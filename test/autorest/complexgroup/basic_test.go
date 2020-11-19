@@ -12,7 +12,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
-func newBasicClient() BasicOperations {
+func newBasicClient() BasicClient {
 	return NewBasicClient(NewDefaultConnection(nil))
 }
 

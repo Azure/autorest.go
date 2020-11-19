@@ -20,30 +20,7 @@ import (
 	"time"
 )
 
-// ImagesOperations contains the methods for the Images group.
-type ImagesOperations interface {
-	// BeginCreateOrUpdate - Create or update an image.
-	BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, imageName string, parameters Image, options *ImagesCreateOrUpdateOptions) (*ImagePollerResponse, error)
-	// ResumeCreateOrUpdate - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeCreateOrUpdate(token string) (ImagePoller, error)
-	// BeginDelete - Deletes an Image.
-	BeginDelete(ctx context.Context, resourceGroupName string, imageName string, options *ImagesDeleteOptions) (*HTTPPollerResponse, error)
-	// ResumeDelete - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeDelete(token string) (HTTPPoller, error)
-	// Get - Gets an image.
-	Get(ctx context.Context, resourceGroupName string, imageName string, options *ImagesGetOptions) (*ImageResponse, error)
-	// List - Gets the list of Images in the subscription. Use nextLink property in the response to get the next page of Images. Do this till nextLink is null
-	// to fetch all the Images.
-	List(options *ImagesListOptions) ImageListResultPager
-	// ListByResourceGroup - Gets the list of images under a resource group.
-	ListByResourceGroup(resourceGroupName string, options *ImagesListByResourceGroupOptions) ImageListResultPager
-	// BeginUpdate - Update an image.
-	BeginUpdate(ctx context.Context, resourceGroupName string, imageName string, parameters ImageUpdate, options *ImagesUpdateOptions) (*ImagePollerResponse, error)
-	// ResumeUpdate - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeUpdate(token string) (ImagePoller, error)
-}
-
-// ImagesClient implements the ImagesOperations interface.
+// ImagesClient contains the methods for the Images group.
 // Don't use this type directly, use NewImagesClient() instead.
 type ImagesClient struct {
 	con            *armcore.Connection
@@ -51,16 +28,17 @@ type ImagesClient struct {
 }
 
 // NewImagesClient creates a new instance of ImagesClient with the specified values.
-func NewImagesClient(con *armcore.Connection, subscriptionID string) ImagesOperations {
-	return &ImagesClient{con: con, subscriptionID: subscriptionID}
+func NewImagesClient(con *armcore.Connection, subscriptionID string) ImagesClient {
+	return ImagesClient{con: con, subscriptionID: subscriptionID}
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client *ImagesClient) Pipeline() azcore.Pipeline {
+func (client ImagesClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
-func (client *ImagesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, imageName string, parameters Image, options *ImagesCreateOrUpdateOptions) (*ImagePollerResponse, error) {
+// BeginCreateOrUpdate - Create or update an image.
+func (client ImagesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, imageName string, parameters Image, options *ImagesCreateOrUpdateOptions) (*ImagePollerResponse, error) {
 	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, imageName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -83,7 +61,9 @@ func (client *ImagesClient) BeginCreateOrUpdate(ctx context.Context, resourceGro
 	return result, nil
 }
 
-func (client *ImagesClient) ResumeCreateOrUpdate(token string) (ImagePoller, error) {
+// ResumeCreateOrUpdate creates a new ImagePoller from the specified resume token.
+// token - The value must come from a previous call to ImagePoller.ResumeToken().
+func (client ImagesClient) ResumeCreateOrUpdate(token string) (ImagePoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("ImagesClient.CreateOrUpdate", token, client.CreateOrUpdateHandleError)
 	if err != nil {
 		return nil, err
@@ -95,7 +75,7 @@ func (client *ImagesClient) ResumeCreateOrUpdate(token string) (ImagePoller, err
 }
 
 // CreateOrUpdate - Create or update an image.
-func (client *ImagesClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, imageName string, parameters Image, options *ImagesCreateOrUpdateOptions) (*azcore.Response, error) {
+func (client ImagesClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, imageName string, parameters Image, options *ImagesCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, imageName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -111,7 +91,7 @@ func (client *ImagesClient) CreateOrUpdate(ctx context.Context, resourceGroupNam
 }
 
 // CreateOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *ImagesClient) CreateOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, imageName string, parameters Image, options *ImagesCreateOrUpdateOptions) (*azcore.Request, error) {
+func (client ImagesClient) CreateOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, imageName string, parameters Image, options *ImagesCreateOrUpdateOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/images/{imageName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{imageName}", url.PathEscape(imageName))
@@ -129,13 +109,13 @@ func (client *ImagesClient) CreateOrUpdateCreateRequest(ctx context.Context, res
 }
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *ImagesClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*ImageResponse, error) {
+func (client ImagesClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*ImageResponse, error) {
 	result := ImageResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Image)
 }
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *ImagesClient) CreateOrUpdateHandleError(resp *azcore.Response) error {
+func (client ImagesClient) CreateOrUpdateHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -146,7 +126,8 @@ func (client *ImagesClient) CreateOrUpdateHandleError(resp *azcore.Response) err
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
-func (client *ImagesClient) BeginDelete(ctx context.Context, resourceGroupName string, imageName string, options *ImagesDeleteOptions) (*HTTPPollerResponse, error) {
+// BeginDelete - Deletes an Image.
+func (client ImagesClient) BeginDelete(ctx context.Context, resourceGroupName string, imageName string, options *ImagesDeleteOptions) (*HTTPPollerResponse, error) {
 	resp, err := client.Delete(ctx, resourceGroupName, imageName, options)
 	if err != nil {
 		return nil, err
@@ -169,7 +150,9 @@ func (client *ImagesClient) BeginDelete(ctx context.Context, resourceGroupName s
 	return result, nil
 }
 
-func (client *ImagesClient) ResumeDelete(token string) (HTTPPoller, error) {
+// ResumeDelete creates a new HTTPPoller from the specified resume token.
+// token - The value must come from a previous call to HTTPPoller.ResumeToken().
+func (client ImagesClient) ResumeDelete(token string) (HTTPPoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("ImagesClient.Delete", token, client.DeleteHandleError)
 	if err != nil {
 		return nil, err
@@ -181,7 +164,7 @@ func (client *ImagesClient) ResumeDelete(token string) (HTTPPoller, error) {
 }
 
 // Delete - Deletes an Image.
-func (client *ImagesClient) Delete(ctx context.Context, resourceGroupName string, imageName string, options *ImagesDeleteOptions) (*azcore.Response, error) {
+func (client ImagesClient) Delete(ctx context.Context, resourceGroupName string, imageName string, options *ImagesDeleteOptions) (*azcore.Response, error) {
 	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, imageName, options)
 	if err != nil {
 		return nil, err
@@ -197,7 +180,7 @@ func (client *ImagesClient) Delete(ctx context.Context, resourceGroupName string
 }
 
 // DeleteCreateRequest creates the Delete request.
-func (client *ImagesClient) DeleteCreateRequest(ctx context.Context, resourceGroupName string, imageName string, options *ImagesDeleteOptions) (*azcore.Request, error) {
+func (client ImagesClient) DeleteCreateRequest(ctx context.Context, resourceGroupName string, imageName string, options *ImagesDeleteOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/images/{imageName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{imageName}", url.PathEscape(imageName))
@@ -214,7 +197,7 @@ func (client *ImagesClient) DeleteCreateRequest(ctx context.Context, resourceGro
 }
 
 // DeleteHandleError handles the Delete error response.
-func (client *ImagesClient) DeleteHandleError(resp *azcore.Response) error {
+func (client ImagesClient) DeleteHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -226,7 +209,7 @@ func (client *ImagesClient) DeleteHandleError(resp *azcore.Response) error {
 }
 
 // Get - Gets an image.
-func (client *ImagesClient) Get(ctx context.Context, resourceGroupName string, imageName string, options *ImagesGetOptions) (*ImageResponse, error) {
+func (client ImagesClient) Get(ctx context.Context, resourceGroupName string, imageName string, options *ImagesGetOptions) (*ImageResponse, error) {
 	req, err := client.GetCreateRequest(ctx, resourceGroupName, imageName, options)
 	if err != nil {
 		return nil, err
@@ -246,7 +229,7 @@ func (client *ImagesClient) Get(ctx context.Context, resourceGroupName string, i
 }
 
 // GetCreateRequest creates the Get request.
-func (client *ImagesClient) GetCreateRequest(ctx context.Context, resourceGroupName string, imageName string, options *ImagesGetOptions) (*azcore.Request, error) {
+func (client ImagesClient) GetCreateRequest(ctx context.Context, resourceGroupName string, imageName string, options *ImagesGetOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/images/{imageName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{imageName}", url.PathEscape(imageName))
@@ -267,13 +250,13 @@ func (client *ImagesClient) GetCreateRequest(ctx context.Context, resourceGroupN
 }
 
 // GetHandleResponse handles the Get response.
-func (client *ImagesClient) GetHandleResponse(resp *azcore.Response) (*ImageResponse, error) {
+func (client ImagesClient) GetHandleResponse(resp *azcore.Response) (*ImageResponse, error) {
 	result := ImageResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Image)
 }
 
 // GetHandleError handles the Get error response.
-func (client *ImagesClient) GetHandleError(resp *azcore.Response) error {
+func (client ImagesClient) GetHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -286,7 +269,7 @@ func (client *ImagesClient) GetHandleError(resp *azcore.Response) error {
 
 // List - Gets the list of Images in the subscription. Use nextLink property in the response to get the next page of Images. Do this till nextLink is null
 // to fetch all the Images.
-func (client *ImagesClient) List(options *ImagesListOptions) ImageListResultPager {
+func (client ImagesClient) List(options *ImagesListOptions) ImageListResultPager {
 	return &imageListResultPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
@@ -302,7 +285,7 @@ func (client *ImagesClient) List(options *ImagesListOptions) ImageListResultPage
 }
 
 // ListCreateRequest creates the List request.
-func (client *ImagesClient) ListCreateRequest(ctx context.Context, options *ImagesListOptions) (*azcore.Request, error) {
+func (client ImagesClient) ListCreateRequest(ctx context.Context, options *ImagesListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/images"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -318,13 +301,13 @@ func (client *ImagesClient) ListCreateRequest(ctx context.Context, options *Imag
 }
 
 // ListHandleResponse handles the List response.
-func (client *ImagesClient) ListHandleResponse(resp *azcore.Response) (*ImageListResultResponse, error) {
+func (client ImagesClient) ListHandleResponse(resp *azcore.Response) (*ImageListResultResponse, error) {
 	result := ImageListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ImageListResult)
 }
 
 // ListHandleError handles the List error response.
-func (client *ImagesClient) ListHandleError(resp *azcore.Response) error {
+func (client ImagesClient) ListHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -336,7 +319,7 @@ func (client *ImagesClient) ListHandleError(resp *azcore.Response) error {
 }
 
 // ListByResourceGroup - Gets the list of images under a resource group.
-func (client *ImagesClient) ListByResourceGroup(resourceGroupName string, options *ImagesListByResourceGroupOptions) ImageListResultPager {
+func (client ImagesClient) ListByResourceGroup(resourceGroupName string, options *ImagesListByResourceGroupOptions) ImageListResultPager {
 	return &imageListResultPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
@@ -352,7 +335,7 @@ func (client *ImagesClient) ListByResourceGroup(resourceGroupName string, option
 }
 
 // ListByResourceGroupCreateRequest creates the ListByResourceGroup request.
-func (client *ImagesClient) ListByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, options *ImagesListByResourceGroupOptions) (*azcore.Request, error) {
+func (client ImagesClient) ListByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, options *ImagesListByResourceGroupOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/images"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
@@ -369,13 +352,13 @@ func (client *ImagesClient) ListByResourceGroupCreateRequest(ctx context.Context
 }
 
 // ListByResourceGroupHandleResponse handles the ListByResourceGroup response.
-func (client *ImagesClient) ListByResourceGroupHandleResponse(resp *azcore.Response) (*ImageListResultResponse, error) {
+func (client ImagesClient) ListByResourceGroupHandleResponse(resp *azcore.Response) (*ImageListResultResponse, error) {
 	result := ImageListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ImageListResult)
 }
 
 // ListByResourceGroupHandleError handles the ListByResourceGroup error response.
-func (client *ImagesClient) ListByResourceGroupHandleError(resp *azcore.Response) error {
+func (client ImagesClient) ListByResourceGroupHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -386,7 +369,8 @@ func (client *ImagesClient) ListByResourceGroupHandleError(resp *azcore.Response
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
-func (client *ImagesClient) BeginUpdate(ctx context.Context, resourceGroupName string, imageName string, parameters ImageUpdate, options *ImagesUpdateOptions) (*ImagePollerResponse, error) {
+// BeginUpdate - Update an image.
+func (client ImagesClient) BeginUpdate(ctx context.Context, resourceGroupName string, imageName string, parameters ImageUpdate, options *ImagesUpdateOptions) (*ImagePollerResponse, error) {
 	resp, err := client.Update(ctx, resourceGroupName, imageName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -409,7 +393,9 @@ func (client *ImagesClient) BeginUpdate(ctx context.Context, resourceGroupName s
 	return result, nil
 }
 
-func (client *ImagesClient) ResumeUpdate(token string) (ImagePoller, error) {
+// ResumeUpdate creates a new ImagePoller from the specified resume token.
+// token - The value must come from a previous call to ImagePoller.ResumeToken().
+func (client ImagesClient) ResumeUpdate(token string) (ImagePoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("ImagesClient.Update", token, client.UpdateHandleError)
 	if err != nil {
 		return nil, err
@@ -421,7 +407,7 @@ func (client *ImagesClient) ResumeUpdate(token string) (ImagePoller, error) {
 }
 
 // Update - Update an image.
-func (client *ImagesClient) Update(ctx context.Context, resourceGroupName string, imageName string, parameters ImageUpdate, options *ImagesUpdateOptions) (*azcore.Response, error) {
+func (client ImagesClient) Update(ctx context.Context, resourceGroupName string, imageName string, parameters ImageUpdate, options *ImagesUpdateOptions) (*azcore.Response, error) {
 	req, err := client.UpdateCreateRequest(ctx, resourceGroupName, imageName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -437,7 +423,7 @@ func (client *ImagesClient) Update(ctx context.Context, resourceGroupName string
 }
 
 // UpdateCreateRequest creates the Update request.
-func (client *ImagesClient) UpdateCreateRequest(ctx context.Context, resourceGroupName string, imageName string, parameters ImageUpdate, options *ImagesUpdateOptions) (*azcore.Request, error) {
+func (client ImagesClient) UpdateCreateRequest(ctx context.Context, resourceGroupName string, imageName string, parameters ImageUpdate, options *ImagesUpdateOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/images/{imageName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{imageName}", url.PathEscape(imageName))
@@ -455,13 +441,13 @@ func (client *ImagesClient) UpdateCreateRequest(ctx context.Context, resourceGro
 }
 
 // UpdateHandleResponse handles the Update response.
-func (client *ImagesClient) UpdateHandleResponse(resp *azcore.Response) (*ImageResponse, error) {
+func (client ImagesClient) UpdateHandleResponse(resp *azcore.Response) (*ImageResponse, error) {
 	result := ImageResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Image)
 }
 
 // UpdateHandleError handles the Update error response.
-func (client *ImagesClient) UpdateHandleError(resp *azcore.Response) error {
+func (client ImagesClient) UpdateHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)

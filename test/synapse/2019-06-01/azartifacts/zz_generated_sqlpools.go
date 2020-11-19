@@ -20,12 +20,12 @@ type sqlPoolsClient struct {
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client *sqlPoolsClient) Pipeline() azcore.Pipeline {
+func (client sqlPoolsClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // Get - Get Sql Pool
-func (client *sqlPoolsClient) Get(ctx context.Context, sqlPoolName string, options *SQLPoolsGetOptions) (*SQLPoolResponse, error) {
+func (client sqlPoolsClient) Get(ctx context.Context, sqlPoolName string, options *SQLPoolsGetOptions) (*SQLPoolResponse, error) {
 	req, err := client.GetCreateRequest(ctx, sqlPoolName, options)
 	if err != nil {
 		return nil, err
@@ -45,7 +45,7 @@ func (client *sqlPoolsClient) Get(ctx context.Context, sqlPoolName string, optio
 }
 
 // GetCreateRequest creates the Get request.
-func (client *sqlPoolsClient) GetCreateRequest(ctx context.Context, sqlPoolName string, options *SQLPoolsGetOptions) (*azcore.Request, error) {
+func (client sqlPoolsClient) GetCreateRequest(ctx context.Context, sqlPoolName string, options *SQLPoolsGetOptions) (*azcore.Request, error) {
 	urlPath := "/sqlPools/{sqlPoolName}"
 	urlPath = strings.ReplaceAll(urlPath, "{sqlPoolName}", url.PathEscape(sqlPoolName))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -61,13 +61,13 @@ func (client *sqlPoolsClient) GetCreateRequest(ctx context.Context, sqlPoolName 
 }
 
 // GetHandleResponse handles the Get response.
-func (client *sqlPoolsClient) GetHandleResponse(resp *azcore.Response) (*SQLPoolResponse, error) {
+func (client sqlPoolsClient) GetHandleResponse(resp *azcore.Response) (*SQLPoolResponse, error) {
 	result := SQLPoolResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.SQLPool)
 }
 
 // GetHandleError handles the Get error response.
-func (client *sqlPoolsClient) GetHandleError(resp *azcore.Response) error {
+func (client sqlPoolsClient) GetHandleError(resp *azcore.Response) error {
 	var err ErrorContract
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -76,7 +76,7 @@ func (client *sqlPoolsClient) GetHandleError(resp *azcore.Response) error {
 }
 
 // List - List Sql Pools
-func (client *sqlPoolsClient) List(ctx context.Context, options *SQLPoolsListOptions) (*SQLPoolInfoListResultResponse, error) {
+func (client sqlPoolsClient) List(ctx context.Context, options *SQLPoolsListOptions) (*SQLPoolInfoListResultResponse, error) {
 	req, err := client.ListCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -96,7 +96,7 @@ func (client *sqlPoolsClient) List(ctx context.Context, options *SQLPoolsListOpt
 }
 
 // ListCreateRequest creates the List request.
-func (client *sqlPoolsClient) ListCreateRequest(ctx context.Context, options *SQLPoolsListOptions) (*azcore.Request, error) {
+func (client sqlPoolsClient) ListCreateRequest(ctx context.Context, options *SQLPoolsListOptions) (*azcore.Request, error) {
 	urlPath := "/sqlPools"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -111,13 +111,13 @@ func (client *sqlPoolsClient) ListCreateRequest(ctx context.Context, options *SQ
 }
 
 // ListHandleResponse handles the List response.
-func (client *sqlPoolsClient) ListHandleResponse(resp *azcore.Response) (*SQLPoolInfoListResultResponse, error) {
+func (client sqlPoolsClient) ListHandleResponse(resp *azcore.Response) (*SQLPoolInfoListResultResponse, error) {
 	result := SQLPoolInfoListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.SQLPoolInfoListResult)
 }
 
 // ListHandleError handles the List error response.
-func (client *sqlPoolsClient) ListHandleError(resp *azcore.Response) error {
+func (client sqlPoolsClient) ListHandleError(resp *azcore.Response) error {
 	var err ErrorContract
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

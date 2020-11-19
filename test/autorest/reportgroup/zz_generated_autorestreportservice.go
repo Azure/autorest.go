@@ -13,32 +13,24 @@ import (
 	"net/http"
 )
 
-// AutoRestReportServiceOperations contains the methods for the AutoRestReportService group.
-type AutoRestReportServiceOperations interface {
-	// GetOptionalReport - Get optional test coverage report
-	GetOptionalReport(ctx context.Context, options *AutoRestReportServiceGetOptionalReportOptions) (*MapOfInt32Response, error)
-	// GetReport - Get test coverage report
-	GetReport(ctx context.Context, options *AutoRestReportServiceGetReportOptions) (*MapOfInt32Response, error)
-}
-
-// AutoRestReportServiceClient implements the AutoRestReportServiceOperations interface.
+// AutoRestReportServiceClient contains the methods for the AutoRestReportService group.
 // Don't use this type directly, use NewAutoRestReportServiceClient() instead.
 type AutoRestReportServiceClient struct {
 	con *Connection
 }
 
 // NewAutoRestReportServiceClient creates a new instance of AutoRestReportServiceClient with the specified values.
-func NewAutoRestReportServiceClient(con *Connection) AutoRestReportServiceOperations {
-	return &AutoRestReportServiceClient{con: con}
+func NewAutoRestReportServiceClient(con *Connection) AutoRestReportServiceClient {
+	return AutoRestReportServiceClient{con: con}
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client *AutoRestReportServiceClient) Pipeline() azcore.Pipeline {
+func (client AutoRestReportServiceClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // GetOptionalReport - Get optional test coverage report
-func (client *AutoRestReportServiceClient) GetOptionalReport(ctx context.Context, options *AutoRestReportServiceGetOptionalReportOptions) (*MapOfInt32Response, error) {
+func (client AutoRestReportServiceClient) GetOptionalReport(ctx context.Context, options *AutoRestReportServiceGetOptionalReportOptions) (*MapOfInt32Response, error) {
 	req, err := client.GetOptionalReportCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -58,7 +50,7 @@ func (client *AutoRestReportServiceClient) GetOptionalReport(ctx context.Context
 }
 
 // GetOptionalReportCreateRequest creates the GetOptionalReport request.
-func (client *AutoRestReportServiceClient) GetOptionalReportCreateRequest(ctx context.Context, options *AutoRestReportServiceGetOptionalReportOptions) (*azcore.Request, error) {
+func (client AutoRestReportServiceClient) GetOptionalReportCreateRequest(ctx context.Context, options *AutoRestReportServiceGetOptionalReportOptions) (*azcore.Request, error) {
 	urlPath := "/report/optional"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -75,13 +67,13 @@ func (client *AutoRestReportServiceClient) GetOptionalReportCreateRequest(ctx co
 }
 
 // GetOptionalReportHandleResponse handles the GetOptionalReport response.
-func (client *AutoRestReportServiceClient) GetOptionalReportHandleResponse(resp *azcore.Response) (*MapOfInt32Response, error) {
+func (client AutoRestReportServiceClient) GetOptionalReportHandleResponse(resp *azcore.Response) (*MapOfInt32Response, error) {
 	result := MapOfInt32Response{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetOptionalReportHandleError handles the GetOptionalReport error response.
-func (client *AutoRestReportServiceClient) GetOptionalReportHandleError(resp *azcore.Response) error {
+func (client AutoRestReportServiceClient) GetOptionalReportHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -90,7 +82,7 @@ func (client *AutoRestReportServiceClient) GetOptionalReportHandleError(resp *az
 }
 
 // GetReport - Get test coverage report
-func (client *AutoRestReportServiceClient) GetReport(ctx context.Context, options *AutoRestReportServiceGetReportOptions) (*MapOfInt32Response, error) {
+func (client AutoRestReportServiceClient) GetReport(ctx context.Context, options *AutoRestReportServiceGetReportOptions) (*MapOfInt32Response, error) {
 	req, err := client.GetReportCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -110,7 +102,7 @@ func (client *AutoRestReportServiceClient) GetReport(ctx context.Context, option
 }
 
 // GetReportCreateRequest creates the GetReport request.
-func (client *AutoRestReportServiceClient) GetReportCreateRequest(ctx context.Context, options *AutoRestReportServiceGetReportOptions) (*azcore.Request, error) {
+func (client AutoRestReportServiceClient) GetReportCreateRequest(ctx context.Context, options *AutoRestReportServiceGetReportOptions) (*azcore.Request, error) {
 	urlPath := "/report"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -127,13 +119,13 @@ func (client *AutoRestReportServiceClient) GetReportCreateRequest(ctx context.Co
 }
 
 // GetReportHandleResponse handles the GetReport response.
-func (client *AutoRestReportServiceClient) GetReportHandleResponse(resp *azcore.Response) (*MapOfInt32Response, error) {
+func (client AutoRestReportServiceClient) GetReportHandleResponse(resp *azcore.Response) (*MapOfInt32Response, error) {
 	result := MapOfInt32Response{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetReportHandleError handles the GetReport error response.
-func (client *AutoRestReportServiceClient) GetReportHandleError(resp *azcore.Response) error {
+func (client AutoRestReportServiceClient) GetReportHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

@@ -16,13 +16,7 @@ import (
 	"strings"
 )
 
-// ServiceTagsOperations contains the methods for the ServiceTags group.
-type ServiceTagsOperations interface {
-	// List - Gets a list of service tag information resources.
-	List(ctx context.Context, location string, options *ServiceTagsListOptions) (*ServiceTagsListResultResponse, error)
-}
-
-// ServiceTagsClient implements the ServiceTagsOperations interface.
+// ServiceTagsClient contains the methods for the ServiceTags group.
 // Don't use this type directly, use NewServiceTagsClient() instead.
 type ServiceTagsClient struct {
 	con            *armcore.Connection
@@ -30,17 +24,17 @@ type ServiceTagsClient struct {
 }
 
 // NewServiceTagsClient creates a new instance of ServiceTagsClient with the specified values.
-func NewServiceTagsClient(con *armcore.Connection, subscriptionID string) ServiceTagsOperations {
-	return &ServiceTagsClient{con: con, subscriptionID: subscriptionID}
+func NewServiceTagsClient(con *armcore.Connection, subscriptionID string) ServiceTagsClient {
+	return ServiceTagsClient{con: con, subscriptionID: subscriptionID}
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client *ServiceTagsClient) Pipeline() azcore.Pipeline {
+func (client ServiceTagsClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // List - Gets a list of service tag information resources.
-func (client *ServiceTagsClient) List(ctx context.Context, location string, options *ServiceTagsListOptions) (*ServiceTagsListResultResponse, error) {
+func (client ServiceTagsClient) List(ctx context.Context, location string, options *ServiceTagsListOptions) (*ServiceTagsListResultResponse, error) {
 	req, err := client.ListCreateRequest(ctx, location, options)
 	if err != nil {
 		return nil, err
@@ -60,7 +54,7 @@ func (client *ServiceTagsClient) List(ctx context.Context, location string, opti
 }
 
 // ListCreateRequest creates the List request.
-func (client *ServiceTagsClient) ListCreateRequest(ctx context.Context, location string, options *ServiceTagsListOptions) (*azcore.Request, error) {
+func (client ServiceTagsClient) ListCreateRequest(ctx context.Context, location string, options *ServiceTagsListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/serviceTags"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
@@ -77,13 +71,13 @@ func (client *ServiceTagsClient) ListCreateRequest(ctx context.Context, location
 }
 
 // ListHandleResponse handles the List response.
-func (client *ServiceTagsClient) ListHandleResponse(resp *azcore.Response) (*ServiceTagsListResultResponse, error) {
+func (client ServiceTagsClient) ListHandleResponse(resp *azcore.Response) (*ServiceTagsListResultResponse, error) {
 	result := ServiceTagsListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ServiceTagsListResult)
 }
 
 // ListHandleError handles the List error response.
-func (client *ServiceTagsClient) ListHandleError(resp *azcore.Response) error {
+func (client ServiceTagsClient) ListHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

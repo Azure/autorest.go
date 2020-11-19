@@ -17,25 +17,7 @@ import (
 	"time"
 )
 
-// PrivateEndpointsOperations contains the methods for the PrivateEndpoints group.
-type PrivateEndpointsOperations interface {
-	// BeginCreateOrUpdate - Creates or updates an private endpoint in the specified resource group.
-	BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, privateEndpointName string, parameters PrivateEndpoint, options *PrivateEndpointsCreateOrUpdateOptions) (*PrivateEndpointPollerResponse, error)
-	// ResumeCreateOrUpdate - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeCreateOrUpdate(token string) (PrivateEndpointPoller, error)
-	// BeginDelete - Deletes the specified private endpoint.
-	BeginDelete(ctx context.Context, resourceGroupName string, privateEndpointName string, options *PrivateEndpointsDeleteOptions) (*HTTPPollerResponse, error)
-	// ResumeDelete - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeDelete(token string) (HTTPPoller, error)
-	// Get - Gets the specified private endpoint by resource group.
-	Get(ctx context.Context, resourceGroupName string, privateEndpointName string, options *PrivateEndpointsGetOptions) (*PrivateEndpointResponse, error)
-	// List - Gets all private endpoints in a resource group.
-	List(resourceGroupName string, options *PrivateEndpointsListOptions) PrivateEndpointListResultPager
-	// ListBySubscription - Gets all private endpoints in a subscription.
-	ListBySubscription(options *PrivateEndpointsListBySubscriptionOptions) PrivateEndpointListResultPager
-}
-
-// PrivateEndpointsClient implements the PrivateEndpointsOperations interface.
+// PrivateEndpointsClient contains the methods for the PrivateEndpoints group.
 // Don't use this type directly, use NewPrivateEndpointsClient() instead.
 type PrivateEndpointsClient struct {
 	con            *armcore.Connection
@@ -43,16 +25,17 @@ type PrivateEndpointsClient struct {
 }
 
 // NewPrivateEndpointsClient creates a new instance of PrivateEndpointsClient with the specified values.
-func NewPrivateEndpointsClient(con *armcore.Connection, subscriptionID string) PrivateEndpointsOperations {
-	return &PrivateEndpointsClient{con: con, subscriptionID: subscriptionID}
+func NewPrivateEndpointsClient(con *armcore.Connection, subscriptionID string) PrivateEndpointsClient {
+	return PrivateEndpointsClient{con: con, subscriptionID: subscriptionID}
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client *PrivateEndpointsClient) Pipeline() azcore.Pipeline {
+func (client PrivateEndpointsClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
-func (client *PrivateEndpointsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, privateEndpointName string, parameters PrivateEndpoint, options *PrivateEndpointsCreateOrUpdateOptions) (*PrivateEndpointPollerResponse, error) {
+// BeginCreateOrUpdate - Creates or updates an private endpoint in the specified resource group.
+func (client PrivateEndpointsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, privateEndpointName string, parameters PrivateEndpoint, options *PrivateEndpointsCreateOrUpdateOptions) (*PrivateEndpointPollerResponse, error) {
 	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, privateEndpointName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -75,7 +58,9 @@ func (client *PrivateEndpointsClient) BeginCreateOrUpdate(ctx context.Context, r
 	return result, nil
 }
 
-func (client *PrivateEndpointsClient) ResumeCreateOrUpdate(token string) (PrivateEndpointPoller, error) {
+// ResumeCreateOrUpdate creates a new PrivateEndpointPoller from the specified resume token.
+// token - The value must come from a previous call to PrivateEndpointPoller.ResumeToken().
+func (client PrivateEndpointsClient) ResumeCreateOrUpdate(token string) (PrivateEndpointPoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("PrivateEndpointsClient.CreateOrUpdate", token, client.CreateOrUpdateHandleError)
 	if err != nil {
 		return nil, err
@@ -87,7 +72,7 @@ func (client *PrivateEndpointsClient) ResumeCreateOrUpdate(token string) (Privat
 }
 
 // CreateOrUpdate - Creates or updates an private endpoint in the specified resource group.
-func (client *PrivateEndpointsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, privateEndpointName string, parameters PrivateEndpoint, options *PrivateEndpointsCreateOrUpdateOptions) (*azcore.Response, error) {
+func (client PrivateEndpointsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, privateEndpointName string, parameters PrivateEndpoint, options *PrivateEndpointsCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, privateEndpointName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -103,7 +88,7 @@ func (client *PrivateEndpointsClient) CreateOrUpdate(ctx context.Context, resour
 }
 
 // CreateOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *PrivateEndpointsClient) CreateOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, privateEndpointName string, parameters PrivateEndpoint, options *PrivateEndpointsCreateOrUpdateOptions) (*azcore.Request, error) {
+func (client PrivateEndpointsClient) CreateOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, privateEndpointName string, parameters PrivateEndpoint, options *PrivateEndpointsCreateOrUpdateOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateEndpoints/{privateEndpointName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{privateEndpointName}", url.PathEscape(privateEndpointName))
@@ -121,13 +106,13 @@ func (client *PrivateEndpointsClient) CreateOrUpdateCreateRequest(ctx context.Co
 }
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *PrivateEndpointsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*PrivateEndpointResponse, error) {
+func (client PrivateEndpointsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*PrivateEndpointResponse, error) {
 	result := PrivateEndpointResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.PrivateEndpoint)
 }
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *PrivateEndpointsClient) CreateOrUpdateHandleError(resp *azcore.Response) error {
+func (client PrivateEndpointsClient) CreateOrUpdateHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -135,7 +120,8 @@ func (client *PrivateEndpointsClient) CreateOrUpdateHandleError(resp *azcore.Res
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-func (client *PrivateEndpointsClient) BeginDelete(ctx context.Context, resourceGroupName string, privateEndpointName string, options *PrivateEndpointsDeleteOptions) (*HTTPPollerResponse, error) {
+// BeginDelete - Deletes the specified private endpoint.
+func (client PrivateEndpointsClient) BeginDelete(ctx context.Context, resourceGroupName string, privateEndpointName string, options *PrivateEndpointsDeleteOptions) (*HTTPPollerResponse, error) {
 	resp, err := client.Delete(ctx, resourceGroupName, privateEndpointName, options)
 	if err != nil {
 		return nil, err
@@ -158,7 +144,9 @@ func (client *PrivateEndpointsClient) BeginDelete(ctx context.Context, resourceG
 	return result, nil
 }
 
-func (client *PrivateEndpointsClient) ResumeDelete(token string) (HTTPPoller, error) {
+// ResumeDelete creates a new HTTPPoller from the specified resume token.
+// token - The value must come from a previous call to HTTPPoller.ResumeToken().
+func (client PrivateEndpointsClient) ResumeDelete(token string) (HTTPPoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("PrivateEndpointsClient.Delete", token, client.DeleteHandleError)
 	if err != nil {
 		return nil, err
@@ -170,7 +158,7 @@ func (client *PrivateEndpointsClient) ResumeDelete(token string) (HTTPPoller, er
 }
 
 // Delete - Deletes the specified private endpoint.
-func (client *PrivateEndpointsClient) Delete(ctx context.Context, resourceGroupName string, privateEndpointName string, options *PrivateEndpointsDeleteOptions) (*azcore.Response, error) {
+func (client PrivateEndpointsClient) Delete(ctx context.Context, resourceGroupName string, privateEndpointName string, options *PrivateEndpointsDeleteOptions) (*azcore.Response, error) {
 	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, privateEndpointName, options)
 	if err != nil {
 		return nil, err
@@ -186,7 +174,7 @@ func (client *PrivateEndpointsClient) Delete(ctx context.Context, resourceGroupN
 }
 
 // DeleteCreateRequest creates the Delete request.
-func (client *PrivateEndpointsClient) DeleteCreateRequest(ctx context.Context, resourceGroupName string, privateEndpointName string, options *PrivateEndpointsDeleteOptions) (*azcore.Request, error) {
+func (client PrivateEndpointsClient) DeleteCreateRequest(ctx context.Context, resourceGroupName string, privateEndpointName string, options *PrivateEndpointsDeleteOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateEndpoints/{privateEndpointName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{privateEndpointName}", url.PathEscape(privateEndpointName))
@@ -204,7 +192,7 @@ func (client *PrivateEndpointsClient) DeleteCreateRequest(ctx context.Context, r
 }
 
 // DeleteHandleError handles the Delete error response.
-func (client *PrivateEndpointsClient) DeleteHandleError(resp *azcore.Response) error {
+func (client PrivateEndpointsClient) DeleteHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -213,7 +201,7 @@ func (client *PrivateEndpointsClient) DeleteHandleError(resp *azcore.Response) e
 }
 
 // Get - Gets the specified private endpoint by resource group.
-func (client *PrivateEndpointsClient) Get(ctx context.Context, resourceGroupName string, privateEndpointName string, options *PrivateEndpointsGetOptions) (*PrivateEndpointResponse, error) {
+func (client PrivateEndpointsClient) Get(ctx context.Context, resourceGroupName string, privateEndpointName string, options *PrivateEndpointsGetOptions) (*PrivateEndpointResponse, error) {
 	req, err := client.GetCreateRequest(ctx, resourceGroupName, privateEndpointName, options)
 	if err != nil {
 		return nil, err
@@ -233,7 +221,7 @@ func (client *PrivateEndpointsClient) Get(ctx context.Context, resourceGroupName
 }
 
 // GetCreateRequest creates the Get request.
-func (client *PrivateEndpointsClient) GetCreateRequest(ctx context.Context, resourceGroupName string, privateEndpointName string, options *PrivateEndpointsGetOptions) (*azcore.Request, error) {
+func (client PrivateEndpointsClient) GetCreateRequest(ctx context.Context, resourceGroupName string, privateEndpointName string, options *PrivateEndpointsGetOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateEndpoints/{privateEndpointName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{privateEndpointName}", url.PathEscape(privateEndpointName))
@@ -254,13 +242,13 @@ func (client *PrivateEndpointsClient) GetCreateRequest(ctx context.Context, reso
 }
 
 // GetHandleResponse handles the Get response.
-func (client *PrivateEndpointsClient) GetHandleResponse(resp *azcore.Response) (*PrivateEndpointResponse, error) {
+func (client PrivateEndpointsClient) GetHandleResponse(resp *azcore.Response) (*PrivateEndpointResponse, error) {
 	result := PrivateEndpointResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.PrivateEndpoint)
 }
 
 // GetHandleError handles the Get error response.
-func (client *PrivateEndpointsClient) GetHandleError(resp *azcore.Response) error {
+func (client PrivateEndpointsClient) GetHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -269,7 +257,7 @@ func (client *PrivateEndpointsClient) GetHandleError(resp *azcore.Response) erro
 }
 
 // List - Gets all private endpoints in a resource group.
-func (client *PrivateEndpointsClient) List(resourceGroupName string, options *PrivateEndpointsListOptions) PrivateEndpointListResultPager {
+func (client PrivateEndpointsClient) List(resourceGroupName string, options *PrivateEndpointsListOptions) PrivateEndpointListResultPager {
 	return &privateEndpointListResultPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
@@ -285,7 +273,7 @@ func (client *PrivateEndpointsClient) List(resourceGroupName string, options *Pr
 }
 
 // ListCreateRequest creates the List request.
-func (client *PrivateEndpointsClient) ListCreateRequest(ctx context.Context, resourceGroupName string, options *PrivateEndpointsListOptions) (*azcore.Request, error) {
+func (client PrivateEndpointsClient) ListCreateRequest(ctx context.Context, resourceGroupName string, options *PrivateEndpointsListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateEndpoints"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
@@ -302,13 +290,13 @@ func (client *PrivateEndpointsClient) ListCreateRequest(ctx context.Context, res
 }
 
 // ListHandleResponse handles the List response.
-func (client *PrivateEndpointsClient) ListHandleResponse(resp *azcore.Response) (*PrivateEndpointListResultResponse, error) {
+func (client PrivateEndpointsClient) ListHandleResponse(resp *azcore.Response) (*PrivateEndpointListResultResponse, error) {
 	result := PrivateEndpointListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.PrivateEndpointListResult)
 }
 
 // ListHandleError handles the List error response.
-func (client *PrivateEndpointsClient) ListHandleError(resp *azcore.Response) error {
+func (client PrivateEndpointsClient) ListHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -317,7 +305,7 @@ func (client *PrivateEndpointsClient) ListHandleError(resp *azcore.Response) err
 }
 
 // ListBySubscription - Gets all private endpoints in a subscription.
-func (client *PrivateEndpointsClient) ListBySubscription(options *PrivateEndpointsListBySubscriptionOptions) PrivateEndpointListResultPager {
+func (client PrivateEndpointsClient) ListBySubscription(options *PrivateEndpointsListBySubscriptionOptions) PrivateEndpointListResultPager {
 	return &privateEndpointListResultPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
@@ -333,7 +321,7 @@ func (client *PrivateEndpointsClient) ListBySubscription(options *PrivateEndpoin
 }
 
 // ListBySubscriptionCreateRequest creates the ListBySubscription request.
-func (client *PrivateEndpointsClient) ListBySubscriptionCreateRequest(ctx context.Context, options *PrivateEndpointsListBySubscriptionOptions) (*azcore.Request, error) {
+func (client PrivateEndpointsClient) ListBySubscriptionCreateRequest(ctx context.Context, options *PrivateEndpointsListBySubscriptionOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/privateEndpoints"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -349,13 +337,13 @@ func (client *PrivateEndpointsClient) ListBySubscriptionCreateRequest(ctx contex
 }
 
 // ListBySubscriptionHandleResponse handles the ListBySubscription response.
-func (client *PrivateEndpointsClient) ListBySubscriptionHandleResponse(resp *azcore.Response) (*PrivateEndpointListResultResponse, error) {
+func (client PrivateEndpointsClient) ListBySubscriptionHandleResponse(resp *azcore.Response) (*PrivateEndpointListResultResponse, error) {
 	result := PrivateEndpointListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.PrivateEndpointListResult)
 }
 
 // ListBySubscriptionHandleError handles the ListBySubscription error response.
-func (client *PrivateEndpointsClient) ListBySubscriptionHandleError(resp *azcore.Response) error {
+func (client PrivateEndpointsClient) ListBySubscriptionHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

@@ -20,12 +20,12 @@ type notebookClient struct {
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client *notebookClient) Pipeline() azcore.Pipeline {
+func (client notebookClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // CreateOrUpdateNotebook - Creates or updates a Note Book.
-func (client *notebookClient) CreateOrUpdateNotebook(ctx context.Context, notebookName string, notebook NotebookResource, options *NotebookCreateOrUpdateNotebookOptions) (*azcore.Response, error) {
+func (client notebookClient) CreateOrUpdateNotebook(ctx context.Context, notebookName string, notebook NotebookResource, options *NotebookCreateOrUpdateNotebookOptions) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdateNotebookCreateRequest(ctx, notebookName, notebook, options)
 	if err != nil {
 		return nil, err
@@ -41,7 +41,7 @@ func (client *notebookClient) CreateOrUpdateNotebook(ctx context.Context, notebo
 }
 
 // CreateOrUpdateNotebookCreateRequest creates the CreateOrUpdateNotebook request.
-func (client *notebookClient) CreateOrUpdateNotebookCreateRequest(ctx context.Context, notebookName string, notebook NotebookResource, options *NotebookCreateOrUpdateNotebookOptions) (*azcore.Request, error) {
+func (client notebookClient) CreateOrUpdateNotebookCreateRequest(ctx context.Context, notebookName string, notebook NotebookResource, options *NotebookCreateOrUpdateNotebookOptions) (*azcore.Request, error) {
 	urlPath := "/notebooks/{notebookName}"
 	urlPath = strings.ReplaceAll(urlPath, "{notebookName}", url.PathEscape(notebookName))
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -60,13 +60,13 @@ func (client *notebookClient) CreateOrUpdateNotebookCreateRequest(ctx context.Co
 }
 
 // CreateOrUpdateNotebookHandleResponse handles the CreateOrUpdateNotebook response.
-func (client *notebookClient) CreateOrUpdateNotebookHandleResponse(resp *azcore.Response) (*NotebookResourceResponse, error) {
+func (client notebookClient) CreateOrUpdateNotebookHandleResponse(resp *azcore.Response) (*NotebookResourceResponse, error) {
 	result := NotebookResourceResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.NotebookResource)
 }
 
 // CreateOrUpdateNotebookHandleError handles the CreateOrUpdateNotebook error response.
-func (client *notebookClient) CreateOrUpdateNotebookHandleError(resp *azcore.Response) error {
+func (client notebookClient) CreateOrUpdateNotebookHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -75,7 +75,7 @@ func (client *notebookClient) CreateOrUpdateNotebookHandleError(resp *azcore.Res
 }
 
 // DeleteNotebook - Deletes a Note book.
-func (client *notebookClient) DeleteNotebook(ctx context.Context, notebookName string, options *NotebookDeleteNotebookOptions) (*azcore.Response, error) {
+func (client notebookClient) DeleteNotebook(ctx context.Context, notebookName string, options *NotebookDeleteNotebookOptions) (*azcore.Response, error) {
 	req, err := client.DeleteNotebookCreateRequest(ctx, notebookName, options)
 	if err != nil {
 		return nil, err
@@ -91,7 +91,7 @@ func (client *notebookClient) DeleteNotebook(ctx context.Context, notebookName s
 }
 
 // DeleteNotebookCreateRequest creates the DeleteNotebook request.
-func (client *notebookClient) DeleteNotebookCreateRequest(ctx context.Context, notebookName string, options *NotebookDeleteNotebookOptions) (*azcore.Request, error) {
+func (client notebookClient) DeleteNotebookCreateRequest(ctx context.Context, notebookName string, options *NotebookDeleteNotebookOptions) (*azcore.Request, error) {
 	urlPath := "/notebooks/{notebookName}"
 	urlPath = strings.ReplaceAll(urlPath, "{notebookName}", url.PathEscape(notebookName))
 	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -107,7 +107,7 @@ func (client *notebookClient) DeleteNotebookCreateRequest(ctx context.Context, n
 }
 
 // DeleteNotebookHandleError handles the DeleteNotebook error response.
-func (client *notebookClient) DeleteNotebookHandleError(resp *azcore.Response) error {
+func (client notebookClient) DeleteNotebookHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -116,7 +116,7 @@ func (client *notebookClient) DeleteNotebookHandleError(resp *azcore.Response) e
 }
 
 // GetNotebook - Gets a Note Book.
-func (client *notebookClient) GetNotebook(ctx context.Context, notebookName string, options *NotebookGetNotebookOptions) (*NotebookResourceResponse, error) {
+func (client notebookClient) GetNotebook(ctx context.Context, notebookName string, options *NotebookGetNotebookOptions) (*NotebookResourceResponse, error) {
 	req, err := client.GetNotebookCreateRequest(ctx, notebookName, options)
 	if err != nil {
 		return nil, err
@@ -136,7 +136,7 @@ func (client *notebookClient) GetNotebook(ctx context.Context, notebookName stri
 }
 
 // GetNotebookCreateRequest creates the GetNotebook request.
-func (client *notebookClient) GetNotebookCreateRequest(ctx context.Context, notebookName string, options *NotebookGetNotebookOptions) (*azcore.Request, error) {
+func (client notebookClient) GetNotebookCreateRequest(ctx context.Context, notebookName string, options *NotebookGetNotebookOptions) (*azcore.Request, error) {
 	urlPath := "/notebooks/{notebookName}"
 	urlPath = strings.ReplaceAll(urlPath, "{notebookName}", url.PathEscape(notebookName))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -155,13 +155,13 @@ func (client *notebookClient) GetNotebookCreateRequest(ctx context.Context, note
 }
 
 // GetNotebookHandleResponse handles the GetNotebook response.
-func (client *notebookClient) GetNotebookHandleResponse(resp *azcore.Response) (*NotebookResourceResponse, error) {
+func (client notebookClient) GetNotebookHandleResponse(resp *azcore.Response) (*NotebookResourceResponse, error) {
 	result := NotebookResourceResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.NotebookResource)
 }
 
 // GetNotebookHandleError handles the GetNotebook error response.
-func (client *notebookClient) GetNotebookHandleError(resp *azcore.Response) error {
+func (client notebookClient) GetNotebookHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -170,7 +170,7 @@ func (client *notebookClient) GetNotebookHandleError(resp *azcore.Response) erro
 }
 
 // GetNotebookSummaryByWorkSpace - Lists a summary of Notebooks.
-func (client *notebookClient) GetNotebookSummaryByWorkSpace(options *NotebookGetNotebookSummaryByWorkSpaceOptions) NotebookListResponsePager {
+func (client notebookClient) GetNotebookSummaryByWorkSpace(options *NotebookGetNotebookSummaryByWorkSpaceOptions) NotebookListResponsePager {
 	return &notebookListResponsePager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
@@ -186,7 +186,7 @@ func (client *notebookClient) GetNotebookSummaryByWorkSpace(options *NotebookGet
 }
 
 // GetNotebookSummaryByWorkSpaceCreateRequest creates the GetNotebookSummaryByWorkSpace request.
-func (client *notebookClient) GetNotebookSummaryByWorkSpaceCreateRequest(ctx context.Context, options *NotebookGetNotebookSummaryByWorkSpaceOptions) (*azcore.Request, error) {
+func (client notebookClient) GetNotebookSummaryByWorkSpaceCreateRequest(ctx context.Context, options *NotebookGetNotebookSummaryByWorkSpaceOptions) (*azcore.Request, error) {
 	urlPath := "/notebooks/summary"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -201,13 +201,13 @@ func (client *notebookClient) GetNotebookSummaryByWorkSpaceCreateRequest(ctx con
 }
 
 // GetNotebookSummaryByWorkSpaceHandleResponse handles the GetNotebookSummaryByWorkSpace response.
-func (client *notebookClient) GetNotebookSummaryByWorkSpaceHandleResponse(resp *azcore.Response) (*NotebookListResponseResponse, error) {
+func (client notebookClient) GetNotebookSummaryByWorkSpaceHandleResponse(resp *azcore.Response) (*NotebookListResponseResponse, error) {
 	result := NotebookListResponseResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.NotebookListResponse)
 }
 
 // GetNotebookSummaryByWorkSpaceHandleError handles the GetNotebookSummaryByWorkSpace error response.
-func (client *notebookClient) GetNotebookSummaryByWorkSpaceHandleError(resp *azcore.Response) error {
+func (client notebookClient) GetNotebookSummaryByWorkSpaceHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -216,7 +216,7 @@ func (client *notebookClient) GetNotebookSummaryByWorkSpaceHandleError(resp *azc
 }
 
 // GetNotebooksByWorkspace - Lists Notebooks.
-func (client *notebookClient) GetNotebooksByWorkspace(options *NotebookGetNotebooksByWorkspaceOptions) NotebookListResponsePager {
+func (client notebookClient) GetNotebooksByWorkspace(options *NotebookGetNotebooksByWorkspaceOptions) NotebookListResponsePager {
 	return &notebookListResponsePager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
@@ -232,7 +232,7 @@ func (client *notebookClient) GetNotebooksByWorkspace(options *NotebookGetNotebo
 }
 
 // GetNotebooksByWorkspaceCreateRequest creates the GetNotebooksByWorkspace request.
-func (client *notebookClient) GetNotebooksByWorkspaceCreateRequest(ctx context.Context, options *NotebookGetNotebooksByWorkspaceOptions) (*azcore.Request, error) {
+func (client notebookClient) GetNotebooksByWorkspaceCreateRequest(ctx context.Context, options *NotebookGetNotebooksByWorkspaceOptions) (*azcore.Request, error) {
 	urlPath := "/notebooks"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -247,13 +247,13 @@ func (client *notebookClient) GetNotebooksByWorkspaceCreateRequest(ctx context.C
 }
 
 // GetNotebooksByWorkspaceHandleResponse handles the GetNotebooksByWorkspace response.
-func (client *notebookClient) GetNotebooksByWorkspaceHandleResponse(resp *azcore.Response) (*NotebookListResponseResponse, error) {
+func (client notebookClient) GetNotebooksByWorkspaceHandleResponse(resp *azcore.Response) (*NotebookListResponseResponse, error) {
 	result := NotebookListResponseResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.NotebookListResponse)
 }
 
 // GetNotebooksByWorkspaceHandleError handles the GetNotebooksByWorkspace error response.
-func (client *notebookClient) GetNotebooksByWorkspaceHandleError(resp *azcore.Response) error {
+func (client notebookClient) GetNotebooksByWorkspaceHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -262,7 +262,7 @@ func (client *notebookClient) GetNotebooksByWorkspaceHandleError(resp *azcore.Re
 }
 
 // RenameNotebook - Renames a notebook.
-func (client *notebookClient) RenameNotebook(ctx context.Context, notebookName string, request ArtifactRenameRequest, options *NotebookRenameNotebookOptions) (*azcore.Response, error) {
+func (client notebookClient) RenameNotebook(ctx context.Context, notebookName string, request ArtifactRenameRequest, options *NotebookRenameNotebookOptions) (*azcore.Response, error) {
 	req, err := client.RenameNotebookCreateRequest(ctx, notebookName, request, options)
 	if err != nil {
 		return nil, err
@@ -278,7 +278,7 @@ func (client *notebookClient) RenameNotebook(ctx context.Context, notebookName s
 }
 
 // RenameNotebookCreateRequest creates the RenameNotebook request.
-func (client *notebookClient) RenameNotebookCreateRequest(ctx context.Context, notebookName string, request ArtifactRenameRequest, options *NotebookRenameNotebookOptions) (*azcore.Request, error) {
+func (client notebookClient) RenameNotebookCreateRequest(ctx context.Context, notebookName string, request ArtifactRenameRequest, options *NotebookRenameNotebookOptions) (*azcore.Request, error) {
 	urlPath := "/notebooks/{notebookName}/rename"
 	urlPath = strings.ReplaceAll(urlPath, "{notebookName}", url.PathEscape(notebookName))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -294,7 +294,7 @@ func (client *notebookClient) RenameNotebookCreateRequest(ctx context.Context, n
 }
 
 // RenameNotebookHandleError handles the RenameNotebook error response.
-func (client *notebookClient) RenameNotebookHandleError(resp *azcore.Response) error {
+func (client notebookClient) RenameNotebookHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

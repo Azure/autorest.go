@@ -13,34 +13,24 @@ import (
 	"net/http"
 )
 
-// QueriesOperations contains the methods for the Queries group.
-type QueriesOperations interface {
-	// ArrayStringMultiEmpty - Get an empty array [] of string using the multi-array format
-	ArrayStringMultiEmpty(ctx context.Context, options *QueriesArrayStringMultiEmptyOptions) (*http.Response, error)
-	// ArrayStringMultiNull - Get a null array of string using the multi-array format
-	ArrayStringMultiNull(ctx context.Context, options *QueriesArrayStringMultiNullOptions) (*http.Response, error)
-	// ArrayStringMultiValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the mult-array format
-	ArrayStringMultiValid(ctx context.Context, options *QueriesArrayStringMultiValidOptions) (*http.Response, error)
-}
-
-// QueriesClient implements the QueriesOperations interface.
+// QueriesClient contains the methods for the Queries group.
 // Don't use this type directly, use NewQueriesClient() instead.
 type QueriesClient struct {
 	con *Connection
 }
 
 // NewQueriesClient creates a new instance of QueriesClient with the specified values.
-func NewQueriesClient(con *Connection) QueriesOperations {
-	return &QueriesClient{con: con}
+func NewQueriesClient(con *Connection) QueriesClient {
+	return QueriesClient{con: con}
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client *QueriesClient) Pipeline() azcore.Pipeline {
+func (client QueriesClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // ArrayStringMultiEmpty - Get an empty array [] of string using the multi-array format
-func (client *QueriesClient) ArrayStringMultiEmpty(ctx context.Context, options *QueriesArrayStringMultiEmptyOptions) (*http.Response, error) {
+func (client QueriesClient) ArrayStringMultiEmpty(ctx context.Context, options *QueriesArrayStringMultiEmptyOptions) (*http.Response, error) {
 	req, err := client.ArrayStringMultiEmptyCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -56,7 +46,7 @@ func (client *QueriesClient) ArrayStringMultiEmpty(ctx context.Context, options 
 }
 
 // ArrayStringMultiEmptyCreateRequest creates the ArrayStringMultiEmpty request.
-func (client *QueriesClient) ArrayStringMultiEmptyCreateRequest(ctx context.Context, options *QueriesArrayStringMultiEmptyOptions) (*azcore.Request, error) {
+func (client QueriesClient) ArrayStringMultiEmptyCreateRequest(ctx context.Context, options *QueriesArrayStringMultiEmptyOptions) (*azcore.Request, error) {
 	urlPath := "/queries/array/multi/string/empty"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -75,7 +65,7 @@ func (client *QueriesClient) ArrayStringMultiEmptyCreateRequest(ctx context.Cont
 }
 
 // ArrayStringMultiEmptyHandleError handles the ArrayStringMultiEmpty error response.
-func (client *QueriesClient) ArrayStringMultiEmptyHandleError(resp *azcore.Response) error {
+func (client QueriesClient) ArrayStringMultiEmptyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -84,7 +74,7 @@ func (client *QueriesClient) ArrayStringMultiEmptyHandleError(resp *azcore.Respo
 }
 
 // ArrayStringMultiNull - Get a null array of string using the multi-array format
-func (client *QueriesClient) ArrayStringMultiNull(ctx context.Context, options *QueriesArrayStringMultiNullOptions) (*http.Response, error) {
+func (client QueriesClient) ArrayStringMultiNull(ctx context.Context, options *QueriesArrayStringMultiNullOptions) (*http.Response, error) {
 	req, err := client.ArrayStringMultiNullCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -100,7 +90,7 @@ func (client *QueriesClient) ArrayStringMultiNull(ctx context.Context, options *
 }
 
 // ArrayStringMultiNullCreateRequest creates the ArrayStringMultiNull request.
-func (client *QueriesClient) ArrayStringMultiNullCreateRequest(ctx context.Context, options *QueriesArrayStringMultiNullOptions) (*azcore.Request, error) {
+func (client QueriesClient) ArrayStringMultiNullCreateRequest(ctx context.Context, options *QueriesArrayStringMultiNullOptions) (*azcore.Request, error) {
 	urlPath := "/queries/array/multi/string/null"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -119,7 +109,7 @@ func (client *QueriesClient) ArrayStringMultiNullCreateRequest(ctx context.Conte
 }
 
 // ArrayStringMultiNullHandleError handles the ArrayStringMultiNull error response.
-func (client *QueriesClient) ArrayStringMultiNullHandleError(resp *azcore.Response) error {
+func (client QueriesClient) ArrayStringMultiNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -128,7 +118,7 @@ func (client *QueriesClient) ArrayStringMultiNullHandleError(resp *azcore.Respon
 }
 
 // ArrayStringMultiValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the mult-array format
-func (client *QueriesClient) ArrayStringMultiValid(ctx context.Context, options *QueriesArrayStringMultiValidOptions) (*http.Response, error) {
+func (client QueriesClient) ArrayStringMultiValid(ctx context.Context, options *QueriesArrayStringMultiValidOptions) (*http.Response, error) {
 	req, err := client.ArrayStringMultiValidCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -144,7 +134,7 @@ func (client *QueriesClient) ArrayStringMultiValid(ctx context.Context, options 
 }
 
 // ArrayStringMultiValidCreateRequest creates the ArrayStringMultiValid request.
-func (client *QueriesClient) ArrayStringMultiValidCreateRequest(ctx context.Context, options *QueriesArrayStringMultiValidOptions) (*azcore.Request, error) {
+func (client QueriesClient) ArrayStringMultiValidCreateRequest(ctx context.Context, options *QueriesArrayStringMultiValidOptions) (*azcore.Request, error) {
 	urlPath := "/queries/array/multi/string/valid"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -163,7 +153,7 @@ func (client *QueriesClient) ArrayStringMultiValidCreateRequest(ctx context.Cont
 }
 
 // ArrayStringMultiValidHandleError handles the ArrayStringMultiValid error response.
-func (client *QueriesClient) ArrayStringMultiValidHandleError(resp *azcore.Response) error {
+func (client QueriesClient) ArrayStringMultiValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

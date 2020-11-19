@@ -18,32 +18,24 @@ import (
 	"strings"
 )
 
-// PetOperations contains the methods for the Pet group.
-type PetOperations interface {
-	// AddPet - add pet
-	AddPet(ctx context.Context, options *PetAddPetOptions) (*PetResponse, error)
-	// GetByPetID - get pet by id
-	GetByPetID(ctx context.Context, petId string, options *PetGetByPetIDOptions) (*PetResponse, error)
-}
-
-// PetClient implements the PetOperations interface.
+// PetClient contains the methods for the Pet group.
 // Don't use this type directly, use NewPetClient() instead.
 type PetClient struct {
 	con *Connection
 }
 
 // NewPetClient creates a new instance of PetClient with the specified values.
-func NewPetClient(con *Connection) PetOperations {
-	return &PetClient{con: con}
+func NewPetClient(con *Connection) PetClient {
+	return PetClient{con: con}
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client *PetClient) Pipeline() azcore.Pipeline {
+func (client PetClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // AddPet - add pet
-func (client *PetClient) AddPet(ctx context.Context, options *PetAddPetOptions) (*PetResponse, error) {
+func (client PetClient) AddPet(ctx context.Context, options *PetAddPetOptions) (*PetResponse, error) {
 	req, err := client.AddPetCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -63,7 +55,7 @@ func (client *PetClient) AddPet(ctx context.Context, options *PetAddPetOptions) 
 }
 
 // AddPetCreateRequest creates the AddPet request.
-func (client *PetClient) AddPetCreateRequest(ctx context.Context, options *PetAddPetOptions) (*azcore.Request, error) {
+func (client PetClient) AddPetCreateRequest(ctx context.Context, options *PetAddPetOptions) (*azcore.Request, error) {
 	urlPath := "/extensibleenums/pet/addPet"
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -78,13 +70,13 @@ func (client *PetClient) AddPetCreateRequest(ctx context.Context, options *PetAd
 }
 
 // AddPetHandleResponse handles the AddPet response.
-func (client *PetClient) AddPetHandleResponse(resp *azcore.Response) (*PetResponse, error) {
+func (client PetClient) AddPetHandleResponse(resp *azcore.Response) (*PetResponse, error) {
 	result := PetResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Pet)
 }
 
 // AddPetHandleError handles the AddPet error response.
-func (client *PetClient) AddPetHandleError(resp *azcore.Response) error {
+func (client PetClient) AddPetHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -96,7 +88,7 @@ func (client *PetClient) AddPetHandleError(resp *azcore.Response) error {
 }
 
 // GetByPetID - get pet by id
-func (client *PetClient) GetByPetID(ctx context.Context, petId string, options *PetGetByPetIDOptions) (*PetResponse, error) {
+func (client PetClient) GetByPetID(ctx context.Context, petId string, options *PetGetByPetIDOptions) (*PetResponse, error) {
 	req, err := client.GetByPetIDCreateRequest(ctx, petId, options)
 	if err != nil {
 		return nil, err
@@ -116,7 +108,7 @@ func (client *PetClient) GetByPetID(ctx context.Context, petId string, options *
 }
 
 // GetByPetIDCreateRequest creates the GetByPetID request.
-func (client *PetClient) GetByPetIDCreateRequest(ctx context.Context, petId string, options *PetGetByPetIDOptions) (*azcore.Request, error) {
+func (client PetClient) GetByPetIDCreateRequest(ctx context.Context, petId string, options *PetGetByPetIDOptions) (*azcore.Request, error) {
 	urlPath := "/extensibleenums/pet/{petId}"
 	urlPath = strings.ReplaceAll(urlPath, "{petId}", url.PathEscape(petId))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -129,13 +121,13 @@ func (client *PetClient) GetByPetIDCreateRequest(ctx context.Context, petId stri
 }
 
 // GetByPetIDHandleResponse handles the GetByPetID response.
-func (client *PetClient) GetByPetIDHandleResponse(resp *azcore.Response) (*PetResponse, error) {
+func (client PetClient) GetByPetIDHandleResponse(resp *azcore.Response) (*PetResponse, error) {
 	result := PetResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Pet)
 }
 
 // GetByPetIDHandleError handles the GetByPetID error response.
-func (client *PetClient) GetByPetIDHandleError(resp *azcore.Response) error {
+func (client PetClient) GetByPetIDHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)

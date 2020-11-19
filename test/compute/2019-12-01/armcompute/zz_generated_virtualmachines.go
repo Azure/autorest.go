@@ -21,92 +21,7 @@ import (
 	"time"
 )
 
-// VirtualMachinesOperations contains the methods for the VirtualMachines group.
-type VirtualMachinesOperations interface {
-	// BeginCapture - Captures the VM by copying virtual hard disks of the VM and outputs a template that can be used to create similar VMs.
-	BeginCapture(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachineCaptureParameters, options *VirtualMachinesCaptureOptions) (*VirtualMachineCaptureResultPollerResponse, error)
-	// ResumeCapture - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeCapture(token string) (VirtualMachineCaptureResultPoller, error)
-	// BeginConvertToManagedDisks - Converts virtual machine disks from blob-based to managed disks. Virtual machine must be stop-deallocated before invoking
-	// this operation.
-	// For Windows, please refer to Convert a virtual machine from unmanaged disks to managed disks. [https://docs.microsoft.com/en-us/azure/virtual-machines/windows/convert-unmanaged-to-managed-disks].
-	// For Linux, please refer to Convert a virtual machine from unmanaged disks to managed disks. [https://docs.microsoft.com/en-us/azure/virtual-machines/linux/convert-unmanaged-to-managed-disks].
-	BeginConvertToManagedDisks(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesConvertToManagedDisksOptions) (*HTTPPollerResponse, error)
-	// ResumeConvertToManagedDisks - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeConvertToManagedDisks(token string) (HTTPPoller, error)
-	// BeginCreateOrUpdate - The operation to create or update a virtual machine. Please note some properties can be set only during virtual machine creation.
-	BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachine, options *VirtualMachinesCreateOrUpdateOptions) (*VirtualMachinePollerResponse, error)
-	// ResumeCreateOrUpdate - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeCreateOrUpdate(token string) (VirtualMachinePoller, error)
-	// BeginDeallocate - Shuts down the virtual machine and releases the compute resources. You are not billed for the compute resources that this virtual machine
-	// uses.
-	BeginDeallocate(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesDeallocateOptions) (*HTTPPollerResponse, error)
-	// ResumeDeallocate - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeDeallocate(token string) (HTTPPoller, error)
-	// BeginDelete - The operation to delete a virtual machine.
-	BeginDelete(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesDeleteOptions) (*HTTPPollerResponse, error)
-	// ResumeDelete - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeDelete(token string) (HTTPPoller, error)
-	// Generalize - Sets the OS state of the virtual machine to generalized. It is recommended to sysprep the virtual machine before performing this operation.
-	// For Windows, please refer to Create a managed image of a generalized VM in Azure [https://docs.microsoft.com/en-us/azure/virtual-machines/windows/capture-image-resource].
-	// For Linux, please refer to How to create an image of a virtual machine or VHD [https://docs.microsoft.com/en-us/azure/virtual-machines/linux/capture-image].
-	Generalize(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesGeneralizeOptions) (*http.Response, error)
-	// Get - Retrieves information about the model view or the instance view of a virtual machine.
-	Get(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesGetOptions) (*VirtualMachineResponse, error)
-	// InstanceView - Retrieves information about the run-time state of a virtual machine.
-	InstanceView(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesInstanceViewOptions) (*VirtualMachineInstanceViewResponse, error)
-	// List - Lists all of the virtual machines in the specified resource group. Use the nextLink property in the response to get the next page of virtual machines.
-	List(resourceGroupName string, options *VirtualMachinesListOptions) VirtualMachineListResultPager
-	// ListAll - Lists all of the virtual machines in the specified subscription. Use the nextLink property in the response to get the next page of virtual
-	// machines.
-	ListAll(options *VirtualMachinesListAllOptions) VirtualMachineListResultPager
-	// ListAvailableSizes - Lists all available virtual machine sizes to which the specified virtual machine can be resized.
-	ListAvailableSizes(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesListAvailableSizesOptions) (*VirtualMachineSizeListResultResponse, error)
-	// ListByLocation - Gets all the virtual machines under the specified subscription for the specified location.
-	ListByLocation(location string, options *VirtualMachinesListByLocationOptions) VirtualMachineListResultPager
-	// BeginPerformMaintenance - Shuts down the virtual machine, moves it to an already updated node, and powers it back on during the self-service phase of
-	// planned maintenance.
-	BeginPerformMaintenance(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesPerformMaintenanceOptions) (*HTTPPollerResponse, error)
-	// ResumePerformMaintenance - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumePerformMaintenance(token string) (HTTPPoller, error)
-	// BeginPowerOff - The operation to power off (stop) a virtual machine. The virtual machine can be restarted with the same provisioned resources. You are
-	// still charged for this virtual machine.
-	BeginPowerOff(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesPowerOffOptions) (*HTTPPollerResponse, error)
-	// ResumePowerOff - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumePowerOff(token string) (HTTPPoller, error)
-	// BeginReapply - The operation to reapply a virtual machine's state.
-	BeginReapply(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesReapplyOptions) (*HTTPPollerResponse, error)
-	// ResumeReapply - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeReapply(token string) (HTTPPoller, error)
-	// BeginRedeploy - Shuts down the virtual machine, moves it to a new node, and powers it back on.
-	BeginRedeploy(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesRedeployOptions) (*HTTPPollerResponse, error)
-	// ResumeRedeploy - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeRedeploy(token string) (HTTPPoller, error)
-	// BeginReimage - Reimages the virtual machine which has an ephemeral OS disk back to its initial state.
-	BeginReimage(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesReimageOptions) (*HTTPPollerResponse, error)
-	// ResumeReimage - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeReimage(token string) (HTTPPoller, error)
-	// BeginRestart - The operation to restart a virtual machine.
-	BeginRestart(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesRestartOptions) (*HTTPPollerResponse, error)
-	// ResumeRestart - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeRestart(token string) (HTTPPoller, error)
-	// BeginRunCommand - Run command on the VM.
-	BeginRunCommand(ctx context.Context, resourceGroupName string, vmName string, parameters RunCommandInput, options *VirtualMachinesRunCommandOptions) (*RunCommandResultPollerResponse, error)
-	// ResumeRunCommand - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeRunCommand(token string) (RunCommandResultPoller, error)
-	// SimulateEviction - The operation to simulate the eviction of spot virtual machine. The eviction will occur within 30 minutes of calling the API
-	SimulateEviction(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesSimulateEvictionOptions) (*http.Response, error)
-	// BeginStart - The operation to start a virtual machine.
-	BeginStart(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesStartOptions) (*HTTPPollerResponse, error)
-	// ResumeStart - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeStart(token string) (HTTPPoller, error)
-	// BeginUpdate - The operation to update a virtual machine.
-	BeginUpdate(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachineUpdate, options *VirtualMachinesUpdateOptions) (*VirtualMachinePollerResponse, error)
-	// ResumeUpdate - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeUpdate(token string) (VirtualMachinePoller, error)
-}
-
-// VirtualMachinesClient implements the VirtualMachinesOperations interface.
+// VirtualMachinesClient contains the methods for the VirtualMachines group.
 // Don't use this type directly, use NewVirtualMachinesClient() instead.
 type VirtualMachinesClient struct {
 	con            *armcore.Connection
@@ -114,16 +29,17 @@ type VirtualMachinesClient struct {
 }
 
 // NewVirtualMachinesClient creates a new instance of VirtualMachinesClient with the specified values.
-func NewVirtualMachinesClient(con *armcore.Connection, subscriptionID string) VirtualMachinesOperations {
-	return &VirtualMachinesClient{con: con, subscriptionID: subscriptionID}
+func NewVirtualMachinesClient(con *armcore.Connection, subscriptionID string) VirtualMachinesClient {
+	return VirtualMachinesClient{con: con, subscriptionID: subscriptionID}
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client *VirtualMachinesClient) Pipeline() azcore.Pipeline {
+func (client VirtualMachinesClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
-func (client *VirtualMachinesClient) BeginCapture(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachineCaptureParameters, options *VirtualMachinesCaptureOptions) (*VirtualMachineCaptureResultPollerResponse, error) {
+// BeginCapture - Captures the VM by copying virtual hard disks of the VM and outputs a template that can be used to create similar VMs.
+func (client VirtualMachinesClient) BeginCapture(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachineCaptureParameters, options *VirtualMachinesCaptureOptions) (*VirtualMachineCaptureResultPollerResponse, error) {
 	resp, err := client.Capture(ctx, resourceGroupName, vmName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -146,7 +62,9 @@ func (client *VirtualMachinesClient) BeginCapture(ctx context.Context, resourceG
 	return result, nil
 }
 
-func (client *VirtualMachinesClient) ResumeCapture(token string) (VirtualMachineCaptureResultPoller, error) {
+// ResumeCapture creates a new VirtualMachineCaptureResultPoller from the specified resume token.
+// token - The value must come from a previous call to VirtualMachineCaptureResultPoller.ResumeToken().
+func (client VirtualMachinesClient) ResumeCapture(token string) (VirtualMachineCaptureResultPoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("VirtualMachinesClient.Capture", token, client.CaptureHandleError)
 	if err != nil {
 		return nil, err
@@ -158,7 +76,7 @@ func (client *VirtualMachinesClient) ResumeCapture(token string) (VirtualMachine
 }
 
 // Capture - Captures the VM by copying virtual hard disks of the VM and outputs a template that can be used to create similar VMs.
-func (client *VirtualMachinesClient) Capture(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachineCaptureParameters, options *VirtualMachinesCaptureOptions) (*azcore.Response, error) {
+func (client VirtualMachinesClient) Capture(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachineCaptureParameters, options *VirtualMachinesCaptureOptions) (*azcore.Response, error) {
 	req, err := client.CaptureCreateRequest(ctx, resourceGroupName, vmName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -174,7 +92,7 @@ func (client *VirtualMachinesClient) Capture(ctx context.Context, resourceGroupN
 }
 
 // CaptureCreateRequest creates the Capture request.
-func (client *VirtualMachinesClient) CaptureCreateRequest(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachineCaptureParameters, options *VirtualMachinesCaptureOptions) (*azcore.Request, error) {
+func (client VirtualMachinesClient) CaptureCreateRequest(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachineCaptureParameters, options *VirtualMachinesCaptureOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/capture"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{vmName}", url.PathEscape(vmName))
@@ -192,13 +110,13 @@ func (client *VirtualMachinesClient) CaptureCreateRequest(ctx context.Context, r
 }
 
 // CaptureHandleResponse handles the Capture response.
-func (client *VirtualMachinesClient) CaptureHandleResponse(resp *azcore.Response) (*VirtualMachineCaptureResultResponse, error) {
+func (client VirtualMachinesClient) CaptureHandleResponse(resp *azcore.Response) (*VirtualMachineCaptureResultResponse, error) {
 	result := VirtualMachineCaptureResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VirtualMachineCaptureResult)
 }
 
 // CaptureHandleError handles the Capture error response.
-func (client *VirtualMachinesClient) CaptureHandleError(resp *azcore.Response) error {
+func (client VirtualMachinesClient) CaptureHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -209,7 +127,11 @@ func (client *VirtualMachinesClient) CaptureHandleError(resp *azcore.Response) e
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
-func (client *VirtualMachinesClient) BeginConvertToManagedDisks(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesConvertToManagedDisksOptions) (*HTTPPollerResponse, error) {
+// BeginConvertToManagedDisks - Converts virtual machine disks from blob-based to managed disks. Virtual machine must be stop-deallocated before invoking
+// this operation.
+// For Windows, please refer to Convert a virtual machine from unmanaged disks to managed disks. [https://docs.microsoft.com/en-us/azure/virtual-machines/windows/convert-unmanaged-to-managed-disks].
+// For Linux, please refer to Convert a virtual machine from unmanaged disks to managed disks. [https://docs.microsoft.com/en-us/azure/virtual-machines/linux/convert-unmanaged-to-managed-disks].
+func (client VirtualMachinesClient) BeginConvertToManagedDisks(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesConvertToManagedDisksOptions) (*HTTPPollerResponse, error) {
 	resp, err := client.ConvertToManagedDisks(ctx, resourceGroupName, vmName, options)
 	if err != nil {
 		return nil, err
@@ -232,7 +154,9 @@ func (client *VirtualMachinesClient) BeginConvertToManagedDisks(ctx context.Cont
 	return result, nil
 }
 
-func (client *VirtualMachinesClient) ResumeConvertToManagedDisks(token string) (HTTPPoller, error) {
+// ResumeConvertToManagedDisks creates a new HTTPPoller from the specified resume token.
+// token - The value must come from a previous call to HTTPPoller.ResumeToken().
+func (client VirtualMachinesClient) ResumeConvertToManagedDisks(token string) (HTTPPoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("VirtualMachinesClient.ConvertToManagedDisks", token, client.ConvertToManagedDisksHandleError)
 	if err != nil {
 		return nil, err
@@ -247,7 +171,7 @@ func (client *VirtualMachinesClient) ResumeConvertToManagedDisks(token string) (
 // operation.
 // For Windows, please refer to Convert a virtual machine from unmanaged disks to managed disks. [https://docs.microsoft.com/en-us/azure/virtual-machines/windows/convert-unmanaged-to-managed-disks].
 // For Linux, please refer to Convert a virtual machine from unmanaged disks to managed disks. [https://docs.microsoft.com/en-us/azure/virtual-machines/linux/convert-unmanaged-to-managed-disks].
-func (client *VirtualMachinesClient) ConvertToManagedDisks(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesConvertToManagedDisksOptions) (*azcore.Response, error) {
+func (client VirtualMachinesClient) ConvertToManagedDisks(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesConvertToManagedDisksOptions) (*azcore.Response, error) {
 	req, err := client.ConvertToManagedDisksCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
 		return nil, err
@@ -263,7 +187,7 @@ func (client *VirtualMachinesClient) ConvertToManagedDisks(ctx context.Context, 
 }
 
 // ConvertToManagedDisksCreateRequest creates the ConvertToManagedDisks request.
-func (client *VirtualMachinesClient) ConvertToManagedDisksCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesConvertToManagedDisksOptions) (*azcore.Request, error) {
+func (client VirtualMachinesClient) ConvertToManagedDisksCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesConvertToManagedDisksOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/convertToManagedDisks"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{vmName}", url.PathEscape(vmName))
@@ -280,7 +204,7 @@ func (client *VirtualMachinesClient) ConvertToManagedDisksCreateRequest(ctx cont
 }
 
 // ConvertToManagedDisksHandleError handles the ConvertToManagedDisks error response.
-func (client *VirtualMachinesClient) ConvertToManagedDisksHandleError(resp *azcore.Response) error {
+func (client VirtualMachinesClient) ConvertToManagedDisksHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -291,7 +215,8 @@ func (client *VirtualMachinesClient) ConvertToManagedDisksHandleError(resp *azco
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
-func (client *VirtualMachinesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachine, options *VirtualMachinesCreateOrUpdateOptions) (*VirtualMachinePollerResponse, error) {
+// BeginCreateOrUpdate - The operation to create or update a virtual machine. Please note some properties can be set only during virtual machine creation.
+func (client VirtualMachinesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachine, options *VirtualMachinesCreateOrUpdateOptions) (*VirtualMachinePollerResponse, error) {
 	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, vmName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -314,7 +239,9 @@ func (client *VirtualMachinesClient) BeginCreateOrUpdate(ctx context.Context, re
 	return result, nil
 }
 
-func (client *VirtualMachinesClient) ResumeCreateOrUpdate(token string) (VirtualMachinePoller, error) {
+// ResumeCreateOrUpdate creates a new VirtualMachinePoller from the specified resume token.
+// token - The value must come from a previous call to VirtualMachinePoller.ResumeToken().
+func (client VirtualMachinesClient) ResumeCreateOrUpdate(token string) (VirtualMachinePoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("VirtualMachinesClient.CreateOrUpdate", token, client.CreateOrUpdateHandleError)
 	if err != nil {
 		return nil, err
@@ -326,7 +253,7 @@ func (client *VirtualMachinesClient) ResumeCreateOrUpdate(token string) (Virtual
 }
 
 // CreateOrUpdate - The operation to create or update a virtual machine. Please note some properties can be set only during virtual machine creation.
-func (client *VirtualMachinesClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachine, options *VirtualMachinesCreateOrUpdateOptions) (*azcore.Response, error) {
+func (client VirtualMachinesClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachine, options *VirtualMachinesCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, vmName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -342,7 +269,7 @@ func (client *VirtualMachinesClient) CreateOrUpdate(ctx context.Context, resourc
 }
 
 // CreateOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *VirtualMachinesClient) CreateOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachine, options *VirtualMachinesCreateOrUpdateOptions) (*azcore.Request, error) {
+func (client VirtualMachinesClient) CreateOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachine, options *VirtualMachinesCreateOrUpdateOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{vmName}", url.PathEscape(vmName))
@@ -360,13 +287,13 @@ func (client *VirtualMachinesClient) CreateOrUpdateCreateRequest(ctx context.Con
 }
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *VirtualMachinesClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*VirtualMachineResponse, error) {
+func (client VirtualMachinesClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*VirtualMachineResponse, error) {
 	result := VirtualMachineResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VirtualMachine)
 }
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *VirtualMachinesClient) CreateOrUpdateHandleError(resp *azcore.Response) error {
+func (client VirtualMachinesClient) CreateOrUpdateHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -377,7 +304,9 @@ func (client *VirtualMachinesClient) CreateOrUpdateHandleError(resp *azcore.Resp
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
-func (client *VirtualMachinesClient) BeginDeallocate(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesDeallocateOptions) (*HTTPPollerResponse, error) {
+// BeginDeallocate - Shuts down the virtual machine and releases the compute resources. You are not billed for the compute resources that this virtual machine
+// uses.
+func (client VirtualMachinesClient) BeginDeallocate(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesDeallocateOptions) (*HTTPPollerResponse, error) {
 	resp, err := client.Deallocate(ctx, resourceGroupName, vmName, options)
 	if err != nil {
 		return nil, err
@@ -400,7 +329,9 @@ func (client *VirtualMachinesClient) BeginDeallocate(ctx context.Context, resour
 	return result, nil
 }
 
-func (client *VirtualMachinesClient) ResumeDeallocate(token string) (HTTPPoller, error) {
+// ResumeDeallocate creates a new HTTPPoller from the specified resume token.
+// token - The value must come from a previous call to HTTPPoller.ResumeToken().
+func (client VirtualMachinesClient) ResumeDeallocate(token string) (HTTPPoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("VirtualMachinesClient.Deallocate", token, client.DeallocateHandleError)
 	if err != nil {
 		return nil, err
@@ -413,7 +344,7 @@ func (client *VirtualMachinesClient) ResumeDeallocate(token string) (HTTPPoller,
 
 // Deallocate - Shuts down the virtual machine and releases the compute resources. You are not billed for the compute resources that this virtual machine
 // uses.
-func (client *VirtualMachinesClient) Deallocate(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesDeallocateOptions) (*azcore.Response, error) {
+func (client VirtualMachinesClient) Deallocate(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesDeallocateOptions) (*azcore.Response, error) {
 	req, err := client.DeallocateCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
 		return nil, err
@@ -429,7 +360,7 @@ func (client *VirtualMachinesClient) Deallocate(ctx context.Context, resourceGro
 }
 
 // DeallocateCreateRequest creates the Deallocate request.
-func (client *VirtualMachinesClient) DeallocateCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesDeallocateOptions) (*azcore.Request, error) {
+func (client VirtualMachinesClient) DeallocateCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesDeallocateOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/deallocate"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{vmName}", url.PathEscape(vmName))
@@ -446,7 +377,7 @@ func (client *VirtualMachinesClient) DeallocateCreateRequest(ctx context.Context
 }
 
 // DeallocateHandleError handles the Deallocate error response.
-func (client *VirtualMachinesClient) DeallocateHandleError(resp *azcore.Response) error {
+func (client VirtualMachinesClient) DeallocateHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -457,7 +388,8 @@ func (client *VirtualMachinesClient) DeallocateHandleError(resp *azcore.Response
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
-func (client *VirtualMachinesClient) BeginDelete(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesDeleteOptions) (*HTTPPollerResponse, error) {
+// BeginDelete - The operation to delete a virtual machine.
+func (client VirtualMachinesClient) BeginDelete(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesDeleteOptions) (*HTTPPollerResponse, error) {
 	resp, err := client.Delete(ctx, resourceGroupName, vmName, options)
 	if err != nil {
 		return nil, err
@@ -480,7 +412,9 @@ func (client *VirtualMachinesClient) BeginDelete(ctx context.Context, resourceGr
 	return result, nil
 }
 
-func (client *VirtualMachinesClient) ResumeDelete(token string) (HTTPPoller, error) {
+// ResumeDelete creates a new HTTPPoller from the specified resume token.
+// token - The value must come from a previous call to HTTPPoller.ResumeToken().
+func (client VirtualMachinesClient) ResumeDelete(token string) (HTTPPoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("VirtualMachinesClient.Delete", token, client.DeleteHandleError)
 	if err != nil {
 		return nil, err
@@ -492,7 +426,7 @@ func (client *VirtualMachinesClient) ResumeDelete(token string) (HTTPPoller, err
 }
 
 // Delete - The operation to delete a virtual machine.
-func (client *VirtualMachinesClient) Delete(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesDeleteOptions) (*azcore.Response, error) {
+func (client VirtualMachinesClient) Delete(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesDeleteOptions) (*azcore.Response, error) {
 	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
 		return nil, err
@@ -508,7 +442,7 @@ func (client *VirtualMachinesClient) Delete(ctx context.Context, resourceGroupNa
 }
 
 // DeleteCreateRequest creates the Delete request.
-func (client *VirtualMachinesClient) DeleteCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesDeleteOptions) (*azcore.Request, error) {
+func (client VirtualMachinesClient) DeleteCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesDeleteOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{vmName}", url.PathEscape(vmName))
@@ -525,7 +459,7 @@ func (client *VirtualMachinesClient) DeleteCreateRequest(ctx context.Context, re
 }
 
 // DeleteHandleError handles the Delete error response.
-func (client *VirtualMachinesClient) DeleteHandleError(resp *azcore.Response) error {
+func (client VirtualMachinesClient) DeleteHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -539,7 +473,7 @@ func (client *VirtualMachinesClient) DeleteHandleError(resp *azcore.Response) er
 // Generalize - Sets the OS state of the virtual machine to generalized. It is recommended to sysprep the virtual machine before performing this operation.
 // For Windows, please refer to Create a managed image of a generalized VM in Azure [https://docs.microsoft.com/en-us/azure/virtual-machines/windows/capture-image-resource].
 // For Linux, please refer to How to create an image of a virtual machine or VHD [https://docs.microsoft.com/en-us/azure/virtual-machines/linux/capture-image].
-func (client *VirtualMachinesClient) Generalize(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesGeneralizeOptions) (*http.Response, error) {
+func (client VirtualMachinesClient) Generalize(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesGeneralizeOptions) (*http.Response, error) {
 	req, err := client.GeneralizeCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
 		return nil, err
@@ -555,7 +489,7 @@ func (client *VirtualMachinesClient) Generalize(ctx context.Context, resourceGro
 }
 
 // GeneralizeCreateRequest creates the Generalize request.
-func (client *VirtualMachinesClient) GeneralizeCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesGeneralizeOptions) (*azcore.Request, error) {
+func (client VirtualMachinesClient) GeneralizeCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesGeneralizeOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/generalize"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{vmName}", url.PathEscape(vmName))
@@ -572,7 +506,7 @@ func (client *VirtualMachinesClient) GeneralizeCreateRequest(ctx context.Context
 }
 
 // GeneralizeHandleError handles the Generalize error response.
-func (client *VirtualMachinesClient) GeneralizeHandleError(resp *azcore.Response) error {
+func (client VirtualMachinesClient) GeneralizeHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -584,7 +518,7 @@ func (client *VirtualMachinesClient) GeneralizeHandleError(resp *azcore.Response
 }
 
 // Get - Retrieves information about the model view or the instance view of a virtual machine.
-func (client *VirtualMachinesClient) Get(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesGetOptions) (*VirtualMachineResponse, error) {
+func (client VirtualMachinesClient) Get(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesGetOptions) (*VirtualMachineResponse, error) {
 	req, err := client.GetCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
 		return nil, err
@@ -604,7 +538,7 @@ func (client *VirtualMachinesClient) Get(ctx context.Context, resourceGroupName 
 }
 
 // GetCreateRequest creates the Get request.
-func (client *VirtualMachinesClient) GetCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesGetOptions) (*azcore.Request, error) {
+func (client VirtualMachinesClient) GetCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesGetOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{vmName}", url.PathEscape(vmName))
@@ -625,13 +559,13 @@ func (client *VirtualMachinesClient) GetCreateRequest(ctx context.Context, resou
 }
 
 // GetHandleResponse handles the Get response.
-func (client *VirtualMachinesClient) GetHandleResponse(resp *azcore.Response) (*VirtualMachineResponse, error) {
+func (client VirtualMachinesClient) GetHandleResponse(resp *azcore.Response) (*VirtualMachineResponse, error) {
 	result := VirtualMachineResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VirtualMachine)
 }
 
 // GetHandleError handles the Get error response.
-func (client *VirtualMachinesClient) GetHandleError(resp *azcore.Response) error {
+func (client VirtualMachinesClient) GetHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -643,7 +577,7 @@ func (client *VirtualMachinesClient) GetHandleError(resp *azcore.Response) error
 }
 
 // InstanceView - Retrieves information about the run-time state of a virtual machine.
-func (client *VirtualMachinesClient) InstanceView(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesInstanceViewOptions) (*VirtualMachineInstanceViewResponse, error) {
+func (client VirtualMachinesClient) InstanceView(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesInstanceViewOptions) (*VirtualMachineInstanceViewResponse, error) {
 	req, err := client.InstanceViewCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
 		return nil, err
@@ -663,7 +597,7 @@ func (client *VirtualMachinesClient) InstanceView(ctx context.Context, resourceG
 }
 
 // InstanceViewCreateRequest creates the InstanceView request.
-func (client *VirtualMachinesClient) InstanceViewCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesInstanceViewOptions) (*azcore.Request, error) {
+func (client VirtualMachinesClient) InstanceViewCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesInstanceViewOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/instanceView"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{vmName}", url.PathEscape(vmName))
@@ -681,13 +615,13 @@ func (client *VirtualMachinesClient) InstanceViewCreateRequest(ctx context.Conte
 }
 
 // InstanceViewHandleResponse handles the InstanceView response.
-func (client *VirtualMachinesClient) InstanceViewHandleResponse(resp *azcore.Response) (*VirtualMachineInstanceViewResponse, error) {
+func (client VirtualMachinesClient) InstanceViewHandleResponse(resp *azcore.Response) (*VirtualMachineInstanceViewResponse, error) {
 	result := VirtualMachineInstanceViewResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VirtualMachineInstanceView)
 }
 
 // InstanceViewHandleError handles the InstanceView error response.
-func (client *VirtualMachinesClient) InstanceViewHandleError(resp *azcore.Response) error {
+func (client VirtualMachinesClient) InstanceViewHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -699,7 +633,7 @@ func (client *VirtualMachinesClient) InstanceViewHandleError(resp *azcore.Respon
 }
 
 // List - Lists all of the virtual machines in the specified resource group. Use the nextLink property in the response to get the next page of virtual machines.
-func (client *VirtualMachinesClient) List(resourceGroupName string, options *VirtualMachinesListOptions) VirtualMachineListResultPager {
+func (client VirtualMachinesClient) List(resourceGroupName string, options *VirtualMachinesListOptions) VirtualMachineListResultPager {
 	return &virtualMachineListResultPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
@@ -715,7 +649,7 @@ func (client *VirtualMachinesClient) List(resourceGroupName string, options *Vir
 }
 
 // ListCreateRequest creates the List request.
-func (client *VirtualMachinesClient) ListCreateRequest(ctx context.Context, resourceGroupName string, options *VirtualMachinesListOptions) (*azcore.Request, error) {
+func (client VirtualMachinesClient) ListCreateRequest(ctx context.Context, resourceGroupName string, options *VirtualMachinesListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
@@ -732,13 +666,13 @@ func (client *VirtualMachinesClient) ListCreateRequest(ctx context.Context, reso
 }
 
 // ListHandleResponse handles the List response.
-func (client *VirtualMachinesClient) ListHandleResponse(resp *azcore.Response) (*VirtualMachineListResultResponse, error) {
+func (client VirtualMachinesClient) ListHandleResponse(resp *azcore.Response) (*VirtualMachineListResultResponse, error) {
 	result := VirtualMachineListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VirtualMachineListResult)
 }
 
 // ListHandleError handles the List error response.
-func (client *VirtualMachinesClient) ListHandleError(resp *azcore.Response) error {
+func (client VirtualMachinesClient) ListHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -751,7 +685,7 @@ func (client *VirtualMachinesClient) ListHandleError(resp *azcore.Response) erro
 
 // ListAll - Lists all of the virtual machines in the specified subscription. Use the nextLink property in the response to get the next page of virtual
 // machines.
-func (client *VirtualMachinesClient) ListAll(options *VirtualMachinesListAllOptions) VirtualMachineListResultPager {
+func (client VirtualMachinesClient) ListAll(options *VirtualMachinesListAllOptions) VirtualMachineListResultPager {
 	return &virtualMachineListResultPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
@@ -767,7 +701,7 @@ func (client *VirtualMachinesClient) ListAll(options *VirtualMachinesListAllOpti
 }
 
 // ListAllCreateRequest creates the ListAll request.
-func (client *VirtualMachinesClient) ListAllCreateRequest(ctx context.Context, options *VirtualMachinesListAllOptions) (*azcore.Request, error) {
+func (client VirtualMachinesClient) ListAllCreateRequest(ctx context.Context, options *VirtualMachinesListAllOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/virtualMachines"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -786,13 +720,13 @@ func (client *VirtualMachinesClient) ListAllCreateRequest(ctx context.Context, o
 }
 
 // ListAllHandleResponse handles the ListAll response.
-func (client *VirtualMachinesClient) ListAllHandleResponse(resp *azcore.Response) (*VirtualMachineListResultResponse, error) {
+func (client VirtualMachinesClient) ListAllHandleResponse(resp *azcore.Response) (*VirtualMachineListResultResponse, error) {
 	result := VirtualMachineListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VirtualMachineListResult)
 }
 
 // ListAllHandleError handles the ListAll error response.
-func (client *VirtualMachinesClient) ListAllHandleError(resp *azcore.Response) error {
+func (client VirtualMachinesClient) ListAllHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -804,7 +738,7 @@ func (client *VirtualMachinesClient) ListAllHandleError(resp *azcore.Response) e
 }
 
 // ListAvailableSizes - Lists all available virtual machine sizes to which the specified virtual machine can be resized.
-func (client *VirtualMachinesClient) ListAvailableSizes(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesListAvailableSizesOptions) (*VirtualMachineSizeListResultResponse, error) {
+func (client VirtualMachinesClient) ListAvailableSizes(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesListAvailableSizesOptions) (*VirtualMachineSizeListResultResponse, error) {
 	req, err := client.ListAvailableSizesCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
 		return nil, err
@@ -824,7 +758,7 @@ func (client *VirtualMachinesClient) ListAvailableSizes(ctx context.Context, res
 }
 
 // ListAvailableSizesCreateRequest creates the ListAvailableSizes request.
-func (client *VirtualMachinesClient) ListAvailableSizesCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesListAvailableSizesOptions) (*azcore.Request, error) {
+func (client VirtualMachinesClient) ListAvailableSizesCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesListAvailableSizesOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/vmSizes"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{vmName}", url.PathEscape(vmName))
@@ -842,13 +776,13 @@ func (client *VirtualMachinesClient) ListAvailableSizesCreateRequest(ctx context
 }
 
 // ListAvailableSizesHandleResponse handles the ListAvailableSizes response.
-func (client *VirtualMachinesClient) ListAvailableSizesHandleResponse(resp *azcore.Response) (*VirtualMachineSizeListResultResponse, error) {
+func (client VirtualMachinesClient) ListAvailableSizesHandleResponse(resp *azcore.Response) (*VirtualMachineSizeListResultResponse, error) {
 	result := VirtualMachineSizeListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VirtualMachineSizeListResult)
 }
 
 // ListAvailableSizesHandleError handles the ListAvailableSizes error response.
-func (client *VirtualMachinesClient) ListAvailableSizesHandleError(resp *azcore.Response) error {
+func (client VirtualMachinesClient) ListAvailableSizesHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -860,7 +794,7 @@ func (client *VirtualMachinesClient) ListAvailableSizesHandleError(resp *azcore.
 }
 
 // ListByLocation - Gets all the virtual machines under the specified subscription for the specified location.
-func (client *VirtualMachinesClient) ListByLocation(location string, options *VirtualMachinesListByLocationOptions) VirtualMachineListResultPager {
+func (client VirtualMachinesClient) ListByLocation(location string, options *VirtualMachinesListByLocationOptions) VirtualMachineListResultPager {
 	return &virtualMachineListResultPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
@@ -876,7 +810,7 @@ func (client *VirtualMachinesClient) ListByLocation(location string, options *Vi
 }
 
 // ListByLocationCreateRequest creates the ListByLocation request.
-func (client *VirtualMachinesClient) ListByLocationCreateRequest(ctx context.Context, location string, options *VirtualMachinesListByLocationOptions) (*azcore.Request, error) {
+func (client VirtualMachinesClient) ListByLocationCreateRequest(ctx context.Context, location string, options *VirtualMachinesListByLocationOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/virtualMachines"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
@@ -893,13 +827,13 @@ func (client *VirtualMachinesClient) ListByLocationCreateRequest(ctx context.Con
 }
 
 // ListByLocationHandleResponse handles the ListByLocation response.
-func (client *VirtualMachinesClient) ListByLocationHandleResponse(resp *azcore.Response) (*VirtualMachineListResultResponse, error) {
+func (client VirtualMachinesClient) ListByLocationHandleResponse(resp *azcore.Response) (*VirtualMachineListResultResponse, error) {
 	result := VirtualMachineListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VirtualMachineListResult)
 }
 
 // ListByLocationHandleError handles the ListByLocation error response.
-func (client *VirtualMachinesClient) ListByLocationHandleError(resp *azcore.Response) error {
+func (client VirtualMachinesClient) ListByLocationHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -910,7 +844,9 @@ func (client *VirtualMachinesClient) ListByLocationHandleError(resp *azcore.Resp
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
-func (client *VirtualMachinesClient) BeginPerformMaintenance(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesPerformMaintenanceOptions) (*HTTPPollerResponse, error) {
+// BeginPerformMaintenance - Shuts down the virtual machine, moves it to an already updated node, and powers it back on during the self-service phase of
+// planned maintenance.
+func (client VirtualMachinesClient) BeginPerformMaintenance(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesPerformMaintenanceOptions) (*HTTPPollerResponse, error) {
 	resp, err := client.PerformMaintenance(ctx, resourceGroupName, vmName, options)
 	if err != nil {
 		return nil, err
@@ -933,7 +869,9 @@ func (client *VirtualMachinesClient) BeginPerformMaintenance(ctx context.Context
 	return result, nil
 }
 
-func (client *VirtualMachinesClient) ResumePerformMaintenance(token string) (HTTPPoller, error) {
+// ResumePerformMaintenance creates a new HTTPPoller from the specified resume token.
+// token - The value must come from a previous call to HTTPPoller.ResumeToken().
+func (client VirtualMachinesClient) ResumePerformMaintenance(token string) (HTTPPoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("VirtualMachinesClient.PerformMaintenance", token, client.PerformMaintenanceHandleError)
 	if err != nil {
 		return nil, err
@@ -946,7 +884,7 @@ func (client *VirtualMachinesClient) ResumePerformMaintenance(token string) (HTT
 
 // PerformMaintenance - Shuts down the virtual machine, moves it to an already updated node, and powers it back on during the self-service phase of planned
 // maintenance.
-func (client *VirtualMachinesClient) PerformMaintenance(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesPerformMaintenanceOptions) (*azcore.Response, error) {
+func (client VirtualMachinesClient) PerformMaintenance(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesPerformMaintenanceOptions) (*azcore.Response, error) {
 	req, err := client.PerformMaintenanceCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
 		return nil, err
@@ -962,7 +900,7 @@ func (client *VirtualMachinesClient) PerformMaintenance(ctx context.Context, res
 }
 
 // PerformMaintenanceCreateRequest creates the PerformMaintenance request.
-func (client *VirtualMachinesClient) PerformMaintenanceCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesPerformMaintenanceOptions) (*azcore.Request, error) {
+func (client VirtualMachinesClient) PerformMaintenanceCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesPerformMaintenanceOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/performMaintenance"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{vmName}", url.PathEscape(vmName))
@@ -979,7 +917,7 @@ func (client *VirtualMachinesClient) PerformMaintenanceCreateRequest(ctx context
 }
 
 // PerformMaintenanceHandleError handles the PerformMaintenance error response.
-func (client *VirtualMachinesClient) PerformMaintenanceHandleError(resp *azcore.Response) error {
+func (client VirtualMachinesClient) PerformMaintenanceHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -990,7 +928,9 @@ func (client *VirtualMachinesClient) PerformMaintenanceHandleError(resp *azcore.
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
-func (client *VirtualMachinesClient) BeginPowerOff(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesPowerOffOptions) (*HTTPPollerResponse, error) {
+// BeginPowerOff - The operation to power off (stop) a virtual machine. The virtual machine can be restarted with the same provisioned resources. You are
+// still charged for this virtual machine.
+func (client VirtualMachinesClient) BeginPowerOff(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesPowerOffOptions) (*HTTPPollerResponse, error) {
 	resp, err := client.PowerOff(ctx, resourceGroupName, vmName, options)
 	if err != nil {
 		return nil, err
@@ -1013,7 +953,9 @@ func (client *VirtualMachinesClient) BeginPowerOff(ctx context.Context, resource
 	return result, nil
 }
 
-func (client *VirtualMachinesClient) ResumePowerOff(token string) (HTTPPoller, error) {
+// ResumePowerOff creates a new HTTPPoller from the specified resume token.
+// token - The value must come from a previous call to HTTPPoller.ResumeToken().
+func (client VirtualMachinesClient) ResumePowerOff(token string) (HTTPPoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("VirtualMachinesClient.PowerOff", token, client.PowerOffHandleError)
 	if err != nil {
 		return nil, err
@@ -1026,7 +968,7 @@ func (client *VirtualMachinesClient) ResumePowerOff(token string) (HTTPPoller, e
 
 // PowerOff - The operation to power off (stop) a virtual machine. The virtual machine can be restarted with the same provisioned resources. You are still
 // charged for this virtual machine.
-func (client *VirtualMachinesClient) PowerOff(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesPowerOffOptions) (*azcore.Response, error) {
+func (client VirtualMachinesClient) PowerOff(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesPowerOffOptions) (*azcore.Response, error) {
 	req, err := client.PowerOffCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
 		return nil, err
@@ -1042,7 +984,7 @@ func (client *VirtualMachinesClient) PowerOff(ctx context.Context, resourceGroup
 }
 
 // PowerOffCreateRequest creates the PowerOff request.
-func (client *VirtualMachinesClient) PowerOffCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesPowerOffOptions) (*azcore.Request, error) {
+func (client VirtualMachinesClient) PowerOffCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesPowerOffOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/powerOff"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{vmName}", url.PathEscape(vmName))
@@ -1062,7 +1004,7 @@ func (client *VirtualMachinesClient) PowerOffCreateRequest(ctx context.Context, 
 }
 
 // PowerOffHandleError handles the PowerOff error response.
-func (client *VirtualMachinesClient) PowerOffHandleError(resp *azcore.Response) error {
+func (client VirtualMachinesClient) PowerOffHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -1073,7 +1015,8 @@ func (client *VirtualMachinesClient) PowerOffHandleError(resp *azcore.Response) 
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
-func (client *VirtualMachinesClient) BeginReapply(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesReapplyOptions) (*HTTPPollerResponse, error) {
+// BeginReapply - The operation to reapply a virtual machine's state.
+func (client VirtualMachinesClient) BeginReapply(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesReapplyOptions) (*HTTPPollerResponse, error) {
 	resp, err := client.Reapply(ctx, resourceGroupName, vmName, options)
 	if err != nil {
 		return nil, err
@@ -1096,7 +1039,9 @@ func (client *VirtualMachinesClient) BeginReapply(ctx context.Context, resourceG
 	return result, nil
 }
 
-func (client *VirtualMachinesClient) ResumeReapply(token string) (HTTPPoller, error) {
+// ResumeReapply creates a new HTTPPoller from the specified resume token.
+// token - The value must come from a previous call to HTTPPoller.ResumeToken().
+func (client VirtualMachinesClient) ResumeReapply(token string) (HTTPPoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("VirtualMachinesClient.Reapply", token, client.ReapplyHandleError)
 	if err != nil {
 		return nil, err
@@ -1108,7 +1053,7 @@ func (client *VirtualMachinesClient) ResumeReapply(token string) (HTTPPoller, er
 }
 
 // Reapply - The operation to reapply a virtual machine's state.
-func (client *VirtualMachinesClient) Reapply(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesReapplyOptions) (*azcore.Response, error) {
+func (client VirtualMachinesClient) Reapply(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesReapplyOptions) (*azcore.Response, error) {
 	req, err := client.ReapplyCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
 		return nil, err
@@ -1124,7 +1069,7 @@ func (client *VirtualMachinesClient) Reapply(ctx context.Context, resourceGroupN
 }
 
 // ReapplyCreateRequest creates the Reapply request.
-func (client *VirtualMachinesClient) ReapplyCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesReapplyOptions) (*azcore.Request, error) {
+func (client VirtualMachinesClient) ReapplyCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesReapplyOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/reapply"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{vmName}", url.PathEscape(vmName))
@@ -1142,7 +1087,7 @@ func (client *VirtualMachinesClient) ReapplyCreateRequest(ctx context.Context, r
 }
 
 // ReapplyHandleError handles the Reapply error response.
-func (client *VirtualMachinesClient) ReapplyHandleError(resp *azcore.Response) error {
+func (client VirtualMachinesClient) ReapplyHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1150,7 +1095,8 @@ func (client *VirtualMachinesClient) ReapplyHandleError(resp *azcore.Response) e
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-func (client *VirtualMachinesClient) BeginRedeploy(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesRedeployOptions) (*HTTPPollerResponse, error) {
+// BeginRedeploy - Shuts down the virtual machine, moves it to a new node, and powers it back on.
+func (client VirtualMachinesClient) BeginRedeploy(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesRedeployOptions) (*HTTPPollerResponse, error) {
 	resp, err := client.Redeploy(ctx, resourceGroupName, vmName, options)
 	if err != nil {
 		return nil, err
@@ -1173,7 +1119,9 @@ func (client *VirtualMachinesClient) BeginRedeploy(ctx context.Context, resource
 	return result, nil
 }
 
-func (client *VirtualMachinesClient) ResumeRedeploy(token string) (HTTPPoller, error) {
+// ResumeRedeploy creates a new HTTPPoller from the specified resume token.
+// token - The value must come from a previous call to HTTPPoller.ResumeToken().
+func (client VirtualMachinesClient) ResumeRedeploy(token string) (HTTPPoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("VirtualMachinesClient.Redeploy", token, client.RedeployHandleError)
 	if err != nil {
 		return nil, err
@@ -1185,7 +1133,7 @@ func (client *VirtualMachinesClient) ResumeRedeploy(token string) (HTTPPoller, e
 }
 
 // Redeploy - Shuts down the virtual machine, moves it to a new node, and powers it back on.
-func (client *VirtualMachinesClient) Redeploy(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesRedeployOptions) (*azcore.Response, error) {
+func (client VirtualMachinesClient) Redeploy(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesRedeployOptions) (*azcore.Response, error) {
 	req, err := client.RedeployCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
 		return nil, err
@@ -1201,7 +1149,7 @@ func (client *VirtualMachinesClient) Redeploy(ctx context.Context, resourceGroup
 }
 
 // RedeployCreateRequest creates the Redeploy request.
-func (client *VirtualMachinesClient) RedeployCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesRedeployOptions) (*azcore.Request, error) {
+func (client VirtualMachinesClient) RedeployCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesRedeployOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/redeploy"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{vmName}", url.PathEscape(vmName))
@@ -1218,7 +1166,7 @@ func (client *VirtualMachinesClient) RedeployCreateRequest(ctx context.Context, 
 }
 
 // RedeployHandleError handles the Redeploy error response.
-func (client *VirtualMachinesClient) RedeployHandleError(resp *azcore.Response) error {
+func (client VirtualMachinesClient) RedeployHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -1229,7 +1177,8 @@ func (client *VirtualMachinesClient) RedeployHandleError(resp *azcore.Response) 
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
-func (client *VirtualMachinesClient) BeginReimage(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesReimageOptions) (*HTTPPollerResponse, error) {
+// BeginReimage - Reimages the virtual machine which has an ephemeral OS disk back to its initial state.
+func (client VirtualMachinesClient) BeginReimage(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesReimageOptions) (*HTTPPollerResponse, error) {
 	resp, err := client.Reimage(ctx, resourceGroupName, vmName, options)
 	if err != nil {
 		return nil, err
@@ -1252,7 +1201,9 @@ func (client *VirtualMachinesClient) BeginReimage(ctx context.Context, resourceG
 	return result, nil
 }
 
-func (client *VirtualMachinesClient) ResumeReimage(token string) (HTTPPoller, error) {
+// ResumeReimage creates a new HTTPPoller from the specified resume token.
+// token - The value must come from a previous call to HTTPPoller.ResumeToken().
+func (client VirtualMachinesClient) ResumeReimage(token string) (HTTPPoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("VirtualMachinesClient.Reimage", token, client.ReimageHandleError)
 	if err != nil {
 		return nil, err
@@ -1264,7 +1215,7 @@ func (client *VirtualMachinesClient) ResumeReimage(token string) (HTTPPoller, er
 }
 
 // Reimage - Reimages the virtual machine which has an ephemeral OS disk back to its initial state.
-func (client *VirtualMachinesClient) Reimage(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesReimageOptions) (*azcore.Response, error) {
+func (client VirtualMachinesClient) Reimage(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesReimageOptions) (*azcore.Response, error) {
 	req, err := client.ReimageCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
 		return nil, err
@@ -1280,7 +1231,7 @@ func (client *VirtualMachinesClient) Reimage(ctx context.Context, resourceGroupN
 }
 
 // ReimageCreateRequest creates the Reimage request.
-func (client *VirtualMachinesClient) ReimageCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesReimageOptions) (*azcore.Request, error) {
+func (client VirtualMachinesClient) ReimageCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesReimageOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/reimage"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{vmName}", url.PathEscape(vmName))
@@ -1300,7 +1251,7 @@ func (client *VirtualMachinesClient) ReimageCreateRequest(ctx context.Context, r
 }
 
 // ReimageHandleError handles the Reimage error response.
-func (client *VirtualMachinesClient) ReimageHandleError(resp *azcore.Response) error {
+func (client VirtualMachinesClient) ReimageHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -1311,7 +1262,8 @@ func (client *VirtualMachinesClient) ReimageHandleError(resp *azcore.Response) e
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
-func (client *VirtualMachinesClient) BeginRestart(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesRestartOptions) (*HTTPPollerResponse, error) {
+// BeginRestart - The operation to restart a virtual machine.
+func (client VirtualMachinesClient) BeginRestart(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesRestartOptions) (*HTTPPollerResponse, error) {
 	resp, err := client.Restart(ctx, resourceGroupName, vmName, options)
 	if err != nil {
 		return nil, err
@@ -1334,7 +1286,9 @@ func (client *VirtualMachinesClient) BeginRestart(ctx context.Context, resourceG
 	return result, nil
 }
 
-func (client *VirtualMachinesClient) ResumeRestart(token string) (HTTPPoller, error) {
+// ResumeRestart creates a new HTTPPoller from the specified resume token.
+// token - The value must come from a previous call to HTTPPoller.ResumeToken().
+func (client VirtualMachinesClient) ResumeRestart(token string) (HTTPPoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("VirtualMachinesClient.Restart", token, client.RestartHandleError)
 	if err != nil {
 		return nil, err
@@ -1346,7 +1300,7 @@ func (client *VirtualMachinesClient) ResumeRestart(token string) (HTTPPoller, er
 }
 
 // Restart - The operation to restart a virtual machine.
-func (client *VirtualMachinesClient) Restart(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesRestartOptions) (*azcore.Response, error) {
+func (client VirtualMachinesClient) Restart(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesRestartOptions) (*azcore.Response, error) {
 	req, err := client.RestartCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
 		return nil, err
@@ -1362,7 +1316,7 @@ func (client *VirtualMachinesClient) Restart(ctx context.Context, resourceGroupN
 }
 
 // RestartCreateRequest creates the Restart request.
-func (client *VirtualMachinesClient) RestartCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesRestartOptions) (*azcore.Request, error) {
+func (client VirtualMachinesClient) RestartCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesRestartOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/restart"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{vmName}", url.PathEscape(vmName))
@@ -1379,7 +1333,7 @@ func (client *VirtualMachinesClient) RestartCreateRequest(ctx context.Context, r
 }
 
 // RestartHandleError handles the Restart error response.
-func (client *VirtualMachinesClient) RestartHandleError(resp *azcore.Response) error {
+func (client VirtualMachinesClient) RestartHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -1390,7 +1344,8 @@ func (client *VirtualMachinesClient) RestartHandleError(resp *azcore.Response) e
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
-func (client *VirtualMachinesClient) BeginRunCommand(ctx context.Context, resourceGroupName string, vmName string, parameters RunCommandInput, options *VirtualMachinesRunCommandOptions) (*RunCommandResultPollerResponse, error) {
+// BeginRunCommand - Run command on the VM.
+func (client VirtualMachinesClient) BeginRunCommand(ctx context.Context, resourceGroupName string, vmName string, parameters RunCommandInput, options *VirtualMachinesRunCommandOptions) (*RunCommandResultPollerResponse, error) {
 	resp, err := client.RunCommand(ctx, resourceGroupName, vmName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -1413,7 +1368,9 @@ func (client *VirtualMachinesClient) BeginRunCommand(ctx context.Context, resour
 	return result, nil
 }
 
-func (client *VirtualMachinesClient) ResumeRunCommand(token string) (RunCommandResultPoller, error) {
+// ResumeRunCommand creates a new RunCommandResultPoller from the specified resume token.
+// token - The value must come from a previous call to RunCommandResultPoller.ResumeToken().
+func (client VirtualMachinesClient) ResumeRunCommand(token string) (RunCommandResultPoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("VirtualMachinesClient.RunCommand", token, client.RunCommandHandleError)
 	if err != nil {
 		return nil, err
@@ -1425,7 +1382,7 @@ func (client *VirtualMachinesClient) ResumeRunCommand(token string) (RunCommandR
 }
 
 // RunCommand - Run command on the VM.
-func (client *VirtualMachinesClient) RunCommand(ctx context.Context, resourceGroupName string, vmName string, parameters RunCommandInput, options *VirtualMachinesRunCommandOptions) (*azcore.Response, error) {
+func (client VirtualMachinesClient) RunCommand(ctx context.Context, resourceGroupName string, vmName string, parameters RunCommandInput, options *VirtualMachinesRunCommandOptions) (*azcore.Response, error) {
 	req, err := client.RunCommandCreateRequest(ctx, resourceGroupName, vmName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -1441,7 +1398,7 @@ func (client *VirtualMachinesClient) RunCommand(ctx context.Context, resourceGro
 }
 
 // RunCommandCreateRequest creates the RunCommand request.
-func (client *VirtualMachinesClient) RunCommandCreateRequest(ctx context.Context, resourceGroupName string, vmName string, parameters RunCommandInput, options *VirtualMachinesRunCommandOptions) (*azcore.Request, error) {
+func (client VirtualMachinesClient) RunCommandCreateRequest(ctx context.Context, resourceGroupName string, vmName string, parameters RunCommandInput, options *VirtualMachinesRunCommandOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/runCommand"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{vmName}", url.PathEscape(vmName))
@@ -1459,13 +1416,13 @@ func (client *VirtualMachinesClient) RunCommandCreateRequest(ctx context.Context
 }
 
 // RunCommandHandleResponse handles the RunCommand response.
-func (client *VirtualMachinesClient) RunCommandHandleResponse(resp *azcore.Response) (*RunCommandResultResponse, error) {
+func (client VirtualMachinesClient) RunCommandHandleResponse(resp *azcore.Response) (*RunCommandResultResponse, error) {
 	result := RunCommandResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.RunCommandResult)
 }
 
 // RunCommandHandleError handles the RunCommand error response.
-func (client *VirtualMachinesClient) RunCommandHandleError(resp *azcore.Response) error {
+func (client VirtualMachinesClient) RunCommandHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -1477,7 +1434,7 @@ func (client *VirtualMachinesClient) RunCommandHandleError(resp *azcore.Response
 }
 
 // SimulateEviction - The operation to simulate the eviction of spot virtual machine. The eviction will occur within 30 minutes of calling the API
-func (client *VirtualMachinesClient) SimulateEviction(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesSimulateEvictionOptions) (*http.Response, error) {
+func (client VirtualMachinesClient) SimulateEviction(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesSimulateEvictionOptions) (*http.Response, error) {
 	req, err := client.SimulateEvictionCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
 		return nil, err
@@ -1493,7 +1450,7 @@ func (client *VirtualMachinesClient) SimulateEviction(ctx context.Context, resou
 }
 
 // SimulateEvictionCreateRequest creates the SimulateEviction request.
-func (client *VirtualMachinesClient) SimulateEvictionCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesSimulateEvictionOptions) (*azcore.Request, error) {
+func (client VirtualMachinesClient) SimulateEvictionCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesSimulateEvictionOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/simulateEviction"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{vmName}", url.PathEscape(vmName))
@@ -1510,7 +1467,7 @@ func (client *VirtualMachinesClient) SimulateEvictionCreateRequest(ctx context.C
 }
 
 // SimulateEvictionHandleError handles the SimulateEviction error response.
-func (client *VirtualMachinesClient) SimulateEvictionHandleError(resp *azcore.Response) error {
+func (client VirtualMachinesClient) SimulateEvictionHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -1521,7 +1478,8 @@ func (client *VirtualMachinesClient) SimulateEvictionHandleError(resp *azcore.Re
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
-func (client *VirtualMachinesClient) BeginStart(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesStartOptions) (*HTTPPollerResponse, error) {
+// BeginStart - The operation to start a virtual machine.
+func (client VirtualMachinesClient) BeginStart(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesStartOptions) (*HTTPPollerResponse, error) {
 	resp, err := client.Start(ctx, resourceGroupName, vmName, options)
 	if err != nil {
 		return nil, err
@@ -1544,7 +1502,9 @@ func (client *VirtualMachinesClient) BeginStart(ctx context.Context, resourceGro
 	return result, nil
 }
 
-func (client *VirtualMachinesClient) ResumeStart(token string) (HTTPPoller, error) {
+// ResumeStart creates a new HTTPPoller from the specified resume token.
+// token - The value must come from a previous call to HTTPPoller.ResumeToken().
+func (client VirtualMachinesClient) ResumeStart(token string) (HTTPPoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("VirtualMachinesClient.Start", token, client.StartHandleError)
 	if err != nil {
 		return nil, err
@@ -1556,7 +1516,7 @@ func (client *VirtualMachinesClient) ResumeStart(token string) (HTTPPoller, erro
 }
 
 // Start - The operation to start a virtual machine.
-func (client *VirtualMachinesClient) Start(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesStartOptions) (*azcore.Response, error) {
+func (client VirtualMachinesClient) Start(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesStartOptions) (*azcore.Response, error) {
 	req, err := client.StartCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
 		return nil, err
@@ -1572,7 +1532,7 @@ func (client *VirtualMachinesClient) Start(ctx context.Context, resourceGroupNam
 }
 
 // StartCreateRequest creates the Start request.
-func (client *VirtualMachinesClient) StartCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesStartOptions) (*azcore.Request, error) {
+func (client VirtualMachinesClient) StartCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesStartOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/start"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{vmName}", url.PathEscape(vmName))
@@ -1589,7 +1549,7 @@ func (client *VirtualMachinesClient) StartCreateRequest(ctx context.Context, res
 }
 
 // StartHandleError handles the Start error response.
-func (client *VirtualMachinesClient) StartHandleError(resp *azcore.Response) error {
+func (client VirtualMachinesClient) StartHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -1600,7 +1560,8 @@ func (client *VirtualMachinesClient) StartHandleError(resp *azcore.Response) err
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
-func (client *VirtualMachinesClient) BeginUpdate(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachineUpdate, options *VirtualMachinesUpdateOptions) (*VirtualMachinePollerResponse, error) {
+// BeginUpdate - The operation to update a virtual machine.
+func (client VirtualMachinesClient) BeginUpdate(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachineUpdate, options *VirtualMachinesUpdateOptions) (*VirtualMachinePollerResponse, error) {
 	resp, err := client.Update(ctx, resourceGroupName, vmName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -1623,7 +1584,9 @@ func (client *VirtualMachinesClient) BeginUpdate(ctx context.Context, resourceGr
 	return result, nil
 }
 
-func (client *VirtualMachinesClient) ResumeUpdate(token string) (VirtualMachinePoller, error) {
+// ResumeUpdate creates a new VirtualMachinePoller from the specified resume token.
+// token - The value must come from a previous call to VirtualMachinePoller.ResumeToken().
+func (client VirtualMachinesClient) ResumeUpdate(token string) (VirtualMachinePoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("VirtualMachinesClient.Update", token, client.UpdateHandleError)
 	if err != nil {
 		return nil, err
@@ -1635,7 +1598,7 @@ func (client *VirtualMachinesClient) ResumeUpdate(token string) (VirtualMachineP
 }
 
 // Update - The operation to update a virtual machine.
-func (client *VirtualMachinesClient) Update(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachineUpdate, options *VirtualMachinesUpdateOptions) (*azcore.Response, error) {
+func (client VirtualMachinesClient) Update(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachineUpdate, options *VirtualMachinesUpdateOptions) (*azcore.Response, error) {
 	req, err := client.UpdateCreateRequest(ctx, resourceGroupName, vmName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -1651,7 +1614,7 @@ func (client *VirtualMachinesClient) Update(ctx context.Context, resourceGroupNa
 }
 
 // UpdateCreateRequest creates the Update request.
-func (client *VirtualMachinesClient) UpdateCreateRequest(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachineUpdate, options *VirtualMachinesUpdateOptions) (*azcore.Request, error) {
+func (client VirtualMachinesClient) UpdateCreateRequest(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachineUpdate, options *VirtualMachinesUpdateOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{vmName}", url.PathEscape(vmName))
@@ -1669,13 +1632,13 @@ func (client *VirtualMachinesClient) UpdateCreateRequest(ctx context.Context, re
 }
 
 // UpdateHandleResponse handles the Update response.
-func (client *VirtualMachinesClient) UpdateHandleResponse(resp *azcore.Response) (*VirtualMachineResponse, error) {
+func (client VirtualMachinesClient) UpdateHandleResponse(resp *azcore.Response) (*VirtualMachineResponse, error) {
 	result := VirtualMachineResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VirtualMachine)
 }
 
 // UpdateHandleError handles the Update error response.
-func (client *VirtualMachinesClient) UpdateHandleError(resp *azcore.Response) error {
+func (client VirtualMachinesClient) UpdateHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)

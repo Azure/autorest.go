@@ -17,50 +17,7 @@ import (
 	"time"
 )
 
-// PrivateLinkServicesOperations contains the methods for the PrivateLinkServices group.
-type PrivateLinkServicesOperations interface {
-	// BeginCheckPrivateLinkServiceVisibility - Checks whether the subscription is visible to private link service.
-	BeginCheckPrivateLinkServiceVisibility(ctx context.Context, location string, parameters CheckPrivateLinkServiceVisibilityRequest, options *PrivateLinkServicesCheckPrivateLinkServiceVisibilityOptions) (*PrivateLinkServiceVisibilityPollerResponse, error)
-	// ResumeCheckPrivateLinkServiceVisibility - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeCheckPrivateLinkServiceVisibility(token string) (PrivateLinkServiceVisibilityPoller, error)
-	// BeginCheckPrivateLinkServiceVisibilityByResourceGroup - Checks whether the subscription is visible to private link service in the specified resource
-	// group.
-	BeginCheckPrivateLinkServiceVisibilityByResourceGroup(ctx context.Context, location string, resourceGroupName string, parameters CheckPrivateLinkServiceVisibilityRequest, options *PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupOptions) (*PrivateLinkServiceVisibilityPollerResponse, error)
-	// ResumeCheckPrivateLinkServiceVisibilityByResourceGroup - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeCheckPrivateLinkServiceVisibilityByResourceGroup(token string) (PrivateLinkServiceVisibilityPoller, error)
-	// BeginCreateOrUpdate - Creates or updates an private link service in the specified resource group.
-	BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, serviceName string, parameters PrivateLinkService, options *PrivateLinkServicesCreateOrUpdateOptions) (*PrivateLinkServicePollerResponse, error)
-	// ResumeCreateOrUpdate - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeCreateOrUpdate(token string) (PrivateLinkServicePoller, error)
-	// BeginDelete - Deletes the specified private link service.
-	BeginDelete(ctx context.Context, resourceGroupName string, serviceName string, options *PrivateLinkServicesDeleteOptions) (*HTTPPollerResponse, error)
-	// ResumeDelete - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeDelete(token string) (HTTPPoller, error)
-	// BeginDeletePrivateEndpointConnection - Delete private end point connection for a private link service in a subscription.
-	BeginDeletePrivateEndpointConnection(ctx context.Context, resourceGroupName string, serviceName string, peConnectionName string, options *PrivateLinkServicesDeletePrivateEndpointConnectionOptions) (*HTTPPollerResponse, error)
-	// ResumeDeletePrivateEndpointConnection - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeDeletePrivateEndpointConnection(token string) (HTTPPoller, error)
-	// Get - Gets the specified private link service by resource group.
-	Get(ctx context.Context, resourceGroupName string, serviceName string, options *PrivateLinkServicesGetOptions) (*PrivateLinkServiceResponse, error)
-	// GetPrivateEndpointConnection - Get the specific private end point connection by specific private link service in the resource group.
-	GetPrivateEndpointConnection(ctx context.Context, resourceGroupName string, serviceName string, peConnectionName string, options *PrivateLinkServicesGetPrivateEndpointConnectionOptions) (*PrivateEndpointConnectionResponse, error)
-	// List - Gets all private link services in a resource group.
-	List(resourceGroupName string, options *PrivateLinkServicesListOptions) PrivateLinkServiceListResultPager
-	// ListAutoApprovedPrivateLinkServices - Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved in this
-	// subscription in this region.
-	ListAutoApprovedPrivateLinkServices(location string, options *PrivateLinkServicesListAutoApprovedPrivateLinkServicesOptions) AutoApprovedPrivateLinkServicesResultPager
-	// ListAutoApprovedPrivateLinkServicesByResourceGroup - Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved
-	// in this subscription in this region.
-	ListAutoApprovedPrivateLinkServicesByResourceGroup(location string, resourceGroupName string, options *PrivateLinkServicesListAutoApprovedPrivateLinkServicesByResourceGroupOptions) AutoApprovedPrivateLinkServicesResultPager
-	// ListBySubscription - Gets all private link service in a subscription.
-	ListBySubscription(options *PrivateLinkServicesListBySubscriptionOptions) PrivateLinkServiceListResultPager
-	// ListPrivateEndpointConnections - Gets all private end point connections for a specific private link service.
-	ListPrivateEndpointConnections(resourceGroupName string, serviceName string, options *PrivateLinkServicesListPrivateEndpointConnectionsOptions) PrivateEndpointConnectionListResultPager
-	// UpdatePrivateEndpointConnection - Approve or reject private end point connection for a private link service in a subscription.
-	UpdatePrivateEndpointConnection(ctx context.Context, resourceGroupName string, serviceName string, peConnectionName string, parameters PrivateEndpointConnection, options *PrivateLinkServicesUpdatePrivateEndpointConnectionOptions) (*PrivateEndpointConnectionResponse, error)
-}
-
-// PrivateLinkServicesClient implements the PrivateLinkServicesOperations interface.
+// PrivateLinkServicesClient contains the methods for the PrivateLinkServices group.
 // Don't use this type directly, use NewPrivateLinkServicesClient() instead.
 type PrivateLinkServicesClient struct {
 	con            *armcore.Connection
@@ -68,16 +25,17 @@ type PrivateLinkServicesClient struct {
 }
 
 // NewPrivateLinkServicesClient creates a new instance of PrivateLinkServicesClient with the specified values.
-func NewPrivateLinkServicesClient(con *armcore.Connection, subscriptionID string) PrivateLinkServicesOperations {
-	return &PrivateLinkServicesClient{con: con, subscriptionID: subscriptionID}
+func NewPrivateLinkServicesClient(con *armcore.Connection, subscriptionID string) PrivateLinkServicesClient {
+	return PrivateLinkServicesClient{con: con, subscriptionID: subscriptionID}
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client *PrivateLinkServicesClient) Pipeline() azcore.Pipeline {
+func (client PrivateLinkServicesClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
-func (client *PrivateLinkServicesClient) BeginCheckPrivateLinkServiceVisibility(ctx context.Context, location string, parameters CheckPrivateLinkServiceVisibilityRequest, options *PrivateLinkServicesCheckPrivateLinkServiceVisibilityOptions) (*PrivateLinkServiceVisibilityPollerResponse, error) {
+// BeginCheckPrivateLinkServiceVisibility - Checks whether the subscription is visible to private link service.
+func (client PrivateLinkServicesClient) BeginCheckPrivateLinkServiceVisibility(ctx context.Context, location string, parameters CheckPrivateLinkServiceVisibilityRequest, options *PrivateLinkServicesCheckPrivateLinkServiceVisibilityOptions) (*PrivateLinkServiceVisibilityPollerResponse, error) {
 	resp, err := client.CheckPrivateLinkServiceVisibility(ctx, location, parameters, options)
 	if err != nil {
 		return nil, err
@@ -100,7 +58,9 @@ func (client *PrivateLinkServicesClient) BeginCheckPrivateLinkServiceVisibility(
 	return result, nil
 }
 
-func (client *PrivateLinkServicesClient) ResumeCheckPrivateLinkServiceVisibility(token string) (PrivateLinkServiceVisibilityPoller, error) {
+// ResumeCheckPrivateLinkServiceVisibility creates a new PrivateLinkServiceVisibilityPoller from the specified resume token.
+// token - The value must come from a previous call to PrivateLinkServiceVisibilityPoller.ResumeToken().
+func (client PrivateLinkServicesClient) ResumeCheckPrivateLinkServiceVisibility(token string) (PrivateLinkServiceVisibilityPoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("PrivateLinkServicesClient.CheckPrivateLinkServiceVisibility", token, client.CheckPrivateLinkServiceVisibilityHandleError)
 	if err != nil {
 		return nil, err
@@ -112,7 +72,7 @@ func (client *PrivateLinkServicesClient) ResumeCheckPrivateLinkServiceVisibility
 }
 
 // CheckPrivateLinkServiceVisibility - Checks whether the subscription is visible to private link service.
-func (client *PrivateLinkServicesClient) CheckPrivateLinkServiceVisibility(ctx context.Context, location string, parameters CheckPrivateLinkServiceVisibilityRequest, options *PrivateLinkServicesCheckPrivateLinkServiceVisibilityOptions) (*azcore.Response, error) {
+func (client PrivateLinkServicesClient) CheckPrivateLinkServiceVisibility(ctx context.Context, location string, parameters CheckPrivateLinkServiceVisibilityRequest, options *PrivateLinkServicesCheckPrivateLinkServiceVisibilityOptions) (*azcore.Response, error) {
 	req, err := client.CheckPrivateLinkServiceVisibilityCreateRequest(ctx, location, parameters, options)
 	if err != nil {
 		return nil, err
@@ -128,7 +88,7 @@ func (client *PrivateLinkServicesClient) CheckPrivateLinkServiceVisibility(ctx c
 }
 
 // CheckPrivateLinkServiceVisibilityCreateRequest creates the CheckPrivateLinkServiceVisibility request.
-func (client *PrivateLinkServicesClient) CheckPrivateLinkServiceVisibilityCreateRequest(ctx context.Context, location string, parameters CheckPrivateLinkServiceVisibilityRequest, options *PrivateLinkServicesCheckPrivateLinkServiceVisibilityOptions) (*azcore.Request, error) {
+func (client PrivateLinkServicesClient) CheckPrivateLinkServiceVisibilityCreateRequest(ctx context.Context, location string, parameters CheckPrivateLinkServiceVisibilityRequest, options *PrivateLinkServicesCheckPrivateLinkServiceVisibilityOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/checkPrivateLinkServiceVisibility"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
@@ -145,13 +105,13 @@ func (client *PrivateLinkServicesClient) CheckPrivateLinkServiceVisibilityCreate
 }
 
 // CheckPrivateLinkServiceVisibilityHandleResponse handles the CheckPrivateLinkServiceVisibility response.
-func (client *PrivateLinkServicesClient) CheckPrivateLinkServiceVisibilityHandleResponse(resp *azcore.Response) (*PrivateLinkServiceVisibilityResponse, error) {
+func (client PrivateLinkServicesClient) CheckPrivateLinkServiceVisibilityHandleResponse(resp *azcore.Response) (*PrivateLinkServiceVisibilityResponse, error) {
 	result := PrivateLinkServiceVisibilityResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.PrivateLinkServiceVisibility)
 }
 
 // CheckPrivateLinkServiceVisibilityHandleError handles the CheckPrivateLinkServiceVisibility error response.
-func (client *PrivateLinkServicesClient) CheckPrivateLinkServiceVisibilityHandleError(resp *azcore.Response) error {
+func (client PrivateLinkServicesClient) CheckPrivateLinkServiceVisibilityHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -159,7 +119,9 @@ func (client *PrivateLinkServicesClient) CheckPrivateLinkServiceVisibilityHandle
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-func (client *PrivateLinkServicesClient) BeginCheckPrivateLinkServiceVisibilityByResourceGroup(ctx context.Context, location string, resourceGroupName string, parameters CheckPrivateLinkServiceVisibilityRequest, options *PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupOptions) (*PrivateLinkServiceVisibilityPollerResponse, error) {
+// BeginCheckPrivateLinkServiceVisibilityByResourceGroup - Checks whether the subscription is visible to private link service in the specified resource
+// group.
+func (client PrivateLinkServicesClient) BeginCheckPrivateLinkServiceVisibilityByResourceGroup(ctx context.Context, location string, resourceGroupName string, parameters CheckPrivateLinkServiceVisibilityRequest, options *PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupOptions) (*PrivateLinkServiceVisibilityPollerResponse, error) {
 	resp, err := client.CheckPrivateLinkServiceVisibilityByResourceGroup(ctx, location, resourceGroupName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -182,7 +144,9 @@ func (client *PrivateLinkServicesClient) BeginCheckPrivateLinkServiceVisibilityB
 	return result, nil
 }
 
-func (client *PrivateLinkServicesClient) ResumeCheckPrivateLinkServiceVisibilityByResourceGroup(token string) (PrivateLinkServiceVisibilityPoller, error) {
+// ResumeCheckPrivateLinkServiceVisibilityByResourceGroup creates a new PrivateLinkServiceVisibilityPoller from the specified resume token.
+// token - The value must come from a previous call to PrivateLinkServiceVisibilityPoller.ResumeToken().
+func (client PrivateLinkServicesClient) ResumeCheckPrivateLinkServiceVisibilityByResourceGroup(token string) (PrivateLinkServiceVisibilityPoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("PrivateLinkServicesClient.CheckPrivateLinkServiceVisibilityByResourceGroup", token, client.CheckPrivateLinkServiceVisibilityByResourceGroupHandleError)
 	if err != nil {
 		return nil, err
@@ -194,7 +158,7 @@ func (client *PrivateLinkServicesClient) ResumeCheckPrivateLinkServiceVisibility
 }
 
 // CheckPrivateLinkServiceVisibilityByResourceGroup - Checks whether the subscription is visible to private link service in the specified resource group.
-func (client *PrivateLinkServicesClient) CheckPrivateLinkServiceVisibilityByResourceGroup(ctx context.Context, location string, resourceGroupName string, parameters CheckPrivateLinkServiceVisibilityRequest, options *PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupOptions) (*azcore.Response, error) {
+func (client PrivateLinkServicesClient) CheckPrivateLinkServiceVisibilityByResourceGroup(ctx context.Context, location string, resourceGroupName string, parameters CheckPrivateLinkServiceVisibilityRequest, options *PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupOptions) (*azcore.Response, error) {
 	req, err := client.CheckPrivateLinkServiceVisibilityByResourceGroupCreateRequest(ctx, location, resourceGroupName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -210,7 +174,7 @@ func (client *PrivateLinkServicesClient) CheckPrivateLinkServiceVisibilityByReso
 }
 
 // CheckPrivateLinkServiceVisibilityByResourceGroupCreateRequest creates the CheckPrivateLinkServiceVisibilityByResourceGroup request.
-func (client *PrivateLinkServicesClient) CheckPrivateLinkServiceVisibilityByResourceGroupCreateRequest(ctx context.Context, location string, resourceGroupName string, parameters CheckPrivateLinkServiceVisibilityRequest, options *PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupOptions) (*azcore.Request, error) {
+func (client PrivateLinkServicesClient) CheckPrivateLinkServiceVisibilityByResourceGroupCreateRequest(ctx context.Context, location string, resourceGroupName string, parameters CheckPrivateLinkServiceVisibilityRequest, options *PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/checkPrivateLinkServiceVisibility"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
@@ -228,13 +192,13 @@ func (client *PrivateLinkServicesClient) CheckPrivateLinkServiceVisibilityByReso
 }
 
 // CheckPrivateLinkServiceVisibilityByResourceGroupHandleResponse handles the CheckPrivateLinkServiceVisibilityByResourceGroup response.
-func (client *PrivateLinkServicesClient) CheckPrivateLinkServiceVisibilityByResourceGroupHandleResponse(resp *azcore.Response) (*PrivateLinkServiceVisibilityResponse, error) {
+func (client PrivateLinkServicesClient) CheckPrivateLinkServiceVisibilityByResourceGroupHandleResponse(resp *azcore.Response) (*PrivateLinkServiceVisibilityResponse, error) {
 	result := PrivateLinkServiceVisibilityResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.PrivateLinkServiceVisibility)
 }
 
 // CheckPrivateLinkServiceVisibilityByResourceGroupHandleError handles the CheckPrivateLinkServiceVisibilityByResourceGroup error response.
-func (client *PrivateLinkServicesClient) CheckPrivateLinkServiceVisibilityByResourceGroupHandleError(resp *azcore.Response) error {
+func (client PrivateLinkServicesClient) CheckPrivateLinkServiceVisibilityByResourceGroupHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -242,7 +206,8 @@ func (client *PrivateLinkServicesClient) CheckPrivateLinkServiceVisibilityByReso
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-func (client *PrivateLinkServicesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, serviceName string, parameters PrivateLinkService, options *PrivateLinkServicesCreateOrUpdateOptions) (*PrivateLinkServicePollerResponse, error) {
+// BeginCreateOrUpdate - Creates or updates an private link service in the specified resource group.
+func (client PrivateLinkServicesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, serviceName string, parameters PrivateLinkService, options *PrivateLinkServicesCreateOrUpdateOptions) (*PrivateLinkServicePollerResponse, error) {
 	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, serviceName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -265,7 +230,9 @@ func (client *PrivateLinkServicesClient) BeginCreateOrUpdate(ctx context.Context
 	return result, nil
 }
 
-func (client *PrivateLinkServicesClient) ResumeCreateOrUpdate(token string) (PrivateLinkServicePoller, error) {
+// ResumeCreateOrUpdate creates a new PrivateLinkServicePoller from the specified resume token.
+// token - The value must come from a previous call to PrivateLinkServicePoller.ResumeToken().
+func (client PrivateLinkServicesClient) ResumeCreateOrUpdate(token string) (PrivateLinkServicePoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("PrivateLinkServicesClient.CreateOrUpdate", token, client.CreateOrUpdateHandleError)
 	if err != nil {
 		return nil, err
@@ -277,7 +244,7 @@ func (client *PrivateLinkServicesClient) ResumeCreateOrUpdate(token string) (Pri
 }
 
 // CreateOrUpdate - Creates or updates an private link service in the specified resource group.
-func (client *PrivateLinkServicesClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, serviceName string, parameters PrivateLinkService, options *PrivateLinkServicesCreateOrUpdateOptions) (*azcore.Response, error) {
+func (client PrivateLinkServicesClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, serviceName string, parameters PrivateLinkService, options *PrivateLinkServicesCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, serviceName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -293,7 +260,7 @@ func (client *PrivateLinkServicesClient) CreateOrUpdate(ctx context.Context, res
 }
 
 // CreateOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *PrivateLinkServicesClient) CreateOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, parameters PrivateLinkService, options *PrivateLinkServicesCreateOrUpdateOptions) (*azcore.Request, error) {
+func (client PrivateLinkServicesClient) CreateOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, parameters PrivateLinkService, options *PrivateLinkServicesCreateOrUpdateOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateLinkServices/{serviceName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{serviceName}", url.PathEscape(serviceName))
@@ -311,13 +278,13 @@ func (client *PrivateLinkServicesClient) CreateOrUpdateCreateRequest(ctx context
 }
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *PrivateLinkServicesClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*PrivateLinkServiceResponse, error) {
+func (client PrivateLinkServicesClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*PrivateLinkServiceResponse, error) {
 	result := PrivateLinkServiceResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.PrivateLinkService)
 }
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *PrivateLinkServicesClient) CreateOrUpdateHandleError(resp *azcore.Response) error {
+func (client PrivateLinkServicesClient) CreateOrUpdateHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -325,7 +292,8 @@ func (client *PrivateLinkServicesClient) CreateOrUpdateHandleError(resp *azcore.
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-func (client *PrivateLinkServicesClient) BeginDelete(ctx context.Context, resourceGroupName string, serviceName string, options *PrivateLinkServicesDeleteOptions) (*HTTPPollerResponse, error) {
+// BeginDelete - Deletes the specified private link service.
+func (client PrivateLinkServicesClient) BeginDelete(ctx context.Context, resourceGroupName string, serviceName string, options *PrivateLinkServicesDeleteOptions) (*HTTPPollerResponse, error) {
 	resp, err := client.Delete(ctx, resourceGroupName, serviceName, options)
 	if err != nil {
 		return nil, err
@@ -348,7 +316,9 @@ func (client *PrivateLinkServicesClient) BeginDelete(ctx context.Context, resour
 	return result, nil
 }
 
-func (client *PrivateLinkServicesClient) ResumeDelete(token string) (HTTPPoller, error) {
+// ResumeDelete creates a new HTTPPoller from the specified resume token.
+// token - The value must come from a previous call to HTTPPoller.ResumeToken().
+func (client PrivateLinkServicesClient) ResumeDelete(token string) (HTTPPoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("PrivateLinkServicesClient.Delete", token, client.DeleteHandleError)
 	if err != nil {
 		return nil, err
@@ -360,7 +330,7 @@ func (client *PrivateLinkServicesClient) ResumeDelete(token string) (HTTPPoller,
 }
 
 // Delete - Deletes the specified private link service.
-func (client *PrivateLinkServicesClient) Delete(ctx context.Context, resourceGroupName string, serviceName string, options *PrivateLinkServicesDeleteOptions) (*azcore.Response, error) {
+func (client PrivateLinkServicesClient) Delete(ctx context.Context, resourceGroupName string, serviceName string, options *PrivateLinkServicesDeleteOptions) (*azcore.Response, error) {
 	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, serviceName, options)
 	if err != nil {
 		return nil, err
@@ -376,7 +346,7 @@ func (client *PrivateLinkServicesClient) Delete(ctx context.Context, resourceGro
 }
 
 // DeleteCreateRequest creates the Delete request.
-func (client *PrivateLinkServicesClient) DeleteCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, options *PrivateLinkServicesDeleteOptions) (*azcore.Request, error) {
+func (client PrivateLinkServicesClient) DeleteCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, options *PrivateLinkServicesDeleteOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateLinkServices/{serviceName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{serviceName}", url.PathEscape(serviceName))
@@ -394,7 +364,7 @@ func (client *PrivateLinkServicesClient) DeleteCreateRequest(ctx context.Context
 }
 
 // DeleteHandleError handles the Delete error response.
-func (client *PrivateLinkServicesClient) DeleteHandleError(resp *azcore.Response) error {
+func (client PrivateLinkServicesClient) DeleteHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -402,7 +372,8 @@ func (client *PrivateLinkServicesClient) DeleteHandleError(resp *azcore.Response
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-func (client *PrivateLinkServicesClient) BeginDeletePrivateEndpointConnection(ctx context.Context, resourceGroupName string, serviceName string, peConnectionName string, options *PrivateLinkServicesDeletePrivateEndpointConnectionOptions) (*HTTPPollerResponse, error) {
+// BeginDeletePrivateEndpointConnection - Delete private end point connection for a private link service in a subscription.
+func (client PrivateLinkServicesClient) BeginDeletePrivateEndpointConnection(ctx context.Context, resourceGroupName string, serviceName string, peConnectionName string, options *PrivateLinkServicesDeletePrivateEndpointConnectionOptions) (*HTTPPollerResponse, error) {
 	resp, err := client.DeletePrivateEndpointConnection(ctx, resourceGroupName, serviceName, peConnectionName, options)
 	if err != nil {
 		return nil, err
@@ -425,7 +396,9 @@ func (client *PrivateLinkServicesClient) BeginDeletePrivateEndpointConnection(ct
 	return result, nil
 }
 
-func (client *PrivateLinkServicesClient) ResumeDeletePrivateEndpointConnection(token string) (HTTPPoller, error) {
+// ResumeDeletePrivateEndpointConnection creates a new HTTPPoller from the specified resume token.
+// token - The value must come from a previous call to HTTPPoller.ResumeToken().
+func (client PrivateLinkServicesClient) ResumeDeletePrivateEndpointConnection(token string) (HTTPPoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("PrivateLinkServicesClient.DeletePrivateEndpointConnection", token, client.DeletePrivateEndpointConnectionHandleError)
 	if err != nil {
 		return nil, err
@@ -437,7 +410,7 @@ func (client *PrivateLinkServicesClient) ResumeDeletePrivateEndpointConnection(t
 }
 
 // DeletePrivateEndpointConnection - Delete private end point connection for a private link service in a subscription.
-func (client *PrivateLinkServicesClient) DeletePrivateEndpointConnection(ctx context.Context, resourceGroupName string, serviceName string, peConnectionName string, options *PrivateLinkServicesDeletePrivateEndpointConnectionOptions) (*azcore.Response, error) {
+func (client PrivateLinkServicesClient) DeletePrivateEndpointConnection(ctx context.Context, resourceGroupName string, serviceName string, peConnectionName string, options *PrivateLinkServicesDeletePrivateEndpointConnectionOptions) (*azcore.Response, error) {
 	req, err := client.DeletePrivateEndpointConnectionCreateRequest(ctx, resourceGroupName, serviceName, peConnectionName, options)
 	if err != nil {
 		return nil, err
@@ -453,7 +426,7 @@ func (client *PrivateLinkServicesClient) DeletePrivateEndpointConnection(ctx con
 }
 
 // DeletePrivateEndpointConnectionCreateRequest creates the DeletePrivateEndpointConnection request.
-func (client *PrivateLinkServicesClient) DeletePrivateEndpointConnectionCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, peConnectionName string, options *PrivateLinkServicesDeletePrivateEndpointConnectionOptions) (*azcore.Request, error) {
+func (client PrivateLinkServicesClient) DeletePrivateEndpointConnectionCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, peConnectionName string, options *PrivateLinkServicesDeletePrivateEndpointConnectionOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateLinkServices/{serviceName}/privateEndpointConnections/{peConnectionName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{serviceName}", url.PathEscape(serviceName))
@@ -472,7 +445,7 @@ func (client *PrivateLinkServicesClient) DeletePrivateEndpointConnectionCreateRe
 }
 
 // DeletePrivateEndpointConnectionHandleError handles the DeletePrivateEndpointConnection error response.
-func (client *PrivateLinkServicesClient) DeletePrivateEndpointConnectionHandleError(resp *azcore.Response) error {
+func (client PrivateLinkServicesClient) DeletePrivateEndpointConnectionHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -481,7 +454,7 @@ func (client *PrivateLinkServicesClient) DeletePrivateEndpointConnectionHandleEr
 }
 
 // Get - Gets the specified private link service by resource group.
-func (client *PrivateLinkServicesClient) Get(ctx context.Context, resourceGroupName string, serviceName string, options *PrivateLinkServicesGetOptions) (*PrivateLinkServiceResponse, error) {
+func (client PrivateLinkServicesClient) Get(ctx context.Context, resourceGroupName string, serviceName string, options *PrivateLinkServicesGetOptions) (*PrivateLinkServiceResponse, error) {
 	req, err := client.GetCreateRequest(ctx, resourceGroupName, serviceName, options)
 	if err != nil {
 		return nil, err
@@ -501,7 +474,7 @@ func (client *PrivateLinkServicesClient) Get(ctx context.Context, resourceGroupN
 }
 
 // GetCreateRequest creates the Get request.
-func (client *PrivateLinkServicesClient) GetCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, options *PrivateLinkServicesGetOptions) (*azcore.Request, error) {
+func (client PrivateLinkServicesClient) GetCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, options *PrivateLinkServicesGetOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateLinkServices/{serviceName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{serviceName}", url.PathEscape(serviceName))
@@ -522,13 +495,13 @@ func (client *PrivateLinkServicesClient) GetCreateRequest(ctx context.Context, r
 }
 
 // GetHandleResponse handles the Get response.
-func (client *PrivateLinkServicesClient) GetHandleResponse(resp *azcore.Response) (*PrivateLinkServiceResponse, error) {
+func (client PrivateLinkServicesClient) GetHandleResponse(resp *azcore.Response) (*PrivateLinkServiceResponse, error) {
 	result := PrivateLinkServiceResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.PrivateLinkService)
 }
 
 // GetHandleError handles the Get error response.
-func (client *PrivateLinkServicesClient) GetHandleError(resp *azcore.Response) error {
+func (client PrivateLinkServicesClient) GetHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -537,7 +510,7 @@ func (client *PrivateLinkServicesClient) GetHandleError(resp *azcore.Response) e
 }
 
 // GetPrivateEndpointConnection - Get the specific private end point connection by specific private link service in the resource group.
-func (client *PrivateLinkServicesClient) GetPrivateEndpointConnection(ctx context.Context, resourceGroupName string, serviceName string, peConnectionName string, options *PrivateLinkServicesGetPrivateEndpointConnectionOptions) (*PrivateEndpointConnectionResponse, error) {
+func (client PrivateLinkServicesClient) GetPrivateEndpointConnection(ctx context.Context, resourceGroupName string, serviceName string, peConnectionName string, options *PrivateLinkServicesGetPrivateEndpointConnectionOptions) (*PrivateEndpointConnectionResponse, error) {
 	req, err := client.GetPrivateEndpointConnectionCreateRequest(ctx, resourceGroupName, serviceName, peConnectionName, options)
 	if err != nil {
 		return nil, err
@@ -557,7 +530,7 @@ func (client *PrivateLinkServicesClient) GetPrivateEndpointConnection(ctx contex
 }
 
 // GetPrivateEndpointConnectionCreateRequest creates the GetPrivateEndpointConnection request.
-func (client *PrivateLinkServicesClient) GetPrivateEndpointConnectionCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, peConnectionName string, options *PrivateLinkServicesGetPrivateEndpointConnectionOptions) (*azcore.Request, error) {
+func (client PrivateLinkServicesClient) GetPrivateEndpointConnectionCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, peConnectionName string, options *PrivateLinkServicesGetPrivateEndpointConnectionOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateLinkServices/{serviceName}/privateEndpointConnections/{peConnectionName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{serviceName}", url.PathEscape(serviceName))
@@ -579,13 +552,13 @@ func (client *PrivateLinkServicesClient) GetPrivateEndpointConnectionCreateReque
 }
 
 // GetPrivateEndpointConnectionHandleResponse handles the GetPrivateEndpointConnection response.
-func (client *PrivateLinkServicesClient) GetPrivateEndpointConnectionHandleResponse(resp *azcore.Response) (*PrivateEndpointConnectionResponse, error) {
+func (client PrivateLinkServicesClient) GetPrivateEndpointConnectionHandleResponse(resp *azcore.Response) (*PrivateEndpointConnectionResponse, error) {
 	result := PrivateEndpointConnectionResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.PrivateEndpointConnection)
 }
 
 // GetPrivateEndpointConnectionHandleError handles the GetPrivateEndpointConnection error response.
-func (client *PrivateLinkServicesClient) GetPrivateEndpointConnectionHandleError(resp *azcore.Response) error {
+func (client PrivateLinkServicesClient) GetPrivateEndpointConnectionHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -594,7 +567,7 @@ func (client *PrivateLinkServicesClient) GetPrivateEndpointConnectionHandleError
 }
 
 // List - Gets all private link services in a resource group.
-func (client *PrivateLinkServicesClient) List(resourceGroupName string, options *PrivateLinkServicesListOptions) PrivateLinkServiceListResultPager {
+func (client PrivateLinkServicesClient) List(resourceGroupName string, options *PrivateLinkServicesListOptions) PrivateLinkServiceListResultPager {
 	return &privateLinkServiceListResultPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
@@ -610,7 +583,7 @@ func (client *PrivateLinkServicesClient) List(resourceGroupName string, options 
 }
 
 // ListCreateRequest creates the List request.
-func (client *PrivateLinkServicesClient) ListCreateRequest(ctx context.Context, resourceGroupName string, options *PrivateLinkServicesListOptions) (*azcore.Request, error) {
+func (client PrivateLinkServicesClient) ListCreateRequest(ctx context.Context, resourceGroupName string, options *PrivateLinkServicesListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateLinkServices"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
@@ -627,13 +600,13 @@ func (client *PrivateLinkServicesClient) ListCreateRequest(ctx context.Context, 
 }
 
 // ListHandleResponse handles the List response.
-func (client *PrivateLinkServicesClient) ListHandleResponse(resp *azcore.Response) (*PrivateLinkServiceListResultResponse, error) {
+func (client PrivateLinkServicesClient) ListHandleResponse(resp *azcore.Response) (*PrivateLinkServiceListResultResponse, error) {
 	result := PrivateLinkServiceListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.PrivateLinkServiceListResult)
 }
 
 // ListHandleError handles the List error response.
-func (client *PrivateLinkServicesClient) ListHandleError(resp *azcore.Response) error {
+func (client PrivateLinkServicesClient) ListHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -643,7 +616,7 @@ func (client *PrivateLinkServicesClient) ListHandleError(resp *azcore.Response) 
 
 // ListAutoApprovedPrivateLinkServices - Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved in this
 // subscription in this region.
-func (client *PrivateLinkServicesClient) ListAutoApprovedPrivateLinkServices(location string, options *PrivateLinkServicesListAutoApprovedPrivateLinkServicesOptions) AutoApprovedPrivateLinkServicesResultPager {
+func (client PrivateLinkServicesClient) ListAutoApprovedPrivateLinkServices(location string, options *PrivateLinkServicesListAutoApprovedPrivateLinkServicesOptions) AutoApprovedPrivateLinkServicesResultPager {
 	return &autoApprovedPrivateLinkServicesResultPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
@@ -659,7 +632,7 @@ func (client *PrivateLinkServicesClient) ListAutoApprovedPrivateLinkServices(loc
 }
 
 // ListAutoApprovedPrivateLinkServicesCreateRequest creates the ListAutoApprovedPrivateLinkServices request.
-func (client *PrivateLinkServicesClient) ListAutoApprovedPrivateLinkServicesCreateRequest(ctx context.Context, location string, options *PrivateLinkServicesListAutoApprovedPrivateLinkServicesOptions) (*azcore.Request, error) {
+func (client PrivateLinkServicesClient) ListAutoApprovedPrivateLinkServicesCreateRequest(ctx context.Context, location string, options *PrivateLinkServicesListAutoApprovedPrivateLinkServicesOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/autoApprovedPrivateLinkServices"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
@@ -676,13 +649,13 @@ func (client *PrivateLinkServicesClient) ListAutoApprovedPrivateLinkServicesCrea
 }
 
 // ListAutoApprovedPrivateLinkServicesHandleResponse handles the ListAutoApprovedPrivateLinkServices response.
-func (client *PrivateLinkServicesClient) ListAutoApprovedPrivateLinkServicesHandleResponse(resp *azcore.Response) (*AutoApprovedPrivateLinkServicesResultResponse, error) {
+func (client PrivateLinkServicesClient) ListAutoApprovedPrivateLinkServicesHandleResponse(resp *azcore.Response) (*AutoApprovedPrivateLinkServicesResultResponse, error) {
 	result := AutoApprovedPrivateLinkServicesResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.AutoApprovedPrivateLinkServicesResult)
 }
 
 // ListAutoApprovedPrivateLinkServicesHandleError handles the ListAutoApprovedPrivateLinkServices error response.
-func (client *PrivateLinkServicesClient) ListAutoApprovedPrivateLinkServicesHandleError(resp *azcore.Response) error {
+func (client PrivateLinkServicesClient) ListAutoApprovedPrivateLinkServicesHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -692,7 +665,7 @@ func (client *PrivateLinkServicesClient) ListAutoApprovedPrivateLinkServicesHand
 
 // ListAutoApprovedPrivateLinkServicesByResourceGroup - Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved
 // in this subscription in this region.
-func (client *PrivateLinkServicesClient) ListAutoApprovedPrivateLinkServicesByResourceGroup(location string, resourceGroupName string, options *PrivateLinkServicesListAutoApprovedPrivateLinkServicesByResourceGroupOptions) AutoApprovedPrivateLinkServicesResultPager {
+func (client PrivateLinkServicesClient) ListAutoApprovedPrivateLinkServicesByResourceGroup(location string, resourceGroupName string, options *PrivateLinkServicesListAutoApprovedPrivateLinkServicesByResourceGroupOptions) AutoApprovedPrivateLinkServicesResultPager {
 	return &autoApprovedPrivateLinkServicesResultPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
@@ -708,7 +681,7 @@ func (client *PrivateLinkServicesClient) ListAutoApprovedPrivateLinkServicesByRe
 }
 
 // ListAutoApprovedPrivateLinkServicesByResourceGroupCreateRequest creates the ListAutoApprovedPrivateLinkServicesByResourceGroup request.
-func (client *PrivateLinkServicesClient) ListAutoApprovedPrivateLinkServicesByResourceGroupCreateRequest(ctx context.Context, location string, resourceGroupName string, options *PrivateLinkServicesListAutoApprovedPrivateLinkServicesByResourceGroupOptions) (*azcore.Request, error) {
+func (client PrivateLinkServicesClient) ListAutoApprovedPrivateLinkServicesByResourceGroupCreateRequest(ctx context.Context, location string, resourceGroupName string, options *PrivateLinkServicesListAutoApprovedPrivateLinkServicesByResourceGroupOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/autoApprovedPrivateLinkServices"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
@@ -726,13 +699,13 @@ func (client *PrivateLinkServicesClient) ListAutoApprovedPrivateLinkServicesByRe
 }
 
 // ListAutoApprovedPrivateLinkServicesByResourceGroupHandleResponse handles the ListAutoApprovedPrivateLinkServicesByResourceGroup response.
-func (client *PrivateLinkServicesClient) ListAutoApprovedPrivateLinkServicesByResourceGroupHandleResponse(resp *azcore.Response) (*AutoApprovedPrivateLinkServicesResultResponse, error) {
+func (client PrivateLinkServicesClient) ListAutoApprovedPrivateLinkServicesByResourceGroupHandleResponse(resp *azcore.Response) (*AutoApprovedPrivateLinkServicesResultResponse, error) {
 	result := AutoApprovedPrivateLinkServicesResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.AutoApprovedPrivateLinkServicesResult)
 }
 
 // ListAutoApprovedPrivateLinkServicesByResourceGroupHandleError handles the ListAutoApprovedPrivateLinkServicesByResourceGroup error response.
-func (client *PrivateLinkServicesClient) ListAutoApprovedPrivateLinkServicesByResourceGroupHandleError(resp *azcore.Response) error {
+func (client PrivateLinkServicesClient) ListAutoApprovedPrivateLinkServicesByResourceGroupHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -741,7 +714,7 @@ func (client *PrivateLinkServicesClient) ListAutoApprovedPrivateLinkServicesByRe
 }
 
 // ListBySubscription - Gets all private link service in a subscription.
-func (client *PrivateLinkServicesClient) ListBySubscription(options *PrivateLinkServicesListBySubscriptionOptions) PrivateLinkServiceListResultPager {
+func (client PrivateLinkServicesClient) ListBySubscription(options *PrivateLinkServicesListBySubscriptionOptions) PrivateLinkServiceListResultPager {
 	return &privateLinkServiceListResultPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
@@ -757,7 +730,7 @@ func (client *PrivateLinkServicesClient) ListBySubscription(options *PrivateLink
 }
 
 // ListBySubscriptionCreateRequest creates the ListBySubscription request.
-func (client *PrivateLinkServicesClient) ListBySubscriptionCreateRequest(ctx context.Context, options *PrivateLinkServicesListBySubscriptionOptions) (*azcore.Request, error) {
+func (client PrivateLinkServicesClient) ListBySubscriptionCreateRequest(ctx context.Context, options *PrivateLinkServicesListBySubscriptionOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/privateLinkServices"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -773,13 +746,13 @@ func (client *PrivateLinkServicesClient) ListBySubscriptionCreateRequest(ctx con
 }
 
 // ListBySubscriptionHandleResponse handles the ListBySubscription response.
-func (client *PrivateLinkServicesClient) ListBySubscriptionHandleResponse(resp *azcore.Response) (*PrivateLinkServiceListResultResponse, error) {
+func (client PrivateLinkServicesClient) ListBySubscriptionHandleResponse(resp *azcore.Response) (*PrivateLinkServiceListResultResponse, error) {
 	result := PrivateLinkServiceListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.PrivateLinkServiceListResult)
 }
 
 // ListBySubscriptionHandleError handles the ListBySubscription error response.
-func (client *PrivateLinkServicesClient) ListBySubscriptionHandleError(resp *azcore.Response) error {
+func (client PrivateLinkServicesClient) ListBySubscriptionHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -788,7 +761,7 @@ func (client *PrivateLinkServicesClient) ListBySubscriptionHandleError(resp *azc
 }
 
 // ListPrivateEndpointConnections - Gets all private end point connections for a specific private link service.
-func (client *PrivateLinkServicesClient) ListPrivateEndpointConnections(resourceGroupName string, serviceName string, options *PrivateLinkServicesListPrivateEndpointConnectionsOptions) PrivateEndpointConnectionListResultPager {
+func (client PrivateLinkServicesClient) ListPrivateEndpointConnections(resourceGroupName string, serviceName string, options *PrivateLinkServicesListPrivateEndpointConnectionsOptions) PrivateEndpointConnectionListResultPager {
 	return &privateEndpointConnectionListResultPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
@@ -804,7 +777,7 @@ func (client *PrivateLinkServicesClient) ListPrivateEndpointConnections(resource
 }
 
 // ListPrivateEndpointConnectionsCreateRequest creates the ListPrivateEndpointConnections request.
-func (client *PrivateLinkServicesClient) ListPrivateEndpointConnectionsCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, options *PrivateLinkServicesListPrivateEndpointConnectionsOptions) (*azcore.Request, error) {
+func (client PrivateLinkServicesClient) ListPrivateEndpointConnectionsCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, options *PrivateLinkServicesListPrivateEndpointConnectionsOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateLinkServices/{serviceName}/privateEndpointConnections"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{serviceName}", url.PathEscape(serviceName))
@@ -822,13 +795,13 @@ func (client *PrivateLinkServicesClient) ListPrivateEndpointConnectionsCreateReq
 }
 
 // ListPrivateEndpointConnectionsHandleResponse handles the ListPrivateEndpointConnections response.
-func (client *PrivateLinkServicesClient) ListPrivateEndpointConnectionsHandleResponse(resp *azcore.Response) (*PrivateEndpointConnectionListResultResponse, error) {
+func (client PrivateLinkServicesClient) ListPrivateEndpointConnectionsHandleResponse(resp *azcore.Response) (*PrivateEndpointConnectionListResultResponse, error) {
 	result := PrivateEndpointConnectionListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.PrivateEndpointConnectionListResult)
 }
 
 // ListPrivateEndpointConnectionsHandleError handles the ListPrivateEndpointConnections error response.
-func (client *PrivateLinkServicesClient) ListPrivateEndpointConnectionsHandleError(resp *azcore.Response) error {
+func (client PrivateLinkServicesClient) ListPrivateEndpointConnectionsHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -837,7 +810,7 @@ func (client *PrivateLinkServicesClient) ListPrivateEndpointConnectionsHandleErr
 }
 
 // UpdatePrivateEndpointConnection - Approve or reject private end point connection for a private link service in a subscription.
-func (client *PrivateLinkServicesClient) UpdatePrivateEndpointConnection(ctx context.Context, resourceGroupName string, serviceName string, peConnectionName string, parameters PrivateEndpointConnection, options *PrivateLinkServicesUpdatePrivateEndpointConnectionOptions) (*PrivateEndpointConnectionResponse, error) {
+func (client PrivateLinkServicesClient) UpdatePrivateEndpointConnection(ctx context.Context, resourceGroupName string, serviceName string, peConnectionName string, parameters PrivateEndpointConnection, options *PrivateLinkServicesUpdatePrivateEndpointConnectionOptions) (*PrivateEndpointConnectionResponse, error) {
 	req, err := client.UpdatePrivateEndpointConnectionCreateRequest(ctx, resourceGroupName, serviceName, peConnectionName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -857,7 +830,7 @@ func (client *PrivateLinkServicesClient) UpdatePrivateEndpointConnection(ctx con
 }
 
 // UpdatePrivateEndpointConnectionCreateRequest creates the UpdatePrivateEndpointConnection request.
-func (client *PrivateLinkServicesClient) UpdatePrivateEndpointConnectionCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, peConnectionName string, parameters PrivateEndpointConnection, options *PrivateLinkServicesUpdatePrivateEndpointConnectionOptions) (*azcore.Request, error) {
+func (client PrivateLinkServicesClient) UpdatePrivateEndpointConnectionCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, peConnectionName string, parameters PrivateEndpointConnection, options *PrivateLinkServicesUpdatePrivateEndpointConnectionOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateLinkServices/{serviceName}/privateEndpointConnections/{peConnectionName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{serviceName}", url.PathEscape(serviceName))
@@ -876,13 +849,13 @@ func (client *PrivateLinkServicesClient) UpdatePrivateEndpointConnectionCreateRe
 }
 
 // UpdatePrivateEndpointConnectionHandleResponse handles the UpdatePrivateEndpointConnection response.
-func (client *PrivateLinkServicesClient) UpdatePrivateEndpointConnectionHandleResponse(resp *azcore.Response) (*PrivateEndpointConnectionResponse, error) {
+func (client PrivateLinkServicesClient) UpdatePrivateEndpointConnectionHandleResponse(resp *azcore.Response) (*PrivateEndpointConnectionResponse, error) {
 	result := PrivateEndpointConnectionResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.PrivateEndpointConnection)
 }
 
 // UpdatePrivateEndpointConnectionHandleError handles the UpdatePrivateEndpointConnection error response.
-func (client *PrivateLinkServicesClient) UpdatePrivateEndpointConnectionHandleError(resp *azcore.Response) error {
+func (client PrivateLinkServicesClient) UpdatePrivateEndpointConnectionHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

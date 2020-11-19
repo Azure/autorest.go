@@ -21,70 +21,7 @@ import (
 	"time"
 )
 
-// VirtualMachineScaleSetVMSOperations contains the methods for the VirtualMachineScaleSetVMS group.
-type VirtualMachineScaleSetVMSOperations interface {
-	// BeginDeallocate - Deallocates a specific virtual machine in a VM scale set. Shuts down the virtual machine and releases the compute resources it uses.
-	// You are not billed for the compute resources of this virtual
-	// machine once it is deallocated.
-	BeginDeallocate(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSDeallocateOptions) (*HTTPPollerResponse, error)
-	// ResumeDeallocate - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeDeallocate(token string) (HTTPPoller, error)
-	// BeginDelete - Deletes a virtual machine from a VM scale set.
-	BeginDelete(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSDeleteOptions) (*HTTPPollerResponse, error)
-	// ResumeDelete - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeDelete(token string) (HTTPPoller, error)
-	// Get - Gets a virtual machine from a VM scale set.
-	Get(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSGetOptions) (*VirtualMachineScaleSetVMResponse, error)
-	// GetInstanceView - Gets the status of a virtual machine from a VM scale set.
-	GetInstanceView(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSGetInstanceViewOptions) (*VirtualMachineScaleSetVMInstanceViewResponse, error)
-	// List - Gets a list of all virtual machines in a VM scale sets.
-	List(resourceGroupName string, virtualMachineScaleSetName string, options *VirtualMachineScaleSetVMSListOptions) VirtualMachineScaleSetVMListResultPager
-	// BeginPerformMaintenance - Shuts down the virtual machine in a VMScaleSet, moves it to an already updated node, and powers it back on during the self-service
-	// phase of planned maintenance.
-	BeginPerformMaintenance(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSPerformMaintenanceOptions) (*HTTPPollerResponse, error)
-	// ResumePerformMaintenance - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumePerformMaintenance(token string) (HTTPPoller, error)
-	// BeginPowerOff - Power off (stop) a virtual machine in a VM scale set. Note that resources are still attached and you are getting charged for the resources.
-	// Instead, use deallocate to release resources and avoid
-	// charges.
-	BeginPowerOff(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSPowerOffOptions) (*HTTPPollerResponse, error)
-	// ResumePowerOff - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumePowerOff(token string) (HTTPPoller, error)
-	// BeginRedeploy - Shuts down the virtual machine in the virtual machine scale set, moves it to a new node, and powers it back on.
-	BeginRedeploy(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSRedeployOptions) (*HTTPPollerResponse, error)
-	// ResumeRedeploy - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeRedeploy(token string) (HTTPPoller, error)
-	// BeginReimage - Reimages (upgrade the operating system) a specific virtual machine in a VM scale set.
-	BeginReimage(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSReimageOptions) (*HTTPPollerResponse, error)
-	// ResumeReimage - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeReimage(token string) (HTTPPoller, error)
-	// BeginReimageAll - Allows you to re-image all the disks ( including data disks ) in the a VM scale set instance. This operation is only supported for
-	// managed disks.
-	BeginReimageAll(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSReimageAllOptions) (*HTTPPollerResponse, error)
-	// ResumeReimageAll - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeReimageAll(token string) (HTTPPoller, error)
-	// BeginRestart - Restarts a virtual machine in a VM scale set.
-	BeginRestart(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSRestartOptions) (*HTTPPollerResponse, error)
-	// ResumeRestart - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeRestart(token string) (HTTPPoller, error)
-	// BeginRunCommand - Run command on a virtual machine in a VM scale set.
-	BeginRunCommand(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, parameters RunCommandInput, options *VirtualMachineScaleSetVMSRunCommandOptions) (*RunCommandResultPollerResponse, error)
-	// ResumeRunCommand - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeRunCommand(token string) (RunCommandResultPoller, error)
-	// SimulateEviction - The operation to simulate the eviction of spot virtual machine in a VM scale set. The eviction will occur within 30 minutes of calling
-	// the API
-	SimulateEviction(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSSimulateEvictionOptions) (*http.Response, error)
-	// BeginStart - Starts a virtual machine in a VM scale set.
-	BeginStart(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSStartOptions) (*HTTPPollerResponse, error)
-	// ResumeStart - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeStart(token string) (HTTPPoller, error)
-	// BeginUpdate - Updates a virtual machine of a VM scale set.
-	BeginUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, parameters VirtualMachineScaleSetVM, options *VirtualMachineScaleSetVMSUpdateOptions) (*VirtualMachineScaleSetVMPollerResponse, error)
-	// ResumeUpdate - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeUpdate(token string) (VirtualMachineScaleSetVMPoller, error)
-}
-
-// VirtualMachineScaleSetVMSClient implements the VirtualMachineScaleSetVMSOperations interface.
+// VirtualMachineScaleSetVMSClient contains the methods for the VirtualMachineScaleSetVMS group.
 // Don't use this type directly, use NewVirtualMachineScaleSetVMSClient() instead.
 type VirtualMachineScaleSetVMSClient struct {
 	con            *armcore.Connection
@@ -92,16 +29,19 @@ type VirtualMachineScaleSetVMSClient struct {
 }
 
 // NewVirtualMachineScaleSetVMSClient creates a new instance of VirtualMachineScaleSetVMSClient with the specified values.
-func NewVirtualMachineScaleSetVMSClient(con *armcore.Connection, subscriptionID string) VirtualMachineScaleSetVMSOperations {
-	return &VirtualMachineScaleSetVMSClient{con: con, subscriptionID: subscriptionID}
+func NewVirtualMachineScaleSetVMSClient(con *armcore.Connection, subscriptionID string) VirtualMachineScaleSetVMSClient {
+	return VirtualMachineScaleSetVMSClient{con: con, subscriptionID: subscriptionID}
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client *VirtualMachineScaleSetVMSClient) Pipeline() azcore.Pipeline {
+func (client VirtualMachineScaleSetVMSClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
-func (client *VirtualMachineScaleSetVMSClient) BeginDeallocate(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSDeallocateOptions) (*HTTPPollerResponse, error) {
+// BeginDeallocate - Deallocates a specific virtual machine in a VM scale set. Shuts down the virtual machine and releases the compute resources it uses.
+// You are not billed for the compute resources of this virtual
+// machine once it is deallocated.
+func (client VirtualMachineScaleSetVMSClient) BeginDeallocate(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSDeallocateOptions) (*HTTPPollerResponse, error) {
 	resp, err := client.Deallocate(ctx, resourceGroupName, vmScaleSetName, instanceId, options)
 	if err != nil {
 		return nil, err
@@ -124,7 +64,9 @@ func (client *VirtualMachineScaleSetVMSClient) BeginDeallocate(ctx context.Conte
 	return result, nil
 }
 
-func (client *VirtualMachineScaleSetVMSClient) ResumeDeallocate(token string) (HTTPPoller, error) {
+// ResumeDeallocate creates a new HTTPPoller from the specified resume token.
+// token - The value must come from a previous call to HTTPPoller.ResumeToken().
+func (client VirtualMachineScaleSetVMSClient) ResumeDeallocate(token string) (HTTPPoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("VirtualMachineScaleSetVMSClient.Deallocate", token, client.DeallocateHandleError)
 	if err != nil {
 		return nil, err
@@ -138,7 +80,7 @@ func (client *VirtualMachineScaleSetVMSClient) ResumeDeallocate(token string) (H
 // Deallocate - Deallocates a specific virtual machine in a VM scale set. Shuts down the virtual machine and releases the compute resources it uses. You
 // are not billed for the compute resources of this virtual
 // machine once it is deallocated.
-func (client *VirtualMachineScaleSetVMSClient) Deallocate(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSDeallocateOptions) (*azcore.Response, error) {
+func (client VirtualMachineScaleSetVMSClient) Deallocate(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSDeallocateOptions) (*azcore.Response, error) {
 	req, err := client.DeallocateCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceId, options)
 	if err != nil {
 		return nil, err
@@ -154,7 +96,7 @@ func (client *VirtualMachineScaleSetVMSClient) Deallocate(ctx context.Context, r
 }
 
 // DeallocateCreateRequest creates the Deallocate request.
-func (client *VirtualMachineScaleSetVMSClient) DeallocateCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSDeallocateOptions) (*azcore.Request, error) {
+func (client VirtualMachineScaleSetVMSClient) DeallocateCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSDeallocateOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualmachines/{instanceId}/deallocate"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{vmScaleSetName}", url.PathEscape(vmScaleSetName))
@@ -172,7 +114,7 @@ func (client *VirtualMachineScaleSetVMSClient) DeallocateCreateRequest(ctx conte
 }
 
 // DeallocateHandleError handles the Deallocate error response.
-func (client *VirtualMachineScaleSetVMSClient) DeallocateHandleError(resp *azcore.Response) error {
+func (client VirtualMachineScaleSetVMSClient) DeallocateHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -183,7 +125,8 @@ func (client *VirtualMachineScaleSetVMSClient) DeallocateHandleError(resp *azcor
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
-func (client *VirtualMachineScaleSetVMSClient) BeginDelete(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSDeleteOptions) (*HTTPPollerResponse, error) {
+// BeginDelete - Deletes a virtual machine from a VM scale set.
+func (client VirtualMachineScaleSetVMSClient) BeginDelete(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSDeleteOptions) (*HTTPPollerResponse, error) {
 	resp, err := client.Delete(ctx, resourceGroupName, vmScaleSetName, instanceId, options)
 	if err != nil {
 		return nil, err
@@ -206,7 +149,9 @@ func (client *VirtualMachineScaleSetVMSClient) BeginDelete(ctx context.Context, 
 	return result, nil
 }
 
-func (client *VirtualMachineScaleSetVMSClient) ResumeDelete(token string) (HTTPPoller, error) {
+// ResumeDelete creates a new HTTPPoller from the specified resume token.
+// token - The value must come from a previous call to HTTPPoller.ResumeToken().
+func (client VirtualMachineScaleSetVMSClient) ResumeDelete(token string) (HTTPPoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("VirtualMachineScaleSetVMSClient.Delete", token, client.DeleteHandleError)
 	if err != nil {
 		return nil, err
@@ -218,7 +163,7 @@ func (client *VirtualMachineScaleSetVMSClient) ResumeDelete(token string) (HTTPP
 }
 
 // Delete - Deletes a virtual machine from a VM scale set.
-func (client *VirtualMachineScaleSetVMSClient) Delete(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSDeleteOptions) (*azcore.Response, error) {
+func (client VirtualMachineScaleSetVMSClient) Delete(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSDeleteOptions) (*azcore.Response, error) {
 	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceId, options)
 	if err != nil {
 		return nil, err
@@ -234,7 +179,7 @@ func (client *VirtualMachineScaleSetVMSClient) Delete(ctx context.Context, resou
 }
 
 // DeleteCreateRequest creates the Delete request.
-func (client *VirtualMachineScaleSetVMSClient) DeleteCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSDeleteOptions) (*azcore.Request, error) {
+func (client VirtualMachineScaleSetVMSClient) DeleteCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSDeleteOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualmachines/{instanceId}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{vmScaleSetName}", url.PathEscape(vmScaleSetName))
@@ -252,7 +197,7 @@ func (client *VirtualMachineScaleSetVMSClient) DeleteCreateRequest(ctx context.C
 }
 
 // DeleteHandleError handles the Delete error response.
-func (client *VirtualMachineScaleSetVMSClient) DeleteHandleError(resp *azcore.Response) error {
+func (client VirtualMachineScaleSetVMSClient) DeleteHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -264,7 +209,7 @@ func (client *VirtualMachineScaleSetVMSClient) DeleteHandleError(resp *azcore.Re
 }
 
 // Get - Gets a virtual machine from a VM scale set.
-func (client *VirtualMachineScaleSetVMSClient) Get(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSGetOptions) (*VirtualMachineScaleSetVMResponse, error) {
+func (client VirtualMachineScaleSetVMSClient) Get(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSGetOptions) (*VirtualMachineScaleSetVMResponse, error) {
 	req, err := client.GetCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceId, options)
 	if err != nil {
 		return nil, err
@@ -284,7 +229,7 @@ func (client *VirtualMachineScaleSetVMSClient) Get(ctx context.Context, resource
 }
 
 // GetCreateRequest creates the Get request.
-func (client *VirtualMachineScaleSetVMSClient) GetCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSGetOptions) (*azcore.Request, error) {
+func (client VirtualMachineScaleSetVMSClient) GetCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSGetOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualmachines/{instanceId}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{vmScaleSetName}", url.PathEscape(vmScaleSetName))
@@ -306,13 +251,13 @@ func (client *VirtualMachineScaleSetVMSClient) GetCreateRequest(ctx context.Cont
 }
 
 // GetHandleResponse handles the Get response.
-func (client *VirtualMachineScaleSetVMSClient) GetHandleResponse(resp *azcore.Response) (*VirtualMachineScaleSetVMResponse, error) {
+func (client VirtualMachineScaleSetVMSClient) GetHandleResponse(resp *azcore.Response) (*VirtualMachineScaleSetVMResponse, error) {
 	result := VirtualMachineScaleSetVMResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VirtualMachineScaleSetVM)
 }
 
 // GetHandleError handles the Get error response.
-func (client *VirtualMachineScaleSetVMSClient) GetHandleError(resp *azcore.Response) error {
+func (client VirtualMachineScaleSetVMSClient) GetHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -324,7 +269,7 @@ func (client *VirtualMachineScaleSetVMSClient) GetHandleError(resp *azcore.Respo
 }
 
 // GetInstanceView - Gets the status of a virtual machine from a VM scale set.
-func (client *VirtualMachineScaleSetVMSClient) GetInstanceView(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSGetInstanceViewOptions) (*VirtualMachineScaleSetVMInstanceViewResponse, error) {
+func (client VirtualMachineScaleSetVMSClient) GetInstanceView(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSGetInstanceViewOptions) (*VirtualMachineScaleSetVMInstanceViewResponse, error) {
 	req, err := client.GetInstanceViewCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceId, options)
 	if err != nil {
 		return nil, err
@@ -344,7 +289,7 @@ func (client *VirtualMachineScaleSetVMSClient) GetInstanceView(ctx context.Conte
 }
 
 // GetInstanceViewCreateRequest creates the GetInstanceView request.
-func (client *VirtualMachineScaleSetVMSClient) GetInstanceViewCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSGetInstanceViewOptions) (*azcore.Request, error) {
+func (client VirtualMachineScaleSetVMSClient) GetInstanceViewCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSGetInstanceViewOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualmachines/{instanceId}/instanceView"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{vmScaleSetName}", url.PathEscape(vmScaleSetName))
@@ -363,13 +308,13 @@ func (client *VirtualMachineScaleSetVMSClient) GetInstanceViewCreateRequest(ctx 
 }
 
 // GetInstanceViewHandleResponse handles the GetInstanceView response.
-func (client *VirtualMachineScaleSetVMSClient) GetInstanceViewHandleResponse(resp *azcore.Response) (*VirtualMachineScaleSetVMInstanceViewResponse, error) {
+func (client VirtualMachineScaleSetVMSClient) GetInstanceViewHandleResponse(resp *azcore.Response) (*VirtualMachineScaleSetVMInstanceViewResponse, error) {
 	result := VirtualMachineScaleSetVMInstanceViewResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VirtualMachineScaleSetVMInstanceView)
 }
 
 // GetInstanceViewHandleError handles the GetInstanceView error response.
-func (client *VirtualMachineScaleSetVMSClient) GetInstanceViewHandleError(resp *azcore.Response) error {
+func (client VirtualMachineScaleSetVMSClient) GetInstanceViewHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -381,7 +326,7 @@ func (client *VirtualMachineScaleSetVMSClient) GetInstanceViewHandleError(resp *
 }
 
 // List - Gets a list of all virtual machines in a VM scale sets.
-func (client *VirtualMachineScaleSetVMSClient) List(resourceGroupName string, virtualMachineScaleSetName string, options *VirtualMachineScaleSetVMSListOptions) VirtualMachineScaleSetVMListResultPager {
+func (client VirtualMachineScaleSetVMSClient) List(resourceGroupName string, virtualMachineScaleSetName string, options *VirtualMachineScaleSetVMSListOptions) VirtualMachineScaleSetVMListResultPager {
 	return &virtualMachineScaleSetVMListResultPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
@@ -397,7 +342,7 @@ func (client *VirtualMachineScaleSetVMSClient) List(resourceGroupName string, vi
 }
 
 // ListCreateRequest creates the List request.
-func (client *VirtualMachineScaleSetVMSClient) ListCreateRequest(ctx context.Context, resourceGroupName string, virtualMachineScaleSetName string, options *VirtualMachineScaleSetVMSListOptions) (*azcore.Request, error) {
+func (client VirtualMachineScaleSetVMSClient) ListCreateRequest(ctx context.Context, resourceGroupName string, virtualMachineScaleSetName string, options *VirtualMachineScaleSetVMSListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/virtualMachines"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualMachineScaleSetName}", url.PathEscape(virtualMachineScaleSetName))
@@ -424,13 +369,13 @@ func (client *VirtualMachineScaleSetVMSClient) ListCreateRequest(ctx context.Con
 }
 
 // ListHandleResponse handles the List response.
-func (client *VirtualMachineScaleSetVMSClient) ListHandleResponse(resp *azcore.Response) (*VirtualMachineScaleSetVMListResultResponse, error) {
+func (client VirtualMachineScaleSetVMSClient) ListHandleResponse(resp *azcore.Response) (*VirtualMachineScaleSetVMListResultResponse, error) {
 	result := VirtualMachineScaleSetVMListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VirtualMachineScaleSetVMListResult)
 }
 
 // ListHandleError handles the List error response.
-func (client *VirtualMachineScaleSetVMSClient) ListHandleError(resp *azcore.Response) error {
+func (client VirtualMachineScaleSetVMSClient) ListHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -441,7 +386,9 @@ func (client *VirtualMachineScaleSetVMSClient) ListHandleError(resp *azcore.Resp
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
-func (client *VirtualMachineScaleSetVMSClient) BeginPerformMaintenance(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSPerformMaintenanceOptions) (*HTTPPollerResponse, error) {
+// BeginPerformMaintenance - Shuts down the virtual machine in a VMScaleSet, moves it to an already updated node, and powers it back on during the self-service
+// phase of planned maintenance.
+func (client VirtualMachineScaleSetVMSClient) BeginPerformMaintenance(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSPerformMaintenanceOptions) (*HTTPPollerResponse, error) {
 	resp, err := client.PerformMaintenance(ctx, resourceGroupName, vmScaleSetName, instanceId, options)
 	if err != nil {
 		return nil, err
@@ -464,7 +411,9 @@ func (client *VirtualMachineScaleSetVMSClient) BeginPerformMaintenance(ctx conte
 	return result, nil
 }
 
-func (client *VirtualMachineScaleSetVMSClient) ResumePerformMaintenance(token string) (HTTPPoller, error) {
+// ResumePerformMaintenance creates a new HTTPPoller from the specified resume token.
+// token - The value must come from a previous call to HTTPPoller.ResumeToken().
+func (client VirtualMachineScaleSetVMSClient) ResumePerformMaintenance(token string) (HTTPPoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("VirtualMachineScaleSetVMSClient.PerformMaintenance", token, client.PerformMaintenanceHandleError)
 	if err != nil {
 		return nil, err
@@ -477,7 +426,7 @@ func (client *VirtualMachineScaleSetVMSClient) ResumePerformMaintenance(token st
 
 // PerformMaintenance - Shuts down the virtual machine in a VMScaleSet, moves it to an already updated node, and powers it back on during the self-service
 // phase of planned maintenance.
-func (client *VirtualMachineScaleSetVMSClient) PerformMaintenance(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSPerformMaintenanceOptions) (*azcore.Response, error) {
+func (client VirtualMachineScaleSetVMSClient) PerformMaintenance(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSPerformMaintenanceOptions) (*azcore.Response, error) {
 	req, err := client.PerformMaintenanceCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceId, options)
 	if err != nil {
 		return nil, err
@@ -493,7 +442,7 @@ func (client *VirtualMachineScaleSetVMSClient) PerformMaintenance(ctx context.Co
 }
 
 // PerformMaintenanceCreateRequest creates the PerformMaintenance request.
-func (client *VirtualMachineScaleSetVMSClient) PerformMaintenanceCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSPerformMaintenanceOptions) (*azcore.Request, error) {
+func (client VirtualMachineScaleSetVMSClient) PerformMaintenanceCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSPerformMaintenanceOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualmachines/{instanceId}/performMaintenance"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{vmScaleSetName}", url.PathEscape(vmScaleSetName))
@@ -511,7 +460,7 @@ func (client *VirtualMachineScaleSetVMSClient) PerformMaintenanceCreateRequest(c
 }
 
 // PerformMaintenanceHandleError handles the PerformMaintenance error response.
-func (client *VirtualMachineScaleSetVMSClient) PerformMaintenanceHandleError(resp *azcore.Response) error {
+func (client VirtualMachineScaleSetVMSClient) PerformMaintenanceHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -522,7 +471,10 @@ func (client *VirtualMachineScaleSetVMSClient) PerformMaintenanceHandleError(res
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
-func (client *VirtualMachineScaleSetVMSClient) BeginPowerOff(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSPowerOffOptions) (*HTTPPollerResponse, error) {
+// BeginPowerOff - Power off (stop) a virtual machine in a VM scale set. Note that resources are still attached and you are getting charged for the resources.
+// Instead, use deallocate to release resources and avoid
+// charges.
+func (client VirtualMachineScaleSetVMSClient) BeginPowerOff(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSPowerOffOptions) (*HTTPPollerResponse, error) {
 	resp, err := client.PowerOff(ctx, resourceGroupName, vmScaleSetName, instanceId, options)
 	if err != nil {
 		return nil, err
@@ -545,7 +497,9 @@ func (client *VirtualMachineScaleSetVMSClient) BeginPowerOff(ctx context.Context
 	return result, nil
 }
 
-func (client *VirtualMachineScaleSetVMSClient) ResumePowerOff(token string) (HTTPPoller, error) {
+// ResumePowerOff creates a new HTTPPoller from the specified resume token.
+// token - The value must come from a previous call to HTTPPoller.ResumeToken().
+func (client VirtualMachineScaleSetVMSClient) ResumePowerOff(token string) (HTTPPoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("VirtualMachineScaleSetVMSClient.PowerOff", token, client.PowerOffHandleError)
 	if err != nil {
 		return nil, err
@@ -559,7 +513,7 @@ func (client *VirtualMachineScaleSetVMSClient) ResumePowerOff(token string) (HTT
 // PowerOff - Power off (stop) a virtual machine in a VM scale set. Note that resources are still attached and you are getting charged for the resources.
 // Instead, use deallocate to release resources and avoid
 // charges.
-func (client *VirtualMachineScaleSetVMSClient) PowerOff(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSPowerOffOptions) (*azcore.Response, error) {
+func (client VirtualMachineScaleSetVMSClient) PowerOff(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSPowerOffOptions) (*azcore.Response, error) {
 	req, err := client.PowerOffCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceId, options)
 	if err != nil {
 		return nil, err
@@ -575,7 +529,7 @@ func (client *VirtualMachineScaleSetVMSClient) PowerOff(ctx context.Context, res
 }
 
 // PowerOffCreateRequest creates the PowerOff request.
-func (client *VirtualMachineScaleSetVMSClient) PowerOffCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSPowerOffOptions) (*azcore.Request, error) {
+func (client VirtualMachineScaleSetVMSClient) PowerOffCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSPowerOffOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualmachines/{instanceId}/poweroff"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{vmScaleSetName}", url.PathEscape(vmScaleSetName))
@@ -596,7 +550,7 @@ func (client *VirtualMachineScaleSetVMSClient) PowerOffCreateRequest(ctx context
 }
 
 // PowerOffHandleError handles the PowerOff error response.
-func (client *VirtualMachineScaleSetVMSClient) PowerOffHandleError(resp *azcore.Response) error {
+func (client VirtualMachineScaleSetVMSClient) PowerOffHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -607,7 +561,8 @@ func (client *VirtualMachineScaleSetVMSClient) PowerOffHandleError(resp *azcore.
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
-func (client *VirtualMachineScaleSetVMSClient) BeginRedeploy(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSRedeployOptions) (*HTTPPollerResponse, error) {
+// BeginRedeploy - Shuts down the virtual machine in the virtual machine scale set, moves it to a new node, and powers it back on.
+func (client VirtualMachineScaleSetVMSClient) BeginRedeploy(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSRedeployOptions) (*HTTPPollerResponse, error) {
 	resp, err := client.Redeploy(ctx, resourceGroupName, vmScaleSetName, instanceId, options)
 	if err != nil {
 		return nil, err
@@ -630,7 +585,9 @@ func (client *VirtualMachineScaleSetVMSClient) BeginRedeploy(ctx context.Context
 	return result, nil
 }
 
-func (client *VirtualMachineScaleSetVMSClient) ResumeRedeploy(token string) (HTTPPoller, error) {
+// ResumeRedeploy creates a new HTTPPoller from the specified resume token.
+// token - The value must come from a previous call to HTTPPoller.ResumeToken().
+func (client VirtualMachineScaleSetVMSClient) ResumeRedeploy(token string) (HTTPPoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("VirtualMachineScaleSetVMSClient.Redeploy", token, client.RedeployHandleError)
 	if err != nil {
 		return nil, err
@@ -642,7 +599,7 @@ func (client *VirtualMachineScaleSetVMSClient) ResumeRedeploy(token string) (HTT
 }
 
 // Redeploy - Shuts down the virtual machine in the virtual machine scale set, moves it to a new node, and powers it back on.
-func (client *VirtualMachineScaleSetVMSClient) Redeploy(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSRedeployOptions) (*azcore.Response, error) {
+func (client VirtualMachineScaleSetVMSClient) Redeploy(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSRedeployOptions) (*azcore.Response, error) {
 	req, err := client.RedeployCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceId, options)
 	if err != nil {
 		return nil, err
@@ -658,7 +615,7 @@ func (client *VirtualMachineScaleSetVMSClient) Redeploy(ctx context.Context, res
 }
 
 // RedeployCreateRequest creates the Redeploy request.
-func (client *VirtualMachineScaleSetVMSClient) RedeployCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSRedeployOptions) (*azcore.Request, error) {
+func (client VirtualMachineScaleSetVMSClient) RedeployCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSRedeployOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualmachines/{instanceId}/redeploy"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{vmScaleSetName}", url.PathEscape(vmScaleSetName))
@@ -676,7 +633,7 @@ func (client *VirtualMachineScaleSetVMSClient) RedeployCreateRequest(ctx context
 }
 
 // RedeployHandleError handles the Redeploy error response.
-func (client *VirtualMachineScaleSetVMSClient) RedeployHandleError(resp *azcore.Response) error {
+func (client VirtualMachineScaleSetVMSClient) RedeployHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -687,7 +644,8 @@ func (client *VirtualMachineScaleSetVMSClient) RedeployHandleError(resp *azcore.
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
-func (client *VirtualMachineScaleSetVMSClient) BeginReimage(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSReimageOptions) (*HTTPPollerResponse, error) {
+// BeginReimage - Reimages (upgrade the operating system) a specific virtual machine in a VM scale set.
+func (client VirtualMachineScaleSetVMSClient) BeginReimage(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSReimageOptions) (*HTTPPollerResponse, error) {
 	resp, err := client.Reimage(ctx, resourceGroupName, vmScaleSetName, instanceId, options)
 	if err != nil {
 		return nil, err
@@ -710,7 +668,9 @@ func (client *VirtualMachineScaleSetVMSClient) BeginReimage(ctx context.Context,
 	return result, nil
 }
 
-func (client *VirtualMachineScaleSetVMSClient) ResumeReimage(token string) (HTTPPoller, error) {
+// ResumeReimage creates a new HTTPPoller from the specified resume token.
+// token - The value must come from a previous call to HTTPPoller.ResumeToken().
+func (client VirtualMachineScaleSetVMSClient) ResumeReimage(token string) (HTTPPoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("VirtualMachineScaleSetVMSClient.Reimage", token, client.ReimageHandleError)
 	if err != nil {
 		return nil, err
@@ -722,7 +682,7 @@ func (client *VirtualMachineScaleSetVMSClient) ResumeReimage(token string) (HTTP
 }
 
 // Reimage - Reimages (upgrade the operating system) a specific virtual machine in a VM scale set.
-func (client *VirtualMachineScaleSetVMSClient) Reimage(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSReimageOptions) (*azcore.Response, error) {
+func (client VirtualMachineScaleSetVMSClient) Reimage(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSReimageOptions) (*azcore.Response, error) {
 	req, err := client.ReimageCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceId, options)
 	if err != nil {
 		return nil, err
@@ -738,7 +698,7 @@ func (client *VirtualMachineScaleSetVMSClient) Reimage(ctx context.Context, reso
 }
 
 // ReimageCreateRequest creates the Reimage request.
-func (client *VirtualMachineScaleSetVMSClient) ReimageCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSReimageOptions) (*azcore.Request, error) {
+func (client VirtualMachineScaleSetVMSClient) ReimageCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSReimageOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualmachines/{instanceId}/reimage"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{vmScaleSetName}", url.PathEscape(vmScaleSetName))
@@ -759,7 +719,7 @@ func (client *VirtualMachineScaleSetVMSClient) ReimageCreateRequest(ctx context.
 }
 
 // ReimageHandleError handles the Reimage error response.
-func (client *VirtualMachineScaleSetVMSClient) ReimageHandleError(resp *azcore.Response) error {
+func (client VirtualMachineScaleSetVMSClient) ReimageHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -770,7 +730,9 @@ func (client *VirtualMachineScaleSetVMSClient) ReimageHandleError(resp *azcore.R
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
-func (client *VirtualMachineScaleSetVMSClient) BeginReimageAll(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSReimageAllOptions) (*HTTPPollerResponse, error) {
+// BeginReimageAll - Allows you to re-image all the disks ( including data disks ) in the a VM scale set instance. This operation is only supported for
+// managed disks.
+func (client VirtualMachineScaleSetVMSClient) BeginReimageAll(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSReimageAllOptions) (*HTTPPollerResponse, error) {
 	resp, err := client.ReimageAll(ctx, resourceGroupName, vmScaleSetName, instanceId, options)
 	if err != nil {
 		return nil, err
@@ -793,7 +755,9 @@ func (client *VirtualMachineScaleSetVMSClient) BeginReimageAll(ctx context.Conte
 	return result, nil
 }
 
-func (client *VirtualMachineScaleSetVMSClient) ResumeReimageAll(token string) (HTTPPoller, error) {
+// ResumeReimageAll creates a new HTTPPoller from the specified resume token.
+// token - The value must come from a previous call to HTTPPoller.ResumeToken().
+func (client VirtualMachineScaleSetVMSClient) ResumeReimageAll(token string) (HTTPPoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("VirtualMachineScaleSetVMSClient.ReimageAll", token, client.ReimageAllHandleError)
 	if err != nil {
 		return nil, err
@@ -806,7 +770,7 @@ func (client *VirtualMachineScaleSetVMSClient) ResumeReimageAll(token string) (H
 
 // ReimageAll - Allows you to re-image all the disks ( including data disks ) in the a VM scale set instance. This operation is only supported for managed
 // disks.
-func (client *VirtualMachineScaleSetVMSClient) ReimageAll(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSReimageAllOptions) (*azcore.Response, error) {
+func (client VirtualMachineScaleSetVMSClient) ReimageAll(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSReimageAllOptions) (*azcore.Response, error) {
 	req, err := client.ReimageAllCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceId, options)
 	if err != nil {
 		return nil, err
@@ -822,7 +786,7 @@ func (client *VirtualMachineScaleSetVMSClient) ReimageAll(ctx context.Context, r
 }
 
 // ReimageAllCreateRequest creates the ReimageAll request.
-func (client *VirtualMachineScaleSetVMSClient) ReimageAllCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSReimageAllOptions) (*azcore.Request, error) {
+func (client VirtualMachineScaleSetVMSClient) ReimageAllCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSReimageAllOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualmachines/{instanceId}/reimageall"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{vmScaleSetName}", url.PathEscape(vmScaleSetName))
@@ -840,7 +804,7 @@ func (client *VirtualMachineScaleSetVMSClient) ReimageAllCreateRequest(ctx conte
 }
 
 // ReimageAllHandleError handles the ReimageAll error response.
-func (client *VirtualMachineScaleSetVMSClient) ReimageAllHandleError(resp *azcore.Response) error {
+func (client VirtualMachineScaleSetVMSClient) ReimageAllHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -851,7 +815,8 @@ func (client *VirtualMachineScaleSetVMSClient) ReimageAllHandleError(resp *azcor
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
-func (client *VirtualMachineScaleSetVMSClient) BeginRestart(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSRestartOptions) (*HTTPPollerResponse, error) {
+// BeginRestart - Restarts a virtual machine in a VM scale set.
+func (client VirtualMachineScaleSetVMSClient) BeginRestart(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSRestartOptions) (*HTTPPollerResponse, error) {
 	resp, err := client.Restart(ctx, resourceGroupName, vmScaleSetName, instanceId, options)
 	if err != nil {
 		return nil, err
@@ -874,7 +839,9 @@ func (client *VirtualMachineScaleSetVMSClient) BeginRestart(ctx context.Context,
 	return result, nil
 }
 
-func (client *VirtualMachineScaleSetVMSClient) ResumeRestart(token string) (HTTPPoller, error) {
+// ResumeRestart creates a new HTTPPoller from the specified resume token.
+// token - The value must come from a previous call to HTTPPoller.ResumeToken().
+func (client VirtualMachineScaleSetVMSClient) ResumeRestart(token string) (HTTPPoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("VirtualMachineScaleSetVMSClient.Restart", token, client.RestartHandleError)
 	if err != nil {
 		return nil, err
@@ -886,7 +853,7 @@ func (client *VirtualMachineScaleSetVMSClient) ResumeRestart(token string) (HTTP
 }
 
 // Restart - Restarts a virtual machine in a VM scale set.
-func (client *VirtualMachineScaleSetVMSClient) Restart(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSRestartOptions) (*azcore.Response, error) {
+func (client VirtualMachineScaleSetVMSClient) Restart(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSRestartOptions) (*azcore.Response, error) {
 	req, err := client.RestartCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceId, options)
 	if err != nil {
 		return nil, err
@@ -902,7 +869,7 @@ func (client *VirtualMachineScaleSetVMSClient) Restart(ctx context.Context, reso
 }
 
 // RestartCreateRequest creates the Restart request.
-func (client *VirtualMachineScaleSetVMSClient) RestartCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSRestartOptions) (*azcore.Request, error) {
+func (client VirtualMachineScaleSetVMSClient) RestartCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSRestartOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualmachines/{instanceId}/restart"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{vmScaleSetName}", url.PathEscape(vmScaleSetName))
@@ -920,7 +887,7 @@ func (client *VirtualMachineScaleSetVMSClient) RestartCreateRequest(ctx context.
 }
 
 // RestartHandleError handles the Restart error response.
-func (client *VirtualMachineScaleSetVMSClient) RestartHandleError(resp *azcore.Response) error {
+func (client VirtualMachineScaleSetVMSClient) RestartHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -931,7 +898,8 @@ func (client *VirtualMachineScaleSetVMSClient) RestartHandleError(resp *azcore.R
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
-func (client *VirtualMachineScaleSetVMSClient) BeginRunCommand(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, parameters RunCommandInput, options *VirtualMachineScaleSetVMSRunCommandOptions) (*RunCommandResultPollerResponse, error) {
+// BeginRunCommand - Run command on a virtual machine in a VM scale set.
+func (client VirtualMachineScaleSetVMSClient) BeginRunCommand(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, parameters RunCommandInput, options *VirtualMachineScaleSetVMSRunCommandOptions) (*RunCommandResultPollerResponse, error) {
 	resp, err := client.RunCommand(ctx, resourceGroupName, vmScaleSetName, instanceId, parameters, options)
 	if err != nil {
 		return nil, err
@@ -954,7 +922,9 @@ func (client *VirtualMachineScaleSetVMSClient) BeginRunCommand(ctx context.Conte
 	return result, nil
 }
 
-func (client *VirtualMachineScaleSetVMSClient) ResumeRunCommand(token string) (RunCommandResultPoller, error) {
+// ResumeRunCommand creates a new RunCommandResultPoller from the specified resume token.
+// token - The value must come from a previous call to RunCommandResultPoller.ResumeToken().
+func (client VirtualMachineScaleSetVMSClient) ResumeRunCommand(token string) (RunCommandResultPoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("VirtualMachineScaleSetVMSClient.RunCommand", token, client.RunCommandHandleError)
 	if err != nil {
 		return nil, err
@@ -966,7 +936,7 @@ func (client *VirtualMachineScaleSetVMSClient) ResumeRunCommand(token string) (R
 }
 
 // RunCommand - Run command on a virtual machine in a VM scale set.
-func (client *VirtualMachineScaleSetVMSClient) RunCommand(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, parameters RunCommandInput, options *VirtualMachineScaleSetVMSRunCommandOptions) (*azcore.Response, error) {
+func (client VirtualMachineScaleSetVMSClient) RunCommand(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, parameters RunCommandInput, options *VirtualMachineScaleSetVMSRunCommandOptions) (*azcore.Response, error) {
 	req, err := client.RunCommandCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceId, parameters, options)
 	if err != nil {
 		return nil, err
@@ -982,7 +952,7 @@ func (client *VirtualMachineScaleSetVMSClient) RunCommand(ctx context.Context, r
 }
 
 // RunCommandCreateRequest creates the RunCommand request.
-func (client *VirtualMachineScaleSetVMSClient) RunCommandCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, parameters RunCommandInput, options *VirtualMachineScaleSetVMSRunCommandOptions) (*azcore.Request, error) {
+func (client VirtualMachineScaleSetVMSClient) RunCommandCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, parameters RunCommandInput, options *VirtualMachineScaleSetVMSRunCommandOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualmachines/{instanceId}/runCommand"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{vmScaleSetName}", url.PathEscape(vmScaleSetName))
@@ -1001,13 +971,13 @@ func (client *VirtualMachineScaleSetVMSClient) RunCommandCreateRequest(ctx conte
 }
 
 // RunCommandHandleResponse handles the RunCommand response.
-func (client *VirtualMachineScaleSetVMSClient) RunCommandHandleResponse(resp *azcore.Response) (*RunCommandResultResponse, error) {
+func (client VirtualMachineScaleSetVMSClient) RunCommandHandleResponse(resp *azcore.Response) (*RunCommandResultResponse, error) {
 	result := RunCommandResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.RunCommandResult)
 }
 
 // RunCommandHandleError handles the RunCommand error response.
-func (client *VirtualMachineScaleSetVMSClient) RunCommandHandleError(resp *azcore.Response) error {
+func (client VirtualMachineScaleSetVMSClient) RunCommandHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -1020,7 +990,7 @@ func (client *VirtualMachineScaleSetVMSClient) RunCommandHandleError(resp *azcor
 
 // SimulateEviction - The operation to simulate the eviction of spot virtual machine in a VM scale set. The eviction will occur within 30 minutes of calling
 // the API
-func (client *VirtualMachineScaleSetVMSClient) SimulateEviction(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSSimulateEvictionOptions) (*http.Response, error) {
+func (client VirtualMachineScaleSetVMSClient) SimulateEviction(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSSimulateEvictionOptions) (*http.Response, error) {
 	req, err := client.SimulateEvictionCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceId, options)
 	if err != nil {
 		return nil, err
@@ -1036,7 +1006,7 @@ func (client *VirtualMachineScaleSetVMSClient) SimulateEviction(ctx context.Cont
 }
 
 // SimulateEvictionCreateRequest creates the SimulateEviction request.
-func (client *VirtualMachineScaleSetVMSClient) SimulateEvictionCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSSimulateEvictionOptions) (*azcore.Request, error) {
+func (client VirtualMachineScaleSetVMSClient) SimulateEvictionCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSSimulateEvictionOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualMachines/{instanceId}/simulateEviction"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{vmScaleSetName}", url.PathEscape(vmScaleSetName))
@@ -1054,7 +1024,7 @@ func (client *VirtualMachineScaleSetVMSClient) SimulateEvictionCreateRequest(ctx
 }
 
 // SimulateEvictionHandleError handles the SimulateEviction error response.
-func (client *VirtualMachineScaleSetVMSClient) SimulateEvictionHandleError(resp *azcore.Response) error {
+func (client VirtualMachineScaleSetVMSClient) SimulateEvictionHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -1065,7 +1035,8 @@ func (client *VirtualMachineScaleSetVMSClient) SimulateEvictionHandleError(resp 
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
-func (client *VirtualMachineScaleSetVMSClient) BeginStart(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSStartOptions) (*HTTPPollerResponse, error) {
+// BeginStart - Starts a virtual machine in a VM scale set.
+func (client VirtualMachineScaleSetVMSClient) BeginStart(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSStartOptions) (*HTTPPollerResponse, error) {
 	resp, err := client.Start(ctx, resourceGroupName, vmScaleSetName, instanceId, options)
 	if err != nil {
 		return nil, err
@@ -1088,7 +1059,9 @@ func (client *VirtualMachineScaleSetVMSClient) BeginStart(ctx context.Context, r
 	return result, nil
 }
 
-func (client *VirtualMachineScaleSetVMSClient) ResumeStart(token string) (HTTPPoller, error) {
+// ResumeStart creates a new HTTPPoller from the specified resume token.
+// token - The value must come from a previous call to HTTPPoller.ResumeToken().
+func (client VirtualMachineScaleSetVMSClient) ResumeStart(token string) (HTTPPoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("VirtualMachineScaleSetVMSClient.Start", token, client.StartHandleError)
 	if err != nil {
 		return nil, err
@@ -1100,7 +1073,7 @@ func (client *VirtualMachineScaleSetVMSClient) ResumeStart(token string) (HTTPPo
 }
 
 // Start - Starts a virtual machine in a VM scale set.
-func (client *VirtualMachineScaleSetVMSClient) Start(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSStartOptions) (*azcore.Response, error) {
+func (client VirtualMachineScaleSetVMSClient) Start(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSStartOptions) (*azcore.Response, error) {
 	req, err := client.StartCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceId, options)
 	if err != nil {
 		return nil, err
@@ -1116,7 +1089,7 @@ func (client *VirtualMachineScaleSetVMSClient) Start(ctx context.Context, resour
 }
 
 // StartCreateRequest creates the Start request.
-func (client *VirtualMachineScaleSetVMSClient) StartCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSStartOptions) (*azcore.Request, error) {
+func (client VirtualMachineScaleSetVMSClient) StartCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, options *VirtualMachineScaleSetVMSStartOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualmachines/{instanceId}/start"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{vmScaleSetName}", url.PathEscape(vmScaleSetName))
@@ -1134,7 +1107,7 @@ func (client *VirtualMachineScaleSetVMSClient) StartCreateRequest(ctx context.Co
 }
 
 // StartHandleError handles the Start error response.
-func (client *VirtualMachineScaleSetVMSClient) StartHandleError(resp *azcore.Response) error {
+func (client VirtualMachineScaleSetVMSClient) StartHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -1145,7 +1118,8 @@ func (client *VirtualMachineScaleSetVMSClient) StartHandleError(resp *azcore.Res
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
-func (client *VirtualMachineScaleSetVMSClient) BeginUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, parameters VirtualMachineScaleSetVM, options *VirtualMachineScaleSetVMSUpdateOptions) (*VirtualMachineScaleSetVMPollerResponse, error) {
+// BeginUpdate - Updates a virtual machine of a VM scale set.
+func (client VirtualMachineScaleSetVMSClient) BeginUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, parameters VirtualMachineScaleSetVM, options *VirtualMachineScaleSetVMSUpdateOptions) (*VirtualMachineScaleSetVMPollerResponse, error) {
 	resp, err := client.Update(ctx, resourceGroupName, vmScaleSetName, instanceId, parameters, options)
 	if err != nil {
 		return nil, err
@@ -1168,7 +1142,9 @@ func (client *VirtualMachineScaleSetVMSClient) BeginUpdate(ctx context.Context, 
 	return result, nil
 }
 
-func (client *VirtualMachineScaleSetVMSClient) ResumeUpdate(token string) (VirtualMachineScaleSetVMPoller, error) {
+// ResumeUpdate creates a new VirtualMachineScaleSetVMPoller from the specified resume token.
+// token - The value must come from a previous call to VirtualMachineScaleSetVMPoller.ResumeToken().
+func (client VirtualMachineScaleSetVMSClient) ResumeUpdate(token string) (VirtualMachineScaleSetVMPoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("VirtualMachineScaleSetVMSClient.Update", token, client.UpdateHandleError)
 	if err != nil {
 		return nil, err
@@ -1180,7 +1156,7 @@ func (client *VirtualMachineScaleSetVMSClient) ResumeUpdate(token string) (Virtu
 }
 
 // Update - Updates a virtual machine of a VM scale set.
-func (client *VirtualMachineScaleSetVMSClient) Update(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, parameters VirtualMachineScaleSetVM, options *VirtualMachineScaleSetVMSUpdateOptions) (*azcore.Response, error) {
+func (client VirtualMachineScaleSetVMSClient) Update(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, parameters VirtualMachineScaleSetVM, options *VirtualMachineScaleSetVMSUpdateOptions) (*azcore.Response, error) {
 	req, err := client.UpdateCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceId, parameters, options)
 	if err != nil {
 		return nil, err
@@ -1196,7 +1172,7 @@ func (client *VirtualMachineScaleSetVMSClient) Update(ctx context.Context, resou
 }
 
 // UpdateCreateRequest creates the Update request.
-func (client *VirtualMachineScaleSetVMSClient) UpdateCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, parameters VirtualMachineScaleSetVM, options *VirtualMachineScaleSetVMSUpdateOptions) (*azcore.Request, error) {
+func (client VirtualMachineScaleSetVMSClient) UpdateCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, parameters VirtualMachineScaleSetVM, options *VirtualMachineScaleSetVMSUpdateOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualmachines/{instanceId}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{vmScaleSetName}", url.PathEscape(vmScaleSetName))
@@ -1215,13 +1191,13 @@ func (client *VirtualMachineScaleSetVMSClient) UpdateCreateRequest(ctx context.C
 }
 
 // UpdateHandleResponse handles the Update response.
-func (client *VirtualMachineScaleSetVMSClient) UpdateHandleResponse(resp *azcore.Response) (*VirtualMachineScaleSetVMResponse, error) {
+func (client VirtualMachineScaleSetVMSClient) UpdateHandleResponse(resp *azcore.Response) (*VirtualMachineScaleSetVMResponse, error) {
 	result := VirtualMachineScaleSetVMResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VirtualMachineScaleSetVM)
 }
 
 // UpdateHandleError handles the Update error response.
-func (client *VirtualMachineScaleSetVMSClient) UpdateHandleError(resp *azcore.Response) error {
+func (client VirtualMachineScaleSetVMSClient) UpdateHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)

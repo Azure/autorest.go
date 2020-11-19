@@ -20,12 +20,12 @@ type sparkJobDefinitionClient struct {
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client *sparkJobDefinitionClient) Pipeline() azcore.Pipeline {
+func (client sparkJobDefinitionClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // CreateOrUpdateSparkJobDefinition - Creates or updates a Spark Job Definition.
-func (client *sparkJobDefinitionClient) CreateOrUpdateSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string, sparkJobDefinition SparkJobDefinitionResource, options *SparkJobDefinitionCreateOrUpdateSparkJobDefinitionOptions) (*SparkJobDefinitionResourceResponse, error) {
+func (client sparkJobDefinitionClient) CreateOrUpdateSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string, sparkJobDefinition SparkJobDefinitionResource, options *SparkJobDefinitionCreateOrUpdateSparkJobDefinitionOptions) (*SparkJobDefinitionResourceResponse, error) {
 	req, err := client.CreateOrUpdateSparkJobDefinitionCreateRequest(ctx, sparkJobDefinitionName, sparkJobDefinition, options)
 	if err != nil {
 		return nil, err
@@ -45,7 +45,7 @@ func (client *sparkJobDefinitionClient) CreateOrUpdateSparkJobDefinition(ctx con
 }
 
 // CreateOrUpdateSparkJobDefinitionCreateRequest creates the CreateOrUpdateSparkJobDefinition request.
-func (client *sparkJobDefinitionClient) CreateOrUpdateSparkJobDefinitionCreateRequest(ctx context.Context, sparkJobDefinitionName string, sparkJobDefinition SparkJobDefinitionResource, options *SparkJobDefinitionCreateOrUpdateSparkJobDefinitionOptions) (*azcore.Request, error) {
+func (client sparkJobDefinitionClient) CreateOrUpdateSparkJobDefinitionCreateRequest(ctx context.Context, sparkJobDefinitionName string, sparkJobDefinition SparkJobDefinitionResource, options *SparkJobDefinitionCreateOrUpdateSparkJobDefinitionOptions) (*azcore.Request, error) {
 	urlPath := "/sparkJobDefinitions/{sparkJobDefinitionName}"
 	urlPath = strings.ReplaceAll(urlPath, "{sparkJobDefinitionName}", url.PathEscape(sparkJobDefinitionName))
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -64,13 +64,13 @@ func (client *sparkJobDefinitionClient) CreateOrUpdateSparkJobDefinitionCreateRe
 }
 
 // CreateOrUpdateSparkJobDefinitionHandleResponse handles the CreateOrUpdateSparkJobDefinition response.
-func (client *sparkJobDefinitionClient) CreateOrUpdateSparkJobDefinitionHandleResponse(resp *azcore.Response) (*SparkJobDefinitionResourceResponse, error) {
+func (client sparkJobDefinitionClient) CreateOrUpdateSparkJobDefinitionHandleResponse(resp *azcore.Response) (*SparkJobDefinitionResourceResponse, error) {
 	result := SparkJobDefinitionResourceResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.SparkJobDefinitionResource)
 }
 
 // CreateOrUpdateSparkJobDefinitionHandleError handles the CreateOrUpdateSparkJobDefinition error response.
-func (client *sparkJobDefinitionClient) CreateOrUpdateSparkJobDefinitionHandleError(resp *azcore.Response) error {
+func (client sparkJobDefinitionClient) CreateOrUpdateSparkJobDefinitionHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -79,7 +79,7 @@ func (client *sparkJobDefinitionClient) CreateOrUpdateSparkJobDefinitionHandleEr
 }
 
 // DebugSparkJobDefinition - Debug the spark job definition.
-func (client *sparkJobDefinitionClient) DebugSparkJobDefinition(ctx context.Context, sparkJobDefinitionAzureResource SparkJobDefinitionResource, options *SparkJobDefinitionDebugSparkJobDefinitionOptions) (*azcore.Response, error) {
+func (client sparkJobDefinitionClient) DebugSparkJobDefinition(ctx context.Context, sparkJobDefinitionAzureResource SparkJobDefinitionResource, options *SparkJobDefinitionDebugSparkJobDefinitionOptions) (*azcore.Response, error) {
 	req, err := client.DebugSparkJobDefinitionCreateRequest(ctx, sparkJobDefinitionAzureResource, options)
 	if err != nil {
 		return nil, err
@@ -95,7 +95,7 @@ func (client *sparkJobDefinitionClient) DebugSparkJobDefinition(ctx context.Cont
 }
 
 // DebugSparkJobDefinitionCreateRequest creates the DebugSparkJobDefinition request.
-func (client *sparkJobDefinitionClient) DebugSparkJobDefinitionCreateRequest(ctx context.Context, sparkJobDefinitionAzureResource SparkJobDefinitionResource, options *SparkJobDefinitionDebugSparkJobDefinitionOptions) (*azcore.Request, error) {
+func (client sparkJobDefinitionClient) DebugSparkJobDefinitionCreateRequest(ctx context.Context, sparkJobDefinitionAzureResource SparkJobDefinitionResource, options *SparkJobDefinitionDebugSparkJobDefinitionOptions) (*azcore.Request, error) {
 	urlPath := "/debugSparkJobDefinition"
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -110,13 +110,13 @@ func (client *sparkJobDefinitionClient) DebugSparkJobDefinitionCreateRequest(ctx
 }
 
 // DebugSparkJobDefinitionHandleResponse handles the DebugSparkJobDefinition response.
-func (client *sparkJobDefinitionClient) DebugSparkJobDefinitionHandleResponse(resp *azcore.Response) (*SparkBatchJobResponse, error) {
+func (client sparkJobDefinitionClient) DebugSparkJobDefinitionHandleResponse(resp *azcore.Response) (*SparkBatchJobResponse, error) {
 	result := SparkBatchJobResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.SparkBatchJob)
 }
 
 // DebugSparkJobDefinitionHandleError handles the DebugSparkJobDefinition error response.
-func (client *sparkJobDefinitionClient) DebugSparkJobDefinitionHandleError(resp *azcore.Response) error {
+func (client sparkJobDefinitionClient) DebugSparkJobDefinitionHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -125,7 +125,7 @@ func (client *sparkJobDefinitionClient) DebugSparkJobDefinitionHandleError(resp 
 }
 
 // DeleteSparkJobDefinition - Deletes a Spark Job Definition.
-func (client *sparkJobDefinitionClient) DeleteSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string, options *SparkJobDefinitionDeleteSparkJobDefinitionOptions) (*http.Response, error) {
+func (client sparkJobDefinitionClient) DeleteSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string, options *SparkJobDefinitionDeleteSparkJobDefinitionOptions) (*http.Response, error) {
 	req, err := client.DeleteSparkJobDefinitionCreateRequest(ctx, sparkJobDefinitionName, options)
 	if err != nil {
 		return nil, err
@@ -141,7 +141,7 @@ func (client *sparkJobDefinitionClient) DeleteSparkJobDefinition(ctx context.Con
 }
 
 // DeleteSparkJobDefinitionCreateRequest creates the DeleteSparkJobDefinition request.
-func (client *sparkJobDefinitionClient) DeleteSparkJobDefinitionCreateRequest(ctx context.Context, sparkJobDefinitionName string, options *SparkJobDefinitionDeleteSparkJobDefinitionOptions) (*azcore.Request, error) {
+func (client sparkJobDefinitionClient) DeleteSparkJobDefinitionCreateRequest(ctx context.Context, sparkJobDefinitionName string, options *SparkJobDefinitionDeleteSparkJobDefinitionOptions) (*azcore.Request, error) {
 	urlPath := "/sparkJobDefinitions/{sparkJobDefinitionName}"
 	urlPath = strings.ReplaceAll(urlPath, "{sparkJobDefinitionName}", url.PathEscape(sparkJobDefinitionName))
 	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -157,7 +157,7 @@ func (client *sparkJobDefinitionClient) DeleteSparkJobDefinitionCreateRequest(ct
 }
 
 // DeleteSparkJobDefinitionHandleError handles the DeleteSparkJobDefinition error response.
-func (client *sparkJobDefinitionClient) DeleteSparkJobDefinitionHandleError(resp *azcore.Response) error {
+func (client sparkJobDefinitionClient) DeleteSparkJobDefinitionHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -166,7 +166,7 @@ func (client *sparkJobDefinitionClient) DeleteSparkJobDefinitionHandleError(resp
 }
 
 // ExecuteSparkJobDefinition - Executes the spark job definition.
-func (client *sparkJobDefinitionClient) ExecuteSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string, options *SparkJobDefinitionExecuteSparkJobDefinitionOptions) (*azcore.Response, error) {
+func (client sparkJobDefinitionClient) ExecuteSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string, options *SparkJobDefinitionExecuteSparkJobDefinitionOptions) (*azcore.Response, error) {
 	req, err := client.ExecuteSparkJobDefinitionCreateRequest(ctx, sparkJobDefinitionName, options)
 	if err != nil {
 		return nil, err
@@ -182,7 +182,7 @@ func (client *sparkJobDefinitionClient) ExecuteSparkJobDefinition(ctx context.Co
 }
 
 // ExecuteSparkJobDefinitionCreateRequest creates the ExecuteSparkJobDefinition request.
-func (client *sparkJobDefinitionClient) ExecuteSparkJobDefinitionCreateRequest(ctx context.Context, sparkJobDefinitionName string, options *SparkJobDefinitionExecuteSparkJobDefinitionOptions) (*azcore.Request, error) {
+func (client sparkJobDefinitionClient) ExecuteSparkJobDefinitionCreateRequest(ctx context.Context, sparkJobDefinitionName string, options *SparkJobDefinitionExecuteSparkJobDefinitionOptions) (*azcore.Request, error) {
 	urlPath := "/sparkJobDefinitions/{sparkJobDefinitionName}/execute"
 	urlPath = strings.ReplaceAll(urlPath, "{sparkJobDefinitionName}", url.PathEscape(sparkJobDefinitionName))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -198,13 +198,13 @@ func (client *sparkJobDefinitionClient) ExecuteSparkJobDefinitionCreateRequest(c
 }
 
 // ExecuteSparkJobDefinitionHandleResponse handles the ExecuteSparkJobDefinition response.
-func (client *sparkJobDefinitionClient) ExecuteSparkJobDefinitionHandleResponse(resp *azcore.Response) (*SparkBatchJobResponse, error) {
+func (client sparkJobDefinitionClient) ExecuteSparkJobDefinitionHandleResponse(resp *azcore.Response) (*SparkBatchJobResponse, error) {
 	result := SparkBatchJobResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.SparkBatchJob)
 }
 
 // ExecuteSparkJobDefinitionHandleError handles the ExecuteSparkJobDefinition error response.
-func (client *sparkJobDefinitionClient) ExecuteSparkJobDefinitionHandleError(resp *azcore.Response) error {
+func (client sparkJobDefinitionClient) ExecuteSparkJobDefinitionHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -213,7 +213,7 @@ func (client *sparkJobDefinitionClient) ExecuteSparkJobDefinitionHandleError(res
 }
 
 // GetSparkJobDefinition - Gets a Spark Job Definition.
-func (client *sparkJobDefinitionClient) GetSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string, options *SparkJobDefinitionGetSparkJobDefinitionOptions) (*SparkJobDefinitionResourceResponse, error) {
+func (client sparkJobDefinitionClient) GetSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string, options *SparkJobDefinitionGetSparkJobDefinitionOptions) (*SparkJobDefinitionResourceResponse, error) {
 	req, err := client.GetSparkJobDefinitionCreateRequest(ctx, sparkJobDefinitionName, options)
 	if err != nil {
 		return nil, err
@@ -233,7 +233,7 @@ func (client *sparkJobDefinitionClient) GetSparkJobDefinition(ctx context.Contex
 }
 
 // GetSparkJobDefinitionCreateRequest creates the GetSparkJobDefinition request.
-func (client *sparkJobDefinitionClient) GetSparkJobDefinitionCreateRequest(ctx context.Context, sparkJobDefinitionName string, options *SparkJobDefinitionGetSparkJobDefinitionOptions) (*azcore.Request, error) {
+func (client sparkJobDefinitionClient) GetSparkJobDefinitionCreateRequest(ctx context.Context, sparkJobDefinitionName string, options *SparkJobDefinitionGetSparkJobDefinitionOptions) (*azcore.Request, error) {
 	urlPath := "/sparkJobDefinitions/{sparkJobDefinitionName}"
 	urlPath = strings.ReplaceAll(urlPath, "{sparkJobDefinitionName}", url.PathEscape(sparkJobDefinitionName))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -252,13 +252,13 @@ func (client *sparkJobDefinitionClient) GetSparkJobDefinitionCreateRequest(ctx c
 }
 
 // GetSparkJobDefinitionHandleResponse handles the GetSparkJobDefinition response.
-func (client *sparkJobDefinitionClient) GetSparkJobDefinitionHandleResponse(resp *azcore.Response) (*SparkJobDefinitionResourceResponse, error) {
+func (client sparkJobDefinitionClient) GetSparkJobDefinitionHandleResponse(resp *azcore.Response) (*SparkJobDefinitionResourceResponse, error) {
 	result := SparkJobDefinitionResourceResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.SparkJobDefinitionResource)
 }
 
 // GetSparkJobDefinitionHandleError handles the GetSparkJobDefinition error response.
-func (client *sparkJobDefinitionClient) GetSparkJobDefinitionHandleError(resp *azcore.Response) error {
+func (client sparkJobDefinitionClient) GetSparkJobDefinitionHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -267,7 +267,7 @@ func (client *sparkJobDefinitionClient) GetSparkJobDefinitionHandleError(resp *a
 }
 
 // GetSparkJobDefinitionsByWorkspace - Lists spark job definitions.
-func (client *sparkJobDefinitionClient) GetSparkJobDefinitionsByWorkspace(options *SparkJobDefinitionGetSparkJobDefinitionsByWorkspaceOptions) SparkJobDefinitionsListResponsePager {
+func (client sparkJobDefinitionClient) GetSparkJobDefinitionsByWorkspace(options *SparkJobDefinitionGetSparkJobDefinitionsByWorkspaceOptions) SparkJobDefinitionsListResponsePager {
 	return &sparkJobDefinitionsListResponsePager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
@@ -283,7 +283,7 @@ func (client *sparkJobDefinitionClient) GetSparkJobDefinitionsByWorkspace(option
 }
 
 // GetSparkJobDefinitionsByWorkspaceCreateRequest creates the GetSparkJobDefinitionsByWorkspace request.
-func (client *sparkJobDefinitionClient) GetSparkJobDefinitionsByWorkspaceCreateRequest(ctx context.Context, options *SparkJobDefinitionGetSparkJobDefinitionsByWorkspaceOptions) (*azcore.Request, error) {
+func (client sparkJobDefinitionClient) GetSparkJobDefinitionsByWorkspaceCreateRequest(ctx context.Context, options *SparkJobDefinitionGetSparkJobDefinitionsByWorkspaceOptions) (*azcore.Request, error) {
 	urlPath := "/sparkJobDefinitions"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -298,13 +298,13 @@ func (client *sparkJobDefinitionClient) GetSparkJobDefinitionsByWorkspaceCreateR
 }
 
 // GetSparkJobDefinitionsByWorkspaceHandleResponse handles the GetSparkJobDefinitionsByWorkspace response.
-func (client *sparkJobDefinitionClient) GetSparkJobDefinitionsByWorkspaceHandleResponse(resp *azcore.Response) (*SparkJobDefinitionsListResponseResponse, error) {
+func (client sparkJobDefinitionClient) GetSparkJobDefinitionsByWorkspaceHandleResponse(resp *azcore.Response) (*SparkJobDefinitionsListResponseResponse, error) {
 	result := SparkJobDefinitionsListResponseResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.SparkJobDefinitionsListResponse)
 }
 
 // GetSparkJobDefinitionsByWorkspaceHandleError handles the GetSparkJobDefinitionsByWorkspace error response.
-func (client *sparkJobDefinitionClient) GetSparkJobDefinitionsByWorkspaceHandleError(resp *azcore.Response) error {
+func (client sparkJobDefinitionClient) GetSparkJobDefinitionsByWorkspaceHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -313,7 +313,7 @@ func (client *sparkJobDefinitionClient) GetSparkJobDefinitionsByWorkspaceHandleE
 }
 
 // RenameSparkJobDefinition - Renames a sparkJobDefinition.
-func (client *sparkJobDefinitionClient) RenameSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string, request ArtifactRenameRequest, options *SparkJobDefinitionRenameSparkJobDefinitionOptions) (*azcore.Response, error) {
+func (client sparkJobDefinitionClient) RenameSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string, request ArtifactRenameRequest, options *SparkJobDefinitionRenameSparkJobDefinitionOptions) (*azcore.Response, error) {
 	req, err := client.RenameSparkJobDefinitionCreateRequest(ctx, sparkJobDefinitionName, request, options)
 	if err != nil {
 		return nil, err
@@ -329,7 +329,7 @@ func (client *sparkJobDefinitionClient) RenameSparkJobDefinition(ctx context.Con
 }
 
 // RenameSparkJobDefinitionCreateRequest creates the RenameSparkJobDefinition request.
-func (client *sparkJobDefinitionClient) RenameSparkJobDefinitionCreateRequest(ctx context.Context, sparkJobDefinitionName string, request ArtifactRenameRequest, options *SparkJobDefinitionRenameSparkJobDefinitionOptions) (*azcore.Request, error) {
+func (client sparkJobDefinitionClient) RenameSparkJobDefinitionCreateRequest(ctx context.Context, sparkJobDefinitionName string, request ArtifactRenameRequest, options *SparkJobDefinitionRenameSparkJobDefinitionOptions) (*azcore.Request, error) {
 	urlPath := "/sparkJobDefinitions/{sparkJobDefinitionName}/rename"
 	urlPath = strings.ReplaceAll(urlPath, "{sparkJobDefinitionName}", url.PathEscape(sparkJobDefinitionName))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -345,7 +345,7 @@ func (client *sparkJobDefinitionClient) RenameSparkJobDefinitionCreateRequest(ct
 }
 
 // RenameSparkJobDefinitionHandleError handles the RenameSparkJobDefinition error response.
-func (client *sparkJobDefinitionClient) RenameSparkJobDefinitionHandleError(resp *azcore.Response) error {
+func (client sparkJobDefinitionClient) RenameSparkJobDefinitionHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

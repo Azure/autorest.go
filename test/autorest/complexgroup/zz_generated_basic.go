@@ -13,40 +13,24 @@ import (
 	"net/http"
 )
 
-// BasicOperations contains the methods for the Basic group.
-type BasicOperations interface {
-	// GetEmpty - Get a basic complex type that is empty
-	GetEmpty(ctx context.Context, options *BasicGetEmptyOptions) (*BasicResponse, error)
-	// GetInvalid - Get a basic complex type that is invalid for the local strong type
-	GetInvalid(ctx context.Context, options *BasicGetInvalidOptions) (*BasicResponse, error)
-	// GetNotProvided - Get a basic complex type while the server doesn't provide a response payload
-	GetNotProvided(ctx context.Context, options *BasicGetNotProvidedOptions) (*BasicResponse, error)
-	// GetNull - Get a basic complex type whose properties are null
-	GetNull(ctx context.Context, options *BasicGetNullOptions) (*BasicResponse, error)
-	// GetValid - Get complex type {id: 2, name: 'abc', color: 'YELLOW'}
-	GetValid(ctx context.Context, options *BasicGetValidOptions) (*BasicResponse, error)
-	// PutValid - Please put {id: 2, name: 'abc', color: 'Magenta'}
-	PutValid(ctx context.Context, complexBody Basic, options *BasicPutValidOptions) (*http.Response, error)
-}
-
-// BasicClient implements the BasicOperations interface.
+// BasicClient contains the methods for the Basic group.
 // Don't use this type directly, use NewBasicClient() instead.
 type BasicClient struct {
 	con *Connection
 }
 
 // NewBasicClient creates a new instance of BasicClient with the specified values.
-func NewBasicClient(con *Connection) BasicOperations {
-	return &BasicClient{con: con}
+func NewBasicClient(con *Connection) BasicClient {
+	return BasicClient{con: con}
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client *BasicClient) Pipeline() azcore.Pipeline {
+func (client BasicClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // GetEmpty - Get a basic complex type that is empty
-func (client *BasicClient) GetEmpty(ctx context.Context, options *BasicGetEmptyOptions) (*BasicResponse, error) {
+func (client BasicClient) GetEmpty(ctx context.Context, options *BasicGetEmptyOptions) (*BasicResponse, error) {
 	req, err := client.GetEmptyCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -66,7 +50,7 @@ func (client *BasicClient) GetEmpty(ctx context.Context, options *BasicGetEmptyO
 }
 
 // GetEmptyCreateRequest creates the GetEmpty request.
-func (client *BasicClient) GetEmptyCreateRequest(ctx context.Context, options *BasicGetEmptyOptions) (*azcore.Request, error) {
+func (client BasicClient) GetEmptyCreateRequest(ctx context.Context, options *BasicGetEmptyOptions) (*azcore.Request, error) {
 	urlPath := "/complex/basic/empty"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -78,13 +62,13 @@ func (client *BasicClient) GetEmptyCreateRequest(ctx context.Context, options *B
 }
 
 // GetEmptyHandleResponse handles the GetEmpty response.
-func (client *BasicClient) GetEmptyHandleResponse(resp *azcore.Response) (*BasicResponse, error) {
+func (client BasicClient) GetEmptyHandleResponse(resp *azcore.Response) (*BasicResponse, error) {
 	result := BasicResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Basic)
 }
 
 // GetEmptyHandleError handles the GetEmpty error response.
-func (client *BasicClient) GetEmptyHandleError(resp *azcore.Response) error {
+func (client BasicClient) GetEmptyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -93,7 +77,7 @@ func (client *BasicClient) GetEmptyHandleError(resp *azcore.Response) error {
 }
 
 // GetInvalid - Get a basic complex type that is invalid for the local strong type
-func (client *BasicClient) GetInvalid(ctx context.Context, options *BasicGetInvalidOptions) (*BasicResponse, error) {
+func (client BasicClient) GetInvalid(ctx context.Context, options *BasicGetInvalidOptions) (*BasicResponse, error) {
 	req, err := client.GetInvalidCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -113,7 +97,7 @@ func (client *BasicClient) GetInvalid(ctx context.Context, options *BasicGetInva
 }
 
 // GetInvalidCreateRequest creates the GetInvalid request.
-func (client *BasicClient) GetInvalidCreateRequest(ctx context.Context, options *BasicGetInvalidOptions) (*azcore.Request, error) {
+func (client BasicClient) GetInvalidCreateRequest(ctx context.Context, options *BasicGetInvalidOptions) (*azcore.Request, error) {
 	urlPath := "/complex/basic/invalid"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -125,13 +109,13 @@ func (client *BasicClient) GetInvalidCreateRequest(ctx context.Context, options 
 }
 
 // GetInvalidHandleResponse handles the GetInvalid response.
-func (client *BasicClient) GetInvalidHandleResponse(resp *azcore.Response) (*BasicResponse, error) {
+func (client BasicClient) GetInvalidHandleResponse(resp *azcore.Response) (*BasicResponse, error) {
 	result := BasicResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Basic)
 }
 
 // GetInvalidHandleError handles the GetInvalid error response.
-func (client *BasicClient) GetInvalidHandleError(resp *azcore.Response) error {
+func (client BasicClient) GetInvalidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -140,7 +124,7 @@ func (client *BasicClient) GetInvalidHandleError(resp *azcore.Response) error {
 }
 
 // GetNotProvided - Get a basic complex type while the server doesn't provide a response payload
-func (client *BasicClient) GetNotProvided(ctx context.Context, options *BasicGetNotProvidedOptions) (*BasicResponse, error) {
+func (client BasicClient) GetNotProvided(ctx context.Context, options *BasicGetNotProvidedOptions) (*BasicResponse, error) {
 	req, err := client.GetNotProvidedCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -160,7 +144,7 @@ func (client *BasicClient) GetNotProvided(ctx context.Context, options *BasicGet
 }
 
 // GetNotProvidedCreateRequest creates the GetNotProvided request.
-func (client *BasicClient) GetNotProvidedCreateRequest(ctx context.Context, options *BasicGetNotProvidedOptions) (*azcore.Request, error) {
+func (client BasicClient) GetNotProvidedCreateRequest(ctx context.Context, options *BasicGetNotProvidedOptions) (*azcore.Request, error) {
 	urlPath := "/complex/basic/notprovided"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -172,13 +156,13 @@ func (client *BasicClient) GetNotProvidedCreateRequest(ctx context.Context, opti
 }
 
 // GetNotProvidedHandleResponse handles the GetNotProvided response.
-func (client *BasicClient) GetNotProvidedHandleResponse(resp *azcore.Response) (*BasicResponse, error) {
+func (client BasicClient) GetNotProvidedHandleResponse(resp *azcore.Response) (*BasicResponse, error) {
 	result := BasicResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Basic)
 }
 
 // GetNotProvidedHandleError handles the GetNotProvided error response.
-func (client *BasicClient) GetNotProvidedHandleError(resp *azcore.Response) error {
+func (client BasicClient) GetNotProvidedHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -187,7 +171,7 @@ func (client *BasicClient) GetNotProvidedHandleError(resp *azcore.Response) erro
 }
 
 // GetNull - Get a basic complex type whose properties are null
-func (client *BasicClient) GetNull(ctx context.Context, options *BasicGetNullOptions) (*BasicResponse, error) {
+func (client BasicClient) GetNull(ctx context.Context, options *BasicGetNullOptions) (*BasicResponse, error) {
 	req, err := client.GetNullCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -207,7 +191,7 @@ func (client *BasicClient) GetNull(ctx context.Context, options *BasicGetNullOpt
 }
 
 // GetNullCreateRequest creates the GetNull request.
-func (client *BasicClient) GetNullCreateRequest(ctx context.Context, options *BasicGetNullOptions) (*azcore.Request, error) {
+func (client BasicClient) GetNullCreateRequest(ctx context.Context, options *BasicGetNullOptions) (*azcore.Request, error) {
 	urlPath := "/complex/basic/null"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -219,13 +203,13 @@ func (client *BasicClient) GetNullCreateRequest(ctx context.Context, options *Ba
 }
 
 // GetNullHandleResponse handles the GetNull response.
-func (client *BasicClient) GetNullHandleResponse(resp *azcore.Response) (*BasicResponse, error) {
+func (client BasicClient) GetNullHandleResponse(resp *azcore.Response) (*BasicResponse, error) {
 	result := BasicResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Basic)
 }
 
 // GetNullHandleError handles the GetNull error response.
-func (client *BasicClient) GetNullHandleError(resp *azcore.Response) error {
+func (client BasicClient) GetNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -234,7 +218,7 @@ func (client *BasicClient) GetNullHandleError(resp *azcore.Response) error {
 }
 
 // GetValid - Get complex type {id: 2, name: 'abc', color: 'YELLOW'}
-func (client *BasicClient) GetValid(ctx context.Context, options *BasicGetValidOptions) (*BasicResponse, error) {
+func (client BasicClient) GetValid(ctx context.Context, options *BasicGetValidOptions) (*BasicResponse, error) {
 	req, err := client.GetValidCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -254,7 +238,7 @@ func (client *BasicClient) GetValid(ctx context.Context, options *BasicGetValidO
 }
 
 // GetValidCreateRequest creates the GetValid request.
-func (client *BasicClient) GetValidCreateRequest(ctx context.Context, options *BasicGetValidOptions) (*azcore.Request, error) {
+func (client BasicClient) GetValidCreateRequest(ctx context.Context, options *BasicGetValidOptions) (*azcore.Request, error) {
 	urlPath := "/complex/basic/valid"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -266,13 +250,13 @@ func (client *BasicClient) GetValidCreateRequest(ctx context.Context, options *B
 }
 
 // GetValidHandleResponse handles the GetValid response.
-func (client *BasicClient) GetValidHandleResponse(resp *azcore.Response) (*BasicResponse, error) {
+func (client BasicClient) GetValidHandleResponse(resp *azcore.Response) (*BasicResponse, error) {
 	result := BasicResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Basic)
 }
 
 // GetValidHandleError handles the GetValid error response.
-func (client *BasicClient) GetValidHandleError(resp *azcore.Response) error {
+func (client BasicClient) GetValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -281,7 +265,7 @@ func (client *BasicClient) GetValidHandleError(resp *azcore.Response) error {
 }
 
 // PutValid - Please put {id: 2, name: 'abc', color: 'Magenta'}
-func (client *BasicClient) PutValid(ctx context.Context, complexBody Basic, options *BasicPutValidOptions) (*http.Response, error) {
+func (client BasicClient) PutValid(ctx context.Context, complexBody Basic, options *BasicPutValidOptions) (*http.Response, error) {
 	req, err := client.PutValidCreateRequest(ctx, complexBody, options)
 	if err != nil {
 		return nil, err
@@ -297,7 +281,7 @@ func (client *BasicClient) PutValid(ctx context.Context, complexBody Basic, opti
 }
 
 // PutValidCreateRequest creates the PutValid request.
-func (client *BasicClient) PutValidCreateRequest(ctx context.Context, complexBody Basic, options *BasicPutValidOptions) (*azcore.Request, error) {
+func (client BasicClient) PutValidCreateRequest(ctx context.Context, complexBody Basic, options *BasicPutValidOptions) (*azcore.Request, error) {
 	urlPath := "/complex/basic/valid"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -312,7 +296,7 @@ func (client *BasicClient) PutValidCreateRequest(ctx context.Context, complexBod
 }
 
 // PutValidHandleError handles the PutValid error response.
-func (client *BasicClient) PutValidHandleError(resp *azcore.Response) error {
+func (client BasicClient) PutValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

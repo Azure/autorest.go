@@ -15,36 +15,24 @@ import (
 	"strings"
 )
 
-// ComplexModelClientOperations contains the methods for the ComplexModelClient group.
-type ComplexModelClientOperations interface {
-	// Create - Resets products.
-	Create(ctx context.Context, subscriptionId string, resourceGroupName string, bodyParameter CatalogDictionaryOfArray, options *ComplexModelClientCreateOptions) (*CatalogDictionaryResponse, error)
-	// List - The Products endpoint returns information about the Uber products offered at a given location. The response includes the display name and other
-	// details about each product, and lists the products in
-	// the proper display order.
-	List(ctx context.Context, resourceGroupName string, options *ComplexModelClientListOptions) (*CatalogArrayResponse, error)
-	// Update - Resets products.
-	Update(ctx context.Context, subscriptionId string, resourceGroupName string, bodyParameter CatalogArrayOfDictionary, options *ComplexModelClientUpdateOptions) (*CatalogArrayResponse, error)
-}
-
-// ComplexModelClient implements the ComplexModelClientOperations interface.
+// ComplexModelClient contains the methods for the ComplexModelClient group.
 // Don't use this type directly, use NewComplexModelClient() instead.
 type ComplexModelClient struct {
 	con *Connection
 }
 
 // NewComplexModelClient creates a new instance of ComplexModelClient with the specified values.
-func NewComplexModelClient(con *Connection) ComplexModelClientOperations {
-	return &ComplexModelClient{con: con}
+func NewComplexModelClient(con *Connection) ComplexModelClient {
+	return ComplexModelClient{con: con}
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client *ComplexModelClient) Pipeline() azcore.Pipeline {
+func (client ComplexModelClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // Create - Resets products.
-func (client *ComplexModelClient) Create(ctx context.Context, subscriptionId string, resourceGroupName string, bodyParameter CatalogDictionaryOfArray, options *ComplexModelClientCreateOptions) (*CatalogDictionaryResponse, error) {
+func (client ComplexModelClient) Create(ctx context.Context, subscriptionId string, resourceGroupName string, bodyParameter CatalogDictionaryOfArray, options *ComplexModelClientCreateOptions) (*CatalogDictionaryResponse, error) {
 	req, err := client.CreateCreateRequest(ctx, subscriptionId, resourceGroupName, bodyParameter, options)
 	if err != nil {
 		return nil, err
@@ -64,7 +52,7 @@ func (client *ComplexModelClient) Create(ctx context.Context, subscriptionId str
 }
 
 // CreateCreateRequest creates the Create request.
-func (client *ComplexModelClient) CreateCreateRequest(ctx context.Context, subscriptionId string, resourceGroupName string, bodyParameter CatalogDictionaryOfArray, options *ComplexModelClientCreateOptions) (*azcore.Request, error) {
+func (client ComplexModelClient) CreateCreateRequest(ctx context.Context, subscriptionId string, resourceGroupName string, bodyParameter CatalogDictionaryOfArray, options *ComplexModelClientCreateOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/Microsoft.Cache/Redis"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(subscriptionId))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
@@ -81,13 +69,13 @@ func (client *ComplexModelClient) CreateCreateRequest(ctx context.Context, subsc
 }
 
 // CreateHandleResponse handles the Create response.
-func (client *ComplexModelClient) CreateHandleResponse(resp *azcore.Response) (*CatalogDictionaryResponse, error) {
+func (client ComplexModelClient) CreateHandleResponse(resp *azcore.Response) (*CatalogDictionaryResponse, error) {
 	result := CatalogDictionaryResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.CatalogDictionary)
 }
 
 // CreateHandleError handles the Create error response.
-func (client *ComplexModelClient) CreateHandleError(resp *azcore.Response) error {
+func (client ComplexModelClient) CreateHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -98,7 +86,7 @@ func (client *ComplexModelClient) CreateHandleError(resp *azcore.Response) error
 // List - The Products endpoint returns information about the Uber products offered at a given location. The response includes the display name and other
 // details about each product, and lists the products in
 // the proper display order.
-func (client *ComplexModelClient) List(ctx context.Context, resourceGroupName string, options *ComplexModelClientListOptions) (*CatalogArrayResponse, error) {
+func (client ComplexModelClient) List(ctx context.Context, resourceGroupName string, options *ComplexModelClientListOptions) (*CatalogArrayResponse, error) {
 	req, err := client.ListCreateRequest(ctx, resourceGroupName, options)
 	if err != nil {
 		return nil, err
@@ -118,7 +106,7 @@ func (client *ComplexModelClient) List(ctx context.Context, resourceGroupName st
 }
 
 // ListCreateRequest creates the List request.
-func (client *ComplexModelClient) ListCreateRequest(ctx context.Context, resourceGroupName string, options *ComplexModelClientListOptions) (*azcore.Request, error) {
+func (client ComplexModelClient) ListCreateRequest(ctx context.Context, resourceGroupName string, options *ComplexModelClientListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/Microsoft.Cache/Redis"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape("123456"))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
@@ -135,13 +123,13 @@ func (client *ComplexModelClient) ListCreateRequest(ctx context.Context, resourc
 }
 
 // ListHandleResponse handles the List response.
-func (client *ComplexModelClient) ListHandleResponse(resp *azcore.Response) (*CatalogArrayResponse, error) {
+func (client ComplexModelClient) ListHandleResponse(resp *azcore.Response) (*CatalogArrayResponse, error) {
 	result := CatalogArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.CatalogArray)
 }
 
 // ListHandleError handles the List error response.
-func (client *ComplexModelClient) ListHandleError(resp *azcore.Response) error {
+func (client ComplexModelClient) ListHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -150,7 +138,7 @@ func (client *ComplexModelClient) ListHandleError(resp *azcore.Response) error {
 }
 
 // Update - Resets products.
-func (client *ComplexModelClient) Update(ctx context.Context, subscriptionId string, resourceGroupName string, bodyParameter CatalogArrayOfDictionary, options *ComplexModelClientUpdateOptions) (*CatalogArrayResponse, error) {
+func (client ComplexModelClient) Update(ctx context.Context, subscriptionId string, resourceGroupName string, bodyParameter CatalogArrayOfDictionary, options *ComplexModelClientUpdateOptions) (*CatalogArrayResponse, error) {
 	req, err := client.UpdateCreateRequest(ctx, subscriptionId, resourceGroupName, bodyParameter, options)
 	if err != nil {
 		return nil, err
@@ -170,7 +158,7 @@ func (client *ComplexModelClient) Update(ctx context.Context, subscriptionId str
 }
 
 // UpdateCreateRequest creates the Update request.
-func (client *ComplexModelClient) UpdateCreateRequest(ctx context.Context, subscriptionId string, resourceGroupName string, bodyParameter CatalogArrayOfDictionary, options *ComplexModelClientUpdateOptions) (*azcore.Request, error) {
+func (client ComplexModelClient) UpdateCreateRequest(ctx context.Context, subscriptionId string, resourceGroupName string, bodyParameter CatalogArrayOfDictionary, options *ComplexModelClientUpdateOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/Microsoft.Cache/Redis"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(subscriptionId))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
@@ -187,13 +175,13 @@ func (client *ComplexModelClient) UpdateCreateRequest(ctx context.Context, subsc
 }
 
 // UpdateHandleResponse handles the Update response.
-func (client *ComplexModelClient) UpdateHandleResponse(resp *azcore.Response) (*CatalogArrayResponse, error) {
+func (client ComplexModelClient) UpdateHandleResponse(resp *azcore.Response) (*CatalogArrayResponse, error) {
 	result := CatalogArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.CatalogArray)
 }
 
 // UpdateHandleError handles the Update error response.
-func (client *ComplexModelClient) UpdateHandleError(resp *azcore.Response) error {
+func (client ComplexModelClient) UpdateHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

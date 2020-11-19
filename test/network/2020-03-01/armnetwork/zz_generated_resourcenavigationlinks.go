@@ -16,13 +16,7 @@ import (
 	"strings"
 )
 
-// ResourceNavigationLinksOperations contains the methods for the ResourceNavigationLinks group.
-type ResourceNavigationLinksOperations interface {
-	// List - Gets a list of resource navigation links for a subnet.
-	List(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, options *ResourceNavigationLinksListOptions) (*ResourceNavigationLinksListResultResponse, error)
-}
-
-// ResourceNavigationLinksClient implements the ResourceNavigationLinksOperations interface.
+// ResourceNavigationLinksClient contains the methods for the ResourceNavigationLinks group.
 // Don't use this type directly, use NewResourceNavigationLinksClient() instead.
 type ResourceNavigationLinksClient struct {
 	con            *armcore.Connection
@@ -30,17 +24,17 @@ type ResourceNavigationLinksClient struct {
 }
 
 // NewResourceNavigationLinksClient creates a new instance of ResourceNavigationLinksClient with the specified values.
-func NewResourceNavigationLinksClient(con *armcore.Connection, subscriptionID string) ResourceNavigationLinksOperations {
-	return &ResourceNavigationLinksClient{con: con, subscriptionID: subscriptionID}
+func NewResourceNavigationLinksClient(con *armcore.Connection, subscriptionID string) ResourceNavigationLinksClient {
+	return ResourceNavigationLinksClient{con: con, subscriptionID: subscriptionID}
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client *ResourceNavigationLinksClient) Pipeline() azcore.Pipeline {
+func (client ResourceNavigationLinksClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // List - Gets a list of resource navigation links for a subnet.
-func (client *ResourceNavigationLinksClient) List(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, options *ResourceNavigationLinksListOptions) (*ResourceNavigationLinksListResultResponse, error) {
+func (client ResourceNavigationLinksClient) List(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, options *ResourceNavigationLinksListOptions) (*ResourceNavigationLinksListResultResponse, error) {
 	req, err := client.ListCreateRequest(ctx, resourceGroupName, virtualNetworkName, subnetName, options)
 	if err != nil {
 		return nil, err
@@ -60,7 +54,7 @@ func (client *ResourceNavigationLinksClient) List(ctx context.Context, resourceG
 }
 
 // ListCreateRequest creates the List request.
-func (client *ResourceNavigationLinksClient) ListCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, options *ResourceNavigationLinksListOptions) (*azcore.Request, error) {
+func (client ResourceNavigationLinksClient) ListCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, options *ResourceNavigationLinksListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}/ResourceNavigationLinks"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkName}", url.PathEscape(virtualNetworkName))
@@ -79,13 +73,13 @@ func (client *ResourceNavigationLinksClient) ListCreateRequest(ctx context.Conte
 }
 
 // ListHandleResponse handles the List response.
-func (client *ResourceNavigationLinksClient) ListHandleResponse(resp *azcore.Response) (*ResourceNavigationLinksListResultResponse, error) {
+func (client ResourceNavigationLinksClient) ListHandleResponse(resp *azcore.Response) (*ResourceNavigationLinksListResultResponse, error) {
 	result := ResourceNavigationLinksListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ResourceNavigationLinksListResult)
 }
 
 // ListHandleError handles the List error response.
-func (client *ResourceNavigationLinksClient) ListHandleError(resp *azcore.Response) error {
+func (client ResourceNavigationLinksClient) ListHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

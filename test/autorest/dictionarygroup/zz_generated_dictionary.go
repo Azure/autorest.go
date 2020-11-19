@@ -14,166 +14,24 @@ import (
 	"time"
 )
 
-// DictionaryOperations contains the methods for the Dictionary group.
-type DictionaryOperations interface {
-	// GetArrayEmpty - Get an empty dictionary {}
-	GetArrayEmpty(ctx context.Context, options *DictionaryGetArrayEmptyOptions) (*MapOfStringArrayResponse, error)
-	// GetArrayItemEmpty - Get an array of array of strings [{"0": ["1", "2", "3"], "1": [], "2": ["7", "8", "9"]}
-	GetArrayItemEmpty(ctx context.Context, options *DictionaryGetArrayItemEmptyOptions) (*MapOfStringArrayResponse, error)
-	// GetArrayItemNull - Get an dictionary of array of strings {"0": ["1", "2", "3"], "1": null, "2": ["7", "8", "9"]}
-	GetArrayItemNull(ctx context.Context, options *DictionaryGetArrayItemNullOptions) (*MapOfStringArrayResponse, error)
-	// GetArrayNull - Get a null array
-	GetArrayNull(ctx context.Context, options *DictionaryGetArrayNullOptions) (*MapOfStringArrayResponse, error)
-	// GetArrayValid - Get an array of array of strings {"0": ["1", "2", "3"], "1": ["4", "5", "6"], "2": ["7", "8", "9"]}
-	GetArrayValid(ctx context.Context, options *DictionaryGetArrayValidOptions) (*MapOfStringArrayResponse, error)
-	// GetBase64URL - Get base64url dictionary value {"0": "a string that gets encoded with base64url", "1": "test string", "2": "Lorem ipsum"}
-	GetBase64URL(ctx context.Context, options *DictionaryGetBase64URLOptions) (*MapOfByteArrayResponse, error)
-	// GetBooleanInvalidNull - Get boolean dictionary value {"0": true, "1": null, "2": false }
-	GetBooleanInvalidNull(ctx context.Context, options *DictionaryGetBooleanInvalidNullOptions) (*MapOfBoolResponse, error)
-	// GetBooleanInvalidString - Get boolean dictionary value '{"0": true, "1": "boolean", "2": false}'
-	GetBooleanInvalidString(ctx context.Context, options *DictionaryGetBooleanInvalidStringOptions) (*MapOfBoolResponse, error)
-	// GetBooleanTfft - Get boolean dictionary value {"0": true, "1": false, "2": false, "3": true }
-	GetBooleanTfft(ctx context.Context, options *DictionaryGetBooleanTfftOptions) (*MapOfBoolResponse, error)
-	// GetByteInvalidNull - Get byte dictionary value {"0": hex(FF FF FF FA), "1": null} with the first item base64 encoded
-	GetByteInvalidNull(ctx context.Context, options *DictionaryGetByteInvalidNullOptions) (*MapOfByteArrayResponse, error)
-	// GetByteValid - Get byte dictionary value {"0": hex(FF FF FF FA), "1": hex(01 02 03), "2": hex (25, 29, 43)} with each item encoded in base64
-	GetByteValid(ctx context.Context, options *DictionaryGetByteValidOptions) (*MapOfByteArrayResponse, error)
-	// GetComplexEmpty - Get empty dictionary of complex type {}
-	GetComplexEmpty(ctx context.Context, options *DictionaryGetComplexEmptyOptions) (*MapOfWidgetResponse, error)
-	// GetComplexItemEmpty - Get dictionary of complex type with empty item {"0": {"integer": 1, "string": "2"}, "1:" {}, "2": {"integer": 5, "string": "6"}}
-	GetComplexItemEmpty(ctx context.Context, options *DictionaryGetComplexItemEmptyOptions) (*MapOfWidgetResponse, error)
-	// GetComplexItemNull - Get dictionary of complex type with null item {"0": {"integer": 1, "string": "2"}, "1": null, "2": {"integer": 5, "string": "6"}}
-	GetComplexItemNull(ctx context.Context, options *DictionaryGetComplexItemNullOptions) (*MapOfWidgetResponse, error)
-	// GetComplexNull - Get dictionary of complex type null value
-	GetComplexNull(ctx context.Context, options *DictionaryGetComplexNullOptions) (*MapOfWidgetResponse, error)
-	// GetComplexValid - Get dictionary of complex type with {"0": {"integer": 1, "string": "2"}, "1": {"integer": 3, "string": "4"}, "2": {"integer": 5, "string":
-	// "6"}}
-	GetComplexValid(ctx context.Context, options *DictionaryGetComplexValidOptions) (*MapOfWidgetResponse, error)
-	// GetDateInvalidChars - Get date dictionary value {"0": "2011-03-22", "1": "date"}
-	GetDateInvalidChars(ctx context.Context, options *DictionaryGetDateInvalidCharsOptions) (*MapOfTimeResponse, error)
-	// GetDateInvalidNull - Get date dictionary value {"0": "2012-01-01", "1": null, "2": "1776-07-04"}
-	GetDateInvalidNull(ctx context.Context, options *DictionaryGetDateInvalidNullOptions) (*MapOfTimeResponse, error)
-	// GetDateTimeInvalidChars - Get date dictionary value {"0": "2000-12-01t00:00:01z", "1": "date-time"}
-	GetDateTimeInvalidChars(ctx context.Context, options *DictionaryGetDateTimeInvalidCharsOptions) (*MapOfTimeResponse, error)
-	// GetDateTimeInvalidNull - Get date dictionary value {"0": "2000-12-01t00:00:01z", "1": null}
-	GetDateTimeInvalidNull(ctx context.Context, options *DictionaryGetDateTimeInvalidNullOptions) (*MapOfTimeResponse, error)
-	// GetDateTimeRFC1123Valid - Get date-time-rfc1123 dictionary value {"0": "Fri, 01 Dec 2000 00:00:01 GMT", "1": "Wed, 02 Jan 1980 00:11:35 GMT", "2": "Wed,
-	// 12 Oct 1492 10:15:01 GMT"}
-	GetDateTimeRFC1123Valid(ctx context.Context, options *DictionaryGetDateTimeRFC1123ValidOptions) (*MapOfTimeResponse, error)
-	// GetDateTimeValid - Get date-time dictionary value {"0": "2000-12-01t00:00:01z", "1": "1980-01-02T00:11:35+01:00", "2": "1492-10-12T10:15:01-08:00"}
-	GetDateTimeValid(ctx context.Context, options *DictionaryGetDateTimeValidOptions) (*MapOfTimeResponse, error)
-	// GetDateValid - Get integer dictionary value {"0": "2000-12-01", "1": "1980-01-02", "2": "1492-10-12"}
-	GetDateValid(ctx context.Context, options *DictionaryGetDateValidOptions) (*MapOfTimeResponse, error)
-	// GetDictionaryEmpty - Get an dictionaries of dictionaries of type with value {}
-	GetDictionaryEmpty(ctx context.Context, options *DictionaryGetDictionaryEmptyOptions) (*MapOfInterfaceResponse, error)
-	// GetDictionaryItemEmpty - Get an dictionaries of dictionaries of type with value {"0": {"1": "one", "2": "two", "3": "three"}, "1": {}, "2": {"7": "seven",
-	// "8": "eight", "9": "nine"}}
-	GetDictionaryItemEmpty(ctx context.Context, options *DictionaryGetDictionaryItemEmptyOptions) (*MapOfInterfaceResponse, error)
-	// GetDictionaryItemNull - Get an dictionaries of dictionaries of type with value {"0": {"1": "one", "2": "two", "3": "three"}, "1": null, "2": {"7": "seven",
-	// "8": "eight", "9": "nine"}}
-	GetDictionaryItemNull(ctx context.Context, options *DictionaryGetDictionaryItemNullOptions) (*MapOfInterfaceResponse, error)
-	// GetDictionaryNull - Get an dictionaries of dictionaries with value null
-	GetDictionaryNull(ctx context.Context, options *DictionaryGetDictionaryNullOptions) (*MapOfInterfaceResponse, error)
-	// GetDictionaryValid - Get an dictionaries of dictionaries of type with value {"0": {"1": "one", "2": "two", "3": "three"}, "1": {"4": "four", "5": "five",
-	// "6": "six"}, "2": {"7": "seven", "8": "eight", "9": "nine"}}
-	GetDictionaryValid(ctx context.Context, options *DictionaryGetDictionaryValidOptions) (*MapOfInterfaceResponse, error)
-	// GetDoubleInvalidNull - Get float dictionary value {"0": 0.0, "1": null, "2": 1.2e20}
-	GetDoubleInvalidNull(ctx context.Context, options *DictionaryGetDoubleInvalidNullOptions) (*MapOfFloat64Response, error)
-	// GetDoubleInvalidString - Get boolean dictionary value {"0": 1.0, "1": "number", "2": 0.0}
-	GetDoubleInvalidString(ctx context.Context, options *DictionaryGetDoubleInvalidStringOptions) (*MapOfFloat64Response, error)
-	// GetDoubleValid - Get float dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
-	GetDoubleValid(ctx context.Context, options *DictionaryGetDoubleValidOptions) (*MapOfFloat64Response, error)
-	// GetDurationValid - Get duration dictionary value {"0": "P123DT22H14M12.011S", "1": "P5DT1H0M0S"}
-	GetDurationValid(ctx context.Context, options *DictionaryGetDurationValidOptions) (*MapOfStringResponse, error)
-	// GetEmpty - Get empty dictionary value {}
-	GetEmpty(ctx context.Context, options *DictionaryGetEmptyOptions) (*MapOfInt32Response, error)
-	// GetEmptyStringKey - Get Dictionary with key as empty string
-	GetEmptyStringKey(ctx context.Context, options *DictionaryGetEmptyStringKeyOptions) (*MapOfStringResponse, error)
-	// GetFloatInvalidNull - Get float dictionary value {"0": 0.0, "1": null, "2": 1.2e20}
-	GetFloatInvalidNull(ctx context.Context, options *DictionaryGetFloatInvalidNullOptions) (*MapOfFloat32Response, error)
-	// GetFloatInvalidString - Get boolean dictionary value {"0": 1.0, "1": "number", "2": 0.0}
-	GetFloatInvalidString(ctx context.Context, options *DictionaryGetFloatInvalidStringOptions) (*MapOfFloat32Response, error)
-	// GetFloatValid - Get float dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
-	GetFloatValid(ctx context.Context, options *DictionaryGetFloatValidOptions) (*MapOfFloat32Response, error)
-	// GetIntInvalidNull - Get integer dictionary value {"0": 1, "1": null, "2": 0}
-	GetIntInvalidNull(ctx context.Context, options *DictionaryGetIntInvalidNullOptions) (*MapOfInt32Response, error)
-	// GetIntInvalidString - Get integer dictionary value {"0": 1, "1": "integer", "2": 0}
-	GetIntInvalidString(ctx context.Context, options *DictionaryGetIntInvalidStringOptions) (*MapOfInt32Response, error)
-	// GetIntegerValid - Get integer dictionary value {"0": 1, "1": -1, "2": 3, "3": 300}
-	GetIntegerValid(ctx context.Context, options *DictionaryGetIntegerValidOptions) (*MapOfInt32Response, error)
-	// GetInvalid - Get invalid Dictionary value
-	GetInvalid(ctx context.Context, options *DictionaryGetInvalidOptions) (*MapOfStringResponse, error)
-	// GetLongInvalidNull - Get long dictionary value {"0": 1, "1": null, "2": 0}
-	GetLongInvalidNull(ctx context.Context, options *DictionaryGetLongInvalidNullOptions) (*MapOfInt64Response, error)
-	// GetLongInvalidString - Get long dictionary value {"0": 1, "1": "integer", "2": 0}
-	GetLongInvalidString(ctx context.Context, options *DictionaryGetLongInvalidStringOptions) (*MapOfInt64Response, error)
-	// GetLongValid - Get integer dictionary value {"0": 1, "1": -1, "2": 3, "3": 300}
-	GetLongValid(ctx context.Context, options *DictionaryGetLongValidOptions) (*MapOfInt64Response, error)
-	// GetNull - Get null dictionary value
-	GetNull(ctx context.Context, options *DictionaryGetNullOptions) (*MapOfInt32Response, error)
-	// GetNullKey - Get Dictionary with null key
-	GetNullKey(ctx context.Context, options *DictionaryGetNullKeyOptions) (*MapOfStringResponse, error)
-	// GetNullValue - Get Dictionary with null value
-	GetNullValue(ctx context.Context, options *DictionaryGetNullValueOptions) (*MapOfStringResponse, error)
-	// GetStringValid - Get string dictionary value {"0": "foo1", "1": "foo2", "2": "foo3"}
-	GetStringValid(ctx context.Context, options *DictionaryGetStringValidOptions) (*MapOfStringResponse, error)
-	// GetStringWithInvalid - Get string dictionary value {"0": "foo", "1": 123, "2": "foo2"}
-	GetStringWithInvalid(ctx context.Context, options *DictionaryGetStringWithInvalidOptions) (*MapOfStringResponse, error)
-	// GetStringWithNull - Get string dictionary value {"0": "foo", "1": null, "2": "foo2"}
-	GetStringWithNull(ctx context.Context, options *DictionaryGetStringWithNullOptions) (*MapOfStringResponse, error)
-	// PutArrayValid - Put An array of array of strings {"0": ["1", "2", "3"], "1": ["4", "5", "6"], "2": ["7", "8", "9"]}
-	PutArrayValid(ctx context.Context, arrayBody map[string][]string, options *DictionaryPutArrayValidOptions) (*http.Response, error)
-	// PutBooleanTfft - Set dictionary value empty {"0": true, "1": false, "2": false, "3": true }
-	PutBooleanTfft(ctx context.Context, arrayBody map[string]bool, options *DictionaryPutBooleanTfftOptions) (*http.Response, error)
-	// PutByteValid - Put the dictionary value {"0": hex(FF FF FF FA), "1": hex(01 02 03), "2": hex (25, 29, 43)} with each elementencoded in base 64
-	PutByteValid(ctx context.Context, arrayBody map[string][]byte, options *DictionaryPutByteValidOptions) (*http.Response, error)
-	// PutComplexValid - Put an dictionary of complex type with values {"0": {"integer": 1, "string": "2"}, "1": {"integer": 3, "string": "4"}, "2": {"integer":
-	// 5, "string": "6"}}
-	PutComplexValid(ctx context.Context, arrayBody map[string]Widget, options *DictionaryPutComplexValidOptions) (*http.Response, error)
-	// PutDateTimeRFC1123Valid - Set dictionary value empty {"0": "Fri, 01 Dec 2000 00:00:01 GMT", "1": "Wed, 02 Jan 1980 00:11:35 GMT", "2": "Wed, 12 Oct 1492
-	// 10:15:01 GMT"}
-	PutDateTimeRFC1123Valid(ctx context.Context, arrayBody map[string]time.Time, options *DictionaryPutDateTimeRFC1123ValidOptions) (*http.Response, error)
-	// PutDateTimeValid - Set dictionary value {"0": "2000-12-01t00:00:01z", "1": "1980-01-02T00:11:35+01:00", "2": "1492-10-12T10:15:01-08:00"}
-	PutDateTimeValid(ctx context.Context, arrayBody map[string]time.Time, options *DictionaryPutDateTimeValidOptions) (*http.Response, error)
-	// PutDateValid - Set dictionary value {"0": "2000-12-01", "1": "1980-01-02", "2": "1492-10-12"}
-	PutDateValid(ctx context.Context, arrayBody map[string]time.Time, options *DictionaryPutDateValidOptions) (*http.Response, error)
-	// PutDictionaryValid - Get an dictionaries of dictionaries of type with value {"0": {"1": "one", "2": "two", "3": "three"}, "1": {"4": "four", "5": "five",
-	// "6": "six"}, "2": {"7": "seven", "8": "eight", "9": "nine"}}
-	PutDictionaryValid(ctx context.Context, arrayBody map[string]interface{}, options *DictionaryPutDictionaryValidOptions) (*http.Response, error)
-	// PutDoubleValid - Set dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
-	PutDoubleValid(ctx context.Context, arrayBody map[string]float64, options *DictionaryPutDoubleValidOptions) (*http.Response, error)
-	// PutDurationValid - Set dictionary value {"0": "P123DT22H14M12.011S", "1": "P5DT1H0M0S"}
-	PutDurationValid(ctx context.Context, arrayBody map[string]string, options *DictionaryPutDurationValidOptions) (*http.Response, error)
-	// PutEmpty - Set dictionary value empty {}
-	PutEmpty(ctx context.Context, arrayBody map[string]string, options *DictionaryPutEmptyOptions) (*http.Response, error)
-	// PutFloatValid - Set dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
-	PutFloatValid(ctx context.Context, arrayBody map[string]float32, options *DictionaryPutFloatValidOptions) (*http.Response, error)
-	// PutIntegerValid - Set dictionary value empty {"0": 1, "1": -1, "2": 3, "3": 300}
-	PutIntegerValid(ctx context.Context, arrayBody map[string]int32, options *DictionaryPutIntegerValidOptions) (*http.Response, error)
-	// PutLongValid - Set dictionary value empty {"0": 1, "1": -1, "2": 3, "3": 300}
-	PutLongValid(ctx context.Context, arrayBody map[string]int64, options *DictionaryPutLongValidOptions) (*http.Response, error)
-	// PutStringValid - Set dictionary value {"0": "foo1", "1": "foo2", "2": "foo3"}
-	PutStringValid(ctx context.Context, arrayBody map[string]string, options *DictionaryPutStringValidOptions) (*http.Response, error)
-}
-
-// DictionaryClient implements the DictionaryOperations interface.
+// DictionaryClient contains the methods for the Dictionary group.
 // Don't use this type directly, use NewDictionaryClient() instead.
 type DictionaryClient struct {
 	con *Connection
 }
 
 // NewDictionaryClient creates a new instance of DictionaryClient with the specified values.
-func NewDictionaryClient(con *Connection) DictionaryOperations {
-	return &DictionaryClient{con: con}
+func NewDictionaryClient(con *Connection) DictionaryClient {
+	return DictionaryClient{con: con}
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client *DictionaryClient) Pipeline() azcore.Pipeline {
+func (client DictionaryClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // GetArrayEmpty - Get an empty dictionary {}
-func (client *DictionaryClient) GetArrayEmpty(ctx context.Context, options *DictionaryGetArrayEmptyOptions) (*MapOfStringArrayResponse, error) {
+func (client DictionaryClient) GetArrayEmpty(ctx context.Context, options *DictionaryGetArrayEmptyOptions) (*MapOfStringArrayResponse, error) {
 	req, err := client.GetArrayEmptyCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -193,7 +51,7 @@ func (client *DictionaryClient) GetArrayEmpty(ctx context.Context, options *Dict
 }
 
 // GetArrayEmptyCreateRequest creates the GetArrayEmpty request.
-func (client *DictionaryClient) GetArrayEmptyCreateRequest(ctx context.Context, options *DictionaryGetArrayEmptyOptions) (*azcore.Request, error) {
+func (client DictionaryClient) GetArrayEmptyCreateRequest(ctx context.Context, options *DictionaryGetArrayEmptyOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/array/empty"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -205,13 +63,13 @@ func (client *DictionaryClient) GetArrayEmptyCreateRequest(ctx context.Context, 
 }
 
 // GetArrayEmptyHandleResponse handles the GetArrayEmpty response.
-func (client *DictionaryClient) GetArrayEmptyHandleResponse(resp *azcore.Response) (*MapOfStringArrayResponse, error) {
+func (client DictionaryClient) GetArrayEmptyHandleResponse(resp *azcore.Response) (*MapOfStringArrayResponse, error) {
 	result := MapOfStringArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetArrayEmptyHandleError handles the GetArrayEmpty error response.
-func (client *DictionaryClient) GetArrayEmptyHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) GetArrayEmptyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -220,7 +78,7 @@ func (client *DictionaryClient) GetArrayEmptyHandleError(resp *azcore.Response) 
 }
 
 // GetArrayItemEmpty - Get an array of array of strings [{"0": ["1", "2", "3"], "1": [], "2": ["7", "8", "9"]}
-func (client *DictionaryClient) GetArrayItemEmpty(ctx context.Context, options *DictionaryGetArrayItemEmptyOptions) (*MapOfStringArrayResponse, error) {
+func (client DictionaryClient) GetArrayItemEmpty(ctx context.Context, options *DictionaryGetArrayItemEmptyOptions) (*MapOfStringArrayResponse, error) {
 	req, err := client.GetArrayItemEmptyCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -240,7 +98,7 @@ func (client *DictionaryClient) GetArrayItemEmpty(ctx context.Context, options *
 }
 
 // GetArrayItemEmptyCreateRequest creates the GetArrayItemEmpty request.
-func (client *DictionaryClient) GetArrayItemEmptyCreateRequest(ctx context.Context, options *DictionaryGetArrayItemEmptyOptions) (*azcore.Request, error) {
+func (client DictionaryClient) GetArrayItemEmptyCreateRequest(ctx context.Context, options *DictionaryGetArrayItemEmptyOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/array/itemempty"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -252,13 +110,13 @@ func (client *DictionaryClient) GetArrayItemEmptyCreateRequest(ctx context.Conte
 }
 
 // GetArrayItemEmptyHandleResponse handles the GetArrayItemEmpty response.
-func (client *DictionaryClient) GetArrayItemEmptyHandleResponse(resp *azcore.Response) (*MapOfStringArrayResponse, error) {
+func (client DictionaryClient) GetArrayItemEmptyHandleResponse(resp *azcore.Response) (*MapOfStringArrayResponse, error) {
 	result := MapOfStringArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetArrayItemEmptyHandleError handles the GetArrayItemEmpty error response.
-func (client *DictionaryClient) GetArrayItemEmptyHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) GetArrayItemEmptyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -267,7 +125,7 @@ func (client *DictionaryClient) GetArrayItemEmptyHandleError(resp *azcore.Respon
 }
 
 // GetArrayItemNull - Get an dictionary of array of strings {"0": ["1", "2", "3"], "1": null, "2": ["7", "8", "9"]}
-func (client *DictionaryClient) GetArrayItemNull(ctx context.Context, options *DictionaryGetArrayItemNullOptions) (*MapOfStringArrayResponse, error) {
+func (client DictionaryClient) GetArrayItemNull(ctx context.Context, options *DictionaryGetArrayItemNullOptions) (*MapOfStringArrayResponse, error) {
 	req, err := client.GetArrayItemNullCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -287,7 +145,7 @@ func (client *DictionaryClient) GetArrayItemNull(ctx context.Context, options *D
 }
 
 // GetArrayItemNullCreateRequest creates the GetArrayItemNull request.
-func (client *DictionaryClient) GetArrayItemNullCreateRequest(ctx context.Context, options *DictionaryGetArrayItemNullOptions) (*azcore.Request, error) {
+func (client DictionaryClient) GetArrayItemNullCreateRequest(ctx context.Context, options *DictionaryGetArrayItemNullOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/array/itemnull"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -299,13 +157,13 @@ func (client *DictionaryClient) GetArrayItemNullCreateRequest(ctx context.Contex
 }
 
 // GetArrayItemNullHandleResponse handles the GetArrayItemNull response.
-func (client *DictionaryClient) GetArrayItemNullHandleResponse(resp *azcore.Response) (*MapOfStringArrayResponse, error) {
+func (client DictionaryClient) GetArrayItemNullHandleResponse(resp *azcore.Response) (*MapOfStringArrayResponse, error) {
 	result := MapOfStringArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetArrayItemNullHandleError handles the GetArrayItemNull error response.
-func (client *DictionaryClient) GetArrayItemNullHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) GetArrayItemNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -314,7 +172,7 @@ func (client *DictionaryClient) GetArrayItemNullHandleError(resp *azcore.Respons
 }
 
 // GetArrayNull - Get a null array
-func (client *DictionaryClient) GetArrayNull(ctx context.Context, options *DictionaryGetArrayNullOptions) (*MapOfStringArrayResponse, error) {
+func (client DictionaryClient) GetArrayNull(ctx context.Context, options *DictionaryGetArrayNullOptions) (*MapOfStringArrayResponse, error) {
 	req, err := client.GetArrayNullCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -334,7 +192,7 @@ func (client *DictionaryClient) GetArrayNull(ctx context.Context, options *Dicti
 }
 
 // GetArrayNullCreateRequest creates the GetArrayNull request.
-func (client *DictionaryClient) GetArrayNullCreateRequest(ctx context.Context, options *DictionaryGetArrayNullOptions) (*azcore.Request, error) {
+func (client DictionaryClient) GetArrayNullCreateRequest(ctx context.Context, options *DictionaryGetArrayNullOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/array/null"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -346,13 +204,13 @@ func (client *DictionaryClient) GetArrayNullCreateRequest(ctx context.Context, o
 }
 
 // GetArrayNullHandleResponse handles the GetArrayNull response.
-func (client *DictionaryClient) GetArrayNullHandleResponse(resp *azcore.Response) (*MapOfStringArrayResponse, error) {
+func (client DictionaryClient) GetArrayNullHandleResponse(resp *azcore.Response) (*MapOfStringArrayResponse, error) {
 	result := MapOfStringArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetArrayNullHandleError handles the GetArrayNull error response.
-func (client *DictionaryClient) GetArrayNullHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) GetArrayNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -361,7 +219,7 @@ func (client *DictionaryClient) GetArrayNullHandleError(resp *azcore.Response) e
 }
 
 // GetArrayValid - Get an array of array of strings {"0": ["1", "2", "3"], "1": ["4", "5", "6"], "2": ["7", "8", "9"]}
-func (client *DictionaryClient) GetArrayValid(ctx context.Context, options *DictionaryGetArrayValidOptions) (*MapOfStringArrayResponse, error) {
+func (client DictionaryClient) GetArrayValid(ctx context.Context, options *DictionaryGetArrayValidOptions) (*MapOfStringArrayResponse, error) {
 	req, err := client.GetArrayValidCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -381,7 +239,7 @@ func (client *DictionaryClient) GetArrayValid(ctx context.Context, options *Dict
 }
 
 // GetArrayValidCreateRequest creates the GetArrayValid request.
-func (client *DictionaryClient) GetArrayValidCreateRequest(ctx context.Context, options *DictionaryGetArrayValidOptions) (*azcore.Request, error) {
+func (client DictionaryClient) GetArrayValidCreateRequest(ctx context.Context, options *DictionaryGetArrayValidOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/array/valid"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -393,13 +251,13 @@ func (client *DictionaryClient) GetArrayValidCreateRequest(ctx context.Context, 
 }
 
 // GetArrayValidHandleResponse handles the GetArrayValid response.
-func (client *DictionaryClient) GetArrayValidHandleResponse(resp *azcore.Response) (*MapOfStringArrayResponse, error) {
+func (client DictionaryClient) GetArrayValidHandleResponse(resp *azcore.Response) (*MapOfStringArrayResponse, error) {
 	result := MapOfStringArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetArrayValidHandleError handles the GetArrayValid error response.
-func (client *DictionaryClient) GetArrayValidHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) GetArrayValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -408,7 +266,7 @@ func (client *DictionaryClient) GetArrayValidHandleError(resp *azcore.Response) 
 }
 
 // GetBase64URL - Get base64url dictionary value {"0": "a string that gets encoded with base64url", "1": "test string", "2": "Lorem ipsum"}
-func (client *DictionaryClient) GetBase64URL(ctx context.Context, options *DictionaryGetBase64URLOptions) (*MapOfByteArrayResponse, error) {
+func (client DictionaryClient) GetBase64URL(ctx context.Context, options *DictionaryGetBase64URLOptions) (*MapOfByteArrayResponse, error) {
 	req, err := client.GetBase64URLCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -428,7 +286,7 @@ func (client *DictionaryClient) GetBase64URL(ctx context.Context, options *Dicti
 }
 
 // GetBase64URLCreateRequest creates the GetBase64URL request.
-func (client *DictionaryClient) GetBase64URLCreateRequest(ctx context.Context, options *DictionaryGetBase64URLOptions) (*azcore.Request, error) {
+func (client DictionaryClient) GetBase64URLCreateRequest(ctx context.Context, options *DictionaryGetBase64URLOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/prim/base64url/valid"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -440,13 +298,13 @@ func (client *DictionaryClient) GetBase64URLCreateRequest(ctx context.Context, o
 }
 
 // GetBase64URLHandleResponse handles the GetBase64URL response.
-func (client *DictionaryClient) GetBase64URLHandleResponse(resp *azcore.Response) (*MapOfByteArrayResponse, error) {
+func (client DictionaryClient) GetBase64URLHandleResponse(resp *azcore.Response) (*MapOfByteArrayResponse, error) {
 	result := MapOfByteArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetBase64URLHandleError handles the GetBase64URL error response.
-func (client *DictionaryClient) GetBase64URLHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) GetBase64URLHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -455,7 +313,7 @@ func (client *DictionaryClient) GetBase64URLHandleError(resp *azcore.Response) e
 }
 
 // GetBooleanInvalidNull - Get boolean dictionary value {"0": true, "1": null, "2": false }
-func (client *DictionaryClient) GetBooleanInvalidNull(ctx context.Context, options *DictionaryGetBooleanInvalidNullOptions) (*MapOfBoolResponse, error) {
+func (client DictionaryClient) GetBooleanInvalidNull(ctx context.Context, options *DictionaryGetBooleanInvalidNullOptions) (*MapOfBoolResponse, error) {
 	req, err := client.GetBooleanInvalidNullCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -475,7 +333,7 @@ func (client *DictionaryClient) GetBooleanInvalidNull(ctx context.Context, optio
 }
 
 // GetBooleanInvalidNullCreateRequest creates the GetBooleanInvalidNull request.
-func (client *DictionaryClient) GetBooleanInvalidNullCreateRequest(ctx context.Context, options *DictionaryGetBooleanInvalidNullOptions) (*azcore.Request, error) {
+func (client DictionaryClient) GetBooleanInvalidNullCreateRequest(ctx context.Context, options *DictionaryGetBooleanInvalidNullOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/prim/boolean/true.null.false"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -487,13 +345,13 @@ func (client *DictionaryClient) GetBooleanInvalidNullCreateRequest(ctx context.C
 }
 
 // GetBooleanInvalidNullHandleResponse handles the GetBooleanInvalidNull response.
-func (client *DictionaryClient) GetBooleanInvalidNullHandleResponse(resp *azcore.Response) (*MapOfBoolResponse, error) {
+func (client DictionaryClient) GetBooleanInvalidNullHandleResponse(resp *azcore.Response) (*MapOfBoolResponse, error) {
 	result := MapOfBoolResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetBooleanInvalidNullHandleError handles the GetBooleanInvalidNull error response.
-func (client *DictionaryClient) GetBooleanInvalidNullHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) GetBooleanInvalidNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -502,7 +360,7 @@ func (client *DictionaryClient) GetBooleanInvalidNullHandleError(resp *azcore.Re
 }
 
 // GetBooleanInvalidString - Get boolean dictionary value '{"0": true, "1": "boolean", "2": false}'
-func (client *DictionaryClient) GetBooleanInvalidString(ctx context.Context, options *DictionaryGetBooleanInvalidStringOptions) (*MapOfBoolResponse, error) {
+func (client DictionaryClient) GetBooleanInvalidString(ctx context.Context, options *DictionaryGetBooleanInvalidStringOptions) (*MapOfBoolResponse, error) {
 	req, err := client.GetBooleanInvalidStringCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -522,7 +380,7 @@ func (client *DictionaryClient) GetBooleanInvalidString(ctx context.Context, opt
 }
 
 // GetBooleanInvalidStringCreateRequest creates the GetBooleanInvalidString request.
-func (client *DictionaryClient) GetBooleanInvalidStringCreateRequest(ctx context.Context, options *DictionaryGetBooleanInvalidStringOptions) (*azcore.Request, error) {
+func (client DictionaryClient) GetBooleanInvalidStringCreateRequest(ctx context.Context, options *DictionaryGetBooleanInvalidStringOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/prim/boolean/true.boolean.false"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -534,13 +392,13 @@ func (client *DictionaryClient) GetBooleanInvalidStringCreateRequest(ctx context
 }
 
 // GetBooleanInvalidStringHandleResponse handles the GetBooleanInvalidString response.
-func (client *DictionaryClient) GetBooleanInvalidStringHandleResponse(resp *azcore.Response) (*MapOfBoolResponse, error) {
+func (client DictionaryClient) GetBooleanInvalidStringHandleResponse(resp *azcore.Response) (*MapOfBoolResponse, error) {
 	result := MapOfBoolResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetBooleanInvalidStringHandleError handles the GetBooleanInvalidString error response.
-func (client *DictionaryClient) GetBooleanInvalidStringHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) GetBooleanInvalidStringHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -549,7 +407,7 @@ func (client *DictionaryClient) GetBooleanInvalidStringHandleError(resp *azcore.
 }
 
 // GetBooleanTfft - Get boolean dictionary value {"0": true, "1": false, "2": false, "3": true }
-func (client *DictionaryClient) GetBooleanTfft(ctx context.Context, options *DictionaryGetBooleanTfftOptions) (*MapOfBoolResponse, error) {
+func (client DictionaryClient) GetBooleanTfft(ctx context.Context, options *DictionaryGetBooleanTfftOptions) (*MapOfBoolResponse, error) {
 	req, err := client.GetBooleanTfftCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -569,7 +427,7 @@ func (client *DictionaryClient) GetBooleanTfft(ctx context.Context, options *Dic
 }
 
 // GetBooleanTfftCreateRequest creates the GetBooleanTfft request.
-func (client *DictionaryClient) GetBooleanTfftCreateRequest(ctx context.Context, options *DictionaryGetBooleanTfftOptions) (*azcore.Request, error) {
+func (client DictionaryClient) GetBooleanTfftCreateRequest(ctx context.Context, options *DictionaryGetBooleanTfftOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/prim/boolean/tfft"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -581,13 +439,13 @@ func (client *DictionaryClient) GetBooleanTfftCreateRequest(ctx context.Context,
 }
 
 // GetBooleanTfftHandleResponse handles the GetBooleanTfft response.
-func (client *DictionaryClient) GetBooleanTfftHandleResponse(resp *azcore.Response) (*MapOfBoolResponse, error) {
+func (client DictionaryClient) GetBooleanTfftHandleResponse(resp *azcore.Response) (*MapOfBoolResponse, error) {
 	result := MapOfBoolResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetBooleanTfftHandleError handles the GetBooleanTfft error response.
-func (client *DictionaryClient) GetBooleanTfftHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) GetBooleanTfftHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -596,7 +454,7 @@ func (client *DictionaryClient) GetBooleanTfftHandleError(resp *azcore.Response)
 }
 
 // GetByteInvalidNull - Get byte dictionary value {"0": hex(FF FF FF FA), "1": null} with the first item base64 encoded
-func (client *DictionaryClient) GetByteInvalidNull(ctx context.Context, options *DictionaryGetByteInvalidNullOptions) (*MapOfByteArrayResponse, error) {
+func (client DictionaryClient) GetByteInvalidNull(ctx context.Context, options *DictionaryGetByteInvalidNullOptions) (*MapOfByteArrayResponse, error) {
 	req, err := client.GetByteInvalidNullCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -616,7 +474,7 @@ func (client *DictionaryClient) GetByteInvalidNull(ctx context.Context, options 
 }
 
 // GetByteInvalidNullCreateRequest creates the GetByteInvalidNull request.
-func (client *DictionaryClient) GetByteInvalidNullCreateRequest(ctx context.Context, options *DictionaryGetByteInvalidNullOptions) (*azcore.Request, error) {
+func (client DictionaryClient) GetByteInvalidNullCreateRequest(ctx context.Context, options *DictionaryGetByteInvalidNullOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/prim/byte/invalidnull"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -628,13 +486,13 @@ func (client *DictionaryClient) GetByteInvalidNullCreateRequest(ctx context.Cont
 }
 
 // GetByteInvalidNullHandleResponse handles the GetByteInvalidNull response.
-func (client *DictionaryClient) GetByteInvalidNullHandleResponse(resp *azcore.Response) (*MapOfByteArrayResponse, error) {
+func (client DictionaryClient) GetByteInvalidNullHandleResponse(resp *azcore.Response) (*MapOfByteArrayResponse, error) {
 	result := MapOfByteArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetByteInvalidNullHandleError handles the GetByteInvalidNull error response.
-func (client *DictionaryClient) GetByteInvalidNullHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) GetByteInvalidNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -643,7 +501,7 @@ func (client *DictionaryClient) GetByteInvalidNullHandleError(resp *azcore.Respo
 }
 
 // GetByteValid - Get byte dictionary value {"0": hex(FF FF FF FA), "1": hex(01 02 03), "2": hex (25, 29, 43)} with each item encoded in base64
-func (client *DictionaryClient) GetByteValid(ctx context.Context, options *DictionaryGetByteValidOptions) (*MapOfByteArrayResponse, error) {
+func (client DictionaryClient) GetByteValid(ctx context.Context, options *DictionaryGetByteValidOptions) (*MapOfByteArrayResponse, error) {
 	req, err := client.GetByteValidCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -663,7 +521,7 @@ func (client *DictionaryClient) GetByteValid(ctx context.Context, options *Dicti
 }
 
 // GetByteValidCreateRequest creates the GetByteValid request.
-func (client *DictionaryClient) GetByteValidCreateRequest(ctx context.Context, options *DictionaryGetByteValidOptions) (*azcore.Request, error) {
+func (client DictionaryClient) GetByteValidCreateRequest(ctx context.Context, options *DictionaryGetByteValidOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/prim/byte/valid"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -675,13 +533,13 @@ func (client *DictionaryClient) GetByteValidCreateRequest(ctx context.Context, o
 }
 
 // GetByteValidHandleResponse handles the GetByteValid response.
-func (client *DictionaryClient) GetByteValidHandleResponse(resp *azcore.Response) (*MapOfByteArrayResponse, error) {
+func (client DictionaryClient) GetByteValidHandleResponse(resp *azcore.Response) (*MapOfByteArrayResponse, error) {
 	result := MapOfByteArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetByteValidHandleError handles the GetByteValid error response.
-func (client *DictionaryClient) GetByteValidHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) GetByteValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -690,7 +548,7 @@ func (client *DictionaryClient) GetByteValidHandleError(resp *azcore.Response) e
 }
 
 // GetComplexEmpty - Get empty dictionary of complex type {}
-func (client *DictionaryClient) GetComplexEmpty(ctx context.Context, options *DictionaryGetComplexEmptyOptions) (*MapOfWidgetResponse, error) {
+func (client DictionaryClient) GetComplexEmpty(ctx context.Context, options *DictionaryGetComplexEmptyOptions) (*MapOfWidgetResponse, error) {
 	req, err := client.GetComplexEmptyCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -710,7 +568,7 @@ func (client *DictionaryClient) GetComplexEmpty(ctx context.Context, options *Di
 }
 
 // GetComplexEmptyCreateRequest creates the GetComplexEmpty request.
-func (client *DictionaryClient) GetComplexEmptyCreateRequest(ctx context.Context, options *DictionaryGetComplexEmptyOptions) (*azcore.Request, error) {
+func (client DictionaryClient) GetComplexEmptyCreateRequest(ctx context.Context, options *DictionaryGetComplexEmptyOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/complex/empty"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -722,13 +580,13 @@ func (client *DictionaryClient) GetComplexEmptyCreateRequest(ctx context.Context
 }
 
 // GetComplexEmptyHandleResponse handles the GetComplexEmpty response.
-func (client *DictionaryClient) GetComplexEmptyHandleResponse(resp *azcore.Response) (*MapOfWidgetResponse, error) {
+func (client DictionaryClient) GetComplexEmptyHandleResponse(resp *azcore.Response) (*MapOfWidgetResponse, error) {
 	result := MapOfWidgetResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetComplexEmptyHandleError handles the GetComplexEmpty error response.
-func (client *DictionaryClient) GetComplexEmptyHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) GetComplexEmptyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -737,7 +595,7 @@ func (client *DictionaryClient) GetComplexEmptyHandleError(resp *azcore.Response
 }
 
 // GetComplexItemEmpty - Get dictionary of complex type with empty item {"0": {"integer": 1, "string": "2"}, "1:" {}, "2": {"integer": 5, "string": "6"}}
-func (client *DictionaryClient) GetComplexItemEmpty(ctx context.Context, options *DictionaryGetComplexItemEmptyOptions) (*MapOfWidgetResponse, error) {
+func (client DictionaryClient) GetComplexItemEmpty(ctx context.Context, options *DictionaryGetComplexItemEmptyOptions) (*MapOfWidgetResponse, error) {
 	req, err := client.GetComplexItemEmptyCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -757,7 +615,7 @@ func (client *DictionaryClient) GetComplexItemEmpty(ctx context.Context, options
 }
 
 // GetComplexItemEmptyCreateRequest creates the GetComplexItemEmpty request.
-func (client *DictionaryClient) GetComplexItemEmptyCreateRequest(ctx context.Context, options *DictionaryGetComplexItemEmptyOptions) (*azcore.Request, error) {
+func (client DictionaryClient) GetComplexItemEmptyCreateRequest(ctx context.Context, options *DictionaryGetComplexItemEmptyOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/complex/itemempty"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -769,13 +627,13 @@ func (client *DictionaryClient) GetComplexItemEmptyCreateRequest(ctx context.Con
 }
 
 // GetComplexItemEmptyHandleResponse handles the GetComplexItemEmpty response.
-func (client *DictionaryClient) GetComplexItemEmptyHandleResponse(resp *azcore.Response) (*MapOfWidgetResponse, error) {
+func (client DictionaryClient) GetComplexItemEmptyHandleResponse(resp *azcore.Response) (*MapOfWidgetResponse, error) {
 	result := MapOfWidgetResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetComplexItemEmptyHandleError handles the GetComplexItemEmpty error response.
-func (client *DictionaryClient) GetComplexItemEmptyHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) GetComplexItemEmptyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -784,7 +642,7 @@ func (client *DictionaryClient) GetComplexItemEmptyHandleError(resp *azcore.Resp
 }
 
 // GetComplexItemNull - Get dictionary of complex type with null item {"0": {"integer": 1, "string": "2"}, "1": null, "2": {"integer": 5, "string": "6"}}
-func (client *DictionaryClient) GetComplexItemNull(ctx context.Context, options *DictionaryGetComplexItemNullOptions) (*MapOfWidgetResponse, error) {
+func (client DictionaryClient) GetComplexItemNull(ctx context.Context, options *DictionaryGetComplexItemNullOptions) (*MapOfWidgetResponse, error) {
 	req, err := client.GetComplexItemNullCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -804,7 +662,7 @@ func (client *DictionaryClient) GetComplexItemNull(ctx context.Context, options 
 }
 
 // GetComplexItemNullCreateRequest creates the GetComplexItemNull request.
-func (client *DictionaryClient) GetComplexItemNullCreateRequest(ctx context.Context, options *DictionaryGetComplexItemNullOptions) (*azcore.Request, error) {
+func (client DictionaryClient) GetComplexItemNullCreateRequest(ctx context.Context, options *DictionaryGetComplexItemNullOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/complex/itemnull"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -816,13 +674,13 @@ func (client *DictionaryClient) GetComplexItemNullCreateRequest(ctx context.Cont
 }
 
 // GetComplexItemNullHandleResponse handles the GetComplexItemNull response.
-func (client *DictionaryClient) GetComplexItemNullHandleResponse(resp *azcore.Response) (*MapOfWidgetResponse, error) {
+func (client DictionaryClient) GetComplexItemNullHandleResponse(resp *azcore.Response) (*MapOfWidgetResponse, error) {
 	result := MapOfWidgetResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetComplexItemNullHandleError handles the GetComplexItemNull error response.
-func (client *DictionaryClient) GetComplexItemNullHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) GetComplexItemNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -831,7 +689,7 @@ func (client *DictionaryClient) GetComplexItemNullHandleError(resp *azcore.Respo
 }
 
 // GetComplexNull - Get dictionary of complex type null value
-func (client *DictionaryClient) GetComplexNull(ctx context.Context, options *DictionaryGetComplexNullOptions) (*MapOfWidgetResponse, error) {
+func (client DictionaryClient) GetComplexNull(ctx context.Context, options *DictionaryGetComplexNullOptions) (*MapOfWidgetResponse, error) {
 	req, err := client.GetComplexNullCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -851,7 +709,7 @@ func (client *DictionaryClient) GetComplexNull(ctx context.Context, options *Dic
 }
 
 // GetComplexNullCreateRequest creates the GetComplexNull request.
-func (client *DictionaryClient) GetComplexNullCreateRequest(ctx context.Context, options *DictionaryGetComplexNullOptions) (*azcore.Request, error) {
+func (client DictionaryClient) GetComplexNullCreateRequest(ctx context.Context, options *DictionaryGetComplexNullOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/complex/null"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -863,13 +721,13 @@ func (client *DictionaryClient) GetComplexNullCreateRequest(ctx context.Context,
 }
 
 // GetComplexNullHandleResponse handles the GetComplexNull response.
-func (client *DictionaryClient) GetComplexNullHandleResponse(resp *azcore.Response) (*MapOfWidgetResponse, error) {
+func (client DictionaryClient) GetComplexNullHandleResponse(resp *azcore.Response) (*MapOfWidgetResponse, error) {
 	result := MapOfWidgetResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetComplexNullHandleError handles the GetComplexNull error response.
-func (client *DictionaryClient) GetComplexNullHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) GetComplexNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -879,7 +737,7 @@ func (client *DictionaryClient) GetComplexNullHandleError(resp *azcore.Response)
 
 // GetComplexValid - Get dictionary of complex type with {"0": {"integer": 1, "string": "2"}, "1": {"integer": 3, "string": "4"}, "2": {"integer": 5, "string":
 // "6"}}
-func (client *DictionaryClient) GetComplexValid(ctx context.Context, options *DictionaryGetComplexValidOptions) (*MapOfWidgetResponse, error) {
+func (client DictionaryClient) GetComplexValid(ctx context.Context, options *DictionaryGetComplexValidOptions) (*MapOfWidgetResponse, error) {
 	req, err := client.GetComplexValidCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -899,7 +757,7 @@ func (client *DictionaryClient) GetComplexValid(ctx context.Context, options *Di
 }
 
 // GetComplexValidCreateRequest creates the GetComplexValid request.
-func (client *DictionaryClient) GetComplexValidCreateRequest(ctx context.Context, options *DictionaryGetComplexValidOptions) (*azcore.Request, error) {
+func (client DictionaryClient) GetComplexValidCreateRequest(ctx context.Context, options *DictionaryGetComplexValidOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/complex/valid"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -911,13 +769,13 @@ func (client *DictionaryClient) GetComplexValidCreateRequest(ctx context.Context
 }
 
 // GetComplexValidHandleResponse handles the GetComplexValid response.
-func (client *DictionaryClient) GetComplexValidHandleResponse(resp *azcore.Response) (*MapOfWidgetResponse, error) {
+func (client DictionaryClient) GetComplexValidHandleResponse(resp *azcore.Response) (*MapOfWidgetResponse, error) {
 	result := MapOfWidgetResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetComplexValidHandleError handles the GetComplexValid error response.
-func (client *DictionaryClient) GetComplexValidHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) GetComplexValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -926,7 +784,7 @@ func (client *DictionaryClient) GetComplexValidHandleError(resp *azcore.Response
 }
 
 // GetDateInvalidChars - Get date dictionary value {"0": "2011-03-22", "1": "date"}
-func (client *DictionaryClient) GetDateInvalidChars(ctx context.Context, options *DictionaryGetDateInvalidCharsOptions) (*MapOfTimeResponse, error) {
+func (client DictionaryClient) GetDateInvalidChars(ctx context.Context, options *DictionaryGetDateInvalidCharsOptions) (*MapOfTimeResponse, error) {
 	req, err := client.GetDateInvalidCharsCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -946,7 +804,7 @@ func (client *DictionaryClient) GetDateInvalidChars(ctx context.Context, options
 }
 
 // GetDateInvalidCharsCreateRequest creates the GetDateInvalidChars request.
-func (client *DictionaryClient) GetDateInvalidCharsCreateRequest(ctx context.Context, options *DictionaryGetDateInvalidCharsOptions) (*azcore.Request, error) {
+func (client DictionaryClient) GetDateInvalidCharsCreateRequest(ctx context.Context, options *DictionaryGetDateInvalidCharsOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/prim/date/invalidchars"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -958,7 +816,7 @@ func (client *DictionaryClient) GetDateInvalidCharsCreateRequest(ctx context.Con
 }
 
 // GetDateInvalidCharsHandleResponse handles the GetDateInvalidChars response.
-func (client *DictionaryClient) GetDateInvalidCharsHandleResponse(resp *azcore.Response) (*MapOfTimeResponse, error) {
+func (client DictionaryClient) GetDateInvalidCharsHandleResponse(resp *azcore.Response) (*MapOfTimeResponse, error) {
 	aux := map[string]dateType{}
 	if err := resp.UnmarshalAsJSON(&aux); err != nil {
 		return nil, err
@@ -971,7 +829,7 @@ func (client *DictionaryClient) GetDateInvalidCharsHandleResponse(resp *azcore.R
 }
 
 // GetDateInvalidCharsHandleError handles the GetDateInvalidChars error response.
-func (client *DictionaryClient) GetDateInvalidCharsHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) GetDateInvalidCharsHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -980,7 +838,7 @@ func (client *DictionaryClient) GetDateInvalidCharsHandleError(resp *azcore.Resp
 }
 
 // GetDateInvalidNull - Get date dictionary value {"0": "2012-01-01", "1": null, "2": "1776-07-04"}
-func (client *DictionaryClient) GetDateInvalidNull(ctx context.Context, options *DictionaryGetDateInvalidNullOptions) (*MapOfTimeResponse, error) {
+func (client DictionaryClient) GetDateInvalidNull(ctx context.Context, options *DictionaryGetDateInvalidNullOptions) (*MapOfTimeResponse, error) {
 	req, err := client.GetDateInvalidNullCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -1000,7 +858,7 @@ func (client *DictionaryClient) GetDateInvalidNull(ctx context.Context, options 
 }
 
 // GetDateInvalidNullCreateRequest creates the GetDateInvalidNull request.
-func (client *DictionaryClient) GetDateInvalidNullCreateRequest(ctx context.Context, options *DictionaryGetDateInvalidNullOptions) (*azcore.Request, error) {
+func (client DictionaryClient) GetDateInvalidNullCreateRequest(ctx context.Context, options *DictionaryGetDateInvalidNullOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/prim/date/invalidnull"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1012,7 +870,7 @@ func (client *DictionaryClient) GetDateInvalidNullCreateRequest(ctx context.Cont
 }
 
 // GetDateInvalidNullHandleResponse handles the GetDateInvalidNull response.
-func (client *DictionaryClient) GetDateInvalidNullHandleResponse(resp *azcore.Response) (*MapOfTimeResponse, error) {
+func (client DictionaryClient) GetDateInvalidNullHandleResponse(resp *azcore.Response) (*MapOfTimeResponse, error) {
 	aux := map[string]dateType{}
 	if err := resp.UnmarshalAsJSON(&aux); err != nil {
 		return nil, err
@@ -1025,7 +883,7 @@ func (client *DictionaryClient) GetDateInvalidNullHandleResponse(resp *azcore.Re
 }
 
 // GetDateInvalidNullHandleError handles the GetDateInvalidNull error response.
-func (client *DictionaryClient) GetDateInvalidNullHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) GetDateInvalidNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1034,7 +892,7 @@ func (client *DictionaryClient) GetDateInvalidNullHandleError(resp *azcore.Respo
 }
 
 // GetDateTimeInvalidChars - Get date dictionary value {"0": "2000-12-01t00:00:01z", "1": "date-time"}
-func (client *DictionaryClient) GetDateTimeInvalidChars(ctx context.Context, options *DictionaryGetDateTimeInvalidCharsOptions) (*MapOfTimeResponse, error) {
+func (client DictionaryClient) GetDateTimeInvalidChars(ctx context.Context, options *DictionaryGetDateTimeInvalidCharsOptions) (*MapOfTimeResponse, error) {
 	req, err := client.GetDateTimeInvalidCharsCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -1054,7 +912,7 @@ func (client *DictionaryClient) GetDateTimeInvalidChars(ctx context.Context, opt
 }
 
 // GetDateTimeInvalidCharsCreateRequest creates the GetDateTimeInvalidChars request.
-func (client *DictionaryClient) GetDateTimeInvalidCharsCreateRequest(ctx context.Context, options *DictionaryGetDateTimeInvalidCharsOptions) (*azcore.Request, error) {
+func (client DictionaryClient) GetDateTimeInvalidCharsCreateRequest(ctx context.Context, options *DictionaryGetDateTimeInvalidCharsOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/prim/date-time/invalidchars"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1066,7 +924,7 @@ func (client *DictionaryClient) GetDateTimeInvalidCharsCreateRequest(ctx context
 }
 
 // GetDateTimeInvalidCharsHandleResponse handles the GetDateTimeInvalidChars response.
-func (client *DictionaryClient) GetDateTimeInvalidCharsHandleResponse(resp *azcore.Response) (*MapOfTimeResponse, error) {
+func (client DictionaryClient) GetDateTimeInvalidCharsHandleResponse(resp *azcore.Response) (*MapOfTimeResponse, error) {
 	aux := map[string]timeRFC3339{}
 	if err := resp.UnmarshalAsJSON(&aux); err != nil {
 		return nil, err
@@ -1079,7 +937,7 @@ func (client *DictionaryClient) GetDateTimeInvalidCharsHandleResponse(resp *azco
 }
 
 // GetDateTimeInvalidCharsHandleError handles the GetDateTimeInvalidChars error response.
-func (client *DictionaryClient) GetDateTimeInvalidCharsHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) GetDateTimeInvalidCharsHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1088,7 +946,7 @@ func (client *DictionaryClient) GetDateTimeInvalidCharsHandleError(resp *azcore.
 }
 
 // GetDateTimeInvalidNull - Get date dictionary value {"0": "2000-12-01t00:00:01z", "1": null}
-func (client *DictionaryClient) GetDateTimeInvalidNull(ctx context.Context, options *DictionaryGetDateTimeInvalidNullOptions) (*MapOfTimeResponse, error) {
+func (client DictionaryClient) GetDateTimeInvalidNull(ctx context.Context, options *DictionaryGetDateTimeInvalidNullOptions) (*MapOfTimeResponse, error) {
 	req, err := client.GetDateTimeInvalidNullCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -1108,7 +966,7 @@ func (client *DictionaryClient) GetDateTimeInvalidNull(ctx context.Context, opti
 }
 
 // GetDateTimeInvalidNullCreateRequest creates the GetDateTimeInvalidNull request.
-func (client *DictionaryClient) GetDateTimeInvalidNullCreateRequest(ctx context.Context, options *DictionaryGetDateTimeInvalidNullOptions) (*azcore.Request, error) {
+func (client DictionaryClient) GetDateTimeInvalidNullCreateRequest(ctx context.Context, options *DictionaryGetDateTimeInvalidNullOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/prim/date-time/invalidnull"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1120,7 +978,7 @@ func (client *DictionaryClient) GetDateTimeInvalidNullCreateRequest(ctx context.
 }
 
 // GetDateTimeInvalidNullHandleResponse handles the GetDateTimeInvalidNull response.
-func (client *DictionaryClient) GetDateTimeInvalidNullHandleResponse(resp *azcore.Response) (*MapOfTimeResponse, error) {
+func (client DictionaryClient) GetDateTimeInvalidNullHandleResponse(resp *azcore.Response) (*MapOfTimeResponse, error) {
 	aux := map[string]timeRFC3339{}
 	if err := resp.UnmarshalAsJSON(&aux); err != nil {
 		return nil, err
@@ -1133,7 +991,7 @@ func (client *DictionaryClient) GetDateTimeInvalidNullHandleResponse(resp *azcor
 }
 
 // GetDateTimeInvalidNullHandleError handles the GetDateTimeInvalidNull error response.
-func (client *DictionaryClient) GetDateTimeInvalidNullHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) GetDateTimeInvalidNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1143,7 +1001,7 @@ func (client *DictionaryClient) GetDateTimeInvalidNullHandleError(resp *azcore.R
 
 // GetDateTimeRFC1123Valid - Get date-time-rfc1123 dictionary value {"0": "Fri, 01 Dec 2000 00:00:01 GMT", "1": "Wed, 02 Jan 1980 00:11:35 GMT", "2": "Wed,
 // 12 Oct 1492 10:15:01 GMT"}
-func (client *DictionaryClient) GetDateTimeRFC1123Valid(ctx context.Context, options *DictionaryGetDateTimeRFC1123ValidOptions) (*MapOfTimeResponse, error) {
+func (client DictionaryClient) GetDateTimeRFC1123Valid(ctx context.Context, options *DictionaryGetDateTimeRFC1123ValidOptions) (*MapOfTimeResponse, error) {
 	req, err := client.GetDateTimeRFC1123ValidCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -1163,7 +1021,7 @@ func (client *DictionaryClient) GetDateTimeRFC1123Valid(ctx context.Context, opt
 }
 
 // GetDateTimeRFC1123ValidCreateRequest creates the GetDateTimeRFC1123Valid request.
-func (client *DictionaryClient) GetDateTimeRFC1123ValidCreateRequest(ctx context.Context, options *DictionaryGetDateTimeRFC1123ValidOptions) (*azcore.Request, error) {
+func (client DictionaryClient) GetDateTimeRFC1123ValidCreateRequest(ctx context.Context, options *DictionaryGetDateTimeRFC1123ValidOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/prim/date-time-rfc1123/valid"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1175,7 +1033,7 @@ func (client *DictionaryClient) GetDateTimeRFC1123ValidCreateRequest(ctx context
 }
 
 // GetDateTimeRFC1123ValidHandleResponse handles the GetDateTimeRFC1123Valid response.
-func (client *DictionaryClient) GetDateTimeRFC1123ValidHandleResponse(resp *azcore.Response) (*MapOfTimeResponse, error) {
+func (client DictionaryClient) GetDateTimeRFC1123ValidHandleResponse(resp *azcore.Response) (*MapOfTimeResponse, error) {
 	aux := map[string]timeRFC1123{}
 	if err := resp.UnmarshalAsJSON(&aux); err != nil {
 		return nil, err
@@ -1188,7 +1046,7 @@ func (client *DictionaryClient) GetDateTimeRFC1123ValidHandleResponse(resp *azco
 }
 
 // GetDateTimeRFC1123ValidHandleError handles the GetDateTimeRFC1123Valid error response.
-func (client *DictionaryClient) GetDateTimeRFC1123ValidHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) GetDateTimeRFC1123ValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1197,7 +1055,7 @@ func (client *DictionaryClient) GetDateTimeRFC1123ValidHandleError(resp *azcore.
 }
 
 // GetDateTimeValid - Get date-time dictionary value {"0": "2000-12-01t00:00:01z", "1": "1980-01-02T00:11:35+01:00", "2": "1492-10-12T10:15:01-08:00"}
-func (client *DictionaryClient) GetDateTimeValid(ctx context.Context, options *DictionaryGetDateTimeValidOptions) (*MapOfTimeResponse, error) {
+func (client DictionaryClient) GetDateTimeValid(ctx context.Context, options *DictionaryGetDateTimeValidOptions) (*MapOfTimeResponse, error) {
 	req, err := client.GetDateTimeValidCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -1217,7 +1075,7 @@ func (client *DictionaryClient) GetDateTimeValid(ctx context.Context, options *D
 }
 
 // GetDateTimeValidCreateRequest creates the GetDateTimeValid request.
-func (client *DictionaryClient) GetDateTimeValidCreateRequest(ctx context.Context, options *DictionaryGetDateTimeValidOptions) (*azcore.Request, error) {
+func (client DictionaryClient) GetDateTimeValidCreateRequest(ctx context.Context, options *DictionaryGetDateTimeValidOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/prim/date-time/valid"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1229,7 +1087,7 @@ func (client *DictionaryClient) GetDateTimeValidCreateRequest(ctx context.Contex
 }
 
 // GetDateTimeValidHandleResponse handles the GetDateTimeValid response.
-func (client *DictionaryClient) GetDateTimeValidHandleResponse(resp *azcore.Response) (*MapOfTimeResponse, error) {
+func (client DictionaryClient) GetDateTimeValidHandleResponse(resp *azcore.Response) (*MapOfTimeResponse, error) {
 	aux := map[string]timeRFC3339{}
 	if err := resp.UnmarshalAsJSON(&aux); err != nil {
 		return nil, err
@@ -1242,7 +1100,7 @@ func (client *DictionaryClient) GetDateTimeValidHandleResponse(resp *azcore.Resp
 }
 
 // GetDateTimeValidHandleError handles the GetDateTimeValid error response.
-func (client *DictionaryClient) GetDateTimeValidHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) GetDateTimeValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1251,7 +1109,7 @@ func (client *DictionaryClient) GetDateTimeValidHandleError(resp *azcore.Respons
 }
 
 // GetDateValid - Get integer dictionary value {"0": "2000-12-01", "1": "1980-01-02", "2": "1492-10-12"}
-func (client *DictionaryClient) GetDateValid(ctx context.Context, options *DictionaryGetDateValidOptions) (*MapOfTimeResponse, error) {
+func (client DictionaryClient) GetDateValid(ctx context.Context, options *DictionaryGetDateValidOptions) (*MapOfTimeResponse, error) {
 	req, err := client.GetDateValidCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -1271,7 +1129,7 @@ func (client *DictionaryClient) GetDateValid(ctx context.Context, options *Dicti
 }
 
 // GetDateValidCreateRequest creates the GetDateValid request.
-func (client *DictionaryClient) GetDateValidCreateRequest(ctx context.Context, options *DictionaryGetDateValidOptions) (*azcore.Request, error) {
+func (client DictionaryClient) GetDateValidCreateRequest(ctx context.Context, options *DictionaryGetDateValidOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/prim/date/valid"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1283,7 +1141,7 @@ func (client *DictionaryClient) GetDateValidCreateRequest(ctx context.Context, o
 }
 
 // GetDateValidHandleResponse handles the GetDateValid response.
-func (client *DictionaryClient) GetDateValidHandleResponse(resp *azcore.Response) (*MapOfTimeResponse, error) {
+func (client DictionaryClient) GetDateValidHandleResponse(resp *azcore.Response) (*MapOfTimeResponse, error) {
 	aux := map[string]dateType{}
 	if err := resp.UnmarshalAsJSON(&aux); err != nil {
 		return nil, err
@@ -1296,7 +1154,7 @@ func (client *DictionaryClient) GetDateValidHandleResponse(resp *azcore.Response
 }
 
 // GetDateValidHandleError handles the GetDateValid error response.
-func (client *DictionaryClient) GetDateValidHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) GetDateValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1305,7 +1163,7 @@ func (client *DictionaryClient) GetDateValidHandleError(resp *azcore.Response) e
 }
 
 // GetDictionaryEmpty - Get an dictionaries of dictionaries of type with value {}
-func (client *DictionaryClient) GetDictionaryEmpty(ctx context.Context, options *DictionaryGetDictionaryEmptyOptions) (*MapOfInterfaceResponse, error) {
+func (client DictionaryClient) GetDictionaryEmpty(ctx context.Context, options *DictionaryGetDictionaryEmptyOptions) (*MapOfInterfaceResponse, error) {
 	req, err := client.GetDictionaryEmptyCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -1325,7 +1183,7 @@ func (client *DictionaryClient) GetDictionaryEmpty(ctx context.Context, options 
 }
 
 // GetDictionaryEmptyCreateRequest creates the GetDictionaryEmpty request.
-func (client *DictionaryClient) GetDictionaryEmptyCreateRequest(ctx context.Context, options *DictionaryGetDictionaryEmptyOptions) (*azcore.Request, error) {
+func (client DictionaryClient) GetDictionaryEmptyCreateRequest(ctx context.Context, options *DictionaryGetDictionaryEmptyOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/dictionary/empty"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1337,13 +1195,13 @@ func (client *DictionaryClient) GetDictionaryEmptyCreateRequest(ctx context.Cont
 }
 
 // GetDictionaryEmptyHandleResponse handles the GetDictionaryEmpty response.
-func (client *DictionaryClient) GetDictionaryEmptyHandleResponse(resp *azcore.Response) (*MapOfInterfaceResponse, error) {
+func (client DictionaryClient) GetDictionaryEmptyHandleResponse(resp *azcore.Response) (*MapOfInterfaceResponse, error) {
 	result := MapOfInterfaceResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetDictionaryEmptyHandleError handles the GetDictionaryEmpty error response.
-func (client *DictionaryClient) GetDictionaryEmptyHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) GetDictionaryEmptyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1353,7 +1211,7 @@ func (client *DictionaryClient) GetDictionaryEmptyHandleError(resp *azcore.Respo
 
 // GetDictionaryItemEmpty - Get an dictionaries of dictionaries of type with value {"0": {"1": "one", "2": "two", "3": "three"}, "1": {}, "2": {"7": "seven",
 // "8": "eight", "9": "nine"}}
-func (client *DictionaryClient) GetDictionaryItemEmpty(ctx context.Context, options *DictionaryGetDictionaryItemEmptyOptions) (*MapOfInterfaceResponse, error) {
+func (client DictionaryClient) GetDictionaryItemEmpty(ctx context.Context, options *DictionaryGetDictionaryItemEmptyOptions) (*MapOfInterfaceResponse, error) {
 	req, err := client.GetDictionaryItemEmptyCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -1373,7 +1231,7 @@ func (client *DictionaryClient) GetDictionaryItemEmpty(ctx context.Context, opti
 }
 
 // GetDictionaryItemEmptyCreateRequest creates the GetDictionaryItemEmpty request.
-func (client *DictionaryClient) GetDictionaryItemEmptyCreateRequest(ctx context.Context, options *DictionaryGetDictionaryItemEmptyOptions) (*azcore.Request, error) {
+func (client DictionaryClient) GetDictionaryItemEmptyCreateRequest(ctx context.Context, options *DictionaryGetDictionaryItemEmptyOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/dictionary/itemempty"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1385,13 +1243,13 @@ func (client *DictionaryClient) GetDictionaryItemEmptyCreateRequest(ctx context.
 }
 
 // GetDictionaryItemEmptyHandleResponse handles the GetDictionaryItemEmpty response.
-func (client *DictionaryClient) GetDictionaryItemEmptyHandleResponse(resp *azcore.Response) (*MapOfInterfaceResponse, error) {
+func (client DictionaryClient) GetDictionaryItemEmptyHandleResponse(resp *azcore.Response) (*MapOfInterfaceResponse, error) {
 	result := MapOfInterfaceResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetDictionaryItemEmptyHandleError handles the GetDictionaryItemEmpty error response.
-func (client *DictionaryClient) GetDictionaryItemEmptyHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) GetDictionaryItemEmptyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1401,7 +1259,7 @@ func (client *DictionaryClient) GetDictionaryItemEmptyHandleError(resp *azcore.R
 
 // GetDictionaryItemNull - Get an dictionaries of dictionaries of type with value {"0": {"1": "one", "2": "two", "3": "three"}, "1": null, "2": {"7": "seven",
 // "8": "eight", "9": "nine"}}
-func (client *DictionaryClient) GetDictionaryItemNull(ctx context.Context, options *DictionaryGetDictionaryItemNullOptions) (*MapOfInterfaceResponse, error) {
+func (client DictionaryClient) GetDictionaryItemNull(ctx context.Context, options *DictionaryGetDictionaryItemNullOptions) (*MapOfInterfaceResponse, error) {
 	req, err := client.GetDictionaryItemNullCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -1421,7 +1279,7 @@ func (client *DictionaryClient) GetDictionaryItemNull(ctx context.Context, optio
 }
 
 // GetDictionaryItemNullCreateRequest creates the GetDictionaryItemNull request.
-func (client *DictionaryClient) GetDictionaryItemNullCreateRequest(ctx context.Context, options *DictionaryGetDictionaryItemNullOptions) (*azcore.Request, error) {
+func (client DictionaryClient) GetDictionaryItemNullCreateRequest(ctx context.Context, options *DictionaryGetDictionaryItemNullOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/dictionary/itemnull"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1433,13 +1291,13 @@ func (client *DictionaryClient) GetDictionaryItemNullCreateRequest(ctx context.C
 }
 
 // GetDictionaryItemNullHandleResponse handles the GetDictionaryItemNull response.
-func (client *DictionaryClient) GetDictionaryItemNullHandleResponse(resp *azcore.Response) (*MapOfInterfaceResponse, error) {
+func (client DictionaryClient) GetDictionaryItemNullHandleResponse(resp *azcore.Response) (*MapOfInterfaceResponse, error) {
 	result := MapOfInterfaceResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetDictionaryItemNullHandleError handles the GetDictionaryItemNull error response.
-func (client *DictionaryClient) GetDictionaryItemNullHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) GetDictionaryItemNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1448,7 +1306,7 @@ func (client *DictionaryClient) GetDictionaryItemNullHandleError(resp *azcore.Re
 }
 
 // GetDictionaryNull - Get an dictionaries of dictionaries with value null
-func (client *DictionaryClient) GetDictionaryNull(ctx context.Context, options *DictionaryGetDictionaryNullOptions) (*MapOfInterfaceResponse, error) {
+func (client DictionaryClient) GetDictionaryNull(ctx context.Context, options *DictionaryGetDictionaryNullOptions) (*MapOfInterfaceResponse, error) {
 	req, err := client.GetDictionaryNullCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -1468,7 +1326,7 @@ func (client *DictionaryClient) GetDictionaryNull(ctx context.Context, options *
 }
 
 // GetDictionaryNullCreateRequest creates the GetDictionaryNull request.
-func (client *DictionaryClient) GetDictionaryNullCreateRequest(ctx context.Context, options *DictionaryGetDictionaryNullOptions) (*azcore.Request, error) {
+func (client DictionaryClient) GetDictionaryNullCreateRequest(ctx context.Context, options *DictionaryGetDictionaryNullOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/dictionary/null"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1480,13 +1338,13 @@ func (client *DictionaryClient) GetDictionaryNullCreateRequest(ctx context.Conte
 }
 
 // GetDictionaryNullHandleResponse handles the GetDictionaryNull response.
-func (client *DictionaryClient) GetDictionaryNullHandleResponse(resp *azcore.Response) (*MapOfInterfaceResponse, error) {
+func (client DictionaryClient) GetDictionaryNullHandleResponse(resp *azcore.Response) (*MapOfInterfaceResponse, error) {
 	result := MapOfInterfaceResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetDictionaryNullHandleError handles the GetDictionaryNull error response.
-func (client *DictionaryClient) GetDictionaryNullHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) GetDictionaryNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1496,7 +1354,7 @@ func (client *DictionaryClient) GetDictionaryNullHandleError(resp *azcore.Respon
 
 // GetDictionaryValid - Get an dictionaries of dictionaries of type with value {"0": {"1": "one", "2": "two", "3": "three"}, "1": {"4": "four", "5": "five",
 // "6": "six"}, "2": {"7": "seven", "8": "eight", "9": "nine"}}
-func (client *DictionaryClient) GetDictionaryValid(ctx context.Context, options *DictionaryGetDictionaryValidOptions) (*MapOfInterfaceResponse, error) {
+func (client DictionaryClient) GetDictionaryValid(ctx context.Context, options *DictionaryGetDictionaryValidOptions) (*MapOfInterfaceResponse, error) {
 	req, err := client.GetDictionaryValidCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -1516,7 +1374,7 @@ func (client *DictionaryClient) GetDictionaryValid(ctx context.Context, options 
 }
 
 // GetDictionaryValidCreateRequest creates the GetDictionaryValid request.
-func (client *DictionaryClient) GetDictionaryValidCreateRequest(ctx context.Context, options *DictionaryGetDictionaryValidOptions) (*azcore.Request, error) {
+func (client DictionaryClient) GetDictionaryValidCreateRequest(ctx context.Context, options *DictionaryGetDictionaryValidOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/dictionary/valid"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1528,13 +1386,13 @@ func (client *DictionaryClient) GetDictionaryValidCreateRequest(ctx context.Cont
 }
 
 // GetDictionaryValidHandleResponse handles the GetDictionaryValid response.
-func (client *DictionaryClient) GetDictionaryValidHandleResponse(resp *azcore.Response) (*MapOfInterfaceResponse, error) {
+func (client DictionaryClient) GetDictionaryValidHandleResponse(resp *azcore.Response) (*MapOfInterfaceResponse, error) {
 	result := MapOfInterfaceResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetDictionaryValidHandleError handles the GetDictionaryValid error response.
-func (client *DictionaryClient) GetDictionaryValidHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) GetDictionaryValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1543,7 +1401,7 @@ func (client *DictionaryClient) GetDictionaryValidHandleError(resp *azcore.Respo
 }
 
 // GetDoubleInvalidNull - Get float dictionary value {"0": 0.0, "1": null, "2": 1.2e20}
-func (client *DictionaryClient) GetDoubleInvalidNull(ctx context.Context, options *DictionaryGetDoubleInvalidNullOptions) (*MapOfFloat64Response, error) {
+func (client DictionaryClient) GetDoubleInvalidNull(ctx context.Context, options *DictionaryGetDoubleInvalidNullOptions) (*MapOfFloat64Response, error) {
 	req, err := client.GetDoubleInvalidNullCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -1563,7 +1421,7 @@ func (client *DictionaryClient) GetDoubleInvalidNull(ctx context.Context, option
 }
 
 // GetDoubleInvalidNullCreateRequest creates the GetDoubleInvalidNull request.
-func (client *DictionaryClient) GetDoubleInvalidNullCreateRequest(ctx context.Context, options *DictionaryGetDoubleInvalidNullOptions) (*azcore.Request, error) {
+func (client DictionaryClient) GetDoubleInvalidNullCreateRequest(ctx context.Context, options *DictionaryGetDoubleInvalidNullOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/prim/double/0.0-null-1.2e20"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1575,13 +1433,13 @@ func (client *DictionaryClient) GetDoubleInvalidNullCreateRequest(ctx context.Co
 }
 
 // GetDoubleInvalidNullHandleResponse handles the GetDoubleInvalidNull response.
-func (client *DictionaryClient) GetDoubleInvalidNullHandleResponse(resp *azcore.Response) (*MapOfFloat64Response, error) {
+func (client DictionaryClient) GetDoubleInvalidNullHandleResponse(resp *azcore.Response) (*MapOfFloat64Response, error) {
 	result := MapOfFloat64Response{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetDoubleInvalidNullHandleError handles the GetDoubleInvalidNull error response.
-func (client *DictionaryClient) GetDoubleInvalidNullHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) GetDoubleInvalidNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1590,7 +1448,7 @@ func (client *DictionaryClient) GetDoubleInvalidNullHandleError(resp *azcore.Res
 }
 
 // GetDoubleInvalidString - Get boolean dictionary value {"0": 1.0, "1": "number", "2": 0.0}
-func (client *DictionaryClient) GetDoubleInvalidString(ctx context.Context, options *DictionaryGetDoubleInvalidStringOptions) (*MapOfFloat64Response, error) {
+func (client DictionaryClient) GetDoubleInvalidString(ctx context.Context, options *DictionaryGetDoubleInvalidStringOptions) (*MapOfFloat64Response, error) {
 	req, err := client.GetDoubleInvalidStringCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -1610,7 +1468,7 @@ func (client *DictionaryClient) GetDoubleInvalidString(ctx context.Context, opti
 }
 
 // GetDoubleInvalidStringCreateRequest creates the GetDoubleInvalidString request.
-func (client *DictionaryClient) GetDoubleInvalidStringCreateRequest(ctx context.Context, options *DictionaryGetDoubleInvalidStringOptions) (*azcore.Request, error) {
+func (client DictionaryClient) GetDoubleInvalidStringCreateRequest(ctx context.Context, options *DictionaryGetDoubleInvalidStringOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/prim/double/1.number.0"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1622,13 +1480,13 @@ func (client *DictionaryClient) GetDoubleInvalidStringCreateRequest(ctx context.
 }
 
 // GetDoubleInvalidStringHandleResponse handles the GetDoubleInvalidString response.
-func (client *DictionaryClient) GetDoubleInvalidStringHandleResponse(resp *azcore.Response) (*MapOfFloat64Response, error) {
+func (client DictionaryClient) GetDoubleInvalidStringHandleResponse(resp *azcore.Response) (*MapOfFloat64Response, error) {
 	result := MapOfFloat64Response{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetDoubleInvalidStringHandleError handles the GetDoubleInvalidString error response.
-func (client *DictionaryClient) GetDoubleInvalidStringHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) GetDoubleInvalidStringHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1637,7 +1495,7 @@ func (client *DictionaryClient) GetDoubleInvalidStringHandleError(resp *azcore.R
 }
 
 // GetDoubleValid - Get float dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
-func (client *DictionaryClient) GetDoubleValid(ctx context.Context, options *DictionaryGetDoubleValidOptions) (*MapOfFloat64Response, error) {
+func (client DictionaryClient) GetDoubleValid(ctx context.Context, options *DictionaryGetDoubleValidOptions) (*MapOfFloat64Response, error) {
 	req, err := client.GetDoubleValidCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -1657,7 +1515,7 @@ func (client *DictionaryClient) GetDoubleValid(ctx context.Context, options *Dic
 }
 
 // GetDoubleValidCreateRequest creates the GetDoubleValid request.
-func (client *DictionaryClient) GetDoubleValidCreateRequest(ctx context.Context, options *DictionaryGetDoubleValidOptions) (*azcore.Request, error) {
+func (client DictionaryClient) GetDoubleValidCreateRequest(ctx context.Context, options *DictionaryGetDoubleValidOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/prim/double/0--0.01-1.2e20"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1669,13 +1527,13 @@ func (client *DictionaryClient) GetDoubleValidCreateRequest(ctx context.Context,
 }
 
 // GetDoubleValidHandleResponse handles the GetDoubleValid response.
-func (client *DictionaryClient) GetDoubleValidHandleResponse(resp *azcore.Response) (*MapOfFloat64Response, error) {
+func (client DictionaryClient) GetDoubleValidHandleResponse(resp *azcore.Response) (*MapOfFloat64Response, error) {
 	result := MapOfFloat64Response{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetDoubleValidHandleError handles the GetDoubleValid error response.
-func (client *DictionaryClient) GetDoubleValidHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) GetDoubleValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1684,7 +1542,7 @@ func (client *DictionaryClient) GetDoubleValidHandleError(resp *azcore.Response)
 }
 
 // GetDurationValid - Get duration dictionary value {"0": "P123DT22H14M12.011S", "1": "P5DT1H0M0S"}
-func (client *DictionaryClient) GetDurationValid(ctx context.Context, options *DictionaryGetDurationValidOptions) (*MapOfStringResponse, error) {
+func (client DictionaryClient) GetDurationValid(ctx context.Context, options *DictionaryGetDurationValidOptions) (*MapOfStringResponse, error) {
 	req, err := client.GetDurationValidCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -1704,7 +1562,7 @@ func (client *DictionaryClient) GetDurationValid(ctx context.Context, options *D
 }
 
 // GetDurationValidCreateRequest creates the GetDurationValid request.
-func (client *DictionaryClient) GetDurationValidCreateRequest(ctx context.Context, options *DictionaryGetDurationValidOptions) (*azcore.Request, error) {
+func (client DictionaryClient) GetDurationValidCreateRequest(ctx context.Context, options *DictionaryGetDurationValidOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/prim/duration/valid"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1716,13 +1574,13 @@ func (client *DictionaryClient) GetDurationValidCreateRequest(ctx context.Contex
 }
 
 // GetDurationValidHandleResponse handles the GetDurationValid response.
-func (client *DictionaryClient) GetDurationValidHandleResponse(resp *azcore.Response) (*MapOfStringResponse, error) {
+func (client DictionaryClient) GetDurationValidHandleResponse(resp *azcore.Response) (*MapOfStringResponse, error) {
 	result := MapOfStringResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetDurationValidHandleError handles the GetDurationValid error response.
-func (client *DictionaryClient) GetDurationValidHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) GetDurationValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1731,7 +1589,7 @@ func (client *DictionaryClient) GetDurationValidHandleError(resp *azcore.Respons
 }
 
 // GetEmpty - Get empty dictionary value {}
-func (client *DictionaryClient) GetEmpty(ctx context.Context, options *DictionaryGetEmptyOptions) (*MapOfInt32Response, error) {
+func (client DictionaryClient) GetEmpty(ctx context.Context, options *DictionaryGetEmptyOptions) (*MapOfInt32Response, error) {
 	req, err := client.GetEmptyCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -1751,7 +1609,7 @@ func (client *DictionaryClient) GetEmpty(ctx context.Context, options *Dictionar
 }
 
 // GetEmptyCreateRequest creates the GetEmpty request.
-func (client *DictionaryClient) GetEmptyCreateRequest(ctx context.Context, options *DictionaryGetEmptyOptions) (*azcore.Request, error) {
+func (client DictionaryClient) GetEmptyCreateRequest(ctx context.Context, options *DictionaryGetEmptyOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/empty"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1763,13 +1621,13 @@ func (client *DictionaryClient) GetEmptyCreateRequest(ctx context.Context, optio
 }
 
 // GetEmptyHandleResponse handles the GetEmpty response.
-func (client *DictionaryClient) GetEmptyHandleResponse(resp *azcore.Response) (*MapOfInt32Response, error) {
+func (client DictionaryClient) GetEmptyHandleResponse(resp *azcore.Response) (*MapOfInt32Response, error) {
 	result := MapOfInt32Response{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetEmptyHandleError handles the GetEmpty error response.
-func (client *DictionaryClient) GetEmptyHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) GetEmptyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1778,7 +1636,7 @@ func (client *DictionaryClient) GetEmptyHandleError(resp *azcore.Response) error
 }
 
 // GetEmptyStringKey - Get Dictionary with key as empty string
-func (client *DictionaryClient) GetEmptyStringKey(ctx context.Context, options *DictionaryGetEmptyStringKeyOptions) (*MapOfStringResponse, error) {
+func (client DictionaryClient) GetEmptyStringKey(ctx context.Context, options *DictionaryGetEmptyStringKeyOptions) (*MapOfStringResponse, error) {
 	req, err := client.GetEmptyStringKeyCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -1798,7 +1656,7 @@ func (client *DictionaryClient) GetEmptyStringKey(ctx context.Context, options *
 }
 
 // GetEmptyStringKeyCreateRequest creates the GetEmptyStringKey request.
-func (client *DictionaryClient) GetEmptyStringKeyCreateRequest(ctx context.Context, options *DictionaryGetEmptyStringKeyOptions) (*azcore.Request, error) {
+func (client DictionaryClient) GetEmptyStringKeyCreateRequest(ctx context.Context, options *DictionaryGetEmptyStringKeyOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/keyemptystring"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1810,13 +1668,13 @@ func (client *DictionaryClient) GetEmptyStringKeyCreateRequest(ctx context.Conte
 }
 
 // GetEmptyStringKeyHandleResponse handles the GetEmptyStringKey response.
-func (client *DictionaryClient) GetEmptyStringKeyHandleResponse(resp *azcore.Response) (*MapOfStringResponse, error) {
+func (client DictionaryClient) GetEmptyStringKeyHandleResponse(resp *azcore.Response) (*MapOfStringResponse, error) {
 	result := MapOfStringResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetEmptyStringKeyHandleError handles the GetEmptyStringKey error response.
-func (client *DictionaryClient) GetEmptyStringKeyHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) GetEmptyStringKeyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1825,7 +1683,7 @@ func (client *DictionaryClient) GetEmptyStringKeyHandleError(resp *azcore.Respon
 }
 
 // GetFloatInvalidNull - Get float dictionary value {"0": 0.0, "1": null, "2": 1.2e20}
-func (client *DictionaryClient) GetFloatInvalidNull(ctx context.Context, options *DictionaryGetFloatInvalidNullOptions) (*MapOfFloat32Response, error) {
+func (client DictionaryClient) GetFloatInvalidNull(ctx context.Context, options *DictionaryGetFloatInvalidNullOptions) (*MapOfFloat32Response, error) {
 	req, err := client.GetFloatInvalidNullCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -1845,7 +1703,7 @@ func (client *DictionaryClient) GetFloatInvalidNull(ctx context.Context, options
 }
 
 // GetFloatInvalidNullCreateRequest creates the GetFloatInvalidNull request.
-func (client *DictionaryClient) GetFloatInvalidNullCreateRequest(ctx context.Context, options *DictionaryGetFloatInvalidNullOptions) (*azcore.Request, error) {
+func (client DictionaryClient) GetFloatInvalidNullCreateRequest(ctx context.Context, options *DictionaryGetFloatInvalidNullOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/prim/float/0.0-null-1.2e20"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1857,13 +1715,13 @@ func (client *DictionaryClient) GetFloatInvalidNullCreateRequest(ctx context.Con
 }
 
 // GetFloatInvalidNullHandleResponse handles the GetFloatInvalidNull response.
-func (client *DictionaryClient) GetFloatInvalidNullHandleResponse(resp *azcore.Response) (*MapOfFloat32Response, error) {
+func (client DictionaryClient) GetFloatInvalidNullHandleResponse(resp *azcore.Response) (*MapOfFloat32Response, error) {
 	result := MapOfFloat32Response{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetFloatInvalidNullHandleError handles the GetFloatInvalidNull error response.
-func (client *DictionaryClient) GetFloatInvalidNullHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) GetFloatInvalidNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1872,7 +1730,7 @@ func (client *DictionaryClient) GetFloatInvalidNullHandleError(resp *azcore.Resp
 }
 
 // GetFloatInvalidString - Get boolean dictionary value {"0": 1.0, "1": "number", "2": 0.0}
-func (client *DictionaryClient) GetFloatInvalidString(ctx context.Context, options *DictionaryGetFloatInvalidStringOptions) (*MapOfFloat32Response, error) {
+func (client DictionaryClient) GetFloatInvalidString(ctx context.Context, options *DictionaryGetFloatInvalidStringOptions) (*MapOfFloat32Response, error) {
 	req, err := client.GetFloatInvalidStringCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -1892,7 +1750,7 @@ func (client *DictionaryClient) GetFloatInvalidString(ctx context.Context, optio
 }
 
 // GetFloatInvalidStringCreateRequest creates the GetFloatInvalidString request.
-func (client *DictionaryClient) GetFloatInvalidStringCreateRequest(ctx context.Context, options *DictionaryGetFloatInvalidStringOptions) (*azcore.Request, error) {
+func (client DictionaryClient) GetFloatInvalidStringCreateRequest(ctx context.Context, options *DictionaryGetFloatInvalidStringOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/prim/float/1.number.0"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1904,13 +1762,13 @@ func (client *DictionaryClient) GetFloatInvalidStringCreateRequest(ctx context.C
 }
 
 // GetFloatInvalidStringHandleResponse handles the GetFloatInvalidString response.
-func (client *DictionaryClient) GetFloatInvalidStringHandleResponse(resp *azcore.Response) (*MapOfFloat32Response, error) {
+func (client DictionaryClient) GetFloatInvalidStringHandleResponse(resp *azcore.Response) (*MapOfFloat32Response, error) {
 	result := MapOfFloat32Response{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetFloatInvalidStringHandleError handles the GetFloatInvalidString error response.
-func (client *DictionaryClient) GetFloatInvalidStringHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) GetFloatInvalidStringHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1919,7 +1777,7 @@ func (client *DictionaryClient) GetFloatInvalidStringHandleError(resp *azcore.Re
 }
 
 // GetFloatValid - Get float dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
-func (client *DictionaryClient) GetFloatValid(ctx context.Context, options *DictionaryGetFloatValidOptions) (*MapOfFloat32Response, error) {
+func (client DictionaryClient) GetFloatValid(ctx context.Context, options *DictionaryGetFloatValidOptions) (*MapOfFloat32Response, error) {
 	req, err := client.GetFloatValidCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -1939,7 +1797,7 @@ func (client *DictionaryClient) GetFloatValid(ctx context.Context, options *Dict
 }
 
 // GetFloatValidCreateRequest creates the GetFloatValid request.
-func (client *DictionaryClient) GetFloatValidCreateRequest(ctx context.Context, options *DictionaryGetFloatValidOptions) (*azcore.Request, error) {
+func (client DictionaryClient) GetFloatValidCreateRequest(ctx context.Context, options *DictionaryGetFloatValidOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/prim/float/0--0.01-1.2e20"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1951,13 +1809,13 @@ func (client *DictionaryClient) GetFloatValidCreateRequest(ctx context.Context, 
 }
 
 // GetFloatValidHandleResponse handles the GetFloatValid response.
-func (client *DictionaryClient) GetFloatValidHandleResponse(resp *azcore.Response) (*MapOfFloat32Response, error) {
+func (client DictionaryClient) GetFloatValidHandleResponse(resp *azcore.Response) (*MapOfFloat32Response, error) {
 	result := MapOfFloat32Response{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetFloatValidHandleError handles the GetFloatValid error response.
-func (client *DictionaryClient) GetFloatValidHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) GetFloatValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1966,7 +1824,7 @@ func (client *DictionaryClient) GetFloatValidHandleError(resp *azcore.Response) 
 }
 
 // GetIntInvalidNull - Get integer dictionary value {"0": 1, "1": null, "2": 0}
-func (client *DictionaryClient) GetIntInvalidNull(ctx context.Context, options *DictionaryGetIntInvalidNullOptions) (*MapOfInt32Response, error) {
+func (client DictionaryClient) GetIntInvalidNull(ctx context.Context, options *DictionaryGetIntInvalidNullOptions) (*MapOfInt32Response, error) {
 	req, err := client.GetIntInvalidNullCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -1986,7 +1844,7 @@ func (client *DictionaryClient) GetIntInvalidNull(ctx context.Context, options *
 }
 
 // GetIntInvalidNullCreateRequest creates the GetIntInvalidNull request.
-func (client *DictionaryClient) GetIntInvalidNullCreateRequest(ctx context.Context, options *DictionaryGetIntInvalidNullOptions) (*azcore.Request, error) {
+func (client DictionaryClient) GetIntInvalidNullCreateRequest(ctx context.Context, options *DictionaryGetIntInvalidNullOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/prim/integer/1.null.zero"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1998,13 +1856,13 @@ func (client *DictionaryClient) GetIntInvalidNullCreateRequest(ctx context.Conte
 }
 
 // GetIntInvalidNullHandleResponse handles the GetIntInvalidNull response.
-func (client *DictionaryClient) GetIntInvalidNullHandleResponse(resp *azcore.Response) (*MapOfInt32Response, error) {
+func (client DictionaryClient) GetIntInvalidNullHandleResponse(resp *azcore.Response) (*MapOfInt32Response, error) {
 	result := MapOfInt32Response{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetIntInvalidNullHandleError handles the GetIntInvalidNull error response.
-func (client *DictionaryClient) GetIntInvalidNullHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) GetIntInvalidNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -2013,7 +1871,7 @@ func (client *DictionaryClient) GetIntInvalidNullHandleError(resp *azcore.Respon
 }
 
 // GetIntInvalidString - Get integer dictionary value {"0": 1, "1": "integer", "2": 0}
-func (client *DictionaryClient) GetIntInvalidString(ctx context.Context, options *DictionaryGetIntInvalidStringOptions) (*MapOfInt32Response, error) {
+func (client DictionaryClient) GetIntInvalidString(ctx context.Context, options *DictionaryGetIntInvalidStringOptions) (*MapOfInt32Response, error) {
 	req, err := client.GetIntInvalidStringCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -2033,7 +1891,7 @@ func (client *DictionaryClient) GetIntInvalidString(ctx context.Context, options
 }
 
 // GetIntInvalidStringCreateRequest creates the GetIntInvalidString request.
-func (client *DictionaryClient) GetIntInvalidStringCreateRequest(ctx context.Context, options *DictionaryGetIntInvalidStringOptions) (*azcore.Request, error) {
+func (client DictionaryClient) GetIntInvalidStringCreateRequest(ctx context.Context, options *DictionaryGetIntInvalidStringOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/prim/integer/1.integer.0"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -2045,13 +1903,13 @@ func (client *DictionaryClient) GetIntInvalidStringCreateRequest(ctx context.Con
 }
 
 // GetIntInvalidStringHandleResponse handles the GetIntInvalidString response.
-func (client *DictionaryClient) GetIntInvalidStringHandleResponse(resp *azcore.Response) (*MapOfInt32Response, error) {
+func (client DictionaryClient) GetIntInvalidStringHandleResponse(resp *azcore.Response) (*MapOfInt32Response, error) {
 	result := MapOfInt32Response{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetIntInvalidStringHandleError handles the GetIntInvalidString error response.
-func (client *DictionaryClient) GetIntInvalidStringHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) GetIntInvalidStringHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -2060,7 +1918,7 @@ func (client *DictionaryClient) GetIntInvalidStringHandleError(resp *azcore.Resp
 }
 
 // GetIntegerValid - Get integer dictionary value {"0": 1, "1": -1, "2": 3, "3": 300}
-func (client *DictionaryClient) GetIntegerValid(ctx context.Context, options *DictionaryGetIntegerValidOptions) (*MapOfInt32Response, error) {
+func (client DictionaryClient) GetIntegerValid(ctx context.Context, options *DictionaryGetIntegerValidOptions) (*MapOfInt32Response, error) {
 	req, err := client.GetIntegerValidCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -2080,7 +1938,7 @@ func (client *DictionaryClient) GetIntegerValid(ctx context.Context, options *Di
 }
 
 // GetIntegerValidCreateRequest creates the GetIntegerValid request.
-func (client *DictionaryClient) GetIntegerValidCreateRequest(ctx context.Context, options *DictionaryGetIntegerValidOptions) (*azcore.Request, error) {
+func (client DictionaryClient) GetIntegerValidCreateRequest(ctx context.Context, options *DictionaryGetIntegerValidOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/prim/integer/1.-1.3.300"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -2092,13 +1950,13 @@ func (client *DictionaryClient) GetIntegerValidCreateRequest(ctx context.Context
 }
 
 // GetIntegerValidHandleResponse handles the GetIntegerValid response.
-func (client *DictionaryClient) GetIntegerValidHandleResponse(resp *azcore.Response) (*MapOfInt32Response, error) {
+func (client DictionaryClient) GetIntegerValidHandleResponse(resp *azcore.Response) (*MapOfInt32Response, error) {
 	result := MapOfInt32Response{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetIntegerValidHandleError handles the GetIntegerValid error response.
-func (client *DictionaryClient) GetIntegerValidHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) GetIntegerValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -2107,7 +1965,7 @@ func (client *DictionaryClient) GetIntegerValidHandleError(resp *azcore.Response
 }
 
 // GetInvalid - Get invalid Dictionary value
-func (client *DictionaryClient) GetInvalid(ctx context.Context, options *DictionaryGetInvalidOptions) (*MapOfStringResponse, error) {
+func (client DictionaryClient) GetInvalid(ctx context.Context, options *DictionaryGetInvalidOptions) (*MapOfStringResponse, error) {
 	req, err := client.GetInvalidCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -2127,7 +1985,7 @@ func (client *DictionaryClient) GetInvalid(ctx context.Context, options *Diction
 }
 
 // GetInvalidCreateRequest creates the GetInvalid request.
-func (client *DictionaryClient) GetInvalidCreateRequest(ctx context.Context, options *DictionaryGetInvalidOptions) (*azcore.Request, error) {
+func (client DictionaryClient) GetInvalidCreateRequest(ctx context.Context, options *DictionaryGetInvalidOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/invalid"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -2139,13 +1997,13 @@ func (client *DictionaryClient) GetInvalidCreateRequest(ctx context.Context, opt
 }
 
 // GetInvalidHandleResponse handles the GetInvalid response.
-func (client *DictionaryClient) GetInvalidHandleResponse(resp *azcore.Response) (*MapOfStringResponse, error) {
+func (client DictionaryClient) GetInvalidHandleResponse(resp *azcore.Response) (*MapOfStringResponse, error) {
 	result := MapOfStringResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetInvalidHandleError handles the GetInvalid error response.
-func (client *DictionaryClient) GetInvalidHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) GetInvalidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -2154,7 +2012,7 @@ func (client *DictionaryClient) GetInvalidHandleError(resp *azcore.Response) err
 }
 
 // GetLongInvalidNull - Get long dictionary value {"0": 1, "1": null, "2": 0}
-func (client *DictionaryClient) GetLongInvalidNull(ctx context.Context, options *DictionaryGetLongInvalidNullOptions) (*MapOfInt64Response, error) {
+func (client DictionaryClient) GetLongInvalidNull(ctx context.Context, options *DictionaryGetLongInvalidNullOptions) (*MapOfInt64Response, error) {
 	req, err := client.GetLongInvalidNullCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -2174,7 +2032,7 @@ func (client *DictionaryClient) GetLongInvalidNull(ctx context.Context, options 
 }
 
 // GetLongInvalidNullCreateRequest creates the GetLongInvalidNull request.
-func (client *DictionaryClient) GetLongInvalidNullCreateRequest(ctx context.Context, options *DictionaryGetLongInvalidNullOptions) (*azcore.Request, error) {
+func (client DictionaryClient) GetLongInvalidNullCreateRequest(ctx context.Context, options *DictionaryGetLongInvalidNullOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/prim/long/1.null.zero"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -2186,13 +2044,13 @@ func (client *DictionaryClient) GetLongInvalidNullCreateRequest(ctx context.Cont
 }
 
 // GetLongInvalidNullHandleResponse handles the GetLongInvalidNull response.
-func (client *DictionaryClient) GetLongInvalidNullHandleResponse(resp *azcore.Response) (*MapOfInt64Response, error) {
+func (client DictionaryClient) GetLongInvalidNullHandleResponse(resp *azcore.Response) (*MapOfInt64Response, error) {
 	result := MapOfInt64Response{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetLongInvalidNullHandleError handles the GetLongInvalidNull error response.
-func (client *DictionaryClient) GetLongInvalidNullHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) GetLongInvalidNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -2201,7 +2059,7 @@ func (client *DictionaryClient) GetLongInvalidNullHandleError(resp *azcore.Respo
 }
 
 // GetLongInvalidString - Get long dictionary value {"0": 1, "1": "integer", "2": 0}
-func (client *DictionaryClient) GetLongInvalidString(ctx context.Context, options *DictionaryGetLongInvalidStringOptions) (*MapOfInt64Response, error) {
+func (client DictionaryClient) GetLongInvalidString(ctx context.Context, options *DictionaryGetLongInvalidStringOptions) (*MapOfInt64Response, error) {
 	req, err := client.GetLongInvalidStringCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -2221,7 +2079,7 @@ func (client *DictionaryClient) GetLongInvalidString(ctx context.Context, option
 }
 
 // GetLongInvalidStringCreateRequest creates the GetLongInvalidString request.
-func (client *DictionaryClient) GetLongInvalidStringCreateRequest(ctx context.Context, options *DictionaryGetLongInvalidStringOptions) (*azcore.Request, error) {
+func (client DictionaryClient) GetLongInvalidStringCreateRequest(ctx context.Context, options *DictionaryGetLongInvalidStringOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/prim/long/1.integer.0"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -2233,13 +2091,13 @@ func (client *DictionaryClient) GetLongInvalidStringCreateRequest(ctx context.Co
 }
 
 // GetLongInvalidStringHandleResponse handles the GetLongInvalidString response.
-func (client *DictionaryClient) GetLongInvalidStringHandleResponse(resp *azcore.Response) (*MapOfInt64Response, error) {
+func (client DictionaryClient) GetLongInvalidStringHandleResponse(resp *azcore.Response) (*MapOfInt64Response, error) {
 	result := MapOfInt64Response{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetLongInvalidStringHandleError handles the GetLongInvalidString error response.
-func (client *DictionaryClient) GetLongInvalidStringHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) GetLongInvalidStringHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -2248,7 +2106,7 @@ func (client *DictionaryClient) GetLongInvalidStringHandleError(resp *azcore.Res
 }
 
 // GetLongValid - Get integer dictionary value {"0": 1, "1": -1, "2": 3, "3": 300}
-func (client *DictionaryClient) GetLongValid(ctx context.Context, options *DictionaryGetLongValidOptions) (*MapOfInt64Response, error) {
+func (client DictionaryClient) GetLongValid(ctx context.Context, options *DictionaryGetLongValidOptions) (*MapOfInt64Response, error) {
 	req, err := client.GetLongValidCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -2268,7 +2126,7 @@ func (client *DictionaryClient) GetLongValid(ctx context.Context, options *Dicti
 }
 
 // GetLongValidCreateRequest creates the GetLongValid request.
-func (client *DictionaryClient) GetLongValidCreateRequest(ctx context.Context, options *DictionaryGetLongValidOptions) (*azcore.Request, error) {
+func (client DictionaryClient) GetLongValidCreateRequest(ctx context.Context, options *DictionaryGetLongValidOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/prim/long/1.-1.3.300"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -2280,13 +2138,13 @@ func (client *DictionaryClient) GetLongValidCreateRequest(ctx context.Context, o
 }
 
 // GetLongValidHandleResponse handles the GetLongValid response.
-func (client *DictionaryClient) GetLongValidHandleResponse(resp *azcore.Response) (*MapOfInt64Response, error) {
+func (client DictionaryClient) GetLongValidHandleResponse(resp *azcore.Response) (*MapOfInt64Response, error) {
 	result := MapOfInt64Response{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetLongValidHandleError handles the GetLongValid error response.
-func (client *DictionaryClient) GetLongValidHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) GetLongValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -2295,7 +2153,7 @@ func (client *DictionaryClient) GetLongValidHandleError(resp *azcore.Response) e
 }
 
 // GetNull - Get null dictionary value
-func (client *DictionaryClient) GetNull(ctx context.Context, options *DictionaryGetNullOptions) (*MapOfInt32Response, error) {
+func (client DictionaryClient) GetNull(ctx context.Context, options *DictionaryGetNullOptions) (*MapOfInt32Response, error) {
 	req, err := client.GetNullCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -2315,7 +2173,7 @@ func (client *DictionaryClient) GetNull(ctx context.Context, options *Dictionary
 }
 
 // GetNullCreateRequest creates the GetNull request.
-func (client *DictionaryClient) GetNullCreateRequest(ctx context.Context, options *DictionaryGetNullOptions) (*azcore.Request, error) {
+func (client DictionaryClient) GetNullCreateRequest(ctx context.Context, options *DictionaryGetNullOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/null"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -2327,13 +2185,13 @@ func (client *DictionaryClient) GetNullCreateRequest(ctx context.Context, option
 }
 
 // GetNullHandleResponse handles the GetNull response.
-func (client *DictionaryClient) GetNullHandleResponse(resp *azcore.Response) (*MapOfInt32Response, error) {
+func (client DictionaryClient) GetNullHandleResponse(resp *azcore.Response) (*MapOfInt32Response, error) {
 	result := MapOfInt32Response{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetNullHandleError handles the GetNull error response.
-func (client *DictionaryClient) GetNullHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) GetNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -2342,7 +2200,7 @@ func (client *DictionaryClient) GetNullHandleError(resp *azcore.Response) error 
 }
 
 // GetNullKey - Get Dictionary with null key
-func (client *DictionaryClient) GetNullKey(ctx context.Context, options *DictionaryGetNullKeyOptions) (*MapOfStringResponse, error) {
+func (client DictionaryClient) GetNullKey(ctx context.Context, options *DictionaryGetNullKeyOptions) (*MapOfStringResponse, error) {
 	req, err := client.GetNullKeyCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -2362,7 +2220,7 @@ func (client *DictionaryClient) GetNullKey(ctx context.Context, options *Diction
 }
 
 // GetNullKeyCreateRequest creates the GetNullKey request.
-func (client *DictionaryClient) GetNullKeyCreateRequest(ctx context.Context, options *DictionaryGetNullKeyOptions) (*azcore.Request, error) {
+func (client DictionaryClient) GetNullKeyCreateRequest(ctx context.Context, options *DictionaryGetNullKeyOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/nullkey"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -2374,13 +2232,13 @@ func (client *DictionaryClient) GetNullKeyCreateRequest(ctx context.Context, opt
 }
 
 // GetNullKeyHandleResponse handles the GetNullKey response.
-func (client *DictionaryClient) GetNullKeyHandleResponse(resp *azcore.Response) (*MapOfStringResponse, error) {
+func (client DictionaryClient) GetNullKeyHandleResponse(resp *azcore.Response) (*MapOfStringResponse, error) {
 	result := MapOfStringResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetNullKeyHandleError handles the GetNullKey error response.
-func (client *DictionaryClient) GetNullKeyHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) GetNullKeyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -2389,7 +2247,7 @@ func (client *DictionaryClient) GetNullKeyHandleError(resp *azcore.Response) err
 }
 
 // GetNullValue - Get Dictionary with null value
-func (client *DictionaryClient) GetNullValue(ctx context.Context, options *DictionaryGetNullValueOptions) (*MapOfStringResponse, error) {
+func (client DictionaryClient) GetNullValue(ctx context.Context, options *DictionaryGetNullValueOptions) (*MapOfStringResponse, error) {
 	req, err := client.GetNullValueCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -2409,7 +2267,7 @@ func (client *DictionaryClient) GetNullValue(ctx context.Context, options *Dicti
 }
 
 // GetNullValueCreateRequest creates the GetNullValue request.
-func (client *DictionaryClient) GetNullValueCreateRequest(ctx context.Context, options *DictionaryGetNullValueOptions) (*azcore.Request, error) {
+func (client DictionaryClient) GetNullValueCreateRequest(ctx context.Context, options *DictionaryGetNullValueOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/nullvalue"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -2421,13 +2279,13 @@ func (client *DictionaryClient) GetNullValueCreateRequest(ctx context.Context, o
 }
 
 // GetNullValueHandleResponse handles the GetNullValue response.
-func (client *DictionaryClient) GetNullValueHandleResponse(resp *azcore.Response) (*MapOfStringResponse, error) {
+func (client DictionaryClient) GetNullValueHandleResponse(resp *azcore.Response) (*MapOfStringResponse, error) {
 	result := MapOfStringResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetNullValueHandleError handles the GetNullValue error response.
-func (client *DictionaryClient) GetNullValueHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) GetNullValueHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -2436,7 +2294,7 @@ func (client *DictionaryClient) GetNullValueHandleError(resp *azcore.Response) e
 }
 
 // GetStringValid - Get string dictionary value {"0": "foo1", "1": "foo2", "2": "foo3"}
-func (client *DictionaryClient) GetStringValid(ctx context.Context, options *DictionaryGetStringValidOptions) (*MapOfStringResponse, error) {
+func (client DictionaryClient) GetStringValid(ctx context.Context, options *DictionaryGetStringValidOptions) (*MapOfStringResponse, error) {
 	req, err := client.GetStringValidCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -2456,7 +2314,7 @@ func (client *DictionaryClient) GetStringValid(ctx context.Context, options *Dic
 }
 
 // GetStringValidCreateRequest creates the GetStringValid request.
-func (client *DictionaryClient) GetStringValidCreateRequest(ctx context.Context, options *DictionaryGetStringValidOptions) (*azcore.Request, error) {
+func (client DictionaryClient) GetStringValidCreateRequest(ctx context.Context, options *DictionaryGetStringValidOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/prim/string/foo1.foo2.foo3"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -2468,13 +2326,13 @@ func (client *DictionaryClient) GetStringValidCreateRequest(ctx context.Context,
 }
 
 // GetStringValidHandleResponse handles the GetStringValid response.
-func (client *DictionaryClient) GetStringValidHandleResponse(resp *azcore.Response) (*MapOfStringResponse, error) {
+func (client DictionaryClient) GetStringValidHandleResponse(resp *azcore.Response) (*MapOfStringResponse, error) {
 	result := MapOfStringResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetStringValidHandleError handles the GetStringValid error response.
-func (client *DictionaryClient) GetStringValidHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) GetStringValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -2483,7 +2341,7 @@ func (client *DictionaryClient) GetStringValidHandleError(resp *azcore.Response)
 }
 
 // GetStringWithInvalid - Get string dictionary value {"0": "foo", "1": 123, "2": "foo2"}
-func (client *DictionaryClient) GetStringWithInvalid(ctx context.Context, options *DictionaryGetStringWithInvalidOptions) (*MapOfStringResponse, error) {
+func (client DictionaryClient) GetStringWithInvalid(ctx context.Context, options *DictionaryGetStringWithInvalidOptions) (*MapOfStringResponse, error) {
 	req, err := client.GetStringWithInvalidCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -2503,7 +2361,7 @@ func (client *DictionaryClient) GetStringWithInvalid(ctx context.Context, option
 }
 
 // GetStringWithInvalidCreateRequest creates the GetStringWithInvalid request.
-func (client *DictionaryClient) GetStringWithInvalidCreateRequest(ctx context.Context, options *DictionaryGetStringWithInvalidOptions) (*azcore.Request, error) {
+func (client DictionaryClient) GetStringWithInvalidCreateRequest(ctx context.Context, options *DictionaryGetStringWithInvalidOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/prim/string/foo.123.foo2"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -2515,13 +2373,13 @@ func (client *DictionaryClient) GetStringWithInvalidCreateRequest(ctx context.Co
 }
 
 // GetStringWithInvalidHandleResponse handles the GetStringWithInvalid response.
-func (client *DictionaryClient) GetStringWithInvalidHandleResponse(resp *azcore.Response) (*MapOfStringResponse, error) {
+func (client DictionaryClient) GetStringWithInvalidHandleResponse(resp *azcore.Response) (*MapOfStringResponse, error) {
 	result := MapOfStringResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetStringWithInvalidHandleError handles the GetStringWithInvalid error response.
-func (client *DictionaryClient) GetStringWithInvalidHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) GetStringWithInvalidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -2530,7 +2388,7 @@ func (client *DictionaryClient) GetStringWithInvalidHandleError(resp *azcore.Res
 }
 
 // GetStringWithNull - Get string dictionary value {"0": "foo", "1": null, "2": "foo2"}
-func (client *DictionaryClient) GetStringWithNull(ctx context.Context, options *DictionaryGetStringWithNullOptions) (*MapOfStringResponse, error) {
+func (client DictionaryClient) GetStringWithNull(ctx context.Context, options *DictionaryGetStringWithNullOptions) (*MapOfStringResponse, error) {
 	req, err := client.GetStringWithNullCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -2550,7 +2408,7 @@ func (client *DictionaryClient) GetStringWithNull(ctx context.Context, options *
 }
 
 // GetStringWithNullCreateRequest creates the GetStringWithNull request.
-func (client *DictionaryClient) GetStringWithNullCreateRequest(ctx context.Context, options *DictionaryGetStringWithNullOptions) (*azcore.Request, error) {
+func (client DictionaryClient) GetStringWithNullCreateRequest(ctx context.Context, options *DictionaryGetStringWithNullOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/prim/string/foo.null.foo2"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -2562,13 +2420,13 @@ func (client *DictionaryClient) GetStringWithNullCreateRequest(ctx context.Conte
 }
 
 // GetStringWithNullHandleResponse handles the GetStringWithNull response.
-func (client *DictionaryClient) GetStringWithNullHandleResponse(resp *azcore.Response) (*MapOfStringResponse, error) {
+func (client DictionaryClient) GetStringWithNullHandleResponse(resp *azcore.Response) (*MapOfStringResponse, error) {
 	result := MapOfStringResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetStringWithNullHandleError handles the GetStringWithNull error response.
-func (client *DictionaryClient) GetStringWithNullHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) GetStringWithNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -2577,7 +2435,7 @@ func (client *DictionaryClient) GetStringWithNullHandleError(resp *azcore.Respon
 }
 
 // PutArrayValid - Put An array of array of strings {"0": ["1", "2", "3"], "1": ["4", "5", "6"], "2": ["7", "8", "9"]}
-func (client *DictionaryClient) PutArrayValid(ctx context.Context, arrayBody map[string][]string, options *DictionaryPutArrayValidOptions) (*http.Response, error) {
+func (client DictionaryClient) PutArrayValid(ctx context.Context, arrayBody map[string][]string, options *DictionaryPutArrayValidOptions) (*http.Response, error) {
 	req, err := client.PutArrayValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
 		return nil, err
@@ -2593,7 +2451,7 @@ func (client *DictionaryClient) PutArrayValid(ctx context.Context, arrayBody map
 }
 
 // PutArrayValidCreateRequest creates the PutArrayValid request.
-func (client *DictionaryClient) PutArrayValidCreateRequest(ctx context.Context, arrayBody map[string][]string, options *DictionaryPutArrayValidOptions) (*azcore.Request, error) {
+func (client DictionaryClient) PutArrayValidCreateRequest(ctx context.Context, arrayBody map[string][]string, options *DictionaryPutArrayValidOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/array/valid"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -2605,7 +2463,7 @@ func (client *DictionaryClient) PutArrayValidCreateRequest(ctx context.Context, 
 }
 
 // PutArrayValidHandleError handles the PutArrayValid error response.
-func (client *DictionaryClient) PutArrayValidHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) PutArrayValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -2614,7 +2472,7 @@ func (client *DictionaryClient) PutArrayValidHandleError(resp *azcore.Response) 
 }
 
 // PutBooleanTfft - Set dictionary value empty {"0": true, "1": false, "2": false, "3": true }
-func (client *DictionaryClient) PutBooleanTfft(ctx context.Context, arrayBody map[string]bool, options *DictionaryPutBooleanTfftOptions) (*http.Response, error) {
+func (client DictionaryClient) PutBooleanTfft(ctx context.Context, arrayBody map[string]bool, options *DictionaryPutBooleanTfftOptions) (*http.Response, error) {
 	req, err := client.PutBooleanTfftCreateRequest(ctx, arrayBody, options)
 	if err != nil {
 		return nil, err
@@ -2630,7 +2488,7 @@ func (client *DictionaryClient) PutBooleanTfft(ctx context.Context, arrayBody ma
 }
 
 // PutBooleanTfftCreateRequest creates the PutBooleanTfft request.
-func (client *DictionaryClient) PutBooleanTfftCreateRequest(ctx context.Context, arrayBody map[string]bool, options *DictionaryPutBooleanTfftOptions) (*azcore.Request, error) {
+func (client DictionaryClient) PutBooleanTfftCreateRequest(ctx context.Context, arrayBody map[string]bool, options *DictionaryPutBooleanTfftOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/prim/boolean/tfft"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -2642,7 +2500,7 @@ func (client *DictionaryClient) PutBooleanTfftCreateRequest(ctx context.Context,
 }
 
 // PutBooleanTfftHandleError handles the PutBooleanTfft error response.
-func (client *DictionaryClient) PutBooleanTfftHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) PutBooleanTfftHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -2651,7 +2509,7 @@ func (client *DictionaryClient) PutBooleanTfftHandleError(resp *azcore.Response)
 }
 
 // PutByteValid - Put the dictionary value {"0": hex(FF FF FF FA), "1": hex(01 02 03), "2": hex (25, 29, 43)} with each elementencoded in base 64
-func (client *DictionaryClient) PutByteValid(ctx context.Context, arrayBody map[string][]byte, options *DictionaryPutByteValidOptions) (*http.Response, error) {
+func (client DictionaryClient) PutByteValid(ctx context.Context, arrayBody map[string][]byte, options *DictionaryPutByteValidOptions) (*http.Response, error) {
 	req, err := client.PutByteValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
 		return nil, err
@@ -2667,7 +2525,7 @@ func (client *DictionaryClient) PutByteValid(ctx context.Context, arrayBody map[
 }
 
 // PutByteValidCreateRequest creates the PutByteValid request.
-func (client *DictionaryClient) PutByteValidCreateRequest(ctx context.Context, arrayBody map[string][]byte, options *DictionaryPutByteValidOptions) (*azcore.Request, error) {
+func (client DictionaryClient) PutByteValidCreateRequest(ctx context.Context, arrayBody map[string][]byte, options *DictionaryPutByteValidOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/prim/byte/valid"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -2679,7 +2537,7 @@ func (client *DictionaryClient) PutByteValidCreateRequest(ctx context.Context, a
 }
 
 // PutByteValidHandleError handles the PutByteValid error response.
-func (client *DictionaryClient) PutByteValidHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) PutByteValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -2689,7 +2547,7 @@ func (client *DictionaryClient) PutByteValidHandleError(resp *azcore.Response) e
 
 // PutComplexValid - Put an dictionary of complex type with values {"0": {"integer": 1, "string": "2"}, "1": {"integer": 3, "string": "4"}, "2": {"integer":
 // 5, "string": "6"}}
-func (client *DictionaryClient) PutComplexValid(ctx context.Context, arrayBody map[string]Widget, options *DictionaryPutComplexValidOptions) (*http.Response, error) {
+func (client DictionaryClient) PutComplexValid(ctx context.Context, arrayBody map[string]Widget, options *DictionaryPutComplexValidOptions) (*http.Response, error) {
 	req, err := client.PutComplexValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
 		return nil, err
@@ -2705,7 +2563,7 @@ func (client *DictionaryClient) PutComplexValid(ctx context.Context, arrayBody m
 }
 
 // PutComplexValidCreateRequest creates the PutComplexValid request.
-func (client *DictionaryClient) PutComplexValidCreateRequest(ctx context.Context, arrayBody map[string]Widget, options *DictionaryPutComplexValidOptions) (*azcore.Request, error) {
+func (client DictionaryClient) PutComplexValidCreateRequest(ctx context.Context, arrayBody map[string]Widget, options *DictionaryPutComplexValidOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/complex/valid"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -2717,7 +2575,7 @@ func (client *DictionaryClient) PutComplexValidCreateRequest(ctx context.Context
 }
 
 // PutComplexValidHandleError handles the PutComplexValid error response.
-func (client *DictionaryClient) PutComplexValidHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) PutComplexValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -2727,7 +2585,7 @@ func (client *DictionaryClient) PutComplexValidHandleError(resp *azcore.Response
 
 // PutDateTimeRFC1123Valid - Set dictionary value empty {"0": "Fri, 01 Dec 2000 00:00:01 GMT", "1": "Wed, 02 Jan 1980 00:11:35 GMT", "2": "Wed, 12 Oct 1492
 // 10:15:01 GMT"}
-func (client *DictionaryClient) PutDateTimeRFC1123Valid(ctx context.Context, arrayBody map[string]time.Time, options *DictionaryPutDateTimeRFC1123ValidOptions) (*http.Response, error) {
+func (client DictionaryClient) PutDateTimeRFC1123Valid(ctx context.Context, arrayBody map[string]time.Time, options *DictionaryPutDateTimeRFC1123ValidOptions) (*http.Response, error) {
 	req, err := client.PutDateTimeRFC1123ValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
 		return nil, err
@@ -2743,7 +2601,7 @@ func (client *DictionaryClient) PutDateTimeRFC1123Valid(ctx context.Context, arr
 }
 
 // PutDateTimeRFC1123ValidCreateRequest creates the PutDateTimeRFC1123Valid request.
-func (client *DictionaryClient) PutDateTimeRFC1123ValidCreateRequest(ctx context.Context, arrayBody map[string]time.Time, options *DictionaryPutDateTimeRFC1123ValidOptions) (*azcore.Request, error) {
+func (client DictionaryClient) PutDateTimeRFC1123ValidCreateRequest(ctx context.Context, arrayBody map[string]time.Time, options *DictionaryPutDateTimeRFC1123ValidOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/prim/date-time-rfc1123/valid"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -2759,7 +2617,7 @@ func (client *DictionaryClient) PutDateTimeRFC1123ValidCreateRequest(ctx context
 }
 
 // PutDateTimeRFC1123ValidHandleError handles the PutDateTimeRFC1123Valid error response.
-func (client *DictionaryClient) PutDateTimeRFC1123ValidHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) PutDateTimeRFC1123ValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -2768,7 +2626,7 @@ func (client *DictionaryClient) PutDateTimeRFC1123ValidHandleError(resp *azcore.
 }
 
 // PutDateTimeValid - Set dictionary value {"0": "2000-12-01t00:00:01z", "1": "1980-01-02T00:11:35+01:00", "2": "1492-10-12T10:15:01-08:00"}
-func (client *DictionaryClient) PutDateTimeValid(ctx context.Context, arrayBody map[string]time.Time, options *DictionaryPutDateTimeValidOptions) (*http.Response, error) {
+func (client DictionaryClient) PutDateTimeValid(ctx context.Context, arrayBody map[string]time.Time, options *DictionaryPutDateTimeValidOptions) (*http.Response, error) {
 	req, err := client.PutDateTimeValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
 		return nil, err
@@ -2784,7 +2642,7 @@ func (client *DictionaryClient) PutDateTimeValid(ctx context.Context, arrayBody 
 }
 
 // PutDateTimeValidCreateRequest creates the PutDateTimeValid request.
-func (client *DictionaryClient) PutDateTimeValidCreateRequest(ctx context.Context, arrayBody map[string]time.Time, options *DictionaryPutDateTimeValidOptions) (*azcore.Request, error) {
+func (client DictionaryClient) PutDateTimeValidCreateRequest(ctx context.Context, arrayBody map[string]time.Time, options *DictionaryPutDateTimeValidOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/prim/date-time/valid"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -2800,7 +2658,7 @@ func (client *DictionaryClient) PutDateTimeValidCreateRequest(ctx context.Contex
 }
 
 // PutDateTimeValidHandleError handles the PutDateTimeValid error response.
-func (client *DictionaryClient) PutDateTimeValidHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) PutDateTimeValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -2809,7 +2667,7 @@ func (client *DictionaryClient) PutDateTimeValidHandleError(resp *azcore.Respons
 }
 
 // PutDateValid - Set dictionary value {"0": "2000-12-01", "1": "1980-01-02", "2": "1492-10-12"}
-func (client *DictionaryClient) PutDateValid(ctx context.Context, arrayBody map[string]time.Time, options *DictionaryPutDateValidOptions) (*http.Response, error) {
+func (client DictionaryClient) PutDateValid(ctx context.Context, arrayBody map[string]time.Time, options *DictionaryPutDateValidOptions) (*http.Response, error) {
 	req, err := client.PutDateValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
 		return nil, err
@@ -2825,7 +2683,7 @@ func (client *DictionaryClient) PutDateValid(ctx context.Context, arrayBody map[
 }
 
 // PutDateValidCreateRequest creates the PutDateValid request.
-func (client *DictionaryClient) PutDateValidCreateRequest(ctx context.Context, arrayBody map[string]time.Time, options *DictionaryPutDateValidOptions) (*azcore.Request, error) {
+func (client DictionaryClient) PutDateValidCreateRequest(ctx context.Context, arrayBody map[string]time.Time, options *DictionaryPutDateValidOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/prim/date/valid"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -2841,7 +2699,7 @@ func (client *DictionaryClient) PutDateValidCreateRequest(ctx context.Context, a
 }
 
 // PutDateValidHandleError handles the PutDateValid error response.
-func (client *DictionaryClient) PutDateValidHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) PutDateValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -2851,7 +2709,7 @@ func (client *DictionaryClient) PutDateValidHandleError(resp *azcore.Response) e
 
 // PutDictionaryValid - Get an dictionaries of dictionaries of type with value {"0": {"1": "one", "2": "two", "3": "three"}, "1": {"4": "four", "5": "five",
 // "6": "six"}, "2": {"7": "seven", "8": "eight", "9": "nine"}}
-func (client *DictionaryClient) PutDictionaryValid(ctx context.Context, arrayBody map[string]interface{}, options *DictionaryPutDictionaryValidOptions) (*http.Response, error) {
+func (client DictionaryClient) PutDictionaryValid(ctx context.Context, arrayBody map[string]interface{}, options *DictionaryPutDictionaryValidOptions) (*http.Response, error) {
 	req, err := client.PutDictionaryValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
 		return nil, err
@@ -2867,7 +2725,7 @@ func (client *DictionaryClient) PutDictionaryValid(ctx context.Context, arrayBod
 }
 
 // PutDictionaryValidCreateRequest creates the PutDictionaryValid request.
-func (client *DictionaryClient) PutDictionaryValidCreateRequest(ctx context.Context, arrayBody map[string]interface{}, options *DictionaryPutDictionaryValidOptions) (*azcore.Request, error) {
+func (client DictionaryClient) PutDictionaryValidCreateRequest(ctx context.Context, arrayBody map[string]interface{}, options *DictionaryPutDictionaryValidOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/dictionary/valid"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -2879,7 +2737,7 @@ func (client *DictionaryClient) PutDictionaryValidCreateRequest(ctx context.Cont
 }
 
 // PutDictionaryValidHandleError handles the PutDictionaryValid error response.
-func (client *DictionaryClient) PutDictionaryValidHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) PutDictionaryValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -2888,7 +2746,7 @@ func (client *DictionaryClient) PutDictionaryValidHandleError(resp *azcore.Respo
 }
 
 // PutDoubleValid - Set dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
-func (client *DictionaryClient) PutDoubleValid(ctx context.Context, arrayBody map[string]float64, options *DictionaryPutDoubleValidOptions) (*http.Response, error) {
+func (client DictionaryClient) PutDoubleValid(ctx context.Context, arrayBody map[string]float64, options *DictionaryPutDoubleValidOptions) (*http.Response, error) {
 	req, err := client.PutDoubleValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
 		return nil, err
@@ -2904,7 +2762,7 @@ func (client *DictionaryClient) PutDoubleValid(ctx context.Context, arrayBody ma
 }
 
 // PutDoubleValidCreateRequest creates the PutDoubleValid request.
-func (client *DictionaryClient) PutDoubleValidCreateRequest(ctx context.Context, arrayBody map[string]float64, options *DictionaryPutDoubleValidOptions) (*azcore.Request, error) {
+func (client DictionaryClient) PutDoubleValidCreateRequest(ctx context.Context, arrayBody map[string]float64, options *DictionaryPutDoubleValidOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/prim/double/0--0.01-1.2e20"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -2916,7 +2774,7 @@ func (client *DictionaryClient) PutDoubleValidCreateRequest(ctx context.Context,
 }
 
 // PutDoubleValidHandleError handles the PutDoubleValid error response.
-func (client *DictionaryClient) PutDoubleValidHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) PutDoubleValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -2925,7 +2783,7 @@ func (client *DictionaryClient) PutDoubleValidHandleError(resp *azcore.Response)
 }
 
 // PutDurationValid - Set dictionary value {"0": "P123DT22H14M12.011S", "1": "P5DT1H0M0S"}
-func (client *DictionaryClient) PutDurationValid(ctx context.Context, arrayBody map[string]string, options *DictionaryPutDurationValidOptions) (*http.Response, error) {
+func (client DictionaryClient) PutDurationValid(ctx context.Context, arrayBody map[string]string, options *DictionaryPutDurationValidOptions) (*http.Response, error) {
 	req, err := client.PutDurationValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
 		return nil, err
@@ -2941,7 +2799,7 @@ func (client *DictionaryClient) PutDurationValid(ctx context.Context, arrayBody 
 }
 
 // PutDurationValidCreateRequest creates the PutDurationValid request.
-func (client *DictionaryClient) PutDurationValidCreateRequest(ctx context.Context, arrayBody map[string]string, options *DictionaryPutDurationValidOptions) (*azcore.Request, error) {
+func (client DictionaryClient) PutDurationValidCreateRequest(ctx context.Context, arrayBody map[string]string, options *DictionaryPutDurationValidOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/prim/duration/valid"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -2953,7 +2811,7 @@ func (client *DictionaryClient) PutDurationValidCreateRequest(ctx context.Contex
 }
 
 // PutDurationValidHandleError handles the PutDurationValid error response.
-func (client *DictionaryClient) PutDurationValidHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) PutDurationValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -2962,7 +2820,7 @@ func (client *DictionaryClient) PutDurationValidHandleError(resp *azcore.Respons
 }
 
 // PutEmpty - Set dictionary value empty {}
-func (client *DictionaryClient) PutEmpty(ctx context.Context, arrayBody map[string]string, options *DictionaryPutEmptyOptions) (*http.Response, error) {
+func (client DictionaryClient) PutEmpty(ctx context.Context, arrayBody map[string]string, options *DictionaryPutEmptyOptions) (*http.Response, error) {
 	req, err := client.PutEmptyCreateRequest(ctx, arrayBody, options)
 	if err != nil {
 		return nil, err
@@ -2978,7 +2836,7 @@ func (client *DictionaryClient) PutEmpty(ctx context.Context, arrayBody map[stri
 }
 
 // PutEmptyCreateRequest creates the PutEmpty request.
-func (client *DictionaryClient) PutEmptyCreateRequest(ctx context.Context, arrayBody map[string]string, options *DictionaryPutEmptyOptions) (*azcore.Request, error) {
+func (client DictionaryClient) PutEmptyCreateRequest(ctx context.Context, arrayBody map[string]string, options *DictionaryPutEmptyOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/empty"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -2990,7 +2848,7 @@ func (client *DictionaryClient) PutEmptyCreateRequest(ctx context.Context, array
 }
 
 // PutEmptyHandleError handles the PutEmpty error response.
-func (client *DictionaryClient) PutEmptyHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) PutEmptyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -2999,7 +2857,7 @@ func (client *DictionaryClient) PutEmptyHandleError(resp *azcore.Response) error
 }
 
 // PutFloatValid - Set dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
-func (client *DictionaryClient) PutFloatValid(ctx context.Context, arrayBody map[string]float32, options *DictionaryPutFloatValidOptions) (*http.Response, error) {
+func (client DictionaryClient) PutFloatValid(ctx context.Context, arrayBody map[string]float32, options *DictionaryPutFloatValidOptions) (*http.Response, error) {
 	req, err := client.PutFloatValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
 		return nil, err
@@ -3015,7 +2873,7 @@ func (client *DictionaryClient) PutFloatValid(ctx context.Context, arrayBody map
 }
 
 // PutFloatValidCreateRequest creates the PutFloatValid request.
-func (client *DictionaryClient) PutFloatValidCreateRequest(ctx context.Context, arrayBody map[string]float32, options *DictionaryPutFloatValidOptions) (*azcore.Request, error) {
+func (client DictionaryClient) PutFloatValidCreateRequest(ctx context.Context, arrayBody map[string]float32, options *DictionaryPutFloatValidOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/prim/float/0--0.01-1.2e20"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -3027,7 +2885,7 @@ func (client *DictionaryClient) PutFloatValidCreateRequest(ctx context.Context, 
 }
 
 // PutFloatValidHandleError handles the PutFloatValid error response.
-func (client *DictionaryClient) PutFloatValidHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) PutFloatValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -3036,7 +2894,7 @@ func (client *DictionaryClient) PutFloatValidHandleError(resp *azcore.Response) 
 }
 
 // PutIntegerValid - Set dictionary value empty {"0": 1, "1": -1, "2": 3, "3": 300}
-func (client *DictionaryClient) PutIntegerValid(ctx context.Context, arrayBody map[string]int32, options *DictionaryPutIntegerValidOptions) (*http.Response, error) {
+func (client DictionaryClient) PutIntegerValid(ctx context.Context, arrayBody map[string]int32, options *DictionaryPutIntegerValidOptions) (*http.Response, error) {
 	req, err := client.PutIntegerValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
 		return nil, err
@@ -3052,7 +2910,7 @@ func (client *DictionaryClient) PutIntegerValid(ctx context.Context, arrayBody m
 }
 
 // PutIntegerValidCreateRequest creates the PutIntegerValid request.
-func (client *DictionaryClient) PutIntegerValidCreateRequest(ctx context.Context, arrayBody map[string]int32, options *DictionaryPutIntegerValidOptions) (*azcore.Request, error) {
+func (client DictionaryClient) PutIntegerValidCreateRequest(ctx context.Context, arrayBody map[string]int32, options *DictionaryPutIntegerValidOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/prim/integer/1.-1.3.300"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -3064,7 +2922,7 @@ func (client *DictionaryClient) PutIntegerValidCreateRequest(ctx context.Context
 }
 
 // PutIntegerValidHandleError handles the PutIntegerValid error response.
-func (client *DictionaryClient) PutIntegerValidHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) PutIntegerValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -3073,7 +2931,7 @@ func (client *DictionaryClient) PutIntegerValidHandleError(resp *azcore.Response
 }
 
 // PutLongValid - Set dictionary value empty {"0": 1, "1": -1, "2": 3, "3": 300}
-func (client *DictionaryClient) PutLongValid(ctx context.Context, arrayBody map[string]int64, options *DictionaryPutLongValidOptions) (*http.Response, error) {
+func (client DictionaryClient) PutLongValid(ctx context.Context, arrayBody map[string]int64, options *DictionaryPutLongValidOptions) (*http.Response, error) {
 	req, err := client.PutLongValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
 		return nil, err
@@ -3089,7 +2947,7 @@ func (client *DictionaryClient) PutLongValid(ctx context.Context, arrayBody map[
 }
 
 // PutLongValidCreateRequest creates the PutLongValid request.
-func (client *DictionaryClient) PutLongValidCreateRequest(ctx context.Context, arrayBody map[string]int64, options *DictionaryPutLongValidOptions) (*azcore.Request, error) {
+func (client DictionaryClient) PutLongValidCreateRequest(ctx context.Context, arrayBody map[string]int64, options *DictionaryPutLongValidOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/prim/long/1.-1.3.300"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -3101,7 +2959,7 @@ func (client *DictionaryClient) PutLongValidCreateRequest(ctx context.Context, a
 }
 
 // PutLongValidHandleError handles the PutLongValid error response.
-func (client *DictionaryClient) PutLongValidHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) PutLongValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -3110,7 +2968,7 @@ func (client *DictionaryClient) PutLongValidHandleError(resp *azcore.Response) e
 }
 
 // PutStringValid - Set dictionary value {"0": "foo1", "1": "foo2", "2": "foo3"}
-func (client *DictionaryClient) PutStringValid(ctx context.Context, arrayBody map[string]string, options *DictionaryPutStringValidOptions) (*http.Response, error) {
+func (client DictionaryClient) PutStringValid(ctx context.Context, arrayBody map[string]string, options *DictionaryPutStringValidOptions) (*http.Response, error) {
 	req, err := client.PutStringValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
 		return nil, err
@@ -3126,7 +2984,7 @@ func (client *DictionaryClient) PutStringValid(ctx context.Context, arrayBody ma
 }
 
 // PutStringValidCreateRequest creates the PutStringValid request.
-func (client *DictionaryClient) PutStringValidCreateRequest(ctx context.Context, arrayBody map[string]string, options *DictionaryPutStringValidOptions) (*azcore.Request, error) {
+func (client DictionaryClient) PutStringValidCreateRequest(ctx context.Context, arrayBody map[string]string, options *DictionaryPutStringValidOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/prim/string/foo1.foo2.foo3"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -3138,7 +2996,7 @@ func (client *DictionaryClient) PutStringValidCreateRequest(ctx context.Context,
 }
 
 // PutStringValidHandleError handles the PutStringValid error response.
-func (client *DictionaryClient) PutStringValidHandleError(resp *azcore.Response) error {
+func (client DictionaryClient) PutStringValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

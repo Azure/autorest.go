@@ -20,21 +20,7 @@ import (
 	"strings"
 )
 
-// VirtualMachineImagesOperations contains the methods for the VirtualMachineImages group.
-type VirtualMachineImagesOperations interface {
-	// Get - Gets a virtual machine image.
-	Get(ctx context.Context, location string, publisherName string, offer string, skus string, version string, options *VirtualMachineImagesGetOptions) (*VirtualMachineImageResponse, error)
-	// List - Gets a list of all virtual machine image versions for the specified location, publisher, offer, and SKU.
-	List(ctx context.Context, location string, publisherName string, offer string, skus string, options *VirtualMachineImagesListOptions) (*VirtualMachineImageResourceArrayResponse, error)
-	// ListOffers - Gets a list of virtual machine image offers for the specified location and publisher.
-	ListOffers(ctx context.Context, location string, publisherName string, options *VirtualMachineImagesListOffersOptions) (*VirtualMachineImageResourceArrayResponse, error)
-	// ListPublishers - Gets a list of virtual machine image publishers for the specified Azure location.
-	ListPublishers(ctx context.Context, location string, options *VirtualMachineImagesListPublishersOptions) (*VirtualMachineImageResourceArrayResponse, error)
-	// ListSKUs - Gets a list of virtual machine image SKUs for the specified location, publisher, and offer.
-	ListSKUs(ctx context.Context, location string, publisherName string, offer string, options *VirtualMachineImagesListSKUsOptions) (*VirtualMachineImageResourceArrayResponse, error)
-}
-
-// VirtualMachineImagesClient implements the VirtualMachineImagesOperations interface.
+// VirtualMachineImagesClient contains the methods for the VirtualMachineImages group.
 // Don't use this type directly, use NewVirtualMachineImagesClient() instead.
 type VirtualMachineImagesClient struct {
 	con            *armcore.Connection
@@ -42,17 +28,17 @@ type VirtualMachineImagesClient struct {
 }
 
 // NewVirtualMachineImagesClient creates a new instance of VirtualMachineImagesClient with the specified values.
-func NewVirtualMachineImagesClient(con *armcore.Connection, subscriptionID string) VirtualMachineImagesOperations {
-	return &VirtualMachineImagesClient{con: con, subscriptionID: subscriptionID}
+func NewVirtualMachineImagesClient(con *armcore.Connection, subscriptionID string) VirtualMachineImagesClient {
+	return VirtualMachineImagesClient{con: con, subscriptionID: subscriptionID}
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client *VirtualMachineImagesClient) Pipeline() azcore.Pipeline {
+func (client VirtualMachineImagesClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // Get - Gets a virtual machine image.
-func (client *VirtualMachineImagesClient) Get(ctx context.Context, location string, publisherName string, offer string, skus string, version string, options *VirtualMachineImagesGetOptions) (*VirtualMachineImageResponse, error) {
+func (client VirtualMachineImagesClient) Get(ctx context.Context, location string, publisherName string, offer string, skus string, version string, options *VirtualMachineImagesGetOptions) (*VirtualMachineImageResponse, error) {
 	req, err := client.GetCreateRequest(ctx, location, publisherName, offer, skus, version, options)
 	if err != nil {
 		return nil, err
@@ -72,7 +58,7 @@ func (client *VirtualMachineImagesClient) Get(ctx context.Context, location stri
 }
 
 // GetCreateRequest creates the Get request.
-func (client *VirtualMachineImagesClient) GetCreateRequest(ctx context.Context, location string, publisherName string, offer string, skus string, version string, options *VirtualMachineImagesGetOptions) (*azcore.Request, error) {
+func (client VirtualMachineImagesClient) GetCreateRequest(ctx context.Context, location string, publisherName string, offer string, skus string, version string, options *VirtualMachineImagesGetOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus/{skus}/versions/{version}"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
 	urlPath = strings.ReplaceAll(urlPath, "{publisherName}", url.PathEscape(publisherName))
@@ -93,13 +79,13 @@ func (client *VirtualMachineImagesClient) GetCreateRequest(ctx context.Context, 
 }
 
 // GetHandleResponse handles the Get response.
-func (client *VirtualMachineImagesClient) GetHandleResponse(resp *azcore.Response) (*VirtualMachineImageResponse, error) {
+func (client VirtualMachineImagesClient) GetHandleResponse(resp *azcore.Response) (*VirtualMachineImageResponse, error) {
 	result := VirtualMachineImageResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VirtualMachineImage)
 }
 
 // GetHandleError handles the Get error response.
-func (client *VirtualMachineImagesClient) GetHandleError(resp *azcore.Response) error {
+func (client VirtualMachineImagesClient) GetHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -111,7 +97,7 @@ func (client *VirtualMachineImagesClient) GetHandleError(resp *azcore.Response) 
 }
 
 // List - Gets a list of all virtual machine image versions for the specified location, publisher, offer, and SKU.
-func (client *VirtualMachineImagesClient) List(ctx context.Context, location string, publisherName string, offer string, skus string, options *VirtualMachineImagesListOptions) (*VirtualMachineImageResourceArrayResponse, error) {
+func (client VirtualMachineImagesClient) List(ctx context.Context, location string, publisherName string, offer string, skus string, options *VirtualMachineImagesListOptions) (*VirtualMachineImageResourceArrayResponse, error) {
 	req, err := client.ListCreateRequest(ctx, location, publisherName, offer, skus, options)
 	if err != nil {
 		return nil, err
@@ -131,7 +117,7 @@ func (client *VirtualMachineImagesClient) List(ctx context.Context, location str
 }
 
 // ListCreateRequest creates the List request.
-func (client *VirtualMachineImagesClient) ListCreateRequest(ctx context.Context, location string, publisherName string, offer string, skus string, options *VirtualMachineImagesListOptions) (*azcore.Request, error) {
+func (client VirtualMachineImagesClient) ListCreateRequest(ctx context.Context, location string, publisherName string, offer string, skus string, options *VirtualMachineImagesListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus/{skus}/versions"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
 	urlPath = strings.ReplaceAll(urlPath, "{publisherName}", url.PathEscape(publisherName))
@@ -160,13 +146,13 @@ func (client *VirtualMachineImagesClient) ListCreateRequest(ctx context.Context,
 }
 
 // ListHandleResponse handles the List response.
-func (client *VirtualMachineImagesClient) ListHandleResponse(resp *azcore.Response) (*VirtualMachineImageResourceArrayResponse, error) {
+func (client VirtualMachineImagesClient) ListHandleResponse(resp *azcore.Response) (*VirtualMachineImageResourceArrayResponse, error) {
 	result := VirtualMachineImageResourceArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VirtualMachineImageResourceArray)
 }
 
 // ListHandleError handles the List error response.
-func (client *VirtualMachineImagesClient) ListHandleError(resp *azcore.Response) error {
+func (client VirtualMachineImagesClient) ListHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -178,7 +164,7 @@ func (client *VirtualMachineImagesClient) ListHandleError(resp *azcore.Response)
 }
 
 // ListOffers - Gets a list of virtual machine image offers for the specified location and publisher.
-func (client *VirtualMachineImagesClient) ListOffers(ctx context.Context, location string, publisherName string, options *VirtualMachineImagesListOffersOptions) (*VirtualMachineImageResourceArrayResponse, error) {
+func (client VirtualMachineImagesClient) ListOffers(ctx context.Context, location string, publisherName string, options *VirtualMachineImagesListOffersOptions) (*VirtualMachineImageResourceArrayResponse, error) {
 	req, err := client.ListOffersCreateRequest(ctx, location, publisherName, options)
 	if err != nil {
 		return nil, err
@@ -198,7 +184,7 @@ func (client *VirtualMachineImagesClient) ListOffers(ctx context.Context, locati
 }
 
 // ListOffersCreateRequest creates the ListOffers request.
-func (client *VirtualMachineImagesClient) ListOffersCreateRequest(ctx context.Context, location string, publisherName string, options *VirtualMachineImagesListOffersOptions) (*azcore.Request, error) {
+func (client VirtualMachineImagesClient) ListOffersCreateRequest(ctx context.Context, location string, publisherName string, options *VirtualMachineImagesListOffersOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmimage/offers"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
 	urlPath = strings.ReplaceAll(urlPath, "{publisherName}", url.PathEscape(publisherName))
@@ -216,13 +202,13 @@ func (client *VirtualMachineImagesClient) ListOffersCreateRequest(ctx context.Co
 }
 
 // ListOffersHandleResponse handles the ListOffers response.
-func (client *VirtualMachineImagesClient) ListOffersHandleResponse(resp *azcore.Response) (*VirtualMachineImageResourceArrayResponse, error) {
+func (client VirtualMachineImagesClient) ListOffersHandleResponse(resp *azcore.Response) (*VirtualMachineImageResourceArrayResponse, error) {
 	result := VirtualMachineImageResourceArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VirtualMachineImageResourceArray)
 }
 
 // ListOffersHandleError handles the ListOffers error response.
-func (client *VirtualMachineImagesClient) ListOffersHandleError(resp *azcore.Response) error {
+func (client VirtualMachineImagesClient) ListOffersHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -234,7 +220,7 @@ func (client *VirtualMachineImagesClient) ListOffersHandleError(resp *azcore.Res
 }
 
 // ListPublishers - Gets a list of virtual machine image publishers for the specified Azure location.
-func (client *VirtualMachineImagesClient) ListPublishers(ctx context.Context, location string, options *VirtualMachineImagesListPublishersOptions) (*VirtualMachineImageResourceArrayResponse, error) {
+func (client VirtualMachineImagesClient) ListPublishers(ctx context.Context, location string, options *VirtualMachineImagesListPublishersOptions) (*VirtualMachineImageResourceArrayResponse, error) {
 	req, err := client.ListPublishersCreateRequest(ctx, location, options)
 	if err != nil {
 		return nil, err
@@ -254,7 +240,7 @@ func (client *VirtualMachineImagesClient) ListPublishers(ctx context.Context, lo
 }
 
 // ListPublishersCreateRequest creates the ListPublishers request.
-func (client *VirtualMachineImagesClient) ListPublishersCreateRequest(ctx context.Context, location string, options *VirtualMachineImagesListPublishersOptions) (*azcore.Request, error) {
+func (client VirtualMachineImagesClient) ListPublishersCreateRequest(ctx context.Context, location string, options *VirtualMachineImagesListPublishersOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
@@ -271,13 +257,13 @@ func (client *VirtualMachineImagesClient) ListPublishersCreateRequest(ctx contex
 }
 
 // ListPublishersHandleResponse handles the ListPublishers response.
-func (client *VirtualMachineImagesClient) ListPublishersHandleResponse(resp *azcore.Response) (*VirtualMachineImageResourceArrayResponse, error) {
+func (client VirtualMachineImagesClient) ListPublishersHandleResponse(resp *azcore.Response) (*VirtualMachineImageResourceArrayResponse, error) {
 	result := VirtualMachineImageResourceArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VirtualMachineImageResourceArray)
 }
 
 // ListPublishersHandleError handles the ListPublishers error response.
-func (client *VirtualMachineImagesClient) ListPublishersHandleError(resp *azcore.Response) error {
+func (client VirtualMachineImagesClient) ListPublishersHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -289,7 +275,7 @@ func (client *VirtualMachineImagesClient) ListPublishersHandleError(resp *azcore
 }
 
 // ListSKUs - Gets a list of virtual machine image SKUs for the specified location, publisher, and offer.
-func (client *VirtualMachineImagesClient) ListSKUs(ctx context.Context, location string, publisherName string, offer string, options *VirtualMachineImagesListSKUsOptions) (*VirtualMachineImageResourceArrayResponse, error) {
+func (client VirtualMachineImagesClient) ListSKUs(ctx context.Context, location string, publisherName string, offer string, options *VirtualMachineImagesListSKUsOptions) (*VirtualMachineImageResourceArrayResponse, error) {
 	req, err := client.ListSKUsCreateRequest(ctx, location, publisherName, offer, options)
 	if err != nil {
 		return nil, err
@@ -309,7 +295,7 @@ func (client *VirtualMachineImagesClient) ListSKUs(ctx context.Context, location
 }
 
 // ListSKUsCreateRequest creates the ListSKUs request.
-func (client *VirtualMachineImagesClient) ListSKUsCreateRequest(ctx context.Context, location string, publisherName string, offer string, options *VirtualMachineImagesListSKUsOptions) (*azcore.Request, error) {
+func (client VirtualMachineImagesClient) ListSKUsCreateRequest(ctx context.Context, location string, publisherName string, offer string, options *VirtualMachineImagesListSKUsOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
 	urlPath = strings.ReplaceAll(urlPath, "{publisherName}", url.PathEscape(publisherName))
@@ -328,13 +314,13 @@ func (client *VirtualMachineImagesClient) ListSKUsCreateRequest(ctx context.Cont
 }
 
 // ListSKUsHandleResponse handles the ListSKUs response.
-func (client *VirtualMachineImagesClient) ListSKUsHandleResponse(resp *azcore.Response) (*VirtualMachineImageResourceArrayResponse, error) {
+func (client VirtualMachineImagesClient) ListSKUsHandleResponse(resp *azcore.Response) (*VirtualMachineImageResourceArrayResponse, error) {
 	result := VirtualMachineImageResourceArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VirtualMachineImageResourceArray)
 }
 
 // ListSKUsHandleError handles the ListSKUs error response.
-func (client *VirtualMachineImagesClient) ListSKUsHandleError(resp *azcore.Response) error {
+func (client VirtualMachineImagesClient) ListSKUsHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)

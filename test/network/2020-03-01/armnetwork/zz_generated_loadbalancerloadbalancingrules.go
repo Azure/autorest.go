@@ -16,15 +16,7 @@ import (
 	"strings"
 )
 
-// LoadBalancerLoadBalancingRulesOperations contains the methods for the LoadBalancerLoadBalancingRules group.
-type LoadBalancerLoadBalancingRulesOperations interface {
-	// Get - Gets the specified load balancer load balancing rule.
-	Get(ctx context.Context, resourceGroupName string, loadBalancerName string, loadBalancingRuleName string, options *LoadBalancerLoadBalancingRulesGetOptions) (*LoadBalancingRuleResponse, error)
-	// List - Gets all the load balancing rules in a load balancer.
-	List(resourceGroupName string, loadBalancerName string, options *LoadBalancerLoadBalancingRulesListOptions) LoadBalancerLoadBalancingRuleListResultPager
-}
-
-// LoadBalancerLoadBalancingRulesClient implements the LoadBalancerLoadBalancingRulesOperations interface.
+// LoadBalancerLoadBalancingRulesClient contains the methods for the LoadBalancerLoadBalancingRules group.
 // Don't use this type directly, use NewLoadBalancerLoadBalancingRulesClient() instead.
 type LoadBalancerLoadBalancingRulesClient struct {
 	con            *armcore.Connection
@@ -32,17 +24,17 @@ type LoadBalancerLoadBalancingRulesClient struct {
 }
 
 // NewLoadBalancerLoadBalancingRulesClient creates a new instance of LoadBalancerLoadBalancingRulesClient with the specified values.
-func NewLoadBalancerLoadBalancingRulesClient(con *armcore.Connection, subscriptionID string) LoadBalancerLoadBalancingRulesOperations {
-	return &LoadBalancerLoadBalancingRulesClient{con: con, subscriptionID: subscriptionID}
+func NewLoadBalancerLoadBalancingRulesClient(con *armcore.Connection, subscriptionID string) LoadBalancerLoadBalancingRulesClient {
+	return LoadBalancerLoadBalancingRulesClient{con: con, subscriptionID: subscriptionID}
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client *LoadBalancerLoadBalancingRulesClient) Pipeline() azcore.Pipeline {
+func (client LoadBalancerLoadBalancingRulesClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // Get - Gets the specified load balancer load balancing rule.
-func (client *LoadBalancerLoadBalancingRulesClient) Get(ctx context.Context, resourceGroupName string, loadBalancerName string, loadBalancingRuleName string, options *LoadBalancerLoadBalancingRulesGetOptions) (*LoadBalancingRuleResponse, error) {
+func (client LoadBalancerLoadBalancingRulesClient) Get(ctx context.Context, resourceGroupName string, loadBalancerName string, loadBalancingRuleName string, options *LoadBalancerLoadBalancingRulesGetOptions) (*LoadBalancingRuleResponse, error) {
 	req, err := client.GetCreateRequest(ctx, resourceGroupName, loadBalancerName, loadBalancingRuleName, options)
 	if err != nil {
 		return nil, err
@@ -62,7 +54,7 @@ func (client *LoadBalancerLoadBalancingRulesClient) Get(ctx context.Context, res
 }
 
 // GetCreateRequest creates the Get request.
-func (client *LoadBalancerLoadBalancingRulesClient) GetCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, loadBalancingRuleName string, options *LoadBalancerLoadBalancingRulesGetOptions) (*azcore.Request, error) {
+func (client LoadBalancerLoadBalancingRulesClient) GetCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, loadBalancingRuleName string, options *LoadBalancerLoadBalancingRulesGetOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/loadBalancingRules/{loadBalancingRuleName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{loadBalancerName}", url.PathEscape(loadBalancerName))
@@ -81,13 +73,13 @@ func (client *LoadBalancerLoadBalancingRulesClient) GetCreateRequest(ctx context
 }
 
 // GetHandleResponse handles the Get response.
-func (client *LoadBalancerLoadBalancingRulesClient) GetHandleResponse(resp *azcore.Response) (*LoadBalancingRuleResponse, error) {
+func (client LoadBalancerLoadBalancingRulesClient) GetHandleResponse(resp *azcore.Response) (*LoadBalancingRuleResponse, error) {
 	result := LoadBalancingRuleResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.LoadBalancingRule)
 }
 
 // GetHandleError handles the Get error response.
-func (client *LoadBalancerLoadBalancingRulesClient) GetHandleError(resp *azcore.Response) error {
+func (client LoadBalancerLoadBalancingRulesClient) GetHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -96,7 +88,7 @@ func (client *LoadBalancerLoadBalancingRulesClient) GetHandleError(resp *azcore.
 }
 
 // List - Gets all the load balancing rules in a load balancer.
-func (client *LoadBalancerLoadBalancingRulesClient) List(resourceGroupName string, loadBalancerName string, options *LoadBalancerLoadBalancingRulesListOptions) LoadBalancerLoadBalancingRuleListResultPager {
+func (client LoadBalancerLoadBalancingRulesClient) List(resourceGroupName string, loadBalancerName string, options *LoadBalancerLoadBalancingRulesListOptions) LoadBalancerLoadBalancingRuleListResultPager {
 	return &loadBalancerLoadBalancingRuleListResultPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
@@ -112,7 +104,7 @@ func (client *LoadBalancerLoadBalancingRulesClient) List(resourceGroupName strin
 }
 
 // ListCreateRequest creates the List request.
-func (client *LoadBalancerLoadBalancingRulesClient) ListCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, options *LoadBalancerLoadBalancingRulesListOptions) (*azcore.Request, error) {
+func (client LoadBalancerLoadBalancingRulesClient) ListCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, options *LoadBalancerLoadBalancingRulesListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/loadBalancingRules"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{loadBalancerName}", url.PathEscape(loadBalancerName))
@@ -130,13 +122,13 @@ func (client *LoadBalancerLoadBalancingRulesClient) ListCreateRequest(ctx contex
 }
 
 // ListHandleResponse handles the List response.
-func (client *LoadBalancerLoadBalancingRulesClient) ListHandleResponse(resp *azcore.Response) (*LoadBalancerLoadBalancingRuleListResultResponse, error) {
+func (client LoadBalancerLoadBalancingRulesClient) ListHandleResponse(resp *azcore.Response) (*LoadBalancerLoadBalancingRuleListResultResponse, error) {
 	result := LoadBalancerLoadBalancingRuleListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.LoadBalancerLoadBalancingRuleListResult)
 }
 
 // ListHandleError handles the List error response.
-func (client *LoadBalancerLoadBalancingRulesClient) ListHandleError(resp *azcore.Response) error {
+func (client LoadBalancerLoadBalancingRulesClient) ListHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

@@ -11,7 +11,7 @@ import (
 	"time"
 )
 
-func newDatetimerfc1123Client() Datetimerfc1123Operations {
+func newDatetimerfc1123Client() Datetimerfc1123Client {
 	return NewDatetimerfc1123Client(NewDefaultConnection(nil))
 }
 

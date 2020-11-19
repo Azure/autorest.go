@@ -10,7 +10,7 @@ import (
 	"testing"
 )
 
-func newBoolClient() BoolOperations {
+func newBoolClient() BoolClient {
 	return NewBoolClient(NewDefaultConnection(nil))
 }
 

@@ -10,7 +10,7 @@ import (
 	"testing"
 )
 
-func newFloatClient() FloatOperations {
+func newFloatClient() FloatClient {
 	return NewFloatClient(NewDefaultConnection(nil))
 }
 

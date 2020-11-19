@@ -10,7 +10,7 @@ import (
 	"testing"
 )
 
-func newHTTPSuccessClient() HTTPSuccessOperations {
+func newHTTPSuccessClient() HTTPSuccessClient {
 	return NewHTTPSuccessClient(NewDefaultConnection(nil))
 }
 

@@ -10,7 +10,7 @@ import (
 	"testing"
 )
 
-func newQueriesClient() QueriesOperations {
+func newQueriesClient() QueriesClient {
 	return NewQueriesClient(NewDefaultConnection(nil))
 }
 

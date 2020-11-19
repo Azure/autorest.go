@@ -10,7 +10,7 @@ import (
 	"testing"
 )
 
-func newNumberClient() NumberOperations {
+func newNumberClient() NumberClient {
 	return NewNumberClient(NewDefaultConnection(nil))
 }
 

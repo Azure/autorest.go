@@ -10,7 +10,7 @@ import (
 	"testing"
 )
 
-func newByteClient() ByteOperations {
+func newByteClient() ByteClient {
 	return NewByteClient(NewDefaultConnection(nil))
 }
 

@@ -12,7 +12,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
-func newPetsClient() PetsOperations {
+func newPetsClient() PetsClient {
 	return NewPetsClient(NewDefaultConnection(nil))
 }
 

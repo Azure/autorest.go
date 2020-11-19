@@ -13,36 +13,24 @@ import (
 	"net/http"
 )
 
-// APIVersionLocalOperations contains the methods for the APIVersionLocal group.
-type APIVersionLocalOperations interface {
-	// GetMethodLocalNull - Get method with api-version modeled in the method. pass in api-version = null to succeed
-	GetMethodLocalNull(ctx context.Context, options *APIVersionLocalGetMethodLocalNullOptions) (*http.Response, error)
-	// GetMethodLocalValid - Get method with api-version modeled in the method. pass in api-version = '2.0' to succeed
-	GetMethodLocalValid(ctx context.Context, options *APIVersionLocalGetMethodLocalValidOptions) (*http.Response, error)
-	// GetPathLocalValid - Get method with api-version modeled in the method. pass in api-version = '2.0' to succeed
-	GetPathLocalValid(ctx context.Context, options *APIVersionLocalGetPathLocalValidOptions) (*http.Response, error)
-	// GetSwaggerLocalValid - Get method with api-version modeled in the method. pass in api-version = '2.0' to succeed
-	GetSwaggerLocalValid(ctx context.Context, options *APIVersionLocalGetSwaggerLocalValidOptions) (*http.Response, error)
-}
-
-// APIVersionLocalClient implements the APIVersionLocalOperations interface.
+// APIVersionLocalClient contains the methods for the APIVersionLocal group.
 // Don't use this type directly, use NewAPIVersionLocalClient() instead.
 type APIVersionLocalClient struct {
 	con *Connection
 }
 
 // NewAPIVersionLocalClient creates a new instance of APIVersionLocalClient with the specified values.
-func NewAPIVersionLocalClient(con *Connection) APIVersionLocalOperations {
-	return &APIVersionLocalClient{con: con}
+func NewAPIVersionLocalClient(con *Connection) APIVersionLocalClient {
+	return APIVersionLocalClient{con: con}
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client *APIVersionLocalClient) Pipeline() azcore.Pipeline {
+func (client APIVersionLocalClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // GetMethodLocalNull - Get method with api-version modeled in the method. pass in api-version = null to succeed
-func (client *APIVersionLocalClient) GetMethodLocalNull(ctx context.Context, options *APIVersionLocalGetMethodLocalNullOptions) (*http.Response, error) {
+func (client APIVersionLocalClient) GetMethodLocalNull(ctx context.Context, options *APIVersionLocalGetMethodLocalNullOptions) (*http.Response, error) {
 	req, err := client.GetMethodLocalNullCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -58,7 +46,7 @@ func (client *APIVersionLocalClient) GetMethodLocalNull(ctx context.Context, opt
 }
 
 // GetMethodLocalNullCreateRequest creates the GetMethodLocalNull request.
-func (client *APIVersionLocalClient) GetMethodLocalNullCreateRequest(ctx context.Context, options *APIVersionLocalGetMethodLocalNullOptions) (*azcore.Request, error) {
+func (client APIVersionLocalClient) GetMethodLocalNullCreateRequest(ctx context.Context, options *APIVersionLocalGetMethodLocalNullOptions) (*azcore.Request, error) {
 	urlPath := "/azurespecials/apiVersion/method/string/none/query/local/null"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -75,7 +63,7 @@ func (client *APIVersionLocalClient) GetMethodLocalNullCreateRequest(ctx context
 }
 
 // GetMethodLocalNullHandleError handles the GetMethodLocalNull error response.
-func (client *APIVersionLocalClient) GetMethodLocalNullHandleError(resp *azcore.Response) error {
+func (client APIVersionLocalClient) GetMethodLocalNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -84,7 +72,7 @@ func (client *APIVersionLocalClient) GetMethodLocalNullHandleError(resp *azcore.
 }
 
 // GetMethodLocalValid - Get method with api-version modeled in the method. pass in api-version = '2.0' to succeed
-func (client *APIVersionLocalClient) GetMethodLocalValid(ctx context.Context, options *APIVersionLocalGetMethodLocalValidOptions) (*http.Response, error) {
+func (client APIVersionLocalClient) GetMethodLocalValid(ctx context.Context, options *APIVersionLocalGetMethodLocalValidOptions) (*http.Response, error) {
 	req, err := client.GetMethodLocalValidCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -100,7 +88,7 @@ func (client *APIVersionLocalClient) GetMethodLocalValid(ctx context.Context, op
 }
 
 // GetMethodLocalValidCreateRequest creates the GetMethodLocalValid request.
-func (client *APIVersionLocalClient) GetMethodLocalValidCreateRequest(ctx context.Context, options *APIVersionLocalGetMethodLocalValidOptions) (*azcore.Request, error) {
+func (client APIVersionLocalClient) GetMethodLocalValidCreateRequest(ctx context.Context, options *APIVersionLocalGetMethodLocalValidOptions) (*azcore.Request, error) {
 	urlPath := "/azurespecials/apiVersion/method/string/none/query/local/2.0"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -115,7 +103,7 @@ func (client *APIVersionLocalClient) GetMethodLocalValidCreateRequest(ctx contex
 }
 
 // GetMethodLocalValidHandleError handles the GetMethodLocalValid error response.
-func (client *APIVersionLocalClient) GetMethodLocalValidHandleError(resp *azcore.Response) error {
+func (client APIVersionLocalClient) GetMethodLocalValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -124,7 +112,7 @@ func (client *APIVersionLocalClient) GetMethodLocalValidHandleError(resp *azcore
 }
 
 // GetPathLocalValid - Get method with api-version modeled in the method. pass in api-version = '2.0' to succeed
-func (client *APIVersionLocalClient) GetPathLocalValid(ctx context.Context, options *APIVersionLocalGetPathLocalValidOptions) (*http.Response, error) {
+func (client APIVersionLocalClient) GetPathLocalValid(ctx context.Context, options *APIVersionLocalGetPathLocalValidOptions) (*http.Response, error) {
 	req, err := client.GetPathLocalValidCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -140,7 +128,7 @@ func (client *APIVersionLocalClient) GetPathLocalValid(ctx context.Context, opti
 }
 
 // GetPathLocalValidCreateRequest creates the GetPathLocalValid request.
-func (client *APIVersionLocalClient) GetPathLocalValidCreateRequest(ctx context.Context, options *APIVersionLocalGetPathLocalValidOptions) (*azcore.Request, error) {
+func (client APIVersionLocalClient) GetPathLocalValidCreateRequest(ctx context.Context, options *APIVersionLocalGetPathLocalValidOptions) (*azcore.Request, error) {
 	urlPath := "/azurespecials/apiVersion/path/string/none/query/local/2.0"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -155,7 +143,7 @@ func (client *APIVersionLocalClient) GetPathLocalValidCreateRequest(ctx context.
 }
 
 // GetPathLocalValidHandleError handles the GetPathLocalValid error response.
-func (client *APIVersionLocalClient) GetPathLocalValidHandleError(resp *azcore.Response) error {
+func (client APIVersionLocalClient) GetPathLocalValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -164,7 +152,7 @@ func (client *APIVersionLocalClient) GetPathLocalValidHandleError(resp *azcore.R
 }
 
 // GetSwaggerLocalValid - Get method with api-version modeled in the method. pass in api-version = '2.0' to succeed
-func (client *APIVersionLocalClient) GetSwaggerLocalValid(ctx context.Context, options *APIVersionLocalGetSwaggerLocalValidOptions) (*http.Response, error) {
+func (client APIVersionLocalClient) GetSwaggerLocalValid(ctx context.Context, options *APIVersionLocalGetSwaggerLocalValidOptions) (*http.Response, error) {
 	req, err := client.GetSwaggerLocalValidCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -180,7 +168,7 @@ func (client *APIVersionLocalClient) GetSwaggerLocalValid(ctx context.Context, o
 }
 
 // GetSwaggerLocalValidCreateRequest creates the GetSwaggerLocalValid request.
-func (client *APIVersionLocalClient) GetSwaggerLocalValidCreateRequest(ctx context.Context, options *APIVersionLocalGetSwaggerLocalValidOptions) (*azcore.Request, error) {
+func (client APIVersionLocalClient) GetSwaggerLocalValidCreateRequest(ctx context.Context, options *APIVersionLocalGetSwaggerLocalValidOptions) (*azcore.Request, error) {
 	urlPath := "/azurespecials/apiVersion/swagger/string/none/query/local/2.0"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -195,7 +183,7 @@ func (client *APIVersionLocalClient) GetSwaggerLocalValidCreateRequest(ctx conte
 }
 
 // GetSwaggerLocalValidHandleError handles the GetSwaggerLocalValid error response.
-func (client *APIVersionLocalClient) GetSwaggerLocalValidHandleError(resp *azcore.Response) error {
+func (client APIVersionLocalClient) GetSwaggerLocalValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

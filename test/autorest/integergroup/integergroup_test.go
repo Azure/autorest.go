@@ -12,7 +12,7 @@ import (
 	"time"
 )
 
-func newIntClient() IntOperations {
+func newIntClient() IntClient {
 	return NewIntClient(NewDefaultConnection(nil))
 }
 

@@ -17,25 +17,7 @@ import (
 	"time"
 )
 
-// LocalNetworkGatewaysOperations contains the methods for the LocalNetworkGateways group.
-type LocalNetworkGatewaysOperations interface {
-	// BeginCreateOrUpdate - Creates or updates a local network gateway in the specified resource group.
-	BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, parameters LocalNetworkGateway, options *LocalNetworkGatewaysCreateOrUpdateOptions) (*LocalNetworkGatewayPollerResponse, error)
-	// ResumeCreateOrUpdate - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeCreateOrUpdate(token string) (LocalNetworkGatewayPoller, error)
-	// BeginDelete - Deletes the specified local network gateway.
-	BeginDelete(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, options *LocalNetworkGatewaysDeleteOptions) (*HTTPPollerResponse, error)
-	// ResumeDelete - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeDelete(token string) (HTTPPoller, error)
-	// Get - Gets the specified local network gateway in a resource group.
-	Get(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, options *LocalNetworkGatewaysGetOptions) (*LocalNetworkGatewayResponse, error)
-	// List - Gets all the local network gateways in a resource group.
-	List(resourceGroupName string, options *LocalNetworkGatewaysListOptions) LocalNetworkGatewayListResultPager
-	// UpdateTags - Updates a local network gateway tags.
-	UpdateTags(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, parameters TagsObject, options *LocalNetworkGatewaysUpdateTagsOptions) (*LocalNetworkGatewayResponse, error)
-}
-
-// LocalNetworkGatewaysClient implements the LocalNetworkGatewaysOperations interface.
+// LocalNetworkGatewaysClient contains the methods for the LocalNetworkGateways group.
 // Don't use this type directly, use NewLocalNetworkGatewaysClient() instead.
 type LocalNetworkGatewaysClient struct {
 	con            *armcore.Connection
@@ -43,16 +25,17 @@ type LocalNetworkGatewaysClient struct {
 }
 
 // NewLocalNetworkGatewaysClient creates a new instance of LocalNetworkGatewaysClient with the specified values.
-func NewLocalNetworkGatewaysClient(con *armcore.Connection, subscriptionID string) LocalNetworkGatewaysOperations {
-	return &LocalNetworkGatewaysClient{con: con, subscriptionID: subscriptionID}
+func NewLocalNetworkGatewaysClient(con *armcore.Connection, subscriptionID string) LocalNetworkGatewaysClient {
+	return LocalNetworkGatewaysClient{con: con, subscriptionID: subscriptionID}
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client *LocalNetworkGatewaysClient) Pipeline() azcore.Pipeline {
+func (client LocalNetworkGatewaysClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
-func (client *LocalNetworkGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, parameters LocalNetworkGateway, options *LocalNetworkGatewaysCreateOrUpdateOptions) (*LocalNetworkGatewayPollerResponse, error) {
+// BeginCreateOrUpdate - Creates or updates a local network gateway in the specified resource group.
+func (client LocalNetworkGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, parameters LocalNetworkGateway, options *LocalNetworkGatewaysCreateOrUpdateOptions) (*LocalNetworkGatewayPollerResponse, error) {
 	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, localNetworkGatewayName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -75,7 +58,9 @@ func (client *LocalNetworkGatewaysClient) BeginCreateOrUpdate(ctx context.Contex
 	return result, nil
 }
 
-func (client *LocalNetworkGatewaysClient) ResumeCreateOrUpdate(token string) (LocalNetworkGatewayPoller, error) {
+// ResumeCreateOrUpdate creates a new LocalNetworkGatewayPoller from the specified resume token.
+// token - The value must come from a previous call to LocalNetworkGatewayPoller.ResumeToken().
+func (client LocalNetworkGatewaysClient) ResumeCreateOrUpdate(token string) (LocalNetworkGatewayPoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("LocalNetworkGatewaysClient.CreateOrUpdate", token, client.CreateOrUpdateHandleError)
 	if err != nil {
 		return nil, err
@@ -87,7 +72,7 @@ func (client *LocalNetworkGatewaysClient) ResumeCreateOrUpdate(token string) (Lo
 }
 
 // CreateOrUpdate - Creates or updates a local network gateway in the specified resource group.
-func (client *LocalNetworkGatewaysClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, parameters LocalNetworkGateway, options *LocalNetworkGatewaysCreateOrUpdateOptions) (*azcore.Response, error) {
+func (client LocalNetworkGatewaysClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, parameters LocalNetworkGateway, options *LocalNetworkGatewaysCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, localNetworkGatewayName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -103,7 +88,7 @@ func (client *LocalNetworkGatewaysClient) CreateOrUpdate(ctx context.Context, re
 }
 
 // CreateOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *LocalNetworkGatewaysClient) CreateOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, parameters LocalNetworkGateway, options *LocalNetworkGatewaysCreateOrUpdateOptions) (*azcore.Request, error) {
+func (client LocalNetworkGatewaysClient) CreateOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, parameters LocalNetworkGateway, options *LocalNetworkGatewaysCreateOrUpdateOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/localNetworkGateways/{localNetworkGatewayName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{localNetworkGatewayName}", url.PathEscape(localNetworkGatewayName))
@@ -121,13 +106,13 @@ func (client *LocalNetworkGatewaysClient) CreateOrUpdateCreateRequest(ctx contex
 }
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *LocalNetworkGatewaysClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*LocalNetworkGatewayResponse, error) {
+func (client LocalNetworkGatewaysClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*LocalNetworkGatewayResponse, error) {
 	result := LocalNetworkGatewayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.LocalNetworkGateway)
 }
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *LocalNetworkGatewaysClient) CreateOrUpdateHandleError(resp *azcore.Response) error {
+func (client LocalNetworkGatewaysClient) CreateOrUpdateHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -135,7 +120,8 @@ func (client *LocalNetworkGatewaysClient) CreateOrUpdateHandleError(resp *azcore
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-func (client *LocalNetworkGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, options *LocalNetworkGatewaysDeleteOptions) (*HTTPPollerResponse, error) {
+// BeginDelete - Deletes the specified local network gateway.
+func (client LocalNetworkGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, options *LocalNetworkGatewaysDeleteOptions) (*HTTPPollerResponse, error) {
 	resp, err := client.Delete(ctx, resourceGroupName, localNetworkGatewayName, options)
 	if err != nil {
 		return nil, err
@@ -158,7 +144,9 @@ func (client *LocalNetworkGatewaysClient) BeginDelete(ctx context.Context, resou
 	return result, nil
 }
 
-func (client *LocalNetworkGatewaysClient) ResumeDelete(token string) (HTTPPoller, error) {
+// ResumeDelete creates a new HTTPPoller from the specified resume token.
+// token - The value must come from a previous call to HTTPPoller.ResumeToken().
+func (client LocalNetworkGatewaysClient) ResumeDelete(token string) (HTTPPoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("LocalNetworkGatewaysClient.Delete", token, client.DeleteHandleError)
 	if err != nil {
 		return nil, err
@@ -170,7 +158,7 @@ func (client *LocalNetworkGatewaysClient) ResumeDelete(token string) (HTTPPoller
 }
 
 // Delete - Deletes the specified local network gateway.
-func (client *LocalNetworkGatewaysClient) Delete(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, options *LocalNetworkGatewaysDeleteOptions) (*azcore.Response, error) {
+func (client LocalNetworkGatewaysClient) Delete(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, options *LocalNetworkGatewaysDeleteOptions) (*azcore.Response, error) {
 	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, localNetworkGatewayName, options)
 	if err != nil {
 		return nil, err
@@ -186,7 +174,7 @@ func (client *LocalNetworkGatewaysClient) Delete(ctx context.Context, resourceGr
 }
 
 // DeleteCreateRequest creates the Delete request.
-func (client *LocalNetworkGatewaysClient) DeleteCreateRequest(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, options *LocalNetworkGatewaysDeleteOptions) (*azcore.Request, error) {
+func (client LocalNetworkGatewaysClient) DeleteCreateRequest(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, options *LocalNetworkGatewaysDeleteOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/localNetworkGateways/{localNetworkGatewayName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{localNetworkGatewayName}", url.PathEscape(localNetworkGatewayName))
@@ -204,7 +192,7 @@ func (client *LocalNetworkGatewaysClient) DeleteCreateRequest(ctx context.Contex
 }
 
 // DeleteHandleError handles the Delete error response.
-func (client *LocalNetworkGatewaysClient) DeleteHandleError(resp *azcore.Response) error {
+func (client LocalNetworkGatewaysClient) DeleteHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -213,7 +201,7 @@ func (client *LocalNetworkGatewaysClient) DeleteHandleError(resp *azcore.Respons
 }
 
 // Get - Gets the specified local network gateway in a resource group.
-func (client *LocalNetworkGatewaysClient) Get(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, options *LocalNetworkGatewaysGetOptions) (*LocalNetworkGatewayResponse, error) {
+func (client LocalNetworkGatewaysClient) Get(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, options *LocalNetworkGatewaysGetOptions) (*LocalNetworkGatewayResponse, error) {
 	req, err := client.GetCreateRequest(ctx, resourceGroupName, localNetworkGatewayName, options)
 	if err != nil {
 		return nil, err
@@ -233,7 +221,7 @@ func (client *LocalNetworkGatewaysClient) Get(ctx context.Context, resourceGroup
 }
 
 // GetCreateRequest creates the Get request.
-func (client *LocalNetworkGatewaysClient) GetCreateRequest(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, options *LocalNetworkGatewaysGetOptions) (*azcore.Request, error) {
+func (client LocalNetworkGatewaysClient) GetCreateRequest(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, options *LocalNetworkGatewaysGetOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/localNetworkGateways/{localNetworkGatewayName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{localNetworkGatewayName}", url.PathEscape(localNetworkGatewayName))
@@ -251,13 +239,13 @@ func (client *LocalNetworkGatewaysClient) GetCreateRequest(ctx context.Context, 
 }
 
 // GetHandleResponse handles the Get response.
-func (client *LocalNetworkGatewaysClient) GetHandleResponse(resp *azcore.Response) (*LocalNetworkGatewayResponse, error) {
+func (client LocalNetworkGatewaysClient) GetHandleResponse(resp *azcore.Response) (*LocalNetworkGatewayResponse, error) {
 	result := LocalNetworkGatewayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.LocalNetworkGateway)
 }
 
 // GetHandleError handles the Get error response.
-func (client *LocalNetworkGatewaysClient) GetHandleError(resp *azcore.Response) error {
+func (client LocalNetworkGatewaysClient) GetHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -266,7 +254,7 @@ func (client *LocalNetworkGatewaysClient) GetHandleError(resp *azcore.Response) 
 }
 
 // List - Gets all the local network gateways in a resource group.
-func (client *LocalNetworkGatewaysClient) List(resourceGroupName string, options *LocalNetworkGatewaysListOptions) LocalNetworkGatewayListResultPager {
+func (client LocalNetworkGatewaysClient) List(resourceGroupName string, options *LocalNetworkGatewaysListOptions) LocalNetworkGatewayListResultPager {
 	return &localNetworkGatewayListResultPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
@@ -282,7 +270,7 @@ func (client *LocalNetworkGatewaysClient) List(resourceGroupName string, options
 }
 
 // ListCreateRequest creates the List request.
-func (client *LocalNetworkGatewaysClient) ListCreateRequest(ctx context.Context, resourceGroupName string, options *LocalNetworkGatewaysListOptions) (*azcore.Request, error) {
+func (client LocalNetworkGatewaysClient) ListCreateRequest(ctx context.Context, resourceGroupName string, options *LocalNetworkGatewaysListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/localNetworkGateways"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
@@ -299,13 +287,13 @@ func (client *LocalNetworkGatewaysClient) ListCreateRequest(ctx context.Context,
 }
 
 // ListHandleResponse handles the List response.
-func (client *LocalNetworkGatewaysClient) ListHandleResponse(resp *azcore.Response) (*LocalNetworkGatewayListResultResponse, error) {
+func (client LocalNetworkGatewaysClient) ListHandleResponse(resp *azcore.Response) (*LocalNetworkGatewayListResultResponse, error) {
 	result := LocalNetworkGatewayListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.LocalNetworkGatewayListResult)
 }
 
 // ListHandleError handles the List error response.
-func (client *LocalNetworkGatewaysClient) ListHandleError(resp *azcore.Response) error {
+func (client LocalNetworkGatewaysClient) ListHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -314,7 +302,7 @@ func (client *LocalNetworkGatewaysClient) ListHandleError(resp *azcore.Response)
 }
 
 // UpdateTags - Updates a local network gateway tags.
-func (client *LocalNetworkGatewaysClient) UpdateTags(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, parameters TagsObject, options *LocalNetworkGatewaysUpdateTagsOptions) (*LocalNetworkGatewayResponse, error) {
+func (client LocalNetworkGatewaysClient) UpdateTags(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, parameters TagsObject, options *LocalNetworkGatewaysUpdateTagsOptions) (*LocalNetworkGatewayResponse, error) {
 	req, err := client.UpdateTagsCreateRequest(ctx, resourceGroupName, localNetworkGatewayName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -334,7 +322,7 @@ func (client *LocalNetworkGatewaysClient) UpdateTags(ctx context.Context, resour
 }
 
 // UpdateTagsCreateRequest creates the UpdateTags request.
-func (client *LocalNetworkGatewaysClient) UpdateTagsCreateRequest(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, parameters TagsObject, options *LocalNetworkGatewaysUpdateTagsOptions) (*azcore.Request, error) {
+func (client LocalNetworkGatewaysClient) UpdateTagsCreateRequest(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, parameters TagsObject, options *LocalNetworkGatewaysUpdateTagsOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/localNetworkGateways/{localNetworkGatewayName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{localNetworkGatewayName}", url.PathEscape(localNetworkGatewayName))
@@ -352,13 +340,13 @@ func (client *LocalNetworkGatewaysClient) UpdateTagsCreateRequest(ctx context.Co
 }
 
 // UpdateTagsHandleResponse handles the UpdateTags response.
-func (client *LocalNetworkGatewaysClient) UpdateTagsHandleResponse(resp *azcore.Response) (*LocalNetworkGatewayResponse, error) {
+func (client LocalNetworkGatewaysClient) UpdateTagsHandleResponse(resp *azcore.Response) (*LocalNetworkGatewayResponse, error) {
 	result := LocalNetworkGatewayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.LocalNetworkGateway)
 }
 
 // UpdateTagsHandleError handles the UpdateTags error response.
-func (client *LocalNetworkGatewaysClient) UpdateTagsHandleError(resp *azcore.Response) error {
+func (client LocalNetworkGatewaysClient) UpdateTagsHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

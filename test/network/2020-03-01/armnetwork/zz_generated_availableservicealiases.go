@@ -16,15 +16,7 @@ import (
 	"strings"
 )
 
-// AvailableServiceAliasesOperations contains the methods for the AvailableServiceAliases group.
-type AvailableServiceAliasesOperations interface {
-	// List - Gets all available service aliases for this subscription in this region.
-	List(location string, options *AvailableServiceAliasesListOptions) AvailableServiceAliasesResultPager
-	// ListByResourceGroup - Gets all available service aliases for this resource group in this region.
-	ListByResourceGroup(resourceGroupName string, location string, options *AvailableServiceAliasesListByResourceGroupOptions) AvailableServiceAliasesResultPager
-}
-
-// AvailableServiceAliasesClient implements the AvailableServiceAliasesOperations interface.
+// AvailableServiceAliasesClient contains the methods for the AvailableServiceAliases group.
 // Don't use this type directly, use NewAvailableServiceAliasesClient() instead.
 type AvailableServiceAliasesClient struct {
 	con            *armcore.Connection
@@ -32,17 +24,17 @@ type AvailableServiceAliasesClient struct {
 }
 
 // NewAvailableServiceAliasesClient creates a new instance of AvailableServiceAliasesClient with the specified values.
-func NewAvailableServiceAliasesClient(con *armcore.Connection, subscriptionID string) AvailableServiceAliasesOperations {
-	return &AvailableServiceAliasesClient{con: con, subscriptionID: subscriptionID}
+func NewAvailableServiceAliasesClient(con *armcore.Connection, subscriptionID string) AvailableServiceAliasesClient {
+	return AvailableServiceAliasesClient{con: con, subscriptionID: subscriptionID}
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client *AvailableServiceAliasesClient) Pipeline() azcore.Pipeline {
+func (client AvailableServiceAliasesClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // List - Gets all available service aliases for this subscription in this region.
-func (client *AvailableServiceAliasesClient) List(location string, options *AvailableServiceAliasesListOptions) AvailableServiceAliasesResultPager {
+func (client AvailableServiceAliasesClient) List(location string, options *AvailableServiceAliasesListOptions) AvailableServiceAliasesResultPager {
 	return &availableServiceAliasesResultPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
@@ -58,7 +50,7 @@ func (client *AvailableServiceAliasesClient) List(location string, options *Avai
 }
 
 // ListCreateRequest creates the List request.
-func (client *AvailableServiceAliasesClient) ListCreateRequest(ctx context.Context, location string, options *AvailableServiceAliasesListOptions) (*azcore.Request, error) {
+func (client AvailableServiceAliasesClient) ListCreateRequest(ctx context.Context, location string, options *AvailableServiceAliasesListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availableServiceAliases"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
@@ -75,13 +67,13 @@ func (client *AvailableServiceAliasesClient) ListCreateRequest(ctx context.Conte
 }
 
 // ListHandleResponse handles the List response.
-func (client *AvailableServiceAliasesClient) ListHandleResponse(resp *azcore.Response) (*AvailableServiceAliasesResultResponse, error) {
+func (client AvailableServiceAliasesClient) ListHandleResponse(resp *azcore.Response) (*AvailableServiceAliasesResultResponse, error) {
 	result := AvailableServiceAliasesResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.AvailableServiceAliasesResult)
 }
 
 // ListHandleError handles the List error response.
-func (client *AvailableServiceAliasesClient) ListHandleError(resp *azcore.Response) error {
+func (client AvailableServiceAliasesClient) ListHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -90,7 +82,7 @@ func (client *AvailableServiceAliasesClient) ListHandleError(resp *azcore.Respon
 }
 
 // ListByResourceGroup - Gets all available service aliases for this resource group in this region.
-func (client *AvailableServiceAliasesClient) ListByResourceGroup(resourceGroupName string, location string, options *AvailableServiceAliasesListByResourceGroupOptions) AvailableServiceAliasesResultPager {
+func (client AvailableServiceAliasesClient) ListByResourceGroup(resourceGroupName string, location string, options *AvailableServiceAliasesListByResourceGroupOptions) AvailableServiceAliasesResultPager {
 	return &availableServiceAliasesResultPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
@@ -106,7 +98,7 @@ func (client *AvailableServiceAliasesClient) ListByResourceGroup(resourceGroupNa
 }
 
 // ListByResourceGroupCreateRequest creates the ListByResourceGroup request.
-func (client *AvailableServiceAliasesClient) ListByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, location string, options *AvailableServiceAliasesListByResourceGroupOptions) (*azcore.Request, error) {
+func (client AvailableServiceAliasesClient) ListByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, location string, options *AvailableServiceAliasesListByResourceGroupOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availableServiceAliases"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
@@ -124,13 +116,13 @@ func (client *AvailableServiceAliasesClient) ListByResourceGroupCreateRequest(ct
 }
 
 // ListByResourceGroupHandleResponse handles the ListByResourceGroup response.
-func (client *AvailableServiceAliasesClient) ListByResourceGroupHandleResponse(resp *azcore.Response) (*AvailableServiceAliasesResultResponse, error) {
+func (client AvailableServiceAliasesClient) ListByResourceGroupHandleResponse(resp *azcore.Response) (*AvailableServiceAliasesResultResponse, error) {
 	result := AvailableServiceAliasesResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.AvailableServiceAliasesResult)
 }
 
 // ListByResourceGroupHandleError handles the ListByResourceGroup error response.
-func (client *AvailableServiceAliasesClient) ListByResourceGroupHandleError(resp *azcore.Response) error {
+func (client AvailableServiceAliasesClient) ListByResourceGroupHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

@@ -16,15 +16,7 @@ import (
 	"strings"
 )
 
-// DefaultSecurityRulesOperations contains the methods for the DefaultSecurityRules group.
-type DefaultSecurityRulesOperations interface {
-	// Get - Get the specified default network security rule.
-	Get(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, defaultSecurityRuleName string, options *DefaultSecurityRulesGetOptions) (*SecurityRuleResponse, error)
-	// List - Gets all default security rules in a network security group.
-	List(resourceGroupName string, networkSecurityGroupName string, options *DefaultSecurityRulesListOptions) SecurityRuleListResultPager
-}
-
-// DefaultSecurityRulesClient implements the DefaultSecurityRulesOperations interface.
+// DefaultSecurityRulesClient contains the methods for the DefaultSecurityRules group.
 // Don't use this type directly, use NewDefaultSecurityRulesClient() instead.
 type DefaultSecurityRulesClient struct {
 	con            *armcore.Connection
@@ -32,17 +24,17 @@ type DefaultSecurityRulesClient struct {
 }
 
 // NewDefaultSecurityRulesClient creates a new instance of DefaultSecurityRulesClient with the specified values.
-func NewDefaultSecurityRulesClient(con *armcore.Connection, subscriptionID string) DefaultSecurityRulesOperations {
-	return &DefaultSecurityRulesClient{con: con, subscriptionID: subscriptionID}
+func NewDefaultSecurityRulesClient(con *armcore.Connection, subscriptionID string) DefaultSecurityRulesClient {
+	return DefaultSecurityRulesClient{con: con, subscriptionID: subscriptionID}
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client *DefaultSecurityRulesClient) Pipeline() azcore.Pipeline {
+func (client DefaultSecurityRulesClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // Get - Get the specified default network security rule.
-func (client *DefaultSecurityRulesClient) Get(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, defaultSecurityRuleName string, options *DefaultSecurityRulesGetOptions) (*SecurityRuleResponse, error) {
+func (client DefaultSecurityRulesClient) Get(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, defaultSecurityRuleName string, options *DefaultSecurityRulesGetOptions) (*SecurityRuleResponse, error) {
 	req, err := client.GetCreateRequest(ctx, resourceGroupName, networkSecurityGroupName, defaultSecurityRuleName, options)
 	if err != nil {
 		return nil, err
@@ -62,7 +54,7 @@ func (client *DefaultSecurityRulesClient) Get(ctx context.Context, resourceGroup
 }
 
 // GetCreateRequest creates the Get request.
-func (client *DefaultSecurityRulesClient) GetCreateRequest(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, defaultSecurityRuleName string, options *DefaultSecurityRulesGetOptions) (*azcore.Request, error) {
+func (client DefaultSecurityRulesClient) GetCreateRequest(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, defaultSecurityRuleName string, options *DefaultSecurityRulesGetOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}/defaultSecurityRules/{defaultSecurityRuleName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{networkSecurityGroupName}", url.PathEscape(networkSecurityGroupName))
@@ -81,13 +73,13 @@ func (client *DefaultSecurityRulesClient) GetCreateRequest(ctx context.Context, 
 }
 
 // GetHandleResponse handles the Get response.
-func (client *DefaultSecurityRulesClient) GetHandleResponse(resp *azcore.Response) (*SecurityRuleResponse, error) {
+func (client DefaultSecurityRulesClient) GetHandleResponse(resp *azcore.Response) (*SecurityRuleResponse, error) {
 	result := SecurityRuleResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.SecurityRule)
 }
 
 // GetHandleError handles the Get error response.
-func (client *DefaultSecurityRulesClient) GetHandleError(resp *azcore.Response) error {
+func (client DefaultSecurityRulesClient) GetHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -96,7 +88,7 @@ func (client *DefaultSecurityRulesClient) GetHandleError(resp *azcore.Response) 
 }
 
 // List - Gets all default security rules in a network security group.
-func (client *DefaultSecurityRulesClient) List(resourceGroupName string, networkSecurityGroupName string, options *DefaultSecurityRulesListOptions) SecurityRuleListResultPager {
+func (client DefaultSecurityRulesClient) List(resourceGroupName string, networkSecurityGroupName string, options *DefaultSecurityRulesListOptions) SecurityRuleListResultPager {
 	return &securityRuleListResultPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
@@ -112,7 +104,7 @@ func (client *DefaultSecurityRulesClient) List(resourceGroupName string, network
 }
 
 // ListCreateRequest creates the List request.
-func (client *DefaultSecurityRulesClient) ListCreateRequest(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, options *DefaultSecurityRulesListOptions) (*azcore.Request, error) {
+func (client DefaultSecurityRulesClient) ListCreateRequest(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, options *DefaultSecurityRulesListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}/defaultSecurityRules"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{networkSecurityGroupName}", url.PathEscape(networkSecurityGroupName))
@@ -130,13 +122,13 @@ func (client *DefaultSecurityRulesClient) ListCreateRequest(ctx context.Context,
 }
 
 // ListHandleResponse handles the List response.
-func (client *DefaultSecurityRulesClient) ListHandleResponse(resp *azcore.Response) (*SecurityRuleListResultResponse, error) {
+func (client DefaultSecurityRulesClient) ListHandleResponse(resp *azcore.Response) (*SecurityRuleListResultResponse, error) {
 	result := SecurityRuleListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.SecurityRuleListResult)
 }
 
 // ListHandleError handles the List error response.
-func (client *DefaultSecurityRulesClient) ListHandleError(resp *azcore.Response) error {
+func (client DefaultSecurityRulesClient) ListHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

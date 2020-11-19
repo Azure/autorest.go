@@ -14,7 +14,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
-func newPetClient() PetOperations {
+func newPetClient() PetClient {
 	options := DefaultConnectionOptions()
 	options.Retry.MaxRetryDelay = 20 * time.Millisecond
 	client := NewConnection("http://localhost:3000", &options)

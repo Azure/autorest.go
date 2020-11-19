@@ -5684,6 +5684,9 @@ type BigDataPoolResourceProperties struct {
 	// The default folder where Spark logs will be written.
 	DefaultSparkLogFolder *string `json:"defaultSparkLogFolder,omitempty"`
 
+	// Whether library requirements changed.
+	HaveLibraryRequirementsChanged *bool `json:"haveLibraryRequirementsChanged,omitempty"`
+
 	// Whether compute isolation is required or not.
 	IsComputeIsolationEnabled *bool `json:"isComputeIsolationEnabled,omitempty"`
 
@@ -5701,6 +5704,9 @@ type BigDataPoolResourceProperties struct {
 
 	// The state of the Big Data pool.
 	ProvisioningState *string `json:"provisioningState,omitempty"`
+
+	// Whether session level packages enabled.
+	SessionLevelPackagesEnabled *bool `json:"sessionLevelPackagesEnabled,omitempty"`
 
 	// Spark configuration file to specify additional properties
 	SparkConfigProperties *LibraryRequirements `json:"sparkConfigProperties,omitempty"`
@@ -5727,6 +5733,9 @@ func (b BigDataPoolResourceProperties) MarshalJSON() ([]byte, error) {
 	if b.DefaultSparkLogFolder != nil {
 		objectMap["defaultSparkLogFolder"] = b.DefaultSparkLogFolder
 	}
+	if b.HaveLibraryRequirementsChanged != nil {
+		objectMap["haveLibraryRequirementsChanged"] = b.HaveLibraryRequirementsChanged
+	}
 	if b.IsComputeIsolationEnabled != nil {
 		objectMap["isComputeIsolationEnabled"] = b.IsComputeIsolationEnabled
 	}
@@ -5744,6 +5753,9 @@ func (b BigDataPoolResourceProperties) MarshalJSON() ([]byte, error) {
 	}
 	if b.ProvisioningState != nil {
 		objectMap["provisioningState"] = b.ProvisioningState
+	}
+	if b.SessionLevelPackagesEnabled != nil {
+		objectMap["sessionLevelPackagesEnabled"] = b.SessionLevelPackagesEnabled
 	}
 	if b.SparkConfigProperties != nil {
 		objectMap["sparkConfigProperties"] = b.SparkConfigProperties
@@ -5788,6 +5800,11 @@ func (b *BigDataPoolResourceProperties) UnmarshalJSON(data []byte) error {
 				err = json.Unmarshal(*val, &b.DefaultSparkLogFolder)
 			}
 			delete(rawMsg, key)
+		case "haveLibraryRequirementsChanged":
+			if val != nil {
+				err = json.Unmarshal(*val, &b.HaveLibraryRequirementsChanged)
+			}
+			delete(rawMsg, key)
 		case "isComputeIsolationEnabled":
 			if val != nil {
 				err = json.Unmarshal(*val, &b.IsComputeIsolationEnabled)
@@ -5816,6 +5833,11 @@ func (b *BigDataPoolResourceProperties) UnmarshalJSON(data []byte) error {
 		case "provisioningState":
 			if val != nil {
 				err = json.Unmarshal(*val, &b.ProvisioningState)
+			}
+			delete(rawMsg, key)
+		case "sessionLevelPackagesEnabled":
+			if val != nil {
+				err = json.Unmarshal(*val, &b.SessionLevelPackagesEnabled)
 			}
 			delete(rawMsg, key)
 		case "sparkConfigProperties":
@@ -24998,7 +25020,7 @@ type SQLPoolResourceProperties struct {
 	RecoverableDatabaseID *string `json:"recoverableDatabaseId,omitempty"`
 
 	// Snapshot time to restore
-	RestorePointInTime *time.Time `json:"restorePointInTime,omitempty"`
+	RestorePointInTime *string `json:"restorePointInTime,omitempty"`
 
 	// Source database to create from
 	SourceDatabaseID *string `json:"sourceDatabaseId,omitempty"`
@@ -25029,7 +25051,7 @@ func (s SQLPoolResourceProperties) MarshalJSON() ([]byte, error) {
 		objectMap["recoverableDatabaseId"] = s.RecoverableDatabaseID
 	}
 	if s.RestorePointInTime != nil {
-		objectMap["restorePointInTime"] = (*timeRFC3339)(s.RestorePointInTime)
+		objectMap["restorePointInTime"] = s.RestorePointInTime
 	}
 	if s.SourceDatabaseID != nil {
 		objectMap["sourceDatabaseId"] = s.SourceDatabaseID
@@ -25083,9 +25105,7 @@ func (s *SQLPoolResourceProperties) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		case "restorePointInTime":
 			if val != nil {
-				var aux timeRFC3339
-				err = json.Unmarshal(*val, &aux)
-				s.RestorePointInTime = (*time.Time)(&aux)
+				err = json.Unmarshal(*val, &s.RestorePointInTime)
 			}
 			delete(rawMsg, key)
 		case "sourceDatabaseId":

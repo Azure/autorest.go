@@ -98,11 +98,6 @@ export async function namer(session: Session<CodeModel>) {
       groupDetails.clientName = camelCase(groupDetails.clientName);
       groupDetails.clientCtorName = camelCase(groupDetails.clientCtorName);
     }
-    groupDetails.interfaceName = `${groupDetails.name}Operations`;
-    if (groupDetails.name === 'Operations') {
-      // if the group name is 'Operations' don't name it 'OperationsOperations'
-      groupDetails.interfaceName = groupDetails.name;
-    }
     for (const op of values(group.operations)) {
       const details = <OperationNaming>op.language.go;
       details.name = getEscapedReservedName(capitalizeAcronyms(pascalCase(details.name)), 'Method');

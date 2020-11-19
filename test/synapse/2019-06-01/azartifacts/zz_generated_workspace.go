@@ -18,12 +18,12 @@ type workspaceClient struct {
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client *workspaceClient) Pipeline() azcore.Pipeline {
+func (client workspaceClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // Get - Get Workspace
-func (client *workspaceClient) Get(ctx context.Context, options *WorkspaceGetOptions) (*WorkspaceResponse, error) {
+func (client workspaceClient) Get(ctx context.Context, options *WorkspaceGetOptions) (*WorkspaceResponse, error) {
 	req, err := client.GetCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -43,7 +43,7 @@ func (client *workspaceClient) Get(ctx context.Context, options *WorkspaceGetOpt
 }
 
 // GetCreateRequest creates the Get request.
-func (client *workspaceClient) GetCreateRequest(ctx context.Context, options *WorkspaceGetOptions) (*azcore.Request, error) {
+func (client workspaceClient) GetCreateRequest(ctx context.Context, options *WorkspaceGetOptions) (*azcore.Request, error) {
 	urlPath := "/workspace"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -58,13 +58,13 @@ func (client *workspaceClient) GetCreateRequest(ctx context.Context, options *Wo
 }
 
 // GetHandleResponse handles the Get response.
-func (client *workspaceClient) GetHandleResponse(resp *azcore.Response) (*WorkspaceResponse, error) {
+func (client workspaceClient) GetHandleResponse(resp *azcore.Response) (*WorkspaceResponse, error) {
 	result := WorkspaceResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Workspace)
 }
 
 // GetHandleError handles the Get error response.
-func (client *workspaceClient) GetHandleError(resp *azcore.Response) error {
+func (client workspaceClient) GetHandleError(resp *azcore.Response) error {
 	var err ErrorContract
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

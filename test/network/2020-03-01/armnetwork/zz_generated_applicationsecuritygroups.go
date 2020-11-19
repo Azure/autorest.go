@@ -17,27 +17,7 @@ import (
 	"time"
 )
 
-// ApplicationSecurityGroupsOperations contains the methods for the ApplicationSecurityGroups group.
-type ApplicationSecurityGroupsOperations interface {
-	// BeginCreateOrUpdate - Creates or updates an application security group.
-	BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, applicationSecurityGroupName string, parameters ApplicationSecurityGroup, options *ApplicationSecurityGroupsCreateOrUpdateOptions) (*ApplicationSecurityGroupPollerResponse, error)
-	// ResumeCreateOrUpdate - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeCreateOrUpdate(token string) (ApplicationSecurityGroupPoller, error)
-	// BeginDelete - Deletes the specified application security group.
-	BeginDelete(ctx context.Context, resourceGroupName string, applicationSecurityGroupName string, options *ApplicationSecurityGroupsDeleteOptions) (*HTTPPollerResponse, error)
-	// ResumeDelete - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeDelete(token string) (HTTPPoller, error)
-	// Get - Gets information about the specified application security group.
-	Get(ctx context.Context, resourceGroupName string, applicationSecurityGroupName string, options *ApplicationSecurityGroupsGetOptions) (*ApplicationSecurityGroupResponse, error)
-	// List - Gets all the application security groups in a resource group.
-	List(resourceGroupName string, options *ApplicationSecurityGroupsListOptions) ApplicationSecurityGroupListResultPager
-	// ListAll - Gets all application security groups in a subscription.
-	ListAll(options *ApplicationSecurityGroupsListAllOptions) ApplicationSecurityGroupListResultPager
-	// UpdateTags - Updates an application security group's tags.
-	UpdateTags(ctx context.Context, resourceGroupName string, applicationSecurityGroupName string, parameters TagsObject, options *ApplicationSecurityGroupsUpdateTagsOptions) (*ApplicationSecurityGroupResponse, error)
-}
-
-// ApplicationSecurityGroupsClient implements the ApplicationSecurityGroupsOperations interface.
+// ApplicationSecurityGroupsClient contains the methods for the ApplicationSecurityGroups group.
 // Don't use this type directly, use NewApplicationSecurityGroupsClient() instead.
 type ApplicationSecurityGroupsClient struct {
 	con            *armcore.Connection
@@ -45,16 +25,17 @@ type ApplicationSecurityGroupsClient struct {
 }
 
 // NewApplicationSecurityGroupsClient creates a new instance of ApplicationSecurityGroupsClient with the specified values.
-func NewApplicationSecurityGroupsClient(con *armcore.Connection, subscriptionID string) ApplicationSecurityGroupsOperations {
-	return &ApplicationSecurityGroupsClient{con: con, subscriptionID: subscriptionID}
+func NewApplicationSecurityGroupsClient(con *armcore.Connection, subscriptionID string) ApplicationSecurityGroupsClient {
+	return ApplicationSecurityGroupsClient{con: con, subscriptionID: subscriptionID}
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client *ApplicationSecurityGroupsClient) Pipeline() azcore.Pipeline {
+func (client ApplicationSecurityGroupsClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
-func (client *ApplicationSecurityGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, applicationSecurityGroupName string, parameters ApplicationSecurityGroup, options *ApplicationSecurityGroupsCreateOrUpdateOptions) (*ApplicationSecurityGroupPollerResponse, error) {
+// BeginCreateOrUpdate - Creates or updates an application security group.
+func (client ApplicationSecurityGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, applicationSecurityGroupName string, parameters ApplicationSecurityGroup, options *ApplicationSecurityGroupsCreateOrUpdateOptions) (*ApplicationSecurityGroupPollerResponse, error) {
 	resp, err := client.CreateOrUpdate(ctx, resourceGroupName, applicationSecurityGroupName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -77,7 +58,9 @@ func (client *ApplicationSecurityGroupsClient) BeginCreateOrUpdate(ctx context.C
 	return result, nil
 }
 
-func (client *ApplicationSecurityGroupsClient) ResumeCreateOrUpdate(token string) (ApplicationSecurityGroupPoller, error) {
+// ResumeCreateOrUpdate creates a new ApplicationSecurityGroupPoller from the specified resume token.
+// token - The value must come from a previous call to ApplicationSecurityGroupPoller.ResumeToken().
+func (client ApplicationSecurityGroupsClient) ResumeCreateOrUpdate(token string) (ApplicationSecurityGroupPoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("ApplicationSecurityGroupsClient.CreateOrUpdate", token, client.CreateOrUpdateHandleError)
 	if err != nil {
 		return nil, err
@@ -89,7 +72,7 @@ func (client *ApplicationSecurityGroupsClient) ResumeCreateOrUpdate(token string
 }
 
 // CreateOrUpdate - Creates or updates an application security group.
-func (client *ApplicationSecurityGroupsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, applicationSecurityGroupName string, parameters ApplicationSecurityGroup, options *ApplicationSecurityGroupsCreateOrUpdateOptions) (*azcore.Response, error) {
+func (client ApplicationSecurityGroupsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, applicationSecurityGroupName string, parameters ApplicationSecurityGroup, options *ApplicationSecurityGroupsCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, applicationSecurityGroupName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -105,7 +88,7 @@ func (client *ApplicationSecurityGroupsClient) CreateOrUpdate(ctx context.Contex
 }
 
 // CreateOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *ApplicationSecurityGroupsClient) CreateOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, applicationSecurityGroupName string, parameters ApplicationSecurityGroup, options *ApplicationSecurityGroupsCreateOrUpdateOptions) (*azcore.Request, error) {
+func (client ApplicationSecurityGroupsClient) CreateOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, applicationSecurityGroupName string, parameters ApplicationSecurityGroup, options *ApplicationSecurityGroupsCreateOrUpdateOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups/{applicationSecurityGroupName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{applicationSecurityGroupName}", url.PathEscape(applicationSecurityGroupName))
@@ -123,13 +106,13 @@ func (client *ApplicationSecurityGroupsClient) CreateOrUpdateCreateRequest(ctx c
 }
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *ApplicationSecurityGroupsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*ApplicationSecurityGroupResponse, error) {
+func (client ApplicationSecurityGroupsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*ApplicationSecurityGroupResponse, error) {
 	result := ApplicationSecurityGroupResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ApplicationSecurityGroup)
 }
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *ApplicationSecurityGroupsClient) CreateOrUpdateHandleError(resp *azcore.Response) error {
+func (client ApplicationSecurityGroupsClient) CreateOrUpdateHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -137,7 +120,8 @@ func (client *ApplicationSecurityGroupsClient) CreateOrUpdateHandleError(resp *a
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-func (client *ApplicationSecurityGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, applicationSecurityGroupName string, options *ApplicationSecurityGroupsDeleteOptions) (*HTTPPollerResponse, error) {
+// BeginDelete - Deletes the specified application security group.
+func (client ApplicationSecurityGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, applicationSecurityGroupName string, options *ApplicationSecurityGroupsDeleteOptions) (*HTTPPollerResponse, error) {
 	resp, err := client.Delete(ctx, resourceGroupName, applicationSecurityGroupName, options)
 	if err != nil {
 		return nil, err
@@ -160,7 +144,9 @@ func (client *ApplicationSecurityGroupsClient) BeginDelete(ctx context.Context, 
 	return result, nil
 }
 
-func (client *ApplicationSecurityGroupsClient) ResumeDelete(token string) (HTTPPoller, error) {
+// ResumeDelete creates a new HTTPPoller from the specified resume token.
+// token - The value must come from a previous call to HTTPPoller.ResumeToken().
+func (client ApplicationSecurityGroupsClient) ResumeDelete(token string) (HTTPPoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("ApplicationSecurityGroupsClient.Delete", token, client.DeleteHandleError)
 	if err != nil {
 		return nil, err
@@ -172,7 +158,7 @@ func (client *ApplicationSecurityGroupsClient) ResumeDelete(token string) (HTTPP
 }
 
 // Delete - Deletes the specified application security group.
-func (client *ApplicationSecurityGroupsClient) Delete(ctx context.Context, resourceGroupName string, applicationSecurityGroupName string, options *ApplicationSecurityGroupsDeleteOptions) (*azcore.Response, error) {
+func (client ApplicationSecurityGroupsClient) Delete(ctx context.Context, resourceGroupName string, applicationSecurityGroupName string, options *ApplicationSecurityGroupsDeleteOptions) (*azcore.Response, error) {
 	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, applicationSecurityGroupName, options)
 	if err != nil {
 		return nil, err
@@ -188,7 +174,7 @@ func (client *ApplicationSecurityGroupsClient) Delete(ctx context.Context, resou
 }
 
 // DeleteCreateRequest creates the Delete request.
-func (client *ApplicationSecurityGroupsClient) DeleteCreateRequest(ctx context.Context, resourceGroupName string, applicationSecurityGroupName string, options *ApplicationSecurityGroupsDeleteOptions) (*azcore.Request, error) {
+func (client ApplicationSecurityGroupsClient) DeleteCreateRequest(ctx context.Context, resourceGroupName string, applicationSecurityGroupName string, options *ApplicationSecurityGroupsDeleteOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups/{applicationSecurityGroupName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{applicationSecurityGroupName}", url.PathEscape(applicationSecurityGroupName))
@@ -206,7 +192,7 @@ func (client *ApplicationSecurityGroupsClient) DeleteCreateRequest(ctx context.C
 }
 
 // DeleteHandleError handles the Delete error response.
-func (client *ApplicationSecurityGroupsClient) DeleteHandleError(resp *azcore.Response) error {
+func (client ApplicationSecurityGroupsClient) DeleteHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -215,7 +201,7 @@ func (client *ApplicationSecurityGroupsClient) DeleteHandleError(resp *azcore.Re
 }
 
 // Get - Gets information about the specified application security group.
-func (client *ApplicationSecurityGroupsClient) Get(ctx context.Context, resourceGroupName string, applicationSecurityGroupName string, options *ApplicationSecurityGroupsGetOptions) (*ApplicationSecurityGroupResponse, error) {
+func (client ApplicationSecurityGroupsClient) Get(ctx context.Context, resourceGroupName string, applicationSecurityGroupName string, options *ApplicationSecurityGroupsGetOptions) (*ApplicationSecurityGroupResponse, error) {
 	req, err := client.GetCreateRequest(ctx, resourceGroupName, applicationSecurityGroupName, options)
 	if err != nil {
 		return nil, err
@@ -235,7 +221,7 @@ func (client *ApplicationSecurityGroupsClient) Get(ctx context.Context, resource
 }
 
 // GetCreateRequest creates the Get request.
-func (client *ApplicationSecurityGroupsClient) GetCreateRequest(ctx context.Context, resourceGroupName string, applicationSecurityGroupName string, options *ApplicationSecurityGroupsGetOptions) (*azcore.Request, error) {
+func (client ApplicationSecurityGroupsClient) GetCreateRequest(ctx context.Context, resourceGroupName string, applicationSecurityGroupName string, options *ApplicationSecurityGroupsGetOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups/{applicationSecurityGroupName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{applicationSecurityGroupName}", url.PathEscape(applicationSecurityGroupName))
@@ -253,13 +239,13 @@ func (client *ApplicationSecurityGroupsClient) GetCreateRequest(ctx context.Cont
 }
 
 // GetHandleResponse handles the Get response.
-func (client *ApplicationSecurityGroupsClient) GetHandleResponse(resp *azcore.Response) (*ApplicationSecurityGroupResponse, error) {
+func (client ApplicationSecurityGroupsClient) GetHandleResponse(resp *azcore.Response) (*ApplicationSecurityGroupResponse, error) {
 	result := ApplicationSecurityGroupResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ApplicationSecurityGroup)
 }
 
 // GetHandleError handles the Get error response.
-func (client *ApplicationSecurityGroupsClient) GetHandleError(resp *azcore.Response) error {
+func (client ApplicationSecurityGroupsClient) GetHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -268,7 +254,7 @@ func (client *ApplicationSecurityGroupsClient) GetHandleError(resp *azcore.Respo
 }
 
 // List - Gets all the application security groups in a resource group.
-func (client *ApplicationSecurityGroupsClient) List(resourceGroupName string, options *ApplicationSecurityGroupsListOptions) ApplicationSecurityGroupListResultPager {
+func (client ApplicationSecurityGroupsClient) List(resourceGroupName string, options *ApplicationSecurityGroupsListOptions) ApplicationSecurityGroupListResultPager {
 	return &applicationSecurityGroupListResultPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
@@ -284,7 +270,7 @@ func (client *ApplicationSecurityGroupsClient) List(resourceGroupName string, op
 }
 
 // ListCreateRequest creates the List request.
-func (client *ApplicationSecurityGroupsClient) ListCreateRequest(ctx context.Context, resourceGroupName string, options *ApplicationSecurityGroupsListOptions) (*azcore.Request, error) {
+func (client ApplicationSecurityGroupsClient) ListCreateRequest(ctx context.Context, resourceGroupName string, options *ApplicationSecurityGroupsListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
@@ -301,13 +287,13 @@ func (client *ApplicationSecurityGroupsClient) ListCreateRequest(ctx context.Con
 }
 
 // ListHandleResponse handles the List response.
-func (client *ApplicationSecurityGroupsClient) ListHandleResponse(resp *azcore.Response) (*ApplicationSecurityGroupListResultResponse, error) {
+func (client ApplicationSecurityGroupsClient) ListHandleResponse(resp *azcore.Response) (*ApplicationSecurityGroupListResultResponse, error) {
 	result := ApplicationSecurityGroupListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ApplicationSecurityGroupListResult)
 }
 
 // ListHandleError handles the List error response.
-func (client *ApplicationSecurityGroupsClient) ListHandleError(resp *azcore.Response) error {
+func (client ApplicationSecurityGroupsClient) ListHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -316,7 +302,7 @@ func (client *ApplicationSecurityGroupsClient) ListHandleError(resp *azcore.Resp
 }
 
 // ListAll - Gets all application security groups in a subscription.
-func (client *ApplicationSecurityGroupsClient) ListAll(options *ApplicationSecurityGroupsListAllOptions) ApplicationSecurityGroupListResultPager {
+func (client ApplicationSecurityGroupsClient) ListAll(options *ApplicationSecurityGroupsListAllOptions) ApplicationSecurityGroupListResultPager {
 	return &applicationSecurityGroupListResultPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
@@ -332,7 +318,7 @@ func (client *ApplicationSecurityGroupsClient) ListAll(options *ApplicationSecur
 }
 
 // ListAllCreateRequest creates the ListAll request.
-func (client *ApplicationSecurityGroupsClient) ListAllCreateRequest(ctx context.Context, options *ApplicationSecurityGroupsListAllOptions) (*azcore.Request, error) {
+func (client ApplicationSecurityGroupsClient) ListAllCreateRequest(ctx context.Context, options *ApplicationSecurityGroupsListAllOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationSecurityGroups"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -348,13 +334,13 @@ func (client *ApplicationSecurityGroupsClient) ListAllCreateRequest(ctx context.
 }
 
 // ListAllHandleResponse handles the ListAll response.
-func (client *ApplicationSecurityGroupsClient) ListAllHandleResponse(resp *azcore.Response) (*ApplicationSecurityGroupListResultResponse, error) {
+func (client ApplicationSecurityGroupsClient) ListAllHandleResponse(resp *azcore.Response) (*ApplicationSecurityGroupListResultResponse, error) {
 	result := ApplicationSecurityGroupListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ApplicationSecurityGroupListResult)
 }
 
 // ListAllHandleError handles the ListAll error response.
-func (client *ApplicationSecurityGroupsClient) ListAllHandleError(resp *azcore.Response) error {
+func (client ApplicationSecurityGroupsClient) ListAllHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -363,7 +349,7 @@ func (client *ApplicationSecurityGroupsClient) ListAllHandleError(resp *azcore.R
 }
 
 // UpdateTags - Updates an application security group's tags.
-func (client *ApplicationSecurityGroupsClient) UpdateTags(ctx context.Context, resourceGroupName string, applicationSecurityGroupName string, parameters TagsObject, options *ApplicationSecurityGroupsUpdateTagsOptions) (*ApplicationSecurityGroupResponse, error) {
+func (client ApplicationSecurityGroupsClient) UpdateTags(ctx context.Context, resourceGroupName string, applicationSecurityGroupName string, parameters TagsObject, options *ApplicationSecurityGroupsUpdateTagsOptions) (*ApplicationSecurityGroupResponse, error) {
 	req, err := client.UpdateTagsCreateRequest(ctx, resourceGroupName, applicationSecurityGroupName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -383,7 +369,7 @@ func (client *ApplicationSecurityGroupsClient) UpdateTags(ctx context.Context, r
 }
 
 // UpdateTagsCreateRequest creates the UpdateTags request.
-func (client *ApplicationSecurityGroupsClient) UpdateTagsCreateRequest(ctx context.Context, resourceGroupName string, applicationSecurityGroupName string, parameters TagsObject, options *ApplicationSecurityGroupsUpdateTagsOptions) (*azcore.Request, error) {
+func (client ApplicationSecurityGroupsClient) UpdateTagsCreateRequest(ctx context.Context, resourceGroupName string, applicationSecurityGroupName string, parameters TagsObject, options *ApplicationSecurityGroupsUpdateTagsOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups/{applicationSecurityGroupName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{applicationSecurityGroupName}", url.PathEscape(applicationSecurityGroupName))
@@ -401,13 +387,13 @@ func (client *ApplicationSecurityGroupsClient) UpdateTagsCreateRequest(ctx conte
 }
 
 // UpdateTagsHandleResponse handles the UpdateTags response.
-func (client *ApplicationSecurityGroupsClient) UpdateTagsHandleResponse(resp *azcore.Response) (*ApplicationSecurityGroupResponse, error) {
+func (client ApplicationSecurityGroupsClient) UpdateTagsHandleResponse(resp *azcore.Response) (*ApplicationSecurityGroupResponse, error) {
 	result := ApplicationSecurityGroupResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ApplicationSecurityGroup)
 }
 
 // UpdateTagsHandleError handles the UpdateTags error response.
-func (client *ApplicationSecurityGroupsClient) UpdateTagsHandleError(resp *azcore.Response) error {
+func (client ApplicationSecurityGroupsClient) UpdateTagsHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

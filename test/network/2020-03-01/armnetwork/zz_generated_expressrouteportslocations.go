@@ -16,16 +16,7 @@ import (
 	"strings"
 )
 
-// ExpressRoutePortsLocationsOperations contains the methods for the ExpressRoutePortsLocations group.
-type ExpressRoutePortsLocationsOperations interface {
-	// Get - Retrieves a single ExpressRoutePort peering location, including the list of available bandwidths available at said peering location.
-	Get(ctx context.Context, locationName string, options *ExpressRoutePortsLocationsGetOptions) (*ExpressRoutePortsLocationResponse, error)
-	// List - Retrieves all ExpressRoutePort peering locations. Does not return available bandwidths for each location. Available bandwidths can only be obtained
-	// when retrieving a specific peering location.
-	List(options *ExpressRoutePortsLocationsListOptions) ExpressRoutePortsLocationListResultPager
-}
-
-// ExpressRoutePortsLocationsClient implements the ExpressRoutePortsLocationsOperations interface.
+// ExpressRoutePortsLocationsClient contains the methods for the ExpressRoutePortsLocations group.
 // Don't use this type directly, use NewExpressRoutePortsLocationsClient() instead.
 type ExpressRoutePortsLocationsClient struct {
 	con            *armcore.Connection
@@ -33,17 +24,17 @@ type ExpressRoutePortsLocationsClient struct {
 }
 
 // NewExpressRoutePortsLocationsClient creates a new instance of ExpressRoutePortsLocationsClient with the specified values.
-func NewExpressRoutePortsLocationsClient(con *armcore.Connection, subscriptionID string) ExpressRoutePortsLocationsOperations {
-	return &ExpressRoutePortsLocationsClient{con: con, subscriptionID: subscriptionID}
+func NewExpressRoutePortsLocationsClient(con *armcore.Connection, subscriptionID string) ExpressRoutePortsLocationsClient {
+	return ExpressRoutePortsLocationsClient{con: con, subscriptionID: subscriptionID}
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client *ExpressRoutePortsLocationsClient) Pipeline() azcore.Pipeline {
+func (client ExpressRoutePortsLocationsClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // Get - Retrieves a single ExpressRoutePort peering location, including the list of available bandwidths available at said peering location.
-func (client *ExpressRoutePortsLocationsClient) Get(ctx context.Context, locationName string, options *ExpressRoutePortsLocationsGetOptions) (*ExpressRoutePortsLocationResponse, error) {
+func (client ExpressRoutePortsLocationsClient) Get(ctx context.Context, locationName string, options *ExpressRoutePortsLocationsGetOptions) (*ExpressRoutePortsLocationResponse, error) {
 	req, err := client.GetCreateRequest(ctx, locationName, options)
 	if err != nil {
 		return nil, err
@@ -63,7 +54,7 @@ func (client *ExpressRoutePortsLocationsClient) Get(ctx context.Context, locatio
 }
 
 // GetCreateRequest creates the Get request.
-func (client *ExpressRoutePortsLocationsClient) GetCreateRequest(ctx context.Context, locationName string, options *ExpressRoutePortsLocationsGetOptions) (*azcore.Request, error) {
+func (client ExpressRoutePortsLocationsClient) GetCreateRequest(ctx context.Context, locationName string, options *ExpressRoutePortsLocationsGetOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/ExpressRoutePortsLocations/{locationName}"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{locationName}", url.PathEscape(locationName))
@@ -80,13 +71,13 @@ func (client *ExpressRoutePortsLocationsClient) GetCreateRequest(ctx context.Con
 }
 
 // GetHandleResponse handles the Get response.
-func (client *ExpressRoutePortsLocationsClient) GetHandleResponse(resp *azcore.Response) (*ExpressRoutePortsLocationResponse, error) {
+func (client ExpressRoutePortsLocationsClient) GetHandleResponse(resp *azcore.Response) (*ExpressRoutePortsLocationResponse, error) {
 	result := ExpressRoutePortsLocationResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ExpressRoutePortsLocation)
 }
 
 // GetHandleError handles the Get error response.
-func (client *ExpressRoutePortsLocationsClient) GetHandleError(resp *azcore.Response) error {
+func (client ExpressRoutePortsLocationsClient) GetHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -96,7 +87,7 @@ func (client *ExpressRoutePortsLocationsClient) GetHandleError(resp *azcore.Resp
 
 // List - Retrieves all ExpressRoutePort peering locations. Does not return available bandwidths for each location. Available bandwidths can only be obtained
 // when retrieving a specific peering location.
-func (client *ExpressRoutePortsLocationsClient) List(options *ExpressRoutePortsLocationsListOptions) ExpressRoutePortsLocationListResultPager {
+func (client ExpressRoutePortsLocationsClient) List(options *ExpressRoutePortsLocationsListOptions) ExpressRoutePortsLocationListResultPager {
 	return &expressRoutePortsLocationListResultPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
@@ -112,7 +103,7 @@ func (client *ExpressRoutePortsLocationsClient) List(options *ExpressRoutePortsL
 }
 
 // ListCreateRequest creates the List request.
-func (client *ExpressRoutePortsLocationsClient) ListCreateRequest(ctx context.Context, options *ExpressRoutePortsLocationsListOptions) (*azcore.Request, error) {
+func (client ExpressRoutePortsLocationsClient) ListCreateRequest(ctx context.Context, options *ExpressRoutePortsLocationsListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/ExpressRoutePortsLocations"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -128,13 +119,13 @@ func (client *ExpressRoutePortsLocationsClient) ListCreateRequest(ctx context.Co
 }
 
 // ListHandleResponse handles the List response.
-func (client *ExpressRoutePortsLocationsClient) ListHandleResponse(resp *azcore.Response) (*ExpressRoutePortsLocationListResultResponse, error) {
+func (client ExpressRoutePortsLocationsClient) ListHandleResponse(resp *azcore.Response) (*ExpressRoutePortsLocationListResultResponse, error) {
 	result := ExpressRoutePortsLocationListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ExpressRoutePortsLocationListResult)
 }
 
 // ListHandleError handles the List error response.
-func (client *ExpressRoutePortsLocationsClient) ListHandleError(resp *azcore.Response) error {
+func (client ExpressRoutePortsLocationsClient) ListHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

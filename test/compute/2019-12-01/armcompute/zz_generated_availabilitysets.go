@@ -19,25 +19,7 @@ import (
 	"strings"
 )
 
-// AvailabilitySetsOperations contains the methods for the AvailabilitySets group.
-type AvailabilitySetsOperations interface {
-	// CreateOrUpdate - Create or update an availability set.
-	CreateOrUpdate(ctx context.Context, resourceGroupName string, availabilitySetName string, parameters AvailabilitySet, options *AvailabilitySetsCreateOrUpdateOptions) (*AvailabilitySetResponse, error)
-	// Delete - Delete an availability set.
-	Delete(ctx context.Context, resourceGroupName string, availabilitySetName string, options *AvailabilitySetsDeleteOptions) (*http.Response, error)
-	// Get - Retrieves information about an availability set.
-	Get(ctx context.Context, resourceGroupName string, availabilitySetName string, options *AvailabilitySetsGetOptions) (*AvailabilitySetResponse, error)
-	// List - Lists all availability sets in a resource group.
-	List(resourceGroupName string, options *AvailabilitySetsListOptions) AvailabilitySetListResultPager
-	// ListAvailableSizes - Lists all available virtual machine sizes that can be used to create a new virtual machine in an existing availability set.
-	ListAvailableSizes(ctx context.Context, resourceGroupName string, availabilitySetName string, options *AvailabilitySetsListAvailableSizesOptions) (*VirtualMachineSizeListResultResponse, error)
-	// ListBySubscription - Lists all availability sets in a subscription.
-	ListBySubscription(options *AvailabilitySetsListBySubscriptionOptions) AvailabilitySetListResultPager
-	// Update - Update an availability set.
-	Update(ctx context.Context, resourceGroupName string, availabilitySetName string, parameters AvailabilitySetUpdate, options *AvailabilitySetsUpdateOptions) (*AvailabilitySetResponse, error)
-}
-
-// AvailabilitySetsClient implements the AvailabilitySetsOperations interface.
+// AvailabilitySetsClient contains the methods for the AvailabilitySets group.
 // Don't use this type directly, use NewAvailabilitySetsClient() instead.
 type AvailabilitySetsClient struct {
 	con            *armcore.Connection
@@ -45,17 +27,17 @@ type AvailabilitySetsClient struct {
 }
 
 // NewAvailabilitySetsClient creates a new instance of AvailabilitySetsClient with the specified values.
-func NewAvailabilitySetsClient(con *armcore.Connection, subscriptionID string) AvailabilitySetsOperations {
-	return &AvailabilitySetsClient{con: con, subscriptionID: subscriptionID}
+func NewAvailabilitySetsClient(con *armcore.Connection, subscriptionID string) AvailabilitySetsClient {
+	return AvailabilitySetsClient{con: con, subscriptionID: subscriptionID}
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client *AvailabilitySetsClient) Pipeline() azcore.Pipeline {
+func (client AvailabilitySetsClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // CreateOrUpdate - Create or update an availability set.
-func (client *AvailabilitySetsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, availabilitySetName string, parameters AvailabilitySet, options *AvailabilitySetsCreateOrUpdateOptions) (*AvailabilitySetResponse, error) {
+func (client AvailabilitySetsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, availabilitySetName string, parameters AvailabilitySet, options *AvailabilitySetsCreateOrUpdateOptions) (*AvailabilitySetResponse, error) {
 	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, availabilitySetName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -75,7 +57,7 @@ func (client *AvailabilitySetsClient) CreateOrUpdate(ctx context.Context, resour
 }
 
 // CreateOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *AvailabilitySetsClient) CreateOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, availabilitySetName string, parameters AvailabilitySet, options *AvailabilitySetsCreateOrUpdateOptions) (*azcore.Request, error) {
+func (client AvailabilitySetsClient) CreateOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, availabilitySetName string, parameters AvailabilitySet, options *AvailabilitySetsCreateOrUpdateOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{availabilitySetName}", url.PathEscape(availabilitySetName))
@@ -93,13 +75,13 @@ func (client *AvailabilitySetsClient) CreateOrUpdateCreateRequest(ctx context.Co
 }
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *AvailabilitySetsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*AvailabilitySetResponse, error) {
+func (client AvailabilitySetsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*AvailabilitySetResponse, error) {
 	result := AvailabilitySetResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.AvailabilitySet)
 }
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *AvailabilitySetsClient) CreateOrUpdateHandleError(resp *azcore.Response) error {
+func (client AvailabilitySetsClient) CreateOrUpdateHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -111,7 +93,7 @@ func (client *AvailabilitySetsClient) CreateOrUpdateHandleError(resp *azcore.Res
 }
 
 // Delete - Delete an availability set.
-func (client *AvailabilitySetsClient) Delete(ctx context.Context, resourceGroupName string, availabilitySetName string, options *AvailabilitySetsDeleteOptions) (*http.Response, error) {
+func (client AvailabilitySetsClient) Delete(ctx context.Context, resourceGroupName string, availabilitySetName string, options *AvailabilitySetsDeleteOptions) (*http.Response, error) {
 	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, availabilitySetName, options)
 	if err != nil {
 		return nil, err
@@ -127,7 +109,7 @@ func (client *AvailabilitySetsClient) Delete(ctx context.Context, resourceGroupN
 }
 
 // DeleteCreateRequest creates the Delete request.
-func (client *AvailabilitySetsClient) DeleteCreateRequest(ctx context.Context, resourceGroupName string, availabilitySetName string, options *AvailabilitySetsDeleteOptions) (*azcore.Request, error) {
+func (client AvailabilitySetsClient) DeleteCreateRequest(ctx context.Context, resourceGroupName string, availabilitySetName string, options *AvailabilitySetsDeleteOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{availabilitySetName}", url.PathEscape(availabilitySetName))
@@ -144,7 +126,7 @@ func (client *AvailabilitySetsClient) DeleteCreateRequest(ctx context.Context, r
 }
 
 // DeleteHandleError handles the Delete error response.
-func (client *AvailabilitySetsClient) DeleteHandleError(resp *azcore.Response) error {
+func (client AvailabilitySetsClient) DeleteHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -156,7 +138,7 @@ func (client *AvailabilitySetsClient) DeleteHandleError(resp *azcore.Response) e
 }
 
 // Get - Retrieves information about an availability set.
-func (client *AvailabilitySetsClient) Get(ctx context.Context, resourceGroupName string, availabilitySetName string, options *AvailabilitySetsGetOptions) (*AvailabilitySetResponse, error) {
+func (client AvailabilitySetsClient) Get(ctx context.Context, resourceGroupName string, availabilitySetName string, options *AvailabilitySetsGetOptions) (*AvailabilitySetResponse, error) {
 	req, err := client.GetCreateRequest(ctx, resourceGroupName, availabilitySetName, options)
 	if err != nil {
 		return nil, err
@@ -176,7 +158,7 @@ func (client *AvailabilitySetsClient) Get(ctx context.Context, resourceGroupName
 }
 
 // GetCreateRequest creates the Get request.
-func (client *AvailabilitySetsClient) GetCreateRequest(ctx context.Context, resourceGroupName string, availabilitySetName string, options *AvailabilitySetsGetOptions) (*azcore.Request, error) {
+func (client AvailabilitySetsClient) GetCreateRequest(ctx context.Context, resourceGroupName string, availabilitySetName string, options *AvailabilitySetsGetOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{availabilitySetName}", url.PathEscape(availabilitySetName))
@@ -194,13 +176,13 @@ func (client *AvailabilitySetsClient) GetCreateRequest(ctx context.Context, reso
 }
 
 // GetHandleResponse handles the Get response.
-func (client *AvailabilitySetsClient) GetHandleResponse(resp *azcore.Response) (*AvailabilitySetResponse, error) {
+func (client AvailabilitySetsClient) GetHandleResponse(resp *azcore.Response) (*AvailabilitySetResponse, error) {
 	result := AvailabilitySetResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.AvailabilitySet)
 }
 
 // GetHandleError handles the Get error response.
-func (client *AvailabilitySetsClient) GetHandleError(resp *azcore.Response) error {
+func (client AvailabilitySetsClient) GetHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -212,7 +194,7 @@ func (client *AvailabilitySetsClient) GetHandleError(resp *azcore.Response) erro
 }
 
 // List - Lists all availability sets in a resource group.
-func (client *AvailabilitySetsClient) List(resourceGroupName string, options *AvailabilitySetsListOptions) AvailabilitySetListResultPager {
+func (client AvailabilitySetsClient) List(resourceGroupName string, options *AvailabilitySetsListOptions) AvailabilitySetListResultPager {
 	return &availabilitySetListResultPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
@@ -228,7 +210,7 @@ func (client *AvailabilitySetsClient) List(resourceGroupName string, options *Av
 }
 
 // ListCreateRequest creates the List request.
-func (client *AvailabilitySetsClient) ListCreateRequest(ctx context.Context, resourceGroupName string, options *AvailabilitySetsListOptions) (*azcore.Request, error) {
+func (client AvailabilitySetsClient) ListCreateRequest(ctx context.Context, resourceGroupName string, options *AvailabilitySetsListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
@@ -245,13 +227,13 @@ func (client *AvailabilitySetsClient) ListCreateRequest(ctx context.Context, res
 }
 
 // ListHandleResponse handles the List response.
-func (client *AvailabilitySetsClient) ListHandleResponse(resp *azcore.Response) (*AvailabilitySetListResultResponse, error) {
+func (client AvailabilitySetsClient) ListHandleResponse(resp *azcore.Response) (*AvailabilitySetListResultResponse, error) {
 	result := AvailabilitySetListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.AvailabilitySetListResult)
 }
 
 // ListHandleError handles the List error response.
-func (client *AvailabilitySetsClient) ListHandleError(resp *azcore.Response) error {
+func (client AvailabilitySetsClient) ListHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -263,7 +245,7 @@ func (client *AvailabilitySetsClient) ListHandleError(resp *azcore.Response) err
 }
 
 // ListAvailableSizes - Lists all available virtual machine sizes that can be used to create a new virtual machine in an existing availability set.
-func (client *AvailabilitySetsClient) ListAvailableSizes(ctx context.Context, resourceGroupName string, availabilitySetName string, options *AvailabilitySetsListAvailableSizesOptions) (*VirtualMachineSizeListResultResponse, error) {
+func (client AvailabilitySetsClient) ListAvailableSizes(ctx context.Context, resourceGroupName string, availabilitySetName string, options *AvailabilitySetsListAvailableSizesOptions) (*VirtualMachineSizeListResultResponse, error) {
 	req, err := client.ListAvailableSizesCreateRequest(ctx, resourceGroupName, availabilitySetName, options)
 	if err != nil {
 		return nil, err
@@ -283,7 +265,7 @@ func (client *AvailabilitySetsClient) ListAvailableSizes(ctx context.Context, re
 }
 
 // ListAvailableSizesCreateRequest creates the ListAvailableSizes request.
-func (client *AvailabilitySetsClient) ListAvailableSizesCreateRequest(ctx context.Context, resourceGroupName string, availabilitySetName string, options *AvailabilitySetsListAvailableSizesOptions) (*azcore.Request, error) {
+func (client AvailabilitySetsClient) ListAvailableSizesCreateRequest(ctx context.Context, resourceGroupName string, availabilitySetName string, options *AvailabilitySetsListAvailableSizesOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}/vmSizes"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{availabilitySetName}", url.PathEscape(availabilitySetName))
@@ -301,13 +283,13 @@ func (client *AvailabilitySetsClient) ListAvailableSizesCreateRequest(ctx contex
 }
 
 // ListAvailableSizesHandleResponse handles the ListAvailableSizes response.
-func (client *AvailabilitySetsClient) ListAvailableSizesHandleResponse(resp *azcore.Response) (*VirtualMachineSizeListResultResponse, error) {
+func (client AvailabilitySetsClient) ListAvailableSizesHandleResponse(resp *azcore.Response) (*VirtualMachineSizeListResultResponse, error) {
 	result := VirtualMachineSizeListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.VirtualMachineSizeListResult)
 }
 
 // ListAvailableSizesHandleError handles the ListAvailableSizes error response.
-func (client *AvailabilitySetsClient) ListAvailableSizesHandleError(resp *azcore.Response) error {
+func (client AvailabilitySetsClient) ListAvailableSizesHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -319,7 +301,7 @@ func (client *AvailabilitySetsClient) ListAvailableSizesHandleError(resp *azcore
 }
 
 // ListBySubscription - Lists all availability sets in a subscription.
-func (client *AvailabilitySetsClient) ListBySubscription(options *AvailabilitySetsListBySubscriptionOptions) AvailabilitySetListResultPager {
+func (client AvailabilitySetsClient) ListBySubscription(options *AvailabilitySetsListBySubscriptionOptions) AvailabilitySetListResultPager {
 	return &availabilitySetListResultPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
@@ -335,7 +317,7 @@ func (client *AvailabilitySetsClient) ListBySubscription(options *AvailabilitySe
 }
 
 // ListBySubscriptionCreateRequest creates the ListBySubscription request.
-func (client *AvailabilitySetsClient) ListBySubscriptionCreateRequest(ctx context.Context, options *AvailabilitySetsListBySubscriptionOptions) (*azcore.Request, error) {
+func (client AvailabilitySetsClient) ListBySubscriptionCreateRequest(ctx context.Context, options *AvailabilitySetsListBySubscriptionOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/availabilitySets"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -354,13 +336,13 @@ func (client *AvailabilitySetsClient) ListBySubscriptionCreateRequest(ctx contex
 }
 
 // ListBySubscriptionHandleResponse handles the ListBySubscription response.
-func (client *AvailabilitySetsClient) ListBySubscriptionHandleResponse(resp *azcore.Response) (*AvailabilitySetListResultResponse, error) {
+func (client AvailabilitySetsClient) ListBySubscriptionHandleResponse(resp *azcore.Response) (*AvailabilitySetListResultResponse, error) {
 	result := AvailabilitySetListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.AvailabilitySetListResult)
 }
 
 // ListBySubscriptionHandleError handles the ListBySubscription error response.
-func (client *AvailabilitySetsClient) ListBySubscriptionHandleError(resp *azcore.Response) error {
+func (client AvailabilitySetsClient) ListBySubscriptionHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -372,7 +354,7 @@ func (client *AvailabilitySetsClient) ListBySubscriptionHandleError(resp *azcore
 }
 
 // Update - Update an availability set.
-func (client *AvailabilitySetsClient) Update(ctx context.Context, resourceGroupName string, availabilitySetName string, parameters AvailabilitySetUpdate, options *AvailabilitySetsUpdateOptions) (*AvailabilitySetResponse, error) {
+func (client AvailabilitySetsClient) Update(ctx context.Context, resourceGroupName string, availabilitySetName string, parameters AvailabilitySetUpdate, options *AvailabilitySetsUpdateOptions) (*AvailabilitySetResponse, error) {
 	req, err := client.UpdateCreateRequest(ctx, resourceGroupName, availabilitySetName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -392,7 +374,7 @@ func (client *AvailabilitySetsClient) Update(ctx context.Context, resourceGroupN
 }
 
 // UpdateCreateRequest creates the Update request.
-func (client *AvailabilitySetsClient) UpdateCreateRequest(ctx context.Context, resourceGroupName string, availabilitySetName string, parameters AvailabilitySetUpdate, options *AvailabilitySetsUpdateOptions) (*azcore.Request, error) {
+func (client AvailabilitySetsClient) UpdateCreateRequest(ctx context.Context, resourceGroupName string, availabilitySetName string, parameters AvailabilitySetUpdate, options *AvailabilitySetsUpdateOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{availabilitySetName}", url.PathEscape(availabilitySetName))
@@ -410,13 +392,13 @@ func (client *AvailabilitySetsClient) UpdateCreateRequest(ctx context.Context, r
 }
 
 // UpdateHandleResponse handles the Update response.
-func (client *AvailabilitySetsClient) UpdateHandleResponse(resp *azcore.Response) (*AvailabilitySetResponse, error) {
+func (client AvailabilitySetsClient) UpdateHandleResponse(resp *azcore.Response) (*AvailabilitySetResponse, error) {
 	result := AvailabilitySetResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.AvailabilitySet)
 }
 
 // UpdateHandleError handles the Update error response.
-func (client *AvailabilitySetsClient) UpdateHandleError(resp *azcore.Response) error {
+func (client AvailabilitySetsClient) UpdateHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)

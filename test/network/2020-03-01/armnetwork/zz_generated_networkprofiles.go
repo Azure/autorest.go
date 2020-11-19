@@ -17,25 +17,7 @@ import (
 	"time"
 )
 
-// NetworkProfilesOperations contains the methods for the NetworkProfiles group.
-type NetworkProfilesOperations interface {
-	// CreateOrUpdate - Creates or updates a network profile.
-	CreateOrUpdate(ctx context.Context, resourceGroupName string, networkProfileName string, parameters NetworkProfile, options *NetworkProfilesCreateOrUpdateOptions) (*NetworkProfileResponse, error)
-	// BeginDelete - Deletes the specified network profile.
-	BeginDelete(ctx context.Context, resourceGroupName string, networkProfileName string, options *NetworkProfilesDeleteOptions) (*HTTPPollerResponse, error)
-	// ResumeDelete - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeDelete(token string) (HTTPPoller, error)
-	// Get - Gets the specified network profile in a specified resource group.
-	Get(ctx context.Context, resourceGroupName string, networkProfileName string, options *NetworkProfilesGetOptions) (*NetworkProfileResponse, error)
-	// List - Gets all network profiles in a resource group.
-	List(resourceGroupName string, options *NetworkProfilesListOptions) NetworkProfileListResultPager
-	// ListAll - Gets all the network profiles in a subscription.
-	ListAll(options *NetworkProfilesListAllOptions) NetworkProfileListResultPager
-	// UpdateTags - Updates network profile tags.
-	UpdateTags(ctx context.Context, resourceGroupName string, networkProfileName string, parameters TagsObject, options *NetworkProfilesUpdateTagsOptions) (*NetworkProfileResponse, error)
-}
-
-// NetworkProfilesClient implements the NetworkProfilesOperations interface.
+// NetworkProfilesClient contains the methods for the NetworkProfiles group.
 // Don't use this type directly, use NewNetworkProfilesClient() instead.
 type NetworkProfilesClient struct {
 	con            *armcore.Connection
@@ -43,17 +25,17 @@ type NetworkProfilesClient struct {
 }
 
 // NewNetworkProfilesClient creates a new instance of NetworkProfilesClient with the specified values.
-func NewNetworkProfilesClient(con *armcore.Connection, subscriptionID string) NetworkProfilesOperations {
-	return &NetworkProfilesClient{con: con, subscriptionID: subscriptionID}
+func NewNetworkProfilesClient(con *armcore.Connection, subscriptionID string) NetworkProfilesClient {
+	return NetworkProfilesClient{con: con, subscriptionID: subscriptionID}
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client *NetworkProfilesClient) Pipeline() azcore.Pipeline {
+func (client NetworkProfilesClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // CreateOrUpdate - Creates or updates a network profile.
-func (client *NetworkProfilesClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, networkProfileName string, parameters NetworkProfile, options *NetworkProfilesCreateOrUpdateOptions) (*NetworkProfileResponse, error) {
+func (client NetworkProfilesClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, networkProfileName string, parameters NetworkProfile, options *NetworkProfilesCreateOrUpdateOptions) (*NetworkProfileResponse, error) {
 	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, networkProfileName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -73,7 +55,7 @@ func (client *NetworkProfilesClient) CreateOrUpdate(ctx context.Context, resourc
 }
 
 // CreateOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *NetworkProfilesClient) CreateOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, networkProfileName string, parameters NetworkProfile, options *NetworkProfilesCreateOrUpdateOptions) (*azcore.Request, error) {
+func (client NetworkProfilesClient) CreateOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, networkProfileName string, parameters NetworkProfile, options *NetworkProfilesCreateOrUpdateOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkProfiles/{networkProfileName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{networkProfileName}", url.PathEscape(networkProfileName))
@@ -91,13 +73,13 @@ func (client *NetworkProfilesClient) CreateOrUpdateCreateRequest(ctx context.Con
 }
 
 // CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *NetworkProfilesClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*NetworkProfileResponse, error) {
+func (client NetworkProfilesClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*NetworkProfileResponse, error) {
 	result := NetworkProfileResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.NetworkProfile)
 }
 
 // CreateOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *NetworkProfilesClient) CreateOrUpdateHandleError(resp *azcore.Response) error {
+func (client NetworkProfilesClient) CreateOrUpdateHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -105,7 +87,8 @@ func (client *NetworkProfilesClient) CreateOrUpdateHandleError(resp *azcore.Resp
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-func (client *NetworkProfilesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkProfileName string, options *NetworkProfilesDeleteOptions) (*HTTPPollerResponse, error) {
+// BeginDelete - Deletes the specified network profile.
+func (client NetworkProfilesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkProfileName string, options *NetworkProfilesDeleteOptions) (*HTTPPollerResponse, error) {
 	resp, err := client.Delete(ctx, resourceGroupName, networkProfileName, options)
 	if err != nil {
 		return nil, err
@@ -128,7 +111,9 @@ func (client *NetworkProfilesClient) BeginDelete(ctx context.Context, resourceGr
 	return result, nil
 }
 
-func (client *NetworkProfilesClient) ResumeDelete(token string) (HTTPPoller, error) {
+// ResumeDelete creates a new HTTPPoller from the specified resume token.
+// token - The value must come from a previous call to HTTPPoller.ResumeToken().
+func (client NetworkProfilesClient) ResumeDelete(token string) (HTTPPoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("NetworkProfilesClient.Delete", token, client.DeleteHandleError)
 	if err != nil {
 		return nil, err
@@ -140,7 +125,7 @@ func (client *NetworkProfilesClient) ResumeDelete(token string) (HTTPPoller, err
 }
 
 // Delete - Deletes the specified network profile.
-func (client *NetworkProfilesClient) Delete(ctx context.Context, resourceGroupName string, networkProfileName string, options *NetworkProfilesDeleteOptions) (*azcore.Response, error) {
+func (client NetworkProfilesClient) Delete(ctx context.Context, resourceGroupName string, networkProfileName string, options *NetworkProfilesDeleteOptions) (*azcore.Response, error) {
 	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, networkProfileName, options)
 	if err != nil {
 		return nil, err
@@ -156,7 +141,7 @@ func (client *NetworkProfilesClient) Delete(ctx context.Context, resourceGroupNa
 }
 
 // DeleteCreateRequest creates the Delete request.
-func (client *NetworkProfilesClient) DeleteCreateRequest(ctx context.Context, resourceGroupName string, networkProfileName string, options *NetworkProfilesDeleteOptions) (*azcore.Request, error) {
+func (client NetworkProfilesClient) DeleteCreateRequest(ctx context.Context, resourceGroupName string, networkProfileName string, options *NetworkProfilesDeleteOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkProfiles/{networkProfileName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{networkProfileName}", url.PathEscape(networkProfileName))
@@ -174,7 +159,7 @@ func (client *NetworkProfilesClient) DeleteCreateRequest(ctx context.Context, re
 }
 
 // DeleteHandleError handles the Delete error response.
-func (client *NetworkProfilesClient) DeleteHandleError(resp *azcore.Response) error {
+func (client NetworkProfilesClient) DeleteHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -183,7 +168,7 @@ func (client *NetworkProfilesClient) DeleteHandleError(resp *azcore.Response) er
 }
 
 // Get - Gets the specified network profile in a specified resource group.
-func (client *NetworkProfilesClient) Get(ctx context.Context, resourceGroupName string, networkProfileName string, options *NetworkProfilesGetOptions) (*NetworkProfileResponse, error) {
+func (client NetworkProfilesClient) Get(ctx context.Context, resourceGroupName string, networkProfileName string, options *NetworkProfilesGetOptions) (*NetworkProfileResponse, error) {
 	req, err := client.GetCreateRequest(ctx, resourceGroupName, networkProfileName, options)
 	if err != nil {
 		return nil, err
@@ -203,7 +188,7 @@ func (client *NetworkProfilesClient) Get(ctx context.Context, resourceGroupName 
 }
 
 // GetCreateRequest creates the Get request.
-func (client *NetworkProfilesClient) GetCreateRequest(ctx context.Context, resourceGroupName string, networkProfileName string, options *NetworkProfilesGetOptions) (*azcore.Request, error) {
+func (client NetworkProfilesClient) GetCreateRequest(ctx context.Context, resourceGroupName string, networkProfileName string, options *NetworkProfilesGetOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkProfiles/{networkProfileName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{networkProfileName}", url.PathEscape(networkProfileName))
@@ -224,13 +209,13 @@ func (client *NetworkProfilesClient) GetCreateRequest(ctx context.Context, resou
 }
 
 // GetHandleResponse handles the Get response.
-func (client *NetworkProfilesClient) GetHandleResponse(resp *azcore.Response) (*NetworkProfileResponse, error) {
+func (client NetworkProfilesClient) GetHandleResponse(resp *azcore.Response) (*NetworkProfileResponse, error) {
 	result := NetworkProfileResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.NetworkProfile)
 }
 
 // GetHandleError handles the Get error response.
-func (client *NetworkProfilesClient) GetHandleError(resp *azcore.Response) error {
+func (client NetworkProfilesClient) GetHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -239,7 +224,7 @@ func (client *NetworkProfilesClient) GetHandleError(resp *azcore.Response) error
 }
 
 // List - Gets all network profiles in a resource group.
-func (client *NetworkProfilesClient) List(resourceGroupName string, options *NetworkProfilesListOptions) NetworkProfileListResultPager {
+func (client NetworkProfilesClient) List(resourceGroupName string, options *NetworkProfilesListOptions) NetworkProfileListResultPager {
 	return &networkProfileListResultPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
@@ -255,7 +240,7 @@ func (client *NetworkProfilesClient) List(resourceGroupName string, options *Net
 }
 
 // ListCreateRequest creates the List request.
-func (client *NetworkProfilesClient) ListCreateRequest(ctx context.Context, resourceGroupName string, options *NetworkProfilesListOptions) (*azcore.Request, error) {
+func (client NetworkProfilesClient) ListCreateRequest(ctx context.Context, resourceGroupName string, options *NetworkProfilesListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkProfiles"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
@@ -272,13 +257,13 @@ func (client *NetworkProfilesClient) ListCreateRequest(ctx context.Context, reso
 }
 
 // ListHandleResponse handles the List response.
-func (client *NetworkProfilesClient) ListHandleResponse(resp *azcore.Response) (*NetworkProfileListResultResponse, error) {
+func (client NetworkProfilesClient) ListHandleResponse(resp *azcore.Response) (*NetworkProfileListResultResponse, error) {
 	result := NetworkProfileListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.NetworkProfileListResult)
 }
 
 // ListHandleError handles the List error response.
-func (client *NetworkProfilesClient) ListHandleError(resp *azcore.Response) error {
+func (client NetworkProfilesClient) ListHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -287,7 +272,7 @@ func (client *NetworkProfilesClient) ListHandleError(resp *azcore.Response) erro
 }
 
 // ListAll - Gets all the network profiles in a subscription.
-func (client *NetworkProfilesClient) ListAll(options *NetworkProfilesListAllOptions) NetworkProfileListResultPager {
+func (client NetworkProfilesClient) ListAll(options *NetworkProfilesListAllOptions) NetworkProfileListResultPager {
 	return &networkProfileListResultPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
@@ -303,7 +288,7 @@ func (client *NetworkProfilesClient) ListAll(options *NetworkProfilesListAllOpti
 }
 
 // ListAllCreateRequest creates the ListAll request.
-func (client *NetworkProfilesClient) ListAllCreateRequest(ctx context.Context, options *NetworkProfilesListAllOptions) (*azcore.Request, error) {
+func (client NetworkProfilesClient) ListAllCreateRequest(ctx context.Context, options *NetworkProfilesListAllOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkProfiles"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -319,13 +304,13 @@ func (client *NetworkProfilesClient) ListAllCreateRequest(ctx context.Context, o
 }
 
 // ListAllHandleResponse handles the ListAll response.
-func (client *NetworkProfilesClient) ListAllHandleResponse(resp *azcore.Response) (*NetworkProfileListResultResponse, error) {
+func (client NetworkProfilesClient) ListAllHandleResponse(resp *azcore.Response) (*NetworkProfileListResultResponse, error) {
 	result := NetworkProfileListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.NetworkProfileListResult)
 }
 
 // ListAllHandleError handles the ListAll error response.
-func (client *NetworkProfilesClient) ListAllHandleError(resp *azcore.Response) error {
+func (client NetworkProfilesClient) ListAllHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -334,7 +319,7 @@ func (client *NetworkProfilesClient) ListAllHandleError(resp *azcore.Response) e
 }
 
 // UpdateTags - Updates network profile tags.
-func (client *NetworkProfilesClient) UpdateTags(ctx context.Context, resourceGroupName string, networkProfileName string, parameters TagsObject, options *NetworkProfilesUpdateTagsOptions) (*NetworkProfileResponse, error) {
+func (client NetworkProfilesClient) UpdateTags(ctx context.Context, resourceGroupName string, networkProfileName string, parameters TagsObject, options *NetworkProfilesUpdateTagsOptions) (*NetworkProfileResponse, error) {
 	req, err := client.UpdateTagsCreateRequest(ctx, resourceGroupName, networkProfileName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -354,7 +339,7 @@ func (client *NetworkProfilesClient) UpdateTags(ctx context.Context, resourceGro
 }
 
 // UpdateTagsCreateRequest creates the UpdateTags request.
-func (client *NetworkProfilesClient) UpdateTagsCreateRequest(ctx context.Context, resourceGroupName string, networkProfileName string, parameters TagsObject, options *NetworkProfilesUpdateTagsOptions) (*azcore.Request, error) {
+func (client NetworkProfilesClient) UpdateTagsCreateRequest(ctx context.Context, resourceGroupName string, networkProfileName string, parameters TagsObject, options *NetworkProfilesUpdateTagsOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkProfiles/{networkProfileName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{networkProfileName}", url.PathEscape(networkProfileName))
@@ -372,13 +357,13 @@ func (client *NetworkProfilesClient) UpdateTagsCreateRequest(ctx context.Context
 }
 
 // UpdateTagsHandleResponse handles the UpdateTags response.
-func (client *NetworkProfilesClient) UpdateTagsHandleResponse(resp *azcore.Response) (*NetworkProfileResponse, error) {
+func (client NetworkProfilesClient) UpdateTagsHandleResponse(resp *azcore.Response) (*NetworkProfileResponse, error) {
 	result := NetworkProfileResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.NetworkProfile)
 }
 
 // UpdateTagsHandleError handles the UpdateTags error response.
-func (client *NetworkProfilesClient) UpdateTagsHandleError(resp *azcore.Response) error {
+func (client NetworkProfilesClient) UpdateTagsHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

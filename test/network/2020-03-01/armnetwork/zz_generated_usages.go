@@ -16,13 +16,7 @@ import (
 	"strings"
 )
 
-// UsagesOperations contains the methods for the Usages group.
-type UsagesOperations interface {
-	// List - List network usages for a subscription.
-	List(location string, options *UsagesListOptions) UsagesListResultPager
-}
-
-// UsagesClient implements the UsagesOperations interface.
+// UsagesClient contains the methods for the Usages group.
 // Don't use this type directly, use NewUsagesClient() instead.
 type UsagesClient struct {
 	con            *armcore.Connection
@@ -30,17 +24,17 @@ type UsagesClient struct {
 }
 
 // NewUsagesClient creates a new instance of UsagesClient with the specified values.
-func NewUsagesClient(con *armcore.Connection, subscriptionID string) UsagesOperations {
-	return &UsagesClient{con: con, subscriptionID: subscriptionID}
+func NewUsagesClient(con *armcore.Connection, subscriptionID string) UsagesClient {
+	return UsagesClient{con: con, subscriptionID: subscriptionID}
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client *UsagesClient) Pipeline() azcore.Pipeline {
+func (client UsagesClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // List - List network usages for a subscription.
-func (client *UsagesClient) List(location string, options *UsagesListOptions) UsagesListResultPager {
+func (client UsagesClient) List(location string, options *UsagesListOptions) UsagesListResultPager {
 	return &usagesListResultPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
@@ -56,7 +50,7 @@ func (client *UsagesClient) List(location string, options *UsagesListOptions) Us
 }
 
 // ListCreateRequest creates the List request.
-func (client *UsagesClient) ListCreateRequest(ctx context.Context, location string, options *UsagesListOptions) (*azcore.Request, error) {
+func (client UsagesClient) ListCreateRequest(ctx context.Context, location string, options *UsagesListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/usages"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
@@ -73,13 +67,13 @@ func (client *UsagesClient) ListCreateRequest(ctx context.Context, location stri
 }
 
 // ListHandleResponse handles the List response.
-func (client *UsagesClient) ListHandleResponse(resp *azcore.Response) (*UsagesListResultResponse, error) {
+func (client UsagesClient) ListHandleResponse(resp *azcore.Response) (*UsagesListResultResponse, error) {
 	result := UsagesListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.UsagesListResult)
 }
 
 // ListHandleError handles the List error response.
-func (client *UsagesClient) ListHandleError(resp *azcore.Response) error {
+func (client UsagesClient) ListHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
