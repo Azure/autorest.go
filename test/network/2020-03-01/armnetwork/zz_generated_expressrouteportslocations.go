@@ -35,7 +35,7 @@ func (client ExpressRoutePortsLocationsClient) Pipeline() azcore.Pipeline {
 
 // Get - Retrieves a single ExpressRoutePort peering location, including the list of available bandwidths available at said peering location.
 func (client ExpressRoutePortsLocationsClient) Get(ctx context.Context, locationName string, options *ExpressRoutePortsLocationsGetOptions) (*ExpressRoutePortsLocationResponse, error) {
-	req, err := client.GetCreateRequest(ctx, locationName, options)
+	req, err := client.getCreateRequest(ctx, locationName, options)
 	if err != nil {
 		return nil, err
 	}
@@ -44,17 +44,17 @@ func (client ExpressRoutePortsLocationsClient) Get(ctx context.Context, location
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetHandleError(resp)
+		return nil, client.getHandleError(resp)
 	}
-	result, err := client.GetHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// GetCreateRequest creates the Get request.
-func (client ExpressRoutePortsLocationsClient) GetCreateRequest(ctx context.Context, locationName string, options *ExpressRoutePortsLocationsGetOptions) (*azcore.Request, error) {
+// getCreateRequest creates the Get request.
+func (client ExpressRoutePortsLocationsClient) getCreateRequest(ctx context.Context, locationName string, options *ExpressRoutePortsLocationsGetOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/ExpressRoutePortsLocations/{locationName}"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{locationName}", url.PathEscape(locationName))
@@ -70,14 +70,14 @@ func (client ExpressRoutePortsLocationsClient) GetCreateRequest(ctx context.Cont
 	return req, nil
 }
 
-// GetHandleResponse handles the Get response.
-func (client ExpressRoutePortsLocationsClient) GetHandleResponse(resp *azcore.Response) (*ExpressRoutePortsLocationResponse, error) {
+// getHandleResponse handles the Get response.
+func (client ExpressRoutePortsLocationsClient) getHandleResponse(resp *azcore.Response) (*ExpressRoutePortsLocationResponse, error) {
 	result := ExpressRoutePortsLocationResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ExpressRoutePortsLocation)
 }
 
-// GetHandleError handles the Get error response.
-func (client ExpressRoutePortsLocationsClient) GetHandleError(resp *azcore.Response) error {
+// getHandleError handles the Get error response.
+func (client ExpressRoutePortsLocationsClient) getHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -91,10 +91,10 @@ func (client ExpressRoutePortsLocationsClient) List(options *ExpressRoutePortsLo
 	return &expressRoutePortsLocationListResultPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
-			return client.ListCreateRequest(ctx, options)
+			return client.listCreateRequest(ctx, options)
 		},
-		responder: client.ListHandleResponse,
-		errorer:   client.ListHandleError,
+		responder: client.listHandleResponse,
+		errorer:   client.listHandleError,
 		advancer: func(ctx context.Context, resp *ExpressRoutePortsLocationListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ExpressRoutePortsLocationListResult.NextLink)
 		},
@@ -102,8 +102,8 @@ func (client ExpressRoutePortsLocationsClient) List(options *ExpressRoutePortsLo
 	}
 }
 
-// ListCreateRequest creates the List request.
-func (client ExpressRoutePortsLocationsClient) ListCreateRequest(ctx context.Context, options *ExpressRoutePortsLocationsListOptions) (*azcore.Request, error) {
+// listCreateRequest creates the List request.
+func (client ExpressRoutePortsLocationsClient) listCreateRequest(ctx context.Context, options *ExpressRoutePortsLocationsListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/ExpressRoutePortsLocations"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -118,14 +118,14 @@ func (client ExpressRoutePortsLocationsClient) ListCreateRequest(ctx context.Con
 	return req, nil
 }
 
-// ListHandleResponse handles the List response.
-func (client ExpressRoutePortsLocationsClient) ListHandleResponse(resp *azcore.Response) (*ExpressRoutePortsLocationListResultResponse, error) {
+// listHandleResponse handles the List response.
+func (client ExpressRoutePortsLocationsClient) listHandleResponse(resp *azcore.Response) (*ExpressRoutePortsLocationListResultResponse, error) {
 	result := ExpressRoutePortsLocationListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ExpressRoutePortsLocationListResult)
 }
 
-// ListHandleError handles the List error response.
-func (client ExpressRoutePortsLocationsClient) ListHandleError(resp *azcore.Response) error {
+// listHandleError handles the List error response.
+func (client ExpressRoutePortsLocationsClient) listHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

@@ -35,7 +35,7 @@ func (client XMLClient) Pipeline() azcore.Pipeline {
 
 // GetACLs - Gets storage ACLs for a container.
 func (client XMLClient) GetACLs(ctx context.Context, options *XMLGetACLsOptions) (*SignedIDentifierArrayResponse, error) {
-	req, err := client.GetACLsCreateRequest(ctx, options)
+	req, err := client.getAcLsCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -44,17 +44,17 @@ func (client XMLClient) GetACLs(ctx context.Context, options *XMLGetACLsOptions)
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetACLsHandleError(resp)
+		return nil, client.getAcLsHandleError(resp)
 	}
-	result, err := client.GetACLsHandleResponse(resp)
+	result, err := client.getAcLsHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// GetACLsCreateRequest creates the GetACLs request.
-func (client XMLClient) GetACLsCreateRequest(ctx context.Context, options *XMLGetACLsOptions) (*azcore.Request, error) {
+// getAcLsCreateRequest creates the GetACLs request.
+func (client XMLClient) getAcLsCreateRequest(ctx context.Context, options *XMLGetACLsOptions) (*azcore.Request, error) {
 	urlPath := "/xml/mycontainer"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -69,14 +69,14 @@ func (client XMLClient) GetACLsCreateRequest(ctx context.Context, options *XMLGe
 	return req, nil
 }
 
-// GetACLsHandleResponse handles the GetACLs response.
-func (client XMLClient) GetACLsHandleResponse(resp *azcore.Response) (*SignedIDentifierArrayResponse, error) {
+// getAcLsHandleResponse handles the GetACLs response.
+func (client XMLClient) getAcLsHandleResponse(resp *azcore.Response) (*SignedIDentifierArrayResponse, error) {
 	result := SignedIDentifierArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsXML(&result)
 }
 
-// GetACLsHandleError handles the GetACLs error response.
-func (client XMLClient) GetACLsHandleError(resp *azcore.Response) error {
+// getAcLsHandleError handles the GetACLs error response.
+func (client XMLClient) getAcLsHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -89,7 +89,7 @@ func (client XMLClient) GetACLsHandleError(resp *azcore.Response) error {
 
 // GetComplexTypeRefNoMeta - Get a complex type that has a ref to a complex type with no XML node
 func (client XMLClient) GetComplexTypeRefNoMeta(ctx context.Context, options *XMLGetComplexTypeRefNoMetaOptions) (*RootWithRefAndNoMetaResponse, error) {
-	req, err := client.GetComplexTypeRefNoMetaCreateRequest(ctx, options)
+	req, err := client.getComplexTypeRefNoMetaCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -98,17 +98,17 @@ func (client XMLClient) GetComplexTypeRefNoMeta(ctx context.Context, options *XM
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetComplexTypeRefNoMetaHandleError(resp)
+		return nil, client.getComplexTypeRefNoMetaHandleError(resp)
 	}
-	result, err := client.GetComplexTypeRefNoMetaHandleResponse(resp)
+	result, err := client.getComplexTypeRefNoMetaHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// GetComplexTypeRefNoMetaCreateRequest creates the GetComplexTypeRefNoMeta request.
-func (client XMLClient) GetComplexTypeRefNoMetaCreateRequest(ctx context.Context, options *XMLGetComplexTypeRefNoMetaOptions) (*azcore.Request, error) {
+// getComplexTypeRefNoMetaCreateRequest creates the GetComplexTypeRefNoMeta request.
+func (client XMLClient) getComplexTypeRefNoMetaCreateRequest(ctx context.Context, options *XMLGetComplexTypeRefNoMetaOptions) (*azcore.Request, error) {
 	urlPath := "/xml/complex-type-ref-no-meta"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -119,14 +119,14 @@ func (client XMLClient) GetComplexTypeRefNoMetaCreateRequest(ctx context.Context
 	return req, nil
 }
 
-// GetComplexTypeRefNoMetaHandleResponse handles the GetComplexTypeRefNoMeta response.
-func (client XMLClient) GetComplexTypeRefNoMetaHandleResponse(resp *azcore.Response) (*RootWithRefAndNoMetaResponse, error) {
+// getComplexTypeRefNoMetaHandleResponse handles the GetComplexTypeRefNoMeta response.
+func (client XMLClient) getComplexTypeRefNoMetaHandleResponse(resp *azcore.Response) (*RootWithRefAndNoMetaResponse, error) {
 	result := RootWithRefAndNoMetaResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsXML(&result.RootWithRefAndNoMeta)
 }
 
-// GetComplexTypeRefNoMetaHandleError handles the GetComplexTypeRefNoMeta error response.
-func (client XMLClient) GetComplexTypeRefNoMetaHandleError(resp *azcore.Response) error {
+// getComplexTypeRefNoMetaHandleError handles the GetComplexTypeRefNoMeta error response.
+func (client XMLClient) getComplexTypeRefNoMetaHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -139,7 +139,7 @@ func (client XMLClient) GetComplexTypeRefNoMetaHandleError(resp *azcore.Response
 
 // GetComplexTypeRefWithMeta - Get a complex type that has a ref to a complex type with XML node
 func (client XMLClient) GetComplexTypeRefWithMeta(ctx context.Context, options *XMLGetComplexTypeRefWithMetaOptions) (*RootWithRefAndMetaResponse, error) {
-	req, err := client.GetComplexTypeRefWithMetaCreateRequest(ctx, options)
+	req, err := client.getComplexTypeRefWithMetaCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -148,17 +148,17 @@ func (client XMLClient) GetComplexTypeRefWithMeta(ctx context.Context, options *
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetComplexTypeRefWithMetaHandleError(resp)
+		return nil, client.getComplexTypeRefWithMetaHandleError(resp)
 	}
-	result, err := client.GetComplexTypeRefWithMetaHandleResponse(resp)
+	result, err := client.getComplexTypeRefWithMetaHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// GetComplexTypeRefWithMetaCreateRequest creates the GetComplexTypeRefWithMeta request.
-func (client XMLClient) GetComplexTypeRefWithMetaCreateRequest(ctx context.Context, options *XMLGetComplexTypeRefWithMetaOptions) (*azcore.Request, error) {
+// getComplexTypeRefWithMetaCreateRequest creates the GetComplexTypeRefWithMeta request.
+func (client XMLClient) getComplexTypeRefWithMetaCreateRequest(ctx context.Context, options *XMLGetComplexTypeRefWithMetaOptions) (*azcore.Request, error) {
 	urlPath := "/xml/complex-type-ref-with-meta"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -169,14 +169,14 @@ func (client XMLClient) GetComplexTypeRefWithMetaCreateRequest(ctx context.Conte
 	return req, nil
 }
 
-// GetComplexTypeRefWithMetaHandleResponse handles the GetComplexTypeRefWithMeta response.
-func (client XMLClient) GetComplexTypeRefWithMetaHandleResponse(resp *azcore.Response) (*RootWithRefAndMetaResponse, error) {
+// getComplexTypeRefWithMetaHandleResponse handles the GetComplexTypeRefWithMeta response.
+func (client XMLClient) getComplexTypeRefWithMetaHandleResponse(resp *azcore.Response) (*RootWithRefAndMetaResponse, error) {
 	result := RootWithRefAndMetaResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsXML(&result.RootWithRefAndMeta)
 }
 
-// GetComplexTypeRefWithMetaHandleError handles the GetComplexTypeRefWithMeta error response.
-func (client XMLClient) GetComplexTypeRefWithMetaHandleError(resp *azcore.Response) error {
+// getComplexTypeRefWithMetaHandleError handles the GetComplexTypeRefWithMeta error response.
+func (client XMLClient) getComplexTypeRefWithMetaHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -189,7 +189,7 @@ func (client XMLClient) GetComplexTypeRefWithMetaHandleError(resp *azcore.Respon
 
 // GetEmptyChildElement - Gets an XML document with an empty child element.
 func (client XMLClient) GetEmptyChildElement(ctx context.Context, options *XMLGetEmptyChildElementOptions) (*BananaResponse, error) {
-	req, err := client.GetEmptyChildElementCreateRequest(ctx, options)
+	req, err := client.getEmptyChildElementCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -198,17 +198,17 @@ func (client XMLClient) GetEmptyChildElement(ctx context.Context, options *XMLGe
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetEmptyChildElementHandleError(resp)
+		return nil, client.getEmptyChildElementHandleError(resp)
 	}
-	result, err := client.GetEmptyChildElementHandleResponse(resp)
+	result, err := client.getEmptyChildElementHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// GetEmptyChildElementCreateRequest creates the GetEmptyChildElement request.
-func (client XMLClient) GetEmptyChildElementCreateRequest(ctx context.Context, options *XMLGetEmptyChildElementOptions) (*azcore.Request, error) {
+// getEmptyChildElementCreateRequest creates the GetEmptyChildElement request.
+func (client XMLClient) getEmptyChildElementCreateRequest(ctx context.Context, options *XMLGetEmptyChildElementOptions) (*azcore.Request, error) {
 	urlPath := "/xml/empty-child-element"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -219,14 +219,14 @@ func (client XMLClient) GetEmptyChildElementCreateRequest(ctx context.Context, o
 	return req, nil
 }
 
-// GetEmptyChildElementHandleResponse handles the GetEmptyChildElement response.
-func (client XMLClient) GetEmptyChildElementHandleResponse(resp *azcore.Response) (*BananaResponse, error) {
+// getEmptyChildElementHandleResponse handles the GetEmptyChildElement response.
+func (client XMLClient) getEmptyChildElementHandleResponse(resp *azcore.Response) (*BananaResponse, error) {
 	result := BananaResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsXML(&result.Banana)
 }
 
-// GetEmptyChildElementHandleError handles the GetEmptyChildElement error response.
-func (client XMLClient) GetEmptyChildElementHandleError(resp *azcore.Response) error {
+// getEmptyChildElementHandleError handles the GetEmptyChildElement error response.
+func (client XMLClient) getEmptyChildElementHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -239,7 +239,7 @@ func (client XMLClient) GetEmptyChildElementHandleError(resp *azcore.Response) e
 
 // GetEmptyList - Get an empty list.
 func (client XMLClient) GetEmptyList(ctx context.Context, options *XMLGetEmptyListOptions) (*SlideshowResponse, error) {
-	req, err := client.GetEmptyListCreateRequest(ctx, options)
+	req, err := client.getEmptyListCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -248,17 +248,17 @@ func (client XMLClient) GetEmptyList(ctx context.Context, options *XMLGetEmptyLi
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetEmptyListHandleError(resp)
+		return nil, client.getEmptyListHandleError(resp)
 	}
-	result, err := client.GetEmptyListHandleResponse(resp)
+	result, err := client.getEmptyListHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// GetEmptyListCreateRequest creates the GetEmptyList request.
-func (client XMLClient) GetEmptyListCreateRequest(ctx context.Context, options *XMLGetEmptyListOptions) (*azcore.Request, error) {
+// getEmptyListCreateRequest creates the GetEmptyList request.
+func (client XMLClient) getEmptyListCreateRequest(ctx context.Context, options *XMLGetEmptyListOptions) (*azcore.Request, error) {
 	urlPath := "/xml/empty-list"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -269,14 +269,14 @@ func (client XMLClient) GetEmptyListCreateRequest(ctx context.Context, options *
 	return req, nil
 }
 
-// GetEmptyListHandleResponse handles the GetEmptyList response.
-func (client XMLClient) GetEmptyListHandleResponse(resp *azcore.Response) (*SlideshowResponse, error) {
+// getEmptyListHandleResponse handles the GetEmptyList response.
+func (client XMLClient) getEmptyListHandleResponse(resp *azcore.Response) (*SlideshowResponse, error) {
 	result := SlideshowResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsXML(&result.Slideshow)
 }
 
-// GetEmptyListHandleError handles the GetEmptyList error response.
-func (client XMLClient) GetEmptyListHandleError(resp *azcore.Response) error {
+// getEmptyListHandleError handles the GetEmptyList error response.
+func (client XMLClient) getEmptyListHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -289,7 +289,7 @@ func (client XMLClient) GetEmptyListHandleError(resp *azcore.Response) error {
 
 // GetEmptyRootList - Gets an empty list as the root element.
 func (client XMLClient) GetEmptyRootList(ctx context.Context, options *XMLGetEmptyRootListOptions) (*BananaArrayResponse, error) {
-	req, err := client.GetEmptyRootListCreateRequest(ctx, options)
+	req, err := client.getEmptyRootListCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -298,17 +298,17 @@ func (client XMLClient) GetEmptyRootList(ctx context.Context, options *XMLGetEmp
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetEmptyRootListHandleError(resp)
+		return nil, client.getEmptyRootListHandleError(resp)
 	}
-	result, err := client.GetEmptyRootListHandleResponse(resp)
+	result, err := client.getEmptyRootListHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// GetEmptyRootListCreateRequest creates the GetEmptyRootList request.
-func (client XMLClient) GetEmptyRootListCreateRequest(ctx context.Context, options *XMLGetEmptyRootListOptions) (*azcore.Request, error) {
+// getEmptyRootListCreateRequest creates the GetEmptyRootList request.
+func (client XMLClient) getEmptyRootListCreateRequest(ctx context.Context, options *XMLGetEmptyRootListOptions) (*azcore.Request, error) {
 	urlPath := "/xml/empty-root-list"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -319,14 +319,14 @@ func (client XMLClient) GetEmptyRootListCreateRequest(ctx context.Context, optio
 	return req, nil
 }
 
-// GetEmptyRootListHandleResponse handles the GetEmptyRootList response.
-func (client XMLClient) GetEmptyRootListHandleResponse(resp *azcore.Response) (*BananaArrayResponse, error) {
+// getEmptyRootListHandleResponse handles the GetEmptyRootList response.
+func (client XMLClient) getEmptyRootListHandleResponse(resp *azcore.Response) (*BananaArrayResponse, error) {
 	result := BananaArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsXML(&result)
 }
 
-// GetEmptyRootListHandleError handles the GetEmptyRootList error response.
-func (client XMLClient) GetEmptyRootListHandleError(resp *azcore.Response) error {
+// getEmptyRootListHandleError handles the GetEmptyRootList error response.
+func (client XMLClient) getEmptyRootListHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -339,7 +339,7 @@ func (client XMLClient) GetEmptyRootListHandleError(resp *azcore.Response) error
 
 // GetEmptyWrappedLists - Gets some empty wrapped lists.
 func (client XMLClient) GetEmptyWrappedLists(ctx context.Context, options *XMLGetEmptyWrappedListsOptions) (*AppleBarrelResponse, error) {
-	req, err := client.GetEmptyWrappedListsCreateRequest(ctx, options)
+	req, err := client.getEmptyWrappedListsCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -348,17 +348,17 @@ func (client XMLClient) GetEmptyWrappedLists(ctx context.Context, options *XMLGe
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetEmptyWrappedListsHandleError(resp)
+		return nil, client.getEmptyWrappedListsHandleError(resp)
 	}
-	result, err := client.GetEmptyWrappedListsHandleResponse(resp)
+	result, err := client.getEmptyWrappedListsHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// GetEmptyWrappedListsCreateRequest creates the GetEmptyWrappedLists request.
-func (client XMLClient) GetEmptyWrappedListsCreateRequest(ctx context.Context, options *XMLGetEmptyWrappedListsOptions) (*azcore.Request, error) {
+// getEmptyWrappedListsCreateRequest creates the GetEmptyWrappedLists request.
+func (client XMLClient) getEmptyWrappedListsCreateRequest(ctx context.Context, options *XMLGetEmptyWrappedListsOptions) (*azcore.Request, error) {
 	urlPath := "/xml/empty-wrapped-lists"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -369,14 +369,14 @@ func (client XMLClient) GetEmptyWrappedListsCreateRequest(ctx context.Context, o
 	return req, nil
 }
 
-// GetEmptyWrappedListsHandleResponse handles the GetEmptyWrappedLists response.
-func (client XMLClient) GetEmptyWrappedListsHandleResponse(resp *azcore.Response) (*AppleBarrelResponse, error) {
+// getEmptyWrappedListsHandleResponse handles the GetEmptyWrappedLists response.
+func (client XMLClient) getEmptyWrappedListsHandleResponse(resp *azcore.Response) (*AppleBarrelResponse, error) {
 	result := AppleBarrelResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsXML(&result.AppleBarrel)
 }
 
-// GetEmptyWrappedListsHandleError handles the GetEmptyWrappedLists error response.
-func (client XMLClient) GetEmptyWrappedListsHandleError(resp *azcore.Response) error {
+// getEmptyWrappedListsHandleError handles the GetEmptyWrappedLists error response.
+func (client XMLClient) getEmptyWrappedListsHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -389,7 +389,7 @@ func (client XMLClient) GetEmptyWrappedListsHandleError(resp *azcore.Response) e
 
 // GetHeaders - Get strongly-typed response headers.
 func (client XMLClient) GetHeaders(ctx context.Context, options *XMLGetHeadersOptions) (*XMLGetHeadersResponse, error) {
-	req, err := client.GetHeadersCreateRequest(ctx, options)
+	req, err := client.getHeadersCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -398,17 +398,17 @@ func (client XMLClient) GetHeaders(ctx context.Context, options *XMLGetHeadersOp
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetHeadersHandleError(resp)
+		return nil, client.getHeadersHandleError(resp)
 	}
-	result, err := client.GetHeadersHandleResponse(resp)
+	result, err := client.getHeadersHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// GetHeadersCreateRequest creates the GetHeaders request.
-func (client XMLClient) GetHeadersCreateRequest(ctx context.Context, options *XMLGetHeadersOptions) (*azcore.Request, error) {
+// getHeadersCreateRequest creates the GetHeaders request.
+func (client XMLClient) getHeadersCreateRequest(ctx context.Context, options *XMLGetHeadersOptions) (*azcore.Request, error) {
 	urlPath := "/xml/headers"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -418,8 +418,8 @@ func (client XMLClient) GetHeadersCreateRequest(ctx context.Context, options *XM
 	return req, nil
 }
 
-// GetHeadersHandleResponse handles the GetHeaders response.
-func (client XMLClient) GetHeadersHandleResponse(resp *azcore.Response) (*XMLGetHeadersResponse, error) {
+// getHeadersHandleResponse handles the GetHeaders response.
+func (client XMLClient) getHeadersHandleResponse(resp *azcore.Response) (*XMLGetHeadersResponse, error) {
 	result := XMLGetHeadersResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("Custom-Header"); val != "" {
 		result.CustomHeader = &val
@@ -427,8 +427,8 @@ func (client XMLClient) GetHeadersHandleResponse(resp *azcore.Response) (*XMLGet
 	return &result, nil
 }
 
-// GetHeadersHandleError handles the GetHeaders error response.
-func (client XMLClient) GetHeadersHandleError(resp *azcore.Response) error {
+// getHeadersHandleError handles the GetHeaders error response.
+func (client XMLClient) getHeadersHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -441,7 +441,7 @@ func (client XMLClient) GetHeadersHandleError(resp *azcore.Response) error {
 
 // GetRootList - Gets a list as the root element.
 func (client XMLClient) GetRootList(ctx context.Context, options *XMLGetRootListOptions) (*BananaArrayResponse, error) {
-	req, err := client.GetRootListCreateRequest(ctx, options)
+	req, err := client.getRootListCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -450,17 +450,17 @@ func (client XMLClient) GetRootList(ctx context.Context, options *XMLGetRootList
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetRootListHandleError(resp)
+		return nil, client.getRootListHandleError(resp)
 	}
-	result, err := client.GetRootListHandleResponse(resp)
+	result, err := client.getRootListHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// GetRootListCreateRequest creates the GetRootList request.
-func (client XMLClient) GetRootListCreateRequest(ctx context.Context, options *XMLGetRootListOptions) (*azcore.Request, error) {
+// getRootListCreateRequest creates the GetRootList request.
+func (client XMLClient) getRootListCreateRequest(ctx context.Context, options *XMLGetRootListOptions) (*azcore.Request, error) {
 	urlPath := "/xml/root-list"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -471,14 +471,14 @@ func (client XMLClient) GetRootListCreateRequest(ctx context.Context, options *X
 	return req, nil
 }
 
-// GetRootListHandleResponse handles the GetRootList response.
-func (client XMLClient) GetRootListHandleResponse(resp *azcore.Response) (*BananaArrayResponse, error) {
+// getRootListHandleResponse handles the GetRootList response.
+func (client XMLClient) getRootListHandleResponse(resp *azcore.Response) (*BananaArrayResponse, error) {
 	result := BananaArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsXML(&result)
 }
 
-// GetRootListHandleError handles the GetRootList error response.
-func (client XMLClient) GetRootListHandleError(resp *azcore.Response) error {
+// getRootListHandleError handles the GetRootList error response.
+func (client XMLClient) getRootListHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -491,7 +491,7 @@ func (client XMLClient) GetRootListHandleError(resp *azcore.Response) error {
 
 // GetRootListSingleItem - Gets a list with a single item.
 func (client XMLClient) GetRootListSingleItem(ctx context.Context, options *XMLGetRootListSingleItemOptions) (*BananaArrayResponse, error) {
-	req, err := client.GetRootListSingleItemCreateRequest(ctx, options)
+	req, err := client.getRootListSingleItemCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -500,17 +500,17 @@ func (client XMLClient) GetRootListSingleItem(ctx context.Context, options *XMLG
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetRootListSingleItemHandleError(resp)
+		return nil, client.getRootListSingleItemHandleError(resp)
 	}
-	result, err := client.GetRootListSingleItemHandleResponse(resp)
+	result, err := client.getRootListSingleItemHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// GetRootListSingleItemCreateRequest creates the GetRootListSingleItem request.
-func (client XMLClient) GetRootListSingleItemCreateRequest(ctx context.Context, options *XMLGetRootListSingleItemOptions) (*azcore.Request, error) {
+// getRootListSingleItemCreateRequest creates the GetRootListSingleItem request.
+func (client XMLClient) getRootListSingleItemCreateRequest(ctx context.Context, options *XMLGetRootListSingleItemOptions) (*azcore.Request, error) {
 	urlPath := "/xml/root-list-single-item"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -521,14 +521,14 @@ func (client XMLClient) GetRootListSingleItemCreateRequest(ctx context.Context, 
 	return req, nil
 }
 
-// GetRootListSingleItemHandleResponse handles the GetRootListSingleItem response.
-func (client XMLClient) GetRootListSingleItemHandleResponse(resp *azcore.Response) (*BananaArrayResponse, error) {
+// getRootListSingleItemHandleResponse handles the GetRootListSingleItem response.
+func (client XMLClient) getRootListSingleItemHandleResponse(resp *azcore.Response) (*BananaArrayResponse, error) {
 	result := BananaArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsXML(&result)
 }
 
-// GetRootListSingleItemHandleError handles the GetRootListSingleItem error response.
-func (client XMLClient) GetRootListSingleItemHandleError(resp *azcore.Response) error {
+// getRootListSingleItemHandleError handles the GetRootListSingleItem error response.
+func (client XMLClient) getRootListSingleItemHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -541,7 +541,7 @@ func (client XMLClient) GetRootListSingleItemHandleError(resp *azcore.Response) 
 
 // GetServiceProperties - Gets storage service properties.
 func (client XMLClient) GetServiceProperties(ctx context.Context, options *XMLGetServicePropertiesOptions) (*StorageServicePropertiesResponse, error) {
-	req, err := client.GetServicePropertiesCreateRequest(ctx, options)
+	req, err := client.getServicePropertiesCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -550,17 +550,17 @@ func (client XMLClient) GetServiceProperties(ctx context.Context, options *XMLGe
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetServicePropertiesHandleError(resp)
+		return nil, client.getServicePropertiesHandleError(resp)
 	}
-	result, err := client.GetServicePropertiesHandleResponse(resp)
+	result, err := client.getServicePropertiesHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// GetServicePropertiesCreateRequest creates the GetServiceProperties request.
-func (client XMLClient) GetServicePropertiesCreateRequest(ctx context.Context, options *XMLGetServicePropertiesOptions) (*azcore.Request, error) {
+// getServicePropertiesCreateRequest creates the GetServiceProperties request.
+func (client XMLClient) getServicePropertiesCreateRequest(ctx context.Context, options *XMLGetServicePropertiesOptions) (*azcore.Request, error) {
 	urlPath := "/xml/"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -575,14 +575,14 @@ func (client XMLClient) GetServicePropertiesCreateRequest(ctx context.Context, o
 	return req, nil
 }
 
-// GetServicePropertiesHandleResponse handles the GetServiceProperties response.
-func (client XMLClient) GetServicePropertiesHandleResponse(resp *azcore.Response) (*StorageServicePropertiesResponse, error) {
+// getServicePropertiesHandleResponse handles the GetServiceProperties response.
+func (client XMLClient) getServicePropertiesHandleResponse(resp *azcore.Response) (*StorageServicePropertiesResponse, error) {
 	result := StorageServicePropertiesResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsXML(&result.StorageServiceProperties)
 }
 
-// GetServicePropertiesHandleError handles the GetServiceProperties error response.
-func (client XMLClient) GetServicePropertiesHandleError(resp *azcore.Response) error {
+// getServicePropertiesHandleError handles the GetServiceProperties error response.
+func (client XMLClient) getServicePropertiesHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -595,7 +595,7 @@ func (client XMLClient) GetServicePropertiesHandleError(resp *azcore.Response) e
 
 // GetSimple - Get a simple XML document
 func (client XMLClient) GetSimple(ctx context.Context, options *XMLGetSimpleOptions) (*SlideshowResponse, error) {
-	req, err := client.GetSimpleCreateRequest(ctx, options)
+	req, err := client.getSimpleCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -604,17 +604,17 @@ func (client XMLClient) GetSimple(ctx context.Context, options *XMLGetSimpleOpti
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetSimpleHandleError(resp)
+		return nil, client.getSimpleHandleError(resp)
 	}
-	result, err := client.GetSimpleHandleResponse(resp)
+	result, err := client.getSimpleHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// GetSimpleCreateRequest creates the GetSimple request.
-func (client XMLClient) GetSimpleCreateRequest(ctx context.Context, options *XMLGetSimpleOptions) (*azcore.Request, error) {
+// getSimpleCreateRequest creates the GetSimple request.
+func (client XMLClient) getSimpleCreateRequest(ctx context.Context, options *XMLGetSimpleOptions) (*azcore.Request, error) {
 	urlPath := "/xml/simple"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -625,14 +625,14 @@ func (client XMLClient) GetSimpleCreateRequest(ctx context.Context, options *XML
 	return req, nil
 }
 
-// GetSimpleHandleResponse handles the GetSimple response.
-func (client XMLClient) GetSimpleHandleResponse(resp *azcore.Response) (*SlideshowResponse, error) {
+// getSimpleHandleResponse handles the GetSimple response.
+func (client XMLClient) getSimpleHandleResponse(resp *azcore.Response) (*SlideshowResponse, error) {
 	result := SlideshowResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsXML(&result.Slideshow)
 }
 
-// GetSimpleHandleError handles the GetSimple error response.
-func (client XMLClient) GetSimpleHandleError(resp *azcore.Response) error {
+// getSimpleHandleError handles the GetSimple error response.
+func (client XMLClient) getSimpleHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -642,7 +642,7 @@ func (client XMLClient) GetSimpleHandleError(resp *azcore.Response) error {
 
 // GetWrappedLists - Get an XML document with multiple wrapped lists
 func (client XMLClient) GetWrappedLists(ctx context.Context, options *XMLGetWrappedListsOptions) (*AppleBarrelResponse, error) {
-	req, err := client.GetWrappedListsCreateRequest(ctx, options)
+	req, err := client.getWrappedListsCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -651,17 +651,17 @@ func (client XMLClient) GetWrappedLists(ctx context.Context, options *XMLGetWrap
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetWrappedListsHandleError(resp)
+		return nil, client.getWrappedListsHandleError(resp)
 	}
-	result, err := client.GetWrappedListsHandleResponse(resp)
+	result, err := client.getWrappedListsHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// GetWrappedListsCreateRequest creates the GetWrappedLists request.
-func (client XMLClient) GetWrappedListsCreateRequest(ctx context.Context, options *XMLGetWrappedListsOptions) (*azcore.Request, error) {
+// getWrappedListsCreateRequest creates the GetWrappedLists request.
+func (client XMLClient) getWrappedListsCreateRequest(ctx context.Context, options *XMLGetWrappedListsOptions) (*azcore.Request, error) {
 	urlPath := "/xml/wrapped-lists"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -672,14 +672,14 @@ func (client XMLClient) GetWrappedListsCreateRequest(ctx context.Context, option
 	return req, nil
 }
 
-// GetWrappedListsHandleResponse handles the GetWrappedLists response.
-func (client XMLClient) GetWrappedListsHandleResponse(resp *azcore.Response) (*AppleBarrelResponse, error) {
+// getWrappedListsHandleResponse handles the GetWrappedLists response.
+func (client XMLClient) getWrappedListsHandleResponse(resp *azcore.Response) (*AppleBarrelResponse, error) {
 	result := AppleBarrelResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsXML(&result.AppleBarrel)
 }
 
-// GetWrappedListsHandleError handles the GetWrappedLists error response.
-func (client XMLClient) GetWrappedListsHandleError(resp *azcore.Response) error {
+// getWrappedListsHandleError handles the GetWrappedLists error response.
+func (client XMLClient) getWrappedListsHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -693,7 +693,7 @@ func (client XMLClient) GetWrappedListsHandleError(resp *azcore.Response) error 
 // GetXMSText - Get back an XML object with an x-ms-text property, which should translate to the returned object's 'language' property being 'english' and
 // its 'content' property being 'I am text'
 func (client XMLClient) GetXMSText(ctx context.Context, options *XMLGetXMSTextOptions) (*ObjectWithXMSTextPropertyResponse, error) {
-	req, err := client.GetXMSTextCreateRequest(ctx, options)
+	req, err := client.getXmsTextCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -702,17 +702,17 @@ func (client XMLClient) GetXMSText(ctx context.Context, options *XMLGetXMSTextOp
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetXMSTextHandleError(resp)
+		return nil, client.getXmsTextHandleError(resp)
 	}
-	result, err := client.GetXMSTextHandleResponse(resp)
+	result, err := client.getXmsTextHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// GetXMSTextCreateRequest creates the GetXMSText request.
-func (client XMLClient) GetXMSTextCreateRequest(ctx context.Context, options *XMLGetXMSTextOptions) (*azcore.Request, error) {
+// getXmsTextCreateRequest creates the GetXMSText request.
+func (client XMLClient) getXmsTextCreateRequest(ctx context.Context, options *XMLGetXMSTextOptions) (*azcore.Request, error) {
 	urlPath := "/xml/x-ms-text"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -723,14 +723,14 @@ func (client XMLClient) GetXMSTextCreateRequest(ctx context.Context, options *XM
 	return req, nil
 }
 
-// GetXMSTextHandleResponse handles the GetXMSText response.
-func (client XMLClient) GetXMSTextHandleResponse(resp *azcore.Response) (*ObjectWithXMSTextPropertyResponse, error) {
+// getXmsTextHandleResponse handles the GetXMSText response.
+func (client XMLClient) getXmsTextHandleResponse(resp *azcore.Response) (*ObjectWithXMSTextPropertyResponse, error) {
 	result := ObjectWithXMSTextPropertyResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsXML(&result.Data)
 }
 
-// GetXMSTextHandleError handles the GetXMSText error response.
-func (client XMLClient) GetXMSTextHandleError(resp *azcore.Response) error {
+// getXmsTextHandleError handles the GetXMSText error response.
+func (client XMLClient) getXmsTextHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -743,7 +743,7 @@ func (client XMLClient) GetXMSTextHandleError(resp *azcore.Response) error {
 
 // JSONInput - A Swagger with XML that has one operation that takes JSON as input. You need to send the ID number 42
 func (client XMLClient) JSONInput(ctx context.Context, properties JSONInput, options *XMLJSONInputOptions) (*http.Response, error) {
-	req, err := client.JSONInputCreateRequest(ctx, properties, options)
+	req, err := client.jsonInputCreateRequest(ctx, properties, options)
 	if err != nil {
 		return nil, err
 	}
@@ -752,13 +752,13 @@ func (client XMLClient) JSONInput(ctx context.Context, properties JSONInput, opt
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.JSONInputHandleError(resp)
+		return nil, client.jsonInputHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// JSONInputCreateRequest creates the JSONInput request.
-func (client XMLClient) JSONInputCreateRequest(ctx context.Context, properties JSONInput, options *XMLJSONInputOptions) (*azcore.Request, error) {
+// jsonInputCreateRequest creates the JSONInput request.
+func (client XMLClient) jsonInputCreateRequest(ctx context.Context, properties JSONInput, options *XMLJSONInputOptions) (*azcore.Request, error) {
 	urlPath := "/xml/jsoninput"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -768,8 +768,8 @@ func (client XMLClient) JSONInputCreateRequest(ctx context.Context, properties J
 	return req, req.MarshalAsJSON(properties)
 }
 
-// JSONInputHandleError handles the JSONInput error response.
-func (client XMLClient) JSONInputHandleError(resp *azcore.Response) error {
+// jsonInputHandleError handles the JSONInput error response.
+func (client XMLClient) jsonInputHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -782,7 +782,7 @@ func (client XMLClient) JSONInputHandleError(resp *azcore.Response) error {
 
 // JSONOutput - A Swagger with XML that has one operation that returns JSON. ID number 42
 func (client XMLClient) JSONOutput(ctx context.Context, options *XMLJSONOutputOptions) (*JSONOutputResponse, error) {
-	req, err := client.JSONOutputCreateRequest(ctx, options)
+	req, err := client.jsonOutputCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -791,17 +791,17 @@ func (client XMLClient) JSONOutput(ctx context.Context, options *XMLJSONOutputOp
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.JSONOutputHandleError(resp)
+		return nil, client.jsonOutputHandleError(resp)
 	}
-	result, err := client.JSONOutputHandleResponse(resp)
+	result, err := client.jsonOutputHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// JSONOutputCreateRequest creates the JSONOutput request.
-func (client XMLClient) JSONOutputCreateRequest(ctx context.Context, options *XMLJSONOutputOptions) (*azcore.Request, error) {
+// jsonOutputCreateRequest creates the JSONOutput request.
+func (client XMLClient) jsonOutputCreateRequest(ctx context.Context, options *XMLJSONOutputOptions) (*azcore.Request, error) {
 	urlPath := "/xml/jsonoutput"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -812,14 +812,14 @@ func (client XMLClient) JSONOutputCreateRequest(ctx context.Context, options *XM
 	return req, nil
 }
 
-// JSONOutputHandleResponse handles the JSONOutput response.
-func (client XMLClient) JSONOutputHandleResponse(resp *azcore.Response) (*JSONOutputResponse, error) {
+// jsonOutputHandleResponse handles the JSONOutput response.
+func (client XMLClient) jsonOutputHandleResponse(resp *azcore.Response) (*JSONOutputResponse, error) {
 	result := JSONOutputResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.JSONOutput)
 }
 
-// JSONOutputHandleError handles the JSONOutput error response.
-func (client XMLClient) JSONOutputHandleError(resp *azcore.Response) error {
+// jsonOutputHandleError handles the JSONOutput error response.
+func (client XMLClient) jsonOutputHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -832,7 +832,7 @@ func (client XMLClient) JSONOutputHandleError(resp *azcore.Response) error {
 
 // ListBlobs - Lists blobs in a storage container.
 func (client XMLClient) ListBlobs(ctx context.Context, options *XMLListBlobsOptions) (*ListBlobsResponseResponse, error) {
-	req, err := client.ListBlobsCreateRequest(ctx, options)
+	req, err := client.listBlobsCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -841,17 +841,17 @@ func (client XMLClient) ListBlobs(ctx context.Context, options *XMLListBlobsOpti
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListBlobsHandleError(resp)
+		return nil, client.listBlobsHandleError(resp)
 	}
-	result, err := client.ListBlobsHandleResponse(resp)
+	result, err := client.listBlobsHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// ListBlobsCreateRequest creates the ListBlobs request.
-func (client XMLClient) ListBlobsCreateRequest(ctx context.Context, options *XMLListBlobsOptions) (*azcore.Request, error) {
+// listBlobsCreateRequest creates the ListBlobs request.
+func (client XMLClient) listBlobsCreateRequest(ctx context.Context, options *XMLListBlobsOptions) (*azcore.Request, error) {
 	urlPath := "/xml/mycontainer"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -866,14 +866,14 @@ func (client XMLClient) ListBlobsCreateRequest(ctx context.Context, options *XML
 	return req, nil
 }
 
-// ListBlobsHandleResponse handles the ListBlobs response.
-func (client XMLClient) ListBlobsHandleResponse(resp *azcore.Response) (*ListBlobsResponseResponse, error) {
+// listBlobsHandleResponse handles the ListBlobs response.
+func (client XMLClient) listBlobsHandleResponse(resp *azcore.Response) (*ListBlobsResponseResponse, error) {
 	result := ListBlobsResponseResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsXML(&result.EnumerationResults)
 }
 
-// ListBlobsHandleError handles the ListBlobs error response.
-func (client XMLClient) ListBlobsHandleError(resp *azcore.Response) error {
+// listBlobsHandleError handles the ListBlobs error response.
+func (client XMLClient) listBlobsHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -886,7 +886,7 @@ func (client XMLClient) ListBlobsHandleError(resp *azcore.Response) error {
 
 // ListContainers - Lists containers in a storage account.
 func (client XMLClient) ListContainers(ctx context.Context, options *XMLListContainersOptions) (*ListContainersResponseResponse, error) {
-	req, err := client.ListContainersCreateRequest(ctx, options)
+	req, err := client.listContainersCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -895,17 +895,17 @@ func (client XMLClient) ListContainers(ctx context.Context, options *XMLListCont
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListContainersHandleError(resp)
+		return nil, client.listContainersHandleError(resp)
 	}
-	result, err := client.ListContainersHandleResponse(resp)
+	result, err := client.listContainersHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// ListContainersCreateRequest creates the ListContainers request.
-func (client XMLClient) ListContainersCreateRequest(ctx context.Context, options *XMLListContainersOptions) (*azcore.Request, error) {
+// listContainersCreateRequest creates the ListContainers request.
+func (client XMLClient) listContainersCreateRequest(ctx context.Context, options *XMLListContainersOptions) (*azcore.Request, error) {
 	urlPath := "/xml/"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -919,14 +919,14 @@ func (client XMLClient) ListContainersCreateRequest(ctx context.Context, options
 	return req, nil
 }
 
-// ListContainersHandleResponse handles the ListContainers response.
-func (client XMLClient) ListContainersHandleResponse(resp *azcore.Response) (*ListContainersResponseResponse, error) {
+// listContainersHandleResponse handles the ListContainers response.
+func (client XMLClient) listContainersHandleResponse(resp *azcore.Response) (*ListContainersResponseResponse, error) {
 	result := ListContainersResponseResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsXML(&result.EnumerationResults)
 }
 
-// ListContainersHandleError handles the ListContainers error response.
-func (client XMLClient) ListContainersHandleError(resp *azcore.Response) error {
+// listContainersHandleError handles the ListContainers error response.
+func (client XMLClient) listContainersHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -939,7 +939,7 @@ func (client XMLClient) ListContainersHandleError(resp *azcore.Response) error {
 
 // PutACLs - Puts storage ACLs for a container.
 func (client XMLClient) PutACLs(ctx context.Context, properties []SignedIDentifier, options *XMLPutACLsOptions) (*http.Response, error) {
-	req, err := client.PutACLsCreateRequest(ctx, properties, options)
+	req, err := client.putAcLsCreateRequest(ctx, properties, options)
 	if err != nil {
 		return nil, err
 	}
@@ -948,13 +948,13 @@ func (client XMLClient) PutACLs(ctx context.Context, properties []SignedIDentifi
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, client.PutACLsHandleError(resp)
+		return nil, client.putAcLsHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// PutACLsCreateRequest creates the PutACLs request.
-func (client XMLClient) PutACLsCreateRequest(ctx context.Context, properties []SignedIDentifier, options *XMLPutACLsOptions) (*azcore.Request, error) {
+// putAcLsCreateRequest creates the PutACLs request.
+func (client XMLClient) putAcLsCreateRequest(ctx context.Context, properties []SignedIDentifier, options *XMLPutACLsOptions) (*azcore.Request, error) {
 	urlPath := "/xml/mycontainer"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -972,8 +972,8 @@ func (client XMLClient) PutACLsCreateRequest(ctx context.Context, properties []S
 	return req, req.MarshalAsXML(wrapper{Properties: &properties})
 }
 
-// PutACLsHandleError handles the PutACLs error response.
-func (client XMLClient) PutACLsHandleError(resp *azcore.Response) error {
+// putAcLsHandleError handles the PutACLs error response.
+func (client XMLClient) putAcLsHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -986,7 +986,7 @@ func (client XMLClient) PutACLsHandleError(resp *azcore.Response) error {
 
 // PutComplexTypeRefNoMeta - Puts a complex type that has a ref to a complex type with no XML node
 func (client XMLClient) PutComplexTypeRefNoMeta(ctx context.Context, model RootWithRefAndNoMeta, options *XMLPutComplexTypeRefNoMetaOptions) (*http.Response, error) {
-	req, err := client.PutComplexTypeRefNoMetaCreateRequest(ctx, model, options)
+	req, err := client.putComplexTypeRefNoMetaCreateRequest(ctx, model, options)
 	if err != nil {
 		return nil, err
 	}
@@ -995,13 +995,13 @@ func (client XMLClient) PutComplexTypeRefNoMeta(ctx context.Context, model RootW
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, client.PutComplexTypeRefNoMetaHandleError(resp)
+		return nil, client.putComplexTypeRefNoMetaHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// PutComplexTypeRefNoMetaCreateRequest creates the PutComplexTypeRefNoMeta request.
-func (client XMLClient) PutComplexTypeRefNoMetaCreateRequest(ctx context.Context, model RootWithRefAndNoMeta, options *XMLPutComplexTypeRefNoMetaOptions) (*azcore.Request, error) {
+// putComplexTypeRefNoMetaCreateRequest creates the PutComplexTypeRefNoMeta request.
+func (client XMLClient) putComplexTypeRefNoMetaCreateRequest(ctx context.Context, model RootWithRefAndNoMeta, options *XMLPutComplexTypeRefNoMetaOptions) (*azcore.Request, error) {
 	urlPath := "/xml/complex-type-ref-no-meta"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1011,8 +1011,8 @@ func (client XMLClient) PutComplexTypeRefNoMetaCreateRequest(ctx context.Context
 	return req, req.MarshalAsXML(model)
 }
 
-// PutComplexTypeRefNoMetaHandleError handles the PutComplexTypeRefNoMeta error response.
-func (client XMLClient) PutComplexTypeRefNoMetaHandleError(resp *azcore.Response) error {
+// putComplexTypeRefNoMetaHandleError handles the PutComplexTypeRefNoMeta error response.
+func (client XMLClient) putComplexTypeRefNoMetaHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -1025,7 +1025,7 @@ func (client XMLClient) PutComplexTypeRefNoMetaHandleError(resp *azcore.Response
 
 // PutComplexTypeRefWithMeta - Puts a complex type that has a ref to a complex type with XML node
 func (client XMLClient) PutComplexTypeRefWithMeta(ctx context.Context, model RootWithRefAndMeta, options *XMLPutComplexTypeRefWithMetaOptions) (*http.Response, error) {
-	req, err := client.PutComplexTypeRefWithMetaCreateRequest(ctx, model, options)
+	req, err := client.putComplexTypeRefWithMetaCreateRequest(ctx, model, options)
 	if err != nil {
 		return nil, err
 	}
@@ -1034,13 +1034,13 @@ func (client XMLClient) PutComplexTypeRefWithMeta(ctx context.Context, model Roo
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, client.PutComplexTypeRefWithMetaHandleError(resp)
+		return nil, client.putComplexTypeRefWithMetaHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// PutComplexTypeRefWithMetaCreateRequest creates the PutComplexTypeRefWithMeta request.
-func (client XMLClient) PutComplexTypeRefWithMetaCreateRequest(ctx context.Context, model RootWithRefAndMeta, options *XMLPutComplexTypeRefWithMetaOptions) (*azcore.Request, error) {
+// putComplexTypeRefWithMetaCreateRequest creates the PutComplexTypeRefWithMeta request.
+func (client XMLClient) putComplexTypeRefWithMetaCreateRequest(ctx context.Context, model RootWithRefAndMeta, options *XMLPutComplexTypeRefWithMetaOptions) (*azcore.Request, error) {
 	urlPath := "/xml/complex-type-ref-with-meta"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1050,8 +1050,8 @@ func (client XMLClient) PutComplexTypeRefWithMetaCreateRequest(ctx context.Conte
 	return req, req.MarshalAsXML(model)
 }
 
-// PutComplexTypeRefWithMetaHandleError handles the PutComplexTypeRefWithMeta error response.
-func (client XMLClient) PutComplexTypeRefWithMetaHandleError(resp *azcore.Response) error {
+// putComplexTypeRefWithMetaHandleError handles the PutComplexTypeRefWithMeta error response.
+func (client XMLClient) putComplexTypeRefWithMetaHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -1064,7 +1064,7 @@ func (client XMLClient) PutComplexTypeRefWithMetaHandleError(resp *azcore.Respon
 
 // PutEmptyChildElement - Puts a value with an empty child element.
 func (client XMLClient) PutEmptyChildElement(ctx context.Context, banana Banana, options *XMLPutEmptyChildElementOptions) (*http.Response, error) {
-	req, err := client.PutEmptyChildElementCreateRequest(ctx, banana, options)
+	req, err := client.putEmptyChildElementCreateRequest(ctx, banana, options)
 	if err != nil {
 		return nil, err
 	}
@@ -1073,13 +1073,13 @@ func (client XMLClient) PutEmptyChildElement(ctx context.Context, banana Banana,
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, client.PutEmptyChildElementHandleError(resp)
+		return nil, client.putEmptyChildElementHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// PutEmptyChildElementCreateRequest creates the PutEmptyChildElement request.
-func (client XMLClient) PutEmptyChildElementCreateRequest(ctx context.Context, banana Banana, options *XMLPutEmptyChildElementOptions) (*azcore.Request, error) {
+// putEmptyChildElementCreateRequest creates the PutEmptyChildElement request.
+func (client XMLClient) putEmptyChildElementCreateRequest(ctx context.Context, banana Banana, options *XMLPutEmptyChildElementOptions) (*azcore.Request, error) {
 	urlPath := "/xml/empty-child-element"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1089,8 +1089,8 @@ func (client XMLClient) PutEmptyChildElementCreateRequest(ctx context.Context, b
 	return req, req.MarshalAsXML(banana)
 }
 
-// PutEmptyChildElementHandleError handles the PutEmptyChildElement error response.
-func (client XMLClient) PutEmptyChildElementHandleError(resp *azcore.Response) error {
+// putEmptyChildElementHandleError handles the PutEmptyChildElement error response.
+func (client XMLClient) putEmptyChildElementHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -1103,7 +1103,7 @@ func (client XMLClient) PutEmptyChildElementHandleError(resp *azcore.Response) e
 
 // PutEmptyList - Puts an empty list.
 func (client XMLClient) PutEmptyList(ctx context.Context, slideshow Slideshow, options *XMLPutEmptyListOptions) (*http.Response, error) {
-	req, err := client.PutEmptyListCreateRequest(ctx, slideshow, options)
+	req, err := client.putEmptyListCreateRequest(ctx, slideshow, options)
 	if err != nil {
 		return nil, err
 	}
@@ -1112,13 +1112,13 @@ func (client XMLClient) PutEmptyList(ctx context.Context, slideshow Slideshow, o
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, client.PutEmptyListHandleError(resp)
+		return nil, client.putEmptyListHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// PutEmptyListCreateRequest creates the PutEmptyList request.
-func (client XMLClient) PutEmptyListCreateRequest(ctx context.Context, slideshow Slideshow, options *XMLPutEmptyListOptions) (*azcore.Request, error) {
+// putEmptyListCreateRequest creates the PutEmptyList request.
+func (client XMLClient) putEmptyListCreateRequest(ctx context.Context, slideshow Slideshow, options *XMLPutEmptyListOptions) (*azcore.Request, error) {
 	urlPath := "/xml/empty-list"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1128,8 +1128,8 @@ func (client XMLClient) PutEmptyListCreateRequest(ctx context.Context, slideshow
 	return req, req.MarshalAsXML(slideshow)
 }
 
-// PutEmptyListHandleError handles the PutEmptyList error response.
-func (client XMLClient) PutEmptyListHandleError(resp *azcore.Response) error {
+// putEmptyListHandleError handles the PutEmptyList error response.
+func (client XMLClient) putEmptyListHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -1142,7 +1142,7 @@ func (client XMLClient) PutEmptyListHandleError(resp *azcore.Response) error {
 
 // PutEmptyRootList - Puts an empty list as the root element.
 func (client XMLClient) PutEmptyRootList(ctx context.Context, bananas []Banana, options *XMLPutEmptyRootListOptions) (*http.Response, error) {
-	req, err := client.PutEmptyRootListCreateRequest(ctx, bananas, options)
+	req, err := client.putEmptyRootListCreateRequest(ctx, bananas, options)
 	if err != nil {
 		return nil, err
 	}
@@ -1151,13 +1151,13 @@ func (client XMLClient) PutEmptyRootList(ctx context.Context, bananas []Banana, 
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, client.PutEmptyRootListHandleError(resp)
+		return nil, client.putEmptyRootListHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// PutEmptyRootListCreateRequest creates the PutEmptyRootList request.
-func (client XMLClient) PutEmptyRootListCreateRequest(ctx context.Context, bananas []Banana, options *XMLPutEmptyRootListOptions) (*azcore.Request, error) {
+// putEmptyRootListCreateRequest creates the PutEmptyRootList request.
+func (client XMLClient) putEmptyRootListCreateRequest(ctx context.Context, bananas []Banana, options *XMLPutEmptyRootListOptions) (*azcore.Request, error) {
 	urlPath := "/xml/empty-root-list"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1171,8 +1171,8 @@ func (client XMLClient) PutEmptyRootListCreateRequest(ctx context.Context, banan
 	return req, req.MarshalAsXML(wrapper{Bananas: &bananas})
 }
 
-// PutEmptyRootListHandleError handles the PutEmptyRootList error response.
-func (client XMLClient) PutEmptyRootListHandleError(resp *azcore.Response) error {
+// putEmptyRootListHandleError handles the PutEmptyRootList error response.
+func (client XMLClient) putEmptyRootListHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -1185,7 +1185,7 @@ func (client XMLClient) PutEmptyRootListHandleError(resp *azcore.Response) error
 
 // PutEmptyWrappedLists - Puts some empty wrapped lists.
 func (client XMLClient) PutEmptyWrappedLists(ctx context.Context, appleBarrel AppleBarrel, options *XMLPutEmptyWrappedListsOptions) (*http.Response, error) {
-	req, err := client.PutEmptyWrappedListsCreateRequest(ctx, appleBarrel, options)
+	req, err := client.putEmptyWrappedListsCreateRequest(ctx, appleBarrel, options)
 	if err != nil {
 		return nil, err
 	}
@@ -1194,13 +1194,13 @@ func (client XMLClient) PutEmptyWrappedLists(ctx context.Context, appleBarrel Ap
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, client.PutEmptyWrappedListsHandleError(resp)
+		return nil, client.putEmptyWrappedListsHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// PutEmptyWrappedListsCreateRequest creates the PutEmptyWrappedLists request.
-func (client XMLClient) PutEmptyWrappedListsCreateRequest(ctx context.Context, appleBarrel AppleBarrel, options *XMLPutEmptyWrappedListsOptions) (*azcore.Request, error) {
+// putEmptyWrappedListsCreateRequest creates the PutEmptyWrappedLists request.
+func (client XMLClient) putEmptyWrappedListsCreateRequest(ctx context.Context, appleBarrel AppleBarrel, options *XMLPutEmptyWrappedListsOptions) (*azcore.Request, error) {
 	urlPath := "/xml/empty-wrapped-lists"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1210,8 +1210,8 @@ func (client XMLClient) PutEmptyWrappedListsCreateRequest(ctx context.Context, a
 	return req, req.MarshalAsXML(appleBarrel)
 }
 
-// PutEmptyWrappedListsHandleError handles the PutEmptyWrappedLists error response.
-func (client XMLClient) PutEmptyWrappedListsHandleError(resp *azcore.Response) error {
+// putEmptyWrappedListsHandleError handles the PutEmptyWrappedLists error response.
+func (client XMLClient) putEmptyWrappedListsHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -1224,7 +1224,7 @@ func (client XMLClient) PutEmptyWrappedListsHandleError(resp *azcore.Response) e
 
 // PutRootList - Puts a list as the root element.
 func (client XMLClient) PutRootList(ctx context.Context, bananas []Banana, options *XMLPutRootListOptions) (*http.Response, error) {
-	req, err := client.PutRootListCreateRequest(ctx, bananas, options)
+	req, err := client.putRootListCreateRequest(ctx, bananas, options)
 	if err != nil {
 		return nil, err
 	}
@@ -1233,13 +1233,13 @@ func (client XMLClient) PutRootList(ctx context.Context, bananas []Banana, optio
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, client.PutRootListHandleError(resp)
+		return nil, client.putRootListHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// PutRootListCreateRequest creates the PutRootList request.
-func (client XMLClient) PutRootListCreateRequest(ctx context.Context, bananas []Banana, options *XMLPutRootListOptions) (*azcore.Request, error) {
+// putRootListCreateRequest creates the PutRootList request.
+func (client XMLClient) putRootListCreateRequest(ctx context.Context, bananas []Banana, options *XMLPutRootListOptions) (*azcore.Request, error) {
 	urlPath := "/xml/root-list"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1253,8 +1253,8 @@ func (client XMLClient) PutRootListCreateRequest(ctx context.Context, bananas []
 	return req, req.MarshalAsXML(wrapper{Bananas: &bananas})
 }
 
-// PutRootListHandleError handles the PutRootList error response.
-func (client XMLClient) PutRootListHandleError(resp *azcore.Response) error {
+// putRootListHandleError handles the PutRootList error response.
+func (client XMLClient) putRootListHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -1267,7 +1267,7 @@ func (client XMLClient) PutRootListHandleError(resp *azcore.Response) error {
 
 // PutRootListSingleItem - Puts a list with a single item.
 func (client XMLClient) PutRootListSingleItem(ctx context.Context, bananas []Banana, options *XMLPutRootListSingleItemOptions) (*http.Response, error) {
-	req, err := client.PutRootListSingleItemCreateRequest(ctx, bananas, options)
+	req, err := client.putRootListSingleItemCreateRequest(ctx, bananas, options)
 	if err != nil {
 		return nil, err
 	}
@@ -1276,13 +1276,13 @@ func (client XMLClient) PutRootListSingleItem(ctx context.Context, bananas []Ban
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, client.PutRootListSingleItemHandleError(resp)
+		return nil, client.putRootListSingleItemHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// PutRootListSingleItemCreateRequest creates the PutRootListSingleItem request.
-func (client XMLClient) PutRootListSingleItemCreateRequest(ctx context.Context, bananas []Banana, options *XMLPutRootListSingleItemOptions) (*azcore.Request, error) {
+// putRootListSingleItemCreateRequest creates the PutRootListSingleItem request.
+func (client XMLClient) putRootListSingleItemCreateRequest(ctx context.Context, bananas []Banana, options *XMLPutRootListSingleItemOptions) (*azcore.Request, error) {
 	urlPath := "/xml/root-list-single-item"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1296,8 +1296,8 @@ func (client XMLClient) PutRootListSingleItemCreateRequest(ctx context.Context, 
 	return req, req.MarshalAsXML(wrapper{Bananas: &bananas})
 }
 
-// PutRootListSingleItemHandleError handles the PutRootListSingleItem error response.
-func (client XMLClient) PutRootListSingleItemHandleError(resp *azcore.Response) error {
+// putRootListSingleItemHandleError handles the PutRootListSingleItem error response.
+func (client XMLClient) putRootListSingleItemHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -1310,7 +1310,7 @@ func (client XMLClient) PutRootListSingleItemHandleError(resp *azcore.Response) 
 
 // PutServiceProperties - Puts storage service properties.
 func (client XMLClient) PutServiceProperties(ctx context.Context, properties StorageServiceProperties, options *XMLPutServicePropertiesOptions) (*http.Response, error) {
-	req, err := client.PutServicePropertiesCreateRequest(ctx, properties, options)
+	req, err := client.putServicePropertiesCreateRequest(ctx, properties, options)
 	if err != nil {
 		return nil, err
 	}
@@ -1319,13 +1319,13 @@ func (client XMLClient) PutServiceProperties(ctx context.Context, properties Sto
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, client.PutServicePropertiesHandleError(resp)
+		return nil, client.putServicePropertiesHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// PutServicePropertiesCreateRequest creates the PutServiceProperties request.
-func (client XMLClient) PutServicePropertiesCreateRequest(ctx context.Context, properties StorageServiceProperties, options *XMLPutServicePropertiesOptions) (*azcore.Request, error) {
+// putServicePropertiesCreateRequest creates the PutServiceProperties request.
+func (client XMLClient) putServicePropertiesCreateRequest(ctx context.Context, properties StorageServiceProperties, options *XMLPutServicePropertiesOptions) (*azcore.Request, error) {
 	urlPath := "/xml/"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1339,8 +1339,8 @@ func (client XMLClient) PutServicePropertiesCreateRequest(ctx context.Context, p
 	return req, req.MarshalAsXML(properties)
 }
 
-// PutServicePropertiesHandleError handles the PutServiceProperties error response.
-func (client XMLClient) PutServicePropertiesHandleError(resp *azcore.Response) error {
+// putServicePropertiesHandleError handles the PutServiceProperties error response.
+func (client XMLClient) putServicePropertiesHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -1353,7 +1353,7 @@ func (client XMLClient) PutServicePropertiesHandleError(resp *azcore.Response) e
 
 // PutSimple - Put a simple XML document
 func (client XMLClient) PutSimple(ctx context.Context, slideshow Slideshow, options *XMLPutSimpleOptions) (*http.Response, error) {
-	req, err := client.PutSimpleCreateRequest(ctx, slideshow, options)
+	req, err := client.putSimpleCreateRequest(ctx, slideshow, options)
 	if err != nil {
 		return nil, err
 	}
@@ -1362,13 +1362,13 @@ func (client XMLClient) PutSimple(ctx context.Context, slideshow Slideshow, opti
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, client.PutSimpleHandleError(resp)
+		return nil, client.putSimpleHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// PutSimpleCreateRequest creates the PutSimple request.
-func (client XMLClient) PutSimpleCreateRequest(ctx context.Context, slideshow Slideshow, options *XMLPutSimpleOptions) (*azcore.Request, error) {
+// putSimpleCreateRequest creates the PutSimple request.
+func (client XMLClient) putSimpleCreateRequest(ctx context.Context, slideshow Slideshow, options *XMLPutSimpleOptions) (*azcore.Request, error) {
 	urlPath := "/xml/simple"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1379,8 +1379,8 @@ func (client XMLClient) PutSimpleCreateRequest(ctx context.Context, slideshow Sl
 	return req, req.MarshalAsXML(slideshow)
 }
 
-// PutSimpleHandleError handles the PutSimple error response.
-func (client XMLClient) PutSimpleHandleError(resp *azcore.Response) error {
+// putSimpleHandleError handles the PutSimple error response.
+func (client XMLClient) putSimpleHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -1390,7 +1390,7 @@ func (client XMLClient) PutSimpleHandleError(resp *azcore.Response) error {
 
 // PutWrappedLists - Put an XML document with multiple wrapped lists
 func (client XMLClient) PutWrappedLists(ctx context.Context, wrappedLists AppleBarrel, options *XMLPutWrappedListsOptions) (*http.Response, error) {
-	req, err := client.PutWrappedListsCreateRequest(ctx, wrappedLists, options)
+	req, err := client.putWrappedListsCreateRequest(ctx, wrappedLists, options)
 	if err != nil {
 		return nil, err
 	}
@@ -1399,13 +1399,13 @@ func (client XMLClient) PutWrappedLists(ctx context.Context, wrappedLists AppleB
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, client.PutWrappedListsHandleError(resp)
+		return nil, client.putWrappedListsHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// PutWrappedListsCreateRequest creates the PutWrappedLists request.
-func (client XMLClient) PutWrappedListsCreateRequest(ctx context.Context, wrappedLists AppleBarrel, options *XMLPutWrappedListsOptions) (*azcore.Request, error) {
+// putWrappedListsCreateRequest creates the PutWrappedLists request.
+func (client XMLClient) putWrappedListsCreateRequest(ctx context.Context, wrappedLists AppleBarrel, options *XMLPutWrappedListsOptions) (*azcore.Request, error) {
 	urlPath := "/xml/wrapped-lists"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1416,8 +1416,8 @@ func (client XMLClient) PutWrappedListsCreateRequest(ctx context.Context, wrappe
 	return req, req.MarshalAsXML(wrappedLists)
 }
 
-// PutWrappedListsHandleError handles the PutWrappedLists error response.
-func (client XMLClient) PutWrappedListsHandleError(resp *azcore.Response) error {
+// putWrappedListsHandleError handles the PutWrappedLists error response.
+func (client XMLClient) putWrappedListsHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err

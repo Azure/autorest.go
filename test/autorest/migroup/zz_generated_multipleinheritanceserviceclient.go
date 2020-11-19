@@ -34,7 +34,7 @@ func (client MultipleInheritanceServiceClient) Pipeline() azcore.Pipeline {
 
 // GetCat - Get a cat with name 'Whiskers' where likesMilk, meows, and hisses is true
 func (client MultipleInheritanceServiceClient) GetCat(ctx context.Context, options *MultipleInheritanceServiceClientGetCatOptions) (*CatResponse, error) {
-	req, err := client.GetCatCreateRequest(ctx, options)
+	req, err := client.getCatCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -43,17 +43,17 @@ func (client MultipleInheritanceServiceClient) GetCat(ctx context.Context, optio
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetCatHandleError(resp)
+		return nil, client.getCatHandleError(resp)
 	}
-	result, err := client.GetCatHandleResponse(resp)
+	result, err := client.getCatHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// GetCatCreateRequest creates the GetCat request.
-func (client MultipleInheritanceServiceClient) GetCatCreateRequest(ctx context.Context, options *MultipleInheritanceServiceClientGetCatOptions) (*azcore.Request, error) {
+// getCatCreateRequest creates the GetCat request.
+func (client MultipleInheritanceServiceClient) getCatCreateRequest(ctx context.Context, options *MultipleInheritanceServiceClientGetCatOptions) (*azcore.Request, error) {
 	urlPath := "/multipleInheritance/cat"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -64,14 +64,14 @@ func (client MultipleInheritanceServiceClient) GetCatCreateRequest(ctx context.C
 	return req, nil
 }
 
-// GetCatHandleResponse handles the GetCat response.
-func (client MultipleInheritanceServiceClient) GetCatHandleResponse(resp *azcore.Response) (*CatResponse, error) {
+// getCatHandleResponse handles the GetCat response.
+func (client MultipleInheritanceServiceClient) getCatHandleResponse(resp *azcore.Response) (*CatResponse, error) {
 	result := CatResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Cat)
 }
 
-// GetCatHandleError handles the GetCat error response.
-func (client MultipleInheritanceServiceClient) GetCatHandleError(resp *azcore.Response) error {
+// getCatHandleError handles the GetCat error response.
+func (client MultipleInheritanceServiceClient) getCatHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -81,7 +81,7 @@ func (client MultipleInheritanceServiceClient) GetCatHandleError(resp *azcore.Re
 
 // GetFeline - Get a feline where meows and hisses are true
 func (client MultipleInheritanceServiceClient) GetFeline(ctx context.Context, options *MultipleInheritanceServiceClientGetFelineOptions) (*FelineResponse, error) {
-	req, err := client.GetFelineCreateRequest(ctx, options)
+	req, err := client.getFelineCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -90,17 +90,17 @@ func (client MultipleInheritanceServiceClient) GetFeline(ctx context.Context, op
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetFelineHandleError(resp)
+		return nil, client.getFelineHandleError(resp)
 	}
-	result, err := client.GetFelineHandleResponse(resp)
+	result, err := client.getFelineHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// GetFelineCreateRequest creates the GetFeline request.
-func (client MultipleInheritanceServiceClient) GetFelineCreateRequest(ctx context.Context, options *MultipleInheritanceServiceClientGetFelineOptions) (*azcore.Request, error) {
+// getFelineCreateRequest creates the GetFeline request.
+func (client MultipleInheritanceServiceClient) getFelineCreateRequest(ctx context.Context, options *MultipleInheritanceServiceClientGetFelineOptions) (*azcore.Request, error) {
 	urlPath := "/multipleInheritance/feline"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -111,14 +111,14 @@ func (client MultipleInheritanceServiceClient) GetFelineCreateRequest(ctx contex
 	return req, nil
 }
 
-// GetFelineHandleResponse handles the GetFeline response.
-func (client MultipleInheritanceServiceClient) GetFelineHandleResponse(resp *azcore.Response) (*FelineResponse, error) {
+// getFelineHandleResponse handles the GetFeline response.
+func (client MultipleInheritanceServiceClient) getFelineHandleResponse(resp *azcore.Response) (*FelineResponse, error) {
 	result := FelineResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Feline)
 }
 
-// GetFelineHandleError handles the GetFeline error response.
-func (client MultipleInheritanceServiceClient) GetFelineHandleError(resp *azcore.Response) error {
+// getFelineHandleError handles the GetFeline error response.
+func (client MultipleInheritanceServiceClient) getFelineHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -128,7 +128,7 @@ func (client MultipleInheritanceServiceClient) GetFelineHandleError(resp *azcore
 
 // GetHorse - Get a horse with name 'Fred' and isAShowHorse true
 func (client MultipleInheritanceServiceClient) GetHorse(ctx context.Context, options *MultipleInheritanceServiceClientGetHorseOptions) (*HorseResponse, error) {
-	req, err := client.GetHorseCreateRequest(ctx, options)
+	req, err := client.getHorseCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -137,17 +137,17 @@ func (client MultipleInheritanceServiceClient) GetHorse(ctx context.Context, opt
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetHorseHandleError(resp)
+		return nil, client.getHorseHandleError(resp)
 	}
-	result, err := client.GetHorseHandleResponse(resp)
+	result, err := client.getHorseHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// GetHorseCreateRequest creates the GetHorse request.
-func (client MultipleInheritanceServiceClient) GetHorseCreateRequest(ctx context.Context, options *MultipleInheritanceServiceClientGetHorseOptions) (*azcore.Request, error) {
+// getHorseCreateRequest creates the GetHorse request.
+func (client MultipleInheritanceServiceClient) getHorseCreateRequest(ctx context.Context, options *MultipleInheritanceServiceClientGetHorseOptions) (*azcore.Request, error) {
 	urlPath := "/multipleInheritance/horse"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -158,14 +158,14 @@ func (client MultipleInheritanceServiceClient) GetHorseCreateRequest(ctx context
 	return req, nil
 }
 
-// GetHorseHandleResponse handles the GetHorse response.
-func (client MultipleInheritanceServiceClient) GetHorseHandleResponse(resp *azcore.Response) (*HorseResponse, error) {
+// getHorseHandleResponse handles the GetHorse response.
+func (client MultipleInheritanceServiceClient) getHorseHandleResponse(resp *azcore.Response) (*HorseResponse, error) {
 	result := HorseResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Horse)
 }
 
-// GetHorseHandleError handles the GetHorse error response.
-func (client MultipleInheritanceServiceClient) GetHorseHandleError(resp *azcore.Response) error {
+// getHorseHandleError handles the GetHorse error response.
+func (client MultipleInheritanceServiceClient) getHorseHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -175,7 +175,7 @@ func (client MultipleInheritanceServiceClient) GetHorseHandleError(resp *azcore.
 
 // GetKitten - Get a kitten with name 'Gatito' where likesMilk and meows is true, and hisses and eatsMiceYet is false
 func (client MultipleInheritanceServiceClient) GetKitten(ctx context.Context, options *MultipleInheritanceServiceClientGetKittenOptions) (*KittenResponse, error) {
-	req, err := client.GetKittenCreateRequest(ctx, options)
+	req, err := client.getKittenCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -184,17 +184,17 @@ func (client MultipleInheritanceServiceClient) GetKitten(ctx context.Context, op
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetKittenHandleError(resp)
+		return nil, client.getKittenHandleError(resp)
 	}
-	result, err := client.GetKittenHandleResponse(resp)
+	result, err := client.getKittenHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// GetKittenCreateRequest creates the GetKitten request.
-func (client MultipleInheritanceServiceClient) GetKittenCreateRequest(ctx context.Context, options *MultipleInheritanceServiceClientGetKittenOptions) (*azcore.Request, error) {
+// getKittenCreateRequest creates the GetKitten request.
+func (client MultipleInheritanceServiceClient) getKittenCreateRequest(ctx context.Context, options *MultipleInheritanceServiceClientGetKittenOptions) (*azcore.Request, error) {
 	urlPath := "/multipleInheritance/kitten"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -205,14 +205,14 @@ func (client MultipleInheritanceServiceClient) GetKittenCreateRequest(ctx contex
 	return req, nil
 }
 
-// GetKittenHandleResponse handles the GetKitten response.
-func (client MultipleInheritanceServiceClient) GetKittenHandleResponse(resp *azcore.Response) (*KittenResponse, error) {
+// getKittenHandleResponse handles the GetKitten response.
+func (client MultipleInheritanceServiceClient) getKittenHandleResponse(resp *azcore.Response) (*KittenResponse, error) {
 	result := KittenResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Kitten)
 }
 
-// GetKittenHandleError handles the GetKitten error response.
-func (client MultipleInheritanceServiceClient) GetKittenHandleError(resp *azcore.Response) error {
+// getKittenHandleError handles the GetKitten error response.
+func (client MultipleInheritanceServiceClient) getKittenHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -222,7 +222,7 @@ func (client MultipleInheritanceServiceClient) GetKittenHandleError(resp *azcore
 
 // GetPet - Get a pet with name 'Peanut'
 func (client MultipleInheritanceServiceClient) GetPet(ctx context.Context, options *MultipleInheritanceServiceClientGetPetOptions) (*PetResponse, error) {
-	req, err := client.GetPetCreateRequest(ctx, options)
+	req, err := client.getPetCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -231,17 +231,17 @@ func (client MultipleInheritanceServiceClient) GetPet(ctx context.Context, optio
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetPetHandleError(resp)
+		return nil, client.getPetHandleError(resp)
 	}
-	result, err := client.GetPetHandleResponse(resp)
+	result, err := client.getPetHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// GetPetCreateRequest creates the GetPet request.
-func (client MultipleInheritanceServiceClient) GetPetCreateRequest(ctx context.Context, options *MultipleInheritanceServiceClientGetPetOptions) (*azcore.Request, error) {
+// getPetCreateRequest creates the GetPet request.
+func (client MultipleInheritanceServiceClient) getPetCreateRequest(ctx context.Context, options *MultipleInheritanceServiceClientGetPetOptions) (*azcore.Request, error) {
 	urlPath := "/multipleInheritance/pet"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -252,14 +252,14 @@ func (client MultipleInheritanceServiceClient) GetPetCreateRequest(ctx context.C
 	return req, nil
 }
 
-// GetPetHandleResponse handles the GetPet response.
-func (client MultipleInheritanceServiceClient) GetPetHandleResponse(resp *azcore.Response) (*PetResponse, error) {
+// getPetHandleResponse handles the GetPet response.
+func (client MultipleInheritanceServiceClient) getPetHandleResponse(resp *azcore.Response) (*PetResponse, error) {
 	result := PetResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Pet)
 }
 
-// GetPetHandleError handles the GetPet error response.
-func (client MultipleInheritanceServiceClient) GetPetHandleError(resp *azcore.Response) error {
+// getPetHandleError handles the GetPet error response.
+func (client MultipleInheritanceServiceClient) getPetHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -269,7 +269,7 @@ func (client MultipleInheritanceServiceClient) GetPetHandleError(resp *azcore.Re
 
 // PutCat - Put a cat with name 'Boots' where likesMilk and hisses is false, meows is true
 func (client MultipleInheritanceServiceClient) PutCat(ctx context.Context, cat Cat, options *MultipleInheritanceServiceClientPutCatOptions) (*StringResponse, error) {
-	req, err := client.PutCatCreateRequest(ctx, cat, options)
+	req, err := client.putCatCreateRequest(ctx, cat, options)
 	if err != nil {
 		return nil, err
 	}
@@ -278,17 +278,17 @@ func (client MultipleInheritanceServiceClient) PutCat(ctx context.Context, cat C
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.PutCatHandleError(resp)
+		return nil, client.putCatHandleError(resp)
 	}
-	result, err := client.PutCatHandleResponse(resp)
+	result, err := client.putCatHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// PutCatCreateRequest creates the PutCat request.
-func (client MultipleInheritanceServiceClient) PutCatCreateRequest(ctx context.Context, cat Cat, options *MultipleInheritanceServiceClientPutCatOptions) (*azcore.Request, error) {
+// putCatCreateRequest creates the PutCat request.
+func (client MultipleInheritanceServiceClient) putCatCreateRequest(ctx context.Context, cat Cat, options *MultipleInheritanceServiceClientPutCatOptions) (*azcore.Request, error) {
 	urlPath := "/multipleInheritance/cat"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -299,14 +299,14 @@ func (client MultipleInheritanceServiceClient) PutCatCreateRequest(ctx context.C
 	return req, req.MarshalAsJSON(cat)
 }
 
-// PutCatHandleResponse handles the PutCat response.
-func (client MultipleInheritanceServiceClient) PutCatHandleResponse(resp *azcore.Response) (*StringResponse, error) {
+// putCatHandleResponse handles the PutCat response.
+func (client MultipleInheritanceServiceClient) putCatHandleResponse(resp *azcore.Response) (*StringResponse, error) {
 	result := StringResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
-// PutCatHandleError handles the PutCat error response.
-func (client MultipleInheritanceServiceClient) PutCatHandleError(resp *azcore.Response) error {
+// putCatHandleError handles the PutCat error response.
+func (client MultipleInheritanceServiceClient) putCatHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -319,7 +319,7 @@ func (client MultipleInheritanceServiceClient) PutCatHandleError(resp *azcore.Re
 
 // PutFeline - Put a feline who hisses and doesn't meow
 func (client MultipleInheritanceServiceClient) PutFeline(ctx context.Context, feline Feline, options *MultipleInheritanceServiceClientPutFelineOptions) (*StringResponse, error) {
-	req, err := client.PutFelineCreateRequest(ctx, feline, options)
+	req, err := client.putFelineCreateRequest(ctx, feline, options)
 	if err != nil {
 		return nil, err
 	}
@@ -328,17 +328,17 @@ func (client MultipleInheritanceServiceClient) PutFeline(ctx context.Context, fe
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.PutFelineHandleError(resp)
+		return nil, client.putFelineHandleError(resp)
 	}
-	result, err := client.PutFelineHandleResponse(resp)
+	result, err := client.putFelineHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// PutFelineCreateRequest creates the PutFeline request.
-func (client MultipleInheritanceServiceClient) PutFelineCreateRequest(ctx context.Context, feline Feline, options *MultipleInheritanceServiceClientPutFelineOptions) (*azcore.Request, error) {
+// putFelineCreateRequest creates the PutFeline request.
+func (client MultipleInheritanceServiceClient) putFelineCreateRequest(ctx context.Context, feline Feline, options *MultipleInheritanceServiceClientPutFelineOptions) (*azcore.Request, error) {
 	urlPath := "/multipleInheritance/feline"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -349,14 +349,14 @@ func (client MultipleInheritanceServiceClient) PutFelineCreateRequest(ctx contex
 	return req, req.MarshalAsJSON(feline)
 }
 
-// PutFelineHandleResponse handles the PutFeline response.
-func (client MultipleInheritanceServiceClient) PutFelineHandleResponse(resp *azcore.Response) (*StringResponse, error) {
+// putFelineHandleResponse handles the PutFeline response.
+func (client MultipleInheritanceServiceClient) putFelineHandleResponse(resp *azcore.Response) (*StringResponse, error) {
 	result := StringResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
-// PutFelineHandleError handles the PutFeline error response.
-func (client MultipleInheritanceServiceClient) PutFelineHandleError(resp *azcore.Response) error {
+// putFelineHandleError handles the PutFeline error response.
+func (client MultipleInheritanceServiceClient) putFelineHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -369,7 +369,7 @@ func (client MultipleInheritanceServiceClient) PutFelineHandleError(resp *azcore
 
 // PutHorse - Put a horse with name 'General' and isAShowHorse false
 func (client MultipleInheritanceServiceClient) PutHorse(ctx context.Context, horse Horse, options *MultipleInheritanceServiceClientPutHorseOptions) (*StringResponse, error) {
-	req, err := client.PutHorseCreateRequest(ctx, horse, options)
+	req, err := client.putHorseCreateRequest(ctx, horse, options)
 	if err != nil {
 		return nil, err
 	}
@@ -378,17 +378,17 @@ func (client MultipleInheritanceServiceClient) PutHorse(ctx context.Context, hor
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.PutHorseHandleError(resp)
+		return nil, client.putHorseHandleError(resp)
 	}
-	result, err := client.PutHorseHandleResponse(resp)
+	result, err := client.putHorseHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// PutHorseCreateRequest creates the PutHorse request.
-func (client MultipleInheritanceServiceClient) PutHorseCreateRequest(ctx context.Context, horse Horse, options *MultipleInheritanceServiceClientPutHorseOptions) (*azcore.Request, error) {
+// putHorseCreateRequest creates the PutHorse request.
+func (client MultipleInheritanceServiceClient) putHorseCreateRequest(ctx context.Context, horse Horse, options *MultipleInheritanceServiceClientPutHorseOptions) (*azcore.Request, error) {
 	urlPath := "/multipleInheritance/horse"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -399,14 +399,14 @@ func (client MultipleInheritanceServiceClient) PutHorseCreateRequest(ctx context
 	return req, req.MarshalAsJSON(horse)
 }
 
-// PutHorseHandleResponse handles the PutHorse response.
-func (client MultipleInheritanceServiceClient) PutHorseHandleResponse(resp *azcore.Response) (*StringResponse, error) {
+// putHorseHandleResponse handles the PutHorse response.
+func (client MultipleInheritanceServiceClient) putHorseHandleResponse(resp *azcore.Response) (*StringResponse, error) {
 	result := StringResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
-// PutHorseHandleError handles the PutHorse error response.
-func (client MultipleInheritanceServiceClient) PutHorseHandleError(resp *azcore.Response) error {
+// putHorseHandleError handles the PutHorse error response.
+func (client MultipleInheritanceServiceClient) putHorseHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -419,7 +419,7 @@ func (client MultipleInheritanceServiceClient) PutHorseHandleError(resp *azcore.
 
 // PutKitten - Put a kitten with name 'Kitty' where likesMilk and hisses is false, meows and eatsMiceYet is true
 func (client MultipleInheritanceServiceClient) PutKitten(ctx context.Context, kitten Kitten, options *MultipleInheritanceServiceClientPutKittenOptions) (*StringResponse, error) {
-	req, err := client.PutKittenCreateRequest(ctx, kitten, options)
+	req, err := client.putKittenCreateRequest(ctx, kitten, options)
 	if err != nil {
 		return nil, err
 	}
@@ -428,17 +428,17 @@ func (client MultipleInheritanceServiceClient) PutKitten(ctx context.Context, ki
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.PutKittenHandleError(resp)
+		return nil, client.putKittenHandleError(resp)
 	}
-	result, err := client.PutKittenHandleResponse(resp)
+	result, err := client.putKittenHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// PutKittenCreateRequest creates the PutKitten request.
-func (client MultipleInheritanceServiceClient) PutKittenCreateRequest(ctx context.Context, kitten Kitten, options *MultipleInheritanceServiceClientPutKittenOptions) (*azcore.Request, error) {
+// putKittenCreateRequest creates the PutKitten request.
+func (client MultipleInheritanceServiceClient) putKittenCreateRequest(ctx context.Context, kitten Kitten, options *MultipleInheritanceServiceClientPutKittenOptions) (*azcore.Request, error) {
 	urlPath := "/multipleInheritance/kitten"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -449,14 +449,14 @@ func (client MultipleInheritanceServiceClient) PutKittenCreateRequest(ctx contex
 	return req, req.MarshalAsJSON(kitten)
 }
 
-// PutKittenHandleResponse handles the PutKitten response.
-func (client MultipleInheritanceServiceClient) PutKittenHandleResponse(resp *azcore.Response) (*StringResponse, error) {
+// putKittenHandleResponse handles the PutKitten response.
+func (client MultipleInheritanceServiceClient) putKittenHandleResponse(resp *azcore.Response) (*StringResponse, error) {
 	result := StringResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
-// PutKittenHandleError handles the PutKitten error response.
-func (client MultipleInheritanceServiceClient) PutKittenHandleError(resp *azcore.Response) error {
+// putKittenHandleError handles the PutKitten error response.
+func (client MultipleInheritanceServiceClient) putKittenHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -469,7 +469,7 @@ func (client MultipleInheritanceServiceClient) PutKittenHandleError(resp *azcore
 
 // PutPet - Put a pet with name 'Butter'
 func (client MultipleInheritanceServiceClient) PutPet(ctx context.Context, pet Pet, options *MultipleInheritanceServiceClientPutPetOptions) (*StringResponse, error) {
-	req, err := client.PutPetCreateRequest(ctx, pet, options)
+	req, err := client.putPetCreateRequest(ctx, pet, options)
 	if err != nil {
 		return nil, err
 	}
@@ -478,17 +478,17 @@ func (client MultipleInheritanceServiceClient) PutPet(ctx context.Context, pet P
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.PutPetHandleError(resp)
+		return nil, client.putPetHandleError(resp)
 	}
-	result, err := client.PutPetHandleResponse(resp)
+	result, err := client.putPetHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// PutPetCreateRequest creates the PutPet request.
-func (client MultipleInheritanceServiceClient) PutPetCreateRequest(ctx context.Context, pet Pet, options *MultipleInheritanceServiceClientPutPetOptions) (*azcore.Request, error) {
+// putPetCreateRequest creates the PutPet request.
+func (client MultipleInheritanceServiceClient) putPetCreateRequest(ctx context.Context, pet Pet, options *MultipleInheritanceServiceClientPutPetOptions) (*azcore.Request, error) {
 	urlPath := "/multipleInheritance/pet"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -499,14 +499,14 @@ func (client MultipleInheritanceServiceClient) PutPetCreateRequest(ctx context.C
 	return req, req.MarshalAsJSON(pet)
 }
 
-// PutPetHandleResponse handles the PutPet response.
-func (client MultipleInheritanceServiceClient) PutPetHandleResponse(resp *azcore.Response) (*StringResponse, error) {
+// putPetHandleResponse handles the PutPet response.
+func (client MultipleInheritanceServiceClient) putPetHandleResponse(resp *azcore.Response) (*StringResponse, error) {
 	result := StringResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
-// PutPetHandleError handles the PutPet error response.
-func (client MultipleInheritanceServiceClient) PutPetHandleError(resp *azcore.Response) error {
+// putPetHandleError handles the PutPet error response.
+func (client MultipleInheritanceServiceClient) putPetHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)

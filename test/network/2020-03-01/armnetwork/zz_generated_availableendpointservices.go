@@ -38,10 +38,10 @@ func (client AvailableEndpointServicesClient) List(location string, options *Ava
 	return &endpointServicesListResultPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
-			return client.ListCreateRequest(ctx, location, options)
+			return client.listCreateRequest(ctx, location, options)
 		},
-		responder: client.ListHandleResponse,
-		errorer:   client.ListHandleError,
+		responder: client.listHandleResponse,
+		errorer:   client.listHandleError,
 		advancer: func(ctx context.Context, resp *EndpointServicesListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.EndpointServicesListResult.NextLink)
 		},
@@ -49,8 +49,8 @@ func (client AvailableEndpointServicesClient) List(location string, options *Ava
 	}
 }
 
-// ListCreateRequest creates the List request.
-func (client AvailableEndpointServicesClient) ListCreateRequest(ctx context.Context, location string, options *AvailableEndpointServicesListOptions) (*azcore.Request, error) {
+// listCreateRequest creates the List request.
+func (client AvailableEndpointServicesClient) listCreateRequest(ctx context.Context, location string, options *AvailableEndpointServicesListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/virtualNetworkAvailableEndpointServices"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
@@ -66,14 +66,14 @@ func (client AvailableEndpointServicesClient) ListCreateRequest(ctx context.Cont
 	return req, nil
 }
 
-// ListHandleResponse handles the List response.
-func (client AvailableEndpointServicesClient) ListHandleResponse(resp *azcore.Response) (*EndpointServicesListResultResponse, error) {
+// listHandleResponse handles the List response.
+func (client AvailableEndpointServicesClient) listHandleResponse(resp *azcore.Response) (*EndpointServicesListResultResponse, error) {
 	result := EndpointServicesListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.EndpointServicesListResult)
 }
 
-// ListHandleError handles the List error response.
-func (client AvailableEndpointServicesClient) ListHandleError(resp *azcore.Response) error {
+// listHandleError handles the List error response.
+func (client AvailableEndpointServicesClient) listHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

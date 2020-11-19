@@ -34,7 +34,7 @@ func (client PathsClient) Pipeline() azcore.Pipeline {
 
 // GetEmpty - Get a 200 to test a valid base uri
 func (client PathsClient) GetEmpty(ctx context.Context, vault string, secret string, keyName string, options *PathsGetEmptyOptions) (*http.Response, error) {
-	req, err := client.GetEmptyCreateRequest(ctx, vault, secret, keyName, options)
+	req, err := client.getEmptyCreateRequest(ctx, vault, secret, keyName, options)
 	if err != nil {
 		return nil, err
 	}
@@ -43,13 +43,13 @@ func (client PathsClient) GetEmpty(ctx context.Context, vault string, secret str
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetEmptyHandleError(resp)
+		return nil, client.getEmptyHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// GetEmptyCreateRequest creates the GetEmpty request.
-func (client PathsClient) GetEmptyCreateRequest(ctx context.Context, vault string, secret string, keyName string, options *PathsGetEmptyOptions) (*azcore.Request, error) {
+// getEmptyCreateRequest creates the GetEmpty request.
+func (client PathsClient) getEmptyCreateRequest(ctx context.Context, vault string, secret string, keyName string, options *PathsGetEmptyOptions) (*azcore.Request, error) {
 	host := "{vault}{secret}{dnsSuffix}"
 	host = strings.ReplaceAll(host, "{dnsSuffix}", client.con.DnsSuffix())
 	host = strings.ReplaceAll(host, "{vault}", vault)
@@ -71,8 +71,8 @@ func (client PathsClient) GetEmptyCreateRequest(ctx context.Context, vault strin
 	return req, nil
 }
 
-// GetEmptyHandleError handles the GetEmpty error response.
-func (client PathsClient) GetEmptyHandleError(resp *azcore.Response) error {
+// getEmptyHandleError handles the GetEmpty error response.
+func (client PathsClient) getEmptyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

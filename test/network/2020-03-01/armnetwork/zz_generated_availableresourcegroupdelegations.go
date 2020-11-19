@@ -38,10 +38,10 @@ func (client AvailableResourceGroupDelegationsClient) List(location string, reso
 	return &availableDelegationsResultPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
-			return client.ListCreateRequest(ctx, location, resourceGroupName, options)
+			return client.listCreateRequest(ctx, location, resourceGroupName, options)
 		},
-		responder: client.ListHandleResponse,
-		errorer:   client.ListHandleError,
+		responder: client.listHandleResponse,
+		errorer:   client.listHandleError,
 		advancer: func(ctx context.Context, resp *AvailableDelegationsResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.AvailableDelegationsResult.NextLink)
 		},
@@ -49,8 +49,8 @@ func (client AvailableResourceGroupDelegationsClient) List(location string, reso
 	}
 }
 
-// ListCreateRequest creates the List request.
-func (client AvailableResourceGroupDelegationsClient) ListCreateRequest(ctx context.Context, location string, resourceGroupName string, options *AvailableResourceGroupDelegationsListOptions) (*azcore.Request, error) {
+// listCreateRequest creates the List request.
+func (client AvailableResourceGroupDelegationsClient) listCreateRequest(ctx context.Context, location string, resourceGroupName string, options *AvailableResourceGroupDelegationsListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availableDelegations"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
@@ -67,14 +67,14 @@ func (client AvailableResourceGroupDelegationsClient) ListCreateRequest(ctx cont
 	return req, nil
 }
 
-// ListHandleResponse handles the List response.
-func (client AvailableResourceGroupDelegationsClient) ListHandleResponse(resp *azcore.Response) (*AvailableDelegationsResultResponse, error) {
+// listHandleResponse handles the List response.
+func (client AvailableResourceGroupDelegationsClient) listHandleResponse(resp *azcore.Response) (*AvailableDelegationsResultResponse, error) {
 	result := AvailableDelegationsResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.AvailableDelegationsResult)
 }
 
-// ListHandleError handles the List error response.
-func (client AvailableResourceGroupDelegationsClient) ListHandleError(resp *azcore.Response) error {
+// listHandleError handles the List error response.
+func (client AvailableResourceGroupDelegationsClient) listHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

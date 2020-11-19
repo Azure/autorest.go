@@ -31,7 +31,7 @@ func (client QueriesClient) Pipeline() azcore.Pipeline {
 
 // ArrayStringMultiEmpty - Get an empty array [] of string using the multi-array format
 func (client QueriesClient) ArrayStringMultiEmpty(ctx context.Context, options *QueriesArrayStringMultiEmptyOptions) (*http.Response, error) {
-	req, err := client.ArrayStringMultiEmptyCreateRequest(ctx, options)
+	req, err := client.arrayStringMultiEmptyCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -40,13 +40,13 @@ func (client QueriesClient) ArrayStringMultiEmpty(ctx context.Context, options *
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ArrayStringMultiEmptyHandleError(resp)
+		return nil, client.arrayStringMultiEmptyHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// ArrayStringMultiEmptyCreateRequest creates the ArrayStringMultiEmpty request.
-func (client QueriesClient) ArrayStringMultiEmptyCreateRequest(ctx context.Context, options *QueriesArrayStringMultiEmptyOptions) (*azcore.Request, error) {
+// arrayStringMultiEmptyCreateRequest creates the ArrayStringMultiEmpty request.
+func (client QueriesClient) arrayStringMultiEmptyCreateRequest(ctx context.Context, options *QueriesArrayStringMultiEmptyOptions) (*azcore.Request, error) {
 	urlPath := "/queries/array/multi/string/empty"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -64,8 +64,8 @@ func (client QueriesClient) ArrayStringMultiEmptyCreateRequest(ctx context.Conte
 	return req, nil
 }
 
-// ArrayStringMultiEmptyHandleError handles the ArrayStringMultiEmpty error response.
-func (client QueriesClient) ArrayStringMultiEmptyHandleError(resp *azcore.Response) error {
+// arrayStringMultiEmptyHandleError handles the ArrayStringMultiEmpty error response.
+func (client QueriesClient) arrayStringMultiEmptyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -75,7 +75,7 @@ func (client QueriesClient) ArrayStringMultiEmptyHandleError(resp *azcore.Respon
 
 // ArrayStringMultiNull - Get a null array of string using the multi-array format
 func (client QueriesClient) ArrayStringMultiNull(ctx context.Context, options *QueriesArrayStringMultiNullOptions) (*http.Response, error) {
-	req, err := client.ArrayStringMultiNullCreateRequest(ctx, options)
+	req, err := client.arrayStringMultiNullCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -84,13 +84,13 @@ func (client QueriesClient) ArrayStringMultiNull(ctx context.Context, options *Q
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ArrayStringMultiNullHandleError(resp)
+		return nil, client.arrayStringMultiNullHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// ArrayStringMultiNullCreateRequest creates the ArrayStringMultiNull request.
-func (client QueriesClient) ArrayStringMultiNullCreateRequest(ctx context.Context, options *QueriesArrayStringMultiNullOptions) (*azcore.Request, error) {
+// arrayStringMultiNullCreateRequest creates the ArrayStringMultiNull request.
+func (client QueriesClient) arrayStringMultiNullCreateRequest(ctx context.Context, options *QueriesArrayStringMultiNullOptions) (*azcore.Request, error) {
 	urlPath := "/queries/array/multi/string/null"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -108,8 +108,8 @@ func (client QueriesClient) ArrayStringMultiNullCreateRequest(ctx context.Contex
 	return req, nil
 }
 
-// ArrayStringMultiNullHandleError handles the ArrayStringMultiNull error response.
-func (client QueriesClient) ArrayStringMultiNullHandleError(resp *azcore.Response) error {
+// arrayStringMultiNullHandleError handles the ArrayStringMultiNull error response.
+func (client QueriesClient) arrayStringMultiNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -119,7 +119,7 @@ func (client QueriesClient) ArrayStringMultiNullHandleError(resp *azcore.Respons
 
 // ArrayStringMultiValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the mult-array format
 func (client QueriesClient) ArrayStringMultiValid(ctx context.Context, options *QueriesArrayStringMultiValidOptions) (*http.Response, error) {
-	req, err := client.ArrayStringMultiValidCreateRequest(ctx, options)
+	req, err := client.arrayStringMultiValidCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -128,13 +128,13 @@ func (client QueriesClient) ArrayStringMultiValid(ctx context.Context, options *
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ArrayStringMultiValidHandleError(resp)
+		return nil, client.arrayStringMultiValidHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// ArrayStringMultiValidCreateRequest creates the ArrayStringMultiValid request.
-func (client QueriesClient) ArrayStringMultiValidCreateRequest(ctx context.Context, options *QueriesArrayStringMultiValidOptions) (*azcore.Request, error) {
+// arrayStringMultiValidCreateRequest creates the ArrayStringMultiValid request.
+func (client QueriesClient) arrayStringMultiValidCreateRequest(ctx context.Context, options *QueriesArrayStringMultiValidOptions) (*azcore.Request, error) {
 	urlPath := "/queries/array/multi/string/valid"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -152,8 +152,8 @@ func (client QueriesClient) ArrayStringMultiValidCreateRequest(ctx context.Conte
 	return req, nil
 }
 
-// ArrayStringMultiValidHandleError handles the ArrayStringMultiValid error response.
-func (client QueriesClient) ArrayStringMultiValidHandleError(resp *azcore.Response) error {
+// arrayStringMultiValidHandleError handles the ArrayStringMultiValid error response.
+func (client QueriesClient) arrayStringMultiValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

@@ -31,7 +31,7 @@ func (client APIVersionDefaultClient) Pipeline() azcore.Pipeline {
 
 // GetMethodGlobalNotProvidedValid - GET method with api-version modeled in global settings.
 func (client APIVersionDefaultClient) GetMethodGlobalNotProvidedValid(ctx context.Context, options *APIVersionDefaultGetMethodGlobalNotProvidedValidOptions) (*http.Response, error) {
-	req, err := client.GetMethodGlobalNotProvidedValidCreateRequest(ctx, options)
+	req, err := client.getMethodGlobalNotProvidedValidCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -40,13 +40,13 @@ func (client APIVersionDefaultClient) GetMethodGlobalNotProvidedValid(ctx contex
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetMethodGlobalNotProvidedValidHandleError(resp)
+		return nil, client.getMethodGlobalNotProvidedValidHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// GetMethodGlobalNotProvidedValidCreateRequest creates the GetMethodGlobalNotProvidedValid request.
-func (client APIVersionDefaultClient) GetMethodGlobalNotProvidedValidCreateRequest(ctx context.Context, options *APIVersionDefaultGetMethodGlobalNotProvidedValidOptions) (*azcore.Request, error) {
+// getMethodGlobalNotProvidedValidCreateRequest creates the GetMethodGlobalNotProvidedValid request.
+func (client APIVersionDefaultClient) getMethodGlobalNotProvidedValidCreateRequest(ctx context.Context, options *APIVersionDefaultGetMethodGlobalNotProvidedValidOptions) (*azcore.Request, error) {
 	urlPath := "/azurespecials/apiVersion/method/string/none/query/globalNotProvided/2015-07-01-preview"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -60,8 +60,8 @@ func (client APIVersionDefaultClient) GetMethodGlobalNotProvidedValidCreateReque
 	return req, nil
 }
 
-// GetMethodGlobalNotProvidedValidHandleError handles the GetMethodGlobalNotProvidedValid error response.
-func (client APIVersionDefaultClient) GetMethodGlobalNotProvidedValidHandleError(resp *azcore.Response) error {
+// getMethodGlobalNotProvidedValidHandleError handles the GetMethodGlobalNotProvidedValid error response.
+func (client APIVersionDefaultClient) getMethodGlobalNotProvidedValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -71,7 +71,7 @@ func (client APIVersionDefaultClient) GetMethodGlobalNotProvidedValidHandleError
 
 // GetMethodGlobalValid - GET method with api-version modeled in global settings.
 func (client APIVersionDefaultClient) GetMethodGlobalValid(ctx context.Context, options *APIVersionDefaultGetMethodGlobalValidOptions) (*http.Response, error) {
-	req, err := client.GetMethodGlobalValidCreateRequest(ctx, options)
+	req, err := client.getMethodGlobalValidCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -80,13 +80,13 @@ func (client APIVersionDefaultClient) GetMethodGlobalValid(ctx context.Context, 
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetMethodGlobalValidHandleError(resp)
+		return nil, client.getMethodGlobalValidHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// GetMethodGlobalValidCreateRequest creates the GetMethodGlobalValid request.
-func (client APIVersionDefaultClient) GetMethodGlobalValidCreateRequest(ctx context.Context, options *APIVersionDefaultGetMethodGlobalValidOptions) (*azcore.Request, error) {
+// getMethodGlobalValidCreateRequest creates the GetMethodGlobalValid request.
+func (client APIVersionDefaultClient) getMethodGlobalValidCreateRequest(ctx context.Context, options *APIVersionDefaultGetMethodGlobalValidOptions) (*azcore.Request, error) {
 	urlPath := "/azurespecials/apiVersion/method/string/none/query/global/2015-07-01-preview"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -100,8 +100,8 @@ func (client APIVersionDefaultClient) GetMethodGlobalValidCreateRequest(ctx cont
 	return req, nil
 }
 
-// GetMethodGlobalValidHandleError handles the GetMethodGlobalValid error response.
-func (client APIVersionDefaultClient) GetMethodGlobalValidHandleError(resp *azcore.Response) error {
+// getMethodGlobalValidHandleError handles the GetMethodGlobalValid error response.
+func (client APIVersionDefaultClient) getMethodGlobalValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -111,7 +111,7 @@ func (client APIVersionDefaultClient) GetMethodGlobalValidHandleError(resp *azco
 
 // GetPathGlobalValid - GET method with api-version modeled in global settings.
 func (client APIVersionDefaultClient) GetPathGlobalValid(ctx context.Context, options *APIVersionDefaultGetPathGlobalValidOptions) (*http.Response, error) {
-	req, err := client.GetPathGlobalValidCreateRequest(ctx, options)
+	req, err := client.getPathGlobalValidCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -120,13 +120,13 @@ func (client APIVersionDefaultClient) GetPathGlobalValid(ctx context.Context, op
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetPathGlobalValidHandleError(resp)
+		return nil, client.getPathGlobalValidHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// GetPathGlobalValidCreateRequest creates the GetPathGlobalValid request.
-func (client APIVersionDefaultClient) GetPathGlobalValidCreateRequest(ctx context.Context, options *APIVersionDefaultGetPathGlobalValidOptions) (*azcore.Request, error) {
+// getPathGlobalValidCreateRequest creates the GetPathGlobalValid request.
+func (client APIVersionDefaultClient) getPathGlobalValidCreateRequest(ctx context.Context, options *APIVersionDefaultGetPathGlobalValidOptions) (*azcore.Request, error) {
 	urlPath := "/azurespecials/apiVersion/path/string/none/query/global/2015-07-01-preview"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -140,8 +140,8 @@ func (client APIVersionDefaultClient) GetPathGlobalValidCreateRequest(ctx contex
 	return req, nil
 }
 
-// GetPathGlobalValidHandleError handles the GetPathGlobalValid error response.
-func (client APIVersionDefaultClient) GetPathGlobalValidHandleError(resp *azcore.Response) error {
+// getPathGlobalValidHandleError handles the GetPathGlobalValid error response.
+func (client APIVersionDefaultClient) getPathGlobalValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -151,7 +151,7 @@ func (client APIVersionDefaultClient) GetPathGlobalValidHandleError(resp *azcore
 
 // GetSwaggerGlobalValid - GET method with api-version modeled in global settings.
 func (client APIVersionDefaultClient) GetSwaggerGlobalValid(ctx context.Context, options *APIVersionDefaultGetSwaggerGlobalValidOptions) (*http.Response, error) {
-	req, err := client.GetSwaggerGlobalValidCreateRequest(ctx, options)
+	req, err := client.getSwaggerGlobalValidCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -160,13 +160,13 @@ func (client APIVersionDefaultClient) GetSwaggerGlobalValid(ctx context.Context,
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetSwaggerGlobalValidHandleError(resp)
+		return nil, client.getSwaggerGlobalValidHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// GetSwaggerGlobalValidCreateRequest creates the GetSwaggerGlobalValid request.
-func (client APIVersionDefaultClient) GetSwaggerGlobalValidCreateRequest(ctx context.Context, options *APIVersionDefaultGetSwaggerGlobalValidOptions) (*azcore.Request, error) {
+// getSwaggerGlobalValidCreateRequest creates the GetSwaggerGlobalValid request.
+func (client APIVersionDefaultClient) getSwaggerGlobalValidCreateRequest(ctx context.Context, options *APIVersionDefaultGetSwaggerGlobalValidOptions) (*azcore.Request, error) {
 	urlPath := "/azurespecials/apiVersion/swagger/string/none/query/global/2015-07-01-preview"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -180,8 +180,8 @@ func (client APIVersionDefaultClient) GetSwaggerGlobalValidCreateRequest(ctx con
 	return req, nil
 }
 
-// GetSwaggerGlobalValidHandleError handles the GetSwaggerGlobalValid error response.
-func (client APIVersionDefaultClient) GetSwaggerGlobalValidHandleError(resp *azcore.Response) error {
+// getSwaggerGlobalValidHandleError handles the GetSwaggerGlobalValid error response.
+func (client APIVersionDefaultClient) getSwaggerGlobalValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

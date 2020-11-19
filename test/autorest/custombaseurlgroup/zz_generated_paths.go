@@ -32,7 +32,7 @@ func (client PathsClient) Pipeline() azcore.Pipeline {
 
 // GetEmpty - Get a 200 to test a valid base uri
 func (client PathsClient) GetEmpty(ctx context.Context, accountName string, options *PathsGetEmptyOptions) (*http.Response, error) {
-	req, err := client.GetEmptyCreateRequest(ctx, accountName, options)
+	req, err := client.getEmptyCreateRequest(ctx, accountName, options)
 	if err != nil {
 		return nil, err
 	}
@@ -41,13 +41,13 @@ func (client PathsClient) GetEmpty(ctx context.Context, accountName string, opti
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetEmptyHandleError(resp)
+		return nil, client.getEmptyHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// GetEmptyCreateRequest creates the GetEmpty request.
-func (client PathsClient) GetEmptyCreateRequest(ctx context.Context, accountName string, options *PathsGetEmptyOptions) (*azcore.Request, error) {
+// getEmptyCreateRequest creates the GetEmpty request.
+func (client PathsClient) getEmptyCreateRequest(ctx context.Context, accountName string, options *PathsGetEmptyOptions) (*azcore.Request, error) {
 	host := "http://{accountName}{host}"
 	host = strings.ReplaceAll(host, "{host}", client.con.Host())
 	host = strings.ReplaceAll(host, "{accountName}", accountName)
@@ -61,8 +61,8 @@ func (client PathsClient) GetEmptyCreateRequest(ctx context.Context, accountName
 	return req, nil
 }
 
-// GetEmptyHandleError handles the GetEmpty error response.
-func (client PathsClient) GetEmptyHandleError(resp *azcore.Response) error {
+// getEmptyHandleError handles the GetEmpty error response.
+func (client PathsClient) getEmptyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

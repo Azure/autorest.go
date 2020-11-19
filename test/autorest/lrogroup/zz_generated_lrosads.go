@@ -40,7 +40,7 @@ func (client LrosaDsClient) BeginDelete202NonRetry400(ctx context.Context, optio
 	result := &HTTPPollerResponse{
 		RawResponse: resp.Response,
 	}
-	pt, err := armcore.NewPoller("LrosaDsClient.Delete202NonRetry400", "", resp, client.Delete202NonRetry400HandleError)
+	pt, err := armcore.NewPoller("LrosaDsClient.Delete202NonRetry400", "", resp, client.delete202NonRetry400HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -58,7 +58,7 @@ func (client LrosaDsClient) BeginDelete202NonRetry400(ctx context.Context, optio
 // ResumeDelete202NonRetry400 creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
 func (client LrosaDsClient) ResumeDelete202NonRetry400(token string) (HTTPPoller, error) {
-	pt, err := armcore.NewPollerFromResumeToken("LrosaDsClient.Delete202NonRetry400", token, client.Delete202NonRetry400HandleError)
+	pt, err := armcore.NewPollerFromResumeToken("LrosaDsClient.Delete202NonRetry400", token, client.delete202NonRetry400HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -70,7 +70,7 @@ func (client LrosaDsClient) ResumeDelete202NonRetry400(token string) (HTTPPoller
 
 // Delete202NonRetry400 - Long running delete request, service returns a 202 with a location header
 func (client LrosaDsClient) Delete202NonRetry400(ctx context.Context, options *LrosaDsDelete202NonRetry400Options) (*azcore.Response, error) {
-	req, err := client.Delete202NonRetry400CreateRequest(ctx, options)
+	req, err := client.delete202NonRetry400CreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -79,13 +79,13 @@ func (client LrosaDsClient) Delete202NonRetry400(ctx context.Context, options *L
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusAccepted) {
-		return nil, client.Delete202NonRetry400HandleError(resp)
+		return nil, client.delete202NonRetry400HandleError(resp)
 	}
 	return resp, nil
 }
 
-// Delete202NonRetry400CreateRequest creates the Delete202NonRetry400 request.
-func (client LrosaDsClient) Delete202NonRetry400CreateRequest(ctx context.Context, options *LrosaDsDelete202NonRetry400Options) (*azcore.Request, error) {
+// delete202NonRetry400CreateRequest creates the Delete202NonRetry400 request.
+func (client LrosaDsClient) delete202NonRetry400CreateRequest(ctx context.Context, options *LrosaDsDelete202NonRetry400Options) (*azcore.Request, error) {
 	urlPath := "/lro/nonretryerror/delete/202/retry/400"
 	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -96,8 +96,8 @@ func (client LrosaDsClient) Delete202NonRetry400CreateRequest(ctx context.Contex
 	return req, nil
 }
 
-// Delete202NonRetry400HandleError handles the Delete202NonRetry400 error response.
-func (client LrosaDsClient) Delete202NonRetry400HandleError(resp *azcore.Response) error {
+// delete202NonRetry400HandleError handles the Delete202NonRetry400 error response.
+func (client LrosaDsClient) delete202NonRetry400HandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -115,7 +115,7 @@ func (client LrosaDsClient) BeginDelete202RetryInvalidHeader(ctx context.Context
 	result := &HTTPPollerResponse{
 		RawResponse: resp.Response,
 	}
-	pt, err := armcore.NewPoller("LrosaDsClient.Delete202RetryInvalidHeader", "", resp, client.Delete202RetryInvalidHeaderHandleError)
+	pt, err := armcore.NewPoller("LrosaDsClient.Delete202RetryInvalidHeader", "", resp, client.delete202RetryInvalidHeaderHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -133,7 +133,7 @@ func (client LrosaDsClient) BeginDelete202RetryInvalidHeader(ctx context.Context
 // ResumeDelete202RetryInvalidHeader creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
 func (client LrosaDsClient) ResumeDelete202RetryInvalidHeader(token string) (HTTPPoller, error) {
-	pt, err := armcore.NewPollerFromResumeToken("LrosaDsClient.Delete202RetryInvalidHeader", token, client.Delete202RetryInvalidHeaderHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("LrosaDsClient.Delete202RetryInvalidHeader", token, client.delete202RetryInvalidHeaderHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -146,7 +146,7 @@ func (client LrosaDsClient) ResumeDelete202RetryInvalidHeader(token string) (HTT
 // Delete202RetryInvalidHeader - Long running delete request, service returns a 202 to the initial request receing a reponse with an invalid 'Location'
 // and 'Retry-After' headers
 func (client LrosaDsClient) Delete202RetryInvalidHeader(ctx context.Context, options *LrosaDsDelete202RetryInvalidHeaderOptions) (*azcore.Response, error) {
-	req, err := client.Delete202RetryInvalidHeaderCreateRequest(ctx, options)
+	req, err := client.delete202RetryInvalidHeaderCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -155,13 +155,13 @@ func (client LrosaDsClient) Delete202RetryInvalidHeader(ctx context.Context, opt
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusAccepted) {
-		return nil, client.Delete202RetryInvalidHeaderHandleError(resp)
+		return nil, client.delete202RetryInvalidHeaderHandleError(resp)
 	}
 	return resp, nil
 }
 
-// Delete202RetryInvalidHeaderCreateRequest creates the Delete202RetryInvalidHeader request.
-func (client LrosaDsClient) Delete202RetryInvalidHeaderCreateRequest(ctx context.Context, options *LrosaDsDelete202RetryInvalidHeaderOptions) (*azcore.Request, error) {
+// delete202RetryInvalidHeaderCreateRequest creates the Delete202RetryInvalidHeader request.
+func (client LrosaDsClient) delete202RetryInvalidHeaderCreateRequest(ctx context.Context, options *LrosaDsDelete202RetryInvalidHeaderOptions) (*azcore.Request, error) {
 	urlPath := "/lro/error/delete/202/retry/invalidheader"
 	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -172,8 +172,8 @@ func (client LrosaDsClient) Delete202RetryInvalidHeaderCreateRequest(ctx context
 	return req, nil
 }
 
-// Delete202RetryInvalidHeaderHandleError handles the Delete202RetryInvalidHeader error response.
-func (client LrosaDsClient) Delete202RetryInvalidHeaderHandleError(resp *azcore.Response) error {
+// delete202RetryInvalidHeaderHandleError handles the Delete202RetryInvalidHeader error response.
+func (client LrosaDsClient) delete202RetryInvalidHeaderHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -190,7 +190,7 @@ func (client LrosaDsClient) BeginDelete204Succeeded(ctx context.Context, options
 	result := &HTTPPollerResponse{
 		RawResponse: resp.Response,
 	}
-	pt, err := armcore.NewPoller("LrosaDsClient.Delete204Succeeded", "", resp, client.Delete204SucceededHandleError)
+	pt, err := armcore.NewPoller("LrosaDsClient.Delete204Succeeded", "", resp, client.delete204SucceededHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -208,7 +208,7 @@ func (client LrosaDsClient) BeginDelete204Succeeded(ctx context.Context, options
 // ResumeDelete204Succeeded creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
 func (client LrosaDsClient) ResumeDelete204Succeeded(token string) (HTTPPoller, error) {
-	pt, err := armcore.NewPollerFromResumeToken("LrosaDsClient.Delete204Succeeded", token, client.Delete204SucceededHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("LrosaDsClient.Delete204Succeeded", token, client.delete204SucceededHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -220,7 +220,7 @@ func (client LrosaDsClient) ResumeDelete204Succeeded(token string) (HTTPPoller, 
 
 // Delete204Succeeded - Long running delete request, service returns a 204 to the initial request, indicating success.
 func (client LrosaDsClient) Delete204Succeeded(ctx context.Context, options *LrosaDsDelete204SucceededOptions) (*azcore.Response, error) {
-	req, err := client.Delete204SucceededCreateRequest(ctx, options)
+	req, err := client.delete204SucceededCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -229,13 +229,13 @@ func (client LrosaDsClient) Delete204Succeeded(ctx context.Context, options *Lro
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusNoContent) {
-		return nil, client.Delete204SucceededHandleError(resp)
+		return nil, client.delete204SucceededHandleError(resp)
 	}
 	return resp, nil
 }
 
-// Delete204SucceededCreateRequest creates the Delete204Succeeded request.
-func (client LrosaDsClient) Delete204SucceededCreateRequest(ctx context.Context, options *LrosaDsDelete204SucceededOptions) (*azcore.Request, error) {
+// delete204SucceededCreateRequest creates the Delete204Succeeded request.
+func (client LrosaDsClient) delete204SucceededCreateRequest(ctx context.Context, options *LrosaDsDelete204SucceededOptions) (*azcore.Request, error) {
 	urlPath := "/lro/error/delete/204/nolocation"
 	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -246,8 +246,8 @@ func (client LrosaDsClient) Delete204SucceededCreateRequest(ctx context.Context,
 	return req, nil
 }
 
-// Delete204SucceededHandleError handles the Delete204Succeeded error response.
-func (client LrosaDsClient) Delete204SucceededHandleError(resp *azcore.Response) error {
+// delete204SucceededHandleError handles the Delete204Succeeded error response.
+func (client LrosaDsClient) delete204SucceededHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -265,7 +265,7 @@ func (client LrosaDsClient) BeginDeleteAsyncRelativeRetry400(ctx context.Context
 	result := &HTTPPollerResponse{
 		RawResponse: resp.Response,
 	}
-	pt, err := armcore.NewPoller("LrosaDsClient.DeleteAsyncRelativeRetry400", "", resp, client.DeleteAsyncRelativeRetry400HandleError)
+	pt, err := armcore.NewPoller("LrosaDsClient.DeleteAsyncRelativeRetry400", "", resp, client.deleteAsyncRelativeRetry400HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -283,7 +283,7 @@ func (client LrosaDsClient) BeginDeleteAsyncRelativeRetry400(ctx context.Context
 // ResumeDeleteAsyncRelativeRetry400 creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
 func (client LrosaDsClient) ResumeDeleteAsyncRelativeRetry400(token string) (HTTPPoller, error) {
-	pt, err := armcore.NewPollerFromResumeToken("LrosaDsClient.DeleteAsyncRelativeRetry400", token, client.DeleteAsyncRelativeRetry400HandleError)
+	pt, err := armcore.NewPollerFromResumeToken("LrosaDsClient.DeleteAsyncRelativeRetry400", token, client.deleteAsyncRelativeRetry400HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -296,7 +296,7 @@ func (client LrosaDsClient) ResumeDeleteAsyncRelativeRetry400(token string) (HTT
 // DeleteAsyncRelativeRetry400 - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated in the Azure-AsyncOperation
 // header for operation status
 func (client LrosaDsClient) DeleteAsyncRelativeRetry400(ctx context.Context, options *LrosaDsDeleteAsyncRelativeRetry400Options) (*azcore.Response, error) {
-	req, err := client.DeleteAsyncRelativeRetry400CreateRequest(ctx, options)
+	req, err := client.deleteAsyncRelativeRetry400CreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -305,13 +305,13 @@ func (client LrosaDsClient) DeleteAsyncRelativeRetry400(ctx context.Context, opt
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusAccepted) {
-		return nil, client.DeleteAsyncRelativeRetry400HandleError(resp)
+		return nil, client.deleteAsyncRelativeRetry400HandleError(resp)
 	}
 	return resp, nil
 }
 
-// DeleteAsyncRelativeRetry400CreateRequest creates the DeleteAsyncRelativeRetry400 request.
-func (client LrosaDsClient) DeleteAsyncRelativeRetry400CreateRequest(ctx context.Context, options *LrosaDsDeleteAsyncRelativeRetry400Options) (*azcore.Request, error) {
+// deleteAsyncRelativeRetry400CreateRequest creates the DeleteAsyncRelativeRetry400 request.
+func (client LrosaDsClient) deleteAsyncRelativeRetry400CreateRequest(ctx context.Context, options *LrosaDsDeleteAsyncRelativeRetry400Options) (*azcore.Request, error) {
 	urlPath := "/lro/nonretryerror/deleteasync/retry/400"
 	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -322,8 +322,8 @@ func (client LrosaDsClient) DeleteAsyncRelativeRetry400CreateRequest(ctx context
 	return req, nil
 }
 
-// DeleteAsyncRelativeRetry400HandleError handles the DeleteAsyncRelativeRetry400 error response.
-func (client LrosaDsClient) DeleteAsyncRelativeRetry400HandleError(resp *azcore.Response) error {
+// deleteAsyncRelativeRetry400HandleError handles the DeleteAsyncRelativeRetry400 error response.
+func (client LrosaDsClient) deleteAsyncRelativeRetry400HandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -341,7 +341,7 @@ func (client LrosaDsClient) BeginDeleteAsyncRelativeRetryInvalidHeader(ctx conte
 	result := &HTTPPollerResponse{
 		RawResponse: resp.Response,
 	}
-	pt, err := armcore.NewPoller("LrosaDsClient.DeleteAsyncRelativeRetryInvalidHeader", "", resp, client.DeleteAsyncRelativeRetryInvalidHeaderHandleError)
+	pt, err := armcore.NewPoller("LrosaDsClient.DeleteAsyncRelativeRetryInvalidHeader", "", resp, client.deleteAsyncRelativeRetryInvalidHeaderHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -359,7 +359,7 @@ func (client LrosaDsClient) BeginDeleteAsyncRelativeRetryInvalidHeader(ctx conte
 // ResumeDeleteAsyncRelativeRetryInvalidHeader creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
 func (client LrosaDsClient) ResumeDeleteAsyncRelativeRetryInvalidHeader(token string) (HTTPPoller, error) {
-	pt, err := armcore.NewPollerFromResumeToken("LrosaDsClient.DeleteAsyncRelativeRetryInvalidHeader", token, client.DeleteAsyncRelativeRetryInvalidHeaderHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("LrosaDsClient.DeleteAsyncRelativeRetryInvalidHeader", token, client.deleteAsyncRelativeRetryInvalidHeaderHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -372,7 +372,7 @@ func (client LrosaDsClient) ResumeDeleteAsyncRelativeRetryInvalidHeader(token st
 // DeleteAsyncRelativeRetryInvalidHeader - Long running delete request, service returns a 202 to the initial request. The endpoint indicated in the Azure-AsyncOperation
 // header is invalid
 func (client LrosaDsClient) DeleteAsyncRelativeRetryInvalidHeader(ctx context.Context, options *LrosaDsDeleteAsyncRelativeRetryInvalidHeaderOptions) (*azcore.Response, error) {
-	req, err := client.DeleteAsyncRelativeRetryInvalidHeaderCreateRequest(ctx, options)
+	req, err := client.deleteAsyncRelativeRetryInvalidHeaderCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -381,13 +381,13 @@ func (client LrosaDsClient) DeleteAsyncRelativeRetryInvalidHeader(ctx context.Co
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusAccepted) {
-		return nil, client.DeleteAsyncRelativeRetryInvalidHeaderHandleError(resp)
+		return nil, client.deleteAsyncRelativeRetryInvalidHeaderHandleError(resp)
 	}
 	return resp, nil
 }
 
-// DeleteAsyncRelativeRetryInvalidHeaderCreateRequest creates the DeleteAsyncRelativeRetryInvalidHeader request.
-func (client LrosaDsClient) DeleteAsyncRelativeRetryInvalidHeaderCreateRequest(ctx context.Context, options *LrosaDsDeleteAsyncRelativeRetryInvalidHeaderOptions) (*azcore.Request, error) {
+// deleteAsyncRelativeRetryInvalidHeaderCreateRequest creates the DeleteAsyncRelativeRetryInvalidHeader request.
+func (client LrosaDsClient) deleteAsyncRelativeRetryInvalidHeaderCreateRequest(ctx context.Context, options *LrosaDsDeleteAsyncRelativeRetryInvalidHeaderOptions) (*azcore.Request, error) {
 	urlPath := "/lro/error/deleteasync/retry/invalidheader"
 	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -398,8 +398,8 @@ func (client LrosaDsClient) DeleteAsyncRelativeRetryInvalidHeaderCreateRequest(c
 	return req, nil
 }
 
-// DeleteAsyncRelativeRetryInvalidHeaderHandleError handles the DeleteAsyncRelativeRetryInvalidHeader error response.
-func (client LrosaDsClient) DeleteAsyncRelativeRetryInvalidHeaderHandleError(resp *azcore.Response) error {
+// deleteAsyncRelativeRetryInvalidHeaderHandleError handles the DeleteAsyncRelativeRetryInvalidHeader error response.
+func (client LrosaDsClient) deleteAsyncRelativeRetryInvalidHeaderHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -417,7 +417,7 @@ func (client LrosaDsClient) BeginDeleteAsyncRelativeRetryInvalidJSONPolling(ctx 
 	result := &HTTPPollerResponse{
 		RawResponse: resp.Response,
 	}
-	pt, err := armcore.NewPoller("LrosaDsClient.DeleteAsyncRelativeRetryInvalidJSONPolling", "", resp, client.DeleteAsyncRelativeRetryInvalidJSONPollingHandleError)
+	pt, err := armcore.NewPoller("LrosaDsClient.DeleteAsyncRelativeRetryInvalidJSONPolling", "", resp, client.deleteAsyncRelativeRetryInvalidJsonPollingHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -435,7 +435,7 @@ func (client LrosaDsClient) BeginDeleteAsyncRelativeRetryInvalidJSONPolling(ctx 
 // ResumeDeleteAsyncRelativeRetryInvalidJSONPolling creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
 func (client LrosaDsClient) ResumeDeleteAsyncRelativeRetryInvalidJSONPolling(token string) (HTTPPoller, error) {
-	pt, err := armcore.NewPollerFromResumeToken("LrosaDsClient.DeleteAsyncRelativeRetryInvalidJSONPolling", token, client.DeleteAsyncRelativeRetryInvalidJSONPollingHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("LrosaDsClient.DeleteAsyncRelativeRetryInvalidJSONPolling", token, client.deleteAsyncRelativeRetryInvalidJsonPollingHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -448,7 +448,7 @@ func (client LrosaDsClient) ResumeDeleteAsyncRelativeRetryInvalidJSONPolling(tok
 // DeleteAsyncRelativeRetryInvalidJSONPolling - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated in
 // the Azure-AsyncOperation header for operation status
 func (client LrosaDsClient) DeleteAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, options *LrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingOptions) (*azcore.Response, error) {
-	req, err := client.DeleteAsyncRelativeRetryInvalidJSONPollingCreateRequest(ctx, options)
+	req, err := client.deleteAsyncRelativeRetryInvalidJsonPollingCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -457,13 +457,13 @@ func (client LrosaDsClient) DeleteAsyncRelativeRetryInvalidJSONPolling(ctx conte
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusAccepted) {
-		return nil, client.DeleteAsyncRelativeRetryInvalidJSONPollingHandleError(resp)
+		return nil, client.deleteAsyncRelativeRetryInvalidJsonPollingHandleError(resp)
 	}
 	return resp, nil
 }
 
-// DeleteAsyncRelativeRetryInvalidJSONPollingCreateRequest creates the DeleteAsyncRelativeRetryInvalidJSONPolling request.
-func (client LrosaDsClient) DeleteAsyncRelativeRetryInvalidJSONPollingCreateRequest(ctx context.Context, options *LrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingOptions) (*azcore.Request, error) {
+// deleteAsyncRelativeRetryInvalidJsonPollingCreateRequest creates the DeleteAsyncRelativeRetryInvalidJSONPolling request.
+func (client LrosaDsClient) deleteAsyncRelativeRetryInvalidJsonPollingCreateRequest(ctx context.Context, options *LrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingOptions) (*azcore.Request, error) {
 	urlPath := "/lro/error/deleteasync/retry/invalidjsonpolling"
 	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -474,8 +474,8 @@ func (client LrosaDsClient) DeleteAsyncRelativeRetryInvalidJSONPollingCreateRequ
 	return req, nil
 }
 
-// DeleteAsyncRelativeRetryInvalidJSONPollingHandleError handles the DeleteAsyncRelativeRetryInvalidJSONPolling error response.
-func (client LrosaDsClient) DeleteAsyncRelativeRetryInvalidJSONPollingHandleError(resp *azcore.Response) error {
+// deleteAsyncRelativeRetryInvalidJsonPollingHandleError handles the DeleteAsyncRelativeRetryInvalidJSONPolling error response.
+func (client LrosaDsClient) deleteAsyncRelativeRetryInvalidJsonPollingHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -493,7 +493,7 @@ func (client LrosaDsClient) BeginDeleteAsyncRelativeRetryNoStatus(ctx context.Co
 	result := &HTTPPollerResponse{
 		RawResponse: resp.Response,
 	}
-	pt, err := armcore.NewPoller("LrosaDsClient.DeleteAsyncRelativeRetryNoStatus", "", resp, client.DeleteAsyncRelativeRetryNoStatusHandleError)
+	pt, err := armcore.NewPoller("LrosaDsClient.DeleteAsyncRelativeRetryNoStatus", "", resp, client.deleteAsyncRelativeRetryNoStatusHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -511,7 +511,7 @@ func (client LrosaDsClient) BeginDeleteAsyncRelativeRetryNoStatus(ctx context.Co
 // ResumeDeleteAsyncRelativeRetryNoStatus creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
 func (client LrosaDsClient) ResumeDeleteAsyncRelativeRetryNoStatus(token string) (HTTPPoller, error) {
-	pt, err := armcore.NewPollerFromResumeToken("LrosaDsClient.DeleteAsyncRelativeRetryNoStatus", token, client.DeleteAsyncRelativeRetryNoStatusHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("LrosaDsClient.DeleteAsyncRelativeRetryNoStatus", token, client.deleteAsyncRelativeRetryNoStatusHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -524,7 +524,7 @@ func (client LrosaDsClient) ResumeDeleteAsyncRelativeRetryNoStatus(token string)
 // DeleteAsyncRelativeRetryNoStatus - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated in the Azure-AsyncOperation
 // header for operation status
 func (client LrosaDsClient) DeleteAsyncRelativeRetryNoStatus(ctx context.Context, options *LrosaDsDeleteAsyncRelativeRetryNoStatusOptions) (*azcore.Response, error) {
-	req, err := client.DeleteAsyncRelativeRetryNoStatusCreateRequest(ctx, options)
+	req, err := client.deleteAsyncRelativeRetryNoStatusCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -533,13 +533,13 @@ func (client LrosaDsClient) DeleteAsyncRelativeRetryNoStatus(ctx context.Context
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusAccepted) {
-		return nil, client.DeleteAsyncRelativeRetryNoStatusHandleError(resp)
+		return nil, client.deleteAsyncRelativeRetryNoStatusHandleError(resp)
 	}
 	return resp, nil
 }
 
-// DeleteAsyncRelativeRetryNoStatusCreateRequest creates the DeleteAsyncRelativeRetryNoStatus request.
-func (client LrosaDsClient) DeleteAsyncRelativeRetryNoStatusCreateRequest(ctx context.Context, options *LrosaDsDeleteAsyncRelativeRetryNoStatusOptions) (*azcore.Request, error) {
+// deleteAsyncRelativeRetryNoStatusCreateRequest creates the DeleteAsyncRelativeRetryNoStatus request.
+func (client LrosaDsClient) deleteAsyncRelativeRetryNoStatusCreateRequest(ctx context.Context, options *LrosaDsDeleteAsyncRelativeRetryNoStatusOptions) (*azcore.Request, error) {
 	urlPath := "/lro/error/deleteasync/retry/nostatus"
 	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -550,8 +550,8 @@ func (client LrosaDsClient) DeleteAsyncRelativeRetryNoStatusCreateRequest(ctx co
 	return req, nil
 }
 
-// DeleteAsyncRelativeRetryNoStatusHandleError handles the DeleteAsyncRelativeRetryNoStatus error response.
-func (client LrosaDsClient) DeleteAsyncRelativeRetryNoStatusHandleError(resp *azcore.Response) error {
+// deleteAsyncRelativeRetryNoStatusHandleError handles the DeleteAsyncRelativeRetryNoStatus error response.
+func (client LrosaDsClient) deleteAsyncRelativeRetryNoStatusHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -568,7 +568,7 @@ func (client LrosaDsClient) BeginDeleteNonRetry400(ctx context.Context, options 
 	result := &HTTPPollerResponse{
 		RawResponse: resp.Response,
 	}
-	pt, err := armcore.NewPoller("LrosaDsClient.DeleteNonRetry400", "", resp, client.DeleteNonRetry400HandleError)
+	pt, err := armcore.NewPoller("LrosaDsClient.DeleteNonRetry400", "", resp, client.deleteNonRetry400HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -586,7 +586,7 @@ func (client LrosaDsClient) BeginDeleteNonRetry400(ctx context.Context, options 
 // ResumeDeleteNonRetry400 creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
 func (client LrosaDsClient) ResumeDeleteNonRetry400(token string) (HTTPPoller, error) {
-	pt, err := armcore.NewPollerFromResumeToken("LrosaDsClient.DeleteNonRetry400", token, client.DeleteNonRetry400HandleError)
+	pt, err := armcore.NewPollerFromResumeToken("LrosaDsClient.DeleteNonRetry400", token, client.deleteNonRetry400HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -598,7 +598,7 @@ func (client LrosaDsClient) ResumeDeleteNonRetry400(token string) (HTTPPoller, e
 
 // DeleteNonRetry400 - Long running delete request, service returns a 400 with an error body
 func (client LrosaDsClient) DeleteNonRetry400(ctx context.Context, options *LrosaDsDeleteNonRetry400Options) (*azcore.Response, error) {
-	req, err := client.DeleteNonRetry400CreateRequest(ctx, options)
+	req, err := client.deleteNonRetry400CreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -607,13 +607,13 @@ func (client LrosaDsClient) DeleteNonRetry400(ctx context.Context, options *Lros
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusAccepted) {
-		return nil, client.DeleteNonRetry400HandleError(resp)
+		return nil, client.deleteNonRetry400HandleError(resp)
 	}
 	return resp, nil
 }
 
-// DeleteNonRetry400CreateRequest creates the DeleteNonRetry400 request.
-func (client LrosaDsClient) DeleteNonRetry400CreateRequest(ctx context.Context, options *LrosaDsDeleteNonRetry400Options) (*azcore.Request, error) {
+// deleteNonRetry400CreateRequest creates the DeleteNonRetry400 request.
+func (client LrosaDsClient) deleteNonRetry400CreateRequest(ctx context.Context, options *LrosaDsDeleteNonRetry400Options) (*azcore.Request, error) {
 	urlPath := "/lro/nonretryerror/delete/400"
 	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -624,8 +624,8 @@ func (client LrosaDsClient) DeleteNonRetry400CreateRequest(ctx context.Context, 
 	return req, nil
 }
 
-// DeleteNonRetry400HandleError handles the DeleteNonRetry400 error response.
-func (client LrosaDsClient) DeleteNonRetry400HandleError(resp *azcore.Response) error {
+// deleteNonRetry400HandleError handles the DeleteNonRetry400 error response.
+func (client LrosaDsClient) deleteNonRetry400HandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -642,7 +642,7 @@ func (client LrosaDsClient) BeginPost202NoLocation(ctx context.Context, options 
 	result := &HTTPPollerResponse{
 		RawResponse: resp.Response,
 	}
-	pt, err := armcore.NewPoller("LrosaDsClient.Post202NoLocation", "", resp, client.Post202NoLocationHandleError)
+	pt, err := armcore.NewPoller("LrosaDsClient.Post202NoLocation", "", resp, client.post202NoLocationHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -660,7 +660,7 @@ func (client LrosaDsClient) BeginPost202NoLocation(ctx context.Context, options 
 // ResumePost202NoLocation creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
 func (client LrosaDsClient) ResumePost202NoLocation(token string) (HTTPPoller, error) {
-	pt, err := armcore.NewPollerFromResumeToken("LrosaDsClient.Post202NoLocation", token, client.Post202NoLocationHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("LrosaDsClient.Post202NoLocation", token, client.post202NoLocationHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -672,7 +672,7 @@ func (client LrosaDsClient) ResumePost202NoLocation(token string) (HTTPPoller, e
 
 // Post202NoLocation - Long running post request, service returns a 202 to the initial request, without a location header.
 func (client LrosaDsClient) Post202NoLocation(ctx context.Context, options *LrosaDsPost202NoLocationOptions) (*azcore.Response, error) {
-	req, err := client.Post202NoLocationCreateRequest(ctx, options)
+	req, err := client.post202NoLocationCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -681,13 +681,13 @@ func (client LrosaDsClient) Post202NoLocation(ctx context.Context, options *Lros
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusAccepted) {
-		return nil, client.Post202NoLocationHandleError(resp)
+		return nil, client.post202NoLocationHandleError(resp)
 	}
 	return resp, nil
 }
 
-// Post202NoLocationCreateRequest creates the Post202NoLocation request.
-func (client LrosaDsClient) Post202NoLocationCreateRequest(ctx context.Context, options *LrosaDsPost202NoLocationOptions) (*azcore.Request, error) {
+// post202NoLocationCreateRequest creates the Post202NoLocation request.
+func (client LrosaDsClient) post202NoLocationCreateRequest(ctx context.Context, options *LrosaDsPost202NoLocationOptions) (*azcore.Request, error) {
 	urlPath := "/lro/error/post/202/nolocation"
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -701,8 +701,8 @@ func (client LrosaDsClient) Post202NoLocationCreateRequest(ctx context.Context, 
 	return req, nil
 }
 
-// Post202NoLocationHandleError handles the Post202NoLocation error response.
-func (client LrosaDsClient) Post202NoLocationHandleError(resp *azcore.Response) error {
+// post202NoLocationHandleError handles the Post202NoLocation error response.
+func (client LrosaDsClient) post202NoLocationHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -719,7 +719,7 @@ func (client LrosaDsClient) BeginPost202NonRetry400(ctx context.Context, options
 	result := &HTTPPollerResponse{
 		RawResponse: resp.Response,
 	}
-	pt, err := armcore.NewPoller("LrosaDsClient.Post202NonRetry400", "", resp, client.Post202NonRetry400HandleError)
+	pt, err := armcore.NewPoller("LrosaDsClient.Post202NonRetry400", "", resp, client.post202NonRetry400HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -737,7 +737,7 @@ func (client LrosaDsClient) BeginPost202NonRetry400(ctx context.Context, options
 // ResumePost202NonRetry400 creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
 func (client LrosaDsClient) ResumePost202NonRetry400(token string) (HTTPPoller, error) {
-	pt, err := armcore.NewPollerFromResumeToken("LrosaDsClient.Post202NonRetry400", token, client.Post202NonRetry400HandleError)
+	pt, err := armcore.NewPollerFromResumeToken("LrosaDsClient.Post202NonRetry400", token, client.post202NonRetry400HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -749,7 +749,7 @@ func (client LrosaDsClient) ResumePost202NonRetry400(token string) (HTTPPoller, 
 
 // Post202NonRetry400 - Long running post request, service returns a 202 with a location header
 func (client LrosaDsClient) Post202NonRetry400(ctx context.Context, options *LrosaDsPost202NonRetry400Options) (*azcore.Response, error) {
-	req, err := client.Post202NonRetry400CreateRequest(ctx, options)
+	req, err := client.post202NonRetry400CreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -758,13 +758,13 @@ func (client LrosaDsClient) Post202NonRetry400(ctx context.Context, options *Lro
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusAccepted) {
-		return nil, client.Post202NonRetry400HandleError(resp)
+		return nil, client.post202NonRetry400HandleError(resp)
 	}
 	return resp, nil
 }
 
-// Post202NonRetry400CreateRequest creates the Post202NonRetry400 request.
-func (client LrosaDsClient) Post202NonRetry400CreateRequest(ctx context.Context, options *LrosaDsPost202NonRetry400Options) (*azcore.Request, error) {
+// post202NonRetry400CreateRequest creates the Post202NonRetry400 request.
+func (client LrosaDsClient) post202NonRetry400CreateRequest(ctx context.Context, options *LrosaDsPost202NonRetry400Options) (*azcore.Request, error) {
 	urlPath := "/lro/nonretryerror/post/202/retry/400"
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -778,8 +778,8 @@ func (client LrosaDsClient) Post202NonRetry400CreateRequest(ctx context.Context,
 	return req, nil
 }
 
-// Post202NonRetry400HandleError handles the Post202NonRetry400 error response.
-func (client LrosaDsClient) Post202NonRetry400HandleError(resp *azcore.Response) error {
+// post202NonRetry400HandleError handles the Post202NonRetry400 error response.
+func (client LrosaDsClient) post202NonRetry400HandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -796,7 +796,7 @@ func (client LrosaDsClient) BeginPost202RetryInvalidHeader(ctx context.Context, 
 	result := &HTTPPollerResponse{
 		RawResponse: resp.Response,
 	}
-	pt, err := armcore.NewPoller("LrosaDsClient.Post202RetryInvalidHeader", "", resp, client.Post202RetryInvalidHeaderHandleError)
+	pt, err := armcore.NewPoller("LrosaDsClient.Post202RetryInvalidHeader", "", resp, client.post202RetryInvalidHeaderHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -814,7 +814,7 @@ func (client LrosaDsClient) BeginPost202RetryInvalidHeader(ctx context.Context, 
 // ResumePost202RetryInvalidHeader creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
 func (client LrosaDsClient) ResumePost202RetryInvalidHeader(token string) (HTTPPoller, error) {
-	pt, err := armcore.NewPollerFromResumeToken("LrosaDsClient.Post202RetryInvalidHeader", token, client.Post202RetryInvalidHeaderHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("LrosaDsClient.Post202RetryInvalidHeader", token, client.post202RetryInvalidHeaderHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -826,7 +826,7 @@ func (client LrosaDsClient) ResumePost202RetryInvalidHeader(token string) (HTTPP
 
 // Post202RetryInvalidHeader - Long running post request, service returns a 202 to the initial request, with invalid 'Location' and 'Retry-After' headers.
 func (client LrosaDsClient) Post202RetryInvalidHeader(ctx context.Context, options *LrosaDsPost202RetryInvalidHeaderOptions) (*azcore.Response, error) {
-	req, err := client.Post202RetryInvalidHeaderCreateRequest(ctx, options)
+	req, err := client.post202RetryInvalidHeaderCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -835,13 +835,13 @@ func (client LrosaDsClient) Post202RetryInvalidHeader(ctx context.Context, optio
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusAccepted) {
-		return nil, client.Post202RetryInvalidHeaderHandleError(resp)
+		return nil, client.post202RetryInvalidHeaderHandleError(resp)
 	}
 	return resp, nil
 }
 
-// Post202RetryInvalidHeaderCreateRequest creates the Post202RetryInvalidHeader request.
-func (client LrosaDsClient) Post202RetryInvalidHeaderCreateRequest(ctx context.Context, options *LrosaDsPost202RetryInvalidHeaderOptions) (*azcore.Request, error) {
+// post202RetryInvalidHeaderCreateRequest creates the Post202RetryInvalidHeader request.
+func (client LrosaDsClient) post202RetryInvalidHeaderCreateRequest(ctx context.Context, options *LrosaDsPost202RetryInvalidHeaderOptions) (*azcore.Request, error) {
 	urlPath := "/lro/error/post/202/retry/invalidheader"
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -855,8 +855,8 @@ func (client LrosaDsClient) Post202RetryInvalidHeaderCreateRequest(ctx context.C
 	return req, nil
 }
 
-// Post202RetryInvalidHeaderHandleError handles the Post202RetryInvalidHeader error response.
-func (client LrosaDsClient) Post202RetryInvalidHeaderHandleError(resp *azcore.Response) error {
+// post202RetryInvalidHeaderHandleError handles the Post202RetryInvalidHeader error response.
+func (client LrosaDsClient) post202RetryInvalidHeaderHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -874,7 +874,7 @@ func (client LrosaDsClient) BeginPostAsyncRelativeRetry400(ctx context.Context, 
 	result := &HTTPPollerResponse{
 		RawResponse: resp.Response,
 	}
-	pt, err := armcore.NewPoller("LrosaDsClient.PostAsyncRelativeRetry400", "", resp, client.PostAsyncRelativeRetry400HandleError)
+	pt, err := armcore.NewPoller("LrosaDsClient.PostAsyncRelativeRetry400", "", resp, client.postAsyncRelativeRetry400HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -892,7 +892,7 @@ func (client LrosaDsClient) BeginPostAsyncRelativeRetry400(ctx context.Context, 
 // ResumePostAsyncRelativeRetry400 creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
 func (client LrosaDsClient) ResumePostAsyncRelativeRetry400(token string) (HTTPPoller, error) {
-	pt, err := armcore.NewPollerFromResumeToken("LrosaDsClient.PostAsyncRelativeRetry400", token, client.PostAsyncRelativeRetry400HandleError)
+	pt, err := armcore.NewPollerFromResumeToken("LrosaDsClient.PostAsyncRelativeRetry400", token, client.postAsyncRelativeRetry400HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -905,7 +905,7 @@ func (client LrosaDsClient) ResumePostAsyncRelativeRetry400(token string) (HTTPP
 // PostAsyncRelativeRetry400 - Long running post request, service returns a 202 to the initial request Poll the endpoint indicated in the Azure-AsyncOperation
 // header for operation status
 func (client LrosaDsClient) PostAsyncRelativeRetry400(ctx context.Context, options *LrosaDsPostAsyncRelativeRetry400Options) (*azcore.Response, error) {
-	req, err := client.PostAsyncRelativeRetry400CreateRequest(ctx, options)
+	req, err := client.postAsyncRelativeRetry400CreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -914,13 +914,13 @@ func (client LrosaDsClient) PostAsyncRelativeRetry400(ctx context.Context, optio
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusAccepted) {
-		return nil, client.PostAsyncRelativeRetry400HandleError(resp)
+		return nil, client.postAsyncRelativeRetry400HandleError(resp)
 	}
 	return resp, nil
 }
 
-// PostAsyncRelativeRetry400CreateRequest creates the PostAsyncRelativeRetry400 request.
-func (client LrosaDsClient) PostAsyncRelativeRetry400CreateRequest(ctx context.Context, options *LrosaDsPostAsyncRelativeRetry400Options) (*azcore.Request, error) {
+// postAsyncRelativeRetry400CreateRequest creates the PostAsyncRelativeRetry400 request.
+func (client LrosaDsClient) postAsyncRelativeRetry400CreateRequest(ctx context.Context, options *LrosaDsPostAsyncRelativeRetry400Options) (*azcore.Request, error) {
 	urlPath := "/lro/nonretryerror/postasync/retry/400"
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -934,8 +934,8 @@ func (client LrosaDsClient) PostAsyncRelativeRetry400CreateRequest(ctx context.C
 	return req, nil
 }
 
-// PostAsyncRelativeRetry400HandleError handles the PostAsyncRelativeRetry400 error response.
-func (client LrosaDsClient) PostAsyncRelativeRetry400HandleError(resp *azcore.Response) error {
+// postAsyncRelativeRetry400HandleError handles the PostAsyncRelativeRetry400 error response.
+func (client LrosaDsClient) postAsyncRelativeRetry400HandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -954,7 +954,7 @@ func (client LrosaDsClient) BeginPostAsyncRelativeRetryInvalidHeader(ctx context
 	result := &HTTPPollerResponse{
 		RawResponse: resp.Response,
 	}
-	pt, err := armcore.NewPoller("LrosaDsClient.PostAsyncRelativeRetryInvalidHeader", "", resp, client.PostAsyncRelativeRetryInvalidHeaderHandleError)
+	pt, err := armcore.NewPoller("LrosaDsClient.PostAsyncRelativeRetryInvalidHeader", "", resp, client.postAsyncRelativeRetryInvalidHeaderHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -972,7 +972,7 @@ func (client LrosaDsClient) BeginPostAsyncRelativeRetryInvalidHeader(ctx context
 // ResumePostAsyncRelativeRetryInvalidHeader creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
 func (client LrosaDsClient) ResumePostAsyncRelativeRetryInvalidHeader(token string) (HTTPPoller, error) {
-	pt, err := armcore.NewPollerFromResumeToken("LrosaDsClient.PostAsyncRelativeRetryInvalidHeader", token, client.PostAsyncRelativeRetryInvalidHeaderHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("LrosaDsClient.PostAsyncRelativeRetryInvalidHeader", token, client.postAsyncRelativeRetryInvalidHeaderHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -986,7 +986,7 @@ func (client LrosaDsClient) ResumePostAsyncRelativeRetryInvalidHeader(token stri
 // The endpoint indicated in the Azure-AsyncOperation header is
 // invalid.
 func (client LrosaDsClient) PostAsyncRelativeRetryInvalidHeader(ctx context.Context, options *LrosaDsPostAsyncRelativeRetryInvalidHeaderOptions) (*azcore.Response, error) {
-	req, err := client.PostAsyncRelativeRetryInvalidHeaderCreateRequest(ctx, options)
+	req, err := client.postAsyncRelativeRetryInvalidHeaderCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -995,13 +995,13 @@ func (client LrosaDsClient) PostAsyncRelativeRetryInvalidHeader(ctx context.Cont
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusAccepted) {
-		return nil, client.PostAsyncRelativeRetryInvalidHeaderHandleError(resp)
+		return nil, client.postAsyncRelativeRetryInvalidHeaderHandleError(resp)
 	}
 	return resp, nil
 }
 
-// PostAsyncRelativeRetryInvalidHeaderCreateRequest creates the PostAsyncRelativeRetryInvalidHeader request.
-func (client LrosaDsClient) PostAsyncRelativeRetryInvalidHeaderCreateRequest(ctx context.Context, options *LrosaDsPostAsyncRelativeRetryInvalidHeaderOptions) (*azcore.Request, error) {
+// postAsyncRelativeRetryInvalidHeaderCreateRequest creates the PostAsyncRelativeRetryInvalidHeader request.
+func (client LrosaDsClient) postAsyncRelativeRetryInvalidHeaderCreateRequest(ctx context.Context, options *LrosaDsPostAsyncRelativeRetryInvalidHeaderOptions) (*azcore.Request, error) {
 	urlPath := "/lro/error/postasync/retry/invalidheader"
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1015,8 +1015,8 @@ func (client LrosaDsClient) PostAsyncRelativeRetryInvalidHeaderCreateRequest(ctx
 	return req, nil
 }
 
-// PostAsyncRelativeRetryInvalidHeaderHandleError handles the PostAsyncRelativeRetryInvalidHeader error response.
-func (client LrosaDsClient) PostAsyncRelativeRetryInvalidHeaderHandleError(resp *azcore.Response) error {
+// postAsyncRelativeRetryInvalidHeaderHandleError handles the PostAsyncRelativeRetryInvalidHeader error response.
+func (client LrosaDsClient) postAsyncRelativeRetryInvalidHeaderHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1035,7 +1035,7 @@ func (client LrosaDsClient) BeginPostAsyncRelativeRetryInvalidJSONPolling(ctx co
 	result := &HTTPPollerResponse{
 		RawResponse: resp.Response,
 	}
-	pt, err := armcore.NewPoller("LrosaDsClient.PostAsyncRelativeRetryInvalidJSONPolling", "", resp, client.PostAsyncRelativeRetryInvalidJSONPollingHandleError)
+	pt, err := armcore.NewPoller("LrosaDsClient.PostAsyncRelativeRetryInvalidJSONPolling", "", resp, client.postAsyncRelativeRetryInvalidJsonPollingHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1053,7 +1053,7 @@ func (client LrosaDsClient) BeginPostAsyncRelativeRetryInvalidJSONPolling(ctx co
 // ResumePostAsyncRelativeRetryInvalidJSONPolling creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
 func (client LrosaDsClient) ResumePostAsyncRelativeRetryInvalidJSONPolling(token string) (HTTPPoller, error) {
-	pt, err := armcore.NewPollerFromResumeToken("LrosaDsClient.PostAsyncRelativeRetryInvalidJSONPolling", token, client.PostAsyncRelativeRetryInvalidJSONPollingHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("LrosaDsClient.PostAsyncRelativeRetryInvalidJSONPolling", token, client.postAsyncRelativeRetryInvalidJsonPollingHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1067,7 +1067,7 @@ func (client LrosaDsClient) ResumePostAsyncRelativeRetryInvalidJSONPolling(token
 // Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
 func (client LrosaDsClient) PostAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, options *LrosaDsPostAsyncRelativeRetryInvalidJSONPollingOptions) (*azcore.Response, error) {
-	req, err := client.PostAsyncRelativeRetryInvalidJSONPollingCreateRequest(ctx, options)
+	req, err := client.postAsyncRelativeRetryInvalidJsonPollingCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -1076,13 +1076,13 @@ func (client LrosaDsClient) PostAsyncRelativeRetryInvalidJSONPolling(ctx context
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusAccepted) {
-		return nil, client.PostAsyncRelativeRetryInvalidJSONPollingHandleError(resp)
+		return nil, client.postAsyncRelativeRetryInvalidJsonPollingHandleError(resp)
 	}
 	return resp, nil
 }
 
-// PostAsyncRelativeRetryInvalidJSONPollingCreateRequest creates the PostAsyncRelativeRetryInvalidJSONPolling request.
-func (client LrosaDsClient) PostAsyncRelativeRetryInvalidJSONPollingCreateRequest(ctx context.Context, options *LrosaDsPostAsyncRelativeRetryInvalidJSONPollingOptions) (*azcore.Request, error) {
+// postAsyncRelativeRetryInvalidJsonPollingCreateRequest creates the PostAsyncRelativeRetryInvalidJSONPolling request.
+func (client LrosaDsClient) postAsyncRelativeRetryInvalidJsonPollingCreateRequest(ctx context.Context, options *LrosaDsPostAsyncRelativeRetryInvalidJSONPollingOptions) (*azcore.Request, error) {
 	urlPath := "/lro/error/postasync/retry/invalidjsonpolling"
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1096,8 +1096,8 @@ func (client LrosaDsClient) PostAsyncRelativeRetryInvalidJSONPollingCreateReques
 	return req, nil
 }
 
-// PostAsyncRelativeRetryInvalidJSONPollingHandleError handles the PostAsyncRelativeRetryInvalidJSONPolling error response.
-func (client LrosaDsClient) PostAsyncRelativeRetryInvalidJSONPollingHandleError(resp *azcore.Response) error {
+// postAsyncRelativeRetryInvalidJsonPollingHandleError handles the PostAsyncRelativeRetryInvalidJSONPolling error response.
+func (client LrosaDsClient) postAsyncRelativeRetryInvalidJsonPollingHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1116,7 +1116,7 @@ func (client LrosaDsClient) BeginPostAsyncRelativeRetryNoPayload(ctx context.Con
 	result := &HTTPPollerResponse{
 		RawResponse: resp.Response,
 	}
-	pt, err := armcore.NewPoller("LrosaDsClient.PostAsyncRelativeRetryNoPayload", "", resp, client.PostAsyncRelativeRetryNoPayloadHandleError)
+	pt, err := armcore.NewPoller("LrosaDsClient.PostAsyncRelativeRetryNoPayload", "", resp, client.postAsyncRelativeRetryNoPayloadHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1134,7 +1134,7 @@ func (client LrosaDsClient) BeginPostAsyncRelativeRetryNoPayload(ctx context.Con
 // ResumePostAsyncRelativeRetryNoPayload creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
 func (client LrosaDsClient) ResumePostAsyncRelativeRetryNoPayload(token string) (HTTPPoller, error) {
-	pt, err := armcore.NewPollerFromResumeToken("LrosaDsClient.PostAsyncRelativeRetryNoPayload", token, client.PostAsyncRelativeRetryNoPayloadHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("LrosaDsClient.PostAsyncRelativeRetryNoPayload", token, client.postAsyncRelativeRetryNoPayloadHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1148,7 +1148,7 @@ func (client LrosaDsClient) ResumePostAsyncRelativeRetryNoPayload(token string) 
 // Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
 func (client LrosaDsClient) PostAsyncRelativeRetryNoPayload(ctx context.Context, options *LrosaDsPostAsyncRelativeRetryNoPayloadOptions) (*azcore.Response, error) {
-	req, err := client.PostAsyncRelativeRetryNoPayloadCreateRequest(ctx, options)
+	req, err := client.postAsyncRelativeRetryNoPayloadCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -1157,13 +1157,13 @@ func (client LrosaDsClient) PostAsyncRelativeRetryNoPayload(ctx context.Context,
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusAccepted) {
-		return nil, client.PostAsyncRelativeRetryNoPayloadHandleError(resp)
+		return nil, client.postAsyncRelativeRetryNoPayloadHandleError(resp)
 	}
 	return resp, nil
 }
 
-// PostAsyncRelativeRetryNoPayloadCreateRequest creates the PostAsyncRelativeRetryNoPayload request.
-func (client LrosaDsClient) PostAsyncRelativeRetryNoPayloadCreateRequest(ctx context.Context, options *LrosaDsPostAsyncRelativeRetryNoPayloadOptions) (*azcore.Request, error) {
+// postAsyncRelativeRetryNoPayloadCreateRequest creates the PostAsyncRelativeRetryNoPayload request.
+func (client LrosaDsClient) postAsyncRelativeRetryNoPayloadCreateRequest(ctx context.Context, options *LrosaDsPostAsyncRelativeRetryNoPayloadOptions) (*azcore.Request, error) {
 	urlPath := "/lro/error/postasync/retry/nopayload"
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1177,8 +1177,8 @@ func (client LrosaDsClient) PostAsyncRelativeRetryNoPayloadCreateRequest(ctx con
 	return req, nil
 }
 
-// PostAsyncRelativeRetryNoPayloadHandleError handles the PostAsyncRelativeRetryNoPayload error response.
-func (client LrosaDsClient) PostAsyncRelativeRetryNoPayloadHandleError(resp *azcore.Response) error {
+// postAsyncRelativeRetryNoPayloadHandleError handles the PostAsyncRelativeRetryNoPayload error response.
+func (client LrosaDsClient) postAsyncRelativeRetryNoPayloadHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1195,7 +1195,7 @@ func (client LrosaDsClient) BeginPostNonRetry400(ctx context.Context, options *L
 	result := &HTTPPollerResponse{
 		RawResponse: resp.Response,
 	}
-	pt, err := armcore.NewPoller("LrosaDsClient.PostNonRetry400", "", resp, client.PostNonRetry400HandleError)
+	pt, err := armcore.NewPoller("LrosaDsClient.PostNonRetry400", "", resp, client.postNonRetry400HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1213,7 +1213,7 @@ func (client LrosaDsClient) BeginPostNonRetry400(ctx context.Context, options *L
 // ResumePostNonRetry400 creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
 func (client LrosaDsClient) ResumePostNonRetry400(token string) (HTTPPoller, error) {
-	pt, err := armcore.NewPollerFromResumeToken("LrosaDsClient.PostNonRetry400", token, client.PostNonRetry400HandleError)
+	pt, err := armcore.NewPollerFromResumeToken("LrosaDsClient.PostNonRetry400", token, client.postNonRetry400HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1225,7 +1225,7 @@ func (client LrosaDsClient) ResumePostNonRetry400(token string) (HTTPPoller, err
 
 // PostNonRetry400 - Long running post request, service returns a 400 with no error body
 func (client LrosaDsClient) PostNonRetry400(ctx context.Context, options *LrosaDsPostNonRetry400Options) (*azcore.Response, error) {
-	req, err := client.PostNonRetry400CreateRequest(ctx, options)
+	req, err := client.postNonRetry400CreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -1234,13 +1234,13 @@ func (client LrosaDsClient) PostNonRetry400(ctx context.Context, options *LrosaD
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusAccepted) {
-		return nil, client.PostNonRetry400HandleError(resp)
+		return nil, client.postNonRetry400HandleError(resp)
 	}
 	return resp, nil
 }
 
-// PostNonRetry400CreateRequest creates the PostNonRetry400 request.
-func (client LrosaDsClient) PostNonRetry400CreateRequest(ctx context.Context, options *LrosaDsPostNonRetry400Options) (*azcore.Request, error) {
+// postNonRetry400CreateRequest creates the PostNonRetry400 request.
+func (client LrosaDsClient) postNonRetry400CreateRequest(ctx context.Context, options *LrosaDsPostNonRetry400Options) (*azcore.Request, error) {
 	urlPath := "/lro/nonretryerror/post/400"
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1254,8 +1254,8 @@ func (client LrosaDsClient) PostNonRetry400CreateRequest(ctx context.Context, op
 	return req, nil
 }
 
-// PostNonRetry400HandleError handles the PostNonRetry400 error response.
-func (client LrosaDsClient) PostNonRetry400HandleError(resp *azcore.Response) error {
+// postNonRetry400HandleError handles the PostNonRetry400 error response.
+func (client LrosaDsClient) postNonRetry400HandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1272,7 +1272,7 @@ func (client LrosaDsClient) BeginPut200InvalidJSON(ctx context.Context, options 
 	result := &ProductPollerResponse{
 		RawResponse: resp.Response,
 	}
-	pt, err := armcore.NewPoller("LrosaDsClient.Put200InvalidJSON", "", resp, client.Put200InvalidJSONHandleError)
+	pt, err := armcore.NewPoller("LrosaDsClient.Put200InvalidJSON", "", resp, client.put200InvalidJsonHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1290,7 +1290,7 @@ func (client LrosaDsClient) BeginPut200InvalidJSON(ctx context.Context, options 
 // ResumePut200InvalidJSON creates a new ProductPoller from the specified resume token.
 // token - The value must come from a previous call to ProductPoller.ResumeToken().
 func (client LrosaDsClient) ResumePut200InvalidJSON(token string) (ProductPoller, error) {
-	pt, err := armcore.NewPollerFromResumeToken("LrosaDsClient.Put200InvalidJSON", token, client.Put200InvalidJSONHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("LrosaDsClient.Put200InvalidJSON", token, client.put200InvalidJsonHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1302,7 +1302,7 @@ func (client LrosaDsClient) ResumePut200InvalidJSON(token string) (ProductPoller
 
 // Put200InvalidJSON - Long running put request, service returns a 200 to the initial request, with an entity that is not a valid json
 func (client LrosaDsClient) Put200InvalidJSON(ctx context.Context, options *LrosaDsPut200InvalidJSONOptions) (*azcore.Response, error) {
-	req, err := client.Put200InvalidJSONCreateRequest(ctx, options)
+	req, err := client.put200InvalidJsonCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -1311,13 +1311,13 @@ func (client LrosaDsClient) Put200InvalidJSON(ctx context.Context, options *Lros
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusNoContent) {
-		return nil, client.Put200InvalidJSONHandleError(resp)
+		return nil, client.put200InvalidJsonHandleError(resp)
 	}
 	return resp, nil
 }
 
-// Put200InvalidJSONCreateRequest creates the Put200InvalidJSON request.
-func (client LrosaDsClient) Put200InvalidJSONCreateRequest(ctx context.Context, options *LrosaDsPut200InvalidJSONOptions) (*azcore.Request, error) {
+// put200InvalidJsonCreateRequest creates the Put200InvalidJSON request.
+func (client LrosaDsClient) put200InvalidJsonCreateRequest(ctx context.Context, options *LrosaDsPut200InvalidJSONOptions) (*azcore.Request, error) {
 	urlPath := "/lro/error/put/200/invalidjson"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1331,14 +1331,14 @@ func (client LrosaDsClient) Put200InvalidJSONCreateRequest(ctx context.Context, 
 	return req, nil
 }
 
-// Put200InvalidJSONHandleResponse handles the Put200InvalidJSON response.
-func (client LrosaDsClient) Put200InvalidJSONHandleResponse(resp *azcore.Response) (*ProductResponse, error) {
+// put200InvalidJsonHandleResponse handles the Put200InvalidJSON response.
+func (client LrosaDsClient) put200InvalidJsonHandleResponse(resp *azcore.Response) (*ProductResponse, error) {
 	result := ProductResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Product)
 }
 
-// Put200InvalidJSONHandleError handles the Put200InvalidJSON error response.
-func (client LrosaDsClient) Put200InvalidJSONHandleError(resp *azcore.Response) error {
+// put200InvalidJsonHandleError handles the Put200InvalidJSON error response.
+func (client LrosaDsClient) put200InvalidJsonHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1356,7 +1356,7 @@ func (client LrosaDsClient) BeginPutAsyncRelativeRetry400(ctx context.Context, o
 	result := &ProductPollerResponse{
 		RawResponse: resp.Response,
 	}
-	pt, err := armcore.NewPoller("LrosaDsClient.PutAsyncRelativeRetry400", "", resp, client.PutAsyncRelativeRetry400HandleError)
+	pt, err := armcore.NewPoller("LrosaDsClient.PutAsyncRelativeRetry400", "", resp, client.putAsyncRelativeRetry400HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1374,7 +1374,7 @@ func (client LrosaDsClient) BeginPutAsyncRelativeRetry400(ctx context.Context, o
 // ResumePutAsyncRelativeRetry400 creates a new ProductPoller from the specified resume token.
 // token - The value must come from a previous call to ProductPoller.ResumeToken().
 func (client LrosaDsClient) ResumePutAsyncRelativeRetry400(token string) (ProductPoller, error) {
-	pt, err := armcore.NewPollerFromResumeToken("LrosaDsClient.PutAsyncRelativeRetry400", token, client.PutAsyncRelativeRetry400HandleError)
+	pt, err := armcore.NewPollerFromResumeToken("LrosaDsClient.PutAsyncRelativeRetry400", token, client.putAsyncRelativeRetry400HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1387,7 +1387,7 @@ func (client LrosaDsClient) ResumePutAsyncRelativeRetry400(token string) (Produc
 // PutAsyncRelativeRetry400 - Long running put request, service returns a 200 with ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation
 // header for operation status
 func (client LrosaDsClient) PutAsyncRelativeRetry400(ctx context.Context, options *LrosaDsPutAsyncRelativeRetry400Options) (*azcore.Response, error) {
-	req, err := client.PutAsyncRelativeRetry400CreateRequest(ctx, options)
+	req, err := client.putAsyncRelativeRetry400CreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -1396,13 +1396,13 @@ func (client LrosaDsClient) PutAsyncRelativeRetry400(ctx context.Context, option
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.PutAsyncRelativeRetry400HandleError(resp)
+		return nil, client.putAsyncRelativeRetry400HandleError(resp)
 	}
 	return resp, nil
 }
 
-// PutAsyncRelativeRetry400CreateRequest creates the PutAsyncRelativeRetry400 request.
-func (client LrosaDsClient) PutAsyncRelativeRetry400CreateRequest(ctx context.Context, options *LrosaDsPutAsyncRelativeRetry400Options) (*azcore.Request, error) {
+// putAsyncRelativeRetry400CreateRequest creates the PutAsyncRelativeRetry400 request.
+func (client LrosaDsClient) putAsyncRelativeRetry400CreateRequest(ctx context.Context, options *LrosaDsPutAsyncRelativeRetry400Options) (*azcore.Request, error) {
 	urlPath := "/lro/nonretryerror/putasync/retry/400"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1416,14 +1416,14 @@ func (client LrosaDsClient) PutAsyncRelativeRetry400CreateRequest(ctx context.Co
 	return req, nil
 }
 
-// PutAsyncRelativeRetry400HandleResponse handles the PutAsyncRelativeRetry400 response.
-func (client LrosaDsClient) PutAsyncRelativeRetry400HandleResponse(resp *azcore.Response) (*ProductResponse, error) {
+// putAsyncRelativeRetry400HandleResponse handles the PutAsyncRelativeRetry400 response.
+func (client LrosaDsClient) putAsyncRelativeRetry400HandleResponse(resp *azcore.Response) (*ProductResponse, error) {
 	result := ProductResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Product)
 }
 
-// PutAsyncRelativeRetry400HandleError handles the PutAsyncRelativeRetry400 error response.
-func (client LrosaDsClient) PutAsyncRelativeRetry400HandleError(resp *azcore.Response) error {
+// putAsyncRelativeRetry400HandleError handles the PutAsyncRelativeRetry400 error response.
+func (client LrosaDsClient) putAsyncRelativeRetry400HandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1441,7 +1441,7 @@ func (client LrosaDsClient) BeginPutAsyncRelativeRetryInvalidHeader(ctx context.
 	result := &ProductPollerResponse{
 		RawResponse: resp.Response,
 	}
-	pt, err := armcore.NewPoller("LrosaDsClient.PutAsyncRelativeRetryInvalidHeader", "", resp, client.PutAsyncRelativeRetryInvalidHeaderHandleError)
+	pt, err := armcore.NewPoller("LrosaDsClient.PutAsyncRelativeRetryInvalidHeader", "", resp, client.putAsyncRelativeRetryInvalidHeaderHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1459,7 +1459,7 @@ func (client LrosaDsClient) BeginPutAsyncRelativeRetryInvalidHeader(ctx context.
 // ResumePutAsyncRelativeRetryInvalidHeader creates a new ProductPoller from the specified resume token.
 // token - The value must come from a previous call to ProductPoller.ResumeToken().
 func (client LrosaDsClient) ResumePutAsyncRelativeRetryInvalidHeader(token string) (ProductPoller, error) {
-	pt, err := armcore.NewPollerFromResumeToken("LrosaDsClient.PutAsyncRelativeRetryInvalidHeader", token, client.PutAsyncRelativeRetryInvalidHeaderHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("LrosaDsClient.PutAsyncRelativeRetryInvalidHeader", token, client.putAsyncRelativeRetryInvalidHeaderHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1472,7 +1472,7 @@ func (client LrosaDsClient) ResumePutAsyncRelativeRetryInvalidHeader(token strin
 // PutAsyncRelativeRetryInvalidHeader - Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’.
 // The endpoint indicated in the Azure-AsyncOperation header is invalid.
 func (client LrosaDsClient) PutAsyncRelativeRetryInvalidHeader(ctx context.Context, options *LrosaDsPutAsyncRelativeRetryInvalidHeaderOptions) (*azcore.Response, error) {
-	req, err := client.PutAsyncRelativeRetryInvalidHeaderCreateRequest(ctx, options)
+	req, err := client.putAsyncRelativeRetryInvalidHeaderCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -1481,13 +1481,13 @@ func (client LrosaDsClient) PutAsyncRelativeRetryInvalidHeader(ctx context.Conte
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.PutAsyncRelativeRetryInvalidHeaderHandleError(resp)
+		return nil, client.putAsyncRelativeRetryInvalidHeaderHandleError(resp)
 	}
 	return resp, nil
 }
 
-// PutAsyncRelativeRetryInvalidHeaderCreateRequest creates the PutAsyncRelativeRetryInvalidHeader request.
-func (client LrosaDsClient) PutAsyncRelativeRetryInvalidHeaderCreateRequest(ctx context.Context, options *LrosaDsPutAsyncRelativeRetryInvalidHeaderOptions) (*azcore.Request, error) {
+// putAsyncRelativeRetryInvalidHeaderCreateRequest creates the PutAsyncRelativeRetryInvalidHeader request.
+func (client LrosaDsClient) putAsyncRelativeRetryInvalidHeaderCreateRequest(ctx context.Context, options *LrosaDsPutAsyncRelativeRetryInvalidHeaderOptions) (*azcore.Request, error) {
 	urlPath := "/lro/error/putasync/retry/invalidheader"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1501,14 +1501,14 @@ func (client LrosaDsClient) PutAsyncRelativeRetryInvalidHeaderCreateRequest(ctx 
 	return req, nil
 }
 
-// PutAsyncRelativeRetryInvalidHeaderHandleResponse handles the PutAsyncRelativeRetryInvalidHeader response.
-func (client LrosaDsClient) PutAsyncRelativeRetryInvalidHeaderHandleResponse(resp *azcore.Response) (*ProductResponse, error) {
+// putAsyncRelativeRetryInvalidHeaderHandleResponse handles the PutAsyncRelativeRetryInvalidHeader response.
+func (client LrosaDsClient) putAsyncRelativeRetryInvalidHeaderHandleResponse(resp *azcore.Response) (*ProductResponse, error) {
 	result := ProductResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Product)
 }
 
-// PutAsyncRelativeRetryInvalidHeaderHandleError handles the PutAsyncRelativeRetryInvalidHeader error response.
-func (client LrosaDsClient) PutAsyncRelativeRetryInvalidHeaderHandleError(resp *azcore.Response) error {
+// putAsyncRelativeRetryInvalidHeaderHandleError handles the PutAsyncRelativeRetryInvalidHeader error response.
+func (client LrosaDsClient) putAsyncRelativeRetryInvalidHeaderHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1527,7 +1527,7 @@ func (client LrosaDsClient) BeginPutAsyncRelativeRetryInvalidJSONPolling(ctx con
 	result := &ProductPollerResponse{
 		RawResponse: resp.Response,
 	}
-	pt, err := armcore.NewPoller("LrosaDsClient.PutAsyncRelativeRetryInvalidJSONPolling", "", resp, client.PutAsyncRelativeRetryInvalidJSONPollingHandleError)
+	pt, err := armcore.NewPoller("LrosaDsClient.PutAsyncRelativeRetryInvalidJSONPolling", "", resp, client.putAsyncRelativeRetryInvalidJsonPollingHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1545,7 +1545,7 @@ func (client LrosaDsClient) BeginPutAsyncRelativeRetryInvalidJSONPolling(ctx con
 // ResumePutAsyncRelativeRetryInvalidJSONPolling creates a new ProductPoller from the specified resume token.
 // token - The value must come from a previous call to ProductPoller.ResumeToken().
 func (client LrosaDsClient) ResumePutAsyncRelativeRetryInvalidJSONPolling(token string) (ProductPoller, error) {
-	pt, err := armcore.NewPollerFromResumeToken("LrosaDsClient.PutAsyncRelativeRetryInvalidJSONPolling", token, client.PutAsyncRelativeRetryInvalidJSONPollingHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("LrosaDsClient.PutAsyncRelativeRetryInvalidJSONPolling", token, client.putAsyncRelativeRetryInvalidJsonPollingHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1559,7 +1559,7 @@ func (client LrosaDsClient) ResumePutAsyncRelativeRetryInvalidJSONPolling(token 
 // Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
 func (client LrosaDsClient) PutAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, options *LrosaDsPutAsyncRelativeRetryInvalidJSONPollingOptions) (*azcore.Response, error) {
-	req, err := client.PutAsyncRelativeRetryInvalidJSONPollingCreateRequest(ctx, options)
+	req, err := client.putAsyncRelativeRetryInvalidJsonPollingCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -1568,13 +1568,13 @@ func (client LrosaDsClient) PutAsyncRelativeRetryInvalidJSONPolling(ctx context.
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.PutAsyncRelativeRetryInvalidJSONPollingHandleError(resp)
+		return nil, client.putAsyncRelativeRetryInvalidJsonPollingHandleError(resp)
 	}
 	return resp, nil
 }
 
-// PutAsyncRelativeRetryInvalidJSONPollingCreateRequest creates the PutAsyncRelativeRetryInvalidJSONPolling request.
-func (client LrosaDsClient) PutAsyncRelativeRetryInvalidJSONPollingCreateRequest(ctx context.Context, options *LrosaDsPutAsyncRelativeRetryInvalidJSONPollingOptions) (*azcore.Request, error) {
+// putAsyncRelativeRetryInvalidJsonPollingCreateRequest creates the PutAsyncRelativeRetryInvalidJSONPolling request.
+func (client LrosaDsClient) putAsyncRelativeRetryInvalidJsonPollingCreateRequest(ctx context.Context, options *LrosaDsPutAsyncRelativeRetryInvalidJSONPollingOptions) (*azcore.Request, error) {
 	urlPath := "/lro/error/putasync/retry/invalidjsonpolling"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1588,14 +1588,14 @@ func (client LrosaDsClient) PutAsyncRelativeRetryInvalidJSONPollingCreateRequest
 	return req, nil
 }
 
-// PutAsyncRelativeRetryInvalidJSONPollingHandleResponse handles the PutAsyncRelativeRetryInvalidJSONPolling response.
-func (client LrosaDsClient) PutAsyncRelativeRetryInvalidJSONPollingHandleResponse(resp *azcore.Response) (*ProductResponse, error) {
+// putAsyncRelativeRetryInvalidJsonPollingHandleResponse handles the PutAsyncRelativeRetryInvalidJSONPolling response.
+func (client LrosaDsClient) putAsyncRelativeRetryInvalidJsonPollingHandleResponse(resp *azcore.Response) (*ProductResponse, error) {
 	result := ProductResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Product)
 }
 
-// PutAsyncRelativeRetryInvalidJSONPollingHandleError handles the PutAsyncRelativeRetryInvalidJSONPolling error response.
-func (client LrosaDsClient) PutAsyncRelativeRetryInvalidJSONPollingHandleError(resp *azcore.Response) error {
+// putAsyncRelativeRetryInvalidJsonPollingHandleError handles the PutAsyncRelativeRetryInvalidJSONPolling error response.
+func (client LrosaDsClient) putAsyncRelativeRetryInvalidJsonPollingHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1614,7 +1614,7 @@ func (client LrosaDsClient) BeginPutAsyncRelativeRetryNoStatus(ctx context.Conte
 	result := &ProductPollerResponse{
 		RawResponse: resp.Response,
 	}
-	pt, err := armcore.NewPoller("LrosaDsClient.PutAsyncRelativeRetryNoStatus", "", resp, client.PutAsyncRelativeRetryNoStatusHandleError)
+	pt, err := armcore.NewPoller("LrosaDsClient.PutAsyncRelativeRetryNoStatus", "", resp, client.putAsyncRelativeRetryNoStatusHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1632,7 +1632,7 @@ func (client LrosaDsClient) BeginPutAsyncRelativeRetryNoStatus(ctx context.Conte
 // ResumePutAsyncRelativeRetryNoStatus creates a new ProductPoller from the specified resume token.
 // token - The value must come from a previous call to ProductPoller.ResumeToken().
 func (client LrosaDsClient) ResumePutAsyncRelativeRetryNoStatus(token string) (ProductPoller, error) {
-	pt, err := armcore.NewPollerFromResumeToken("LrosaDsClient.PutAsyncRelativeRetryNoStatus", token, client.PutAsyncRelativeRetryNoStatusHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("LrosaDsClient.PutAsyncRelativeRetryNoStatus", token, client.putAsyncRelativeRetryNoStatusHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1646,7 +1646,7 @@ func (client LrosaDsClient) ResumePutAsyncRelativeRetryNoStatus(token string) (P
 // Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
 func (client LrosaDsClient) PutAsyncRelativeRetryNoStatus(ctx context.Context, options *LrosaDsPutAsyncRelativeRetryNoStatusOptions) (*azcore.Response, error) {
-	req, err := client.PutAsyncRelativeRetryNoStatusCreateRequest(ctx, options)
+	req, err := client.putAsyncRelativeRetryNoStatusCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -1655,13 +1655,13 @@ func (client LrosaDsClient) PutAsyncRelativeRetryNoStatus(ctx context.Context, o
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.PutAsyncRelativeRetryNoStatusHandleError(resp)
+		return nil, client.putAsyncRelativeRetryNoStatusHandleError(resp)
 	}
 	return resp, nil
 }
 
-// PutAsyncRelativeRetryNoStatusCreateRequest creates the PutAsyncRelativeRetryNoStatus request.
-func (client LrosaDsClient) PutAsyncRelativeRetryNoStatusCreateRequest(ctx context.Context, options *LrosaDsPutAsyncRelativeRetryNoStatusOptions) (*azcore.Request, error) {
+// putAsyncRelativeRetryNoStatusCreateRequest creates the PutAsyncRelativeRetryNoStatus request.
+func (client LrosaDsClient) putAsyncRelativeRetryNoStatusCreateRequest(ctx context.Context, options *LrosaDsPutAsyncRelativeRetryNoStatusOptions) (*azcore.Request, error) {
 	urlPath := "/lro/error/putasync/retry/nostatus"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1675,14 +1675,14 @@ func (client LrosaDsClient) PutAsyncRelativeRetryNoStatusCreateRequest(ctx conte
 	return req, nil
 }
 
-// PutAsyncRelativeRetryNoStatusHandleResponse handles the PutAsyncRelativeRetryNoStatus response.
-func (client LrosaDsClient) PutAsyncRelativeRetryNoStatusHandleResponse(resp *azcore.Response) (*ProductResponse, error) {
+// putAsyncRelativeRetryNoStatusHandleResponse handles the PutAsyncRelativeRetryNoStatus response.
+func (client LrosaDsClient) putAsyncRelativeRetryNoStatusHandleResponse(resp *azcore.Response) (*ProductResponse, error) {
 	result := ProductResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Product)
 }
 
-// PutAsyncRelativeRetryNoStatusHandleError handles the PutAsyncRelativeRetryNoStatus error response.
-func (client LrosaDsClient) PutAsyncRelativeRetryNoStatusHandleError(resp *azcore.Response) error {
+// putAsyncRelativeRetryNoStatusHandleError handles the PutAsyncRelativeRetryNoStatus error response.
+func (client LrosaDsClient) putAsyncRelativeRetryNoStatusHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1701,7 +1701,7 @@ func (client LrosaDsClient) BeginPutAsyncRelativeRetryNoStatusPayload(ctx contex
 	result := &ProductPollerResponse{
 		RawResponse: resp.Response,
 	}
-	pt, err := armcore.NewPoller("LrosaDsClient.PutAsyncRelativeRetryNoStatusPayload", "", resp, client.PutAsyncRelativeRetryNoStatusPayloadHandleError)
+	pt, err := armcore.NewPoller("LrosaDsClient.PutAsyncRelativeRetryNoStatusPayload", "", resp, client.putAsyncRelativeRetryNoStatusPayloadHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1719,7 +1719,7 @@ func (client LrosaDsClient) BeginPutAsyncRelativeRetryNoStatusPayload(ctx contex
 // ResumePutAsyncRelativeRetryNoStatusPayload creates a new ProductPoller from the specified resume token.
 // token - The value must come from a previous call to ProductPoller.ResumeToken().
 func (client LrosaDsClient) ResumePutAsyncRelativeRetryNoStatusPayload(token string) (ProductPoller, error) {
-	pt, err := armcore.NewPollerFromResumeToken("LrosaDsClient.PutAsyncRelativeRetryNoStatusPayload", token, client.PutAsyncRelativeRetryNoStatusPayloadHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("LrosaDsClient.PutAsyncRelativeRetryNoStatusPayload", token, client.putAsyncRelativeRetryNoStatusPayloadHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1733,7 +1733,7 @@ func (client LrosaDsClient) ResumePutAsyncRelativeRetryNoStatusPayload(token str
 // Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
 func (client LrosaDsClient) PutAsyncRelativeRetryNoStatusPayload(ctx context.Context, options *LrosaDsPutAsyncRelativeRetryNoStatusPayloadOptions) (*azcore.Response, error) {
-	req, err := client.PutAsyncRelativeRetryNoStatusPayloadCreateRequest(ctx, options)
+	req, err := client.putAsyncRelativeRetryNoStatusPayloadCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -1742,13 +1742,13 @@ func (client LrosaDsClient) PutAsyncRelativeRetryNoStatusPayload(ctx context.Con
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.PutAsyncRelativeRetryNoStatusPayloadHandleError(resp)
+		return nil, client.putAsyncRelativeRetryNoStatusPayloadHandleError(resp)
 	}
 	return resp, nil
 }
 
-// PutAsyncRelativeRetryNoStatusPayloadCreateRequest creates the PutAsyncRelativeRetryNoStatusPayload request.
-func (client LrosaDsClient) PutAsyncRelativeRetryNoStatusPayloadCreateRequest(ctx context.Context, options *LrosaDsPutAsyncRelativeRetryNoStatusPayloadOptions) (*azcore.Request, error) {
+// putAsyncRelativeRetryNoStatusPayloadCreateRequest creates the PutAsyncRelativeRetryNoStatusPayload request.
+func (client LrosaDsClient) putAsyncRelativeRetryNoStatusPayloadCreateRequest(ctx context.Context, options *LrosaDsPutAsyncRelativeRetryNoStatusPayloadOptions) (*azcore.Request, error) {
 	urlPath := "/lro/error/putasync/retry/nostatuspayload"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1762,14 +1762,14 @@ func (client LrosaDsClient) PutAsyncRelativeRetryNoStatusPayloadCreateRequest(ct
 	return req, nil
 }
 
-// PutAsyncRelativeRetryNoStatusPayloadHandleResponse handles the PutAsyncRelativeRetryNoStatusPayload response.
-func (client LrosaDsClient) PutAsyncRelativeRetryNoStatusPayloadHandleResponse(resp *azcore.Response) (*ProductResponse, error) {
+// putAsyncRelativeRetryNoStatusPayloadHandleResponse handles the PutAsyncRelativeRetryNoStatusPayload response.
+func (client LrosaDsClient) putAsyncRelativeRetryNoStatusPayloadHandleResponse(resp *azcore.Response) (*ProductResponse, error) {
 	result := ProductResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Product)
 }
 
-// PutAsyncRelativeRetryNoStatusPayloadHandleError handles the PutAsyncRelativeRetryNoStatusPayload error response.
-func (client LrosaDsClient) PutAsyncRelativeRetryNoStatusPayloadHandleError(resp *azcore.Response) error {
+// putAsyncRelativeRetryNoStatusPayloadHandleError handles the PutAsyncRelativeRetryNoStatusPayload error response.
+func (client LrosaDsClient) putAsyncRelativeRetryNoStatusPayloadHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1786,7 +1786,7 @@ func (client LrosaDsClient) BeginPutError201NoProvisioningStatePayload(ctx conte
 	result := &ProductPollerResponse{
 		RawResponse: resp.Response,
 	}
-	pt, err := armcore.NewPoller("LrosaDsClient.PutError201NoProvisioningStatePayload", "", resp, client.PutError201NoProvisioningStatePayloadHandleError)
+	pt, err := armcore.NewPoller("LrosaDsClient.PutError201NoProvisioningStatePayload", "", resp, client.putError201NoProvisioningStatePayloadHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1804,7 +1804,7 @@ func (client LrosaDsClient) BeginPutError201NoProvisioningStatePayload(ctx conte
 // ResumePutError201NoProvisioningStatePayload creates a new ProductPoller from the specified resume token.
 // token - The value must come from a previous call to ProductPoller.ResumeToken().
 func (client LrosaDsClient) ResumePutError201NoProvisioningStatePayload(token string) (ProductPoller, error) {
-	pt, err := armcore.NewPollerFromResumeToken("LrosaDsClient.PutError201NoProvisioningStatePayload", token, client.PutError201NoProvisioningStatePayloadHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("LrosaDsClient.PutError201NoProvisioningStatePayload", token, client.putError201NoProvisioningStatePayloadHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1816,7 +1816,7 @@ func (client LrosaDsClient) ResumePutError201NoProvisioningStatePayload(token st
 
 // PutError201NoProvisioningStatePayload - Long running put request, service returns a 201 to the initial request with no payload
 func (client LrosaDsClient) PutError201NoProvisioningStatePayload(ctx context.Context, options *LrosaDsPutError201NoProvisioningStatePayloadOptions) (*azcore.Response, error) {
-	req, err := client.PutError201NoProvisioningStatePayloadCreateRequest(ctx, options)
+	req, err := client.putError201NoProvisioningStatePayloadCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -1825,13 +1825,13 @@ func (client LrosaDsClient) PutError201NoProvisioningStatePayload(ctx context.Co
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
-		return nil, client.PutError201NoProvisioningStatePayloadHandleError(resp)
+		return nil, client.putError201NoProvisioningStatePayloadHandleError(resp)
 	}
 	return resp, nil
 }
 
-// PutError201NoProvisioningStatePayloadCreateRequest creates the PutError201NoProvisioningStatePayload request.
-func (client LrosaDsClient) PutError201NoProvisioningStatePayloadCreateRequest(ctx context.Context, options *LrosaDsPutError201NoProvisioningStatePayloadOptions) (*azcore.Request, error) {
+// putError201NoProvisioningStatePayloadCreateRequest creates the PutError201NoProvisioningStatePayload request.
+func (client LrosaDsClient) putError201NoProvisioningStatePayloadCreateRequest(ctx context.Context, options *LrosaDsPutError201NoProvisioningStatePayloadOptions) (*azcore.Request, error) {
 	urlPath := "/lro/error/put/201/noprovisioningstatepayload"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1845,14 +1845,14 @@ func (client LrosaDsClient) PutError201NoProvisioningStatePayloadCreateRequest(c
 	return req, nil
 }
 
-// PutError201NoProvisioningStatePayloadHandleResponse handles the PutError201NoProvisioningStatePayload response.
-func (client LrosaDsClient) PutError201NoProvisioningStatePayloadHandleResponse(resp *azcore.Response) (*ProductResponse, error) {
+// putError201NoProvisioningStatePayloadHandleResponse handles the PutError201NoProvisioningStatePayload response.
+func (client LrosaDsClient) putError201NoProvisioningStatePayloadHandleResponse(resp *azcore.Response) (*ProductResponse, error) {
 	result := ProductResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Product)
 }
 
-// PutError201NoProvisioningStatePayloadHandleError handles the PutError201NoProvisioningStatePayload error response.
-func (client LrosaDsClient) PutError201NoProvisioningStatePayloadHandleError(resp *azcore.Response) error {
+// putError201NoProvisioningStatePayloadHandleError handles the PutError201NoProvisioningStatePayload error response.
+func (client LrosaDsClient) putError201NoProvisioningStatePayloadHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1869,7 +1869,7 @@ func (client LrosaDsClient) BeginPutNonRetry201Creating400(ctx context.Context, 
 	result := &ProductPollerResponse{
 		RawResponse: resp.Response,
 	}
-	pt, err := armcore.NewPoller("LrosaDsClient.PutNonRetry201Creating400", "", resp, client.PutNonRetry201Creating400HandleError)
+	pt, err := armcore.NewPoller("LrosaDsClient.PutNonRetry201Creating400", "", resp, client.putNonRetry201Creating400HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1887,7 +1887,7 @@ func (client LrosaDsClient) BeginPutNonRetry201Creating400(ctx context.Context, 
 // ResumePutNonRetry201Creating400 creates a new ProductPoller from the specified resume token.
 // token - The value must come from a previous call to ProductPoller.ResumeToken().
 func (client LrosaDsClient) ResumePutNonRetry201Creating400(token string) (ProductPoller, error) {
-	pt, err := armcore.NewPollerFromResumeToken("LrosaDsClient.PutNonRetry201Creating400", token, client.PutNonRetry201Creating400HandleError)
+	pt, err := armcore.NewPollerFromResumeToken("LrosaDsClient.PutNonRetry201Creating400", token, client.putNonRetry201Creating400HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1899,7 +1899,7 @@ func (client LrosaDsClient) ResumePutNonRetry201Creating400(token string) (Produ
 
 // PutNonRetry201Creating400 - Long running put request, service returns a Product with 'ProvisioningState' = 'Creating' and 201 response code
 func (client LrosaDsClient) PutNonRetry201Creating400(ctx context.Context, options *LrosaDsPutNonRetry201Creating400Options) (*azcore.Response, error) {
-	req, err := client.PutNonRetry201Creating400CreateRequest(ctx, options)
+	req, err := client.putNonRetry201Creating400CreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -1908,13 +1908,13 @@ func (client LrosaDsClient) PutNonRetry201Creating400(ctx context.Context, optio
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
-		return nil, client.PutNonRetry201Creating400HandleError(resp)
+		return nil, client.putNonRetry201Creating400HandleError(resp)
 	}
 	return resp, nil
 }
 
-// PutNonRetry201Creating400CreateRequest creates the PutNonRetry201Creating400 request.
-func (client LrosaDsClient) PutNonRetry201Creating400CreateRequest(ctx context.Context, options *LrosaDsPutNonRetry201Creating400Options) (*azcore.Request, error) {
+// putNonRetry201Creating400CreateRequest creates the PutNonRetry201Creating400 request.
+func (client LrosaDsClient) putNonRetry201Creating400CreateRequest(ctx context.Context, options *LrosaDsPutNonRetry201Creating400Options) (*azcore.Request, error) {
 	urlPath := "/lro/nonretryerror/put/201/creating/400"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1928,14 +1928,14 @@ func (client LrosaDsClient) PutNonRetry201Creating400CreateRequest(ctx context.C
 	return req, nil
 }
 
-// PutNonRetry201Creating400HandleResponse handles the PutNonRetry201Creating400 response.
-func (client LrosaDsClient) PutNonRetry201Creating400HandleResponse(resp *azcore.Response) (*ProductResponse, error) {
+// putNonRetry201Creating400HandleResponse handles the PutNonRetry201Creating400 response.
+func (client LrosaDsClient) putNonRetry201Creating400HandleResponse(resp *azcore.Response) (*ProductResponse, error) {
 	result := ProductResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Product)
 }
 
-// PutNonRetry201Creating400HandleError handles the PutNonRetry201Creating400 error response.
-func (client LrosaDsClient) PutNonRetry201Creating400HandleError(resp *azcore.Response) error {
+// putNonRetry201Creating400HandleError handles the PutNonRetry201Creating400 error response.
+func (client LrosaDsClient) putNonRetry201Creating400HandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1953,7 +1953,7 @@ func (client LrosaDsClient) BeginPutNonRetry201Creating400InvalidJSON(ctx contex
 	result := &ProductPollerResponse{
 		RawResponse: resp.Response,
 	}
-	pt, err := armcore.NewPoller("LrosaDsClient.PutNonRetry201Creating400InvalidJSON", "", resp, client.PutNonRetry201Creating400InvalidJSONHandleError)
+	pt, err := armcore.NewPoller("LrosaDsClient.PutNonRetry201Creating400InvalidJSON", "", resp, client.putNonRetry201Creating400InvalidJsonHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1971,7 +1971,7 @@ func (client LrosaDsClient) BeginPutNonRetry201Creating400InvalidJSON(ctx contex
 // ResumePutNonRetry201Creating400InvalidJSON creates a new ProductPoller from the specified resume token.
 // token - The value must come from a previous call to ProductPoller.ResumeToken().
 func (client LrosaDsClient) ResumePutNonRetry201Creating400InvalidJSON(token string) (ProductPoller, error) {
-	pt, err := armcore.NewPollerFromResumeToken("LrosaDsClient.PutNonRetry201Creating400InvalidJSON", token, client.PutNonRetry201Creating400InvalidJSONHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("LrosaDsClient.PutNonRetry201Creating400InvalidJSON", token, client.putNonRetry201Creating400InvalidJsonHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1983,7 +1983,7 @@ func (client LrosaDsClient) ResumePutNonRetry201Creating400InvalidJSON(token str
 
 // PutNonRetry201Creating400InvalidJSON - Long running put request, service returns a Product with 'ProvisioningState' = 'Creating' and 201 response code
 func (client LrosaDsClient) PutNonRetry201Creating400InvalidJSON(ctx context.Context, options *LrosaDsPutNonRetry201Creating400InvalidJSONOptions) (*azcore.Response, error) {
-	req, err := client.PutNonRetry201Creating400InvalidJSONCreateRequest(ctx, options)
+	req, err := client.putNonRetry201Creating400InvalidJsonCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -1992,13 +1992,13 @@ func (client LrosaDsClient) PutNonRetry201Creating400InvalidJSON(ctx context.Con
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
-		return nil, client.PutNonRetry201Creating400InvalidJSONHandleError(resp)
+		return nil, client.putNonRetry201Creating400InvalidJsonHandleError(resp)
 	}
 	return resp, nil
 }
 
-// PutNonRetry201Creating400InvalidJSONCreateRequest creates the PutNonRetry201Creating400InvalidJSON request.
-func (client LrosaDsClient) PutNonRetry201Creating400InvalidJSONCreateRequest(ctx context.Context, options *LrosaDsPutNonRetry201Creating400InvalidJSONOptions) (*azcore.Request, error) {
+// putNonRetry201Creating400InvalidJsonCreateRequest creates the PutNonRetry201Creating400InvalidJSON request.
+func (client LrosaDsClient) putNonRetry201Creating400InvalidJsonCreateRequest(ctx context.Context, options *LrosaDsPutNonRetry201Creating400InvalidJSONOptions) (*azcore.Request, error) {
 	urlPath := "/lro/nonretryerror/put/201/creating/400/invalidjson"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -2012,14 +2012,14 @@ func (client LrosaDsClient) PutNonRetry201Creating400InvalidJSONCreateRequest(ct
 	return req, nil
 }
 
-// PutNonRetry201Creating400InvalidJSONHandleResponse handles the PutNonRetry201Creating400InvalidJSON response.
-func (client LrosaDsClient) PutNonRetry201Creating400InvalidJSONHandleResponse(resp *azcore.Response) (*ProductResponse, error) {
+// putNonRetry201Creating400InvalidJsonHandleResponse handles the PutNonRetry201Creating400InvalidJSON response.
+func (client LrosaDsClient) putNonRetry201Creating400InvalidJsonHandleResponse(resp *azcore.Response) (*ProductResponse, error) {
 	result := ProductResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Product)
 }
 
-// PutNonRetry201Creating400InvalidJSONHandleError handles the PutNonRetry201Creating400InvalidJSON error response.
-func (client LrosaDsClient) PutNonRetry201Creating400InvalidJSONHandleError(resp *azcore.Response) error {
+// putNonRetry201Creating400InvalidJsonHandleError handles the PutNonRetry201Creating400InvalidJSON error response.
+func (client LrosaDsClient) putNonRetry201Creating400InvalidJsonHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -2036,7 +2036,7 @@ func (client LrosaDsClient) BeginPutNonRetry400(ctx context.Context, options *Lr
 	result := &ProductPollerResponse{
 		RawResponse: resp.Response,
 	}
-	pt, err := armcore.NewPoller("LrosaDsClient.PutNonRetry400", "", resp, client.PutNonRetry400HandleError)
+	pt, err := armcore.NewPoller("LrosaDsClient.PutNonRetry400", "", resp, client.putNonRetry400HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -2054,7 +2054,7 @@ func (client LrosaDsClient) BeginPutNonRetry400(ctx context.Context, options *Lr
 // ResumePutNonRetry400 creates a new ProductPoller from the specified resume token.
 // token - The value must come from a previous call to ProductPoller.ResumeToken().
 func (client LrosaDsClient) ResumePutNonRetry400(token string) (ProductPoller, error) {
-	pt, err := armcore.NewPollerFromResumeToken("LrosaDsClient.PutNonRetry400", token, client.PutNonRetry400HandleError)
+	pt, err := armcore.NewPollerFromResumeToken("LrosaDsClient.PutNonRetry400", token, client.putNonRetry400HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -2066,7 +2066,7 @@ func (client LrosaDsClient) ResumePutNonRetry400(token string) (ProductPoller, e
 
 // PutNonRetry400 - Long running put request, service returns a 400 to the initial request
 func (client LrosaDsClient) PutNonRetry400(ctx context.Context, options *LrosaDsPutNonRetry400Options) (*azcore.Response, error) {
-	req, err := client.PutNonRetry400CreateRequest(ctx, options)
+	req, err := client.putNonRetry400CreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -2075,13 +2075,13 @@ func (client LrosaDsClient) PutNonRetry400(ctx context.Context, options *LrosaDs
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
-		return nil, client.PutNonRetry400HandleError(resp)
+		return nil, client.putNonRetry400HandleError(resp)
 	}
 	return resp, nil
 }
 
-// PutNonRetry400CreateRequest creates the PutNonRetry400 request.
-func (client LrosaDsClient) PutNonRetry400CreateRequest(ctx context.Context, options *LrosaDsPutNonRetry400Options) (*azcore.Request, error) {
+// putNonRetry400CreateRequest creates the PutNonRetry400 request.
+func (client LrosaDsClient) putNonRetry400CreateRequest(ctx context.Context, options *LrosaDsPutNonRetry400Options) (*azcore.Request, error) {
 	urlPath := "/lro/nonretryerror/put/400"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -2095,14 +2095,14 @@ func (client LrosaDsClient) PutNonRetry400CreateRequest(ctx context.Context, opt
 	return req, nil
 }
 
-// PutNonRetry400HandleResponse handles the PutNonRetry400 response.
-func (client LrosaDsClient) PutNonRetry400HandleResponse(resp *azcore.Response) (*ProductResponse, error) {
+// putNonRetry400HandleResponse handles the PutNonRetry400 response.
+func (client LrosaDsClient) putNonRetry400HandleResponse(resp *azcore.Response) (*ProductResponse, error) {
 	result := ProductResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Product)
 }
 
-// PutNonRetry400HandleError handles the PutNonRetry400 error response.
-func (client LrosaDsClient) PutNonRetry400HandleError(resp *azcore.Response) error {
+// putNonRetry400HandleError handles the PutNonRetry400 error response.
+func (client LrosaDsClient) putNonRetry400HandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

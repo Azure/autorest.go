@@ -41,10 +41,10 @@ func (client UsageClient) List(location string, options *UsageListOptions) ListU
 	return &listUsagesResultPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
-			return client.ListCreateRequest(ctx, location, options)
+			return client.listCreateRequest(ctx, location, options)
 		},
-		responder: client.ListHandleResponse,
-		errorer:   client.ListHandleError,
+		responder: client.listHandleResponse,
+		errorer:   client.listHandleError,
 		advancer: func(ctx context.Context, resp *ListUsagesResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ListUsagesResult.NextLink)
 		},
@@ -52,8 +52,8 @@ func (client UsageClient) List(location string, options *UsageListOptions) ListU
 	}
 }
 
-// ListCreateRequest creates the List request.
-func (client UsageClient) ListCreateRequest(ctx context.Context, location string, options *UsageListOptions) (*azcore.Request, error) {
+// listCreateRequest creates the List request.
+func (client UsageClient) listCreateRequest(ctx context.Context, location string, options *UsageListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/usages"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
@@ -69,14 +69,14 @@ func (client UsageClient) ListCreateRequest(ctx context.Context, location string
 	return req, nil
 }
 
-// ListHandleResponse handles the List response.
-func (client UsageClient) ListHandleResponse(resp *azcore.Response) (*ListUsagesResultResponse, error) {
+// listHandleResponse handles the List response.
+func (client UsageClient) listHandleResponse(resp *azcore.Response) (*ListUsagesResultResponse, error) {
 	result := ListUsagesResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ListUsagesResult)
 }
 
-// ListHandleError handles the List error response.
-func (client UsageClient) ListHandleError(resp *azcore.Response) error {
+// listHandleError handles the List error response.
+func (client UsageClient) listHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)

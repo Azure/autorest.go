@@ -34,7 +34,7 @@ func (client HTTPSuccessClient) Pipeline() azcore.Pipeline {
 
 // Head200 - Return 200 status code if successful
 func (client HTTPSuccessClient) Head200(ctx context.Context, options *HTTPSuccessHead200Options) (*BooleanResponse, error) {
-	req, err := client.Head200CreateRequest(ctx, options)
+	req, err := client.head200CreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -47,12 +47,12 @@ func (client HTTPSuccessClient) Head200(ctx context.Context, options *HTTPSucces
 	} else if resp.StatusCode >= 400 && resp.StatusCode < 500 {
 		return &BooleanResponse{RawResponse: resp.Response, Success: false}, nil
 	} else {
-		return nil, client.Head200HandleError(resp)
+		return nil, client.head200HandleError(resp)
 	}
 }
 
-// Head200CreateRequest creates the Head200 request.
-func (client HTTPSuccessClient) Head200CreateRequest(ctx context.Context, options *HTTPSuccessHead200Options) (*azcore.Request, error) {
+// head200CreateRequest creates the Head200 request.
+func (client HTTPSuccessClient) head200CreateRequest(ctx context.Context, options *HTTPSuccessHead200Options) (*azcore.Request, error) {
 	urlPath := "/http/success/200"
 	req, err := azcore.NewRequest(ctx, http.MethodHead, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -62,8 +62,8 @@ func (client HTTPSuccessClient) Head200CreateRequest(ctx context.Context, option
 	return req, nil
 }
 
-// Head200HandleError handles the Head200 error response.
-func (client HTTPSuccessClient) Head200HandleError(resp *azcore.Response) error {
+// head200HandleError handles the Head200 error response.
+func (client HTTPSuccessClient) head200HandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -76,7 +76,7 @@ func (client HTTPSuccessClient) Head200HandleError(resp *azcore.Response) error 
 
 // Head204 - Return 204 status code if successful
 func (client HTTPSuccessClient) Head204(ctx context.Context, options *HTTPSuccessHead204Options) (*BooleanResponse, error) {
-	req, err := client.Head204CreateRequest(ctx, options)
+	req, err := client.head204CreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -89,12 +89,12 @@ func (client HTTPSuccessClient) Head204(ctx context.Context, options *HTTPSucces
 	} else if resp.StatusCode >= 400 && resp.StatusCode < 500 {
 		return &BooleanResponse{RawResponse: resp.Response, Success: false}, nil
 	} else {
-		return nil, client.Head204HandleError(resp)
+		return nil, client.head204HandleError(resp)
 	}
 }
 
-// Head204CreateRequest creates the Head204 request.
-func (client HTTPSuccessClient) Head204CreateRequest(ctx context.Context, options *HTTPSuccessHead204Options) (*azcore.Request, error) {
+// head204CreateRequest creates the Head204 request.
+func (client HTTPSuccessClient) head204CreateRequest(ctx context.Context, options *HTTPSuccessHead204Options) (*azcore.Request, error) {
 	urlPath := "/http/success/204"
 	req, err := azcore.NewRequest(ctx, http.MethodHead, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -104,8 +104,8 @@ func (client HTTPSuccessClient) Head204CreateRequest(ctx context.Context, option
 	return req, nil
 }
 
-// Head204HandleError handles the Head204 error response.
-func (client HTTPSuccessClient) Head204HandleError(resp *azcore.Response) error {
+// head204HandleError handles the Head204 error response.
+func (client HTTPSuccessClient) head204HandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -118,7 +118,7 @@ func (client HTTPSuccessClient) Head204HandleError(resp *azcore.Response) error 
 
 // Head404 - Return 404 status code if successful
 func (client HTTPSuccessClient) Head404(ctx context.Context, options *HTTPSuccessHead404Options) (*BooleanResponse, error) {
-	req, err := client.Head404CreateRequest(ctx, options)
+	req, err := client.head404CreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -131,12 +131,12 @@ func (client HTTPSuccessClient) Head404(ctx context.Context, options *HTTPSucces
 	} else if resp.StatusCode >= 400 && resp.StatusCode < 500 {
 		return &BooleanResponse{RawResponse: resp.Response, Success: false}, nil
 	} else {
-		return nil, client.Head404HandleError(resp)
+		return nil, client.head404HandleError(resp)
 	}
 }
 
-// Head404CreateRequest creates the Head404 request.
-func (client HTTPSuccessClient) Head404CreateRequest(ctx context.Context, options *HTTPSuccessHead404Options) (*azcore.Request, error) {
+// head404CreateRequest creates the Head404 request.
+func (client HTTPSuccessClient) head404CreateRequest(ctx context.Context, options *HTTPSuccessHead404Options) (*azcore.Request, error) {
 	urlPath := "/http/success/404"
 	req, err := azcore.NewRequest(ctx, http.MethodHead, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -146,8 +146,8 @@ func (client HTTPSuccessClient) Head404CreateRequest(ctx context.Context, option
 	return req, nil
 }
 
-// Head404HandleError handles the Head404 error response.
-func (client HTTPSuccessClient) Head404HandleError(resp *azcore.Response) error {
+// head404HandleError handles the Head404 error response.
+func (client HTTPSuccessClient) head404HandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)

@@ -38,10 +38,10 @@ func (client ExpressRouteServiceProvidersClient) List(options *ExpressRouteServi
 	return &expressRouteServiceProviderListResultPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
-			return client.ListCreateRequest(ctx, options)
+			return client.listCreateRequest(ctx, options)
 		},
-		responder: client.ListHandleResponse,
-		errorer:   client.ListHandleError,
+		responder: client.listHandleResponse,
+		errorer:   client.listHandleError,
 		advancer: func(ctx context.Context, resp *ExpressRouteServiceProviderListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ExpressRouteServiceProviderListResult.NextLink)
 		},
@@ -49,8 +49,8 @@ func (client ExpressRouteServiceProvidersClient) List(options *ExpressRouteServi
 	}
 }
 
-// ListCreateRequest creates the List request.
-func (client ExpressRouteServiceProvidersClient) ListCreateRequest(ctx context.Context, options *ExpressRouteServiceProvidersListOptions) (*azcore.Request, error) {
+// listCreateRequest creates the List request.
+func (client ExpressRouteServiceProvidersClient) listCreateRequest(ctx context.Context, options *ExpressRouteServiceProvidersListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteServiceProviders"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -65,14 +65,14 @@ func (client ExpressRouteServiceProvidersClient) ListCreateRequest(ctx context.C
 	return req, nil
 }
 
-// ListHandleResponse handles the List response.
-func (client ExpressRouteServiceProvidersClient) ListHandleResponse(resp *azcore.Response) (*ExpressRouteServiceProviderListResultResponse, error) {
+// listHandleResponse handles the List response.
+func (client ExpressRouteServiceProvidersClient) listHandleResponse(resp *azcore.Response) (*ExpressRouteServiceProviderListResultResponse, error) {
 	result := ExpressRouteServiceProviderListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ExpressRouteServiceProviderListResult)
 }
 
-// ListHandleError handles the List error response.
-func (client ExpressRouteServiceProvidersClient) ListHandleError(resp *azcore.Response) error {
+// listHandleError handles the List error response.
+func (client ExpressRouteServiceProvidersClient) listHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

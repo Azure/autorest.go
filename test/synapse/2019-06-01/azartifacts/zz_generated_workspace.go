@@ -24,7 +24,7 @@ func (client workspaceClient) Pipeline() azcore.Pipeline {
 
 // Get - Get Workspace
 func (client workspaceClient) Get(ctx context.Context, options *WorkspaceGetOptions) (*WorkspaceResponse, error) {
-	req, err := client.GetCreateRequest(ctx, options)
+	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -33,17 +33,17 @@ func (client workspaceClient) Get(ctx context.Context, options *WorkspaceGetOpti
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetHandleError(resp)
+		return nil, client.getHandleError(resp)
 	}
-	result, err := client.GetHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// GetCreateRequest creates the Get request.
-func (client workspaceClient) GetCreateRequest(ctx context.Context, options *WorkspaceGetOptions) (*azcore.Request, error) {
+// getCreateRequest creates the Get request.
+func (client workspaceClient) getCreateRequest(ctx context.Context, options *WorkspaceGetOptions) (*azcore.Request, error) {
 	urlPath := "/workspace"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -57,14 +57,14 @@ func (client workspaceClient) GetCreateRequest(ctx context.Context, options *Wor
 	return req, nil
 }
 
-// GetHandleResponse handles the Get response.
-func (client workspaceClient) GetHandleResponse(resp *azcore.Response) (*WorkspaceResponse, error) {
+// getHandleResponse handles the Get response.
+func (client workspaceClient) getHandleResponse(resp *azcore.Response) (*WorkspaceResponse, error) {
 	result := WorkspaceResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Workspace)
 }
 
-// GetHandleError handles the Get error response.
-func (client workspaceClient) GetHandleError(resp *azcore.Response) error {
+// getHandleError handles the Get error response.
+func (client workspaceClient) getHandleError(resp *azcore.Response) error {
 	var err ErrorContract
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

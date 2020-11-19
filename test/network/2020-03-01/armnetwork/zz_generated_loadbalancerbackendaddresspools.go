@@ -35,7 +35,7 @@ func (client LoadBalancerBackendAddressPoolsClient) Pipeline() azcore.Pipeline {
 
 // Get - Gets load balancer backend address pool.
 func (client LoadBalancerBackendAddressPoolsClient) Get(ctx context.Context, resourceGroupName string, loadBalancerName string, backendAddressPoolName string, options *LoadBalancerBackendAddressPoolsGetOptions) (*BackendAddressPoolResponse, error) {
-	req, err := client.GetCreateRequest(ctx, resourceGroupName, loadBalancerName, backendAddressPoolName, options)
+	req, err := client.getCreateRequest(ctx, resourceGroupName, loadBalancerName, backendAddressPoolName, options)
 	if err != nil {
 		return nil, err
 	}
@@ -44,17 +44,17 @@ func (client LoadBalancerBackendAddressPoolsClient) Get(ctx context.Context, res
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetHandleError(resp)
+		return nil, client.getHandleError(resp)
 	}
-	result, err := client.GetHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// GetCreateRequest creates the Get request.
-func (client LoadBalancerBackendAddressPoolsClient) GetCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, backendAddressPoolName string, options *LoadBalancerBackendAddressPoolsGetOptions) (*azcore.Request, error) {
+// getCreateRequest creates the Get request.
+func (client LoadBalancerBackendAddressPoolsClient) getCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, backendAddressPoolName string, options *LoadBalancerBackendAddressPoolsGetOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/backendAddressPools/{backendAddressPoolName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{loadBalancerName}", url.PathEscape(loadBalancerName))
@@ -72,14 +72,14 @@ func (client LoadBalancerBackendAddressPoolsClient) GetCreateRequest(ctx context
 	return req, nil
 }
 
-// GetHandleResponse handles the Get response.
-func (client LoadBalancerBackendAddressPoolsClient) GetHandleResponse(resp *azcore.Response) (*BackendAddressPoolResponse, error) {
+// getHandleResponse handles the Get response.
+func (client LoadBalancerBackendAddressPoolsClient) getHandleResponse(resp *azcore.Response) (*BackendAddressPoolResponse, error) {
 	result := BackendAddressPoolResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.BackendAddressPool)
 }
 
-// GetHandleError handles the Get error response.
-func (client LoadBalancerBackendAddressPoolsClient) GetHandleError(resp *azcore.Response) error {
+// getHandleError handles the Get error response.
+func (client LoadBalancerBackendAddressPoolsClient) getHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -92,10 +92,10 @@ func (client LoadBalancerBackendAddressPoolsClient) List(resourceGroupName strin
 	return &loadBalancerBackendAddressPoolListResultPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
-			return client.ListCreateRequest(ctx, resourceGroupName, loadBalancerName, options)
+			return client.listCreateRequest(ctx, resourceGroupName, loadBalancerName, options)
 		},
-		responder: client.ListHandleResponse,
-		errorer:   client.ListHandleError,
+		responder: client.listHandleResponse,
+		errorer:   client.listHandleError,
 		advancer: func(ctx context.Context, resp *LoadBalancerBackendAddressPoolListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.LoadBalancerBackendAddressPoolListResult.NextLink)
 		},
@@ -103,8 +103,8 @@ func (client LoadBalancerBackendAddressPoolsClient) List(resourceGroupName strin
 	}
 }
 
-// ListCreateRequest creates the List request.
-func (client LoadBalancerBackendAddressPoolsClient) ListCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, options *LoadBalancerBackendAddressPoolsListOptions) (*azcore.Request, error) {
+// listCreateRequest creates the List request.
+func (client LoadBalancerBackendAddressPoolsClient) listCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, options *LoadBalancerBackendAddressPoolsListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/backendAddressPools"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{loadBalancerName}", url.PathEscape(loadBalancerName))
@@ -121,14 +121,14 @@ func (client LoadBalancerBackendAddressPoolsClient) ListCreateRequest(ctx contex
 	return req, nil
 }
 
-// ListHandleResponse handles the List response.
-func (client LoadBalancerBackendAddressPoolsClient) ListHandleResponse(resp *azcore.Response) (*LoadBalancerBackendAddressPoolListResultResponse, error) {
+// listHandleResponse handles the List response.
+func (client LoadBalancerBackendAddressPoolsClient) listHandleResponse(resp *azcore.Response) (*LoadBalancerBackendAddressPoolListResultResponse, error) {
 	result := LoadBalancerBackendAddressPoolListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.LoadBalancerBackendAddressPoolListResult)
 }
 
-// ListHandleError handles the List error response.
-func (client LoadBalancerBackendAddressPoolsClient) ListHandleError(resp *azcore.Response) error {
+// listHandleError handles the List error response.
+func (client LoadBalancerBackendAddressPoolsClient) listHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

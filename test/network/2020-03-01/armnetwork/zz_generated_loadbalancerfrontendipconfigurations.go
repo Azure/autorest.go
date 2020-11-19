@@ -35,7 +35,7 @@ func (client LoadBalancerFrontendIPConfigurationsClient) Pipeline() azcore.Pipel
 
 // Get - Gets load balancer frontend IP configuration.
 func (client LoadBalancerFrontendIPConfigurationsClient) Get(ctx context.Context, resourceGroupName string, loadBalancerName string, frontendIPConfigurationName string, options *LoadBalancerFrontendIPConfigurationsGetOptions) (*FrontendIPConfigurationResponse, error) {
-	req, err := client.GetCreateRequest(ctx, resourceGroupName, loadBalancerName, frontendIPConfigurationName, options)
+	req, err := client.getCreateRequest(ctx, resourceGroupName, loadBalancerName, frontendIPConfigurationName, options)
 	if err != nil {
 		return nil, err
 	}
@@ -44,17 +44,17 @@ func (client LoadBalancerFrontendIPConfigurationsClient) Get(ctx context.Context
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetHandleError(resp)
+		return nil, client.getHandleError(resp)
 	}
-	result, err := client.GetHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// GetCreateRequest creates the Get request.
-func (client LoadBalancerFrontendIPConfigurationsClient) GetCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, frontendIPConfigurationName string, options *LoadBalancerFrontendIPConfigurationsGetOptions) (*azcore.Request, error) {
+// getCreateRequest creates the Get request.
+func (client LoadBalancerFrontendIPConfigurationsClient) getCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, frontendIPConfigurationName string, options *LoadBalancerFrontendIPConfigurationsGetOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/frontendIPConfigurations/{frontendIPConfigurationName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{loadBalancerName}", url.PathEscape(loadBalancerName))
@@ -72,14 +72,14 @@ func (client LoadBalancerFrontendIPConfigurationsClient) GetCreateRequest(ctx co
 	return req, nil
 }
 
-// GetHandleResponse handles the Get response.
-func (client LoadBalancerFrontendIPConfigurationsClient) GetHandleResponse(resp *azcore.Response) (*FrontendIPConfigurationResponse, error) {
+// getHandleResponse handles the Get response.
+func (client LoadBalancerFrontendIPConfigurationsClient) getHandleResponse(resp *azcore.Response) (*FrontendIPConfigurationResponse, error) {
 	result := FrontendIPConfigurationResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.FrontendIPConfiguration)
 }
 
-// GetHandleError handles the Get error response.
-func (client LoadBalancerFrontendIPConfigurationsClient) GetHandleError(resp *azcore.Response) error {
+// getHandleError handles the Get error response.
+func (client LoadBalancerFrontendIPConfigurationsClient) getHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -92,10 +92,10 @@ func (client LoadBalancerFrontendIPConfigurationsClient) List(resourceGroupName 
 	return &loadBalancerFrontendIPConfigurationListResultPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
-			return client.ListCreateRequest(ctx, resourceGroupName, loadBalancerName, options)
+			return client.listCreateRequest(ctx, resourceGroupName, loadBalancerName, options)
 		},
-		responder: client.ListHandleResponse,
-		errorer:   client.ListHandleError,
+		responder: client.listHandleResponse,
+		errorer:   client.listHandleError,
 		advancer: func(ctx context.Context, resp *LoadBalancerFrontendIPConfigurationListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.LoadBalancerFrontendIPConfigurationListResult.NextLink)
 		},
@@ -103,8 +103,8 @@ func (client LoadBalancerFrontendIPConfigurationsClient) List(resourceGroupName 
 	}
 }
 
-// ListCreateRequest creates the List request.
-func (client LoadBalancerFrontendIPConfigurationsClient) ListCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, options *LoadBalancerFrontendIPConfigurationsListOptions) (*azcore.Request, error) {
+// listCreateRequest creates the List request.
+func (client LoadBalancerFrontendIPConfigurationsClient) listCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, options *LoadBalancerFrontendIPConfigurationsListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/frontendIPConfigurations"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{loadBalancerName}", url.PathEscape(loadBalancerName))
@@ -121,14 +121,14 @@ func (client LoadBalancerFrontendIPConfigurationsClient) ListCreateRequest(ctx c
 	return req, nil
 }
 
-// ListHandleResponse handles the List response.
-func (client LoadBalancerFrontendIPConfigurationsClient) ListHandleResponse(resp *azcore.Response) (*LoadBalancerFrontendIPConfigurationListResultResponse, error) {
+// listHandleResponse handles the List response.
+func (client LoadBalancerFrontendIPConfigurationsClient) listHandleResponse(resp *azcore.Response) (*LoadBalancerFrontendIPConfigurationListResultResponse, error) {
 	result := LoadBalancerFrontendIPConfigurationListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.LoadBalancerFrontendIPConfigurationListResult)
 }
 
-// ListHandleError handles the List error response.
-func (client LoadBalancerFrontendIPConfigurationsClient) ListHandleError(resp *azcore.Response) error {
+// listHandleError handles the List error response.
+func (client LoadBalancerFrontendIPConfigurationsClient) listHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

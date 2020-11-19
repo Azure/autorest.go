@@ -35,7 +35,7 @@ func (client ResourceNavigationLinksClient) Pipeline() azcore.Pipeline {
 
 // List - Gets a list of resource navigation links for a subnet.
 func (client ResourceNavigationLinksClient) List(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, options *ResourceNavigationLinksListOptions) (*ResourceNavigationLinksListResultResponse, error) {
-	req, err := client.ListCreateRequest(ctx, resourceGroupName, virtualNetworkName, subnetName, options)
+	req, err := client.listCreateRequest(ctx, resourceGroupName, virtualNetworkName, subnetName, options)
 	if err != nil {
 		return nil, err
 	}
@@ -44,17 +44,17 @@ func (client ResourceNavigationLinksClient) List(ctx context.Context, resourceGr
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListHandleError(resp)
+		return nil, client.listHandleError(resp)
 	}
-	result, err := client.ListHandleResponse(resp)
+	result, err := client.listHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// ListCreateRequest creates the List request.
-func (client ResourceNavigationLinksClient) ListCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, options *ResourceNavigationLinksListOptions) (*azcore.Request, error) {
+// listCreateRequest creates the List request.
+func (client ResourceNavigationLinksClient) listCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, options *ResourceNavigationLinksListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}/ResourceNavigationLinks"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkName}", url.PathEscape(virtualNetworkName))
@@ -72,14 +72,14 @@ func (client ResourceNavigationLinksClient) ListCreateRequest(ctx context.Contex
 	return req, nil
 }
 
-// ListHandleResponse handles the List response.
-func (client ResourceNavigationLinksClient) ListHandleResponse(resp *azcore.Response) (*ResourceNavigationLinksListResultResponse, error) {
+// listHandleResponse handles the List response.
+func (client ResourceNavigationLinksClient) listHandleResponse(resp *azcore.Response) (*ResourceNavigationLinksListResultResponse, error) {
 	result := ResourceNavigationLinksListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ResourceNavigationLinksListResult)
 }
 
-// ListHandleError handles the List error response.
-func (client ResourceNavigationLinksClient) ListHandleError(resp *azcore.Response) error {
+// listHandleError handles the List error response.
+func (client ResourceNavigationLinksClient) listHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

@@ -43,7 +43,7 @@ func (client IPAllocationsClient) BeginCreateOrUpdate(ctx context.Context, resou
 	result := &IPAllocationPollerResponse{
 		RawResponse: resp.Response,
 	}
-	pt, err := armcore.NewPoller("IPAllocationsClient.CreateOrUpdate", "azure-async-operation", resp, client.CreateOrUpdateHandleError)
+	pt, err := armcore.NewPoller("IPAllocationsClient.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -61,7 +61,7 @@ func (client IPAllocationsClient) BeginCreateOrUpdate(ctx context.Context, resou
 // ResumeCreateOrUpdate creates a new IPAllocationPoller from the specified resume token.
 // token - The value must come from a previous call to IPAllocationPoller.ResumeToken().
 func (client IPAllocationsClient) ResumeCreateOrUpdate(token string) (IPAllocationPoller, error) {
-	pt, err := armcore.NewPollerFromResumeToken("IPAllocationsClient.CreateOrUpdate", token, client.CreateOrUpdateHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("IPAllocationsClient.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -73,7 +73,7 @@ func (client IPAllocationsClient) ResumeCreateOrUpdate(token string) (IPAllocati
 
 // CreateOrUpdate - Creates or updates an IpAllocation in the specified resource group.
 func (client IPAllocationsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, ipAllocationName string, parameters IPAllocation, options *IPAllocationsCreateOrUpdateOptions) (*azcore.Response, error) {
-	req, err := client.CreateOrUpdateCreateRequest(ctx, resourceGroupName, ipAllocationName, parameters, options)
+	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, ipAllocationName, parameters, options)
 	if err != nil {
 		return nil, err
 	}
@@ -82,13 +82,13 @@ func (client IPAllocationsClient) CreateOrUpdate(ctx context.Context, resourceGr
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
-		return nil, client.CreateOrUpdateHandleError(resp)
+		return nil, client.createOrUpdateHandleError(resp)
 	}
 	return resp, nil
 }
 
-// CreateOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client IPAllocationsClient) CreateOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, ipAllocationName string, parameters IPAllocation, options *IPAllocationsCreateOrUpdateOptions) (*azcore.Request, error) {
+// createOrUpdateCreateRequest creates the CreateOrUpdate request.
+func (client IPAllocationsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, ipAllocationName string, parameters IPAllocation, options *IPAllocationsCreateOrUpdateOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/IpAllocations/{ipAllocationName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{ipAllocationName}", url.PathEscape(ipAllocationName))
@@ -105,14 +105,14 @@ func (client IPAllocationsClient) CreateOrUpdateCreateRequest(ctx context.Contex
 	return req, req.MarshalAsJSON(parameters)
 }
 
-// CreateOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client IPAllocationsClient) CreateOrUpdateHandleResponse(resp *azcore.Response) (*IPAllocationResponse, error) {
+// createOrUpdateHandleResponse handles the CreateOrUpdate response.
+func (client IPAllocationsClient) createOrUpdateHandleResponse(resp *azcore.Response) (*IPAllocationResponse, error) {
 	result := IPAllocationResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.IPAllocation)
 }
 
-// CreateOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client IPAllocationsClient) CreateOrUpdateHandleError(resp *azcore.Response) error {
+// createOrUpdateHandleError handles the CreateOrUpdate error response.
+func (client IPAllocationsClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -129,7 +129,7 @@ func (client IPAllocationsClient) BeginDelete(ctx context.Context, resourceGroup
 	result := &HTTPPollerResponse{
 		RawResponse: resp.Response,
 	}
-	pt, err := armcore.NewPoller("IPAllocationsClient.Delete", "location", resp, client.DeleteHandleError)
+	pt, err := armcore.NewPoller("IPAllocationsClient.Delete", "location", resp, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -147,7 +147,7 @@ func (client IPAllocationsClient) BeginDelete(ctx context.Context, resourceGroup
 // ResumeDelete creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
 func (client IPAllocationsClient) ResumeDelete(token string) (HTTPPoller, error) {
-	pt, err := armcore.NewPollerFromResumeToken("IPAllocationsClient.Delete", token, client.DeleteHandleError)
+	pt, err := armcore.NewPollerFromResumeToken("IPAllocationsClient.Delete", token, client.deleteHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -159,7 +159,7 @@ func (client IPAllocationsClient) ResumeDelete(token string) (HTTPPoller, error)
 
 // Delete - Deletes the specified IpAllocation.
 func (client IPAllocationsClient) Delete(ctx context.Context, resourceGroupName string, ipAllocationName string, options *IPAllocationsDeleteOptions) (*azcore.Response, error) {
-	req, err := client.DeleteCreateRequest(ctx, resourceGroupName, ipAllocationName, options)
+	req, err := client.deleteCreateRequest(ctx, resourceGroupName, ipAllocationName, options)
 	if err != nil {
 		return nil, err
 	}
@@ -168,13 +168,13 @@ func (client IPAllocationsClient) Delete(ctx context.Context, resourceGroupName 
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.DeleteHandleError(resp)
+		return nil, client.deleteHandleError(resp)
 	}
 	return resp, nil
 }
 
-// DeleteCreateRequest creates the Delete request.
-func (client IPAllocationsClient) DeleteCreateRequest(ctx context.Context, resourceGroupName string, ipAllocationName string, options *IPAllocationsDeleteOptions) (*azcore.Request, error) {
+// deleteCreateRequest creates the Delete request.
+func (client IPAllocationsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, ipAllocationName string, options *IPAllocationsDeleteOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/IpAllocations/{ipAllocationName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{ipAllocationName}", url.PathEscape(ipAllocationName))
@@ -191,8 +191,8 @@ func (client IPAllocationsClient) DeleteCreateRequest(ctx context.Context, resou
 	return req, nil
 }
 
-// DeleteHandleError handles the Delete error response.
-func (client IPAllocationsClient) DeleteHandleError(resp *azcore.Response) error {
+// deleteHandleError handles the Delete error response.
+func (client IPAllocationsClient) deleteHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -202,7 +202,7 @@ func (client IPAllocationsClient) DeleteHandleError(resp *azcore.Response) error
 
 // Get - Gets the specified IpAllocation by resource group.
 func (client IPAllocationsClient) Get(ctx context.Context, resourceGroupName string, ipAllocationName string, options *IPAllocationsGetOptions) (*IPAllocationResponse, error) {
-	req, err := client.GetCreateRequest(ctx, resourceGroupName, ipAllocationName, options)
+	req, err := client.getCreateRequest(ctx, resourceGroupName, ipAllocationName, options)
 	if err != nil {
 		return nil, err
 	}
@@ -211,17 +211,17 @@ func (client IPAllocationsClient) Get(ctx context.Context, resourceGroupName str
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetHandleError(resp)
+		return nil, client.getHandleError(resp)
 	}
-	result, err := client.GetHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// GetCreateRequest creates the Get request.
-func (client IPAllocationsClient) GetCreateRequest(ctx context.Context, resourceGroupName string, ipAllocationName string, options *IPAllocationsGetOptions) (*azcore.Request, error) {
+// getCreateRequest creates the Get request.
+func (client IPAllocationsClient) getCreateRequest(ctx context.Context, resourceGroupName string, ipAllocationName string, options *IPAllocationsGetOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/IpAllocations/{ipAllocationName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{ipAllocationName}", url.PathEscape(ipAllocationName))
@@ -241,14 +241,14 @@ func (client IPAllocationsClient) GetCreateRequest(ctx context.Context, resource
 	return req, nil
 }
 
-// GetHandleResponse handles the Get response.
-func (client IPAllocationsClient) GetHandleResponse(resp *azcore.Response) (*IPAllocationResponse, error) {
+// getHandleResponse handles the Get response.
+func (client IPAllocationsClient) getHandleResponse(resp *azcore.Response) (*IPAllocationResponse, error) {
 	result := IPAllocationResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.IPAllocation)
 }
 
-// GetHandleError handles the Get error response.
-func (client IPAllocationsClient) GetHandleError(resp *azcore.Response) error {
+// getHandleError handles the Get error response.
+func (client IPAllocationsClient) getHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -261,10 +261,10 @@ func (client IPAllocationsClient) List(options *IPAllocationsListOptions) IPAllo
 	return &ipAllocationListResultPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
-			return client.ListCreateRequest(ctx, options)
+			return client.listCreateRequest(ctx, options)
 		},
-		responder: client.ListHandleResponse,
-		errorer:   client.ListHandleError,
+		responder: client.listHandleResponse,
+		errorer:   client.listHandleError,
 		advancer: func(ctx context.Context, resp *IPAllocationListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.IPAllocationListResult.NextLink)
 		},
@@ -272,8 +272,8 @@ func (client IPAllocationsClient) List(options *IPAllocationsListOptions) IPAllo
 	}
 }
 
-// ListCreateRequest creates the List request.
-func (client IPAllocationsClient) ListCreateRequest(ctx context.Context, options *IPAllocationsListOptions) (*azcore.Request, error) {
+// listCreateRequest creates the List request.
+func (client IPAllocationsClient) listCreateRequest(ctx context.Context, options *IPAllocationsListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/IpAllocations"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -288,14 +288,14 @@ func (client IPAllocationsClient) ListCreateRequest(ctx context.Context, options
 	return req, nil
 }
 
-// ListHandleResponse handles the List response.
-func (client IPAllocationsClient) ListHandleResponse(resp *azcore.Response) (*IPAllocationListResultResponse, error) {
+// listHandleResponse handles the List response.
+func (client IPAllocationsClient) listHandleResponse(resp *azcore.Response) (*IPAllocationListResultResponse, error) {
 	result := IPAllocationListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.IPAllocationListResult)
 }
 
-// ListHandleError handles the List error response.
-func (client IPAllocationsClient) ListHandleError(resp *azcore.Response) error {
+// listHandleError handles the List error response.
+func (client IPAllocationsClient) listHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -308,10 +308,10 @@ func (client IPAllocationsClient) ListByResourceGroup(resourceGroupName string, 
 	return &ipAllocationListResultPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
-			return client.ListByResourceGroupCreateRequest(ctx, resourceGroupName, options)
+			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
 		},
-		responder: client.ListByResourceGroupHandleResponse,
-		errorer:   client.ListByResourceGroupHandleError,
+		responder: client.listByResourceGroupHandleResponse,
+		errorer:   client.listByResourceGroupHandleError,
 		advancer: func(ctx context.Context, resp *IPAllocationListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.IPAllocationListResult.NextLink)
 		},
@@ -319,8 +319,8 @@ func (client IPAllocationsClient) ListByResourceGroup(resourceGroupName string, 
 	}
 }
 
-// ListByResourceGroupCreateRequest creates the ListByResourceGroup request.
-func (client IPAllocationsClient) ListByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, options *IPAllocationsListByResourceGroupOptions) (*azcore.Request, error) {
+// listByResourceGroupCreateRequest creates the ListByResourceGroup request.
+func (client IPAllocationsClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, options *IPAllocationsListByResourceGroupOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/IpAllocations"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
@@ -336,14 +336,14 @@ func (client IPAllocationsClient) ListByResourceGroupCreateRequest(ctx context.C
 	return req, nil
 }
 
-// ListByResourceGroupHandleResponse handles the ListByResourceGroup response.
-func (client IPAllocationsClient) ListByResourceGroupHandleResponse(resp *azcore.Response) (*IPAllocationListResultResponse, error) {
+// listByResourceGroupHandleResponse handles the ListByResourceGroup response.
+func (client IPAllocationsClient) listByResourceGroupHandleResponse(resp *azcore.Response) (*IPAllocationListResultResponse, error) {
 	result := IPAllocationListResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.IPAllocationListResult)
 }
 
-// ListByResourceGroupHandleError handles the ListByResourceGroup error response.
-func (client IPAllocationsClient) ListByResourceGroupHandleError(resp *azcore.Response) error {
+// listByResourceGroupHandleError handles the ListByResourceGroup error response.
+func (client IPAllocationsClient) listByResourceGroupHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -353,7 +353,7 @@ func (client IPAllocationsClient) ListByResourceGroupHandleError(resp *azcore.Re
 
 // UpdateTags - Updates a IpAllocation tags.
 func (client IPAllocationsClient) UpdateTags(ctx context.Context, resourceGroupName string, ipAllocationName string, parameters TagsObject, options *IPAllocationsUpdateTagsOptions) (*IPAllocationResponse, error) {
-	req, err := client.UpdateTagsCreateRequest(ctx, resourceGroupName, ipAllocationName, parameters, options)
+	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, ipAllocationName, parameters, options)
 	if err != nil {
 		return nil, err
 	}
@@ -362,17 +362,17 @@ func (client IPAllocationsClient) UpdateTags(ctx context.Context, resourceGroupN
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.UpdateTagsHandleError(resp)
+		return nil, client.updateTagsHandleError(resp)
 	}
-	result, err := client.UpdateTagsHandleResponse(resp)
+	result, err := client.updateTagsHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// UpdateTagsCreateRequest creates the UpdateTags request.
-func (client IPAllocationsClient) UpdateTagsCreateRequest(ctx context.Context, resourceGroupName string, ipAllocationName string, parameters TagsObject, options *IPAllocationsUpdateTagsOptions) (*azcore.Request, error) {
+// updateTagsCreateRequest creates the UpdateTags request.
+func (client IPAllocationsClient) updateTagsCreateRequest(ctx context.Context, resourceGroupName string, ipAllocationName string, parameters TagsObject, options *IPAllocationsUpdateTagsOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/IpAllocations/{ipAllocationName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{ipAllocationName}", url.PathEscape(ipAllocationName))
@@ -389,14 +389,14 @@ func (client IPAllocationsClient) UpdateTagsCreateRequest(ctx context.Context, r
 	return req, req.MarshalAsJSON(parameters)
 }
 
-// UpdateTagsHandleResponse handles the UpdateTags response.
-func (client IPAllocationsClient) UpdateTagsHandleResponse(resp *azcore.Response) (*IPAllocationResponse, error) {
+// updateTagsHandleResponse handles the UpdateTags response.
+func (client IPAllocationsClient) updateTagsHandleResponse(resp *azcore.Response) (*IPAllocationResponse, error) {
 	result := IPAllocationResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.IPAllocation)
 }
 
-// UpdateTagsHandleError handles the UpdateTags error response.
-func (client IPAllocationsClient) UpdateTagsHandleError(resp *azcore.Response) error {
+// updateTagsHandleError handles the UpdateTags error response.
+func (client IPAllocationsClient) updateTagsHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
