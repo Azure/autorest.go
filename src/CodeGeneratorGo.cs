@@ -149,6 +149,18 @@ namespace AutoRest.Go
                 var gomodTemplate = new GoModTemplate { Model = new GoMod(normalized.Substring(i), goVersion) };
                 await Write(gomodTemplate, $"{StagingDir()}go.mod");
             }
+
+            // metadata
+            var metadataOutputFolder = Settings.Instance.Host.GetValue<string>("metadata-output-folder").Result;
+            if (!string.IsNullOrWhiteSpace(metadataOutputFolder))
+            {
+                var metadataTemplate = new MetadataTemplate
+                {
+                    Model = new MetadataGo(Settings.Instance.Host.GetValue<string[]>("input-file").Result, folder)
+                };
+                var tag = Settings.Instance.Host.GetValue<string>("tag").Result;
+                await Write(metadataTemplate, $"{metadataOutputFolder}/{tag}.json");
+            }
         }
 
         private const string defaultGoVersion = "1.13";

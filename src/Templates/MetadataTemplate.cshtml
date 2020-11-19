@@ -1,0 +1,18 @@
+﻿@using AutoRest.Go
+@using AutoRest.Go.Model
+@using AutoRest.Go.Templates
+@using System.Linq;
+
+@inherits AutoRest.Core.Template<AutoRest.Go.Model.MetadataGo>
+
+@{
+    var inputFiles = Model.InputFiles.Select(file => $"\"{file}\"");
+    var outputFolder = $"\"{Model.OutputFolder}\"";
+}
+{
+    "inputFiles": [
+        @(string.Join(",\n", inputFiles))
+    ],
+    "outputFolder": outputFolder
+}
+
