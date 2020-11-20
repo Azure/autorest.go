@@ -17,7 +17,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 )
 
-func newLROSClient() LrOSOperations {
+func newLROSClient() LrOSClient {
 	options := DefaultConnectionOptions()
 	options.Retry.RetryDelay = 10 * time.Millisecond
 	options.HTTPClient = httpClientWithCookieJar()

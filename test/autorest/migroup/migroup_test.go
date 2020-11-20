@@ -11,7 +11,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
-func newMultipleInheritanceServiceClient() MultipleInheritanceServiceClientOperations {
+func newMultipleInheritanceServiceClient() MultipleInheritanceServiceClient {
 	return NewMultipleInheritanceServiceClient(NewDefaultConnection(nil))
 }
 

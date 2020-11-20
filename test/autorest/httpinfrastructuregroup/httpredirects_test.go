@@ -10,7 +10,7 @@ import (
 	"testing"
 )
 
-func newHTTPRedirectsClient() HTTPRedirectsOperations {
+func newHTTPRedirectsClient() HTTPRedirectsClient {
 	return NewHTTPRedirectsClient(NewDefaultConnection(nil))
 }
 

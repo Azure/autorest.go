@@ -21,7 +21,7 @@ func toTimePtr(layout string, value string) *time.Time {
 	return &t
 }
 
-func newXMLClient() XMLOperations {
+func newXMLClient() XMLClient {
 	return NewXMLClient(NewDefaultConnection(nil))
 }
 

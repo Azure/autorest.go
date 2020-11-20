@@ -13,7 +13,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
-func newPolymorphismClient() PolymorphismOperations {
+func newPolymorphismClient() PolymorphismClient {
 	return NewPolymorphismClient(NewDefaultConnection(nil))
 }
 

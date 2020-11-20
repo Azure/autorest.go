@@ -21,7 +21,7 @@ type directoryClient struct {
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client *directoryClient) Pipeline() azcore.Pipeline {
+func (client directoryClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
@@ -30,8 +30,8 @@ func (client *directoryClient) Pipeline() azcore.Pipeline {
 // information, see Specifying Conditional Headers for Blob Service Operations [https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations].
 // To
 // fail if the destination already exists, use a conditional request with If-None-Match: "*".
-func (client *directoryClient) Create(ctx context.Context, directoryCreateOptions *DirectoryCreateOptions, directoryHttpHeaders *DirectoryHttpHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*DirectoryCreateResponse, error) {
-	req, err := client.CreateCreateRequest(ctx, directoryCreateOptions, directoryHttpHeaders, leaseAccessConditions, modifiedAccessConditions)
+func (client directoryClient) Create(ctx context.Context, directoryCreateOptions *DirectoryCreateOptions, directoryHttpHeaders *DirectoryHttpHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*DirectoryCreateResponse, error) {
+	req, err := client.createCreateRequest(ctx, directoryCreateOptions, directoryHttpHeaders, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
 		return nil, err
 	}
@@ -40,17 +40,17 @@ func (client *directoryClient) Create(ctx context.Context, directoryCreateOption
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, client.CreateHandleError(resp)
+		return nil, client.createHandleError(resp)
 	}
-	result, err := client.CreateHandleResponse(resp)
+	result, err := client.createHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// CreateCreateRequest creates the Create request.
-func (client *directoryClient) CreateCreateRequest(ctx context.Context, directoryCreateOptions *DirectoryCreateOptions, directoryHttpHeaders *DirectoryHttpHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
+// createCreateRequest creates the Create request.
+func (client directoryClient) createCreateRequest(ctx context.Context, directoryCreateOptions *DirectoryCreateOptions, directoryHttpHeaders *DirectoryHttpHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
 	req, err := azcore.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
 	if err != nil {
 		return nil, err
@@ -109,8 +109,8 @@ func (client *directoryClient) CreateCreateRequest(ctx context.Context, director
 	return req, nil
 }
 
-// CreateHandleResponse handles the Create response.
-func (client *directoryClient) CreateHandleResponse(resp *azcore.Response) (*DirectoryCreateResponse, error) {
+// createHandleResponse handles the Create response.
+func (client directoryClient) createHandleResponse(resp *azcore.Response) (*DirectoryCreateResponse, error) {
 	result := DirectoryCreateResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -148,8 +148,8 @@ func (client *directoryClient) CreateHandleResponse(resp *azcore.Response) (*Dir
 	return &result, nil
 }
 
-// CreateHandleError handles the Create error response.
-func (client *directoryClient) CreateHandleError(resp *azcore.Response) error {
+// createHandleError handles the Create error response.
+func (client directoryClient) createHandleError(resp *azcore.Response) error {
 	var err DataLakeStorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -158,8 +158,8 @@ func (client *directoryClient) CreateHandleError(resp *azcore.Response) error {
 }
 
 // Delete - Deletes the directory
-func (client *directoryClient) Delete(ctx context.Context, recursiveDirectoryDelete bool, directoryDeleteOptions *DirectoryDeleteOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*DirectoryDeleteResponse, error) {
-	req, err := client.DeleteCreateRequest(ctx, recursiveDirectoryDelete, directoryDeleteOptions, leaseAccessConditions, modifiedAccessConditions)
+func (client directoryClient) Delete(ctx context.Context, recursiveDirectoryDelete bool, directoryDeleteOptions *DirectoryDeleteOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*DirectoryDeleteResponse, error) {
+	req, err := client.deleteCreateRequest(ctx, recursiveDirectoryDelete, directoryDeleteOptions, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
 		return nil, err
 	}
@@ -168,17 +168,17 @@ func (client *directoryClient) Delete(ctx context.Context, recursiveDirectoryDel
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.DeleteHandleError(resp)
+		return nil, client.deleteHandleError(resp)
 	}
-	result, err := client.DeleteHandleResponse(resp)
+	result, err := client.deleteHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// DeleteCreateRequest creates the Delete request.
-func (client *directoryClient) DeleteCreateRequest(ctx context.Context, recursiveDirectoryDelete bool, directoryDeleteOptions *DirectoryDeleteOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
+// deleteCreateRequest creates the Delete request.
+func (client directoryClient) deleteCreateRequest(ctx context.Context, recursiveDirectoryDelete bool, directoryDeleteOptions *DirectoryDeleteOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
 	req, err := azcore.NewRequest(ctx, http.MethodDelete, client.con.Endpoint())
 	if err != nil {
 		return nil, err
@@ -216,8 +216,8 @@ func (client *directoryClient) DeleteCreateRequest(ctx context.Context, recursiv
 	return req, nil
 }
 
-// DeleteHandleResponse handles the Delete response.
-func (client *directoryClient) DeleteHandleResponse(resp *azcore.Response) (*DirectoryDeleteResponse, error) {
+// deleteHandleResponse handles the Delete response.
+func (client directoryClient) deleteHandleResponse(resp *azcore.Response) (*DirectoryDeleteResponse, error) {
 	result := DirectoryDeleteResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("x-ms-continuation"); val != "" {
 		result.Marker = &val
@@ -241,8 +241,8 @@ func (client *directoryClient) DeleteHandleResponse(resp *azcore.Response) (*Dir
 	return &result, nil
 }
 
-// DeleteHandleError handles the Delete error response.
-func (client *directoryClient) DeleteHandleError(resp *azcore.Response) error {
+// deleteHandleError handles the Delete error response.
+func (client directoryClient) deleteHandleError(resp *azcore.Response) error {
 	var err DataLakeStorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -251,8 +251,8 @@ func (client *directoryClient) DeleteHandleError(resp *azcore.Response) error {
 }
 
 // GetAccessControl - Get the owner, group, permissions, or access control list for a directory.
-func (client *directoryClient) GetAccessControl(ctx context.Context, directoryGetAccessControlOptions *DirectoryGetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*DirectoryGetAccessControlResponse, error) {
-	req, err := client.GetAccessControlCreateRequest(ctx, directoryGetAccessControlOptions, leaseAccessConditions, modifiedAccessConditions)
+func (client directoryClient) GetAccessControl(ctx context.Context, directoryGetAccessControlOptions *DirectoryGetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*DirectoryGetAccessControlResponse, error) {
+	req, err := client.getAccessControlCreateRequest(ctx, directoryGetAccessControlOptions, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
 		return nil, err
 	}
@@ -261,17 +261,17 @@ func (client *directoryClient) GetAccessControl(ctx context.Context, directoryGe
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetAccessControlHandleError(resp)
+		return nil, client.getAccessControlHandleError(resp)
 	}
-	result, err := client.GetAccessControlHandleResponse(resp)
+	result, err := client.getAccessControlHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// GetAccessControlCreateRequest creates the GetAccessControl request.
-func (client *directoryClient) GetAccessControlCreateRequest(ctx context.Context, directoryGetAccessControlOptions *DirectoryGetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
+// getAccessControlCreateRequest creates the GetAccessControl request.
+func (client directoryClient) getAccessControlCreateRequest(ctx context.Context, directoryGetAccessControlOptions *DirectoryGetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
 	req, err := azcore.NewRequest(ctx, http.MethodHead, client.con.Endpoint())
 	if err != nil {
 		return nil, err
@@ -309,8 +309,8 @@ func (client *directoryClient) GetAccessControlCreateRequest(ctx context.Context
 	return req, nil
 }
 
-// GetAccessControlHandleResponse handles the GetAccessControl response.
-func (client *directoryClient) GetAccessControlHandleResponse(resp *azcore.Response) (*DirectoryGetAccessControlResponse, error) {
+// getAccessControlHandleResponse handles the GetAccessControl response.
+func (client directoryClient) getAccessControlHandleResponse(resp *azcore.Response) (*DirectoryGetAccessControlResponse, error) {
 	result := DirectoryGetAccessControlResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
@@ -350,8 +350,8 @@ func (client *directoryClient) GetAccessControlHandleResponse(resp *azcore.Respo
 	return &result, nil
 }
 
-// GetAccessControlHandleError handles the GetAccessControl error response.
-func (client *directoryClient) GetAccessControlHandleError(resp *azcore.Response) error {
+// getAccessControlHandleError handles the GetAccessControl error response.
+func (client directoryClient) getAccessControlHandleError(resp *azcore.Response) error {
 	var err DataLakeStorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -364,8 +364,8 @@ func (client *directoryClient) GetAccessControlHandleError(resp *azcore.Response
 // information, see Specifying Conditional Headers for Blob Service Operations [https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations].
 // To
 // fail if the destination already exists, use a conditional request with If-None-Match: "*".
-func (client *directoryClient) Rename(ctx context.Context, renameSource string, directoryRenameOptions *DirectoryRenameOptions, directoryHttpHeaders *DirectoryHttpHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*DirectoryRenameResponse, error) {
-	req, err := client.RenameCreateRequest(ctx, renameSource, directoryRenameOptions, directoryHttpHeaders, leaseAccessConditions, modifiedAccessConditions, sourceModifiedAccessConditions)
+func (client directoryClient) Rename(ctx context.Context, renameSource string, directoryRenameOptions *DirectoryRenameOptions, directoryHttpHeaders *DirectoryHttpHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*DirectoryRenameResponse, error) {
+	req, err := client.renameCreateRequest(ctx, renameSource, directoryRenameOptions, directoryHttpHeaders, leaseAccessConditions, modifiedAccessConditions, sourceModifiedAccessConditions)
 	if err != nil {
 		return nil, err
 	}
@@ -374,17 +374,17 @@ func (client *directoryClient) Rename(ctx context.Context, renameSource string, 
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, client.RenameHandleError(resp)
+		return nil, client.renameHandleError(resp)
 	}
-	result, err := client.RenameHandleResponse(resp)
+	result, err := client.renameHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// RenameCreateRequest creates the Rename request.
-func (client *directoryClient) RenameCreateRequest(ctx context.Context, renameSource string, directoryRenameOptions *DirectoryRenameOptions, directoryHttpHeaders *DirectoryHttpHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*azcore.Request, error) {
+// renameCreateRequest creates the Rename request.
+func (client directoryClient) renameCreateRequest(ctx context.Context, renameSource string, directoryRenameOptions *DirectoryRenameOptions, directoryHttpHeaders *DirectoryHttpHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*azcore.Request, error) {
 	req, err := azcore.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
 	if err != nil {
 		return nil, err
@@ -464,8 +464,8 @@ func (client *directoryClient) RenameCreateRequest(ctx context.Context, renameSo
 	return req, nil
 }
 
-// RenameHandleResponse handles the Rename response.
-func (client *directoryClient) RenameHandleResponse(resp *azcore.Response) (*DirectoryRenameResponse, error) {
+// renameHandleResponse handles the Rename response.
+func (client directoryClient) renameHandleResponse(resp *azcore.Response) (*DirectoryRenameResponse, error) {
 	result := DirectoryRenameResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("x-ms-continuation"); val != "" {
 		result.Marker = &val
@@ -506,8 +506,8 @@ func (client *directoryClient) RenameHandleResponse(resp *azcore.Response) (*Dir
 	return &result, nil
 }
 
-// RenameHandleError handles the Rename error response.
-func (client *directoryClient) RenameHandleError(resp *azcore.Response) error {
+// renameHandleError handles the Rename error response.
+func (client directoryClient) renameHandleError(resp *azcore.Response) error {
 	var err DataLakeStorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -516,8 +516,8 @@ func (client *directoryClient) RenameHandleError(resp *azcore.Response) error {
 }
 
 // SetAccessControl - Set the owner, group, permissions, or access control list for a directory.
-func (client *directoryClient) SetAccessControl(ctx context.Context, directorySetAccessControlOptions *DirectorySetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*DirectorySetAccessControlResponse, error) {
-	req, err := client.SetAccessControlCreateRequest(ctx, directorySetAccessControlOptions, leaseAccessConditions, modifiedAccessConditions)
+func (client directoryClient) SetAccessControl(ctx context.Context, directorySetAccessControlOptions *DirectorySetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*DirectorySetAccessControlResponse, error) {
+	req, err := client.setAccessControlCreateRequest(ctx, directorySetAccessControlOptions, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
 		return nil, err
 	}
@@ -526,17 +526,17 @@ func (client *directoryClient) SetAccessControl(ctx context.Context, directorySe
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.SetAccessControlHandleError(resp)
+		return nil, client.setAccessControlHandleError(resp)
 	}
-	result, err := client.SetAccessControlHandleResponse(resp)
+	result, err := client.setAccessControlHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// SetAccessControlCreateRequest creates the SetAccessControl request.
-func (client *directoryClient) SetAccessControlCreateRequest(ctx context.Context, directorySetAccessControlOptions *DirectorySetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
+// setAccessControlCreateRequest creates the SetAccessControl request.
+func (client directoryClient) setAccessControlCreateRequest(ctx context.Context, directorySetAccessControlOptions *DirectorySetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
 	req, err := azcore.NewRequest(ctx, http.MethodPatch, client.con.Endpoint())
 	if err != nil {
 		return nil, err
@@ -583,8 +583,8 @@ func (client *directoryClient) SetAccessControlCreateRequest(ctx context.Context
 	return req, nil
 }
 
-// SetAccessControlHandleResponse handles the SetAccessControl response.
-func (client *directoryClient) SetAccessControlHandleResponse(resp *azcore.Response) (*DirectorySetAccessControlResponse, error) {
+// setAccessControlHandleResponse handles the SetAccessControl response.
+func (client directoryClient) setAccessControlHandleResponse(resp *azcore.Response) (*DirectorySetAccessControlResponse, error) {
 	result := DirectorySetAccessControlResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
@@ -612,8 +612,8 @@ func (client *directoryClient) SetAccessControlHandleResponse(resp *azcore.Respo
 	return &result, nil
 }
 
-// SetAccessControlHandleError handles the SetAccessControl error response.
-func (client *directoryClient) SetAccessControlHandleError(resp *azcore.Response) error {
+// setAccessControlHandleError handles the SetAccessControl error response.
+func (client directoryClient) setAccessControlHandleError(resp *azcore.Response) error {
 	var err DataLakeStorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err

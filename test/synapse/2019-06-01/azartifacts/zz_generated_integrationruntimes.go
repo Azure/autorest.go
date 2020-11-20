@@ -20,13 +20,13 @@ type integrationRuntimesClient struct {
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client *integrationRuntimesClient) Pipeline() azcore.Pipeline {
+func (client integrationRuntimesClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // Get - Get Integration Runtime
-func (client *integrationRuntimesClient) Get(ctx context.Context, integrationRuntimeName string, options *IntegrationRuntimesGetOptions) (*IntegrationRuntimeResourceResponse, error) {
-	req, err := client.GetCreateRequest(ctx, integrationRuntimeName, options)
+func (client integrationRuntimesClient) Get(ctx context.Context, integrationRuntimeName string, options *IntegrationRuntimesGetOptions) (*IntegrationRuntimeResourceResponse, error) {
+	req, err := client.getCreateRequest(ctx, integrationRuntimeName, options)
 	if err != nil {
 		return nil, err
 	}
@@ -35,17 +35,17 @@ func (client *integrationRuntimesClient) Get(ctx context.Context, integrationRun
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetHandleError(resp)
+		return nil, client.getHandleError(resp)
 	}
-	result, err := client.GetHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// GetCreateRequest creates the Get request.
-func (client *integrationRuntimesClient) GetCreateRequest(ctx context.Context, integrationRuntimeName string, options *IntegrationRuntimesGetOptions) (*azcore.Request, error) {
+// getCreateRequest creates the Get request.
+func (client integrationRuntimesClient) getCreateRequest(ctx context.Context, integrationRuntimeName string, options *IntegrationRuntimesGetOptions) (*azcore.Request, error) {
 	urlPath := "/integrationRuntimes/{integrationRuntimeName}"
 	urlPath = strings.ReplaceAll(urlPath, "{integrationRuntimeName}", url.PathEscape(integrationRuntimeName))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -60,14 +60,14 @@ func (client *integrationRuntimesClient) GetCreateRequest(ctx context.Context, i
 	return req, nil
 }
 
-// GetHandleResponse handles the Get response.
-func (client *integrationRuntimesClient) GetHandleResponse(resp *azcore.Response) (*IntegrationRuntimeResourceResponse, error) {
+// getHandleResponse handles the Get response.
+func (client integrationRuntimesClient) getHandleResponse(resp *azcore.Response) (*IntegrationRuntimeResourceResponse, error) {
 	result := IntegrationRuntimeResourceResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.IntegrationRuntimeResource)
 }
 
-// GetHandleError handles the Get error response.
-func (client *integrationRuntimesClient) GetHandleError(resp *azcore.Response) error {
+// getHandleError handles the Get error response.
+func (client integrationRuntimesClient) getHandleError(resp *azcore.Response) error {
 	var err ErrorContract
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -76,8 +76,8 @@ func (client *integrationRuntimesClient) GetHandleError(resp *azcore.Response) e
 }
 
 // List - List Integration Runtimes
-func (client *integrationRuntimesClient) List(ctx context.Context, options *IntegrationRuntimesListOptions) (*IntegrationRuntimeListResponseResponse, error) {
-	req, err := client.ListCreateRequest(ctx, options)
+func (client integrationRuntimesClient) List(ctx context.Context, options *IntegrationRuntimesListOptions) (*IntegrationRuntimeListResponseResponse, error) {
+	req, err := client.listCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -86,17 +86,17 @@ func (client *integrationRuntimesClient) List(ctx context.Context, options *Inte
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.ListHandleError(resp)
+		return nil, client.listHandleError(resp)
 	}
-	result, err := client.ListHandleResponse(resp)
+	result, err := client.listHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// ListCreateRequest creates the List request.
-func (client *integrationRuntimesClient) ListCreateRequest(ctx context.Context, options *IntegrationRuntimesListOptions) (*azcore.Request, error) {
+// listCreateRequest creates the List request.
+func (client integrationRuntimesClient) listCreateRequest(ctx context.Context, options *IntegrationRuntimesListOptions) (*azcore.Request, error) {
 	urlPath := "/integrationRuntimes"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -110,14 +110,14 @@ func (client *integrationRuntimesClient) ListCreateRequest(ctx context.Context, 
 	return req, nil
 }
 
-// ListHandleResponse handles the List response.
-func (client *integrationRuntimesClient) ListHandleResponse(resp *azcore.Response) (*IntegrationRuntimeListResponseResponse, error) {
+// listHandleResponse handles the List response.
+func (client integrationRuntimesClient) listHandleResponse(resp *azcore.Response) (*IntegrationRuntimeListResponseResponse, error) {
 	result := IntegrationRuntimeListResponseResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.IntegrationRuntimeListResponse)
 }
 
-// ListHandleError handles the List error response.
-func (client *integrationRuntimesClient) ListHandleError(resp *azcore.Response) error {
+// listHandleError handles the List error response.
+func (client integrationRuntimesClient) listHandleError(resp *azcore.Response) error {
 	var err ErrorContract
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

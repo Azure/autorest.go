@@ -16,33 +16,25 @@ import (
 	"net/http"
 )
 
-// FloatOperations contains the methods for the Float group.
-type FloatOperations interface {
-	// Get - Get a float enum
-	Get(ctx context.Context, options *FloatGetOptions) (*FloatEnumResponse, error)
-	// Put - Put a float enum
-	Put(ctx context.Context, options *FloatPutOptions) (*StringResponse, error)
-}
-
-// FloatClient implements the FloatOperations interface.
+// FloatClient contains the methods for the Float group.
 // Don't use this type directly, use NewFloatClient() instead.
 type FloatClient struct {
 	con *Connection
 }
 
 // NewFloatClient creates a new instance of FloatClient with the specified values.
-func NewFloatClient(con *Connection) FloatOperations {
-	return &FloatClient{con: con}
+func NewFloatClient(con *Connection) FloatClient {
+	return FloatClient{con: con}
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client *FloatClient) Pipeline() azcore.Pipeline {
+func (client FloatClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // Get - Get a float enum
-func (client *FloatClient) Get(ctx context.Context, options *FloatGetOptions) (*FloatEnumResponse, error) {
-	req, err := client.GetCreateRequest(ctx, options)
+func (client FloatClient) Get(ctx context.Context, options *FloatGetOptions) (*FloatEnumResponse, error) {
+	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -51,17 +43,17 @@ func (client *FloatClient) Get(ctx context.Context, options *FloatGetOptions) (*
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetHandleError(resp)
+		return nil, client.getHandleError(resp)
 	}
-	result, err := client.GetHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// GetCreateRequest creates the Get request.
-func (client *FloatClient) GetCreateRequest(ctx context.Context, options *FloatGetOptions) (*azcore.Request, error) {
+// getCreateRequest creates the Get request.
+func (client FloatClient) getCreateRequest(ctx context.Context, options *FloatGetOptions) (*azcore.Request, error) {
 	urlPath := "/nonStringEnums/float/get"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -72,14 +64,14 @@ func (client *FloatClient) GetCreateRequest(ctx context.Context, options *FloatG
 	return req, nil
 }
 
-// GetHandleResponse handles the Get response.
-func (client *FloatClient) GetHandleResponse(resp *azcore.Response) (*FloatEnumResponse, error) {
+// getHandleResponse handles the Get response.
+func (client FloatClient) getHandleResponse(resp *azcore.Response) (*FloatEnumResponse, error) {
 	result := FloatEnumResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
-// GetHandleError handles the Get error response.
-func (client *FloatClient) GetHandleError(resp *azcore.Response) error {
+// getHandleError handles the Get error response.
+func (client FloatClient) getHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -91,8 +83,8 @@ func (client *FloatClient) GetHandleError(resp *azcore.Response) error {
 }
 
 // Put - Put a float enum
-func (client *FloatClient) Put(ctx context.Context, options *FloatPutOptions) (*StringResponse, error) {
-	req, err := client.PutCreateRequest(ctx, options)
+func (client FloatClient) Put(ctx context.Context, options *FloatPutOptions) (*StringResponse, error) {
+	req, err := client.putCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -101,17 +93,17 @@ func (client *FloatClient) Put(ctx context.Context, options *FloatPutOptions) (*
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.PutHandleError(resp)
+		return nil, client.putHandleError(resp)
 	}
-	result, err := client.PutHandleResponse(resp)
+	result, err := client.putHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// PutCreateRequest creates the Put request.
-func (client *FloatClient) PutCreateRequest(ctx context.Context, options *FloatPutOptions) (*azcore.Request, error) {
+// putCreateRequest creates the Put request.
+func (client FloatClient) putCreateRequest(ctx context.Context, options *FloatPutOptions) (*azcore.Request, error) {
 	urlPath := "/nonStringEnums/float/put"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -125,14 +117,14 @@ func (client *FloatClient) PutCreateRequest(ctx context.Context, options *FloatP
 	return req, nil
 }
 
-// PutHandleResponse handles the Put response.
-func (client *FloatClient) PutHandleResponse(resp *azcore.Response) (*StringResponse, error) {
+// putHandleResponse handles the Put response.
+func (client FloatClient) putHandleResponse(resp *azcore.Response) (*StringResponse, error) {
 	result := StringResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
-// PutHandleError handles the Put error response.
-func (client *FloatClient) PutHandleError(resp *azcore.Response) error {
+// putHandleError handles the Put error response.
+func (client FloatClient) putHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)

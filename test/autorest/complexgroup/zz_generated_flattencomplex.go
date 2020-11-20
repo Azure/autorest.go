@@ -16,29 +16,24 @@ import (
 	"net/http"
 )
 
-// FlattencomplexOperations contains the methods for the Flattencomplex group.
-type FlattencomplexOperations interface {
-	GetValid(ctx context.Context, options *FlattencomplexGetValidOptions) (*MyBaseTypeResponse, error)
-}
-
-// FlattencomplexClient implements the FlattencomplexOperations interface.
+// FlattencomplexClient contains the methods for the Flattencomplex group.
 // Don't use this type directly, use NewFlattencomplexClient() instead.
 type FlattencomplexClient struct {
 	con *Connection
 }
 
 // NewFlattencomplexClient creates a new instance of FlattencomplexClient with the specified values.
-func NewFlattencomplexClient(con *Connection) FlattencomplexOperations {
-	return &FlattencomplexClient{con: con}
+func NewFlattencomplexClient(con *Connection) FlattencomplexClient {
+	return FlattencomplexClient{con: con}
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client *FlattencomplexClient) Pipeline() azcore.Pipeline {
+func (client FlattencomplexClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
-func (client *FlattencomplexClient) GetValid(ctx context.Context, options *FlattencomplexGetValidOptions) (*MyBaseTypeResponse, error) {
-	req, err := client.GetValidCreateRequest(ctx, options)
+func (client FlattencomplexClient) GetValid(ctx context.Context, options *FlattencomplexGetValidOptions) (*MyBaseTypeResponse, error) {
+	req, err := client.getValidCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -47,17 +42,17 @@ func (client *FlattencomplexClient) GetValid(ctx context.Context, options *Flatt
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetValidHandleError(resp)
+		return nil, client.getValidHandleError(resp)
 	}
-	result, err := client.GetValidHandleResponse(resp)
+	result, err := client.getValidHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// GetValidCreateRequest creates the GetValid request.
-func (client *FlattencomplexClient) GetValidCreateRequest(ctx context.Context, options *FlattencomplexGetValidOptions) (*azcore.Request, error) {
+// getValidCreateRequest creates the GetValid request.
+func (client FlattencomplexClient) getValidCreateRequest(ctx context.Context, options *FlattencomplexGetValidOptions) (*azcore.Request, error) {
 	urlPath := "/complex/flatten/valid"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -68,14 +63,14 @@ func (client *FlattencomplexClient) GetValidCreateRequest(ctx context.Context, o
 	return req, nil
 }
 
-// GetValidHandleResponse handles the GetValid response.
-func (client *FlattencomplexClient) GetValidHandleResponse(resp *azcore.Response) (*MyBaseTypeResponse, error) {
+// getValidHandleResponse handles the GetValid response.
+func (client FlattencomplexClient) getValidHandleResponse(resp *azcore.Response) (*MyBaseTypeResponse, error) {
 	result := MyBaseTypeResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result)
 }
 
-// GetValidHandleError handles the GetValid error response.
-func (client *FlattencomplexClient) GetValidHandleError(resp *azcore.Response) error {
+// getValidHandleError handles the GetValid error response.
+func (client FlattencomplexClient) getValidHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)

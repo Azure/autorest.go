@@ -12,7 +12,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
-func newStringClient() StringOperations {
+func newStringClient() StringClient {
 	return NewStringClient(NewDefaultConnection(nil))
 }
 

@@ -10,7 +10,7 @@ import (
 	"testing"
 )
 
-func newIntClient() IntOperations {
+func newIntClient() IntClient {
 	return NewIntClient(NewDefaultConnection(nil))
 }
 

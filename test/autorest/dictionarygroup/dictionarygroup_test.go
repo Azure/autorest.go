@@ -13,7 +13,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
-func newDictionaryClient() DictionaryOperations {
+func newDictionaryClient() DictionaryClient {
 	return NewDictionaryClient(NewDefaultConnection(nil))
 }
 

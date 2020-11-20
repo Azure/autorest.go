@@ -21,13 +21,13 @@ type pipelineRunClient struct {
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client *pipelineRunClient) Pipeline() azcore.Pipeline {
+func (client pipelineRunClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // CancelPipelineRun - Cancel a pipeline run by its run ID.
-func (client *pipelineRunClient) CancelPipelineRun(ctx context.Context, runId string, options *PipelineRunCancelPipelineRunOptions) (*http.Response, error) {
-	req, err := client.CancelPipelineRunCreateRequest(ctx, runId, options)
+func (client pipelineRunClient) CancelPipelineRun(ctx context.Context, runId string, options *PipelineRunCancelPipelineRunOptions) (*http.Response, error) {
+	req, err := client.cancelPipelineRunCreateRequest(ctx, runId, options)
 	if err != nil {
 		return nil, err
 	}
@@ -36,13 +36,13 @@ func (client *pipelineRunClient) CancelPipelineRun(ctx context.Context, runId st
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.CancelPipelineRunHandleError(resp)
+		return nil, client.cancelPipelineRunHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// CancelPipelineRunCreateRequest creates the CancelPipelineRun request.
-func (client *pipelineRunClient) CancelPipelineRunCreateRequest(ctx context.Context, runId string, options *PipelineRunCancelPipelineRunOptions) (*azcore.Request, error) {
+// cancelPipelineRunCreateRequest creates the CancelPipelineRun request.
+func (client pipelineRunClient) cancelPipelineRunCreateRequest(ctx context.Context, runId string, options *PipelineRunCancelPipelineRunOptions) (*azcore.Request, error) {
 	urlPath := "/pipelineruns/{runId}/cancel"
 	urlPath = strings.ReplaceAll(urlPath, "{runId}", url.PathEscape(runId))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -60,8 +60,8 @@ func (client *pipelineRunClient) CancelPipelineRunCreateRequest(ctx context.Cont
 	return req, nil
 }
 
-// CancelPipelineRunHandleError handles the CancelPipelineRun error response.
-func (client *pipelineRunClient) CancelPipelineRunHandleError(resp *azcore.Response) error {
+// cancelPipelineRunHandleError handles the CancelPipelineRun error response.
+func (client pipelineRunClient) cancelPipelineRunHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -70,8 +70,8 @@ func (client *pipelineRunClient) CancelPipelineRunHandleError(resp *azcore.Respo
 }
 
 // GetPipelineRun - Get a pipeline run by its run ID.
-func (client *pipelineRunClient) GetPipelineRun(ctx context.Context, runId string, options *PipelineRunGetPipelineRunOptions) (*PipelineRunResponse, error) {
-	req, err := client.GetPipelineRunCreateRequest(ctx, runId, options)
+func (client pipelineRunClient) GetPipelineRun(ctx context.Context, runId string, options *PipelineRunGetPipelineRunOptions) (*PipelineRunResponse, error) {
+	req, err := client.getPipelineRunCreateRequest(ctx, runId, options)
 	if err != nil {
 		return nil, err
 	}
@@ -80,17 +80,17 @@ func (client *pipelineRunClient) GetPipelineRun(ctx context.Context, runId strin
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetPipelineRunHandleError(resp)
+		return nil, client.getPipelineRunHandleError(resp)
 	}
-	result, err := client.GetPipelineRunHandleResponse(resp)
+	result, err := client.getPipelineRunHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// GetPipelineRunCreateRequest creates the GetPipelineRun request.
-func (client *pipelineRunClient) GetPipelineRunCreateRequest(ctx context.Context, runId string, options *PipelineRunGetPipelineRunOptions) (*azcore.Request, error) {
+// getPipelineRunCreateRequest creates the GetPipelineRun request.
+func (client pipelineRunClient) getPipelineRunCreateRequest(ctx context.Context, runId string, options *PipelineRunGetPipelineRunOptions) (*azcore.Request, error) {
 	urlPath := "/pipelineruns/{runId}"
 	urlPath = strings.ReplaceAll(urlPath, "{runId}", url.PathEscape(runId))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -105,14 +105,14 @@ func (client *pipelineRunClient) GetPipelineRunCreateRequest(ctx context.Context
 	return req, nil
 }
 
-// GetPipelineRunHandleResponse handles the GetPipelineRun response.
-func (client *pipelineRunClient) GetPipelineRunHandleResponse(resp *azcore.Response) (*PipelineRunResponse, error) {
+// getPipelineRunHandleResponse handles the GetPipelineRun response.
+func (client pipelineRunClient) getPipelineRunHandleResponse(resp *azcore.Response) (*PipelineRunResponse, error) {
 	result := PipelineRunResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.PipelineRun)
 }
 
-// GetPipelineRunHandleError handles the GetPipelineRun error response.
-func (client *pipelineRunClient) GetPipelineRunHandleError(resp *azcore.Response) error {
+// getPipelineRunHandleError handles the GetPipelineRun error response.
+func (client pipelineRunClient) getPipelineRunHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -121,8 +121,8 @@ func (client *pipelineRunClient) GetPipelineRunHandleError(resp *azcore.Response
 }
 
 // QueryActivityRuns - Query activity runs based on input filter conditions.
-func (client *pipelineRunClient) QueryActivityRuns(ctx context.Context, pipelineName string, runId string, filterParameters RunFilterParameters, options *PipelineRunQueryActivityRunsOptions) (*ActivityRunsQueryResponseResponse, error) {
-	req, err := client.QueryActivityRunsCreateRequest(ctx, pipelineName, runId, filterParameters, options)
+func (client pipelineRunClient) QueryActivityRuns(ctx context.Context, pipelineName string, runId string, filterParameters RunFilterParameters, options *PipelineRunQueryActivityRunsOptions) (*ActivityRunsQueryResponseResponse, error) {
+	req, err := client.queryActivityRunsCreateRequest(ctx, pipelineName, runId, filterParameters, options)
 	if err != nil {
 		return nil, err
 	}
@@ -131,17 +131,17 @@ func (client *pipelineRunClient) QueryActivityRuns(ctx context.Context, pipeline
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.QueryActivityRunsHandleError(resp)
+		return nil, client.queryActivityRunsHandleError(resp)
 	}
-	result, err := client.QueryActivityRunsHandleResponse(resp)
+	result, err := client.queryActivityRunsHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// QueryActivityRunsCreateRequest creates the QueryActivityRuns request.
-func (client *pipelineRunClient) QueryActivityRunsCreateRequest(ctx context.Context, pipelineName string, runId string, filterParameters RunFilterParameters, options *PipelineRunQueryActivityRunsOptions) (*azcore.Request, error) {
+// queryActivityRunsCreateRequest creates the QueryActivityRuns request.
+func (client pipelineRunClient) queryActivityRunsCreateRequest(ctx context.Context, pipelineName string, runId string, filterParameters RunFilterParameters, options *PipelineRunQueryActivityRunsOptions) (*azcore.Request, error) {
 	urlPath := "/pipelines/{pipelineName}/pipelineruns/{runId}/queryActivityruns"
 	urlPath = strings.ReplaceAll(urlPath, "{pipelineName}", url.PathEscape(pipelineName))
 	urlPath = strings.ReplaceAll(urlPath, "{runId}", url.PathEscape(runId))
@@ -157,14 +157,14 @@ func (client *pipelineRunClient) QueryActivityRunsCreateRequest(ctx context.Cont
 	return req, req.MarshalAsJSON(filterParameters)
 }
 
-// QueryActivityRunsHandleResponse handles the QueryActivityRuns response.
-func (client *pipelineRunClient) QueryActivityRunsHandleResponse(resp *azcore.Response) (*ActivityRunsQueryResponseResponse, error) {
+// queryActivityRunsHandleResponse handles the QueryActivityRuns response.
+func (client pipelineRunClient) queryActivityRunsHandleResponse(resp *azcore.Response) (*ActivityRunsQueryResponseResponse, error) {
 	result := ActivityRunsQueryResponseResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ActivityRunsQueryResponse)
 }
 
-// QueryActivityRunsHandleError handles the QueryActivityRuns error response.
-func (client *pipelineRunClient) QueryActivityRunsHandleError(resp *azcore.Response) error {
+// queryActivityRunsHandleError handles the QueryActivityRuns error response.
+func (client pipelineRunClient) queryActivityRunsHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -173,8 +173,8 @@ func (client *pipelineRunClient) QueryActivityRunsHandleError(resp *azcore.Respo
 }
 
 // QueryPipelineRunsByWorkspace - Query pipeline runs in the workspace based on input filter conditions.
-func (client *pipelineRunClient) QueryPipelineRunsByWorkspace(ctx context.Context, filterParameters RunFilterParameters, options *PipelineRunQueryPipelineRunsByWorkspaceOptions) (*PipelineRunsQueryResponseResponse, error) {
-	req, err := client.QueryPipelineRunsByWorkspaceCreateRequest(ctx, filterParameters, options)
+func (client pipelineRunClient) QueryPipelineRunsByWorkspace(ctx context.Context, filterParameters RunFilterParameters, options *PipelineRunQueryPipelineRunsByWorkspaceOptions) (*PipelineRunsQueryResponseResponse, error) {
+	req, err := client.queryPipelineRunsByWorkspaceCreateRequest(ctx, filterParameters, options)
 	if err != nil {
 		return nil, err
 	}
@@ -183,17 +183,17 @@ func (client *pipelineRunClient) QueryPipelineRunsByWorkspace(ctx context.Contex
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.QueryPipelineRunsByWorkspaceHandleError(resp)
+		return nil, client.queryPipelineRunsByWorkspaceHandleError(resp)
 	}
-	result, err := client.QueryPipelineRunsByWorkspaceHandleResponse(resp)
+	result, err := client.queryPipelineRunsByWorkspaceHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// QueryPipelineRunsByWorkspaceCreateRequest creates the QueryPipelineRunsByWorkspace request.
-func (client *pipelineRunClient) QueryPipelineRunsByWorkspaceCreateRequest(ctx context.Context, filterParameters RunFilterParameters, options *PipelineRunQueryPipelineRunsByWorkspaceOptions) (*azcore.Request, error) {
+// queryPipelineRunsByWorkspaceCreateRequest creates the QueryPipelineRunsByWorkspace request.
+func (client pipelineRunClient) queryPipelineRunsByWorkspaceCreateRequest(ctx context.Context, filterParameters RunFilterParameters, options *PipelineRunQueryPipelineRunsByWorkspaceOptions) (*azcore.Request, error) {
 	urlPath := "/queryPipelineRuns"
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -207,14 +207,14 @@ func (client *pipelineRunClient) QueryPipelineRunsByWorkspaceCreateRequest(ctx c
 	return req, req.MarshalAsJSON(filterParameters)
 }
 
-// QueryPipelineRunsByWorkspaceHandleResponse handles the QueryPipelineRunsByWorkspace response.
-func (client *pipelineRunClient) QueryPipelineRunsByWorkspaceHandleResponse(resp *azcore.Response) (*PipelineRunsQueryResponseResponse, error) {
+// queryPipelineRunsByWorkspaceHandleResponse handles the QueryPipelineRunsByWorkspace response.
+func (client pipelineRunClient) queryPipelineRunsByWorkspaceHandleResponse(resp *azcore.Response) (*PipelineRunsQueryResponseResponse, error) {
 	result := PipelineRunsQueryResponseResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.PipelineRunsQueryResponse)
 }
 
-// QueryPipelineRunsByWorkspaceHandleError handles the QueryPipelineRunsByWorkspace error response.
-func (client *pipelineRunClient) QueryPipelineRunsByWorkspaceHandleError(resp *azcore.Response) error {
+// queryPipelineRunsByWorkspaceHandleError handles the QueryPipelineRunsByWorkspace error response.
+func (client pipelineRunClient) queryPipelineRunsByWorkspaceHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

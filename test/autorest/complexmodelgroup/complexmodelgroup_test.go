@@ -8,7 +8,7 @@ import (
 	"testing"
 )
 
-func newComplexModelClient() ComplexModelClientOperations {
+func newComplexModelClient() ComplexModelClient {
 	return NewComplexModelClient(NewDefaultConnection(nil))
 }
 

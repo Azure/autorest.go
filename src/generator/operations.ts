@@ -53,10 +53,6 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       opText += createProtocolResponse(op, imports);
       opText += createProtocolErrHandler(op, imports);
     }
-    let interfaceText = '';
-    if (isARM) {
-      interfaceText = createInterfaceDefinition(group, imports);
-    }
     // stitch it all together
     let text = await contentPreamble(session);
     const exportClient = await exportClients(session);
@@ -69,11 +65,9 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     }
     const clientCtor = group.language.go!.clientCtorName;
     text += imports.text();
-    text += interfaceText;
     // generate the operation client
-    const interfaceName = group.language.go!.interfaceName;
     if (isARM) {
-      text += `// ${clientName} implements the ${interfaceName} interface.\n`;
+      text += `// ${clientName} contains the methods for the ${group.language.go!.name} group.\n`;
       text += `// Don't use this type directly, use ${clientCtor}() instead.\n`;
     }
     text += `type ${clientName} struct {\n`;
@@ -99,13 +93,13 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
         }
       }
       text += `// ${clientCtor} creates a new instance of ${clientName} with the specified values.\n`;
-      text += `func ${clientCtor}(${methodParams.join(', ')}) ${interfaceName} {\n`;
-      text += `\treturn &${clientName}{${connectionLiterals.join(', ')}}\n`;
+      text += `func ${clientCtor}(${methodParams.join(', ')}) ${clientName} {\n`;
+      text += `\treturn ${clientName}{${connectionLiterals.join(', ')}}\n`;
       text += '}\n\n';
     }
     // operation client Pipeline method
     text += '// Pipeline returns the pipeline associated with this client.\n';
-    text += `func (client *${clientName}) Pipeline() azcore.Pipeline {\n`;
+    text += `func (client ${clientName}) Pipeline() azcore.Pipeline {\n`;
     text += '\treturn client.con.Pipeline()\n';
     text += '}\n\n';
     // add operations content last
@@ -225,7 +219,7 @@ function generateOperation(op: Operation, imports: ImportManager): string {
   if (isMultiRespOperation(op)) {
     text += generateMultiRespComment(op);
   }
-  text += `func (client *${clientName}) ${op.language.go!.name}(${params}) (${returns.join(', ')}) {\n`;
+  text += `func (client ${clientName}) ${op.language.go!.name}(${params}) (${returns.join(', ')}) {\n`;
   const reqParams = getCreateRequestParameters(op);
   const statusCodes = getStatusCodes(op);
   if (isPageableOperation(op) && !isLROOperation(op)) {
@@ -311,7 +305,7 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
   }
   const returns = ['*azcore.Request', 'error'];
   let text = `${comment(name, '// ')} creates the ${info.name} request.\n`;
-  text += `func (client *${op.language.go!.clientName}) ${name}(${getCreateRequestParametersSig(op)}) (${returns.join(', ')}) {\n`;
+  text += `func (client ${op.language.go!.clientName}) ${name}(${getCreateRequestParametersSig(op)}) (${returns.join(', ')}) {\n`;
   // default to host on the connection
   let hostParam = 'client.con.Endpoint()';
   if (codeModel.language.go!.complexHostParams) {
@@ -674,7 +668,7 @@ function createProtocolResponse(op: Operation, imports: ImportManager): string {
   const name = info.protocolNaming.responseMethod;
   const clientName = op.language.go!.clientName;
   let text = `${comment(name, '// ')} handles the ${info.name} response.\n`;
-  text += `func (client *${clientName}) ${name}(resp *azcore.Response) (${generateReturnsInfo(op, 'handler').join(', ')}) {\n`;
+  text += `func (client ${clientName}) ${name}(resp *azcore.Response) (${generateReturnsInfo(op, 'handler').join(', ')}) {\n`;
   if (!isMultiRespOperation(op)) {
     text += generateResponseUnmarshaller(op, op.responses![0], imports);
   } else {
@@ -696,7 +690,7 @@ function createProtocolErrHandler(op: Operation, imports: ImportManager): string
   const info = <OperationNaming>op.language.go!;
   const name = info.protocolNaming.errorMethod;
   let text = `${comment(name, '// ')} handles the ${info.name} error response.\n`;
-  text += `func (client *${op.language.go!.clientName}) ${name}(resp *azcore.Response) error {\n`;
+  text += `func (client ${op.language.go!.clientName}) ${name}(resp *azcore.Response) error {\n`;
   // define a generic error for when there are no exceptions or no error schema
   const generateGenericError = function () {
     imports.add('errors');
@@ -806,42 +800,6 @@ function isMapOfDate(schema: Schema): boolean {
   return dictElem.type === SchemaType.Date;
 }
 
-function createInterfaceDefinition(group: OperationGroup, imports: ImportManager): string {
-  let interfaceText = `// ${group.language.go!.interfaceName} contains the methods for the ${group.language.go!.name} group.\n`;
-  interfaceText += `type ${group.language.go!.interfaceName} interface {\n`;
-  for (const op of values(group.operations)) {
-    let opName = op.language.go!.name;
-    if (op.language.go!.paging && op.language.go!.paging.isNextOp) {
-      // don't generate a public API for the methods used to advance pages
-      continue;
-    }
-    if (isLROOperation(op)) {
-      opName = `Begin${opName}`;
-    }
-    for (const param of values(aggregateParameters(op))) {
-      if (param.implementation !== ImplementationLocation.Method || param.required !== true) {
-        continue;
-      }
-      imports.addImportForSchemaType(param.schema);
-    }
-    if (hasDescription(op.language.go!)) {
-      interfaceText += `${comment(`${opName} - ${op.language.go!.description}`, "//", undefined, commentLength)}\n`;
-    }
-    if (isMultiRespOperation(op)) {
-      interfaceText += generateMultiRespComment(op);
-    }
-    const returns = generateReturnsInfo(op, 'int');
-    interfaceText += `\t${opName}(${getAPIParametersSig(op, imports)}) (${returns.join(', ')})\n`;
-    // Add resume LRO poller method for each Begin poller method
-    if (isLROOperation(op)) {
-      interfaceText += `\t// Resume${op.language.go!.name} - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.\n`;
-      interfaceText += `\tResume${op.language.go!.name}(token string) (${op.language.go!.pollerType.name}, error)\n`;
-    }
-  }
-  interfaceText += '}\n\n';
-  return interfaceText;
-}
-
 // returns the media type used by the protocol
 function getMediaType(protocol: Protocols): 'JSON' | 'XML' | 'binary' | 'text' | 'none' {
   // TODO: binary, forms etc
@@ -898,10 +856,10 @@ function getAPIParametersSig(op: Operation, imports: ImportManager): string {
 // returns the return signature where each entry is the type name
 // e.g. [ '*string', 'error' ]
 // apiType describes where the return sig is used.
-//   int - for the interface definition
+//   api - for the API definition
 //    op - for the operation
 // handler - for the response handler
-function generateReturnsInfo(op: Operation, apiType: 'int' | 'op' | 'handler'): string[] {
+function generateReturnsInfo(op: Operation, apiType: 'api' | 'op' | 'handler'): string[] {
   if (!op.responses) {
     return ['*http.Response', 'error'];
   }
@@ -911,7 +869,7 @@ function generateReturnsInfo(op: Operation, apiType: 'int' | 'op' | 'handler'): 
       case 'handler':
         returnType = '*' + (<SchemaResponse>op.responses![0]).schema.language.go!.responseType.name;
         break;
-      case 'int':
+      case 'api':
         returnType = '*HTTPPollerResponse';
         if (hasSchemaResponse(op)) {
           returnType = '*' + (<SchemaResponse>op.responses![0]).schema.language.go!.lroResponseType.language.go!.name;
@@ -926,7 +884,7 @@ function generateReturnsInfo(op: Operation, apiType: 'int' | 'op' | 'handler'): 
       case 'handler':
         returnType = '*' + (<SchemaResponse>op.responses![0]).schema.language.go!.responseType.name;
         break;
-      case 'int':
+      case 'api':
       case 'op':
         // pager operations don't return an error
         return [op.language.go!.pageableType.name];
@@ -947,11 +905,15 @@ function generateReturnsInfo(op: Operation, apiType: 'int' | 'op' | 'handler'): 
 function generateARMLROBeginMethod(op: Operation, imports: ImportManager): string {
   const info = <OperationNaming>op.language.go!;
   const params = getAPIParametersSig(op, imports);
-  const returns = generateReturnsInfo(op, 'int');
+  const returns = generateReturnsInfo(op, 'api');
   const clientName = op.language.go!.clientName;
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/armcore');
   imports.add('time');
-  let text = `func (client *${clientName}) Begin${op.language.go!.name}(${params}) (${returns.join(', ')}) {\n`;
+  let text = '';
+  if (hasDescription(op.language.go!)) {
+    text += `${comment(`Begin${op.language.go!.name} - ${op.language.go!.description}`, "//", undefined, commentLength)}\n`;
+  }
+  text += `func (client ${clientName}) Begin${op.language.go!.name}(${params}) (${returns.join(', ')}) {\n`;
   text += `\tresp, err := client.${op.language.go!.name}(${getCreateRequestParameters(op)})\n`;
   text += `\tif err != nil {\n`;
   text += `\t\treturn nil, err\n`;
@@ -1017,7 +979,9 @@ function generateARMLROBeginMethod(op: Operation, imports: ImportManager): strin
 function generateARMLROResumeMethod(op: Operation): string {
   const info = <OperationNaming>op.language.go!;
   const clientName = op.language.go!.clientName;
-  let text = `func (client *${clientName}) Resume${op.language.go!.name}(token string) (${op.language.go!.pollerType.name}, error) {\n`;
+  let text = `// Resume${op.language.go!.name} creates a new ${op.language.go!.pollerType.name} from the specified resume token.\n`;
+  text += `// token - The value must come from a previous call to ${op.language.go!.pollerType.name}.ResumeToken().\n`;
+  text += `func (client ${clientName}) Resume${op.language.go!.name}(token string) (${op.language.go!.pollerType.name}, error) {\n`;
   text += `\tpt, err := armcore.NewPollerFromResumeToken("${clientName}.${op.language.go!.name}", token, client.${info.protocolNaming.errorMethod})\n`;
   text += '\tif err != nil {\n';
   text += '\t\treturn nil, err\n';

@@ -13,31 +13,25 @@ import (
 	"net/http"
 )
 
-// AutoRestReportServiceForAzureOperations contains the methods for the AutoRestReportServiceForAzure group.
-type AutoRestReportServiceForAzureOperations interface {
-	// GetReport - Get test coverage report
-	GetReport(ctx context.Context, options *AutoRestReportServiceForAzureGetReportOptions) (*MapOfInt32Response, error)
-}
-
-// AutoRestReportServiceForAzureClient implements the AutoRestReportServiceForAzureOperations interface.
+// AutoRestReportServiceForAzureClient contains the methods for the AutoRestReportServiceForAzure group.
 // Don't use this type directly, use NewAutoRestReportServiceForAzureClient() instead.
 type AutoRestReportServiceForAzureClient struct {
 	con *Connection
 }
 
 // NewAutoRestReportServiceForAzureClient creates a new instance of AutoRestReportServiceForAzureClient with the specified values.
-func NewAutoRestReportServiceForAzureClient(con *Connection) AutoRestReportServiceForAzureOperations {
-	return &AutoRestReportServiceForAzureClient{con: con}
+func NewAutoRestReportServiceForAzureClient(con *Connection) AutoRestReportServiceForAzureClient {
+	return AutoRestReportServiceForAzureClient{con: con}
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client *AutoRestReportServiceForAzureClient) Pipeline() azcore.Pipeline {
+func (client AutoRestReportServiceForAzureClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // GetReport - Get test coverage report
-func (client *AutoRestReportServiceForAzureClient) GetReport(ctx context.Context, options *AutoRestReportServiceForAzureGetReportOptions) (*MapOfInt32Response, error) {
-	req, err := client.GetReportCreateRequest(ctx, options)
+func (client AutoRestReportServiceForAzureClient) GetReport(ctx context.Context, options *AutoRestReportServiceForAzureGetReportOptions) (*MapOfInt32Response, error) {
+	req, err := client.getReportCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -46,17 +40,17 @@ func (client *AutoRestReportServiceForAzureClient) GetReport(ctx context.Context
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.GetReportHandleError(resp)
+		return nil, client.getReportHandleError(resp)
 	}
-	result, err := client.GetReportHandleResponse(resp)
+	result, err := client.getReportHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// GetReportCreateRequest creates the GetReport request.
-func (client *AutoRestReportServiceForAzureClient) GetReportCreateRequest(ctx context.Context, options *AutoRestReportServiceForAzureGetReportOptions) (*azcore.Request, error) {
+// getReportCreateRequest creates the GetReport request.
+func (client AutoRestReportServiceForAzureClient) getReportCreateRequest(ctx context.Context, options *AutoRestReportServiceForAzureGetReportOptions) (*azcore.Request, error) {
 	urlPath := "/report/azure"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -72,14 +66,14 @@ func (client *AutoRestReportServiceForAzureClient) GetReportCreateRequest(ctx co
 	return req, nil
 }
 
-// GetReportHandleResponse handles the GetReport response.
-func (client *AutoRestReportServiceForAzureClient) GetReportHandleResponse(resp *azcore.Response) (*MapOfInt32Response, error) {
+// getReportHandleResponse handles the GetReport response.
+func (client AutoRestReportServiceForAzureClient) getReportHandleResponse(resp *azcore.Response) (*MapOfInt32Response, error) {
 	result := MapOfInt32Response{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
-// GetReportHandleError handles the GetReport error response.
-func (client *AutoRestReportServiceForAzureClient) GetReportHandleError(resp *azcore.Response) error {
+// getReportHandleError handles the GetReport error response.
+func (client AutoRestReportServiceForAzureClient) getReportHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

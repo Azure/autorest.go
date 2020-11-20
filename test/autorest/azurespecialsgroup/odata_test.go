@@ -12,7 +12,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
-func newOdataClient() OdataOperations {
+func newOdataClient() OdataClient {
 	return NewOdataClient(NewDefaultConnection(nil))
 }
 

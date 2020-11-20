@@ -11,7 +11,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
-func newPetClient() PetOperations {
+func newPetClient() PetClient {
 	return NewPetClient(NewDefaultConnection(nil))
 }
 

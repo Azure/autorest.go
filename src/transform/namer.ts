@@ -31,9 +31,9 @@ export class protocolMethods implements protocolNaming {
   readonly errorMethod: string;
 
   constructor(name: string) {
-    this.requestMethod = `${name}${requestMethodSuffix}`;
-    this.responseMethod = `${name}${responseMethodSuffix}`;
-    this.errorMethod = `${name}${errorMethodSuffix}`;
+    this.requestMethod = `${camelCase(name)}${requestMethodSuffix}`;
+    this.responseMethod = `${camelCase(name)}${responseMethodSuffix}`;
+    this.errorMethod = `${camelCase(name)}${errorMethodSuffix}`;
   }
 }
 
@@ -98,11 +98,6 @@ export async function namer(session: Session<CodeModel>) {
       groupDetails.clientName = camelCase(groupDetails.clientName);
       groupDetails.clientCtorName = camelCase(groupDetails.clientCtorName);
     }
-    groupDetails.interfaceName = `${groupDetails.name}Operations`;
-    if (groupDetails.name === 'Operations') {
-      // if the group name is 'Operations' don't name it 'OperationsOperations'
-      groupDetails.interfaceName = groupDetails.name;
-    }
     for (const op of values(group.operations)) {
       const details = <OperationNaming>op.language.go;
       details.name = getEscapedReservedName(capitalizeAcronyms(pascalCase(details.name)), 'Method');
@@ -117,8 +112,13 @@ export async function namer(session: Session<CodeModel>) {
         paramDetails.name = getEscapedReservedName(removePrefix(camelCase(paramDetails.name), 'XMS'), 'Parameter');
       }
       details.protocolNaming = new protocolMethods(details.name);
-      if (op.language.go!.paging && op.language.go!.paging.nextLinkName !== null) {
-        op.language.go!.paging.nextLinkName = pascalCase(op.language.go!.paging.nextLinkName);
+      if (op.language.go!.paging) {
+        if (op.language.go!.paging.nextLinkName !== null) {
+          op.language.go!.paging.nextLinkName = pascalCase(op.language.go!.paging.nextLinkName);
+        }
+        if (op.language.go!.paging.member) {
+          op.language.go!.paging.member = camelCase(op.language.go!.paging.member);
+        }
       }
       for (const resp of values(op.responses)) {
         for (const header of values(resp.protocol.http!.headers)) {

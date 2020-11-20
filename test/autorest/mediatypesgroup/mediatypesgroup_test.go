@@ -14,7 +14,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
-func newMediaTypesClient() MediaTypesClientOperations {
+func newMediaTypesClient() MediaTypesClient {
 	return NewMediaTypesClient(NewDefaultConnection(nil))
 }
 

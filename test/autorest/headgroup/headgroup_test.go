@@ -8,7 +8,7 @@ import (
 	"testing"
 )
 
-func newHTTPSuccessOperationsClient() HTTPSuccessOperations {
+func newHTTPSuccessOperationsClient() HTTPSuccessClient {
 	return NewHTTPSuccessClient(NewDefaultConnection(nil))
 }
 
