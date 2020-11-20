@@ -34,23 +34,19 @@ func (client XMLClient) Pipeline() azcore.Pipeline {
 }
 
 // GetACLs - Gets storage ACLs for a container.
-func (client XMLClient) GetACLs(ctx context.Context, options *XMLGetACLsOptions) (*SignedIDentifierArrayResponse, error) {
+func (client XMLClient) GetACLs(ctx context.Context, options *XMLGetACLsOptions) (SignedIDentifierArrayResponse, error) {
 	req, err := client.getAcLsCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return SignedIDentifierArrayResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return SignedIDentifierArrayResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getAcLsHandleError(resp)
+		return SignedIDentifierArrayResponse{}, client.getAcLsHandleError(resp)
 	}
-	result, err := client.getAcLsHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.getAcLsHandleResponse(resp)
 }
 
 // getAcLsCreateRequest creates the GetACLs request.
@@ -70,9 +66,10 @@ func (client XMLClient) getAcLsCreateRequest(ctx context.Context, options *XMLGe
 }
 
 // getAcLsHandleResponse handles the GetACLs response.
-func (client XMLClient) getAcLsHandleResponse(resp *azcore.Response) (*SignedIDentifierArrayResponse, error) {
+func (client XMLClient) getAcLsHandleResponse(resp *azcore.Response) (SignedIDentifierArrayResponse, error) {
 	result := SignedIDentifierArrayResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsXML(&result)
+	err := resp.UnmarshalAsXML(&result)
+	return result, err
 }
 
 // getAcLsHandleError handles the GetACLs error response.
@@ -88,23 +85,19 @@ func (client XMLClient) getAcLsHandleError(resp *azcore.Response) error {
 }
 
 // GetComplexTypeRefNoMeta - Get a complex type that has a ref to a complex type with no XML node
-func (client XMLClient) GetComplexTypeRefNoMeta(ctx context.Context, options *XMLGetComplexTypeRefNoMetaOptions) (*RootWithRefAndNoMetaResponse, error) {
+func (client XMLClient) GetComplexTypeRefNoMeta(ctx context.Context, options *XMLGetComplexTypeRefNoMetaOptions) (RootWithRefAndNoMetaResponse, error) {
 	req, err := client.getComplexTypeRefNoMetaCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return RootWithRefAndNoMetaResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return RootWithRefAndNoMetaResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getComplexTypeRefNoMetaHandleError(resp)
+		return RootWithRefAndNoMetaResponse{}, client.getComplexTypeRefNoMetaHandleError(resp)
 	}
-	result, err := client.getComplexTypeRefNoMetaHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.getComplexTypeRefNoMetaHandleResponse(resp)
 }
 
 // getComplexTypeRefNoMetaCreateRequest creates the GetComplexTypeRefNoMeta request.
@@ -120,9 +113,10 @@ func (client XMLClient) getComplexTypeRefNoMetaCreateRequest(ctx context.Context
 }
 
 // getComplexTypeRefNoMetaHandleResponse handles the GetComplexTypeRefNoMeta response.
-func (client XMLClient) getComplexTypeRefNoMetaHandleResponse(resp *azcore.Response) (*RootWithRefAndNoMetaResponse, error) {
+func (client XMLClient) getComplexTypeRefNoMetaHandleResponse(resp *azcore.Response) (RootWithRefAndNoMetaResponse, error) {
 	result := RootWithRefAndNoMetaResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsXML(&result.RootWithRefAndNoMeta)
+	err := resp.UnmarshalAsXML(&result.RootWithRefAndNoMeta)
+	return result, err
 }
 
 // getComplexTypeRefNoMetaHandleError handles the GetComplexTypeRefNoMeta error response.
@@ -138,23 +132,19 @@ func (client XMLClient) getComplexTypeRefNoMetaHandleError(resp *azcore.Response
 }
 
 // GetComplexTypeRefWithMeta - Get a complex type that has a ref to a complex type with XML node
-func (client XMLClient) GetComplexTypeRefWithMeta(ctx context.Context, options *XMLGetComplexTypeRefWithMetaOptions) (*RootWithRefAndMetaResponse, error) {
+func (client XMLClient) GetComplexTypeRefWithMeta(ctx context.Context, options *XMLGetComplexTypeRefWithMetaOptions) (RootWithRefAndMetaResponse, error) {
 	req, err := client.getComplexTypeRefWithMetaCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return RootWithRefAndMetaResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return RootWithRefAndMetaResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getComplexTypeRefWithMetaHandleError(resp)
+		return RootWithRefAndMetaResponse{}, client.getComplexTypeRefWithMetaHandleError(resp)
 	}
-	result, err := client.getComplexTypeRefWithMetaHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.getComplexTypeRefWithMetaHandleResponse(resp)
 }
 
 // getComplexTypeRefWithMetaCreateRequest creates the GetComplexTypeRefWithMeta request.
@@ -170,9 +160,10 @@ func (client XMLClient) getComplexTypeRefWithMetaCreateRequest(ctx context.Conte
 }
 
 // getComplexTypeRefWithMetaHandleResponse handles the GetComplexTypeRefWithMeta response.
-func (client XMLClient) getComplexTypeRefWithMetaHandleResponse(resp *azcore.Response) (*RootWithRefAndMetaResponse, error) {
+func (client XMLClient) getComplexTypeRefWithMetaHandleResponse(resp *azcore.Response) (RootWithRefAndMetaResponse, error) {
 	result := RootWithRefAndMetaResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsXML(&result.RootWithRefAndMeta)
+	err := resp.UnmarshalAsXML(&result.RootWithRefAndMeta)
+	return result, err
 }
 
 // getComplexTypeRefWithMetaHandleError handles the GetComplexTypeRefWithMeta error response.
@@ -188,23 +179,19 @@ func (client XMLClient) getComplexTypeRefWithMetaHandleError(resp *azcore.Respon
 }
 
 // GetEmptyChildElement - Gets an XML document with an empty child element.
-func (client XMLClient) GetEmptyChildElement(ctx context.Context, options *XMLGetEmptyChildElementOptions) (*BananaResponse, error) {
+func (client XMLClient) GetEmptyChildElement(ctx context.Context, options *XMLGetEmptyChildElementOptions) (BananaResponse, error) {
 	req, err := client.getEmptyChildElementCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return BananaResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return BananaResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getEmptyChildElementHandleError(resp)
+		return BananaResponse{}, client.getEmptyChildElementHandleError(resp)
 	}
-	result, err := client.getEmptyChildElementHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.getEmptyChildElementHandleResponse(resp)
 }
 
 // getEmptyChildElementCreateRequest creates the GetEmptyChildElement request.
@@ -220,9 +207,10 @@ func (client XMLClient) getEmptyChildElementCreateRequest(ctx context.Context, o
 }
 
 // getEmptyChildElementHandleResponse handles the GetEmptyChildElement response.
-func (client XMLClient) getEmptyChildElementHandleResponse(resp *azcore.Response) (*BananaResponse, error) {
+func (client XMLClient) getEmptyChildElementHandleResponse(resp *azcore.Response) (BananaResponse, error) {
 	result := BananaResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsXML(&result.Banana)
+	err := resp.UnmarshalAsXML(&result.Banana)
+	return result, err
 }
 
 // getEmptyChildElementHandleError handles the GetEmptyChildElement error response.
@@ -238,23 +226,19 @@ func (client XMLClient) getEmptyChildElementHandleError(resp *azcore.Response) e
 }
 
 // GetEmptyList - Get an empty list.
-func (client XMLClient) GetEmptyList(ctx context.Context, options *XMLGetEmptyListOptions) (*SlideshowResponse, error) {
+func (client XMLClient) GetEmptyList(ctx context.Context, options *XMLGetEmptyListOptions) (SlideshowResponse, error) {
 	req, err := client.getEmptyListCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return SlideshowResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return SlideshowResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getEmptyListHandleError(resp)
+		return SlideshowResponse{}, client.getEmptyListHandleError(resp)
 	}
-	result, err := client.getEmptyListHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.getEmptyListHandleResponse(resp)
 }
 
 // getEmptyListCreateRequest creates the GetEmptyList request.
@@ -270,9 +254,10 @@ func (client XMLClient) getEmptyListCreateRequest(ctx context.Context, options *
 }
 
 // getEmptyListHandleResponse handles the GetEmptyList response.
-func (client XMLClient) getEmptyListHandleResponse(resp *azcore.Response) (*SlideshowResponse, error) {
+func (client XMLClient) getEmptyListHandleResponse(resp *azcore.Response) (SlideshowResponse, error) {
 	result := SlideshowResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsXML(&result.Slideshow)
+	err := resp.UnmarshalAsXML(&result.Slideshow)
+	return result, err
 }
 
 // getEmptyListHandleError handles the GetEmptyList error response.
@@ -288,23 +273,19 @@ func (client XMLClient) getEmptyListHandleError(resp *azcore.Response) error {
 }
 
 // GetEmptyRootList - Gets an empty list as the root element.
-func (client XMLClient) GetEmptyRootList(ctx context.Context, options *XMLGetEmptyRootListOptions) (*BananaArrayResponse, error) {
+func (client XMLClient) GetEmptyRootList(ctx context.Context, options *XMLGetEmptyRootListOptions) (BananaArrayResponse, error) {
 	req, err := client.getEmptyRootListCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return BananaArrayResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return BananaArrayResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getEmptyRootListHandleError(resp)
+		return BananaArrayResponse{}, client.getEmptyRootListHandleError(resp)
 	}
-	result, err := client.getEmptyRootListHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.getEmptyRootListHandleResponse(resp)
 }
 
 // getEmptyRootListCreateRequest creates the GetEmptyRootList request.
@@ -320,9 +301,10 @@ func (client XMLClient) getEmptyRootListCreateRequest(ctx context.Context, optio
 }
 
 // getEmptyRootListHandleResponse handles the GetEmptyRootList response.
-func (client XMLClient) getEmptyRootListHandleResponse(resp *azcore.Response) (*BananaArrayResponse, error) {
+func (client XMLClient) getEmptyRootListHandleResponse(resp *azcore.Response) (BananaArrayResponse, error) {
 	result := BananaArrayResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsXML(&result)
+	err := resp.UnmarshalAsXML(&result)
+	return result, err
 }
 
 // getEmptyRootListHandleError handles the GetEmptyRootList error response.
@@ -338,23 +320,19 @@ func (client XMLClient) getEmptyRootListHandleError(resp *azcore.Response) error
 }
 
 // GetEmptyWrappedLists - Gets some empty wrapped lists.
-func (client XMLClient) GetEmptyWrappedLists(ctx context.Context, options *XMLGetEmptyWrappedListsOptions) (*AppleBarrelResponse, error) {
+func (client XMLClient) GetEmptyWrappedLists(ctx context.Context, options *XMLGetEmptyWrappedListsOptions) (AppleBarrelResponse, error) {
 	req, err := client.getEmptyWrappedListsCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return AppleBarrelResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return AppleBarrelResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getEmptyWrappedListsHandleError(resp)
+		return AppleBarrelResponse{}, client.getEmptyWrappedListsHandleError(resp)
 	}
-	result, err := client.getEmptyWrappedListsHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.getEmptyWrappedListsHandleResponse(resp)
 }
 
 // getEmptyWrappedListsCreateRequest creates the GetEmptyWrappedLists request.
@@ -370,9 +348,10 @@ func (client XMLClient) getEmptyWrappedListsCreateRequest(ctx context.Context, o
 }
 
 // getEmptyWrappedListsHandleResponse handles the GetEmptyWrappedLists response.
-func (client XMLClient) getEmptyWrappedListsHandleResponse(resp *azcore.Response) (*AppleBarrelResponse, error) {
+func (client XMLClient) getEmptyWrappedListsHandleResponse(resp *azcore.Response) (AppleBarrelResponse, error) {
 	result := AppleBarrelResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsXML(&result.AppleBarrel)
+	err := resp.UnmarshalAsXML(&result.AppleBarrel)
+	return result, err
 }
 
 // getEmptyWrappedListsHandleError handles the GetEmptyWrappedLists error response.
@@ -388,23 +367,19 @@ func (client XMLClient) getEmptyWrappedListsHandleError(resp *azcore.Response) e
 }
 
 // GetHeaders - Get strongly-typed response headers.
-func (client XMLClient) GetHeaders(ctx context.Context, options *XMLGetHeadersOptions) (*XMLGetHeadersResponse, error) {
+func (client XMLClient) GetHeaders(ctx context.Context, options *XMLGetHeadersOptions) (XMLGetHeadersResponse, error) {
 	req, err := client.getHeadersCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return XMLGetHeadersResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return XMLGetHeadersResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getHeadersHandleError(resp)
+		return XMLGetHeadersResponse{}, client.getHeadersHandleError(resp)
 	}
-	result, err := client.getHeadersHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.getHeadersHandleResponse(resp)
 }
 
 // getHeadersCreateRequest creates the GetHeaders request.
@@ -419,12 +394,12 @@ func (client XMLClient) getHeadersCreateRequest(ctx context.Context, options *XM
 }
 
 // getHeadersHandleResponse handles the GetHeaders response.
-func (client XMLClient) getHeadersHandleResponse(resp *azcore.Response) (*XMLGetHeadersResponse, error) {
+func (client XMLClient) getHeadersHandleResponse(resp *azcore.Response) (XMLGetHeadersResponse, error) {
 	result := XMLGetHeadersResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("Custom-Header"); val != "" {
 		result.CustomHeader = &val
 	}
-	return &result, nil
+	return result, nil
 }
 
 // getHeadersHandleError handles the GetHeaders error response.
@@ -440,23 +415,19 @@ func (client XMLClient) getHeadersHandleError(resp *azcore.Response) error {
 }
 
 // GetRootList - Gets a list as the root element.
-func (client XMLClient) GetRootList(ctx context.Context, options *XMLGetRootListOptions) (*BananaArrayResponse, error) {
+func (client XMLClient) GetRootList(ctx context.Context, options *XMLGetRootListOptions) (BananaArrayResponse, error) {
 	req, err := client.getRootListCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return BananaArrayResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return BananaArrayResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getRootListHandleError(resp)
+		return BananaArrayResponse{}, client.getRootListHandleError(resp)
 	}
-	result, err := client.getRootListHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.getRootListHandleResponse(resp)
 }
 
 // getRootListCreateRequest creates the GetRootList request.
@@ -472,9 +443,10 @@ func (client XMLClient) getRootListCreateRequest(ctx context.Context, options *X
 }
 
 // getRootListHandleResponse handles the GetRootList response.
-func (client XMLClient) getRootListHandleResponse(resp *azcore.Response) (*BananaArrayResponse, error) {
+func (client XMLClient) getRootListHandleResponse(resp *azcore.Response) (BananaArrayResponse, error) {
 	result := BananaArrayResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsXML(&result)
+	err := resp.UnmarshalAsXML(&result)
+	return result, err
 }
 
 // getRootListHandleError handles the GetRootList error response.
@@ -490,23 +462,19 @@ func (client XMLClient) getRootListHandleError(resp *azcore.Response) error {
 }
 
 // GetRootListSingleItem - Gets a list with a single item.
-func (client XMLClient) GetRootListSingleItem(ctx context.Context, options *XMLGetRootListSingleItemOptions) (*BananaArrayResponse, error) {
+func (client XMLClient) GetRootListSingleItem(ctx context.Context, options *XMLGetRootListSingleItemOptions) (BananaArrayResponse, error) {
 	req, err := client.getRootListSingleItemCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return BananaArrayResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return BananaArrayResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getRootListSingleItemHandleError(resp)
+		return BananaArrayResponse{}, client.getRootListSingleItemHandleError(resp)
 	}
-	result, err := client.getRootListSingleItemHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.getRootListSingleItemHandleResponse(resp)
 }
 
 // getRootListSingleItemCreateRequest creates the GetRootListSingleItem request.
@@ -522,9 +490,10 @@ func (client XMLClient) getRootListSingleItemCreateRequest(ctx context.Context, 
 }
 
 // getRootListSingleItemHandleResponse handles the GetRootListSingleItem response.
-func (client XMLClient) getRootListSingleItemHandleResponse(resp *azcore.Response) (*BananaArrayResponse, error) {
+func (client XMLClient) getRootListSingleItemHandleResponse(resp *azcore.Response) (BananaArrayResponse, error) {
 	result := BananaArrayResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsXML(&result)
+	err := resp.UnmarshalAsXML(&result)
+	return result, err
 }
 
 // getRootListSingleItemHandleError handles the GetRootListSingleItem error response.
@@ -540,23 +509,19 @@ func (client XMLClient) getRootListSingleItemHandleError(resp *azcore.Response) 
 }
 
 // GetServiceProperties - Gets storage service properties.
-func (client XMLClient) GetServiceProperties(ctx context.Context, options *XMLGetServicePropertiesOptions) (*StorageServicePropertiesResponse, error) {
+func (client XMLClient) GetServiceProperties(ctx context.Context, options *XMLGetServicePropertiesOptions) (StorageServicePropertiesResponse, error) {
 	req, err := client.getServicePropertiesCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return StorageServicePropertiesResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return StorageServicePropertiesResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getServicePropertiesHandleError(resp)
+		return StorageServicePropertiesResponse{}, client.getServicePropertiesHandleError(resp)
 	}
-	result, err := client.getServicePropertiesHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.getServicePropertiesHandleResponse(resp)
 }
 
 // getServicePropertiesCreateRequest creates the GetServiceProperties request.
@@ -576,9 +541,10 @@ func (client XMLClient) getServicePropertiesCreateRequest(ctx context.Context, o
 }
 
 // getServicePropertiesHandleResponse handles the GetServiceProperties response.
-func (client XMLClient) getServicePropertiesHandleResponse(resp *azcore.Response) (*StorageServicePropertiesResponse, error) {
+func (client XMLClient) getServicePropertiesHandleResponse(resp *azcore.Response) (StorageServicePropertiesResponse, error) {
 	result := StorageServicePropertiesResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsXML(&result.StorageServiceProperties)
+	err := resp.UnmarshalAsXML(&result.StorageServiceProperties)
+	return result, err
 }
 
 // getServicePropertiesHandleError handles the GetServiceProperties error response.
@@ -594,23 +560,19 @@ func (client XMLClient) getServicePropertiesHandleError(resp *azcore.Response) e
 }
 
 // GetSimple - Get a simple XML document
-func (client XMLClient) GetSimple(ctx context.Context, options *XMLGetSimpleOptions) (*SlideshowResponse, error) {
+func (client XMLClient) GetSimple(ctx context.Context, options *XMLGetSimpleOptions) (SlideshowResponse, error) {
 	req, err := client.getSimpleCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return SlideshowResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return SlideshowResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getSimpleHandleError(resp)
+		return SlideshowResponse{}, client.getSimpleHandleError(resp)
 	}
-	result, err := client.getSimpleHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.getSimpleHandleResponse(resp)
 }
 
 // getSimpleCreateRequest creates the GetSimple request.
@@ -626,9 +588,10 @@ func (client XMLClient) getSimpleCreateRequest(ctx context.Context, options *XML
 }
 
 // getSimpleHandleResponse handles the GetSimple response.
-func (client XMLClient) getSimpleHandleResponse(resp *azcore.Response) (*SlideshowResponse, error) {
+func (client XMLClient) getSimpleHandleResponse(resp *azcore.Response) (SlideshowResponse, error) {
 	result := SlideshowResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsXML(&result.Slideshow)
+	err := resp.UnmarshalAsXML(&result.Slideshow)
+	return result, err
 }
 
 // getSimpleHandleError handles the GetSimple error response.
@@ -641,23 +604,19 @@ func (client XMLClient) getSimpleHandleError(resp *azcore.Response) error {
 }
 
 // GetWrappedLists - Get an XML document with multiple wrapped lists
-func (client XMLClient) GetWrappedLists(ctx context.Context, options *XMLGetWrappedListsOptions) (*AppleBarrelResponse, error) {
+func (client XMLClient) GetWrappedLists(ctx context.Context, options *XMLGetWrappedListsOptions) (AppleBarrelResponse, error) {
 	req, err := client.getWrappedListsCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return AppleBarrelResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return AppleBarrelResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getWrappedListsHandleError(resp)
+		return AppleBarrelResponse{}, client.getWrappedListsHandleError(resp)
 	}
-	result, err := client.getWrappedListsHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.getWrappedListsHandleResponse(resp)
 }
 
 // getWrappedListsCreateRequest creates the GetWrappedLists request.
@@ -673,9 +632,10 @@ func (client XMLClient) getWrappedListsCreateRequest(ctx context.Context, option
 }
 
 // getWrappedListsHandleResponse handles the GetWrappedLists response.
-func (client XMLClient) getWrappedListsHandleResponse(resp *azcore.Response) (*AppleBarrelResponse, error) {
+func (client XMLClient) getWrappedListsHandleResponse(resp *azcore.Response) (AppleBarrelResponse, error) {
 	result := AppleBarrelResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsXML(&result.AppleBarrel)
+	err := resp.UnmarshalAsXML(&result.AppleBarrel)
+	return result, err
 }
 
 // getWrappedListsHandleError handles the GetWrappedLists error response.
@@ -692,23 +652,19 @@ func (client XMLClient) getWrappedListsHandleError(resp *azcore.Response) error 
 
 // GetXMSText - Get back an XML object with an x-ms-text property, which should translate to the returned object's 'language' property being 'english' and
 // its 'content' property being 'I am text'
-func (client XMLClient) GetXMSText(ctx context.Context, options *XMLGetXMSTextOptions) (*ObjectWithXMSTextPropertyResponse, error) {
+func (client XMLClient) GetXMSText(ctx context.Context, options *XMLGetXMSTextOptions) (ObjectWithXMSTextPropertyResponse, error) {
 	req, err := client.getXmsTextCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return ObjectWithXMSTextPropertyResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return ObjectWithXMSTextPropertyResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getXmsTextHandleError(resp)
+		return ObjectWithXMSTextPropertyResponse{}, client.getXmsTextHandleError(resp)
 	}
-	result, err := client.getXmsTextHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.getXmsTextHandleResponse(resp)
 }
 
 // getXmsTextCreateRequest creates the GetXMSText request.
@@ -724,9 +680,10 @@ func (client XMLClient) getXmsTextCreateRequest(ctx context.Context, options *XM
 }
 
 // getXmsTextHandleResponse handles the GetXMSText response.
-func (client XMLClient) getXmsTextHandleResponse(resp *azcore.Response) (*ObjectWithXMSTextPropertyResponse, error) {
+func (client XMLClient) getXmsTextHandleResponse(resp *azcore.Response) (ObjectWithXMSTextPropertyResponse, error) {
 	result := ObjectWithXMSTextPropertyResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsXML(&result.Data)
+	err := resp.UnmarshalAsXML(&result.Data)
+	return result, err
 }
 
 // getXmsTextHandleError handles the GetXMSText error response.
@@ -781,23 +738,19 @@ func (client XMLClient) jsonInputHandleError(resp *azcore.Response) error {
 }
 
 // JSONOutput - A Swagger with XML that has one operation that returns JSON. ID number 42
-func (client XMLClient) JSONOutput(ctx context.Context, options *XMLJSONOutputOptions) (*JSONOutputResponse, error) {
+func (client XMLClient) JSONOutput(ctx context.Context, options *XMLJSONOutputOptions) (JSONOutputResponse, error) {
 	req, err := client.jsonOutputCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return JSONOutputResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return JSONOutputResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.jsonOutputHandleError(resp)
+		return JSONOutputResponse{}, client.jsonOutputHandleError(resp)
 	}
-	result, err := client.jsonOutputHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.jsonOutputHandleResponse(resp)
 }
 
 // jsonOutputCreateRequest creates the JSONOutput request.
@@ -813,9 +766,10 @@ func (client XMLClient) jsonOutputCreateRequest(ctx context.Context, options *XM
 }
 
 // jsonOutputHandleResponse handles the JSONOutput response.
-func (client XMLClient) jsonOutputHandleResponse(resp *azcore.Response) (*JSONOutputResponse, error) {
+func (client XMLClient) jsonOutputHandleResponse(resp *azcore.Response) (JSONOutputResponse, error) {
 	result := JSONOutputResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.JSONOutput)
+	err := resp.UnmarshalAsJSON(&result.JSONOutput)
+	return result, err
 }
 
 // jsonOutputHandleError handles the JSONOutput error response.
@@ -831,23 +785,19 @@ func (client XMLClient) jsonOutputHandleError(resp *azcore.Response) error {
 }
 
 // ListBlobs - Lists blobs in a storage container.
-func (client XMLClient) ListBlobs(ctx context.Context, options *XMLListBlobsOptions) (*ListBlobsResponseResponse, error) {
+func (client XMLClient) ListBlobs(ctx context.Context, options *XMLListBlobsOptions) (ListBlobsResponseResponse, error) {
 	req, err := client.listBlobsCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return ListBlobsResponseResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return ListBlobsResponseResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.listBlobsHandleError(resp)
+		return ListBlobsResponseResponse{}, client.listBlobsHandleError(resp)
 	}
-	result, err := client.listBlobsHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.listBlobsHandleResponse(resp)
 }
 
 // listBlobsCreateRequest creates the ListBlobs request.
@@ -867,9 +817,10 @@ func (client XMLClient) listBlobsCreateRequest(ctx context.Context, options *XML
 }
 
 // listBlobsHandleResponse handles the ListBlobs response.
-func (client XMLClient) listBlobsHandleResponse(resp *azcore.Response) (*ListBlobsResponseResponse, error) {
+func (client XMLClient) listBlobsHandleResponse(resp *azcore.Response) (ListBlobsResponseResponse, error) {
 	result := ListBlobsResponseResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsXML(&result.EnumerationResults)
+	err := resp.UnmarshalAsXML(&result.EnumerationResults)
+	return result, err
 }
 
 // listBlobsHandleError handles the ListBlobs error response.
@@ -885,23 +836,19 @@ func (client XMLClient) listBlobsHandleError(resp *azcore.Response) error {
 }
 
 // ListContainers - Lists containers in a storage account.
-func (client XMLClient) ListContainers(ctx context.Context, options *XMLListContainersOptions) (*ListContainersResponseResponse, error) {
+func (client XMLClient) ListContainers(ctx context.Context, options *XMLListContainersOptions) (ListContainersResponseResponse, error) {
 	req, err := client.listContainersCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return ListContainersResponseResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return ListContainersResponseResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.listContainersHandleError(resp)
+		return ListContainersResponseResponse{}, client.listContainersHandleError(resp)
 	}
-	result, err := client.listContainersHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.listContainersHandleResponse(resp)
 }
 
 // listContainersCreateRequest creates the ListContainers request.
@@ -920,9 +867,10 @@ func (client XMLClient) listContainersCreateRequest(ctx context.Context, options
 }
 
 // listContainersHandleResponse handles the ListContainers response.
-func (client XMLClient) listContainersHandleResponse(resp *azcore.Response) (*ListContainersResponseResponse, error) {
+func (client XMLClient) listContainersHandleResponse(resp *azcore.Response) (ListContainersResponseResponse, error) {
 	result := ListContainersResponseResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsXML(&result.EnumerationResults)
+	err := resp.UnmarshalAsXML(&result.EnumerationResults)
+	return result, err
 }
 
 // listContainersHandleError handles the ListContainers error response.

@@ -75,23 +75,19 @@ func (client AutoRestValidationTestClient) getWithConstantInPathHandleError(resp
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
-func (client AutoRestValidationTestClient) PostWithConstantInBody(ctx context.Context, options *AutoRestValidationTestPostWithConstantInBodyOptions) (*ProductResponse, error) {
+func (client AutoRestValidationTestClient) PostWithConstantInBody(ctx context.Context, options *AutoRestValidationTestPostWithConstantInBodyOptions) (ProductResponse, error) {
 	req, err := client.postWithConstantInBodyCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return ProductResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return ProductResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.postWithConstantInBodyHandleError(resp)
+		return ProductResponse{}, client.postWithConstantInBodyHandleError(resp)
 	}
-	result, err := client.postWithConstantInBodyHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.postWithConstantInBodyHandleResponse(resp)
 }
 
 // postWithConstantInBodyCreateRequest creates the PostWithConstantInBody request.
@@ -111,9 +107,10 @@ func (client AutoRestValidationTestClient) postWithConstantInBodyCreateRequest(c
 }
 
 // postWithConstantInBodyHandleResponse handles the PostWithConstantInBody response.
-func (client AutoRestValidationTestClient) postWithConstantInBodyHandleResponse(resp *azcore.Response) (*ProductResponse, error) {
+func (client AutoRestValidationTestClient) postWithConstantInBodyHandleResponse(resp *azcore.Response) (ProductResponse, error) {
 	result := ProductResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.Product)
+	err := resp.UnmarshalAsJSON(&result.Product)
+	return result, err
 }
 
 // postWithConstantInBodyHandleError handles the PostWithConstantInBody error response.
@@ -129,23 +126,19 @@ func (client AutoRestValidationTestClient) postWithConstantInBodyHandleError(res
 }
 
 // ValidationOfBody - Validates body parameters on the method. See swagger for details.
-func (client AutoRestValidationTestClient) ValidationOfBody(ctx context.Context, resourceGroupName string, id int32, options *AutoRestValidationTestValidationOfBodyOptions) (*ProductResponse, error) {
+func (client AutoRestValidationTestClient) ValidationOfBody(ctx context.Context, resourceGroupName string, id int32, options *AutoRestValidationTestValidationOfBodyOptions) (ProductResponse, error) {
 	req, err := client.validationOfBodyCreateRequest(ctx, resourceGroupName, id, options)
 	if err != nil {
-		return nil, err
+		return ProductResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return ProductResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.validationOfBodyHandleError(resp)
+		return ProductResponse{}, client.validationOfBodyHandleError(resp)
 	}
-	result, err := client.validationOfBodyHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.validationOfBodyHandleResponse(resp)
 }
 
 // validationOfBodyCreateRequest creates the ValidationOfBody request.
@@ -170,9 +163,10 @@ func (client AutoRestValidationTestClient) validationOfBodyCreateRequest(ctx con
 }
 
 // validationOfBodyHandleResponse handles the ValidationOfBody response.
-func (client AutoRestValidationTestClient) validationOfBodyHandleResponse(resp *azcore.Response) (*ProductResponse, error) {
+func (client AutoRestValidationTestClient) validationOfBodyHandleResponse(resp *azcore.Response) (ProductResponse, error) {
 	result := ProductResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.Product)
+	err := resp.UnmarshalAsJSON(&result.Product)
+	return result, err
 }
 
 // validationOfBodyHandleError handles the ValidationOfBody error response.
@@ -185,23 +179,19 @@ func (client AutoRestValidationTestClient) validationOfBodyHandleError(resp *azc
 }
 
 // ValidationOfMethodParameters - Validates input parameters on the method. See swagger for details.
-func (client AutoRestValidationTestClient) ValidationOfMethodParameters(ctx context.Context, resourceGroupName string, id int32, options *AutoRestValidationTestValidationOfMethodParametersOptions) (*ProductResponse, error) {
+func (client AutoRestValidationTestClient) ValidationOfMethodParameters(ctx context.Context, resourceGroupName string, id int32, options *AutoRestValidationTestValidationOfMethodParametersOptions) (ProductResponse, error) {
 	req, err := client.validationOfMethodParametersCreateRequest(ctx, resourceGroupName, id, options)
 	if err != nil {
-		return nil, err
+		return ProductResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return ProductResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.validationOfMethodParametersHandleError(resp)
+		return ProductResponse{}, client.validationOfMethodParametersHandleError(resp)
 	}
-	result, err := client.validationOfMethodParametersHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.validationOfMethodParametersHandleResponse(resp)
 }
 
 // validationOfMethodParametersCreateRequest creates the ValidationOfMethodParameters request.
@@ -223,9 +213,10 @@ func (client AutoRestValidationTestClient) validationOfMethodParametersCreateReq
 }
 
 // validationOfMethodParametersHandleResponse handles the ValidationOfMethodParameters response.
-func (client AutoRestValidationTestClient) validationOfMethodParametersHandleResponse(resp *azcore.Response) (*ProductResponse, error) {
+func (client AutoRestValidationTestClient) validationOfMethodParametersHandleResponse(resp *azcore.Response) (ProductResponse, error) {
 	result := ProductResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.Product)
+	err := resp.UnmarshalAsJSON(&result.Product)
+	return result, err
 }
 
 // validationOfMethodParametersHandleError handles the ValidationOfMethodParameters error response.

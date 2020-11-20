@@ -7,6 +7,7 @@ import (
 	"context"
 	"generatortests/helpers"
 	"net/http"
+	"reflect"
 	"testing"
 )
 
@@ -97,8 +98,8 @@ func TestNumberGetInvalidDecimal(t *testing.T) {
 	if err == nil {
 		t.Fatalf("unexpected nil error")
 	}
-	if result != nil {
-		t.Fatalf("expected a nil result")
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected empty response")
 	}
 }
 
@@ -108,8 +109,8 @@ func TestNumberGetInvalidDouble(t *testing.T) {
 	if err == nil {
 		t.Fatalf("unexpected nil error")
 	}
-	if result != nil {
-		t.Fatalf("expected a nil result")
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected empty response")
 	}
 }
 
@@ -119,8 +120,8 @@ func TestNumberGetInvalidFloat(t *testing.T) {
 	if err == nil {
 		t.Fatalf("unexpected nil error")
 	}
-	if result != nil {
-		t.Fatalf("expected a nil result")
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected empty response")
 	}
 }
 

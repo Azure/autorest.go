@@ -228,7 +228,7 @@ func TestHeaderResponseBool(t *testing.T) {
 	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 	val := true
 	expected := HeaderResponseBoolResponse{RawResponse: result.RawResponse, Value: &val}
-	helpers.DeepEqualOrFatal(t, result, &expected)
+	helpers.DeepEqualOrFatal(t, result, expected)
 	result, err = client.ResponseBool(context.Background(), "false", nil)
 	if err != nil {
 		t.Fatalf("ResponseBool: %v", err)
@@ -236,7 +236,7 @@ func TestHeaderResponseBool(t *testing.T) {
 	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 	val = false
 	expected = HeaderResponseBoolResponse{RawResponse: result.RawResponse, Value: &val}
-	helpers.DeepEqualOrFatal(t, result, &expected)
+	helpers.DeepEqualOrFatal(t, result, expected)
 
 }
 
@@ -248,7 +248,7 @@ func TestHeaderResponseByte(t *testing.T) {
 	}
 	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 	val := []byte("啊齄丂狛狜隣郎隣兀﨩")
-	helpers.DeepEqualOrFatal(t, result, &HeaderResponseByteResponse{RawResponse: result.RawResponse, Value: &val})
+	helpers.DeepEqualOrFatal(t, result, HeaderResponseByteResponse{RawResponse: result.RawResponse, Value: &val})
 }
 
 func TestHeaderResponseDate(t *testing.T) {
@@ -263,7 +263,7 @@ func TestHeaderResponseDate(t *testing.T) {
 		t.Fatalf("Unable to parse time: %v", err)
 	}
 	helpers.DeepEqualOrFatal(t, result,
-		&HeaderResponseDateResponse{
+		HeaderResponseDateResponse{
 			RawResponse: result.RawResponse,
 			Value:       &val,
 		})
@@ -277,7 +277,7 @@ func TestHeaderResponseDate(t *testing.T) {
 		t.Fatalf("Unable to parse time: %v", err)
 	}
 	helpers.DeepEqualOrFatal(t, result,
-		&HeaderResponseDateResponse{
+		HeaderResponseDateResponse{
 			RawResponse: result.RawResponse,
 			Value:       &val,
 		})
@@ -295,7 +295,7 @@ func TestHeaderResponseDatetime(t *testing.T) {
 		t.Fatalf("Unable to parse time: %v", err)
 	}
 	helpers.DeepEqualOrFatal(t, result,
-		&HeaderResponseDatetimeResponse{
+		HeaderResponseDatetimeResponse{
 			RawResponse: result.RawResponse,
 			Value:       &val,
 		})
@@ -309,7 +309,7 @@ func TestHeaderResponseDatetime(t *testing.T) {
 		t.Fatalf("Unable to parse time: %v", err)
 	}
 	helpers.DeepEqualOrFatal(t, result,
-		&HeaderResponseDatetimeResponse{
+		HeaderResponseDatetimeResponse{
 			RawResponse: result.RawResponse,
 			Value:       &val,
 		})
@@ -327,7 +327,7 @@ func TestHeaderResponseDatetimeRFC1123(t *testing.T) {
 		t.Fatalf("Unable to parse time: %v", err)
 	}
 	helpers.DeepEqualOrFatal(t, result,
-		&HeaderResponseDatetimeRFC1123Response{
+		HeaderResponseDatetimeRFC1123Response{
 			RawResponse: result.RawResponse,
 			Value:       &val,
 		})
@@ -341,7 +341,7 @@ func TestHeaderResponseDatetimeRFC1123(t *testing.T) {
 		t.Fatalf("Unable to parse time: %v", err)
 	}
 	helpers.DeepEqualOrFatal(t, result,
-		&HeaderResponseDatetimeRFC1123Response{
+		HeaderResponseDatetimeRFC1123Response{
 			RawResponse: result.RawResponse,
 			Value:       &val,
 		})
@@ -379,7 +379,7 @@ func TestHeaderResponseEnum(t *testing.T) {
 	}
 	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 	val := GreyscaleColors("GREY")
-	helpers.DeepEqualOrFatal(t, result, &HeaderResponseEnumResponse{RawResponse: result.RawResponse, Value: &val})
+	helpers.DeepEqualOrFatal(t, result, HeaderResponseEnumResponse{RawResponse: result.RawResponse, Value: &val})
 	result, err = client.ResponseEnum(context.Background(), "null", nil)
 	if err != nil {
 		t.Fatalf("ResponseEnum: %v", err)

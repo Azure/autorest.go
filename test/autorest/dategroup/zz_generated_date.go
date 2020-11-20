@@ -31,23 +31,19 @@ func (client DateClient) Pipeline() azcore.Pipeline {
 }
 
 // GetInvalidDate - Get invalid date value
-func (client DateClient) GetInvalidDate(ctx context.Context, options *DateGetInvalidDateOptions) (*TimeResponse, error) {
+func (client DateClient) GetInvalidDate(ctx context.Context, options *DateGetInvalidDateOptions) (TimeResponse, error) {
 	req, err := client.getInvalidDateCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return TimeResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return TimeResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getInvalidDateHandleError(resp)
+		return TimeResponse{}, client.getInvalidDateHandleError(resp)
 	}
-	result, err := client.getInvalidDateHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.getInvalidDateHandleResponse(resp)
 }
 
 // getInvalidDateCreateRequest creates the GetInvalidDate request.
@@ -63,10 +59,10 @@ func (client DateClient) getInvalidDateCreateRequest(ctx context.Context, option
 }
 
 // getInvalidDateHandleResponse handles the GetInvalidDate response.
-func (client DateClient) getInvalidDateHandleResponse(resp *azcore.Response) (*TimeResponse, error) {
+func (client DateClient) getInvalidDateHandleResponse(resp *azcore.Response) (TimeResponse, error) {
 	var aux *dateType
 	err := resp.UnmarshalAsJSON(&aux)
-	return &TimeResponse{RawResponse: resp.Response, Value: (*time.Time)(aux)}, err
+	return TimeResponse{RawResponse: resp.Response, Value: (*time.Time)(aux)}, err
 }
 
 // getInvalidDateHandleError handles the GetInvalidDate error response.
@@ -79,23 +75,19 @@ func (client DateClient) getInvalidDateHandleError(resp *azcore.Response) error 
 }
 
 // GetMaxDate - Get max date value 9999-12-31
-func (client DateClient) GetMaxDate(ctx context.Context, options *DateGetMaxDateOptions) (*TimeResponse, error) {
+func (client DateClient) GetMaxDate(ctx context.Context, options *DateGetMaxDateOptions) (TimeResponse, error) {
 	req, err := client.getMaxDateCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return TimeResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return TimeResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getMaxDateHandleError(resp)
+		return TimeResponse{}, client.getMaxDateHandleError(resp)
 	}
-	result, err := client.getMaxDateHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.getMaxDateHandleResponse(resp)
 }
 
 // getMaxDateCreateRequest creates the GetMaxDate request.
@@ -111,10 +103,10 @@ func (client DateClient) getMaxDateCreateRequest(ctx context.Context, options *D
 }
 
 // getMaxDateHandleResponse handles the GetMaxDate response.
-func (client DateClient) getMaxDateHandleResponse(resp *azcore.Response) (*TimeResponse, error) {
+func (client DateClient) getMaxDateHandleResponse(resp *azcore.Response) (TimeResponse, error) {
 	var aux *dateType
 	err := resp.UnmarshalAsJSON(&aux)
-	return &TimeResponse{RawResponse: resp.Response, Value: (*time.Time)(aux)}, err
+	return TimeResponse{RawResponse: resp.Response, Value: (*time.Time)(aux)}, err
 }
 
 // getMaxDateHandleError handles the GetMaxDate error response.
@@ -127,23 +119,19 @@ func (client DateClient) getMaxDateHandleError(resp *azcore.Response) error {
 }
 
 // GetMinDate - Get min date value 0000-01-01
-func (client DateClient) GetMinDate(ctx context.Context, options *DateGetMinDateOptions) (*TimeResponse, error) {
+func (client DateClient) GetMinDate(ctx context.Context, options *DateGetMinDateOptions) (TimeResponse, error) {
 	req, err := client.getMinDateCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return TimeResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return TimeResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getMinDateHandleError(resp)
+		return TimeResponse{}, client.getMinDateHandleError(resp)
 	}
-	result, err := client.getMinDateHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.getMinDateHandleResponse(resp)
 }
 
 // getMinDateCreateRequest creates the GetMinDate request.
@@ -159,10 +147,10 @@ func (client DateClient) getMinDateCreateRequest(ctx context.Context, options *D
 }
 
 // getMinDateHandleResponse handles the GetMinDate response.
-func (client DateClient) getMinDateHandleResponse(resp *azcore.Response) (*TimeResponse, error) {
+func (client DateClient) getMinDateHandleResponse(resp *azcore.Response) (TimeResponse, error) {
 	var aux *dateType
 	err := resp.UnmarshalAsJSON(&aux)
-	return &TimeResponse{RawResponse: resp.Response, Value: (*time.Time)(aux)}, err
+	return TimeResponse{RawResponse: resp.Response, Value: (*time.Time)(aux)}, err
 }
 
 // getMinDateHandleError handles the GetMinDate error response.
@@ -175,23 +163,19 @@ func (client DateClient) getMinDateHandleError(resp *azcore.Response) error {
 }
 
 // GetNull - Get null date value
-func (client DateClient) GetNull(ctx context.Context, options *DateGetNullOptions) (*TimeResponse, error) {
+func (client DateClient) GetNull(ctx context.Context, options *DateGetNullOptions) (TimeResponse, error) {
 	req, err := client.getNullCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return TimeResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return TimeResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getNullHandleError(resp)
+		return TimeResponse{}, client.getNullHandleError(resp)
 	}
-	result, err := client.getNullHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.getNullHandleResponse(resp)
 }
 
 // getNullCreateRequest creates the GetNull request.
@@ -207,10 +191,10 @@ func (client DateClient) getNullCreateRequest(ctx context.Context, options *Date
 }
 
 // getNullHandleResponse handles the GetNull response.
-func (client DateClient) getNullHandleResponse(resp *azcore.Response) (*TimeResponse, error) {
+func (client DateClient) getNullHandleResponse(resp *azcore.Response) (TimeResponse, error) {
 	var aux *dateType
 	err := resp.UnmarshalAsJSON(&aux)
-	return &TimeResponse{RawResponse: resp.Response, Value: (*time.Time)(aux)}, err
+	return TimeResponse{RawResponse: resp.Response, Value: (*time.Time)(aux)}, err
 }
 
 // getNullHandleError handles the GetNull error response.
@@ -223,23 +207,19 @@ func (client DateClient) getNullHandleError(resp *azcore.Response) error {
 }
 
 // GetOverflowDate - Get overflow date value
-func (client DateClient) GetOverflowDate(ctx context.Context, options *DateGetOverflowDateOptions) (*TimeResponse, error) {
+func (client DateClient) GetOverflowDate(ctx context.Context, options *DateGetOverflowDateOptions) (TimeResponse, error) {
 	req, err := client.getOverflowDateCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return TimeResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return TimeResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getOverflowDateHandleError(resp)
+		return TimeResponse{}, client.getOverflowDateHandleError(resp)
 	}
-	result, err := client.getOverflowDateHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.getOverflowDateHandleResponse(resp)
 }
 
 // getOverflowDateCreateRequest creates the GetOverflowDate request.
@@ -255,10 +235,10 @@ func (client DateClient) getOverflowDateCreateRequest(ctx context.Context, optio
 }
 
 // getOverflowDateHandleResponse handles the GetOverflowDate response.
-func (client DateClient) getOverflowDateHandleResponse(resp *azcore.Response) (*TimeResponse, error) {
+func (client DateClient) getOverflowDateHandleResponse(resp *azcore.Response) (TimeResponse, error) {
 	var aux *dateType
 	err := resp.UnmarshalAsJSON(&aux)
-	return &TimeResponse{RawResponse: resp.Response, Value: (*time.Time)(aux)}, err
+	return TimeResponse{RawResponse: resp.Response, Value: (*time.Time)(aux)}, err
 }
 
 // getOverflowDateHandleError handles the GetOverflowDate error response.
@@ -271,23 +251,19 @@ func (client DateClient) getOverflowDateHandleError(resp *azcore.Response) error
 }
 
 // GetUnderflowDate - Get underflow date value
-func (client DateClient) GetUnderflowDate(ctx context.Context, options *DateGetUnderflowDateOptions) (*TimeResponse, error) {
+func (client DateClient) GetUnderflowDate(ctx context.Context, options *DateGetUnderflowDateOptions) (TimeResponse, error) {
 	req, err := client.getUnderflowDateCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return TimeResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return TimeResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getUnderflowDateHandleError(resp)
+		return TimeResponse{}, client.getUnderflowDateHandleError(resp)
 	}
-	result, err := client.getUnderflowDateHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.getUnderflowDateHandleResponse(resp)
 }
 
 // getUnderflowDateCreateRequest creates the GetUnderflowDate request.
@@ -303,10 +279,10 @@ func (client DateClient) getUnderflowDateCreateRequest(ctx context.Context, opti
 }
 
 // getUnderflowDateHandleResponse handles the GetUnderflowDate response.
-func (client DateClient) getUnderflowDateHandleResponse(resp *azcore.Response) (*TimeResponse, error) {
+func (client DateClient) getUnderflowDateHandleResponse(resp *azcore.Response) (TimeResponse, error) {
 	var aux *dateType
 	err := resp.UnmarshalAsJSON(&aux)
-	return &TimeResponse{RawResponse: resp.Response, Value: (*time.Time)(aux)}, err
+	return TimeResponse{RawResponse: resp.Response, Value: (*time.Time)(aux)}, err
 }
 
 // getUnderflowDateHandleError handles the GetUnderflowDate error response.

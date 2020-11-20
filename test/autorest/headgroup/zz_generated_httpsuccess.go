@@ -33,21 +33,21 @@ func (client HTTPSuccessClient) Pipeline() azcore.Pipeline {
 }
 
 // Head200 - Return 200 status code if successful
-func (client HTTPSuccessClient) Head200(ctx context.Context, options *HTTPSuccessHead200Options) (*BooleanResponse, error) {
+func (client HTTPSuccessClient) Head200(ctx context.Context, options *HTTPSuccessHead200Options) (BooleanResponse, error) {
 	req, err := client.head200CreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return BooleanResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return BooleanResponse{}, err
 	}
 	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
-		return &BooleanResponse{RawResponse: resp.Response, Success: true}, nil
+		return BooleanResponse{RawResponse: resp.Response, Success: true}, nil
 	} else if resp.StatusCode >= 400 && resp.StatusCode < 500 {
-		return &BooleanResponse{RawResponse: resp.Response, Success: false}, nil
+		return BooleanResponse{RawResponse: resp.Response, Success: false}, nil
 	} else {
-		return nil, client.head200HandleError(resp)
+		return BooleanResponse{}, client.head200HandleError(resp)
 	}
 }
 
@@ -75,21 +75,21 @@ func (client HTTPSuccessClient) head200HandleError(resp *azcore.Response) error 
 }
 
 // Head204 - Return 204 status code if successful
-func (client HTTPSuccessClient) Head204(ctx context.Context, options *HTTPSuccessHead204Options) (*BooleanResponse, error) {
+func (client HTTPSuccessClient) Head204(ctx context.Context, options *HTTPSuccessHead204Options) (BooleanResponse, error) {
 	req, err := client.head204CreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return BooleanResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return BooleanResponse{}, err
 	}
 	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
-		return &BooleanResponse{RawResponse: resp.Response, Success: true}, nil
+		return BooleanResponse{RawResponse: resp.Response, Success: true}, nil
 	} else if resp.StatusCode >= 400 && resp.StatusCode < 500 {
-		return &BooleanResponse{RawResponse: resp.Response, Success: false}, nil
+		return BooleanResponse{RawResponse: resp.Response, Success: false}, nil
 	} else {
-		return nil, client.head204HandleError(resp)
+		return BooleanResponse{}, client.head204HandleError(resp)
 	}
 }
 
@@ -117,21 +117,21 @@ func (client HTTPSuccessClient) head204HandleError(resp *azcore.Response) error 
 }
 
 // Head404 - Return 404 status code if successful
-func (client HTTPSuccessClient) Head404(ctx context.Context, options *HTTPSuccessHead404Options) (*BooleanResponse, error) {
+func (client HTTPSuccessClient) Head404(ctx context.Context, options *HTTPSuccessHead404Options) (BooleanResponse, error) {
 	req, err := client.head404CreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return BooleanResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return BooleanResponse{}, err
 	}
 	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
-		return &BooleanResponse{RawResponse: resp.Response, Success: true}, nil
+		return BooleanResponse{RawResponse: resp.Response, Success: true}, nil
 	} else if resp.StatusCode >= 400 && resp.StatusCode < 500 {
-		return &BooleanResponse{RawResponse: resp.Response, Success: false}, nil
+		return BooleanResponse{RawResponse: resp.Response, Success: false}, nil
 	} else {
-		return nil, client.head404HandleError(resp)
+		return BooleanResponse{}, client.head404HandleError(resp)
 	}
 }
 

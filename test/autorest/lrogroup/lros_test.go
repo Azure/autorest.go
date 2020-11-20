@@ -664,9 +664,7 @@ func TestLROBeginPut200Acceptedcanceled200(t *testing.T) {
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
-	if res != nil {
-		t.Fatal("expected a nil response from the polling operation")
-	}
+	helpers.DeepEqualOrFatal(t, res, ProductResponse{})
 	var cloudErr *CloudError
 	if !errors.As(err, &cloudErr) {
 		t.Fatal("expected a CloudError but did not receive one")
@@ -781,9 +779,7 @@ func TestLROBeginPut201CreatingFailed200(t *testing.T) {
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
-	if res != nil {
-		t.Fatal("expected a nil response from the polling operation")
-	}
+	helpers.DeepEqualOrFatal(t, res, ProductResponse{})
 	var cloudErr *CloudError
 	if !errors.As(err, &cloudErr) {
 		t.Fatal("expected a CloudError but did not receive one")
@@ -936,9 +932,7 @@ func TestLROBeginPutAsyncNoRetrycanceled(t *testing.T) {
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
-	if res != nil {
-		t.Fatal("expected a nil response from the polling operation")
-	}
+	helpers.DeepEqualOrFatal(t, res, ProductResponse{})
 	var cloudErr *CloudError
 	if !errors.As(err, &cloudErr) {
 		t.Fatal("expected a CloudError but did not receive one")
@@ -996,9 +990,7 @@ func TestLROBeginPutAsyncRetryFailed(t *testing.T) {
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
-	if res != nil {
-		t.Fatal("expected a nil response from the polling operation")
-	}
+	helpers.DeepEqualOrFatal(t, res, ProductResponse{})
 	var cloudErr *CloudError
 	if !errors.As(err, &cloudErr) {
 		t.Fatal("expected a CloudError but did not receive one")

@@ -60,9 +60,10 @@ func (client linkedServiceClient) createOrUpdateLinkedServiceCreateRequest(ctx c
 }
 
 // createOrUpdateLinkedServiceHandleResponse handles the CreateOrUpdateLinkedService response.
-func (client linkedServiceClient) createOrUpdateLinkedServiceHandleResponse(resp *azcore.Response) (*LinkedServiceResourceResponse, error) {
+func (client linkedServiceClient) createOrUpdateLinkedServiceHandleResponse(resp *azcore.Response) (LinkedServiceResourceResponse, error) {
 	result := LinkedServiceResourceResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.LinkedServiceResource)
+	err := resp.UnmarshalAsJSON(&result.LinkedServiceResource)
+	return result, err
 }
 
 // createOrUpdateLinkedServiceHandleError handles the CreateOrUpdateLinkedService error response.
@@ -116,23 +117,19 @@ func (client linkedServiceClient) deleteLinkedServiceHandleError(resp *azcore.Re
 }
 
 // GetLinkedService - Gets a linked service.
-func (client linkedServiceClient) GetLinkedService(ctx context.Context, linkedServiceName string, options *LinkedServiceGetLinkedServiceOptions) (*LinkedServiceResourceResponse, error) {
+func (client linkedServiceClient) GetLinkedService(ctx context.Context, linkedServiceName string, options *LinkedServiceGetLinkedServiceOptions) (LinkedServiceResourceResponse, error) {
 	req, err := client.getLinkedServiceCreateRequest(ctx, linkedServiceName, options)
 	if err != nil {
-		return nil, err
+		return LinkedServiceResourceResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return LinkedServiceResourceResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusNotModified) {
-		return nil, client.getLinkedServiceHandleError(resp)
+		return LinkedServiceResourceResponse{}, client.getLinkedServiceHandleError(resp)
 	}
-	result, err := client.getLinkedServiceHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.getLinkedServiceHandleResponse(resp)
 }
 
 // getLinkedServiceCreateRequest creates the GetLinkedService request.
@@ -155,9 +152,10 @@ func (client linkedServiceClient) getLinkedServiceCreateRequest(ctx context.Cont
 }
 
 // getLinkedServiceHandleResponse handles the GetLinkedService response.
-func (client linkedServiceClient) getLinkedServiceHandleResponse(resp *azcore.Response) (*LinkedServiceResourceResponse, error) {
+func (client linkedServiceClient) getLinkedServiceHandleResponse(resp *azcore.Response) (LinkedServiceResourceResponse, error) {
 	result := LinkedServiceResourceResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.LinkedServiceResource)
+	err := resp.UnmarshalAsJSON(&result.LinkedServiceResource)
+	return result, err
 }
 
 // getLinkedServiceHandleError handles the GetLinkedService error response.
@@ -178,7 +176,7 @@ func (client linkedServiceClient) GetLinkedServicesByWorkspace(options *LinkedSe
 		},
 		responder: client.getLinkedServicesByWorkspaceHandleResponse,
 		errorer:   client.getLinkedServicesByWorkspaceHandleError,
-		advancer: func(ctx context.Context, resp *LinkedServiceListResponseResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp LinkedServiceListResponseResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.LinkedServiceListResponse.NextLink)
 		},
 		statusCodes: []int{http.StatusOK},
@@ -201,9 +199,10 @@ func (client linkedServiceClient) getLinkedServicesByWorkspaceCreateRequest(ctx 
 }
 
 // getLinkedServicesByWorkspaceHandleResponse handles the GetLinkedServicesByWorkspace response.
-func (client linkedServiceClient) getLinkedServicesByWorkspaceHandleResponse(resp *azcore.Response) (*LinkedServiceListResponseResponse, error) {
+func (client linkedServiceClient) getLinkedServicesByWorkspaceHandleResponse(resp *azcore.Response) (LinkedServiceListResponseResponse, error) {
 	result := LinkedServiceListResponseResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.LinkedServiceListResponse)
+	err := resp.UnmarshalAsJSON(&result.LinkedServiceListResponse)
+	return result, err
 }
 
 // getLinkedServicesByWorkspaceHandleError handles the GetLinkedServicesByWorkspace error response.

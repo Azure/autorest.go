@@ -313,9 +313,7 @@ func TestLROSADSBeginPutAsyncRelativeRetry400(t *testing.T) {
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
-	if res != nil {
-		t.Fatal("expected a nil response with the error")
-	}
+	helpers.DeepEqualOrFatal(t, res, ProductResponse{})
 }
 
 func TestLROSADSBeginPutAsyncRelativeRetryInvalidHeader(t *testing.T) {
@@ -345,9 +343,7 @@ func TestLROSADSBeginPutAsyncRelativeRetryInvalidJSONPolling(t *testing.T) {
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
-	if res != nil {
-		t.Fatal("expected a nil response with the error")
-	}
+	helpers.DeepEqualOrFatal(t, res, ProductResponse{})
 }
 
 func TestLROSADSBeginPutAsyncRelativeRetryNoStatus(t *testing.T) {
@@ -369,9 +365,7 @@ func TestLROSADSBeginPutAsyncRelativeRetryNoStatus(t *testing.T) {
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
-	if res != nil {
-		t.Fatal("expected a nil response with the error")
-	}
+	helpers.DeepEqualOrFatal(t, res, ProductResponse{})
 }
 
 func TestLROSADSBeginPutAsyncRelativeRetryNoStatusPayload(t *testing.T) {
@@ -393,9 +387,7 @@ func TestLROSADSBeginPutAsyncRelativeRetryNoStatusPayload(t *testing.T) {
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
-	if res != nil {
-		t.Fatal("expected a nil response with the error")
-	}
+	helpers.DeepEqualOrFatal(t, res, ProductResponse{})
 }
 
 func TestLROSADSBeginPutError201NoProvisioningStatePayload(t *testing.T) {
@@ -417,9 +409,7 @@ func TestLROSADSBeginPutError201NoProvisioningStatePayload(t *testing.T) {
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
-	if res != nil {
-		t.Fatal("expected a nil response with the error")
-	}
+	helpers.DeepEqualOrFatal(t, res, ProductResponse{})
 }
 
 func TestLROSADSBeginPutNonRetry201Creating400(t *testing.T) {
@@ -441,9 +431,7 @@ func TestLROSADSBeginPutNonRetry201Creating400(t *testing.T) {
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
-	if res != nil {
-		t.Fatal("expected a nil response with the error")
-	}
+	helpers.DeepEqualOrFatal(t, res, ProductResponse{})
 }
 
 func TestLROSADSBeginPutNonRetry201Creating400InvalidJSON(t *testing.T) {
@@ -465,9 +453,7 @@ func TestLROSADSBeginPutNonRetry201Creating400InvalidJSON(t *testing.T) {
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
-	if res != nil {
-		t.Fatal("expected a nil response with the error")
-	}
+	helpers.DeepEqualOrFatal(t, res, ProductResponse{})
 }
 
 func TestLROSADSBeginPutNonRetry400(t *testing.T) {

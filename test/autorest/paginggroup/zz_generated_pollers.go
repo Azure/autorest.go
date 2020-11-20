@@ -72,7 +72,7 @@ func (p *productResultPagerPoller) handleResponse(resp *azcore.Response) (Produc
 		resp:      resp,
 		errorer:   p.errHandler,
 		responder: p.respHandler,
-		advancer: func(ctx context.Context, resp *ProductResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp ProductResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ProductResult.NextLink)
 		},
 		statusCodes: p.statusCodes,

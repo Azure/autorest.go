@@ -10,6 +10,7 @@ package paginggroup
 import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"reflect"
 )
 
 // OdataProductResultPager provides iteration over OdataProductResult pages.
@@ -19,7 +20,7 @@ type OdataProductResultPager interface {
 	NextPage(context.Context) bool
 
 	// Page returns the current OdataProductResultResponse.
-	PageResponse() *OdataProductResultResponse
+	PageResponse() OdataProductResultResponse
 
 	// Err returns the last error encountered while paging.
 	Err() error
@@ -29,9 +30,9 @@ type odataProductResultCreateRequest func(context.Context) (*azcore.Request, err
 
 type odataProductResultHandleError func(*azcore.Response) error
 
-type odataProductResultHandleResponse func(*azcore.Response) (*OdataProductResultResponse, error)
+type odataProductResultHandleResponse func(*azcore.Response) (OdataProductResultResponse, error)
 
-type odataProductResultAdvancePage func(context.Context, *OdataProductResultResponse) (*azcore.Request, error)
+type odataProductResultAdvancePage func(context.Context, OdataProductResultResponse) (*azcore.Request, error)
 
 type odataProductResultPager struct {
 	// the pipeline for making the request
@@ -45,7 +46,7 @@ type odataProductResultPager struct {
 	// callback for advancing to the next page
 	advancer odataProductResultAdvancePage
 	// contains the current response
-	current *OdataProductResultResponse
+	current OdataProductResultResponse
 	// status codes for successful retrieval
 	statusCodes []int
 	// any error encountered
@@ -59,7 +60,7 @@ func (p *odataProductResultPager) Err() error {
 func (p *odataProductResultPager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
-	if p.current != nil {
+	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.OdataProductResult.OdataNextLink == nil || len(*p.current.OdataProductResult.OdataNextLink) == 0 {
 			return false
 		}
@@ -89,7 +90,7 @@ func (p *odataProductResultPager) NextPage(ctx context.Context) bool {
 	return true
 }
 
-func (p *odataProductResultPager) PageResponse() *OdataProductResultResponse {
+func (p *odataProductResultPager) PageResponse() OdataProductResultResponse {
 	return p.current
 }
 
@@ -100,7 +101,7 @@ type ProductResultPager interface {
 	NextPage(context.Context) bool
 
 	// Page returns the current ProductResultResponse.
-	PageResponse() *ProductResultResponse
+	PageResponse() ProductResultResponse
 
 	// Err returns the last error encountered while paging.
 	Err() error
@@ -110,9 +111,9 @@ type productResultCreateRequest func(context.Context) (*azcore.Request, error)
 
 type productResultHandleError func(*azcore.Response) error
 
-type productResultHandleResponse func(*azcore.Response) (*ProductResultResponse, error)
+type productResultHandleResponse func(*azcore.Response) (ProductResultResponse, error)
 
-type productResultAdvancePage func(context.Context, *ProductResultResponse) (*azcore.Request, error)
+type productResultAdvancePage func(context.Context, ProductResultResponse) (*azcore.Request, error)
 
 type productResultPager struct {
 	// the pipeline for making the request
@@ -126,7 +127,7 @@ type productResultPager struct {
 	// callback for advancing to the next page
 	advancer productResultAdvancePage
 	// contains the current response
-	current *ProductResultResponse
+	current ProductResultResponse
 	// status codes for successful retrieval
 	statusCodes []int
 	// any error encountered
@@ -142,7 +143,7 @@ func (p *productResultPager) Err() error {
 func (p *productResultPager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
-	if p.current != nil {
+	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.ProductResult.NextLink == nil || len(*p.current.ProductResult.NextLink) == 0 {
 			return false
 		}
@@ -177,7 +178,7 @@ func (p *productResultPager) NextPage(ctx context.Context) bool {
 	return true
 }
 
-func (p *productResultPager) PageResponse() *ProductResultResponse {
+func (p *productResultPager) PageResponse() ProductResultResponse {
 	return p.current
 }
 
@@ -188,7 +189,7 @@ type ProductResultValuePager interface {
 	NextPage(context.Context) bool
 
 	// Page returns the current ProductResultValueResponse.
-	PageResponse() *ProductResultValueResponse
+	PageResponse() ProductResultValueResponse
 
 	// Err returns the last error encountered while paging.
 	Err() error
@@ -198,9 +199,9 @@ type productResultValueCreateRequest func(context.Context) (*azcore.Request, err
 
 type productResultValueHandleError func(*azcore.Response) error
 
-type productResultValueHandleResponse func(*azcore.Response) (*ProductResultValueResponse, error)
+type productResultValueHandleResponse func(*azcore.Response) (ProductResultValueResponse, error)
 
-type productResultValueAdvancePage func(context.Context, *ProductResultValueResponse) (*azcore.Request, error)
+type productResultValueAdvancePage func(context.Context, ProductResultValueResponse) (*azcore.Request, error)
 
 type productResultValuePager struct {
 	// the pipeline for making the request
@@ -214,7 +215,7 @@ type productResultValuePager struct {
 	// callback for advancing to the next page
 	advancer productResultValueAdvancePage
 	// contains the current response
-	current *ProductResultValueResponse
+	current ProductResultValueResponse
 	// status codes for successful retrieval
 	statusCodes []int
 	// any error encountered
@@ -228,7 +229,7 @@ func (p *productResultValuePager) Err() error {
 func (p *productResultValuePager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
-	if p.current != nil {
+	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.ProductResultValue.NextLink == nil || len(*p.current.ProductResultValue.NextLink) == 0 {
 			return false
 		}
@@ -258,7 +259,7 @@ func (p *productResultValuePager) NextPage(ctx context.Context) bool {
 	return true
 }
 
-func (p *productResultValuePager) PageResponse() *ProductResultValueResponse {
+func (p *productResultValuePager) PageResponse() ProductResultValueResponse {
 	return p.current
 }
 
@@ -269,7 +270,7 @@ type ProductResultValueWithXmsClientNamePager interface {
 	NextPage(context.Context) bool
 
 	// Page returns the current ProductResultValueWithXmsClientNameResponse.
-	PageResponse() *ProductResultValueWithXmsClientNameResponse
+	PageResponse() ProductResultValueWithXmsClientNameResponse
 
 	// Err returns the last error encountered while paging.
 	Err() error
@@ -279,9 +280,9 @@ type productResultValueWithXmsClientNameCreateRequest func(context.Context) (*az
 
 type productResultValueWithXmsClientNameHandleError func(*azcore.Response) error
 
-type productResultValueWithXmsClientNameHandleResponse func(*azcore.Response) (*ProductResultValueWithXmsClientNameResponse, error)
+type productResultValueWithXmsClientNameHandleResponse func(*azcore.Response) (ProductResultValueWithXmsClientNameResponse, error)
 
-type productResultValueWithXmsClientNameAdvancePage func(context.Context, *ProductResultValueWithXmsClientNameResponse) (*azcore.Request, error)
+type productResultValueWithXmsClientNameAdvancePage func(context.Context, ProductResultValueWithXmsClientNameResponse) (*azcore.Request, error)
 
 type productResultValueWithXmsClientNamePager struct {
 	// the pipeline for making the request
@@ -295,7 +296,7 @@ type productResultValueWithXmsClientNamePager struct {
 	// callback for advancing to the next page
 	advancer productResultValueWithXmsClientNameAdvancePage
 	// contains the current response
-	current *ProductResultValueWithXmsClientNameResponse
+	current ProductResultValueWithXmsClientNameResponse
 	// status codes for successful retrieval
 	statusCodes []int
 	// any error encountered
@@ -309,7 +310,7 @@ func (p *productResultValueWithXmsClientNamePager) Err() error {
 func (p *productResultValueWithXmsClientNamePager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
-	if p.current != nil {
+	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.ProductResultValueWithXmsClientName.NextLink == nil || len(*p.current.ProductResultValueWithXmsClientName.NextLink) == 0 {
 			return false
 		}
@@ -339,6 +340,6 @@ func (p *productResultValueWithXmsClientNamePager) NextPage(ctx context.Context)
 	return true
 }
 
-func (p *productResultValueWithXmsClientNamePager) PageResponse() *ProductResultValueWithXmsClientNameResponse {
+func (p *productResultValueWithXmsClientNamePager) PageResponse() ProductResultValueWithXmsClientNameResponse {
 	return p.current
 }

@@ -81,11 +81,7 @@ func (client HTTPRedirectsClient) Get300(ctx context.Context, options *HTTPRedir
 	if !resp.HasStatusCode(http.StatusOK, http.StatusMultipleChoices) {
 		return nil, client.get300HandleError(resp)
 	}
-	result, err := client.get300HandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.get300HandleResponse(resp)
 }
 
 // get300CreateRequest creates the Get300 request.
@@ -108,13 +104,14 @@ func (client HTTPRedirectsClient) get300HandleResponse(resp *azcore.Response) (i
 		if val := resp.Header.Get("Location"); val != "" {
 			result.Location = &val
 		}
-		return &result, nil
+		return result, nil
 	case http.StatusMultipleChoices:
 		result := StringArrayResponse{RawResponse: resp.Response}
 		if val := resp.Header.Get("Location"); val != "" {
 			result.Location = &val
 		}
-		return &result, resp.UnmarshalAsJSON(&result.StringArray)
+		err := resp.UnmarshalAsJSON(&result.StringArray)
+		return result, err
 	default:
 		return nil, fmt.Errorf("unhandled HTTP status code %d", resp.StatusCode)
 	}
@@ -241,23 +238,19 @@ func (client HTTPRedirectsClient) get307HandleError(resp *azcore.Response) error
 }
 
 // Head300 - Return 300 status code and redirect to /http/success/200
-func (client HTTPRedirectsClient) Head300(ctx context.Context, options *HTTPRedirectsHead300Options) (*HTTPRedirectsHead300Response, error) {
+func (client HTTPRedirectsClient) Head300(ctx context.Context, options *HTTPRedirectsHead300Options) (HTTPRedirectsHead300Response, error) {
 	req, err := client.head300CreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return HTTPRedirectsHead300Response{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return HTTPRedirectsHead300Response{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusMultipleChoices) {
-		return nil, client.head300HandleError(resp)
+		return HTTPRedirectsHead300Response{}, client.head300HandleError(resp)
 	}
-	result, err := client.head300HandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.head300HandleResponse(resp)
 }
 
 // head300CreateRequest creates the Head300 request.
@@ -273,7 +266,7 @@ func (client HTTPRedirectsClient) head300CreateRequest(ctx context.Context, opti
 }
 
 // head300HandleResponse handles the Head300 response.
-func (client HTTPRedirectsClient) head300HandleResponse(resp *azcore.Response) (*HTTPRedirectsHead300Response, error) {
+func (client HTTPRedirectsClient) head300HandleResponse(resp *azcore.Response) (HTTPRedirectsHead300Response, error) {
 	result := HTTPRedirectsHead300Response{RawResponse: resp.Response}
 	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
 		result.Success = true
@@ -281,7 +274,7 @@ func (client HTTPRedirectsClient) head300HandleResponse(resp *azcore.Response) (
 	if val := resp.Header.Get("Location"); val != "" {
 		result.Location = &val
 	}
-	return &result, nil
+	return result, nil
 }
 
 // head300HandleError handles the Head300 error response.
@@ -294,21 +287,21 @@ func (client HTTPRedirectsClient) head300HandleError(resp *azcore.Response) erro
 }
 
 // Head301 - Return 301 status code and redirect to /http/success/200
-func (client HTTPRedirectsClient) Head301(ctx context.Context, options *HTTPRedirectsHead301Options) (*BooleanResponse, error) {
+func (client HTTPRedirectsClient) Head301(ctx context.Context, options *HTTPRedirectsHead301Options) (BooleanResponse, error) {
 	req, err := client.head301CreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return BooleanResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return BooleanResponse{}, err
 	}
 	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
-		return &BooleanResponse{RawResponse: resp.Response, Success: true}, nil
+		return BooleanResponse{RawResponse: resp.Response, Success: true}, nil
 	} else if resp.StatusCode >= 400 && resp.StatusCode < 500 {
-		return &BooleanResponse{RawResponse: resp.Response, Success: false}, nil
+		return BooleanResponse{RawResponse: resp.Response, Success: false}, nil
 	} else {
-		return nil, client.head301HandleError(resp)
+		return BooleanResponse{}, client.head301HandleError(resp)
 	}
 }
 
@@ -334,21 +327,21 @@ func (client HTTPRedirectsClient) head301HandleError(resp *azcore.Response) erro
 }
 
 // Head302 - Return 302 status code and redirect to /http/success/200
-func (client HTTPRedirectsClient) Head302(ctx context.Context, options *HTTPRedirectsHead302Options) (*BooleanResponse, error) {
+func (client HTTPRedirectsClient) Head302(ctx context.Context, options *HTTPRedirectsHead302Options) (BooleanResponse, error) {
 	req, err := client.head302CreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return BooleanResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return BooleanResponse{}, err
 	}
 	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
-		return &BooleanResponse{RawResponse: resp.Response, Success: true}, nil
+		return BooleanResponse{RawResponse: resp.Response, Success: true}, nil
 	} else if resp.StatusCode >= 400 && resp.StatusCode < 500 {
-		return &BooleanResponse{RawResponse: resp.Response, Success: false}, nil
+		return BooleanResponse{RawResponse: resp.Response, Success: false}, nil
 	} else {
-		return nil, client.head302HandleError(resp)
+		return BooleanResponse{}, client.head302HandleError(resp)
 	}
 }
 
@@ -374,21 +367,21 @@ func (client HTTPRedirectsClient) head302HandleError(resp *azcore.Response) erro
 }
 
 // Head307 - Redirect with 307, resulting in a 200 success
-func (client HTTPRedirectsClient) Head307(ctx context.Context, options *HTTPRedirectsHead307Options) (*BooleanResponse, error) {
+func (client HTTPRedirectsClient) Head307(ctx context.Context, options *HTTPRedirectsHead307Options) (BooleanResponse, error) {
 	req, err := client.head307CreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return BooleanResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return BooleanResponse{}, err
 	}
 	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
-		return &BooleanResponse{RawResponse: resp.Response, Success: true}, nil
+		return BooleanResponse{RawResponse: resp.Response, Success: true}, nil
 	} else if resp.StatusCode >= 400 && resp.StatusCode < 500 {
-		return &BooleanResponse{RawResponse: resp.Response, Success: false}, nil
+		return BooleanResponse{RawResponse: resp.Response, Success: false}, nil
 	} else {
-		return nil, client.head307HandleError(resp)
+		return BooleanResponse{}, client.head307HandleError(resp)
 	}
 }
 
@@ -452,23 +445,19 @@ func (client HTTPRedirectsClient) options307HandleError(resp *azcore.Response) e
 
 // Patch302 - Patch true Boolean value in request returns 302. This request should not be automatically redirected, but should return the received 302 to
 // the caller for evaluation
-func (client HTTPRedirectsClient) Patch302(ctx context.Context, options *HTTPRedirectsPatch302Options) (*HTTPRedirectsPatch302Response, error) {
+func (client HTTPRedirectsClient) Patch302(ctx context.Context, options *HTTPRedirectsPatch302Options) (HTTPRedirectsPatch302Response, error) {
 	req, err := client.patch302CreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return HTTPRedirectsPatch302Response{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return HTTPRedirectsPatch302Response{}, err
 	}
 	if !resp.HasStatusCode(http.StatusFound) {
-		return nil, client.patch302HandleError(resp)
+		return HTTPRedirectsPatch302Response{}, client.patch302HandleError(resp)
 	}
-	result, err := client.patch302HandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.patch302HandleResponse(resp)
 }
 
 // patch302CreateRequest creates the Patch302 request.
@@ -484,12 +473,12 @@ func (client HTTPRedirectsClient) patch302CreateRequest(ctx context.Context, opt
 }
 
 // patch302HandleResponse handles the Patch302 response.
-func (client HTTPRedirectsClient) patch302HandleResponse(resp *azcore.Response) (*HTTPRedirectsPatch302Response, error) {
+func (client HTTPRedirectsClient) patch302HandleResponse(resp *azcore.Response) (HTTPRedirectsPatch302Response, error) {
 	result := HTTPRedirectsPatch302Response{RawResponse: resp.Response}
 	if val := resp.Header.Get("Location"); val != "" {
 		result.Location = &val
 	}
-	return &result, nil
+	return result, nil
 }
 
 // patch302HandleError handles the Patch302 error response.
@@ -540,23 +529,19 @@ func (client HTTPRedirectsClient) patch307HandleError(resp *azcore.Response) err
 
 // Post303 - Post true Boolean value in request returns 303. This request should be automatically redirected usign a get, ultimately returning a 200 status
 // code
-func (client HTTPRedirectsClient) Post303(ctx context.Context, options *HTTPRedirectsPost303Options) (*HTTPRedirectsPost303Response, error) {
+func (client HTTPRedirectsClient) Post303(ctx context.Context, options *HTTPRedirectsPost303Options) (HTTPRedirectsPost303Response, error) {
 	req, err := client.post303CreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return HTTPRedirectsPost303Response{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return HTTPRedirectsPost303Response{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusSeeOther) {
-		return nil, client.post303HandleError(resp)
+		return HTTPRedirectsPost303Response{}, client.post303HandleError(resp)
 	}
-	result, err := client.post303HandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.post303HandleResponse(resp)
 }
 
 // post303CreateRequest creates the Post303 request.
@@ -572,12 +557,12 @@ func (client HTTPRedirectsClient) post303CreateRequest(ctx context.Context, opti
 }
 
 // post303HandleResponse handles the Post303 response.
-func (client HTTPRedirectsClient) post303HandleResponse(resp *azcore.Response) (*HTTPRedirectsPost303Response, error) {
+func (client HTTPRedirectsClient) post303HandleResponse(resp *azcore.Response) (HTTPRedirectsPost303Response, error) {
 	result := HTTPRedirectsPost303Response{RawResponse: resp.Response}
 	if val := resp.Header.Get("Location"); val != "" {
 		result.Location = &val
 	}
-	return &result, nil
+	return result, nil
 }
 
 // post303HandleError handles the Post303 error response.
@@ -628,23 +613,19 @@ func (client HTTPRedirectsClient) post307HandleError(resp *azcore.Response) erro
 
 // Put301 - Put true Boolean value in request returns 301. This request should not be automatically redirected, but should return the received 301 to the
 // caller for evaluation
-func (client HTTPRedirectsClient) Put301(ctx context.Context, options *HTTPRedirectsPut301Options) (*HTTPRedirectsPut301Response, error) {
+func (client HTTPRedirectsClient) Put301(ctx context.Context, options *HTTPRedirectsPut301Options) (HTTPRedirectsPut301Response, error) {
 	req, err := client.put301CreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return HTTPRedirectsPut301Response{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return HTTPRedirectsPut301Response{}, err
 	}
 	if !resp.HasStatusCode(http.StatusMovedPermanently) {
-		return nil, client.put301HandleError(resp)
+		return HTTPRedirectsPut301Response{}, client.put301HandleError(resp)
 	}
-	result, err := client.put301HandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.put301HandleResponse(resp)
 }
 
 // put301CreateRequest creates the Put301 request.
@@ -660,12 +641,12 @@ func (client HTTPRedirectsClient) put301CreateRequest(ctx context.Context, optio
 }
 
 // put301HandleResponse handles the Put301 response.
-func (client HTTPRedirectsClient) put301HandleResponse(resp *azcore.Response) (*HTTPRedirectsPut301Response, error) {
+func (client HTTPRedirectsClient) put301HandleResponse(resp *azcore.Response) (HTTPRedirectsPut301Response, error) {
 	result := HTTPRedirectsPut301Response{RawResponse: resp.Response}
 	if val := resp.Header.Get("Location"); val != "" {
 		result.Location = &val
 	}
-	return &result, nil
+	return result, nil
 }
 
 // put301HandleError handles the Put301 error response.

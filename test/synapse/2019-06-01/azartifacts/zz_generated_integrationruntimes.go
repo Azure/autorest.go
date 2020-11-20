@@ -25,23 +25,19 @@ func (client integrationRuntimesClient) Pipeline() azcore.Pipeline {
 }
 
 // Get - Get Integration Runtime
-func (client integrationRuntimesClient) Get(ctx context.Context, integrationRuntimeName string, options *IntegrationRuntimesGetOptions) (*IntegrationRuntimeResourceResponse, error) {
+func (client integrationRuntimesClient) Get(ctx context.Context, integrationRuntimeName string, options *IntegrationRuntimesGetOptions) (IntegrationRuntimeResourceResponse, error) {
 	req, err := client.getCreateRequest(ctx, integrationRuntimeName, options)
 	if err != nil {
-		return nil, err
+		return IntegrationRuntimeResourceResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return IntegrationRuntimeResourceResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getHandleError(resp)
+		return IntegrationRuntimeResourceResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -61,9 +57,10 @@ func (client integrationRuntimesClient) getCreateRequest(ctx context.Context, in
 }
 
 // getHandleResponse handles the Get response.
-func (client integrationRuntimesClient) getHandleResponse(resp *azcore.Response) (*IntegrationRuntimeResourceResponse, error) {
+func (client integrationRuntimesClient) getHandleResponse(resp *azcore.Response) (IntegrationRuntimeResourceResponse, error) {
 	result := IntegrationRuntimeResourceResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.IntegrationRuntimeResource)
+	err := resp.UnmarshalAsJSON(&result.IntegrationRuntimeResource)
+	return result, err
 }
 
 // getHandleError handles the Get error response.
@@ -76,23 +73,19 @@ func (client integrationRuntimesClient) getHandleError(resp *azcore.Response) er
 }
 
 // List - List Integration Runtimes
-func (client integrationRuntimesClient) List(ctx context.Context, options *IntegrationRuntimesListOptions) (*IntegrationRuntimeListResponseResponse, error) {
+func (client integrationRuntimesClient) List(ctx context.Context, options *IntegrationRuntimesListOptions) (IntegrationRuntimeListResponseResponse, error) {
 	req, err := client.listCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return IntegrationRuntimeListResponseResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return IntegrationRuntimeListResponseResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.listHandleError(resp)
+		return IntegrationRuntimeListResponseResponse{}, client.listHandleError(resp)
 	}
-	result, err := client.listHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.listHandleResponse(resp)
 }
 
 // listCreateRequest creates the List request.
@@ -111,9 +104,10 @@ func (client integrationRuntimesClient) listCreateRequest(ctx context.Context, o
 }
 
 // listHandleResponse handles the List response.
-func (client integrationRuntimesClient) listHandleResponse(resp *azcore.Response) (*IntegrationRuntimeListResponseResponse, error) {
+func (client integrationRuntimesClient) listHandleResponse(resp *azcore.Response) (IntegrationRuntimeListResponseResponse, error) {
 	result := IntegrationRuntimeListResponseResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.IntegrationRuntimeListResponse)
+	err := resp.UnmarshalAsJSON(&result.IntegrationRuntimeListResponse)
+	return result, err
 }
 
 // listHandleError handles the List error response.

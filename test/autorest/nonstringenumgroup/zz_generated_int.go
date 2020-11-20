@@ -33,23 +33,19 @@ func (client IntClient) Pipeline() azcore.Pipeline {
 }
 
 // Get - Get an int enum
-func (client IntClient) Get(ctx context.Context, options *IntGetOptions) (*IntEnumResponse, error) {
+func (client IntClient) Get(ctx context.Context, options *IntGetOptions) (IntEnumResponse, error) {
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return IntEnumResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return IntEnumResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getHandleError(resp)
+		return IntEnumResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -65,9 +61,10 @@ func (client IntClient) getCreateRequest(ctx context.Context, options *IntGetOpt
 }
 
 // getHandleResponse handles the Get response.
-func (client IntClient) getHandleResponse(resp *azcore.Response) (*IntEnumResponse, error) {
+func (client IntClient) getHandleResponse(resp *azcore.Response) (IntEnumResponse, error) {
 	result := IntEnumResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.Value)
+	err := resp.UnmarshalAsJSON(&result.Value)
+	return result, err
 }
 
 // getHandleError handles the Get error response.
@@ -83,23 +80,19 @@ func (client IntClient) getHandleError(resp *azcore.Response) error {
 }
 
 // Put - Put an int enum
-func (client IntClient) Put(ctx context.Context, options *IntPutOptions) (*StringResponse, error) {
+func (client IntClient) Put(ctx context.Context, options *IntPutOptions) (StringResponse, error) {
 	req, err := client.putCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return StringResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return StringResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.putHandleError(resp)
+		return StringResponse{}, client.putHandleError(resp)
 	}
-	result, err := client.putHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.putHandleResponse(resp)
 }
 
 // putCreateRequest creates the Put request.
@@ -118,9 +111,10 @@ func (client IntClient) putCreateRequest(ctx context.Context, options *IntPutOpt
 }
 
 // putHandleResponse handles the Put response.
-func (client IntClient) putHandleResponse(resp *azcore.Response) (*StringResponse, error) {
+func (client IntClient) putHandleResponse(resp *azcore.Response) (StringResponse, error) {
 	result := StringResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.Value)
+	err := resp.UnmarshalAsJSON(&result.Value)
+	return result, err
 }
 
 // putHandleError handles the Put error response.

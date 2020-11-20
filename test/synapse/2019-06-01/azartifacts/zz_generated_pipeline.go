@@ -61,9 +61,10 @@ func (client pipelineClient) createOrUpdatePipelineCreateRequest(ctx context.Con
 }
 
 // createOrUpdatePipelineHandleResponse handles the CreateOrUpdatePipeline response.
-func (client pipelineClient) createOrUpdatePipelineHandleResponse(resp *azcore.Response) (*PipelineResourceResponse, error) {
+func (client pipelineClient) createOrUpdatePipelineHandleResponse(resp *azcore.Response) (PipelineResourceResponse, error) {
 	result := PipelineResourceResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.PipelineResource)
+	err := resp.UnmarshalAsJSON(&result.PipelineResource)
+	return result, err
 }
 
 // createOrUpdatePipelineHandleError handles the CreateOrUpdatePipeline error response.
@@ -76,23 +77,19 @@ func (client pipelineClient) createOrUpdatePipelineHandleError(resp *azcore.Resp
 }
 
 // CreatePipelineRun - Creates a run of a pipeline.
-func (client pipelineClient) CreatePipelineRun(ctx context.Context, pipelineName string, options *PipelineCreatePipelineRunOptions) (*CreateRunResponseResponse, error) {
+func (client pipelineClient) CreatePipelineRun(ctx context.Context, pipelineName string, options *PipelineCreatePipelineRunOptions) (CreateRunResponseResponse, error) {
 	req, err := client.createPipelineRunCreateRequest(ctx, pipelineName, options)
 	if err != nil {
-		return nil, err
+		return CreateRunResponseResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return CreateRunResponseResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusAccepted) {
-		return nil, client.createPipelineRunHandleError(resp)
+		return CreateRunResponseResponse{}, client.createPipelineRunHandleError(resp)
 	}
-	result, err := client.createPipelineRunHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.createPipelineRunHandleResponse(resp)
 }
 
 // createPipelineRunCreateRequest creates the CreatePipelineRun request.
@@ -124,9 +121,10 @@ func (client pipelineClient) createPipelineRunCreateRequest(ctx context.Context,
 }
 
 // createPipelineRunHandleResponse handles the CreatePipelineRun response.
-func (client pipelineClient) createPipelineRunHandleResponse(resp *azcore.Response) (*CreateRunResponseResponse, error) {
+func (client pipelineClient) createPipelineRunHandleResponse(resp *azcore.Response) (CreateRunResponseResponse, error) {
 	result := CreateRunResponseResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.CreateRunResponse)
+	err := resp.UnmarshalAsJSON(&result.CreateRunResponse)
+	return result, err
 }
 
 // createPipelineRunHandleError handles the CreatePipelineRun error response.
@@ -180,23 +178,19 @@ func (client pipelineClient) deletePipelineHandleError(resp *azcore.Response) er
 }
 
 // GetPipeline - Gets a pipeline.
-func (client pipelineClient) GetPipeline(ctx context.Context, pipelineName string, options *PipelineGetPipelineOptions) (*PipelineResourceResponse, error) {
+func (client pipelineClient) GetPipeline(ctx context.Context, pipelineName string, options *PipelineGetPipelineOptions) (PipelineResourceResponse, error) {
 	req, err := client.getPipelineCreateRequest(ctx, pipelineName, options)
 	if err != nil {
-		return nil, err
+		return PipelineResourceResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return PipelineResourceResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusNotModified) {
-		return nil, client.getPipelineHandleError(resp)
+		return PipelineResourceResponse{}, client.getPipelineHandleError(resp)
 	}
-	result, err := client.getPipelineHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.getPipelineHandleResponse(resp)
 }
 
 // getPipelineCreateRequest creates the GetPipeline request.
@@ -219,9 +213,10 @@ func (client pipelineClient) getPipelineCreateRequest(ctx context.Context, pipel
 }
 
 // getPipelineHandleResponse handles the GetPipeline response.
-func (client pipelineClient) getPipelineHandleResponse(resp *azcore.Response) (*PipelineResourceResponse, error) {
+func (client pipelineClient) getPipelineHandleResponse(resp *azcore.Response) (PipelineResourceResponse, error) {
 	result := PipelineResourceResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.PipelineResource)
+	err := resp.UnmarshalAsJSON(&result.PipelineResource)
+	return result, err
 }
 
 // getPipelineHandleError handles the GetPipeline error response.
@@ -242,7 +237,7 @@ func (client pipelineClient) GetPipelinesByWorkspace(options *PipelineGetPipelin
 		},
 		responder: client.getPipelinesByWorkspaceHandleResponse,
 		errorer:   client.getPipelinesByWorkspaceHandleError,
-		advancer: func(ctx context.Context, resp *PipelineListResponseResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp PipelineListResponseResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.PipelineListResponse.NextLink)
 		},
 		statusCodes: []int{http.StatusOK},
@@ -265,9 +260,10 @@ func (client pipelineClient) getPipelinesByWorkspaceCreateRequest(ctx context.Co
 }
 
 // getPipelinesByWorkspaceHandleResponse handles the GetPipelinesByWorkspace response.
-func (client pipelineClient) getPipelinesByWorkspaceHandleResponse(resp *azcore.Response) (*PipelineListResponseResponse, error) {
+func (client pipelineClient) getPipelinesByWorkspaceHandleResponse(resp *azcore.Response) (PipelineListResponseResponse, error) {
 	result := PipelineListResponseResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.PipelineListResponse)
+	err := resp.UnmarshalAsJSON(&result.PipelineListResponse)
+	return result, err
 }
 
 // getPipelinesByWorkspaceHandleError handles the GetPipelinesByWorkspace error response.

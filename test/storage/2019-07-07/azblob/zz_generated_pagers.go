@@ -10,6 +10,7 @@ package azblob
 import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"reflect"
 )
 
 // ListBlobsFlatSegmentResponsePager provides iteration over ListBlobsFlatSegmentResponse pages.
@@ -19,7 +20,7 @@ type ListBlobsFlatSegmentResponsePager interface {
 	NextPage(context.Context) bool
 
 	// Page returns the current ListBlobsFlatSegmentResponseResponse.
-	PageResponse() *ListBlobsFlatSegmentResponseResponse
+	PageResponse() ListBlobsFlatSegmentResponseResponse
 
 	// Err returns the last error encountered while paging.
 	Err() error
@@ -29,9 +30,9 @@ type listBlobsFlatSegmentResponseCreateRequest func(context.Context) (*azcore.Re
 
 type listBlobsFlatSegmentResponseHandleError func(*azcore.Response) error
 
-type listBlobsFlatSegmentResponseHandleResponse func(*azcore.Response) (*ListBlobsFlatSegmentResponseResponse, error)
+type listBlobsFlatSegmentResponseHandleResponse func(*azcore.Response) (ListBlobsFlatSegmentResponseResponse, error)
 
-type listBlobsFlatSegmentResponseAdvancePage func(context.Context, *ListBlobsFlatSegmentResponseResponse) (*azcore.Request, error)
+type listBlobsFlatSegmentResponseAdvancePage func(context.Context, ListBlobsFlatSegmentResponseResponse) (*azcore.Request, error)
 
 type listBlobsFlatSegmentResponsePager struct {
 	// the pipeline for making the request
@@ -45,7 +46,7 @@ type listBlobsFlatSegmentResponsePager struct {
 	// callback for advancing to the next page
 	advancer listBlobsFlatSegmentResponseAdvancePage
 	// contains the current response
-	current *ListBlobsFlatSegmentResponseResponse
+	current ListBlobsFlatSegmentResponseResponse
 	// status codes for successful retrieval
 	statusCodes []int
 	// any error encountered
@@ -59,7 +60,7 @@ func (p *listBlobsFlatSegmentResponsePager) Err() error {
 func (p *listBlobsFlatSegmentResponsePager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
-	if p.current != nil {
+	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.EnumerationResults.NextMarker == nil || len(*p.current.EnumerationResults.NextMarker) == 0 {
 			return false
 		}
@@ -89,7 +90,7 @@ func (p *listBlobsFlatSegmentResponsePager) NextPage(ctx context.Context) bool {
 	return true
 }
 
-func (p *listBlobsFlatSegmentResponsePager) PageResponse() *ListBlobsFlatSegmentResponseResponse {
+func (p *listBlobsFlatSegmentResponsePager) PageResponse() ListBlobsFlatSegmentResponseResponse {
 	return p.current
 }
 
@@ -100,7 +101,7 @@ type ListBlobsHierarchySegmentResponsePager interface {
 	NextPage(context.Context) bool
 
 	// Page returns the current ListBlobsHierarchySegmentResponseResponse.
-	PageResponse() *ListBlobsHierarchySegmentResponseResponse
+	PageResponse() ListBlobsHierarchySegmentResponseResponse
 
 	// Err returns the last error encountered while paging.
 	Err() error
@@ -110,9 +111,9 @@ type listBlobsHierarchySegmentResponseCreateRequest func(context.Context) (*azco
 
 type listBlobsHierarchySegmentResponseHandleError func(*azcore.Response) error
 
-type listBlobsHierarchySegmentResponseHandleResponse func(*azcore.Response) (*ListBlobsHierarchySegmentResponseResponse, error)
+type listBlobsHierarchySegmentResponseHandleResponse func(*azcore.Response) (ListBlobsHierarchySegmentResponseResponse, error)
 
-type listBlobsHierarchySegmentResponseAdvancePage func(context.Context, *ListBlobsHierarchySegmentResponseResponse) (*azcore.Request, error)
+type listBlobsHierarchySegmentResponseAdvancePage func(context.Context, ListBlobsHierarchySegmentResponseResponse) (*azcore.Request, error)
 
 type listBlobsHierarchySegmentResponsePager struct {
 	// the pipeline for making the request
@@ -126,7 +127,7 @@ type listBlobsHierarchySegmentResponsePager struct {
 	// callback for advancing to the next page
 	advancer listBlobsHierarchySegmentResponseAdvancePage
 	// contains the current response
-	current *ListBlobsHierarchySegmentResponseResponse
+	current ListBlobsHierarchySegmentResponseResponse
 	// status codes for successful retrieval
 	statusCodes []int
 	// any error encountered
@@ -140,7 +141,7 @@ func (p *listBlobsHierarchySegmentResponsePager) Err() error {
 func (p *listBlobsHierarchySegmentResponsePager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
-	if p.current != nil {
+	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.EnumerationResults.NextMarker == nil || len(*p.current.EnumerationResults.NextMarker) == 0 {
 			return false
 		}
@@ -170,7 +171,7 @@ func (p *listBlobsHierarchySegmentResponsePager) NextPage(ctx context.Context) b
 	return true
 }
 
-func (p *listBlobsHierarchySegmentResponsePager) PageResponse() *ListBlobsHierarchySegmentResponseResponse {
+func (p *listBlobsHierarchySegmentResponsePager) PageResponse() ListBlobsHierarchySegmentResponseResponse {
 	return p.current
 }
 
@@ -181,7 +182,7 @@ type ListContainersSegmentResponsePager interface {
 	NextPage(context.Context) bool
 
 	// Page returns the current ListContainersSegmentResponseResponse.
-	PageResponse() *ListContainersSegmentResponseResponse
+	PageResponse() ListContainersSegmentResponseResponse
 
 	// Err returns the last error encountered while paging.
 	Err() error
@@ -191,9 +192,9 @@ type listContainersSegmentResponseCreateRequest func(context.Context) (*azcore.R
 
 type listContainersSegmentResponseHandleError func(*azcore.Response) error
 
-type listContainersSegmentResponseHandleResponse func(*azcore.Response) (*ListContainersSegmentResponseResponse, error)
+type listContainersSegmentResponseHandleResponse func(*azcore.Response) (ListContainersSegmentResponseResponse, error)
 
-type listContainersSegmentResponseAdvancePage func(context.Context, *ListContainersSegmentResponseResponse) (*azcore.Request, error)
+type listContainersSegmentResponseAdvancePage func(context.Context, ListContainersSegmentResponseResponse) (*azcore.Request, error)
 
 type listContainersSegmentResponsePager struct {
 	// the pipeline for making the request
@@ -207,7 +208,7 @@ type listContainersSegmentResponsePager struct {
 	// callback for advancing to the next page
 	advancer listContainersSegmentResponseAdvancePage
 	// contains the current response
-	current *ListContainersSegmentResponseResponse
+	current ListContainersSegmentResponseResponse
 	// status codes for successful retrieval
 	statusCodes []int
 	// any error encountered
@@ -221,7 +222,7 @@ func (p *listContainersSegmentResponsePager) Err() error {
 func (p *listContainersSegmentResponsePager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
-	if p.current != nil {
+	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.EnumerationResults.NextMarker == nil || len(*p.current.EnumerationResults.NextMarker) == 0 {
 			return false
 		}
@@ -251,6 +252,6 @@ func (p *listContainersSegmentResponsePager) NextPage(ctx context.Context) bool 
 	return true
 }
 
-func (p *listContainersSegmentResponsePager) PageResponse() *ListContainersSegmentResponseResponse {
+func (p *listContainersSegmentResponsePager) PageResponse() ListContainersSegmentResponseResponse {
 	return p.current
 }

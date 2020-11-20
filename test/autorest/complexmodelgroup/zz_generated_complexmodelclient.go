@@ -32,23 +32,19 @@ func (client ComplexModelClient) Pipeline() azcore.Pipeline {
 }
 
 // Create - Resets products.
-func (client ComplexModelClient) Create(ctx context.Context, subscriptionId string, resourceGroupName string, bodyParameter CatalogDictionaryOfArray, options *ComplexModelClientCreateOptions) (*CatalogDictionaryResponse, error) {
+func (client ComplexModelClient) Create(ctx context.Context, subscriptionId string, resourceGroupName string, bodyParameter CatalogDictionaryOfArray, options *ComplexModelClientCreateOptions) (CatalogDictionaryResponse, error) {
 	req, err := client.createCreateRequest(ctx, subscriptionId, resourceGroupName, bodyParameter, options)
 	if err != nil {
-		return nil, err
+		return CatalogDictionaryResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return CatalogDictionaryResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.createHandleError(resp)
+		return CatalogDictionaryResponse{}, client.createHandleError(resp)
 	}
-	result, err := client.createHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.createHandleResponse(resp)
 }
 
 // createCreateRequest creates the Create request.
@@ -69,9 +65,10 @@ func (client ComplexModelClient) createCreateRequest(ctx context.Context, subscr
 }
 
 // createHandleResponse handles the Create response.
-func (client ComplexModelClient) createHandleResponse(resp *azcore.Response) (*CatalogDictionaryResponse, error) {
+func (client ComplexModelClient) createHandleResponse(resp *azcore.Response) (CatalogDictionaryResponse, error) {
 	result := CatalogDictionaryResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.CatalogDictionary)
+	err := resp.UnmarshalAsJSON(&result.CatalogDictionary)
+	return result, err
 }
 
 // createHandleError handles the Create error response.
@@ -86,23 +83,19 @@ func (client ComplexModelClient) createHandleError(resp *azcore.Response) error 
 // List - The Products endpoint returns information about the Uber products offered at a given location. The response includes the display name and other
 // details about each product, and lists the products in
 // the proper display order.
-func (client ComplexModelClient) List(ctx context.Context, resourceGroupName string, options *ComplexModelClientListOptions) (*CatalogArrayResponse, error) {
+func (client ComplexModelClient) List(ctx context.Context, resourceGroupName string, options *ComplexModelClientListOptions) (CatalogArrayResponse, error) {
 	req, err := client.listCreateRequest(ctx, resourceGroupName, options)
 	if err != nil {
-		return nil, err
+		return CatalogArrayResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return CatalogArrayResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.listHandleError(resp)
+		return CatalogArrayResponse{}, client.listHandleError(resp)
 	}
-	result, err := client.listHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.listHandleResponse(resp)
 }
 
 // listCreateRequest creates the List request.
@@ -123,9 +116,10 @@ func (client ComplexModelClient) listCreateRequest(ctx context.Context, resource
 }
 
 // listHandleResponse handles the List response.
-func (client ComplexModelClient) listHandleResponse(resp *azcore.Response) (*CatalogArrayResponse, error) {
+func (client ComplexModelClient) listHandleResponse(resp *azcore.Response) (CatalogArrayResponse, error) {
 	result := CatalogArrayResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.CatalogArray)
+	err := resp.UnmarshalAsJSON(&result.CatalogArray)
+	return result, err
 }
 
 // listHandleError handles the List error response.
@@ -138,23 +132,19 @@ func (client ComplexModelClient) listHandleError(resp *azcore.Response) error {
 }
 
 // Update - Resets products.
-func (client ComplexModelClient) Update(ctx context.Context, subscriptionId string, resourceGroupName string, bodyParameter CatalogArrayOfDictionary, options *ComplexModelClientUpdateOptions) (*CatalogArrayResponse, error) {
+func (client ComplexModelClient) Update(ctx context.Context, subscriptionId string, resourceGroupName string, bodyParameter CatalogArrayOfDictionary, options *ComplexModelClientUpdateOptions) (CatalogArrayResponse, error) {
 	req, err := client.updateCreateRequest(ctx, subscriptionId, resourceGroupName, bodyParameter, options)
 	if err != nil {
-		return nil, err
+		return CatalogArrayResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return CatalogArrayResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.updateHandleError(resp)
+		return CatalogArrayResponse{}, client.updateHandleError(resp)
 	}
-	result, err := client.updateHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.updateHandleResponse(resp)
 }
 
 // updateCreateRequest creates the Update request.
@@ -175,9 +165,10 @@ func (client ComplexModelClient) updateCreateRequest(ctx context.Context, subscr
 }
 
 // updateHandleResponse handles the Update response.
-func (client ComplexModelClient) updateHandleResponse(resp *azcore.Response) (*CatalogArrayResponse, error) {
+func (client ComplexModelClient) updateHandleResponse(resp *azcore.Response) (CatalogArrayResponse, error) {
 	result := CatalogArrayResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.CatalogArray)
+	err := resp.UnmarshalAsJSON(&result.CatalogArray)
+	return result, err
 }
 
 // updateHandleError handles the Update error response.

@@ -60,9 +60,10 @@ func (client datasetClient) createOrUpdateDatasetCreateRequest(ctx context.Conte
 }
 
 // createOrUpdateDatasetHandleResponse handles the CreateOrUpdateDataset response.
-func (client datasetClient) createOrUpdateDatasetHandleResponse(resp *azcore.Response) (*DatasetResourceResponse, error) {
+func (client datasetClient) createOrUpdateDatasetHandleResponse(resp *azcore.Response) (DatasetResourceResponse, error) {
 	result := DatasetResourceResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.DatasetResource)
+	err := resp.UnmarshalAsJSON(&result.DatasetResource)
+	return result, err
 }
 
 // createOrUpdateDatasetHandleError handles the CreateOrUpdateDataset error response.
@@ -116,23 +117,19 @@ func (client datasetClient) deleteDatasetHandleError(resp *azcore.Response) erro
 }
 
 // GetDataset - Gets a dataset.
-func (client datasetClient) GetDataset(ctx context.Context, datasetName string, options *DatasetGetDatasetOptions) (*DatasetResourceResponse, error) {
+func (client datasetClient) GetDataset(ctx context.Context, datasetName string, options *DatasetGetDatasetOptions) (DatasetResourceResponse, error) {
 	req, err := client.getDatasetCreateRequest(ctx, datasetName, options)
 	if err != nil {
-		return nil, err
+		return DatasetResourceResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return DatasetResourceResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusNotModified) {
-		return nil, client.getDatasetHandleError(resp)
+		return DatasetResourceResponse{}, client.getDatasetHandleError(resp)
 	}
-	result, err := client.getDatasetHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.getDatasetHandleResponse(resp)
 }
 
 // getDatasetCreateRequest creates the GetDataset request.
@@ -155,9 +152,10 @@ func (client datasetClient) getDatasetCreateRequest(ctx context.Context, dataset
 }
 
 // getDatasetHandleResponse handles the GetDataset response.
-func (client datasetClient) getDatasetHandleResponse(resp *azcore.Response) (*DatasetResourceResponse, error) {
+func (client datasetClient) getDatasetHandleResponse(resp *azcore.Response) (DatasetResourceResponse, error) {
 	result := DatasetResourceResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.DatasetResource)
+	err := resp.UnmarshalAsJSON(&result.DatasetResource)
+	return result, err
 }
 
 // getDatasetHandleError handles the GetDataset error response.
@@ -178,7 +176,7 @@ func (client datasetClient) GetDatasetsByWorkspace(options *DatasetGetDatasetsBy
 		},
 		responder: client.getDatasetsByWorkspaceHandleResponse,
 		errorer:   client.getDatasetsByWorkspaceHandleError,
-		advancer: func(ctx context.Context, resp *DatasetListResponseResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp DatasetListResponseResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.DatasetListResponse.NextLink)
 		},
 		statusCodes: []int{http.StatusOK},
@@ -201,9 +199,10 @@ func (client datasetClient) getDatasetsByWorkspaceCreateRequest(ctx context.Cont
 }
 
 // getDatasetsByWorkspaceHandleResponse handles the GetDatasetsByWorkspace response.
-func (client datasetClient) getDatasetsByWorkspaceHandleResponse(resp *azcore.Response) (*DatasetListResponseResponse, error) {
+func (client datasetClient) getDatasetsByWorkspaceHandleResponse(resp *azcore.Response) (DatasetListResponseResponse, error) {
 	result := DatasetListResponseResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.DatasetListResponse)
+	err := resp.UnmarshalAsJSON(&result.DatasetListResponse)
+	return result, err
 }
 
 // getDatasetsByWorkspaceHandleError handles the GetDatasetsByWorkspace error response.

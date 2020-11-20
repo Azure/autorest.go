@@ -30,23 +30,19 @@ func (client ArrayClient) Pipeline() azcore.Pipeline {
 }
 
 // GetEmpty - Get complex types with array property which is empty
-func (client ArrayClient) GetEmpty(ctx context.Context, options *ArrayGetEmptyOptions) (*ArrayWrapperResponse, error) {
+func (client ArrayClient) GetEmpty(ctx context.Context, options *ArrayGetEmptyOptions) (ArrayWrapperResponse, error) {
 	req, err := client.getEmptyCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return ArrayWrapperResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return ArrayWrapperResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getEmptyHandleError(resp)
+		return ArrayWrapperResponse{}, client.getEmptyHandleError(resp)
 	}
-	result, err := client.getEmptyHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.getEmptyHandleResponse(resp)
 }
 
 // getEmptyCreateRequest creates the GetEmpty request.
@@ -62,9 +58,10 @@ func (client ArrayClient) getEmptyCreateRequest(ctx context.Context, options *Ar
 }
 
 // getEmptyHandleResponse handles the GetEmpty response.
-func (client ArrayClient) getEmptyHandleResponse(resp *azcore.Response) (*ArrayWrapperResponse, error) {
+func (client ArrayClient) getEmptyHandleResponse(resp *azcore.Response) (ArrayWrapperResponse, error) {
 	result := ArrayWrapperResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.ArrayWrapper)
+	err := resp.UnmarshalAsJSON(&result.ArrayWrapper)
+	return result, err
 }
 
 // getEmptyHandleError handles the GetEmpty error response.
@@ -77,23 +74,19 @@ func (client ArrayClient) getEmptyHandleError(resp *azcore.Response) error {
 }
 
 // GetNotProvided - Get complex types with array property while server doesn't provide a response payload
-func (client ArrayClient) GetNotProvided(ctx context.Context, options *ArrayGetNotProvidedOptions) (*ArrayWrapperResponse, error) {
+func (client ArrayClient) GetNotProvided(ctx context.Context, options *ArrayGetNotProvidedOptions) (ArrayWrapperResponse, error) {
 	req, err := client.getNotProvidedCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return ArrayWrapperResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return ArrayWrapperResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getNotProvidedHandleError(resp)
+		return ArrayWrapperResponse{}, client.getNotProvidedHandleError(resp)
 	}
-	result, err := client.getNotProvidedHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.getNotProvidedHandleResponse(resp)
 }
 
 // getNotProvidedCreateRequest creates the GetNotProvided request.
@@ -109,9 +102,10 @@ func (client ArrayClient) getNotProvidedCreateRequest(ctx context.Context, optio
 }
 
 // getNotProvidedHandleResponse handles the GetNotProvided response.
-func (client ArrayClient) getNotProvidedHandleResponse(resp *azcore.Response) (*ArrayWrapperResponse, error) {
+func (client ArrayClient) getNotProvidedHandleResponse(resp *azcore.Response) (ArrayWrapperResponse, error) {
 	result := ArrayWrapperResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.ArrayWrapper)
+	err := resp.UnmarshalAsJSON(&result.ArrayWrapper)
+	return result, err
 }
 
 // getNotProvidedHandleError handles the GetNotProvided error response.
@@ -124,23 +118,19 @@ func (client ArrayClient) getNotProvidedHandleError(resp *azcore.Response) error
 }
 
 // GetValid - Get complex types with array property
-func (client ArrayClient) GetValid(ctx context.Context, options *ArrayGetValidOptions) (*ArrayWrapperResponse, error) {
+func (client ArrayClient) GetValid(ctx context.Context, options *ArrayGetValidOptions) (ArrayWrapperResponse, error) {
 	req, err := client.getValidCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return ArrayWrapperResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return ArrayWrapperResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getValidHandleError(resp)
+		return ArrayWrapperResponse{}, client.getValidHandleError(resp)
 	}
-	result, err := client.getValidHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.getValidHandleResponse(resp)
 }
 
 // getValidCreateRequest creates the GetValid request.
@@ -156,9 +146,10 @@ func (client ArrayClient) getValidCreateRequest(ctx context.Context, options *Ar
 }
 
 // getValidHandleResponse handles the GetValid response.
-func (client ArrayClient) getValidHandleResponse(resp *azcore.Response) (*ArrayWrapperResponse, error) {
+func (client ArrayClient) getValidHandleResponse(resp *azcore.Response) (ArrayWrapperResponse, error) {
 	result := ArrayWrapperResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.ArrayWrapper)
+	err := resp.UnmarshalAsJSON(&result.ArrayWrapper)
+	return result, err
 }
 
 // getValidHandleError handles the GetValid error response.

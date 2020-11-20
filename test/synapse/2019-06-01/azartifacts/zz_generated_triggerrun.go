@@ -67,23 +67,19 @@ func (client triggerRunClient) cancelTriggerInstanceHandleError(resp *azcore.Res
 }
 
 // QueryTriggerRunsByWorkspace - Query trigger runs.
-func (client triggerRunClient) QueryTriggerRunsByWorkspace(ctx context.Context, filterParameters RunFilterParameters, options *TriggerRunQueryTriggerRunsByWorkspaceOptions) (*TriggerRunsQueryResponseResponse, error) {
+func (client triggerRunClient) QueryTriggerRunsByWorkspace(ctx context.Context, filterParameters RunFilterParameters, options *TriggerRunQueryTriggerRunsByWorkspaceOptions) (TriggerRunsQueryResponseResponse, error) {
 	req, err := client.queryTriggerRunsByWorkspaceCreateRequest(ctx, filterParameters, options)
 	if err != nil {
-		return nil, err
+		return TriggerRunsQueryResponseResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return TriggerRunsQueryResponseResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.queryTriggerRunsByWorkspaceHandleError(resp)
+		return TriggerRunsQueryResponseResponse{}, client.queryTriggerRunsByWorkspaceHandleError(resp)
 	}
-	result, err := client.queryTriggerRunsByWorkspaceHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.queryTriggerRunsByWorkspaceHandleResponse(resp)
 }
 
 // queryTriggerRunsByWorkspaceCreateRequest creates the QueryTriggerRunsByWorkspace request.
@@ -102,9 +98,10 @@ func (client triggerRunClient) queryTriggerRunsByWorkspaceCreateRequest(ctx cont
 }
 
 // queryTriggerRunsByWorkspaceHandleResponse handles the QueryTriggerRunsByWorkspace response.
-func (client triggerRunClient) queryTriggerRunsByWorkspaceHandleResponse(resp *azcore.Response) (*TriggerRunsQueryResponseResponse, error) {
+func (client triggerRunClient) queryTriggerRunsByWorkspaceHandleResponse(resp *azcore.Response) (TriggerRunsQueryResponseResponse, error) {
 	result := TriggerRunsQueryResponseResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.TriggerRunsQueryResponse)
+	err := resp.UnmarshalAsJSON(&result.TriggerRunsQueryResponse)
+	return result, err
 }
 
 // queryTriggerRunsByWorkspaceHandleError handles the QueryTriggerRunsByWorkspace error response.

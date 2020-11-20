@@ -60,9 +60,10 @@ func (client notebookClient) createOrUpdateNotebookCreateRequest(ctx context.Con
 }
 
 // createOrUpdateNotebookHandleResponse handles the CreateOrUpdateNotebook response.
-func (client notebookClient) createOrUpdateNotebookHandleResponse(resp *azcore.Response) (*NotebookResourceResponse, error) {
+func (client notebookClient) createOrUpdateNotebookHandleResponse(resp *azcore.Response) (NotebookResourceResponse, error) {
 	result := NotebookResourceResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.NotebookResource)
+	err := resp.UnmarshalAsJSON(&result.NotebookResource)
+	return result, err
 }
 
 // createOrUpdateNotebookHandleError handles the CreateOrUpdateNotebook error response.
@@ -116,23 +117,19 @@ func (client notebookClient) deleteNotebookHandleError(resp *azcore.Response) er
 }
 
 // GetNotebook - Gets a Note Book.
-func (client notebookClient) GetNotebook(ctx context.Context, notebookName string, options *NotebookGetNotebookOptions) (*NotebookResourceResponse, error) {
+func (client notebookClient) GetNotebook(ctx context.Context, notebookName string, options *NotebookGetNotebookOptions) (NotebookResourceResponse, error) {
 	req, err := client.getNotebookCreateRequest(ctx, notebookName, options)
 	if err != nil {
-		return nil, err
+		return NotebookResourceResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return NotebookResourceResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusNotModified) {
-		return nil, client.getNotebookHandleError(resp)
+		return NotebookResourceResponse{}, client.getNotebookHandleError(resp)
 	}
-	result, err := client.getNotebookHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.getNotebookHandleResponse(resp)
 }
 
 // getNotebookCreateRequest creates the GetNotebook request.
@@ -155,9 +152,10 @@ func (client notebookClient) getNotebookCreateRequest(ctx context.Context, noteb
 }
 
 // getNotebookHandleResponse handles the GetNotebook response.
-func (client notebookClient) getNotebookHandleResponse(resp *azcore.Response) (*NotebookResourceResponse, error) {
+func (client notebookClient) getNotebookHandleResponse(resp *azcore.Response) (NotebookResourceResponse, error) {
 	result := NotebookResourceResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.NotebookResource)
+	err := resp.UnmarshalAsJSON(&result.NotebookResource)
+	return result, err
 }
 
 // getNotebookHandleError handles the GetNotebook error response.
@@ -178,7 +176,7 @@ func (client notebookClient) GetNotebookSummaryByWorkSpace(options *NotebookGetN
 		},
 		responder: client.getNotebookSummaryByWorkSpaceHandleResponse,
 		errorer:   client.getNotebookSummaryByWorkSpaceHandleError,
-		advancer: func(ctx context.Context, resp *NotebookListResponseResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp NotebookListResponseResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.NotebookListResponse.NextLink)
 		},
 		statusCodes: []int{http.StatusOK},
@@ -201,9 +199,10 @@ func (client notebookClient) getNotebookSummaryByWorkSpaceCreateRequest(ctx cont
 }
 
 // getNotebookSummaryByWorkSpaceHandleResponse handles the GetNotebookSummaryByWorkSpace response.
-func (client notebookClient) getNotebookSummaryByWorkSpaceHandleResponse(resp *azcore.Response) (*NotebookListResponseResponse, error) {
+func (client notebookClient) getNotebookSummaryByWorkSpaceHandleResponse(resp *azcore.Response) (NotebookListResponseResponse, error) {
 	result := NotebookListResponseResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.NotebookListResponse)
+	err := resp.UnmarshalAsJSON(&result.NotebookListResponse)
+	return result, err
 }
 
 // getNotebookSummaryByWorkSpaceHandleError handles the GetNotebookSummaryByWorkSpace error response.
@@ -224,7 +223,7 @@ func (client notebookClient) GetNotebooksByWorkspace(options *NotebookGetNoteboo
 		},
 		responder: client.getNotebooksByWorkspaceHandleResponse,
 		errorer:   client.getNotebooksByWorkspaceHandleError,
-		advancer: func(ctx context.Context, resp *NotebookListResponseResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp NotebookListResponseResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.NotebookListResponse.NextLink)
 		},
 		statusCodes: []int{http.StatusOK},
@@ -247,9 +246,10 @@ func (client notebookClient) getNotebooksByWorkspaceCreateRequest(ctx context.Co
 }
 
 // getNotebooksByWorkspaceHandleResponse handles the GetNotebooksByWorkspace response.
-func (client notebookClient) getNotebooksByWorkspaceHandleResponse(resp *azcore.Response) (*NotebookListResponseResponse, error) {
+func (client notebookClient) getNotebooksByWorkspaceHandleResponse(resp *azcore.Response) (NotebookListResponseResponse, error) {
 	result := NotebookListResponseResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.NotebookListResponse)
+	err := resp.UnmarshalAsJSON(&result.NotebookListResponse)
+	return result, err
 }
 
 // getNotebooksByWorkspaceHandleError handles the GetNotebooksByWorkspace error response.

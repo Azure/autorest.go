@@ -622,23 +622,19 @@ func (client HeaderClient) paramStringHandleError(resp *azcore.Response) error {
 }
 
 // ResponseBool - Get a response with header value "value": true or false
-func (client HeaderClient) ResponseBool(ctx context.Context, scenario string, options *HeaderResponseBoolOptions) (*HeaderResponseBoolResponse, error) {
+func (client HeaderClient) ResponseBool(ctx context.Context, scenario string, options *HeaderResponseBoolOptions) (HeaderResponseBoolResponse, error) {
 	req, err := client.responseBoolCreateRequest(ctx, scenario, options)
 	if err != nil {
-		return nil, err
+		return HeaderResponseBoolResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return HeaderResponseBoolResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.responseBoolHandleError(resp)
+		return HeaderResponseBoolResponse{}, client.responseBoolHandleError(resp)
 	}
-	result, err := client.responseBoolHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.responseBoolHandleResponse(resp)
 }
 
 // responseBoolCreateRequest creates the ResponseBool request.
@@ -655,16 +651,16 @@ func (client HeaderClient) responseBoolCreateRequest(ctx context.Context, scenar
 }
 
 // responseBoolHandleResponse handles the ResponseBool response.
-func (client HeaderClient) responseBoolHandleResponse(resp *azcore.Response) (*HeaderResponseBoolResponse, error) {
+func (client HeaderClient) responseBoolHandleResponse(resp *azcore.Response) (HeaderResponseBoolResponse, error) {
 	result := HeaderResponseBoolResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("value"); val != "" {
 		value, err := strconv.ParseBool(val)
 		if err != nil {
-			return nil, err
+			return HeaderResponseBoolResponse{}, err
 		}
 		result.Value = &value
 	}
-	return &result, nil
+	return result, nil
 }
 
 // responseBoolHandleError handles the ResponseBool error response.
@@ -677,23 +673,19 @@ func (client HeaderClient) responseBoolHandleError(resp *azcore.Response) error 
 }
 
 // ResponseByte - Get a response with header values "啊齄丂狛狜隣郎隣兀﨩"
-func (client HeaderClient) ResponseByte(ctx context.Context, scenario string, options *HeaderResponseByteOptions) (*HeaderResponseByteResponse, error) {
+func (client HeaderClient) ResponseByte(ctx context.Context, scenario string, options *HeaderResponseByteOptions) (HeaderResponseByteResponse, error) {
 	req, err := client.responseByteCreateRequest(ctx, scenario, options)
 	if err != nil {
-		return nil, err
+		return HeaderResponseByteResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return HeaderResponseByteResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.responseByteHandleError(resp)
+		return HeaderResponseByteResponse{}, client.responseByteHandleError(resp)
 	}
-	result, err := client.responseByteHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.responseByteHandleResponse(resp)
 }
 
 // responseByteCreateRequest creates the ResponseByte request.
@@ -710,16 +702,16 @@ func (client HeaderClient) responseByteCreateRequest(ctx context.Context, scenar
 }
 
 // responseByteHandleResponse handles the ResponseByte response.
-func (client HeaderClient) responseByteHandleResponse(resp *azcore.Response) (*HeaderResponseByteResponse, error) {
+func (client HeaderClient) responseByteHandleResponse(resp *azcore.Response) (HeaderResponseByteResponse, error) {
 	result := HeaderResponseByteResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("value"); val != "" {
 		value, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
-			return nil, err
+			return HeaderResponseByteResponse{}, err
 		}
 		result.Value = &value
 	}
-	return &result, nil
+	return result, nil
 }
 
 // responseByteHandleError handles the ResponseByte error response.
@@ -732,23 +724,19 @@ func (client HeaderClient) responseByteHandleError(resp *azcore.Response) error 
 }
 
 // ResponseDate - Get a response with header values "2010-01-01" or "0001-01-01"
-func (client HeaderClient) ResponseDate(ctx context.Context, scenario string, options *HeaderResponseDateOptions) (*HeaderResponseDateResponse, error) {
+func (client HeaderClient) ResponseDate(ctx context.Context, scenario string, options *HeaderResponseDateOptions) (HeaderResponseDateResponse, error) {
 	req, err := client.responseDateCreateRequest(ctx, scenario, options)
 	if err != nil {
-		return nil, err
+		return HeaderResponseDateResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return HeaderResponseDateResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.responseDateHandleError(resp)
+		return HeaderResponseDateResponse{}, client.responseDateHandleError(resp)
 	}
-	result, err := client.responseDateHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.responseDateHandleResponse(resp)
 }
 
 // responseDateCreateRequest creates the ResponseDate request.
@@ -765,16 +753,16 @@ func (client HeaderClient) responseDateCreateRequest(ctx context.Context, scenar
 }
 
 // responseDateHandleResponse handles the ResponseDate response.
-func (client HeaderClient) responseDateHandleResponse(resp *azcore.Response) (*HeaderResponseDateResponse, error) {
+func (client HeaderClient) responseDateHandleResponse(resp *azcore.Response) (HeaderResponseDateResponse, error) {
 	result := HeaderResponseDateResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("value"); val != "" {
 		value, err := time.Parse("2006-01-02", val)
 		if err != nil {
-			return nil, err
+			return HeaderResponseDateResponse{}, err
 		}
 		result.Value = &value
 	}
-	return &result, nil
+	return result, nil
 }
 
 // responseDateHandleError handles the ResponseDate error response.
@@ -787,23 +775,19 @@ func (client HeaderClient) responseDateHandleError(resp *azcore.Response) error 
 }
 
 // ResponseDatetime - Get a response with header values "2010-01-01T12:34:56Z" or "0001-01-01T00:00:00Z"
-func (client HeaderClient) ResponseDatetime(ctx context.Context, scenario string, options *HeaderResponseDatetimeOptions) (*HeaderResponseDatetimeResponse, error) {
+func (client HeaderClient) ResponseDatetime(ctx context.Context, scenario string, options *HeaderResponseDatetimeOptions) (HeaderResponseDatetimeResponse, error) {
 	req, err := client.responseDatetimeCreateRequest(ctx, scenario, options)
 	if err != nil {
-		return nil, err
+		return HeaderResponseDatetimeResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return HeaderResponseDatetimeResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.responseDatetimeHandleError(resp)
+		return HeaderResponseDatetimeResponse{}, client.responseDatetimeHandleError(resp)
 	}
-	result, err := client.responseDatetimeHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.responseDatetimeHandleResponse(resp)
 }
 
 // responseDatetimeCreateRequest creates the ResponseDatetime request.
@@ -820,16 +804,16 @@ func (client HeaderClient) responseDatetimeCreateRequest(ctx context.Context, sc
 }
 
 // responseDatetimeHandleResponse handles the ResponseDatetime response.
-func (client HeaderClient) responseDatetimeHandleResponse(resp *azcore.Response) (*HeaderResponseDatetimeResponse, error) {
+func (client HeaderClient) responseDatetimeHandleResponse(resp *azcore.Response) (HeaderResponseDatetimeResponse, error) {
 	result := HeaderResponseDatetimeResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("value"); val != "" {
 		value, err := time.Parse(time.RFC3339Nano, val)
 		if err != nil {
-			return nil, err
+			return HeaderResponseDatetimeResponse{}, err
 		}
 		result.Value = &value
 	}
-	return &result, nil
+	return result, nil
 }
 
 // responseDatetimeHandleError handles the ResponseDatetime error response.
@@ -842,23 +826,19 @@ func (client HeaderClient) responseDatetimeHandleError(resp *azcore.Response) er
 }
 
 // ResponseDatetimeRFC1123 - Get a response with header values "Wed, 01 Jan 2010 12:34:56 GMT" or "Mon, 01 Jan 0001 00:00:00 GMT"
-func (client HeaderClient) ResponseDatetimeRFC1123(ctx context.Context, scenario string, options *HeaderResponseDatetimeRFC1123Options) (*HeaderResponseDatetimeRFC1123Response, error) {
+func (client HeaderClient) ResponseDatetimeRFC1123(ctx context.Context, scenario string, options *HeaderResponseDatetimeRFC1123Options) (HeaderResponseDatetimeRFC1123Response, error) {
 	req, err := client.responseDatetimeRfc1123CreateRequest(ctx, scenario, options)
 	if err != nil {
-		return nil, err
+		return HeaderResponseDatetimeRFC1123Response{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return HeaderResponseDatetimeRFC1123Response{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.responseDatetimeRfc1123HandleError(resp)
+		return HeaderResponseDatetimeRFC1123Response{}, client.responseDatetimeRfc1123HandleError(resp)
 	}
-	result, err := client.responseDatetimeRfc1123HandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.responseDatetimeRfc1123HandleResponse(resp)
 }
 
 // responseDatetimeRfc1123CreateRequest creates the ResponseDatetimeRFC1123 request.
@@ -875,16 +855,16 @@ func (client HeaderClient) responseDatetimeRfc1123CreateRequest(ctx context.Cont
 }
 
 // responseDatetimeRfc1123HandleResponse handles the ResponseDatetimeRFC1123 response.
-func (client HeaderClient) responseDatetimeRfc1123HandleResponse(resp *azcore.Response) (*HeaderResponseDatetimeRFC1123Response, error) {
+func (client HeaderClient) responseDatetimeRfc1123HandleResponse(resp *azcore.Response) (HeaderResponseDatetimeRFC1123Response, error) {
 	result := HeaderResponseDatetimeRFC1123Response{RawResponse: resp.Response}
 	if val := resp.Header.Get("value"); val != "" {
 		value, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return nil, err
+			return HeaderResponseDatetimeRFC1123Response{}, err
 		}
 		result.Value = &value
 	}
-	return &result, nil
+	return result, nil
 }
 
 // responseDatetimeRfc1123HandleError handles the ResponseDatetimeRFC1123 error response.
@@ -897,23 +877,19 @@ func (client HeaderClient) responseDatetimeRfc1123HandleError(resp *azcore.Respo
 }
 
 // ResponseDouble - Get a response with header value "value": 7e120 or -3.0
-func (client HeaderClient) ResponseDouble(ctx context.Context, scenario string, options *HeaderResponseDoubleOptions) (*HeaderResponseDoubleResponse, error) {
+func (client HeaderClient) ResponseDouble(ctx context.Context, scenario string, options *HeaderResponseDoubleOptions) (HeaderResponseDoubleResponse, error) {
 	req, err := client.responseDoubleCreateRequest(ctx, scenario, options)
 	if err != nil {
-		return nil, err
+		return HeaderResponseDoubleResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return HeaderResponseDoubleResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.responseDoubleHandleError(resp)
+		return HeaderResponseDoubleResponse{}, client.responseDoubleHandleError(resp)
 	}
-	result, err := client.responseDoubleHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.responseDoubleHandleResponse(resp)
 }
 
 // responseDoubleCreateRequest creates the ResponseDouble request.
@@ -930,16 +906,16 @@ func (client HeaderClient) responseDoubleCreateRequest(ctx context.Context, scen
 }
 
 // responseDoubleHandleResponse handles the ResponseDouble response.
-func (client HeaderClient) responseDoubleHandleResponse(resp *azcore.Response) (*HeaderResponseDoubleResponse, error) {
+func (client HeaderClient) responseDoubleHandleResponse(resp *azcore.Response) (HeaderResponseDoubleResponse, error) {
 	result := HeaderResponseDoubleResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("value"); val != "" {
 		value, err := strconv.ParseFloat(val, 64)
 		if err != nil {
-			return nil, err
+			return HeaderResponseDoubleResponse{}, err
 		}
 		result.Value = &value
 	}
-	return &result, nil
+	return result, nil
 }
 
 // responseDoubleHandleError handles the ResponseDouble error response.
@@ -952,23 +928,19 @@ func (client HeaderClient) responseDoubleHandleError(resp *azcore.Response) erro
 }
 
 // ResponseDuration - Get a response with header values "P123DT22H14M12.011S"
-func (client HeaderClient) ResponseDuration(ctx context.Context, scenario string, options *HeaderResponseDurationOptions) (*HeaderResponseDurationResponse, error) {
+func (client HeaderClient) ResponseDuration(ctx context.Context, scenario string, options *HeaderResponseDurationOptions) (HeaderResponseDurationResponse, error) {
 	req, err := client.responseDurationCreateRequest(ctx, scenario, options)
 	if err != nil {
-		return nil, err
+		return HeaderResponseDurationResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return HeaderResponseDurationResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.responseDurationHandleError(resp)
+		return HeaderResponseDurationResponse{}, client.responseDurationHandleError(resp)
 	}
-	result, err := client.responseDurationHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.responseDurationHandleResponse(resp)
 }
 
 // responseDurationCreateRequest creates the ResponseDuration request.
@@ -985,12 +957,12 @@ func (client HeaderClient) responseDurationCreateRequest(ctx context.Context, sc
 }
 
 // responseDurationHandleResponse handles the ResponseDuration response.
-func (client HeaderClient) responseDurationHandleResponse(resp *azcore.Response) (*HeaderResponseDurationResponse, error) {
+func (client HeaderClient) responseDurationHandleResponse(resp *azcore.Response) (HeaderResponseDurationResponse, error) {
 	result := HeaderResponseDurationResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("value"); val != "" {
 		result.Value = &val
 	}
-	return &result, nil
+	return result, nil
 }
 
 // responseDurationHandleError handles the ResponseDuration error response.
@@ -1003,23 +975,19 @@ func (client HeaderClient) responseDurationHandleError(resp *azcore.Response) er
 }
 
 // ResponseEnum - Get a response with header values "GREY" or null
-func (client HeaderClient) ResponseEnum(ctx context.Context, scenario string, options *HeaderResponseEnumOptions) (*HeaderResponseEnumResponse, error) {
+func (client HeaderClient) ResponseEnum(ctx context.Context, scenario string, options *HeaderResponseEnumOptions) (HeaderResponseEnumResponse, error) {
 	req, err := client.responseEnumCreateRequest(ctx, scenario, options)
 	if err != nil {
-		return nil, err
+		return HeaderResponseEnumResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return HeaderResponseEnumResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.responseEnumHandleError(resp)
+		return HeaderResponseEnumResponse{}, client.responseEnumHandleError(resp)
 	}
-	result, err := client.responseEnumHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.responseEnumHandleResponse(resp)
 }
 
 // responseEnumCreateRequest creates the ResponseEnum request.
@@ -1036,12 +1004,12 @@ func (client HeaderClient) responseEnumCreateRequest(ctx context.Context, scenar
 }
 
 // responseEnumHandleResponse handles the ResponseEnum response.
-func (client HeaderClient) responseEnumHandleResponse(resp *azcore.Response) (*HeaderResponseEnumResponse, error) {
+func (client HeaderClient) responseEnumHandleResponse(resp *azcore.Response) (HeaderResponseEnumResponse, error) {
 	result := HeaderResponseEnumResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("value"); val != "" {
 		result.Value = (*GreyscaleColors)(&val)
 	}
-	return &result, nil
+	return result, nil
 }
 
 // responseEnumHandleError handles the ResponseEnum error response.
@@ -1054,23 +1022,19 @@ func (client HeaderClient) responseEnumHandleError(resp *azcore.Response) error 
 }
 
 // ResponseExistingKey - Get a response with header value "User-Agent": "overwrite"
-func (client HeaderClient) ResponseExistingKey(ctx context.Context, options *HeaderResponseExistingKeyOptions) (*HeaderResponseExistingKeyResponse, error) {
+func (client HeaderClient) ResponseExistingKey(ctx context.Context, options *HeaderResponseExistingKeyOptions) (HeaderResponseExistingKeyResponse, error) {
 	req, err := client.responseExistingKeyCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return HeaderResponseExistingKeyResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return HeaderResponseExistingKeyResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.responseExistingKeyHandleError(resp)
+		return HeaderResponseExistingKeyResponse{}, client.responseExistingKeyHandleError(resp)
 	}
-	result, err := client.responseExistingKeyHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.responseExistingKeyHandleResponse(resp)
 }
 
 // responseExistingKeyCreateRequest creates the ResponseExistingKey request.
@@ -1086,12 +1050,12 @@ func (client HeaderClient) responseExistingKeyCreateRequest(ctx context.Context,
 }
 
 // responseExistingKeyHandleResponse handles the ResponseExistingKey response.
-func (client HeaderClient) responseExistingKeyHandleResponse(resp *azcore.Response) (*HeaderResponseExistingKeyResponse, error) {
+func (client HeaderClient) responseExistingKeyHandleResponse(resp *azcore.Response) (HeaderResponseExistingKeyResponse, error) {
 	result := HeaderResponseExistingKeyResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("User-Agent"); val != "" {
 		result.UserAgent = &val
 	}
-	return &result, nil
+	return result, nil
 }
 
 // responseExistingKeyHandleError handles the ResponseExistingKey error response.
@@ -1104,23 +1068,19 @@ func (client HeaderClient) responseExistingKeyHandleError(resp *azcore.Response)
 }
 
 // ResponseFloat - Get a response with header value "value": 0.07 or -3.0
-func (client HeaderClient) ResponseFloat(ctx context.Context, scenario string, options *HeaderResponseFloatOptions) (*HeaderResponseFloatResponse, error) {
+func (client HeaderClient) ResponseFloat(ctx context.Context, scenario string, options *HeaderResponseFloatOptions) (HeaderResponseFloatResponse, error) {
 	req, err := client.responseFloatCreateRequest(ctx, scenario, options)
 	if err != nil {
-		return nil, err
+		return HeaderResponseFloatResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return HeaderResponseFloatResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.responseFloatHandleError(resp)
+		return HeaderResponseFloatResponse{}, client.responseFloatHandleError(resp)
 	}
-	result, err := client.responseFloatHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.responseFloatHandleResponse(resp)
 }
 
 // responseFloatCreateRequest creates the ResponseFloat request.
@@ -1137,17 +1097,17 @@ func (client HeaderClient) responseFloatCreateRequest(ctx context.Context, scena
 }
 
 // responseFloatHandleResponse handles the ResponseFloat response.
-func (client HeaderClient) responseFloatHandleResponse(resp *azcore.Response) (*HeaderResponseFloatResponse, error) {
+func (client HeaderClient) responseFloatHandleResponse(resp *azcore.Response) (HeaderResponseFloatResponse, error) {
 	result := HeaderResponseFloatResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("value"); val != "" {
 		value32, err := strconv.ParseFloat(val, 32)
 		value := float32(value32)
 		if err != nil {
-			return nil, err
+			return HeaderResponseFloatResponse{}, err
 		}
 		result.Value = &value
 	}
-	return &result, nil
+	return result, nil
 }
 
 // responseFloatHandleError handles the ResponseFloat error response.
@@ -1160,23 +1120,19 @@ func (client HeaderClient) responseFloatHandleError(resp *azcore.Response) error
 }
 
 // ResponseInteger - Get a response with header value "value": 1 or -2
-func (client HeaderClient) ResponseInteger(ctx context.Context, scenario string, options *HeaderResponseIntegerOptions) (*HeaderResponseIntegerResponse, error) {
+func (client HeaderClient) ResponseInteger(ctx context.Context, scenario string, options *HeaderResponseIntegerOptions) (HeaderResponseIntegerResponse, error) {
 	req, err := client.responseIntegerCreateRequest(ctx, scenario, options)
 	if err != nil {
-		return nil, err
+		return HeaderResponseIntegerResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return HeaderResponseIntegerResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.responseIntegerHandleError(resp)
+		return HeaderResponseIntegerResponse{}, client.responseIntegerHandleError(resp)
 	}
-	result, err := client.responseIntegerHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.responseIntegerHandleResponse(resp)
 }
 
 // responseIntegerCreateRequest creates the ResponseInteger request.
@@ -1193,17 +1149,17 @@ func (client HeaderClient) responseIntegerCreateRequest(ctx context.Context, sce
 }
 
 // responseIntegerHandleResponse handles the ResponseInteger response.
-func (client HeaderClient) responseIntegerHandleResponse(resp *azcore.Response) (*HeaderResponseIntegerResponse, error) {
+func (client HeaderClient) responseIntegerHandleResponse(resp *azcore.Response) (HeaderResponseIntegerResponse, error) {
 	result := HeaderResponseIntegerResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("value"); val != "" {
 		value32, err := strconv.ParseInt(val, 10, 32)
 		value := int32(value32)
 		if err != nil {
-			return nil, err
+			return HeaderResponseIntegerResponse{}, err
 		}
 		result.Value = &value
 	}
-	return &result, nil
+	return result, nil
 }
 
 // responseIntegerHandleError handles the ResponseInteger error response.
@@ -1216,23 +1172,19 @@ func (client HeaderClient) responseIntegerHandleError(resp *azcore.Response) err
 }
 
 // ResponseLong - Get a response with header value "value": 105 or -2
-func (client HeaderClient) ResponseLong(ctx context.Context, scenario string, options *HeaderResponseLongOptions) (*HeaderResponseLongResponse, error) {
+func (client HeaderClient) ResponseLong(ctx context.Context, scenario string, options *HeaderResponseLongOptions) (HeaderResponseLongResponse, error) {
 	req, err := client.responseLongCreateRequest(ctx, scenario, options)
 	if err != nil {
-		return nil, err
+		return HeaderResponseLongResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return HeaderResponseLongResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.responseLongHandleError(resp)
+		return HeaderResponseLongResponse{}, client.responseLongHandleError(resp)
 	}
-	result, err := client.responseLongHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.responseLongHandleResponse(resp)
 }
 
 // responseLongCreateRequest creates the ResponseLong request.
@@ -1249,16 +1201,16 @@ func (client HeaderClient) responseLongCreateRequest(ctx context.Context, scenar
 }
 
 // responseLongHandleResponse handles the ResponseLong response.
-func (client HeaderClient) responseLongHandleResponse(resp *azcore.Response) (*HeaderResponseLongResponse, error) {
+func (client HeaderClient) responseLongHandleResponse(resp *azcore.Response) (HeaderResponseLongResponse, error) {
 	result := HeaderResponseLongResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("value"); val != "" {
 		value, err := strconv.ParseInt(val, 10, 64)
 		if err != nil {
-			return nil, err
+			return HeaderResponseLongResponse{}, err
 		}
 		result.Value = &value
 	}
-	return &result, nil
+	return result, nil
 }
 
 // responseLongHandleError handles the ResponseLong error response.
@@ -1271,23 +1223,19 @@ func (client HeaderClient) responseLongHandleError(resp *azcore.Response) error 
 }
 
 // ResponseProtectedKey - Get a response with header value "Content-Type": "text/html"
-func (client HeaderClient) ResponseProtectedKey(ctx context.Context, options *HeaderResponseProtectedKeyOptions) (*HeaderResponseProtectedKeyResponse, error) {
+func (client HeaderClient) ResponseProtectedKey(ctx context.Context, options *HeaderResponseProtectedKeyOptions) (HeaderResponseProtectedKeyResponse, error) {
 	req, err := client.responseProtectedKeyCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return HeaderResponseProtectedKeyResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return HeaderResponseProtectedKeyResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.responseProtectedKeyHandleError(resp)
+		return HeaderResponseProtectedKeyResponse{}, client.responseProtectedKeyHandleError(resp)
 	}
-	result, err := client.responseProtectedKeyHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.responseProtectedKeyHandleResponse(resp)
 }
 
 // responseProtectedKeyCreateRequest creates the ResponseProtectedKey request.
@@ -1303,12 +1251,12 @@ func (client HeaderClient) responseProtectedKeyCreateRequest(ctx context.Context
 }
 
 // responseProtectedKeyHandleResponse handles the ResponseProtectedKey response.
-func (client HeaderClient) responseProtectedKeyHandleResponse(resp *azcore.Response) (*HeaderResponseProtectedKeyResponse, error) {
+func (client HeaderClient) responseProtectedKeyHandleResponse(resp *azcore.Response) (HeaderResponseProtectedKeyResponse, error) {
 	result := HeaderResponseProtectedKeyResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("Content-Type"); val != "" {
 		result.ContentType = &val
 	}
-	return &result, nil
+	return result, nil
 }
 
 // responseProtectedKeyHandleError handles the ResponseProtectedKey error response.
@@ -1321,23 +1269,19 @@ func (client HeaderClient) responseProtectedKeyHandleError(resp *azcore.Response
 }
 
 // ResponseString - Get a response with header values "The quick brown fox jumps over the lazy dog" or null or ""
-func (client HeaderClient) ResponseString(ctx context.Context, scenario string, options *HeaderResponseStringOptions) (*HeaderResponseStringResponse, error) {
+func (client HeaderClient) ResponseString(ctx context.Context, scenario string, options *HeaderResponseStringOptions) (HeaderResponseStringResponse, error) {
 	req, err := client.responseStringCreateRequest(ctx, scenario, options)
 	if err != nil {
-		return nil, err
+		return HeaderResponseStringResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return HeaderResponseStringResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.responseStringHandleError(resp)
+		return HeaderResponseStringResponse{}, client.responseStringHandleError(resp)
 	}
-	result, err := client.responseStringHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.responseStringHandleResponse(resp)
 }
 
 // responseStringCreateRequest creates the ResponseString request.
@@ -1354,12 +1298,12 @@ func (client HeaderClient) responseStringCreateRequest(ctx context.Context, scen
 }
 
 // responseStringHandleResponse handles the ResponseString response.
-func (client HeaderClient) responseStringHandleResponse(resp *azcore.Response) (*HeaderResponseStringResponse, error) {
+func (client HeaderClient) responseStringHandleResponse(resp *azcore.Response) (HeaderResponseStringResponse, error) {
 	result := HeaderResponseStringResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("value"); val != "" {
 		result.Value = &val
 	}
-	return &result, nil
+	return result, nil
 }
 
 // responseStringHandleError handles the ResponseString error response.

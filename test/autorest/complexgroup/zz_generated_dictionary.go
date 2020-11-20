@@ -30,23 +30,19 @@ func (client DictionaryClient) Pipeline() azcore.Pipeline {
 }
 
 // GetEmpty - Get complex types with dictionary property which is empty
-func (client DictionaryClient) GetEmpty(ctx context.Context, options *DictionaryGetEmptyOptions) (*DictionaryWrapperResponse, error) {
+func (client DictionaryClient) GetEmpty(ctx context.Context, options *DictionaryGetEmptyOptions) (DictionaryWrapperResponse, error) {
 	req, err := client.getEmptyCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return DictionaryWrapperResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return DictionaryWrapperResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getEmptyHandleError(resp)
+		return DictionaryWrapperResponse{}, client.getEmptyHandleError(resp)
 	}
-	result, err := client.getEmptyHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.getEmptyHandleResponse(resp)
 }
 
 // getEmptyCreateRequest creates the GetEmpty request.
@@ -62,9 +58,10 @@ func (client DictionaryClient) getEmptyCreateRequest(ctx context.Context, option
 }
 
 // getEmptyHandleResponse handles the GetEmpty response.
-func (client DictionaryClient) getEmptyHandleResponse(resp *azcore.Response) (*DictionaryWrapperResponse, error) {
+func (client DictionaryClient) getEmptyHandleResponse(resp *azcore.Response) (DictionaryWrapperResponse, error) {
 	result := DictionaryWrapperResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.DictionaryWrapper)
+	err := resp.UnmarshalAsJSON(&result.DictionaryWrapper)
+	return result, err
 }
 
 // getEmptyHandleError handles the GetEmpty error response.
@@ -77,23 +74,19 @@ func (client DictionaryClient) getEmptyHandleError(resp *azcore.Response) error 
 }
 
 // GetNotProvided - Get complex types with dictionary property while server doesn't provide a response payload
-func (client DictionaryClient) GetNotProvided(ctx context.Context, options *DictionaryGetNotProvidedOptions) (*DictionaryWrapperResponse, error) {
+func (client DictionaryClient) GetNotProvided(ctx context.Context, options *DictionaryGetNotProvidedOptions) (DictionaryWrapperResponse, error) {
 	req, err := client.getNotProvidedCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return DictionaryWrapperResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return DictionaryWrapperResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getNotProvidedHandleError(resp)
+		return DictionaryWrapperResponse{}, client.getNotProvidedHandleError(resp)
 	}
-	result, err := client.getNotProvidedHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.getNotProvidedHandleResponse(resp)
 }
 
 // getNotProvidedCreateRequest creates the GetNotProvided request.
@@ -109,9 +102,10 @@ func (client DictionaryClient) getNotProvidedCreateRequest(ctx context.Context, 
 }
 
 // getNotProvidedHandleResponse handles the GetNotProvided response.
-func (client DictionaryClient) getNotProvidedHandleResponse(resp *azcore.Response) (*DictionaryWrapperResponse, error) {
+func (client DictionaryClient) getNotProvidedHandleResponse(resp *azcore.Response) (DictionaryWrapperResponse, error) {
 	result := DictionaryWrapperResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.DictionaryWrapper)
+	err := resp.UnmarshalAsJSON(&result.DictionaryWrapper)
+	return result, err
 }
 
 // getNotProvidedHandleError handles the GetNotProvided error response.
@@ -124,23 +118,19 @@ func (client DictionaryClient) getNotProvidedHandleError(resp *azcore.Response) 
 }
 
 // GetNull - Get complex types with dictionary property which is null
-func (client DictionaryClient) GetNull(ctx context.Context, options *DictionaryGetNullOptions) (*DictionaryWrapperResponse, error) {
+func (client DictionaryClient) GetNull(ctx context.Context, options *DictionaryGetNullOptions) (DictionaryWrapperResponse, error) {
 	req, err := client.getNullCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return DictionaryWrapperResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return DictionaryWrapperResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getNullHandleError(resp)
+		return DictionaryWrapperResponse{}, client.getNullHandleError(resp)
 	}
-	result, err := client.getNullHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.getNullHandleResponse(resp)
 }
 
 // getNullCreateRequest creates the GetNull request.
@@ -156,9 +146,10 @@ func (client DictionaryClient) getNullCreateRequest(ctx context.Context, options
 }
 
 // getNullHandleResponse handles the GetNull response.
-func (client DictionaryClient) getNullHandleResponse(resp *azcore.Response) (*DictionaryWrapperResponse, error) {
+func (client DictionaryClient) getNullHandleResponse(resp *azcore.Response) (DictionaryWrapperResponse, error) {
 	result := DictionaryWrapperResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.DictionaryWrapper)
+	err := resp.UnmarshalAsJSON(&result.DictionaryWrapper)
+	return result, err
 }
 
 // getNullHandleError handles the GetNull error response.
@@ -171,23 +162,19 @@ func (client DictionaryClient) getNullHandleError(resp *azcore.Response) error {
 }
 
 // GetValid - Get complex types with dictionary property
-func (client DictionaryClient) GetValid(ctx context.Context, options *DictionaryGetValidOptions) (*DictionaryWrapperResponse, error) {
+func (client DictionaryClient) GetValid(ctx context.Context, options *DictionaryGetValidOptions) (DictionaryWrapperResponse, error) {
 	req, err := client.getValidCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return DictionaryWrapperResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return DictionaryWrapperResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getValidHandleError(resp)
+		return DictionaryWrapperResponse{}, client.getValidHandleError(resp)
 	}
-	result, err := client.getValidHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.getValidHandleResponse(resp)
 }
 
 // getValidCreateRequest creates the GetValid request.
@@ -203,9 +190,10 @@ func (client DictionaryClient) getValidCreateRequest(ctx context.Context, option
 }
 
 // getValidHandleResponse handles the GetValid response.
-func (client DictionaryClient) getValidHandleResponse(resp *azcore.Response) (*DictionaryWrapperResponse, error) {
+func (client DictionaryClient) getValidHandleResponse(resp *azcore.Response) (DictionaryWrapperResponse, error) {
 	result := DictionaryWrapperResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.DictionaryWrapper)
+	err := resp.UnmarshalAsJSON(&result.DictionaryWrapper)
+	return result, err
 }
 
 // getValidHandleError handles the GetValid error response.

@@ -30,23 +30,19 @@ func (client PolymorphicrecursiveClient) Pipeline() azcore.Pipeline {
 }
 
 // GetValid - Get complex types that are polymorphic and have recursive references
-func (client PolymorphicrecursiveClient) GetValid(ctx context.Context, options *PolymorphicrecursiveGetValidOptions) (*FishResponse, error) {
+func (client PolymorphicrecursiveClient) GetValid(ctx context.Context, options *PolymorphicrecursiveGetValidOptions) (FishResponse, error) {
 	req, err := client.getValidCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return FishResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return FishResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getValidHandleError(resp)
+		return FishResponse{}, client.getValidHandleError(resp)
 	}
-	result, err := client.getValidHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.getValidHandleResponse(resp)
 }
 
 // getValidCreateRequest creates the GetValid request.
@@ -62,9 +58,10 @@ func (client PolymorphicrecursiveClient) getValidCreateRequest(ctx context.Conte
 }
 
 // getValidHandleResponse handles the GetValid response.
-func (client PolymorphicrecursiveClient) getValidHandleResponse(resp *azcore.Response) (*FishResponse, error) {
+func (client PolymorphicrecursiveClient) getValidHandleResponse(resp *azcore.Response) (FishResponse, error) {
 	result := FishResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result)
+	err := resp.UnmarshalAsJSON(&result)
+	return result, err
 }
 
 // getValidHandleError handles the GetValid error response.

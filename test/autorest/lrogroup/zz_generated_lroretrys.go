@@ -33,17 +33,17 @@ func (client LroRetrysClient) Pipeline() azcore.Pipeline {
 
 // BeginDelete202Retry200 - Long running delete request, service returns a 500, then a 202 to the initial request. Polls return this value until the last
 // poll returns a ‘200’ with ProvisioningState=’Succeeded’
-func (client LroRetrysClient) BeginDelete202Retry200(ctx context.Context, options *LroRetrysDelete202Retry200Options) (*HTTPPollerResponse, error) {
+func (client LroRetrysClient) BeginDelete202Retry200(ctx context.Context, options *LroRetrysDelete202Retry200Options) (HTTPPollerResponse, error) {
 	resp, err := client.Delete202Retry200(ctx, options)
 	if err != nil {
-		return nil, err
+		return HTTPPollerResponse{}, err
 	}
-	result := &HTTPPollerResponse{
+	result := HTTPPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("LroRetrysClient.Delete202Retry200", "", resp, client.delete202Retry200HandleError)
 	if err != nil {
-		return nil, err
+		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
 		pt:       pt,
@@ -109,17 +109,17 @@ func (client LroRetrysClient) delete202Retry200HandleError(resp *azcore.Response
 
 // BeginDeleteAsyncRelativeRetrySucceeded - Long running delete request, service returns a 500, then a 202 to the initial request. Poll the endpoint indicated
 // in the Azure-AsyncOperation header for operation status
-func (client LroRetrysClient) BeginDeleteAsyncRelativeRetrySucceeded(ctx context.Context, options *LroRetrysDeleteAsyncRelativeRetrySucceededOptions) (*HTTPPollerResponse, error) {
+func (client LroRetrysClient) BeginDeleteAsyncRelativeRetrySucceeded(ctx context.Context, options *LroRetrysDeleteAsyncRelativeRetrySucceededOptions) (HTTPPollerResponse, error) {
 	resp, err := client.DeleteAsyncRelativeRetrySucceeded(ctx, options)
 	if err != nil {
-		return nil, err
+		return HTTPPollerResponse{}, err
 	}
-	result := &HTTPPollerResponse{
+	result := HTTPPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("LroRetrysClient.DeleteAsyncRelativeRetrySucceeded", "", resp, client.deleteAsyncRelativeRetrySucceededHandleError)
 	if err != nil {
-		return nil, err
+		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
 		pt:       pt,
@@ -186,24 +186,24 @@ func (client LroRetrysClient) deleteAsyncRelativeRetrySucceededHandleError(resp 
 // BeginDeleteProvisioning202Accepted200Succeeded - Long running delete request, service returns a 500, then a 202 to the initial request, with an entity
 // that contains ProvisioningState=’Accepted’. Polls return this value until the last poll returns a
 // ‘200’ with ProvisioningState=’Succeeded’
-func (client LroRetrysClient) BeginDeleteProvisioning202Accepted200Succeeded(ctx context.Context, options *LroRetrysDeleteProvisioning202Accepted200SucceededOptions) (*ProductPollerResponse, error) {
+func (client LroRetrysClient) BeginDeleteProvisioning202Accepted200Succeeded(ctx context.Context, options *LroRetrysDeleteProvisioning202Accepted200SucceededOptions) (ProductPollerResponse, error) {
 	resp, err := client.DeleteProvisioning202Accepted200Succeeded(ctx, options)
 	if err != nil {
-		return nil, err
+		return ProductPollerResponse{}, err
 	}
-	result := &ProductPollerResponse{
+	result := ProductPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("LroRetrysClient.DeleteProvisioning202Accepted200Succeeded", "", resp, client.deleteProvisioning202Accepted200SucceededHandleError)
 	if err != nil {
-		return nil, err
+		return ProductPollerResponse{}, err
 	}
 	poller := &productPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*ProductResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ProductResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -253,9 +253,10 @@ func (client LroRetrysClient) deleteProvisioning202Accepted200SucceededCreateReq
 }
 
 // deleteProvisioning202Accepted200SucceededHandleResponse handles the DeleteProvisioning202Accepted200Succeeded response.
-func (client LroRetrysClient) deleteProvisioning202Accepted200SucceededHandleResponse(resp *azcore.Response) (*ProductResponse, error) {
+func (client LroRetrysClient) deleteProvisioning202Accepted200SucceededHandleResponse(resp *azcore.Response) (ProductResponse, error) {
 	result := ProductResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.Product)
+	err := resp.UnmarshalAsJSON(&result.Product)
+	return result, err
 }
 
 // deleteProvisioning202Accepted200SucceededHandleError handles the DeleteProvisioning202Accepted200Succeeded error response.
@@ -269,17 +270,17 @@ func (client LroRetrysClient) deleteProvisioning202Accepted200SucceededHandleErr
 
 // BeginPost202Retry200 - Long running post request, service returns a 500, then a 202 to the initial request, with 'Location' and 'Retry-After' headers,
 // Polls return a 200 with a response body after success
-func (client LroRetrysClient) BeginPost202Retry200(ctx context.Context, options *LroRetrysPost202Retry200Options) (*HTTPPollerResponse, error) {
+func (client LroRetrysClient) BeginPost202Retry200(ctx context.Context, options *LroRetrysPost202Retry200Options) (HTTPPollerResponse, error) {
 	resp, err := client.Post202Retry200(ctx, options)
 	if err != nil {
-		return nil, err
+		return HTTPPollerResponse{}, err
 	}
-	result := &HTTPPollerResponse{
+	result := HTTPPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("LroRetrysClient.Post202Retry200", "", resp, client.post202Retry200HandleError)
 	if err != nil {
-		return nil, err
+		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
 		pt:       pt,
@@ -349,17 +350,17 @@ func (client LroRetrysClient) post202Retry200HandleError(resp *azcore.Response) 
 // BeginPostAsyncRelativeRetrySucceeded - Long running post request, service returns a 500, then a 202 to the initial request, with an entity that contains
 // ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation
 // header for operation status
-func (client LroRetrysClient) BeginPostAsyncRelativeRetrySucceeded(ctx context.Context, options *LroRetrysPostAsyncRelativeRetrySucceededOptions) (*HTTPPollerResponse, error) {
+func (client LroRetrysClient) BeginPostAsyncRelativeRetrySucceeded(ctx context.Context, options *LroRetrysPostAsyncRelativeRetrySucceededOptions) (HTTPPollerResponse, error) {
 	resp, err := client.PostAsyncRelativeRetrySucceeded(ctx, options)
 	if err != nil {
-		return nil, err
+		return HTTPPollerResponse{}, err
 	}
-	result := &HTTPPollerResponse{
+	result := HTTPPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("LroRetrysClient.PostAsyncRelativeRetrySucceeded", "", resp, client.postAsyncRelativeRetrySucceededHandleError)
 	if err != nil {
-		return nil, err
+		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
 		pt:       pt,
@@ -430,24 +431,24 @@ func (client LroRetrysClient) postAsyncRelativeRetrySucceededHandleError(resp *a
 // BeginPut201CreatingSucceeded200 - Long running put request, service returns a 500, then a 201 to the initial request, with an entity that contains ProvisioningState=’Creating’.
 // Polls return this value until the last poll returns a
 // ‘200’ with ProvisioningState=’Succeeded’
-func (client LroRetrysClient) BeginPut201CreatingSucceeded200(ctx context.Context, options *LroRetrysPut201CreatingSucceeded200Options) (*ProductPollerResponse, error) {
+func (client LroRetrysClient) BeginPut201CreatingSucceeded200(ctx context.Context, options *LroRetrysPut201CreatingSucceeded200Options) (ProductPollerResponse, error) {
 	resp, err := client.Put201CreatingSucceeded200(ctx, options)
 	if err != nil {
-		return nil, err
+		return ProductPollerResponse{}, err
 	}
-	result := &ProductPollerResponse{
+	result := ProductPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("LroRetrysClient.Put201CreatingSucceeded200", "", resp, client.put201CreatingSucceeded200HandleError)
 	if err != nil {
-		return nil, err
+		return ProductPollerResponse{}, err
 	}
 	poller := &productPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*ProductResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ProductResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -500,9 +501,10 @@ func (client LroRetrysClient) put201CreatingSucceeded200CreateRequest(ctx contex
 }
 
 // put201CreatingSucceeded200HandleResponse handles the Put201CreatingSucceeded200 response.
-func (client LroRetrysClient) put201CreatingSucceeded200HandleResponse(resp *azcore.Response) (*ProductResponse, error) {
+func (client LroRetrysClient) put201CreatingSucceeded200HandleResponse(resp *azcore.Response) (ProductResponse, error) {
 	result := ProductResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.Product)
+	err := resp.UnmarshalAsJSON(&result.Product)
+	return result, err
 }
 
 // put201CreatingSucceeded200HandleError handles the Put201CreatingSucceeded200 error response.
@@ -517,24 +519,24 @@ func (client LroRetrysClient) put201CreatingSucceeded200HandleError(resp *azcore
 // BeginPutAsyncRelativeRetrySucceeded - Long running put request, service returns a 500, then a 200 to the initial request, with an entity that contains
 // ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation
 // header for operation status
-func (client LroRetrysClient) BeginPutAsyncRelativeRetrySucceeded(ctx context.Context, options *LroRetrysPutAsyncRelativeRetrySucceededOptions) (*ProductPollerResponse, error) {
+func (client LroRetrysClient) BeginPutAsyncRelativeRetrySucceeded(ctx context.Context, options *LroRetrysPutAsyncRelativeRetrySucceededOptions) (ProductPollerResponse, error) {
 	resp, err := client.PutAsyncRelativeRetrySucceeded(ctx, options)
 	if err != nil {
-		return nil, err
+		return ProductPollerResponse{}, err
 	}
-	result := &ProductPollerResponse{
+	result := ProductPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("LroRetrysClient.PutAsyncRelativeRetrySucceeded", "", resp, client.putAsyncRelativeRetrySucceededHandleError)
 	if err != nil {
-		return nil, err
+		return ProductPollerResponse{}, err
 	}
 	poller := &productPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*ProductResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ProductResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -587,9 +589,10 @@ func (client LroRetrysClient) putAsyncRelativeRetrySucceededCreateRequest(ctx co
 }
 
 // putAsyncRelativeRetrySucceededHandleResponse handles the PutAsyncRelativeRetrySucceeded response.
-func (client LroRetrysClient) putAsyncRelativeRetrySucceededHandleResponse(resp *azcore.Response) (*ProductResponse, error) {
+func (client LroRetrysClient) putAsyncRelativeRetrySucceededHandleResponse(resp *azcore.Response) (ProductResponse, error) {
 	result := ProductResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.Product)
+	err := resp.UnmarshalAsJSON(&result.Product)
+	return result, err
 }
 
 // putAsyncRelativeRetrySucceededHandleError handles the PutAsyncRelativeRetrySucceeded error response.

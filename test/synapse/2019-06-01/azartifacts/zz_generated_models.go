@@ -8091,7 +8091,7 @@ type CreateDataFlowDebugSessionResponse struct {
 // type.
 type CreateDataFlowDebugSessionResponsePollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (*CreateDataFlowDebugSessionResponseResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (CreateDataFlowDebugSessionResponseResponse, error)
 
 	// Poller contains an initialized poller.
 	Poller CreateDataFlowDebugSessionResponsePoller
@@ -8446,7 +8446,7 @@ type DataFlowDebugCommandResponse struct {
 // DataFlowDebugCommandResponsePollerResponse is the response envelope for operations that asynchronously return a DataFlowDebugCommandResponse type.
 type DataFlowDebugCommandResponsePollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (*DataFlowDebugCommandResponseResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (DataFlowDebugCommandResponseResponse, error)
 
 	// Poller contains an initialized poller.
 	Poller DataFlowDebugCommandResponsePoller
@@ -8940,7 +8940,7 @@ type DataFlowResource struct {
 // DataFlowResourcePollerResponse is the response envelope for operations that asynchronously return a DataFlowResource type.
 type DataFlowResourcePollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (*DataFlowResourceResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (DataFlowResourceResponse, error)
 
 	// Poller contains an initialized poller.
 	Poller DataFlowResourcePoller
@@ -9772,7 +9772,7 @@ type DatasetResource struct {
 // DatasetResourcePollerResponse is the response envelope for operations that asynchronously return a DatasetResource type.
 type DatasetResourcePollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (*DatasetResourceResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (DatasetResourceResponse, error)
 
 	// Poller contains an initialized poller.
 	Poller DatasetResourcePoller
@@ -17914,7 +17914,7 @@ type LinkedServiceResource struct {
 // LinkedServiceResourcePollerResponse is the response envelope for operations that asynchronously return a LinkedServiceResource type.
 type LinkedServiceResourcePollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (*LinkedServiceResourceResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LinkedServiceResourceResponse, error)
 
 	// Poller contains an initialized poller.
 	Poller LinkedServiceResourcePoller
@@ -20273,7 +20273,7 @@ type NotebookResource struct {
 // NotebookResourcePollerResponse is the response envelope for operations that asynchronously return a NotebookResource type.
 type NotebookResourcePollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (*NotebookResourceResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (NotebookResourceResponse, error)
 
 	// Poller contains an initialized poller.
 	Poller NotebookResourcePoller
@@ -22371,7 +22371,7 @@ func (p *PipelineResource) UnmarshalJSON(data []byte) error {
 // PipelineResourcePollerResponse is the response envelope for operations that asynchronously return a PipelineResource type.
 type PipelineResourcePollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (*PipelineResourceResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (PipelineResourceResponse, error)
 
 	// Poller contains an initialized poller.
 	Poller PipelineResourcePoller
@@ -29229,7 +29229,7 @@ type SparkBatchJob struct {
 // SparkBatchJobPollerResponse is the response envelope for operations that asynchronously return a SparkBatchJob type.
 type SparkBatchJobPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (*SparkBatchJobResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (SparkBatchJobResponse, error)
 
 	// Poller contains an initialized poller.
 	Poller SparkBatchJobPoller
@@ -32089,7 +32089,7 @@ type TriggerResource struct {
 // TriggerResourcePollerResponse is the response envelope for operations that asynchronously return a TriggerResource type.
 type TriggerResourcePollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (*TriggerResourceResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (TriggerResourceResponse, error)
 
 	// Poller contains an initialized poller.
 	Poller TriggerResourcePoller
@@ -32302,7 +32302,7 @@ type TriggerSubscriptionOperationStatus struct {
 // type.
 type TriggerSubscriptionOperationStatusPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (*TriggerSubscriptionOperationStatusResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (TriggerSubscriptionOperationStatusResponse, error)
 
 	// Poller contains an initialized poller.
 	Poller TriggerSubscriptionOperationStatusPoller

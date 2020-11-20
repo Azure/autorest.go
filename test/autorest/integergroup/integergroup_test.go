@@ -8,6 +8,7 @@ import (
 	"generatortests/helpers"
 	"math"
 	"net/http"
+	"reflect"
 	"testing"
 	"time"
 )
@@ -22,8 +23,8 @@ func TestIntGetInvalid(t *testing.T) {
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
 	}
-	if result != nil {
-		t.Fatalf("Expected a nil result")
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected empty response")
 	}
 }
 
@@ -33,8 +34,8 @@ func TestIntGetInvalidUnixTime(t *testing.T) {
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
 	}
-	if result != nil {
-		t.Fatalf("Expected a nil result")
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected empty response")
 	}
 }
 
@@ -64,8 +65,8 @@ func TestIntGetOverflowInt32(t *testing.T) {
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
 	}
-	if result != nil {
-		t.Fatalf("Expected a nil response but received one")
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected empty response")
 	}
 }
 
@@ -75,8 +76,8 @@ func TestIntGetOverflowInt64(t *testing.T) {
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
 	}
-	if result != nil {
-		t.Fatalf("Expected a nil response but received one")
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected empty response")
 	}
 }
 
@@ -86,8 +87,8 @@ func TestIntGetUnderflowInt32(t *testing.T) {
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
 	}
-	if result != nil {
-		t.Fatalf("Expected a nil response but received one")
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected empty response")
 	}
 }
 
@@ -97,8 +98,8 @@ func TestIntGetUnderflowInt64(t *testing.T) {
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
 	}
-	if result != nil {
-		t.Fatalf("Expected a nil response but received one")
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected empty response")
 	}
 }
 

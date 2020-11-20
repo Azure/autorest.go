@@ -5,6 +5,7 @@ package httpinfrastructuregroup
 
 import (
 	"context"
+	"reflect"
 	"testing"
 )
 
@@ -18,8 +19,8 @@ func TestHTTPFailureGetEmptyError(t *testing.T) {
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
 	}
-	if result != nil {
-		t.Fatalf("Expected a nil result")
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected empty response")
 	}
 }
 
@@ -29,8 +30,8 @@ func TestHTTPFailureGetNoModelEmpty(t *testing.T) {
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
 	}
-	if result != nil {
-		t.Fatalf("Expected a nil result")
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected empty response")
 	}
 }
 
@@ -40,7 +41,7 @@ func TestHTTPFailureGetNoModelError(t *testing.T) {
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
 	}
-	if result != nil {
-		t.Fatalf("Expected a nil result")
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected empty response")
 	}
 }

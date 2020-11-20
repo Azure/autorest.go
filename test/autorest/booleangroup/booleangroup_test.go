@@ -7,6 +7,7 @@ import (
 	"context"
 	"generatortests/helpers"
 	"net/http"
+	"reflect"
 	"testing"
 )
 
@@ -53,8 +54,8 @@ func TestGetInvalid(t *testing.T) {
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
-	if result != nil {
-		t.Fatal("expected nil result")
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected empty response")
 	}
 }
 

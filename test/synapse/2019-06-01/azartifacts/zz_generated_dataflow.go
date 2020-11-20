@@ -60,9 +60,10 @@ func (client dataFlowClient) createOrUpdateDataFlowCreateRequest(ctx context.Con
 }
 
 // createOrUpdateDataFlowHandleResponse handles the CreateOrUpdateDataFlow response.
-func (client dataFlowClient) createOrUpdateDataFlowHandleResponse(resp *azcore.Response) (*DataFlowResourceResponse, error) {
+func (client dataFlowClient) createOrUpdateDataFlowHandleResponse(resp *azcore.Response) (DataFlowResourceResponse, error) {
 	result := DataFlowResourceResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.DataFlowResource)
+	err := resp.UnmarshalAsJSON(&result.DataFlowResource)
+	return result, err
 }
 
 // createOrUpdateDataFlowHandleError handles the CreateOrUpdateDataFlow error response.
@@ -116,23 +117,19 @@ func (client dataFlowClient) deleteDataFlowHandleError(resp *azcore.Response) er
 }
 
 // GetDataFlow - Gets a data flow.
-func (client dataFlowClient) GetDataFlow(ctx context.Context, dataFlowName string, options *DataFlowGetDataFlowOptions) (*DataFlowResourceResponse, error) {
+func (client dataFlowClient) GetDataFlow(ctx context.Context, dataFlowName string, options *DataFlowGetDataFlowOptions) (DataFlowResourceResponse, error) {
 	req, err := client.getDataFlowCreateRequest(ctx, dataFlowName, options)
 	if err != nil {
-		return nil, err
+		return DataFlowResourceResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return DataFlowResourceResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getDataFlowHandleError(resp)
+		return DataFlowResourceResponse{}, client.getDataFlowHandleError(resp)
 	}
-	result, err := client.getDataFlowHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.getDataFlowHandleResponse(resp)
 }
 
 // getDataFlowCreateRequest creates the GetDataFlow request.
@@ -155,9 +152,10 @@ func (client dataFlowClient) getDataFlowCreateRequest(ctx context.Context, dataF
 }
 
 // getDataFlowHandleResponse handles the GetDataFlow response.
-func (client dataFlowClient) getDataFlowHandleResponse(resp *azcore.Response) (*DataFlowResourceResponse, error) {
+func (client dataFlowClient) getDataFlowHandleResponse(resp *azcore.Response) (DataFlowResourceResponse, error) {
 	result := DataFlowResourceResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.DataFlowResource)
+	err := resp.UnmarshalAsJSON(&result.DataFlowResource)
+	return result, err
 }
 
 // getDataFlowHandleError handles the GetDataFlow error response.
@@ -178,7 +176,7 @@ func (client dataFlowClient) GetDataFlowsByWorkspace(options *DataFlowGetDataFlo
 		},
 		responder: client.getDataFlowsByWorkspaceHandleResponse,
 		errorer:   client.getDataFlowsByWorkspaceHandleError,
-		advancer: func(ctx context.Context, resp *DataFlowListResponseResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp DataFlowListResponseResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.DataFlowListResponse.NextLink)
 		},
 		statusCodes: []int{http.StatusOK},
@@ -201,9 +199,10 @@ func (client dataFlowClient) getDataFlowsByWorkspaceCreateRequest(ctx context.Co
 }
 
 // getDataFlowsByWorkspaceHandleResponse handles the GetDataFlowsByWorkspace response.
-func (client dataFlowClient) getDataFlowsByWorkspaceHandleResponse(resp *azcore.Response) (*DataFlowListResponseResponse, error) {
+func (client dataFlowClient) getDataFlowsByWorkspaceHandleResponse(resp *azcore.Response) (DataFlowListResponseResponse, error) {
 	result := DataFlowListResponseResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.DataFlowListResponse)
+	err := resp.UnmarshalAsJSON(&result.DataFlowListResponse)
+	return result, err
 }
 
 // getDataFlowsByWorkspaceHandleError handles the GetDataFlowsByWorkspace error response.

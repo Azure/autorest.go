@@ -7,6 +7,7 @@ import (
 	"context"
 	"generatortests/helpers"
 	"net/http"
+	"reflect"
 	"testing"
 	"time"
 )
@@ -21,8 +22,8 @@ func TestGetInvalidDate(t *testing.T) {
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
-	if resp != nil {
-		t.Fatal("expected nil response")
+	if !reflect.ValueOf(resp).IsZero() {
+		t.Fatal("expected empty response")
 	}
 }
 
@@ -62,8 +63,8 @@ func TestGetOverflowDate(t *testing.T) {
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
-	if resp != nil {
-		t.Fatal("expected nil response")
+	if !reflect.ValueOf(resp).IsZero() {
+		t.Fatal("expected empty response")
 	}
 }
 
@@ -73,8 +74,8 @@ func TestGetUnderflowDate(t *testing.T) {
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
-	if resp != nil {
-		t.Fatal("expected nil response")
+	if !reflect.ValueOf(resp).IsZero() {
+		t.Fatal("expected empty response")
 	}
 }
 

@@ -29,23 +29,19 @@ func (client appendBlobClient) Pipeline() azcore.Pipeline {
 // AppendBlock - The Append Block operation commits a new block of data to the end of an existing append blob. The Append Block operation is permitted only
 // if the blob was created with x-ms-blob-type set to
 // AppendBlob. Append Block is supported only on version 2015-02-21 version or later.
-func (client appendBlobClient) AppendBlock(ctx context.Context, contentLength int64, body azcore.ReadSeekCloser, appendBlobAppendBlockOptions *AppendBlobAppendBlockOptions, leaseAccessConditions *LeaseAccessConditions, appendPositionAccessConditions *AppendPositionAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*AppendBlobAppendBlockResponse, error) {
+func (client appendBlobClient) AppendBlock(ctx context.Context, contentLength int64, body azcore.ReadSeekCloser, appendBlobAppendBlockOptions *AppendBlobAppendBlockOptions, leaseAccessConditions *LeaseAccessConditions, appendPositionAccessConditions *AppendPositionAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (AppendBlobAppendBlockResponse, error) {
 	req, err := client.appendBlockCreateRequest(ctx, contentLength, body, appendBlobAppendBlockOptions, leaseAccessConditions, appendPositionAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
 	if err != nil {
-		return nil, err
+		return AppendBlobAppendBlockResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return AppendBlobAppendBlockResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, client.appendBlockHandleError(resp)
+		return AppendBlobAppendBlockResponse{}, client.appendBlockHandleError(resp)
 	}
-	result, err := client.appendBlockHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.appendBlockHandleResponse(resp)
 }
 
 // appendBlockCreateRequest creates the AppendBlock request.
@@ -110,7 +106,7 @@ func (client appendBlobClient) appendBlockCreateRequest(ctx context.Context, con
 }
 
 // appendBlockHandleResponse handles the AppendBlock response.
-func (client appendBlobClient) appendBlockHandleResponse(resp *azcore.Response) (*AppendBlobAppendBlockResponse, error) {
+func (client appendBlobClient) appendBlockHandleResponse(resp *azcore.Response) (AppendBlobAppendBlockResponse, error) {
 	result := AppendBlobAppendBlockResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -118,21 +114,21 @@ func (client appendBlobClient) appendBlockHandleResponse(resp *azcore.Response) 
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return nil, err
+			return AppendBlobAppendBlockResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
 	if val := resp.Header.Get("Content-MD5"); val != "" {
 		contentMd5, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
-			return nil, err
+			return AppendBlobAppendBlockResponse{}, err
 		}
 		result.ContentMD5 = &contentMd5
 	}
 	if val := resp.Header.Get("x-ms-content-crc64"); val != "" {
 		contentCrc64, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
-			return nil, err
+			return AppendBlobAppendBlockResponse{}, err
 		}
 		result.ContentCRC64 = &contentCrc64
 	}
@@ -148,7 +144,7 @@ func (client appendBlobClient) appendBlockHandleResponse(resp *azcore.Response) 
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return nil, err
+			return AppendBlobAppendBlockResponse{}, err
 		}
 		result.Date = &date
 	}
@@ -159,14 +155,14 @@ func (client appendBlobClient) appendBlockHandleResponse(resp *azcore.Response) 
 		blobCommittedBlockCount32, err := strconv.ParseInt(val, 10, 32)
 		blobCommittedBlockCount := int32(blobCommittedBlockCount32)
 		if err != nil {
-			return nil, err
+			return AppendBlobAppendBlockResponse{}, err
 		}
 		result.BlobCommittedBlockCount = &blobCommittedBlockCount
 	}
 	if val := resp.Header.Get("x-ms-request-server-encrypted"); val != "" {
 		isServerEncrypted, err := strconv.ParseBool(val)
 		if err != nil {
-			return nil, err
+			return AppendBlobAppendBlockResponse{}, err
 		}
 		result.IsServerEncrypted = &isServerEncrypted
 	}
@@ -176,7 +172,7 @@ func (client appendBlobClient) appendBlockHandleResponse(resp *azcore.Response) 
 	if val := resp.Header.Get("x-ms-encryption-scope"); val != "" {
 		result.EncryptionScope = &val
 	}
-	return &result, nil
+	return result, nil
 }
 
 // appendBlockHandleError handles the AppendBlock error response.
@@ -191,23 +187,19 @@ func (client appendBlobClient) appendBlockHandleError(resp *azcore.Response) err
 // AppendBlockFromURL - The Append Block operation commits a new block of data to the end of an existing append blob where the contents are read from a
 // source url. The Append Block operation is permitted only if the blob was
 // created with x-ms-blob-type set to AppendBlob. Append Block is supported only on version 2015-02-21 version or later.
-func (client appendBlobClient) AppendBlockFromURL(ctx context.Context, sourceUrl url.URL, contentLength int64, appendBlobAppendBlockFromUrlOptions *AppendBlobAppendBlockFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, appendPositionAccessConditions *AppendPositionAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*AppendBlobAppendBlockFromURLResponse, error) {
+func (client appendBlobClient) AppendBlockFromURL(ctx context.Context, sourceUrl url.URL, contentLength int64, appendBlobAppendBlockFromUrlOptions *AppendBlobAppendBlockFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, appendPositionAccessConditions *AppendPositionAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (AppendBlobAppendBlockFromURLResponse, error) {
 	req, err := client.appendBlockFromUrlCreateRequest(ctx, sourceUrl, contentLength, appendBlobAppendBlockFromUrlOptions, cpkInfo, cpkScopeInfo, leaseAccessConditions, appendPositionAccessConditions, modifiedAccessConditions, sourceModifiedAccessConditions)
 	if err != nil {
-		return nil, err
+		return AppendBlobAppendBlockFromURLResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return AppendBlobAppendBlockFromURLResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, client.appendBlockFromUrlHandleError(resp)
+		return AppendBlobAppendBlockFromURLResponse{}, client.appendBlockFromUrlHandleError(resp)
 	}
-	result, err := client.appendBlockFromUrlHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.appendBlockFromUrlHandleResponse(resp)
 }
 
 // appendBlockFromUrlCreateRequest creates the AppendBlockFromURL request.
@@ -291,7 +283,7 @@ func (client appendBlobClient) appendBlockFromUrlCreateRequest(ctx context.Conte
 }
 
 // appendBlockFromUrlHandleResponse handles the AppendBlockFromURL response.
-func (client appendBlobClient) appendBlockFromUrlHandleResponse(resp *azcore.Response) (*AppendBlobAppendBlockFromURLResponse, error) {
+func (client appendBlobClient) appendBlockFromUrlHandleResponse(resp *azcore.Response) (AppendBlobAppendBlockFromURLResponse, error) {
 	result := AppendBlobAppendBlockFromURLResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -299,21 +291,21 @@ func (client appendBlobClient) appendBlockFromUrlHandleResponse(resp *azcore.Res
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return nil, err
+			return AppendBlobAppendBlockFromURLResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
 	if val := resp.Header.Get("Content-MD5"); val != "" {
 		contentMd5, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
-			return nil, err
+			return AppendBlobAppendBlockFromURLResponse{}, err
 		}
 		result.ContentMD5 = &contentMd5
 	}
 	if val := resp.Header.Get("x-ms-content-crc64"); val != "" {
 		contentCrc64, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
-			return nil, err
+			return AppendBlobAppendBlockFromURLResponse{}, err
 		}
 		result.ContentCRC64 = &contentCrc64
 	}
@@ -326,7 +318,7 @@ func (client appendBlobClient) appendBlockFromUrlHandleResponse(resp *azcore.Res
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return nil, err
+			return AppendBlobAppendBlockFromURLResponse{}, err
 		}
 		result.Date = &date
 	}
@@ -337,7 +329,7 @@ func (client appendBlobClient) appendBlockFromUrlHandleResponse(resp *azcore.Res
 		blobCommittedBlockCount32, err := strconv.ParseInt(val, 10, 32)
 		blobCommittedBlockCount := int32(blobCommittedBlockCount32)
 		if err != nil {
-			return nil, err
+			return AppendBlobAppendBlockFromURLResponse{}, err
 		}
 		result.BlobCommittedBlockCount = &blobCommittedBlockCount
 	}
@@ -350,11 +342,11 @@ func (client appendBlobClient) appendBlockFromUrlHandleResponse(resp *azcore.Res
 	if val := resp.Header.Get("x-ms-request-server-encrypted"); val != "" {
 		isServerEncrypted, err := strconv.ParseBool(val)
 		if err != nil {
-			return nil, err
+			return AppendBlobAppendBlockFromURLResponse{}, err
 		}
 		result.IsServerEncrypted = &isServerEncrypted
 	}
-	return &result, nil
+	return result, nil
 }
 
 // appendBlockFromUrlHandleError handles the AppendBlockFromURL error response.
@@ -367,23 +359,19 @@ func (client appendBlobClient) appendBlockFromUrlHandleError(resp *azcore.Respon
 }
 
 // Create - The Create Append Blob operation creates a new append blob.
-func (client appendBlobClient) Create(ctx context.Context, contentLength int64, appendBlobCreateOptions *AppendBlobCreateOptions, blobHttpHeaders *BlobHttpHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*AppendBlobCreateResponse, error) {
+func (client appendBlobClient) Create(ctx context.Context, contentLength int64, appendBlobCreateOptions *AppendBlobCreateOptions, blobHttpHeaders *BlobHttpHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (AppendBlobCreateResponse, error) {
 	req, err := client.createCreateRequest(ctx, contentLength, appendBlobCreateOptions, blobHttpHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
 	if err != nil {
-		return nil, err
+		return AppendBlobCreateResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return AppendBlobCreateResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, client.createHandleError(resp)
+		return AppendBlobCreateResponse{}, client.createHandleError(resp)
 	}
-	result, err := client.createHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.createHandleResponse(resp)
 }
 
 // createCreateRequest creates the Create request.
@@ -459,7 +447,7 @@ func (client appendBlobClient) createCreateRequest(ctx context.Context, contentL
 }
 
 // createHandleResponse handles the Create response.
-func (client appendBlobClient) createHandleResponse(resp *azcore.Response) (*AppendBlobCreateResponse, error) {
+func (client appendBlobClient) createHandleResponse(resp *azcore.Response) (AppendBlobCreateResponse, error) {
 	result := AppendBlobCreateResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -467,14 +455,14 @@ func (client appendBlobClient) createHandleResponse(resp *azcore.Response) (*App
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return nil, err
+			return AppendBlobCreateResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
 	if val := resp.Header.Get("Content-MD5"); val != "" {
 		contentMd5, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
-			return nil, err
+			return AppendBlobCreateResponse{}, err
 		}
 		result.ContentMD5 = &contentMd5
 	}
@@ -490,14 +478,14 @@ func (client appendBlobClient) createHandleResponse(resp *azcore.Response) (*App
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return nil, err
+			return AppendBlobCreateResponse{}, err
 		}
 		result.Date = &date
 	}
 	if val := resp.Header.Get("x-ms-request-server-encrypted"); val != "" {
 		isServerEncrypted, err := strconv.ParseBool(val)
 		if err != nil {
-			return nil, err
+			return AppendBlobCreateResponse{}, err
 		}
 		result.IsServerEncrypted = &isServerEncrypted
 	}
@@ -507,7 +495,7 @@ func (client appendBlobClient) createHandleResponse(resp *azcore.Response) (*App
 	if val := resp.Header.Get("x-ms-encryption-scope"); val != "" {
 		result.EncryptionScope = &val
 	}
-	return &result, nil
+	return result, nil
 }
 
 // createHandleError handles the Create error response.

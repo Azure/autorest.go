@@ -7,6 +7,7 @@ import (
 	"context"
 	"generatortests/helpers"
 	"net/http"
+	"reflect"
 	"testing"
 	"time"
 
@@ -109,8 +110,8 @@ func TestGetBooleanInvalidNull(t *testing.T) {
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
-	if resp != nil {
-		t.Fatal("expected nil response")
+	if !reflect.ValueOf(resp).IsZero() {
+		t.Fatal("expected empty response")
 	}
 }
 
@@ -121,8 +122,8 @@ func TestGetBooleanInvalidString(t *testing.T) {
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
-	if resp != nil {
-		t.Fatal("expected nil response")
+	if !reflect.ValueOf(resp).IsZero() {
+		t.Fatal("expected empty response")
 	}
 }
 
@@ -144,8 +145,8 @@ func TestGetByteInvalidNull(t *testing.T) {
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
-	if resp != nil {
-		t.Fatal("expected nil response")
+	if !reflect.ValueOf(resp).IsZero() {
+		t.Fatal("expected empty response")
 	}
 }
 
@@ -230,8 +231,8 @@ func TestGetDateInvalidChars(t *testing.T) {
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
-	if resp != nil {
-		t.Fatal("expected nil response")
+	if !reflect.ValueOf(resp).IsZero() {
+		t.Fatal("expected empty response")
 	}
 }
 
@@ -247,8 +248,8 @@ func TestGetDateTimeInvalidChars(t *testing.T) {
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
-	if resp != nil {
-		t.Fatal("expected nil response")
+	if !reflect.ValueOf(resp).IsZero() {
+		t.Fatal("expected empty response")
 	}
 }
 
@@ -259,8 +260,8 @@ func TestGetDateTimeInvalidNull(t *testing.T) {
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
-	if resp != nil {
-		t.Fatal("expected nil response")
+	if !reflect.ValueOf(resp).IsZero() {
+		t.Fatal("expected empty response")
 	}
 }
 
@@ -412,8 +413,8 @@ func TestGetDoubleInvalidNull(t *testing.T) {
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
-	if resp != nil {
-		t.Fatal("expected nil response")
+	if !reflect.ValueOf(resp).IsZero() {
+		t.Fatal("expected empty response")
 	}
 }
 
@@ -424,8 +425,8 @@ func TestGetDoubleInvalidString(t *testing.T) {
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
-	if resp != nil {
-		t.Fatal("expected nil response")
+	if !reflect.ValueOf(resp).IsZero() {
+		t.Fatal("expected empty response")
 	}
 }
 
@@ -482,8 +483,8 @@ func TestGetFloatInvalidNull(t *testing.T) {
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
-	if resp != nil {
-		t.Fatal("expected nil response")
+	if !reflect.ValueOf(resp).IsZero() {
+		t.Fatal("expected empty response")
 	}
 }
 
@@ -494,8 +495,8 @@ func TestGetFloatInvalidString(t *testing.T) {
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
-	if resp != nil {
-		t.Fatal("expected nil response")
+	if !reflect.ValueOf(resp).IsZero() {
+		t.Fatal("expected empty response")
 	}
 }
 
@@ -517,8 +518,8 @@ func TestGetIntInvalidNull(t *testing.T) {
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
-	if resp != nil {
-		t.Fatal("expected nil response")
+	if !reflect.ValueOf(resp).IsZero() {
+		t.Fatal("expected empty response")
 	}
 }
 
@@ -529,8 +530,8 @@ func TestGetIntInvalidString(t *testing.T) {
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
-	if resp != nil {
-		t.Fatal("expected nil response")
+	if !reflect.ValueOf(resp).IsZero() {
+		t.Fatal("expected empty response")
 	}
 }
 
@@ -551,8 +552,8 @@ func TestGetInvalid(t *testing.T) {
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
-	if resp != nil {
-		t.Fatal("expected nil response")
+	if !reflect.ValueOf(resp).IsZero() {
+		t.Fatal("expected empty response")
 	}
 }
 
@@ -564,8 +565,8 @@ func TestGetLongInvalidNull(t *testing.T) {
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
-	if resp != nil {
-		t.Fatal("expected nil response")
+	if !reflect.ValueOf(resp).IsZero() {
+		t.Fatal("expected empty response")
 	}
 }
 
@@ -576,8 +577,8 @@ func TestGetLongInvalidString(t *testing.T) {
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
-	if resp != nil {
-		t.Fatal("expected nil response")
+	if !reflect.ValueOf(resp).IsZero() {
+		t.Fatal("expected empty response")
 	}
 }
 
@@ -630,8 +631,8 @@ func TestGetStringWithInvalid(t *testing.T) {
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
-	if resp != nil {
-		t.Fatal("expected nil response")
+	if !reflect.ValueOf(resp).IsZero() {
+		t.Fatal("expected empty response")
 	}
 }
 
@@ -643,8 +644,8 @@ func TestGetStringWithNull(t *testing.T) {
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
-	if resp != nil {
-		t.Fatal("expected nil response")
+	if !reflect.ValueOf(resp).IsZero() {
+		t.Fatal("expected empty response")
 	}
 }
 
