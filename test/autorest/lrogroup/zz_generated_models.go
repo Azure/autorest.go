@@ -511,7 +511,7 @@ type Product struct {
 // ProductArrayPollerResponse is the response envelope for operations that asynchronously return a []Product type.
 type ProductArrayPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (*ProductArrayResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (ProductArrayResponse, error)
 
 	// Poller contains an initialized poller.
 	Poller ProductArrayPoller
@@ -532,7 +532,7 @@ type ProductArrayResponse struct {
 // ProductPollerResponse is the response envelope for operations that asynchronously return a Product type.
 type ProductPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (*ProductResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (ProductResponse, error)
 
 	// Poller contains an initialized poller.
 	Poller ProductPoller
@@ -581,7 +581,7 @@ type SKU struct {
 // SKUPollerResponse is the response envelope for operations that asynchronously return a SKU type.
 type SKUPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (*SKUResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (SKUResponse, error)
 
 	// Poller contains an initialized poller.
 	Poller SKUPoller
@@ -605,7 +605,7 @@ type SubProduct struct {
 // SubProductPollerResponse is the response envelope for operations that asynchronously return a SubProduct type.
 type SubProductPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (*SubProductResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (SubProductResponse, error)
 
 	// Poller contains an initialized poller.
 	Poller SubProductPoller

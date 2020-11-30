@@ -57,7 +57,7 @@ func (p *httpPoller) pollUntilDone(ctx context.Context, frequency time.Duration)
 type ProductArrayPoller interface {
 	Done() bool
 	Poll(ctx context.Context) (*http.Response, error)
-	FinalResponse(ctx context.Context) (*ProductArrayResponse, error)
+	FinalResponse(ctx context.Context) (ProductArrayResponse, error)
 	ResumeToken() (string, error)
 }
 
@@ -77,11 +77,11 @@ func (p *productArrayPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx, p.pipeline)
 }
 
-func (p *productArrayPoller) FinalResponse(ctx context.Context) (*ProductArrayResponse, error) {
-	respType := &ProductArrayResponse{ProductArray: &[]Product{}}
+func (p *productArrayPoller) FinalResponse(ctx context.Context) (ProductArrayResponse, error) {
+	respType := ProductArrayResponse{ProductArray: &[]Product{}}
 	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.ProductArray)
 	if err != nil {
-		return nil, err
+		return ProductArrayResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil
@@ -93,11 +93,11 @@ func (p *productArrayPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-func (p *productArrayPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*ProductArrayResponse, error) {
-	respType := &ProductArrayResponse{ProductArray: &[]Product{}}
+func (p *productArrayPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (ProductArrayResponse, error) {
+	respType := ProductArrayResponse{ProductArray: &[]Product{}}
 	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.ProductArray)
 	if err != nil {
-		return nil, err
+		return ProductArrayResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil
@@ -107,7 +107,7 @@ func (p *productArrayPoller) pollUntilDone(ctx context.Context, frequency time.D
 type ProductPoller interface {
 	Done() bool
 	Poll(ctx context.Context) (*http.Response, error)
-	FinalResponse(ctx context.Context) (*ProductResponse, error)
+	FinalResponse(ctx context.Context) (ProductResponse, error)
 	ResumeToken() (string, error)
 }
 
@@ -127,11 +127,11 @@ func (p *productPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx, p.pipeline)
 }
 
-func (p *productPoller) FinalResponse(ctx context.Context) (*ProductResponse, error) {
-	respType := &ProductResponse{Product: &Product{}}
+func (p *productPoller) FinalResponse(ctx context.Context) (ProductResponse, error) {
+	respType := ProductResponse{Product: &Product{}}
 	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.Product)
 	if err != nil {
-		return nil, err
+		return ProductResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil
@@ -143,11 +143,11 @@ func (p *productPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-func (p *productPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*ProductResponse, error) {
-	respType := &ProductResponse{Product: &Product{}}
+func (p *productPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (ProductResponse, error) {
+	respType := ProductResponse{Product: &Product{}}
 	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.Product)
 	if err != nil {
-		return nil, err
+		return ProductResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil
@@ -157,7 +157,7 @@ func (p *productPoller) pollUntilDone(ctx context.Context, frequency time.Durati
 type SKUPoller interface {
 	Done() bool
 	Poll(ctx context.Context) (*http.Response, error)
-	FinalResponse(ctx context.Context) (*SKUResponse, error)
+	FinalResponse(ctx context.Context) (SKUResponse, error)
 	ResumeToken() (string, error)
 }
 
@@ -177,11 +177,11 @@ func (p *skuPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx, p.pipeline)
 }
 
-func (p *skuPoller) FinalResponse(ctx context.Context) (*SKUResponse, error) {
-	respType := &SKUResponse{SKU: &SKU{}}
+func (p *skuPoller) FinalResponse(ctx context.Context) (SKUResponse, error) {
+	respType := SKUResponse{SKU: &SKU{}}
 	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.SKU)
 	if err != nil {
-		return nil, err
+		return SKUResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil
@@ -193,11 +193,11 @@ func (p *skuPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-func (p *skuPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*SKUResponse, error) {
-	respType := &SKUResponse{SKU: &SKU{}}
+func (p *skuPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (SKUResponse, error) {
+	respType := SKUResponse{SKU: &SKU{}}
 	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.SKU)
 	if err != nil {
-		return nil, err
+		return SKUResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil
@@ -207,7 +207,7 @@ func (p *skuPoller) pollUntilDone(ctx context.Context, frequency time.Duration) 
 type SubProductPoller interface {
 	Done() bool
 	Poll(ctx context.Context) (*http.Response, error)
-	FinalResponse(ctx context.Context) (*SubProductResponse, error)
+	FinalResponse(ctx context.Context) (SubProductResponse, error)
 	ResumeToken() (string, error)
 }
 
@@ -227,11 +227,11 @@ func (p *subProductPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx, p.pipeline)
 }
 
-func (p *subProductPoller) FinalResponse(ctx context.Context) (*SubProductResponse, error) {
-	respType := &SubProductResponse{SubProduct: &SubProduct{}}
+func (p *subProductPoller) FinalResponse(ctx context.Context) (SubProductResponse, error) {
+	respType := SubProductResponse{SubProduct: &SubProduct{}}
 	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.SubProduct)
 	if err != nil {
-		return nil, err
+		return SubProductResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil
@@ -243,11 +243,11 @@ func (p *subProductPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-func (p *subProductPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*SubProductResponse, error) {
-	respType := &SubProductResponse{SubProduct: &SubProduct{}}
+func (p *subProductPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (SubProductResponse, error) {
+	respType := SubProductResponse{SubProduct: &SubProduct{}}
 	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.SubProduct)
 	if err != nil {
-		return nil, err
+		return SubProductResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil

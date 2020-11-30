@@ -27,21 +27,21 @@ func (client pageBlobClient) Pipeline() azcore.Pipeline {
 }
 
 // ClearPages - The Clear Pages operation clears a set of pages from a page blob
-func (client pageBlobClient) ClearPages(ctx context.Context, contentLength int64, pageBlobClearPagesOptions *PageBlobClearPagesOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, sequenceNumberAccessConditions *SequenceNumberAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*PageBlobClearPagesResponse, error) {
+func (client pageBlobClient) ClearPages(ctx context.Context, contentLength int64, pageBlobClearPagesOptions *PageBlobClearPagesOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, sequenceNumberAccessConditions *SequenceNumberAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (PageBlobClearPagesResponse, error) {
 	req, err := client.clearPagesCreateRequest(ctx, contentLength, pageBlobClearPagesOptions, leaseAccessConditions, cpkInfo, cpkScopeInfo, sequenceNumberAccessConditions, modifiedAccessConditions)
 	if err != nil {
-		return nil, err
+		return PageBlobClearPagesResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return PageBlobClearPagesResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, client.clearPagesHandleError(resp)
+		return PageBlobClearPagesResponse{}, client.clearPagesHandleError(resp)
 	}
 	result, err := client.clearPagesHandleResponse(resp)
 	if err != nil {
-		return nil, err
+		return PageBlobClearPagesResponse{}, err
 	}
 	return result, nil
 }
@@ -109,7 +109,7 @@ func (client pageBlobClient) clearPagesCreateRequest(ctx context.Context, conten
 }
 
 // clearPagesHandleResponse handles the ClearPages response.
-func (client pageBlobClient) clearPagesHandleResponse(resp *azcore.Response) (*PageBlobClearPagesResponse, error) {
+func (client pageBlobClient) clearPagesHandleResponse(resp *azcore.Response) (PageBlobClearPagesResponse, error) {
 	result := PageBlobClearPagesResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -117,28 +117,28 @@ func (client pageBlobClient) clearPagesHandleResponse(resp *azcore.Response) (*P
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return nil, err
+			return PageBlobClearPagesResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
 	if val := resp.Header.Get("Content-MD5"); val != "" {
 		contentMd5, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
-			return nil, err
+			return PageBlobClearPagesResponse{}, err
 		}
 		result.ContentMD5 = &contentMd5
 	}
 	if val := resp.Header.Get("x-ms-content-crc64"); val != "" {
 		contentCrc64, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
-			return nil, err
+			return PageBlobClearPagesResponse{}, err
 		}
 		result.ContentCRC64 = &contentCrc64
 	}
 	if val := resp.Header.Get("x-ms-blob-sequence-number"); val != "" {
 		blobSequenceNumber, err := strconv.ParseInt(val, 10, 64)
 		if err != nil {
-			return nil, err
+			return PageBlobClearPagesResponse{}, err
 		}
 		result.BlobSequenceNumber = &blobSequenceNumber
 	}
@@ -154,11 +154,11 @@ func (client pageBlobClient) clearPagesHandleResponse(resp *azcore.Response) (*P
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return nil, err
+			return PageBlobClearPagesResponse{}, err
 		}
 		result.Date = &date
 	}
-	return &result, nil
+	return result, nil
 }
 
 // clearPagesHandleError handles the ClearPages error response.
@@ -175,21 +175,21 @@ func (client pageBlobClient) clearPagesHandleError(resp *azcore.Response) error 
 // snapshot are transferred to the destination. The copied snapshots are complete copies of the original snapshot and can be read or copied from as usual.
 // This API is supported since REST version
 // 2016-05-31.
-func (client pageBlobClient) CopyIncremental(ctx context.Context, copySource url.URL, pageBlobCopyIncrementalOptions *PageBlobCopyIncrementalOptions, modifiedAccessConditions *ModifiedAccessConditions) (*PageBlobCopyIncrementalResponse, error) {
+func (client pageBlobClient) CopyIncremental(ctx context.Context, copySource url.URL, pageBlobCopyIncrementalOptions *PageBlobCopyIncrementalOptions, modifiedAccessConditions *ModifiedAccessConditions) (PageBlobCopyIncrementalResponse, error) {
 	req, err := client.copyIncrementalCreateRequest(ctx, copySource, pageBlobCopyIncrementalOptions, modifiedAccessConditions)
 	if err != nil {
-		return nil, err
+		return PageBlobCopyIncrementalResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return PageBlobCopyIncrementalResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusAccepted) {
-		return nil, client.copyIncrementalHandleError(resp)
+		return PageBlobCopyIncrementalResponse{}, client.copyIncrementalHandleError(resp)
 	}
 	result, err := client.copyIncrementalHandleResponse(resp)
 	if err != nil {
-		return nil, err
+		return PageBlobCopyIncrementalResponse{}, err
 	}
 	return result, nil
 }
@@ -229,7 +229,7 @@ func (client pageBlobClient) copyIncrementalCreateRequest(ctx context.Context, c
 }
 
 // copyIncrementalHandleResponse handles the CopyIncremental response.
-func (client pageBlobClient) copyIncrementalHandleResponse(resp *azcore.Response) (*PageBlobCopyIncrementalResponse, error) {
+func (client pageBlobClient) copyIncrementalHandleResponse(resp *azcore.Response) (PageBlobCopyIncrementalResponse, error) {
 	result := PageBlobCopyIncrementalResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -237,7 +237,7 @@ func (client pageBlobClient) copyIncrementalHandleResponse(resp *azcore.Response
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return nil, err
+			return PageBlobCopyIncrementalResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
@@ -253,7 +253,7 @@ func (client pageBlobClient) copyIncrementalHandleResponse(resp *azcore.Response
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return nil, err
+			return PageBlobCopyIncrementalResponse{}, err
 		}
 		result.Date = &date
 	}
@@ -263,7 +263,7 @@ func (client pageBlobClient) copyIncrementalHandleResponse(resp *azcore.Response
 	if val := resp.Header.Get("x-ms-copy-status"); val != "" {
 		result.CopyStatus = (*CopyStatusType)(&val)
 	}
-	return &result, nil
+	return result, nil
 }
 
 // copyIncrementalHandleError handles the CopyIncremental error response.
@@ -276,21 +276,21 @@ func (client pageBlobClient) copyIncrementalHandleError(resp *azcore.Response) e
 }
 
 // Create - The Create operation creates a new page blob.
-func (client pageBlobClient) Create(ctx context.Context, contentLength int64, blobContentLength int64, pageBlobCreateOptions *PageBlobCreateOptions, blobHttpHeaders *BlobHttpHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*PageBlobCreateResponse, error) {
+func (client pageBlobClient) Create(ctx context.Context, contentLength int64, blobContentLength int64, pageBlobCreateOptions *PageBlobCreateOptions, blobHttpHeaders *BlobHttpHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (PageBlobCreateResponse, error) {
 	req, err := client.createCreateRequest(ctx, contentLength, blobContentLength, pageBlobCreateOptions, blobHttpHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
 	if err != nil {
-		return nil, err
+		return PageBlobCreateResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return PageBlobCreateResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, client.createHandleError(resp)
+		return PageBlobCreateResponse{}, client.createHandleError(resp)
 	}
 	result, err := client.createHandleResponse(resp)
 	if err != nil {
-		return nil, err
+		return PageBlobCreateResponse{}, err
 	}
 	return result, nil
 }
@@ -375,7 +375,7 @@ func (client pageBlobClient) createCreateRequest(ctx context.Context, contentLen
 }
 
 // createHandleResponse handles the Create response.
-func (client pageBlobClient) createHandleResponse(resp *azcore.Response) (*PageBlobCreateResponse, error) {
+func (client pageBlobClient) createHandleResponse(resp *azcore.Response) (PageBlobCreateResponse, error) {
 	result := PageBlobCreateResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -383,14 +383,14 @@ func (client pageBlobClient) createHandleResponse(resp *azcore.Response) (*PageB
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return nil, err
+			return PageBlobCreateResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
 	if val := resp.Header.Get("Content-MD5"); val != "" {
 		contentMd5, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
-			return nil, err
+			return PageBlobCreateResponse{}, err
 		}
 		result.ContentMD5 = &contentMd5
 	}
@@ -406,14 +406,14 @@ func (client pageBlobClient) createHandleResponse(resp *azcore.Response) (*PageB
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return nil, err
+			return PageBlobCreateResponse{}, err
 		}
 		result.Date = &date
 	}
 	if val := resp.Header.Get("x-ms-request-server-encrypted"); val != "" {
 		isServerEncrypted, err := strconv.ParseBool(val)
 		if err != nil {
-			return nil, err
+			return PageBlobCreateResponse{}, err
 		}
 		result.IsServerEncrypted = &isServerEncrypted
 	}
@@ -423,7 +423,7 @@ func (client pageBlobClient) createHandleResponse(resp *azcore.Response) (*PageB
 	if val := resp.Header.Get("x-ms-encryption-scope"); val != "" {
 		result.EncryptionScope = &val
 	}
-	return &result, nil
+	return result, nil
 }
 
 // createHandleError handles the Create error response.
@@ -436,21 +436,21 @@ func (client pageBlobClient) createHandleError(resp *azcore.Response) error {
 }
 
 // GetPageRanges - The Get Page Ranges operation returns the list of valid page ranges for a page blob or snapshot of a page blob
-func (client pageBlobClient) GetPageRanges(ctx context.Context, pageBlobGetPageRangesOptions *PageBlobGetPageRangesOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*PageListResponse, error) {
+func (client pageBlobClient) GetPageRanges(ctx context.Context, pageBlobGetPageRangesOptions *PageBlobGetPageRangesOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (PageListResponse, error) {
 	req, err := client.getPageRangesCreateRequest(ctx, pageBlobGetPageRangesOptions, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
-		return nil, err
+		return PageListResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return PageListResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getPageRangesHandleError(resp)
+		return PageListResponse{}, client.getPageRangesHandleError(resp)
 	}
 	result, err := client.getPageRangesHandleResponse(resp)
 	if err != nil {
-		return nil, err
+		return PageListResponse{}, err
 	}
 	return result, nil
 }
@@ -498,12 +498,12 @@ func (client pageBlobClient) getPageRangesCreateRequest(ctx context.Context, pag
 }
 
 // getPageRangesHandleResponse handles the GetPageRanges response.
-func (client pageBlobClient) getPageRangesHandleResponse(resp *azcore.Response) (*PageListResponse, error) {
+func (client pageBlobClient) getPageRangesHandleResponse(resp *azcore.Response) (PageListResponse, error) {
 	result := PageListResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return nil, err
+			return PageListResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
@@ -513,7 +513,7 @@ func (client pageBlobClient) getPageRangesHandleResponse(resp *azcore.Response) 
 	if val := resp.Header.Get("x-ms-blob-content-length"); val != "" {
 		blobContentLength, err := strconv.ParseInt(val, 10, 64)
 		if err != nil {
-			return nil, err
+			return PageListResponse{}, err
 		}
 		result.BlobContentLength = &blobContentLength
 	}
@@ -529,11 +529,12 @@ func (client pageBlobClient) getPageRangesHandleResponse(resp *azcore.Response) 
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return nil, err
+			return PageListResponse{}, err
 		}
 		result.Date = &date
 	}
-	return &result, resp.UnmarshalAsXML(&result.PageList)
+	err := resp.UnmarshalAsXML(&result.PageList)
+	return result, err
 }
 
 // getPageRangesHandleError handles the GetPageRanges error response.
@@ -547,21 +548,21 @@ func (client pageBlobClient) getPageRangesHandleError(resp *azcore.Response) err
 
 // GetPageRangesDiff - The Get Page Ranges Diff operation returns the list of valid page ranges for a page blob that were changed between target blob and
 // previous snapshot.
-func (client pageBlobClient) GetPageRangesDiff(ctx context.Context, pageBlobGetPageRangesDiffOptions *PageBlobGetPageRangesDiffOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*PageListResponse, error) {
+func (client pageBlobClient) GetPageRangesDiff(ctx context.Context, pageBlobGetPageRangesDiffOptions *PageBlobGetPageRangesDiffOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (PageListResponse, error) {
 	req, err := client.getPageRangesDiffCreateRequest(ctx, pageBlobGetPageRangesDiffOptions, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
-		return nil, err
+		return PageListResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return PageListResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getPageRangesDiffHandleError(resp)
+		return PageListResponse{}, client.getPageRangesDiffHandleError(resp)
 	}
 	result, err := client.getPageRangesDiffHandleResponse(resp)
 	if err != nil {
-		return nil, err
+		return PageListResponse{}, err
 	}
 	return result, nil
 }
@@ -615,12 +616,12 @@ func (client pageBlobClient) getPageRangesDiffCreateRequest(ctx context.Context,
 }
 
 // getPageRangesDiffHandleResponse handles the GetPageRangesDiff response.
-func (client pageBlobClient) getPageRangesDiffHandleResponse(resp *azcore.Response) (*PageListResponse, error) {
+func (client pageBlobClient) getPageRangesDiffHandleResponse(resp *azcore.Response) (PageListResponse, error) {
 	result := PageListResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return nil, err
+			return PageListResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
@@ -630,7 +631,7 @@ func (client pageBlobClient) getPageRangesDiffHandleResponse(resp *azcore.Respon
 	if val := resp.Header.Get("x-ms-blob-content-length"); val != "" {
 		blobContentLength, err := strconv.ParseInt(val, 10, 64)
 		if err != nil {
-			return nil, err
+			return PageListResponse{}, err
 		}
 		result.BlobContentLength = &blobContentLength
 	}
@@ -646,11 +647,12 @@ func (client pageBlobClient) getPageRangesDiffHandleResponse(resp *azcore.Respon
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return nil, err
+			return PageListResponse{}, err
 		}
 		result.Date = &date
 	}
-	return &result, resp.UnmarshalAsXML(&result.PageList)
+	err := resp.UnmarshalAsXML(&result.PageList)
+	return result, err
 }
 
 // getPageRangesDiffHandleError handles the GetPageRangesDiff error response.
@@ -663,21 +665,21 @@ func (client pageBlobClient) getPageRangesDiffHandleError(resp *azcore.Response)
 }
 
 // Resize - Resize the Blob
-func (client pageBlobClient) Resize(ctx context.Context, blobContentLength int64, pageBlobResizeOptions *PageBlobResizeOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*PageBlobResizeResponse, error) {
+func (client pageBlobClient) Resize(ctx context.Context, blobContentLength int64, pageBlobResizeOptions *PageBlobResizeOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (PageBlobResizeResponse, error) {
 	req, err := client.resizeCreateRequest(ctx, blobContentLength, pageBlobResizeOptions, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
 	if err != nil {
-		return nil, err
+		return PageBlobResizeResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return PageBlobResizeResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.resizeHandleError(resp)
+		return PageBlobResizeResponse{}, client.resizeHandleError(resp)
 	}
 	result, err := client.resizeHandleResponse(resp)
 	if err != nil {
-		return nil, err
+		return PageBlobResizeResponse{}, err
 	}
 	return result, nil
 }
@@ -732,7 +734,7 @@ func (client pageBlobClient) resizeCreateRequest(ctx context.Context, blobConten
 }
 
 // resizeHandleResponse handles the Resize response.
-func (client pageBlobClient) resizeHandleResponse(resp *azcore.Response) (*PageBlobResizeResponse, error) {
+func (client pageBlobClient) resizeHandleResponse(resp *azcore.Response) (PageBlobResizeResponse, error) {
 	result := PageBlobResizeResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -740,14 +742,14 @@ func (client pageBlobClient) resizeHandleResponse(resp *azcore.Response) (*PageB
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return nil, err
+			return PageBlobResizeResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
 	if val := resp.Header.Get("x-ms-blob-sequence-number"); val != "" {
 		blobSequenceNumber, err := strconv.ParseInt(val, 10, 64)
 		if err != nil {
-			return nil, err
+			return PageBlobResizeResponse{}, err
 		}
 		result.BlobSequenceNumber = &blobSequenceNumber
 	}
@@ -763,11 +765,11 @@ func (client pageBlobClient) resizeHandleResponse(resp *azcore.Response) (*PageB
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return nil, err
+			return PageBlobResizeResponse{}, err
 		}
 		result.Date = &date
 	}
-	return &result, nil
+	return result, nil
 }
 
 // resizeHandleError handles the Resize error response.
@@ -780,21 +782,21 @@ func (client pageBlobClient) resizeHandleError(resp *azcore.Response) error {
 }
 
 // UpdateSequenceNumber - Update the sequence number of the blob
-func (client pageBlobClient) UpdateSequenceNumber(ctx context.Context, sequenceNumberAction SequenceNumberActionType, pageBlobUpdateSequenceNumberOptions *PageBlobUpdateSequenceNumberOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*PageBlobUpdateSequenceNumberResponse, error) {
+func (client pageBlobClient) UpdateSequenceNumber(ctx context.Context, sequenceNumberAction SequenceNumberActionType, pageBlobUpdateSequenceNumberOptions *PageBlobUpdateSequenceNumberOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (PageBlobUpdateSequenceNumberResponse, error) {
 	req, err := client.updateSequenceNumberCreateRequest(ctx, sequenceNumberAction, pageBlobUpdateSequenceNumberOptions, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
-		return nil, err
+		return PageBlobUpdateSequenceNumberResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return PageBlobUpdateSequenceNumberResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.updateSequenceNumberHandleError(resp)
+		return PageBlobUpdateSequenceNumberResponse{}, client.updateSequenceNumberHandleError(resp)
 	}
 	result, err := client.updateSequenceNumberHandleResponse(resp)
 	if err != nil {
-		return nil, err
+		return PageBlobUpdateSequenceNumberResponse{}, err
 	}
 	return result, nil
 }
@@ -840,7 +842,7 @@ func (client pageBlobClient) updateSequenceNumberCreateRequest(ctx context.Conte
 }
 
 // updateSequenceNumberHandleResponse handles the UpdateSequenceNumber response.
-func (client pageBlobClient) updateSequenceNumberHandleResponse(resp *azcore.Response) (*PageBlobUpdateSequenceNumberResponse, error) {
+func (client pageBlobClient) updateSequenceNumberHandleResponse(resp *azcore.Response) (PageBlobUpdateSequenceNumberResponse, error) {
 	result := PageBlobUpdateSequenceNumberResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -848,14 +850,14 @@ func (client pageBlobClient) updateSequenceNumberHandleResponse(resp *azcore.Res
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return nil, err
+			return PageBlobUpdateSequenceNumberResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
 	if val := resp.Header.Get("x-ms-blob-sequence-number"); val != "" {
 		blobSequenceNumber, err := strconv.ParseInt(val, 10, 64)
 		if err != nil {
-			return nil, err
+			return PageBlobUpdateSequenceNumberResponse{}, err
 		}
 		result.BlobSequenceNumber = &blobSequenceNumber
 	}
@@ -871,11 +873,11 @@ func (client pageBlobClient) updateSequenceNumberHandleResponse(resp *azcore.Res
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return nil, err
+			return PageBlobUpdateSequenceNumberResponse{}, err
 		}
 		result.Date = &date
 	}
-	return &result, nil
+	return result, nil
 }
 
 // updateSequenceNumberHandleError handles the UpdateSequenceNumber error response.
@@ -888,21 +890,21 @@ func (client pageBlobClient) updateSequenceNumberHandleError(resp *azcore.Respon
 }
 
 // UploadPages - The Upload Pages operation writes a range of pages to a page blob
-func (client pageBlobClient) UploadPages(ctx context.Context, contentLength int64, body azcore.ReadSeekCloser, pageBlobUploadPagesOptions *PageBlobUploadPagesOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, sequenceNumberAccessConditions *SequenceNumberAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*PageBlobUploadPagesResponse, error) {
+func (client pageBlobClient) UploadPages(ctx context.Context, contentLength int64, body azcore.ReadSeekCloser, pageBlobUploadPagesOptions *PageBlobUploadPagesOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, sequenceNumberAccessConditions *SequenceNumberAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (PageBlobUploadPagesResponse, error) {
 	req, err := client.uploadPagesCreateRequest(ctx, contentLength, body, pageBlobUploadPagesOptions, leaseAccessConditions, cpkInfo, cpkScopeInfo, sequenceNumberAccessConditions, modifiedAccessConditions)
 	if err != nil {
-		return nil, err
+		return PageBlobUploadPagesResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return PageBlobUploadPagesResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, client.uploadPagesHandleError(resp)
+		return PageBlobUploadPagesResponse{}, client.uploadPagesHandleError(resp)
 	}
 	result, err := client.uploadPagesHandleResponse(resp)
 	if err != nil {
-		return nil, err
+		return PageBlobUploadPagesResponse{}, err
 	}
 	return result, nil
 }
@@ -976,7 +978,7 @@ func (client pageBlobClient) uploadPagesCreateRequest(ctx context.Context, conte
 }
 
 // uploadPagesHandleResponse handles the UploadPages response.
-func (client pageBlobClient) uploadPagesHandleResponse(resp *azcore.Response) (*PageBlobUploadPagesResponse, error) {
+func (client pageBlobClient) uploadPagesHandleResponse(resp *azcore.Response) (PageBlobUploadPagesResponse, error) {
 	result := PageBlobUploadPagesResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -984,28 +986,28 @@ func (client pageBlobClient) uploadPagesHandleResponse(resp *azcore.Response) (*
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return nil, err
+			return PageBlobUploadPagesResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
 	if val := resp.Header.Get("Content-MD5"); val != "" {
 		contentMd5, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
-			return nil, err
+			return PageBlobUploadPagesResponse{}, err
 		}
 		result.ContentMD5 = &contentMd5
 	}
 	if val := resp.Header.Get("x-ms-content-crc64"); val != "" {
 		contentCrc64, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
-			return nil, err
+			return PageBlobUploadPagesResponse{}, err
 		}
 		result.ContentCRC64 = &contentCrc64
 	}
 	if val := resp.Header.Get("x-ms-blob-sequence-number"); val != "" {
 		blobSequenceNumber, err := strconv.ParseInt(val, 10, 64)
 		if err != nil {
-			return nil, err
+			return PageBlobUploadPagesResponse{}, err
 		}
 		result.BlobSequenceNumber = &blobSequenceNumber
 	}
@@ -1021,14 +1023,14 @@ func (client pageBlobClient) uploadPagesHandleResponse(resp *azcore.Response) (*
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return nil, err
+			return PageBlobUploadPagesResponse{}, err
 		}
 		result.Date = &date
 	}
 	if val := resp.Header.Get("x-ms-request-server-encrypted"); val != "" {
 		isServerEncrypted, err := strconv.ParseBool(val)
 		if err != nil {
-			return nil, err
+			return PageBlobUploadPagesResponse{}, err
 		}
 		result.IsServerEncrypted = &isServerEncrypted
 	}
@@ -1038,7 +1040,7 @@ func (client pageBlobClient) uploadPagesHandleResponse(resp *azcore.Response) (*
 	if val := resp.Header.Get("x-ms-encryption-scope"); val != "" {
 		result.EncryptionScope = &val
 	}
-	return &result, nil
+	return result, nil
 }
 
 // uploadPagesHandleError handles the UploadPages error response.
@@ -1051,21 +1053,21 @@ func (client pageBlobClient) uploadPagesHandleError(resp *azcore.Response) error
 }
 
 // UploadPagesFromURL - The Upload Pages operation writes a range of pages to a page blob where the contents are read from a URL
-func (client pageBlobClient) UploadPagesFromURL(ctx context.Context, sourceUrl url.URL, sourceRange string, contentLength int64, rangeParameter string, pageBlobUploadPagesFromUrlOptions *PageBlobUploadPagesFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, sequenceNumberAccessConditions *SequenceNumberAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*PageBlobUploadPagesFromURLResponse, error) {
+func (client pageBlobClient) UploadPagesFromURL(ctx context.Context, sourceUrl url.URL, sourceRange string, contentLength int64, rangeParameter string, pageBlobUploadPagesFromUrlOptions *PageBlobUploadPagesFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, sequenceNumberAccessConditions *SequenceNumberAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (PageBlobUploadPagesFromURLResponse, error) {
 	req, err := client.uploadPagesFromUrlCreateRequest(ctx, sourceUrl, sourceRange, contentLength, rangeParameter, pageBlobUploadPagesFromUrlOptions, cpkInfo, cpkScopeInfo, leaseAccessConditions, sequenceNumberAccessConditions, modifiedAccessConditions, sourceModifiedAccessConditions)
 	if err != nil {
-		return nil, err
+		return PageBlobUploadPagesFromURLResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return PageBlobUploadPagesFromURLResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, client.uploadPagesFromUrlHandleError(resp)
+		return PageBlobUploadPagesFromURLResponse{}, client.uploadPagesFromUrlHandleError(resp)
 	}
 	result, err := client.uploadPagesFromUrlHandleResponse(resp)
 	if err != nil {
-		return nil, err
+		return PageBlobUploadPagesFromURLResponse{}, err
 	}
 	return result, nil
 }
@@ -1151,7 +1153,7 @@ func (client pageBlobClient) uploadPagesFromUrlCreateRequest(ctx context.Context
 }
 
 // uploadPagesFromUrlHandleResponse handles the UploadPagesFromURL response.
-func (client pageBlobClient) uploadPagesFromUrlHandleResponse(resp *azcore.Response) (*PageBlobUploadPagesFromURLResponse, error) {
+func (client pageBlobClient) uploadPagesFromUrlHandleResponse(resp *azcore.Response) (PageBlobUploadPagesFromURLResponse, error) {
 	result := PageBlobUploadPagesFromURLResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -1159,28 +1161,28 @@ func (client pageBlobClient) uploadPagesFromUrlHandleResponse(resp *azcore.Respo
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return nil, err
+			return PageBlobUploadPagesFromURLResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
 	if val := resp.Header.Get("Content-MD5"); val != "" {
 		contentMd5, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
-			return nil, err
+			return PageBlobUploadPagesFromURLResponse{}, err
 		}
 		result.ContentMD5 = &contentMd5
 	}
 	if val := resp.Header.Get("x-ms-content-crc64"); val != "" {
 		contentCrc64, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
-			return nil, err
+			return PageBlobUploadPagesFromURLResponse{}, err
 		}
 		result.ContentCRC64 = &contentCrc64
 	}
 	if val := resp.Header.Get("x-ms-blob-sequence-number"); val != "" {
 		blobSequenceNumber, err := strconv.ParseInt(val, 10, 64)
 		if err != nil {
-			return nil, err
+			return PageBlobUploadPagesFromURLResponse{}, err
 		}
 		result.BlobSequenceNumber = &blobSequenceNumber
 	}
@@ -1193,14 +1195,14 @@ func (client pageBlobClient) uploadPagesFromUrlHandleResponse(resp *azcore.Respo
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return nil, err
+			return PageBlobUploadPagesFromURLResponse{}, err
 		}
 		result.Date = &date
 	}
 	if val := resp.Header.Get("x-ms-request-server-encrypted"); val != "" {
 		isServerEncrypted, err := strconv.ParseBool(val)
 		if err != nil {
-			return nil, err
+			return PageBlobUploadPagesFromURLResponse{}, err
 		}
 		result.IsServerEncrypted = &isServerEncrypted
 	}
@@ -1210,7 +1212,7 @@ func (client pageBlobClient) uploadPagesFromUrlHandleResponse(resp *azcore.Respo
 	if val := resp.Header.Get("x-ms-encryption-scope"); val != "" {
 		result.EncryptionScope = &val
 	}
-	return &result, nil
+	return result, nil
 }
 
 // uploadPagesFromUrlHandleError handles the UploadPagesFromURL error response.

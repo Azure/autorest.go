@@ -30,21 +30,21 @@ func (client InheritanceClient) Pipeline() azcore.Pipeline {
 }
 
 // GetValid - Get complex types that extend others
-func (client InheritanceClient) GetValid(ctx context.Context, options *InheritanceGetValidOptions) (*SiameseResponse, error) {
+func (client InheritanceClient) GetValid(ctx context.Context, options *InheritanceGetValidOptions) (SiameseResponse, error) {
 	req, err := client.getValidCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return SiameseResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return SiameseResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getValidHandleError(resp)
+		return SiameseResponse{}, client.getValidHandleError(resp)
 	}
 	result, err := client.getValidHandleResponse(resp)
 	if err != nil {
-		return nil, err
+		return SiameseResponse{}, err
 	}
 	return result, nil
 }
@@ -62,9 +62,10 @@ func (client InheritanceClient) getValidCreateRequest(ctx context.Context, optio
 }
 
 // getValidHandleResponse handles the GetValid response.
-func (client InheritanceClient) getValidHandleResponse(resp *azcore.Response) (*SiameseResponse, error) {
+func (client InheritanceClient) getValidHandleResponse(resp *azcore.Response) (SiameseResponse, error) {
 	result := SiameseResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.Siamese)
+	err := resp.UnmarshalAsJSON(&result.Siamese)
+	return result, err
 }
 
 // getValidHandleError handles the GetValid error response.

@@ -8,6 +8,7 @@ import (
 	"errors"
 	"generatortests/helpers"
 	"net/http"
+	"reflect"
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
@@ -25,12 +26,12 @@ func TestGet200Model201ModelDefaultError200Valid(t *testing.T) {
 		t.Fatal(err)
 	}
 	switch x := result.(type) {
-	case *MyExceptionResponse:
+	case MyExceptionResponse:
 		helpers.DeepEqualOrFatal(t, x.MyException.StatusCode, to.StringPtr("200"))
-	case *BResponse:
+	case BResponse:
 		helpers.VerifyStatusCode(t, x.RawResponse, http.StatusCreated)
 	default:
-		t.Fatalf("unhandled response type %v", x)
+		t.Fatalf("unhandled response type %T", x)
 	}
 }
 
@@ -41,9 +42,9 @@ func TestGet200Model201ModelDefaultError201Valid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	r, ok := result.(*BResponse)
+	r, ok := result.(BResponse)
 	if !ok {
-		t.Fatal("unexpected response type")
+		t.Fatalf("unexpected response type %T", result)
 	}
 	helpers.DeepEqualOrFatal(t, r.B, &B{
 		MyException: MyException{
@@ -59,7 +60,7 @@ func TestGet200Model201ModelDefaultError400Valid(t *testing.T) {
 	result, err := client.Get200Model201ModelDefaultError400Valid(context.Background(), nil)
 	var r *Error
 	if !errors.As(err, &r) {
-		t.Fatal("unexpected error type")
+		t.Fatalf("unexpected error type %T", err)
 	}
 	helpers.DeepEqualOrFatal(t, r, &Error{
 		Message: to.StringPtr("client error"),
@@ -91,8 +92,8 @@ func TestGet200Model204NoModelDefaultError201Invalid(t *testing.T) {
 		t.Fatal("unexpected error type")
 	}
 	helpers.DeepEqualOrFatal(t, r, &Error{})
-	if result != nil {
-		t.Fatal("expected nil result")
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected empty response")
 	}
 }
 
@@ -105,8 +106,8 @@ func TestGet200Model204NoModelDefaultError202None(t *testing.T) {
 		t.Fatal("unexpected error type")
 	}
 	helpers.DeepEqualOrFatal(t, r, &Error{})
-	if result != nil {
-		t.Fatal("expected nil result")
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected empty response")
 	}
 }
 
@@ -135,8 +136,8 @@ func TestGet200Model204NoModelDefaultError400Valid(t *testing.T) {
 		Message: to.StringPtr("client error"),
 		Status:  to.Int32Ptr(400),
 	})
-	if result != nil {
-		t.Fatal("expected nil result")
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected empty response")
 	}
 }
 
@@ -176,9 +177,9 @@ func TestGet200ModelA201ModelC404ModelDDefaultError200Valid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	r, ok := result.(*MyExceptionResponse)
+	r, ok := result.(MyExceptionResponse)
 	if !ok {
-		t.Fatal("unexpected result type")
+		t.Fatalf("unexpected result type %T", result)
 	}
 	helpers.DeepEqualOrFatal(t, r.MyException, &MyException{
 		StatusCode: to.StringPtr("200"),
@@ -192,9 +193,9 @@ func TestGet200ModelA201ModelC404ModelDDefaultError201Valid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	r, ok := result.(*CResponse)
+	r, ok := result.(CResponse)
 	if !ok {
-		t.Fatal("unexpected result type")
+		t.Fatalf("unexpected result type %T", result)
 	}
 	helpers.DeepEqualOrFatal(t, r.C, &C{
 		HTTPCode: to.StringPtr("201"),
@@ -225,9 +226,9 @@ func TestGet200ModelA201ModelC404ModelDDefaultError404Valid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	r, ok := result.(*DResponse)
+	r, ok := result.(DResponse)
 	if !ok {
-		t.Fatal("unexpected result type")
+		t.Fatalf("unexpected result type %T", result)
 	}
 	helpers.DeepEqualOrFatal(t, r.D, &D{
 		HTTPStatusCode: to.StringPtr("404"),
@@ -258,8 +259,8 @@ func TestGet200ModelA400None(t *testing.T) {
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
-	if result != nil {
-		t.Fatal("expected nil result")
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected empty response")
 	}
 }
 
@@ -270,8 +271,8 @@ func TestGet200ModelA400Valid(t *testing.T) {
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
-	if result != nil {
-		t.Fatal("expected nil result")
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected empty response")
 	}
 }
 

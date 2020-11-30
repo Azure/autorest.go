@@ -35,21 +35,21 @@ func (client PetClient) Pipeline() azcore.Pipeline {
 }
 
 // DoSomething - Asks pet to do something
-func (client PetClient) DoSomething(ctx context.Context, whatAction string, options *PetDoSomethingOptions) (*PetActionResponse, error) {
+func (client PetClient) DoSomething(ctx context.Context, whatAction string, options *PetDoSomethingOptions) (PetActionResponse, error) {
 	req, err := client.doSomethingCreateRequest(ctx, whatAction, options)
 	if err != nil {
-		return nil, err
+		return PetActionResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return PetActionResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.doSomethingHandleError(resp)
+		return PetActionResponse{}, client.doSomethingHandleError(resp)
 	}
 	result, err := client.doSomethingHandleResponse(resp)
 	if err != nil {
-		return nil, err
+		return PetActionResponse{}, err
 	}
 	return result, nil
 }
@@ -68,9 +68,10 @@ func (client PetClient) doSomethingCreateRequest(ctx context.Context, whatAction
 }
 
 // doSomethingHandleResponse handles the DoSomething response.
-func (client PetClient) doSomethingHandleResponse(resp *azcore.Response) (*PetActionResponse, error) {
+func (client PetClient) doSomethingHandleResponse(resp *azcore.Response) (PetActionResponse, error) {
 	result := PetActionResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.PetAction)
+	err := resp.UnmarshalAsJSON(&result.PetAction)
+	return result, err
 }
 
 // doSomethingHandleError handles the DoSomething error response.
@@ -92,21 +93,21 @@ func (client PetClient) doSomethingHandleError(resp *azcore.Response) error {
 }
 
 // GetPetByID - Gets pets by id.
-func (client PetClient) GetPetByID(ctx context.Context, petId string, options *PetGetPetByIDOptions) (*PetResponse, error) {
+func (client PetClient) GetPetByID(ctx context.Context, petId string, options *PetGetPetByIDOptions) (PetResponse, error) {
 	req, err := client.getPetByIdCreateRequest(ctx, petId, options)
 	if err != nil {
-		return nil, err
+		return PetResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return PetResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
-		return nil, client.getPetByIdHandleError(resp)
+		return PetResponse{}, client.getPetByIdHandleError(resp)
 	}
 	result, err := client.getPetByIdHandleResponse(resp)
 	if err != nil {
-		return nil, err
+		return PetResponse{}, err
 	}
 	return result, nil
 }
@@ -125,9 +126,10 @@ func (client PetClient) getPetByIdCreateRequest(ctx context.Context, petId strin
 }
 
 // getPetByIdHandleResponse handles the GetPetByID response.
-func (client PetClient) getPetByIdHandleResponse(resp *azcore.Response) (*PetResponse, error) {
+func (client PetClient) getPetByIdHandleResponse(resp *azcore.Response) (PetResponse, error) {
 	result := PetResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.Pet)
+	err := resp.UnmarshalAsJSON(&result.Pet)
+	return result, err
 }
 
 // getPetByIdHandleError handles the GetPetByID error response.

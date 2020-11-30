@@ -1006,7 +1006,7 @@ function generateLROResponseEnvelope(response: Response, op: Operation, codeMode
     response.schema.language.go!.isLRO = true;
     response.schema.language.go!.lroResponseType = respTypeObject;
   } else {
-    pollerResponse = `*${response.schema.language.go!.responseType.name}`;
+    pollerResponse = response.schema.language.go!.responseType.name;
     pollerTypeName = generateLROPollerName(response, op);
     response.schema.language.go!.isLRO = true;
     response.schema.language.go!.lroResponseType = respTypeObject;

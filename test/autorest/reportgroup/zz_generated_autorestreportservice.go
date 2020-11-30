@@ -30,21 +30,21 @@ func (client AutoRestReportServiceClient) Pipeline() azcore.Pipeline {
 }
 
 // GetOptionalReport - Get optional test coverage report
-func (client AutoRestReportServiceClient) GetOptionalReport(ctx context.Context, options *AutoRestReportServiceGetOptionalReportOptions) (*MapOfInt32Response, error) {
+func (client AutoRestReportServiceClient) GetOptionalReport(ctx context.Context, options *AutoRestReportServiceGetOptionalReportOptions) (MapOfInt32Response, error) {
 	req, err := client.getOptionalReportCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return MapOfInt32Response{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return MapOfInt32Response{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getOptionalReportHandleError(resp)
+		return MapOfInt32Response{}, client.getOptionalReportHandleError(resp)
 	}
 	result, err := client.getOptionalReportHandleResponse(resp)
 	if err != nil {
-		return nil, err
+		return MapOfInt32Response{}, err
 	}
 	return result, nil
 }
@@ -67,9 +67,10 @@ func (client AutoRestReportServiceClient) getOptionalReportCreateRequest(ctx con
 }
 
 // getOptionalReportHandleResponse handles the GetOptionalReport response.
-func (client AutoRestReportServiceClient) getOptionalReportHandleResponse(resp *azcore.Response) (*MapOfInt32Response, error) {
+func (client AutoRestReportServiceClient) getOptionalReportHandleResponse(resp *azcore.Response) (MapOfInt32Response, error) {
 	result := MapOfInt32Response{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.Value)
+	err := resp.UnmarshalAsJSON(&result.Value)
+	return result, err
 }
 
 // getOptionalReportHandleError handles the GetOptionalReport error response.
@@ -82,21 +83,21 @@ func (client AutoRestReportServiceClient) getOptionalReportHandleError(resp *azc
 }
 
 // GetReport - Get test coverage report
-func (client AutoRestReportServiceClient) GetReport(ctx context.Context, options *AutoRestReportServiceGetReportOptions) (*MapOfInt32Response, error) {
+func (client AutoRestReportServiceClient) GetReport(ctx context.Context, options *AutoRestReportServiceGetReportOptions) (MapOfInt32Response, error) {
 	req, err := client.getReportCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return MapOfInt32Response{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return MapOfInt32Response{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getReportHandleError(resp)
+		return MapOfInt32Response{}, client.getReportHandleError(resp)
 	}
 	result, err := client.getReportHandleResponse(resp)
 	if err != nil {
-		return nil, err
+		return MapOfInt32Response{}, err
 	}
 	return result, nil
 }
@@ -119,9 +120,10 @@ func (client AutoRestReportServiceClient) getReportCreateRequest(ctx context.Con
 }
 
 // getReportHandleResponse handles the GetReport response.
-func (client AutoRestReportServiceClient) getReportHandleResponse(resp *azcore.Response) (*MapOfInt32Response, error) {
+func (client AutoRestReportServiceClient) getReportHandleResponse(resp *azcore.Response) (MapOfInt32Response, error) {
 	result := MapOfInt32Response{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.Value)
+	err := resp.UnmarshalAsJSON(&result.Value)
+	return result, err
 }
 
 // getReportHandleError handles the GetReport error response.

@@ -34,21 +34,21 @@ func (client MediaTypesClient) Pipeline() azcore.Pipeline {
 }
 
 // AnalyzeBody - Analyze body, that could be different media types.
-func (client MediaTypesClient) AnalyzeBody(ctx context.Context, contentType ContentType, input azcore.ReadSeekCloser, options *MediaTypesClientAnalyzeBodyOptions) (*StringResponse, error) {
+func (client MediaTypesClient) AnalyzeBody(ctx context.Context, contentType ContentType, input azcore.ReadSeekCloser, options *MediaTypesClientAnalyzeBodyOptions) (StringResponse, error) {
 	req, err := client.analyzeBodyCreateRequest(ctx, contentType, input, options)
 	if err != nil {
-		return nil, err
+		return StringResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return StringResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.analyzeBodyHandleError(resp)
+		return StringResponse{}, client.analyzeBodyHandleError(resp)
 	}
 	result, err := client.analyzeBodyHandleResponse(resp)
 	if err != nil {
-		return nil, err
+		return StringResponse{}, err
 	}
 	return result, nil
 }
@@ -67,9 +67,10 @@ func (client MediaTypesClient) analyzeBodyCreateRequest(ctx context.Context, con
 }
 
 // analyzeBodyHandleResponse handles the AnalyzeBody response.
-func (client MediaTypesClient) analyzeBodyHandleResponse(resp *azcore.Response) (*StringResponse, error) {
+func (client MediaTypesClient) analyzeBodyHandleResponse(resp *azcore.Response) (StringResponse, error) {
 	result := StringResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.Value)
+	err := resp.UnmarshalAsJSON(&result.Value)
+	return result, err
 }
 
 // analyzeBodyHandleError handles the AnalyzeBody error response.
@@ -85,21 +86,21 @@ func (client MediaTypesClient) analyzeBodyHandleError(resp *azcore.Response) err
 }
 
 // AnalyzeBodyWithSourcePath - Analyze body, that could be different media types.
-func (client MediaTypesClient) AnalyzeBodyWithSourcePath(ctx context.Context, options *MediaTypesClientAnalyzeBodyWithSourcePathOptions) (*StringResponse, error) {
+func (client MediaTypesClient) AnalyzeBodyWithSourcePath(ctx context.Context, options *MediaTypesClientAnalyzeBodyWithSourcePathOptions) (StringResponse, error) {
 	req, err := client.analyzeBodyWithSourcePathCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return StringResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return StringResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.analyzeBodyWithSourcePathHandleError(resp)
+		return StringResponse{}, client.analyzeBodyWithSourcePathHandleError(resp)
 	}
 	result, err := client.analyzeBodyWithSourcePathHandleResponse(resp)
 	if err != nil {
-		return nil, err
+		return StringResponse{}, err
 	}
 	return result, nil
 }
@@ -120,9 +121,10 @@ func (client MediaTypesClient) analyzeBodyWithSourcePathCreateRequest(ctx contex
 }
 
 // analyzeBodyWithSourcePathHandleResponse handles the AnalyzeBodyWithSourcePath response.
-func (client MediaTypesClient) analyzeBodyWithSourcePathHandleResponse(resp *azcore.Response) (*StringResponse, error) {
+func (client MediaTypesClient) analyzeBodyWithSourcePathHandleResponse(resp *azcore.Response) (StringResponse, error) {
 	result := StringResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.Value)
+	err := resp.UnmarshalAsJSON(&result.Value)
+	return result, err
 }
 
 // analyzeBodyWithSourcePathHandleError handles the AnalyzeBodyWithSourcePath error response.
@@ -138,21 +140,21 @@ func (client MediaTypesClient) analyzeBodyWithSourcePathHandleError(resp *azcore
 }
 
 // ContentTypeWithEncoding - Pass in contentType 'text/plain; encoding=UTF-8' to pass test. Value for input does not matter
-func (client MediaTypesClient) ContentTypeWithEncoding(ctx context.Context, input string) (*StringResponse, error) {
+func (client MediaTypesClient) ContentTypeWithEncoding(ctx context.Context, input string) (StringResponse, error) {
 	req, err := client.contentTypeWithEncodingCreateRequest(ctx, input)
 	if err != nil {
-		return nil, err
+		return StringResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return StringResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.contentTypeWithEncodingHandleError(resp)
+		return StringResponse{}, client.contentTypeWithEncodingHandleError(resp)
 	}
 	result, err := client.contentTypeWithEncodingHandleResponse(resp)
 	if err != nil {
-		return nil, err
+		return StringResponse{}, err
 	}
 	return result, nil
 }
@@ -171,9 +173,10 @@ func (client MediaTypesClient) contentTypeWithEncodingCreateRequest(ctx context.
 }
 
 // contentTypeWithEncodingHandleResponse handles the ContentTypeWithEncoding response.
-func (client MediaTypesClient) contentTypeWithEncodingHandleResponse(resp *azcore.Response) (*StringResponse, error) {
+func (client MediaTypesClient) contentTypeWithEncodingHandleResponse(resp *azcore.Response) (StringResponse, error) {
 	result := StringResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.Value)
+	err := resp.UnmarshalAsJSON(&result.Value)
+	return result, err
 }
 
 // contentTypeWithEncodingHandleError handles the ContentTypeWithEncoding error response.

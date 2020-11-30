@@ -22,6 +22,7 @@ export async function generatePagers(session: Session<CodeModel>): Promise<strin
   const imports = new ImportManager();
   imports.add('context');
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
+  imports.add('reflect');
   text += imports.text();
 
   const pagers = <Array<PagerInfo>>session.model.language.go!.pageableTypes;
@@ -55,7 +56,7 @@ type ${pager.name} interface {
 	NextPage(context.Context) bool
 
 	// Page returns the current ${pager.respEnv}.
-	PageResponse() *${pager.respEnv}
+	PageResponse() ${pager.respEnv}
 
 	// Err returns the last error encountered while paging.
 	Err() error
@@ -65,9 +66,9 @@ type ${requesterType} func(context.Context) (*azcore.Request, error)
 
 type ${errorerType} func(*azcore.Response) error
 
-type ${responderType} func(*azcore.Response) (*${pager.respEnv}, error)
+type ${responderType} func(*azcore.Response) (${pager.respEnv}, error)
 
-type ${advanceType} func(context.Context, *${pager.respEnv}) (*azcore.Request, error)
+type ${advanceType} func(context.Context, ${pager.respEnv}) (*azcore.Request, error)
 
 type ${pagerType} struct {
 	// the pipeline for making the request
@@ -81,7 +82,7 @@ type ${pagerType} struct {
 	// callback for advancing to the next page
 	advancer ${advanceType}
 	// contains the current response
-	current *${pager.respEnv}
+	current ${pager.respEnv}
 	// status codes for successful retrieval
 	statusCodes []int
 	// any error encountered
@@ -95,7 +96,7 @@ func (p *${pagerType}) Err() error {
 func (p *${pagerType}) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
-	if p.current != nil {
+	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.${pager.respField}.${pager.nextLink} == nil || len(*p.current.${pager.respField}.${pager.nextLink}) == 0 {
 			return false
 		}
@@ -126,7 +127,7 @@ func (p *${pagerType}) NextPage(ctx context.Context) bool {
 	return true
 }
 
-func (p *${pagerType}) PageResponse() *${pager.respEnv} {
+func (p *${pagerType}) PageResponse() ${pager.respEnv} {
 	return p.current
 }
 

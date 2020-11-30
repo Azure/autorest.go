@@ -8,6 +8,7 @@ import (
 	"errors"
 	"generatortests/helpers"
 	"net/http"
+	"reflect"
 	"testing"
 	"time"
 
@@ -46,8 +47,8 @@ func TestDoSomethingError1(t *testing.T) {
 		},
 		Reason: to.StringPtr("need more treats"),
 	})
-	if result != nil {
-		t.Fatal("expected nil result")
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected empty response")
 	}
 }
 
@@ -68,8 +69,8 @@ func TestDoSomethingError2(t *testing.T) {
 		},
 		HungryOrThirsty: to.StringPtr("hungry and thirsty"),
 	})
-	if result != nil {
-		t.Fatal("expected nil result")
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected empty response")
 	}
 }
 
@@ -81,8 +82,8 @@ func TestDoSomethingError3(t *testing.T) {
 		t.Fatal("expected PetActionError")
 	}
 	helpers.DeepEqualOrFatal(t, actErr, &PetActionError{})
-	if result != nil {
-		t.Fatal("expected nil result")
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected empty response")
 	}
 }
 
@@ -127,8 +128,8 @@ func TestGetPetByIDError1(t *testing.T) {
 		},
 		Name: to.StringPtr("coyote"),
 	})
-	if result != nil {
-		t.Fatal("expected nil result")
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected empty response")
 	}
 }
 
@@ -149,8 +150,8 @@ func TestGetPetByIDError2(t *testing.T) {
 		},
 		WhatSubAddress: to.StringPtr("pet/yourpet was not found"),
 	})
-	if result != nil {
-		t.Fatal("expected nil result")
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected empty response")
 	}
 }
 
@@ -164,8 +165,8 @@ func TestGetPetByIDError3(t *testing.T) {
 	if e := err.Error(); e != expected {
 		t.Fatalf("expected %s, got %s", expected, e)
 	}
-	if result != nil {
-		t.Fatal("expected nil result")
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected empty response")
 	}
 }
 
@@ -179,8 +180,8 @@ func TestGetPetByIDError4(t *testing.T) {
 	if e := err.Error(); e != expected {
 		t.Fatalf("expected %s, got %s", expected, e)
 	}
-	if result != nil {
-		t.Fatal("expected nil result")
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected empty response")
 	}
 }
 
@@ -189,7 +190,7 @@ func TestGetPetByIDError5(t *testing.T) {
 	result, err := client.GetPetByID(context.Background(), "unknown", nil)
 	// default generic error (no schema)
 	helpers.DeepEqualOrFatal(t, err.Error(), "That's all folks!!")
-	if result != nil {
-		t.Fatal("expected nil result")
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected empty response")
 	}
 }

@@ -8,6 +8,7 @@ import (
 	"generatortests/helpers"
 	"net/http"
 	"net/http/cookiejar"
+	"reflect"
 	"testing"
 	"time"
 
@@ -50,8 +51,8 @@ func TestGetMultiplePages(t *testing.T) {
 	if count != 10 {
 		helpers.DeepEqualOrFatal(t, count, 10)
 	}
-	if page.PageResponse() == nil {
-		t.Fatal("unexpected nil payload")
+	if reflect.ValueOf(page.PageResponse()).IsZero() {
+		t.Fatal("unexpected empty payload")
 	}
 }
 
@@ -73,8 +74,8 @@ func TestGetMultiplePagesFailure(t *testing.T) {
 	if count != 1 {
 		helpers.DeepEqualOrFatal(t, count, 1)
 	}
-	if page.PageResponse() == nil {
-		t.Fatal("unexpected nil payload")
+	if reflect.ValueOf(page.PageResponse()).IsZero() {
+		t.Fatal("unexpected empty payload")
 	}
 }
 
@@ -96,8 +97,8 @@ func TestGetMultiplePagesFailureURI(t *testing.T) {
 	if count != 1 {
 		helpers.DeepEqualOrFatal(t, count, 1)
 	}
-	if page.PageResponse() == nil {
-		t.Fatal("unexpected nil payload")
+	if reflect.ValueOf(page.PageResponse()).IsZero() {
+		t.Fatal("unexpected empty payload")
 	}
 }
 
@@ -119,8 +120,8 @@ func TestGetMultiplePagesFragmentNextLink(t *testing.T) {
 	if count != 10 {
 		helpers.DeepEqualOrFatal(t, count, 10)
 	}
-	if page.PageResponse() == nil {
-		t.Fatal("unexpected nil payload")
+	if reflect.ValueOf(page.PageResponse()).IsZero() {
+		t.Fatal("unexpected empty payload")
 	}
 }
 
@@ -145,8 +146,8 @@ func TestGetMultiplePagesFragmentWithGroupingNextLink(t *testing.T) {
 	if count != 10 {
 		helpers.DeepEqualOrFatal(t, count, 10)
 	}
-	if page.PageResponse() == nil {
-		t.Fatal("unexpected nil payload")
+	if reflect.ValueOf(page.PageResponse()).IsZero() {
+		t.Fatal("unexpected empty payload")
 	}
 }
 
@@ -205,8 +206,8 @@ func TestGetMultiplePagesRetryFirst(t *testing.T) {
 	if count != 10 {
 		helpers.DeepEqualOrFatal(t, count, 10)
 	}
-	if page.PageResponse() == nil {
-		t.Fatal("unexpected nil payload")
+	if reflect.ValueOf(page.PageResponse()).IsZero() {
+		t.Fatal("unexpected empty payload")
 	}
 }
 
@@ -228,8 +229,8 @@ func TestGetMultiplePagesRetrySecond(t *testing.T) {
 	if count != 10 {
 		helpers.DeepEqualOrFatal(t, count, 10)
 	}
-	if page.PageResponse() == nil {
-		t.Fatal("unexpected nil payload")
+	if reflect.ValueOf(page.PageResponse()).IsZero() {
+		t.Fatal("unexpected empty payload")
 	}
 }
 
@@ -251,8 +252,8 @@ func TestGetMultiplePagesWithOffset(t *testing.T) {
 	if count != 10 {
 		helpers.DeepEqualOrFatal(t, count, 10)
 	}
-	if page.PageResponse() == nil {
-		t.Fatal("unexpected nil payload")
+	if reflect.ValueOf(page.PageResponse()).IsZero() {
+		t.Fatal("unexpected empty payload")
 	}
 }
 
@@ -274,8 +275,8 @@ func TestGetNoItemNamePages(t *testing.T) {
 	if count != 1 {
 		helpers.DeepEqualOrFatal(t, count, 1)
 	}
-	if page.PageResponse() == nil {
-		t.Fatal("unexpected nil payload")
+	if reflect.ValueOf(page.PageResponse()).IsZero() {
+		t.Fatal("unexpected empty payload")
 	}
 }
 
@@ -309,8 +310,8 @@ func TestGetOdataMultiplePages(t *testing.T) {
 	if count != 10 {
 		helpers.DeepEqualOrFatal(t, count, 10)
 	}
-	if page.PageResponse() == nil {
-		t.Fatal("unexpected nil payload")
+	if reflect.ValueOf(page.PageResponse()).IsZero() {
+		t.Fatal("unexpected empty payload")
 	}
 }
 
@@ -332,8 +333,8 @@ func TestGetPagingModelWithItemNameWithXmsClientName(t *testing.T) {
 	if count != 1 {
 		helpers.DeepEqualOrFatal(t, count, 1)
 	}
-	if page.PageResponse() == nil {
-		t.Fatal("unexpected nil payload")
+	if reflect.ValueOf(page.PageResponse()).IsZero() {
+		t.Fatal("unexpected empty payload")
 	}
 }
 
@@ -355,8 +356,8 @@ func TestGetSinglePages(t *testing.T) {
 	if count != 1 {
 		helpers.DeepEqualOrFatal(t, count, 1)
 	}
-	if page.PageResponse() == nil {
-		t.Fatal("unexpected nil payload")
+	if reflect.ValueOf(page.PageResponse()).IsZero() {
+		t.Fatal("unexpected empty payload")
 	}
 }
 
@@ -378,8 +379,8 @@ func TestGetSinglePagesFailure(t *testing.T) {
 	if count != 0 {
 		helpers.DeepEqualOrFatal(t, count, 0)
 	}
-	if page.PageResponse() != nil {
-		t.Fatal("expected nil payload")
+	if !reflect.ValueOf(page.PageResponse()).IsZero() {
+		t.Fatal("expected empty payload")
 	}
 }
 
@@ -401,7 +402,7 @@ func TestGetWithQueryParams(t *testing.T) {
 	if count != 0 {
 		helpers.DeepEqualOrFatal(t, count, 2)
 	}
-	if page.PageResponse() == nil {
-		t.Fatal("unexpected nil payload")
+	if reflect.ValueOf(page.PageResponse()).IsZero() {
+		t.Fatal("unexpected empty payload")
 	}
 }

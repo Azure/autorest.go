@@ -32,21 +32,21 @@ func (client FlattencomplexClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
-func (client FlattencomplexClient) GetValid(ctx context.Context, options *FlattencomplexGetValidOptions) (*MyBaseTypeResponse, error) {
+func (client FlattencomplexClient) GetValid(ctx context.Context, options *FlattencomplexGetValidOptions) (MyBaseTypeResponse, error) {
 	req, err := client.getValidCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return MyBaseTypeResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return MyBaseTypeResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getValidHandleError(resp)
+		return MyBaseTypeResponse{}, client.getValidHandleError(resp)
 	}
 	result, err := client.getValidHandleResponse(resp)
 	if err != nil {
-		return nil, err
+		return MyBaseTypeResponse{}, err
 	}
 	return result, nil
 }
@@ -64,9 +64,10 @@ func (client FlattencomplexClient) getValidCreateRequest(ctx context.Context, op
 }
 
 // getValidHandleResponse handles the GetValid response.
-func (client FlattencomplexClient) getValidHandleResponse(resp *azcore.Response) (*MyBaseTypeResponse, error) {
+func (client FlattencomplexClient) getValidHandleResponse(resp *azcore.Response) (MyBaseTypeResponse, error) {
 	result := MyBaseTypeResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result)
+	err := resp.UnmarshalAsJSON(&result)
+	return result, err
 }
 
 // getValidHandleError handles the GetValid error response.

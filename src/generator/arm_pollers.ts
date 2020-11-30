@@ -18,7 +18,7 @@ function generatePagerReturnInstance(pager: PagerInfo): string {
   text += `\t\tresp: resp,\n`;
   text += '\t\terrorer: p.errHandler,\n';
   text += `\t\tresponder: p.respHandler,\n`;
-  text += `\t\tadvancer: func(ctx context.Context, resp *${pager.respEnv}) (*azcore.Request, error) {\n`;
+  text += `\t\tadvancer: func(ctx context.Context, resp ${pager.respEnv}) (*azcore.Request, error) {\n`;
   text += `\t\t\treturn azcore.NewRequest(ctx, http.MethodGet, *resp.${pager.respField}.${pager.nextLink})\n`;
   text += '\t\t},\n';
   text += `\t\tstatusCodes: p.statusCodes,\n`;
@@ -85,21 +85,21 @@ export async function generateARMPollers(session: Session<CodeModel>): Promise<s
       pollUntilDone = finalPagerProcessing('PollUntilDone', 'ctx, frequency, p.pipeline, respType');
     } else if (poller.respType) {
       responseType = poller.respEnv;
-      pollUntilDoneResponse = `(*${responseType}, error)`;
+      pollUntilDoneResponse = `(${responseType}, error)`;
       // for operations that do return a model add a final response method that handles the final get URL scenario
-      finalResponseDeclaration = `FinalResponse(ctx context.Context) (*${responseType}, error)`;
-      finalResponse = `FinalResponse(ctx context.Context) (*${responseType}, error) {`;
-      let respType = `respType := &${responseType}{${poller.respField}: &${poller.respType.language.go!.name}{}}`;
+      finalResponseDeclaration = `FinalResponse(ctx context.Context) (${responseType}, error)`;
+      finalResponse = `FinalResponse(ctx context.Context) (${responseType}, error) {`;
+      let respType = `respType := ${responseType}{${poller.respField}: &${poller.respType.language.go!.name}{}}`;
       let reference = '';
       const isScalar = isScalarType(poller.respType);
       if (isScalar) {
-        respType = `respType := &${responseType}{}\n`;
+        respType = `respType := ${responseType}{}\n`;
         reference = '&';
       }
       pollUntilDone = `${respType}
 		resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, ${reference}respType.${poller.respField})
 		if err != nil {
-			return nil, err
+			return ${responseType}{}, err
     }
     respType.RawResponse = resp
     return respType, nil`;
@@ -107,7 +107,7 @@ export async function generateARMPollers(session: Session<CodeModel>): Promise<s
       ${respType}
 		resp, err := p.pt.FinalResponse(ctx, p.pipeline, ${reference}respType.${poller.respField})
 		if err != nil {
-			return nil, err
+			return ${responseType}{}, err
     }
     respType.RawResponse = resp
 		return respType, nil

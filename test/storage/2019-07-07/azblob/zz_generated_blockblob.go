@@ -33,21 +33,21 @@ func (client blockBlobClient) Pipeline() azcore.Pipeline {
 // this by specifying whether to commit a block from the committed block list or from the uncommitted block list, or to commit the most recently uploaded
 // version of the block, whichever list it may
 // belong to.
-func (client blockBlobClient) CommitBlockList(ctx context.Context, blocks BlockLookupList, blockBlobCommitBlockListOptions *BlockBlobCommitBlockListOptions, blobHttpHeaders *BlobHttpHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*BlockBlobCommitBlockListResponse, error) {
+func (client blockBlobClient) CommitBlockList(ctx context.Context, blocks BlockLookupList, blockBlobCommitBlockListOptions *BlockBlobCommitBlockListOptions, blobHttpHeaders *BlobHttpHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (BlockBlobCommitBlockListResponse, error) {
 	req, err := client.commitBlockListCreateRequest(ctx, blocks, blockBlobCommitBlockListOptions, blobHttpHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
 	if err != nil {
-		return nil, err
+		return BlockBlobCommitBlockListResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return BlockBlobCommitBlockListResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, client.commitBlockListHandleError(resp)
+		return BlockBlobCommitBlockListResponse{}, client.commitBlockListHandleError(resp)
 	}
 	result, err := client.commitBlockListHandleResponse(resp)
 	if err != nil {
-		return nil, err
+		return BlockBlobCommitBlockListResponse{}, err
 	}
 	return result, nil
 }
@@ -133,7 +133,7 @@ func (client blockBlobClient) commitBlockListCreateRequest(ctx context.Context, 
 }
 
 // commitBlockListHandleResponse handles the CommitBlockList response.
-func (client blockBlobClient) commitBlockListHandleResponse(resp *azcore.Response) (*BlockBlobCommitBlockListResponse, error) {
+func (client blockBlobClient) commitBlockListHandleResponse(resp *azcore.Response) (BlockBlobCommitBlockListResponse, error) {
 	result := BlockBlobCommitBlockListResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -141,21 +141,21 @@ func (client blockBlobClient) commitBlockListHandleResponse(resp *azcore.Respons
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return nil, err
+			return BlockBlobCommitBlockListResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
 	if val := resp.Header.Get("Content-MD5"); val != "" {
 		contentMd5, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
-			return nil, err
+			return BlockBlobCommitBlockListResponse{}, err
 		}
 		result.ContentMD5 = &contentMd5
 	}
 	if val := resp.Header.Get("x-ms-content-crc64"); val != "" {
 		contentCrc64, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
-			return nil, err
+			return BlockBlobCommitBlockListResponse{}, err
 		}
 		result.ContentCRC64 = &contentCrc64
 	}
@@ -171,14 +171,14 @@ func (client blockBlobClient) commitBlockListHandleResponse(resp *azcore.Respons
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return nil, err
+			return BlockBlobCommitBlockListResponse{}, err
 		}
 		result.Date = &date
 	}
 	if val := resp.Header.Get("x-ms-request-server-encrypted"); val != "" {
 		isServerEncrypted, err := strconv.ParseBool(val)
 		if err != nil {
-			return nil, err
+			return BlockBlobCommitBlockListResponse{}, err
 		}
 		result.IsServerEncrypted = &isServerEncrypted
 	}
@@ -188,7 +188,7 @@ func (client blockBlobClient) commitBlockListHandleResponse(resp *azcore.Respons
 	if val := resp.Header.Get("x-ms-encryption-scope"); val != "" {
 		result.EncryptionScope = &val
 	}
-	return &result, nil
+	return result, nil
 }
 
 // commitBlockListHandleError handles the CommitBlockList error response.
@@ -201,21 +201,21 @@ func (client blockBlobClient) commitBlockListHandleError(resp *azcore.Response) 
 }
 
 // GetBlockList - The Get Block List operation retrieves the list of blocks that have been uploaded as part of a block blob
-func (client blockBlobClient) GetBlockList(ctx context.Context, listType BlockListType, blockBlobGetBlockListOptions *BlockBlobGetBlockListOptions, leaseAccessConditions *LeaseAccessConditions) (*BlockListResponse, error) {
+func (client blockBlobClient) GetBlockList(ctx context.Context, listType BlockListType, blockBlobGetBlockListOptions *BlockBlobGetBlockListOptions, leaseAccessConditions *LeaseAccessConditions) (BlockListResponse, error) {
 	req, err := client.getBlockListCreateRequest(ctx, listType, blockBlobGetBlockListOptions, leaseAccessConditions)
 	if err != nil {
-		return nil, err
+		return BlockListResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return BlockListResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getBlockListHandleError(resp)
+		return BlockListResponse{}, client.getBlockListHandleError(resp)
 	}
 	result, err := client.getBlockListHandleResponse(resp)
 	if err != nil {
-		return nil, err
+		return BlockListResponse{}, err
 	}
 	return result, nil
 }
@@ -249,12 +249,12 @@ func (client blockBlobClient) getBlockListCreateRequest(ctx context.Context, lis
 }
 
 // getBlockListHandleResponse handles the GetBlockList response.
-func (client blockBlobClient) getBlockListHandleResponse(resp *azcore.Response) (*BlockListResponse, error) {
+func (client blockBlobClient) getBlockListHandleResponse(resp *azcore.Response) (BlockListResponse, error) {
 	result := BlockListResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return nil, err
+			return BlockListResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
@@ -267,7 +267,7 @@ func (client blockBlobClient) getBlockListHandleResponse(resp *azcore.Response) 
 	if val := resp.Header.Get("x-ms-blob-content-length"); val != "" {
 		blobContentLength, err := strconv.ParseInt(val, 10, 64)
 		if err != nil {
-			return nil, err
+			return BlockListResponse{}, err
 		}
 		result.BlobContentLength = &blobContentLength
 	}
@@ -283,11 +283,12 @@ func (client blockBlobClient) getBlockListHandleResponse(resp *azcore.Response) 
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return nil, err
+			return BlockListResponse{}, err
 		}
 		result.Date = &date
 	}
-	return &result, resp.UnmarshalAsXML(&result.BlockList)
+	err := resp.UnmarshalAsXML(&result.BlockList)
+	return result, err
 }
 
 // getBlockListHandleError handles the GetBlockList error response.
@@ -300,21 +301,21 @@ func (client blockBlobClient) getBlockListHandleError(resp *azcore.Response) err
 }
 
 // StageBlock - The Stage Block operation creates a new block to be committed as part of a blob
-func (client blockBlobClient) StageBlock(ctx context.Context, blockId string, contentLength int64, body azcore.ReadSeekCloser, blockBlobStageBlockOptions *BlockBlobStageBlockOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo) (*BlockBlobStageBlockResponse, error) {
+func (client blockBlobClient) StageBlock(ctx context.Context, blockId string, contentLength int64, body azcore.ReadSeekCloser, blockBlobStageBlockOptions *BlockBlobStageBlockOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo) (BlockBlobStageBlockResponse, error) {
 	req, err := client.stageBlockCreateRequest(ctx, blockId, contentLength, body, blockBlobStageBlockOptions, leaseAccessConditions, cpkInfo, cpkScopeInfo)
 	if err != nil {
-		return nil, err
+		return BlockBlobStageBlockResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return BlockBlobStageBlockResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, client.stageBlockHandleError(resp)
+		return BlockBlobStageBlockResponse{}, client.stageBlockHandleError(resp)
 	}
 	result, err := client.stageBlockHandleResponse(resp)
 	if err != nil {
-		return nil, err
+		return BlockBlobStageBlockResponse{}, err
 	}
 	return result, nil
 }
@@ -364,12 +365,12 @@ func (client blockBlobClient) stageBlockCreateRequest(ctx context.Context, block
 }
 
 // stageBlockHandleResponse handles the StageBlock response.
-func (client blockBlobClient) stageBlockHandleResponse(resp *azcore.Response) (*BlockBlobStageBlockResponse, error) {
+func (client blockBlobClient) stageBlockHandleResponse(resp *azcore.Response) (BlockBlobStageBlockResponse, error) {
 	result := BlockBlobStageBlockResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("Content-MD5"); val != "" {
 		contentMd5, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
-			return nil, err
+			return BlockBlobStageBlockResponse{}, err
 		}
 		result.ContentMD5 = &contentMd5
 	}
@@ -385,21 +386,21 @@ func (client blockBlobClient) stageBlockHandleResponse(resp *azcore.Response) (*
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return nil, err
+			return BlockBlobStageBlockResponse{}, err
 		}
 		result.Date = &date
 	}
 	if val := resp.Header.Get("x-ms-content-crc64"); val != "" {
 		contentCrc64, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
-			return nil, err
+			return BlockBlobStageBlockResponse{}, err
 		}
 		result.ContentCRC64 = &contentCrc64
 	}
 	if val := resp.Header.Get("x-ms-request-server-encrypted"); val != "" {
 		isServerEncrypted, err := strconv.ParseBool(val)
 		if err != nil {
-			return nil, err
+			return BlockBlobStageBlockResponse{}, err
 		}
 		result.IsServerEncrypted = &isServerEncrypted
 	}
@@ -409,7 +410,7 @@ func (client blockBlobClient) stageBlockHandleResponse(resp *azcore.Response) (*
 	if val := resp.Header.Get("x-ms-encryption-scope"); val != "" {
 		result.EncryptionScope = &val
 	}
-	return &result, nil
+	return result, nil
 }
 
 // stageBlockHandleError handles the StageBlock error response.
@@ -422,21 +423,21 @@ func (client blockBlobClient) stageBlockHandleError(resp *azcore.Response) error
 }
 
 // StageBlockFromURL - The Stage Block operation creates a new block to be committed as part of a blob where the contents are read from a URL.
-func (client blockBlobClient) StageBlockFromURL(ctx context.Context, blockId string, contentLength int64, sourceUrl url.URL, blockBlobStageBlockFromUrlOptions *BlockBlobStageBlockFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*BlockBlobStageBlockFromURLResponse, error) {
+func (client blockBlobClient) StageBlockFromURL(ctx context.Context, blockId string, contentLength int64, sourceUrl url.URL, blockBlobStageBlockFromUrlOptions *BlockBlobStageBlockFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (BlockBlobStageBlockFromURLResponse, error) {
 	req, err := client.stageBlockFromUrlCreateRequest(ctx, blockId, contentLength, sourceUrl, blockBlobStageBlockFromUrlOptions, cpkInfo, cpkScopeInfo, leaseAccessConditions, sourceModifiedAccessConditions)
 	if err != nil {
-		return nil, err
+		return BlockBlobStageBlockFromURLResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return BlockBlobStageBlockFromURLResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, client.stageBlockFromUrlHandleError(resp)
+		return BlockBlobStageBlockFromURLResponse{}, client.stageBlockFromUrlHandleError(resp)
 	}
 	result, err := client.stageBlockFromUrlHandleResponse(resp)
 	if err != nil {
-		return nil, err
+		return BlockBlobStageBlockFromURLResponse{}, err
 	}
 	return result, nil
 }
@@ -502,19 +503,19 @@ func (client blockBlobClient) stageBlockFromUrlCreateRequest(ctx context.Context
 }
 
 // stageBlockFromUrlHandleResponse handles the StageBlockFromURL response.
-func (client blockBlobClient) stageBlockFromUrlHandleResponse(resp *azcore.Response) (*BlockBlobStageBlockFromURLResponse, error) {
+func (client blockBlobClient) stageBlockFromUrlHandleResponse(resp *azcore.Response) (BlockBlobStageBlockFromURLResponse, error) {
 	result := BlockBlobStageBlockFromURLResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("Content-MD5"); val != "" {
 		contentMd5, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
-			return nil, err
+			return BlockBlobStageBlockFromURLResponse{}, err
 		}
 		result.ContentMD5 = &contentMd5
 	}
 	if val := resp.Header.Get("x-ms-content-crc64"); val != "" {
 		contentCrc64, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
-			return nil, err
+			return BlockBlobStageBlockFromURLResponse{}, err
 		}
 		result.ContentCRC64 = &contentCrc64
 	}
@@ -530,14 +531,14 @@ func (client blockBlobClient) stageBlockFromUrlHandleResponse(resp *azcore.Respo
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return nil, err
+			return BlockBlobStageBlockFromURLResponse{}, err
 		}
 		result.Date = &date
 	}
 	if val := resp.Header.Get("x-ms-request-server-encrypted"); val != "" {
 		isServerEncrypted, err := strconv.ParseBool(val)
 		if err != nil {
-			return nil, err
+			return BlockBlobStageBlockFromURLResponse{}, err
 		}
 		result.IsServerEncrypted = &isServerEncrypted
 	}
@@ -547,7 +548,7 @@ func (client blockBlobClient) stageBlockFromUrlHandleResponse(resp *azcore.Respo
 	if val := resp.Header.Get("x-ms-encryption-scope"); val != "" {
 		result.EncryptionScope = &val
 	}
-	return &result, nil
+	return result, nil
 }
 
 // stageBlockFromUrlHandleError handles the StageBlockFromURL error response.
@@ -563,21 +564,21 @@ func (client blockBlobClient) stageBlockFromUrlHandleError(resp *azcore.Response
 // on the blob. Partial updates are not supported with Put
 // Blob; the content of the existing blob is overwritten with the content of the new blob. To perform a partial update of the content of a block blob, use
 // the Put Block List operation.
-func (client blockBlobClient) Upload(ctx context.Context, contentLength int64, body azcore.ReadSeekCloser, blockBlobUploadOptions *BlockBlobUploadOptions, blobHttpHeaders *BlobHttpHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*BlockBlobUploadResponse, error) {
+func (client blockBlobClient) Upload(ctx context.Context, contentLength int64, body azcore.ReadSeekCloser, blockBlobUploadOptions *BlockBlobUploadOptions, blobHttpHeaders *BlobHttpHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (BlockBlobUploadResponse, error) {
 	req, err := client.uploadCreateRequest(ctx, contentLength, body, blockBlobUploadOptions, blobHttpHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
 	if err != nil {
-		return nil, err
+		return BlockBlobUploadResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return BlockBlobUploadResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, client.uploadHandleError(resp)
+		return BlockBlobUploadResponse{}, client.uploadHandleError(resp)
 	}
 	result, err := client.uploadHandleResponse(resp)
 	if err != nil {
-		return nil, err
+		return BlockBlobUploadResponse{}, err
 	}
 	return result, nil
 }
@@ -661,7 +662,7 @@ func (client blockBlobClient) uploadCreateRequest(ctx context.Context, contentLe
 }
 
 // uploadHandleResponse handles the Upload response.
-func (client blockBlobClient) uploadHandleResponse(resp *azcore.Response) (*BlockBlobUploadResponse, error) {
+func (client blockBlobClient) uploadHandleResponse(resp *azcore.Response) (BlockBlobUploadResponse, error) {
 	result := BlockBlobUploadResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -669,14 +670,14 @@ func (client blockBlobClient) uploadHandleResponse(resp *azcore.Response) (*Bloc
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return nil, err
+			return BlockBlobUploadResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
 	if val := resp.Header.Get("Content-MD5"); val != "" {
 		contentMd5, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
-			return nil, err
+			return BlockBlobUploadResponse{}, err
 		}
 		result.ContentMD5 = &contentMd5
 	}
@@ -692,14 +693,14 @@ func (client blockBlobClient) uploadHandleResponse(resp *azcore.Response) (*Bloc
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return nil, err
+			return BlockBlobUploadResponse{}, err
 		}
 		result.Date = &date
 	}
 	if val := resp.Header.Get("x-ms-request-server-encrypted"); val != "" {
 		isServerEncrypted, err := strconv.ParseBool(val)
 		if err != nil {
-			return nil, err
+			return BlockBlobUploadResponse{}, err
 		}
 		result.IsServerEncrypted = &isServerEncrypted
 	}
@@ -709,7 +710,7 @@ func (client blockBlobClient) uploadHandleResponse(resp *azcore.Response) (*Bloc
 	if val := resp.Header.Get("x-ms-encryption-scope"); val != "" {
 		result.EncryptionScope = &val
 	}
-	return &result, nil
+	return result, nil
 }
 
 // uploadHandleError handles the Upload error response.

@@ -60,7 +60,7 @@ type AccessURI struct {
 // AccessURIPollerResponse is the response envelope for operations that asynchronously return a AccessURI type.
 type AccessURIPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (*AccessURIResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (AccessURIResponse, error)
 
 	// Poller contains an initialized poller.
 	Poller AccessURIPoller
@@ -436,7 +436,7 @@ type ContainerServiceOrchestratorProfile struct {
 // ContainerServicePollerResponse is the response envelope for operations that asynchronously return a ContainerService type.
 type ContainerServicePollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (*ContainerServiceResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (ContainerServiceResponse, error)
 
 	// Poller contains an initialized poller.
 	Poller ContainerServicePoller
@@ -803,7 +803,7 @@ type DedicatedHostListResultResponse struct {
 // DedicatedHostPollerResponse is the response envelope for operations that asynchronously return a DedicatedHost type.
 type DedicatedHostPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (*DedicatedHostResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (DedicatedHostResponse, error)
 
 	// Poller contains an initialized poller.
 	Poller DedicatedHostPoller
@@ -1062,7 +1062,7 @@ type DiskEncryptionSetParameters struct {
 // DiskEncryptionSetPollerResponse is the response envelope for operations that asynchronously return a DiskEncryptionSet type.
 type DiskEncryptionSetPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (*DiskEncryptionSetResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (DiskEncryptionSetResponse, error)
 
 	// Poller contains an initialized poller.
 	Poller DiskEncryptionSetPoller
@@ -1177,7 +1177,7 @@ type DiskListResponse struct {
 // DiskPollerResponse is the response envelope for operations that asynchronously return a Disk type.
 type DiskPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (*DiskResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (DiskResponse, error)
 
 	// Poller contains an initialized poller.
 	Poller DiskPoller
@@ -1648,7 +1648,7 @@ type GalleryApplicationListResponse struct {
 // GalleryApplicationPollerResponse is the response envelope for operations that asynchronously return a GalleryApplication type.
 type GalleryApplicationPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (*GalleryApplicationResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (GalleryApplicationResponse, error)
 
 	// Poller contains an initialized poller.
 	Poller GalleryApplicationPoller
@@ -1798,7 +1798,7 @@ type GalleryApplicationVersionListResponse struct {
 // GalleryApplicationVersionPollerResponse is the response envelope for operations that asynchronously return a GalleryApplicationVersion type.
 type GalleryApplicationVersionPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (*GalleryApplicationVersionResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (GalleryApplicationVersionResponse, error)
 
 	// Poller contains an initialized poller.
 	Poller GalleryApplicationVersionPoller
@@ -2132,7 +2132,7 @@ type GalleryImageListResponse struct {
 // GalleryImagePollerResponse is the response envelope for operations that asynchronously return a GalleryImage type.
 type GalleryImagePollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (*GalleryImageResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (GalleryImageResponse, error)
 
 	// Poller contains an initialized poller.
 	Poller GalleryImagePoller
@@ -2359,7 +2359,7 @@ type GalleryImageVersionListResponse struct {
 // GalleryImageVersionPollerResponse is the response envelope for operations that asynchronously return a GalleryImageVersion type.
 type GalleryImageVersionPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (*GalleryImageVersionResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (GalleryImageVersionResponse, error)
 
 	// Poller contains an initialized poller.
 	Poller GalleryImageVersionPoller
@@ -2493,7 +2493,7 @@ type GalleryOSDiskImage struct {
 // GalleryPollerResponse is the response envelope for operations that asynchronously return a Gallery type.
 type GalleryPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (*GalleryResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (GalleryResponse, error)
 
 	// Poller contains an initialized poller.
 	Poller GalleryPoller
@@ -2652,7 +2652,7 @@ type ImageOSDisk struct {
 // ImagePollerResponse is the response envelope for operations that asynchronously return a Image type.
 type ImagePollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (*ImageResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (ImageResponse, error)
 
 	// Poller contains an initialized poller.
 	Poller ImagePoller
@@ -3069,7 +3069,7 @@ type LogAnalyticsOperationResult struct {
 // LogAnalyticsOperationResultPollerResponse is the response envelope for operations that asynchronously return a LogAnalyticsOperationResult type.
 type LogAnalyticsOperationResultPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (*LogAnalyticsOperationResultResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LogAnalyticsOperationResultResponse, error)
 
 	// Poller contains an initialized poller.
 	Poller LogAnalyticsOperationResultPoller
@@ -4042,7 +4042,7 @@ type RunCommandResult struct {
 // RunCommandResultPollerResponse is the response envelope for operations that asynchronously return a RunCommandResult type.
 type RunCommandResultPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (*RunCommandResultResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (RunCommandResultResponse, error)
 
 	// Poller contains an initialized poller.
 	Poller RunCommandResultPoller
@@ -4260,7 +4260,7 @@ type SnapshotListResponse struct {
 // SnapshotPollerResponse is the response envelope for operations that asynchronously return a Snapshot type.
 type SnapshotPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (*SnapshotResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (SnapshotResponse, error)
 
 	// Poller contains an initialized poller.
 	Poller SnapshotPoller
@@ -4864,7 +4864,7 @@ type VirtualMachineCaptureResult struct {
 // VirtualMachineCaptureResultPollerResponse is the response envelope for operations that asynchronously return a VirtualMachineCaptureResult type.
 type VirtualMachineCaptureResultPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (*VirtualMachineCaptureResultResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualMachineCaptureResultResponse, error)
 
 	// Poller contains an initialized poller.
 	Poller VirtualMachineCaptureResultPoller
@@ -4985,7 +4985,7 @@ type VirtualMachineExtensionInstanceView struct {
 // VirtualMachineExtensionPollerResponse is the response envelope for operations that asynchronously return a VirtualMachineExtension type.
 type VirtualMachineExtensionPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (*VirtualMachineExtensionResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualMachineExtensionResponse, error)
 
 	// Poller contains an initialized poller.
 	Poller VirtualMachineExtensionPoller
@@ -5291,7 +5291,7 @@ type VirtualMachineListResultResponse struct {
 // VirtualMachinePollerResponse is the response envelope for operations that asynchronously return a VirtualMachine type.
 type VirtualMachinePollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (*VirtualMachineResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualMachineResponse, error)
 
 	// Poller contains an initialized poller.
 	Poller VirtualMachinePoller
@@ -5506,7 +5506,7 @@ type VirtualMachineScaleSetExtensionListResultResponse struct {
 // VirtualMachineScaleSetExtensionPollerResponse is the response envelope for operations that asynchronously return a VirtualMachineScaleSetExtension type.
 type VirtualMachineScaleSetExtensionPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (*VirtualMachineScaleSetExtensionResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetExtensionResponse, error)
 
 	// Poller contains an initialized poller.
 	Poller VirtualMachineScaleSetExtensionPoller
@@ -5945,7 +5945,7 @@ type VirtualMachineScaleSetOSProfile struct {
 // VirtualMachineScaleSetPollerResponse is the response envelope for operations that asynchronously return a VirtualMachineScaleSet type.
 type VirtualMachineScaleSetPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (*VirtualMachineScaleSetResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetResponse, error)
 
 	// Poller contains an initialized poller.
 	Poller VirtualMachineScaleSetPoller
@@ -6502,7 +6502,7 @@ type VirtualMachineScaleSetVMNetworkProfileConfiguration struct {
 // VirtualMachineScaleSetVMPollerResponse is the response envelope for operations that asynchronously return a VirtualMachineScaleSetVM type.
 type VirtualMachineScaleSetVMPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (*VirtualMachineScaleSetVMResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetVMResponse, error)
 
 	// Poller contains an initialized poller.
 	Poller VirtualMachineScaleSetVMPoller

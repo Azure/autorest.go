@@ -30,21 +30,21 @@ func (client AutoRestReportServiceForAzureClient) Pipeline() azcore.Pipeline {
 }
 
 // GetReport - Get test coverage report
-func (client AutoRestReportServiceForAzureClient) GetReport(ctx context.Context, options *AutoRestReportServiceForAzureGetReportOptions) (*MapOfInt32Response, error) {
+func (client AutoRestReportServiceForAzureClient) GetReport(ctx context.Context, options *AutoRestReportServiceForAzureGetReportOptions) (MapOfInt32Response, error) {
 	req, err := client.getReportCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return MapOfInt32Response{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return MapOfInt32Response{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getReportHandleError(resp)
+		return MapOfInt32Response{}, client.getReportHandleError(resp)
 	}
 	result, err := client.getReportHandleResponse(resp)
 	if err != nil {
-		return nil, err
+		return MapOfInt32Response{}, err
 	}
 	return result, nil
 }
@@ -67,9 +67,10 @@ func (client AutoRestReportServiceForAzureClient) getReportCreateRequest(ctx con
 }
 
 // getReportHandleResponse handles the GetReport response.
-func (client AutoRestReportServiceForAzureClient) getReportHandleResponse(resp *azcore.Response) (*MapOfInt32Response, error) {
+func (client AutoRestReportServiceForAzureClient) getReportHandleResponse(resp *azcore.Response) (MapOfInt32Response, error) {
 	result := MapOfInt32Response{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.Value)
+	err := resp.UnmarshalAsJSON(&result.Value)
+	return result, err
 }
 
 // getReportHandleError handles the GetReport error response.

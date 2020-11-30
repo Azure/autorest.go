@@ -30,21 +30,21 @@ func (client ReadonlypropertyClient) Pipeline() azcore.Pipeline {
 }
 
 // GetValid - Get complex types that have readonly properties
-func (client ReadonlypropertyClient) GetValid(ctx context.Context, options *ReadonlypropertyGetValidOptions) (*ReadonlyObjResponse, error) {
+func (client ReadonlypropertyClient) GetValid(ctx context.Context, options *ReadonlypropertyGetValidOptions) (ReadonlyObjResponse, error) {
 	req, err := client.getValidCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return ReadonlyObjResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return ReadonlyObjResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getValidHandleError(resp)
+		return ReadonlyObjResponse{}, client.getValidHandleError(resp)
 	}
 	result, err := client.getValidHandleResponse(resp)
 	if err != nil {
-		return nil, err
+		return ReadonlyObjResponse{}, err
 	}
 	return result, nil
 }
@@ -62,9 +62,10 @@ func (client ReadonlypropertyClient) getValidCreateRequest(ctx context.Context, 
 }
 
 // getValidHandleResponse handles the GetValid response.
-func (client ReadonlypropertyClient) getValidHandleResponse(resp *azcore.Response) (*ReadonlyObjResponse, error) {
+func (client ReadonlypropertyClient) getValidHandleResponse(resp *azcore.Response) (ReadonlyObjResponse, error) {
 	result := ReadonlyObjResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.ReadonlyObj)
+	err := resp.UnmarshalAsJSON(&result.ReadonlyObj)
+	return result, err
 }
 
 // getValidHandleError handles the GetValid error response.

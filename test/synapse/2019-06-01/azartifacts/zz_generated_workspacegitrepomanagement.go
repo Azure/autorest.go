@@ -26,21 +26,21 @@ func (client workspaceGitRepoManagementClient) Pipeline() azcore.Pipeline {
 }
 
 // GetGitHubAccessToken - Get the GitHub access token.
-func (client workspaceGitRepoManagementClient) GetGitHubAccessToken(ctx context.Context, gitHubAccessTokenRequest GitHubAccessTokenRequest, options *WorkspaceGitRepoManagementGetGitHubAccessTokenOptions) (*GitHubAccessTokenResponseResponse, error) {
+func (client workspaceGitRepoManagementClient) GetGitHubAccessToken(ctx context.Context, gitHubAccessTokenRequest GitHubAccessTokenRequest, options *WorkspaceGitRepoManagementGetGitHubAccessTokenOptions) (GitHubAccessTokenResponseResponse, error) {
 	req, err := client.getGitHubAccessTokenCreateRequest(ctx, gitHubAccessTokenRequest, options)
 	if err != nil {
-		return nil, err
+		return GitHubAccessTokenResponseResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return GitHubAccessTokenResponseResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getGitHubAccessTokenHandleError(resp)
+		return GitHubAccessTokenResponseResponse{}, client.getGitHubAccessTokenHandleError(resp)
 	}
 	result, err := client.getGitHubAccessTokenHandleResponse(resp)
 	if err != nil {
-		return nil, err
+		return GitHubAccessTokenResponseResponse{}, err
 	}
 	return result, nil
 }
@@ -64,9 +64,10 @@ func (client workspaceGitRepoManagementClient) getGitHubAccessTokenCreateRequest
 }
 
 // getGitHubAccessTokenHandleResponse handles the GetGitHubAccessToken response.
-func (client workspaceGitRepoManagementClient) getGitHubAccessTokenHandleResponse(resp *azcore.Response) (*GitHubAccessTokenResponseResponse, error) {
+func (client workspaceGitRepoManagementClient) getGitHubAccessTokenHandleResponse(resp *azcore.Response) (GitHubAccessTokenResponseResponse, error) {
 	result := GitHubAccessTokenResponseResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.GitHubAccessTokenResponse)
+	err := resp.UnmarshalAsJSON(&result.GitHubAccessTokenResponse)
+	return result, err
 }
 
 // getGitHubAccessTokenHandleError handles the GetGitHubAccessToken error response.

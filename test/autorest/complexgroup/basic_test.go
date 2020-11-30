@@ -44,9 +44,7 @@ func TestBasicGetInvalid(t *testing.T) {
 	if err == nil {
 		t.Fatal("GetInvalid expected an error")
 	}
-	if result != nil {
-		t.Fatal("expected nil result")
-	}
+	helpers.DeepEqualOrFatal(t, result, BasicResponse{})
 }
 
 func TestBasicGetEmpty(t *testing.T) {

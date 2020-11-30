@@ -37,21 +37,21 @@ func (client VirtualMachineRunCommandsClient) Pipeline() azcore.Pipeline {
 }
 
 // Get - Gets specific run command for a subscription in a location.
-func (client VirtualMachineRunCommandsClient) Get(ctx context.Context, location string, commandId string, options *VirtualMachineRunCommandsGetOptions) (*RunCommandDocumentResponse, error) {
+func (client VirtualMachineRunCommandsClient) Get(ctx context.Context, location string, commandId string, options *VirtualMachineRunCommandsGetOptions) (RunCommandDocumentResponse, error) {
 	req, err := client.getCreateRequest(ctx, location, commandId, options)
 	if err != nil {
-		return nil, err
+		return RunCommandDocumentResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return RunCommandDocumentResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getHandleError(resp)
+		return RunCommandDocumentResponse{}, client.getHandleError(resp)
 	}
 	result, err := client.getHandleResponse(resp)
 	if err != nil {
-		return nil, err
+		return RunCommandDocumentResponse{}, err
 	}
 	return result, nil
 }
@@ -75,9 +75,10 @@ func (client VirtualMachineRunCommandsClient) getCreateRequest(ctx context.Conte
 }
 
 // getHandleResponse handles the Get response.
-func (client VirtualMachineRunCommandsClient) getHandleResponse(resp *azcore.Response) (*RunCommandDocumentResponse, error) {
+func (client VirtualMachineRunCommandsClient) getHandleResponse(resp *azcore.Response) (RunCommandDocumentResponse, error) {
 	result := RunCommandDocumentResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.RunCommandDocument)
+	err := resp.UnmarshalAsJSON(&result.RunCommandDocument)
+	return result, err
 }
 
 // getHandleError handles the Get error response.
@@ -101,7 +102,7 @@ func (client VirtualMachineRunCommandsClient) List(location string, options *Vir
 		},
 		responder: client.listHandleResponse,
 		errorer:   client.listHandleError,
-		advancer: func(ctx context.Context, resp *RunCommandListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp RunCommandListResultResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.RunCommandListResult.NextLink)
 		},
 		statusCodes: []int{http.StatusOK},
@@ -126,9 +127,10 @@ func (client VirtualMachineRunCommandsClient) listCreateRequest(ctx context.Cont
 }
 
 // listHandleResponse handles the List response.
-func (client VirtualMachineRunCommandsClient) listHandleResponse(resp *azcore.Response) (*RunCommandListResultResponse, error) {
+func (client VirtualMachineRunCommandsClient) listHandleResponse(resp *azcore.Response) (RunCommandListResultResponse, error) {
 	result := RunCommandListResultResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.RunCommandListResult)
+	err := resp.UnmarshalAsJSON(&result.RunCommandListResult)
+	return result, err
 }
 
 // listHandleError handles the List error response.
