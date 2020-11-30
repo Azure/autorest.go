@@ -216,7 +216,11 @@ func (client RoutesClient) Get(ctx context.Context, resourceGroupName string, ro
 	if !resp.HasStatusCode(http.StatusOK) {
 		return RouteResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return RouteResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.

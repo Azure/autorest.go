@@ -216,7 +216,11 @@ func (client VirtualNetworkPeeringsClient) Get(ctx context.Context, resourceGrou
 	if !resp.HasStatusCode(http.StatusOK) {
 		return VirtualNetworkPeeringResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return VirtualNetworkPeeringResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.

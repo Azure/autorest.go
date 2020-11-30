@@ -79,7 +79,11 @@ func (client triggerRunClient) QueryTriggerRunsByWorkspace(ctx context.Context, 
 	if !resp.HasStatusCode(http.StatusOK) {
 		return TriggerRunsQueryResponseResponse{}, client.queryTriggerRunsByWorkspaceHandleError(resp)
 	}
-	return client.queryTriggerRunsByWorkspaceHandleResponse(resp)
+	result, err := client.queryTriggerRunsByWorkspaceHandleResponse(resp)
+	if err != nil {
+		return TriggerRunsQueryResponseResponse{}, err
+	}
+	return result, nil
 }
 
 // queryTriggerRunsByWorkspaceCreateRequest creates the QueryTriggerRunsByWorkspace request.

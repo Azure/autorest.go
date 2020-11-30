@@ -42,7 +42,11 @@ func (client ArrayClient) GetEmpty(ctx context.Context, options *ArrayGetEmptyOp
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ArrayWrapperResponse{}, client.getEmptyHandleError(resp)
 	}
-	return client.getEmptyHandleResponse(resp)
+	result, err := client.getEmptyHandleResponse(resp)
+	if err != nil {
+		return ArrayWrapperResponse{}, err
+	}
+	return result, nil
 }
 
 // getEmptyCreateRequest creates the GetEmpty request.
@@ -86,7 +90,11 @@ func (client ArrayClient) GetNotProvided(ctx context.Context, options *ArrayGetN
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ArrayWrapperResponse{}, client.getNotProvidedHandleError(resp)
 	}
-	return client.getNotProvidedHandleResponse(resp)
+	result, err := client.getNotProvidedHandleResponse(resp)
+	if err != nil {
+		return ArrayWrapperResponse{}, err
+	}
+	return result, nil
 }
 
 // getNotProvidedCreateRequest creates the GetNotProvided request.
@@ -130,7 +138,11 @@ func (client ArrayClient) GetValid(ctx context.Context, options *ArrayGetValidOp
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ArrayWrapperResponse{}, client.getValidHandleError(resp)
 	}
-	return client.getValidHandleResponse(resp)
+	result, err := client.getValidHandleResponse(resp)
+	if err != nil {
+		return ArrayWrapperResponse{}, err
+	}
+	return result, nil
 }
 
 // getValidCreateRequest creates the GetValid request.

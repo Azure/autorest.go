@@ -440,7 +440,11 @@ func (client VirtualMachineScaleSetsClient) ForceRecoveryServiceFabricPlatformUp
 	if !resp.HasStatusCode(http.StatusOK) {
 		return RecoveryWalkResponseResponse{}, client.forceRecoveryServiceFabricPlatformUpdateDomainWalkHandleError(resp)
 	}
-	return client.forceRecoveryServiceFabricPlatformUpdateDomainWalkHandleResponse(resp)
+	result, err := client.forceRecoveryServiceFabricPlatformUpdateDomainWalkHandleResponse(resp)
+	if err != nil {
+		return RecoveryWalkResponseResponse{}, err
+	}
+	return result, nil
 }
 
 // forceRecoveryServiceFabricPlatformUpdateDomainWalkCreateRequest creates the ForceRecoveryServiceFabricPlatformUpdateDomainWalk request.
@@ -494,7 +498,11 @@ func (client VirtualMachineScaleSetsClient) Get(ctx context.Context, resourceGro
 	if !resp.HasStatusCode(http.StatusOK) {
 		return VirtualMachineScaleSetResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return VirtualMachineScaleSetResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.
@@ -547,7 +555,11 @@ func (client VirtualMachineScaleSetsClient) GetInstanceView(ctx context.Context,
 	if !resp.HasStatusCode(http.StatusOK) {
 		return VirtualMachineScaleSetInstanceViewResponse{}, client.getInstanceViewHandleError(resp)
 	}
-	return client.getInstanceViewHandleResponse(resp)
+	result, err := client.getInstanceViewHandleResponse(resp)
+	if err != nil {
+		return VirtualMachineScaleSetInstanceViewResponse{}, err
+	}
+	return result, nil
 }
 
 // getInstanceViewCreateRequest creates the GetInstanceView request.

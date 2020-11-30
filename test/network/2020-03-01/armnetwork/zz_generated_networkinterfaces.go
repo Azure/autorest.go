@@ -214,7 +214,11 @@ func (client NetworkInterfacesClient) Get(ctx context.Context, resourceGroupName
 	if !resp.HasStatusCode(http.StatusOK) {
 		return NetworkInterfaceResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return NetworkInterfaceResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.
@@ -354,7 +358,11 @@ func (client NetworkInterfacesClient) GetVirtualMachineScaleSetIPConfiguration(c
 	if !resp.HasStatusCode(http.StatusOK) {
 		return NetworkInterfaceIPConfigurationResponse{}, client.getVirtualMachineScaleSetIPConfigurationHandleError(resp)
 	}
-	return client.getVirtualMachineScaleSetIPConfigurationHandleResponse(resp)
+	result, err := client.getVirtualMachineScaleSetIPConfigurationHandleResponse(resp)
+	if err != nil {
+		return NetworkInterfaceIPConfigurationResponse{}, err
+	}
+	return result, nil
 }
 
 // getVirtualMachineScaleSetIPConfigurationCreateRequest creates the GetVirtualMachineScaleSetIPConfiguration request.
@@ -410,7 +418,11 @@ func (client NetworkInterfacesClient) GetVirtualMachineScaleSetNetworkInterface(
 	if !resp.HasStatusCode(http.StatusOK) {
 		return NetworkInterfaceResponse{}, client.getVirtualMachineScaleSetNetworkInterfaceHandleError(resp)
 	}
-	return client.getVirtualMachineScaleSetNetworkInterfaceHandleResponse(resp)
+	result, err := client.getVirtualMachineScaleSetNetworkInterfaceHandleResponse(resp)
+	if err != nil {
+		return NetworkInterfaceResponse{}, err
+	}
+	return result, nil
 }
 
 // getVirtualMachineScaleSetNetworkInterfaceCreateRequest creates the GetVirtualMachineScaleSetNetworkInterface request.
@@ -805,7 +817,11 @@ func (client NetworkInterfacesClient) UpdateTags(ctx context.Context, resourceGr
 	if !resp.HasStatusCode(http.StatusOK) {
 		return NetworkInterfaceResponse{}, client.updateTagsHandleError(resp)
 	}
-	return client.updateTagsHandleResponse(resp)
+	result, err := client.updateTagsHandleResponse(resp)
+	if err != nil {
+		return NetworkInterfaceResponse{}, err
+	}
+	return result, nil
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.

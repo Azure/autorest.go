@@ -42,7 +42,11 @@ func (client PetsClient) CreateApInProperties(ctx context.Context, createParamet
 	if !resp.HasStatusCode(http.StatusOK) {
 		return PetApInPropertiesResponse{}, client.createApInPropertiesHandleError(resp)
 	}
-	return client.createApInPropertiesHandleResponse(resp)
+	result, err := client.createApInPropertiesHandleResponse(resp)
+	if err != nil {
+		return PetApInPropertiesResponse{}, err
+	}
+	return result, nil
 }
 
 // createApInPropertiesCreateRequest creates the CreateApInProperties request.
@@ -86,7 +90,11 @@ func (client PetsClient) CreateApInPropertiesWithApstring(ctx context.Context, c
 	if !resp.HasStatusCode(http.StatusOK) {
 		return PetApInPropertiesWithApstringResponse{}, client.createApInPropertiesWithApstringHandleError(resp)
 	}
-	return client.createApInPropertiesWithApstringHandleResponse(resp)
+	result, err := client.createApInPropertiesWithApstringHandleResponse(resp)
+	if err != nil {
+		return PetApInPropertiesWithApstringResponse{}, err
+	}
+	return result, nil
 }
 
 // createApInPropertiesWithApstringCreateRequest creates the CreateApInPropertiesWithApstring request.
@@ -130,7 +138,11 @@ func (client PetsClient) CreateApObject(ctx context.Context, createParameters Pe
 	if !resp.HasStatusCode(http.StatusOK) {
 		return PetApObjectResponse{}, client.createApObjectHandleError(resp)
 	}
-	return client.createApObjectHandleResponse(resp)
+	result, err := client.createApObjectHandleResponse(resp)
+	if err != nil {
+		return PetApObjectResponse{}, err
+	}
+	return result, nil
 }
 
 // createApObjectCreateRequest creates the CreateApObject request.
@@ -174,7 +186,11 @@ func (client PetsClient) CreateApString(ctx context.Context, createParameters Pe
 	if !resp.HasStatusCode(http.StatusOK) {
 		return PetApStringResponse{}, client.createApStringHandleError(resp)
 	}
-	return client.createApStringHandleResponse(resp)
+	result, err := client.createApStringHandleResponse(resp)
+	if err != nil {
+		return PetApStringResponse{}, err
+	}
+	return result, nil
 }
 
 // createApStringCreateRequest creates the CreateApString request.
@@ -218,7 +234,11 @@ func (client PetsClient) CreateApTrue(ctx context.Context, createParameters PetA
 	if !resp.HasStatusCode(http.StatusOK) {
 		return PetApTrueResponse{}, client.createApTrueHandleError(resp)
 	}
-	return client.createApTrueHandleResponse(resp)
+	result, err := client.createApTrueHandleResponse(resp)
+	if err != nil {
+		return PetApTrueResponse{}, err
+	}
+	return result, nil
 }
 
 // createApTrueCreateRequest creates the CreateApTrue request.
@@ -262,7 +282,11 @@ func (client PetsClient) CreateCatApTrue(ctx context.Context, createParameters C
 	if !resp.HasStatusCode(http.StatusOK) {
 		return CatApTrueResponse{}, client.createCatApTrueHandleError(resp)
 	}
-	return client.createCatApTrueHandleResponse(resp)
+	result, err := client.createCatApTrueHandleResponse(resp)
+	if err != nil {
+		return CatApTrueResponse{}, err
+	}
+	return result, nil
 }
 
 // createCatApTrueCreateRequest creates the CreateCatApTrue request.

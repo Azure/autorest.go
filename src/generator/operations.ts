@@ -312,7 +312,11 @@ function generateOperation(op: Operation, imports: ImportManager): string {
       text += '\t return resp, nil\n';
     } else if (needsResponseHandler(op)) {
       // also cheating here as at present the only param to the responder is an azcore.Response
-      text += `\treturn client.${info.protocolNaming.responseMethod}(resp)\n`;
+      text += `\tresult, err := client.${info.protocolNaming.responseMethod}(resp)\n`;
+      text += `\tif err != nil {\n`;
+      text += `\t\treturn ${zeroResp}, err\n`;
+      text += `\t}\n`;
+      text += `\treturn result, nil\n`;
     } else {
       text += '\treturn resp.Response, nil\n';
     }

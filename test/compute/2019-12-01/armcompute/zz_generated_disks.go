@@ -222,7 +222,11 @@ func (client DisksClient) Get(ctx context.Context, resourceGroupName string, dis
 	if !resp.HasStatusCode(http.StatusOK) {
 		return DiskResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return DiskResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.

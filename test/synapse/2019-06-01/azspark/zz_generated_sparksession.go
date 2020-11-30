@@ -81,7 +81,11 @@ func (client sparkSessionClient) CancelSparkStatement(ctx context.Context, sessi
 	if !resp.HasStatusCode(http.StatusOK) {
 		return SparkStatementCancellationResultResponse{}, client.cancelSparkStatementHandleError(resp)
 	}
-	return client.cancelSparkStatementHandleResponse(resp)
+	result, err := client.cancelSparkStatementHandleResponse(resp)
+	if err != nil {
+		return SparkStatementCancellationResultResponse{}, err
+	}
+	return result, nil
 }
 
 // cancelSparkStatementCreateRequest creates the CancelSparkStatement request.
@@ -130,7 +134,11 @@ func (client sparkSessionClient) CreateSparkSession(ctx context.Context, sparkSe
 	if !resp.HasStatusCode(http.StatusOK) {
 		return SparkSessionResponse{}, client.createSparkSessionHandleError(resp)
 	}
-	return client.createSparkSessionHandleResponse(resp)
+	result, err := client.createSparkSessionHandleResponse(resp)
+	if err != nil {
+		return SparkSessionResponse{}, err
+	}
+	return result, nil
 }
 
 // createSparkSessionCreateRequest creates the CreateSparkSession request.
@@ -182,7 +190,11 @@ func (client sparkSessionClient) CreateSparkStatement(ctx context.Context, sessi
 	if !resp.HasStatusCode(http.StatusOK) {
 		return SparkStatementResponse{}, client.createSparkStatementHandleError(resp)
 	}
-	return client.createSparkStatementHandleResponse(resp)
+	result, err := client.createSparkStatementHandleResponse(resp)
+	if err != nil {
+		return SparkStatementResponse{}, err
+	}
+	return result, nil
 }
 
 // createSparkStatementCreateRequest creates the CreateSparkStatement request.
@@ -230,7 +242,11 @@ func (client sparkSessionClient) GetSparkSession(ctx context.Context, sessionId 
 	if !resp.HasStatusCode(http.StatusOK) {
 		return SparkSessionResponse{}, client.getSparkSessionHandleError(resp)
 	}
-	return client.getSparkSessionHandleResponse(resp)
+	result, err := client.getSparkSessionHandleResponse(resp)
+	if err != nil {
+		return SparkSessionResponse{}, err
+	}
+	return result, nil
 }
 
 // getSparkSessionCreateRequest creates the GetSparkSession request.
@@ -283,7 +299,11 @@ func (client sparkSessionClient) GetSparkSessions(ctx context.Context, options *
 	if !resp.HasStatusCode(http.StatusOK) {
 		return SparkSessionCollectionResponse{}, client.getSparkSessionsHandleError(resp)
 	}
-	return client.getSparkSessionsHandleResponse(resp)
+	result, err := client.getSparkSessionsHandleResponse(resp)
+	if err != nil {
+		return SparkSessionCollectionResponse{}, err
+	}
+	return result, nil
 }
 
 // getSparkSessionsCreateRequest creates the GetSparkSessions request.
@@ -341,7 +361,11 @@ func (client sparkSessionClient) GetSparkStatement(ctx context.Context, sessionI
 	if !resp.HasStatusCode(http.StatusOK) {
 		return SparkStatementResponse{}, client.getSparkStatementHandleError(resp)
 	}
-	return client.getSparkStatementHandleResponse(resp)
+	result, err := client.getSparkStatementHandleResponse(resp)
+	if err != nil {
+		return SparkStatementResponse{}, err
+	}
+	return result, nil
 }
 
 // getSparkStatementCreateRequest creates the GetSparkStatement request.
@@ -390,7 +414,11 @@ func (client sparkSessionClient) GetSparkStatements(ctx context.Context, session
 	if !resp.HasStatusCode(http.StatusOK) {
 		return SparkStatementCollectionResponse{}, client.getSparkStatementsHandleError(resp)
 	}
-	return client.getSparkStatementsHandleResponse(resp)
+	result, err := client.getSparkStatementsHandleResponse(resp)
+	if err != nil {
+		return SparkStatementCollectionResponse{}, err
+	}
+	return result, nil
 }
 
 // getSparkStatementsCreateRequest creates the GetSparkStatements request.

@@ -50,7 +50,11 @@ func (client VirtualMachineImagesClient) Get(ctx context.Context, location strin
 	if !resp.HasStatusCode(http.StatusOK) {
 		return VirtualMachineImageResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return VirtualMachineImageResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.
@@ -106,7 +110,11 @@ func (client VirtualMachineImagesClient) List(ctx context.Context, location stri
 	if !resp.HasStatusCode(http.StatusOK) {
 		return VirtualMachineImageResourceArrayResponse{}, client.listHandleError(resp)
 	}
-	return client.listHandleResponse(resp)
+	result, err := client.listHandleResponse(resp)
+	if err != nil {
+		return VirtualMachineImageResourceArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // listCreateRequest creates the List request.
@@ -170,7 +178,11 @@ func (client VirtualMachineImagesClient) ListOffers(ctx context.Context, locatio
 	if !resp.HasStatusCode(http.StatusOK) {
 		return VirtualMachineImageResourceArrayResponse{}, client.listOffersHandleError(resp)
 	}
-	return client.listOffersHandleResponse(resp)
+	result, err := client.listOffersHandleResponse(resp)
+	if err != nil {
+		return VirtualMachineImageResourceArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // listOffersCreateRequest creates the ListOffers request.
@@ -223,7 +235,11 @@ func (client VirtualMachineImagesClient) ListPublishers(ctx context.Context, loc
 	if !resp.HasStatusCode(http.StatusOK) {
 		return VirtualMachineImageResourceArrayResponse{}, client.listPublishersHandleError(resp)
 	}
-	return client.listPublishersHandleResponse(resp)
+	result, err := client.listPublishersHandleResponse(resp)
+	if err != nil {
+		return VirtualMachineImageResourceArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // listPublishersCreateRequest creates the ListPublishers request.
@@ -275,7 +291,11 @@ func (client VirtualMachineImagesClient) ListSKUs(ctx context.Context, location 
 	if !resp.HasStatusCode(http.StatusOK) {
 		return VirtualMachineImageResourceArrayResponse{}, client.listSkUsHandleError(resp)
 	}
-	return client.listSkUsHandleResponse(resp)
+	result, err := client.listSkUsHandleResponse(resp)
+	if err != nil {
+		return VirtualMachineImageResourceArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // listSkUsCreateRequest creates the ListSKUs request.

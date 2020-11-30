@@ -46,7 +46,11 @@ func (client ExpressRouteLinksClient) Get(ctx context.Context, resourceGroupName
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ExpressRouteLinkResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return ExpressRouteLinkResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.

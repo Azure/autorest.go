@@ -37,7 +37,11 @@ func (client bigDataPoolsClient) Get(ctx context.Context, bigDataPoolName string
 	if !resp.HasStatusCode(http.StatusOK) {
 		return BigDataPoolResourceInfoResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return BigDataPoolResourceInfoResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.
@@ -85,7 +89,11 @@ func (client bigDataPoolsClient) List(ctx context.Context, options *BigDataPools
 	if !resp.HasStatusCode(http.StatusOK) {
 		return BigDataPoolResourceInfoListResultResponse{}, client.listHandleError(resp)
 	}
-	return client.listHandleResponse(resp)
+	result, err := client.listHandleResponse(resp)
+	if err != nil {
+		return BigDataPoolResourceInfoListResultResponse{}, err
+	}
+	return result, nil
 }
 
 // listCreateRequest creates the List request.

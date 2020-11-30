@@ -224,7 +224,11 @@ func (client VirtualMachineScaleSetExtensionsClient) Get(ctx context.Context, re
 	if !resp.HasStatusCode(http.StatusOK) {
 		return VirtualMachineScaleSetExtensionResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return VirtualMachineScaleSetExtensionResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.

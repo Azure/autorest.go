@@ -47,7 +47,11 @@ func (client NetworkProfilesClient) CreateOrUpdate(ctx context.Context, resource
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return NetworkProfileResponse{}, client.createOrUpdateHandleError(resp)
 	}
-	return client.createOrUpdateHandleResponse(resp)
+	result, err := client.createOrUpdateHandleResponse(resp)
+	if err != nil {
+		return NetworkProfileResponse{}, err
+	}
+	return result, nil
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -177,7 +181,11 @@ func (client NetworkProfilesClient) Get(ctx context.Context, resourceGroupName s
 	if !resp.HasStatusCode(http.StatusOK) {
 		return NetworkProfileResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return NetworkProfileResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.
@@ -327,7 +335,11 @@ func (client NetworkProfilesClient) UpdateTags(ctx context.Context, resourceGrou
 	if !resp.HasStatusCode(http.StatusOK) {
 		return NetworkProfileResponse{}, client.updateTagsHandleError(resp)
 	}
-	return client.updateTagsHandleResponse(resp)
+	result, err := client.updateTagsHandleResponse(resp)
+	if err != nil {
+		return NetworkProfileResponse{}, err
+	}
+	return result, nil
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.

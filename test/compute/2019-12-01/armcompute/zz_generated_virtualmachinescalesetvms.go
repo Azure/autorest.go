@@ -221,7 +221,11 @@ func (client VirtualMachineScaleSetVMSClient) Get(ctx context.Context, resourceG
 	if !resp.HasStatusCode(http.StatusOK) {
 		return VirtualMachineScaleSetVMResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return VirtualMachineScaleSetVMResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.
@@ -278,7 +282,11 @@ func (client VirtualMachineScaleSetVMSClient) GetInstanceView(ctx context.Contex
 	if !resp.HasStatusCode(http.StatusOK) {
 		return VirtualMachineScaleSetVMInstanceViewResponse{}, client.getInstanceViewHandleError(resp)
 	}
-	return client.getInstanceViewHandleResponse(resp)
+	result, err := client.getInstanceViewHandleResponse(resp)
+	if err != nil {
+		return VirtualMachineScaleSetVMInstanceViewResponse{}, err
+	}
+	return result, nil
 }
 
 // getInstanceViewCreateRequest creates the GetInstanceView request.

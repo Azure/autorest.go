@@ -42,7 +42,11 @@ func (client ByteClient) GetEmpty(ctx context.Context, options *ByteGetEmptyOpti
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ByteArrayResponse{}, client.getEmptyHandleError(resp)
 	}
-	return client.getEmptyHandleResponse(resp)
+	result, err := client.getEmptyHandleResponse(resp)
+	if err != nil {
+		return ByteArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getEmptyCreateRequest creates the GetEmpty request.
@@ -86,7 +90,11 @@ func (client ByteClient) GetInvalid(ctx context.Context, options *ByteGetInvalid
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ByteArrayResponse{}, client.getInvalidHandleError(resp)
 	}
-	return client.getInvalidHandleResponse(resp)
+	result, err := client.getInvalidHandleResponse(resp)
+	if err != nil {
+		return ByteArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getInvalidCreateRequest creates the GetInvalid request.
@@ -130,7 +138,11 @@ func (client ByteClient) GetNonASCII(ctx context.Context, options *ByteGetNonASC
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ByteArrayResponse{}, client.getNonAsciiHandleError(resp)
 	}
-	return client.getNonAsciiHandleResponse(resp)
+	result, err := client.getNonAsciiHandleResponse(resp)
+	if err != nil {
+		return ByteArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getNonAsciiCreateRequest creates the GetNonASCII request.
@@ -174,7 +186,11 @@ func (client ByteClient) GetNull(ctx context.Context, options *ByteGetNullOption
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ByteArrayResponse{}, client.getNullHandleError(resp)
 	}
-	return client.getNullHandleResponse(resp)
+	result, err := client.getNullHandleResponse(resp)
+	if err != nil {
+		return ByteArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getNullCreateRequest creates the GetNull request.

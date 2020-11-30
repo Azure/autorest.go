@@ -89,7 +89,11 @@ func (client pipelineClient) CreatePipelineRun(ctx context.Context, pipelineName
 	if !resp.HasStatusCode(http.StatusAccepted) {
 		return CreateRunResponseResponse{}, client.createPipelineRunHandleError(resp)
 	}
-	return client.createPipelineRunHandleResponse(resp)
+	result, err := client.createPipelineRunHandleResponse(resp)
+	if err != nil {
+		return CreateRunResponseResponse{}, err
+	}
+	return result, nil
 }
 
 // createPipelineRunCreateRequest creates the CreatePipelineRun request.
@@ -190,7 +194,11 @@ func (client pipelineClient) GetPipeline(ctx context.Context, pipelineName strin
 	if !resp.HasStatusCode(http.StatusOK, http.StatusNotModified) {
 		return PipelineResourceResponse{}, client.getPipelineHandleError(resp)
 	}
-	return client.getPipelineHandleResponse(resp)
+	result, err := client.getPipelineHandleResponse(resp)
+	if err != nil {
+		return PipelineResourceResponse{}, err
+	}
+	return result, nil
 }
 
 // getPipelineCreateRequest creates the GetPipeline request.

@@ -153,7 +153,11 @@ func (client HTTPSuccessClient) Get200(ctx context.Context, options *HTTPSuccess
 	if !resp.HasStatusCode(http.StatusOK) {
 		return BoolResponse{}, client.get200HandleError(resp)
 	}
-	return client.get200HandleResponse(resp)
+	result, err := client.get200HandleResponse(resp)
+	if err != nil {
+		return BoolResponse{}, err
+	}
+	return result, nil
 }
 
 // get200CreateRequest creates the Get200 request.
@@ -317,7 +321,11 @@ func (client HTTPSuccessClient) Options200(ctx context.Context, options *HTTPSuc
 	if !resp.HasStatusCode(http.StatusOK) {
 		return BoolResponse{}, client.options200HandleError(resp)
 	}
-	return client.options200HandleResponse(resp)
+	result, err := client.options200HandleResponse(resp)
+	if err != nil {
+		return BoolResponse{}, err
+	}
+	return result, nil
 }
 
 // options200CreateRequest creates the Options200 request.

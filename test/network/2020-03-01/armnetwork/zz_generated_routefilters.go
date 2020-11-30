@@ -214,7 +214,11 @@ func (client RouteFiltersClient) Get(ctx context.Context, resourceGroupName stri
 	if !resp.HasStatusCode(http.StatusOK) {
 		return RouteFilterResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return RouteFilterResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.
@@ -364,7 +368,11 @@ func (client RouteFiltersClient) UpdateTags(ctx context.Context, resourceGroupNa
 	if !resp.HasStatusCode(http.StatusOK) {
 		return RouteFilterResponse{}, client.updateTagsHandleError(resp)
 	}
-	return client.updateTagsHandleResponse(resp)
+	result, err := client.updateTagsHandleResponse(resp)
+	if err != nil {
+		return RouteFilterResponse{}, err
+	}
+	return result, nil
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.

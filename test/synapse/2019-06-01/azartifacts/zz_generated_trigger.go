@@ -129,7 +129,11 @@ func (client triggerClient) GetEventSubscriptionStatus(ctx context.Context, trig
 	if !resp.HasStatusCode(http.StatusOK) {
 		return TriggerSubscriptionOperationStatusResponse{}, client.getEventSubscriptionStatusHandleError(resp)
 	}
-	return client.getEventSubscriptionStatusHandleResponse(resp)
+	result, err := client.getEventSubscriptionStatusHandleResponse(resp)
+	if err != nil {
+		return TriggerSubscriptionOperationStatusResponse{}, err
+	}
+	return result, nil
 }
 
 // getEventSubscriptionStatusCreateRequest creates the GetEventSubscriptionStatus request.
@@ -177,7 +181,11 @@ func (client triggerClient) GetTrigger(ctx context.Context, triggerName string, 
 	if !resp.HasStatusCode(http.StatusOK, http.StatusNotModified) {
 		return TriggerResourceResponse{}, client.getTriggerHandleError(resp)
 	}
-	return client.getTriggerHandleResponse(resp)
+	result, err := client.getTriggerHandleResponse(resp)
+	if err != nil {
+		return TriggerResourceResponse{}, err
+	}
+	return result, nil
 }
 
 // getTriggerCreateRequest creates the GetTrigger request.

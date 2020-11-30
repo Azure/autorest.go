@@ -469,7 +469,11 @@ func (client PrivateLinkServicesClient) Get(ctx context.Context, resourceGroupNa
 	if !resp.HasStatusCode(http.StatusOK) {
 		return PrivateLinkServiceResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return PrivateLinkServiceResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.
@@ -522,7 +526,11 @@ func (client PrivateLinkServicesClient) GetPrivateEndpointConnection(ctx context
 	if !resp.HasStatusCode(http.StatusOK) {
 		return PrivateEndpointConnectionResponse{}, client.getPrivateEndpointConnectionHandleError(resp)
 	}
-	return client.getPrivateEndpointConnectionHandleResponse(resp)
+	result, err := client.getPrivateEndpointConnectionHandleResponse(resp)
+	if err != nil {
+		return PrivateEndpointConnectionResponse{}, err
+	}
+	return result, nil
 }
 
 // getPrivateEndpointConnectionCreateRequest creates the GetPrivateEndpointConnection request.
@@ -824,7 +832,11 @@ func (client PrivateLinkServicesClient) UpdatePrivateEndpointConnection(ctx cont
 	if !resp.HasStatusCode(http.StatusOK) {
 		return PrivateEndpointConnectionResponse{}, client.updatePrivateEndpointConnectionHandleError(resp)
 	}
-	return client.updatePrivateEndpointConnectionHandleResponse(resp)
+	result, err := client.updatePrivateEndpointConnectionHandleResponse(resp)
+	if err != nil {
+		return PrivateEndpointConnectionResponse{}, err
+	}
+	return result, nil
 }
 
 // updatePrivateEndpointConnectionCreateRequest creates the UpdatePrivateEndpointConnection request.

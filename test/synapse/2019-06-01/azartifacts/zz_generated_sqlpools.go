@@ -37,7 +37,11 @@ func (client sqlPoolsClient) Get(ctx context.Context, sqlPoolName string, option
 	if !resp.HasStatusCode(http.StatusOK) {
 		return SQLPoolResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return SQLPoolResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.
@@ -85,7 +89,11 @@ func (client sqlPoolsClient) List(ctx context.Context, options *SQLPoolsListOpti
 	if !resp.HasStatusCode(http.StatusOK) {
 		return SQLPoolInfoListResultResponse{}, client.listHandleError(resp)
 	}
-	return client.listHandleResponse(resp)
+	result, err := client.listHandleResponse(resp)
+	if err != nil {
+		return SQLPoolInfoListResultResponse{}, err
+	}
+	return result, nil
 }
 
 // listCreateRequest creates the List request.

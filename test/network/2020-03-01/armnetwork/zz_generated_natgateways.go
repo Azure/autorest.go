@@ -214,7 +214,11 @@ func (client NatGatewaysClient) Get(ctx context.Context, resourceGroupName strin
 	if !resp.HasStatusCode(http.StatusOK) {
 		return NatGatewayResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return NatGatewayResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.
@@ -364,7 +368,11 @@ func (client NatGatewaysClient) UpdateTags(ctx context.Context, resourceGroupNam
 	if !resp.HasStatusCode(http.StatusOK) {
 		return NatGatewayResponse{}, client.updateTagsHandleError(resp)
 	}
-	return client.updateTagsHandleResponse(resp)
+	result, err := client.updateTagsHandleResponse(resp)
+	if err != nil {
+		return NatGatewayResponse{}, err
+	}
+	return result, nil
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.

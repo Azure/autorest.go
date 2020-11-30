@@ -37,7 +37,11 @@ func (client sparkJobDefinitionClient) CreateOrUpdateSparkJobDefinition(ctx cont
 	if !resp.HasStatusCode(http.StatusOK) {
 		return SparkJobDefinitionResourceResponse{}, client.createOrUpdateSparkJobDefinitionHandleError(resp)
 	}
-	return client.createOrUpdateSparkJobDefinitionHandleResponse(resp)
+	result, err := client.createOrUpdateSparkJobDefinitionHandleResponse(resp)
+	if err != nil {
+		return SparkJobDefinitionResourceResponse{}, err
+	}
+	return result, nil
 }
 
 // createOrUpdateSparkJobDefinitionCreateRequest creates the CreateOrUpdateSparkJobDefinition request.
@@ -224,7 +228,11 @@ func (client sparkJobDefinitionClient) GetSparkJobDefinition(ctx context.Context
 	if !resp.HasStatusCode(http.StatusOK, http.StatusNotModified) {
 		return SparkJobDefinitionResourceResponse{}, client.getSparkJobDefinitionHandleError(resp)
 	}
-	return client.getSparkJobDefinitionHandleResponse(resp)
+	result, err := client.getSparkJobDefinitionHandleResponse(resp)
+	if err != nil {
+		return SparkJobDefinitionResourceResponse{}, err
+	}
+	return result, nil
 }
 
 // getSparkJobDefinitionCreateRequest creates the GetSparkJobDefinition request.

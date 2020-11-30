@@ -38,7 +38,11 @@ func (client workspaceGitRepoManagementClient) GetGitHubAccessToken(ctx context.
 	if !resp.HasStatusCode(http.StatusOK) {
 		return GitHubAccessTokenResponseResponse{}, client.getGitHubAccessTokenHandleError(resp)
 	}
-	return client.getGitHubAccessTokenHandleResponse(resp)
+	result, err := client.getGitHubAccessTokenHandleResponse(resp)
+	if err != nil {
+		return GitHubAccessTokenResponseResponse{}, err
+	}
+	return result, nil
 }
 
 // getGitHubAccessTokenCreateRequest creates the GetGitHubAccessToken request.

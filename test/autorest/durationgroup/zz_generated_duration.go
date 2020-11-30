@@ -42,7 +42,11 @@ func (client DurationClient) GetInvalid(ctx context.Context, options *DurationGe
 	if !resp.HasStatusCode(http.StatusOK) {
 		return StringResponse{}, client.getInvalidHandleError(resp)
 	}
-	return client.getInvalidHandleResponse(resp)
+	result, err := client.getInvalidHandleResponse(resp)
+	if err != nil {
+		return StringResponse{}, err
+	}
+	return result, nil
 }
 
 // getInvalidCreateRequest creates the GetInvalid request.
@@ -86,7 +90,11 @@ func (client DurationClient) GetNull(ctx context.Context, options *DurationGetNu
 	if !resp.HasStatusCode(http.StatusOK) {
 		return StringResponse{}, client.getNullHandleError(resp)
 	}
-	return client.getNullHandleResponse(resp)
+	result, err := client.getNullHandleResponse(resp)
+	if err != nil {
+		return StringResponse{}, err
+	}
+	return result, nil
 }
 
 // getNullCreateRequest creates the GetNull request.
@@ -130,7 +138,11 @@ func (client DurationClient) GetPositiveDuration(ctx context.Context, options *D
 	if !resp.HasStatusCode(http.StatusOK) {
 		return StringResponse{}, client.getPositiveDurationHandleError(resp)
 	}
-	return client.getPositiveDurationHandleResponse(resp)
+	result, err := client.getPositiveDurationHandleResponse(resp)
+	if err != nil {
+		return StringResponse{}, err
+	}
+	return result, nil
 }
 
 // getPositiveDurationCreateRequest creates the GetPositiveDuration request.

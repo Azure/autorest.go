@@ -216,7 +216,11 @@ func (client ServiceEndpointPolicyDefinitionsClient) Get(ctx context.Context, re
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ServiceEndpointPolicyDefinitionResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return ServiceEndpointPolicyDefinitionResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.

@@ -607,7 +607,11 @@ func (client PagingClient) GetNullNextLinkNamePages(ctx context.Context, options
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ProductResultResponse{}, client.getNullNextLinkNamePagesHandleError(resp)
 	}
-	return client.getNullNextLinkNamePagesHandleResponse(resp)
+	result, err := client.getNullNextLinkNamePagesHandleResponse(resp)
+	if err != nil {
+		return ProductResultResponse{}, err
+	}
+	return result, nil
 }
 
 // getNullNextLinkNamePagesCreateRequest creates the GetNullNextLinkNamePages request.

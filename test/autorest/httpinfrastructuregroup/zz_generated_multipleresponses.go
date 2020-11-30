@@ -46,7 +46,11 @@ func (client MultipleResponsesClient) Get200Model201ModelDefaultError200Valid(ct
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return nil, client.get200Model201ModelDefaultError200ValidHandleError(resp)
 	}
-	return client.get200Model201ModelDefaultError200ValidHandleResponse(resp)
+	result, err := client.get200Model201ModelDefaultError200ValidHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 // get200Model201ModelDefaultError200ValidCreateRequest creates the Get200Model201ModelDefaultError200Valid request.
@@ -100,7 +104,11 @@ func (client MultipleResponsesClient) Get200Model201ModelDefaultError201Valid(ct
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return nil, client.get200Model201ModelDefaultError201ValidHandleError(resp)
 	}
-	return client.get200Model201ModelDefaultError201ValidHandleResponse(resp)
+	result, err := client.get200Model201ModelDefaultError201ValidHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 // get200Model201ModelDefaultError201ValidCreateRequest creates the Get200Model201ModelDefaultError201Valid request.
@@ -154,7 +162,11 @@ func (client MultipleResponsesClient) Get200Model201ModelDefaultError400Valid(ct
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return nil, client.get200Model201ModelDefaultError400ValidHandleError(resp)
 	}
-	return client.get200Model201ModelDefaultError400ValidHandleResponse(resp)
+	result, err := client.get200Model201ModelDefaultError400ValidHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 // get200Model201ModelDefaultError400ValidCreateRequest creates the Get200Model201ModelDefaultError400Valid request.
@@ -207,7 +219,11 @@ func (client MultipleResponsesClient) Get200Model204NoModelDefaultError200Valid(
 	if !resp.HasStatusCode(http.StatusOK, http.StatusNoContent) {
 		return MyExceptionResponse{}, client.get200Model204NoModelDefaultError200ValidHandleError(resp)
 	}
-	return client.get200Model204NoModelDefaultError200ValidHandleResponse(resp)
+	result, err := client.get200Model204NoModelDefaultError200ValidHandleResponse(resp)
+	if err != nil {
+		return MyExceptionResponse{}, err
+	}
+	return result, nil
 }
 
 // get200Model204NoModelDefaultError200ValidCreateRequest creates the Get200Model204NoModelDefaultError200Valid request.
@@ -251,7 +267,11 @@ func (client MultipleResponsesClient) Get200Model204NoModelDefaultError201Invali
 	if !resp.HasStatusCode(http.StatusOK, http.StatusNoContent) {
 		return MyExceptionResponse{}, client.get200Model204NoModelDefaultError201InvalidHandleError(resp)
 	}
-	return client.get200Model204NoModelDefaultError201InvalidHandleResponse(resp)
+	result, err := client.get200Model204NoModelDefaultError201InvalidHandleResponse(resp)
+	if err != nil {
+		return MyExceptionResponse{}, err
+	}
+	return result, nil
 }
 
 // get200Model204NoModelDefaultError201InvalidCreateRequest creates the Get200Model204NoModelDefaultError201Invalid request.
@@ -295,7 +315,11 @@ func (client MultipleResponsesClient) Get200Model204NoModelDefaultError202None(c
 	if !resp.HasStatusCode(http.StatusOK, http.StatusNoContent) {
 		return MyExceptionResponse{}, client.get200Model204NoModelDefaultError202NoneHandleError(resp)
 	}
-	return client.get200Model204NoModelDefaultError202NoneHandleResponse(resp)
+	result, err := client.get200Model204NoModelDefaultError202NoneHandleResponse(resp)
+	if err != nil {
+		return MyExceptionResponse{}, err
+	}
+	return result, nil
 }
 
 // get200Model204NoModelDefaultError202NoneCreateRequest creates the Get200Model204NoModelDefaultError202None request.
@@ -339,7 +363,11 @@ func (client MultipleResponsesClient) Get200Model204NoModelDefaultError204Valid(
 	if !resp.HasStatusCode(http.StatusOK, http.StatusNoContent) {
 		return MyExceptionResponse{}, client.get200Model204NoModelDefaultError204ValidHandleError(resp)
 	}
-	return client.get200Model204NoModelDefaultError204ValidHandleResponse(resp)
+	result, err := client.get200Model204NoModelDefaultError204ValidHandleResponse(resp)
+	if err != nil {
+		return MyExceptionResponse{}, err
+	}
+	return result, nil
 }
 
 // get200Model204NoModelDefaultError204ValidCreateRequest creates the Get200Model204NoModelDefaultError204Valid request.
@@ -383,7 +411,11 @@ func (client MultipleResponsesClient) Get200Model204NoModelDefaultError400Valid(
 	if !resp.HasStatusCode(http.StatusOK, http.StatusNoContent) {
 		return MyExceptionResponse{}, client.get200Model204NoModelDefaultError400ValidHandleError(resp)
 	}
-	return client.get200Model204NoModelDefaultError400ValidHandleResponse(resp)
+	result, err := client.get200Model204NoModelDefaultError400ValidHandleResponse(resp)
+	if err != nil {
+		return MyExceptionResponse{}, err
+	}
+	return result, nil
 }
 
 // get200Model204NoModelDefaultError400ValidCreateRequest creates the Get200Model204NoModelDefaultError400Valid request.
@@ -427,7 +459,11 @@ func (client MultipleResponsesClient) Get200ModelA200Invalid(ctx context.Context
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MyExceptionResponse{}, client.get200ModelA200InvalidHandleError(resp)
 	}
-	return client.get200ModelA200InvalidHandleResponse(resp)
+	result, err := client.get200ModelA200InvalidHandleResponse(resp)
+	if err != nil {
+		return MyExceptionResponse{}, err
+	}
+	return result, nil
 }
 
 // get200ModelA200InvalidCreateRequest creates the Get200ModelA200Invalid request.
@@ -474,7 +510,11 @@ func (client MultipleResponsesClient) Get200ModelA200None(ctx context.Context, o
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MyExceptionResponse{}, client.get200ModelA200NoneHandleError(resp)
 	}
-	return client.get200ModelA200NoneHandleResponse(resp)
+	result, err := client.get200ModelA200NoneHandleResponse(resp)
+	if err != nil {
+		return MyExceptionResponse{}, err
+	}
+	return result, nil
 }
 
 // get200ModelA200NoneCreateRequest creates the Get200ModelA200None request.
@@ -521,7 +561,11 @@ func (client MultipleResponsesClient) Get200ModelA200Valid(ctx context.Context, 
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MyExceptionResponse{}, client.get200ModelA200ValidHandleError(resp)
 	}
-	return client.get200ModelA200ValidHandleResponse(resp)
+	result, err := client.get200ModelA200ValidHandleResponse(resp)
+	if err != nil {
+		return MyExceptionResponse{}, err
+	}
+	return result, nil
 }
 
 // get200ModelA200ValidCreateRequest creates the Get200ModelA200Valid request.
@@ -569,7 +613,11 @@ func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNotFound) {
 		return nil, client.get200ModelA201ModelC404ModelDDefaultError200ValidHandleError(resp)
 	}
-	return client.get200ModelA201ModelC404ModelDDefaultError200ValidHandleResponse(resp)
+	result, err := client.get200ModelA201ModelC404ModelDDefaultError200ValidHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 // get200ModelA201ModelC404ModelDDefaultError200ValidCreateRequest creates the Get200ModelA201ModelC404ModelDDefaultError200Valid request.
@@ -627,7 +675,11 @@ func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNotFound) {
 		return nil, client.get200ModelA201ModelC404ModelDDefaultError201ValidHandleError(resp)
 	}
-	return client.get200ModelA201ModelC404ModelDDefaultError201ValidHandleResponse(resp)
+	result, err := client.get200ModelA201ModelC404ModelDDefaultError201ValidHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 // get200ModelA201ModelC404ModelDDefaultError201ValidCreateRequest creates the Get200ModelA201ModelC404ModelDDefaultError201Valid request.
@@ -685,7 +737,11 @@ func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNotFound) {
 		return nil, client.get200ModelA201ModelC404ModelDDefaultError400ValidHandleError(resp)
 	}
-	return client.get200ModelA201ModelC404ModelDDefaultError400ValidHandleResponse(resp)
+	result, err := client.get200ModelA201ModelC404ModelDDefaultError400ValidHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 // get200ModelA201ModelC404ModelDDefaultError400ValidCreateRequest creates the Get200ModelA201ModelC404ModelDDefaultError400Valid request.
@@ -743,7 +799,11 @@ func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusNotFound) {
 		return nil, client.get200ModelA201ModelC404ModelDDefaultError404ValidHandleError(resp)
 	}
-	return client.get200ModelA201ModelC404ModelDDefaultError404ValidHandleResponse(resp)
+	result, err := client.get200ModelA201ModelC404ModelDDefaultError404ValidHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 // get200ModelA201ModelC404ModelDDefaultError404ValidCreateRequest creates the Get200ModelA201ModelC404ModelDDefaultError404Valid request.
@@ -800,7 +860,11 @@ func (client MultipleResponsesClient) Get200ModelA202Valid(ctx context.Context, 
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MyExceptionResponse{}, client.get200ModelA202ValidHandleError(resp)
 	}
-	return client.get200ModelA202ValidHandleResponse(resp)
+	result, err := client.get200ModelA202ValidHandleResponse(resp)
+	if err != nil {
+		return MyExceptionResponse{}, err
+	}
+	return result, nil
 }
 
 // get200ModelA202ValidCreateRequest creates the Get200ModelA202Valid request.
@@ -847,7 +911,11 @@ func (client MultipleResponsesClient) Get200ModelA400Invalid(ctx context.Context
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MyExceptionResponse{}, client.get200ModelA400InvalidHandleError(resp)
 	}
-	return client.get200ModelA400InvalidHandleResponse(resp)
+	result, err := client.get200ModelA400InvalidHandleResponse(resp)
+	if err != nil {
+		return MyExceptionResponse{}, err
+	}
+	return result, nil
 }
 
 // get200ModelA400InvalidCreateRequest creates the Get200ModelA400Invalid request.
@@ -894,7 +962,11 @@ func (client MultipleResponsesClient) Get200ModelA400None(ctx context.Context, o
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MyExceptionResponse{}, client.get200ModelA400NoneHandleError(resp)
 	}
-	return client.get200ModelA400NoneHandleResponse(resp)
+	result, err := client.get200ModelA400NoneHandleResponse(resp)
+	if err != nil {
+		return MyExceptionResponse{}, err
+	}
+	return result, nil
 }
 
 // get200ModelA400NoneCreateRequest creates the Get200ModelA400None request.
@@ -941,7 +1013,11 @@ func (client MultipleResponsesClient) Get200ModelA400Valid(ctx context.Context, 
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MyExceptionResponse{}, client.get200ModelA400ValidHandleError(resp)
 	}
-	return client.get200ModelA400ValidHandleResponse(resp)
+	result, err := client.get200ModelA400ValidHandleResponse(resp)
+	if err != nil {
+		return MyExceptionResponse{}, err
+	}
+	return result, nil
 }
 
 // get200ModelA400ValidCreateRequest creates the Get200ModelA400Valid request.
@@ -1255,7 +1331,11 @@ func (client MultipleResponsesClient) GetDefaultModelA200None(ctx context.Contex
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MyExceptionResponse{}, client.getDefaultModelA200NoneHandleError(resp)
 	}
-	return client.getDefaultModelA200NoneHandleResponse(resp)
+	result, err := client.getDefaultModelA200NoneHandleResponse(resp)
+	if err != nil {
+		return MyExceptionResponse{}, err
+	}
+	return result, nil
 }
 
 // getDefaultModelA200NoneCreateRequest creates the GetDefaultModelA200None request.
@@ -1302,7 +1382,11 @@ func (client MultipleResponsesClient) GetDefaultModelA200Valid(ctx context.Conte
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MyExceptionResponse{}, client.getDefaultModelA200ValidHandleError(resp)
 	}
-	return client.getDefaultModelA200ValidHandleResponse(resp)
+	result, err := client.getDefaultModelA200ValidHandleResponse(resp)
+	if err != nil {
+		return MyExceptionResponse{}, err
+	}
+	return result, nil
 }
 
 // getDefaultModelA200ValidCreateRequest creates the GetDefaultModelA200Valid request.

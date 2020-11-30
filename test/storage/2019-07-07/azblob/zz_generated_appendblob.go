@@ -41,7 +41,11 @@ func (client appendBlobClient) AppendBlock(ctx context.Context, contentLength in
 	if !resp.HasStatusCode(http.StatusCreated) {
 		return AppendBlobAppendBlockResponse{}, client.appendBlockHandleError(resp)
 	}
-	return client.appendBlockHandleResponse(resp)
+	result, err := client.appendBlockHandleResponse(resp)
+	if err != nil {
+		return AppendBlobAppendBlockResponse{}, err
+	}
+	return result, nil
 }
 
 // appendBlockCreateRequest creates the AppendBlock request.
@@ -199,7 +203,11 @@ func (client appendBlobClient) AppendBlockFromURL(ctx context.Context, sourceUrl
 	if !resp.HasStatusCode(http.StatusCreated) {
 		return AppendBlobAppendBlockFromURLResponse{}, client.appendBlockFromUrlHandleError(resp)
 	}
-	return client.appendBlockFromUrlHandleResponse(resp)
+	result, err := client.appendBlockFromUrlHandleResponse(resp)
+	if err != nil {
+		return AppendBlobAppendBlockFromURLResponse{}, err
+	}
+	return result, nil
 }
 
 // appendBlockFromUrlCreateRequest creates the AppendBlockFromURL request.
@@ -371,7 +379,11 @@ func (client appendBlobClient) Create(ctx context.Context, contentLength int64, 
 	if !resp.HasStatusCode(http.StatusCreated) {
 		return AppendBlobCreateResponse{}, client.createHandleError(resp)
 	}
-	return client.createHandleResponse(resp)
+	result, err := client.createHandleResponse(resp)
+	if err != nil {
+		return AppendBlobCreateResponse{}, err
+	}
+	return result, nil
 }
 
 // createCreateRequest creates the Create request.

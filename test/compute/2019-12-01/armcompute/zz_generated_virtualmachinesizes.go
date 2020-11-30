@@ -49,7 +49,11 @@ func (client VirtualMachineSizesClient) List(ctx context.Context, location strin
 	if !resp.HasStatusCode(http.StatusOK) {
 		return VirtualMachineSizeListResultResponse{}, client.listHandleError(resp)
 	}
-	return client.listHandleResponse(resp)
+	result, err := client.listHandleResponse(resp)
+	if err != nil {
+		return VirtualMachineSizeListResultResponse{}, err
+	}
+	return result, nil
 }
 
 // listCreateRequest creates the List request.

@@ -218,7 +218,11 @@ func (client ExpressRouteCircuitConnectionsClient) Get(ctx context.Context, reso
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ExpressRouteCircuitConnectionResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return ExpressRouteCircuitConnectionResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.

@@ -46,7 +46,11 @@ func (client LoadBalancerBackendAddressPoolsClient) Get(ctx context.Context, res
 	if !resp.HasStatusCode(http.StatusOK) {
 		return BackendAddressPoolResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return BackendAddressPoolResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.

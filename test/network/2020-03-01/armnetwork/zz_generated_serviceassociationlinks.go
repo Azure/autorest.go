@@ -46,7 +46,11 @@ func (client ServiceAssociationLinksClient) List(ctx context.Context, resourceGr
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ServiceAssociationLinksListResultResponse{}, client.listHandleError(resp)
 	}
-	return client.listHandleResponse(resp)
+	result, err := client.listHandleResponse(resp)
+	if err != nil {
+		return ServiceAssociationLinksListResultResponse{}, err
+	}
+	return result, nil
 }
 
 // listCreateRequest creates the List request.

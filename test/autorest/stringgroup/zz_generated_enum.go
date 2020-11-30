@@ -42,7 +42,11 @@ func (client EnumClient) GetNotExpandable(ctx context.Context, options *EnumGetN
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ColorsResponse{}, client.getNotExpandableHandleError(resp)
 	}
-	return client.getNotExpandableHandleResponse(resp)
+	result, err := client.getNotExpandableHandleResponse(resp)
+	if err != nil {
+		return ColorsResponse{}, err
+	}
+	return result, nil
 }
 
 // getNotExpandableCreateRequest creates the GetNotExpandable request.
@@ -86,7 +90,11 @@ func (client EnumClient) GetReferenced(ctx context.Context, options *EnumGetRefe
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ColorsResponse{}, client.getReferencedHandleError(resp)
 	}
-	return client.getReferencedHandleResponse(resp)
+	result, err := client.getReferencedHandleResponse(resp)
+	if err != nil {
+		return ColorsResponse{}, err
+	}
+	return result, nil
 }
 
 // getReferencedCreateRequest creates the GetReferenced request.
@@ -130,7 +138,11 @@ func (client EnumClient) GetReferencedConstant(ctx context.Context, options *Enu
 	if !resp.HasStatusCode(http.StatusOK) {
 		return RefColorConstantResponse{}, client.getReferencedConstantHandleError(resp)
 	}
-	return client.getReferencedConstantHandleResponse(resp)
+	result, err := client.getReferencedConstantHandleResponse(resp)
+	if err != nil {
+		return RefColorConstantResponse{}, err
+	}
+	return result, nil
 }
 
 // getReferencedConstantCreateRequest creates the GetReferencedConstant request.

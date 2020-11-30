@@ -45,7 +45,11 @@ func (client FloatClient) Get(ctx context.Context, options *FloatGetOptions) (Fl
 	if !resp.HasStatusCode(http.StatusOK) {
 		return FloatEnumResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return FloatEnumResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.
@@ -92,7 +96,11 @@ func (client FloatClient) Put(ctx context.Context, options *FloatPutOptions) (St
 	if !resp.HasStatusCode(http.StatusOK) {
 		return StringResponse{}, client.putHandleError(resp)
 	}
-	return client.putHandleResponse(resp)
+	result, err := client.putHandleResponse(resp)
+	if err != nil {
+		return StringResponse{}, err
+	}
+	return result, nil
 }
 
 // putCreateRequest creates the Put request.

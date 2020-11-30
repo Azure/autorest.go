@@ -129,7 +129,11 @@ func (client linkedServiceClient) GetLinkedService(ctx context.Context, linkedSe
 	if !resp.HasStatusCode(http.StatusOK, http.StatusNotModified) {
 		return LinkedServiceResourceResponse{}, client.getLinkedServiceHandleError(resp)
 	}
-	return client.getLinkedServiceHandleResponse(resp)
+	result, err := client.getLinkedServiceHandleResponse(resp)
+	if err != nil {
+		return LinkedServiceResourceResponse{}, err
+	}
+	return result, nil
 }
 
 // getLinkedServiceCreateRequest creates the GetLinkedService request.

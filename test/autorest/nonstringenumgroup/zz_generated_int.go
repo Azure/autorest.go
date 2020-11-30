@@ -45,7 +45,11 @@ func (client IntClient) Get(ctx context.Context, options *IntGetOptions) (IntEnu
 	if !resp.HasStatusCode(http.StatusOK) {
 		return IntEnumResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return IntEnumResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.
@@ -92,7 +96,11 @@ func (client IntClient) Put(ctx context.Context, options *IntPutOptions) (String
 	if !resp.HasStatusCode(http.StatusOK) {
 		return StringResponse{}, client.putHandleError(resp)
 	}
-	return client.putHandleResponse(resp)
+	result, err := client.putHandleResponse(resp)
+	if err != nil {
+		return StringResponse{}, err
+	}
+	return result, nil
 }
 
 // putCreateRequest creates the Put request.

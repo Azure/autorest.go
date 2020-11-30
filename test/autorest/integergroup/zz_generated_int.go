@@ -43,7 +43,11 @@ func (client IntClient) GetInvalid(ctx context.Context, options *IntGetInvalidOp
 	if !resp.HasStatusCode(http.StatusOK) {
 		return Int32Response{}, client.getInvalidHandleError(resp)
 	}
-	return client.getInvalidHandleResponse(resp)
+	result, err := client.getInvalidHandleResponse(resp)
+	if err != nil {
+		return Int32Response{}, err
+	}
+	return result, nil
 }
 
 // getInvalidCreateRequest creates the GetInvalid request.
@@ -87,7 +91,11 @@ func (client IntClient) GetInvalidUnixTime(ctx context.Context, options *IntGetI
 	if !resp.HasStatusCode(http.StatusOK) {
 		return TimeResponse{}, client.getInvalidUnixTimeHandleError(resp)
 	}
-	return client.getInvalidUnixTimeHandleResponse(resp)
+	result, err := client.getInvalidUnixTimeHandleResponse(resp)
+	if err != nil {
+		return TimeResponse{}, err
+	}
+	return result, nil
 }
 
 // getInvalidUnixTimeCreateRequest creates the GetInvalidUnixTime request.
@@ -131,7 +139,11 @@ func (client IntClient) GetNull(ctx context.Context, options *IntGetNullOptions)
 	if !resp.HasStatusCode(http.StatusOK) {
 		return Int32Response{}, client.getNullHandleError(resp)
 	}
-	return client.getNullHandleResponse(resp)
+	result, err := client.getNullHandleResponse(resp)
+	if err != nil {
+		return Int32Response{}, err
+	}
+	return result, nil
 }
 
 // getNullCreateRequest creates the GetNull request.
@@ -175,7 +187,11 @@ func (client IntClient) GetNullUnixTime(ctx context.Context, options *IntGetNull
 	if !resp.HasStatusCode(http.StatusOK) {
 		return TimeResponse{}, client.getNullUnixTimeHandleError(resp)
 	}
-	return client.getNullUnixTimeHandleResponse(resp)
+	result, err := client.getNullUnixTimeHandleResponse(resp)
+	if err != nil {
+		return TimeResponse{}, err
+	}
+	return result, nil
 }
 
 // getNullUnixTimeCreateRequest creates the GetNullUnixTime request.
@@ -219,7 +235,11 @@ func (client IntClient) GetOverflowInt32(ctx context.Context, options *IntGetOve
 	if !resp.HasStatusCode(http.StatusOK) {
 		return Int32Response{}, client.getOverflowInt32HandleError(resp)
 	}
-	return client.getOverflowInt32HandleResponse(resp)
+	result, err := client.getOverflowInt32HandleResponse(resp)
+	if err != nil {
+		return Int32Response{}, err
+	}
+	return result, nil
 }
 
 // getOverflowInt32CreateRequest creates the GetOverflowInt32 request.
@@ -263,7 +283,11 @@ func (client IntClient) GetOverflowInt64(ctx context.Context, options *IntGetOve
 	if !resp.HasStatusCode(http.StatusOK) {
 		return Int64Response{}, client.getOverflowInt64HandleError(resp)
 	}
-	return client.getOverflowInt64HandleResponse(resp)
+	result, err := client.getOverflowInt64HandleResponse(resp)
+	if err != nil {
+		return Int64Response{}, err
+	}
+	return result, nil
 }
 
 // getOverflowInt64CreateRequest creates the GetOverflowInt64 request.
@@ -307,7 +331,11 @@ func (client IntClient) GetUnderflowInt32(ctx context.Context, options *IntGetUn
 	if !resp.HasStatusCode(http.StatusOK) {
 		return Int32Response{}, client.getUnderflowInt32HandleError(resp)
 	}
-	return client.getUnderflowInt32HandleResponse(resp)
+	result, err := client.getUnderflowInt32HandleResponse(resp)
+	if err != nil {
+		return Int32Response{}, err
+	}
+	return result, nil
 }
 
 // getUnderflowInt32CreateRequest creates the GetUnderflowInt32 request.
@@ -351,7 +379,11 @@ func (client IntClient) GetUnderflowInt64(ctx context.Context, options *IntGetUn
 	if !resp.HasStatusCode(http.StatusOK) {
 		return Int64Response{}, client.getUnderflowInt64HandleError(resp)
 	}
-	return client.getUnderflowInt64HandleResponse(resp)
+	result, err := client.getUnderflowInt64HandleResponse(resp)
+	if err != nil {
+		return Int64Response{}, err
+	}
+	return result, nil
 }
 
 // getUnderflowInt64CreateRequest creates the GetUnderflowInt64 request.
@@ -395,7 +427,11 @@ func (client IntClient) GetUnixTime(ctx context.Context, options *IntGetUnixTime
 	if !resp.HasStatusCode(http.StatusOK) {
 		return TimeResponse{}, client.getUnixTimeHandleError(resp)
 	}
-	return client.getUnixTimeHandleResponse(resp)
+	result, err := client.getUnixTimeHandleResponse(resp)
+	if err != nil {
+		return TimeResponse{}, err
+	}
+	return result, nil
 }
 
 // getUnixTimeCreateRequest creates the GetUnixTime request.

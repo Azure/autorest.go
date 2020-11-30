@@ -82,7 +82,11 @@ func (client pipelineRunClient) GetPipelineRun(ctx context.Context, runId string
 	if !resp.HasStatusCode(http.StatusOK) {
 		return PipelineRunResponse{}, client.getPipelineRunHandleError(resp)
 	}
-	return client.getPipelineRunHandleResponse(resp)
+	result, err := client.getPipelineRunHandleResponse(resp)
+	if err != nil {
+		return PipelineRunResponse{}, err
+	}
+	return result, nil
 }
 
 // getPipelineRunCreateRequest creates the GetPipelineRun request.
@@ -130,7 +134,11 @@ func (client pipelineRunClient) QueryActivityRuns(ctx context.Context, pipelineN
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ActivityRunsQueryResponseResponse{}, client.queryActivityRunsHandleError(resp)
 	}
-	return client.queryActivityRunsHandleResponse(resp)
+	result, err := client.queryActivityRunsHandleResponse(resp)
+	if err != nil {
+		return ActivityRunsQueryResponseResponse{}, err
+	}
+	return result, nil
 }
 
 // queryActivityRunsCreateRequest creates the QueryActivityRuns request.
@@ -179,7 +187,11 @@ func (client pipelineRunClient) QueryPipelineRunsByWorkspace(ctx context.Context
 	if !resp.HasStatusCode(http.StatusOK) {
 		return PipelineRunsQueryResponseResponse{}, client.queryPipelineRunsByWorkspaceHandleError(resp)
 	}
-	return client.queryPipelineRunsByWorkspaceHandleResponse(resp)
+	result, err := client.queryPipelineRunsByWorkspaceHandleResponse(resp)
+	if err != nil {
+		return PipelineRunsQueryResponseResponse{}, err
+	}
+	return result, nil
 }
 
 // queryPipelineRunsByWorkspaceCreateRequest creates the QueryPipelineRunsByWorkspace request.

@@ -216,7 +216,11 @@ func (client VirtualHubRouteTableV2SClient) Get(ctx context.Context, resourceGro
 	if !resp.HasStatusCode(http.StatusOK) {
 		return VirtualHubRouteTableV2Response{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return VirtualHubRouteTableV2Response{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.

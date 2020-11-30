@@ -216,7 +216,11 @@ func (client FirewallPolicyRuleGroupsClient) Get(ctx context.Context, resourceGr
 	if !resp.HasStatusCode(http.StatusOK) {
 		return FirewallPolicyRuleGroupResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return FirewallPolicyRuleGroupResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.

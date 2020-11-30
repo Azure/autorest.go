@@ -42,7 +42,11 @@ func (client PolymorphicrecursiveClient) GetValid(ctx context.Context, options *
 	if !resp.HasStatusCode(http.StatusOK) {
 		return FishResponse{}, client.getValidHandleError(resp)
 	}
-	return client.getValidHandleResponse(resp)
+	result, err := client.getValidHandleResponse(resp)
+	if err != nil {
+		return FishResponse{}, err
+	}
+	return result, nil
 }
 
 // getValidCreateRequest creates the GetValid request.

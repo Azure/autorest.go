@@ -532,7 +532,11 @@ func (client VirtualMachinesClient) Get(ctx context.Context, resourceGroupName s
 	if !resp.HasStatusCode(http.StatusOK) {
 		return VirtualMachineResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return VirtualMachineResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.
@@ -588,7 +592,11 @@ func (client VirtualMachinesClient) InstanceView(ctx context.Context, resourceGr
 	if !resp.HasStatusCode(http.StatusOK) {
 		return VirtualMachineInstanceViewResponse{}, client.instanceViewHandleError(resp)
 	}
-	return client.instanceViewHandleResponse(resp)
+	result, err := client.instanceViewHandleResponse(resp)
+	if err != nil {
+		return VirtualMachineInstanceViewResponse{}, err
+	}
+	return result, nil
 }
 
 // instanceViewCreateRequest creates the InstanceView request.
@@ -748,7 +756,11 @@ func (client VirtualMachinesClient) ListAvailableSizes(ctx context.Context, reso
 	if !resp.HasStatusCode(http.StatusOK) {
 		return VirtualMachineSizeListResultResponse{}, client.listAvailableSizesHandleError(resp)
 	}
-	return client.listAvailableSizesHandleResponse(resp)
+	result, err := client.listAvailableSizesHandleResponse(resp)
+	if err != nil {
+		return VirtualMachineSizeListResultResponse{}, err
+	}
+	return result, nil
 }
 
 // listAvailableSizesCreateRequest creates the ListAvailableSizes request.

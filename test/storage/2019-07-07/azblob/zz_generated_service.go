@@ -37,7 +37,11 @@ func (client serviceClient) GetAccountInfo(ctx context.Context, options *Service
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ServiceGetAccountInfoResponse{}, client.getAccountInfoHandleError(resp)
 	}
-	return client.getAccountInfoHandleResponse(resp)
+	result, err := client.getAccountInfoHandleResponse(resp)
+	if err != nil {
+		return ServiceGetAccountInfoResponse{}, err
+	}
+	return result, nil
 }
 
 // getAccountInfoCreateRequest creates the GetAccountInfo request.
@@ -107,7 +111,11 @@ func (client serviceClient) GetProperties(ctx context.Context, options *ServiceG
 	if !resp.HasStatusCode(http.StatusOK) {
 		return StorageServicePropertiesResponse{}, client.getPropertiesHandleError(resp)
 	}
-	return client.getPropertiesHandleResponse(resp)
+	result, err := client.getPropertiesHandleResponse(resp)
+	if err != nil {
+		return StorageServicePropertiesResponse{}, err
+	}
+	return result, nil
 }
 
 // getPropertiesCreateRequest creates the GetProperties request.
@@ -171,7 +179,11 @@ func (client serviceClient) GetStatistics(ctx context.Context, options *ServiceG
 	if !resp.HasStatusCode(http.StatusOK) {
 		return StorageServiceStatsResponse{}, client.getStatisticsHandleError(resp)
 	}
-	return client.getStatisticsHandleResponse(resp)
+	result, err := client.getStatisticsHandleResponse(resp)
+	if err != nil {
+		return StorageServiceStatsResponse{}, err
+	}
+	return result, nil
 }
 
 // getStatisticsCreateRequest creates the GetStatistics request.
@@ -241,7 +253,11 @@ func (client serviceClient) GetUserDelegationKey(ctx context.Context, keyInfo Ke
 	if !resp.HasStatusCode(http.StatusOK) {
 		return UserDelegationKeyResponse{}, client.getUserDelegationKeyHandleError(resp)
 	}
-	return client.getUserDelegationKeyHandleResponse(resp)
+	result, err := client.getUserDelegationKeyHandleResponse(resp)
+	if err != nil {
+		return UserDelegationKeyResponse{}, err
+	}
+	return result, nil
 }
 
 // getUserDelegationKeyCreateRequest creates the GetUserDelegationKey request.
@@ -386,7 +402,11 @@ func (client serviceClient) SetProperties(ctx context.Context, storageServicePro
 	if !resp.HasStatusCode(http.StatusAccepted) {
 		return ServiceSetPropertiesResponse{}, client.setPropertiesHandleError(resp)
 	}
-	return client.setPropertiesHandleResponse(resp)
+	result, err := client.setPropertiesHandleResponse(resp)
+	if err != nil {
+		return ServiceSetPropertiesResponse{}, err
+	}
+	return result, nil
 }
 
 // setPropertiesCreateRequest creates the SetProperties request.
@@ -448,7 +468,11 @@ func (client serviceClient) SubmitBatch(ctx context.Context, contentLength int64
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ServiceSubmitBatchResponse{}, client.submitBatchHandleError(resp)
 	}
-	return client.submitBatchHandleResponse(resp)
+	result, err := client.submitBatchHandleResponse(resp)
+	if err != nil {
+		return ServiceSubmitBatchResponse{}, err
+	}
+	return result, nil
 }
 
 // submitBatchCreateRequest creates the SubmitBatch request.

@@ -470,7 +470,11 @@ func (client VirtualNetworkGatewaysClient) Get(ctx context.Context, resourceGrou
 	if !resp.HasStatusCode(http.StatusOK) {
 		return VirtualNetworkGatewayResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return VirtualNetworkGatewayResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.
@@ -1589,7 +1593,11 @@ func (client VirtualNetworkGatewaysClient) SupportedVpnDevices(ctx context.Conte
 	if !resp.HasStatusCode(http.StatusOK) {
 		return StringResponse{}, client.supportedVpnDevicesHandleError(resp)
 	}
-	return client.supportedVpnDevicesHandleResponse(resp)
+	result, err := client.supportedVpnDevicesHandleResponse(resp)
+	if err != nil {
+		return StringResponse{}, err
+	}
+	return result, nil
 }
 
 // supportedVpnDevicesCreateRequest creates the SupportedVpnDevices request.
@@ -1726,7 +1734,11 @@ func (client VirtualNetworkGatewaysClient) VpnDeviceConfigurationScript(ctx cont
 	if !resp.HasStatusCode(http.StatusOK) {
 		return StringResponse{}, client.vpnDeviceConfigurationScriptHandleError(resp)
 	}
-	return client.vpnDeviceConfigurationScriptHandleResponse(resp)
+	result, err := client.vpnDeviceConfigurationScriptHandleResponse(resp)
+	if err != nil {
+		return StringResponse{}, err
+	}
+	return result, nil
 }
 
 // vpnDeviceConfigurationScriptCreateRequest creates the VpnDeviceConfigurationScript request.

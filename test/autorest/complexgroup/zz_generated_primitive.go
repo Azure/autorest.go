@@ -42,7 +42,11 @@ func (client PrimitiveClient) GetBool(ctx context.Context, options *PrimitiveGet
 	if !resp.HasStatusCode(http.StatusOK) {
 		return BooleanWrapperResponse{}, client.getBoolHandleError(resp)
 	}
-	return client.getBoolHandleResponse(resp)
+	result, err := client.getBoolHandleResponse(resp)
+	if err != nil {
+		return BooleanWrapperResponse{}, err
+	}
+	return result, nil
 }
 
 // getBoolCreateRequest creates the GetBool request.
@@ -86,7 +90,11 @@ func (client PrimitiveClient) GetByte(ctx context.Context, options *PrimitiveGet
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ByteWrapperResponse{}, client.getByteHandleError(resp)
 	}
-	return client.getByteHandleResponse(resp)
+	result, err := client.getByteHandleResponse(resp)
+	if err != nil {
+		return ByteWrapperResponse{}, err
+	}
+	return result, nil
 }
 
 // getByteCreateRequest creates the GetByte request.
@@ -130,7 +138,11 @@ func (client PrimitiveClient) GetDate(ctx context.Context, options *PrimitiveGet
 	if !resp.HasStatusCode(http.StatusOK) {
 		return DateWrapperResponse{}, client.getDateHandleError(resp)
 	}
-	return client.getDateHandleResponse(resp)
+	result, err := client.getDateHandleResponse(resp)
+	if err != nil {
+		return DateWrapperResponse{}, err
+	}
+	return result, nil
 }
 
 // getDateCreateRequest creates the GetDate request.
@@ -174,7 +186,11 @@ func (client PrimitiveClient) GetDateTime(ctx context.Context, options *Primitiv
 	if !resp.HasStatusCode(http.StatusOK) {
 		return DatetimeWrapperResponse{}, client.getDateTimeHandleError(resp)
 	}
-	return client.getDateTimeHandleResponse(resp)
+	result, err := client.getDateTimeHandleResponse(resp)
+	if err != nil {
+		return DatetimeWrapperResponse{}, err
+	}
+	return result, nil
 }
 
 // getDateTimeCreateRequest creates the GetDateTime request.
@@ -218,7 +234,11 @@ func (client PrimitiveClient) GetDateTimeRFC1123(ctx context.Context, options *P
 	if !resp.HasStatusCode(http.StatusOK) {
 		return Datetimerfc1123WrapperResponse{}, client.getDateTimeRfc1123HandleError(resp)
 	}
-	return client.getDateTimeRfc1123HandleResponse(resp)
+	result, err := client.getDateTimeRfc1123HandleResponse(resp)
+	if err != nil {
+		return Datetimerfc1123WrapperResponse{}, err
+	}
+	return result, nil
 }
 
 // getDateTimeRfc1123CreateRequest creates the GetDateTimeRFC1123 request.
@@ -262,7 +282,11 @@ func (client PrimitiveClient) GetDouble(ctx context.Context, options *PrimitiveG
 	if !resp.HasStatusCode(http.StatusOK) {
 		return DoubleWrapperResponse{}, client.getDoubleHandleError(resp)
 	}
-	return client.getDoubleHandleResponse(resp)
+	result, err := client.getDoubleHandleResponse(resp)
+	if err != nil {
+		return DoubleWrapperResponse{}, err
+	}
+	return result, nil
 }
 
 // getDoubleCreateRequest creates the GetDouble request.
@@ -306,7 +330,11 @@ func (client PrimitiveClient) GetDuration(ctx context.Context, options *Primitiv
 	if !resp.HasStatusCode(http.StatusOK) {
 		return DurationWrapperResponse{}, client.getDurationHandleError(resp)
 	}
-	return client.getDurationHandleResponse(resp)
+	result, err := client.getDurationHandleResponse(resp)
+	if err != nil {
+		return DurationWrapperResponse{}, err
+	}
+	return result, nil
 }
 
 // getDurationCreateRequest creates the GetDuration request.
@@ -350,7 +378,11 @@ func (client PrimitiveClient) GetFloat(ctx context.Context, options *PrimitiveGe
 	if !resp.HasStatusCode(http.StatusOK) {
 		return FloatWrapperResponse{}, client.getFloatHandleError(resp)
 	}
-	return client.getFloatHandleResponse(resp)
+	result, err := client.getFloatHandleResponse(resp)
+	if err != nil {
+		return FloatWrapperResponse{}, err
+	}
+	return result, nil
 }
 
 // getFloatCreateRequest creates the GetFloat request.
@@ -394,7 +426,11 @@ func (client PrimitiveClient) GetInt(ctx context.Context, options *PrimitiveGetI
 	if !resp.HasStatusCode(http.StatusOK) {
 		return IntWrapperResponse{}, client.getIntHandleError(resp)
 	}
-	return client.getIntHandleResponse(resp)
+	result, err := client.getIntHandleResponse(resp)
+	if err != nil {
+		return IntWrapperResponse{}, err
+	}
+	return result, nil
 }
 
 // getIntCreateRequest creates the GetInt request.
@@ -438,7 +474,11 @@ func (client PrimitiveClient) GetLong(ctx context.Context, options *PrimitiveGet
 	if !resp.HasStatusCode(http.StatusOK) {
 		return LongWrapperResponse{}, client.getLongHandleError(resp)
 	}
-	return client.getLongHandleResponse(resp)
+	result, err := client.getLongHandleResponse(resp)
+	if err != nil {
+		return LongWrapperResponse{}, err
+	}
+	return result, nil
 }
 
 // getLongCreateRequest creates the GetLong request.
@@ -482,7 +522,11 @@ func (client PrimitiveClient) GetString(ctx context.Context, options *PrimitiveG
 	if !resp.HasStatusCode(http.StatusOK) {
 		return StringWrapperResponse{}, client.getStringHandleError(resp)
 	}
-	return client.getStringHandleResponse(resp)
+	result, err := client.getStringHandleResponse(resp)
+	if err != nil {
+		return StringWrapperResponse{}, err
+	}
+	return result, nil
 }
 
 // getStringCreateRequest creates the GetString request.

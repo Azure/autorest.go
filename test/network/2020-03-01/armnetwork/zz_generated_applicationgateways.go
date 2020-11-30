@@ -396,7 +396,11 @@ func (client ApplicationGatewaysClient) Get(ctx context.Context, resourceGroupNa
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ApplicationGatewayResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return ApplicationGatewayResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.
@@ -446,7 +450,11 @@ func (client ApplicationGatewaysClient) GetSslPredefinedPolicy(ctx context.Conte
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ApplicationGatewaySslPredefinedPolicyResponse{}, client.getSslPredefinedPolicyHandleError(resp)
 	}
-	return client.getSslPredefinedPolicyHandleResponse(resp)
+	result, err := client.getSslPredefinedPolicyHandleResponse(resp)
+	if err != nil {
+		return ApplicationGatewaySslPredefinedPolicyResponse{}, err
+	}
+	return result, nil
 }
 
 // getSslPredefinedPolicyCreateRequest creates the GetSslPredefinedPolicy request.
@@ -592,7 +600,11 @@ func (client ApplicationGatewaysClient) ListAvailableRequestHeaders(ctx context.
 	if !resp.HasStatusCode(http.StatusOK) {
 		return StringArrayResponse{}, client.listAvailableRequestHeadersHandleError(resp)
 	}
-	return client.listAvailableRequestHeadersHandleResponse(resp)
+	result, err := client.listAvailableRequestHeadersHandleResponse(resp)
+	if err != nil {
+		return StringArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // listAvailableRequestHeadersCreateRequest creates the ListAvailableRequestHeaders request.
@@ -640,7 +652,11 @@ func (client ApplicationGatewaysClient) ListAvailableResponseHeaders(ctx context
 	if !resp.HasStatusCode(http.StatusOK) {
 		return StringArrayResponse{}, client.listAvailableResponseHeadersHandleError(resp)
 	}
-	return client.listAvailableResponseHeadersHandleResponse(resp)
+	result, err := client.listAvailableResponseHeadersHandleResponse(resp)
+	if err != nil {
+		return StringArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // listAvailableResponseHeadersCreateRequest creates the ListAvailableResponseHeaders request.
@@ -688,7 +704,11 @@ func (client ApplicationGatewaysClient) ListAvailableServerVariables(ctx context
 	if !resp.HasStatusCode(http.StatusOK) {
 		return StringArrayResponse{}, client.listAvailableServerVariablesHandleError(resp)
 	}
-	return client.listAvailableServerVariablesHandleResponse(resp)
+	result, err := client.listAvailableServerVariablesHandleResponse(resp)
+	if err != nil {
+		return StringArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // listAvailableServerVariablesCreateRequest creates the ListAvailableServerVariables request.
@@ -736,7 +756,11 @@ func (client ApplicationGatewaysClient) ListAvailableSslOptions(ctx context.Cont
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ApplicationGatewayAvailableSslOptionsResponse{}, client.listAvailableSslOptionsHandleError(resp)
 	}
-	return client.listAvailableSslOptionsHandleResponse(resp)
+	result, err := client.listAvailableSslOptionsHandleResponse(resp)
+	if err != nil {
+		return ApplicationGatewayAvailableSslOptionsResponse{}, err
+	}
+	return result, nil
 }
 
 // listAvailableSslOptionsCreateRequest creates the ListAvailableSslOptions request.
@@ -832,7 +856,11 @@ func (client ApplicationGatewaysClient) ListAvailableWafRuleSets(ctx context.Con
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ApplicationGatewayAvailableWafRuleSetsResultResponse{}, client.listAvailableWafRuleSetsHandleError(resp)
 	}
-	return client.listAvailableWafRuleSetsHandleResponse(resp)
+	result, err := client.listAvailableWafRuleSetsHandleResponse(resp)
+	if err != nil {
+		return ApplicationGatewayAvailableWafRuleSetsResultResponse{}, err
+	}
+	return result, nil
 }
 
 // listAvailableWafRuleSetsCreateRequest creates the ListAvailableWafRuleSets request.
@@ -1040,7 +1068,11 @@ func (client ApplicationGatewaysClient) UpdateTags(ctx context.Context, resource
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ApplicationGatewayResponse{}, client.updateTagsHandleError(resp)
 	}
-	return client.updateTagsHandleResponse(resp)
+	result, err := client.updateTagsHandleResponse(resp)
+	if err != nil {
+		return ApplicationGatewayResponse{}, err
+	}
+	return result, nil
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.

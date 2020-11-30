@@ -42,7 +42,11 @@ func (client NumberClient) GetBigDecimal(ctx context.Context, options *NumberGet
 	if !resp.HasStatusCode(http.StatusOK) {
 		return Float64Response{}, client.getBigDecimalHandleError(resp)
 	}
-	return client.getBigDecimalHandleResponse(resp)
+	result, err := client.getBigDecimalHandleResponse(resp)
+	if err != nil {
+		return Float64Response{}, err
+	}
+	return result, nil
 }
 
 // getBigDecimalCreateRequest creates the GetBigDecimal request.
@@ -86,7 +90,11 @@ func (client NumberClient) GetBigDecimalNegativeDecimal(ctx context.Context, opt
 	if !resp.HasStatusCode(http.StatusOK) {
 		return Float64Response{}, client.getBigDecimalNegativeDecimalHandleError(resp)
 	}
-	return client.getBigDecimalNegativeDecimalHandleResponse(resp)
+	result, err := client.getBigDecimalNegativeDecimalHandleResponse(resp)
+	if err != nil {
+		return Float64Response{}, err
+	}
+	return result, nil
 }
 
 // getBigDecimalNegativeDecimalCreateRequest creates the GetBigDecimalNegativeDecimal request.
@@ -130,7 +138,11 @@ func (client NumberClient) GetBigDecimalPositiveDecimal(ctx context.Context, opt
 	if !resp.HasStatusCode(http.StatusOK) {
 		return Float64Response{}, client.getBigDecimalPositiveDecimalHandleError(resp)
 	}
-	return client.getBigDecimalPositiveDecimalHandleResponse(resp)
+	result, err := client.getBigDecimalPositiveDecimalHandleResponse(resp)
+	if err != nil {
+		return Float64Response{}, err
+	}
+	return result, nil
 }
 
 // getBigDecimalPositiveDecimalCreateRequest creates the GetBigDecimalPositiveDecimal request.
@@ -174,7 +186,11 @@ func (client NumberClient) GetBigDouble(ctx context.Context, options *NumberGetB
 	if !resp.HasStatusCode(http.StatusOK) {
 		return Float64Response{}, client.getBigDoubleHandleError(resp)
 	}
-	return client.getBigDoubleHandleResponse(resp)
+	result, err := client.getBigDoubleHandleResponse(resp)
+	if err != nil {
+		return Float64Response{}, err
+	}
+	return result, nil
 }
 
 // getBigDoubleCreateRequest creates the GetBigDouble request.
@@ -218,7 +234,11 @@ func (client NumberClient) GetBigDoubleNegativeDecimal(ctx context.Context, opti
 	if !resp.HasStatusCode(http.StatusOK) {
 		return Float64Response{}, client.getBigDoubleNegativeDecimalHandleError(resp)
 	}
-	return client.getBigDoubleNegativeDecimalHandleResponse(resp)
+	result, err := client.getBigDoubleNegativeDecimalHandleResponse(resp)
+	if err != nil {
+		return Float64Response{}, err
+	}
+	return result, nil
 }
 
 // getBigDoubleNegativeDecimalCreateRequest creates the GetBigDoubleNegativeDecimal request.
@@ -262,7 +282,11 @@ func (client NumberClient) GetBigDoublePositiveDecimal(ctx context.Context, opti
 	if !resp.HasStatusCode(http.StatusOK) {
 		return Float64Response{}, client.getBigDoublePositiveDecimalHandleError(resp)
 	}
-	return client.getBigDoublePositiveDecimalHandleResponse(resp)
+	result, err := client.getBigDoublePositiveDecimalHandleResponse(resp)
+	if err != nil {
+		return Float64Response{}, err
+	}
+	return result, nil
 }
 
 // getBigDoublePositiveDecimalCreateRequest creates the GetBigDoublePositiveDecimal request.
@@ -306,7 +330,11 @@ func (client NumberClient) GetBigFloat(ctx context.Context, options *NumberGetBi
 	if !resp.HasStatusCode(http.StatusOK) {
 		return Float32Response{}, client.getBigFloatHandleError(resp)
 	}
-	return client.getBigFloatHandleResponse(resp)
+	result, err := client.getBigFloatHandleResponse(resp)
+	if err != nil {
+		return Float32Response{}, err
+	}
+	return result, nil
 }
 
 // getBigFloatCreateRequest creates the GetBigFloat request.
@@ -350,7 +378,11 @@ func (client NumberClient) GetInvalidDecimal(ctx context.Context, options *Numbe
 	if !resp.HasStatusCode(http.StatusOK) {
 		return Float64Response{}, client.getInvalidDecimalHandleError(resp)
 	}
-	return client.getInvalidDecimalHandleResponse(resp)
+	result, err := client.getInvalidDecimalHandleResponse(resp)
+	if err != nil {
+		return Float64Response{}, err
+	}
+	return result, nil
 }
 
 // getInvalidDecimalCreateRequest creates the GetInvalidDecimal request.
@@ -394,7 +426,11 @@ func (client NumberClient) GetInvalidDouble(ctx context.Context, options *Number
 	if !resp.HasStatusCode(http.StatusOK) {
 		return Float64Response{}, client.getInvalidDoubleHandleError(resp)
 	}
-	return client.getInvalidDoubleHandleResponse(resp)
+	result, err := client.getInvalidDoubleHandleResponse(resp)
+	if err != nil {
+		return Float64Response{}, err
+	}
+	return result, nil
 }
 
 // getInvalidDoubleCreateRequest creates the GetInvalidDouble request.
@@ -438,7 +474,11 @@ func (client NumberClient) GetInvalidFloat(ctx context.Context, options *NumberG
 	if !resp.HasStatusCode(http.StatusOK) {
 		return Float32Response{}, client.getInvalidFloatHandleError(resp)
 	}
-	return client.getInvalidFloatHandleResponse(resp)
+	result, err := client.getInvalidFloatHandleResponse(resp)
+	if err != nil {
+		return Float32Response{}, err
+	}
+	return result, nil
 }
 
 // getInvalidFloatCreateRequest creates the GetInvalidFloat request.
@@ -482,7 +522,11 @@ func (client NumberClient) GetNull(ctx context.Context, options *NumberGetNullOp
 	if !resp.HasStatusCode(http.StatusOK) {
 		return Float32Response{}, client.getNullHandleError(resp)
 	}
-	return client.getNullHandleResponse(resp)
+	result, err := client.getNullHandleResponse(resp)
+	if err != nil {
+		return Float32Response{}, err
+	}
+	return result, nil
 }
 
 // getNullCreateRequest creates the GetNull request.
@@ -526,7 +570,11 @@ func (client NumberClient) GetSmallDecimal(ctx context.Context, options *NumberG
 	if !resp.HasStatusCode(http.StatusOK) {
 		return Float64Response{}, client.getSmallDecimalHandleError(resp)
 	}
-	return client.getSmallDecimalHandleResponse(resp)
+	result, err := client.getSmallDecimalHandleResponse(resp)
+	if err != nil {
+		return Float64Response{}, err
+	}
+	return result, nil
 }
 
 // getSmallDecimalCreateRequest creates the GetSmallDecimal request.
@@ -570,7 +618,11 @@ func (client NumberClient) GetSmallDouble(ctx context.Context, options *NumberGe
 	if !resp.HasStatusCode(http.StatusOK) {
 		return Float64Response{}, client.getSmallDoubleHandleError(resp)
 	}
-	return client.getSmallDoubleHandleResponse(resp)
+	result, err := client.getSmallDoubleHandleResponse(resp)
+	if err != nil {
+		return Float64Response{}, err
+	}
+	return result, nil
 }
 
 // getSmallDoubleCreateRequest creates the GetSmallDouble request.
@@ -614,7 +666,11 @@ func (client NumberClient) GetSmallFloat(ctx context.Context, options *NumberGet
 	if !resp.HasStatusCode(http.StatusOK) {
 		return Float64Response{}, client.getSmallFloatHandleError(resp)
 	}
-	return client.getSmallFloatHandleResponse(resp)
+	result, err := client.getSmallFloatHandleResponse(resp)
+	if err != nil {
+		return Float64Response{}, err
+	}
+	return result, nil
 }
 
 // getSmallFloatCreateRequest creates the GetSmallFloat request.

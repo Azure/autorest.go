@@ -214,7 +214,11 @@ func (client NetworkSecurityGroupsClient) Get(ctx context.Context, resourceGroup
 	if !resp.HasStatusCode(http.StatusOK) {
 		return NetworkSecurityGroupResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return NetworkSecurityGroupResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.
@@ -364,7 +368,11 @@ func (client NetworkSecurityGroupsClient) UpdateTags(ctx context.Context, resour
 	if !resp.HasStatusCode(http.StatusOK) {
 		return NetworkSecurityGroupResponse{}, client.updateTagsHandleError(resp)
 	}
-	return client.updateTagsHandleResponse(resp)
+	result, err := client.updateTagsHandleResponse(resp)
+	if err != nil {
+		return NetworkSecurityGroupResponse{}, err
+	}
+	return result, nil
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.

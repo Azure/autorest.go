@@ -216,7 +216,11 @@ func (client ConnectionMonitorsClient) Get(ctx context.Context, resourceGroupNam
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ConnectionMonitorResultResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return ConnectionMonitorResultResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.
@@ -267,7 +271,11 @@ func (client ConnectionMonitorsClient) List(ctx context.Context, resourceGroupNa
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ConnectionMonitorListResultResponse{}, client.listHandleError(resp)
 	}
-	return client.listHandleResponse(resp)
+	result, err := client.listHandleResponse(resp)
+	if err != nil {
+		return ConnectionMonitorListResultResponse{}, err
+	}
+	return result, nil
 }
 
 // listCreateRequest creates the List request.
@@ -567,7 +575,11 @@ func (client ConnectionMonitorsClient) UpdateTags(ctx context.Context, resourceG
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ConnectionMonitorResultResponse{}, client.updateTagsHandleError(resp)
 	}
-	return client.updateTagsHandleResponse(resp)
+	result, err := client.updateTagsHandleResponse(resp)
+	if err != nil {
+		return ConnectionMonitorResultResponse{}, err
+	}
+	return result, nil
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.

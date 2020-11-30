@@ -42,7 +42,11 @@ func (client BoolClient) GetFalse(ctx context.Context, options *BoolGetFalseOpti
 	if !resp.HasStatusCode(http.StatusOK) {
 		return BoolResponse{}, client.getFalseHandleError(resp)
 	}
-	return client.getFalseHandleResponse(resp)
+	result, err := client.getFalseHandleResponse(resp)
+	if err != nil {
+		return BoolResponse{}, err
+	}
+	return result, nil
 }
 
 // getFalseCreateRequest creates the GetFalse request.
@@ -86,7 +90,11 @@ func (client BoolClient) GetInvalid(ctx context.Context, options *BoolGetInvalid
 	if !resp.HasStatusCode(http.StatusOK) {
 		return BoolResponse{}, client.getInvalidHandleError(resp)
 	}
-	return client.getInvalidHandleResponse(resp)
+	result, err := client.getInvalidHandleResponse(resp)
+	if err != nil {
+		return BoolResponse{}, err
+	}
+	return result, nil
 }
 
 // getInvalidCreateRequest creates the GetInvalid request.
@@ -130,7 +138,11 @@ func (client BoolClient) GetNull(ctx context.Context, options *BoolGetNullOption
 	if !resp.HasStatusCode(http.StatusOK) {
 		return BoolResponse{}, client.getNullHandleError(resp)
 	}
-	return client.getNullHandleResponse(resp)
+	result, err := client.getNullHandleResponse(resp)
+	if err != nil {
+		return BoolResponse{}, err
+	}
+	return result, nil
 }
 
 // getNullCreateRequest creates the GetNull request.
@@ -174,7 +186,11 @@ func (client BoolClient) GetTrue(ctx context.Context, options *BoolGetTrueOption
 	if !resp.HasStatusCode(http.StatusOK) {
 		return BoolResponse{}, client.getTrueHandleError(resp)
 	}
-	return client.getTrueHandleResponse(resp)
+	result, err := client.getTrueHandleResponse(resp)
+	if err != nil {
+		return BoolResponse{}, err
+	}
+	return result, nil
 }
 
 // getTrueCreateRequest creates the GetTrue request.

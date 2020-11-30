@@ -47,7 +47,11 @@ func (client WebApplicationFirewallPoliciesClient) CreateOrUpdate(ctx context.Co
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return WebApplicationFirewallPolicyResponse{}, client.createOrUpdateHandleError(resp)
 	}
-	return client.createOrUpdateHandleResponse(resp)
+	result, err := client.createOrUpdateHandleResponse(resp)
+	if err != nil {
+		return WebApplicationFirewallPolicyResponse{}, err
+	}
+	return result, nil
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -177,7 +181,11 @@ func (client WebApplicationFirewallPoliciesClient) Get(ctx context.Context, reso
 	if !resp.HasStatusCode(http.StatusOK) {
 		return WebApplicationFirewallPolicyResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return WebApplicationFirewallPolicyResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.

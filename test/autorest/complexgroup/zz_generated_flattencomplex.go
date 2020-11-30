@@ -44,7 +44,11 @@ func (client FlattencomplexClient) GetValid(ctx context.Context, options *Flatte
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MyBaseTypeResponse{}, client.getValidHandleError(resp)
 	}
-	return client.getValidHandleResponse(resp)
+	result, err := client.getValidHandleResponse(resp)
+	if err != nil {
+		return MyBaseTypeResponse{}, err
+	}
+	return result, nil
 }
 
 // getValidCreateRequest creates the GetValid request.

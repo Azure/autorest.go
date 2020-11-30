@@ -214,7 +214,11 @@ func (client SecurityPartnerProvidersClient) Get(ctx context.Context, resourceGr
 	if !resp.HasStatusCode(http.StatusOK) {
 		return SecurityPartnerProviderResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return SecurityPartnerProviderResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.
@@ -361,7 +365,11 @@ func (client SecurityPartnerProvidersClient) UpdateTags(ctx context.Context, res
 	if !resp.HasStatusCode(http.StatusOK) {
 		return SecurityPartnerProviderResponse{}, client.updateTagsHandleError(resp)
 	}
-	return client.updateTagsHandleResponse(resp)
+	result, err := client.updateTagsHandleResponse(resp)
+	if err != nil {
+		return SecurityPartnerProviderResponse{}, err
+	}
+	return result, nil
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.

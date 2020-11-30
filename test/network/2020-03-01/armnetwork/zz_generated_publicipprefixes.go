@@ -214,7 +214,11 @@ func (client PublicIPPrefixesClient) Get(ctx context.Context, resourceGroupName 
 	if !resp.HasStatusCode(http.StatusOK) {
 		return PublicIPPrefixResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return PublicIPPrefixResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.
@@ -364,7 +368,11 @@ func (client PublicIPPrefixesClient) UpdateTags(ctx context.Context, resourceGro
 	if !resp.HasStatusCode(http.StatusOK) {
 		return PublicIPPrefixResponse{}, client.updateTagsHandleError(resp)
 	}
-	return client.updateTagsHandleResponse(resp)
+	result, err := client.updateTagsHandleResponse(resp)
+	if err != nil {
+		return PublicIPPrefixResponse{}, err
+	}
+	return result, nil
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.

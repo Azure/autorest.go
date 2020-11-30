@@ -45,7 +45,11 @@ func (client MultipleInheritanceServiceClient) GetCat(ctx context.Context, optio
 	if !resp.HasStatusCode(http.StatusOK) {
 		return CatResponse{}, client.getCatHandleError(resp)
 	}
-	return client.getCatHandleResponse(resp)
+	result, err := client.getCatHandleResponse(resp)
+	if err != nil {
+		return CatResponse{}, err
+	}
+	return result, nil
 }
 
 // getCatCreateRequest creates the GetCat request.
@@ -89,7 +93,11 @@ func (client MultipleInheritanceServiceClient) GetFeline(ctx context.Context, op
 	if !resp.HasStatusCode(http.StatusOK) {
 		return FelineResponse{}, client.getFelineHandleError(resp)
 	}
-	return client.getFelineHandleResponse(resp)
+	result, err := client.getFelineHandleResponse(resp)
+	if err != nil {
+		return FelineResponse{}, err
+	}
+	return result, nil
 }
 
 // getFelineCreateRequest creates the GetFeline request.
@@ -133,7 +141,11 @@ func (client MultipleInheritanceServiceClient) GetHorse(ctx context.Context, opt
 	if !resp.HasStatusCode(http.StatusOK) {
 		return HorseResponse{}, client.getHorseHandleError(resp)
 	}
-	return client.getHorseHandleResponse(resp)
+	result, err := client.getHorseHandleResponse(resp)
+	if err != nil {
+		return HorseResponse{}, err
+	}
+	return result, nil
 }
 
 // getHorseCreateRequest creates the GetHorse request.
@@ -177,7 +189,11 @@ func (client MultipleInheritanceServiceClient) GetKitten(ctx context.Context, op
 	if !resp.HasStatusCode(http.StatusOK) {
 		return KittenResponse{}, client.getKittenHandleError(resp)
 	}
-	return client.getKittenHandleResponse(resp)
+	result, err := client.getKittenHandleResponse(resp)
+	if err != nil {
+		return KittenResponse{}, err
+	}
+	return result, nil
 }
 
 // getKittenCreateRequest creates the GetKitten request.
@@ -221,7 +237,11 @@ func (client MultipleInheritanceServiceClient) GetPet(ctx context.Context, optio
 	if !resp.HasStatusCode(http.StatusOK) {
 		return PetResponse{}, client.getPetHandleError(resp)
 	}
-	return client.getPetHandleResponse(resp)
+	result, err := client.getPetHandleResponse(resp)
+	if err != nil {
+		return PetResponse{}, err
+	}
+	return result, nil
 }
 
 // getPetCreateRequest creates the GetPet request.
@@ -265,7 +285,11 @@ func (client MultipleInheritanceServiceClient) PutCat(ctx context.Context, cat C
 	if !resp.HasStatusCode(http.StatusOK) {
 		return StringResponse{}, client.putCatHandleError(resp)
 	}
-	return client.putCatHandleResponse(resp)
+	result, err := client.putCatHandleResponse(resp)
+	if err != nil {
+		return StringResponse{}, err
+	}
+	return result, nil
 }
 
 // putCatCreateRequest creates the PutCat request.
@@ -312,7 +336,11 @@ func (client MultipleInheritanceServiceClient) PutFeline(ctx context.Context, fe
 	if !resp.HasStatusCode(http.StatusOK) {
 		return StringResponse{}, client.putFelineHandleError(resp)
 	}
-	return client.putFelineHandleResponse(resp)
+	result, err := client.putFelineHandleResponse(resp)
+	if err != nil {
+		return StringResponse{}, err
+	}
+	return result, nil
 }
 
 // putFelineCreateRequest creates the PutFeline request.
@@ -359,7 +387,11 @@ func (client MultipleInheritanceServiceClient) PutHorse(ctx context.Context, hor
 	if !resp.HasStatusCode(http.StatusOK) {
 		return StringResponse{}, client.putHorseHandleError(resp)
 	}
-	return client.putHorseHandleResponse(resp)
+	result, err := client.putHorseHandleResponse(resp)
+	if err != nil {
+		return StringResponse{}, err
+	}
+	return result, nil
 }
 
 // putHorseCreateRequest creates the PutHorse request.
@@ -406,7 +438,11 @@ func (client MultipleInheritanceServiceClient) PutKitten(ctx context.Context, ki
 	if !resp.HasStatusCode(http.StatusOK) {
 		return StringResponse{}, client.putKittenHandleError(resp)
 	}
-	return client.putKittenHandleResponse(resp)
+	result, err := client.putKittenHandleResponse(resp)
+	if err != nil {
+		return StringResponse{}, err
+	}
+	return result, nil
 }
 
 // putKittenCreateRequest creates the PutKitten request.
@@ -453,7 +489,11 @@ func (client MultipleInheritanceServiceClient) PutPet(ctx context.Context, pet P
 	if !resp.HasStatusCode(http.StatusOK) {
 		return StringResponse{}, client.putPetHandleError(resp)
 	}
-	return client.putPetHandleResponse(resp)
+	result, err := client.putPetHandleResponse(resp)
+	if err != nil {
+		return StringResponse{}, err
+	}
+	return result, nil
 }
 
 // putPetCreateRequest creates the PutPet request.

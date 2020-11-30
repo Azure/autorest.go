@@ -46,7 +46,11 @@ func (client ResourceNavigationLinksClient) List(ctx context.Context, resourceGr
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ResourceNavigationLinksListResultResponse{}, client.listHandleError(resp)
 	}
-	return client.listHandleResponse(resp)
+	result, err := client.listHandleResponse(resp)
+	if err != nil {
+		return ResourceNavigationLinksListResultResponse{}, err
+	}
+	return result, nil
 }
 
 // listCreateRequest creates the List request.

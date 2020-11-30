@@ -42,7 +42,11 @@ func (client BasicClient) GetEmpty(ctx context.Context, options *BasicGetEmptyOp
 	if !resp.HasStatusCode(http.StatusOK) {
 		return BasicResponse{}, client.getEmptyHandleError(resp)
 	}
-	return client.getEmptyHandleResponse(resp)
+	result, err := client.getEmptyHandleResponse(resp)
+	if err != nil {
+		return BasicResponse{}, err
+	}
+	return result, nil
 }
 
 // getEmptyCreateRequest creates the GetEmpty request.
@@ -86,7 +90,11 @@ func (client BasicClient) GetInvalid(ctx context.Context, options *BasicGetInval
 	if !resp.HasStatusCode(http.StatusOK) {
 		return BasicResponse{}, client.getInvalidHandleError(resp)
 	}
-	return client.getInvalidHandleResponse(resp)
+	result, err := client.getInvalidHandleResponse(resp)
+	if err != nil {
+		return BasicResponse{}, err
+	}
+	return result, nil
 }
 
 // getInvalidCreateRequest creates the GetInvalid request.
@@ -130,7 +138,11 @@ func (client BasicClient) GetNotProvided(ctx context.Context, options *BasicGetN
 	if !resp.HasStatusCode(http.StatusOK) {
 		return BasicResponse{}, client.getNotProvidedHandleError(resp)
 	}
-	return client.getNotProvidedHandleResponse(resp)
+	result, err := client.getNotProvidedHandleResponse(resp)
+	if err != nil {
+		return BasicResponse{}, err
+	}
+	return result, nil
 }
 
 // getNotProvidedCreateRequest creates the GetNotProvided request.
@@ -174,7 +186,11 @@ func (client BasicClient) GetNull(ctx context.Context, options *BasicGetNullOpti
 	if !resp.HasStatusCode(http.StatusOK) {
 		return BasicResponse{}, client.getNullHandleError(resp)
 	}
-	return client.getNullHandleResponse(resp)
+	result, err := client.getNullHandleResponse(resp)
+	if err != nil {
+		return BasicResponse{}, err
+	}
+	return result, nil
 }
 
 // getNullCreateRequest creates the GetNull request.
@@ -218,7 +234,11 @@ func (client BasicClient) GetValid(ctx context.Context, options *BasicGetValidOp
 	if !resp.HasStatusCode(http.StatusOK) {
 		return BasicResponse{}, client.getValidHandleError(resp)
 	}
-	return client.getValidHandleResponse(resp)
+	result, err := client.getValidHandleResponse(resp)
+	if err != nil {
+		return BasicResponse{}, err
+	}
+	return result, nil
 }
 
 // getValidCreateRequest creates the GetValid request.

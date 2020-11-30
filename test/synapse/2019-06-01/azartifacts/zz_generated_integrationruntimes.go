@@ -37,7 +37,11 @@ func (client integrationRuntimesClient) Get(ctx context.Context, integrationRunt
 	if !resp.HasStatusCode(http.StatusOK) {
 		return IntegrationRuntimeResourceResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return IntegrationRuntimeResourceResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.
@@ -85,7 +89,11 @@ func (client integrationRuntimesClient) List(ctx context.Context, options *Integ
 	if !resp.HasStatusCode(http.StatusOK) {
 		return IntegrationRuntimeListResponseResponse{}, client.listHandleError(resp)
 	}
-	return client.listHandleResponse(resp)
+	result, err := client.listHandleResponse(resp)
+	if err != nil {
+		return IntegrationRuntimeListResponseResponse{}, err
+	}
+	return result, nil
 }
 
 // listCreateRequest creates the List request.

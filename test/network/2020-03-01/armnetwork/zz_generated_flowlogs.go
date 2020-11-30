@@ -216,7 +216,11 @@ func (client FlowLogsClient) Get(ctx context.Context, resourceGroupName string, 
 	if !resp.HasStatusCode(http.StatusOK) {
 		return FlowLogResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return FlowLogResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.

@@ -381,7 +381,11 @@ func (client P2SVpnGatewaysClient) Get(ctx context.Context, resourceGroupName st
 	if !resp.HasStatusCode(http.StatusOK) {
 		return P2SVpnGatewayResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return P2SVpnGatewayResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.
@@ -704,7 +708,11 @@ func (client P2SVpnGatewaysClient) UpdateTags(ctx context.Context, resourceGroup
 	if !resp.HasStatusCode(http.StatusOK) {
 		return P2SVpnGatewayResponse{}, client.updateTagsHandleError(resp)
 	}
-	return client.updateTagsHandleResponse(resp)
+	result, err := client.updateTagsHandleResponse(resp)
+	if err != nil {
+		return P2SVpnGatewayResponse{}, err
+	}
+	return result, nil
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.

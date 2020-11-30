@@ -216,7 +216,11 @@ func (client PacketCapturesClient) Get(ctx context.Context, resourceGroupName st
 	if !resp.HasStatusCode(http.StatusOK) {
 		return PacketCaptureResultResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return PacketCaptureResultResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.
@@ -355,7 +359,11 @@ func (client PacketCapturesClient) List(ctx context.Context, resourceGroupName s
 	if !resp.HasStatusCode(http.StatusOK) {
 		return PacketCaptureListResultResponse{}, client.listHandleError(resp)
 	}
-	return client.listHandleResponse(resp)
+	result, err := client.listHandleResponse(resp)
+	if err != nil {
+		return PacketCaptureListResultResponse{}, err
+	}
+	return result, nil
 }
 
 // listCreateRequest creates the List request.

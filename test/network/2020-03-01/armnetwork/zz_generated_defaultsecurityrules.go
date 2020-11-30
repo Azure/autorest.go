@@ -46,7 +46,11 @@ func (client DefaultSecurityRulesClient) Get(ctx context.Context, resourceGroupN
 	if !resp.HasStatusCode(http.StatusOK) {
 		return SecurityRuleResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return SecurityRuleResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.

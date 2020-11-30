@@ -46,7 +46,11 @@ func (client NetworkInterfaceIPConfigurationsClient) Get(ctx context.Context, re
 	if !resp.HasStatusCode(http.StatusOK) {
 		return NetworkInterfaceIPConfigurationResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return NetworkInterfaceIPConfigurationResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.

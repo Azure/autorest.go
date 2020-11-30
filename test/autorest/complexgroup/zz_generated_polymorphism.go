@@ -42,7 +42,11 @@ func (client PolymorphismClient) GetComplicated(ctx context.Context, options *Po
 	if !resp.HasStatusCode(http.StatusOK) {
 		return SalmonResponse{}, client.getComplicatedHandleError(resp)
 	}
-	return client.getComplicatedHandleResponse(resp)
+	result, err := client.getComplicatedHandleResponse(resp)
+	if err != nil {
+		return SalmonResponse{}, err
+	}
+	return result, nil
 }
 
 // getComplicatedCreateRequest creates the GetComplicated request.
@@ -88,7 +92,11 @@ func (client PolymorphismClient) GetComposedWithDiscriminator(ctx context.Contex
 	if !resp.HasStatusCode(http.StatusOK) {
 		return DotFishMarketResponse{}, client.getComposedWithDiscriminatorHandleError(resp)
 	}
-	return client.getComposedWithDiscriminatorHandleResponse(resp)
+	result, err := client.getComposedWithDiscriminatorHandleResponse(resp)
+	if err != nil {
+		return DotFishMarketResponse{}, err
+	}
+	return result, nil
 }
 
 // getComposedWithDiscriminatorCreateRequest creates the GetComposedWithDiscriminator request.
@@ -134,7 +142,11 @@ func (client PolymorphismClient) GetComposedWithoutDiscriminator(ctx context.Con
 	if !resp.HasStatusCode(http.StatusOK) {
 		return DotFishMarketResponse{}, client.getComposedWithoutDiscriminatorHandleError(resp)
 	}
-	return client.getComposedWithoutDiscriminatorHandleResponse(resp)
+	result, err := client.getComposedWithoutDiscriminatorHandleResponse(resp)
+	if err != nil {
+		return DotFishMarketResponse{}, err
+	}
+	return result, nil
 }
 
 // getComposedWithoutDiscriminatorCreateRequest creates the GetComposedWithoutDiscriminator request.
@@ -178,7 +190,11 @@ func (client PolymorphismClient) GetDotSyntax(ctx context.Context, options *Poly
 	if !resp.HasStatusCode(http.StatusOK) {
 		return DotFishResponse{}, client.getDotSyntaxHandleError(resp)
 	}
-	return client.getDotSyntaxHandleResponse(resp)
+	result, err := client.getDotSyntaxHandleResponse(resp)
+	if err != nil {
+		return DotFishResponse{}, err
+	}
+	return result, nil
 }
 
 // getDotSyntaxCreateRequest creates the GetDotSyntax request.
@@ -222,7 +238,11 @@ func (client PolymorphismClient) GetValid(ctx context.Context, options *Polymorp
 	if !resp.HasStatusCode(http.StatusOK) {
 		return FishResponse{}, client.getValidHandleError(resp)
 	}
-	return client.getValidHandleResponse(resp)
+	result, err := client.getValidHandleResponse(resp)
+	if err != nil {
+		return FishResponse{}, err
+	}
+	return result, nil
 }
 
 // getValidCreateRequest creates the GetValid request.
@@ -303,7 +323,11 @@ func (client PolymorphismClient) PutMissingDiscriminator(ctx context.Context, co
 	if !resp.HasStatusCode(http.StatusOK) {
 		return SalmonResponse{}, client.putMissingDiscriminatorHandleError(resp)
 	}
-	return client.putMissingDiscriminatorHandleResponse(resp)
+	result, err := client.putMissingDiscriminatorHandleResponse(resp)
+	if err != nil {
+		return SalmonResponse{}, err
+	}
+	return result, nil
 }
 
 // putMissingDiscriminatorCreateRequest creates the PutMissingDiscriminator request.

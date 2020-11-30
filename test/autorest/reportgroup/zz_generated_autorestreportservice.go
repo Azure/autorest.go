@@ -42,7 +42,11 @@ func (client AutoRestReportServiceClient) GetOptionalReport(ctx context.Context,
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfInt32Response{}, client.getOptionalReportHandleError(resp)
 	}
-	return client.getOptionalReportHandleResponse(resp)
+	result, err := client.getOptionalReportHandleResponse(resp)
+	if err != nil {
+		return MapOfInt32Response{}, err
+	}
+	return result, nil
 }
 
 // getOptionalReportCreateRequest creates the GetOptionalReport request.
@@ -91,7 +95,11 @@ func (client AutoRestReportServiceClient) GetReport(ctx context.Context, options
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfInt32Response{}, client.getReportHandleError(resp)
 	}
-	return client.getReportHandleResponse(resp)
+	result, err := client.getReportHandleResponse(resp)
+	if err != nil {
+		return MapOfInt32Response{}, err
+	}
+	return result, nil
 }
 
 // getReportCreateRequest creates the GetReport request.

@@ -46,7 +46,11 @@ func (client XMLClient) GetACLs(ctx context.Context, options *XMLGetACLsOptions)
 	if !resp.HasStatusCode(http.StatusOK) {
 		return SignedIDentifierArrayResponse{}, client.getAcLsHandleError(resp)
 	}
-	return client.getAcLsHandleResponse(resp)
+	result, err := client.getAcLsHandleResponse(resp)
+	if err != nil {
+		return SignedIDentifierArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getAcLsCreateRequest creates the GetACLs request.
@@ -97,7 +101,11 @@ func (client XMLClient) GetComplexTypeRefNoMeta(ctx context.Context, options *XM
 	if !resp.HasStatusCode(http.StatusOK) {
 		return RootWithRefAndNoMetaResponse{}, client.getComplexTypeRefNoMetaHandleError(resp)
 	}
-	return client.getComplexTypeRefNoMetaHandleResponse(resp)
+	result, err := client.getComplexTypeRefNoMetaHandleResponse(resp)
+	if err != nil {
+		return RootWithRefAndNoMetaResponse{}, err
+	}
+	return result, nil
 }
 
 // getComplexTypeRefNoMetaCreateRequest creates the GetComplexTypeRefNoMeta request.
@@ -144,7 +152,11 @@ func (client XMLClient) GetComplexTypeRefWithMeta(ctx context.Context, options *
 	if !resp.HasStatusCode(http.StatusOK) {
 		return RootWithRefAndMetaResponse{}, client.getComplexTypeRefWithMetaHandleError(resp)
 	}
-	return client.getComplexTypeRefWithMetaHandleResponse(resp)
+	result, err := client.getComplexTypeRefWithMetaHandleResponse(resp)
+	if err != nil {
+		return RootWithRefAndMetaResponse{}, err
+	}
+	return result, nil
 }
 
 // getComplexTypeRefWithMetaCreateRequest creates the GetComplexTypeRefWithMeta request.
@@ -191,7 +203,11 @@ func (client XMLClient) GetEmptyChildElement(ctx context.Context, options *XMLGe
 	if !resp.HasStatusCode(http.StatusOK) {
 		return BananaResponse{}, client.getEmptyChildElementHandleError(resp)
 	}
-	return client.getEmptyChildElementHandleResponse(resp)
+	result, err := client.getEmptyChildElementHandleResponse(resp)
+	if err != nil {
+		return BananaResponse{}, err
+	}
+	return result, nil
 }
 
 // getEmptyChildElementCreateRequest creates the GetEmptyChildElement request.
@@ -238,7 +254,11 @@ func (client XMLClient) GetEmptyList(ctx context.Context, options *XMLGetEmptyLi
 	if !resp.HasStatusCode(http.StatusOK) {
 		return SlideshowResponse{}, client.getEmptyListHandleError(resp)
 	}
-	return client.getEmptyListHandleResponse(resp)
+	result, err := client.getEmptyListHandleResponse(resp)
+	if err != nil {
+		return SlideshowResponse{}, err
+	}
+	return result, nil
 }
 
 // getEmptyListCreateRequest creates the GetEmptyList request.
@@ -285,7 +305,11 @@ func (client XMLClient) GetEmptyRootList(ctx context.Context, options *XMLGetEmp
 	if !resp.HasStatusCode(http.StatusOK) {
 		return BananaArrayResponse{}, client.getEmptyRootListHandleError(resp)
 	}
-	return client.getEmptyRootListHandleResponse(resp)
+	result, err := client.getEmptyRootListHandleResponse(resp)
+	if err != nil {
+		return BananaArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getEmptyRootListCreateRequest creates the GetEmptyRootList request.
@@ -332,7 +356,11 @@ func (client XMLClient) GetEmptyWrappedLists(ctx context.Context, options *XMLGe
 	if !resp.HasStatusCode(http.StatusOK) {
 		return AppleBarrelResponse{}, client.getEmptyWrappedListsHandleError(resp)
 	}
-	return client.getEmptyWrappedListsHandleResponse(resp)
+	result, err := client.getEmptyWrappedListsHandleResponse(resp)
+	if err != nil {
+		return AppleBarrelResponse{}, err
+	}
+	return result, nil
 }
 
 // getEmptyWrappedListsCreateRequest creates the GetEmptyWrappedLists request.
@@ -379,7 +407,11 @@ func (client XMLClient) GetHeaders(ctx context.Context, options *XMLGetHeadersOp
 	if !resp.HasStatusCode(http.StatusOK) {
 		return XMLGetHeadersResponse{}, client.getHeadersHandleError(resp)
 	}
-	return client.getHeadersHandleResponse(resp)
+	result, err := client.getHeadersHandleResponse(resp)
+	if err != nil {
+		return XMLGetHeadersResponse{}, err
+	}
+	return result, nil
 }
 
 // getHeadersCreateRequest creates the GetHeaders request.
@@ -427,7 +459,11 @@ func (client XMLClient) GetRootList(ctx context.Context, options *XMLGetRootList
 	if !resp.HasStatusCode(http.StatusOK) {
 		return BananaArrayResponse{}, client.getRootListHandleError(resp)
 	}
-	return client.getRootListHandleResponse(resp)
+	result, err := client.getRootListHandleResponse(resp)
+	if err != nil {
+		return BananaArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getRootListCreateRequest creates the GetRootList request.
@@ -474,7 +510,11 @@ func (client XMLClient) GetRootListSingleItem(ctx context.Context, options *XMLG
 	if !resp.HasStatusCode(http.StatusOK) {
 		return BananaArrayResponse{}, client.getRootListSingleItemHandleError(resp)
 	}
-	return client.getRootListSingleItemHandleResponse(resp)
+	result, err := client.getRootListSingleItemHandleResponse(resp)
+	if err != nil {
+		return BananaArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getRootListSingleItemCreateRequest creates the GetRootListSingleItem request.
@@ -521,7 +561,11 @@ func (client XMLClient) GetServiceProperties(ctx context.Context, options *XMLGe
 	if !resp.HasStatusCode(http.StatusOK) {
 		return StorageServicePropertiesResponse{}, client.getServicePropertiesHandleError(resp)
 	}
-	return client.getServicePropertiesHandleResponse(resp)
+	result, err := client.getServicePropertiesHandleResponse(resp)
+	if err != nil {
+		return StorageServicePropertiesResponse{}, err
+	}
+	return result, nil
 }
 
 // getServicePropertiesCreateRequest creates the GetServiceProperties request.
@@ -572,7 +616,11 @@ func (client XMLClient) GetSimple(ctx context.Context, options *XMLGetSimpleOpti
 	if !resp.HasStatusCode(http.StatusOK) {
 		return SlideshowResponse{}, client.getSimpleHandleError(resp)
 	}
-	return client.getSimpleHandleResponse(resp)
+	result, err := client.getSimpleHandleResponse(resp)
+	if err != nil {
+		return SlideshowResponse{}, err
+	}
+	return result, nil
 }
 
 // getSimpleCreateRequest creates the GetSimple request.
@@ -616,7 +664,11 @@ func (client XMLClient) GetWrappedLists(ctx context.Context, options *XMLGetWrap
 	if !resp.HasStatusCode(http.StatusOK) {
 		return AppleBarrelResponse{}, client.getWrappedListsHandleError(resp)
 	}
-	return client.getWrappedListsHandleResponse(resp)
+	result, err := client.getWrappedListsHandleResponse(resp)
+	if err != nil {
+		return AppleBarrelResponse{}, err
+	}
+	return result, nil
 }
 
 // getWrappedListsCreateRequest creates the GetWrappedLists request.
@@ -664,7 +716,11 @@ func (client XMLClient) GetXMSText(ctx context.Context, options *XMLGetXMSTextOp
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ObjectWithXMSTextPropertyResponse{}, client.getXmsTextHandleError(resp)
 	}
-	return client.getXmsTextHandleResponse(resp)
+	result, err := client.getXmsTextHandleResponse(resp)
+	if err != nil {
+		return ObjectWithXMSTextPropertyResponse{}, err
+	}
+	return result, nil
 }
 
 // getXmsTextCreateRequest creates the GetXMSText request.
@@ -750,7 +806,11 @@ func (client XMLClient) JSONOutput(ctx context.Context, options *XMLJSONOutputOp
 	if !resp.HasStatusCode(http.StatusOK) {
 		return JSONOutputResponse{}, client.jsonOutputHandleError(resp)
 	}
-	return client.jsonOutputHandleResponse(resp)
+	result, err := client.jsonOutputHandleResponse(resp)
+	if err != nil {
+		return JSONOutputResponse{}, err
+	}
+	return result, nil
 }
 
 // jsonOutputCreateRequest creates the JSONOutput request.
@@ -797,7 +857,11 @@ func (client XMLClient) ListBlobs(ctx context.Context, options *XMLListBlobsOpti
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ListBlobsResponseResponse{}, client.listBlobsHandleError(resp)
 	}
-	return client.listBlobsHandleResponse(resp)
+	result, err := client.listBlobsHandleResponse(resp)
+	if err != nil {
+		return ListBlobsResponseResponse{}, err
+	}
+	return result, nil
 }
 
 // listBlobsCreateRequest creates the ListBlobs request.
@@ -848,7 +912,11 @@ func (client XMLClient) ListContainers(ctx context.Context, options *XMLListCont
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ListContainersResponseResponse{}, client.listContainersHandleError(resp)
 	}
-	return client.listContainersHandleResponse(resp)
+	result, err := client.listContainersHandleResponse(resp)
+	if err != nil {
+		return ListContainersResponseResponse{}, err
+	}
+	return result, nil
 }
 
 // listContainersCreateRequest creates the ListContainers request.

@@ -216,7 +216,11 @@ func (client ExpressRouteCircuitAuthorizationsClient) Get(ctx context.Context, r
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ExpressRouteCircuitAuthorizationResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return ExpressRouteCircuitAuthorizationResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.

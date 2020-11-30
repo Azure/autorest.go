@@ -216,7 +216,11 @@ func (client ExpressRouteConnectionsClient) Get(ctx context.Context, resourceGro
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ExpressRouteConnectionResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return ExpressRouteConnectionResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.
@@ -267,7 +271,11 @@ func (client ExpressRouteConnectionsClient) List(ctx context.Context, resourceGr
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ExpressRouteConnectionListResponse{}, client.listHandleError(resp)
 	}
-	return client.listHandleResponse(resp)
+	result, err := client.listHandleResponse(resp)
+	if err != nil {
+		return ExpressRouteConnectionListResponse{}, err
+	}
+	return result, nil
 }
 
 // listCreateRequest creates the List request.

@@ -37,7 +37,11 @@ func (client sqlScriptClient) CreateOrUpdateSQLScript(ctx context.Context, sqlSc
 	if !resp.HasStatusCode(http.StatusOK) {
 		return SQLScriptResourceResponse{}, client.createOrUpdateSqlScriptHandleError(resp)
 	}
-	return client.createOrUpdateSqlScriptHandleResponse(resp)
+	result, err := client.createOrUpdateSqlScriptHandleResponse(resp)
+	if err != nil {
+		return SQLScriptResourceResponse{}, err
+	}
+	return result, nil
 }
 
 // createOrUpdateSqlScriptCreateRequest creates the CreateOrUpdateSQLScript request.
@@ -129,7 +133,11 @@ func (client sqlScriptClient) GetSQLScript(ctx context.Context, sqlScriptName st
 	if !resp.HasStatusCode(http.StatusOK, http.StatusNotModified) {
 		return SQLScriptResourceResponse{}, client.getSqlScriptHandleError(resp)
 	}
-	return client.getSqlScriptHandleResponse(resp)
+	result, err := client.getSqlScriptHandleResponse(resp)
+	if err != nil {
+		return SQLScriptResourceResponse{}, err
+	}
+	return result, nil
 }
 
 // getSqlScriptCreateRequest creates the GetSQLScript request.

@@ -214,7 +214,11 @@ func (client DiskEncryptionSetsClient) Get(ctx context.Context, resourceGroupNam
 	if !resp.HasStatusCode(http.StatusOK) {
 		return DiskEncryptionSetResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return DiskEncryptionSetResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.

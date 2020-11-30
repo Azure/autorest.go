@@ -43,7 +43,11 @@ func (client Datetimerfc1123Client) GetInvalid(ctx context.Context, options *Dat
 	if !resp.HasStatusCode(http.StatusOK) {
 		return TimeResponse{}, client.getInvalidHandleError(resp)
 	}
-	return client.getInvalidHandleResponse(resp)
+	result, err := client.getInvalidHandleResponse(resp)
+	if err != nil {
+		return TimeResponse{}, err
+	}
+	return result, nil
 }
 
 // getInvalidCreateRequest creates the GetInvalid request.
@@ -87,7 +91,11 @@ func (client Datetimerfc1123Client) GetNull(ctx context.Context, options *Dateti
 	if !resp.HasStatusCode(http.StatusOK) {
 		return TimeResponse{}, client.getNullHandleError(resp)
 	}
-	return client.getNullHandleResponse(resp)
+	result, err := client.getNullHandleResponse(resp)
+	if err != nil {
+		return TimeResponse{}, err
+	}
+	return result, nil
 }
 
 // getNullCreateRequest creates the GetNull request.
@@ -131,7 +139,11 @@ func (client Datetimerfc1123Client) GetOverflow(ctx context.Context, options *Da
 	if !resp.HasStatusCode(http.StatusOK) {
 		return TimeResponse{}, client.getOverflowHandleError(resp)
 	}
-	return client.getOverflowHandleResponse(resp)
+	result, err := client.getOverflowHandleResponse(resp)
+	if err != nil {
+		return TimeResponse{}, err
+	}
+	return result, nil
 }
 
 // getOverflowCreateRequest creates the GetOverflow request.
@@ -175,7 +187,11 @@ func (client Datetimerfc1123Client) GetUTCLowercaseMaxDateTime(ctx context.Conte
 	if !resp.HasStatusCode(http.StatusOK) {
 		return TimeResponse{}, client.getUtcLowercaseMaxDateTimeHandleError(resp)
 	}
-	return client.getUtcLowercaseMaxDateTimeHandleResponse(resp)
+	result, err := client.getUtcLowercaseMaxDateTimeHandleResponse(resp)
+	if err != nil {
+		return TimeResponse{}, err
+	}
+	return result, nil
 }
 
 // getUtcLowercaseMaxDateTimeCreateRequest creates the GetUTCLowercaseMaxDateTime request.
@@ -219,7 +235,11 @@ func (client Datetimerfc1123Client) GetUTCMinDateTime(ctx context.Context, optio
 	if !resp.HasStatusCode(http.StatusOK) {
 		return TimeResponse{}, client.getUtcMinDateTimeHandleError(resp)
 	}
-	return client.getUtcMinDateTimeHandleResponse(resp)
+	result, err := client.getUtcMinDateTimeHandleResponse(resp)
+	if err != nil {
+		return TimeResponse{}, err
+	}
+	return result, nil
 }
 
 // getUtcMinDateTimeCreateRequest creates the GetUTCMinDateTime request.
@@ -263,7 +283,11 @@ func (client Datetimerfc1123Client) GetUTCUppercaseMaxDateTime(ctx context.Conte
 	if !resp.HasStatusCode(http.StatusOK) {
 		return TimeResponse{}, client.getUtcUppercaseMaxDateTimeHandleError(resp)
 	}
-	return client.getUtcUppercaseMaxDateTimeHandleResponse(resp)
+	result, err := client.getUtcUppercaseMaxDateTimeHandleResponse(resp)
+	if err != nil {
+		return TimeResponse{}, err
+	}
+	return result, nil
 }
 
 // getUtcUppercaseMaxDateTimeCreateRequest creates the GetUTCUppercaseMaxDateTime request.
@@ -307,7 +331,11 @@ func (client Datetimerfc1123Client) GetUnderflow(ctx context.Context, options *D
 	if !resp.HasStatusCode(http.StatusOK) {
 		return TimeResponse{}, client.getUnderflowHandleError(resp)
 	}
-	return client.getUnderflowHandleResponse(resp)
+	result, err := client.getUnderflowHandleResponse(resp)
+	if err != nil {
+		return TimeResponse{}, err
+	}
+	return result, nil
 }
 
 // getUnderflowCreateRequest creates the GetUnderflow request.

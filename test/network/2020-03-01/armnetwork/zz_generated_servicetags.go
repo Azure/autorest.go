@@ -46,7 +46,11 @@ func (client ServiceTagsClient) List(ctx context.Context, location string, optio
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ServiceTagsListResultResponse{}, client.listHandleError(resp)
 	}
-	return client.listHandleResponse(resp)
+	result, err := client.listHandleResponse(resp)
+	if err != nil {
+		return ServiceTagsListResultResponse{}, err
+	}
+	return result, nil
 }
 
 // listCreateRequest creates the List request.

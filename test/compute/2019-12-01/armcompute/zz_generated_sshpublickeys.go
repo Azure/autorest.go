@@ -49,7 +49,11 @@ func (client SSHPublicKeysClient) Create(ctx context.Context, resourceGroupName 
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return SSHPublicKeyResourceResponse{}, client.createHandleError(resp)
 	}
-	return client.createHandleResponse(resp)
+	result, err := client.createHandleResponse(resp)
+	if err != nil {
+		return SSHPublicKeyResourceResponse{}, err
+	}
+	return result, nil
 }
 
 // createCreateRequest creates the Create request.
@@ -149,7 +153,11 @@ func (client SSHPublicKeysClient) GenerateKeyPair(ctx context.Context, resourceG
 	if !resp.HasStatusCode(http.StatusOK) {
 		return SSHPublicKeyGenerateKeyPairResultResponse{}, client.generateKeyPairHandleError(resp)
 	}
-	return client.generateKeyPairHandleResponse(resp)
+	result, err := client.generateKeyPairHandleResponse(resp)
+	if err != nil {
+		return SSHPublicKeyGenerateKeyPairResultResponse{}, err
+	}
+	return result, nil
 }
 
 // generateKeyPairCreateRequest creates the GenerateKeyPair request.
@@ -202,7 +210,11 @@ func (client SSHPublicKeysClient) Get(ctx context.Context, resourceGroupName str
 	if !resp.HasStatusCode(http.StatusOK) {
 		return SSHPublicKeyResourceResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return SSHPublicKeyResourceResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.
@@ -360,7 +372,11 @@ func (client SSHPublicKeysClient) Update(ctx context.Context, resourceGroupName 
 	if !resp.HasStatusCode(http.StatusOK) {
 		return SSHPublicKeyResourceResponse{}, client.updateHandleError(resp)
 	}
-	return client.updateHandleResponse(resp)
+	result, err := client.updateHandleResponse(resp)
+	if err != nil {
+		return SSHPublicKeyResourceResponse{}, err
+	}
+	return result, nil
 }
 
 // updateCreateRequest creates the Update request.

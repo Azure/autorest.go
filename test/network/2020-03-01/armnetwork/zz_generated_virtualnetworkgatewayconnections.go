@@ -214,7 +214,11 @@ func (client VirtualNetworkGatewayConnectionsClient) Get(ctx context.Context, re
 	if !resp.HasStatusCode(http.StatusOK) {
 		return VirtualNetworkGatewayConnectionResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return VirtualNetworkGatewayConnectionResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.
@@ -265,7 +269,11 @@ func (client VirtualNetworkGatewayConnectionsClient) GetSharedKey(ctx context.Co
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ConnectionSharedKeyResponse{}, client.getSharedKeyHandleError(resp)
 	}
-	return client.getSharedKeyHandleResponse(resp)
+	result, err := client.getSharedKeyHandleResponse(resp)
+	if err != nil {
+		return ConnectionSharedKeyResponse{}, err
+	}
+	return result, nil
 }
 
 // getSharedKeyCreateRequest creates the GetSharedKey request.

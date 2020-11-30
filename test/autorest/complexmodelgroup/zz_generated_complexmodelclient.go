@@ -44,7 +44,11 @@ func (client ComplexModelClient) Create(ctx context.Context, subscriptionId stri
 	if !resp.HasStatusCode(http.StatusOK) {
 		return CatalogDictionaryResponse{}, client.createHandleError(resp)
 	}
-	return client.createHandleResponse(resp)
+	result, err := client.createHandleResponse(resp)
+	if err != nil {
+		return CatalogDictionaryResponse{}, err
+	}
+	return result, nil
 }
 
 // createCreateRequest creates the Create request.
@@ -95,7 +99,11 @@ func (client ComplexModelClient) List(ctx context.Context, resourceGroupName str
 	if !resp.HasStatusCode(http.StatusOK) {
 		return CatalogArrayResponse{}, client.listHandleError(resp)
 	}
-	return client.listHandleResponse(resp)
+	result, err := client.listHandleResponse(resp)
+	if err != nil {
+		return CatalogArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // listCreateRequest creates the List request.
@@ -144,7 +152,11 @@ func (client ComplexModelClient) Update(ctx context.Context, subscriptionId stri
 	if !resp.HasStatusCode(http.StatusOK) {
 		return CatalogArrayResponse{}, client.updateHandleError(resp)
 	}
-	return client.updateHandleResponse(resp)
+	result, err := client.updateHandleResponse(resp)
+	if err != nil {
+		return CatalogArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // updateCreateRequest creates the Update request.

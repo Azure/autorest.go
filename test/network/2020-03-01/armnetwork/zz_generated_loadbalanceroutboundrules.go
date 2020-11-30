@@ -46,7 +46,11 @@ func (client LoadBalancerOutboundRulesClient) Get(ctx context.Context, resourceG
 	if !resp.HasStatusCode(http.StatusOK) {
 		return OutboundRuleResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return OutboundRuleResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.

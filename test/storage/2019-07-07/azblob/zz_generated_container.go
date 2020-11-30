@@ -40,7 +40,11 @@ func (client containerClient) AcquireLease(ctx context.Context, containerAcquire
 	if !resp.HasStatusCode(http.StatusCreated) {
 		return ContainerAcquireLeaseResponse{}, client.acquireLeaseHandleError(resp)
 	}
-	return client.acquireLeaseHandleResponse(resp)
+	result, err := client.acquireLeaseHandleResponse(resp)
+	if err != nil {
+		return ContainerAcquireLeaseResponse{}, err
+	}
+	return result, nil
 }
 
 // acquireLeaseCreateRequest creates the AcquireLease request.
@@ -135,7 +139,11 @@ func (client containerClient) BreakLease(ctx context.Context, containerBreakLeas
 	if !resp.HasStatusCode(http.StatusAccepted) {
 		return ContainerBreakLeaseResponse{}, client.breakLeaseHandleError(resp)
 	}
-	return client.breakLeaseHandleResponse(resp)
+	result, err := client.breakLeaseHandleResponse(resp)
+	if err != nil {
+		return ContainerBreakLeaseResponse{}, err
+	}
+	return result, nil
 }
 
 // breakLeaseCreateRequest creates the BreakLease request.
@@ -232,7 +240,11 @@ func (client containerClient) ChangeLease(ctx context.Context, leaseId string, p
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ContainerChangeLeaseResponse{}, client.changeLeaseHandleError(resp)
 	}
-	return client.changeLeaseHandleResponse(resp)
+	result, err := client.changeLeaseHandleResponse(resp)
+	if err != nil {
+		return ContainerChangeLeaseResponse{}, err
+	}
+	return result, nil
 }
 
 // changeLeaseCreateRequest creates the ChangeLease request.
@@ -323,7 +335,11 @@ func (client containerClient) Create(ctx context.Context, containerCreateOptions
 	if !resp.HasStatusCode(http.StatusCreated) {
 		return ContainerCreateResponse{}, client.createHandleError(resp)
 	}
-	return client.createHandleResponse(resp)
+	result, err := client.createHandleResponse(resp)
+	if err != nil {
+		return ContainerCreateResponse{}, err
+	}
+	return result, nil
 }
 
 // createCreateRequest creates the Create request.
@@ -415,7 +431,11 @@ func (client containerClient) Delete(ctx context.Context, containerDeleteOptions
 	if !resp.HasStatusCode(http.StatusAccepted) {
 		return ContainerDeleteResponse{}, client.deleteHandleError(resp)
 	}
-	return client.deleteHandleResponse(resp)
+	result, err := client.deleteHandleResponse(resp)
+	if err != nil {
+		return ContainerDeleteResponse{}, err
+	}
+	return result, nil
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -492,7 +512,11 @@ func (client containerClient) GetAccessPolicy(ctx context.Context, containerGetA
 	if !resp.HasStatusCode(http.StatusOK) {
 		return SignedIDentifierArrayResponse{}, client.getAccessPolicyHandleError(resp)
 	}
-	return client.getAccessPolicyHandleResponse(resp)
+	result, err := client.getAccessPolicyHandleResponse(resp)
+	if err != nil {
+		return SignedIDentifierArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getAccessPolicyCreateRequest creates the GetAccessPolicy request.
@@ -578,7 +602,11 @@ func (client containerClient) GetAccountInfo(ctx context.Context, options *Conta
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ContainerGetAccountInfoResponse{}, client.getAccountInfoHandleError(resp)
 	}
-	return client.getAccountInfoHandleResponse(resp)
+	result, err := client.getAccountInfoHandleResponse(resp)
+	if err != nil {
+		return ContainerGetAccountInfoResponse{}, err
+	}
+	return result, nil
 }
 
 // getAccountInfoCreateRequest creates the GetAccountInfo request.
@@ -648,7 +676,11 @@ func (client containerClient) GetProperties(ctx context.Context, containerGetPro
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ContainerGetPropertiesResponse{}, client.getPropertiesHandleError(resp)
 	}
-	return client.getPropertiesHandleResponse(resp)
+	result, err := client.getPropertiesHandleResponse(resp)
+	if err != nil {
+		return ContainerGetPropertiesResponse{}, err
+	}
+	return result, nil
 }
 
 // getPropertiesCreateRequest creates the GetProperties request.
@@ -944,7 +976,11 @@ func (client containerClient) ReleaseLease(ctx context.Context, leaseId string, 
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ContainerReleaseLeaseResponse{}, client.releaseLeaseHandleError(resp)
 	}
-	return client.releaseLeaseHandleResponse(resp)
+	result, err := client.releaseLeaseHandleResponse(resp)
+	if err != nil {
+		return ContainerReleaseLeaseResponse{}, err
+	}
+	return result, nil
 }
 
 // releaseLeaseCreateRequest creates the ReleaseLease request.
@@ -1031,7 +1067,11 @@ func (client containerClient) RenewLease(ctx context.Context, leaseId string, co
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ContainerRenewLeaseResponse{}, client.renewLeaseHandleError(resp)
 	}
-	return client.renewLeaseHandleResponse(resp)
+	result, err := client.renewLeaseHandleResponse(resp)
+	if err != nil {
+		return ContainerRenewLeaseResponse{}, err
+	}
+	return result, nil
 }
 
 // renewLeaseCreateRequest creates the RenewLease request.
@@ -1121,7 +1161,11 @@ func (client containerClient) SetAccessPolicy(ctx context.Context, containerSetA
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ContainerSetAccessPolicyResponse{}, client.setAccessPolicyHandleError(resp)
 	}
-	return client.setAccessPolicyHandleResponse(resp)
+	result, err := client.setAccessPolicyHandleResponse(resp)
+	if err != nil {
+		return ContainerSetAccessPolicyResponse{}, err
+	}
+	return result, nil
 }
 
 // setAccessPolicyCreateRequest creates the SetAccessPolicy request.
@@ -1219,7 +1263,11 @@ func (client containerClient) SetMetadata(ctx context.Context, containerSetMetad
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ContainerSetMetadataResponse{}, client.setMetadataHandleError(resp)
 	}
-	return client.setMetadataHandleResponse(resp)
+	result, err := client.setMetadataHandleResponse(resp)
+	if err != nil {
+		return ContainerSetMetadataResponse{}, err
+	}
+	return result, nil
 }
 
 // setMetadataCreateRequest creates the SetMetadata request.

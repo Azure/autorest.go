@@ -214,7 +214,11 @@ func (client LoadBalancersClient) Get(ctx context.Context, resourceGroupName str
 	if !resp.HasStatusCode(http.StatusOK) {
 		return LoadBalancerResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return LoadBalancerResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.
@@ -364,7 +368,11 @@ func (client LoadBalancersClient) UpdateTags(ctx context.Context, resourceGroupN
 	if !resp.HasStatusCode(http.StatusOK) {
 		return LoadBalancerResponse{}, client.updateTagsHandleError(resp)
 	}
-	return client.updateTagsHandleResponse(resp)
+	result, err := client.updateTagsHandleResponse(resp)
+	if err != nil {
+		return LoadBalancerResponse{}, err
+	}
+	return result, nil
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.

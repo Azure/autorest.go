@@ -214,7 +214,11 @@ func (client ServiceEndpointPoliciesClient) Get(ctx context.Context, resourceGro
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ServiceEndpointPolicyResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return ServiceEndpointPolicyResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.
@@ -364,7 +368,11 @@ func (client ServiceEndpointPoliciesClient) UpdateTags(ctx context.Context, reso
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ServiceEndpointPolicyResponse{}, client.updateTagsHandleError(resp)
 	}
-	return client.updateTagsHandleResponse(resp)
+	result, err := client.updateTagsHandleResponse(resp)
+	if err != nil {
+		return ServiceEndpointPolicyResponse{}, err
+	}
+	return result, nil
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.

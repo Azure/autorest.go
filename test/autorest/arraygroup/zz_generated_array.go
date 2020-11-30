@@ -43,7 +43,11 @@ func (client ArrayClient) GetArrayEmpty(ctx context.Context, options *ArrayGetAr
 	if !resp.HasStatusCode(http.StatusOK) {
 		return StringArrayArrayResponse{}, client.getArrayEmptyHandleError(resp)
 	}
-	return client.getArrayEmptyHandleResponse(resp)
+	result, err := client.getArrayEmptyHandleResponse(resp)
+	if err != nil {
+		return StringArrayArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getArrayEmptyCreateRequest creates the GetArrayEmpty request.
@@ -87,7 +91,11 @@ func (client ArrayClient) GetArrayItemEmpty(ctx context.Context, options *ArrayG
 	if !resp.HasStatusCode(http.StatusOK) {
 		return StringArrayArrayResponse{}, client.getArrayItemEmptyHandleError(resp)
 	}
-	return client.getArrayItemEmptyHandleResponse(resp)
+	result, err := client.getArrayItemEmptyHandleResponse(resp)
+	if err != nil {
+		return StringArrayArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getArrayItemEmptyCreateRequest creates the GetArrayItemEmpty request.
@@ -131,7 +139,11 @@ func (client ArrayClient) GetArrayItemNull(ctx context.Context, options *ArrayGe
 	if !resp.HasStatusCode(http.StatusOK) {
 		return StringArrayArrayResponse{}, client.getArrayItemNullHandleError(resp)
 	}
-	return client.getArrayItemNullHandleResponse(resp)
+	result, err := client.getArrayItemNullHandleResponse(resp)
+	if err != nil {
+		return StringArrayArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getArrayItemNullCreateRequest creates the GetArrayItemNull request.
@@ -175,7 +187,11 @@ func (client ArrayClient) GetArrayNull(ctx context.Context, options *ArrayGetArr
 	if !resp.HasStatusCode(http.StatusOK) {
 		return StringArrayArrayResponse{}, client.getArrayNullHandleError(resp)
 	}
-	return client.getArrayNullHandleResponse(resp)
+	result, err := client.getArrayNullHandleResponse(resp)
+	if err != nil {
+		return StringArrayArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getArrayNullCreateRequest creates the GetArrayNull request.
@@ -219,7 +235,11 @@ func (client ArrayClient) GetArrayValid(ctx context.Context, options *ArrayGetAr
 	if !resp.HasStatusCode(http.StatusOK) {
 		return StringArrayArrayResponse{}, client.getArrayValidHandleError(resp)
 	}
-	return client.getArrayValidHandleResponse(resp)
+	result, err := client.getArrayValidHandleResponse(resp)
+	if err != nil {
+		return StringArrayArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getArrayValidCreateRequest creates the GetArrayValid request.
@@ -263,7 +283,11 @@ func (client ArrayClient) GetBase64URL(ctx context.Context, options *ArrayGetBas
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ByteArrayArrayResponse{}, client.getBase64UrlHandleError(resp)
 	}
-	return client.getBase64UrlHandleResponse(resp)
+	result, err := client.getBase64UrlHandleResponse(resp)
+	if err != nil {
+		return ByteArrayArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getBase64UrlCreateRequest creates the GetBase64URL request.
@@ -307,7 +331,11 @@ func (client ArrayClient) GetBooleanInvalidNull(ctx context.Context, options *Ar
 	if !resp.HasStatusCode(http.StatusOK) {
 		return BoolArrayResponse{}, client.getBooleanInvalidNullHandleError(resp)
 	}
-	return client.getBooleanInvalidNullHandleResponse(resp)
+	result, err := client.getBooleanInvalidNullHandleResponse(resp)
+	if err != nil {
+		return BoolArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getBooleanInvalidNullCreateRequest creates the GetBooleanInvalidNull request.
@@ -351,7 +379,11 @@ func (client ArrayClient) GetBooleanInvalidString(ctx context.Context, options *
 	if !resp.HasStatusCode(http.StatusOK) {
 		return BoolArrayResponse{}, client.getBooleanInvalidStringHandleError(resp)
 	}
-	return client.getBooleanInvalidStringHandleResponse(resp)
+	result, err := client.getBooleanInvalidStringHandleResponse(resp)
+	if err != nil {
+		return BoolArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getBooleanInvalidStringCreateRequest creates the GetBooleanInvalidString request.
@@ -395,7 +427,11 @@ func (client ArrayClient) GetBooleanTfft(ctx context.Context, options *ArrayGetB
 	if !resp.HasStatusCode(http.StatusOK) {
 		return BoolArrayResponse{}, client.getBooleanTfftHandleError(resp)
 	}
-	return client.getBooleanTfftHandleResponse(resp)
+	result, err := client.getBooleanTfftHandleResponse(resp)
+	if err != nil {
+		return BoolArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getBooleanTfftCreateRequest creates the GetBooleanTfft request.
@@ -439,7 +475,11 @@ func (client ArrayClient) GetByteInvalidNull(ctx context.Context, options *Array
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ByteArrayArrayResponse{}, client.getByteInvalidNullHandleError(resp)
 	}
-	return client.getByteInvalidNullHandleResponse(resp)
+	result, err := client.getByteInvalidNullHandleResponse(resp)
+	if err != nil {
+		return ByteArrayArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getByteInvalidNullCreateRequest creates the GetByteInvalidNull request.
@@ -483,7 +523,11 @@ func (client ArrayClient) GetByteValid(ctx context.Context, options *ArrayGetByt
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ByteArrayArrayResponse{}, client.getByteValidHandleError(resp)
 	}
-	return client.getByteValidHandleResponse(resp)
+	result, err := client.getByteValidHandleResponse(resp)
+	if err != nil {
+		return ByteArrayArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getByteValidCreateRequest creates the GetByteValid request.
@@ -527,7 +571,11 @@ func (client ArrayClient) GetComplexEmpty(ctx context.Context, options *ArrayGet
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ProductArrayResponse{}, client.getComplexEmptyHandleError(resp)
 	}
-	return client.getComplexEmptyHandleResponse(resp)
+	result, err := client.getComplexEmptyHandleResponse(resp)
+	if err != nil {
+		return ProductArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getComplexEmptyCreateRequest creates the GetComplexEmpty request.
@@ -571,7 +619,11 @@ func (client ArrayClient) GetComplexItemEmpty(ctx context.Context, options *Arra
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ProductArrayResponse{}, client.getComplexItemEmptyHandleError(resp)
 	}
-	return client.getComplexItemEmptyHandleResponse(resp)
+	result, err := client.getComplexItemEmptyHandleResponse(resp)
+	if err != nil {
+		return ProductArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getComplexItemEmptyCreateRequest creates the GetComplexItemEmpty request.
@@ -615,7 +667,11 @@ func (client ArrayClient) GetComplexItemNull(ctx context.Context, options *Array
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ProductArrayResponse{}, client.getComplexItemNullHandleError(resp)
 	}
-	return client.getComplexItemNullHandleResponse(resp)
+	result, err := client.getComplexItemNullHandleResponse(resp)
+	if err != nil {
+		return ProductArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getComplexItemNullCreateRequest creates the GetComplexItemNull request.
@@ -659,7 +715,11 @@ func (client ArrayClient) GetComplexNull(ctx context.Context, options *ArrayGetC
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ProductArrayResponse{}, client.getComplexNullHandleError(resp)
 	}
-	return client.getComplexNullHandleResponse(resp)
+	result, err := client.getComplexNullHandleResponse(resp)
+	if err != nil {
+		return ProductArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getComplexNullCreateRequest creates the GetComplexNull request.
@@ -703,7 +763,11 @@ func (client ArrayClient) GetComplexValid(ctx context.Context, options *ArrayGet
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ProductArrayResponse{}, client.getComplexValidHandleError(resp)
 	}
-	return client.getComplexValidHandleResponse(resp)
+	result, err := client.getComplexValidHandleResponse(resp)
+	if err != nil {
+		return ProductArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getComplexValidCreateRequest creates the GetComplexValid request.
@@ -747,7 +811,11 @@ func (client ArrayClient) GetDateInvalidChars(ctx context.Context, options *Arra
 	if !resp.HasStatusCode(http.StatusOK) {
 		return TimeArrayResponse{}, client.getDateInvalidCharsHandleError(resp)
 	}
-	return client.getDateInvalidCharsHandleResponse(resp)
+	result, err := client.getDateInvalidCharsHandleResponse(resp)
+	if err != nil {
+		return TimeArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getDateInvalidCharsCreateRequest creates the GetDateInvalidChars request.
@@ -797,7 +865,11 @@ func (client ArrayClient) GetDateInvalidNull(ctx context.Context, options *Array
 	if !resp.HasStatusCode(http.StatusOK) {
 		return TimeArrayResponse{}, client.getDateInvalidNullHandleError(resp)
 	}
-	return client.getDateInvalidNullHandleResponse(resp)
+	result, err := client.getDateInvalidNullHandleResponse(resp)
+	if err != nil {
+		return TimeArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getDateInvalidNullCreateRequest creates the GetDateInvalidNull request.
@@ -847,7 +919,11 @@ func (client ArrayClient) GetDateTimeInvalidChars(ctx context.Context, options *
 	if !resp.HasStatusCode(http.StatusOK) {
 		return TimeArrayResponse{}, client.getDateTimeInvalidCharsHandleError(resp)
 	}
-	return client.getDateTimeInvalidCharsHandleResponse(resp)
+	result, err := client.getDateTimeInvalidCharsHandleResponse(resp)
+	if err != nil {
+		return TimeArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getDateTimeInvalidCharsCreateRequest creates the GetDateTimeInvalidChars request.
@@ -897,7 +973,11 @@ func (client ArrayClient) GetDateTimeInvalidNull(ctx context.Context, options *A
 	if !resp.HasStatusCode(http.StatusOK) {
 		return TimeArrayResponse{}, client.getDateTimeInvalidNullHandleError(resp)
 	}
-	return client.getDateTimeInvalidNullHandleResponse(resp)
+	result, err := client.getDateTimeInvalidNullHandleResponse(resp)
+	if err != nil {
+		return TimeArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getDateTimeInvalidNullCreateRequest creates the GetDateTimeInvalidNull request.
@@ -947,7 +1027,11 @@ func (client ArrayClient) GetDateTimeRFC1123Valid(ctx context.Context, options *
 	if !resp.HasStatusCode(http.StatusOK) {
 		return TimeArrayResponse{}, client.getDateTimeRfc1123ValidHandleError(resp)
 	}
-	return client.getDateTimeRfc1123ValidHandleResponse(resp)
+	result, err := client.getDateTimeRfc1123ValidHandleResponse(resp)
+	if err != nil {
+		return TimeArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getDateTimeRfc1123ValidCreateRequest creates the GetDateTimeRFC1123Valid request.
@@ -997,7 +1081,11 @@ func (client ArrayClient) GetDateTimeValid(ctx context.Context, options *ArrayGe
 	if !resp.HasStatusCode(http.StatusOK) {
 		return TimeArrayResponse{}, client.getDateTimeValidHandleError(resp)
 	}
-	return client.getDateTimeValidHandleResponse(resp)
+	result, err := client.getDateTimeValidHandleResponse(resp)
+	if err != nil {
+		return TimeArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getDateTimeValidCreateRequest creates the GetDateTimeValid request.
@@ -1047,7 +1135,11 @@ func (client ArrayClient) GetDateValid(ctx context.Context, options *ArrayGetDat
 	if !resp.HasStatusCode(http.StatusOK) {
 		return TimeArrayResponse{}, client.getDateValidHandleError(resp)
 	}
-	return client.getDateValidHandleResponse(resp)
+	result, err := client.getDateValidHandleResponse(resp)
+	if err != nil {
+		return TimeArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getDateValidCreateRequest creates the GetDateValid request.
@@ -1097,7 +1189,11 @@ func (client ArrayClient) GetDictionaryEmpty(ctx context.Context, options *Array
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfStringArrayResponse{}, client.getDictionaryEmptyHandleError(resp)
 	}
-	return client.getDictionaryEmptyHandleResponse(resp)
+	result, err := client.getDictionaryEmptyHandleResponse(resp)
+	if err != nil {
+		return MapOfStringArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getDictionaryEmptyCreateRequest creates the GetDictionaryEmpty request.
@@ -1142,7 +1238,11 @@ func (client ArrayClient) GetDictionaryItemEmpty(ctx context.Context, options *A
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfStringArrayResponse{}, client.getDictionaryItemEmptyHandleError(resp)
 	}
-	return client.getDictionaryItemEmptyHandleResponse(resp)
+	result, err := client.getDictionaryItemEmptyHandleResponse(resp)
+	if err != nil {
+		return MapOfStringArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getDictionaryItemEmptyCreateRequest creates the GetDictionaryItemEmpty request.
@@ -1187,7 +1287,11 @@ func (client ArrayClient) GetDictionaryItemNull(ctx context.Context, options *Ar
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfStringArrayResponse{}, client.getDictionaryItemNullHandleError(resp)
 	}
-	return client.getDictionaryItemNullHandleResponse(resp)
+	result, err := client.getDictionaryItemNullHandleResponse(resp)
+	if err != nil {
+		return MapOfStringArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getDictionaryItemNullCreateRequest creates the GetDictionaryItemNull request.
@@ -1231,7 +1335,11 @@ func (client ArrayClient) GetDictionaryNull(ctx context.Context, options *ArrayG
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfStringArrayResponse{}, client.getDictionaryNullHandleError(resp)
 	}
-	return client.getDictionaryNullHandleResponse(resp)
+	result, err := client.getDictionaryNullHandleResponse(resp)
+	if err != nil {
+		return MapOfStringArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getDictionaryNullCreateRequest creates the GetDictionaryNull request.
@@ -1276,7 +1384,11 @@ func (client ArrayClient) GetDictionaryValid(ctx context.Context, options *Array
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfStringArrayResponse{}, client.getDictionaryValidHandleError(resp)
 	}
-	return client.getDictionaryValidHandleResponse(resp)
+	result, err := client.getDictionaryValidHandleResponse(resp)
+	if err != nil {
+		return MapOfStringArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getDictionaryValidCreateRequest creates the GetDictionaryValid request.
@@ -1320,7 +1432,11 @@ func (client ArrayClient) GetDoubleInvalidNull(ctx context.Context, options *Arr
 	if !resp.HasStatusCode(http.StatusOK) {
 		return Float64ArrayResponse{}, client.getDoubleInvalidNullHandleError(resp)
 	}
-	return client.getDoubleInvalidNullHandleResponse(resp)
+	result, err := client.getDoubleInvalidNullHandleResponse(resp)
+	if err != nil {
+		return Float64ArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getDoubleInvalidNullCreateRequest creates the GetDoubleInvalidNull request.
@@ -1364,7 +1480,11 @@ func (client ArrayClient) GetDoubleInvalidString(ctx context.Context, options *A
 	if !resp.HasStatusCode(http.StatusOK) {
 		return Float64ArrayResponse{}, client.getDoubleInvalidStringHandleError(resp)
 	}
-	return client.getDoubleInvalidStringHandleResponse(resp)
+	result, err := client.getDoubleInvalidStringHandleResponse(resp)
+	if err != nil {
+		return Float64ArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getDoubleInvalidStringCreateRequest creates the GetDoubleInvalidString request.
@@ -1408,7 +1528,11 @@ func (client ArrayClient) GetDoubleValid(ctx context.Context, options *ArrayGetD
 	if !resp.HasStatusCode(http.StatusOK) {
 		return Float64ArrayResponse{}, client.getDoubleValidHandleError(resp)
 	}
-	return client.getDoubleValidHandleResponse(resp)
+	result, err := client.getDoubleValidHandleResponse(resp)
+	if err != nil {
+		return Float64ArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getDoubleValidCreateRequest creates the GetDoubleValid request.
@@ -1452,7 +1576,11 @@ func (client ArrayClient) GetDurationValid(ctx context.Context, options *ArrayGe
 	if !resp.HasStatusCode(http.StatusOK) {
 		return StringArrayResponse{}, client.getDurationValidHandleError(resp)
 	}
-	return client.getDurationValidHandleResponse(resp)
+	result, err := client.getDurationValidHandleResponse(resp)
+	if err != nil {
+		return StringArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getDurationValidCreateRequest creates the GetDurationValid request.
@@ -1496,7 +1624,11 @@ func (client ArrayClient) GetEmpty(ctx context.Context, options *ArrayGetEmptyOp
 	if !resp.HasStatusCode(http.StatusOK) {
 		return Int32ArrayResponse{}, client.getEmptyHandleError(resp)
 	}
-	return client.getEmptyHandleResponse(resp)
+	result, err := client.getEmptyHandleResponse(resp)
+	if err != nil {
+		return Int32ArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getEmptyCreateRequest creates the GetEmpty request.
@@ -1540,7 +1672,11 @@ func (client ArrayClient) GetEnumValid(ctx context.Context, options *ArrayGetEnu
 	if !resp.HasStatusCode(http.StatusOK) {
 		return FooEnumArrayResponse{}, client.getEnumValidHandleError(resp)
 	}
-	return client.getEnumValidHandleResponse(resp)
+	result, err := client.getEnumValidHandleResponse(resp)
+	if err != nil {
+		return FooEnumArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getEnumValidCreateRequest creates the GetEnumValid request.
@@ -1584,7 +1720,11 @@ func (client ArrayClient) GetFloatInvalidNull(ctx context.Context, options *Arra
 	if !resp.HasStatusCode(http.StatusOK) {
 		return Float32ArrayResponse{}, client.getFloatInvalidNullHandleError(resp)
 	}
-	return client.getFloatInvalidNullHandleResponse(resp)
+	result, err := client.getFloatInvalidNullHandleResponse(resp)
+	if err != nil {
+		return Float32ArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getFloatInvalidNullCreateRequest creates the GetFloatInvalidNull request.
@@ -1628,7 +1768,11 @@ func (client ArrayClient) GetFloatInvalidString(ctx context.Context, options *Ar
 	if !resp.HasStatusCode(http.StatusOK) {
 		return Float32ArrayResponse{}, client.getFloatInvalidStringHandleError(resp)
 	}
-	return client.getFloatInvalidStringHandleResponse(resp)
+	result, err := client.getFloatInvalidStringHandleResponse(resp)
+	if err != nil {
+		return Float32ArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getFloatInvalidStringCreateRequest creates the GetFloatInvalidString request.
@@ -1672,7 +1816,11 @@ func (client ArrayClient) GetFloatValid(ctx context.Context, options *ArrayGetFl
 	if !resp.HasStatusCode(http.StatusOK) {
 		return Float32ArrayResponse{}, client.getFloatValidHandleError(resp)
 	}
-	return client.getFloatValidHandleResponse(resp)
+	result, err := client.getFloatValidHandleResponse(resp)
+	if err != nil {
+		return Float32ArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getFloatValidCreateRequest creates the GetFloatValid request.
@@ -1716,7 +1864,11 @@ func (client ArrayClient) GetIntInvalidNull(ctx context.Context, options *ArrayG
 	if !resp.HasStatusCode(http.StatusOK) {
 		return Int32ArrayResponse{}, client.getIntInvalidNullHandleError(resp)
 	}
-	return client.getIntInvalidNullHandleResponse(resp)
+	result, err := client.getIntInvalidNullHandleResponse(resp)
+	if err != nil {
+		return Int32ArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getIntInvalidNullCreateRequest creates the GetIntInvalidNull request.
@@ -1760,7 +1912,11 @@ func (client ArrayClient) GetIntInvalidString(ctx context.Context, options *Arra
 	if !resp.HasStatusCode(http.StatusOK) {
 		return Int32ArrayResponse{}, client.getIntInvalidStringHandleError(resp)
 	}
-	return client.getIntInvalidStringHandleResponse(resp)
+	result, err := client.getIntInvalidStringHandleResponse(resp)
+	if err != nil {
+		return Int32ArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getIntInvalidStringCreateRequest creates the GetIntInvalidString request.
@@ -1804,7 +1960,11 @@ func (client ArrayClient) GetIntegerValid(ctx context.Context, options *ArrayGet
 	if !resp.HasStatusCode(http.StatusOK) {
 		return Int32ArrayResponse{}, client.getIntegerValidHandleError(resp)
 	}
-	return client.getIntegerValidHandleResponse(resp)
+	result, err := client.getIntegerValidHandleResponse(resp)
+	if err != nil {
+		return Int32ArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getIntegerValidCreateRequest creates the GetIntegerValid request.
@@ -1848,7 +2008,11 @@ func (client ArrayClient) GetInvalid(ctx context.Context, options *ArrayGetInval
 	if !resp.HasStatusCode(http.StatusOK) {
 		return Int32ArrayResponse{}, client.getInvalidHandleError(resp)
 	}
-	return client.getInvalidHandleResponse(resp)
+	result, err := client.getInvalidHandleResponse(resp)
+	if err != nil {
+		return Int32ArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getInvalidCreateRequest creates the GetInvalid request.
@@ -1892,7 +2056,11 @@ func (client ArrayClient) GetLongInvalidNull(ctx context.Context, options *Array
 	if !resp.HasStatusCode(http.StatusOK) {
 		return Int64ArrayResponse{}, client.getLongInvalidNullHandleError(resp)
 	}
-	return client.getLongInvalidNullHandleResponse(resp)
+	result, err := client.getLongInvalidNullHandleResponse(resp)
+	if err != nil {
+		return Int64ArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getLongInvalidNullCreateRequest creates the GetLongInvalidNull request.
@@ -1936,7 +2104,11 @@ func (client ArrayClient) GetLongInvalidString(ctx context.Context, options *Arr
 	if !resp.HasStatusCode(http.StatusOK) {
 		return Int64ArrayResponse{}, client.getLongInvalidStringHandleError(resp)
 	}
-	return client.getLongInvalidStringHandleResponse(resp)
+	result, err := client.getLongInvalidStringHandleResponse(resp)
+	if err != nil {
+		return Int64ArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getLongInvalidStringCreateRequest creates the GetLongInvalidString request.
@@ -1980,7 +2152,11 @@ func (client ArrayClient) GetLongValid(ctx context.Context, options *ArrayGetLon
 	if !resp.HasStatusCode(http.StatusOK) {
 		return Int64ArrayResponse{}, client.getLongValidHandleError(resp)
 	}
-	return client.getLongValidHandleResponse(resp)
+	result, err := client.getLongValidHandleResponse(resp)
+	if err != nil {
+		return Int64ArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getLongValidCreateRequest creates the GetLongValid request.
@@ -2024,7 +2200,11 @@ func (client ArrayClient) GetNull(ctx context.Context, options *ArrayGetNullOpti
 	if !resp.HasStatusCode(http.StatusOK) {
 		return Int32ArrayResponse{}, client.getNullHandleError(resp)
 	}
-	return client.getNullHandleResponse(resp)
+	result, err := client.getNullHandleResponse(resp)
+	if err != nil {
+		return Int32ArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getNullCreateRequest creates the GetNull request.
@@ -2068,7 +2248,11 @@ func (client ArrayClient) GetStringEnumValid(ctx context.Context, options *Array
 	if !resp.HasStatusCode(http.StatusOK) {
 		return Enum0ArrayResponse{}, client.getStringEnumValidHandleError(resp)
 	}
-	return client.getStringEnumValidHandleResponse(resp)
+	result, err := client.getStringEnumValidHandleResponse(resp)
+	if err != nil {
+		return Enum0ArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getStringEnumValidCreateRequest creates the GetStringEnumValid request.
@@ -2112,7 +2296,11 @@ func (client ArrayClient) GetStringValid(ctx context.Context, options *ArrayGetS
 	if !resp.HasStatusCode(http.StatusOK) {
 		return StringArrayResponse{}, client.getStringValidHandleError(resp)
 	}
-	return client.getStringValidHandleResponse(resp)
+	result, err := client.getStringValidHandleResponse(resp)
+	if err != nil {
+		return StringArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getStringValidCreateRequest creates the GetStringValid request.
@@ -2156,7 +2344,11 @@ func (client ArrayClient) GetStringWithInvalid(ctx context.Context, options *Arr
 	if !resp.HasStatusCode(http.StatusOK) {
 		return StringArrayResponse{}, client.getStringWithInvalidHandleError(resp)
 	}
-	return client.getStringWithInvalidHandleResponse(resp)
+	result, err := client.getStringWithInvalidHandleResponse(resp)
+	if err != nil {
+		return StringArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getStringWithInvalidCreateRequest creates the GetStringWithInvalid request.
@@ -2200,7 +2392,11 @@ func (client ArrayClient) GetStringWithNull(ctx context.Context, options *ArrayG
 	if !resp.HasStatusCode(http.StatusOK) {
 		return StringArrayResponse{}, client.getStringWithNullHandleError(resp)
 	}
-	return client.getStringWithNullHandleResponse(resp)
+	result, err := client.getStringWithNullHandleResponse(resp)
+	if err != nil {
+		return StringArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getStringWithNullCreateRequest creates the GetStringWithNull request.
@@ -2244,7 +2440,11 @@ func (client ArrayClient) GetUUIDInvalidChars(ctx context.Context, options *Arra
 	if !resp.HasStatusCode(http.StatusOK) {
 		return StringArrayResponse{}, client.getUuidInvalidCharsHandleError(resp)
 	}
-	return client.getUuidInvalidCharsHandleResponse(resp)
+	result, err := client.getUuidInvalidCharsHandleResponse(resp)
+	if err != nil {
+		return StringArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getUuidInvalidCharsCreateRequest creates the GetUUIDInvalidChars request.
@@ -2288,7 +2488,11 @@ func (client ArrayClient) GetUUIDValid(ctx context.Context, options *ArrayGetUUI
 	if !resp.HasStatusCode(http.StatusOK) {
 		return StringArrayResponse{}, client.getUuidValidHandleError(resp)
 	}
-	return client.getUuidValidHandleResponse(resp)
+	result, err := client.getUuidValidHandleResponse(resp)
+	if err != nil {
+		return StringArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getUuidValidCreateRequest creates the GetUUIDValid request.

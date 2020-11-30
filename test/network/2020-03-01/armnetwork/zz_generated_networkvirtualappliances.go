@@ -214,7 +214,11 @@ func (client NetworkVirtualAppliancesClient) Get(ctx context.Context, resourceGr
 	if !resp.HasStatusCode(http.StatusOK) {
 		return NetworkVirtualApplianceResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return NetworkVirtualApplianceResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.
@@ -364,7 +368,11 @@ func (client NetworkVirtualAppliancesClient) UpdateTags(ctx context.Context, res
 	if !resp.HasStatusCode(http.StatusOK) {
 		return NetworkVirtualApplianceResponse{}, client.updateTagsHandleError(resp)
 	}
-	return client.updateTagsHandleResponse(resp)
+	result, err := client.updateTagsHandleResponse(resp)
+	if err != nil {
+		return NetworkVirtualApplianceResponse{}, err
+	}
+	return result, nil
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.

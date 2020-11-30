@@ -214,7 +214,11 @@ func (client LocalNetworkGatewaysClient) Get(ctx context.Context, resourceGroupN
 	if !resp.HasStatusCode(http.StatusOK) {
 		return LocalNetworkGatewayResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return LocalNetworkGatewayResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.
@@ -313,7 +317,11 @@ func (client LocalNetworkGatewaysClient) UpdateTags(ctx context.Context, resourc
 	if !resp.HasStatusCode(http.StatusOK) {
 		return LocalNetworkGatewayResponse{}, client.updateTagsHandleError(resp)
 	}
-	return client.updateTagsHandleResponse(resp)
+	result, err := client.updateTagsHandleResponse(resp)
+	if err != nil {
+		return LocalNetworkGatewayResponse{}, err
+	}
+	return result, nil
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.

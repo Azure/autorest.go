@@ -42,7 +42,11 @@ func (client StringClient) GetBase64Encoded(ctx context.Context, options *String
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ByteArrayResponse{}, client.getBase64EncodedHandleError(resp)
 	}
-	return client.getBase64EncodedHandleResponse(resp)
+	result, err := client.getBase64EncodedHandleResponse(resp)
+	if err != nil {
+		return ByteArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getBase64EncodedCreateRequest creates the GetBase64Encoded request.
@@ -86,7 +90,11 @@ func (client StringClient) GetBase64URLEncoded(ctx context.Context, options *Str
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ByteArrayResponse{}, client.getBase64UrlEncodedHandleError(resp)
 	}
-	return client.getBase64UrlEncodedHandleResponse(resp)
+	result, err := client.getBase64UrlEncodedHandleResponse(resp)
+	if err != nil {
+		return ByteArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getBase64UrlEncodedCreateRequest creates the GetBase64URLEncoded request.
@@ -130,7 +138,11 @@ func (client StringClient) GetEmpty(ctx context.Context, options *StringGetEmpty
 	if !resp.HasStatusCode(http.StatusOK) {
 		return StringResponse{}, client.getEmptyHandleError(resp)
 	}
-	return client.getEmptyHandleResponse(resp)
+	result, err := client.getEmptyHandleResponse(resp)
+	if err != nil {
+		return StringResponse{}, err
+	}
+	return result, nil
 }
 
 // getEmptyCreateRequest creates the GetEmpty request.
@@ -174,7 +186,11 @@ func (client StringClient) GetMBCS(ctx context.Context, options *StringGetMBCSOp
 	if !resp.HasStatusCode(http.StatusOK) {
 		return StringResponse{}, client.getMbcsHandleError(resp)
 	}
-	return client.getMbcsHandleResponse(resp)
+	result, err := client.getMbcsHandleResponse(resp)
+	if err != nil {
+		return StringResponse{}, err
+	}
+	return result, nil
 }
 
 // getMbcsCreateRequest creates the GetMBCS request.
@@ -218,7 +234,11 @@ func (client StringClient) GetNotProvided(ctx context.Context, options *StringGe
 	if !resp.HasStatusCode(http.StatusOK) {
 		return StringResponse{}, client.getNotProvidedHandleError(resp)
 	}
-	return client.getNotProvidedHandleResponse(resp)
+	result, err := client.getNotProvidedHandleResponse(resp)
+	if err != nil {
+		return StringResponse{}, err
+	}
+	return result, nil
 }
 
 // getNotProvidedCreateRequest creates the GetNotProvided request.
@@ -262,7 +282,11 @@ func (client StringClient) GetNull(ctx context.Context, options *StringGetNullOp
 	if !resp.HasStatusCode(http.StatusOK) {
 		return StringResponse{}, client.getNullHandleError(resp)
 	}
-	return client.getNullHandleResponse(resp)
+	result, err := client.getNullHandleResponse(resp)
+	if err != nil {
+		return StringResponse{}, err
+	}
+	return result, nil
 }
 
 // getNullCreateRequest creates the GetNull request.
@@ -306,7 +330,11 @@ func (client StringClient) GetNullBase64URLEncoded(ctx context.Context, options 
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ByteArrayResponse{}, client.getNullBase64UrlEncodedHandleError(resp)
 	}
-	return client.getNullBase64UrlEncodedHandleResponse(resp)
+	result, err := client.getNullBase64UrlEncodedHandleResponse(resp)
+	if err != nil {
+		return ByteArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getNullBase64UrlEncodedCreateRequest creates the GetNullBase64URLEncoded request.
@@ -350,7 +378,11 @@ func (client StringClient) GetWhitespace(ctx context.Context, options *StringGet
 	if !resp.HasStatusCode(http.StatusOK) {
 		return StringResponse{}, client.getWhitespaceHandleError(resp)
 	}
-	return client.getWhitespaceHandleResponse(resp)
+	result, err := client.getWhitespaceHandleResponse(resp)
+	if err != nil {
+		return StringResponse{}, err
+	}
+	return result, nil
 }
 
 // getWhitespaceCreateRequest creates the GetWhitespace request.

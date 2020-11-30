@@ -49,7 +49,11 @@ func (client ProximityPlacementGroupsClient) CreateOrUpdate(ctx context.Context,
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return ProximityPlacementGroupResponse{}, client.createOrUpdateHandleError(resp)
 	}
-	return client.createOrUpdateHandleResponse(resp)
+	result, err := client.createOrUpdateHandleResponse(resp)
+	if err != nil {
+		return ProximityPlacementGroupResponse{}, err
+	}
+	return result, nil
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -147,7 +151,11 @@ func (client ProximityPlacementGroupsClient) Get(ctx context.Context, resourceGr
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ProximityPlacementGroupResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return ProximityPlacementGroupResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.
@@ -306,7 +314,11 @@ func (client ProximityPlacementGroupsClient) Update(ctx context.Context, resourc
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ProximityPlacementGroupResponse{}, client.updateHandleError(resp)
 	}
-	return client.updateHandleResponse(resp)
+	result, err := client.updateHandleResponse(resp)
+	if err != nil {
+		return ProximityPlacementGroupResponse{}, err
+	}
+	return result, nil
 }
 
 // updateCreateRequest creates the Update request.

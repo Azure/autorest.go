@@ -43,7 +43,11 @@ func (client DictionaryClient) GetArrayEmpty(ctx context.Context, options *Dicti
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfStringArrayResponse{}, client.getArrayEmptyHandleError(resp)
 	}
-	return client.getArrayEmptyHandleResponse(resp)
+	result, err := client.getArrayEmptyHandleResponse(resp)
+	if err != nil {
+		return MapOfStringArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getArrayEmptyCreateRequest creates the GetArrayEmpty request.
@@ -87,7 +91,11 @@ func (client DictionaryClient) GetArrayItemEmpty(ctx context.Context, options *D
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfStringArrayResponse{}, client.getArrayItemEmptyHandleError(resp)
 	}
-	return client.getArrayItemEmptyHandleResponse(resp)
+	result, err := client.getArrayItemEmptyHandleResponse(resp)
+	if err != nil {
+		return MapOfStringArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getArrayItemEmptyCreateRequest creates the GetArrayItemEmpty request.
@@ -131,7 +139,11 @@ func (client DictionaryClient) GetArrayItemNull(ctx context.Context, options *Di
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfStringArrayResponse{}, client.getArrayItemNullHandleError(resp)
 	}
-	return client.getArrayItemNullHandleResponse(resp)
+	result, err := client.getArrayItemNullHandleResponse(resp)
+	if err != nil {
+		return MapOfStringArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getArrayItemNullCreateRequest creates the GetArrayItemNull request.
@@ -175,7 +187,11 @@ func (client DictionaryClient) GetArrayNull(ctx context.Context, options *Dictio
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfStringArrayResponse{}, client.getArrayNullHandleError(resp)
 	}
-	return client.getArrayNullHandleResponse(resp)
+	result, err := client.getArrayNullHandleResponse(resp)
+	if err != nil {
+		return MapOfStringArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getArrayNullCreateRequest creates the GetArrayNull request.
@@ -219,7 +235,11 @@ func (client DictionaryClient) GetArrayValid(ctx context.Context, options *Dicti
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfStringArrayResponse{}, client.getArrayValidHandleError(resp)
 	}
-	return client.getArrayValidHandleResponse(resp)
+	result, err := client.getArrayValidHandleResponse(resp)
+	if err != nil {
+		return MapOfStringArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getArrayValidCreateRequest creates the GetArrayValid request.
@@ -263,7 +283,11 @@ func (client DictionaryClient) GetBase64URL(ctx context.Context, options *Dictio
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfByteArrayResponse{}, client.getBase64UrlHandleError(resp)
 	}
-	return client.getBase64UrlHandleResponse(resp)
+	result, err := client.getBase64UrlHandleResponse(resp)
+	if err != nil {
+		return MapOfByteArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getBase64UrlCreateRequest creates the GetBase64URL request.
@@ -307,7 +331,11 @@ func (client DictionaryClient) GetBooleanInvalidNull(ctx context.Context, option
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfBoolResponse{}, client.getBooleanInvalidNullHandleError(resp)
 	}
-	return client.getBooleanInvalidNullHandleResponse(resp)
+	result, err := client.getBooleanInvalidNullHandleResponse(resp)
+	if err != nil {
+		return MapOfBoolResponse{}, err
+	}
+	return result, nil
 }
 
 // getBooleanInvalidNullCreateRequest creates the GetBooleanInvalidNull request.
@@ -351,7 +379,11 @@ func (client DictionaryClient) GetBooleanInvalidString(ctx context.Context, opti
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfBoolResponse{}, client.getBooleanInvalidStringHandleError(resp)
 	}
-	return client.getBooleanInvalidStringHandleResponse(resp)
+	result, err := client.getBooleanInvalidStringHandleResponse(resp)
+	if err != nil {
+		return MapOfBoolResponse{}, err
+	}
+	return result, nil
 }
 
 // getBooleanInvalidStringCreateRequest creates the GetBooleanInvalidString request.
@@ -395,7 +427,11 @@ func (client DictionaryClient) GetBooleanTfft(ctx context.Context, options *Dict
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfBoolResponse{}, client.getBooleanTfftHandleError(resp)
 	}
-	return client.getBooleanTfftHandleResponse(resp)
+	result, err := client.getBooleanTfftHandleResponse(resp)
+	if err != nil {
+		return MapOfBoolResponse{}, err
+	}
+	return result, nil
 }
 
 // getBooleanTfftCreateRequest creates the GetBooleanTfft request.
@@ -439,7 +475,11 @@ func (client DictionaryClient) GetByteInvalidNull(ctx context.Context, options *
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfByteArrayResponse{}, client.getByteInvalidNullHandleError(resp)
 	}
-	return client.getByteInvalidNullHandleResponse(resp)
+	result, err := client.getByteInvalidNullHandleResponse(resp)
+	if err != nil {
+		return MapOfByteArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getByteInvalidNullCreateRequest creates the GetByteInvalidNull request.
@@ -483,7 +523,11 @@ func (client DictionaryClient) GetByteValid(ctx context.Context, options *Dictio
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfByteArrayResponse{}, client.getByteValidHandleError(resp)
 	}
-	return client.getByteValidHandleResponse(resp)
+	result, err := client.getByteValidHandleResponse(resp)
+	if err != nil {
+		return MapOfByteArrayResponse{}, err
+	}
+	return result, nil
 }
 
 // getByteValidCreateRequest creates the GetByteValid request.
@@ -527,7 +571,11 @@ func (client DictionaryClient) GetComplexEmpty(ctx context.Context, options *Dic
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfWidgetResponse{}, client.getComplexEmptyHandleError(resp)
 	}
-	return client.getComplexEmptyHandleResponse(resp)
+	result, err := client.getComplexEmptyHandleResponse(resp)
+	if err != nil {
+		return MapOfWidgetResponse{}, err
+	}
+	return result, nil
 }
 
 // getComplexEmptyCreateRequest creates the GetComplexEmpty request.
@@ -571,7 +619,11 @@ func (client DictionaryClient) GetComplexItemEmpty(ctx context.Context, options 
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfWidgetResponse{}, client.getComplexItemEmptyHandleError(resp)
 	}
-	return client.getComplexItemEmptyHandleResponse(resp)
+	result, err := client.getComplexItemEmptyHandleResponse(resp)
+	if err != nil {
+		return MapOfWidgetResponse{}, err
+	}
+	return result, nil
 }
 
 // getComplexItemEmptyCreateRequest creates the GetComplexItemEmpty request.
@@ -615,7 +667,11 @@ func (client DictionaryClient) GetComplexItemNull(ctx context.Context, options *
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfWidgetResponse{}, client.getComplexItemNullHandleError(resp)
 	}
-	return client.getComplexItemNullHandleResponse(resp)
+	result, err := client.getComplexItemNullHandleResponse(resp)
+	if err != nil {
+		return MapOfWidgetResponse{}, err
+	}
+	return result, nil
 }
 
 // getComplexItemNullCreateRequest creates the GetComplexItemNull request.
@@ -659,7 +715,11 @@ func (client DictionaryClient) GetComplexNull(ctx context.Context, options *Dict
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfWidgetResponse{}, client.getComplexNullHandleError(resp)
 	}
-	return client.getComplexNullHandleResponse(resp)
+	result, err := client.getComplexNullHandleResponse(resp)
+	if err != nil {
+		return MapOfWidgetResponse{}, err
+	}
+	return result, nil
 }
 
 // getComplexNullCreateRequest creates the GetComplexNull request.
@@ -704,7 +764,11 @@ func (client DictionaryClient) GetComplexValid(ctx context.Context, options *Dic
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfWidgetResponse{}, client.getComplexValidHandleError(resp)
 	}
-	return client.getComplexValidHandleResponse(resp)
+	result, err := client.getComplexValidHandleResponse(resp)
+	if err != nil {
+		return MapOfWidgetResponse{}, err
+	}
+	return result, nil
 }
 
 // getComplexValidCreateRequest creates the GetComplexValid request.
@@ -748,7 +812,11 @@ func (client DictionaryClient) GetDateInvalidChars(ctx context.Context, options 
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfTimeResponse{}, client.getDateInvalidCharsHandleError(resp)
 	}
-	return client.getDateInvalidCharsHandleResponse(resp)
+	result, err := client.getDateInvalidCharsHandleResponse(resp)
+	if err != nil {
+		return MapOfTimeResponse{}, err
+	}
+	return result, nil
 }
 
 // getDateInvalidCharsCreateRequest creates the GetDateInvalidChars request.
@@ -798,7 +866,11 @@ func (client DictionaryClient) GetDateInvalidNull(ctx context.Context, options *
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfTimeResponse{}, client.getDateInvalidNullHandleError(resp)
 	}
-	return client.getDateInvalidNullHandleResponse(resp)
+	result, err := client.getDateInvalidNullHandleResponse(resp)
+	if err != nil {
+		return MapOfTimeResponse{}, err
+	}
+	return result, nil
 }
 
 // getDateInvalidNullCreateRequest creates the GetDateInvalidNull request.
@@ -848,7 +920,11 @@ func (client DictionaryClient) GetDateTimeInvalidChars(ctx context.Context, opti
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfTimeResponse{}, client.getDateTimeInvalidCharsHandleError(resp)
 	}
-	return client.getDateTimeInvalidCharsHandleResponse(resp)
+	result, err := client.getDateTimeInvalidCharsHandleResponse(resp)
+	if err != nil {
+		return MapOfTimeResponse{}, err
+	}
+	return result, nil
 }
 
 // getDateTimeInvalidCharsCreateRequest creates the GetDateTimeInvalidChars request.
@@ -898,7 +974,11 @@ func (client DictionaryClient) GetDateTimeInvalidNull(ctx context.Context, optio
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfTimeResponse{}, client.getDateTimeInvalidNullHandleError(resp)
 	}
-	return client.getDateTimeInvalidNullHandleResponse(resp)
+	result, err := client.getDateTimeInvalidNullHandleResponse(resp)
+	if err != nil {
+		return MapOfTimeResponse{}, err
+	}
+	return result, nil
 }
 
 // getDateTimeInvalidNullCreateRequest creates the GetDateTimeInvalidNull request.
@@ -949,7 +1029,11 @@ func (client DictionaryClient) GetDateTimeRFC1123Valid(ctx context.Context, opti
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfTimeResponse{}, client.getDateTimeRfc1123ValidHandleError(resp)
 	}
-	return client.getDateTimeRfc1123ValidHandleResponse(resp)
+	result, err := client.getDateTimeRfc1123ValidHandleResponse(resp)
+	if err != nil {
+		return MapOfTimeResponse{}, err
+	}
+	return result, nil
 }
 
 // getDateTimeRfc1123ValidCreateRequest creates the GetDateTimeRFC1123Valid request.
@@ -999,7 +1083,11 @@ func (client DictionaryClient) GetDateTimeValid(ctx context.Context, options *Di
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfTimeResponse{}, client.getDateTimeValidHandleError(resp)
 	}
-	return client.getDateTimeValidHandleResponse(resp)
+	result, err := client.getDateTimeValidHandleResponse(resp)
+	if err != nil {
+		return MapOfTimeResponse{}, err
+	}
+	return result, nil
 }
 
 // getDateTimeValidCreateRequest creates the GetDateTimeValid request.
@@ -1049,7 +1137,11 @@ func (client DictionaryClient) GetDateValid(ctx context.Context, options *Dictio
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfTimeResponse{}, client.getDateValidHandleError(resp)
 	}
-	return client.getDateValidHandleResponse(resp)
+	result, err := client.getDateValidHandleResponse(resp)
+	if err != nil {
+		return MapOfTimeResponse{}, err
+	}
+	return result, nil
 }
 
 // getDateValidCreateRequest creates the GetDateValid request.
@@ -1099,7 +1191,11 @@ func (client DictionaryClient) GetDictionaryEmpty(ctx context.Context, options *
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfInterfaceResponse{}, client.getDictionaryEmptyHandleError(resp)
 	}
-	return client.getDictionaryEmptyHandleResponse(resp)
+	result, err := client.getDictionaryEmptyHandleResponse(resp)
+	if err != nil {
+		return MapOfInterfaceResponse{}, err
+	}
+	return result, nil
 }
 
 // getDictionaryEmptyCreateRequest creates the GetDictionaryEmpty request.
@@ -1144,7 +1240,11 @@ func (client DictionaryClient) GetDictionaryItemEmpty(ctx context.Context, optio
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfInterfaceResponse{}, client.getDictionaryItemEmptyHandleError(resp)
 	}
-	return client.getDictionaryItemEmptyHandleResponse(resp)
+	result, err := client.getDictionaryItemEmptyHandleResponse(resp)
+	if err != nil {
+		return MapOfInterfaceResponse{}, err
+	}
+	return result, nil
 }
 
 // getDictionaryItemEmptyCreateRequest creates the GetDictionaryItemEmpty request.
@@ -1189,7 +1289,11 @@ func (client DictionaryClient) GetDictionaryItemNull(ctx context.Context, option
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfInterfaceResponse{}, client.getDictionaryItemNullHandleError(resp)
 	}
-	return client.getDictionaryItemNullHandleResponse(resp)
+	result, err := client.getDictionaryItemNullHandleResponse(resp)
+	if err != nil {
+		return MapOfInterfaceResponse{}, err
+	}
+	return result, nil
 }
 
 // getDictionaryItemNullCreateRequest creates the GetDictionaryItemNull request.
@@ -1233,7 +1337,11 @@ func (client DictionaryClient) GetDictionaryNull(ctx context.Context, options *D
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfInterfaceResponse{}, client.getDictionaryNullHandleError(resp)
 	}
-	return client.getDictionaryNullHandleResponse(resp)
+	result, err := client.getDictionaryNullHandleResponse(resp)
+	if err != nil {
+		return MapOfInterfaceResponse{}, err
+	}
+	return result, nil
 }
 
 // getDictionaryNullCreateRequest creates the GetDictionaryNull request.
@@ -1278,7 +1386,11 @@ func (client DictionaryClient) GetDictionaryValid(ctx context.Context, options *
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfInterfaceResponse{}, client.getDictionaryValidHandleError(resp)
 	}
-	return client.getDictionaryValidHandleResponse(resp)
+	result, err := client.getDictionaryValidHandleResponse(resp)
+	if err != nil {
+		return MapOfInterfaceResponse{}, err
+	}
+	return result, nil
 }
 
 // getDictionaryValidCreateRequest creates the GetDictionaryValid request.
@@ -1322,7 +1434,11 @@ func (client DictionaryClient) GetDoubleInvalidNull(ctx context.Context, options
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfFloat64Response{}, client.getDoubleInvalidNullHandleError(resp)
 	}
-	return client.getDoubleInvalidNullHandleResponse(resp)
+	result, err := client.getDoubleInvalidNullHandleResponse(resp)
+	if err != nil {
+		return MapOfFloat64Response{}, err
+	}
+	return result, nil
 }
 
 // getDoubleInvalidNullCreateRequest creates the GetDoubleInvalidNull request.
@@ -1366,7 +1482,11 @@ func (client DictionaryClient) GetDoubleInvalidString(ctx context.Context, optio
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfFloat64Response{}, client.getDoubleInvalidStringHandleError(resp)
 	}
-	return client.getDoubleInvalidStringHandleResponse(resp)
+	result, err := client.getDoubleInvalidStringHandleResponse(resp)
+	if err != nil {
+		return MapOfFloat64Response{}, err
+	}
+	return result, nil
 }
 
 // getDoubleInvalidStringCreateRequest creates the GetDoubleInvalidString request.
@@ -1410,7 +1530,11 @@ func (client DictionaryClient) GetDoubleValid(ctx context.Context, options *Dict
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfFloat64Response{}, client.getDoubleValidHandleError(resp)
 	}
-	return client.getDoubleValidHandleResponse(resp)
+	result, err := client.getDoubleValidHandleResponse(resp)
+	if err != nil {
+		return MapOfFloat64Response{}, err
+	}
+	return result, nil
 }
 
 // getDoubleValidCreateRequest creates the GetDoubleValid request.
@@ -1454,7 +1578,11 @@ func (client DictionaryClient) GetDurationValid(ctx context.Context, options *Di
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfStringResponse{}, client.getDurationValidHandleError(resp)
 	}
-	return client.getDurationValidHandleResponse(resp)
+	result, err := client.getDurationValidHandleResponse(resp)
+	if err != nil {
+		return MapOfStringResponse{}, err
+	}
+	return result, nil
 }
 
 // getDurationValidCreateRequest creates the GetDurationValid request.
@@ -1498,7 +1626,11 @@ func (client DictionaryClient) GetEmpty(ctx context.Context, options *Dictionary
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfInt32Response{}, client.getEmptyHandleError(resp)
 	}
-	return client.getEmptyHandleResponse(resp)
+	result, err := client.getEmptyHandleResponse(resp)
+	if err != nil {
+		return MapOfInt32Response{}, err
+	}
+	return result, nil
 }
 
 // getEmptyCreateRequest creates the GetEmpty request.
@@ -1542,7 +1674,11 @@ func (client DictionaryClient) GetEmptyStringKey(ctx context.Context, options *D
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfStringResponse{}, client.getEmptyStringKeyHandleError(resp)
 	}
-	return client.getEmptyStringKeyHandleResponse(resp)
+	result, err := client.getEmptyStringKeyHandleResponse(resp)
+	if err != nil {
+		return MapOfStringResponse{}, err
+	}
+	return result, nil
 }
 
 // getEmptyStringKeyCreateRequest creates the GetEmptyStringKey request.
@@ -1586,7 +1722,11 @@ func (client DictionaryClient) GetFloatInvalidNull(ctx context.Context, options 
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfFloat32Response{}, client.getFloatInvalidNullHandleError(resp)
 	}
-	return client.getFloatInvalidNullHandleResponse(resp)
+	result, err := client.getFloatInvalidNullHandleResponse(resp)
+	if err != nil {
+		return MapOfFloat32Response{}, err
+	}
+	return result, nil
 }
 
 // getFloatInvalidNullCreateRequest creates the GetFloatInvalidNull request.
@@ -1630,7 +1770,11 @@ func (client DictionaryClient) GetFloatInvalidString(ctx context.Context, option
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfFloat32Response{}, client.getFloatInvalidStringHandleError(resp)
 	}
-	return client.getFloatInvalidStringHandleResponse(resp)
+	result, err := client.getFloatInvalidStringHandleResponse(resp)
+	if err != nil {
+		return MapOfFloat32Response{}, err
+	}
+	return result, nil
 }
 
 // getFloatInvalidStringCreateRequest creates the GetFloatInvalidString request.
@@ -1674,7 +1818,11 @@ func (client DictionaryClient) GetFloatValid(ctx context.Context, options *Dicti
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfFloat32Response{}, client.getFloatValidHandleError(resp)
 	}
-	return client.getFloatValidHandleResponse(resp)
+	result, err := client.getFloatValidHandleResponse(resp)
+	if err != nil {
+		return MapOfFloat32Response{}, err
+	}
+	return result, nil
 }
 
 // getFloatValidCreateRequest creates the GetFloatValid request.
@@ -1718,7 +1866,11 @@ func (client DictionaryClient) GetIntInvalidNull(ctx context.Context, options *D
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfInt32Response{}, client.getIntInvalidNullHandleError(resp)
 	}
-	return client.getIntInvalidNullHandleResponse(resp)
+	result, err := client.getIntInvalidNullHandleResponse(resp)
+	if err != nil {
+		return MapOfInt32Response{}, err
+	}
+	return result, nil
 }
 
 // getIntInvalidNullCreateRequest creates the GetIntInvalidNull request.
@@ -1762,7 +1914,11 @@ func (client DictionaryClient) GetIntInvalidString(ctx context.Context, options 
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfInt32Response{}, client.getIntInvalidStringHandleError(resp)
 	}
-	return client.getIntInvalidStringHandleResponse(resp)
+	result, err := client.getIntInvalidStringHandleResponse(resp)
+	if err != nil {
+		return MapOfInt32Response{}, err
+	}
+	return result, nil
 }
 
 // getIntInvalidStringCreateRequest creates the GetIntInvalidString request.
@@ -1806,7 +1962,11 @@ func (client DictionaryClient) GetIntegerValid(ctx context.Context, options *Dic
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfInt32Response{}, client.getIntegerValidHandleError(resp)
 	}
-	return client.getIntegerValidHandleResponse(resp)
+	result, err := client.getIntegerValidHandleResponse(resp)
+	if err != nil {
+		return MapOfInt32Response{}, err
+	}
+	return result, nil
 }
 
 // getIntegerValidCreateRequest creates the GetIntegerValid request.
@@ -1850,7 +2010,11 @@ func (client DictionaryClient) GetInvalid(ctx context.Context, options *Dictiona
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfStringResponse{}, client.getInvalidHandleError(resp)
 	}
-	return client.getInvalidHandleResponse(resp)
+	result, err := client.getInvalidHandleResponse(resp)
+	if err != nil {
+		return MapOfStringResponse{}, err
+	}
+	return result, nil
 }
 
 // getInvalidCreateRequest creates the GetInvalid request.
@@ -1894,7 +2058,11 @@ func (client DictionaryClient) GetLongInvalidNull(ctx context.Context, options *
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfInt64Response{}, client.getLongInvalidNullHandleError(resp)
 	}
-	return client.getLongInvalidNullHandleResponse(resp)
+	result, err := client.getLongInvalidNullHandleResponse(resp)
+	if err != nil {
+		return MapOfInt64Response{}, err
+	}
+	return result, nil
 }
 
 // getLongInvalidNullCreateRequest creates the GetLongInvalidNull request.
@@ -1938,7 +2106,11 @@ func (client DictionaryClient) GetLongInvalidString(ctx context.Context, options
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfInt64Response{}, client.getLongInvalidStringHandleError(resp)
 	}
-	return client.getLongInvalidStringHandleResponse(resp)
+	result, err := client.getLongInvalidStringHandleResponse(resp)
+	if err != nil {
+		return MapOfInt64Response{}, err
+	}
+	return result, nil
 }
 
 // getLongInvalidStringCreateRequest creates the GetLongInvalidString request.
@@ -1982,7 +2154,11 @@ func (client DictionaryClient) GetLongValid(ctx context.Context, options *Dictio
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfInt64Response{}, client.getLongValidHandleError(resp)
 	}
-	return client.getLongValidHandleResponse(resp)
+	result, err := client.getLongValidHandleResponse(resp)
+	if err != nil {
+		return MapOfInt64Response{}, err
+	}
+	return result, nil
 }
 
 // getLongValidCreateRequest creates the GetLongValid request.
@@ -2026,7 +2202,11 @@ func (client DictionaryClient) GetNull(ctx context.Context, options *DictionaryG
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfInt32Response{}, client.getNullHandleError(resp)
 	}
-	return client.getNullHandleResponse(resp)
+	result, err := client.getNullHandleResponse(resp)
+	if err != nil {
+		return MapOfInt32Response{}, err
+	}
+	return result, nil
 }
 
 // getNullCreateRequest creates the GetNull request.
@@ -2070,7 +2250,11 @@ func (client DictionaryClient) GetNullKey(ctx context.Context, options *Dictiona
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfStringResponse{}, client.getNullKeyHandleError(resp)
 	}
-	return client.getNullKeyHandleResponse(resp)
+	result, err := client.getNullKeyHandleResponse(resp)
+	if err != nil {
+		return MapOfStringResponse{}, err
+	}
+	return result, nil
 }
 
 // getNullKeyCreateRequest creates the GetNullKey request.
@@ -2114,7 +2298,11 @@ func (client DictionaryClient) GetNullValue(ctx context.Context, options *Dictio
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfStringResponse{}, client.getNullValueHandleError(resp)
 	}
-	return client.getNullValueHandleResponse(resp)
+	result, err := client.getNullValueHandleResponse(resp)
+	if err != nil {
+		return MapOfStringResponse{}, err
+	}
+	return result, nil
 }
 
 // getNullValueCreateRequest creates the GetNullValue request.
@@ -2158,7 +2346,11 @@ func (client DictionaryClient) GetStringValid(ctx context.Context, options *Dict
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfStringResponse{}, client.getStringValidHandleError(resp)
 	}
-	return client.getStringValidHandleResponse(resp)
+	result, err := client.getStringValidHandleResponse(resp)
+	if err != nil {
+		return MapOfStringResponse{}, err
+	}
+	return result, nil
 }
 
 // getStringValidCreateRequest creates the GetStringValid request.
@@ -2202,7 +2394,11 @@ func (client DictionaryClient) GetStringWithInvalid(ctx context.Context, options
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfStringResponse{}, client.getStringWithInvalidHandleError(resp)
 	}
-	return client.getStringWithInvalidHandleResponse(resp)
+	result, err := client.getStringWithInvalidHandleResponse(resp)
+	if err != nil {
+		return MapOfStringResponse{}, err
+	}
+	return result, nil
 }
 
 // getStringWithInvalidCreateRequest creates the GetStringWithInvalid request.
@@ -2246,7 +2442,11 @@ func (client DictionaryClient) GetStringWithNull(ctx context.Context, options *D
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfStringResponse{}, client.getStringWithNullHandleError(resp)
 	}
-	return client.getStringWithNullHandleResponse(resp)
+	result, err := client.getStringWithNullHandleResponse(resp)
+	if err != nil {
+		return MapOfStringResponse{}, err
+	}
+	return result, nil
 }
 
 // getStringWithNullCreateRequest creates the GetStringWithNull request.

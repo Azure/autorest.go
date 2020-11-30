@@ -42,7 +42,11 @@ func (client InheritanceClient) GetValid(ctx context.Context, options *Inheritan
 	if !resp.HasStatusCode(http.StatusOK) {
 		return SiameseResponse{}, client.getValidHandleError(resp)
 	}
-	return client.getValidHandleResponse(resp)
+	result, err := client.getValidHandleResponse(resp)
+	if err != nil {
+		return SiameseResponse{}, err
+	}
+	return result, nil
 }
 
 // getValidCreateRequest creates the GetValid request.

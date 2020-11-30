@@ -214,7 +214,11 @@ func (client DdosCustomPoliciesClient) Get(ctx context.Context, resourceGroupNam
 	if !resp.HasStatusCode(http.StatusOK) {
 		return DdosCustomPolicyResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return DdosCustomPolicyResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.
@@ -264,7 +268,11 @@ func (client DdosCustomPoliciesClient) UpdateTags(ctx context.Context, resourceG
 	if !resp.HasStatusCode(http.StatusOK) {
 		return DdosCustomPolicyResponse{}, client.updateTagsHandleError(resp)
 	}
-	return client.updateTagsHandleResponse(resp)
+	result, err := client.updateTagsHandleResponse(resp)
+	if err != nil {
+		return DdosCustomPolicyResponse{}, err
+	}
+	return result, nil
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.

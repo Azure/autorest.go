@@ -214,7 +214,11 @@ func (client IPGroupsClient) Get(ctx context.Context, resourceGroupName string, 
 	if !resp.HasStatusCode(http.StatusOK) {
 		return IPGroupResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return IPGroupResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.
@@ -364,7 +368,11 @@ func (client IPGroupsClient) UpdateGroups(ctx context.Context, resourceGroupName
 	if !resp.HasStatusCode(http.StatusOK) {
 		return IPGroupResponse{}, client.updateGroupsHandleError(resp)
 	}
-	return client.updateGroupsHandleResponse(resp)
+	result, err := client.updateGroupsHandleResponse(resp)
+	if err != nil {
+		return IPGroupResponse{}, err
+	}
+	return result, nil
 }
 
 // updateGroupsCreateRequest creates the UpdateGroups request.

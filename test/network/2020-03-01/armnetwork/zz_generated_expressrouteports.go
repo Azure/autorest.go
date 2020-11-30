@@ -214,7 +214,11 @@ func (client ExpressRoutePortsClient) Get(ctx context.Context, resourceGroupName
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ExpressRoutePortResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return ExpressRoutePortResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.
@@ -361,7 +365,11 @@ func (client ExpressRoutePortsClient) UpdateTags(ctx context.Context, resourceGr
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ExpressRoutePortResponse{}, client.updateTagsHandleError(resp)
 	}
-	return client.updateTagsHandleResponse(resp)
+	result, err := client.updateTagsHandleResponse(resp)
+	if err != nil {
+		return ExpressRoutePortResponse{}, err
+	}
+	return result, nil
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.

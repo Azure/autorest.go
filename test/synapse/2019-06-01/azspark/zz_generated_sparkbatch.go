@@ -81,7 +81,11 @@ func (client sparkBatchClient) CreateSparkBatchJob(ctx context.Context, sparkBat
 	if !resp.HasStatusCode(http.StatusOK) {
 		return SparkBatchJobResponse{}, client.createSparkBatchJobHandleError(resp)
 	}
-	return client.createSparkBatchJobHandleResponse(resp)
+	result, err := client.createSparkBatchJobHandleResponse(resp)
+	if err != nil {
+		return SparkBatchJobResponse{}, err
+	}
+	return result, nil
 }
 
 // createSparkBatchJobCreateRequest creates the CreateSparkBatchJob request.
@@ -133,7 +137,11 @@ func (client sparkBatchClient) GetSparkBatchJob(ctx context.Context, batchId int
 	if !resp.HasStatusCode(http.StatusOK) {
 		return SparkBatchJobResponse{}, client.getSparkBatchJobHandleError(resp)
 	}
-	return client.getSparkBatchJobHandleResponse(resp)
+	result, err := client.getSparkBatchJobHandleResponse(resp)
+	if err != nil {
+		return SparkBatchJobResponse{}, err
+	}
+	return result, nil
 }
 
 // getSparkBatchJobCreateRequest creates the GetSparkBatchJob request.
@@ -186,7 +194,11 @@ func (client sparkBatchClient) GetSparkBatchJobs(ctx context.Context, options *S
 	if !resp.HasStatusCode(http.StatusOK) {
 		return SparkBatchJobCollectionResponse{}, client.getSparkBatchJobsHandleError(resp)
 	}
-	return client.getSparkBatchJobsHandleResponse(resp)
+	result, err := client.getSparkBatchJobsHandleResponse(resp)
+	if err != nil {
+		return SparkBatchJobCollectionResponse{}, err
+	}
+	return result, nil
 }
 
 // getSparkBatchJobsCreateRequest creates the GetSparkBatchJobs request.

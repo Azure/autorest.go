@@ -46,7 +46,11 @@ func (client VpnSiteLinkConnectionsClient) Get(ctx context.Context, resourceGrou
 	if !resp.HasStatusCode(http.StatusOK) {
 		return VpnSiteLinkConnectionResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return VpnSiteLinkConnectionResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.

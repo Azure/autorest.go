@@ -81,7 +81,11 @@ func (client HTTPRedirectsClient) Get300(ctx context.Context, options *HTTPRedir
 	if !resp.HasStatusCode(http.StatusOK, http.StatusMultipleChoices) {
 		return nil, client.get300HandleError(resp)
 	}
-	return client.get300HandleResponse(resp)
+	result, err := client.get300HandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 // get300CreateRequest creates the Get300 request.
@@ -250,7 +254,11 @@ func (client HTTPRedirectsClient) Head300(ctx context.Context, options *HTTPRedi
 	if !resp.HasStatusCode(http.StatusOK, http.StatusMultipleChoices) {
 		return HTTPRedirectsHead300Response{}, client.head300HandleError(resp)
 	}
-	return client.head300HandleResponse(resp)
+	result, err := client.head300HandleResponse(resp)
+	if err != nil {
+		return HTTPRedirectsHead300Response{}, err
+	}
+	return result, nil
 }
 
 // head300CreateRequest creates the Head300 request.
@@ -457,7 +465,11 @@ func (client HTTPRedirectsClient) Patch302(ctx context.Context, options *HTTPRed
 	if !resp.HasStatusCode(http.StatusFound) {
 		return HTTPRedirectsPatch302Response{}, client.patch302HandleError(resp)
 	}
-	return client.patch302HandleResponse(resp)
+	result, err := client.patch302HandleResponse(resp)
+	if err != nil {
+		return HTTPRedirectsPatch302Response{}, err
+	}
+	return result, nil
 }
 
 // patch302CreateRequest creates the Patch302 request.
@@ -541,7 +553,11 @@ func (client HTTPRedirectsClient) Post303(ctx context.Context, options *HTTPRedi
 	if !resp.HasStatusCode(http.StatusOK, http.StatusSeeOther) {
 		return HTTPRedirectsPost303Response{}, client.post303HandleError(resp)
 	}
-	return client.post303HandleResponse(resp)
+	result, err := client.post303HandleResponse(resp)
+	if err != nil {
+		return HTTPRedirectsPost303Response{}, err
+	}
+	return result, nil
 }
 
 // post303CreateRequest creates the Post303 request.
@@ -625,7 +641,11 @@ func (client HTTPRedirectsClient) Put301(ctx context.Context, options *HTTPRedir
 	if !resp.HasStatusCode(http.StatusMovedPermanently) {
 		return HTTPRedirectsPut301Response{}, client.put301HandleError(resp)
 	}
-	return client.put301HandleResponse(resp)
+	result, err := client.put301HandleResponse(resp)
+	if err != nil {
+		return HTTPRedirectsPut301Response{}, err
+	}
+	return result, nil
 }
 
 // put301CreateRequest creates the Put301 request.

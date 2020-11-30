@@ -129,7 +129,11 @@ func (client notebookClient) GetNotebook(ctx context.Context, notebookName strin
 	if !resp.HasStatusCode(http.StatusOK, http.StatusNotModified) {
 		return NotebookResourceResponse{}, client.getNotebookHandleError(resp)
 	}
-	return client.getNotebookHandleResponse(resp)
+	result, err := client.getNotebookHandleResponse(resp)
+	if err != nil {
+		return NotebookResourceResponse{}, err
+	}
+	return result, nil
 }
 
 // getNotebookCreateRequest creates the GetNotebook request.

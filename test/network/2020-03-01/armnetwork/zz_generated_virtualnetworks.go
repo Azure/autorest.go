@@ -47,7 +47,11 @@ func (client VirtualNetworksClient) CheckIPAddressAvailability(ctx context.Conte
 	if !resp.HasStatusCode(http.StatusOK) {
 		return IPAddressAvailabilityResultResponse{}, client.checkIPAddressAvailabilityHandleError(resp)
 	}
-	return client.checkIPAddressAvailabilityHandleResponse(resp)
+	result, err := client.checkIPAddressAvailabilityHandleResponse(resp)
+	if err != nil {
+		return IPAddressAvailabilityResultResponse{}, err
+	}
+	return result, nil
 }
 
 // checkIPAddressAvailabilityCreateRequest creates the CheckIPAddressAvailability request.
@@ -265,7 +269,11 @@ func (client VirtualNetworksClient) Get(ctx context.Context, resourceGroupName s
 	if !resp.HasStatusCode(http.StatusOK) {
 		return VirtualNetworkResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return VirtualNetworkResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.
@@ -465,7 +473,11 @@ func (client VirtualNetworksClient) UpdateTags(ctx context.Context, resourceGrou
 	if !resp.HasStatusCode(http.StatusOK) {
 		return VirtualNetworkResponse{}, client.updateTagsHandleError(resp)
 	}
-	return client.updateTagsHandleResponse(resp)
+	result, err := client.updateTagsHandleResponse(resp)
+	if err != nil {
+		return VirtualNetworkResponse{}, err
+	}
+	return result, nil
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.

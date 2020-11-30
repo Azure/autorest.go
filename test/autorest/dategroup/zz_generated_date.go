@@ -43,7 +43,11 @@ func (client DateClient) GetInvalidDate(ctx context.Context, options *DateGetInv
 	if !resp.HasStatusCode(http.StatusOK) {
 		return TimeResponse{}, client.getInvalidDateHandleError(resp)
 	}
-	return client.getInvalidDateHandleResponse(resp)
+	result, err := client.getInvalidDateHandleResponse(resp)
+	if err != nil {
+		return TimeResponse{}, err
+	}
+	return result, nil
 }
 
 // getInvalidDateCreateRequest creates the GetInvalidDate request.
@@ -87,7 +91,11 @@ func (client DateClient) GetMaxDate(ctx context.Context, options *DateGetMaxDate
 	if !resp.HasStatusCode(http.StatusOK) {
 		return TimeResponse{}, client.getMaxDateHandleError(resp)
 	}
-	return client.getMaxDateHandleResponse(resp)
+	result, err := client.getMaxDateHandleResponse(resp)
+	if err != nil {
+		return TimeResponse{}, err
+	}
+	return result, nil
 }
 
 // getMaxDateCreateRequest creates the GetMaxDate request.
@@ -131,7 +139,11 @@ func (client DateClient) GetMinDate(ctx context.Context, options *DateGetMinDate
 	if !resp.HasStatusCode(http.StatusOK) {
 		return TimeResponse{}, client.getMinDateHandleError(resp)
 	}
-	return client.getMinDateHandleResponse(resp)
+	result, err := client.getMinDateHandleResponse(resp)
+	if err != nil {
+		return TimeResponse{}, err
+	}
+	return result, nil
 }
 
 // getMinDateCreateRequest creates the GetMinDate request.
@@ -175,7 +187,11 @@ func (client DateClient) GetNull(ctx context.Context, options *DateGetNullOption
 	if !resp.HasStatusCode(http.StatusOK) {
 		return TimeResponse{}, client.getNullHandleError(resp)
 	}
-	return client.getNullHandleResponse(resp)
+	result, err := client.getNullHandleResponse(resp)
+	if err != nil {
+		return TimeResponse{}, err
+	}
+	return result, nil
 }
 
 // getNullCreateRequest creates the GetNull request.
@@ -219,7 +235,11 @@ func (client DateClient) GetOverflowDate(ctx context.Context, options *DateGetOv
 	if !resp.HasStatusCode(http.StatusOK) {
 		return TimeResponse{}, client.getOverflowDateHandleError(resp)
 	}
-	return client.getOverflowDateHandleResponse(resp)
+	result, err := client.getOverflowDateHandleResponse(resp)
+	if err != nil {
+		return TimeResponse{}, err
+	}
+	return result, nil
 }
 
 // getOverflowDateCreateRequest creates the GetOverflowDate request.
@@ -263,7 +283,11 @@ func (client DateClient) GetUnderflowDate(ctx context.Context, options *DateGetU
 	if !resp.HasStatusCode(http.StatusOK) {
 		return TimeResponse{}, client.getUnderflowDateHandleError(resp)
 	}
-	return client.getUnderflowDateHandleResponse(resp)
+	result, err := client.getUnderflowDateHandleResponse(resp)
+	if err != nil {
+		return TimeResponse{}, err
+	}
+	return result, nil
 }
 
 // getUnderflowDateCreateRequest creates the GetUnderflowDate request.

@@ -46,7 +46,11 @@ func (client MediaTypesClient) AnalyzeBody(ctx context.Context, contentType Cont
 	if !resp.HasStatusCode(http.StatusOK) {
 		return StringResponse{}, client.analyzeBodyHandleError(resp)
 	}
-	return client.analyzeBodyHandleResponse(resp)
+	result, err := client.analyzeBodyHandleResponse(resp)
+	if err != nil {
+		return StringResponse{}, err
+	}
+	return result, nil
 }
 
 // analyzeBodyCreateRequest creates the AnalyzeBody request.
@@ -94,7 +98,11 @@ func (client MediaTypesClient) AnalyzeBodyWithSourcePath(ctx context.Context, op
 	if !resp.HasStatusCode(http.StatusOK) {
 		return StringResponse{}, client.analyzeBodyWithSourcePathHandleError(resp)
 	}
-	return client.analyzeBodyWithSourcePathHandleResponse(resp)
+	result, err := client.analyzeBodyWithSourcePathHandleResponse(resp)
+	if err != nil {
+		return StringResponse{}, err
+	}
+	return result, nil
 }
 
 // analyzeBodyWithSourcePathCreateRequest creates the AnalyzeBodyWithSourcePath request.
@@ -144,7 +152,11 @@ func (client MediaTypesClient) ContentTypeWithEncoding(ctx context.Context, inpu
 	if !resp.HasStatusCode(http.StatusOK) {
 		return StringResponse{}, client.contentTypeWithEncodingHandleError(resp)
 	}
-	return client.contentTypeWithEncodingHandleResponse(resp)
+	result, err := client.contentTypeWithEncodingHandleResponse(resp)
+	if err != nil {
+		return StringResponse{}, err
+	}
+	return result, nil
 }
 
 // contentTypeWithEncodingCreateRequest creates the ContentTypeWithEncoding request.

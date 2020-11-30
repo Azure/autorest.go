@@ -214,7 +214,11 @@ func (client PublicIPAddressesClient) Get(ctx context.Context, resourceGroupName
 	if !resp.HasStatusCode(http.StatusOK) {
 		return PublicIPAddressResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return PublicIPAddressResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.
@@ -267,7 +271,11 @@ func (client PublicIPAddressesClient) GetVirtualMachineScaleSetPublicIPAddress(c
 	if !resp.HasStatusCode(http.StatusOK) {
 		return PublicIPAddressResponse{}, client.getVirtualMachineScaleSetPublicIPAddressHandleError(resp)
 	}
-	return client.getVirtualMachineScaleSetPublicIPAddressHandleResponse(resp)
+	result, err := client.getVirtualMachineScaleSetPublicIPAddressHandleResponse(resp)
+	if err != nil {
+		return PublicIPAddressResponse{}, err
+	}
+	return result, nil
 }
 
 // getVirtualMachineScaleSetPublicIPAddressCreateRequest creates the GetVirtualMachineScaleSetPublicIPAddress request.
@@ -525,7 +533,11 @@ func (client PublicIPAddressesClient) UpdateTags(ctx context.Context, resourceGr
 	if !resp.HasStatusCode(http.StatusOK) {
 		return PublicIPAddressResponse{}, client.updateTagsHandleError(resp)
 	}
-	return client.updateTagsHandleResponse(resp)
+	result, err := client.updateTagsHandleResponse(resp)
+	if err != nil {
+		return PublicIPAddressResponse{}, err
+	}
+	return result, nil
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.

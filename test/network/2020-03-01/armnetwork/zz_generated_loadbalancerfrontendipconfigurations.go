@@ -46,7 +46,11 @@ func (client LoadBalancerFrontendIPConfigurationsClient) Get(ctx context.Context
 	if !resp.HasStatusCode(http.StatusOK) {
 		return FrontendIPConfigurationResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return FrontendIPConfigurationResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.

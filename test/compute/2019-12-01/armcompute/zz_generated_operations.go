@@ -46,7 +46,11 @@ func (client OperationsClient) List(ctx context.Context, options *OperationsList
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ComputeOperationListResultResponse{}, client.listHandleError(resp)
 	}
-	return client.listHandleResponse(resp)
+	result, err := client.listHandleResponse(resp)
+	if err != nil {
+		return ComputeOperationListResultResponse{}, err
+	}
+	return result, nil
 }
 
 // listCreateRequest creates the List request.

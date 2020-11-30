@@ -45,7 +45,11 @@ func (client HTTPFailureClient) GetEmptyError(ctx context.Context, options *HTTP
 	if !resp.HasStatusCode(http.StatusOK) {
 		return BoolResponse{}, client.getEmptyErrorHandleError(resp)
 	}
-	return client.getEmptyErrorHandleResponse(resp)
+	result, err := client.getEmptyErrorHandleResponse(resp)
+	if err != nil {
+		return BoolResponse{}, err
+	}
+	return result, nil
 }
 
 // getEmptyErrorCreateRequest creates the GetEmptyError request.
@@ -89,7 +93,11 @@ func (client HTTPFailureClient) GetNoModelEmpty(ctx context.Context, options *HT
 	if !resp.HasStatusCode(http.StatusOK) {
 		return BoolResponse{}, client.getNoModelEmptyHandleError(resp)
 	}
-	return client.getNoModelEmptyHandleResponse(resp)
+	result, err := client.getNoModelEmptyHandleResponse(resp)
+	if err != nil {
+		return BoolResponse{}, err
+	}
+	return result, nil
 }
 
 // getNoModelEmptyCreateRequest creates the GetNoModelEmpty request.
@@ -136,7 +144,11 @@ func (client HTTPFailureClient) GetNoModelError(ctx context.Context, options *HT
 	if !resp.HasStatusCode(http.StatusOK) {
 		return BoolResponse{}, client.getNoModelErrorHandleError(resp)
 	}
-	return client.getNoModelErrorHandleResponse(resp)
+	result, err := client.getNoModelErrorHandleResponse(resp)
+	if err != nil {
+		return BoolResponse{}, err
+	}
+	return result, nil
 }
 
 // getNoModelErrorCreateRequest creates the GetNoModelError request.

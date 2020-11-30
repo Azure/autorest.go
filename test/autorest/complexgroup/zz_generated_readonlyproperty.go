@@ -42,7 +42,11 @@ func (client ReadonlypropertyClient) GetValid(ctx context.Context, options *Read
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ReadonlyObjResponse{}, client.getValidHandleError(resp)
 	}
-	return client.getValidHandleResponse(resp)
+	result, err := client.getValidHandleResponse(resp)
+	if err != nil {
+		return ReadonlyObjResponse{}, err
+	}
+	return result, nil
 }
 
 // getValidCreateRequest creates the GetValid request.

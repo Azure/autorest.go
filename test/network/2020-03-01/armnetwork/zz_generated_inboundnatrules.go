@@ -216,7 +216,11 @@ func (client InboundNatRulesClient) Get(ctx context.Context, resourceGroupName s
 	if !resp.HasStatusCode(http.StatusOK) {
 		return InboundNatRuleResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return InboundNatRuleResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.

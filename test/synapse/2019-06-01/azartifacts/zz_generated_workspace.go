@@ -35,7 +35,11 @@ func (client workspaceClient) Get(ctx context.Context, options *WorkspaceGetOpti
 	if !resp.HasStatusCode(http.StatusOK) {
 		return WorkspaceResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return WorkspaceResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.

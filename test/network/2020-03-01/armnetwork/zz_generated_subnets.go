@@ -216,7 +216,11 @@ func (client SubnetsClient) Get(ctx context.Context, resourceGroupName string, v
 	if !resp.HasStatusCode(http.StatusOK) {
 		return SubnetResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return SubnetResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.

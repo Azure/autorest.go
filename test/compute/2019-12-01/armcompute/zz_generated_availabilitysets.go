@@ -49,7 +49,11 @@ func (client AvailabilitySetsClient) CreateOrUpdate(ctx context.Context, resourc
 	if !resp.HasStatusCode(http.StatusOK) {
 		return AvailabilitySetResponse{}, client.createOrUpdateHandleError(resp)
 	}
-	return client.createOrUpdateHandleResponse(resp)
+	result, err := client.createOrUpdateHandleResponse(resp)
+	if err != nil {
+		return AvailabilitySetResponse{}, err
+	}
+	return result, nil
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -147,7 +151,11 @@ func (client AvailabilitySetsClient) Get(ctx context.Context, resourceGroupName 
 	if !resp.HasStatusCode(http.StatusOK) {
 		return AvailabilitySetResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return AvailabilitySetResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.
@@ -252,7 +260,11 @@ func (client AvailabilitySetsClient) ListAvailableSizes(ctx context.Context, res
 	if !resp.HasStatusCode(http.StatusOK) {
 		return VirtualMachineSizeListResultResponse{}, client.listAvailableSizesHandleError(resp)
 	}
-	return client.listAvailableSizesHandleResponse(resp)
+	result, err := client.listAvailableSizesHandleResponse(resp)
+	if err != nil {
+		return VirtualMachineSizeListResultResponse{}, err
+	}
+	return result, nil
 }
 
 // listAvailableSizesCreateRequest creates the ListAvailableSizes request.
@@ -359,7 +371,11 @@ func (client AvailabilitySetsClient) Update(ctx context.Context, resourceGroupNa
 	if !resp.HasStatusCode(http.StatusOK) {
 		return AvailabilitySetResponse{}, client.updateHandleError(resp)
 	}
-	return client.updateHandleResponse(resp)
+	result, err := client.updateHandleResponse(resp)
+	if err != nil {
+		return AvailabilitySetResponse{}, err
+	}
+	return result, nil
 }
 
 // updateCreateRequest creates the Update request.

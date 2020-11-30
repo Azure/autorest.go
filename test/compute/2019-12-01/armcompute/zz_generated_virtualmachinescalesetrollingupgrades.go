@@ -132,7 +132,11 @@ func (client VirtualMachineScaleSetRollingUpgradesClient) GetLatest(ctx context.
 	if !resp.HasStatusCode(http.StatusOK) {
 		return RollingUpgradeStatusInfoResponse{}, client.getLatestHandleError(resp)
 	}
-	return client.getLatestHandleResponse(resp)
+	result, err := client.getLatestHandleResponse(resp)
+	if err != nil {
+		return RollingUpgradeStatusInfoResponse{}, err
+	}
+	return result, nil
 }
 
 // getLatestCreateRequest creates the GetLatest request.

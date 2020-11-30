@@ -42,7 +42,11 @@ func (client AutoRestReportServiceForAzureClient) GetReport(ctx context.Context,
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfInt32Response{}, client.getReportHandleError(resp)
 	}
-	return client.getReportHandleResponse(resp)
+	result, err := client.getReportHandleResponse(resp)
+	if err != nil {
+		return MapOfInt32Response{}, err
+	}
+	return result, nil
 }
 
 // getReportCreateRequest creates the GetReport request.

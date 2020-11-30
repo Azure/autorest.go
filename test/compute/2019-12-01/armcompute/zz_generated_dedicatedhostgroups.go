@@ -50,7 +50,11 @@ func (client DedicatedHostGroupsClient) CreateOrUpdate(ctx context.Context, reso
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return DedicatedHostGroupResponse{}, client.createOrUpdateHandleError(resp)
 	}
-	return client.createOrUpdateHandleResponse(resp)
+	result, err := client.createOrUpdateHandleResponse(resp)
+	if err != nil {
+		return DedicatedHostGroupResponse{}, err
+	}
+	return result, nil
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -148,7 +152,11 @@ func (client DedicatedHostGroupsClient) Get(ctx context.Context, resourceGroupNa
 	if !resp.HasStatusCode(http.StatusOK) {
 		return DedicatedHostGroupResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return DedicatedHostGroupResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.
@@ -306,7 +314,11 @@ func (client DedicatedHostGroupsClient) Update(ctx context.Context, resourceGrou
 	if !resp.HasStatusCode(http.StatusOK) {
 		return DedicatedHostGroupResponse{}, client.updateHandleError(resp)
 	}
-	return client.updateHandleResponse(resp)
+	result, err := client.updateHandleResponse(resp)
+	if err != nil {
+		return DedicatedHostGroupResponse{}, err
+	}
+	return result, nil
 }
 
 // updateCreateRequest creates the Update request.

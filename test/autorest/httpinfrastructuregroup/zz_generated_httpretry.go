@@ -156,7 +156,11 @@ func (client HTTPRetryClient) Options502(ctx context.Context, options *HTTPRetry
 	if !resp.HasStatusCode(http.StatusOK) {
 		return BoolResponse{}, client.options502HandleError(resp)
 	}
-	return client.options502HandleResponse(resp)
+	result, err := client.options502HandleResponse(resp)
+	if err != nil {
+		return BoolResponse{}, err
+	}
+	return result, nil
 }
 
 // options502CreateRequest creates the Options502 request.

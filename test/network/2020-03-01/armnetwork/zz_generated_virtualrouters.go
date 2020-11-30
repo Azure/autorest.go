@@ -214,7 +214,11 @@ func (client VirtualRoutersClient) Get(ctx context.Context, resourceGroupName st
 	if !resp.HasStatusCode(http.StatusOK) {
 		return VirtualRouterResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return VirtualRouterResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.

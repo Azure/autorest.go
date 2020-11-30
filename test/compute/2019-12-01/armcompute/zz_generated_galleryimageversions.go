@@ -218,7 +218,11 @@ func (client GalleryImageVersionsClient) Get(ctx context.Context, resourceGroupN
 	if !resp.HasStatusCode(http.StatusOK) {
 		return GalleryImageVersionResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return GalleryImageVersionResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.

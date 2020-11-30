@@ -129,7 +129,11 @@ func (client dataFlowClient) GetDataFlow(ctx context.Context, dataFlowName strin
 	if !resp.HasStatusCode(http.StatusOK) {
 		return DataFlowResourceResponse{}, client.getDataFlowHandleError(resp)
 	}
-	return client.getDataFlowHandleResponse(resp)
+	result, err := client.getDataFlowHandleResponse(resp)
+	if err != nil {
+		return DataFlowResourceResponse{}, err
+	}
+	return result, nil
 }
 
 // getDataFlowCreateRequest creates the GetDataFlow request.

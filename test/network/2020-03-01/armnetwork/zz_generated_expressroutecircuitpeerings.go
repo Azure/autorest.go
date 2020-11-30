@@ -216,7 +216,11 @@ func (client ExpressRouteCircuitPeeringsClient) Get(ctx context.Context, resourc
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ExpressRouteCircuitPeeringResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return ExpressRouteCircuitPeeringResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.

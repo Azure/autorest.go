@@ -87,7 +87,11 @@ func (client AutoRestValidationTestClient) PostWithConstantInBody(ctx context.Co
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ProductResponse{}, client.postWithConstantInBodyHandleError(resp)
 	}
-	return client.postWithConstantInBodyHandleResponse(resp)
+	result, err := client.postWithConstantInBodyHandleResponse(resp)
+	if err != nil {
+		return ProductResponse{}, err
+	}
+	return result, nil
 }
 
 // postWithConstantInBodyCreateRequest creates the PostWithConstantInBody request.
@@ -138,7 +142,11 @@ func (client AutoRestValidationTestClient) ValidationOfBody(ctx context.Context,
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ProductResponse{}, client.validationOfBodyHandleError(resp)
 	}
-	return client.validationOfBodyHandleResponse(resp)
+	result, err := client.validationOfBodyHandleResponse(resp)
+	if err != nil {
+		return ProductResponse{}, err
+	}
+	return result, nil
 }
 
 // validationOfBodyCreateRequest creates the ValidationOfBody request.
@@ -191,7 +199,11 @@ func (client AutoRestValidationTestClient) ValidationOfMethodParameters(ctx cont
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ProductResponse{}, client.validationOfMethodParametersHandleError(resp)
 	}
-	return client.validationOfMethodParametersHandleResponse(resp)
+	result, err := client.validationOfMethodParametersHandleResponse(resp)
+	if err != nil {
+		return ProductResponse{}, err
+	}
+	return result, nil
 }
 
 // validationOfMethodParametersCreateRequest creates the ValidationOfMethodParameters request.

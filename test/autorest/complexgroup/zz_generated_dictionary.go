@@ -42,7 +42,11 @@ func (client DictionaryClient) GetEmpty(ctx context.Context, options *Dictionary
 	if !resp.HasStatusCode(http.StatusOK) {
 		return DictionaryWrapperResponse{}, client.getEmptyHandleError(resp)
 	}
-	return client.getEmptyHandleResponse(resp)
+	result, err := client.getEmptyHandleResponse(resp)
+	if err != nil {
+		return DictionaryWrapperResponse{}, err
+	}
+	return result, nil
 }
 
 // getEmptyCreateRequest creates the GetEmpty request.
@@ -86,7 +90,11 @@ func (client DictionaryClient) GetNotProvided(ctx context.Context, options *Dict
 	if !resp.HasStatusCode(http.StatusOK) {
 		return DictionaryWrapperResponse{}, client.getNotProvidedHandleError(resp)
 	}
-	return client.getNotProvidedHandleResponse(resp)
+	result, err := client.getNotProvidedHandleResponse(resp)
+	if err != nil {
+		return DictionaryWrapperResponse{}, err
+	}
+	return result, nil
 }
 
 // getNotProvidedCreateRequest creates the GetNotProvided request.
@@ -130,7 +138,11 @@ func (client DictionaryClient) GetNull(ctx context.Context, options *DictionaryG
 	if !resp.HasStatusCode(http.StatusOK) {
 		return DictionaryWrapperResponse{}, client.getNullHandleError(resp)
 	}
-	return client.getNullHandleResponse(resp)
+	result, err := client.getNullHandleResponse(resp)
+	if err != nil {
+		return DictionaryWrapperResponse{}, err
+	}
+	return result, nil
 }
 
 // getNullCreateRequest creates the GetNull request.
@@ -174,7 +186,11 @@ func (client DictionaryClient) GetValid(ctx context.Context, options *Dictionary
 	if !resp.HasStatusCode(http.StatusOK) {
 		return DictionaryWrapperResponse{}, client.getValidHandleError(resp)
 	}
-	return client.getValidHandleResponse(resp)
+	result, err := client.getValidHandleResponse(resp)
+	if err != nil {
+		return DictionaryWrapperResponse{}, err
+	}
+	return result, nil
 }
 
 // getValidCreateRequest creates the GetValid request.

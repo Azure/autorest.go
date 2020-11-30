@@ -47,7 +47,11 @@ func (client NetworkManagementClient) CheckDNSNameAvailability(ctx context.Conte
 	if !resp.HasStatusCode(http.StatusOK) {
 		return DNSNameAvailabilityResultResponse{}, client.checkDnsNameAvailabilityHandleError(resp)
 	}
-	return client.checkDnsNameAvailabilityHandleResponse(resp)
+	result, err := client.checkDnsNameAvailabilityHandleResponse(resp)
+	if err != nil {
+		return DNSNameAvailabilityResultResponse{}, err
+	}
+	return result, nil
 }
 
 // checkDnsNameAvailabilityCreateRequest creates the CheckDNSNameAvailability request.
@@ -564,7 +568,11 @@ func (client NetworkManagementClient) SupportedSecurityProviders(ctx context.Con
 	if !resp.HasStatusCode(http.StatusOK) {
 		return VirtualWanSecurityProvidersResponse{}, client.supportedSecurityProvidersHandleError(resp)
 	}
-	return client.supportedSecurityProvidersHandleResponse(resp)
+	result, err := client.supportedSecurityProvidersHandleResponse(resp)
+	if err != nil {
+		return VirtualWanSecurityProvidersResponse{}, err
+	}
+	return result, nil
 }
 
 // supportedSecurityProvidersCreateRequest creates the SupportedSecurityProviders request.

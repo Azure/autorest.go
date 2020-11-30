@@ -49,7 +49,11 @@ func (client VirtualMachineRunCommandsClient) Get(ctx context.Context, location 
 	if !resp.HasStatusCode(http.StatusOK) {
 		return RunCommandDocumentResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return RunCommandDocumentResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.

@@ -214,7 +214,11 @@ func (client DdosProtectionPlansClient) Get(ctx context.Context, resourceGroupNa
 	if !resp.HasStatusCode(http.StatusOK) {
 		return DdosProtectionPlanResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return DdosProtectionPlanResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.
@@ -361,7 +365,11 @@ func (client DdosProtectionPlansClient) UpdateTags(ctx context.Context, resource
 	if !resp.HasStatusCode(http.StatusOK) {
 		return DdosProtectionPlanResponse{}, client.updateTagsHandleError(resp)
 	}
-	return client.updateTagsHandleResponse(resp)
+	result, err := client.updateTagsHandleResponse(resp)
+	if err != nil {
+		return DdosProtectionPlanResponse{}, err
+	}
+	return result, nil
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.

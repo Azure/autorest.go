@@ -634,7 +634,11 @@ func (client HeaderClient) ResponseBool(ctx context.Context, scenario string, op
 	if !resp.HasStatusCode(http.StatusOK) {
 		return HeaderResponseBoolResponse{}, client.responseBoolHandleError(resp)
 	}
-	return client.responseBoolHandleResponse(resp)
+	result, err := client.responseBoolHandleResponse(resp)
+	if err != nil {
+		return HeaderResponseBoolResponse{}, err
+	}
+	return result, nil
 }
 
 // responseBoolCreateRequest creates the ResponseBool request.
@@ -685,7 +689,11 @@ func (client HeaderClient) ResponseByte(ctx context.Context, scenario string, op
 	if !resp.HasStatusCode(http.StatusOK) {
 		return HeaderResponseByteResponse{}, client.responseByteHandleError(resp)
 	}
-	return client.responseByteHandleResponse(resp)
+	result, err := client.responseByteHandleResponse(resp)
+	if err != nil {
+		return HeaderResponseByteResponse{}, err
+	}
+	return result, nil
 }
 
 // responseByteCreateRequest creates the ResponseByte request.
@@ -736,7 +744,11 @@ func (client HeaderClient) ResponseDate(ctx context.Context, scenario string, op
 	if !resp.HasStatusCode(http.StatusOK) {
 		return HeaderResponseDateResponse{}, client.responseDateHandleError(resp)
 	}
-	return client.responseDateHandleResponse(resp)
+	result, err := client.responseDateHandleResponse(resp)
+	if err != nil {
+		return HeaderResponseDateResponse{}, err
+	}
+	return result, nil
 }
 
 // responseDateCreateRequest creates the ResponseDate request.
@@ -787,7 +799,11 @@ func (client HeaderClient) ResponseDatetime(ctx context.Context, scenario string
 	if !resp.HasStatusCode(http.StatusOK) {
 		return HeaderResponseDatetimeResponse{}, client.responseDatetimeHandleError(resp)
 	}
-	return client.responseDatetimeHandleResponse(resp)
+	result, err := client.responseDatetimeHandleResponse(resp)
+	if err != nil {
+		return HeaderResponseDatetimeResponse{}, err
+	}
+	return result, nil
 }
 
 // responseDatetimeCreateRequest creates the ResponseDatetime request.
@@ -838,7 +854,11 @@ func (client HeaderClient) ResponseDatetimeRFC1123(ctx context.Context, scenario
 	if !resp.HasStatusCode(http.StatusOK) {
 		return HeaderResponseDatetimeRFC1123Response{}, client.responseDatetimeRfc1123HandleError(resp)
 	}
-	return client.responseDatetimeRfc1123HandleResponse(resp)
+	result, err := client.responseDatetimeRfc1123HandleResponse(resp)
+	if err != nil {
+		return HeaderResponseDatetimeRFC1123Response{}, err
+	}
+	return result, nil
 }
 
 // responseDatetimeRfc1123CreateRequest creates the ResponseDatetimeRFC1123 request.
@@ -889,7 +909,11 @@ func (client HeaderClient) ResponseDouble(ctx context.Context, scenario string, 
 	if !resp.HasStatusCode(http.StatusOK) {
 		return HeaderResponseDoubleResponse{}, client.responseDoubleHandleError(resp)
 	}
-	return client.responseDoubleHandleResponse(resp)
+	result, err := client.responseDoubleHandleResponse(resp)
+	if err != nil {
+		return HeaderResponseDoubleResponse{}, err
+	}
+	return result, nil
 }
 
 // responseDoubleCreateRequest creates the ResponseDouble request.
@@ -940,7 +964,11 @@ func (client HeaderClient) ResponseDuration(ctx context.Context, scenario string
 	if !resp.HasStatusCode(http.StatusOK) {
 		return HeaderResponseDurationResponse{}, client.responseDurationHandleError(resp)
 	}
-	return client.responseDurationHandleResponse(resp)
+	result, err := client.responseDurationHandleResponse(resp)
+	if err != nil {
+		return HeaderResponseDurationResponse{}, err
+	}
+	return result, nil
 }
 
 // responseDurationCreateRequest creates the ResponseDuration request.
@@ -987,7 +1015,11 @@ func (client HeaderClient) ResponseEnum(ctx context.Context, scenario string, op
 	if !resp.HasStatusCode(http.StatusOK) {
 		return HeaderResponseEnumResponse{}, client.responseEnumHandleError(resp)
 	}
-	return client.responseEnumHandleResponse(resp)
+	result, err := client.responseEnumHandleResponse(resp)
+	if err != nil {
+		return HeaderResponseEnumResponse{}, err
+	}
+	return result, nil
 }
 
 // responseEnumCreateRequest creates the ResponseEnum request.
@@ -1034,7 +1066,11 @@ func (client HeaderClient) ResponseExistingKey(ctx context.Context, options *Hea
 	if !resp.HasStatusCode(http.StatusOK) {
 		return HeaderResponseExistingKeyResponse{}, client.responseExistingKeyHandleError(resp)
 	}
-	return client.responseExistingKeyHandleResponse(resp)
+	result, err := client.responseExistingKeyHandleResponse(resp)
+	if err != nil {
+		return HeaderResponseExistingKeyResponse{}, err
+	}
+	return result, nil
 }
 
 // responseExistingKeyCreateRequest creates the ResponseExistingKey request.
@@ -1080,7 +1116,11 @@ func (client HeaderClient) ResponseFloat(ctx context.Context, scenario string, o
 	if !resp.HasStatusCode(http.StatusOK) {
 		return HeaderResponseFloatResponse{}, client.responseFloatHandleError(resp)
 	}
-	return client.responseFloatHandleResponse(resp)
+	result, err := client.responseFloatHandleResponse(resp)
+	if err != nil {
+		return HeaderResponseFloatResponse{}, err
+	}
+	return result, nil
 }
 
 // responseFloatCreateRequest creates the ResponseFloat request.
@@ -1132,7 +1172,11 @@ func (client HeaderClient) ResponseInteger(ctx context.Context, scenario string,
 	if !resp.HasStatusCode(http.StatusOK) {
 		return HeaderResponseIntegerResponse{}, client.responseIntegerHandleError(resp)
 	}
-	return client.responseIntegerHandleResponse(resp)
+	result, err := client.responseIntegerHandleResponse(resp)
+	if err != nil {
+		return HeaderResponseIntegerResponse{}, err
+	}
+	return result, nil
 }
 
 // responseIntegerCreateRequest creates the ResponseInteger request.
@@ -1184,7 +1228,11 @@ func (client HeaderClient) ResponseLong(ctx context.Context, scenario string, op
 	if !resp.HasStatusCode(http.StatusOK) {
 		return HeaderResponseLongResponse{}, client.responseLongHandleError(resp)
 	}
-	return client.responseLongHandleResponse(resp)
+	result, err := client.responseLongHandleResponse(resp)
+	if err != nil {
+		return HeaderResponseLongResponse{}, err
+	}
+	return result, nil
 }
 
 // responseLongCreateRequest creates the ResponseLong request.
@@ -1235,7 +1283,11 @@ func (client HeaderClient) ResponseProtectedKey(ctx context.Context, options *He
 	if !resp.HasStatusCode(http.StatusOK) {
 		return HeaderResponseProtectedKeyResponse{}, client.responseProtectedKeyHandleError(resp)
 	}
-	return client.responseProtectedKeyHandleResponse(resp)
+	result, err := client.responseProtectedKeyHandleResponse(resp)
+	if err != nil {
+		return HeaderResponseProtectedKeyResponse{}, err
+	}
+	return result, nil
 }
 
 // responseProtectedKeyCreateRequest creates the ResponseProtectedKey request.
@@ -1281,7 +1333,11 @@ func (client HeaderClient) ResponseString(ctx context.Context, scenario string, 
 	if !resp.HasStatusCode(http.StatusOK) {
 		return HeaderResponseStringResponse{}, client.responseStringHandleError(resp)
 	}
-	return client.responseStringHandleResponse(resp)
+	result, err := client.responseStringHandleResponse(resp)
+	if err != nil {
+		return HeaderResponseStringResponse{}, err
+	}
+	return result, nil
 }
 
 // responseStringCreateRequest creates the ResponseString request.

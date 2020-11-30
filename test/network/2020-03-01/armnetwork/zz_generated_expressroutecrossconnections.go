@@ -134,7 +134,11 @@ func (client ExpressRouteCrossConnectionsClient) Get(ctx context.Context, resour
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ExpressRouteCrossConnectionResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return ExpressRouteCrossConnectionResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.
@@ -548,7 +552,11 @@ func (client ExpressRouteCrossConnectionsClient) UpdateTags(ctx context.Context,
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ExpressRouteCrossConnectionResponse{}, client.updateTagsHandleError(resp)
 	}
-	return client.updateTagsHandleResponse(resp)
+	result, err := client.updateTagsHandleResponse(resp)
+	if err != nil {
+		return ExpressRouteCrossConnectionResponse{}, err
+	}
+	return result, nil
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.

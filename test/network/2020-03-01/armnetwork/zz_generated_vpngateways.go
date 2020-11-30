@@ -214,7 +214,11 @@ func (client VpnGatewaysClient) Get(ctx context.Context, resourceGroupName strin
 	if !resp.HasStatusCode(http.StatusOK) {
 		return VpnGatewayResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return VpnGatewayResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.
@@ -448,7 +452,11 @@ func (client VpnGatewaysClient) UpdateTags(ctx context.Context, resourceGroupNam
 	if !resp.HasStatusCode(http.StatusOK) {
 		return VpnGatewayResponse{}, client.updateTagsHandleError(resp)
 	}
-	return client.updateTagsHandleResponse(resp)
+	result, err := client.updateTagsHandleResponse(resp)
+	if err != nil {
+		return VpnGatewayResponse{}, err
+	}
+	return result, nil
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.

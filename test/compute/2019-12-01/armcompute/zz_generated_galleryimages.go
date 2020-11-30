@@ -216,7 +216,11 @@ func (client GalleryImagesClient) Get(ctx context.Context, resourceGroupName str
 	if !resp.HasStatusCode(http.StatusOK) {
 		return GalleryImageResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return GalleryImageResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.

@@ -216,7 +216,11 @@ func (client ExpressRouteGatewaysClient) Get(ctx context.Context, resourceGroupN
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ExpressRouteGatewayResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return ExpressRouteGatewayResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.
@@ -266,7 +270,11 @@ func (client ExpressRouteGatewaysClient) ListByResourceGroup(ctx context.Context
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ExpressRouteGatewayListResponse{}, client.listByResourceGroupHandleError(resp)
 	}
-	return client.listByResourceGroupHandleResponse(resp)
+	result, err := client.listByResourceGroupHandleResponse(resp)
+	if err != nil {
+		return ExpressRouteGatewayListResponse{}, err
+	}
+	return result, nil
 }
 
 // listByResourceGroupCreateRequest creates the ListByResourceGroup request.
@@ -315,7 +323,11 @@ func (client ExpressRouteGatewaysClient) ListBySubscription(ctx context.Context,
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ExpressRouteGatewayListResponse{}, client.listBySubscriptionHandleError(resp)
 	}
-	return client.listBySubscriptionHandleResponse(resp)
+	result, err := client.listBySubscriptionHandleResponse(resp)
+	if err != nil {
+		return ExpressRouteGatewayListResponse{}, err
+	}
+	return result, nil
 }
 
 // listBySubscriptionCreateRequest creates the ListBySubscription request.

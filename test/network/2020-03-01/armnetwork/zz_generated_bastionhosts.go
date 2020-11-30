@@ -214,7 +214,11 @@ func (client BastionHostsClient) Get(ctx context.Context, resourceGroupName stri
 	if !resp.HasStatusCode(http.StatusOK) {
 		return BastionHostResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return BastionHostResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.

@@ -214,7 +214,11 @@ func (client ExpressRouteCircuitsClient) Get(ctx context.Context, resourceGroupN
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ExpressRouteCircuitResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return ExpressRouteCircuitResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.
@@ -264,7 +268,11 @@ func (client ExpressRouteCircuitsClient) GetPeeringStats(ctx context.Context, re
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ExpressRouteCircuitStatsResponse{}, client.getPeeringStatsHandleError(resp)
 	}
-	return client.getPeeringStatsHandleResponse(resp)
+	result, err := client.getPeeringStatsHandleResponse(resp)
+	if err != nil {
+		return ExpressRouteCircuitStatsResponse{}, err
+	}
+	return result, nil
 }
 
 // getPeeringStatsCreateRequest creates the GetPeeringStats request.
@@ -315,7 +323,11 @@ func (client ExpressRouteCircuitsClient) GetStats(ctx context.Context, resourceG
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ExpressRouteCircuitStatsResponse{}, client.getStatsHandleError(resp)
 	}
-	return client.getStatsHandleResponse(resp)
+	result, err := client.getStatsHandleResponse(resp)
+	if err != nil {
+		return ExpressRouteCircuitStatsResponse{}, err
+	}
+	return result, nil
 }
 
 // getStatsCreateRequest creates the GetStats request.
@@ -729,7 +741,11 @@ func (client ExpressRouteCircuitsClient) UpdateTags(ctx context.Context, resourc
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ExpressRouteCircuitResponse{}, client.updateTagsHandleError(resp)
 	}
-	return client.updateTagsHandleResponse(resp)
+	result, err := client.updateTagsHandleResponse(resp)
+	if err != nil {
+		return ExpressRouteCircuitResponse{}, err
+	}
+	return result, nil
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.

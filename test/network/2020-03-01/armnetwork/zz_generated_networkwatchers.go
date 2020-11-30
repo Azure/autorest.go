@@ -136,7 +136,11 @@ func (client NetworkWatchersClient) CreateOrUpdate(ctx context.Context, resource
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return NetworkWatcherResponse{}, client.createOrUpdateHandleError(resp)
 	}
-	return client.createOrUpdateHandleResponse(resp)
+	result, err := client.createOrUpdateHandleResponse(resp)
+	if err != nil {
+		return NetworkWatcherResponse{}, err
+	}
+	return result, nil
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -266,7 +270,11 @@ func (client NetworkWatchersClient) Get(ctx context.Context, resourceGroupName s
 	if !resp.HasStatusCode(http.StatusOK) {
 		return NetworkWatcherResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return NetworkWatcherResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.
@@ -674,7 +682,11 @@ func (client NetworkWatchersClient) GetTopology(ctx context.Context, resourceGro
 	if !resp.HasStatusCode(http.StatusOK) {
 		return TopologyResponse{}, client.getTopologyHandleError(resp)
 	}
-	return client.getTopologyHandleResponse(resp)
+	result, err := client.getTopologyHandleResponse(resp)
+	if err != nil {
+		return TopologyResponse{}, err
+	}
+	return result, nil
 }
 
 // getTopologyCreateRequest creates the GetTopology request.
@@ -985,7 +997,11 @@ func (client NetworkWatchersClient) List(ctx context.Context, resourceGroupName 
 	if !resp.HasStatusCode(http.StatusOK) {
 		return NetworkWatcherListResultResponse{}, client.listHandleError(resp)
 	}
-	return client.listHandleResponse(resp)
+	result, err := client.listHandleResponse(resp)
+	if err != nil {
+		return NetworkWatcherListResultResponse{}, err
+	}
+	return result, nil
 }
 
 // listCreateRequest creates the List request.
@@ -1034,7 +1050,11 @@ func (client NetworkWatchersClient) ListAll(ctx context.Context, options *Networ
 	if !resp.HasStatusCode(http.StatusOK) {
 		return NetworkWatcherListResultResponse{}, client.listAllHandleError(resp)
 	}
-	return client.listAllHandleResponse(resp)
+	result, err := client.listAllHandleResponse(resp)
+	if err != nil {
+		return NetworkWatcherListResultResponse{}, err
+	}
+	return result, nil
 }
 
 // listAllCreateRequest creates the ListAll request.
@@ -1258,7 +1278,11 @@ func (client NetworkWatchersClient) UpdateTags(ctx context.Context, resourceGrou
 	if !resp.HasStatusCode(http.StatusOK) {
 		return NetworkWatcherResponse{}, client.updateTagsHandleError(resp)
 	}
-	return client.updateTagsHandleResponse(resp)
+	result, err := client.updateTagsHandleResponse(resp)
+	if err != nil {
+		return NetworkWatcherResponse{}, err
+	}
+	return result, nil
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.

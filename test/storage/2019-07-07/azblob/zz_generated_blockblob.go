@@ -45,7 +45,11 @@ func (client blockBlobClient) CommitBlockList(ctx context.Context, blocks BlockL
 	if !resp.HasStatusCode(http.StatusCreated) {
 		return BlockBlobCommitBlockListResponse{}, client.commitBlockListHandleError(resp)
 	}
-	return client.commitBlockListHandleResponse(resp)
+	result, err := client.commitBlockListHandleResponse(resp)
+	if err != nil {
+		return BlockBlobCommitBlockListResponse{}, err
+	}
+	return result, nil
 }
 
 // commitBlockListCreateRequest creates the CommitBlockList request.
@@ -209,7 +213,11 @@ func (client blockBlobClient) GetBlockList(ctx context.Context, listType BlockLi
 	if !resp.HasStatusCode(http.StatusOK) {
 		return BlockListResponse{}, client.getBlockListHandleError(resp)
 	}
-	return client.getBlockListHandleResponse(resp)
+	result, err := client.getBlockListHandleResponse(resp)
+	if err != nil {
+		return BlockListResponse{}, err
+	}
+	return result, nil
 }
 
 // getBlockListCreateRequest creates the GetBlockList request.
@@ -305,7 +313,11 @@ func (client blockBlobClient) StageBlock(ctx context.Context, blockId string, co
 	if !resp.HasStatusCode(http.StatusCreated) {
 		return BlockBlobStageBlockResponse{}, client.stageBlockHandleError(resp)
 	}
-	return client.stageBlockHandleResponse(resp)
+	result, err := client.stageBlockHandleResponse(resp)
+	if err != nil {
+		return BlockBlobStageBlockResponse{}, err
+	}
+	return result, nil
 }
 
 // stageBlockCreateRequest creates the StageBlock request.
@@ -423,7 +435,11 @@ func (client blockBlobClient) StageBlockFromURL(ctx context.Context, blockId str
 	if !resp.HasStatusCode(http.StatusCreated) {
 		return BlockBlobStageBlockFromURLResponse{}, client.stageBlockFromUrlHandleError(resp)
 	}
-	return client.stageBlockFromUrlHandleResponse(resp)
+	result, err := client.stageBlockFromUrlHandleResponse(resp)
+	if err != nil {
+		return BlockBlobStageBlockFromURLResponse{}, err
+	}
+	return result, nil
 }
 
 // stageBlockFromUrlCreateRequest creates the StageBlockFromURL request.
@@ -560,7 +576,11 @@ func (client blockBlobClient) Upload(ctx context.Context, contentLength int64, b
 	if !resp.HasStatusCode(http.StatusCreated) {
 		return BlockBlobUploadResponse{}, client.uploadHandleError(resp)
 	}
-	return client.uploadHandleResponse(resp)
+	result, err := client.uploadHandleResponse(resp)
+	if err != nil {
+		return BlockBlobUploadResponse{}, err
+	}
+	return result, nil
 }
 
 // uploadCreateRequest creates the Upload request.

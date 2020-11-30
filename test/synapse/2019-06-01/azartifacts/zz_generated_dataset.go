@@ -129,7 +129,11 @@ func (client datasetClient) GetDataset(ctx context.Context, datasetName string, 
 	if !resp.HasStatusCode(http.StatusOK, http.StatusNotModified) {
 		return DatasetResourceResponse{}, client.getDatasetHandleError(resp)
 	}
-	return client.getDatasetHandleResponse(resp)
+	result, err := client.getDatasetHandleResponse(resp)
+	if err != nil {
+		return DatasetResourceResponse{}, err
+	}
+	return result, nil
 }
 
 // getDatasetCreateRequest creates the GetDataset request.

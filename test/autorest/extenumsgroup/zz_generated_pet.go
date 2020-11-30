@@ -47,7 +47,11 @@ func (client PetClient) AddPet(ctx context.Context, options *PetAddPetOptions) (
 	if !resp.HasStatusCode(http.StatusOK) {
 		return PetResponse{}, client.addPetHandleError(resp)
 	}
-	return client.addPetHandleResponse(resp)
+	result, err := client.addPetHandleResponse(resp)
+	if err != nil {
+		return PetResponse{}, err
+	}
+	return result, nil
 }
 
 // addPetCreateRequest creates the AddPet request.
@@ -97,7 +101,11 @@ func (client PetClient) GetByPetID(ctx context.Context, petId string, options *P
 	if !resp.HasStatusCode(http.StatusOK) {
 		return PetResponse{}, client.getByPetIdHandleError(resp)
 	}
-	return client.getByPetIdHandleResponse(resp)
+	result, err := client.getByPetIdHandleResponse(resp)
+	if err != nil {
+		return PetResponse{}, err
+	}
+	return result, nil
 }
 
 // getByPetIdCreateRequest creates the GetByPetID request.

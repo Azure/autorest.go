@@ -35,7 +35,11 @@ func (client dataFlowDebugSessionClient) AddDataFlow(ctx context.Context, reques
 	if !resp.HasStatusCode(http.StatusOK) {
 		return AddDataFlowToDebugSessionResponseResponse{}, client.addDataFlowHandleError(resp)
 	}
-	return client.addDataFlowHandleResponse(resp)
+	result, err := client.addDataFlowHandleResponse(resp)
+	if err != nil {
+		return AddDataFlowToDebugSessionResponseResponse{}, err
+	}
+	return result, nil
 }
 
 // addDataFlowCreateRequest creates the AddDataFlow request.

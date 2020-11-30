@@ -218,7 +218,11 @@ func (client VirtualMachineScaleSetVMExtensionsClient) Get(ctx context.Context, 
 	if !resp.HasStatusCode(http.StatusOK) {
 		return VirtualMachineExtensionResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return VirtualMachineExtensionResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.
@@ -273,7 +277,11 @@ func (client VirtualMachineScaleSetVMExtensionsClient) List(ctx context.Context,
 	if !resp.HasStatusCode(http.StatusOK) {
 		return VirtualMachineExtensionsListResultResponse{}, client.listHandleError(resp)
 	}
-	return client.listHandleResponse(resp)
+	result, err := client.listHandleResponse(resp)
+	if err != nil {
+		return VirtualMachineExtensionsListResultResponse{}, err
+	}
+	return result, nil
 }
 
 // listCreateRequest creates the List request.

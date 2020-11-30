@@ -46,7 +46,11 @@ func (client PeerExpressRouteCircuitConnectionsClient) Get(ctx context.Context, 
 	if !resp.HasStatusCode(http.StatusOK) {
 		return PeerExpressRouteCircuitConnectionResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return PeerExpressRouteCircuitConnectionResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.

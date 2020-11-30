@@ -216,7 +216,11 @@ func (client NetworkInterfaceTapConfigurationsClient) Get(ctx context.Context, r
 	if !resp.HasStatusCode(http.StatusOK) {
 		return NetworkInterfaceTapConfigurationResponse{}, client.getHandleError(resp)
 	}
-	return client.getHandleResponse(resp)
+	result, err := client.getHandleResponse(resp)
+	if err != nil {
+		return NetworkInterfaceTapConfigurationResponse{}, err
+	}
+	return result, nil
 }
 
 // getCreateRequest creates the Get request.
