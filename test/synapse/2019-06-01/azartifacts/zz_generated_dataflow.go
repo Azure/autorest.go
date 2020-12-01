@@ -25,7 +25,7 @@ func (client dataFlowClient) Pipeline() azcore.Pipeline {
 }
 
 // CreateOrUpdateDataFlow - Creates or updates a data flow.
-func (client dataFlowClient) CreateOrUpdateDataFlow(ctx context.Context, dataFlowName string, dataFlow DataFlowResource, options *DataFlowCreateOrUpdateDataFlowOptions) (*azcore.Response, error) {
+func (client dataFlowClient) createOrUpdateDataFlow(ctx context.Context, dataFlowName string, dataFlow DataFlowResource, options *DataFlowBeginCreateOrUpdateDataFlowOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateDataFlowCreateRequest(ctx, dataFlowName, dataFlow, options)
 	if err != nil {
 		return nil, err
@@ -41,7 +41,7 @@ func (client dataFlowClient) CreateOrUpdateDataFlow(ctx context.Context, dataFlo
 }
 
 // createOrUpdateDataFlowCreateRequest creates the CreateOrUpdateDataFlow request.
-func (client dataFlowClient) createOrUpdateDataFlowCreateRequest(ctx context.Context, dataFlowName string, dataFlow DataFlowResource, options *DataFlowCreateOrUpdateDataFlowOptions) (*azcore.Request, error) {
+func (client dataFlowClient) createOrUpdateDataFlowCreateRequest(ctx context.Context, dataFlowName string, dataFlow DataFlowResource, options *DataFlowBeginCreateOrUpdateDataFlowOptions) (*azcore.Request, error) {
 	urlPath := "/dataflows/{dataFlowName}"
 	urlPath = strings.ReplaceAll(urlPath, "{dataFlowName}", url.PathEscape(dataFlowName))
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -76,7 +76,7 @@ func (client dataFlowClient) createOrUpdateDataFlowHandleError(resp *azcore.Resp
 }
 
 // DeleteDataFlow - Deletes a data flow.
-func (client dataFlowClient) DeleteDataFlow(ctx context.Context, dataFlowName string, options *DataFlowDeleteDataFlowOptions) (*azcore.Response, error) {
+func (client dataFlowClient) deleteDataFlow(ctx context.Context, dataFlowName string, options *DataFlowBeginDeleteDataFlowOptions) (*azcore.Response, error) {
 	req, err := client.deleteDataFlowCreateRequest(ctx, dataFlowName, options)
 	if err != nil {
 		return nil, err
@@ -92,7 +92,7 @@ func (client dataFlowClient) DeleteDataFlow(ctx context.Context, dataFlowName st
 }
 
 // deleteDataFlowCreateRequest creates the DeleteDataFlow request.
-func (client dataFlowClient) deleteDataFlowCreateRequest(ctx context.Context, dataFlowName string, options *DataFlowDeleteDataFlowOptions) (*azcore.Request, error) {
+func (client dataFlowClient) deleteDataFlowCreateRequest(ctx context.Context, dataFlowName string, options *DataFlowBeginDeleteDataFlowOptions) (*azcore.Request, error) {
 	urlPath := "/dataflows/{dataFlowName}"
 	urlPath = strings.ReplaceAll(urlPath, "{dataFlowName}", url.PathEscape(dataFlowName))
 	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -219,7 +219,7 @@ func (client dataFlowClient) getDataFlowsByWorkspaceHandleError(resp *azcore.Res
 }
 
 // RenameDataFlow - Renames a dataflow.
-func (client dataFlowClient) RenameDataFlow(ctx context.Context, dataFlowName string, request ArtifactRenameRequest, options *DataFlowRenameDataFlowOptions) (*azcore.Response, error) {
+func (client dataFlowClient) renameDataFlow(ctx context.Context, dataFlowName string, request ArtifactRenameRequest, options *DataFlowBeginRenameDataFlowOptions) (*azcore.Response, error) {
 	req, err := client.renameDataFlowCreateRequest(ctx, dataFlowName, request, options)
 	if err != nil {
 		return nil, err
@@ -235,7 +235,7 @@ func (client dataFlowClient) RenameDataFlow(ctx context.Context, dataFlowName st
 }
 
 // renameDataFlowCreateRequest creates the RenameDataFlow request.
-func (client dataFlowClient) renameDataFlowCreateRequest(ctx context.Context, dataFlowName string, request ArtifactRenameRequest, options *DataFlowRenameDataFlowOptions) (*azcore.Request, error) {
+func (client dataFlowClient) renameDataFlowCreateRequest(ctx context.Context, dataFlowName string, request ArtifactRenameRequest, options *DataFlowBeginRenameDataFlowOptions) (*azcore.Request, error) {
 	urlPath := "/dataflows/{dataFlowName}/rename"
 	urlPath = strings.ReplaceAll(urlPath, "{dataFlowName}", url.PathEscape(dataFlowName))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))

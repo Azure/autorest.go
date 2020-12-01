@@ -223,7 +223,7 @@ func (client sqlScriptClient) getSqlScriptsByWorkspaceHandleError(resp *azcore.R
 }
 
 // RenameSQLScript - Renames a sqlScript.
-func (client sqlScriptClient) RenameSQLScript(ctx context.Context, sqlScriptName string, request ArtifactRenameRequest, options *SQLScriptRenameSQLScriptOptions) (*azcore.Response, error) {
+func (client sqlScriptClient) renameSQLScript(ctx context.Context, sqlScriptName string, request ArtifactRenameRequest, options *SQLScriptBeginRenameSQLScriptOptions) (*azcore.Response, error) {
 	req, err := client.renameSqlScriptCreateRequest(ctx, sqlScriptName, request, options)
 	if err != nil {
 		return nil, err
@@ -239,7 +239,7 @@ func (client sqlScriptClient) RenameSQLScript(ctx context.Context, sqlScriptName
 }
 
 // renameSqlScriptCreateRequest creates the RenameSQLScript request.
-func (client sqlScriptClient) renameSqlScriptCreateRequest(ctx context.Context, sqlScriptName string, request ArtifactRenameRequest, options *SQLScriptRenameSQLScriptOptions) (*azcore.Request, error) {
+func (client sqlScriptClient) renameSqlScriptCreateRequest(ctx context.Context, sqlScriptName string, request ArtifactRenameRequest, options *SQLScriptBeginRenameSQLScriptOptions) (*azcore.Request, error) {
 	urlPath := "/sqlScripts/{sqlScriptName}/rename"
 	urlPath = strings.ReplaceAll(urlPath, "{sqlScriptName}", url.PathEscape(sqlScriptName))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))

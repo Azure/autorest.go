@@ -26,7 +26,7 @@ func (client pipelineClient) Pipeline() azcore.Pipeline {
 }
 
 // CreateOrUpdatePipeline - Creates or updates a pipeline.
-func (client pipelineClient) CreateOrUpdatePipeline(ctx context.Context, pipelineName string, pipeline PipelineResource, options *PipelineCreateOrUpdatePipelineOptions) (*azcore.Response, error) {
+func (client pipelineClient) createOrUpdatePipeline(ctx context.Context, pipelineName string, pipeline PipelineResource, options *PipelineBeginCreateOrUpdatePipelineOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdatePipelineCreateRequest(ctx, pipelineName, pipeline, options)
 	if err != nil {
 		return nil, err
@@ -42,7 +42,7 @@ func (client pipelineClient) CreateOrUpdatePipeline(ctx context.Context, pipelin
 }
 
 // createOrUpdatePipelineCreateRequest creates the CreateOrUpdatePipeline request.
-func (client pipelineClient) createOrUpdatePipelineCreateRequest(ctx context.Context, pipelineName string, pipeline PipelineResource, options *PipelineCreateOrUpdatePipelineOptions) (*azcore.Request, error) {
+func (client pipelineClient) createOrUpdatePipelineCreateRequest(ctx context.Context, pipelineName string, pipeline PipelineResource, options *PipelineBeginCreateOrUpdatePipelineOptions) (*azcore.Request, error) {
 	urlPath := "/pipelines/{pipelineName}"
 	urlPath = strings.ReplaceAll(urlPath, "{pipelineName}", url.PathEscape(pipelineName))
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -141,7 +141,7 @@ func (client pipelineClient) createPipelineRunHandleError(resp *azcore.Response)
 }
 
 // DeletePipeline - Deletes a pipeline.
-func (client pipelineClient) DeletePipeline(ctx context.Context, pipelineName string, options *PipelineDeletePipelineOptions) (*azcore.Response, error) {
+func (client pipelineClient) deletePipeline(ctx context.Context, pipelineName string, options *PipelineBeginDeletePipelineOptions) (*azcore.Response, error) {
 	req, err := client.deletePipelineCreateRequest(ctx, pipelineName, options)
 	if err != nil {
 		return nil, err
@@ -157,7 +157,7 @@ func (client pipelineClient) DeletePipeline(ctx context.Context, pipelineName st
 }
 
 // deletePipelineCreateRequest creates the DeletePipeline request.
-func (client pipelineClient) deletePipelineCreateRequest(ctx context.Context, pipelineName string, options *PipelineDeletePipelineOptions) (*azcore.Request, error) {
+func (client pipelineClient) deletePipelineCreateRequest(ctx context.Context, pipelineName string, options *PipelineBeginDeletePipelineOptions) (*azcore.Request, error) {
 	urlPath := "/pipelines/{pipelineName}"
 	urlPath = strings.ReplaceAll(urlPath, "{pipelineName}", url.PathEscape(pipelineName))
 	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -284,7 +284,7 @@ func (client pipelineClient) getPipelinesByWorkspaceHandleError(resp *azcore.Res
 }
 
 // RenamePipeline - Renames a pipeline.
-func (client pipelineClient) RenamePipeline(ctx context.Context, pipelineName string, request ArtifactRenameRequest, options *PipelineRenamePipelineOptions) (*azcore.Response, error) {
+func (client pipelineClient) renamePipeline(ctx context.Context, pipelineName string, request ArtifactRenameRequest, options *PipelineBeginRenamePipelineOptions) (*azcore.Response, error) {
 	req, err := client.renamePipelineCreateRequest(ctx, pipelineName, request, options)
 	if err != nil {
 		return nil, err
@@ -300,7 +300,7 @@ func (client pipelineClient) RenamePipeline(ctx context.Context, pipelineName st
 }
 
 // renamePipelineCreateRequest creates the RenamePipeline request.
-func (client pipelineClient) renamePipelineCreateRequest(ctx context.Context, pipelineName string, request ArtifactRenameRequest, options *PipelineRenamePipelineOptions) (*azcore.Request, error) {
+func (client pipelineClient) renamePipelineCreateRequest(ctx context.Context, pipelineName string, request ArtifactRenameRequest, options *PipelineBeginRenamePipelineOptions) (*azcore.Request, error) {
 	urlPath := "/pipelines/{pipelineName}/rename"
 	urlPath = strings.ReplaceAll(urlPath, "{pipelineName}", url.PathEscape(pipelineName))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))

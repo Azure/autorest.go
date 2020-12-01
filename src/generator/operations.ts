@@ -249,7 +249,11 @@ function generateOperation(op: Operation, imports: ImportManager): string {
   if (isMultiRespOperation(op)) {
     text += generateMultiRespComment(op);
   }
-  text += `func (client ${clientName}) ${op.language.go!.name}(${params}) (${returns.join(', ')}) {\n`;
+  let opName = op.language.go!.name;
+  if (isLROOperation(op)) {
+    opName = opName[0].toLocaleLowerCase() + opName.substr(1);
+  }
+  text += `func (client ${clientName}) ${opName}(${params}) (${returns.join(', ')}) {\n`;
   const reqParams = getCreateRequestParameters(op);
   const statusCodes = getStatusCodes(op);
   if (isPageableOperation(op) && !isLROOperation(op)) {
@@ -947,7 +951,9 @@ function generateARMLROBeginMethod(op: Operation, imports: ImportManager): strin
   }
   const zeroResp = getZeroReturnValue(op, 'api');
   text += `func (client ${clientName}) Begin${op.language.go!.name}(${params}) (${returns.join(', ')}) {\n`;
-  text += `\tresp, err := client.${op.language.go!.name}(${getCreateRequestParameters(op)})\n`;
+  let opName = op.language.go!.name;
+  opName = opName[0].toLocaleLowerCase() + opName.substr(1);
+  text += `\tresp, err := client.${opName}(${getCreateRequestParameters(op)})\n`;
   text += `\tif err != nil {\n`;
   text += `\t\treturn ${zeroResp}, err\n`;
   text += `\t}\n`;
