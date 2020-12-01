@@ -8413,10 +8413,20 @@ func (d *DataFlow) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
 	return nil
 }
 
-// DataFlowCreateOrUpdateDataFlowOptions contains the optional parameters for the DataFlow.CreateOrUpdateDataFlow method.
-type DataFlowCreateOrUpdateDataFlowOptions struct {
+// DataFlowBeginCreateOrUpdateDataFlowOptions contains the optional parameters for the DataFlow.BeginCreateOrUpdateDataFlow method.
+type DataFlowBeginCreateOrUpdateDataFlowOptions struct {
 	// ETag of the data flow entity. Should only be specified for update, for which it should match existing entity or can be * for unconditional update.
 	IfMatch *string
+}
+
+// DataFlowBeginDeleteDataFlowOptions contains the optional parameters for the DataFlow.BeginDeleteDataFlow method.
+type DataFlowBeginDeleteDataFlowOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DataFlowBeginRenameDataFlowOptions contains the optional parameters for the DataFlow.BeginRenameDataFlow method.
+type DataFlowBeginRenameDataFlowOptions struct {
+	// placeholder for future optional parameters
 }
 
 // Request body structure for data flow expression preview.
@@ -8628,18 +8638,19 @@ type DataFlowDebugSessionAddDataFlowOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DataFlowDebugSessionCreateDataFlowDebugSessionOptions contains the optional parameters for the DataFlowDebugSession.CreateDataFlowDebugSession method.
-type DataFlowDebugSessionCreateDataFlowDebugSessionOptions struct {
+// DataFlowDebugSessionBeginCreateDataFlowDebugSessionOptions contains the optional parameters for the DataFlowDebugSession.BeginCreateDataFlowDebugSession
+// method.
+type DataFlowDebugSessionBeginCreateDataFlowDebugSessionOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DataFlowDebugSessionBeginExecuteCommandOptions contains the optional parameters for the DataFlowDebugSession.BeginExecuteCommand method.
+type DataFlowDebugSessionBeginExecuteCommandOptions struct {
 	// placeholder for future optional parameters
 }
 
 // DataFlowDebugSessionDeleteDataFlowDebugSessionOptions contains the optional parameters for the DataFlowDebugSession.DeleteDataFlowDebugSession method.
 type DataFlowDebugSessionDeleteDataFlowDebugSessionOptions struct {
-	// placeholder for future optional parameters
-}
-
-// DataFlowDebugSessionExecuteCommandOptions contains the optional parameters for the DataFlowDebugSession.ExecuteCommand method.
-type DataFlowDebugSessionExecuteCommandOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -8807,11 +8818,6 @@ type DataFlowDebugStatisticsRequest struct {
 	StreamName *string `json:"streamName,omitempty"`
 }
 
-// DataFlowDeleteDataFlowOptions contains the optional parameters for the DataFlow.DeleteDataFlow method.
-type DataFlowDeleteDataFlowOptions struct {
-	// placeholder for future optional parameters
-}
-
 // The folder that this data flow is in. If not specified, Data flow will appear at the root level.
 type DataFlowFolder struct {
 	// The name of the folder that this data flow is in.
@@ -8923,11 +8929,6 @@ func (d *DataFlowReference) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return nil
-}
-
-// DataFlowRenameDataFlowOptions contains the optional parameters for the DataFlow.RenameDataFlow method.
-type DataFlowRenameDataFlowOptions struct {
-	// placeholder for future optional parameters
 }
 
 // Data flow resource type.
@@ -9445,6 +9446,22 @@ func (d DatasetBZip2Compression) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
+// DatasetBeginCreateOrUpdateDatasetOptions contains the optional parameters for the Dataset.BeginCreateOrUpdateDataset method.
+type DatasetBeginCreateOrUpdateDatasetOptions struct {
+	// ETag of the dataset entity. Should only be specified for update, for which it should match existing entity or can be * for unconditional update.
+	IfMatch *string
+}
+
+// DatasetBeginDeleteDatasetOptions contains the optional parameters for the Dataset.BeginDeleteDataset method.
+type DatasetBeginDeleteDatasetOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DatasetBeginRenameDatasetOptions contains the optional parameters for the Dataset.BeginRenameDataset method.
+type DatasetBeginRenameDatasetOptions struct {
+	// placeholder for future optional parameters
+}
+
 // DatasetCompressionClassification provides polymorphic access to related types.
 // Call the interface's GetDatasetCompression() method to access the common type.
 // Use a type switch to determine the concrete type.  The possible types are:
@@ -9514,12 +9531,6 @@ func (d *DatasetCompression) unmarshalInternal(rawMsg map[string]*json.RawMessag
 	return nil
 }
 
-// DatasetCreateOrUpdateDatasetOptions contains the optional parameters for the Dataset.CreateOrUpdateDataset method.
-type DatasetCreateOrUpdateDatasetOptions struct {
-	// ETag of the dataset entity. Should only be specified for update, for which it should match existing entity or can be * for unconditional update.
-	IfMatch *string
-}
-
 // Columns that define the structure of the dataset.
 type DatasetDataElement struct {
 	// Name of the column. Type: string (or Expression with resultType string).
@@ -9572,11 +9583,6 @@ func (d *DatasetDeflateCompression) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return d.DatasetCompression.unmarshalInternal(rawMsg)
-}
-
-// DatasetDeleteDatasetOptions contains the optional parameters for the Dataset.DeleteDataset method.
-type DatasetDeleteDatasetOptions struct {
-	// placeholder for future optional parameters
 }
 
 // The folder that this Dataset is in. If not specified, Dataset will appear at the root level.
@@ -9755,11 +9761,6 @@ type DatasetReference struct {
 
 	// Dataset reference type.
 	Type *DatasetReferenceType `json:"type,omitempty"`
-}
-
-// DatasetRenameDatasetOptions contains the optional parameters for the Dataset.RenameDataset method.
-type DatasetRenameDatasetOptions struct {
-	// placeholder for future optional parameters
 }
 
 // Dataset resource type.
@@ -17839,10 +17840,20 @@ func (l *LinkedService) unmarshalInternal(rawMsg map[string]*json.RawMessage) er
 	return nil
 }
 
-// LinkedServiceCreateOrUpdateLinkedServiceOptions contains the optional parameters for the LinkedService.CreateOrUpdateLinkedService method.
-type LinkedServiceCreateOrUpdateLinkedServiceOptions struct {
+// LinkedServiceBeginCreateOrUpdateLinkedServiceOptions contains the optional parameters for the LinkedService.BeginCreateOrUpdateLinkedService method.
+type LinkedServiceBeginCreateOrUpdateLinkedServiceOptions struct {
 	// ETag of the linkedService entity. Should only be specified for update, for which it should match existing entity or can be * for unconditional update.
 	IfMatch *string
+}
+
+// LinkedServiceBeginDeleteLinkedServiceOptions contains the optional parameters for the LinkedService.BeginDeleteLinkedService method.
+type LinkedServiceBeginDeleteLinkedServiceOptions struct {
+	// placeholder for future optional parameters
+}
+
+// LinkedServiceBeginRenameLinkedServiceOptions contains the optional parameters for the LinkedService.BeginRenameLinkedService method.
+type LinkedServiceBeginRenameLinkedServiceOptions struct {
+	// placeholder for future optional parameters
 }
 
 // Linked service debug resource.
@@ -17850,11 +17861,6 @@ type LinkedServiceDebugResource struct {
 	SubResourceDebugResource
 	// Properties of linked service.
 	Properties LinkedServiceClassification `json:"properties,omitempty"`
-}
-
-// LinkedServiceDeleteLinkedServiceOptions contains the optional parameters for the LinkedService.DeleteLinkedService method.
-type LinkedServiceDeleteLinkedServiceOptions struct {
-	// placeholder for future optional parameters
 }
 
 // LinkedServiceGetLinkedServiceOptions contains the optional parameters for the LinkedService.GetLinkedService method.
@@ -17897,11 +17903,6 @@ type LinkedServiceReference struct {
 
 	// Linked service reference type.
 	Type *Type `json:"type,omitempty"`
-}
-
-// LinkedServiceRenameLinkedServiceOptions contains the optional parameters for the LinkedService.RenameLinkedService method.
-type LinkedServiceRenameLinkedServiceOptions struct {
-	// placeholder for future optional parameters
 }
 
 // Linked service resource type.
@@ -19883,6 +19884,22 @@ func (n *Notebook) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// NotebookBeginCreateOrUpdateNotebookOptions contains the optional parameters for the Notebook.BeginCreateOrUpdateNotebook method.
+type NotebookBeginCreateOrUpdateNotebookOptions struct {
+	// ETag of the Note book entity. Should only be specified for update, for which it should match existing entity or can be * for unconditional update.
+	IfMatch *string
+}
+
+// NotebookBeginDeleteNotebookOptions contains the optional parameters for the Notebook.BeginDeleteNotebook method.
+type NotebookBeginDeleteNotebookOptions struct {
+	// placeholder for future optional parameters
+}
+
+// NotebookBeginRenameNotebookOptions contains the optional parameters for the Notebook.BeginRenameNotebook method.
+type NotebookBeginRenameNotebookOptions struct {
+	// placeholder for future optional parameters
+}
+
 // Notebook cell.
 type NotebookCell struct {
 	// Contains additional key/value pairs not defined in the schema.
@@ -20001,17 +20018,6 @@ type NotebookCellOutputItem struct {
 
 	// For output_type=stream, the stream's text output, represented as a string or an array of strings.
 	Text interface{} `json:"text,omitempty"`
-}
-
-// NotebookCreateOrUpdateNotebookOptions contains the optional parameters for the Notebook.CreateOrUpdateNotebook method.
-type NotebookCreateOrUpdateNotebookOptions struct {
-	// ETag of the Note book entity. Should only be specified for update, for which it should match existing entity or can be * for unconditional update.
-	IfMatch *string
-}
-
-// NotebookDeleteNotebookOptions contains the optional parameters for the Notebook.DeleteNotebook method.
-type NotebookDeleteNotebookOptions struct {
-	// placeholder for future optional parameters
 }
 
 // NotebookGetNotebookOptions contains the optional parameters for the Notebook.GetNotebook method.
@@ -20245,11 +20251,6 @@ func (n *NotebookMetadata) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return nil
-}
-
-// NotebookRenameNotebookOptions contains the optional parameters for the Notebook.RenameNotebook method.
-type NotebookRenameNotebookOptions struct {
-	// placeholder for future optional parameters
 }
 
 // Notebook resource type.
@@ -22228,10 +22229,20 @@ type Pipeline struct {
 	Variables *map[string]VariableSpecification `json:"variables,omitempty"`
 }
 
-// PipelineCreateOrUpdatePipelineOptions contains the optional parameters for the Pipeline.CreateOrUpdatePipeline method.
-type PipelineCreateOrUpdatePipelineOptions struct {
+// PipelineBeginCreateOrUpdatePipelineOptions contains the optional parameters for the Pipeline.BeginCreateOrUpdatePipeline method.
+type PipelineBeginCreateOrUpdatePipelineOptions struct {
 	// ETag of the pipeline entity. Should only be specified for update, for which it should match existing entity or can be * for unconditional update.
 	IfMatch *string
+}
+
+// PipelineBeginDeletePipelineOptions contains the optional parameters for the Pipeline.BeginDeletePipeline method.
+type PipelineBeginDeletePipelineOptions struct {
+	// placeholder for future optional parameters
+}
+
+// PipelineBeginRenamePipelineOptions contains the optional parameters for the Pipeline.BeginRenamePipeline method.
+type PipelineBeginRenamePipelineOptions struct {
+	// placeholder for future optional parameters
 }
 
 // PipelineCreatePipelineRunOptions contains the optional parameters for the Pipeline.CreatePipelineRun method.
@@ -22244,11 +22255,6 @@ type PipelineCreatePipelineRunOptions struct {
 	ReferencePipelineRunId *string
 	// In recovery mode, the rerun will start from this activity. If not specified, all activities will run.
 	StartActivityName *string
-}
-
-// PipelineDeletePipelineOptions contains the optional parameters for the Pipeline.DeletePipeline method.
-type PipelineDeletePipelineOptions struct {
-	// placeholder for future optional parameters
 }
 
 // The folder that this Pipeline is in. If not specified, Pipeline will appear at the root level.
@@ -22297,11 +22303,6 @@ type PipelineReference struct {
 
 	// Pipeline reference type.
 	Type *PipelineReferenceType `json:"type,omitempty"`
-}
-
-// PipelineRenamePipelineOptions contains the optional parameters for the Pipeline.RenamePipeline method.
-type PipelineRenamePipelineOptions struct {
-	// placeholder for future optional parameters
 }
 
 // Pipeline resource type.
@@ -25280,6 +25281,11 @@ func (s *SQLScript) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// SQLScriptBeginRenameSQLScriptOptions contains the optional parameters for the SQLScript.BeginRenameSQLScript method.
+type SQLScriptBeginRenameSQLScriptOptions struct {
+	// placeholder for future optional parameters
+}
+
 // The content of the SQL script.
 type SQLScriptContent struct {
 	// Contains additional key/value pairs not defined in the schema.
@@ -25433,11 +25439,6 @@ func (s *SQLScriptMetadata) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return nil
-}
-
-// SQLScriptRenameSQLScriptOptions contains the optional parameters for the SQLScript.RenameSQLScript method.
-type SQLScriptRenameSQLScriptOptions struct {
-	// placeholder for future optional parameters
 }
 
 // Sql Script resource type.
@@ -29492,6 +29493,21 @@ func (s *SparkJobDefinition) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// SparkJobDefinitionBeginDebugSparkJobDefinitionOptions contains the optional parameters for the SparkJobDefinition.BeginDebugSparkJobDefinition method.
+type SparkJobDefinitionBeginDebugSparkJobDefinitionOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SparkJobDefinitionBeginExecuteSparkJobDefinitionOptions contains the optional parameters for the SparkJobDefinition.BeginExecuteSparkJobDefinition method.
+type SparkJobDefinitionBeginExecuteSparkJobDefinitionOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SparkJobDefinitionBeginRenameSparkJobDefinitionOptions contains the optional parameters for the SparkJobDefinition.BeginRenameSparkJobDefinition method.
+type SparkJobDefinitionBeginRenameSparkJobDefinitionOptions struct {
+	// placeholder for future optional parameters
+}
+
 // SparkJobDefinitionCreateOrUpdateSparkJobDefinitionOptions contains the optional parameters for the SparkJobDefinition.CreateOrUpdateSparkJobDefinition
 // method.
 type SparkJobDefinitionCreateOrUpdateSparkJobDefinitionOptions struct {
@@ -29500,18 +29516,8 @@ type SparkJobDefinitionCreateOrUpdateSparkJobDefinitionOptions struct {
 	IfMatch *string
 }
 
-// SparkJobDefinitionDebugSparkJobDefinitionOptions contains the optional parameters for the SparkJobDefinition.DebugSparkJobDefinition method.
-type SparkJobDefinitionDebugSparkJobDefinitionOptions struct {
-	// placeholder for future optional parameters
-}
-
 // SparkJobDefinitionDeleteSparkJobDefinitionOptions contains the optional parameters for the SparkJobDefinition.DeleteSparkJobDefinition method.
 type SparkJobDefinitionDeleteSparkJobDefinitionOptions struct {
-	// placeholder for future optional parameters
-}
-
-// SparkJobDefinitionExecuteSparkJobDefinitionOptions contains the optional parameters for the SparkJobDefinition.ExecuteSparkJobDefinition method.
-type SparkJobDefinitionExecuteSparkJobDefinitionOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -29525,11 +29531,6 @@ type SparkJobDefinitionGetSparkJobDefinitionOptions struct {
 // SparkJobDefinitionGetSparkJobDefinitionsByWorkspaceOptions contains the optional parameters for the SparkJobDefinition.GetSparkJobDefinitionsByWorkspace
 // method.
 type SparkJobDefinitionGetSparkJobDefinitionsByWorkspaceOptions struct {
-	// placeholder for future optional parameters
-}
-
-// SparkJobDefinitionRenameSparkJobDefinitionOptions contains the optional parameters for the SparkJobDefinition.RenameSparkJobDefinition method.
-type SparkJobDefinitionRenameSparkJobDefinitionOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -31944,14 +31945,34 @@ func (t *Trigger) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
 	return nil
 }
 
-// TriggerCreateOrUpdateTriggerOptions contains the optional parameters for the Trigger.CreateOrUpdateTrigger method.
-type TriggerCreateOrUpdateTriggerOptions struct {
+// TriggerBeginCreateOrUpdateTriggerOptions contains the optional parameters for the Trigger.BeginCreateOrUpdateTrigger method.
+type TriggerBeginCreateOrUpdateTriggerOptions struct {
 	// ETag of the trigger entity. Should only be specified for update, for which it should match existing entity or can be * for unconditional update.
 	IfMatch *string
 }
 
-// TriggerDeleteTriggerOptions contains the optional parameters for the Trigger.DeleteTrigger method.
-type TriggerDeleteTriggerOptions struct {
+// TriggerBeginDeleteTriggerOptions contains the optional parameters for the Trigger.BeginDeleteTrigger method.
+type TriggerBeginDeleteTriggerOptions struct {
+	// placeholder for future optional parameters
+}
+
+// TriggerBeginStartTriggerOptions contains the optional parameters for the Trigger.BeginStartTrigger method.
+type TriggerBeginStartTriggerOptions struct {
+	// placeholder for future optional parameters
+}
+
+// TriggerBeginStopTriggerOptions contains the optional parameters for the Trigger.BeginStopTrigger method.
+type TriggerBeginStopTriggerOptions struct {
+	// placeholder for future optional parameters
+}
+
+// TriggerBeginSubscribeTriggerToEventsOptions contains the optional parameters for the Trigger.BeginSubscribeTriggerToEvents method.
+type TriggerBeginSubscribeTriggerToEventsOptions struct {
+	// placeholder for future optional parameters
+}
+
+// TriggerBeginUnsubscribeTriggerFromEventsOptions contains the optional parameters for the Trigger.BeginUnsubscribeTriggerFromEvents method.
+type TriggerBeginUnsubscribeTriggerFromEventsOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -32274,21 +32295,6 @@ type TriggerRunsQueryResponseResponse struct {
 	TriggerRunsQueryResponse *TriggerRunsQueryResponse
 }
 
-// TriggerStartTriggerOptions contains the optional parameters for the Trigger.StartTrigger method.
-type TriggerStartTriggerOptions struct {
-	// placeholder for future optional parameters
-}
-
-// TriggerStopTriggerOptions contains the optional parameters for the Trigger.StopTrigger method.
-type TriggerStopTriggerOptions struct {
-	// placeholder for future optional parameters
-}
-
-// TriggerSubscribeTriggerToEventsOptions contains the optional parameters for the Trigger.SubscribeTriggerToEvents method.
-type TriggerSubscribeTriggerToEventsOptions struct {
-	// placeholder for future optional parameters
-}
-
 // Defines the response of a trigger subscription operation.
 type TriggerSubscriptionOperationStatus struct {
 	// READ-ONLY; Event Subscription Status.
@@ -32318,11 +32324,6 @@ type TriggerSubscriptionOperationStatusResponse struct {
 
 	// Defines the response of a trigger subscription operation.
 	TriggerSubscriptionOperationStatus *TriggerSubscriptionOperationStatus
-}
-
-// TriggerUnsubscribeTriggerFromEventsOptions contains the optional parameters for the Trigger.UnsubscribeTriggerFromEvents method.
-type TriggerUnsubscribeTriggerFromEventsOptions struct {
-	// placeholder for future optional parameters
 }
 
 // Trigger that schedules pipeline runs for all fixed time interval windows from a start time without gaps and also supports backfill scenarios (when start

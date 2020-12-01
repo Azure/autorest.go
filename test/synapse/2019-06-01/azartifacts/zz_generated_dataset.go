@@ -25,7 +25,7 @@ func (client datasetClient) Pipeline() azcore.Pipeline {
 }
 
 // CreateOrUpdateDataset - Creates or updates a dataset.
-func (client datasetClient) CreateOrUpdateDataset(ctx context.Context, datasetName string, dataset DatasetResource, options *DatasetCreateOrUpdateDatasetOptions) (*azcore.Response, error) {
+func (client datasetClient) createOrUpdateDataset(ctx context.Context, datasetName string, dataset DatasetResource, options *DatasetBeginCreateOrUpdateDatasetOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateDatasetCreateRequest(ctx, datasetName, dataset, options)
 	if err != nil {
 		return nil, err
@@ -41,7 +41,7 @@ func (client datasetClient) CreateOrUpdateDataset(ctx context.Context, datasetNa
 }
 
 // createOrUpdateDatasetCreateRequest creates the CreateOrUpdateDataset request.
-func (client datasetClient) createOrUpdateDatasetCreateRequest(ctx context.Context, datasetName string, dataset DatasetResource, options *DatasetCreateOrUpdateDatasetOptions) (*azcore.Request, error) {
+func (client datasetClient) createOrUpdateDatasetCreateRequest(ctx context.Context, datasetName string, dataset DatasetResource, options *DatasetBeginCreateOrUpdateDatasetOptions) (*azcore.Request, error) {
 	urlPath := "/datasets/{datasetName}"
 	urlPath = strings.ReplaceAll(urlPath, "{datasetName}", url.PathEscape(datasetName))
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -76,7 +76,7 @@ func (client datasetClient) createOrUpdateDatasetHandleError(resp *azcore.Respon
 }
 
 // DeleteDataset - Deletes a dataset.
-func (client datasetClient) DeleteDataset(ctx context.Context, datasetName string, options *DatasetDeleteDatasetOptions) (*azcore.Response, error) {
+func (client datasetClient) deleteDataset(ctx context.Context, datasetName string, options *DatasetBeginDeleteDatasetOptions) (*azcore.Response, error) {
 	req, err := client.deleteDatasetCreateRequest(ctx, datasetName, options)
 	if err != nil {
 		return nil, err
@@ -92,7 +92,7 @@ func (client datasetClient) DeleteDataset(ctx context.Context, datasetName strin
 }
 
 // deleteDatasetCreateRequest creates the DeleteDataset request.
-func (client datasetClient) deleteDatasetCreateRequest(ctx context.Context, datasetName string, options *DatasetDeleteDatasetOptions) (*azcore.Request, error) {
+func (client datasetClient) deleteDatasetCreateRequest(ctx context.Context, datasetName string, options *DatasetBeginDeleteDatasetOptions) (*azcore.Request, error) {
 	urlPath := "/datasets/{datasetName}"
 	urlPath = strings.ReplaceAll(urlPath, "{datasetName}", url.PathEscape(datasetName))
 	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -219,7 +219,7 @@ func (client datasetClient) getDatasetsByWorkspaceHandleError(resp *azcore.Respo
 }
 
 // RenameDataset - Renames a dataset.
-func (client datasetClient) RenameDataset(ctx context.Context, datasetName string, request ArtifactRenameRequest, options *DatasetRenameDatasetOptions) (*azcore.Response, error) {
+func (client datasetClient) renameDataset(ctx context.Context, datasetName string, request ArtifactRenameRequest, options *DatasetBeginRenameDatasetOptions) (*azcore.Response, error) {
 	req, err := client.renameDatasetCreateRequest(ctx, datasetName, request, options)
 	if err != nil {
 		return nil, err
@@ -235,7 +235,7 @@ func (client datasetClient) RenameDataset(ctx context.Context, datasetName strin
 }
 
 // renameDatasetCreateRequest creates the RenameDataset request.
-func (client datasetClient) renameDatasetCreateRequest(ctx context.Context, datasetName string, request ArtifactRenameRequest, options *DatasetRenameDatasetOptions) (*azcore.Request, error) {
+func (client datasetClient) renameDatasetCreateRequest(ctx context.Context, datasetName string, request ArtifactRenameRequest, options *DatasetBeginRenameDatasetOptions) (*azcore.Request, error) {
 	urlPath := "/datasets/{datasetName}/rename"
 	urlPath = strings.ReplaceAll(urlPath, "{datasetName}", url.PathEscape(datasetName))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))

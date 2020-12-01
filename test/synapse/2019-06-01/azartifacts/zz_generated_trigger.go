@@ -25,7 +25,7 @@ func (client triggerClient) Pipeline() azcore.Pipeline {
 }
 
 // CreateOrUpdateTrigger - Creates or updates a trigger.
-func (client triggerClient) CreateOrUpdateTrigger(ctx context.Context, triggerName string, trigger TriggerResource, options *TriggerCreateOrUpdateTriggerOptions) (*azcore.Response, error) {
+func (client triggerClient) createOrUpdateTrigger(ctx context.Context, triggerName string, trigger TriggerResource, options *TriggerBeginCreateOrUpdateTriggerOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateTriggerCreateRequest(ctx, triggerName, trigger, options)
 	if err != nil {
 		return nil, err
@@ -41,7 +41,7 @@ func (client triggerClient) CreateOrUpdateTrigger(ctx context.Context, triggerNa
 }
 
 // createOrUpdateTriggerCreateRequest creates the CreateOrUpdateTrigger request.
-func (client triggerClient) createOrUpdateTriggerCreateRequest(ctx context.Context, triggerName string, trigger TriggerResource, options *TriggerCreateOrUpdateTriggerOptions) (*azcore.Request, error) {
+func (client triggerClient) createOrUpdateTriggerCreateRequest(ctx context.Context, triggerName string, trigger TriggerResource, options *TriggerBeginCreateOrUpdateTriggerOptions) (*azcore.Request, error) {
 	urlPath := "/triggers/{triggerName}"
 	urlPath = strings.ReplaceAll(urlPath, "{triggerName}", url.PathEscape(triggerName))
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -76,7 +76,7 @@ func (client triggerClient) createOrUpdateTriggerHandleError(resp *azcore.Respon
 }
 
 // DeleteTrigger - Deletes a trigger.
-func (client triggerClient) DeleteTrigger(ctx context.Context, triggerName string, options *TriggerDeleteTriggerOptions) (*azcore.Response, error) {
+func (client triggerClient) deleteTrigger(ctx context.Context, triggerName string, options *TriggerBeginDeleteTriggerOptions) (*azcore.Response, error) {
 	req, err := client.deleteTriggerCreateRequest(ctx, triggerName, options)
 	if err != nil {
 		return nil, err
@@ -92,7 +92,7 @@ func (client triggerClient) DeleteTrigger(ctx context.Context, triggerName strin
 }
 
 // deleteTriggerCreateRequest creates the DeleteTrigger request.
-func (client triggerClient) deleteTriggerCreateRequest(ctx context.Context, triggerName string, options *TriggerDeleteTriggerOptions) (*azcore.Request, error) {
+func (client triggerClient) deleteTriggerCreateRequest(ctx context.Context, triggerName string, options *TriggerBeginDeleteTriggerOptions) (*azcore.Request, error) {
 	urlPath := "/triggers/{triggerName}"
 	urlPath = strings.ReplaceAll(urlPath, "{triggerName}", url.PathEscape(triggerName))
 	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -271,7 +271,7 @@ func (client triggerClient) getTriggersByWorkspaceHandleError(resp *azcore.Respo
 }
 
 // StartTrigger - Starts a trigger.
-func (client triggerClient) StartTrigger(ctx context.Context, triggerName string, options *TriggerStartTriggerOptions) (*azcore.Response, error) {
+func (client triggerClient) startTrigger(ctx context.Context, triggerName string, options *TriggerBeginStartTriggerOptions) (*azcore.Response, error) {
 	req, err := client.startTriggerCreateRequest(ctx, triggerName, options)
 	if err != nil {
 		return nil, err
@@ -287,7 +287,7 @@ func (client triggerClient) StartTrigger(ctx context.Context, triggerName string
 }
 
 // startTriggerCreateRequest creates the StartTrigger request.
-func (client triggerClient) startTriggerCreateRequest(ctx context.Context, triggerName string, options *TriggerStartTriggerOptions) (*azcore.Request, error) {
+func (client triggerClient) startTriggerCreateRequest(ctx context.Context, triggerName string, options *TriggerBeginStartTriggerOptions) (*azcore.Request, error) {
 	urlPath := "/triggers/{triggerName}/start"
 	urlPath = strings.ReplaceAll(urlPath, "{triggerName}", url.PathEscape(triggerName))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -312,7 +312,7 @@ func (client triggerClient) startTriggerHandleError(resp *azcore.Response) error
 }
 
 // StopTrigger - Stops a trigger.
-func (client triggerClient) StopTrigger(ctx context.Context, triggerName string, options *TriggerStopTriggerOptions) (*azcore.Response, error) {
+func (client triggerClient) stopTrigger(ctx context.Context, triggerName string, options *TriggerBeginStopTriggerOptions) (*azcore.Response, error) {
 	req, err := client.stopTriggerCreateRequest(ctx, triggerName, options)
 	if err != nil {
 		return nil, err
@@ -328,7 +328,7 @@ func (client triggerClient) StopTrigger(ctx context.Context, triggerName string,
 }
 
 // stopTriggerCreateRequest creates the StopTrigger request.
-func (client triggerClient) stopTriggerCreateRequest(ctx context.Context, triggerName string, options *TriggerStopTriggerOptions) (*azcore.Request, error) {
+func (client triggerClient) stopTriggerCreateRequest(ctx context.Context, triggerName string, options *TriggerBeginStopTriggerOptions) (*azcore.Request, error) {
 	urlPath := "/triggers/{triggerName}/stop"
 	urlPath = strings.ReplaceAll(urlPath, "{triggerName}", url.PathEscape(triggerName))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -353,7 +353,7 @@ func (client triggerClient) stopTriggerHandleError(resp *azcore.Response) error 
 }
 
 // SubscribeTriggerToEvents - Subscribe event trigger to events.
-func (client triggerClient) SubscribeTriggerToEvents(ctx context.Context, triggerName string, options *TriggerSubscribeTriggerToEventsOptions) (*azcore.Response, error) {
+func (client triggerClient) subscribeTriggerToEvents(ctx context.Context, triggerName string, options *TriggerBeginSubscribeTriggerToEventsOptions) (*azcore.Response, error) {
 	req, err := client.subscribeTriggerToEventsCreateRequest(ctx, triggerName, options)
 	if err != nil {
 		return nil, err
@@ -369,7 +369,7 @@ func (client triggerClient) SubscribeTriggerToEvents(ctx context.Context, trigge
 }
 
 // subscribeTriggerToEventsCreateRequest creates the SubscribeTriggerToEvents request.
-func (client triggerClient) subscribeTriggerToEventsCreateRequest(ctx context.Context, triggerName string, options *TriggerSubscribeTriggerToEventsOptions) (*azcore.Request, error) {
+func (client triggerClient) subscribeTriggerToEventsCreateRequest(ctx context.Context, triggerName string, options *TriggerBeginSubscribeTriggerToEventsOptions) (*azcore.Request, error) {
 	urlPath := "/triggers/{triggerName}/subscribeToEvents"
 	urlPath = strings.ReplaceAll(urlPath, "{triggerName}", url.PathEscape(triggerName))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -401,7 +401,7 @@ func (client triggerClient) subscribeTriggerToEventsHandleError(resp *azcore.Res
 }
 
 // UnsubscribeTriggerFromEvents - Unsubscribe event trigger from events.
-func (client triggerClient) UnsubscribeTriggerFromEvents(ctx context.Context, triggerName string, options *TriggerUnsubscribeTriggerFromEventsOptions) (*azcore.Response, error) {
+func (client triggerClient) unsubscribeTriggerFromEvents(ctx context.Context, triggerName string, options *TriggerBeginUnsubscribeTriggerFromEventsOptions) (*azcore.Response, error) {
 	req, err := client.unsubscribeTriggerFromEventsCreateRequest(ctx, triggerName, options)
 	if err != nil {
 		return nil, err
@@ -417,7 +417,7 @@ func (client triggerClient) UnsubscribeTriggerFromEvents(ctx context.Context, tr
 }
 
 // unsubscribeTriggerFromEventsCreateRequest creates the UnsubscribeTriggerFromEvents request.
-func (client triggerClient) unsubscribeTriggerFromEventsCreateRequest(ctx context.Context, triggerName string, options *TriggerUnsubscribeTriggerFromEventsOptions) (*azcore.Request, error) {
+func (client triggerClient) unsubscribeTriggerFromEventsCreateRequest(ctx context.Context, triggerName string, options *TriggerBeginUnsubscribeTriggerFromEventsOptions) (*azcore.Request, error) {
 	urlPath := "/triggers/{triggerName}/unsubscribeFromEvents"
 	urlPath = strings.ReplaceAll(urlPath, "{triggerName}", url.PathEscape(triggerName))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))

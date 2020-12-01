@@ -25,7 +25,7 @@ func (client notebookClient) Pipeline() azcore.Pipeline {
 }
 
 // CreateOrUpdateNotebook - Creates or updates a Note Book.
-func (client notebookClient) CreateOrUpdateNotebook(ctx context.Context, notebookName string, notebook NotebookResource, options *NotebookCreateOrUpdateNotebookOptions) (*azcore.Response, error) {
+func (client notebookClient) createOrUpdateNotebook(ctx context.Context, notebookName string, notebook NotebookResource, options *NotebookBeginCreateOrUpdateNotebookOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateNotebookCreateRequest(ctx, notebookName, notebook, options)
 	if err != nil {
 		return nil, err
@@ -41,7 +41,7 @@ func (client notebookClient) CreateOrUpdateNotebook(ctx context.Context, noteboo
 }
 
 // createOrUpdateNotebookCreateRequest creates the CreateOrUpdateNotebook request.
-func (client notebookClient) createOrUpdateNotebookCreateRequest(ctx context.Context, notebookName string, notebook NotebookResource, options *NotebookCreateOrUpdateNotebookOptions) (*azcore.Request, error) {
+func (client notebookClient) createOrUpdateNotebookCreateRequest(ctx context.Context, notebookName string, notebook NotebookResource, options *NotebookBeginCreateOrUpdateNotebookOptions) (*azcore.Request, error) {
 	urlPath := "/notebooks/{notebookName}"
 	urlPath = strings.ReplaceAll(urlPath, "{notebookName}", url.PathEscape(notebookName))
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -76,7 +76,7 @@ func (client notebookClient) createOrUpdateNotebookHandleError(resp *azcore.Resp
 }
 
 // DeleteNotebook - Deletes a Note book.
-func (client notebookClient) DeleteNotebook(ctx context.Context, notebookName string, options *NotebookDeleteNotebookOptions) (*azcore.Response, error) {
+func (client notebookClient) deleteNotebook(ctx context.Context, notebookName string, options *NotebookBeginDeleteNotebookOptions) (*azcore.Response, error) {
 	req, err := client.deleteNotebookCreateRequest(ctx, notebookName, options)
 	if err != nil {
 		return nil, err
@@ -92,7 +92,7 @@ func (client notebookClient) DeleteNotebook(ctx context.Context, notebookName st
 }
 
 // deleteNotebookCreateRequest creates the DeleteNotebook request.
-func (client notebookClient) deleteNotebookCreateRequest(ctx context.Context, notebookName string, options *NotebookDeleteNotebookOptions) (*azcore.Request, error) {
+func (client notebookClient) deleteNotebookCreateRequest(ctx context.Context, notebookName string, options *NotebookBeginDeleteNotebookOptions) (*azcore.Request, error) {
 	urlPath := "/notebooks/{notebookName}"
 	urlPath = strings.ReplaceAll(urlPath, "{notebookName}", url.PathEscape(notebookName))
 	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -266,7 +266,7 @@ func (client notebookClient) getNotebooksByWorkspaceHandleError(resp *azcore.Res
 }
 
 // RenameNotebook - Renames a notebook.
-func (client notebookClient) RenameNotebook(ctx context.Context, notebookName string, request ArtifactRenameRequest, options *NotebookRenameNotebookOptions) (*azcore.Response, error) {
+func (client notebookClient) renameNotebook(ctx context.Context, notebookName string, request ArtifactRenameRequest, options *NotebookBeginRenameNotebookOptions) (*azcore.Response, error) {
 	req, err := client.renameNotebookCreateRequest(ctx, notebookName, request, options)
 	if err != nil {
 		return nil, err
@@ -282,7 +282,7 @@ func (client notebookClient) RenameNotebook(ctx context.Context, notebookName st
 }
 
 // renameNotebookCreateRequest creates the RenameNotebook request.
-func (client notebookClient) renameNotebookCreateRequest(ctx context.Context, notebookName string, request ArtifactRenameRequest, options *NotebookRenameNotebookOptions) (*azcore.Request, error) {
+func (client notebookClient) renameNotebookCreateRequest(ctx context.Context, notebookName string, request ArtifactRenameRequest, options *NotebookBeginRenameNotebookOptions) (*azcore.Request, error) {
 	urlPath := "/notebooks/{notebookName}/rename"
 	urlPath = strings.ReplaceAll(urlPath, "{notebookName}", url.PathEscape(notebookName))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))

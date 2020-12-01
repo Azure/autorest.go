@@ -334,20 +334,24 @@ function processOperationRequests(session: Session<CodeModel>) {
           // at least one method contains a parameterized host param, bye-bye simple case
           session.model.language.go!.complexHostParams = true;
         }
+        let opName = op.language.go!.name;
+        if (isLROOperation(op)) {
+          opName = 'Begin' + opName;
+        }
         // check for grouping
         if (param.extensions?.['x-ms-parameter-grouping']) {
           // this param belongs to a param group, init name with default
-          let paramGroupName = `${group.language.go!.name}${op.language.go!.name}Parameters`;
+          let paramGroupName = `${group.language.go!.name}${opName}Parameters`;
           if (param.extensions['x-ms-parameter-grouping'].name) {
             // use the specified name
             paramGroupName = pascalCase(param.extensions['x-ms-parameter-grouping'].name);
           } else if (param.extensions['x-ms-parameter-grouping'].postfix) {
             // use the suffix
-            paramGroupName = `${group.language.go!.name}${op.language.go!.name}${pascalCase(param.extensions['x-ms-parameter-grouping'].postfix)}`;
+            paramGroupName = `${group.language.go!.name}${opName}${pascalCase(param.extensions['x-ms-parameter-grouping'].postfix)}`;
           }
           // create group entry and add the param to it
           if (!paramGroups.has(paramGroupName)) {
-            const desc = `${paramGroupName} contains a group of parameters for the ${group.language.go!.name}.${op.language.go!.name} method.`;
+            const desc = `${paramGroupName} contains a group of parameters for the ${group.language.go!.name}.${opName} method.`;
             paramGroups.set(paramGroupName, createGroupProperty(paramGroupName, desc));
           }
           // associate the group with the param
@@ -373,9 +377,9 @@ function processOperationRequests(session: Session<CodeModel>) {
           continue;
         }
         // create a type named <OperationGroup><Operation>Options
-        const paramGroupName = `${group.language.go!.name}${op.language.go!.name}Options`;
+        const paramGroupName = `${group.language.go!.name}${opName}Options`;
         if (!paramGroups.has(paramGroupName)) {
-          const desc = `${paramGroupName} contains the optional parameters for the ${group.language.go!.name}.${op.language.go!.name} method.`;
+          const desc = `${paramGroupName} contains the optional parameters for the ${group.language.go!.name}.${opName} method.`;
           const gp = createGroupProperty(paramGroupName, desc);
           gp.required = false;
           paramGroups.set(paramGroupName, gp);

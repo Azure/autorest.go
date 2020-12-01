@@ -39,6 +39,15 @@ type OperationResult struct {
 	Status *OperationResultStatus `json:"status,omitempty"`
 }
 
+// PagingBeginGetMultiplePagesLroOptions contains the optional parameters for the Paging.BeginGetMultiplePagesLro method.
+type PagingBeginGetMultiplePagesLroOptions struct {
+	ClientRequestId *string
+	// Sets the maximum number of items to return in the response.
+	Maxresults *int32
+	// Sets the maximum time that the server can spend processing the request, in seconds. The default is 30 seconds.
+	Timeout *int32
+}
+
 // PagingGetMultiplePagesFailureOptions contains the optional parameters for the Paging.GetMultiplePagesFailure method.
 type PagingGetMultiplePagesFailureOptions struct {
 	// placeholder for future optional parameters
@@ -58,15 +67,6 @@ type PagingGetMultiplePagesFragmentNextLinkOptions struct {
 // method.
 type PagingGetMultiplePagesFragmentWithGroupingNextLinkOptions struct {
 	// placeholder for future optional parameters
-}
-
-// PagingGetMultiplePagesLroOptions contains the optional parameters for the Paging.GetMultiplePagesLro method.
-type PagingGetMultiplePagesLroOptions struct {
-	ClientRequestId *string
-	// Sets the maximum number of items to return in the response.
-	Maxresults *int32
-	// Sets the maximum time that the server can spend processing the request, in seconds. The default is 30 seconds.
-	Timeout *int32
 }
 
 // PagingGetMultiplePagesOptions contains the optional parameters for the Paging.GetMultiplePages method.

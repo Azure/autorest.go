@@ -794,7 +794,7 @@ func TestLROBeginPut201CreatingFailed200(t *testing.T) {
 
 func TestLROBeginPut201CreatingSucceeded200(t *testing.T) {
 	op := newLROSClient()
-	resp, err := op.BeginPut201CreatingSucceeded200(context.Background(), &LrOSPut201CreatingSucceeded200Options{Product: &Product{}})
+	resp, err := op.BeginPut201CreatingSucceeded200(context.Background(), &LrOSBeginPut201CreatingSucceeded200Options{Product: &Product{}})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -825,7 +825,7 @@ func TestLROBeginPut201CreatingSucceeded200(t *testing.T) {
 
 func TestLROBeginPut202Retry200(t *testing.T) {
 	op := newLROSClient()
-	resp, err := op.BeginPut202Retry200(context.Background(), &LrOSPut202Retry200Options{Product: &Product{}})
+	resp, err := op.BeginPut202Retry200(context.Background(), &LrOSBeginPut202Retry200Options{Product: &Product{}})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -853,7 +853,7 @@ func TestLROBeginPut202Retry200(t *testing.T) {
 
 func TestLROBeginPutAsyncNoHeaderInRetry(t *testing.T) {
 	op := newLROSClient()
-	resp, err := op.BeginPutAsyncNoHeaderInRetry(context.Background(), &LrOSPutAsyncNoHeaderInRetryOptions{Product: &Product{}})
+	resp, err := op.BeginPutAsyncNoHeaderInRetry(context.Background(), &LrOSBeginPutAsyncNoHeaderInRetryOptions{Product: &Product{}})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -884,7 +884,7 @@ func TestLROBeginPutAsyncNoHeaderInRetry(t *testing.T) {
 
 func TestLROBeginPutAsyncNoRetrySucceeded(t *testing.T) {
 	op := newLROSClient()
-	resp, err := op.BeginPutAsyncNoRetrySucceeded(context.Background(), &LrOSPutAsyncNoRetrySucceededOptions{Product: &Product{}})
+	resp, err := op.BeginPutAsyncNoRetrySucceeded(context.Background(), &LrOSBeginPutAsyncNoRetrySucceededOptions{Product: &Product{}})
 	if err != nil {
 		t.Fatal(err)
 	}
