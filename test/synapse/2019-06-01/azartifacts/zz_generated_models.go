@@ -6074,7 +6074,7 @@ type BlobEventsTriggerTypeProperties struct {
 	BlobPathEndsWith *string `json:"blobPathEndsWith,omitempty"`
 
 	// The type of events that cause this trigger to fire.
-	Events *[]BlobEventTypes `json:"events,omitempty"`
+	Events *[]BlobEventType `json:"events,omitempty"`
 
 	// If set to true, blobs with zero bytes will be ignored.
 	IgnoreEmptyBlobs *bool `json:"ignoreEmptyBlobs,omitempty"`
@@ -12249,7 +12249,8 @@ type ExecuteSsisPackageActivityTypeProperties struct {
 // - *AzureMLUpdateResourceActivity, *CopyActivity, *CustomActivity, *DataLakeAnalyticsUsqlActivity, *DatabricksNotebookActivity,
 // - *DatabricksSparkJarActivity, *DatabricksSparkPythonActivity, *DeleteActivity, *ExecuteDataFlowActivity, *ExecuteSsisPackageActivity,
 // - *GetMetadataActivity, *HDInsightHiveActivity, *HDInsightMapReduceActivity, *HDInsightPigActivity, *HDInsightSparkActivity,
-// - *HDInsightStreamingActivity, *LookupActivity, *SqlServerStoredProcedureActivity, *WebActivity
+// - *HDInsightStreamingActivity, *LookupActivity, *SynapseSparkJobDefinitionActivity, *SqlServerStoredProcedureActivity,
+// - *SynapseNotebookActivity, *WebActivity
 type ExecutionActivityClassification interface {
 	ActivityClassification
 	// GetExecutionActivity() returns the ExecutionActivity content of the underlying type.
@@ -31202,14 +31203,14 @@ type SybaseTableDatasetTypeProperties struct {
 
 // Execute Synapse notebook activity.
 type SynapseNotebookActivity struct {
-	Activity
+	ExecutionActivity
 	// Execute Synapse notebook activity properties.
 	TypeProperties *SynapseNotebookActivityTypeProperties `json:"typeProperties,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type SynapseNotebookActivity.
 func (s SynapseNotebookActivity) MarshalJSON() ([]byte, error) {
-	objectMap := s.Activity.marshalInternal("SynapseNotebook")
+	objectMap := s.ExecutionActivity.marshalInternal("SynapseNotebook")
 	if s.TypeProperties != nil {
 		objectMap["typeProperties"] = s.TypeProperties
 	}
@@ -31235,7 +31236,7 @@ func (s *SynapseNotebookActivity) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.Activity.unmarshalInternal(rawMsg)
+	return s.ExecutionActivity.unmarshalInternal(rawMsg)
 }
 
 // Execute Synapse notebook activity properties.
@@ -31264,14 +31265,14 @@ type SynapseSparkJobActivityTypeProperties struct {
 
 // Execute spark job activity.
 type SynapseSparkJobDefinitionActivity struct {
-	Activity
+	ExecutionActivity
 	// Execute spark job activity properties.
 	TypeProperties *SynapseSparkJobActivityTypeProperties `json:"typeProperties,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type SynapseSparkJobDefinitionActivity.
 func (s SynapseSparkJobDefinitionActivity) MarshalJSON() ([]byte, error) {
-	objectMap := s.Activity.marshalInternal("SparkJob")
+	objectMap := s.ExecutionActivity.marshalInternal("SparkJob")
 	if s.TypeProperties != nil {
 		objectMap["typeProperties"] = s.TypeProperties
 	}
@@ -31297,7 +31298,7 @@ func (s *SynapseSparkJobDefinitionActivity) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.Activity.unmarshalInternal(rawMsg)
+	return s.ExecutionActivity.unmarshalInternal(rawMsg)
 }
 
 // Synapse spark job reference type.

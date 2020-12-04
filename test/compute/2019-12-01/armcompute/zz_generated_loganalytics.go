@@ -109,9 +109,11 @@ func (client LogAnalyticsClient) exportRequestRateByIntervalCreateRequest(ctx co
 
 // exportRequestRateByIntervalHandleResponse handles the ExportRequestRateByInterval response.
 func (client LogAnalyticsClient) exportRequestRateByIntervalHandleResponse(resp *azcore.Response) (LogAnalyticsOperationResultResponse, error) {
-	result := LogAnalyticsOperationResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.LogAnalyticsOperationResult)
-	return result, err
+	var val *LogAnalyticsOperationResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return LogAnalyticsOperationResultResponse{}, err
+	}
+	return LogAnalyticsOperationResultResponse{RawResponse: resp.Response, LogAnalyticsOperationResult: val}, nil
 }
 
 // exportRequestRateByIntervalHandleError handles the ExportRequestRateByInterval error response.
@@ -198,9 +200,11 @@ func (client LogAnalyticsClient) exportThrottledRequestsCreateRequest(ctx contex
 
 // exportThrottledRequestsHandleResponse handles the ExportThrottledRequests response.
 func (client LogAnalyticsClient) exportThrottledRequestsHandleResponse(resp *azcore.Response) (LogAnalyticsOperationResultResponse, error) {
-	result := LogAnalyticsOperationResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.LogAnalyticsOperationResult)
-	return result, err
+	var val *LogAnalyticsOperationResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return LogAnalyticsOperationResultResponse{}, err
+	}
+	return LogAnalyticsOperationResultResponse{RawResponse: resp.Response, LogAnalyticsOperationResult: val}, nil
 }
 
 // exportThrottledRequestsHandleError handles the ExportThrottledRequests error response.

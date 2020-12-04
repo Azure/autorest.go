@@ -46,11 +46,7 @@ func (client OperationsClient) List(ctx context.Context, options *OperationsList
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ComputeOperationListResultResponse{}, client.listHandleError(resp)
 	}
-	result, err := client.listHandleResponse(resp)
-	if err != nil {
-		return ComputeOperationListResultResponse{}, err
-	}
-	return result, nil
+	return client.listHandleResponse(resp)
 }
 
 // listCreateRequest creates the List request.
@@ -70,9 +66,11 @@ func (client OperationsClient) listCreateRequest(ctx context.Context, options *O
 
 // listHandleResponse handles the List response.
 func (client OperationsClient) listHandleResponse(resp *azcore.Response) (ComputeOperationListResultResponse, error) {
-	result := ComputeOperationListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ComputeOperationListResult)
-	return result, err
+	var val *ComputeOperationListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ComputeOperationListResultResponse{}, err
+	}
+	return ComputeOperationListResultResponse{RawResponse: resp.Response, ComputeOperationListResult: val}, nil
 }
 
 // listHandleError handles the List error response.

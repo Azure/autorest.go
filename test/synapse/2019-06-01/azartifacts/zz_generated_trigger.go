@@ -61,9 +61,11 @@ func (client triggerClient) createOrUpdateTriggerCreateRequest(ctx context.Conte
 
 // createOrUpdateTriggerHandleResponse handles the CreateOrUpdateTrigger response.
 func (client triggerClient) createOrUpdateTriggerHandleResponse(resp *azcore.Response) (TriggerResourceResponse, error) {
-	result := TriggerResourceResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.TriggerResource)
-	return result, err
+	var val *TriggerResource
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return TriggerResourceResponse{}, err
+	}
+	return TriggerResourceResponse{RawResponse: resp.Response, TriggerResource: val}, nil
 }
 
 // createOrUpdateTriggerHandleError handles the CreateOrUpdateTrigger error response.
@@ -129,11 +131,7 @@ func (client triggerClient) GetEventSubscriptionStatus(ctx context.Context, trig
 	if !resp.HasStatusCode(http.StatusOK) {
 		return TriggerSubscriptionOperationStatusResponse{}, client.getEventSubscriptionStatusHandleError(resp)
 	}
-	result, err := client.getEventSubscriptionStatusHandleResponse(resp)
-	if err != nil {
-		return TriggerSubscriptionOperationStatusResponse{}, err
-	}
-	return result, nil
+	return client.getEventSubscriptionStatusHandleResponse(resp)
 }
 
 // getEventSubscriptionStatusCreateRequest creates the GetEventSubscriptionStatus request.
@@ -154,9 +152,11 @@ func (client triggerClient) getEventSubscriptionStatusCreateRequest(ctx context.
 
 // getEventSubscriptionStatusHandleResponse handles the GetEventSubscriptionStatus response.
 func (client triggerClient) getEventSubscriptionStatusHandleResponse(resp *azcore.Response) (TriggerSubscriptionOperationStatusResponse, error) {
-	result := TriggerSubscriptionOperationStatusResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.TriggerSubscriptionOperationStatus)
-	return result, err
+	var val *TriggerSubscriptionOperationStatus
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return TriggerSubscriptionOperationStatusResponse{}, err
+	}
+	return TriggerSubscriptionOperationStatusResponse{RawResponse: resp.Response, TriggerSubscriptionOperationStatus: val}, nil
 }
 
 // getEventSubscriptionStatusHandleError handles the GetEventSubscriptionStatus error response.
@@ -181,11 +181,7 @@ func (client triggerClient) GetTrigger(ctx context.Context, triggerName string, 
 	if !resp.HasStatusCode(http.StatusOK, http.StatusNotModified) {
 		return TriggerResourceResponse{}, client.getTriggerHandleError(resp)
 	}
-	result, err := client.getTriggerHandleResponse(resp)
-	if err != nil {
-		return TriggerResourceResponse{}, err
-	}
-	return result, nil
+	return client.getTriggerHandleResponse(resp)
 }
 
 // getTriggerCreateRequest creates the GetTrigger request.
@@ -209,9 +205,11 @@ func (client triggerClient) getTriggerCreateRequest(ctx context.Context, trigger
 
 // getTriggerHandleResponse handles the GetTrigger response.
 func (client triggerClient) getTriggerHandleResponse(resp *azcore.Response) (TriggerResourceResponse, error) {
-	result := TriggerResourceResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.TriggerResource)
-	return result, err
+	var val *TriggerResource
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return TriggerResourceResponse{}, err
+	}
+	return TriggerResourceResponse{RawResponse: resp.Response, TriggerResource: val}, nil
 }
 
 // getTriggerHandleError handles the GetTrigger error response.
@@ -256,9 +254,11 @@ func (client triggerClient) getTriggersByWorkspaceCreateRequest(ctx context.Cont
 
 // getTriggersByWorkspaceHandleResponse handles the GetTriggersByWorkspace response.
 func (client triggerClient) getTriggersByWorkspaceHandleResponse(resp *azcore.Response) (TriggerListResponseResponse, error) {
-	result := TriggerListResponseResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.TriggerListResponse)
-	return result, err
+	var val *TriggerListResponse
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return TriggerListResponseResponse{}, err
+	}
+	return TriggerListResponseResponse{RawResponse: resp.Response, TriggerListResponse: val}, nil
 }
 
 // getTriggersByWorkspaceHandleError handles the GetTriggersByWorkspace error response.
@@ -386,9 +386,11 @@ func (client triggerClient) subscribeTriggerToEventsCreateRequest(ctx context.Co
 
 // subscribeTriggerToEventsHandleResponse handles the SubscribeTriggerToEvents response.
 func (client triggerClient) subscribeTriggerToEventsHandleResponse(resp *azcore.Response) (TriggerSubscriptionOperationStatusResponse, error) {
-	result := TriggerSubscriptionOperationStatusResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.TriggerSubscriptionOperationStatus)
-	return result, err
+	var val *TriggerSubscriptionOperationStatus
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return TriggerSubscriptionOperationStatusResponse{}, err
+	}
+	return TriggerSubscriptionOperationStatusResponse{RawResponse: resp.Response, TriggerSubscriptionOperationStatus: val}, nil
 }
 
 // subscribeTriggerToEventsHandleError handles the SubscribeTriggerToEvents error response.
@@ -434,9 +436,11 @@ func (client triggerClient) unsubscribeTriggerFromEventsCreateRequest(ctx contex
 
 // unsubscribeTriggerFromEventsHandleResponse handles the UnsubscribeTriggerFromEvents response.
 func (client triggerClient) unsubscribeTriggerFromEventsHandleResponse(resp *azcore.Response) (TriggerSubscriptionOperationStatusResponse, error) {
-	result := TriggerSubscriptionOperationStatusResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.TriggerSubscriptionOperationStatus)
-	return result, err
+	var val *TriggerSubscriptionOperationStatus
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return TriggerSubscriptionOperationStatusResponse{}, err
+	}
+	return TriggerSubscriptionOperationStatusResponse{RawResponse: resp.Response, TriggerSubscriptionOperationStatus: val}, nil
 }
 
 // unsubscribeTriggerFromEventsHandleError handles the UnsubscribeTriggerFromEvents error response.

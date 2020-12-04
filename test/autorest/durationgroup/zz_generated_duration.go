@@ -42,11 +42,7 @@ func (client DurationClient) GetInvalid(ctx context.Context, options *DurationGe
 	if !resp.HasStatusCode(http.StatusOK) {
 		return StringResponse{}, client.getInvalidHandleError(resp)
 	}
-	result, err := client.getInvalidHandleResponse(resp)
-	if err != nil {
-		return StringResponse{}, err
-	}
-	return result, nil
+	return client.getInvalidHandleResponse(resp)
 }
 
 // getInvalidCreateRequest creates the GetInvalid request.
@@ -63,9 +59,11 @@ func (client DurationClient) getInvalidCreateRequest(ctx context.Context, option
 
 // getInvalidHandleResponse handles the GetInvalid response.
 func (client DurationClient) getInvalidHandleResponse(resp *azcore.Response) (StringResponse, error) {
-	result := StringResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Value)
-	return result, err
+	var val *string
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return StringResponse{}, err
+	}
+	return StringResponse{RawResponse: resp.Response, Value: val}, nil
 }
 
 // getInvalidHandleError handles the GetInvalid error response.
@@ -90,11 +88,7 @@ func (client DurationClient) GetNull(ctx context.Context, options *DurationGetNu
 	if !resp.HasStatusCode(http.StatusOK) {
 		return StringResponse{}, client.getNullHandleError(resp)
 	}
-	result, err := client.getNullHandleResponse(resp)
-	if err != nil {
-		return StringResponse{}, err
-	}
-	return result, nil
+	return client.getNullHandleResponse(resp)
 }
 
 // getNullCreateRequest creates the GetNull request.
@@ -111,9 +105,11 @@ func (client DurationClient) getNullCreateRequest(ctx context.Context, options *
 
 // getNullHandleResponse handles the GetNull response.
 func (client DurationClient) getNullHandleResponse(resp *azcore.Response) (StringResponse, error) {
-	result := StringResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Value)
-	return result, err
+	var val *string
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return StringResponse{}, err
+	}
+	return StringResponse{RawResponse: resp.Response, Value: val}, nil
 }
 
 // getNullHandleError handles the GetNull error response.
@@ -138,11 +134,7 @@ func (client DurationClient) GetPositiveDuration(ctx context.Context, options *D
 	if !resp.HasStatusCode(http.StatusOK) {
 		return StringResponse{}, client.getPositiveDurationHandleError(resp)
 	}
-	result, err := client.getPositiveDurationHandleResponse(resp)
-	if err != nil {
-		return StringResponse{}, err
-	}
-	return result, nil
+	return client.getPositiveDurationHandleResponse(resp)
 }
 
 // getPositiveDurationCreateRequest creates the GetPositiveDuration request.
@@ -159,9 +151,11 @@ func (client DurationClient) getPositiveDurationCreateRequest(ctx context.Contex
 
 // getPositiveDurationHandleResponse handles the GetPositiveDuration response.
 func (client DurationClient) getPositiveDurationHandleResponse(resp *azcore.Response) (StringResponse, error) {
-	result := StringResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Value)
-	return result, err
+	var val *string
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return StringResponse{}, err
+	}
+	return StringResponse{RawResponse: resp.Response, Value: val}, nil
 }
 
 // getPositiveDurationHandleError handles the GetPositiveDuration error response.

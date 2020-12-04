@@ -35,11 +35,7 @@ func (client workspaceClient) Get(ctx context.Context, options *WorkspaceGetOpti
 	if !resp.HasStatusCode(http.StatusOK) {
 		return WorkspaceResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return WorkspaceResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -59,9 +55,11 @@ func (client workspaceClient) getCreateRequest(ctx context.Context, options *Wor
 
 // getHandleResponse handles the Get response.
 func (client workspaceClient) getHandleResponse(resp *azcore.Response) (WorkspaceResponse, error) {
-	result := WorkspaceResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Workspace)
-	return result, err
+	var val *Workspace
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return WorkspaceResponse{}, err
+	}
+	return WorkspaceResponse{RawResponse: resp.Response, Workspace: val}, nil
 }
 
 // getHandleError handles the Get error response.

@@ -108,9 +108,11 @@ func (client ExpressRouteCircuitPeeringsClient) createOrUpdateCreateRequest(ctx 
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client ExpressRouteCircuitPeeringsClient) createOrUpdateHandleResponse(resp *azcore.Response) (ExpressRouteCircuitPeeringResponse, error) {
-	result := ExpressRouteCircuitPeeringResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ExpressRouteCircuitPeering)
-	return result, err
+	var val *ExpressRouteCircuitPeering
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ExpressRouteCircuitPeeringResponse{}, err
+	}
+	return ExpressRouteCircuitPeeringResponse{RawResponse: resp.Response, ExpressRouteCircuitPeering: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -216,11 +218,7 @@ func (client ExpressRouteCircuitPeeringsClient) Get(ctx context.Context, resourc
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ExpressRouteCircuitPeeringResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return ExpressRouteCircuitPeeringResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -244,9 +242,11 @@ func (client ExpressRouteCircuitPeeringsClient) getCreateRequest(ctx context.Con
 
 // getHandleResponse handles the Get response.
 func (client ExpressRouteCircuitPeeringsClient) getHandleResponse(resp *azcore.Response) (ExpressRouteCircuitPeeringResponse, error) {
-	result := ExpressRouteCircuitPeeringResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ExpressRouteCircuitPeering)
-	return result, err
+	var val *ExpressRouteCircuitPeering
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ExpressRouteCircuitPeeringResponse{}, err
+	}
+	return ExpressRouteCircuitPeeringResponse{RawResponse: resp.Response, ExpressRouteCircuitPeering: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -294,9 +294,11 @@ func (client ExpressRouteCircuitPeeringsClient) listCreateRequest(ctx context.Co
 
 // listHandleResponse handles the List response.
 func (client ExpressRouteCircuitPeeringsClient) listHandleResponse(resp *azcore.Response) (ExpressRouteCircuitPeeringListResultResponse, error) {
-	result := ExpressRouteCircuitPeeringListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ExpressRouteCircuitPeeringListResult)
-	return result, err
+	var val *ExpressRouteCircuitPeeringListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ExpressRouteCircuitPeeringListResultResponse{}, err
+	}
+	return ExpressRouteCircuitPeeringListResultResponse{RawResponse: resp.Response, ExpressRouteCircuitPeeringListResult: val}, nil
 }
 
 // listHandleError handles the List error response.

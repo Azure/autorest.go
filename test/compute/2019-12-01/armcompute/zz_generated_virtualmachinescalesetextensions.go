@@ -111,9 +111,11 @@ func (client VirtualMachineScaleSetExtensionsClient) createOrUpdateCreateRequest
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client VirtualMachineScaleSetExtensionsClient) createOrUpdateHandleResponse(resp *azcore.Response) (VirtualMachineScaleSetExtensionResponse, error) {
-	result := VirtualMachineScaleSetExtensionResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.VirtualMachineScaleSetExtension)
-	return result, err
+	var val *VirtualMachineScaleSetExtension
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return VirtualMachineScaleSetExtensionResponse{}, err
+	}
+	return VirtualMachineScaleSetExtensionResponse{RawResponse: resp.Response, VirtualMachineScaleSetExtension: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -224,11 +226,7 @@ func (client VirtualMachineScaleSetExtensionsClient) Get(ctx context.Context, re
 	if !resp.HasStatusCode(http.StatusOK) {
 		return VirtualMachineScaleSetExtensionResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return VirtualMachineScaleSetExtensionResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -255,9 +253,11 @@ func (client VirtualMachineScaleSetExtensionsClient) getCreateRequest(ctx contex
 
 // getHandleResponse handles the Get response.
 func (client VirtualMachineScaleSetExtensionsClient) getHandleResponse(resp *azcore.Response) (VirtualMachineScaleSetExtensionResponse, error) {
-	result := VirtualMachineScaleSetExtensionResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.VirtualMachineScaleSetExtension)
-	return result, err
+	var val *VirtualMachineScaleSetExtension
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return VirtualMachineScaleSetExtensionResponse{}, err
+	}
+	return VirtualMachineScaleSetExtensionResponse{RawResponse: resp.Response, VirtualMachineScaleSetExtension: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -308,9 +308,11 @@ func (client VirtualMachineScaleSetExtensionsClient) listCreateRequest(ctx conte
 
 // listHandleResponse handles the List response.
 func (client VirtualMachineScaleSetExtensionsClient) listHandleResponse(resp *azcore.Response) (VirtualMachineScaleSetExtensionListResultResponse, error) {
-	result := VirtualMachineScaleSetExtensionListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.VirtualMachineScaleSetExtensionListResult)
-	return result, err
+	var val *VirtualMachineScaleSetExtensionListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return VirtualMachineScaleSetExtensionListResultResponse{}, err
+	}
+	return VirtualMachineScaleSetExtensionListResultResponse{RawResponse: resp.Response, VirtualMachineScaleSetExtensionListResult: val}, nil
 }
 
 // listHandleError handles the List error response.
@@ -399,9 +401,11 @@ func (client VirtualMachineScaleSetExtensionsClient) updateCreateRequest(ctx con
 
 // updateHandleResponse handles the Update response.
 func (client VirtualMachineScaleSetExtensionsClient) updateHandleResponse(resp *azcore.Response) (VirtualMachineScaleSetExtensionResponse, error) {
-	result := VirtualMachineScaleSetExtensionResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.VirtualMachineScaleSetExtension)
-	return result, err
+	var val *VirtualMachineScaleSetExtension
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return VirtualMachineScaleSetExtensionResponse{}, err
+	}
+	return VirtualMachineScaleSetExtensionResponse{RawResponse: resp.Response, VirtualMachineScaleSetExtension: val}, nil
 }
 
 // updateHandleError handles the Update error response.

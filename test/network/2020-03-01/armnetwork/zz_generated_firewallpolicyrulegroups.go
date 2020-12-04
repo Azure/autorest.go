@@ -108,9 +108,11 @@ func (client FirewallPolicyRuleGroupsClient) createOrUpdateCreateRequest(ctx con
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client FirewallPolicyRuleGroupsClient) createOrUpdateHandleResponse(resp *azcore.Response) (FirewallPolicyRuleGroupResponse, error) {
-	result := FirewallPolicyRuleGroupResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.FirewallPolicyRuleGroup)
-	return result, err
+	var val *FirewallPolicyRuleGroup
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return FirewallPolicyRuleGroupResponse{}, err
+	}
+	return FirewallPolicyRuleGroupResponse{RawResponse: resp.Response, FirewallPolicyRuleGroup: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -216,11 +218,7 @@ func (client FirewallPolicyRuleGroupsClient) Get(ctx context.Context, resourceGr
 	if !resp.HasStatusCode(http.StatusOK) {
 		return FirewallPolicyRuleGroupResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return FirewallPolicyRuleGroupResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -244,9 +242,11 @@ func (client FirewallPolicyRuleGroupsClient) getCreateRequest(ctx context.Contex
 
 // getHandleResponse handles the Get response.
 func (client FirewallPolicyRuleGroupsClient) getHandleResponse(resp *azcore.Response) (FirewallPolicyRuleGroupResponse, error) {
-	result := FirewallPolicyRuleGroupResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.FirewallPolicyRuleGroup)
-	return result, err
+	var val *FirewallPolicyRuleGroup
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return FirewallPolicyRuleGroupResponse{}, err
+	}
+	return FirewallPolicyRuleGroupResponse{RawResponse: resp.Response, FirewallPolicyRuleGroup: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -294,9 +294,11 @@ func (client FirewallPolicyRuleGroupsClient) listCreateRequest(ctx context.Conte
 
 // listHandleResponse handles the List response.
 func (client FirewallPolicyRuleGroupsClient) listHandleResponse(resp *azcore.Response) (FirewallPolicyRuleGroupListResultResponse, error) {
-	result := FirewallPolicyRuleGroupListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.FirewallPolicyRuleGroupListResult)
-	return result, err
+	var val *FirewallPolicyRuleGroupListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return FirewallPolicyRuleGroupListResultResponse{}, err
+	}
+	return FirewallPolicyRuleGroupListResultResponse{RawResponse: resp.Response, FirewallPolicyRuleGroupListResult: val}, nil
 }
 
 // listHandleError handles the List error response.

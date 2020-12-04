@@ -37,11 +37,7 @@ func (client sqlPoolsClient) Get(ctx context.Context, sqlPoolName string, option
 	if !resp.HasStatusCode(http.StatusOK) {
 		return SQLPoolResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return SQLPoolResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -62,9 +58,11 @@ func (client sqlPoolsClient) getCreateRequest(ctx context.Context, sqlPoolName s
 
 // getHandleResponse handles the Get response.
 func (client sqlPoolsClient) getHandleResponse(resp *azcore.Response) (SQLPoolResponse, error) {
-	result := SQLPoolResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.SQLPool)
-	return result, err
+	var val *SQLPool
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return SQLPoolResponse{}, err
+	}
+	return SQLPoolResponse{RawResponse: resp.Response, SQLPool: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -89,11 +87,7 @@ func (client sqlPoolsClient) List(ctx context.Context, options *SQLPoolsListOpti
 	if !resp.HasStatusCode(http.StatusOK) {
 		return SQLPoolInfoListResultResponse{}, client.listHandleError(resp)
 	}
-	result, err := client.listHandleResponse(resp)
-	if err != nil {
-		return SQLPoolInfoListResultResponse{}, err
-	}
-	return result, nil
+	return client.listHandleResponse(resp)
 }
 
 // listCreateRequest creates the List request.
@@ -113,9 +107,11 @@ func (client sqlPoolsClient) listCreateRequest(ctx context.Context, options *SQL
 
 // listHandleResponse handles the List response.
 func (client sqlPoolsClient) listHandleResponse(resp *azcore.Response) (SQLPoolInfoListResultResponse, error) {
-	result := SQLPoolInfoListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.SQLPoolInfoListResult)
-	return result, err
+	var val *SQLPoolInfoListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return SQLPoolInfoListResultResponse{}, err
+	}
+	return SQLPoolInfoListResultResponse{RawResponse: resp.Response, SQLPoolInfoListResult: val}, nil
 }
 
 // listHandleError handles the List error response.

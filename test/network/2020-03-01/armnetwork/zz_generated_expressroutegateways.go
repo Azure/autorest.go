@@ -107,9 +107,11 @@ func (client ExpressRouteGatewaysClient) createOrUpdateCreateRequest(ctx context
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client ExpressRouteGatewaysClient) createOrUpdateHandleResponse(resp *azcore.Response) (ExpressRouteGatewayResponse, error) {
-	result := ExpressRouteGatewayResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ExpressRouteGateway)
-	return result, err
+	var val *ExpressRouteGateway
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ExpressRouteGatewayResponse{}, err
+	}
+	return ExpressRouteGatewayResponse{RawResponse: resp.Response, ExpressRouteGateway: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -216,11 +218,7 @@ func (client ExpressRouteGatewaysClient) Get(ctx context.Context, resourceGroupN
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ExpressRouteGatewayResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return ExpressRouteGatewayResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -243,9 +241,11 @@ func (client ExpressRouteGatewaysClient) getCreateRequest(ctx context.Context, r
 
 // getHandleResponse handles the Get response.
 func (client ExpressRouteGatewaysClient) getHandleResponse(resp *azcore.Response) (ExpressRouteGatewayResponse, error) {
-	result := ExpressRouteGatewayResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ExpressRouteGateway)
-	return result, err
+	var val *ExpressRouteGateway
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ExpressRouteGatewayResponse{}, err
+	}
+	return ExpressRouteGatewayResponse{RawResponse: resp.Response, ExpressRouteGateway: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -270,11 +270,7 @@ func (client ExpressRouteGatewaysClient) ListByResourceGroup(ctx context.Context
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ExpressRouteGatewayListResponse{}, client.listByResourceGroupHandleError(resp)
 	}
-	result, err := client.listByResourceGroupHandleResponse(resp)
-	if err != nil {
-		return ExpressRouteGatewayListResponse{}, err
-	}
-	return result, nil
+	return client.listByResourceGroupHandleResponse(resp)
 }
 
 // listByResourceGroupCreateRequest creates the ListByResourceGroup request.
@@ -296,9 +292,11 @@ func (client ExpressRouteGatewaysClient) listByResourceGroupCreateRequest(ctx co
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
 func (client ExpressRouteGatewaysClient) listByResourceGroupHandleResponse(resp *azcore.Response) (ExpressRouteGatewayListResponse, error) {
-	result := ExpressRouteGatewayListResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ExpressRouteGatewayList)
-	return result, err
+	var val *ExpressRouteGatewayList
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ExpressRouteGatewayListResponse{}, err
+	}
+	return ExpressRouteGatewayListResponse{RawResponse: resp.Response, ExpressRouteGatewayList: val}, nil
 }
 
 // listByResourceGroupHandleError handles the ListByResourceGroup error response.
@@ -323,11 +321,7 @@ func (client ExpressRouteGatewaysClient) ListBySubscription(ctx context.Context,
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ExpressRouteGatewayListResponse{}, client.listBySubscriptionHandleError(resp)
 	}
-	result, err := client.listBySubscriptionHandleResponse(resp)
-	if err != nil {
-		return ExpressRouteGatewayListResponse{}, err
-	}
-	return result, nil
+	return client.listBySubscriptionHandleResponse(resp)
 }
 
 // listBySubscriptionCreateRequest creates the ListBySubscription request.
@@ -348,9 +342,11 @@ func (client ExpressRouteGatewaysClient) listBySubscriptionCreateRequest(ctx con
 
 // listBySubscriptionHandleResponse handles the ListBySubscription response.
 func (client ExpressRouteGatewaysClient) listBySubscriptionHandleResponse(resp *azcore.Response) (ExpressRouteGatewayListResponse, error) {
-	result := ExpressRouteGatewayListResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ExpressRouteGatewayList)
-	return result, err
+	var val *ExpressRouteGatewayList
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ExpressRouteGatewayListResponse{}, err
+	}
+	return ExpressRouteGatewayListResponse{RawResponse: resp.Response, ExpressRouteGatewayList: val}, nil
 }
 
 // listBySubscriptionHandleError handles the ListBySubscription error response.

@@ -107,9 +107,11 @@ func (client VirtualWansClient) createOrUpdateCreateRequest(ctx context.Context,
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client VirtualWansClient) createOrUpdateHandleResponse(resp *azcore.Response) (VirtualWanResponse, error) {
-	result := VirtualWanResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.VirtualWan)
-	return result, err
+	var val *VirtualWan
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return VirtualWanResponse{}, err
+	}
+	return VirtualWanResponse{RawResponse: resp.Response, VirtualWan: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -214,11 +216,7 @@ func (client VirtualWansClient) Get(ctx context.Context, resourceGroupName strin
 	if !resp.HasStatusCode(http.StatusOK) {
 		return VirtualWanResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return VirtualWanResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -241,9 +239,11 @@ func (client VirtualWansClient) getCreateRequest(ctx context.Context, resourceGr
 
 // getHandleResponse handles the Get response.
 func (client VirtualWansClient) getHandleResponse(resp *azcore.Response) (VirtualWanResponse, error) {
-	result := VirtualWanResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.VirtualWan)
-	return result, err
+	var val *VirtualWan
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return VirtualWanResponse{}, err
+	}
+	return VirtualWanResponse{RawResponse: resp.Response, VirtualWan: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -289,9 +289,11 @@ func (client VirtualWansClient) listCreateRequest(ctx context.Context, options *
 
 // listHandleResponse handles the List response.
 func (client VirtualWansClient) listHandleResponse(resp *azcore.Response) (ListVirtualWaNsResultResponse, error) {
-	result := ListVirtualWaNsResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ListVirtualWaNsResult)
-	return result, err
+	var val *ListVirtualWaNsResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ListVirtualWaNsResultResponse{}, err
+	}
+	return ListVirtualWaNsResultResponse{RawResponse: resp.Response, ListVirtualWaNsResult: val}, nil
 }
 
 // listHandleError handles the List error response.
@@ -338,9 +340,11 @@ func (client VirtualWansClient) listByResourceGroupCreateRequest(ctx context.Con
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
 func (client VirtualWansClient) listByResourceGroupHandleResponse(resp *azcore.Response) (ListVirtualWaNsResultResponse, error) {
-	result := ListVirtualWaNsResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ListVirtualWaNsResult)
-	return result, err
+	var val *ListVirtualWaNsResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ListVirtualWaNsResultResponse{}, err
+	}
+	return ListVirtualWaNsResultResponse{RawResponse: resp.Response, ListVirtualWaNsResult: val}, nil
 }
 
 // listByResourceGroupHandleError handles the ListByResourceGroup error response.
@@ -365,11 +369,7 @@ func (client VirtualWansClient) UpdateTags(ctx context.Context, resourceGroupNam
 	if !resp.HasStatusCode(http.StatusOK) {
 		return VirtualWanResponse{}, client.updateTagsHandleError(resp)
 	}
-	result, err := client.updateTagsHandleResponse(resp)
-	if err != nil {
-		return VirtualWanResponse{}, err
-	}
-	return result, nil
+	return client.updateTagsHandleResponse(resp)
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.
@@ -392,9 +392,11 @@ func (client VirtualWansClient) updateTagsCreateRequest(ctx context.Context, res
 
 // updateTagsHandleResponse handles the UpdateTags response.
 func (client VirtualWansClient) updateTagsHandleResponse(resp *azcore.Response) (VirtualWanResponse, error) {
-	result := VirtualWanResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.VirtualWan)
-	return result, err
+	var val *VirtualWan
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return VirtualWanResponse{}, err
+	}
+	return VirtualWanResponse{RawResponse: resp.Response, VirtualWan: val}, nil
 }
 
 // updateTagsHandleError handles the UpdateTags error response.

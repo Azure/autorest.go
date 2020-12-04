@@ -81,11 +81,7 @@ func (client HTTPRedirectsClient) Get300(ctx context.Context, options *HTTPRedir
 	if !resp.HasStatusCode(http.StatusOK, http.StatusMultipleChoices) {
 		return nil, client.get300HandleError(resp)
 	}
-	result, err := client.get300HandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+	return client.get300HandleResponse(resp)
 }
 
 // get300CreateRequest creates the Get300 request.
@@ -110,12 +106,15 @@ func (client HTTPRedirectsClient) get300HandleResponse(resp *azcore.Response) (i
 		}
 		return result, nil
 	case http.StatusMultipleChoices:
-		result := StringArrayResponse{RawResponse: resp.Response}
+		var val *[]string
+		if err := resp.UnmarshalAsJSON(&val); err != nil {
+			return nil, err
+		}
+		result := StringArrayResponse{RawResponse: resp.Response, StringArray: val}
 		if val := resp.Header.Get("Location"); val != "" {
 			result.Location = &val
 		}
-		err := resp.UnmarshalAsJSON(&result.StringArray)
-		return result, err
+		return result, nil
 	default:
 		return nil, fmt.Errorf("unhandled HTTP status code %d", resp.StatusCode)
 	}
@@ -254,11 +253,7 @@ func (client HTTPRedirectsClient) Head300(ctx context.Context, options *HTTPRedi
 	if !resp.HasStatusCode(http.StatusOK, http.StatusMultipleChoices) {
 		return HTTPRedirectsHead300Response{}, client.head300HandleError(resp)
 	}
-	result, err := client.head300HandleResponse(resp)
-	if err != nil {
-		return HTTPRedirectsHead300Response{}, err
-	}
-	return result, nil
+	return client.head300HandleResponse(resp)
 }
 
 // head300CreateRequest creates the Head300 request.
@@ -465,11 +460,7 @@ func (client HTTPRedirectsClient) Patch302(ctx context.Context, options *HTTPRed
 	if !resp.HasStatusCode(http.StatusFound) {
 		return HTTPRedirectsPatch302Response{}, client.patch302HandleError(resp)
 	}
-	result, err := client.patch302HandleResponse(resp)
-	if err != nil {
-		return HTTPRedirectsPatch302Response{}, err
-	}
-	return result, nil
+	return client.patch302HandleResponse(resp)
 }
 
 // patch302CreateRequest creates the Patch302 request.
@@ -553,11 +544,7 @@ func (client HTTPRedirectsClient) Post303(ctx context.Context, options *HTTPRedi
 	if !resp.HasStatusCode(http.StatusOK, http.StatusSeeOther) {
 		return HTTPRedirectsPost303Response{}, client.post303HandleError(resp)
 	}
-	result, err := client.post303HandleResponse(resp)
-	if err != nil {
-		return HTTPRedirectsPost303Response{}, err
-	}
-	return result, nil
+	return client.post303HandleResponse(resp)
 }
 
 // post303CreateRequest creates the Post303 request.
@@ -641,11 +628,7 @@ func (client HTTPRedirectsClient) Put301(ctx context.Context, options *HTTPRedir
 	if !resp.HasStatusCode(http.StatusMovedPermanently) {
 		return HTTPRedirectsPut301Response{}, client.put301HandleError(resp)
 	}
-	result, err := client.put301HandleResponse(resp)
-	if err != nil {
-		return HTTPRedirectsPut301Response{}, err
-	}
-	return result, nil
+	return client.put301HandleResponse(resp)
 }
 
 // put301CreateRequest creates the Put301 request.

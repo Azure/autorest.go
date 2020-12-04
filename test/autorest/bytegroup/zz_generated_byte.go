@@ -42,11 +42,7 @@ func (client ByteClient) GetEmpty(ctx context.Context, options *ByteGetEmptyOpti
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ByteArrayResponse{}, client.getEmptyHandleError(resp)
 	}
-	result, err := client.getEmptyHandleResponse(resp)
-	if err != nil {
-		return ByteArrayResponse{}, err
-	}
-	return result, nil
+	return client.getEmptyHandleResponse(resp)
 }
 
 // getEmptyCreateRequest creates the GetEmpty request.
@@ -63,9 +59,11 @@ func (client ByteClient) getEmptyCreateRequest(ctx context.Context, options *Byt
 
 // getEmptyHandleResponse handles the GetEmpty response.
 func (client ByteClient) getEmptyHandleResponse(resp *azcore.Response) (ByteArrayResponse, error) {
-	result := ByteArrayResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsByteArray(&result.Value, azcore.Base64StdFormat)
-	return result, err
+	var val *[]byte
+	if err := resp.UnmarshalAsByteArray(&val, azcore.Base64StdFormat); err != nil {
+		return ByteArrayResponse{}, err
+	}
+	return ByteArrayResponse{RawResponse: resp.Response, Value: val}, nil
 }
 
 // getEmptyHandleError handles the GetEmpty error response.
@@ -90,11 +88,7 @@ func (client ByteClient) GetInvalid(ctx context.Context, options *ByteGetInvalid
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ByteArrayResponse{}, client.getInvalidHandleError(resp)
 	}
-	result, err := client.getInvalidHandleResponse(resp)
-	if err != nil {
-		return ByteArrayResponse{}, err
-	}
-	return result, nil
+	return client.getInvalidHandleResponse(resp)
 }
 
 // getInvalidCreateRequest creates the GetInvalid request.
@@ -111,9 +105,11 @@ func (client ByteClient) getInvalidCreateRequest(ctx context.Context, options *B
 
 // getInvalidHandleResponse handles the GetInvalid response.
 func (client ByteClient) getInvalidHandleResponse(resp *azcore.Response) (ByteArrayResponse, error) {
-	result := ByteArrayResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsByteArray(&result.Value, azcore.Base64StdFormat)
-	return result, err
+	var val *[]byte
+	if err := resp.UnmarshalAsByteArray(&val, azcore.Base64StdFormat); err != nil {
+		return ByteArrayResponse{}, err
+	}
+	return ByteArrayResponse{RawResponse: resp.Response, Value: val}, nil
 }
 
 // getInvalidHandleError handles the GetInvalid error response.
@@ -138,11 +134,7 @@ func (client ByteClient) GetNonASCII(ctx context.Context, options *ByteGetNonASC
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ByteArrayResponse{}, client.getNonAsciiHandleError(resp)
 	}
-	result, err := client.getNonAsciiHandleResponse(resp)
-	if err != nil {
-		return ByteArrayResponse{}, err
-	}
-	return result, nil
+	return client.getNonAsciiHandleResponse(resp)
 }
 
 // getNonAsciiCreateRequest creates the GetNonASCII request.
@@ -159,9 +151,11 @@ func (client ByteClient) getNonAsciiCreateRequest(ctx context.Context, options *
 
 // getNonAsciiHandleResponse handles the GetNonASCII response.
 func (client ByteClient) getNonAsciiHandleResponse(resp *azcore.Response) (ByteArrayResponse, error) {
-	result := ByteArrayResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsByteArray(&result.Value, azcore.Base64StdFormat)
-	return result, err
+	var val *[]byte
+	if err := resp.UnmarshalAsByteArray(&val, azcore.Base64StdFormat); err != nil {
+		return ByteArrayResponse{}, err
+	}
+	return ByteArrayResponse{RawResponse: resp.Response, Value: val}, nil
 }
 
 // getNonAsciiHandleError handles the GetNonASCII error response.
@@ -186,11 +180,7 @@ func (client ByteClient) GetNull(ctx context.Context, options *ByteGetNullOption
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ByteArrayResponse{}, client.getNullHandleError(resp)
 	}
-	result, err := client.getNullHandleResponse(resp)
-	if err != nil {
-		return ByteArrayResponse{}, err
-	}
-	return result, nil
+	return client.getNullHandleResponse(resp)
 }
 
 // getNullCreateRequest creates the GetNull request.
@@ -207,9 +197,11 @@ func (client ByteClient) getNullCreateRequest(ctx context.Context, options *Byte
 
 // getNullHandleResponse handles the GetNull response.
 func (client ByteClient) getNullHandleResponse(resp *azcore.Response) (ByteArrayResponse, error) {
-	result := ByteArrayResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsByteArray(&result.Value, azcore.Base64StdFormat)
-	return result, err
+	var val *[]byte
+	if err := resp.UnmarshalAsByteArray(&val, azcore.Base64StdFormat); err != nil {
+		return ByteArrayResponse{}, err
+	}
+	return ByteArrayResponse{RawResponse: resp.Response, Value: val}, nil
 }
 
 // getNullHandleError handles the GetNull error response.

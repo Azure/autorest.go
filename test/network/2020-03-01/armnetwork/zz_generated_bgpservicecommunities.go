@@ -67,9 +67,11 @@ func (client BgpServiceCommunitiesClient) listCreateRequest(ctx context.Context,
 
 // listHandleResponse handles the List response.
 func (client BgpServiceCommunitiesClient) listHandleResponse(resp *azcore.Response) (BgpServiceCommunityListResultResponse, error) {
-	result := BgpServiceCommunityListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.BgpServiceCommunityListResult)
-	return result, err
+	var val *BgpServiceCommunityListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return BgpServiceCommunityListResultResponse{}, err
+	}
+	return BgpServiceCommunityListResultResponse{RawResponse: resp.Response, BgpServiceCommunityListResult: val}, nil
 }
 
 // listHandleError handles the List error response.

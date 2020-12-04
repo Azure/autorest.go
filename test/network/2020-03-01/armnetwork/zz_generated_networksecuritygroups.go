@@ -107,9 +107,11 @@ func (client NetworkSecurityGroupsClient) createOrUpdateCreateRequest(ctx contex
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client NetworkSecurityGroupsClient) createOrUpdateHandleResponse(resp *azcore.Response) (NetworkSecurityGroupResponse, error) {
-	result := NetworkSecurityGroupResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.NetworkSecurityGroup)
-	return result, err
+	var val *NetworkSecurityGroup
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return NetworkSecurityGroupResponse{}, err
+	}
+	return NetworkSecurityGroupResponse{RawResponse: resp.Response, NetworkSecurityGroup: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -214,11 +216,7 @@ func (client NetworkSecurityGroupsClient) Get(ctx context.Context, resourceGroup
 	if !resp.HasStatusCode(http.StatusOK) {
 		return NetworkSecurityGroupResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return NetworkSecurityGroupResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -244,9 +242,11 @@ func (client NetworkSecurityGroupsClient) getCreateRequest(ctx context.Context, 
 
 // getHandleResponse handles the Get response.
 func (client NetworkSecurityGroupsClient) getHandleResponse(resp *azcore.Response) (NetworkSecurityGroupResponse, error) {
-	result := NetworkSecurityGroupResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.NetworkSecurityGroup)
-	return result, err
+	var val *NetworkSecurityGroup
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return NetworkSecurityGroupResponse{}, err
+	}
+	return NetworkSecurityGroupResponse{RawResponse: resp.Response, NetworkSecurityGroup: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -293,9 +293,11 @@ func (client NetworkSecurityGroupsClient) listCreateRequest(ctx context.Context,
 
 // listHandleResponse handles the List response.
 func (client NetworkSecurityGroupsClient) listHandleResponse(resp *azcore.Response) (NetworkSecurityGroupListResultResponse, error) {
-	result := NetworkSecurityGroupListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.NetworkSecurityGroupListResult)
-	return result, err
+	var val *NetworkSecurityGroupListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return NetworkSecurityGroupListResultResponse{}, err
+	}
+	return NetworkSecurityGroupListResultResponse{RawResponse: resp.Response, NetworkSecurityGroupListResult: val}, nil
 }
 
 // listHandleError handles the List error response.
@@ -341,9 +343,11 @@ func (client NetworkSecurityGroupsClient) listAllCreateRequest(ctx context.Conte
 
 // listAllHandleResponse handles the ListAll response.
 func (client NetworkSecurityGroupsClient) listAllHandleResponse(resp *azcore.Response) (NetworkSecurityGroupListResultResponse, error) {
-	result := NetworkSecurityGroupListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.NetworkSecurityGroupListResult)
-	return result, err
+	var val *NetworkSecurityGroupListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return NetworkSecurityGroupListResultResponse{}, err
+	}
+	return NetworkSecurityGroupListResultResponse{RawResponse: resp.Response, NetworkSecurityGroupListResult: val}, nil
 }
 
 // listAllHandleError handles the ListAll error response.
@@ -368,11 +372,7 @@ func (client NetworkSecurityGroupsClient) UpdateTags(ctx context.Context, resour
 	if !resp.HasStatusCode(http.StatusOK) {
 		return NetworkSecurityGroupResponse{}, client.updateTagsHandleError(resp)
 	}
-	result, err := client.updateTagsHandleResponse(resp)
-	if err != nil {
-		return NetworkSecurityGroupResponse{}, err
-	}
-	return result, nil
+	return client.updateTagsHandleResponse(resp)
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.
@@ -395,9 +395,11 @@ func (client NetworkSecurityGroupsClient) updateTagsCreateRequest(ctx context.Co
 
 // updateTagsHandleResponse handles the UpdateTags response.
 func (client NetworkSecurityGroupsClient) updateTagsHandleResponse(resp *azcore.Response) (NetworkSecurityGroupResponse, error) {
-	result := NetworkSecurityGroupResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.NetworkSecurityGroup)
-	return result, err
+	var val *NetworkSecurityGroup
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return NetworkSecurityGroupResponse{}, err
+	}
+	return NetworkSecurityGroupResponse{RawResponse: resp.Response, NetworkSecurityGroup: val}, nil
 }
 
 // updateTagsHandleError handles the UpdateTags error response.

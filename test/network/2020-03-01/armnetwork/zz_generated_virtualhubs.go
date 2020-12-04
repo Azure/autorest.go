@@ -107,9 +107,11 @@ func (client VirtualHubsClient) createOrUpdateCreateRequest(ctx context.Context,
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client VirtualHubsClient) createOrUpdateHandleResponse(resp *azcore.Response) (VirtualHubResponse, error) {
-	result := VirtualHubResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.VirtualHub)
-	return result, err
+	var val *VirtualHub
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return VirtualHubResponse{}, err
+	}
+	return VirtualHubResponse{RawResponse: resp.Response, VirtualHub: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -214,11 +216,7 @@ func (client VirtualHubsClient) Get(ctx context.Context, resourceGroupName strin
 	if !resp.HasStatusCode(http.StatusOK) {
 		return VirtualHubResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return VirtualHubResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -241,9 +239,11 @@ func (client VirtualHubsClient) getCreateRequest(ctx context.Context, resourceGr
 
 // getHandleResponse handles the Get response.
 func (client VirtualHubsClient) getHandleResponse(resp *azcore.Response) (VirtualHubResponse, error) {
-	result := VirtualHubResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.VirtualHub)
-	return result, err
+	var val *VirtualHub
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return VirtualHubResponse{}, err
+	}
+	return VirtualHubResponse{RawResponse: resp.Response, VirtualHub: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -289,9 +289,11 @@ func (client VirtualHubsClient) listCreateRequest(ctx context.Context, options *
 
 // listHandleResponse handles the List response.
 func (client VirtualHubsClient) listHandleResponse(resp *azcore.Response) (ListVirtualHubsResultResponse, error) {
-	result := ListVirtualHubsResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ListVirtualHubsResult)
-	return result, err
+	var val *ListVirtualHubsResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ListVirtualHubsResultResponse{}, err
+	}
+	return ListVirtualHubsResultResponse{RawResponse: resp.Response, ListVirtualHubsResult: val}, nil
 }
 
 // listHandleError handles the List error response.
@@ -338,9 +340,11 @@ func (client VirtualHubsClient) listByResourceGroupCreateRequest(ctx context.Con
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
 func (client VirtualHubsClient) listByResourceGroupHandleResponse(resp *azcore.Response) (ListVirtualHubsResultResponse, error) {
-	result := ListVirtualHubsResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ListVirtualHubsResult)
-	return result, err
+	var val *ListVirtualHubsResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ListVirtualHubsResultResponse{}, err
+	}
+	return ListVirtualHubsResultResponse{RawResponse: resp.Response, ListVirtualHubsResult: val}, nil
 }
 
 // listByResourceGroupHandleError handles the ListByResourceGroup error response.
@@ -365,11 +369,7 @@ func (client VirtualHubsClient) UpdateTags(ctx context.Context, resourceGroupNam
 	if !resp.HasStatusCode(http.StatusOK) {
 		return VirtualHubResponse{}, client.updateTagsHandleError(resp)
 	}
-	result, err := client.updateTagsHandleResponse(resp)
-	if err != nil {
-		return VirtualHubResponse{}, err
-	}
-	return result, nil
+	return client.updateTagsHandleResponse(resp)
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.
@@ -392,9 +392,11 @@ func (client VirtualHubsClient) updateTagsCreateRequest(ctx context.Context, res
 
 // updateTagsHandleResponse handles the UpdateTags response.
 func (client VirtualHubsClient) updateTagsHandleResponse(resp *azcore.Response) (VirtualHubResponse, error) {
-	result := VirtualHubResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.VirtualHub)
-	return result, err
+	var val *VirtualHub
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return VirtualHubResponse{}, err
+	}
+	return VirtualHubResponse{RawResponse: resp.Response, VirtualHub: val}, nil
 }
 
 // updateTagsHandleError handles the UpdateTags error response.

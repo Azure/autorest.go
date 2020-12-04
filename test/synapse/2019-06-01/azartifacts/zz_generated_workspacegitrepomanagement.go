@@ -38,11 +38,7 @@ func (client workspaceGitRepoManagementClient) GetGitHubAccessToken(ctx context.
 	if !resp.HasStatusCode(http.StatusOK) {
 		return GitHubAccessTokenResponseResponse{}, client.getGitHubAccessTokenHandleError(resp)
 	}
-	result, err := client.getGitHubAccessTokenHandleResponse(resp)
-	if err != nil {
-		return GitHubAccessTokenResponseResponse{}, err
-	}
-	return result, nil
+	return client.getGitHubAccessTokenHandleResponse(resp)
 }
 
 // getGitHubAccessTokenCreateRequest creates the GetGitHubAccessToken request.
@@ -65,9 +61,11 @@ func (client workspaceGitRepoManagementClient) getGitHubAccessTokenCreateRequest
 
 // getGitHubAccessTokenHandleResponse handles the GetGitHubAccessToken response.
 func (client workspaceGitRepoManagementClient) getGitHubAccessTokenHandleResponse(resp *azcore.Response) (GitHubAccessTokenResponseResponse, error) {
-	result := GitHubAccessTokenResponseResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.GitHubAccessTokenResponse)
-	return result, err
+	var val *GitHubAccessTokenResponse
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return GitHubAccessTokenResponseResponse{}, err
+	}
+	return GitHubAccessTokenResponseResponse{RawResponse: resp.Response, GitHubAccessTokenResponse: val}, nil
 }
 
 // getGitHubAccessTokenHandleError handles the GetGitHubAccessToken error response.

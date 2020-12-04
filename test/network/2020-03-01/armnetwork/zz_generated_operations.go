@@ -63,9 +63,11 @@ func (client OperationsClient) listCreateRequest(ctx context.Context, options *O
 
 // listHandleResponse handles the List response.
 func (client OperationsClient) listHandleResponse(resp *azcore.Response) (OperationListResultResponse, error) {
-	result := OperationListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.OperationListResult)
-	return result, err
+	var val *OperationListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return OperationListResultResponse{}, err
+	}
+	return OperationListResultResponse{RawResponse: resp.Response, OperationListResult: val}, nil
 }
 
 // listHandleError handles the List error response.

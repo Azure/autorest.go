@@ -108,9 +108,11 @@ func (client ExpressRouteCrossConnectionPeeringsClient) createOrUpdateCreateRequ
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client ExpressRouteCrossConnectionPeeringsClient) createOrUpdateHandleResponse(resp *azcore.Response) (ExpressRouteCrossConnectionPeeringResponse, error) {
-	result := ExpressRouteCrossConnectionPeeringResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ExpressRouteCrossConnectionPeering)
-	return result, err
+	var val *ExpressRouteCrossConnectionPeering
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ExpressRouteCrossConnectionPeeringResponse{}, err
+	}
+	return ExpressRouteCrossConnectionPeeringResponse{RawResponse: resp.Response, ExpressRouteCrossConnectionPeering: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -216,11 +218,7 @@ func (client ExpressRouteCrossConnectionPeeringsClient) Get(ctx context.Context,
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ExpressRouteCrossConnectionPeeringResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return ExpressRouteCrossConnectionPeeringResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -244,9 +242,11 @@ func (client ExpressRouteCrossConnectionPeeringsClient) getCreateRequest(ctx con
 
 // getHandleResponse handles the Get response.
 func (client ExpressRouteCrossConnectionPeeringsClient) getHandleResponse(resp *azcore.Response) (ExpressRouteCrossConnectionPeeringResponse, error) {
-	result := ExpressRouteCrossConnectionPeeringResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ExpressRouteCrossConnectionPeering)
-	return result, err
+	var val *ExpressRouteCrossConnectionPeering
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ExpressRouteCrossConnectionPeeringResponse{}, err
+	}
+	return ExpressRouteCrossConnectionPeeringResponse{RawResponse: resp.Response, ExpressRouteCrossConnectionPeering: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -294,9 +294,11 @@ func (client ExpressRouteCrossConnectionPeeringsClient) listCreateRequest(ctx co
 
 // listHandleResponse handles the List response.
 func (client ExpressRouteCrossConnectionPeeringsClient) listHandleResponse(resp *azcore.Response) (ExpressRouteCrossConnectionPeeringListResponse, error) {
-	result := ExpressRouteCrossConnectionPeeringListResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ExpressRouteCrossConnectionPeeringList)
-	return result, err
+	var val *ExpressRouteCrossConnectionPeeringList
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ExpressRouteCrossConnectionPeeringListResponse{}, err
+	}
+	return ExpressRouteCrossConnectionPeeringListResponse{RawResponse: resp.Response, ExpressRouteCrossConnectionPeeringList: val}, nil
 }
 
 // listHandleError handles the List error response.

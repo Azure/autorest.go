@@ -68,9 +68,11 @@ func (client AvailableEndpointServicesClient) listCreateRequest(ctx context.Cont
 
 // listHandleResponse handles the List response.
 func (client AvailableEndpointServicesClient) listHandleResponse(resp *azcore.Response) (EndpointServicesListResultResponse, error) {
-	result := EndpointServicesListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.EndpointServicesListResult)
-	return result, err
+	var val *EndpointServicesListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return EndpointServicesListResultResponse{}, err
+	}
+	return EndpointServicesListResultResponse{RawResponse: resp.Response, EndpointServicesListResult: val}, nil
 }
 
 // listHandleError handles the List error response.

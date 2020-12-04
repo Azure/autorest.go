@@ -108,9 +108,11 @@ func (client ExpressRouteConnectionsClient) createOrUpdateCreateRequest(ctx cont
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client ExpressRouteConnectionsClient) createOrUpdateHandleResponse(resp *azcore.Response) (ExpressRouteConnectionResponse, error) {
-	result := ExpressRouteConnectionResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ExpressRouteConnection)
-	return result, err
+	var val *ExpressRouteConnection
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ExpressRouteConnectionResponse{}, err
+	}
+	return ExpressRouteConnectionResponse{RawResponse: resp.Response, ExpressRouteConnection: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -216,11 +218,7 @@ func (client ExpressRouteConnectionsClient) Get(ctx context.Context, resourceGro
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ExpressRouteConnectionResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return ExpressRouteConnectionResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -244,9 +242,11 @@ func (client ExpressRouteConnectionsClient) getCreateRequest(ctx context.Context
 
 // getHandleResponse handles the Get response.
 func (client ExpressRouteConnectionsClient) getHandleResponse(resp *azcore.Response) (ExpressRouteConnectionResponse, error) {
-	result := ExpressRouteConnectionResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ExpressRouteConnection)
-	return result, err
+	var val *ExpressRouteConnection
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ExpressRouteConnectionResponse{}, err
+	}
+	return ExpressRouteConnectionResponse{RawResponse: resp.Response, ExpressRouteConnection: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -271,11 +271,7 @@ func (client ExpressRouteConnectionsClient) List(ctx context.Context, resourceGr
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ExpressRouteConnectionListResponse{}, client.listHandleError(resp)
 	}
-	result, err := client.listHandleResponse(resp)
-	if err != nil {
-		return ExpressRouteConnectionListResponse{}, err
-	}
-	return result, nil
+	return client.listHandleResponse(resp)
 }
 
 // listCreateRequest creates the List request.
@@ -298,9 +294,11 @@ func (client ExpressRouteConnectionsClient) listCreateRequest(ctx context.Contex
 
 // listHandleResponse handles the List response.
 func (client ExpressRouteConnectionsClient) listHandleResponse(resp *azcore.Response) (ExpressRouteConnectionListResponse, error) {
-	result := ExpressRouteConnectionListResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ExpressRouteConnectionList)
-	return result, err
+	var val *ExpressRouteConnectionList
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ExpressRouteConnectionListResponse{}, err
+	}
+	return ExpressRouteConnectionListResponse{RawResponse: resp.Response, ExpressRouteConnectionList: val}, nil
 }
 
 // listHandleError handles the List error response.

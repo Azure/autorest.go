@@ -108,9 +108,11 @@ func (client ConnectionMonitorsClient) createOrUpdateCreateRequest(ctx context.C
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client ConnectionMonitorsClient) createOrUpdateHandleResponse(resp *azcore.Response) (ConnectionMonitorResultResponse, error) {
-	result := ConnectionMonitorResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ConnectionMonitorResult)
-	return result, err
+	var val *ConnectionMonitorResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ConnectionMonitorResultResponse{}, err
+	}
+	return ConnectionMonitorResultResponse{RawResponse: resp.Response, ConnectionMonitorResult: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -216,11 +218,7 @@ func (client ConnectionMonitorsClient) Get(ctx context.Context, resourceGroupNam
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ConnectionMonitorResultResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return ConnectionMonitorResultResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -244,9 +242,11 @@ func (client ConnectionMonitorsClient) getCreateRequest(ctx context.Context, res
 
 // getHandleResponse handles the Get response.
 func (client ConnectionMonitorsClient) getHandleResponse(resp *azcore.Response) (ConnectionMonitorResultResponse, error) {
-	result := ConnectionMonitorResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ConnectionMonitorResult)
-	return result, err
+	var val *ConnectionMonitorResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ConnectionMonitorResultResponse{}, err
+	}
+	return ConnectionMonitorResultResponse{RawResponse: resp.Response, ConnectionMonitorResult: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -271,11 +271,7 @@ func (client ConnectionMonitorsClient) List(ctx context.Context, resourceGroupNa
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ConnectionMonitorListResultResponse{}, client.listHandleError(resp)
 	}
-	result, err := client.listHandleResponse(resp)
-	if err != nil {
-		return ConnectionMonitorListResultResponse{}, err
-	}
-	return result, nil
+	return client.listHandleResponse(resp)
 }
 
 // listCreateRequest creates the List request.
@@ -298,9 +294,11 @@ func (client ConnectionMonitorsClient) listCreateRequest(ctx context.Context, re
 
 // listHandleResponse handles the List response.
 func (client ConnectionMonitorsClient) listHandleResponse(resp *azcore.Response) (ConnectionMonitorListResultResponse, error) {
-	result := ConnectionMonitorListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ConnectionMonitorListResult)
-	return result, err
+	var val *ConnectionMonitorListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ConnectionMonitorListResultResponse{}, err
+	}
+	return ConnectionMonitorListResultResponse{RawResponse: resp.Response, ConnectionMonitorListResult: val}, nil
 }
 
 // listHandleError handles the List error response.
@@ -386,9 +384,11 @@ func (client ConnectionMonitorsClient) queryCreateRequest(ctx context.Context, r
 
 // queryHandleResponse handles the Query response.
 func (client ConnectionMonitorsClient) queryHandleResponse(resp *azcore.Response) (ConnectionMonitorQueryResultResponse, error) {
-	result := ConnectionMonitorQueryResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ConnectionMonitorQueryResult)
-	return result, err
+	var val *ConnectionMonitorQueryResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ConnectionMonitorQueryResultResponse{}, err
+	}
+	return ConnectionMonitorQueryResultResponse{RawResponse: resp.Response, ConnectionMonitorQueryResult: val}, nil
 }
 
 // queryHandleError handles the Query error response.
@@ -575,11 +575,7 @@ func (client ConnectionMonitorsClient) UpdateTags(ctx context.Context, resourceG
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ConnectionMonitorResultResponse{}, client.updateTagsHandleError(resp)
 	}
-	result, err := client.updateTagsHandleResponse(resp)
-	if err != nil {
-		return ConnectionMonitorResultResponse{}, err
-	}
-	return result, nil
+	return client.updateTagsHandleResponse(resp)
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.
@@ -603,9 +599,11 @@ func (client ConnectionMonitorsClient) updateTagsCreateRequest(ctx context.Conte
 
 // updateTagsHandleResponse handles the UpdateTags response.
 func (client ConnectionMonitorsClient) updateTagsHandleResponse(resp *azcore.Response) (ConnectionMonitorResultResponse, error) {
-	result := ConnectionMonitorResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ConnectionMonitorResult)
-	return result, err
+	var val *ConnectionMonitorResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ConnectionMonitorResultResponse{}, err
+	}
+	return ConnectionMonitorResultResponse{RawResponse: resp.Response, ConnectionMonitorResult: val}, nil
 }
 
 // updateTagsHandleError handles the UpdateTags error response.

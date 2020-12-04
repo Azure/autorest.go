@@ -107,9 +107,11 @@ func (client PublicIPPrefixesClient) createOrUpdateCreateRequest(ctx context.Con
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client PublicIPPrefixesClient) createOrUpdateHandleResponse(resp *azcore.Response) (PublicIPPrefixResponse, error) {
-	result := PublicIPPrefixResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.PublicIPPrefix)
-	return result, err
+	var val *PublicIPPrefix
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return PublicIPPrefixResponse{}, err
+	}
+	return PublicIPPrefixResponse{RawResponse: resp.Response, PublicIPPrefix: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -214,11 +216,7 @@ func (client PublicIPPrefixesClient) Get(ctx context.Context, resourceGroupName 
 	if !resp.HasStatusCode(http.StatusOK) {
 		return PublicIPPrefixResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return PublicIPPrefixResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -244,9 +242,11 @@ func (client PublicIPPrefixesClient) getCreateRequest(ctx context.Context, resou
 
 // getHandleResponse handles the Get response.
 func (client PublicIPPrefixesClient) getHandleResponse(resp *azcore.Response) (PublicIPPrefixResponse, error) {
-	result := PublicIPPrefixResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.PublicIPPrefix)
-	return result, err
+	var val *PublicIPPrefix
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return PublicIPPrefixResponse{}, err
+	}
+	return PublicIPPrefixResponse{RawResponse: resp.Response, PublicIPPrefix: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -293,9 +293,11 @@ func (client PublicIPPrefixesClient) listCreateRequest(ctx context.Context, reso
 
 // listHandleResponse handles the List response.
 func (client PublicIPPrefixesClient) listHandleResponse(resp *azcore.Response) (PublicIPPrefixListResultResponse, error) {
-	result := PublicIPPrefixListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.PublicIPPrefixListResult)
-	return result, err
+	var val *PublicIPPrefixListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return PublicIPPrefixListResultResponse{}, err
+	}
+	return PublicIPPrefixListResultResponse{RawResponse: resp.Response, PublicIPPrefixListResult: val}, nil
 }
 
 // listHandleError handles the List error response.
@@ -341,9 +343,11 @@ func (client PublicIPPrefixesClient) listAllCreateRequest(ctx context.Context, o
 
 // listAllHandleResponse handles the ListAll response.
 func (client PublicIPPrefixesClient) listAllHandleResponse(resp *azcore.Response) (PublicIPPrefixListResultResponse, error) {
-	result := PublicIPPrefixListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.PublicIPPrefixListResult)
-	return result, err
+	var val *PublicIPPrefixListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return PublicIPPrefixListResultResponse{}, err
+	}
+	return PublicIPPrefixListResultResponse{RawResponse: resp.Response, PublicIPPrefixListResult: val}, nil
 }
 
 // listAllHandleError handles the ListAll error response.
@@ -368,11 +372,7 @@ func (client PublicIPPrefixesClient) UpdateTags(ctx context.Context, resourceGro
 	if !resp.HasStatusCode(http.StatusOK) {
 		return PublicIPPrefixResponse{}, client.updateTagsHandleError(resp)
 	}
-	result, err := client.updateTagsHandleResponse(resp)
-	if err != nil {
-		return PublicIPPrefixResponse{}, err
-	}
-	return result, nil
+	return client.updateTagsHandleResponse(resp)
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.
@@ -395,9 +395,11 @@ func (client PublicIPPrefixesClient) updateTagsCreateRequest(ctx context.Context
 
 // updateTagsHandleResponse handles the UpdateTags response.
 func (client PublicIPPrefixesClient) updateTagsHandleResponse(resp *azcore.Response) (PublicIPPrefixResponse, error) {
-	result := PublicIPPrefixResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.PublicIPPrefix)
-	return result, err
+	var val *PublicIPPrefix
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return PublicIPPrefixResponse{}, err
+	}
+	return PublicIPPrefixResponse{RawResponse: resp.Response, PublicIPPrefix: val}, nil
 }
 
 // updateTagsHandleError handles the UpdateTags error response.

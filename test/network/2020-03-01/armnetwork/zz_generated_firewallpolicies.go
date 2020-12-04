@@ -107,9 +107,11 @@ func (client FirewallPoliciesClient) createOrUpdateCreateRequest(ctx context.Con
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client FirewallPoliciesClient) createOrUpdateHandleResponse(resp *azcore.Response) (FirewallPolicyResponse, error) {
-	result := FirewallPolicyResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.FirewallPolicy)
-	return result, err
+	var val *FirewallPolicy
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return FirewallPolicyResponse{}, err
+	}
+	return FirewallPolicyResponse{RawResponse: resp.Response, FirewallPolicy: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -214,11 +216,7 @@ func (client FirewallPoliciesClient) Get(ctx context.Context, resourceGroupName 
 	if !resp.HasStatusCode(http.StatusOK) {
 		return FirewallPolicyResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return FirewallPolicyResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -244,9 +242,11 @@ func (client FirewallPoliciesClient) getCreateRequest(ctx context.Context, resou
 
 // getHandleResponse handles the Get response.
 func (client FirewallPoliciesClient) getHandleResponse(resp *azcore.Response) (FirewallPolicyResponse, error) {
-	result := FirewallPolicyResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.FirewallPolicy)
-	return result, err
+	var val *FirewallPolicy
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return FirewallPolicyResponse{}, err
+	}
+	return FirewallPolicyResponse{RawResponse: resp.Response, FirewallPolicy: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -293,9 +293,11 @@ func (client FirewallPoliciesClient) listCreateRequest(ctx context.Context, reso
 
 // listHandleResponse handles the List response.
 func (client FirewallPoliciesClient) listHandleResponse(resp *azcore.Response) (FirewallPolicyListResultResponse, error) {
-	result := FirewallPolicyListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.FirewallPolicyListResult)
-	return result, err
+	var val *FirewallPolicyListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return FirewallPolicyListResultResponse{}, err
+	}
+	return FirewallPolicyListResultResponse{RawResponse: resp.Response, FirewallPolicyListResult: val}, nil
 }
 
 // listHandleError handles the List error response.
@@ -341,9 +343,11 @@ func (client FirewallPoliciesClient) listAllCreateRequest(ctx context.Context, o
 
 // listAllHandleResponse handles the ListAll response.
 func (client FirewallPoliciesClient) listAllHandleResponse(resp *azcore.Response) (FirewallPolicyListResultResponse, error) {
-	result := FirewallPolicyListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.FirewallPolicyListResult)
-	return result, err
+	var val *FirewallPolicyListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return FirewallPolicyListResultResponse{}, err
+	}
+	return FirewallPolicyListResultResponse{RawResponse: resp.Response, FirewallPolicyListResult: val}, nil
 }
 
 // listAllHandleError handles the ListAll error response.

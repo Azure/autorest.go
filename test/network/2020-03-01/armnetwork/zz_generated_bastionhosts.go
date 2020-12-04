@@ -107,9 +107,11 @@ func (client BastionHostsClient) createOrUpdateCreateRequest(ctx context.Context
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client BastionHostsClient) createOrUpdateHandleResponse(resp *azcore.Response) (BastionHostResponse, error) {
-	result := BastionHostResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.BastionHost)
-	return result, err
+	var val *BastionHost
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return BastionHostResponse{}, err
+	}
+	return BastionHostResponse{RawResponse: resp.Response, BastionHost: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -214,11 +216,7 @@ func (client BastionHostsClient) Get(ctx context.Context, resourceGroupName stri
 	if !resp.HasStatusCode(http.StatusOK) {
 		return BastionHostResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return BastionHostResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -241,9 +239,11 @@ func (client BastionHostsClient) getCreateRequest(ctx context.Context, resourceG
 
 // getHandleResponse handles the Get response.
 func (client BastionHostsClient) getHandleResponse(resp *azcore.Response) (BastionHostResponse, error) {
-	result := BastionHostResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.BastionHost)
-	return result, err
+	var val *BastionHost
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return BastionHostResponse{}, err
+	}
+	return BastionHostResponse{RawResponse: resp.Response, BastionHost: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -289,9 +289,11 @@ func (client BastionHostsClient) listCreateRequest(ctx context.Context, options 
 
 // listHandleResponse handles the List response.
 func (client BastionHostsClient) listHandleResponse(resp *azcore.Response) (BastionHostListResultResponse, error) {
-	result := BastionHostListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.BastionHostListResult)
-	return result, err
+	var val *BastionHostListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return BastionHostListResultResponse{}, err
+	}
+	return BastionHostListResultResponse{RawResponse: resp.Response, BastionHostListResult: val}, nil
 }
 
 // listHandleError handles the List error response.
@@ -338,9 +340,11 @@ func (client BastionHostsClient) listByResourceGroupCreateRequest(ctx context.Co
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
 func (client BastionHostsClient) listByResourceGroupHandleResponse(resp *azcore.Response) (BastionHostListResultResponse, error) {
-	result := BastionHostListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.BastionHostListResult)
-	return result, err
+	var val *BastionHostListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return BastionHostListResultResponse{}, err
+	}
+	return BastionHostListResultResponse{RawResponse: resp.Response, BastionHostListResult: val}, nil
 }
 
 // listByResourceGroupHandleError handles the ListByResourceGroup error response.

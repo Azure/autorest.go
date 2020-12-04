@@ -37,11 +37,7 @@ func (client integrationRuntimesClient) Get(ctx context.Context, integrationRunt
 	if !resp.HasStatusCode(http.StatusOK) {
 		return IntegrationRuntimeResourceResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return IntegrationRuntimeResourceResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -62,9 +58,11 @@ func (client integrationRuntimesClient) getCreateRequest(ctx context.Context, in
 
 // getHandleResponse handles the Get response.
 func (client integrationRuntimesClient) getHandleResponse(resp *azcore.Response) (IntegrationRuntimeResourceResponse, error) {
-	result := IntegrationRuntimeResourceResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.IntegrationRuntimeResource)
-	return result, err
+	var val *IntegrationRuntimeResource
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return IntegrationRuntimeResourceResponse{}, err
+	}
+	return IntegrationRuntimeResourceResponse{RawResponse: resp.Response, IntegrationRuntimeResource: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -89,11 +87,7 @@ func (client integrationRuntimesClient) List(ctx context.Context, options *Integ
 	if !resp.HasStatusCode(http.StatusOK) {
 		return IntegrationRuntimeListResponseResponse{}, client.listHandleError(resp)
 	}
-	result, err := client.listHandleResponse(resp)
-	if err != nil {
-		return IntegrationRuntimeListResponseResponse{}, err
-	}
-	return result, nil
+	return client.listHandleResponse(resp)
 }
 
 // listCreateRequest creates the List request.
@@ -113,9 +107,11 @@ func (client integrationRuntimesClient) listCreateRequest(ctx context.Context, o
 
 // listHandleResponse handles the List response.
 func (client integrationRuntimesClient) listHandleResponse(resp *azcore.Response) (IntegrationRuntimeListResponseResponse, error) {
-	result := IntegrationRuntimeListResponseResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.IntegrationRuntimeListResponse)
-	return result, err
+	var val *IntegrationRuntimeListResponse
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return IntegrationRuntimeListResponseResponse{}, err
+	}
+	return IntegrationRuntimeListResponseResponse{RawResponse: resp.Response, IntegrationRuntimeListResponse: val}, nil
 }
 
 // listHandleError handles the List error response.

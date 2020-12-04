@@ -107,9 +107,11 @@ func (client VirtualNetworkGatewayConnectionsClient) createOrUpdateCreateRequest
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client VirtualNetworkGatewayConnectionsClient) createOrUpdateHandleResponse(resp *azcore.Response) (VirtualNetworkGatewayConnectionResponse, error) {
-	result := VirtualNetworkGatewayConnectionResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.VirtualNetworkGatewayConnection)
-	return result, err
+	var val *VirtualNetworkGatewayConnection
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return VirtualNetworkGatewayConnectionResponse{}, err
+	}
+	return VirtualNetworkGatewayConnectionResponse{RawResponse: resp.Response, VirtualNetworkGatewayConnection: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -214,11 +216,7 @@ func (client VirtualNetworkGatewayConnectionsClient) Get(ctx context.Context, re
 	if !resp.HasStatusCode(http.StatusOK) {
 		return VirtualNetworkGatewayConnectionResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return VirtualNetworkGatewayConnectionResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -241,9 +239,11 @@ func (client VirtualNetworkGatewayConnectionsClient) getCreateRequest(ctx contex
 
 // getHandleResponse handles the Get response.
 func (client VirtualNetworkGatewayConnectionsClient) getHandleResponse(resp *azcore.Response) (VirtualNetworkGatewayConnectionResponse, error) {
-	result := VirtualNetworkGatewayConnectionResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.VirtualNetworkGatewayConnection)
-	return result, err
+	var val *VirtualNetworkGatewayConnection
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return VirtualNetworkGatewayConnectionResponse{}, err
+	}
+	return VirtualNetworkGatewayConnectionResponse{RawResponse: resp.Response, VirtualNetworkGatewayConnection: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -269,11 +269,7 @@ func (client VirtualNetworkGatewayConnectionsClient) GetSharedKey(ctx context.Co
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ConnectionSharedKeyResponse{}, client.getSharedKeyHandleError(resp)
 	}
-	result, err := client.getSharedKeyHandleResponse(resp)
-	if err != nil {
-		return ConnectionSharedKeyResponse{}, err
-	}
-	return result, nil
+	return client.getSharedKeyHandleResponse(resp)
 }
 
 // getSharedKeyCreateRequest creates the GetSharedKey request.
@@ -296,9 +292,11 @@ func (client VirtualNetworkGatewayConnectionsClient) getSharedKeyCreateRequest(c
 
 // getSharedKeyHandleResponse handles the GetSharedKey response.
 func (client VirtualNetworkGatewayConnectionsClient) getSharedKeyHandleResponse(resp *azcore.Response) (ConnectionSharedKeyResponse, error) {
-	result := ConnectionSharedKeyResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ConnectionSharedKey)
-	return result, err
+	var val *ConnectionSharedKey
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ConnectionSharedKeyResponse{}, err
+	}
+	return ConnectionSharedKeyResponse{RawResponse: resp.Response, ConnectionSharedKey: val}, nil
 }
 
 // getSharedKeyHandleError handles the GetSharedKey error response.
@@ -345,9 +343,11 @@ func (client VirtualNetworkGatewayConnectionsClient) listCreateRequest(ctx conte
 
 // listHandleResponse handles the List response.
 func (client VirtualNetworkGatewayConnectionsClient) listHandleResponse(resp *azcore.Response) (VirtualNetworkGatewayConnectionListResultResponse, error) {
-	result := VirtualNetworkGatewayConnectionListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.VirtualNetworkGatewayConnectionListResult)
-	return result, err
+	var val *VirtualNetworkGatewayConnectionListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return VirtualNetworkGatewayConnectionListResultResponse{}, err
+	}
+	return VirtualNetworkGatewayConnectionListResultResponse{RawResponse: resp.Response, VirtualNetworkGatewayConnectionListResult: val}, nil
 }
 
 // listHandleError handles the List error response.
@@ -436,9 +436,11 @@ func (client VirtualNetworkGatewayConnectionsClient) resetSharedKeyCreateRequest
 
 // resetSharedKeyHandleResponse handles the ResetSharedKey response.
 func (client VirtualNetworkGatewayConnectionsClient) resetSharedKeyHandleResponse(resp *azcore.Response) (ConnectionResetSharedKeyResponse, error) {
-	result := ConnectionResetSharedKeyResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ConnectionResetSharedKey)
-	return result, err
+	var val *ConnectionResetSharedKey
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ConnectionResetSharedKeyResponse{}, err
+	}
+	return ConnectionResetSharedKeyResponse{RawResponse: resp.Response, ConnectionResetSharedKey: val}, nil
 }
 
 // resetSharedKeyHandleError handles the ResetSharedKey error response.
@@ -527,9 +529,11 @@ func (client VirtualNetworkGatewayConnectionsClient) setSharedKeyCreateRequest(c
 
 // setSharedKeyHandleResponse handles the SetSharedKey response.
 func (client VirtualNetworkGatewayConnectionsClient) setSharedKeyHandleResponse(resp *azcore.Response) (ConnectionSharedKeyResponse, error) {
-	result := ConnectionSharedKeyResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ConnectionSharedKey)
-	return result, err
+	var val *ConnectionSharedKey
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ConnectionSharedKeyResponse{}, err
+	}
+	return ConnectionSharedKeyResponse{RawResponse: resp.Response, ConnectionSharedKey: val}, nil
 }
 
 // setSharedKeyHandleError handles the SetSharedKey error response.
@@ -617,9 +621,11 @@ func (client VirtualNetworkGatewayConnectionsClient) startPacketCaptureCreateReq
 
 // startPacketCaptureHandleResponse handles the StartPacketCapture response.
 func (client VirtualNetworkGatewayConnectionsClient) startPacketCaptureHandleResponse(resp *azcore.Response) (StringResponse, error) {
-	result := StringResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Value)
-	return result, err
+	var val *string
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return StringResponse{}, err
+	}
+	return StringResponse{RawResponse: resp.Response, Value: val}, nil
 }
 
 // startPacketCaptureHandleError handles the StartPacketCapture error response.
@@ -704,9 +710,11 @@ func (client VirtualNetworkGatewayConnectionsClient) stopPacketCaptureCreateRequ
 
 // stopPacketCaptureHandleResponse handles the StopPacketCapture response.
 func (client VirtualNetworkGatewayConnectionsClient) stopPacketCaptureHandleResponse(resp *azcore.Response) (StringResponse, error) {
-	result := StringResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Value)
-	return result, err
+	var val *string
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return StringResponse{}, err
+	}
+	return StringResponse{RawResponse: resp.Response, Value: val}, nil
 }
 
 // stopPacketCaptureHandleError handles the StopPacketCapture error response.
@@ -791,9 +799,11 @@ func (client VirtualNetworkGatewayConnectionsClient) updateTagsCreateRequest(ctx
 
 // updateTagsHandleResponse handles the UpdateTags response.
 func (client VirtualNetworkGatewayConnectionsClient) updateTagsHandleResponse(resp *azcore.Response) (VirtualNetworkGatewayConnectionResponse, error) {
-	result := VirtualNetworkGatewayConnectionResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.VirtualNetworkGatewayConnection)
-	return result, err
+	var val *VirtualNetworkGatewayConnection
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return VirtualNetworkGatewayConnectionResponse{}, err
+	}
+	return VirtualNetworkGatewayConnectionResponse{RawResponse: resp.Response, VirtualNetworkGatewayConnection: val}, nil
 }
 
 // updateTagsHandleError handles the UpdateTags error response.

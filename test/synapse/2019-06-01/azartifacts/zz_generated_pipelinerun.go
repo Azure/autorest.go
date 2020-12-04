@@ -82,11 +82,7 @@ func (client pipelineRunClient) GetPipelineRun(ctx context.Context, runId string
 	if !resp.HasStatusCode(http.StatusOK) {
 		return PipelineRunResponse{}, client.getPipelineRunHandleError(resp)
 	}
-	result, err := client.getPipelineRunHandleResponse(resp)
-	if err != nil {
-		return PipelineRunResponse{}, err
-	}
-	return result, nil
+	return client.getPipelineRunHandleResponse(resp)
 }
 
 // getPipelineRunCreateRequest creates the GetPipelineRun request.
@@ -107,9 +103,11 @@ func (client pipelineRunClient) getPipelineRunCreateRequest(ctx context.Context,
 
 // getPipelineRunHandleResponse handles the GetPipelineRun response.
 func (client pipelineRunClient) getPipelineRunHandleResponse(resp *azcore.Response) (PipelineRunResponse, error) {
-	result := PipelineRunResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.PipelineRun)
-	return result, err
+	var val *PipelineRun
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return PipelineRunResponse{}, err
+	}
+	return PipelineRunResponse{RawResponse: resp.Response, PipelineRun: val}, nil
 }
 
 // getPipelineRunHandleError handles the GetPipelineRun error response.
@@ -134,11 +132,7 @@ func (client pipelineRunClient) QueryActivityRuns(ctx context.Context, pipelineN
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ActivityRunsQueryResponseResponse{}, client.queryActivityRunsHandleError(resp)
 	}
-	result, err := client.queryActivityRunsHandleResponse(resp)
-	if err != nil {
-		return ActivityRunsQueryResponseResponse{}, err
-	}
-	return result, nil
+	return client.queryActivityRunsHandleResponse(resp)
 }
 
 // queryActivityRunsCreateRequest creates the QueryActivityRuns request.
@@ -160,9 +154,11 @@ func (client pipelineRunClient) queryActivityRunsCreateRequest(ctx context.Conte
 
 // queryActivityRunsHandleResponse handles the QueryActivityRuns response.
 func (client pipelineRunClient) queryActivityRunsHandleResponse(resp *azcore.Response) (ActivityRunsQueryResponseResponse, error) {
-	result := ActivityRunsQueryResponseResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ActivityRunsQueryResponse)
-	return result, err
+	var val *ActivityRunsQueryResponse
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ActivityRunsQueryResponseResponse{}, err
+	}
+	return ActivityRunsQueryResponseResponse{RawResponse: resp.Response, ActivityRunsQueryResponse: val}, nil
 }
 
 // queryActivityRunsHandleError handles the QueryActivityRuns error response.
@@ -187,11 +183,7 @@ func (client pipelineRunClient) QueryPipelineRunsByWorkspace(ctx context.Context
 	if !resp.HasStatusCode(http.StatusOK) {
 		return PipelineRunsQueryResponseResponse{}, client.queryPipelineRunsByWorkspaceHandleError(resp)
 	}
-	result, err := client.queryPipelineRunsByWorkspaceHandleResponse(resp)
-	if err != nil {
-		return PipelineRunsQueryResponseResponse{}, err
-	}
-	return result, nil
+	return client.queryPipelineRunsByWorkspaceHandleResponse(resp)
 }
 
 // queryPipelineRunsByWorkspaceCreateRequest creates the QueryPipelineRunsByWorkspace request.
@@ -211,9 +203,11 @@ func (client pipelineRunClient) queryPipelineRunsByWorkspaceCreateRequest(ctx co
 
 // queryPipelineRunsByWorkspaceHandleResponse handles the QueryPipelineRunsByWorkspace response.
 func (client pipelineRunClient) queryPipelineRunsByWorkspaceHandleResponse(resp *azcore.Response) (PipelineRunsQueryResponseResponse, error) {
-	result := PipelineRunsQueryResponseResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.PipelineRunsQueryResponse)
-	return result, err
+	var val *PipelineRunsQueryResponse
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return PipelineRunsQueryResponseResponse{}, err
+	}
+	return PipelineRunsQueryResponseResponse{RawResponse: resp.Response, PipelineRunsQueryResponse: val}, nil
 }
 
 // queryPipelineRunsByWorkspaceHandleError handles the QueryPipelineRunsByWorkspace error response.

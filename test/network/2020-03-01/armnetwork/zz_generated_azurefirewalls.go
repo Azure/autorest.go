@@ -107,9 +107,11 @@ func (client AzureFirewallsClient) createOrUpdateCreateRequest(ctx context.Conte
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client AzureFirewallsClient) createOrUpdateHandleResponse(resp *azcore.Response) (AzureFirewallResponse, error) {
-	result := AzureFirewallResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.AzureFirewall)
-	return result, err
+	var val *AzureFirewall
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return AzureFirewallResponse{}, err
+	}
+	return AzureFirewallResponse{RawResponse: resp.Response, AzureFirewall: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -214,11 +216,7 @@ func (client AzureFirewallsClient) Get(ctx context.Context, resourceGroupName st
 	if !resp.HasStatusCode(http.StatusOK) {
 		return AzureFirewallResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return AzureFirewallResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -241,9 +239,11 @@ func (client AzureFirewallsClient) getCreateRequest(ctx context.Context, resourc
 
 // getHandleResponse handles the Get response.
 func (client AzureFirewallsClient) getHandleResponse(resp *azcore.Response) (AzureFirewallResponse, error) {
-	result := AzureFirewallResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.AzureFirewall)
-	return result, err
+	var val *AzureFirewall
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return AzureFirewallResponse{}, err
+	}
+	return AzureFirewallResponse{RawResponse: resp.Response, AzureFirewall: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -290,9 +290,11 @@ func (client AzureFirewallsClient) listCreateRequest(ctx context.Context, resour
 
 // listHandleResponse handles the List response.
 func (client AzureFirewallsClient) listHandleResponse(resp *azcore.Response) (AzureFirewallListResultResponse, error) {
-	result := AzureFirewallListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.AzureFirewallListResult)
-	return result, err
+	var val *AzureFirewallListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return AzureFirewallListResultResponse{}, err
+	}
+	return AzureFirewallListResultResponse{RawResponse: resp.Response, AzureFirewallListResult: val}, nil
 }
 
 // listHandleError handles the List error response.
@@ -338,9 +340,11 @@ func (client AzureFirewallsClient) listAllCreateRequest(ctx context.Context, opt
 
 // listAllHandleResponse handles the ListAll response.
 func (client AzureFirewallsClient) listAllHandleResponse(resp *azcore.Response) (AzureFirewallListResultResponse, error) {
-	result := AzureFirewallListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.AzureFirewallListResult)
-	return result, err
+	var val *AzureFirewallListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return AzureFirewallListResultResponse{}, err
+	}
+	return AzureFirewallListResultResponse{RawResponse: resp.Response, AzureFirewallListResult: val}, nil
 }
 
 // listAllHandleError handles the ListAll error response.
@@ -425,9 +429,11 @@ func (client AzureFirewallsClient) updateTagsCreateRequest(ctx context.Context, 
 
 // updateTagsHandleResponse handles the UpdateTags response.
 func (client AzureFirewallsClient) updateTagsHandleResponse(resp *azcore.Response) (AzureFirewallResponse, error) {
-	result := AzureFirewallResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.AzureFirewall)
-	return result, err
+	var val *AzureFirewall
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return AzureFirewallResponse{}, err
+	}
+	return AzureFirewallResponse{RawResponse: resp.Response, AzureFirewall: val}, nil
 }
 
 // updateTagsHandleError handles the UpdateTags error response.

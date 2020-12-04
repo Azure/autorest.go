@@ -108,9 +108,11 @@ func (client VpnConnectionsClient) createOrUpdateCreateRequest(ctx context.Conte
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client VpnConnectionsClient) createOrUpdateHandleResponse(resp *azcore.Response) (VpnConnectionResponse, error) {
-	result := VpnConnectionResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.VpnConnection)
-	return result, err
+	var val *VpnConnection
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return VpnConnectionResponse{}, err
+	}
+	return VpnConnectionResponse{RawResponse: resp.Response, VpnConnection: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -216,11 +218,7 @@ func (client VpnConnectionsClient) Get(ctx context.Context, resourceGroupName st
 	if !resp.HasStatusCode(http.StatusOK) {
 		return VpnConnectionResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return VpnConnectionResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -244,9 +242,11 @@ func (client VpnConnectionsClient) getCreateRequest(ctx context.Context, resourc
 
 // getHandleResponse handles the Get response.
 func (client VpnConnectionsClient) getHandleResponse(resp *azcore.Response) (VpnConnectionResponse, error) {
-	result := VpnConnectionResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.VpnConnection)
-	return result, err
+	var val *VpnConnection
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return VpnConnectionResponse{}, err
+	}
+	return VpnConnectionResponse{RawResponse: resp.Response, VpnConnection: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -294,9 +294,11 @@ func (client VpnConnectionsClient) listByVpnGatewayCreateRequest(ctx context.Con
 
 // listByVpnGatewayHandleResponse handles the ListByVpnGateway response.
 func (client VpnConnectionsClient) listByVpnGatewayHandleResponse(resp *azcore.Response) (ListVpnConnectionsResultResponse, error) {
-	result := ListVpnConnectionsResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ListVpnConnectionsResult)
-	return result, err
+	var val *ListVpnConnectionsResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ListVpnConnectionsResultResponse{}, err
+	}
+	return ListVpnConnectionsResultResponse{RawResponse: resp.Response, ListVpnConnectionsResult: val}, nil
 }
 
 // listByVpnGatewayHandleError handles the ListByVpnGateway error response.

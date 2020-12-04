@@ -107,9 +107,11 @@ func (client VirtualNetworkTapsClient) createOrUpdateCreateRequest(ctx context.C
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client VirtualNetworkTapsClient) createOrUpdateHandleResponse(resp *azcore.Response) (VirtualNetworkTapResponse, error) {
-	result := VirtualNetworkTapResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.VirtualNetworkTap)
-	return result, err
+	var val *VirtualNetworkTap
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return VirtualNetworkTapResponse{}, err
+	}
+	return VirtualNetworkTapResponse{RawResponse: resp.Response, VirtualNetworkTap: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -214,11 +216,7 @@ func (client VirtualNetworkTapsClient) Get(ctx context.Context, resourceGroupNam
 	if !resp.HasStatusCode(http.StatusOK) {
 		return VirtualNetworkTapResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return VirtualNetworkTapResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -241,9 +239,11 @@ func (client VirtualNetworkTapsClient) getCreateRequest(ctx context.Context, res
 
 // getHandleResponse handles the Get response.
 func (client VirtualNetworkTapsClient) getHandleResponse(resp *azcore.Response) (VirtualNetworkTapResponse, error) {
-	result := VirtualNetworkTapResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.VirtualNetworkTap)
-	return result, err
+	var val *VirtualNetworkTap
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return VirtualNetworkTapResponse{}, err
+	}
+	return VirtualNetworkTapResponse{RawResponse: resp.Response, VirtualNetworkTap: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -289,9 +289,11 @@ func (client VirtualNetworkTapsClient) listAllCreateRequest(ctx context.Context,
 
 // listAllHandleResponse handles the ListAll response.
 func (client VirtualNetworkTapsClient) listAllHandleResponse(resp *azcore.Response) (VirtualNetworkTapListResultResponse, error) {
-	result := VirtualNetworkTapListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.VirtualNetworkTapListResult)
-	return result, err
+	var val *VirtualNetworkTapListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return VirtualNetworkTapListResultResponse{}, err
+	}
+	return VirtualNetworkTapListResultResponse{RawResponse: resp.Response, VirtualNetworkTapListResult: val}, nil
 }
 
 // listAllHandleError handles the ListAll error response.
@@ -338,9 +340,11 @@ func (client VirtualNetworkTapsClient) listByResourceGroupCreateRequest(ctx cont
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
 func (client VirtualNetworkTapsClient) listByResourceGroupHandleResponse(resp *azcore.Response) (VirtualNetworkTapListResultResponse, error) {
-	result := VirtualNetworkTapListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.VirtualNetworkTapListResult)
-	return result, err
+	var val *VirtualNetworkTapListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return VirtualNetworkTapListResultResponse{}, err
+	}
+	return VirtualNetworkTapListResultResponse{RawResponse: resp.Response, VirtualNetworkTapListResult: val}, nil
 }
 
 // listByResourceGroupHandleError handles the ListByResourceGroup error response.
@@ -365,11 +369,7 @@ func (client VirtualNetworkTapsClient) UpdateTags(ctx context.Context, resourceG
 	if !resp.HasStatusCode(http.StatusOK) {
 		return VirtualNetworkTapResponse{}, client.updateTagsHandleError(resp)
 	}
-	result, err := client.updateTagsHandleResponse(resp)
-	if err != nil {
-		return VirtualNetworkTapResponse{}, err
-	}
-	return result, nil
+	return client.updateTagsHandleResponse(resp)
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.
@@ -392,9 +392,11 @@ func (client VirtualNetworkTapsClient) updateTagsCreateRequest(ctx context.Conte
 
 // updateTagsHandleResponse handles the UpdateTags response.
 func (client VirtualNetworkTapsClient) updateTagsHandleResponse(resp *azcore.Response) (VirtualNetworkTapResponse, error) {
-	result := VirtualNetworkTapResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.VirtualNetworkTap)
-	return result, err
+	var val *VirtualNetworkTap
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return VirtualNetworkTapResponse{}, err
+	}
+	return VirtualNetworkTapResponse{RawResponse: resp.Response, VirtualNetworkTap: val}, nil
 }
 
 // updateTagsHandleError handles the UpdateTags error response.

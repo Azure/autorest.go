@@ -42,11 +42,7 @@ func (client BoolClient) GetFalse(ctx context.Context, options *BoolGetFalseOpti
 	if !resp.HasStatusCode(http.StatusOK) {
 		return BoolResponse{}, client.getFalseHandleError(resp)
 	}
-	result, err := client.getFalseHandleResponse(resp)
-	if err != nil {
-		return BoolResponse{}, err
-	}
-	return result, nil
+	return client.getFalseHandleResponse(resp)
 }
 
 // getFalseCreateRequest creates the GetFalse request.
@@ -63,9 +59,11 @@ func (client BoolClient) getFalseCreateRequest(ctx context.Context, options *Boo
 
 // getFalseHandleResponse handles the GetFalse response.
 func (client BoolClient) getFalseHandleResponse(resp *azcore.Response) (BoolResponse, error) {
-	result := BoolResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Value)
-	return result, err
+	var val *bool
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return BoolResponse{}, err
+	}
+	return BoolResponse{RawResponse: resp.Response, Value: val}, nil
 }
 
 // getFalseHandleError handles the GetFalse error response.
@@ -90,11 +88,7 @@ func (client BoolClient) GetInvalid(ctx context.Context, options *BoolGetInvalid
 	if !resp.HasStatusCode(http.StatusOK) {
 		return BoolResponse{}, client.getInvalidHandleError(resp)
 	}
-	result, err := client.getInvalidHandleResponse(resp)
-	if err != nil {
-		return BoolResponse{}, err
-	}
-	return result, nil
+	return client.getInvalidHandleResponse(resp)
 }
 
 // getInvalidCreateRequest creates the GetInvalid request.
@@ -111,9 +105,11 @@ func (client BoolClient) getInvalidCreateRequest(ctx context.Context, options *B
 
 // getInvalidHandleResponse handles the GetInvalid response.
 func (client BoolClient) getInvalidHandleResponse(resp *azcore.Response) (BoolResponse, error) {
-	result := BoolResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Value)
-	return result, err
+	var val *bool
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return BoolResponse{}, err
+	}
+	return BoolResponse{RawResponse: resp.Response, Value: val}, nil
 }
 
 // getInvalidHandleError handles the GetInvalid error response.
@@ -138,11 +134,7 @@ func (client BoolClient) GetNull(ctx context.Context, options *BoolGetNullOption
 	if !resp.HasStatusCode(http.StatusOK) {
 		return BoolResponse{}, client.getNullHandleError(resp)
 	}
-	result, err := client.getNullHandleResponse(resp)
-	if err != nil {
-		return BoolResponse{}, err
-	}
-	return result, nil
+	return client.getNullHandleResponse(resp)
 }
 
 // getNullCreateRequest creates the GetNull request.
@@ -159,9 +151,11 @@ func (client BoolClient) getNullCreateRequest(ctx context.Context, options *Bool
 
 // getNullHandleResponse handles the GetNull response.
 func (client BoolClient) getNullHandleResponse(resp *azcore.Response) (BoolResponse, error) {
-	result := BoolResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Value)
-	return result, err
+	var val *bool
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return BoolResponse{}, err
+	}
+	return BoolResponse{RawResponse: resp.Response, Value: val}, nil
 }
 
 // getNullHandleError handles the GetNull error response.
@@ -186,11 +180,7 @@ func (client BoolClient) GetTrue(ctx context.Context, options *BoolGetTrueOption
 	if !resp.HasStatusCode(http.StatusOK) {
 		return BoolResponse{}, client.getTrueHandleError(resp)
 	}
-	result, err := client.getTrueHandleResponse(resp)
-	if err != nil {
-		return BoolResponse{}, err
-	}
-	return result, nil
+	return client.getTrueHandleResponse(resp)
 }
 
 // getTrueCreateRequest creates the GetTrue request.
@@ -207,9 +197,11 @@ func (client BoolClient) getTrueCreateRequest(ctx context.Context, options *Bool
 
 // getTrueHandleResponse handles the GetTrue response.
 func (client BoolClient) getTrueHandleResponse(resp *azcore.Response) (BoolResponse, error) {
-	result := BoolResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Value)
-	return result, err
+	var val *bool
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return BoolResponse{}, err
+	}
+	return BoolResponse{RawResponse: resp.Response, Value: val}, nil
 }
 
 // getTrueHandleError handles the GetTrue error response.

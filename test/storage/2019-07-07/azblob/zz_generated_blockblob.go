@@ -45,11 +45,7 @@ func (client blockBlobClient) CommitBlockList(ctx context.Context, blocks BlockL
 	if !resp.HasStatusCode(http.StatusCreated) {
 		return BlockBlobCommitBlockListResponse{}, client.commitBlockListHandleError(resp)
 	}
-	result, err := client.commitBlockListHandleResponse(resp)
-	if err != nil {
-		return BlockBlobCommitBlockListResponse{}, err
-	}
-	return result, nil
+	return client.commitBlockListHandleResponse(resp)
 }
 
 // commitBlockListCreateRequest creates the CommitBlockList request.
@@ -213,11 +209,7 @@ func (client blockBlobClient) GetBlockList(ctx context.Context, listType BlockLi
 	if !resp.HasStatusCode(http.StatusOK) {
 		return BlockListResponse{}, client.getBlockListHandleError(resp)
 	}
-	result, err := client.getBlockListHandleResponse(resp)
-	if err != nil {
-		return BlockListResponse{}, err
-	}
-	return result, nil
+	return client.getBlockListHandleResponse(resp)
 }
 
 // getBlockListCreateRequest creates the GetBlockList request.
@@ -250,7 +242,11 @@ func (client blockBlobClient) getBlockListCreateRequest(ctx context.Context, lis
 
 // getBlockListHandleResponse handles the GetBlockList response.
 func (client blockBlobClient) getBlockListHandleResponse(resp *azcore.Response) (BlockListResponse, error) {
-	result := BlockListResponse{RawResponse: resp.Response}
+	var val *BlockList
+	if err := resp.UnmarshalAsXML(&val); err != nil {
+		return BlockListResponse{}, err
+	}
+	result := BlockListResponse{RawResponse: resp.Response, BlockList: val}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
@@ -287,8 +283,7 @@ func (client blockBlobClient) getBlockListHandleResponse(resp *azcore.Response) 
 		}
 		result.Date = &date
 	}
-	err := resp.UnmarshalAsXML(&result.BlockList)
-	return result, err
+	return result, nil
 }
 
 // getBlockListHandleError handles the GetBlockList error response.
@@ -313,11 +308,7 @@ func (client blockBlobClient) StageBlock(ctx context.Context, blockId string, co
 	if !resp.HasStatusCode(http.StatusCreated) {
 		return BlockBlobStageBlockResponse{}, client.stageBlockHandleError(resp)
 	}
-	result, err := client.stageBlockHandleResponse(resp)
-	if err != nil {
-		return BlockBlobStageBlockResponse{}, err
-	}
-	return result, nil
+	return client.stageBlockHandleResponse(resp)
 }
 
 // stageBlockCreateRequest creates the StageBlock request.
@@ -435,11 +426,7 @@ func (client blockBlobClient) StageBlockFromURL(ctx context.Context, blockId str
 	if !resp.HasStatusCode(http.StatusCreated) {
 		return BlockBlobStageBlockFromURLResponse{}, client.stageBlockFromUrlHandleError(resp)
 	}
-	result, err := client.stageBlockFromUrlHandleResponse(resp)
-	if err != nil {
-		return BlockBlobStageBlockFromURLResponse{}, err
-	}
-	return result, nil
+	return client.stageBlockFromUrlHandleResponse(resp)
 }
 
 // stageBlockFromUrlCreateRequest creates the StageBlockFromURL request.
@@ -576,11 +563,7 @@ func (client blockBlobClient) Upload(ctx context.Context, contentLength int64, b
 	if !resp.HasStatusCode(http.StatusCreated) {
 		return BlockBlobUploadResponse{}, client.uploadHandleError(resp)
 	}
-	result, err := client.uploadHandleResponse(resp)
-	if err != nil {
-		return BlockBlobUploadResponse{}, err
-	}
-	return result, nil
+	return client.uploadHandleResponse(resp)
 }
 
 // uploadCreateRequest creates the Upload request.

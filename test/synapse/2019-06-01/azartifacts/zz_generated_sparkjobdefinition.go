@@ -37,11 +37,7 @@ func (client sparkJobDefinitionClient) CreateOrUpdateSparkJobDefinition(ctx cont
 	if !resp.HasStatusCode(http.StatusOK) {
 		return SparkJobDefinitionResourceResponse{}, client.createOrUpdateSparkJobDefinitionHandleError(resp)
 	}
-	result, err := client.createOrUpdateSparkJobDefinitionHandleResponse(resp)
-	if err != nil {
-		return SparkJobDefinitionResourceResponse{}, err
-	}
-	return result, nil
+	return client.createOrUpdateSparkJobDefinitionHandleResponse(resp)
 }
 
 // createOrUpdateSparkJobDefinitionCreateRequest creates the CreateOrUpdateSparkJobDefinition request.
@@ -65,9 +61,11 @@ func (client sparkJobDefinitionClient) createOrUpdateSparkJobDefinitionCreateReq
 
 // createOrUpdateSparkJobDefinitionHandleResponse handles the CreateOrUpdateSparkJobDefinition response.
 func (client sparkJobDefinitionClient) createOrUpdateSparkJobDefinitionHandleResponse(resp *azcore.Response) (SparkJobDefinitionResourceResponse, error) {
-	result := SparkJobDefinitionResourceResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.SparkJobDefinitionResource)
-	return result, err
+	var val *SparkJobDefinitionResource
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return SparkJobDefinitionResourceResponse{}, err
+	}
+	return SparkJobDefinitionResourceResponse{RawResponse: resp.Response, SparkJobDefinitionResource: val}, nil
 }
 
 // createOrUpdateSparkJobDefinitionHandleError handles the CreateOrUpdateSparkJobDefinition error response.
@@ -112,9 +110,11 @@ func (client sparkJobDefinitionClient) debugSparkJobDefinitionCreateRequest(ctx 
 
 // debugSparkJobDefinitionHandleResponse handles the DebugSparkJobDefinition response.
 func (client sparkJobDefinitionClient) debugSparkJobDefinitionHandleResponse(resp *azcore.Response) (SparkBatchJobResponse, error) {
-	result := SparkBatchJobResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.SparkBatchJob)
-	return result, err
+	var val *SparkBatchJob
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return SparkBatchJobResponse{}, err
+	}
+	return SparkBatchJobResponse{RawResponse: resp.Response, SparkBatchJob: val}, nil
 }
 
 // debugSparkJobDefinitionHandleError handles the DebugSparkJobDefinition error response.
@@ -201,9 +201,11 @@ func (client sparkJobDefinitionClient) executeSparkJobDefinitionCreateRequest(ct
 
 // executeSparkJobDefinitionHandleResponse handles the ExecuteSparkJobDefinition response.
 func (client sparkJobDefinitionClient) executeSparkJobDefinitionHandleResponse(resp *azcore.Response) (SparkBatchJobResponse, error) {
-	result := SparkBatchJobResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.SparkBatchJob)
-	return result, err
+	var val *SparkBatchJob
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return SparkBatchJobResponse{}, err
+	}
+	return SparkBatchJobResponse{RawResponse: resp.Response, SparkBatchJob: val}, nil
 }
 
 // executeSparkJobDefinitionHandleError handles the ExecuteSparkJobDefinition error response.
@@ -228,11 +230,7 @@ func (client sparkJobDefinitionClient) GetSparkJobDefinition(ctx context.Context
 	if !resp.HasStatusCode(http.StatusOK, http.StatusNotModified) {
 		return SparkJobDefinitionResourceResponse{}, client.getSparkJobDefinitionHandleError(resp)
 	}
-	result, err := client.getSparkJobDefinitionHandleResponse(resp)
-	if err != nil {
-		return SparkJobDefinitionResourceResponse{}, err
-	}
-	return result, nil
+	return client.getSparkJobDefinitionHandleResponse(resp)
 }
 
 // getSparkJobDefinitionCreateRequest creates the GetSparkJobDefinition request.
@@ -256,9 +254,11 @@ func (client sparkJobDefinitionClient) getSparkJobDefinitionCreateRequest(ctx co
 
 // getSparkJobDefinitionHandleResponse handles the GetSparkJobDefinition response.
 func (client sparkJobDefinitionClient) getSparkJobDefinitionHandleResponse(resp *azcore.Response) (SparkJobDefinitionResourceResponse, error) {
-	result := SparkJobDefinitionResourceResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.SparkJobDefinitionResource)
-	return result, err
+	var val *SparkJobDefinitionResource
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return SparkJobDefinitionResourceResponse{}, err
+	}
+	return SparkJobDefinitionResourceResponse{RawResponse: resp.Response, SparkJobDefinitionResource: val}, nil
 }
 
 // getSparkJobDefinitionHandleError handles the GetSparkJobDefinition error response.
@@ -303,9 +303,11 @@ func (client sparkJobDefinitionClient) getSparkJobDefinitionsByWorkspaceCreateRe
 
 // getSparkJobDefinitionsByWorkspaceHandleResponse handles the GetSparkJobDefinitionsByWorkspace response.
 func (client sparkJobDefinitionClient) getSparkJobDefinitionsByWorkspaceHandleResponse(resp *azcore.Response) (SparkJobDefinitionsListResponseResponse, error) {
-	result := SparkJobDefinitionsListResponseResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.SparkJobDefinitionsListResponse)
-	return result, err
+	var val *SparkJobDefinitionsListResponse
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return SparkJobDefinitionsListResponseResponse{}, err
+	}
+	return SparkJobDefinitionsListResponseResponse{RawResponse: resp.Response, SparkJobDefinitionsListResponse: val}, nil
 }
 
 // getSparkJobDefinitionsByWorkspaceHandleError handles the GetSparkJobDefinitionsByWorkspace error response.

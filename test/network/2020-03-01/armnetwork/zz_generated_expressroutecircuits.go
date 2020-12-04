@@ -107,9 +107,11 @@ func (client ExpressRouteCircuitsClient) createOrUpdateCreateRequest(ctx context
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client ExpressRouteCircuitsClient) createOrUpdateHandleResponse(resp *azcore.Response) (ExpressRouteCircuitResponse, error) {
-	result := ExpressRouteCircuitResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ExpressRouteCircuit)
-	return result, err
+	var val *ExpressRouteCircuit
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ExpressRouteCircuitResponse{}, err
+	}
+	return ExpressRouteCircuitResponse{RawResponse: resp.Response, ExpressRouteCircuit: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -214,11 +216,7 @@ func (client ExpressRouteCircuitsClient) Get(ctx context.Context, resourceGroupN
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ExpressRouteCircuitResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return ExpressRouteCircuitResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -241,9 +239,11 @@ func (client ExpressRouteCircuitsClient) getCreateRequest(ctx context.Context, r
 
 // getHandleResponse handles the Get response.
 func (client ExpressRouteCircuitsClient) getHandleResponse(resp *azcore.Response) (ExpressRouteCircuitResponse, error) {
-	result := ExpressRouteCircuitResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ExpressRouteCircuit)
-	return result, err
+	var val *ExpressRouteCircuit
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ExpressRouteCircuitResponse{}, err
+	}
+	return ExpressRouteCircuitResponse{RawResponse: resp.Response, ExpressRouteCircuit: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -268,11 +268,7 @@ func (client ExpressRouteCircuitsClient) GetPeeringStats(ctx context.Context, re
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ExpressRouteCircuitStatsResponse{}, client.getPeeringStatsHandleError(resp)
 	}
-	result, err := client.getPeeringStatsHandleResponse(resp)
-	if err != nil {
-		return ExpressRouteCircuitStatsResponse{}, err
-	}
-	return result, nil
+	return client.getPeeringStatsHandleResponse(resp)
 }
 
 // getPeeringStatsCreateRequest creates the GetPeeringStats request.
@@ -296,9 +292,11 @@ func (client ExpressRouteCircuitsClient) getPeeringStatsCreateRequest(ctx contex
 
 // getPeeringStatsHandleResponse handles the GetPeeringStats response.
 func (client ExpressRouteCircuitsClient) getPeeringStatsHandleResponse(resp *azcore.Response) (ExpressRouteCircuitStatsResponse, error) {
-	result := ExpressRouteCircuitStatsResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ExpressRouteCircuitStats)
-	return result, err
+	var val *ExpressRouteCircuitStats
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ExpressRouteCircuitStatsResponse{}, err
+	}
+	return ExpressRouteCircuitStatsResponse{RawResponse: resp.Response, ExpressRouteCircuitStats: val}, nil
 }
 
 // getPeeringStatsHandleError handles the GetPeeringStats error response.
@@ -323,11 +321,7 @@ func (client ExpressRouteCircuitsClient) GetStats(ctx context.Context, resourceG
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ExpressRouteCircuitStatsResponse{}, client.getStatsHandleError(resp)
 	}
-	result, err := client.getStatsHandleResponse(resp)
-	if err != nil {
-		return ExpressRouteCircuitStatsResponse{}, err
-	}
-	return result, nil
+	return client.getStatsHandleResponse(resp)
 }
 
 // getStatsCreateRequest creates the GetStats request.
@@ -350,9 +344,11 @@ func (client ExpressRouteCircuitsClient) getStatsCreateRequest(ctx context.Conte
 
 // getStatsHandleResponse handles the GetStats response.
 func (client ExpressRouteCircuitsClient) getStatsHandleResponse(resp *azcore.Response) (ExpressRouteCircuitStatsResponse, error) {
-	result := ExpressRouteCircuitStatsResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ExpressRouteCircuitStats)
-	return result, err
+	var val *ExpressRouteCircuitStats
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ExpressRouteCircuitStatsResponse{}, err
+	}
+	return ExpressRouteCircuitStatsResponse{RawResponse: resp.Response, ExpressRouteCircuitStats: val}, nil
 }
 
 // getStatsHandleError handles the GetStats error response.
@@ -399,9 +395,11 @@ func (client ExpressRouteCircuitsClient) listCreateRequest(ctx context.Context, 
 
 // listHandleResponse handles the List response.
 func (client ExpressRouteCircuitsClient) listHandleResponse(resp *azcore.Response) (ExpressRouteCircuitListResultResponse, error) {
-	result := ExpressRouteCircuitListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ExpressRouteCircuitListResult)
-	return result, err
+	var val *ExpressRouteCircuitListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ExpressRouteCircuitListResultResponse{}, err
+	}
+	return ExpressRouteCircuitListResultResponse{RawResponse: resp.Response, ExpressRouteCircuitListResult: val}, nil
 }
 
 // listHandleError handles the List error response.
@@ -447,9 +445,11 @@ func (client ExpressRouteCircuitsClient) listAllCreateRequest(ctx context.Contex
 
 // listAllHandleResponse handles the ListAll response.
 func (client ExpressRouteCircuitsClient) listAllHandleResponse(resp *azcore.Response) (ExpressRouteCircuitListResultResponse, error) {
-	result := ExpressRouteCircuitListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ExpressRouteCircuitListResult)
-	return result, err
+	var val *ExpressRouteCircuitListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ExpressRouteCircuitListResultResponse{}, err
+	}
+	return ExpressRouteCircuitListResultResponse{RawResponse: resp.Response, ExpressRouteCircuitListResult: val}, nil
 }
 
 // listAllHandleError handles the ListAll error response.
@@ -536,9 +536,11 @@ func (client ExpressRouteCircuitsClient) listArpTableCreateRequest(ctx context.C
 
 // listArpTableHandleResponse handles the ListArpTable response.
 func (client ExpressRouteCircuitsClient) listArpTableHandleResponse(resp *azcore.Response) (ExpressRouteCircuitsArpTableListResultResponse, error) {
-	result := ExpressRouteCircuitsArpTableListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ExpressRouteCircuitsArpTableListResult)
-	return result, err
+	var val *ExpressRouteCircuitsArpTableListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ExpressRouteCircuitsArpTableListResultResponse{}, err
+	}
+	return ExpressRouteCircuitsArpTableListResultResponse{RawResponse: resp.Response, ExpressRouteCircuitsArpTableListResult: val}, nil
 }
 
 // listArpTableHandleError handles the ListArpTable error response.
@@ -625,9 +627,11 @@ func (client ExpressRouteCircuitsClient) listRoutesTableCreateRequest(ctx contex
 
 // listRoutesTableHandleResponse handles the ListRoutesTable response.
 func (client ExpressRouteCircuitsClient) listRoutesTableHandleResponse(resp *azcore.Response) (ExpressRouteCircuitsRoutesTableListResultResponse, error) {
-	result := ExpressRouteCircuitsRoutesTableListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ExpressRouteCircuitsRoutesTableListResult)
-	return result, err
+	var val *ExpressRouteCircuitsRoutesTableListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ExpressRouteCircuitsRoutesTableListResultResponse{}, err
+	}
+	return ExpressRouteCircuitsRoutesTableListResultResponse{RawResponse: resp.Response, ExpressRouteCircuitsRoutesTableListResult: val}, nil
 }
 
 // listRoutesTableHandleError handles the ListRoutesTable error response.
@@ -714,9 +718,11 @@ func (client ExpressRouteCircuitsClient) listRoutesTableSummaryCreateRequest(ctx
 
 // listRoutesTableSummaryHandleResponse handles the ListRoutesTableSummary response.
 func (client ExpressRouteCircuitsClient) listRoutesTableSummaryHandleResponse(resp *azcore.Response) (ExpressRouteCircuitsRoutesTableSummaryListResultResponse, error) {
-	result := ExpressRouteCircuitsRoutesTableSummaryListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ExpressRouteCircuitsRoutesTableSummaryListResult)
-	return result, err
+	var val *ExpressRouteCircuitsRoutesTableSummaryListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ExpressRouteCircuitsRoutesTableSummaryListResultResponse{}, err
+	}
+	return ExpressRouteCircuitsRoutesTableSummaryListResultResponse{RawResponse: resp.Response, ExpressRouteCircuitsRoutesTableSummaryListResult: val}, nil
 }
 
 // listRoutesTableSummaryHandleError handles the ListRoutesTableSummary error response.
@@ -741,11 +747,7 @@ func (client ExpressRouteCircuitsClient) UpdateTags(ctx context.Context, resourc
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ExpressRouteCircuitResponse{}, client.updateTagsHandleError(resp)
 	}
-	result, err := client.updateTagsHandleResponse(resp)
-	if err != nil {
-		return ExpressRouteCircuitResponse{}, err
-	}
-	return result, nil
+	return client.updateTagsHandleResponse(resp)
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.
@@ -768,9 +770,11 @@ func (client ExpressRouteCircuitsClient) updateTagsCreateRequest(ctx context.Con
 
 // updateTagsHandleResponse handles the UpdateTags response.
 func (client ExpressRouteCircuitsClient) updateTagsHandleResponse(resp *azcore.Response) (ExpressRouteCircuitResponse, error) {
-	result := ExpressRouteCircuitResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ExpressRouteCircuit)
-	return result, err
+	var val *ExpressRouteCircuit
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ExpressRouteCircuitResponse{}, err
+	}
+	return ExpressRouteCircuitResponse{RawResponse: resp.Response, ExpressRouteCircuit: val}, nil
 }
 
 // updateTagsHandleError handles the UpdateTags error response.

@@ -156,11 +156,7 @@ func (client HTTPRetryClient) Options502(ctx context.Context, options *HTTPRetry
 	if !resp.HasStatusCode(http.StatusOK) {
 		return BoolResponse{}, client.options502HandleError(resp)
 	}
-	result, err := client.options502HandleResponse(resp)
-	if err != nil {
-		return BoolResponse{}, err
-	}
-	return result, nil
+	return client.options502HandleResponse(resp)
 }
 
 // options502CreateRequest creates the Options502 request.
@@ -177,9 +173,11 @@ func (client HTTPRetryClient) options502CreateRequest(ctx context.Context, optio
 
 // options502HandleResponse handles the Options502 response.
 func (client HTTPRetryClient) options502HandleResponse(resp *azcore.Response) (BoolResponse, error) {
-	result := BoolResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Value)
-	return result, err
+	var val *bool
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return BoolResponse{}, err
+	}
+	return BoolResponse{RawResponse: resp.Response, Value: val}, nil
 }
 
 // options502HandleError handles the Options502 error response.

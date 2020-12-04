@@ -108,9 +108,11 @@ func (client RoutesClient) createOrUpdateCreateRequest(ctx context.Context, reso
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client RoutesClient) createOrUpdateHandleResponse(resp *azcore.Response) (RouteResponse, error) {
-	result := RouteResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Route)
-	return result, err
+	var val *Route
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return RouteResponse{}, err
+	}
+	return RouteResponse{RawResponse: resp.Response, Route: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -216,11 +218,7 @@ func (client RoutesClient) Get(ctx context.Context, resourceGroupName string, ro
 	if !resp.HasStatusCode(http.StatusOK) {
 		return RouteResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return RouteResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -244,9 +242,11 @@ func (client RoutesClient) getCreateRequest(ctx context.Context, resourceGroupNa
 
 // getHandleResponse handles the Get response.
 func (client RoutesClient) getHandleResponse(resp *azcore.Response) (RouteResponse, error) {
-	result := RouteResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Route)
-	return result, err
+	var val *Route
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return RouteResponse{}, err
+	}
+	return RouteResponse{RawResponse: resp.Response, Route: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -294,9 +294,11 @@ func (client RoutesClient) listCreateRequest(ctx context.Context, resourceGroupN
 
 // listHandleResponse handles the List response.
 func (client RoutesClient) listHandleResponse(resp *azcore.Response) (RouteListResultResponse, error) {
-	result := RouteListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.RouteListResult)
-	return result, err
+	var val *RouteListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return RouteListResultResponse{}, err
+	}
+	return RouteListResultResponse{RawResponse: resp.Response, RouteListResult: val}, nil
 }
 
 // listHandleError handles the List error response.

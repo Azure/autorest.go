@@ -42,11 +42,7 @@ func (client PolymorphismClient) GetComplicated(ctx context.Context, options *Po
 	if !resp.HasStatusCode(http.StatusOK) {
 		return SalmonResponse{}, client.getComplicatedHandleError(resp)
 	}
-	result, err := client.getComplicatedHandleResponse(resp)
-	if err != nil {
-		return SalmonResponse{}, err
-	}
-	return result, nil
+	return client.getComplicatedHandleResponse(resp)
 }
 
 // getComplicatedCreateRequest creates the GetComplicated request.
@@ -64,8 +60,10 @@ func (client PolymorphismClient) getComplicatedCreateRequest(ctx context.Context
 // getComplicatedHandleResponse handles the GetComplicated response.
 func (client PolymorphismClient) getComplicatedHandleResponse(resp *azcore.Response) (SalmonResponse, error) {
 	result := SalmonResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result)
-	return result, err
+	if err := resp.UnmarshalAsJSON(&result); err != nil {
+		return SalmonResponse{}, err
+	}
+	return result, nil
 }
 
 // getComplicatedHandleError handles the GetComplicated error response.
@@ -92,11 +90,7 @@ func (client PolymorphismClient) GetComposedWithDiscriminator(ctx context.Contex
 	if !resp.HasStatusCode(http.StatusOK) {
 		return DotFishMarketResponse{}, client.getComposedWithDiscriminatorHandleError(resp)
 	}
-	result, err := client.getComposedWithDiscriminatorHandleResponse(resp)
-	if err != nil {
-		return DotFishMarketResponse{}, err
-	}
-	return result, nil
+	return client.getComposedWithDiscriminatorHandleResponse(resp)
 }
 
 // getComposedWithDiscriminatorCreateRequest creates the GetComposedWithDiscriminator request.
@@ -113,9 +107,11 @@ func (client PolymorphismClient) getComposedWithDiscriminatorCreateRequest(ctx c
 
 // getComposedWithDiscriminatorHandleResponse handles the GetComposedWithDiscriminator response.
 func (client PolymorphismClient) getComposedWithDiscriminatorHandleResponse(resp *azcore.Response) (DotFishMarketResponse, error) {
-	result := DotFishMarketResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.DotFishMarket)
-	return result, err
+	var val *DotFishMarket
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return DotFishMarketResponse{}, err
+	}
+	return DotFishMarketResponse{RawResponse: resp.Response, DotFishMarket: val}, nil
 }
 
 // getComposedWithDiscriminatorHandleError handles the GetComposedWithDiscriminator error response.
@@ -142,11 +138,7 @@ func (client PolymorphismClient) GetComposedWithoutDiscriminator(ctx context.Con
 	if !resp.HasStatusCode(http.StatusOK) {
 		return DotFishMarketResponse{}, client.getComposedWithoutDiscriminatorHandleError(resp)
 	}
-	result, err := client.getComposedWithoutDiscriminatorHandleResponse(resp)
-	if err != nil {
-		return DotFishMarketResponse{}, err
-	}
-	return result, nil
+	return client.getComposedWithoutDiscriminatorHandleResponse(resp)
 }
 
 // getComposedWithoutDiscriminatorCreateRequest creates the GetComposedWithoutDiscriminator request.
@@ -163,9 +155,11 @@ func (client PolymorphismClient) getComposedWithoutDiscriminatorCreateRequest(ct
 
 // getComposedWithoutDiscriminatorHandleResponse handles the GetComposedWithoutDiscriminator response.
 func (client PolymorphismClient) getComposedWithoutDiscriminatorHandleResponse(resp *azcore.Response) (DotFishMarketResponse, error) {
-	result := DotFishMarketResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.DotFishMarket)
-	return result, err
+	var val *DotFishMarket
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return DotFishMarketResponse{}, err
+	}
+	return DotFishMarketResponse{RawResponse: resp.Response, DotFishMarket: val}, nil
 }
 
 // getComposedWithoutDiscriminatorHandleError handles the GetComposedWithoutDiscriminator error response.
@@ -190,11 +184,7 @@ func (client PolymorphismClient) GetDotSyntax(ctx context.Context, options *Poly
 	if !resp.HasStatusCode(http.StatusOK) {
 		return DotFishResponse{}, client.getDotSyntaxHandleError(resp)
 	}
-	result, err := client.getDotSyntaxHandleResponse(resp)
-	if err != nil {
-		return DotFishResponse{}, err
-	}
-	return result, nil
+	return client.getDotSyntaxHandleResponse(resp)
 }
 
 // getDotSyntaxCreateRequest creates the GetDotSyntax request.
@@ -212,8 +202,10 @@ func (client PolymorphismClient) getDotSyntaxCreateRequest(ctx context.Context, 
 // getDotSyntaxHandleResponse handles the GetDotSyntax response.
 func (client PolymorphismClient) getDotSyntaxHandleResponse(resp *azcore.Response) (DotFishResponse, error) {
 	result := DotFishResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result)
-	return result, err
+	if err := resp.UnmarshalAsJSON(&result); err != nil {
+		return DotFishResponse{}, err
+	}
+	return result, nil
 }
 
 // getDotSyntaxHandleError handles the GetDotSyntax error response.
@@ -238,11 +230,7 @@ func (client PolymorphismClient) GetValid(ctx context.Context, options *Polymorp
 	if !resp.HasStatusCode(http.StatusOK) {
 		return FishResponse{}, client.getValidHandleError(resp)
 	}
-	result, err := client.getValidHandleResponse(resp)
-	if err != nil {
-		return FishResponse{}, err
-	}
-	return result, nil
+	return client.getValidHandleResponse(resp)
 }
 
 // getValidCreateRequest creates the GetValid request.
@@ -260,8 +248,10 @@ func (client PolymorphismClient) getValidCreateRequest(ctx context.Context, opti
 // getValidHandleResponse handles the GetValid response.
 func (client PolymorphismClient) getValidHandleResponse(resp *azcore.Response) (FishResponse, error) {
 	result := FishResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result)
-	return result, err
+	if err := resp.UnmarshalAsJSON(&result); err != nil {
+		return FishResponse{}, err
+	}
+	return result, nil
 }
 
 // getValidHandleError handles the GetValid error response.
@@ -323,11 +313,7 @@ func (client PolymorphismClient) PutMissingDiscriminator(ctx context.Context, co
 	if !resp.HasStatusCode(http.StatusOK) {
 		return SalmonResponse{}, client.putMissingDiscriminatorHandleError(resp)
 	}
-	result, err := client.putMissingDiscriminatorHandleResponse(resp)
-	if err != nil {
-		return SalmonResponse{}, err
-	}
-	return result, nil
+	return client.putMissingDiscriminatorHandleResponse(resp)
 }
 
 // putMissingDiscriminatorCreateRequest creates the PutMissingDiscriminator request.
@@ -345,8 +331,10 @@ func (client PolymorphismClient) putMissingDiscriminatorCreateRequest(ctx contex
 // putMissingDiscriminatorHandleResponse handles the PutMissingDiscriminator response.
 func (client PolymorphismClient) putMissingDiscriminatorHandleResponse(resp *azcore.Response) (SalmonResponse, error) {
 	result := SalmonResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result)
-	return result, err
+	if err := resp.UnmarshalAsJSON(&result); err != nil {
+		return SalmonResponse{}, err
+	}
+	return result, nil
 }
 
 // putMissingDiscriminatorHandleError handles the PutMissingDiscriminator error response.

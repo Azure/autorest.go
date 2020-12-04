@@ -47,11 +47,7 @@ func (client NetworkManagementClient) CheckDNSNameAvailability(ctx context.Conte
 	if !resp.HasStatusCode(http.StatusOK) {
 		return DNSNameAvailabilityResultResponse{}, client.checkDnsNameAvailabilityHandleError(resp)
 	}
-	result, err := client.checkDnsNameAvailabilityHandleResponse(resp)
-	if err != nil {
-		return DNSNameAvailabilityResultResponse{}, err
-	}
-	return result, nil
+	return client.checkDnsNameAvailabilityHandleResponse(resp)
 }
 
 // checkDnsNameAvailabilityCreateRequest creates the CheckDNSNameAvailability request.
@@ -74,9 +70,11 @@ func (client NetworkManagementClient) checkDnsNameAvailabilityCreateRequest(ctx 
 
 // checkDnsNameAvailabilityHandleResponse handles the CheckDNSNameAvailability response.
 func (client NetworkManagementClient) checkDnsNameAvailabilityHandleResponse(resp *azcore.Response) (DNSNameAvailabilityResultResponse, error) {
-	result := DNSNameAvailabilityResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.DNSNameAvailabilityResult)
-	return result, err
+	var val *DNSNameAvailabilityResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return DNSNameAvailabilityResultResponse{}, err
+	}
+	return DNSNameAvailabilityResultResponse{RawResponse: resp.Response, DNSNameAvailabilityResult: val}, nil
 }
 
 // checkDnsNameAvailabilityHandleError handles the CheckDNSNameAvailability error response.
@@ -204,9 +202,11 @@ func (client NetworkManagementClient) disconnectActiveSessionsCreateRequest(ctx 
 
 // disconnectActiveSessionsHandleResponse handles the DisconnectActiveSessions response.
 func (client NetworkManagementClient) disconnectActiveSessionsHandleResponse(resp *azcore.Response) (BastionSessionDeleteResultResponse, error) {
-	result := BastionSessionDeleteResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.BastionSessionDeleteResult)
-	return result, err
+	var val *BastionSessionDeleteResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return BastionSessionDeleteResultResponse{}, err
+	}
+	return BastionSessionDeleteResultResponse{RawResponse: resp.Response, BastionSessionDeleteResult: val}, nil
 }
 
 // disconnectActiveSessionsHandleError handles the DisconnectActiveSessions error response.
@@ -293,9 +293,11 @@ func (client NetworkManagementClient) generatevirtualwanvpnserverconfigurationvp
 
 // generatevirtualwanvpnserverconfigurationvpnprofileHandleResponse handles the Generatevirtualwanvpnserverconfigurationvpnprofile response.
 func (client NetworkManagementClient) generatevirtualwanvpnserverconfigurationvpnprofileHandleResponse(resp *azcore.Response) (VpnProfileResponseResponse, error) {
-	result := VpnProfileResponseResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.VpnProfileResponse)
-	return result, err
+	var val *VpnProfileResponse
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return VpnProfileResponseResponse{}, err
+	}
+	return VpnProfileResponseResponse{RawResponse: resp.Response, VpnProfileResponse: val}, nil
 }
 
 // generatevirtualwanvpnserverconfigurationvpnprofileHandleError handles the Generatevirtualwanvpnserverconfigurationvpnprofile error response.
@@ -329,9 +331,11 @@ func (client NetworkManagementClient) BeginGetActiveSessions(ctx context.Context
 			return client.getActiveSessionsHandleError(resp)
 		},
 		respHandler: func(resp *azcore.Response) (BastionActiveSessionListResultResponse, error) {
-			result := BastionActiveSessionListResultResponse{RawResponse: resp.Response}
-			err := resp.UnmarshalAsJSON(&result.BastionActiveSessionListResult)
-			return result, err
+			var val *BastionActiveSessionListResult
+			if err := resp.UnmarshalAsJSON(&val); err != nil {
+				return BastionActiveSessionListResultResponse{}, err
+			}
+			return BastionActiveSessionListResultResponse{RawResponse: resp.Response, BastionActiveSessionListResult: val}, nil
 		},
 		statusCodes: []int{http.StatusOK, http.StatusAccepted, http.StatusNoContent},
 		pipeline:    client.con.Pipeline(),
@@ -392,9 +396,11 @@ func (client NetworkManagementClient) getActiveSessionsCreateRequest(ctx context
 
 // getActiveSessionsHandleResponse handles the GetActiveSessions response.
 func (client NetworkManagementClient) getActiveSessionsHandleResponse(resp *azcore.Response) (BastionActiveSessionListResultResponse, error) {
-	result := BastionActiveSessionListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.BastionActiveSessionListResult)
-	return result, err
+	var val *BastionActiveSessionListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return BastionActiveSessionListResultResponse{}, err
+	}
+	return BastionActiveSessionListResultResponse{RawResponse: resp.Response, BastionActiveSessionListResult: val}, nil
 }
 
 // getActiveSessionsHandleError handles the GetActiveSessions error response.
@@ -442,9 +448,11 @@ func (client NetworkManagementClient) getBastionShareableLinkCreateRequest(ctx c
 
 // getBastionShareableLinkHandleResponse handles the GetBastionShareableLink response.
 func (client NetworkManagementClient) getBastionShareableLinkHandleResponse(resp *azcore.Response) (BastionShareableLinkListResultResponse, error) {
-	result := BastionShareableLinkListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.BastionShareableLinkListResult)
-	return result, err
+	var val *BastionShareableLinkListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return BastionShareableLinkListResultResponse{}, err
+	}
+	return BastionShareableLinkListResultResponse{RawResponse: resp.Response, BastionShareableLinkListResult: val}, nil
 }
 
 // getBastionShareableLinkHandleError handles the GetBastionShareableLink error response.
@@ -478,9 +486,11 @@ func (client NetworkManagementClient) BeginPutBastionShareableLink(ctx context.C
 			return client.putBastionShareableLinkHandleError(resp)
 		},
 		respHandler: func(resp *azcore.Response) (BastionShareableLinkListResultResponse, error) {
-			result := BastionShareableLinkListResultResponse{RawResponse: resp.Response}
-			err := resp.UnmarshalAsJSON(&result.BastionShareableLinkListResult)
-			return result, err
+			var val *BastionShareableLinkListResult
+			if err := resp.UnmarshalAsJSON(&val); err != nil {
+				return BastionShareableLinkListResultResponse{}, err
+			}
+			return BastionShareableLinkListResultResponse{RawResponse: resp.Response, BastionShareableLinkListResult: val}, nil
 		},
 		statusCodes: []int{http.StatusOK, http.StatusAccepted, http.StatusNoContent},
 		pipeline:    client.con.Pipeline(),
@@ -541,9 +551,11 @@ func (client NetworkManagementClient) putBastionShareableLinkCreateRequest(ctx c
 
 // putBastionShareableLinkHandleResponse handles the PutBastionShareableLink response.
 func (client NetworkManagementClient) putBastionShareableLinkHandleResponse(resp *azcore.Response) (BastionShareableLinkListResultResponse, error) {
-	result := BastionShareableLinkListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.BastionShareableLinkListResult)
-	return result, err
+	var val *BastionShareableLinkListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return BastionShareableLinkListResultResponse{}, err
+	}
+	return BastionShareableLinkListResultResponse{RawResponse: resp.Response, BastionShareableLinkListResult: val}, nil
 }
 
 // putBastionShareableLinkHandleError handles the PutBastionShareableLink error response.
@@ -568,11 +580,7 @@ func (client NetworkManagementClient) SupportedSecurityProviders(ctx context.Con
 	if !resp.HasStatusCode(http.StatusOK) {
 		return VirtualWanSecurityProvidersResponse{}, client.supportedSecurityProvidersHandleError(resp)
 	}
-	result, err := client.supportedSecurityProvidersHandleResponse(resp)
-	if err != nil {
-		return VirtualWanSecurityProvidersResponse{}, err
-	}
-	return result, nil
+	return client.supportedSecurityProvidersHandleResponse(resp)
 }
 
 // supportedSecurityProvidersCreateRequest creates the SupportedSecurityProviders request.
@@ -595,9 +603,11 @@ func (client NetworkManagementClient) supportedSecurityProvidersCreateRequest(ct
 
 // supportedSecurityProvidersHandleResponse handles the SupportedSecurityProviders response.
 func (client NetworkManagementClient) supportedSecurityProvidersHandleResponse(resp *azcore.Response) (VirtualWanSecurityProvidersResponse, error) {
-	result := VirtualWanSecurityProvidersResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.VirtualWanSecurityProviders)
-	return result, err
+	var val *VirtualWanSecurityProviders
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return VirtualWanSecurityProvidersResponse{}, err
+	}
+	return VirtualWanSecurityProvidersResponse{RawResponse: resp.Response, VirtualWanSecurityProviders: val}, nil
 }
 
 // supportedSecurityProvidersHandleError handles the SupportedSecurityProviders error response.

@@ -107,9 +107,11 @@ func (client ApplicationSecurityGroupsClient) createOrUpdateCreateRequest(ctx co
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client ApplicationSecurityGroupsClient) createOrUpdateHandleResponse(resp *azcore.Response) (ApplicationSecurityGroupResponse, error) {
-	result := ApplicationSecurityGroupResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ApplicationSecurityGroup)
-	return result, err
+	var val *ApplicationSecurityGroup
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ApplicationSecurityGroupResponse{}, err
+	}
+	return ApplicationSecurityGroupResponse{RawResponse: resp.Response, ApplicationSecurityGroup: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -214,11 +216,7 @@ func (client ApplicationSecurityGroupsClient) Get(ctx context.Context, resourceG
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ApplicationSecurityGroupResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return ApplicationSecurityGroupResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -241,9 +239,11 @@ func (client ApplicationSecurityGroupsClient) getCreateRequest(ctx context.Conte
 
 // getHandleResponse handles the Get response.
 func (client ApplicationSecurityGroupsClient) getHandleResponse(resp *azcore.Response) (ApplicationSecurityGroupResponse, error) {
-	result := ApplicationSecurityGroupResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ApplicationSecurityGroup)
-	return result, err
+	var val *ApplicationSecurityGroup
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ApplicationSecurityGroupResponse{}, err
+	}
+	return ApplicationSecurityGroupResponse{RawResponse: resp.Response, ApplicationSecurityGroup: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -290,9 +290,11 @@ func (client ApplicationSecurityGroupsClient) listCreateRequest(ctx context.Cont
 
 // listHandleResponse handles the List response.
 func (client ApplicationSecurityGroupsClient) listHandleResponse(resp *azcore.Response) (ApplicationSecurityGroupListResultResponse, error) {
-	result := ApplicationSecurityGroupListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ApplicationSecurityGroupListResult)
-	return result, err
+	var val *ApplicationSecurityGroupListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ApplicationSecurityGroupListResultResponse{}, err
+	}
+	return ApplicationSecurityGroupListResultResponse{RawResponse: resp.Response, ApplicationSecurityGroupListResult: val}, nil
 }
 
 // listHandleError handles the List error response.
@@ -338,9 +340,11 @@ func (client ApplicationSecurityGroupsClient) listAllCreateRequest(ctx context.C
 
 // listAllHandleResponse handles the ListAll response.
 func (client ApplicationSecurityGroupsClient) listAllHandleResponse(resp *azcore.Response) (ApplicationSecurityGroupListResultResponse, error) {
-	result := ApplicationSecurityGroupListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ApplicationSecurityGroupListResult)
-	return result, err
+	var val *ApplicationSecurityGroupListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ApplicationSecurityGroupListResultResponse{}, err
+	}
+	return ApplicationSecurityGroupListResultResponse{RawResponse: resp.Response, ApplicationSecurityGroupListResult: val}, nil
 }
 
 // listAllHandleError handles the ListAll error response.
@@ -365,11 +369,7 @@ func (client ApplicationSecurityGroupsClient) UpdateTags(ctx context.Context, re
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ApplicationSecurityGroupResponse{}, client.updateTagsHandleError(resp)
 	}
-	result, err := client.updateTagsHandleResponse(resp)
-	if err != nil {
-		return ApplicationSecurityGroupResponse{}, err
-	}
-	return result, nil
+	return client.updateTagsHandleResponse(resp)
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.
@@ -392,9 +392,11 @@ func (client ApplicationSecurityGroupsClient) updateTagsCreateRequest(ctx contex
 
 // updateTagsHandleResponse handles the UpdateTags response.
 func (client ApplicationSecurityGroupsClient) updateTagsHandleResponse(resp *azcore.Response) (ApplicationSecurityGroupResponse, error) {
-	result := ApplicationSecurityGroupResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ApplicationSecurityGroup)
-	return result, err
+	var val *ApplicationSecurityGroup
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ApplicationSecurityGroupResponse{}, err
+	}
+	return ApplicationSecurityGroupResponse{RawResponse: resp.Response, ApplicationSecurityGroup: val}, nil
 }
 
 // updateTagsHandleError handles the UpdateTags error response.

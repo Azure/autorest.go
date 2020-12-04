@@ -107,9 +107,11 @@ func (client PrivateEndpointsClient) createOrUpdateCreateRequest(ctx context.Con
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client PrivateEndpointsClient) createOrUpdateHandleResponse(resp *azcore.Response) (PrivateEndpointResponse, error) {
-	result := PrivateEndpointResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.PrivateEndpoint)
-	return result, err
+	var val *PrivateEndpoint
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return PrivateEndpointResponse{}, err
+	}
+	return PrivateEndpointResponse{RawResponse: resp.Response, PrivateEndpoint: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -214,11 +216,7 @@ func (client PrivateEndpointsClient) Get(ctx context.Context, resourceGroupName 
 	if !resp.HasStatusCode(http.StatusOK) {
 		return PrivateEndpointResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return PrivateEndpointResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -244,9 +242,11 @@ func (client PrivateEndpointsClient) getCreateRequest(ctx context.Context, resou
 
 // getHandleResponse handles the Get response.
 func (client PrivateEndpointsClient) getHandleResponse(resp *azcore.Response) (PrivateEndpointResponse, error) {
-	result := PrivateEndpointResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.PrivateEndpoint)
-	return result, err
+	var val *PrivateEndpoint
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return PrivateEndpointResponse{}, err
+	}
+	return PrivateEndpointResponse{RawResponse: resp.Response, PrivateEndpoint: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -293,9 +293,11 @@ func (client PrivateEndpointsClient) listCreateRequest(ctx context.Context, reso
 
 // listHandleResponse handles the List response.
 func (client PrivateEndpointsClient) listHandleResponse(resp *azcore.Response) (PrivateEndpointListResultResponse, error) {
-	result := PrivateEndpointListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.PrivateEndpointListResult)
-	return result, err
+	var val *PrivateEndpointListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return PrivateEndpointListResultResponse{}, err
+	}
+	return PrivateEndpointListResultResponse{RawResponse: resp.Response, PrivateEndpointListResult: val}, nil
 }
 
 // listHandleError handles the List error response.
@@ -341,9 +343,11 @@ func (client PrivateEndpointsClient) listBySubscriptionCreateRequest(ctx context
 
 // listBySubscriptionHandleResponse handles the ListBySubscription response.
 func (client PrivateEndpointsClient) listBySubscriptionHandleResponse(resp *azcore.Response) (PrivateEndpointListResultResponse, error) {
-	result := PrivateEndpointListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.PrivateEndpointListResult)
-	return result, err
+	var val *PrivateEndpointListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return PrivateEndpointListResultResponse{}, err
+	}
+	return PrivateEndpointListResultResponse{RawResponse: resp.Response, PrivateEndpointListResult: val}, nil
 }
 
 // listBySubscriptionHandleError handles the ListBySubscription error response.

@@ -110,9 +110,11 @@ func (client DisksClient) createOrUpdateCreateRequest(ctx context.Context, resou
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client DisksClient) createOrUpdateHandleResponse(resp *azcore.Response) (DiskResponse, error) {
-	result := DiskResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Disk)
-	return result, err
+	var val *Disk
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return DiskResponse{}, err
+	}
+	return DiskResponse{RawResponse: resp.Response, Disk: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -222,11 +224,7 @@ func (client DisksClient) Get(ctx context.Context, resourceGroupName string, dis
 	if !resp.HasStatusCode(http.StatusOK) {
 		return DiskResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return DiskResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -249,9 +247,11 @@ func (client DisksClient) getCreateRequest(ctx context.Context, resourceGroupNam
 
 // getHandleResponse handles the Get response.
 func (client DisksClient) getHandleResponse(resp *azcore.Response) (DiskResponse, error) {
-	result := DiskResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Disk)
-	return result, err
+	var val *Disk
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return DiskResponse{}, err
+	}
+	return DiskResponse{RawResponse: resp.Response, Disk: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -339,9 +339,11 @@ func (client DisksClient) grantAccessCreateRequest(ctx context.Context, resource
 
 // grantAccessHandleResponse handles the GrantAccess response.
 func (client DisksClient) grantAccessHandleResponse(resp *azcore.Response) (AccessURIResponse, error) {
-	result := AccessURIResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.AccessURI)
-	return result, err
+	var val *AccessURI
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return AccessURIResponse{}, err
+	}
+	return AccessURIResponse{RawResponse: resp.Response, AccessURI: val}, nil
 }
 
 // grantAccessHandleError handles the GrantAccess error response.
@@ -390,9 +392,11 @@ func (client DisksClient) listCreateRequest(ctx context.Context, options *DisksL
 
 // listHandleResponse handles the List response.
 func (client DisksClient) listHandleResponse(resp *azcore.Response) (DiskListResponse, error) {
-	result := DiskListResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.DiskList)
-	return result, err
+	var val *DiskList
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return DiskListResponse{}, err
+	}
+	return DiskListResponse{RawResponse: resp.Response, DiskList: val}, nil
 }
 
 // listHandleError handles the List error response.
@@ -442,9 +446,11 @@ func (client DisksClient) listByResourceGroupCreateRequest(ctx context.Context, 
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
 func (client DisksClient) listByResourceGroupHandleResponse(resp *azcore.Response) (DiskListResponse, error) {
-	result := DiskListResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.DiskList)
-	return result, err
+	var val *DiskList
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return DiskListResponse{}, err
+	}
+	return DiskListResponse{RawResponse: resp.Response, DiskList: val}, nil
 }
 
 // listByResourceGroupHandleError handles the ListByResourceGroup error response.
@@ -614,9 +620,11 @@ func (client DisksClient) updateCreateRequest(ctx context.Context, resourceGroup
 
 // updateHandleResponse handles the Update response.
 func (client DisksClient) updateHandleResponse(resp *azcore.Response) (DiskResponse, error) {
-	result := DiskResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Disk)
-	return result, err
+	var val *Disk
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return DiskResponse{}, err
+	}
+	return DiskResponse{RawResponse: resp.Response, Disk: val}, nil
 }
 
 // updateHandleError handles the Update error response.

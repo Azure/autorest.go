@@ -108,9 +108,11 @@ func (client RouteFilterRulesClient) createOrUpdateCreateRequest(ctx context.Con
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client RouteFilterRulesClient) createOrUpdateHandleResponse(resp *azcore.Response) (RouteFilterRuleResponse, error) {
-	result := RouteFilterRuleResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.RouteFilterRule)
-	return result, err
+	var val *RouteFilterRule
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return RouteFilterRuleResponse{}, err
+	}
+	return RouteFilterRuleResponse{RawResponse: resp.Response, RouteFilterRule: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -216,11 +218,7 @@ func (client RouteFilterRulesClient) Get(ctx context.Context, resourceGroupName 
 	if !resp.HasStatusCode(http.StatusOK) {
 		return RouteFilterRuleResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return RouteFilterRuleResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -244,9 +242,11 @@ func (client RouteFilterRulesClient) getCreateRequest(ctx context.Context, resou
 
 // getHandleResponse handles the Get response.
 func (client RouteFilterRulesClient) getHandleResponse(resp *azcore.Response) (RouteFilterRuleResponse, error) {
-	result := RouteFilterRuleResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.RouteFilterRule)
-	return result, err
+	var val *RouteFilterRule
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return RouteFilterRuleResponse{}, err
+	}
+	return RouteFilterRuleResponse{RawResponse: resp.Response, RouteFilterRule: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -294,9 +294,11 @@ func (client RouteFilterRulesClient) listByRouteFilterCreateRequest(ctx context.
 
 // listByRouteFilterHandleResponse handles the ListByRouteFilter response.
 func (client RouteFilterRulesClient) listByRouteFilterHandleResponse(resp *azcore.Response) (RouteFilterRuleListResultResponse, error) {
-	result := RouteFilterRuleListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.RouteFilterRuleListResult)
-	return result, err
+	var val *RouteFilterRuleListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return RouteFilterRuleListResultResponse{}, err
+	}
+	return RouteFilterRuleListResultResponse{RawResponse: resp.Response, RouteFilterRuleListResult: val}, nil
 }
 
 // listByRouteFilterHandleError handles the ListByRouteFilter error response.

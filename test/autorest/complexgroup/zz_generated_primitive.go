@@ -42,11 +42,7 @@ func (client PrimitiveClient) GetBool(ctx context.Context, options *PrimitiveGet
 	if !resp.HasStatusCode(http.StatusOK) {
 		return BooleanWrapperResponse{}, client.getBoolHandleError(resp)
 	}
-	result, err := client.getBoolHandleResponse(resp)
-	if err != nil {
-		return BooleanWrapperResponse{}, err
-	}
-	return result, nil
+	return client.getBoolHandleResponse(resp)
 }
 
 // getBoolCreateRequest creates the GetBool request.
@@ -63,9 +59,11 @@ func (client PrimitiveClient) getBoolCreateRequest(ctx context.Context, options 
 
 // getBoolHandleResponse handles the GetBool response.
 func (client PrimitiveClient) getBoolHandleResponse(resp *azcore.Response) (BooleanWrapperResponse, error) {
-	result := BooleanWrapperResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.BooleanWrapper)
-	return result, err
+	var val *BooleanWrapper
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return BooleanWrapperResponse{}, err
+	}
+	return BooleanWrapperResponse{RawResponse: resp.Response, BooleanWrapper: val}, nil
 }
 
 // getBoolHandleError handles the GetBool error response.
@@ -90,11 +88,7 @@ func (client PrimitiveClient) GetByte(ctx context.Context, options *PrimitiveGet
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ByteWrapperResponse{}, client.getByteHandleError(resp)
 	}
-	result, err := client.getByteHandleResponse(resp)
-	if err != nil {
-		return ByteWrapperResponse{}, err
-	}
-	return result, nil
+	return client.getByteHandleResponse(resp)
 }
 
 // getByteCreateRequest creates the GetByte request.
@@ -111,9 +105,11 @@ func (client PrimitiveClient) getByteCreateRequest(ctx context.Context, options 
 
 // getByteHandleResponse handles the GetByte response.
 func (client PrimitiveClient) getByteHandleResponse(resp *azcore.Response) (ByteWrapperResponse, error) {
-	result := ByteWrapperResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ByteWrapper)
-	return result, err
+	var val *ByteWrapper
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ByteWrapperResponse{}, err
+	}
+	return ByteWrapperResponse{RawResponse: resp.Response, ByteWrapper: val}, nil
 }
 
 // getByteHandleError handles the GetByte error response.
@@ -138,11 +134,7 @@ func (client PrimitiveClient) GetDate(ctx context.Context, options *PrimitiveGet
 	if !resp.HasStatusCode(http.StatusOK) {
 		return DateWrapperResponse{}, client.getDateHandleError(resp)
 	}
-	result, err := client.getDateHandleResponse(resp)
-	if err != nil {
-		return DateWrapperResponse{}, err
-	}
-	return result, nil
+	return client.getDateHandleResponse(resp)
 }
 
 // getDateCreateRequest creates the GetDate request.
@@ -159,9 +151,11 @@ func (client PrimitiveClient) getDateCreateRequest(ctx context.Context, options 
 
 // getDateHandleResponse handles the GetDate response.
 func (client PrimitiveClient) getDateHandleResponse(resp *azcore.Response) (DateWrapperResponse, error) {
-	result := DateWrapperResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.DateWrapper)
-	return result, err
+	var val *DateWrapper
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return DateWrapperResponse{}, err
+	}
+	return DateWrapperResponse{RawResponse: resp.Response, DateWrapper: val}, nil
 }
 
 // getDateHandleError handles the GetDate error response.
@@ -186,11 +180,7 @@ func (client PrimitiveClient) GetDateTime(ctx context.Context, options *Primitiv
 	if !resp.HasStatusCode(http.StatusOK) {
 		return DatetimeWrapperResponse{}, client.getDateTimeHandleError(resp)
 	}
-	result, err := client.getDateTimeHandleResponse(resp)
-	if err != nil {
-		return DatetimeWrapperResponse{}, err
-	}
-	return result, nil
+	return client.getDateTimeHandleResponse(resp)
 }
 
 // getDateTimeCreateRequest creates the GetDateTime request.
@@ -207,9 +197,11 @@ func (client PrimitiveClient) getDateTimeCreateRequest(ctx context.Context, opti
 
 // getDateTimeHandleResponse handles the GetDateTime response.
 func (client PrimitiveClient) getDateTimeHandleResponse(resp *azcore.Response) (DatetimeWrapperResponse, error) {
-	result := DatetimeWrapperResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.DatetimeWrapper)
-	return result, err
+	var val *DatetimeWrapper
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return DatetimeWrapperResponse{}, err
+	}
+	return DatetimeWrapperResponse{RawResponse: resp.Response, DatetimeWrapper: val}, nil
 }
 
 // getDateTimeHandleError handles the GetDateTime error response.
@@ -234,11 +226,7 @@ func (client PrimitiveClient) GetDateTimeRFC1123(ctx context.Context, options *P
 	if !resp.HasStatusCode(http.StatusOK) {
 		return Datetimerfc1123WrapperResponse{}, client.getDateTimeRfc1123HandleError(resp)
 	}
-	result, err := client.getDateTimeRfc1123HandleResponse(resp)
-	if err != nil {
-		return Datetimerfc1123WrapperResponse{}, err
-	}
-	return result, nil
+	return client.getDateTimeRfc1123HandleResponse(resp)
 }
 
 // getDateTimeRfc1123CreateRequest creates the GetDateTimeRFC1123 request.
@@ -255,9 +243,11 @@ func (client PrimitiveClient) getDateTimeRfc1123CreateRequest(ctx context.Contex
 
 // getDateTimeRfc1123HandleResponse handles the GetDateTimeRFC1123 response.
 func (client PrimitiveClient) getDateTimeRfc1123HandleResponse(resp *azcore.Response) (Datetimerfc1123WrapperResponse, error) {
-	result := Datetimerfc1123WrapperResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Datetimerfc1123Wrapper)
-	return result, err
+	var val *Datetimerfc1123Wrapper
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return Datetimerfc1123WrapperResponse{}, err
+	}
+	return Datetimerfc1123WrapperResponse{RawResponse: resp.Response, Datetimerfc1123Wrapper: val}, nil
 }
 
 // getDateTimeRfc1123HandleError handles the GetDateTimeRFC1123 error response.
@@ -282,11 +272,7 @@ func (client PrimitiveClient) GetDouble(ctx context.Context, options *PrimitiveG
 	if !resp.HasStatusCode(http.StatusOK) {
 		return DoubleWrapperResponse{}, client.getDoubleHandleError(resp)
 	}
-	result, err := client.getDoubleHandleResponse(resp)
-	if err != nil {
-		return DoubleWrapperResponse{}, err
-	}
-	return result, nil
+	return client.getDoubleHandleResponse(resp)
 }
 
 // getDoubleCreateRequest creates the GetDouble request.
@@ -303,9 +289,11 @@ func (client PrimitiveClient) getDoubleCreateRequest(ctx context.Context, option
 
 // getDoubleHandleResponse handles the GetDouble response.
 func (client PrimitiveClient) getDoubleHandleResponse(resp *azcore.Response) (DoubleWrapperResponse, error) {
-	result := DoubleWrapperResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.DoubleWrapper)
-	return result, err
+	var val *DoubleWrapper
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return DoubleWrapperResponse{}, err
+	}
+	return DoubleWrapperResponse{RawResponse: resp.Response, DoubleWrapper: val}, nil
 }
 
 // getDoubleHandleError handles the GetDouble error response.
@@ -330,11 +318,7 @@ func (client PrimitiveClient) GetDuration(ctx context.Context, options *Primitiv
 	if !resp.HasStatusCode(http.StatusOK) {
 		return DurationWrapperResponse{}, client.getDurationHandleError(resp)
 	}
-	result, err := client.getDurationHandleResponse(resp)
-	if err != nil {
-		return DurationWrapperResponse{}, err
-	}
-	return result, nil
+	return client.getDurationHandleResponse(resp)
 }
 
 // getDurationCreateRequest creates the GetDuration request.
@@ -351,9 +335,11 @@ func (client PrimitiveClient) getDurationCreateRequest(ctx context.Context, opti
 
 // getDurationHandleResponse handles the GetDuration response.
 func (client PrimitiveClient) getDurationHandleResponse(resp *azcore.Response) (DurationWrapperResponse, error) {
-	result := DurationWrapperResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.DurationWrapper)
-	return result, err
+	var val *DurationWrapper
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return DurationWrapperResponse{}, err
+	}
+	return DurationWrapperResponse{RawResponse: resp.Response, DurationWrapper: val}, nil
 }
 
 // getDurationHandleError handles the GetDuration error response.
@@ -378,11 +364,7 @@ func (client PrimitiveClient) GetFloat(ctx context.Context, options *PrimitiveGe
 	if !resp.HasStatusCode(http.StatusOK) {
 		return FloatWrapperResponse{}, client.getFloatHandleError(resp)
 	}
-	result, err := client.getFloatHandleResponse(resp)
-	if err != nil {
-		return FloatWrapperResponse{}, err
-	}
-	return result, nil
+	return client.getFloatHandleResponse(resp)
 }
 
 // getFloatCreateRequest creates the GetFloat request.
@@ -399,9 +381,11 @@ func (client PrimitiveClient) getFloatCreateRequest(ctx context.Context, options
 
 // getFloatHandleResponse handles the GetFloat response.
 func (client PrimitiveClient) getFloatHandleResponse(resp *azcore.Response) (FloatWrapperResponse, error) {
-	result := FloatWrapperResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.FloatWrapper)
-	return result, err
+	var val *FloatWrapper
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return FloatWrapperResponse{}, err
+	}
+	return FloatWrapperResponse{RawResponse: resp.Response, FloatWrapper: val}, nil
 }
 
 // getFloatHandleError handles the GetFloat error response.
@@ -426,11 +410,7 @@ func (client PrimitiveClient) GetInt(ctx context.Context, options *PrimitiveGetI
 	if !resp.HasStatusCode(http.StatusOK) {
 		return IntWrapperResponse{}, client.getIntHandleError(resp)
 	}
-	result, err := client.getIntHandleResponse(resp)
-	if err != nil {
-		return IntWrapperResponse{}, err
-	}
-	return result, nil
+	return client.getIntHandleResponse(resp)
 }
 
 // getIntCreateRequest creates the GetInt request.
@@ -447,9 +427,11 @@ func (client PrimitiveClient) getIntCreateRequest(ctx context.Context, options *
 
 // getIntHandleResponse handles the GetInt response.
 func (client PrimitiveClient) getIntHandleResponse(resp *azcore.Response) (IntWrapperResponse, error) {
-	result := IntWrapperResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.IntWrapper)
-	return result, err
+	var val *IntWrapper
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return IntWrapperResponse{}, err
+	}
+	return IntWrapperResponse{RawResponse: resp.Response, IntWrapper: val}, nil
 }
 
 // getIntHandleError handles the GetInt error response.
@@ -474,11 +456,7 @@ func (client PrimitiveClient) GetLong(ctx context.Context, options *PrimitiveGet
 	if !resp.HasStatusCode(http.StatusOK) {
 		return LongWrapperResponse{}, client.getLongHandleError(resp)
 	}
-	result, err := client.getLongHandleResponse(resp)
-	if err != nil {
-		return LongWrapperResponse{}, err
-	}
-	return result, nil
+	return client.getLongHandleResponse(resp)
 }
 
 // getLongCreateRequest creates the GetLong request.
@@ -495,9 +473,11 @@ func (client PrimitiveClient) getLongCreateRequest(ctx context.Context, options 
 
 // getLongHandleResponse handles the GetLong response.
 func (client PrimitiveClient) getLongHandleResponse(resp *azcore.Response) (LongWrapperResponse, error) {
-	result := LongWrapperResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.LongWrapper)
-	return result, err
+	var val *LongWrapper
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return LongWrapperResponse{}, err
+	}
+	return LongWrapperResponse{RawResponse: resp.Response, LongWrapper: val}, nil
 }
 
 // getLongHandleError handles the GetLong error response.
@@ -522,11 +502,7 @@ func (client PrimitiveClient) GetString(ctx context.Context, options *PrimitiveG
 	if !resp.HasStatusCode(http.StatusOK) {
 		return StringWrapperResponse{}, client.getStringHandleError(resp)
 	}
-	result, err := client.getStringHandleResponse(resp)
-	if err != nil {
-		return StringWrapperResponse{}, err
-	}
-	return result, nil
+	return client.getStringHandleResponse(resp)
 }
 
 // getStringCreateRequest creates the GetString request.
@@ -543,9 +519,11 @@ func (client PrimitiveClient) getStringCreateRequest(ctx context.Context, option
 
 // getStringHandleResponse handles the GetString response.
 func (client PrimitiveClient) getStringHandleResponse(resp *azcore.Response) (StringWrapperResponse, error) {
-	result := StringWrapperResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.StringWrapper)
-	return result, err
+	var val *StringWrapper
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return StringWrapperResponse{}, err
+	}
+	return StringWrapperResponse{RawResponse: resp.Response, StringWrapper: val}, nil
 }
 
 // getStringHandleError handles the GetString error response.

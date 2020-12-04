@@ -107,9 +107,11 @@ func (client NetworkVirtualAppliancesClient) createOrUpdateCreateRequest(ctx con
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client NetworkVirtualAppliancesClient) createOrUpdateHandleResponse(resp *azcore.Response) (NetworkVirtualApplianceResponse, error) {
-	result := NetworkVirtualApplianceResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.NetworkVirtualAppliance)
-	return result, err
+	var val *NetworkVirtualAppliance
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return NetworkVirtualApplianceResponse{}, err
+	}
+	return NetworkVirtualApplianceResponse{RawResponse: resp.Response, NetworkVirtualAppliance: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -214,11 +216,7 @@ func (client NetworkVirtualAppliancesClient) Get(ctx context.Context, resourceGr
 	if !resp.HasStatusCode(http.StatusOK) {
 		return NetworkVirtualApplianceResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return NetworkVirtualApplianceResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -244,9 +242,11 @@ func (client NetworkVirtualAppliancesClient) getCreateRequest(ctx context.Contex
 
 // getHandleResponse handles the Get response.
 func (client NetworkVirtualAppliancesClient) getHandleResponse(resp *azcore.Response) (NetworkVirtualApplianceResponse, error) {
-	result := NetworkVirtualApplianceResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.NetworkVirtualAppliance)
-	return result, err
+	var val *NetworkVirtualAppliance
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return NetworkVirtualApplianceResponse{}, err
+	}
+	return NetworkVirtualApplianceResponse{RawResponse: resp.Response, NetworkVirtualAppliance: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -292,9 +292,11 @@ func (client NetworkVirtualAppliancesClient) listCreateRequest(ctx context.Conte
 
 // listHandleResponse handles the List response.
 func (client NetworkVirtualAppliancesClient) listHandleResponse(resp *azcore.Response) (NetworkVirtualApplianceListResultResponse, error) {
-	result := NetworkVirtualApplianceListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.NetworkVirtualApplianceListResult)
-	return result, err
+	var val *NetworkVirtualApplianceListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return NetworkVirtualApplianceListResultResponse{}, err
+	}
+	return NetworkVirtualApplianceListResultResponse{RawResponse: resp.Response, NetworkVirtualApplianceListResult: val}, nil
 }
 
 // listHandleError handles the List error response.
@@ -341,9 +343,11 @@ func (client NetworkVirtualAppliancesClient) listByResourceGroupCreateRequest(ct
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
 func (client NetworkVirtualAppliancesClient) listByResourceGroupHandleResponse(resp *azcore.Response) (NetworkVirtualApplianceListResultResponse, error) {
-	result := NetworkVirtualApplianceListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.NetworkVirtualApplianceListResult)
-	return result, err
+	var val *NetworkVirtualApplianceListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return NetworkVirtualApplianceListResultResponse{}, err
+	}
+	return NetworkVirtualApplianceListResultResponse{RawResponse: resp.Response, NetworkVirtualApplianceListResult: val}, nil
 }
 
 // listByResourceGroupHandleError handles the ListByResourceGroup error response.
@@ -368,11 +372,7 @@ func (client NetworkVirtualAppliancesClient) UpdateTags(ctx context.Context, res
 	if !resp.HasStatusCode(http.StatusOK) {
 		return NetworkVirtualApplianceResponse{}, client.updateTagsHandleError(resp)
 	}
-	result, err := client.updateTagsHandleResponse(resp)
-	if err != nil {
-		return NetworkVirtualApplianceResponse{}, err
-	}
-	return result, nil
+	return client.updateTagsHandleResponse(resp)
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.
@@ -395,9 +395,11 @@ func (client NetworkVirtualAppliancesClient) updateTagsCreateRequest(ctx context
 
 // updateTagsHandleResponse handles the UpdateTags response.
 func (client NetworkVirtualAppliancesClient) updateTagsHandleResponse(resp *azcore.Response) (NetworkVirtualApplianceResponse, error) {
-	result := NetworkVirtualApplianceResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.NetworkVirtualAppliance)
-	return result, err
+	var val *NetworkVirtualAppliance
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return NetworkVirtualApplianceResponse{}, err
+	}
+	return NetworkVirtualApplianceResponse{RawResponse: resp.Response, NetworkVirtualAppliance: val}, nil
 }
 
 // updateTagsHandleError handles the UpdateTags error response.

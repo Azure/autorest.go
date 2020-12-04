@@ -49,11 +49,7 @@ func (client AvailabilitySetsClient) CreateOrUpdate(ctx context.Context, resourc
 	if !resp.HasStatusCode(http.StatusOK) {
 		return AvailabilitySetResponse{}, client.createOrUpdateHandleError(resp)
 	}
-	result, err := client.createOrUpdateHandleResponse(resp)
-	if err != nil {
-		return AvailabilitySetResponse{}, err
-	}
-	return result, nil
+	return client.createOrUpdateHandleResponse(resp)
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -76,9 +72,11 @@ func (client AvailabilitySetsClient) createOrUpdateCreateRequest(ctx context.Con
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client AvailabilitySetsClient) createOrUpdateHandleResponse(resp *azcore.Response) (AvailabilitySetResponse, error) {
-	result := AvailabilitySetResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.AvailabilitySet)
-	return result, err
+	var val *AvailabilitySet
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return AvailabilitySetResponse{}, err
+	}
+	return AvailabilitySetResponse{RawResponse: resp.Response, AvailabilitySet: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -151,11 +149,7 @@ func (client AvailabilitySetsClient) Get(ctx context.Context, resourceGroupName 
 	if !resp.HasStatusCode(http.StatusOK) {
 		return AvailabilitySetResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return AvailabilitySetResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -178,9 +172,11 @@ func (client AvailabilitySetsClient) getCreateRequest(ctx context.Context, resou
 
 // getHandleResponse handles the Get response.
 func (client AvailabilitySetsClient) getHandleResponse(resp *azcore.Response) (AvailabilitySetResponse, error) {
-	result := AvailabilitySetResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.AvailabilitySet)
-	return result, err
+	var val *AvailabilitySet
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return AvailabilitySetResponse{}, err
+	}
+	return AvailabilitySetResponse{RawResponse: resp.Response, AvailabilitySet: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -230,9 +226,11 @@ func (client AvailabilitySetsClient) listCreateRequest(ctx context.Context, reso
 
 // listHandleResponse handles the List response.
 func (client AvailabilitySetsClient) listHandleResponse(resp *azcore.Response) (AvailabilitySetListResultResponse, error) {
-	result := AvailabilitySetListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.AvailabilitySetListResult)
-	return result, err
+	var val *AvailabilitySetListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return AvailabilitySetListResultResponse{}, err
+	}
+	return AvailabilitySetListResultResponse{RawResponse: resp.Response, AvailabilitySetListResult: val}, nil
 }
 
 // listHandleError handles the List error response.
@@ -260,11 +258,7 @@ func (client AvailabilitySetsClient) ListAvailableSizes(ctx context.Context, res
 	if !resp.HasStatusCode(http.StatusOK) {
 		return VirtualMachineSizeListResultResponse{}, client.listAvailableSizesHandleError(resp)
 	}
-	result, err := client.listAvailableSizesHandleResponse(resp)
-	if err != nil {
-		return VirtualMachineSizeListResultResponse{}, err
-	}
-	return result, nil
+	return client.listAvailableSizesHandleResponse(resp)
 }
 
 // listAvailableSizesCreateRequest creates the ListAvailableSizes request.
@@ -287,9 +281,11 @@ func (client AvailabilitySetsClient) listAvailableSizesCreateRequest(ctx context
 
 // listAvailableSizesHandleResponse handles the ListAvailableSizes response.
 func (client AvailabilitySetsClient) listAvailableSizesHandleResponse(resp *azcore.Response) (VirtualMachineSizeListResultResponse, error) {
-	result := VirtualMachineSizeListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.VirtualMachineSizeListResult)
-	return result, err
+	var val *VirtualMachineSizeListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return VirtualMachineSizeListResultResponse{}, err
+	}
+	return VirtualMachineSizeListResultResponse{RawResponse: resp.Response, VirtualMachineSizeListResult: val}, nil
 }
 
 // listAvailableSizesHandleError handles the ListAvailableSizes error response.
@@ -341,9 +337,11 @@ func (client AvailabilitySetsClient) listBySubscriptionCreateRequest(ctx context
 
 // listBySubscriptionHandleResponse handles the ListBySubscription response.
 func (client AvailabilitySetsClient) listBySubscriptionHandleResponse(resp *azcore.Response) (AvailabilitySetListResultResponse, error) {
-	result := AvailabilitySetListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.AvailabilitySetListResult)
-	return result, err
+	var val *AvailabilitySetListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return AvailabilitySetListResultResponse{}, err
+	}
+	return AvailabilitySetListResultResponse{RawResponse: resp.Response, AvailabilitySetListResult: val}, nil
 }
 
 // listBySubscriptionHandleError handles the ListBySubscription error response.
@@ -371,11 +369,7 @@ func (client AvailabilitySetsClient) Update(ctx context.Context, resourceGroupNa
 	if !resp.HasStatusCode(http.StatusOK) {
 		return AvailabilitySetResponse{}, client.updateHandleError(resp)
 	}
-	result, err := client.updateHandleResponse(resp)
-	if err != nil {
-		return AvailabilitySetResponse{}, err
-	}
-	return result, nil
+	return client.updateHandleResponse(resp)
 }
 
 // updateCreateRequest creates the Update request.
@@ -398,9 +392,11 @@ func (client AvailabilitySetsClient) updateCreateRequest(ctx context.Context, re
 
 // updateHandleResponse handles the Update response.
 func (client AvailabilitySetsClient) updateHandleResponse(resp *azcore.Response) (AvailabilitySetResponse, error) {
-	result := AvailabilitySetResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.AvailabilitySet)
-	return result, err
+	var val *AvailabilitySet
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return AvailabilitySetResponse{}, err
+	}
+	return AvailabilitySetResponse{RawResponse: resp.Response, AvailabilitySet: val}, nil
 }
 
 // updateHandleError handles the Update error response.

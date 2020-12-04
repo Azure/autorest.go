@@ -165,8 +165,12 @@ func unmarshalExecutionActivityClassification(body []byte) (ExecutionActivityCla
 		b = &HdInsightStreamingActivity{}
 	case "Lookup":
 		b = &LookupActivity{}
+	case "SparkJob":
+		b = &SynapseSparkJobDefinitionActivity{}
 	case "SqlServerStoredProcedure":
 		b = &SQLServerStoredProcedureActivity{}
+	case "SynapseNotebook":
+		b = &SynapseNotebookActivity{}
 	case "WebActivity":
 		b = &WebActivity{}
 	default:

@@ -73,9 +73,11 @@ func (client ResourceSKUsClient) listCreateRequest(ctx context.Context, options 
 
 // listHandleResponse handles the List response.
 func (client ResourceSKUsClient) listHandleResponse(resp *azcore.Response) (ResourceSKUsResultResponse, error) {
-	result := ResourceSKUsResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ResourceSKUsResult)
-	return result, err
+	var val *ResourceSKUsResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ResourceSKUsResultResponse{}, err
+	}
+	return ResourceSKUsResultResponse{RawResponse: resp.Response, ResourceSKUsResult: val}, nil
 }
 
 // listHandleError handles the List error response.

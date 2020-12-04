@@ -68,9 +68,11 @@ func (client UsagesClient) listCreateRequest(ctx context.Context, location strin
 
 // listHandleResponse handles the List response.
 func (client UsagesClient) listHandleResponse(resp *azcore.Response) (UsagesListResultResponse, error) {
-	result := UsagesListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.UsagesListResult)
-	return result, err
+	var val *UsagesListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return UsagesListResultResponse{}, err
+	}
+	return UsagesListResultResponse{RawResponse: resp.Response, UsagesListResult: val}, nil
 }
 
 // listHandleError handles the List error response.

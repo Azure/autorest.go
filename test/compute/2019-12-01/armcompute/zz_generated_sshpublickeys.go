@@ -49,11 +49,7 @@ func (client SSHPublicKeysClient) Create(ctx context.Context, resourceGroupName 
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return SSHPublicKeyResourceResponse{}, client.createHandleError(resp)
 	}
-	result, err := client.createHandleResponse(resp)
-	if err != nil {
-		return SSHPublicKeyResourceResponse{}, err
-	}
-	return result, nil
+	return client.createHandleResponse(resp)
 }
 
 // createCreateRequest creates the Create request.
@@ -76,9 +72,11 @@ func (client SSHPublicKeysClient) createCreateRequest(ctx context.Context, resou
 
 // createHandleResponse handles the Create response.
 func (client SSHPublicKeysClient) createHandleResponse(resp *azcore.Response) (SSHPublicKeyResourceResponse, error) {
-	result := SSHPublicKeyResourceResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.SSHPublicKeyResource)
-	return result, err
+	var val *SSHPublicKeyResource
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return SSHPublicKeyResourceResponse{}, err
+	}
+	return SSHPublicKeyResourceResponse{RawResponse: resp.Response, SSHPublicKeyResource: val}, nil
 }
 
 // createHandleError handles the Create error response.
@@ -153,11 +151,7 @@ func (client SSHPublicKeysClient) GenerateKeyPair(ctx context.Context, resourceG
 	if !resp.HasStatusCode(http.StatusOK) {
 		return SSHPublicKeyGenerateKeyPairResultResponse{}, client.generateKeyPairHandleError(resp)
 	}
-	result, err := client.generateKeyPairHandleResponse(resp)
-	if err != nil {
-		return SSHPublicKeyGenerateKeyPairResultResponse{}, err
-	}
-	return result, nil
+	return client.generateKeyPairHandleResponse(resp)
 }
 
 // generateKeyPairCreateRequest creates the GenerateKeyPair request.
@@ -180,9 +174,11 @@ func (client SSHPublicKeysClient) generateKeyPairCreateRequest(ctx context.Conte
 
 // generateKeyPairHandleResponse handles the GenerateKeyPair response.
 func (client SSHPublicKeysClient) generateKeyPairHandleResponse(resp *azcore.Response) (SSHPublicKeyGenerateKeyPairResultResponse, error) {
-	result := SSHPublicKeyGenerateKeyPairResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.SSHPublicKeyGenerateKeyPairResult)
-	return result, err
+	var val *SSHPublicKeyGenerateKeyPairResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return SSHPublicKeyGenerateKeyPairResultResponse{}, err
+	}
+	return SSHPublicKeyGenerateKeyPairResultResponse{RawResponse: resp.Response, SSHPublicKeyGenerateKeyPairResult: val}, nil
 }
 
 // generateKeyPairHandleError handles the GenerateKeyPair error response.
@@ -210,11 +206,7 @@ func (client SSHPublicKeysClient) Get(ctx context.Context, resourceGroupName str
 	if !resp.HasStatusCode(http.StatusOK) {
 		return SSHPublicKeyResourceResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return SSHPublicKeyResourceResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -237,9 +229,11 @@ func (client SSHPublicKeysClient) getCreateRequest(ctx context.Context, resource
 
 // getHandleResponse handles the Get response.
 func (client SSHPublicKeysClient) getHandleResponse(resp *azcore.Response) (SSHPublicKeyResourceResponse, error) {
-	result := SSHPublicKeyResourceResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.SSHPublicKeyResource)
-	return result, err
+	var val *SSHPublicKeyResource
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return SSHPublicKeyResourceResponse{}, err
+	}
+	return SSHPublicKeyResourceResponse{RawResponse: resp.Response, SSHPublicKeyResource: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -290,9 +284,11 @@ func (client SSHPublicKeysClient) listByResourceGroupCreateRequest(ctx context.C
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
 func (client SSHPublicKeysClient) listByResourceGroupHandleResponse(resp *azcore.Response) (SSHPublicKeysGroupListResultResponse, error) {
-	result := SSHPublicKeysGroupListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.SSHPublicKeysGroupListResult)
-	return result, err
+	var val *SSHPublicKeysGroupListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return SSHPublicKeysGroupListResultResponse{}, err
+	}
+	return SSHPublicKeysGroupListResultResponse{RawResponse: resp.Response, SSHPublicKeysGroupListResult: val}, nil
 }
 
 // listByResourceGroupHandleError handles the ListByResourceGroup error response.
@@ -342,9 +338,11 @@ func (client SSHPublicKeysClient) listBySubscriptionCreateRequest(ctx context.Co
 
 // listBySubscriptionHandleResponse handles the ListBySubscription response.
 func (client SSHPublicKeysClient) listBySubscriptionHandleResponse(resp *azcore.Response) (SSHPublicKeysGroupListResultResponse, error) {
-	result := SSHPublicKeysGroupListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.SSHPublicKeysGroupListResult)
-	return result, err
+	var val *SSHPublicKeysGroupListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return SSHPublicKeysGroupListResultResponse{}, err
+	}
+	return SSHPublicKeysGroupListResultResponse{RawResponse: resp.Response, SSHPublicKeysGroupListResult: val}, nil
 }
 
 // listBySubscriptionHandleError handles the ListBySubscription error response.
@@ -372,11 +370,7 @@ func (client SSHPublicKeysClient) Update(ctx context.Context, resourceGroupName 
 	if !resp.HasStatusCode(http.StatusOK) {
 		return SSHPublicKeyResourceResponse{}, client.updateHandleError(resp)
 	}
-	result, err := client.updateHandleResponse(resp)
-	if err != nil {
-		return SSHPublicKeyResourceResponse{}, err
-	}
-	return result, nil
+	return client.updateHandleResponse(resp)
 }
 
 // updateCreateRequest creates the Update request.
@@ -399,9 +393,11 @@ func (client SSHPublicKeysClient) updateCreateRequest(ctx context.Context, resou
 
 // updateHandleResponse handles the Update response.
 func (client SSHPublicKeysClient) updateHandleResponse(resp *azcore.Response) (SSHPublicKeyResourceResponse, error) {
-	result := SSHPublicKeyResourceResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.SSHPublicKeyResource)
-	return result, err
+	var val *SSHPublicKeyResource
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return SSHPublicKeyResourceResponse{}, err
+	}
+	return SSHPublicKeyResourceResponse{RawResponse: resp.Response, SSHPublicKeyResource: val}, nil
 }
 
 // updateHandleError handles the Update error response.

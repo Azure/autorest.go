@@ -45,11 +45,7 @@ func (client FloatClient) Get(ctx context.Context, options *FloatGetOptions) (Fl
 	if !resp.HasStatusCode(http.StatusOK) {
 		return FloatEnumResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return FloatEnumResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -66,9 +62,11 @@ func (client FloatClient) getCreateRequest(ctx context.Context, options *FloatGe
 
 // getHandleResponse handles the Get response.
 func (client FloatClient) getHandleResponse(resp *azcore.Response) (FloatEnumResponse, error) {
-	result := FloatEnumResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Value)
-	return result, err
+	var val *FloatEnum
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return FloatEnumResponse{}, err
+	}
+	return FloatEnumResponse{RawResponse: resp.Response, Value: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -96,11 +94,7 @@ func (client FloatClient) Put(ctx context.Context, options *FloatPutOptions) (St
 	if !resp.HasStatusCode(http.StatusOK) {
 		return StringResponse{}, client.putHandleError(resp)
 	}
-	result, err := client.putHandleResponse(resp)
-	if err != nil {
-		return StringResponse{}, err
-	}
-	return result, nil
+	return client.putHandleResponse(resp)
 }
 
 // putCreateRequest creates the Put request.
@@ -120,9 +114,11 @@ func (client FloatClient) putCreateRequest(ctx context.Context, options *FloatPu
 
 // putHandleResponse handles the Put response.
 func (client FloatClient) putHandleResponse(resp *azcore.Response) (StringResponse, error) {
-	result := StringResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Value)
-	return result, err
+	var val *string
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return StringResponse{}, err
+	}
+	return StringResponse{RawResponse: resp.Response, Value: val}, nil
 }
 
 // putHandleError handles the Put error response.

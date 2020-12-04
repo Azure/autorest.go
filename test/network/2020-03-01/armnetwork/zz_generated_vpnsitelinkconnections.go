@@ -46,11 +46,7 @@ func (client VpnSiteLinkConnectionsClient) Get(ctx context.Context, resourceGrou
 	if !resp.HasStatusCode(http.StatusOK) {
 		return VpnSiteLinkConnectionResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return VpnSiteLinkConnectionResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -75,9 +71,11 @@ func (client VpnSiteLinkConnectionsClient) getCreateRequest(ctx context.Context,
 
 // getHandleResponse handles the Get response.
 func (client VpnSiteLinkConnectionsClient) getHandleResponse(resp *azcore.Response) (VpnSiteLinkConnectionResponse, error) {
-	result := VpnSiteLinkConnectionResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.VpnSiteLinkConnection)
-	return result, err
+	var val *VpnSiteLinkConnection
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return VpnSiteLinkConnectionResponse{}, err
+	}
+	return VpnSiteLinkConnectionResponse{RawResponse: resp.Response, VpnSiteLinkConnection: val}, nil
 }
 
 // getHandleError handles the Get error response.

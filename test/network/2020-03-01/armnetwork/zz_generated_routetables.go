@@ -107,9 +107,11 @@ func (client RouteTablesClient) createOrUpdateCreateRequest(ctx context.Context,
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client RouteTablesClient) createOrUpdateHandleResponse(resp *azcore.Response) (RouteTableResponse, error) {
-	result := RouteTableResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.RouteTable)
-	return result, err
+	var val *RouteTable
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return RouteTableResponse{}, err
+	}
+	return RouteTableResponse{RawResponse: resp.Response, RouteTable: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -214,11 +216,7 @@ func (client RouteTablesClient) Get(ctx context.Context, resourceGroupName strin
 	if !resp.HasStatusCode(http.StatusOK) {
 		return RouteTableResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return RouteTableResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -244,9 +242,11 @@ func (client RouteTablesClient) getCreateRequest(ctx context.Context, resourceGr
 
 // getHandleResponse handles the Get response.
 func (client RouteTablesClient) getHandleResponse(resp *azcore.Response) (RouteTableResponse, error) {
-	result := RouteTableResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.RouteTable)
-	return result, err
+	var val *RouteTable
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return RouteTableResponse{}, err
+	}
+	return RouteTableResponse{RawResponse: resp.Response, RouteTable: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -293,9 +293,11 @@ func (client RouteTablesClient) listCreateRequest(ctx context.Context, resourceG
 
 // listHandleResponse handles the List response.
 func (client RouteTablesClient) listHandleResponse(resp *azcore.Response) (RouteTableListResultResponse, error) {
-	result := RouteTableListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.RouteTableListResult)
-	return result, err
+	var val *RouteTableListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return RouteTableListResultResponse{}, err
+	}
+	return RouteTableListResultResponse{RawResponse: resp.Response, RouteTableListResult: val}, nil
 }
 
 // listHandleError handles the List error response.
@@ -341,9 +343,11 @@ func (client RouteTablesClient) listAllCreateRequest(ctx context.Context, option
 
 // listAllHandleResponse handles the ListAll response.
 func (client RouteTablesClient) listAllHandleResponse(resp *azcore.Response) (RouteTableListResultResponse, error) {
-	result := RouteTableListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.RouteTableListResult)
-	return result, err
+	var val *RouteTableListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return RouteTableListResultResponse{}, err
+	}
+	return RouteTableListResultResponse{RawResponse: resp.Response, RouteTableListResult: val}, nil
 }
 
 // listAllHandleError handles the ListAll error response.
@@ -368,11 +372,7 @@ func (client RouteTablesClient) UpdateTags(ctx context.Context, resourceGroupNam
 	if !resp.HasStatusCode(http.StatusOK) {
 		return RouteTableResponse{}, client.updateTagsHandleError(resp)
 	}
-	result, err := client.updateTagsHandleResponse(resp)
-	if err != nil {
-		return RouteTableResponse{}, err
-	}
-	return result, nil
+	return client.updateTagsHandleResponse(resp)
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.
@@ -395,9 +395,11 @@ func (client RouteTablesClient) updateTagsCreateRequest(ctx context.Context, res
 
 // updateTagsHandleResponse handles the UpdateTags response.
 func (client RouteTablesClient) updateTagsHandleResponse(resp *azcore.Response) (RouteTableResponse, error) {
-	result := RouteTableResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.RouteTable)
-	return result, err
+	var val *RouteTable
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return RouteTableResponse{}, err
+	}
+	return RouteTableResponse{RawResponse: resp.Response, RouteTable: val}, nil
 }
 
 // updateTagsHandleError handles the UpdateTags error response.

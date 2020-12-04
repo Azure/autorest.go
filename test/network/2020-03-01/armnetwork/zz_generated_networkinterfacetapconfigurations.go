@@ -108,9 +108,11 @@ func (client NetworkInterfaceTapConfigurationsClient) createOrUpdateCreateReques
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client NetworkInterfaceTapConfigurationsClient) createOrUpdateHandleResponse(resp *azcore.Response) (NetworkInterfaceTapConfigurationResponse, error) {
-	result := NetworkInterfaceTapConfigurationResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.NetworkInterfaceTapConfiguration)
-	return result, err
+	var val *NetworkInterfaceTapConfiguration
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return NetworkInterfaceTapConfigurationResponse{}, err
+	}
+	return NetworkInterfaceTapConfigurationResponse{RawResponse: resp.Response, NetworkInterfaceTapConfiguration: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -216,11 +218,7 @@ func (client NetworkInterfaceTapConfigurationsClient) Get(ctx context.Context, r
 	if !resp.HasStatusCode(http.StatusOK) {
 		return NetworkInterfaceTapConfigurationResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return NetworkInterfaceTapConfigurationResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -244,9 +242,11 @@ func (client NetworkInterfaceTapConfigurationsClient) getCreateRequest(ctx conte
 
 // getHandleResponse handles the Get response.
 func (client NetworkInterfaceTapConfigurationsClient) getHandleResponse(resp *azcore.Response) (NetworkInterfaceTapConfigurationResponse, error) {
-	result := NetworkInterfaceTapConfigurationResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.NetworkInterfaceTapConfiguration)
-	return result, err
+	var val *NetworkInterfaceTapConfiguration
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return NetworkInterfaceTapConfigurationResponse{}, err
+	}
+	return NetworkInterfaceTapConfigurationResponse{RawResponse: resp.Response, NetworkInterfaceTapConfiguration: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -294,9 +294,11 @@ func (client NetworkInterfaceTapConfigurationsClient) listCreateRequest(ctx cont
 
 // listHandleResponse handles the List response.
 func (client NetworkInterfaceTapConfigurationsClient) listHandleResponse(resp *azcore.Response) (NetworkInterfaceTapConfigurationListResultResponse, error) {
-	result := NetworkInterfaceTapConfigurationListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.NetworkInterfaceTapConfigurationListResult)
-	return result, err
+	var val *NetworkInterfaceTapConfigurationListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return NetworkInterfaceTapConfigurationListResultResponse{}, err
+	}
+	return NetworkInterfaceTapConfigurationListResultResponse{RawResponse: resp.Response, NetworkInterfaceTapConfigurationListResult: val}, nil
 }
 
 // listHandleError handles the List error response.

@@ -70,9 +70,11 @@ func (client VpnLinkConnectionsClient) listByVpnConnectionCreateRequest(ctx cont
 
 // listByVpnConnectionHandleResponse handles the ListByVpnConnection response.
 func (client VpnLinkConnectionsClient) listByVpnConnectionHandleResponse(resp *azcore.Response) (ListVpnSiteLinkConnectionsResultResponse, error) {
-	result := ListVpnSiteLinkConnectionsResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ListVpnSiteLinkConnectionsResult)
-	return result, err
+	var val *ListVpnSiteLinkConnectionsResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ListVpnSiteLinkConnectionsResultResponse{}, err
+	}
+	return ListVpnSiteLinkConnectionsResultResponse{RawResponse: resp.Response, ListVpnSiteLinkConnectionsResult: val}, nil
 }
 
 // listByVpnConnectionHandleError handles the ListByVpnConnection error response.

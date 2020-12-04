@@ -46,11 +46,7 @@ func (client ExpressRoutePortsLocationsClient) Get(ctx context.Context, location
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ExpressRoutePortsLocationResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return ExpressRoutePortsLocationResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -72,9 +68,11 @@ func (client ExpressRoutePortsLocationsClient) getCreateRequest(ctx context.Cont
 
 // getHandleResponse handles the Get response.
 func (client ExpressRoutePortsLocationsClient) getHandleResponse(resp *azcore.Response) (ExpressRoutePortsLocationResponse, error) {
-	result := ExpressRoutePortsLocationResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ExpressRoutePortsLocation)
-	return result, err
+	var val *ExpressRoutePortsLocation
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ExpressRoutePortsLocationResponse{}, err
+	}
+	return ExpressRoutePortsLocationResponse{RawResponse: resp.Response, ExpressRoutePortsLocation: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -121,9 +119,11 @@ func (client ExpressRoutePortsLocationsClient) listCreateRequest(ctx context.Con
 
 // listHandleResponse handles the List response.
 func (client ExpressRoutePortsLocationsClient) listHandleResponse(resp *azcore.Response) (ExpressRoutePortsLocationListResultResponse, error) {
-	result := ExpressRoutePortsLocationListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ExpressRoutePortsLocationListResult)
-	return result, err
+	var val *ExpressRoutePortsLocationListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ExpressRoutePortsLocationListResultResponse{}, err
+	}
+	return ExpressRoutePortsLocationListResultResponse{RawResponse: resp.Response, ExpressRoutePortsLocationListResult: val}, nil
 }
 
 // listHandleError handles the List error response.

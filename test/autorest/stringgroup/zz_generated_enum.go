@@ -42,11 +42,7 @@ func (client EnumClient) GetNotExpandable(ctx context.Context, options *EnumGetN
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ColorsResponse{}, client.getNotExpandableHandleError(resp)
 	}
-	result, err := client.getNotExpandableHandleResponse(resp)
-	if err != nil {
-		return ColorsResponse{}, err
-	}
-	return result, nil
+	return client.getNotExpandableHandleResponse(resp)
 }
 
 // getNotExpandableCreateRequest creates the GetNotExpandable request.
@@ -63,9 +59,11 @@ func (client EnumClient) getNotExpandableCreateRequest(ctx context.Context, opti
 
 // getNotExpandableHandleResponse handles the GetNotExpandable response.
 func (client EnumClient) getNotExpandableHandleResponse(resp *azcore.Response) (ColorsResponse, error) {
-	result := ColorsResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Value)
-	return result, err
+	var val *Colors
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ColorsResponse{}, err
+	}
+	return ColorsResponse{RawResponse: resp.Response, Value: val}, nil
 }
 
 // getNotExpandableHandleError handles the GetNotExpandable error response.
@@ -90,11 +88,7 @@ func (client EnumClient) GetReferenced(ctx context.Context, options *EnumGetRefe
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ColorsResponse{}, client.getReferencedHandleError(resp)
 	}
-	result, err := client.getReferencedHandleResponse(resp)
-	if err != nil {
-		return ColorsResponse{}, err
-	}
-	return result, nil
+	return client.getReferencedHandleResponse(resp)
 }
 
 // getReferencedCreateRequest creates the GetReferenced request.
@@ -111,9 +105,11 @@ func (client EnumClient) getReferencedCreateRequest(ctx context.Context, options
 
 // getReferencedHandleResponse handles the GetReferenced response.
 func (client EnumClient) getReferencedHandleResponse(resp *azcore.Response) (ColorsResponse, error) {
-	result := ColorsResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Value)
-	return result, err
+	var val *Colors
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ColorsResponse{}, err
+	}
+	return ColorsResponse{RawResponse: resp.Response, Value: val}, nil
 }
 
 // getReferencedHandleError handles the GetReferenced error response.
@@ -138,11 +134,7 @@ func (client EnumClient) GetReferencedConstant(ctx context.Context, options *Enu
 	if !resp.HasStatusCode(http.StatusOK) {
 		return RefColorConstantResponse{}, client.getReferencedConstantHandleError(resp)
 	}
-	result, err := client.getReferencedConstantHandleResponse(resp)
-	if err != nil {
-		return RefColorConstantResponse{}, err
-	}
-	return result, nil
+	return client.getReferencedConstantHandleResponse(resp)
 }
 
 // getReferencedConstantCreateRequest creates the GetReferencedConstant request.
@@ -159,9 +151,11 @@ func (client EnumClient) getReferencedConstantCreateRequest(ctx context.Context,
 
 // getReferencedConstantHandleResponse handles the GetReferencedConstant response.
 func (client EnumClient) getReferencedConstantHandleResponse(resp *azcore.Response) (RefColorConstantResponse, error) {
-	result := RefColorConstantResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.RefColorConstant)
-	return result, err
+	var val *RefColorConstant
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return RefColorConstantResponse{}, err
+	}
+	return RefColorConstantResponse{RawResponse: resp.Response, RefColorConstant: val}, nil
 }
 
 // getReferencedConstantHandleError handles the GetReferencedConstant error response.

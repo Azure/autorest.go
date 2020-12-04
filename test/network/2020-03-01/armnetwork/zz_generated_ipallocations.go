@@ -107,9 +107,11 @@ func (client IPAllocationsClient) createOrUpdateCreateRequest(ctx context.Contex
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client IPAllocationsClient) createOrUpdateHandleResponse(resp *azcore.Response) (IPAllocationResponse, error) {
-	result := IPAllocationResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.IPAllocation)
-	return result, err
+	var val *IPAllocation
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return IPAllocationResponse{}, err
+	}
+	return IPAllocationResponse{RawResponse: resp.Response, IPAllocation: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -214,11 +216,7 @@ func (client IPAllocationsClient) Get(ctx context.Context, resourceGroupName str
 	if !resp.HasStatusCode(http.StatusOK) {
 		return IPAllocationResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return IPAllocationResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -244,9 +242,11 @@ func (client IPAllocationsClient) getCreateRequest(ctx context.Context, resource
 
 // getHandleResponse handles the Get response.
 func (client IPAllocationsClient) getHandleResponse(resp *azcore.Response) (IPAllocationResponse, error) {
-	result := IPAllocationResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.IPAllocation)
-	return result, err
+	var val *IPAllocation
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return IPAllocationResponse{}, err
+	}
+	return IPAllocationResponse{RawResponse: resp.Response, IPAllocation: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -292,9 +292,11 @@ func (client IPAllocationsClient) listCreateRequest(ctx context.Context, options
 
 // listHandleResponse handles the List response.
 func (client IPAllocationsClient) listHandleResponse(resp *azcore.Response) (IPAllocationListResultResponse, error) {
-	result := IPAllocationListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.IPAllocationListResult)
-	return result, err
+	var val *IPAllocationListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return IPAllocationListResultResponse{}, err
+	}
+	return IPAllocationListResultResponse{RawResponse: resp.Response, IPAllocationListResult: val}, nil
 }
 
 // listHandleError handles the List error response.
@@ -341,9 +343,11 @@ func (client IPAllocationsClient) listByResourceGroupCreateRequest(ctx context.C
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
 func (client IPAllocationsClient) listByResourceGroupHandleResponse(resp *azcore.Response) (IPAllocationListResultResponse, error) {
-	result := IPAllocationListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.IPAllocationListResult)
-	return result, err
+	var val *IPAllocationListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return IPAllocationListResultResponse{}, err
+	}
+	return IPAllocationListResultResponse{RawResponse: resp.Response, IPAllocationListResult: val}, nil
 }
 
 // listByResourceGroupHandleError handles the ListByResourceGroup error response.
@@ -368,11 +372,7 @@ func (client IPAllocationsClient) UpdateTags(ctx context.Context, resourceGroupN
 	if !resp.HasStatusCode(http.StatusOK) {
 		return IPAllocationResponse{}, client.updateTagsHandleError(resp)
 	}
-	result, err := client.updateTagsHandleResponse(resp)
-	if err != nil {
-		return IPAllocationResponse{}, err
-	}
-	return result, nil
+	return client.updateTagsHandleResponse(resp)
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.
@@ -395,9 +395,11 @@ func (client IPAllocationsClient) updateTagsCreateRequest(ctx context.Context, r
 
 // updateTagsHandleResponse handles the UpdateTags response.
 func (client IPAllocationsClient) updateTagsHandleResponse(resp *azcore.Response) (IPAllocationResponse, error) {
-	result := IPAllocationResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.IPAllocation)
-	return result, err
+	var val *IPAllocation
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return IPAllocationResponse{}, err
+	}
+	return IPAllocationResponse{RawResponse: resp.Response, IPAllocation: val}, nil
 }
 
 // updateTagsHandleError handles the UpdateTags error response.

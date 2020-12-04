@@ -107,9 +107,11 @@ func (client LocalNetworkGatewaysClient) createOrUpdateCreateRequest(ctx context
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client LocalNetworkGatewaysClient) createOrUpdateHandleResponse(resp *azcore.Response) (LocalNetworkGatewayResponse, error) {
-	result := LocalNetworkGatewayResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.LocalNetworkGateway)
-	return result, err
+	var val *LocalNetworkGateway
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return LocalNetworkGatewayResponse{}, err
+	}
+	return LocalNetworkGatewayResponse{RawResponse: resp.Response, LocalNetworkGateway: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -214,11 +216,7 @@ func (client LocalNetworkGatewaysClient) Get(ctx context.Context, resourceGroupN
 	if !resp.HasStatusCode(http.StatusOK) {
 		return LocalNetworkGatewayResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return LocalNetworkGatewayResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -241,9 +239,11 @@ func (client LocalNetworkGatewaysClient) getCreateRequest(ctx context.Context, r
 
 // getHandleResponse handles the Get response.
 func (client LocalNetworkGatewaysClient) getHandleResponse(resp *azcore.Response) (LocalNetworkGatewayResponse, error) {
-	result := LocalNetworkGatewayResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.LocalNetworkGateway)
-	return result, err
+	var val *LocalNetworkGateway
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return LocalNetworkGatewayResponse{}, err
+	}
+	return LocalNetworkGatewayResponse{RawResponse: resp.Response, LocalNetworkGateway: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -290,9 +290,11 @@ func (client LocalNetworkGatewaysClient) listCreateRequest(ctx context.Context, 
 
 // listHandleResponse handles the List response.
 func (client LocalNetworkGatewaysClient) listHandleResponse(resp *azcore.Response) (LocalNetworkGatewayListResultResponse, error) {
-	result := LocalNetworkGatewayListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.LocalNetworkGatewayListResult)
-	return result, err
+	var val *LocalNetworkGatewayListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return LocalNetworkGatewayListResultResponse{}, err
+	}
+	return LocalNetworkGatewayListResultResponse{RawResponse: resp.Response, LocalNetworkGatewayListResult: val}, nil
 }
 
 // listHandleError handles the List error response.
@@ -317,11 +319,7 @@ func (client LocalNetworkGatewaysClient) UpdateTags(ctx context.Context, resourc
 	if !resp.HasStatusCode(http.StatusOK) {
 		return LocalNetworkGatewayResponse{}, client.updateTagsHandleError(resp)
 	}
-	result, err := client.updateTagsHandleResponse(resp)
-	if err != nil {
-		return LocalNetworkGatewayResponse{}, err
-	}
-	return result, nil
+	return client.updateTagsHandleResponse(resp)
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.
@@ -344,9 +342,11 @@ func (client LocalNetworkGatewaysClient) updateTagsCreateRequest(ctx context.Con
 
 // updateTagsHandleResponse handles the UpdateTags response.
 func (client LocalNetworkGatewaysClient) updateTagsHandleResponse(resp *azcore.Response) (LocalNetworkGatewayResponse, error) {
-	result := LocalNetworkGatewayResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.LocalNetworkGateway)
-	return result, err
+	var val *LocalNetworkGateway
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return LocalNetworkGatewayResponse{}, err
+	}
+	return LocalNetworkGatewayResponse{RawResponse: resp.Response, LocalNetworkGateway: val}, nil
 }
 
 // updateTagsHandleError handles the UpdateTags error response.

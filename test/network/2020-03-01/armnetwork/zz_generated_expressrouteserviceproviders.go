@@ -67,9 +67,11 @@ func (client ExpressRouteServiceProvidersClient) listCreateRequest(ctx context.C
 
 // listHandleResponse handles the List response.
 func (client ExpressRouteServiceProvidersClient) listHandleResponse(resp *azcore.Response) (ExpressRouteServiceProviderListResultResponse, error) {
-	result := ExpressRouteServiceProviderListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ExpressRouteServiceProviderListResult)
-	return result, err
+	var val *ExpressRouteServiceProviderListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ExpressRouteServiceProviderListResultResponse{}, err
+	}
+	return ExpressRouteServiceProviderListResultResponse{RawResponse: resp.Response, ExpressRouteServiceProviderListResult: val}, nil
 }
 
 // listHandleError handles the List error response.

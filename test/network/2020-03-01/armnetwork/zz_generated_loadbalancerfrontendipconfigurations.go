@@ -46,11 +46,7 @@ func (client LoadBalancerFrontendIPConfigurationsClient) Get(ctx context.Context
 	if !resp.HasStatusCode(http.StatusOK) {
 		return FrontendIPConfigurationResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return FrontendIPConfigurationResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -74,9 +70,11 @@ func (client LoadBalancerFrontendIPConfigurationsClient) getCreateRequest(ctx co
 
 // getHandleResponse handles the Get response.
 func (client LoadBalancerFrontendIPConfigurationsClient) getHandleResponse(resp *azcore.Response) (FrontendIPConfigurationResponse, error) {
-	result := FrontendIPConfigurationResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.FrontendIPConfiguration)
-	return result, err
+	var val *FrontendIPConfiguration
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return FrontendIPConfigurationResponse{}, err
+	}
+	return FrontendIPConfigurationResponse{RawResponse: resp.Response, FrontendIPConfiguration: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -124,9 +122,11 @@ func (client LoadBalancerFrontendIPConfigurationsClient) listCreateRequest(ctx c
 
 // listHandleResponse handles the List response.
 func (client LoadBalancerFrontendIPConfigurationsClient) listHandleResponse(resp *azcore.Response) (LoadBalancerFrontendIPConfigurationListResultResponse, error) {
-	result := LoadBalancerFrontendIPConfigurationListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.LoadBalancerFrontendIPConfigurationListResult)
-	return result, err
+	var val *LoadBalancerFrontendIPConfigurationListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return LoadBalancerFrontendIPConfigurationListResultResponse{}, err
+	}
+	return LoadBalancerFrontendIPConfigurationListResultResponse{RawResponse: resp.Response, LoadBalancerFrontendIPConfigurationListResult: val}, nil
 }
 
 // listHandleError handles the List error response.

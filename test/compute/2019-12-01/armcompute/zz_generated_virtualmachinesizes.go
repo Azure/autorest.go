@@ -49,11 +49,7 @@ func (client VirtualMachineSizesClient) List(ctx context.Context, location strin
 	if !resp.HasStatusCode(http.StatusOK) {
 		return VirtualMachineSizeListResultResponse{}, client.listHandleError(resp)
 	}
-	result, err := client.listHandleResponse(resp)
-	if err != nil {
-		return VirtualMachineSizeListResultResponse{}, err
-	}
-	return result, nil
+	return client.listHandleResponse(resp)
 }
 
 // listCreateRequest creates the List request.
@@ -75,9 +71,11 @@ func (client VirtualMachineSizesClient) listCreateRequest(ctx context.Context, l
 
 // listHandleResponse handles the List response.
 func (client VirtualMachineSizesClient) listHandleResponse(resp *azcore.Response) (VirtualMachineSizeListResultResponse, error) {
-	result := VirtualMachineSizeListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.VirtualMachineSizeListResult)
-	return result, err
+	var val *VirtualMachineSizeListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return VirtualMachineSizeListResultResponse{}, err
+	}
+	return VirtualMachineSizeListResultResponse{RawResponse: resp.Response, VirtualMachineSizeListResult: val}, nil
 }
 
 // listHandleError handles the List error response.

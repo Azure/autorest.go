@@ -46,11 +46,7 @@ func (client DefaultSecurityRulesClient) Get(ctx context.Context, resourceGroupN
 	if !resp.HasStatusCode(http.StatusOK) {
 		return SecurityRuleResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return SecurityRuleResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -74,9 +70,11 @@ func (client DefaultSecurityRulesClient) getCreateRequest(ctx context.Context, r
 
 // getHandleResponse handles the Get response.
 func (client DefaultSecurityRulesClient) getHandleResponse(resp *azcore.Response) (SecurityRuleResponse, error) {
-	result := SecurityRuleResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.SecurityRule)
-	return result, err
+	var val *SecurityRule
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return SecurityRuleResponse{}, err
+	}
+	return SecurityRuleResponse{RawResponse: resp.Response, SecurityRule: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -124,9 +122,11 @@ func (client DefaultSecurityRulesClient) listCreateRequest(ctx context.Context, 
 
 // listHandleResponse handles the List response.
 func (client DefaultSecurityRulesClient) listHandleResponse(resp *azcore.Response) (SecurityRuleListResultResponse, error) {
-	result := SecurityRuleListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.SecurityRuleListResult)
-	return result, err
+	var val *SecurityRuleListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return SecurityRuleListResultResponse{}, err
+	}
+	return SecurityRuleListResultResponse{RawResponse: resp.Response, SecurityRuleListResult: val}, nil
 }
 
 // listHandleError handles the List error response.

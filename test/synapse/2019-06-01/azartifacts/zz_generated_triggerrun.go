@@ -79,11 +79,7 @@ func (client triggerRunClient) QueryTriggerRunsByWorkspace(ctx context.Context, 
 	if !resp.HasStatusCode(http.StatusOK) {
 		return TriggerRunsQueryResponseResponse{}, client.queryTriggerRunsByWorkspaceHandleError(resp)
 	}
-	result, err := client.queryTriggerRunsByWorkspaceHandleResponse(resp)
-	if err != nil {
-		return TriggerRunsQueryResponseResponse{}, err
-	}
-	return result, nil
+	return client.queryTriggerRunsByWorkspaceHandleResponse(resp)
 }
 
 // queryTriggerRunsByWorkspaceCreateRequest creates the QueryTriggerRunsByWorkspace request.
@@ -103,9 +99,11 @@ func (client triggerRunClient) queryTriggerRunsByWorkspaceCreateRequest(ctx cont
 
 // queryTriggerRunsByWorkspaceHandleResponse handles the QueryTriggerRunsByWorkspace response.
 func (client triggerRunClient) queryTriggerRunsByWorkspaceHandleResponse(resp *azcore.Response) (TriggerRunsQueryResponseResponse, error) {
-	result := TriggerRunsQueryResponseResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.TriggerRunsQueryResponse)
-	return result, err
+	var val *TriggerRunsQueryResponse
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return TriggerRunsQueryResponseResponse{}, err
+	}
+	return TriggerRunsQueryResponseResponse{RawResponse: resp.Response, TriggerRunsQueryResponse: val}, nil
 }
 
 // queryTriggerRunsByWorkspaceHandleError handles the QueryTriggerRunsByWorkspace error response.

@@ -108,9 +108,11 @@ func (client PacketCapturesClient) createCreateRequest(ctx context.Context, reso
 
 // createHandleResponse handles the Create response.
 func (client PacketCapturesClient) createHandleResponse(resp *azcore.Response) (PacketCaptureResultResponse, error) {
-	result := PacketCaptureResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.PacketCaptureResult)
-	return result, err
+	var val *PacketCaptureResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return PacketCaptureResultResponse{}, err
+	}
+	return PacketCaptureResultResponse{RawResponse: resp.Response, PacketCaptureResult: val}, nil
 }
 
 // createHandleError handles the Create error response.
@@ -216,11 +218,7 @@ func (client PacketCapturesClient) Get(ctx context.Context, resourceGroupName st
 	if !resp.HasStatusCode(http.StatusOK) {
 		return PacketCaptureResultResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return PacketCaptureResultResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -244,9 +242,11 @@ func (client PacketCapturesClient) getCreateRequest(ctx context.Context, resourc
 
 // getHandleResponse handles the Get response.
 func (client PacketCapturesClient) getHandleResponse(resp *azcore.Response) (PacketCaptureResultResponse, error) {
-	result := PacketCaptureResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.PacketCaptureResult)
-	return result, err
+	var val *PacketCaptureResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return PacketCaptureResultResponse{}, err
+	}
+	return PacketCaptureResultResponse{RawResponse: resp.Response, PacketCaptureResult: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -332,9 +332,11 @@ func (client PacketCapturesClient) getStatusCreateRequest(ctx context.Context, r
 
 // getStatusHandleResponse handles the GetStatus response.
 func (client PacketCapturesClient) getStatusHandleResponse(resp *azcore.Response) (PacketCaptureQueryStatusResultResponse, error) {
-	result := PacketCaptureQueryStatusResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.PacketCaptureQueryStatusResult)
-	return result, err
+	var val *PacketCaptureQueryStatusResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return PacketCaptureQueryStatusResultResponse{}, err
+	}
+	return PacketCaptureQueryStatusResultResponse{RawResponse: resp.Response, PacketCaptureQueryStatusResult: val}, nil
 }
 
 // getStatusHandleError handles the GetStatus error response.
@@ -359,11 +361,7 @@ func (client PacketCapturesClient) List(ctx context.Context, resourceGroupName s
 	if !resp.HasStatusCode(http.StatusOK) {
 		return PacketCaptureListResultResponse{}, client.listHandleError(resp)
 	}
-	result, err := client.listHandleResponse(resp)
-	if err != nil {
-		return PacketCaptureListResultResponse{}, err
-	}
-	return result, nil
+	return client.listHandleResponse(resp)
 }
 
 // listCreateRequest creates the List request.
@@ -386,9 +384,11 @@ func (client PacketCapturesClient) listCreateRequest(ctx context.Context, resour
 
 // listHandleResponse handles the List response.
 func (client PacketCapturesClient) listHandleResponse(resp *azcore.Response) (PacketCaptureListResultResponse, error) {
-	result := PacketCaptureListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.PacketCaptureListResult)
-	return result, err
+	var val *PacketCaptureListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return PacketCaptureListResultResponse{}, err
+	}
+	return PacketCaptureListResultResponse{RawResponse: resp.Response, PacketCaptureListResult: val}, nil
 }
 
 // listHandleError handles the List error response.

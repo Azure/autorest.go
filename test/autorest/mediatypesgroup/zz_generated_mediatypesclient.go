@@ -46,11 +46,7 @@ func (client MediaTypesClient) AnalyzeBody(ctx context.Context, contentType Cont
 	if !resp.HasStatusCode(http.StatusOK) {
 		return StringResponse{}, client.analyzeBodyHandleError(resp)
 	}
-	result, err := client.analyzeBodyHandleResponse(resp)
-	if err != nil {
-		return StringResponse{}, err
-	}
-	return result, nil
+	return client.analyzeBodyHandleResponse(resp)
 }
 
 // analyzeBodyCreateRequest creates the AnalyzeBody request.
@@ -68,9 +64,11 @@ func (client MediaTypesClient) analyzeBodyCreateRequest(ctx context.Context, con
 
 // analyzeBodyHandleResponse handles the AnalyzeBody response.
 func (client MediaTypesClient) analyzeBodyHandleResponse(resp *azcore.Response) (StringResponse, error) {
-	result := StringResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Value)
-	return result, err
+	var val *string
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return StringResponse{}, err
+	}
+	return StringResponse{RawResponse: resp.Response, Value: val}, nil
 }
 
 // analyzeBodyHandleError handles the AnalyzeBody error response.
@@ -98,11 +96,7 @@ func (client MediaTypesClient) AnalyzeBodyWithSourcePath(ctx context.Context, op
 	if !resp.HasStatusCode(http.StatusOK) {
 		return StringResponse{}, client.analyzeBodyWithSourcePathHandleError(resp)
 	}
-	result, err := client.analyzeBodyWithSourcePathHandleResponse(resp)
-	if err != nil {
-		return StringResponse{}, err
-	}
-	return result, nil
+	return client.analyzeBodyWithSourcePathHandleResponse(resp)
 }
 
 // analyzeBodyWithSourcePathCreateRequest creates the AnalyzeBodyWithSourcePath request.
@@ -122,9 +116,11 @@ func (client MediaTypesClient) analyzeBodyWithSourcePathCreateRequest(ctx contex
 
 // analyzeBodyWithSourcePathHandleResponse handles the AnalyzeBodyWithSourcePath response.
 func (client MediaTypesClient) analyzeBodyWithSourcePathHandleResponse(resp *azcore.Response) (StringResponse, error) {
-	result := StringResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Value)
-	return result, err
+	var val *string
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return StringResponse{}, err
+	}
+	return StringResponse{RawResponse: resp.Response, Value: val}, nil
 }
 
 // analyzeBodyWithSourcePathHandleError handles the AnalyzeBodyWithSourcePath error response.
@@ -152,11 +148,7 @@ func (client MediaTypesClient) ContentTypeWithEncoding(ctx context.Context, inpu
 	if !resp.HasStatusCode(http.StatusOK) {
 		return StringResponse{}, client.contentTypeWithEncodingHandleError(resp)
 	}
-	result, err := client.contentTypeWithEncodingHandleResponse(resp)
-	if err != nil {
-		return StringResponse{}, err
-	}
-	return result, nil
+	return client.contentTypeWithEncodingHandleResponse(resp)
 }
 
 // contentTypeWithEncodingCreateRequest creates the ContentTypeWithEncoding request.
@@ -174,9 +166,11 @@ func (client MediaTypesClient) contentTypeWithEncodingCreateRequest(ctx context.
 
 // contentTypeWithEncodingHandleResponse handles the ContentTypeWithEncoding response.
 func (client MediaTypesClient) contentTypeWithEncodingHandleResponse(resp *azcore.Response) (StringResponse, error) {
-	result := StringResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Value)
-	return result, err
+	var val *string
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return StringResponse{}, err
+	}
+	return StringResponse{RawResponse: resp.Response, Value: val}, nil
 }
 
 // contentTypeWithEncodingHandleError handles the ContentTypeWithEncoding error response.

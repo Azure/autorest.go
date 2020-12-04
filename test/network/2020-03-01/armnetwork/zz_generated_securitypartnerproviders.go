@@ -107,9 +107,11 @@ func (client SecurityPartnerProvidersClient) createOrUpdateCreateRequest(ctx con
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client SecurityPartnerProvidersClient) createOrUpdateHandleResponse(resp *azcore.Response) (SecurityPartnerProviderResponse, error) {
-	result := SecurityPartnerProviderResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.SecurityPartnerProvider)
-	return result, err
+	var val *SecurityPartnerProvider
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return SecurityPartnerProviderResponse{}, err
+	}
+	return SecurityPartnerProviderResponse{RawResponse: resp.Response, SecurityPartnerProvider: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -214,11 +216,7 @@ func (client SecurityPartnerProvidersClient) Get(ctx context.Context, resourceGr
 	if !resp.HasStatusCode(http.StatusOK) {
 		return SecurityPartnerProviderResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return SecurityPartnerProviderResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -241,9 +239,11 @@ func (client SecurityPartnerProvidersClient) getCreateRequest(ctx context.Contex
 
 // getHandleResponse handles the Get response.
 func (client SecurityPartnerProvidersClient) getHandleResponse(resp *azcore.Response) (SecurityPartnerProviderResponse, error) {
-	result := SecurityPartnerProviderResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.SecurityPartnerProvider)
-	return result, err
+	var val *SecurityPartnerProvider
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return SecurityPartnerProviderResponse{}, err
+	}
+	return SecurityPartnerProviderResponse{RawResponse: resp.Response, SecurityPartnerProvider: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -289,9 +289,11 @@ func (client SecurityPartnerProvidersClient) listCreateRequest(ctx context.Conte
 
 // listHandleResponse handles the List response.
 func (client SecurityPartnerProvidersClient) listHandleResponse(resp *azcore.Response) (SecurityPartnerProviderListResultResponse, error) {
-	result := SecurityPartnerProviderListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.SecurityPartnerProviderListResult)
-	return result, err
+	var val *SecurityPartnerProviderListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return SecurityPartnerProviderListResultResponse{}, err
+	}
+	return SecurityPartnerProviderListResultResponse{RawResponse: resp.Response, SecurityPartnerProviderListResult: val}, nil
 }
 
 // listHandleError handles the List error response.
@@ -338,9 +340,11 @@ func (client SecurityPartnerProvidersClient) listByResourceGroupCreateRequest(ct
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
 func (client SecurityPartnerProvidersClient) listByResourceGroupHandleResponse(resp *azcore.Response) (SecurityPartnerProviderListResultResponse, error) {
-	result := SecurityPartnerProviderListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.SecurityPartnerProviderListResult)
-	return result, err
+	var val *SecurityPartnerProviderListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return SecurityPartnerProviderListResultResponse{}, err
+	}
+	return SecurityPartnerProviderListResultResponse{RawResponse: resp.Response, SecurityPartnerProviderListResult: val}, nil
 }
 
 // listByResourceGroupHandleError handles the ListByResourceGroup error response.
@@ -365,11 +369,7 @@ func (client SecurityPartnerProvidersClient) UpdateTags(ctx context.Context, res
 	if !resp.HasStatusCode(http.StatusOK) {
 		return SecurityPartnerProviderResponse{}, client.updateTagsHandleError(resp)
 	}
-	result, err := client.updateTagsHandleResponse(resp)
-	if err != nil {
-		return SecurityPartnerProviderResponse{}, err
-	}
-	return result, nil
+	return client.updateTagsHandleResponse(resp)
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.
@@ -392,9 +392,11 @@ func (client SecurityPartnerProvidersClient) updateTagsCreateRequest(ctx context
 
 // updateTagsHandleResponse handles the UpdateTags response.
 func (client SecurityPartnerProvidersClient) updateTagsHandleResponse(resp *azcore.Response) (SecurityPartnerProviderResponse, error) {
-	result := SecurityPartnerProviderResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.SecurityPartnerProvider)
-	return result, err
+	var val *SecurityPartnerProvider
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return SecurityPartnerProviderResponse{}, err
+	}
+	return SecurityPartnerProviderResponse{RawResponse: resp.Response, SecurityPartnerProvider: val}, nil
 }
 
 // updateTagsHandleError handles the UpdateTags error response.

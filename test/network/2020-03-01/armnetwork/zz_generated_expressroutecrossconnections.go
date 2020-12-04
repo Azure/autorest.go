@@ -107,9 +107,11 @@ func (client ExpressRouteCrossConnectionsClient) createOrUpdateCreateRequest(ctx
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client ExpressRouteCrossConnectionsClient) createOrUpdateHandleResponse(resp *azcore.Response) (ExpressRouteCrossConnectionResponse, error) {
-	result := ExpressRouteCrossConnectionResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ExpressRouteCrossConnection)
-	return result, err
+	var val *ExpressRouteCrossConnection
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ExpressRouteCrossConnectionResponse{}, err
+	}
+	return ExpressRouteCrossConnectionResponse{RawResponse: resp.Response, ExpressRouteCrossConnection: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -134,11 +136,7 @@ func (client ExpressRouteCrossConnectionsClient) Get(ctx context.Context, resour
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ExpressRouteCrossConnectionResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return ExpressRouteCrossConnectionResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -161,9 +159,11 @@ func (client ExpressRouteCrossConnectionsClient) getCreateRequest(ctx context.Co
 
 // getHandleResponse handles the Get response.
 func (client ExpressRouteCrossConnectionsClient) getHandleResponse(resp *azcore.Response) (ExpressRouteCrossConnectionResponse, error) {
-	result := ExpressRouteCrossConnectionResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ExpressRouteCrossConnection)
-	return result, err
+	var val *ExpressRouteCrossConnection
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ExpressRouteCrossConnectionResponse{}, err
+	}
+	return ExpressRouteCrossConnectionResponse{RawResponse: resp.Response, ExpressRouteCrossConnection: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -209,9 +209,11 @@ func (client ExpressRouteCrossConnectionsClient) listCreateRequest(ctx context.C
 
 // listHandleResponse handles the List response.
 func (client ExpressRouteCrossConnectionsClient) listHandleResponse(resp *azcore.Response) (ExpressRouteCrossConnectionListResultResponse, error) {
-	result := ExpressRouteCrossConnectionListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ExpressRouteCrossConnectionListResult)
-	return result, err
+	var val *ExpressRouteCrossConnectionListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ExpressRouteCrossConnectionListResultResponse{}, err
+	}
+	return ExpressRouteCrossConnectionListResultResponse{RawResponse: resp.Response, ExpressRouteCrossConnectionListResult: val}, nil
 }
 
 // listHandleError handles the List error response.
@@ -298,9 +300,11 @@ func (client ExpressRouteCrossConnectionsClient) listArpTableCreateRequest(ctx c
 
 // listArpTableHandleResponse handles the ListArpTable response.
 func (client ExpressRouteCrossConnectionsClient) listArpTableHandleResponse(resp *azcore.Response) (ExpressRouteCircuitsArpTableListResultResponse, error) {
-	result := ExpressRouteCircuitsArpTableListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ExpressRouteCircuitsArpTableListResult)
-	return result, err
+	var val *ExpressRouteCircuitsArpTableListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ExpressRouteCircuitsArpTableListResultResponse{}, err
+	}
+	return ExpressRouteCircuitsArpTableListResultResponse{RawResponse: resp.Response, ExpressRouteCircuitsArpTableListResult: val}, nil
 }
 
 // listArpTableHandleError handles the ListArpTable error response.
@@ -347,9 +351,11 @@ func (client ExpressRouteCrossConnectionsClient) listByResourceGroupCreateReques
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
 func (client ExpressRouteCrossConnectionsClient) listByResourceGroupHandleResponse(resp *azcore.Response) (ExpressRouteCrossConnectionListResultResponse, error) {
-	result := ExpressRouteCrossConnectionListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ExpressRouteCrossConnectionListResult)
-	return result, err
+	var val *ExpressRouteCrossConnectionListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ExpressRouteCrossConnectionListResultResponse{}, err
+	}
+	return ExpressRouteCrossConnectionListResultResponse{RawResponse: resp.Response, ExpressRouteCrossConnectionListResult: val}, nil
 }
 
 // listByResourceGroupHandleError handles the ListByResourceGroup error response.
@@ -436,9 +442,11 @@ func (client ExpressRouteCrossConnectionsClient) listRoutesTableCreateRequest(ct
 
 // listRoutesTableHandleResponse handles the ListRoutesTable response.
 func (client ExpressRouteCrossConnectionsClient) listRoutesTableHandleResponse(resp *azcore.Response) (ExpressRouteCircuitsRoutesTableListResultResponse, error) {
-	result := ExpressRouteCircuitsRoutesTableListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ExpressRouteCircuitsRoutesTableListResult)
-	return result, err
+	var val *ExpressRouteCircuitsRoutesTableListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ExpressRouteCircuitsRoutesTableListResultResponse{}, err
+	}
+	return ExpressRouteCircuitsRoutesTableListResultResponse{RawResponse: resp.Response, ExpressRouteCircuitsRoutesTableListResult: val}, nil
 }
 
 // listRoutesTableHandleError handles the ListRoutesTable error response.
@@ -525,9 +533,11 @@ func (client ExpressRouteCrossConnectionsClient) listRoutesTableSummaryCreateReq
 
 // listRoutesTableSummaryHandleResponse handles the ListRoutesTableSummary response.
 func (client ExpressRouteCrossConnectionsClient) listRoutesTableSummaryHandleResponse(resp *azcore.Response) (ExpressRouteCrossConnectionsRoutesTableSummaryListResultResponse, error) {
-	result := ExpressRouteCrossConnectionsRoutesTableSummaryListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ExpressRouteCrossConnectionsRoutesTableSummaryListResult)
-	return result, err
+	var val *ExpressRouteCrossConnectionsRoutesTableSummaryListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ExpressRouteCrossConnectionsRoutesTableSummaryListResultResponse{}, err
+	}
+	return ExpressRouteCrossConnectionsRoutesTableSummaryListResultResponse{RawResponse: resp.Response, ExpressRouteCrossConnectionsRoutesTableSummaryListResult: val}, nil
 }
 
 // listRoutesTableSummaryHandleError handles the ListRoutesTableSummary error response.
@@ -552,11 +562,7 @@ func (client ExpressRouteCrossConnectionsClient) UpdateTags(ctx context.Context,
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ExpressRouteCrossConnectionResponse{}, client.updateTagsHandleError(resp)
 	}
-	result, err := client.updateTagsHandleResponse(resp)
-	if err != nil {
-		return ExpressRouteCrossConnectionResponse{}, err
-	}
-	return result, nil
+	return client.updateTagsHandleResponse(resp)
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.
@@ -579,9 +585,11 @@ func (client ExpressRouteCrossConnectionsClient) updateTagsCreateRequest(ctx con
 
 // updateTagsHandleResponse handles the UpdateTags response.
 func (client ExpressRouteCrossConnectionsClient) updateTagsHandleResponse(resp *azcore.Response) (ExpressRouteCrossConnectionResponse, error) {
-	result := ExpressRouteCrossConnectionResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ExpressRouteCrossConnection)
-	return result, err
+	var val *ExpressRouteCrossConnection
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ExpressRouteCrossConnectionResponse{}, err
+	}
+	return ExpressRouteCrossConnectionResponse{RawResponse: resp.Response, ExpressRouteCrossConnection: val}, nil
 }
 
 // updateTagsHandleError handles the UpdateTags error response.

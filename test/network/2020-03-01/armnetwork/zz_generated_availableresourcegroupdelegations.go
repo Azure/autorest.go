@@ -69,9 +69,11 @@ func (client AvailableResourceGroupDelegationsClient) listCreateRequest(ctx cont
 
 // listHandleResponse handles the List response.
 func (client AvailableResourceGroupDelegationsClient) listHandleResponse(resp *azcore.Response) (AvailableDelegationsResultResponse, error) {
-	result := AvailableDelegationsResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.AvailableDelegationsResult)
-	return result, err
+	var val *AvailableDelegationsResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return AvailableDelegationsResultResponse{}, err
+	}
+	return AvailableDelegationsResultResponse{RawResponse: resp.Response, AvailableDelegationsResult: val}, nil
 }
 
 // listHandleError handles the List error response.

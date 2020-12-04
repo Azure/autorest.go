@@ -81,11 +81,7 @@ func (client sparkSessionClient) CancelSparkStatement(ctx context.Context, sessi
 	if !resp.HasStatusCode(http.StatusOK) {
 		return SparkStatementCancellationResultResponse{}, client.cancelSparkStatementHandleError(resp)
 	}
-	result, err := client.cancelSparkStatementHandleResponse(resp)
-	if err != nil {
-		return SparkStatementCancellationResultResponse{}, err
-	}
-	return result, nil
+	return client.cancelSparkStatementHandleResponse(resp)
 }
 
 // cancelSparkStatementCreateRequest creates the CancelSparkStatement request.
@@ -104,9 +100,11 @@ func (client sparkSessionClient) cancelSparkStatementCreateRequest(ctx context.C
 
 // cancelSparkStatementHandleResponse handles the CancelSparkStatement response.
 func (client sparkSessionClient) cancelSparkStatementHandleResponse(resp *azcore.Response) (SparkStatementCancellationResultResponse, error) {
-	result := SparkStatementCancellationResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.SparkStatementCancellationResult)
-	return result, err
+	var val *SparkStatementCancellationResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return SparkStatementCancellationResultResponse{}, err
+	}
+	return SparkStatementCancellationResultResponse{RawResponse: resp.Response, SparkStatementCancellationResult: val}, nil
 }
 
 // cancelSparkStatementHandleError handles the CancelSparkStatement error response.
@@ -134,11 +132,7 @@ func (client sparkSessionClient) CreateSparkSession(ctx context.Context, sparkSe
 	if !resp.HasStatusCode(http.StatusOK) {
 		return SparkSessionResponse{}, client.createSparkSessionHandleError(resp)
 	}
-	result, err := client.createSparkSessionHandleResponse(resp)
-	if err != nil {
-		return SparkSessionResponse{}, err
-	}
-	return result, nil
+	return client.createSparkSessionHandleResponse(resp)
 }
 
 // createSparkSessionCreateRequest creates the CreateSparkSession request.
@@ -160,9 +154,11 @@ func (client sparkSessionClient) createSparkSessionCreateRequest(ctx context.Con
 
 // createSparkSessionHandleResponse handles the CreateSparkSession response.
 func (client sparkSessionClient) createSparkSessionHandleResponse(resp *azcore.Response) (SparkSessionResponse, error) {
-	result := SparkSessionResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.SparkSession)
-	return result, err
+	var val *SparkSession
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return SparkSessionResponse{}, err
+	}
+	return SparkSessionResponse{RawResponse: resp.Response, SparkSession: val}, nil
 }
 
 // createSparkSessionHandleError handles the CreateSparkSession error response.
@@ -190,11 +186,7 @@ func (client sparkSessionClient) CreateSparkStatement(ctx context.Context, sessi
 	if !resp.HasStatusCode(http.StatusOK) {
 		return SparkStatementResponse{}, client.createSparkStatementHandleError(resp)
 	}
-	result, err := client.createSparkStatementHandleResponse(resp)
-	if err != nil {
-		return SparkStatementResponse{}, err
-	}
-	return result, nil
+	return client.createSparkStatementHandleResponse(resp)
 }
 
 // createSparkStatementCreateRequest creates the CreateSparkStatement request.
@@ -212,9 +204,11 @@ func (client sparkSessionClient) createSparkStatementCreateRequest(ctx context.C
 
 // createSparkStatementHandleResponse handles the CreateSparkStatement response.
 func (client sparkSessionClient) createSparkStatementHandleResponse(resp *azcore.Response) (SparkStatementResponse, error) {
-	result := SparkStatementResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.SparkStatement)
-	return result, err
+	var val *SparkStatement
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return SparkStatementResponse{}, err
+	}
+	return SparkStatementResponse{RawResponse: resp.Response, SparkStatement: val}, nil
 }
 
 // createSparkStatementHandleError handles the CreateSparkStatement error response.
@@ -242,11 +236,7 @@ func (client sparkSessionClient) GetSparkSession(ctx context.Context, sessionId 
 	if !resp.HasStatusCode(http.StatusOK) {
 		return SparkSessionResponse{}, client.getSparkSessionHandleError(resp)
 	}
-	result, err := client.getSparkSessionHandleResponse(resp)
-	if err != nil {
-		return SparkSessionResponse{}, err
-	}
-	return result, nil
+	return client.getSparkSessionHandleResponse(resp)
 }
 
 // getSparkSessionCreateRequest creates the GetSparkSession request.
@@ -269,9 +259,11 @@ func (client sparkSessionClient) getSparkSessionCreateRequest(ctx context.Contex
 
 // getSparkSessionHandleResponse handles the GetSparkSession response.
 func (client sparkSessionClient) getSparkSessionHandleResponse(resp *azcore.Response) (SparkSessionResponse, error) {
-	result := SparkSessionResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.SparkSession)
-	return result, err
+	var val *SparkSession
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return SparkSessionResponse{}, err
+	}
+	return SparkSessionResponse{RawResponse: resp.Response, SparkSession: val}, nil
 }
 
 // getSparkSessionHandleError handles the GetSparkSession error response.
@@ -299,11 +291,7 @@ func (client sparkSessionClient) GetSparkSessions(ctx context.Context, options *
 	if !resp.HasStatusCode(http.StatusOK) {
 		return SparkSessionCollectionResponse{}, client.getSparkSessionsHandleError(resp)
 	}
-	result, err := client.getSparkSessionsHandleResponse(resp)
-	if err != nil {
-		return SparkSessionCollectionResponse{}, err
-	}
-	return result, nil
+	return client.getSparkSessionsHandleResponse(resp)
 }
 
 // getSparkSessionsCreateRequest creates the GetSparkSessions request.
@@ -331,9 +319,11 @@ func (client sparkSessionClient) getSparkSessionsCreateRequest(ctx context.Conte
 
 // getSparkSessionsHandleResponse handles the GetSparkSessions response.
 func (client sparkSessionClient) getSparkSessionsHandleResponse(resp *azcore.Response) (SparkSessionCollectionResponse, error) {
-	result := SparkSessionCollectionResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.SparkSessionCollection)
-	return result, err
+	var val *SparkSessionCollection
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return SparkSessionCollectionResponse{}, err
+	}
+	return SparkSessionCollectionResponse{RawResponse: resp.Response, SparkSessionCollection: val}, nil
 }
 
 // getSparkSessionsHandleError handles the GetSparkSessions error response.
@@ -361,11 +351,7 @@ func (client sparkSessionClient) GetSparkStatement(ctx context.Context, sessionI
 	if !resp.HasStatusCode(http.StatusOK) {
 		return SparkStatementResponse{}, client.getSparkStatementHandleError(resp)
 	}
-	result, err := client.getSparkStatementHandleResponse(resp)
-	if err != nil {
-		return SparkStatementResponse{}, err
-	}
-	return result, nil
+	return client.getSparkStatementHandleResponse(resp)
 }
 
 // getSparkStatementCreateRequest creates the GetSparkStatement request.
@@ -384,9 +370,11 @@ func (client sparkSessionClient) getSparkStatementCreateRequest(ctx context.Cont
 
 // getSparkStatementHandleResponse handles the GetSparkStatement response.
 func (client sparkSessionClient) getSparkStatementHandleResponse(resp *azcore.Response) (SparkStatementResponse, error) {
-	result := SparkStatementResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.SparkStatement)
-	return result, err
+	var val *SparkStatement
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return SparkStatementResponse{}, err
+	}
+	return SparkStatementResponse{RawResponse: resp.Response, SparkStatement: val}, nil
 }
 
 // getSparkStatementHandleError handles the GetSparkStatement error response.
@@ -414,11 +402,7 @@ func (client sparkSessionClient) GetSparkStatements(ctx context.Context, session
 	if !resp.HasStatusCode(http.StatusOK) {
 		return SparkStatementCollectionResponse{}, client.getSparkStatementsHandleError(resp)
 	}
-	result, err := client.getSparkStatementsHandleResponse(resp)
-	if err != nil {
-		return SparkStatementCollectionResponse{}, err
-	}
-	return result, nil
+	return client.getSparkStatementsHandleResponse(resp)
 }
 
 // getSparkStatementsCreateRequest creates the GetSparkStatements request.
@@ -436,9 +420,11 @@ func (client sparkSessionClient) getSparkStatementsCreateRequest(ctx context.Con
 
 // getSparkStatementsHandleResponse handles the GetSparkStatements response.
 func (client sparkSessionClient) getSparkStatementsHandleResponse(resp *azcore.Response) (SparkStatementCollectionResponse, error) {
-	result := SparkStatementCollectionResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.SparkStatementCollection)
-	return result, err
+	var val *SparkStatementCollection
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return SparkStatementCollectionResponse{}, err
+	}
+	return SparkStatementCollectionResponse{RawResponse: resp.Response, SparkStatementCollection: val}, nil
 }
 
 // getSparkStatementsHandleError handles the GetSparkStatements error response.

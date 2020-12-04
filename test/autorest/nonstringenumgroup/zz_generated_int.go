@@ -45,11 +45,7 @@ func (client IntClient) Get(ctx context.Context, options *IntGetOptions) (IntEnu
 	if !resp.HasStatusCode(http.StatusOK) {
 		return IntEnumResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return IntEnumResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -66,9 +62,11 @@ func (client IntClient) getCreateRequest(ctx context.Context, options *IntGetOpt
 
 // getHandleResponse handles the Get response.
 func (client IntClient) getHandleResponse(resp *azcore.Response) (IntEnumResponse, error) {
-	result := IntEnumResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Value)
-	return result, err
+	var val *IntEnum
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return IntEnumResponse{}, err
+	}
+	return IntEnumResponse{RawResponse: resp.Response, Value: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -96,11 +94,7 @@ func (client IntClient) Put(ctx context.Context, options *IntPutOptions) (String
 	if !resp.HasStatusCode(http.StatusOK) {
 		return StringResponse{}, client.putHandleError(resp)
 	}
-	result, err := client.putHandleResponse(resp)
-	if err != nil {
-		return StringResponse{}, err
-	}
-	return result, nil
+	return client.putHandleResponse(resp)
 }
 
 // putCreateRequest creates the Put request.
@@ -120,9 +114,11 @@ func (client IntClient) putCreateRequest(ctx context.Context, options *IntPutOpt
 
 // putHandleResponse handles the Put response.
 func (client IntClient) putHandleResponse(resp *azcore.Response) (StringResponse, error) {
-	result := StringResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Value)
-	return result, err
+	var val *string
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return StringResponse{}, err
+	}
+	return StringResponse{RawResponse: resp.Response, Value: val}, nil
 }
 
 // putHandleError handles the Put error response.

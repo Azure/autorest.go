@@ -49,11 +49,7 @@ func (client VirtualMachineRunCommandsClient) Get(ctx context.Context, location 
 	if !resp.HasStatusCode(http.StatusOK) {
 		return RunCommandDocumentResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return RunCommandDocumentResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -76,9 +72,11 @@ func (client VirtualMachineRunCommandsClient) getCreateRequest(ctx context.Conte
 
 // getHandleResponse handles the Get response.
 func (client VirtualMachineRunCommandsClient) getHandleResponse(resp *azcore.Response) (RunCommandDocumentResponse, error) {
-	result := RunCommandDocumentResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.RunCommandDocument)
-	return result, err
+	var val *RunCommandDocument
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return RunCommandDocumentResponse{}, err
+	}
+	return RunCommandDocumentResponse{RawResponse: resp.Response, RunCommandDocument: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -128,9 +126,11 @@ func (client VirtualMachineRunCommandsClient) listCreateRequest(ctx context.Cont
 
 // listHandleResponse handles the List response.
 func (client VirtualMachineRunCommandsClient) listHandleResponse(resp *azcore.Response) (RunCommandListResultResponse, error) {
-	result := RunCommandListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.RunCommandListResult)
-	return result, err
+	var val *RunCommandListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return RunCommandListResultResponse{}, err
+	}
+	return RunCommandListResultResponse{RawResponse: resp.Response, RunCommandListResult: val}, nil
 }
 
 // listHandleError handles the List error response.
