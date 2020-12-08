@@ -742,7 +742,7 @@ function generateAliasType(structDef: StructDef, receiver: string, forMarshal: b
   return text;
 }
 
-// differentiates between objects and basic types defined in Go. Returns false if it finds an object to expand for the error message. 
+// differentiates between objects and basic types defined in Go. Returns true if it finds an object to expand for the error message. 
 function isObjectType(schema: Schema): boolean {
   switch (schema.type) {
     case SchemaType.Object:
