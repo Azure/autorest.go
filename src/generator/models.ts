@@ -244,7 +244,31 @@ function generateStructs(objects?: ObjectSchema[]): StructDef[] {
       text += `\tmsg := ""\n`;
       for (const prop of values(structDef.Properties)) {
         text += `\tif e.${prop.language.go!.name} != nil {\n`;
-        text += `\t\tmsg += fmt.Sprintf("${prop.language.go!.name}: %v\\n", *e.${prop.language.go!.name})\n`;
+        // check if the property is an object or a basic type and output the corresponding error message
+        if (!isObjectType(prop.schema)) {
+          text += `\t\tmsg += fmt.Sprintf("${prop.language.go!.name}: %v\\n", *e.${prop.language.go!.name})\n`;
+        } else {
+          // if the property is an object schema add the information in the Go struct to the error message 
+          if (prop.language.go!.errorType) {
+            text += `\t\tmsg += fmt.Sprintf("${prop.language.go!.name}: %v\\n", *e.${prop.language.go!.name}.Error())\n`;
+          } else {
+            text += `\t\tmsg += "${prop.language.go!.name}: \\n"\n`;
+            for (const s of values(objects)) {
+              if (s.language.go!.name === prop.schema.language.go!.name) {
+                for (const p of values(s.properties)) {
+                  text += `\t\tif e.${prop.language.go!.name}.${p.language.go!.name} != nil {\n`;
+                  if (p.language.go!.errorType) {
+                    text += `\t\tmsg += fmt.Sprintf("${prop.language.go!.name}: %v\\n", *e.${prop.language.go!.name}.Error())\n`;
+                  } else {
+                    text += `\t\t\tmsg += fmt.Sprintf("\\t${p.language.go!.name}: %v\\n", *e.${prop.language.go!.name}.${p.language.go!.name})\n`;
+                  }
+                  text += '\t\t}\n';
+                }
+                break;
+              }
+            }
+          }
+        }
         text += `\t}\n`;
       }
       text += '\tif msg == "" {\n';
@@ -715,4 +739,14 @@ function generateAliasType(structDef: StructDef, receiver: string, forMarshal: b
   }
   text += `\t}\n`;
   return text;
+}
+
+// differentiates between objects and basic types defined in Go. Returns false if it finds an object to expand for the error message. 
+function isObjectType(schema: Schema): boolean {
+  switch (schema.type) {
+    case SchemaType.Object:
+      return true;
+    default:
+      return false;
+  }
 }

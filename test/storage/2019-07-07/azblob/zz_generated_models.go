@@ -2213,7 +2213,13 @@ type DataLakeStorageError struct {
 func (e DataLakeStorageError) Error() string {
 	msg := ""
 	if e.DataLakeStorageErrorDetails != nil {
-		msg += fmt.Sprintf("DataLakeStorageErrorDetails: %v\n", *e.DataLakeStorageErrorDetails)
+		msg += "DataLakeStorageErrorDetails: \n"
+		if e.DataLakeStorageErrorDetails.Code != nil {
+			msg += fmt.Sprintf("\tCode: %v\n", *e.DataLakeStorageErrorDetails.Code)
+		}
+		if e.DataLakeStorageErrorDetails.Message != nil {
+			msg += fmt.Sprintf("\tMessage: %v\n", *e.DataLakeStorageErrorDetails.Message)
+		}
 	}
 	if msg == "" {
 		msg = "missing error info"
