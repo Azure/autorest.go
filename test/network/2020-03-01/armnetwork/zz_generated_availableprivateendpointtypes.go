@@ -68,9 +68,11 @@ func (client AvailablePrivateEndpointTypesClient) listCreateRequest(ctx context.
 
 // listHandleResponse handles the List response.
 func (client AvailablePrivateEndpointTypesClient) listHandleResponse(resp *azcore.Response) (AvailablePrivateEndpointTypesResultResponse, error) {
-	result := AvailablePrivateEndpointTypesResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.AvailablePrivateEndpointTypesResult)
-	return result, err
+	var val *AvailablePrivateEndpointTypesResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return AvailablePrivateEndpointTypesResultResponse{}, err
+	}
+	return AvailablePrivateEndpointTypesResultResponse{RawResponse: resp.Response, AvailablePrivateEndpointTypesResult: val}, nil
 }
 
 // listHandleError handles the List error response.
@@ -118,9 +120,11 @@ func (client AvailablePrivateEndpointTypesClient) listByResourceGroupCreateReque
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
 func (client AvailablePrivateEndpointTypesClient) listByResourceGroupHandleResponse(resp *azcore.Response) (AvailablePrivateEndpointTypesResultResponse, error) {
-	result := AvailablePrivateEndpointTypesResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.AvailablePrivateEndpointTypesResult)
-	return result, err
+	var val *AvailablePrivateEndpointTypesResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return AvailablePrivateEndpointTypesResultResponse{}, err
+	}
+	return AvailablePrivateEndpointTypesResultResponse{RawResponse: resp.Response, AvailablePrivateEndpointTypesResult: val}, nil
 }
 
 // listByResourceGroupHandleError handles the ListByResourceGroup error response.

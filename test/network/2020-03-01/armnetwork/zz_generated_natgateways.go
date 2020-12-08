@@ -107,9 +107,11 @@ func (client NatGatewaysClient) createOrUpdateCreateRequest(ctx context.Context,
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client NatGatewaysClient) createOrUpdateHandleResponse(resp *azcore.Response) (NatGatewayResponse, error) {
-	result := NatGatewayResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.NatGateway)
-	return result, err
+	var val *NatGateway
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return NatGatewayResponse{}, err
+	}
+	return NatGatewayResponse{RawResponse: resp.Response, NatGateway: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -214,11 +216,7 @@ func (client NatGatewaysClient) Get(ctx context.Context, resourceGroupName strin
 	if !resp.HasStatusCode(http.StatusOK) {
 		return NatGatewayResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return NatGatewayResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -244,9 +242,11 @@ func (client NatGatewaysClient) getCreateRequest(ctx context.Context, resourceGr
 
 // getHandleResponse handles the Get response.
 func (client NatGatewaysClient) getHandleResponse(resp *azcore.Response) (NatGatewayResponse, error) {
-	result := NatGatewayResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.NatGateway)
-	return result, err
+	var val *NatGateway
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return NatGatewayResponse{}, err
+	}
+	return NatGatewayResponse{RawResponse: resp.Response, NatGateway: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -293,9 +293,11 @@ func (client NatGatewaysClient) listCreateRequest(ctx context.Context, resourceG
 
 // listHandleResponse handles the List response.
 func (client NatGatewaysClient) listHandleResponse(resp *azcore.Response) (NatGatewayListResultResponse, error) {
-	result := NatGatewayListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.NatGatewayListResult)
-	return result, err
+	var val *NatGatewayListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return NatGatewayListResultResponse{}, err
+	}
+	return NatGatewayListResultResponse{RawResponse: resp.Response, NatGatewayListResult: val}, nil
 }
 
 // listHandleError handles the List error response.
@@ -341,9 +343,11 @@ func (client NatGatewaysClient) listAllCreateRequest(ctx context.Context, option
 
 // listAllHandleResponse handles the ListAll response.
 func (client NatGatewaysClient) listAllHandleResponse(resp *azcore.Response) (NatGatewayListResultResponse, error) {
-	result := NatGatewayListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.NatGatewayListResult)
-	return result, err
+	var val *NatGatewayListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return NatGatewayListResultResponse{}, err
+	}
+	return NatGatewayListResultResponse{RawResponse: resp.Response, NatGatewayListResult: val}, nil
 }
 
 // listAllHandleError handles the ListAll error response.
@@ -368,11 +372,7 @@ func (client NatGatewaysClient) UpdateTags(ctx context.Context, resourceGroupNam
 	if !resp.HasStatusCode(http.StatusOK) {
 		return NatGatewayResponse{}, client.updateTagsHandleError(resp)
 	}
-	result, err := client.updateTagsHandleResponse(resp)
-	if err != nil {
-		return NatGatewayResponse{}, err
-	}
-	return result, nil
+	return client.updateTagsHandleResponse(resp)
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.
@@ -395,9 +395,11 @@ func (client NatGatewaysClient) updateTagsCreateRequest(ctx context.Context, res
 
 // updateTagsHandleResponse handles the UpdateTags response.
 func (client NatGatewaysClient) updateTagsHandleResponse(resp *azcore.Response) (NatGatewayResponse, error) {
-	result := NatGatewayResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.NatGateway)
-	return result, err
+	var val *NatGateway
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return NatGatewayResponse{}, err
+	}
+	return NatGatewayResponse{RawResponse: resp.Response, NatGateway: val}, nil
 }
 
 // updateTagsHandleError handles the UpdateTags error response.

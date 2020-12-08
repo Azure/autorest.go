@@ -107,9 +107,11 @@ func (client DdosCustomPoliciesClient) createOrUpdateCreateRequest(ctx context.C
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client DdosCustomPoliciesClient) createOrUpdateHandleResponse(resp *azcore.Response) (DdosCustomPolicyResponse, error) {
-	result := DdosCustomPolicyResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.DdosCustomPolicy)
-	return result, err
+	var val *DdosCustomPolicy
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return DdosCustomPolicyResponse{}, err
+	}
+	return DdosCustomPolicyResponse{RawResponse: resp.Response, DdosCustomPolicy: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -214,11 +216,7 @@ func (client DdosCustomPoliciesClient) Get(ctx context.Context, resourceGroupNam
 	if !resp.HasStatusCode(http.StatusOK) {
 		return DdosCustomPolicyResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return DdosCustomPolicyResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -241,9 +239,11 @@ func (client DdosCustomPoliciesClient) getCreateRequest(ctx context.Context, res
 
 // getHandleResponse handles the Get response.
 func (client DdosCustomPoliciesClient) getHandleResponse(resp *azcore.Response) (DdosCustomPolicyResponse, error) {
-	result := DdosCustomPolicyResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.DdosCustomPolicy)
-	return result, err
+	var val *DdosCustomPolicy
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return DdosCustomPolicyResponse{}, err
+	}
+	return DdosCustomPolicyResponse{RawResponse: resp.Response, DdosCustomPolicy: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -268,11 +268,7 @@ func (client DdosCustomPoliciesClient) UpdateTags(ctx context.Context, resourceG
 	if !resp.HasStatusCode(http.StatusOK) {
 		return DdosCustomPolicyResponse{}, client.updateTagsHandleError(resp)
 	}
-	result, err := client.updateTagsHandleResponse(resp)
-	if err != nil {
-		return DdosCustomPolicyResponse{}, err
-	}
-	return result, nil
+	return client.updateTagsHandleResponse(resp)
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.
@@ -295,9 +291,11 @@ func (client DdosCustomPoliciesClient) updateTagsCreateRequest(ctx context.Conte
 
 // updateTagsHandleResponse handles the UpdateTags response.
 func (client DdosCustomPoliciesClient) updateTagsHandleResponse(resp *azcore.Response) (DdosCustomPolicyResponse, error) {
-	result := DdosCustomPolicyResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.DdosCustomPolicy)
-	return result, err
+	var val *DdosCustomPolicy
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return DdosCustomPolicyResponse{}, err
+	}
+	return DdosCustomPolicyResponse{RawResponse: resp.Response, DdosCustomPolicy: val}, nil
 }
 
 // updateTagsHandleError handles the UpdateTags error response.

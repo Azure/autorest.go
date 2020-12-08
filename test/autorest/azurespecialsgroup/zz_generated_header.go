@@ -42,11 +42,7 @@ func (client HeaderClient) CustomNamedRequestID(ctx context.Context, fooClientRe
 	if !resp.HasStatusCode(http.StatusOK) {
 		return HeaderCustomNamedRequestIDResponse{}, client.customNamedRequestIdHandleError(resp)
 	}
-	result, err := client.customNamedRequestIdHandleResponse(resp)
-	if err != nil {
-		return HeaderCustomNamedRequestIDResponse{}, err
-	}
-	return result, nil
+	return client.customNamedRequestIdHandleResponse(resp)
 }
 
 // customNamedRequestIdCreateRequest creates the CustomNamedRequestID request.
@@ -93,11 +89,7 @@ func (client HeaderClient) CustomNamedRequestIDHead(ctx context.Context, fooClie
 	if !resp.HasStatusCode(http.StatusOK, http.StatusNotFound) {
 		return HeaderCustomNamedRequestIDHeadResponse{}, client.customNamedRequestIdHeadHandleError(resp)
 	}
-	result, err := client.customNamedRequestIdHeadHandleResponse(resp)
-	if err != nil {
-		return HeaderCustomNamedRequestIDHeadResponse{}, err
-	}
-	return result, nil
+	return client.customNamedRequestIdHeadHandleResponse(resp)
 }
 
 // customNamedRequestIdHeadCreateRequest creates the CustomNamedRequestIDHead request.
@@ -147,11 +139,7 @@ func (client HeaderClient) CustomNamedRequestIDParamGrouping(ctx context.Context
 	if !resp.HasStatusCode(http.StatusOK) {
 		return HeaderCustomNamedRequestIDParamGroupingResponse{}, client.customNamedRequestIdParamGroupingHandleError(resp)
 	}
-	result, err := client.customNamedRequestIdParamGroupingHandleResponse(resp)
-	if err != nil {
-		return HeaderCustomNamedRequestIDParamGroupingResponse{}, err
-	}
-	return result, nil
+	return client.customNamedRequestIdParamGroupingHandleResponse(resp)
 }
 
 // customNamedRequestIdParamGroupingCreateRequest creates the CustomNamedRequestIDParamGrouping request.

@@ -46,11 +46,7 @@ func (client ResourceNavigationLinksClient) List(ctx context.Context, resourceGr
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ResourceNavigationLinksListResultResponse{}, client.listHandleError(resp)
 	}
-	result, err := client.listHandleResponse(resp)
-	if err != nil {
-		return ResourceNavigationLinksListResultResponse{}, err
-	}
-	return result, nil
+	return client.listHandleResponse(resp)
 }
 
 // listCreateRequest creates the List request.
@@ -74,9 +70,11 @@ func (client ResourceNavigationLinksClient) listCreateRequest(ctx context.Contex
 
 // listHandleResponse handles the List response.
 func (client ResourceNavigationLinksClient) listHandleResponse(resp *azcore.Response) (ResourceNavigationLinksListResultResponse, error) {
-	result := ResourceNavigationLinksListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ResourceNavigationLinksListResult)
-	return result, err
+	var val *ResourceNavigationLinksListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ResourceNavigationLinksListResultResponse{}, err
+	}
+	return ResourceNavigationLinksListResultResponse{RawResponse: resp.Response, ResourceNavigationLinksListResult: val}, nil
 }
 
 // listHandleError handles the List error response.

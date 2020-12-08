@@ -47,11 +47,7 @@ func (client NetworkProfilesClient) CreateOrUpdate(ctx context.Context, resource
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return NetworkProfileResponse{}, client.createOrUpdateHandleError(resp)
 	}
-	result, err := client.createOrUpdateHandleResponse(resp)
-	if err != nil {
-		return NetworkProfileResponse{}, err
-	}
-	return result, nil
+	return client.createOrUpdateHandleResponse(resp)
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -74,9 +70,11 @@ func (client NetworkProfilesClient) createOrUpdateCreateRequest(ctx context.Cont
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client NetworkProfilesClient) createOrUpdateHandleResponse(resp *azcore.Response) (NetworkProfileResponse, error) {
-	result := NetworkProfileResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.NetworkProfile)
-	return result, err
+	var val *NetworkProfile
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return NetworkProfileResponse{}, err
+	}
+	return NetworkProfileResponse{RawResponse: resp.Response, NetworkProfile: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -181,11 +179,7 @@ func (client NetworkProfilesClient) Get(ctx context.Context, resourceGroupName s
 	if !resp.HasStatusCode(http.StatusOK) {
 		return NetworkProfileResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return NetworkProfileResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -211,9 +205,11 @@ func (client NetworkProfilesClient) getCreateRequest(ctx context.Context, resour
 
 // getHandleResponse handles the Get response.
 func (client NetworkProfilesClient) getHandleResponse(resp *azcore.Response) (NetworkProfileResponse, error) {
-	result := NetworkProfileResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.NetworkProfile)
-	return result, err
+	var val *NetworkProfile
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return NetworkProfileResponse{}, err
+	}
+	return NetworkProfileResponse{RawResponse: resp.Response, NetworkProfile: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -260,9 +256,11 @@ func (client NetworkProfilesClient) listCreateRequest(ctx context.Context, resou
 
 // listHandleResponse handles the List response.
 func (client NetworkProfilesClient) listHandleResponse(resp *azcore.Response) (NetworkProfileListResultResponse, error) {
-	result := NetworkProfileListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.NetworkProfileListResult)
-	return result, err
+	var val *NetworkProfileListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return NetworkProfileListResultResponse{}, err
+	}
+	return NetworkProfileListResultResponse{RawResponse: resp.Response, NetworkProfileListResult: val}, nil
 }
 
 // listHandleError handles the List error response.
@@ -308,9 +306,11 @@ func (client NetworkProfilesClient) listAllCreateRequest(ctx context.Context, op
 
 // listAllHandleResponse handles the ListAll response.
 func (client NetworkProfilesClient) listAllHandleResponse(resp *azcore.Response) (NetworkProfileListResultResponse, error) {
-	result := NetworkProfileListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.NetworkProfileListResult)
-	return result, err
+	var val *NetworkProfileListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return NetworkProfileListResultResponse{}, err
+	}
+	return NetworkProfileListResultResponse{RawResponse: resp.Response, NetworkProfileListResult: val}, nil
 }
 
 // listAllHandleError handles the ListAll error response.
@@ -335,11 +335,7 @@ func (client NetworkProfilesClient) UpdateTags(ctx context.Context, resourceGrou
 	if !resp.HasStatusCode(http.StatusOK) {
 		return NetworkProfileResponse{}, client.updateTagsHandleError(resp)
 	}
-	result, err := client.updateTagsHandleResponse(resp)
-	if err != nil {
-		return NetworkProfileResponse{}, err
-	}
-	return result, nil
+	return client.updateTagsHandleResponse(resp)
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.
@@ -362,9 +358,11 @@ func (client NetworkProfilesClient) updateTagsCreateRequest(ctx context.Context,
 
 // updateTagsHandleResponse handles the UpdateTags response.
 func (client NetworkProfilesClient) updateTagsHandleResponse(resp *azcore.Response) (NetworkProfileResponse, error) {
-	result := NetworkProfileResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.NetworkProfile)
-	return result, err
+	var val *NetworkProfile
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return NetworkProfileResponse{}, err
+	}
+	return NetworkProfileResponse{RawResponse: resp.Response, NetworkProfile: val}, nil
 }
 
 // updateTagsHandleError handles the UpdateTags error response.

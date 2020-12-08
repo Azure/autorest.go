@@ -46,11 +46,7 @@ func (client LoadBalancerBackendAddressPoolsClient) Get(ctx context.Context, res
 	if !resp.HasStatusCode(http.StatusOK) {
 		return BackendAddressPoolResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return BackendAddressPoolResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -74,9 +70,11 @@ func (client LoadBalancerBackendAddressPoolsClient) getCreateRequest(ctx context
 
 // getHandleResponse handles the Get response.
 func (client LoadBalancerBackendAddressPoolsClient) getHandleResponse(resp *azcore.Response) (BackendAddressPoolResponse, error) {
-	result := BackendAddressPoolResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.BackendAddressPool)
-	return result, err
+	var val *BackendAddressPool
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return BackendAddressPoolResponse{}, err
+	}
+	return BackendAddressPoolResponse{RawResponse: resp.Response, BackendAddressPool: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -124,9 +122,11 @@ func (client LoadBalancerBackendAddressPoolsClient) listCreateRequest(ctx contex
 
 // listHandleResponse handles the List response.
 func (client LoadBalancerBackendAddressPoolsClient) listHandleResponse(resp *azcore.Response) (LoadBalancerBackendAddressPoolListResultResponse, error) {
-	result := LoadBalancerBackendAddressPoolListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.LoadBalancerBackendAddressPoolListResult)
-	return result, err
+	var val *LoadBalancerBackendAddressPoolListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return LoadBalancerBackendAddressPoolListResultResponse{}, err
+	}
+	return LoadBalancerBackendAddressPoolListResultResponse{RawResponse: resp.Response, LoadBalancerBackendAddressPoolListResult: val}, nil
 }
 
 // listHandleError handles the List error response.

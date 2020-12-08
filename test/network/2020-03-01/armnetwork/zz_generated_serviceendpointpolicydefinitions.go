@@ -108,9 +108,11 @@ func (client ServiceEndpointPolicyDefinitionsClient) createOrUpdateCreateRequest
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client ServiceEndpointPolicyDefinitionsClient) createOrUpdateHandleResponse(resp *azcore.Response) (ServiceEndpointPolicyDefinitionResponse, error) {
-	result := ServiceEndpointPolicyDefinitionResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ServiceEndpointPolicyDefinition)
-	return result, err
+	var val *ServiceEndpointPolicyDefinition
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ServiceEndpointPolicyDefinitionResponse{}, err
+	}
+	return ServiceEndpointPolicyDefinitionResponse{RawResponse: resp.Response, ServiceEndpointPolicyDefinition: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -216,11 +218,7 @@ func (client ServiceEndpointPolicyDefinitionsClient) Get(ctx context.Context, re
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ServiceEndpointPolicyDefinitionResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return ServiceEndpointPolicyDefinitionResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -244,9 +242,11 @@ func (client ServiceEndpointPolicyDefinitionsClient) getCreateRequest(ctx contex
 
 // getHandleResponse handles the Get response.
 func (client ServiceEndpointPolicyDefinitionsClient) getHandleResponse(resp *azcore.Response) (ServiceEndpointPolicyDefinitionResponse, error) {
-	result := ServiceEndpointPolicyDefinitionResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ServiceEndpointPolicyDefinition)
-	return result, err
+	var val *ServiceEndpointPolicyDefinition
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ServiceEndpointPolicyDefinitionResponse{}, err
+	}
+	return ServiceEndpointPolicyDefinitionResponse{RawResponse: resp.Response, ServiceEndpointPolicyDefinition: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -294,9 +294,11 @@ func (client ServiceEndpointPolicyDefinitionsClient) listByResourceGroupCreateRe
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
 func (client ServiceEndpointPolicyDefinitionsClient) listByResourceGroupHandleResponse(resp *azcore.Response) (ServiceEndpointPolicyDefinitionListResultResponse, error) {
-	result := ServiceEndpointPolicyDefinitionListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ServiceEndpointPolicyDefinitionListResult)
-	return result, err
+	var val *ServiceEndpointPolicyDefinitionListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ServiceEndpointPolicyDefinitionListResultResponse{}, err
+	}
+	return ServiceEndpointPolicyDefinitionListResultResponse{RawResponse: resp.Response, ServiceEndpointPolicyDefinitionListResult: val}, nil
 }
 
 // listByResourceGroupHandleError handles the ListByResourceGroup error response.

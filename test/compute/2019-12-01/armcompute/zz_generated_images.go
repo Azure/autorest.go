@@ -110,9 +110,11 @@ func (client ImagesClient) createOrUpdateCreateRequest(ctx context.Context, reso
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client ImagesClient) createOrUpdateHandleResponse(resp *azcore.Response) (ImageResponse, error) {
-	result := ImageResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Image)
-	return result, err
+	var val *Image
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ImageResponse{}, err
+	}
+	return ImageResponse{RawResponse: resp.Response, Image: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -222,11 +224,7 @@ func (client ImagesClient) Get(ctx context.Context, resourceGroupName string, im
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ImageResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return ImageResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -252,9 +250,11 @@ func (client ImagesClient) getCreateRequest(ctx context.Context, resourceGroupNa
 
 // getHandleResponse handles the Get response.
 func (client ImagesClient) getHandleResponse(resp *azcore.Response) (ImageResponse, error) {
-	result := ImageResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Image)
-	return result, err
+	var val *Image
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ImageResponse{}, err
+	}
+	return ImageResponse{RawResponse: resp.Response, Image: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -304,9 +304,11 @@ func (client ImagesClient) listCreateRequest(ctx context.Context, options *Image
 
 // listHandleResponse handles the List response.
 func (client ImagesClient) listHandleResponse(resp *azcore.Response) (ImageListResultResponse, error) {
-	result := ImageListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ImageListResult)
-	return result, err
+	var val *ImageListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ImageListResultResponse{}, err
+	}
+	return ImageListResultResponse{RawResponse: resp.Response, ImageListResult: val}, nil
 }
 
 // listHandleError handles the List error response.
@@ -356,9 +358,11 @@ func (client ImagesClient) listByResourceGroupCreateRequest(ctx context.Context,
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
 func (client ImagesClient) listByResourceGroupHandleResponse(resp *azcore.Response) (ImageListResultResponse, error) {
-	result := ImageListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ImageListResult)
-	return result, err
+	var val *ImageListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ImageListResultResponse{}, err
+	}
+	return ImageListResultResponse{RawResponse: resp.Response, ImageListResult: val}, nil
 }
 
 // listByResourceGroupHandleError handles the ListByResourceGroup error response.
@@ -446,9 +450,11 @@ func (client ImagesClient) updateCreateRequest(ctx context.Context, resourceGrou
 
 // updateHandleResponse handles the Update response.
 func (client ImagesClient) updateHandleResponse(resp *azcore.Response) (ImageResponse, error) {
-	result := ImageResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Image)
-	return result, err
+	var val *Image
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ImageResponse{}, err
+	}
+	return ImageResponse{RawResponse: resp.Response, Image: val}, nil
 }
 
 // updateHandleError handles the Update error response.

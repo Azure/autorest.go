@@ -203,7 +203,7 @@ function generateMultiRespComment(op: Operation): string {
   return `// Possible return types are ${returnTypes.join(', ')}\n`;
 }
 
-function getZeroReturnValue(op: Operation, apiType: 'api' | 'op'): string {
+function getZeroReturnValue(op: Operation, apiType: 'api' | 'op' | 'handler'): string {
   if (!op.responses) {
     // no responses return *http.Response
     return 'nil';
@@ -213,10 +213,15 @@ function getZeroReturnValue(op: Operation, apiType: 'api' | 'op'): string {
     if (apiType === 'op') {
       // the operation returns an *azcore.Response
       returnType = 'nil';
-    } else {
+    } else if (apiType === 'api') {
       returnType = 'HTTPPollerResponse{}';
       if (hasSchemaResponse(op)) {
         returnType = `${(<SchemaResponse>op.responses![0]).schema.language.go!.lroResponseType.language.go!.name}{}`;
+      }
+    } else {
+      returnType = 'nil';
+      if (hasSchemaResponse(op)) {
+        returnType = `${(<SchemaResponse>op.responses![0]).schema.language.go!.responseType.name}{}`;
       }
     }
   } else if (isMultiRespOperation(op)) {
@@ -316,11 +321,7 @@ function generateOperation(op: Operation, imports: ImportManager): string {
       text += '\t return resp, nil\n';
     } else if (needsResponseHandler(op)) {
       // also cheating here as at present the only param to the responder is an azcore.Response
-      text += `\tresult, err := client.${info.protocolNaming.responseMethod}(resp)\n`;
-      text += `\tif err != nil {\n`;
-      text += `\t\treturn ${zeroResp}, err\n`;
-      text += `\t}\n`;
-      text += `\treturn result, nil\n`;
+      text += `\treturn client.${info.protocolNaming.responseMethod}(resp)\n`;
     } else {
       text += '\treturn resp.Response, nil\n';
     }
@@ -631,20 +632,23 @@ function needsResponseHandler(op: Operation): boolean {
 
 function generateResponseUnmarshaller(op: Operation, response: Response, imports: ImportManager): string {
   let unmarshallerText = '';
+  const zeroValue = getZeroReturnValue(op, 'handler');
   if (!isSchemaResponse(response)) {
-    throw console.error('TODO');
+    throw console.error(`generateResponseUnmarshaller() called for operation that doesn't return a schema`);
   } else if (response.schema.type === SchemaType.DateTime || response.schema.type === SchemaType.UnixTime || response.schema.type === SchemaType.Date) {
     // use the designated time type for unmarshalling
     unmarshallerText += `\tvar aux *${response.schema.language.go!.internalTimeType}\n`;
-    unmarshallerText += `\terr := resp.UnmarshalAs${getMediaType(response.protocol)}(&aux)\n`;
+    unmarshallerText += `\tif err := resp.UnmarshalAs${getMediaType(response.protocol)}(&aux); err != nil {\n`;
+    unmarshallerText += `\t\treturn ${zeroValue}, err\n`;
+    unmarshallerText += '\t}\n';
     const resp = `${response.schema.language.go!.responseType.name}{RawResponse: resp.Response, ${response.schema.language.go!.responseType.value}: (*time.Time)(aux)}`;
-    unmarshallerText += `\treturn ${resp}, err\n`;
+    unmarshallerText += `\treturn ${resp}, nil\n`;
     return unmarshallerText;
   } else if (isArrayOfDateTime(response.schema) || isArrayOfDate(response.schema)) {
     // unmarshalling arrays of date/time is a little more involved
     unmarshallerText += `\tvar aux *[]${(<ArraySchema>response.schema).elementType.language.go!.internalTimeType}\n`;
     unmarshallerText += `\tif err := resp.UnmarshalAs${getMediaType(response.protocol)}(&aux); err != nil {\n`;
-    unmarshallerText += `\t\treturn ${response.schema.language.go!.responseType.name}{}, err\n`;
+    unmarshallerText += `\t\treturn ${zeroValue}, err\n`;
     unmarshallerText += '\t}\n';
     unmarshallerText += '\tcp := make([]time.Time, len(*aux), len(*aux))\n';
     unmarshallerText += '\tfor i := 0; i < len(*aux); i++ {\n';
@@ -656,7 +660,7 @@ function generateResponseUnmarshaller(op: Operation, response: Response, imports
   } else if (isMapOfDateTime(response.schema) || isMapOfDate(response.schema)) {
     unmarshallerText += `\taux := map[string]${(<DictionarySchema>response.schema).elementType.language.go!.internalTimeType}{}\n`;
     unmarshallerText += `\tif err := resp.UnmarshalAs${getMediaType(response.protocol)}(&aux); err != nil {\n`;
-    unmarshallerText += `\t\treturn ${response.schema.language.go!.responseType.name}{}, err\n`;
+    unmarshallerText += `\t\treturn ${zeroValue}, err\n`;
     unmarshallerText += '\t}\n';
     unmarshallerText += `\tcp := map[string]time.Time{}\n`;
     unmarshallerText += `\tfor k, v := range aux {\n`;
@@ -667,32 +671,59 @@ function generateResponseUnmarshaller(op: Operation, response: Response, imports
     return unmarshallerText;
   }
   const schemaResponse = <SchemaResponse>response;
-  let respObj = `${schemaResponse.schema.language.go!.responseType.name}{RawResponse: resp.Response}`;
-  unmarshallerText += `\tresult := ${respObj}\n`;
+  const mediaType = getMediaType(response.protocol);
+  const headerVals = new Array<Property>();
+  for (const prop of values(<Array<Property>>schemaResponse.schema.language.go!.properties)) {
+    if (prop.language.go!.fromHeader) {
+      headerVals.push(prop);
+    }
+  }
+  const addHeaderVals = function () {
+    for (const headerVal of values(headerVals)) {
+      unmarshallerText += formatHeaderResponseValue(headerVal.language.go!.name, headerVal.language.go!.fromHeader, headerVal.schema, imports, 'result', `${response.schema.language.go!.responseType.name}{}`);
+    }
+  };
   if (op.language.go!.headAsBoolean) {
+    unmarshallerText += `\tresult := ${schemaResponse.schema.language.go!.responseType.name}{RawResponse: resp.Response}\n`;
     unmarshallerText += '\tif resp.StatusCode >= 200 && resp.StatusCode < 300 {\n';
     unmarshallerText += '\t\tresult.Success = true\n';
     unmarshallerText += '\t}\n';
-  }
-  // assign any header values
-  for (const prop of values(<Array<Property>>schemaResponse.schema.language.go!.properties)) {
-    if (prop.language.go!.fromHeader) {
-      unmarshallerText += formatHeaderResponseValue(prop.language.go!.name, prop.language.go!.fromHeader, prop.schema, imports, 'result', `${response.schema.language.go!.responseType.name}{}`);
-    }
-  }
-  const mediaType = getMediaType(response.protocol);
-  if (mediaType === 'JSON' || mediaType === 'XML') {
-    let target = `result.${schemaResponse.schema.language.go!.responseType.value}`;
-    // when unmarshalling a wrapped XML array or discriminated type, unmarshal into the response type, not the field
+    addHeaderVals();
+    unmarshallerText += '\treturn result, nil\n';
+  } else if (mediaType === 'JSON' || mediaType === 'XML') {
+    const unmarshalInto = function (target: string) {
+      unmarshallerText += `\tif err := resp.UnmarshalAs${getMediaFormat(response.schema, mediaType, `&${target}`)}; err != nil {\n`;
+      unmarshallerText += `\t\treturn ${zeroValue}, err\n`;
+      unmarshallerText += '\t}\n';
+    };
+    // when unmarshalling a wrapped XML array or discriminated type, unmarshal into the response envelope
     if ((mediaType === 'XML' && schemaResponse.schema.type === SchemaType.Array) || schemaResponse.schema.language.go!.discriminatorInterface) {
-      target = 'result';
+      unmarshallerText += `\tresult := ${schemaResponse.schema.language.go!.responseType.name}{RawResponse: resp.Response}\n`;
+      unmarshalInto('result');
+      addHeaderVals();
+      unmarshallerText += `\treturn result, nil\n`;
+    } else {
+      // unmarshall the result into a temp, this is to avoid allocating the response envelope on the heap
+      unmarshallerText += `\tvar val *${schemaResponse.schema.language.go!.name}\n`;
+      unmarshalInto('val');
+      if (headerVals.length === 0) {
+        unmarshallerText += `return ${schemaResponse.schema.language.go!.responseType.name}{RawResponse: resp.Response, ${schemaResponse.schema.language.go!.responseType.value}: val}, nil\n`;
+      } else {
+        unmarshallerText += `\tresult := ${schemaResponse.schema.language.go!.responseType.name}{RawResponse: resp.Response, ${schemaResponse.schema.language.go!.responseType.value}: val}\n`;
+        addHeaderVals();
+        unmarshallerText += `\treturn result, nil\n`;
+      }
     }
-    unmarshallerText += `\terr := resp.UnmarshalAs${getMediaFormat(response.schema, mediaType, `&${target}`)}\n`;
-    unmarshallerText += `\treturn result, err\n`;
-    return unmarshallerText;
+  } else {
+    // nothing to unmarshall, check if any headers need to be populated
+    if (headerVals.length === 0) {
+      unmarshallerText += `\treturn ${schemaResponse.schema.language.go!.responseType.name}{RawResponse: resp.Response}, nil\n`;
+    } else {
+      unmarshallerText += `\tresult := ${schemaResponse.schema.language.go!.responseType.name}{RawResponse: resp.Response}\n`;
+      addHeaderVals();
+      unmarshallerText += '\treturn result, nil\n';
+    }
   }
-  // nothing to unmarshal
-  unmarshallerText += '\treturn result, nil\n';
   return unmarshallerText;
 }
 

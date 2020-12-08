@@ -108,9 +108,11 @@ func (client VirtualHubRouteTableV2SClient) createOrUpdateCreateRequest(ctx cont
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client VirtualHubRouteTableV2SClient) createOrUpdateHandleResponse(resp *azcore.Response) (VirtualHubRouteTableV2Response, error) {
-	result := VirtualHubRouteTableV2Response{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.VirtualHubRouteTableV2)
-	return result, err
+	var val *VirtualHubRouteTableV2
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return VirtualHubRouteTableV2Response{}, err
+	}
+	return VirtualHubRouteTableV2Response{RawResponse: resp.Response, VirtualHubRouteTableV2: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -216,11 +218,7 @@ func (client VirtualHubRouteTableV2SClient) Get(ctx context.Context, resourceGro
 	if !resp.HasStatusCode(http.StatusOK) {
 		return VirtualHubRouteTableV2Response{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return VirtualHubRouteTableV2Response{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -244,9 +242,11 @@ func (client VirtualHubRouteTableV2SClient) getCreateRequest(ctx context.Context
 
 // getHandleResponse handles the Get response.
 func (client VirtualHubRouteTableV2SClient) getHandleResponse(resp *azcore.Response) (VirtualHubRouteTableV2Response, error) {
-	result := VirtualHubRouteTableV2Response{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.VirtualHubRouteTableV2)
-	return result, err
+	var val *VirtualHubRouteTableV2
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return VirtualHubRouteTableV2Response{}, err
+	}
+	return VirtualHubRouteTableV2Response{RawResponse: resp.Response, VirtualHubRouteTableV2: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -294,9 +294,11 @@ func (client VirtualHubRouteTableV2SClient) listCreateRequest(ctx context.Contex
 
 // listHandleResponse handles the List response.
 func (client VirtualHubRouteTableV2SClient) listHandleResponse(resp *azcore.Response) (ListVirtualHubRouteTableV2SResultResponse, error) {
-	result := ListVirtualHubRouteTableV2SResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ListVirtualHubRouteTableV2SResult)
-	return result, err
+	var val *ListVirtualHubRouteTableV2SResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ListVirtualHubRouteTableV2SResultResponse{}, err
+	}
+	return ListVirtualHubRouteTableV2SResultResponse{RawResponse: resp.Response, ListVirtualHubRouteTableV2SResult: val}, nil
 }
 
 // listHandleError handles the List error response.

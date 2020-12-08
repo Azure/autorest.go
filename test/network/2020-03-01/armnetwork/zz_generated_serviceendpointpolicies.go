@@ -107,9 +107,11 @@ func (client ServiceEndpointPoliciesClient) createOrUpdateCreateRequest(ctx cont
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client ServiceEndpointPoliciesClient) createOrUpdateHandleResponse(resp *azcore.Response) (ServiceEndpointPolicyResponse, error) {
-	result := ServiceEndpointPolicyResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ServiceEndpointPolicy)
-	return result, err
+	var val *ServiceEndpointPolicy
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ServiceEndpointPolicyResponse{}, err
+	}
+	return ServiceEndpointPolicyResponse{RawResponse: resp.Response, ServiceEndpointPolicy: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -214,11 +216,7 @@ func (client ServiceEndpointPoliciesClient) Get(ctx context.Context, resourceGro
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ServiceEndpointPolicyResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return ServiceEndpointPolicyResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -244,9 +242,11 @@ func (client ServiceEndpointPoliciesClient) getCreateRequest(ctx context.Context
 
 // getHandleResponse handles the Get response.
 func (client ServiceEndpointPoliciesClient) getHandleResponse(resp *azcore.Response) (ServiceEndpointPolicyResponse, error) {
-	result := ServiceEndpointPolicyResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ServiceEndpointPolicy)
-	return result, err
+	var val *ServiceEndpointPolicy
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ServiceEndpointPolicyResponse{}, err
+	}
+	return ServiceEndpointPolicyResponse{RawResponse: resp.Response, ServiceEndpointPolicy: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -292,9 +292,11 @@ func (client ServiceEndpointPoliciesClient) listCreateRequest(ctx context.Contex
 
 // listHandleResponse handles the List response.
 func (client ServiceEndpointPoliciesClient) listHandleResponse(resp *azcore.Response) (ServiceEndpointPolicyListResultResponse, error) {
-	result := ServiceEndpointPolicyListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ServiceEndpointPolicyListResult)
-	return result, err
+	var val *ServiceEndpointPolicyListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ServiceEndpointPolicyListResultResponse{}, err
+	}
+	return ServiceEndpointPolicyListResultResponse{RawResponse: resp.Response, ServiceEndpointPolicyListResult: val}, nil
 }
 
 // listHandleError handles the List error response.
@@ -341,9 +343,11 @@ func (client ServiceEndpointPoliciesClient) listByResourceGroupCreateRequest(ctx
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
 func (client ServiceEndpointPoliciesClient) listByResourceGroupHandleResponse(resp *azcore.Response) (ServiceEndpointPolicyListResultResponse, error) {
-	result := ServiceEndpointPolicyListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ServiceEndpointPolicyListResult)
-	return result, err
+	var val *ServiceEndpointPolicyListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ServiceEndpointPolicyListResultResponse{}, err
+	}
+	return ServiceEndpointPolicyListResultResponse{RawResponse: resp.Response, ServiceEndpointPolicyListResult: val}, nil
 }
 
 // listByResourceGroupHandleError handles the ListByResourceGroup error response.
@@ -368,11 +372,7 @@ func (client ServiceEndpointPoliciesClient) UpdateTags(ctx context.Context, reso
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ServiceEndpointPolicyResponse{}, client.updateTagsHandleError(resp)
 	}
-	result, err := client.updateTagsHandleResponse(resp)
-	if err != nil {
-		return ServiceEndpointPolicyResponse{}, err
-	}
-	return result, nil
+	return client.updateTagsHandleResponse(resp)
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.
@@ -395,9 +395,11 @@ func (client ServiceEndpointPoliciesClient) updateTagsCreateRequest(ctx context.
 
 // updateTagsHandleResponse handles the UpdateTags response.
 func (client ServiceEndpointPoliciesClient) updateTagsHandleResponse(resp *azcore.Response) (ServiceEndpointPolicyResponse, error) {
-	result := ServiceEndpointPolicyResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ServiceEndpointPolicy)
-	return result, err
+	var val *ServiceEndpointPolicy
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ServiceEndpointPolicyResponse{}, err
+	}
+	return ServiceEndpointPolicyResponse{RawResponse: resp.Response, ServiceEndpointPolicy: val}, nil
 }
 
 // updateTagsHandleError handles the UpdateTags error response.

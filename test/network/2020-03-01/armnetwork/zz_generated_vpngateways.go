@@ -107,9 +107,11 @@ func (client VpnGatewaysClient) createOrUpdateCreateRequest(ctx context.Context,
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client VpnGatewaysClient) createOrUpdateHandleResponse(resp *azcore.Response) (VpnGatewayResponse, error) {
-	result := VpnGatewayResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.VpnGateway)
-	return result, err
+	var val *VpnGateway
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return VpnGatewayResponse{}, err
+	}
+	return VpnGatewayResponse{RawResponse: resp.Response, VpnGateway: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -214,11 +216,7 @@ func (client VpnGatewaysClient) Get(ctx context.Context, resourceGroupName strin
 	if !resp.HasStatusCode(http.StatusOK) {
 		return VpnGatewayResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return VpnGatewayResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -241,9 +239,11 @@ func (client VpnGatewaysClient) getCreateRequest(ctx context.Context, resourceGr
 
 // getHandleResponse handles the Get response.
 func (client VpnGatewaysClient) getHandleResponse(resp *azcore.Response) (VpnGatewayResponse, error) {
-	result := VpnGatewayResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.VpnGateway)
-	return result, err
+	var val *VpnGateway
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return VpnGatewayResponse{}, err
+	}
+	return VpnGatewayResponse{RawResponse: resp.Response, VpnGateway: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -289,9 +289,11 @@ func (client VpnGatewaysClient) listCreateRequest(ctx context.Context, options *
 
 // listHandleResponse handles the List response.
 func (client VpnGatewaysClient) listHandleResponse(resp *azcore.Response) (ListVpnGatewaysResultResponse, error) {
-	result := ListVpnGatewaysResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ListVpnGatewaysResult)
-	return result, err
+	var val *ListVpnGatewaysResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ListVpnGatewaysResultResponse{}, err
+	}
+	return ListVpnGatewaysResultResponse{RawResponse: resp.Response, ListVpnGatewaysResult: val}, nil
 }
 
 // listHandleError handles the List error response.
@@ -338,9 +340,11 @@ func (client VpnGatewaysClient) listByResourceGroupCreateRequest(ctx context.Con
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
 func (client VpnGatewaysClient) listByResourceGroupHandleResponse(resp *azcore.Response) (ListVpnGatewaysResultResponse, error) {
-	result := ListVpnGatewaysResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ListVpnGatewaysResult)
-	return result, err
+	var val *ListVpnGatewaysResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ListVpnGatewaysResultResponse{}, err
+	}
+	return ListVpnGatewaysResultResponse{RawResponse: resp.Response, ListVpnGatewaysResult: val}, nil
 }
 
 // listByResourceGroupHandleError handles the ListByResourceGroup error response.
@@ -425,9 +429,11 @@ func (client VpnGatewaysClient) resetCreateRequest(ctx context.Context, resource
 
 // resetHandleResponse handles the Reset response.
 func (client VpnGatewaysClient) resetHandleResponse(resp *azcore.Response) (VpnGatewayResponse, error) {
-	result := VpnGatewayResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.VpnGateway)
-	return result, err
+	var val *VpnGateway
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return VpnGatewayResponse{}, err
+	}
+	return VpnGatewayResponse{RawResponse: resp.Response, VpnGateway: val}, nil
 }
 
 // resetHandleError handles the Reset error response.
@@ -452,11 +458,7 @@ func (client VpnGatewaysClient) UpdateTags(ctx context.Context, resourceGroupNam
 	if !resp.HasStatusCode(http.StatusOK) {
 		return VpnGatewayResponse{}, client.updateTagsHandleError(resp)
 	}
-	result, err := client.updateTagsHandleResponse(resp)
-	if err != nil {
-		return VpnGatewayResponse{}, err
-	}
-	return result, nil
+	return client.updateTagsHandleResponse(resp)
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.
@@ -479,9 +481,11 @@ func (client VpnGatewaysClient) updateTagsCreateRequest(ctx context.Context, res
 
 // updateTagsHandleResponse handles the UpdateTags response.
 func (client VpnGatewaysClient) updateTagsHandleResponse(resp *azcore.Response) (VpnGatewayResponse, error) {
-	result := VpnGatewayResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.VpnGateway)
-	return result, err
+	var val *VpnGateway
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return VpnGatewayResponse{}, err
+	}
+	return VpnGatewayResponse{RawResponse: resp.Response, VpnGateway: val}, nil
 }
 
 // updateTagsHandleError handles the UpdateTags error response.

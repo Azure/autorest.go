@@ -108,9 +108,11 @@ func (client FlowLogsClient) createOrUpdateCreateRequest(ctx context.Context, re
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client FlowLogsClient) createOrUpdateHandleResponse(resp *azcore.Response) (FlowLogResponse, error) {
-	result := FlowLogResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.FlowLog)
-	return result, err
+	var val *FlowLog
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return FlowLogResponse{}, err
+	}
+	return FlowLogResponse{RawResponse: resp.Response, FlowLog: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -216,11 +218,7 @@ func (client FlowLogsClient) Get(ctx context.Context, resourceGroupName string, 
 	if !resp.HasStatusCode(http.StatusOK) {
 		return FlowLogResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return FlowLogResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -244,9 +242,11 @@ func (client FlowLogsClient) getCreateRequest(ctx context.Context, resourceGroup
 
 // getHandleResponse handles the Get response.
 func (client FlowLogsClient) getHandleResponse(resp *azcore.Response) (FlowLogResponse, error) {
-	result := FlowLogResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.FlowLog)
-	return result, err
+	var val *FlowLog
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return FlowLogResponse{}, err
+	}
+	return FlowLogResponse{RawResponse: resp.Response, FlowLog: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -294,9 +294,11 @@ func (client FlowLogsClient) listCreateRequest(ctx context.Context, resourceGrou
 
 // listHandleResponse handles the List response.
 func (client FlowLogsClient) listHandleResponse(resp *azcore.Response) (FlowLogListResultResponse, error) {
-	result := FlowLogListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.FlowLogListResult)
-	return result, err
+	var val *FlowLogListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return FlowLogListResultResponse{}, err
+	}
+	return FlowLogListResultResponse{RawResponse: resp.Response, FlowLogListResult: val}, nil
 }
 
 // listHandleError handles the List error response.

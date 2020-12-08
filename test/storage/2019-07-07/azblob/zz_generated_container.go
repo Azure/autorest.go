@@ -40,11 +40,7 @@ func (client containerClient) AcquireLease(ctx context.Context, containerAcquire
 	if !resp.HasStatusCode(http.StatusCreated) {
 		return ContainerAcquireLeaseResponse{}, client.acquireLeaseHandleError(resp)
 	}
-	result, err := client.acquireLeaseHandleResponse(resp)
-	if err != nil {
-		return ContainerAcquireLeaseResponse{}, err
-	}
-	return result, nil
+	return client.acquireLeaseHandleResponse(resp)
 }
 
 // acquireLeaseCreateRequest creates the AcquireLease request.
@@ -139,11 +135,7 @@ func (client containerClient) BreakLease(ctx context.Context, containerBreakLeas
 	if !resp.HasStatusCode(http.StatusAccepted) {
 		return ContainerBreakLeaseResponse{}, client.breakLeaseHandleError(resp)
 	}
-	result, err := client.breakLeaseHandleResponse(resp)
-	if err != nil {
-		return ContainerBreakLeaseResponse{}, err
-	}
-	return result, nil
+	return client.breakLeaseHandleResponse(resp)
 }
 
 // breakLeaseCreateRequest creates the BreakLease request.
@@ -240,11 +232,7 @@ func (client containerClient) ChangeLease(ctx context.Context, leaseId string, p
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ContainerChangeLeaseResponse{}, client.changeLeaseHandleError(resp)
 	}
-	result, err := client.changeLeaseHandleResponse(resp)
-	if err != nil {
-		return ContainerChangeLeaseResponse{}, err
-	}
-	return result, nil
+	return client.changeLeaseHandleResponse(resp)
 }
 
 // changeLeaseCreateRequest creates the ChangeLease request.
@@ -335,11 +323,7 @@ func (client containerClient) Create(ctx context.Context, containerCreateOptions
 	if !resp.HasStatusCode(http.StatusCreated) {
 		return ContainerCreateResponse{}, client.createHandleError(resp)
 	}
-	result, err := client.createHandleResponse(resp)
-	if err != nil {
-		return ContainerCreateResponse{}, err
-	}
-	return result, nil
+	return client.createHandleResponse(resp)
 }
 
 // createCreateRequest creates the Create request.
@@ -431,11 +415,7 @@ func (client containerClient) Delete(ctx context.Context, containerDeleteOptions
 	if !resp.HasStatusCode(http.StatusAccepted) {
 		return ContainerDeleteResponse{}, client.deleteHandleError(resp)
 	}
-	result, err := client.deleteHandleResponse(resp)
-	if err != nil {
-		return ContainerDeleteResponse{}, err
-	}
-	return result, nil
+	return client.deleteHandleResponse(resp)
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -512,11 +492,7 @@ func (client containerClient) GetAccessPolicy(ctx context.Context, containerGetA
 	if !resp.HasStatusCode(http.StatusOK) {
 		return SignedIDentifierArrayResponse{}, client.getAccessPolicyHandleError(resp)
 	}
-	result, err := client.getAccessPolicyHandleResponse(resp)
-	if err != nil {
-		return SignedIDentifierArrayResponse{}, err
-	}
-	return result, nil
+	return client.getAccessPolicyHandleResponse(resp)
 }
 
 // getAccessPolicyCreateRequest creates the GetAccessPolicy request.
@@ -547,6 +523,9 @@ func (client containerClient) getAccessPolicyCreateRequest(ctx context.Context, 
 // getAccessPolicyHandleResponse handles the GetAccessPolicy response.
 func (client containerClient) getAccessPolicyHandleResponse(resp *azcore.Response) (SignedIDentifierArrayResponse, error) {
 	result := SignedIDentifierArrayResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsXML(&result); err != nil {
+		return SignedIDentifierArrayResponse{}, err
+	}
 	if val := resp.Header.Get("x-ms-blob-public-access"); val != "" {
 		result.BlobPublicAccess = (*PublicAccessType)(&val)
 	}
@@ -576,8 +555,7 @@ func (client containerClient) getAccessPolicyHandleResponse(resp *azcore.Respons
 		}
 		result.Date = &date
 	}
-	err := resp.UnmarshalAsXML(&result)
-	return result, err
+	return result, nil
 }
 
 // getAccessPolicyHandleError handles the GetAccessPolicy error response.
@@ -602,11 +580,7 @@ func (client containerClient) GetAccountInfo(ctx context.Context, options *Conta
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ContainerGetAccountInfoResponse{}, client.getAccountInfoHandleError(resp)
 	}
-	result, err := client.getAccountInfoHandleResponse(resp)
-	if err != nil {
-		return ContainerGetAccountInfoResponse{}, err
-	}
-	return result, nil
+	return client.getAccountInfoHandleResponse(resp)
 }
 
 // getAccountInfoCreateRequest creates the GetAccountInfo request.
@@ -676,11 +650,7 @@ func (client containerClient) GetProperties(ctx context.Context, containerGetPro
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ContainerGetPropertiesResponse{}, client.getPropertiesHandleError(resp)
 	}
-	result, err := client.getPropertiesHandleResponse(resp)
-	if err != nil {
-		return ContainerGetPropertiesResponse{}, err
-	}
-	return result, nil
+	return client.getPropertiesHandleResponse(resp)
 }
 
 // getPropertiesCreateRequest creates the GetProperties request.
@@ -844,7 +814,11 @@ func (client containerClient) listBlobFlatSegmentCreateRequest(ctx context.Conte
 
 // listBlobFlatSegmentHandleResponse handles the ListBlobFlatSegment response.
 func (client containerClient) listBlobFlatSegmentHandleResponse(resp *azcore.Response) (ListBlobsFlatSegmentResponseResponse, error) {
-	result := ListBlobsFlatSegmentResponseResponse{RawResponse: resp.Response}
+	var val *ListBlobsFlatSegmentResponse
+	if err := resp.UnmarshalAsXML(&val); err != nil {
+		return ListBlobsFlatSegmentResponseResponse{}, err
+	}
+	result := ListBlobsFlatSegmentResponseResponse{RawResponse: resp.Response, EnumerationResults: val}
 	if val := resp.Header.Get("Content-Type"); val != "" {
 		result.ContentType = &val
 	}
@@ -864,8 +838,7 @@ func (client containerClient) listBlobFlatSegmentHandleResponse(resp *azcore.Res
 		}
 		result.Date = &date
 	}
-	err := resp.UnmarshalAsXML(&result.EnumerationResults)
-	return result, err
+	return result, nil
 }
 
 // listBlobFlatSegmentHandleError handles the ListBlobFlatSegment error response.
@@ -930,7 +903,11 @@ func (client containerClient) listBlobHierarchySegmentCreateRequest(ctx context.
 
 // listBlobHierarchySegmentHandleResponse handles the ListBlobHierarchySegment response.
 func (client containerClient) listBlobHierarchySegmentHandleResponse(resp *azcore.Response) (ListBlobsHierarchySegmentResponseResponse, error) {
-	result := ListBlobsHierarchySegmentResponseResponse{RawResponse: resp.Response}
+	var val *ListBlobsHierarchySegmentResponse
+	if err := resp.UnmarshalAsXML(&val); err != nil {
+		return ListBlobsHierarchySegmentResponseResponse{}, err
+	}
+	result := ListBlobsHierarchySegmentResponseResponse{RawResponse: resp.Response, EnumerationResults: val}
 	if val := resp.Header.Get("Content-Type"); val != "" {
 		result.ContentType = &val
 	}
@@ -950,8 +927,7 @@ func (client containerClient) listBlobHierarchySegmentHandleResponse(resp *azcor
 		}
 		result.Date = &date
 	}
-	err := resp.UnmarshalAsXML(&result.EnumerationResults)
-	return result, err
+	return result, nil
 }
 
 // listBlobHierarchySegmentHandleError handles the ListBlobHierarchySegment error response.
@@ -976,11 +952,7 @@ func (client containerClient) ReleaseLease(ctx context.Context, leaseId string, 
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ContainerReleaseLeaseResponse{}, client.releaseLeaseHandleError(resp)
 	}
-	result, err := client.releaseLeaseHandleResponse(resp)
-	if err != nil {
-		return ContainerReleaseLeaseResponse{}, err
-	}
-	return result, nil
+	return client.releaseLeaseHandleResponse(resp)
 }
 
 // releaseLeaseCreateRequest creates the ReleaseLease request.
@@ -1067,11 +1039,7 @@ func (client containerClient) RenewLease(ctx context.Context, leaseId string, co
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ContainerRenewLeaseResponse{}, client.renewLeaseHandleError(resp)
 	}
-	result, err := client.renewLeaseHandleResponse(resp)
-	if err != nil {
-		return ContainerRenewLeaseResponse{}, err
-	}
-	return result, nil
+	return client.renewLeaseHandleResponse(resp)
 }
 
 // renewLeaseCreateRequest creates the RenewLease request.
@@ -1161,11 +1129,7 @@ func (client containerClient) SetAccessPolicy(ctx context.Context, containerSetA
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ContainerSetAccessPolicyResponse{}, client.setAccessPolicyHandleError(resp)
 	}
-	result, err := client.setAccessPolicyHandleResponse(resp)
-	if err != nil {
-		return ContainerSetAccessPolicyResponse{}, err
-	}
-	return result, nil
+	return client.setAccessPolicyHandleResponse(resp)
 }
 
 // setAccessPolicyCreateRequest creates the SetAccessPolicy request.
@@ -1263,11 +1227,7 @@ func (client containerClient) SetMetadata(ctx context.Context, containerSetMetad
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ContainerSetMetadataResponse{}, client.setMetadataHandleError(resp)
 	}
-	result, err := client.setMetadataHandleResponse(resp)
-	if err != nil {
-		return ContainerSetMetadataResponse{}, err
-	}
-	return result, nil
+	return client.setMetadataHandleResponse(resp)
 }
 
 // setMetadataCreateRequest creates the SetMetadata request.

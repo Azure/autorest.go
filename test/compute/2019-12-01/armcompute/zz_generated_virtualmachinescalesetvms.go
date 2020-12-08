@@ -221,11 +221,7 @@ func (client VirtualMachineScaleSetVMSClient) Get(ctx context.Context, resourceG
 	if !resp.HasStatusCode(http.StatusOK) {
 		return VirtualMachineScaleSetVMResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return VirtualMachineScaleSetVMResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -252,9 +248,11 @@ func (client VirtualMachineScaleSetVMSClient) getCreateRequest(ctx context.Conte
 
 // getHandleResponse handles the Get response.
 func (client VirtualMachineScaleSetVMSClient) getHandleResponse(resp *azcore.Response) (VirtualMachineScaleSetVMResponse, error) {
-	result := VirtualMachineScaleSetVMResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.VirtualMachineScaleSetVM)
-	return result, err
+	var val *VirtualMachineScaleSetVM
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return VirtualMachineScaleSetVMResponse{}, err
+	}
+	return VirtualMachineScaleSetVMResponse{RawResponse: resp.Response, VirtualMachineScaleSetVM: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -282,11 +280,7 @@ func (client VirtualMachineScaleSetVMSClient) GetInstanceView(ctx context.Contex
 	if !resp.HasStatusCode(http.StatusOK) {
 		return VirtualMachineScaleSetVMInstanceViewResponse{}, client.getInstanceViewHandleError(resp)
 	}
-	result, err := client.getInstanceViewHandleResponse(resp)
-	if err != nil {
-		return VirtualMachineScaleSetVMInstanceViewResponse{}, err
-	}
-	return result, nil
+	return client.getInstanceViewHandleResponse(resp)
 }
 
 // getInstanceViewCreateRequest creates the GetInstanceView request.
@@ -310,9 +304,11 @@ func (client VirtualMachineScaleSetVMSClient) getInstanceViewCreateRequest(ctx c
 
 // getInstanceViewHandleResponse handles the GetInstanceView response.
 func (client VirtualMachineScaleSetVMSClient) getInstanceViewHandleResponse(resp *azcore.Response) (VirtualMachineScaleSetVMInstanceViewResponse, error) {
-	result := VirtualMachineScaleSetVMInstanceViewResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.VirtualMachineScaleSetVMInstanceView)
-	return result, err
+	var val *VirtualMachineScaleSetVMInstanceView
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return VirtualMachineScaleSetVMInstanceViewResponse{}, err
+	}
+	return VirtualMachineScaleSetVMInstanceViewResponse{RawResponse: resp.Response, VirtualMachineScaleSetVMInstanceView: val}, nil
 }
 
 // getInstanceViewHandleError handles the GetInstanceView error response.
@@ -372,9 +368,11 @@ func (client VirtualMachineScaleSetVMSClient) listCreateRequest(ctx context.Cont
 
 // listHandleResponse handles the List response.
 func (client VirtualMachineScaleSetVMSClient) listHandleResponse(resp *azcore.Response) (VirtualMachineScaleSetVMListResultResponse, error) {
-	result := VirtualMachineScaleSetVMListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.VirtualMachineScaleSetVMListResult)
-	return result, err
+	var val *VirtualMachineScaleSetVMListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return VirtualMachineScaleSetVMListResultResponse{}, err
+	}
+	return VirtualMachineScaleSetVMListResultResponse{RawResponse: resp.Response, VirtualMachineScaleSetVMListResult: val}, nil
 }
 
 // listHandleError handles the List error response.
@@ -975,9 +973,11 @@ func (client VirtualMachineScaleSetVMSClient) runCommandCreateRequest(ctx contex
 
 // runCommandHandleResponse handles the RunCommand response.
 func (client VirtualMachineScaleSetVMSClient) runCommandHandleResponse(resp *azcore.Response) (RunCommandResultResponse, error) {
-	result := RunCommandResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.RunCommandResult)
-	return result, err
+	var val *RunCommandResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return RunCommandResultResponse{}, err
+	}
+	return RunCommandResultResponse{RawResponse: resp.Response, RunCommandResult: val}, nil
 }
 
 // runCommandHandleError handles the RunCommand error response.
@@ -1196,9 +1196,11 @@ func (client VirtualMachineScaleSetVMSClient) updateCreateRequest(ctx context.Co
 
 // updateHandleResponse handles the Update response.
 func (client VirtualMachineScaleSetVMSClient) updateHandleResponse(resp *azcore.Response) (VirtualMachineScaleSetVMResponse, error) {
-	result := VirtualMachineScaleSetVMResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.VirtualMachineScaleSetVM)
-	return result, err
+	var val *VirtualMachineScaleSetVM
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return VirtualMachineScaleSetVMResponse{}, err
+	}
+	return VirtualMachineScaleSetVMResponse{RawResponse: resp.Response, VirtualMachineScaleSetVM: val}, nil
 }
 
 // updateHandleError handles the Update error response.

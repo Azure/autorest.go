@@ -61,9 +61,11 @@ func (client dataFlowClient) createOrUpdateDataFlowCreateRequest(ctx context.Con
 
 // createOrUpdateDataFlowHandleResponse handles the CreateOrUpdateDataFlow response.
 func (client dataFlowClient) createOrUpdateDataFlowHandleResponse(resp *azcore.Response) (DataFlowResourceResponse, error) {
-	result := DataFlowResourceResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.DataFlowResource)
-	return result, err
+	var val *DataFlowResource
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return DataFlowResourceResponse{}, err
+	}
+	return DataFlowResourceResponse{RawResponse: resp.Response, DataFlowResource: val}, nil
 }
 
 // createOrUpdateDataFlowHandleError handles the CreateOrUpdateDataFlow error response.
@@ -129,11 +131,7 @@ func (client dataFlowClient) GetDataFlow(ctx context.Context, dataFlowName strin
 	if !resp.HasStatusCode(http.StatusOK) {
 		return DataFlowResourceResponse{}, client.getDataFlowHandleError(resp)
 	}
-	result, err := client.getDataFlowHandleResponse(resp)
-	if err != nil {
-		return DataFlowResourceResponse{}, err
-	}
-	return result, nil
+	return client.getDataFlowHandleResponse(resp)
 }
 
 // getDataFlowCreateRequest creates the GetDataFlow request.
@@ -157,9 +155,11 @@ func (client dataFlowClient) getDataFlowCreateRequest(ctx context.Context, dataF
 
 // getDataFlowHandleResponse handles the GetDataFlow response.
 func (client dataFlowClient) getDataFlowHandleResponse(resp *azcore.Response) (DataFlowResourceResponse, error) {
-	result := DataFlowResourceResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.DataFlowResource)
-	return result, err
+	var val *DataFlowResource
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return DataFlowResourceResponse{}, err
+	}
+	return DataFlowResourceResponse{RawResponse: resp.Response, DataFlowResource: val}, nil
 }
 
 // getDataFlowHandleError handles the GetDataFlow error response.
@@ -204,9 +204,11 @@ func (client dataFlowClient) getDataFlowsByWorkspaceCreateRequest(ctx context.Co
 
 // getDataFlowsByWorkspaceHandleResponse handles the GetDataFlowsByWorkspace response.
 func (client dataFlowClient) getDataFlowsByWorkspaceHandleResponse(resp *azcore.Response) (DataFlowListResponseResponse, error) {
-	result := DataFlowListResponseResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.DataFlowListResponse)
-	return result, err
+	var val *DataFlowListResponse
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return DataFlowListResponseResponse{}, err
+	}
+	return DataFlowListResponseResponse{RawResponse: resp.Response, DataFlowListResponse: val}, nil
 }
 
 // getDataFlowsByWorkspaceHandleError handles the GetDataFlowsByWorkspace error response.

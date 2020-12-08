@@ -42,11 +42,7 @@ func (client blobClient) AbortCopyFromURL(ctx context.Context, copyId string, bl
 	if !resp.HasStatusCode(http.StatusNoContent) {
 		return BlobAbortCopyFromURLResponse{}, client.abortCopyFromUrlHandleError(resp)
 	}
-	result, err := client.abortCopyFromUrlHandleResponse(resp)
-	if err != nil {
-		return BlobAbortCopyFromURLResponse{}, err
-	}
-	return result, nil
+	return client.abortCopyFromUrlHandleResponse(resp)
 }
 
 // abortCopyFromUrlCreateRequest creates the AbortCopyFromURL request.
@@ -119,11 +115,7 @@ func (client blobClient) AcquireLease(ctx context.Context, blobAcquireLeaseOptio
 	if !resp.HasStatusCode(http.StatusCreated) {
 		return BlobAcquireLeaseResponse{}, client.acquireLeaseHandleError(resp)
 	}
-	result, err := client.acquireLeaseHandleResponse(resp)
-	if err != nil {
-		return BlobAcquireLeaseResponse{}, err
-	}
-	return result, nil
+	return client.acquireLeaseHandleResponse(resp)
 }
 
 // acquireLeaseCreateRequest creates the AcquireLease request.
@@ -223,11 +215,7 @@ func (client blobClient) BreakLease(ctx context.Context, blobBreakLeaseOptions *
 	if !resp.HasStatusCode(http.StatusAccepted) {
 		return BlobBreakLeaseResponse{}, client.breakLeaseHandleError(resp)
 	}
-	result, err := client.breakLeaseHandleResponse(resp)
-	if err != nil {
-		return BlobBreakLeaseResponse{}, err
-	}
-	return result, nil
+	return client.breakLeaseHandleResponse(resp)
 }
 
 // breakLeaseCreateRequest creates the BreakLease request.
@@ -329,11 +317,7 @@ func (client blobClient) ChangeLease(ctx context.Context, leaseId string, propos
 	if !resp.HasStatusCode(http.StatusOK) {
 		return BlobChangeLeaseResponse{}, client.changeLeaseHandleError(resp)
 	}
-	result, err := client.changeLeaseHandleResponse(resp)
-	if err != nil {
-		return BlobChangeLeaseResponse{}, err
-	}
-	return result, nil
+	return client.changeLeaseHandleResponse(resp)
 }
 
 // changeLeaseCreateRequest creates the ChangeLease request.
@@ -429,11 +413,7 @@ func (client blobClient) CopyFromURL(ctx context.Context, copySource url.URL, bl
 	if !resp.HasStatusCode(http.StatusAccepted) {
 		return BlobCopyFromURLResponse{}, client.copyFromUrlHandleError(resp)
 	}
-	result, err := client.copyFromUrlHandleResponse(resp)
-	if err != nil {
-		return BlobCopyFromURLResponse{}, err
-	}
-	return result, nil
+	return client.copyFromUrlHandleResponse(resp)
 }
 
 // copyFromUrlCreateRequest creates the CopyFromURL request.
@@ -570,11 +550,7 @@ func (client blobClient) CreateSnapshot(ctx context.Context, blobCreateSnapshotO
 	if !resp.HasStatusCode(http.StatusCreated) {
 		return BlobCreateSnapshotResponse{}, client.createSnapshotHandleError(resp)
 	}
-	result, err := client.createSnapshotHandleResponse(resp)
-	if err != nil {
-		return BlobCreateSnapshotResponse{}, err
-	}
-	return result, nil
+	return client.createSnapshotHandleResponse(resp)
 }
 
 // createSnapshotCreateRequest creates the CreateSnapshot request.
@@ -704,11 +680,7 @@ func (client blobClient) Delete(ctx context.Context, blobDeleteOptions *BlobDele
 	if !resp.HasStatusCode(http.StatusAccepted) {
 		return BlobDeleteResponse{}, client.deleteHandleError(resp)
 	}
-	result, err := client.deleteHandleResponse(resp)
-	if err != nil {
-		return BlobDeleteResponse{}, err
-	}
-	return result, nil
+	return client.deleteHandleResponse(resp)
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -797,11 +769,7 @@ func (client blobClient) Download(ctx context.Context, blobDownloadOptions *Blob
 	if !resp.HasStatusCode(http.StatusOK, http.StatusPartialContent) {
 		return BlobDownloadResponse{}, client.downloadHandleError(resp)
 	}
-	result, err := client.downloadHandleResponse(resp)
-	if err != nil {
-		return BlobDownloadResponse{}, err
-	}
-	return result, nil
+	return client.downloadHandleResponse(resp)
 }
 
 // downloadCreateRequest creates the Download request.
@@ -1034,11 +1002,7 @@ func (client blobClient) GetAccessControl(ctx context.Context, blobGetAccessCont
 	if !resp.HasStatusCode(http.StatusOK) {
 		return BlobGetAccessControlResponse{}, client.getAccessControlHandleError(resp)
 	}
-	result, err := client.getAccessControlHandleResponse(resp)
-	if err != nil {
-		return BlobGetAccessControlResponse{}, err
-	}
-	return result, nil
+	return client.getAccessControlHandleResponse(resp)
 }
 
 // getAccessControlCreateRequest creates the GetAccessControl request.
@@ -1143,11 +1107,7 @@ func (client blobClient) GetAccountInfo(ctx context.Context, options *BlobGetAcc
 	if !resp.HasStatusCode(http.StatusOK) {
 		return BlobGetAccountInfoResponse{}, client.getAccountInfoHandleError(resp)
 	}
-	result, err := client.getAccountInfoHandleResponse(resp)
-	if err != nil {
-		return BlobGetAccountInfoResponse{}, err
-	}
-	return result, nil
+	return client.getAccountInfoHandleResponse(resp)
 }
 
 // getAccountInfoCreateRequest creates the GetAccountInfo request.
@@ -1217,11 +1177,7 @@ func (client blobClient) GetProperties(ctx context.Context, blobGetPropertiesOpt
 	if !resp.HasStatusCode(http.StatusOK) {
 		return BlobGetPropertiesResponse{}, client.getPropertiesHandleError(resp)
 	}
-	result, err := client.getPropertiesHandleResponse(resp)
-	if err != nil {
-		return BlobGetPropertiesResponse{}, err
-	}
-	return result, nil
+	return client.getPropertiesHandleResponse(resp)
 }
 
 // getPropertiesCreateRequest creates the GetProperties request.
@@ -1464,11 +1420,7 @@ func (client blobClient) ReleaseLease(ctx context.Context, leaseId string, blobR
 	if !resp.HasStatusCode(http.StatusOK) {
 		return BlobReleaseLeaseResponse{}, client.releaseLeaseHandleError(resp)
 	}
-	result, err := client.releaseLeaseHandleResponse(resp)
-	if err != nil {
-		return BlobReleaseLeaseResponse{}, err
-	}
-	return result, nil
+	return client.releaseLeaseHandleResponse(resp)
 }
 
 // releaseLeaseCreateRequest creates the ReleaseLease request.
@@ -1564,11 +1516,7 @@ func (client blobClient) Rename(ctx context.Context, renameSource string, blobRe
 	if !resp.HasStatusCode(http.StatusCreated) {
 		return BlobRenameResponse{}, client.renameHandleError(resp)
 	}
-	result, err := client.renameHandleResponse(resp)
-	if err != nil {
-		return BlobRenameResponse{}, err
-	}
-	return result, nil
+	return client.renameHandleResponse(resp)
 }
 
 // renameCreateRequest creates the Rename request.
@@ -1710,11 +1658,7 @@ func (client blobClient) RenewLease(ctx context.Context, leaseId string, blobRen
 	if !resp.HasStatusCode(http.StatusOK) {
 		return BlobRenewLeaseResponse{}, client.renewLeaseHandleError(resp)
 	}
-	result, err := client.renewLeaseHandleResponse(resp)
-	if err != nil {
-		return BlobRenewLeaseResponse{}, err
-	}
-	return result, nil
+	return client.renewLeaseHandleResponse(resp)
 }
 
 // renewLeaseCreateRequest creates the RenewLease request.
@@ -1809,11 +1753,7 @@ func (client blobClient) SetAccessControl(ctx context.Context, blobSetAccessCont
 	if !resp.HasStatusCode(http.StatusOK) {
 		return BlobSetAccessControlResponse{}, client.setAccessControlHandleError(resp)
 	}
-	result, err := client.setAccessControlHandleResponse(resp)
-	if err != nil {
-		return BlobSetAccessControlResponse{}, err
-	}
-	return result, nil
+	return client.setAccessControlHandleResponse(resp)
 }
 
 // setAccessControlCreateRequest creates the SetAccessControl request.
@@ -1915,11 +1855,7 @@ func (client blobClient) SetHTTPHeaders(ctx context.Context, blobSetHttpHeadersO
 	if !resp.HasStatusCode(http.StatusOK) {
 		return BlobSetHTTPHeadersResponse{}, client.setHttpHeadersHandleError(resp)
 	}
-	result, err := client.setHttpHeadersHandleResponse(resp)
-	if err != nil {
-		return BlobSetHTTPHeadersResponse{}, err
-	}
-	return result, nil
+	return client.setHttpHeadersHandleResponse(resp)
 }
 
 // setHttpHeadersCreateRequest creates the SetHTTPHeaders request.
@@ -2037,11 +1973,7 @@ func (client blobClient) SetMetadata(ctx context.Context, blobSetMetadataOptions
 	if !resp.HasStatusCode(http.StatusOK) {
 		return BlobSetMetadataResponse{}, client.setMetadataHandleError(resp)
 	}
-	result, err := client.setMetadataHandleResponse(resp)
-	if err != nil {
-		return BlobSetMetadataResponse{}, err
-	}
-	return result, nil
+	return client.setMetadataHandleResponse(resp)
 }
 
 // setMetadataCreateRequest creates the SetMetadata request.
@@ -2167,11 +2099,7 @@ func (client blobClient) SetTier(ctx context.Context, tier AccessTier, blobSetTi
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return BlobSetTierResponse{}, client.setTierHandleError(resp)
 	}
-	result, err := client.setTierHandleResponse(resp)
-	if err != nil {
-		return BlobSetTierResponse{}, err
-	}
-	return result, nil
+	return client.setTierHandleResponse(resp)
 }
 
 // setTierCreateRequest creates the SetTier request.
@@ -2239,11 +2167,7 @@ func (client blobClient) StartCopyFromURL(ctx context.Context, copySource url.UR
 	if !resp.HasStatusCode(http.StatusAccepted) {
 		return BlobStartCopyFromURLResponse{}, client.startCopyFromUrlHandleError(resp)
 	}
-	result, err := client.startCopyFromUrlHandleResponse(resp)
-	if err != nil {
-		return BlobStartCopyFromURLResponse{}, err
-	}
-	return result, nil
+	return client.startCopyFromUrlHandleResponse(resp)
 }
 
 // startCopyFromUrlCreateRequest creates the StartCopyFromURL request.
@@ -2365,11 +2289,7 @@ func (client blobClient) Undelete(ctx context.Context, options *BlobUndeleteOpti
 	if !resp.HasStatusCode(http.StatusOK) {
 		return BlobUndeleteResponse{}, client.undeleteHandleError(resp)
 	}
-	result, err := client.undeleteHandleResponse(resp)
-	if err != nil {
-		return BlobUndeleteResponse{}, err
-	}
-	return result, nil
+	return client.undeleteHandleResponse(resp)
 }
 
 // undeleteCreateRequest creates the Undelete request.

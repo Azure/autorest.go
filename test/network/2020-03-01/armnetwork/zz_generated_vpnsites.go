@@ -107,9 +107,11 @@ func (client VpnSitesClient) createOrUpdateCreateRequest(ctx context.Context, re
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client VpnSitesClient) createOrUpdateHandleResponse(resp *azcore.Response) (VpnSiteResponse, error) {
-	result := VpnSiteResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.VpnSite)
-	return result, err
+	var val *VpnSite
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return VpnSiteResponse{}, err
+	}
+	return VpnSiteResponse{RawResponse: resp.Response, VpnSite: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -214,11 +216,7 @@ func (client VpnSitesClient) Get(ctx context.Context, resourceGroupName string, 
 	if !resp.HasStatusCode(http.StatusOK) {
 		return VpnSiteResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return VpnSiteResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -241,9 +239,11 @@ func (client VpnSitesClient) getCreateRequest(ctx context.Context, resourceGroup
 
 // getHandleResponse handles the Get response.
 func (client VpnSitesClient) getHandleResponse(resp *azcore.Response) (VpnSiteResponse, error) {
-	result := VpnSiteResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.VpnSite)
-	return result, err
+	var val *VpnSite
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return VpnSiteResponse{}, err
+	}
+	return VpnSiteResponse{RawResponse: resp.Response, VpnSite: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -289,9 +289,11 @@ func (client VpnSitesClient) listCreateRequest(ctx context.Context, options *Vpn
 
 // listHandleResponse handles the List response.
 func (client VpnSitesClient) listHandleResponse(resp *azcore.Response) (ListVpnSitesResultResponse, error) {
-	result := ListVpnSitesResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ListVpnSitesResult)
-	return result, err
+	var val *ListVpnSitesResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ListVpnSitesResultResponse{}, err
+	}
+	return ListVpnSitesResultResponse{RawResponse: resp.Response, ListVpnSitesResult: val}, nil
 }
 
 // listHandleError handles the List error response.
@@ -338,9 +340,11 @@ func (client VpnSitesClient) listByResourceGroupCreateRequest(ctx context.Contex
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
 func (client VpnSitesClient) listByResourceGroupHandleResponse(resp *azcore.Response) (ListVpnSitesResultResponse, error) {
-	result := ListVpnSitesResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ListVpnSitesResult)
-	return result, err
+	var val *ListVpnSitesResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ListVpnSitesResultResponse{}, err
+	}
+	return ListVpnSitesResultResponse{RawResponse: resp.Response, ListVpnSitesResult: val}, nil
 }
 
 // listByResourceGroupHandleError handles the ListByResourceGroup error response.
@@ -365,11 +369,7 @@ func (client VpnSitesClient) UpdateTags(ctx context.Context, resourceGroupName s
 	if !resp.HasStatusCode(http.StatusOK) {
 		return VpnSiteResponse{}, client.updateTagsHandleError(resp)
 	}
-	result, err := client.updateTagsHandleResponse(resp)
-	if err != nil {
-		return VpnSiteResponse{}, err
-	}
-	return result, nil
+	return client.updateTagsHandleResponse(resp)
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.
@@ -392,9 +392,11 @@ func (client VpnSitesClient) updateTagsCreateRequest(ctx context.Context, resour
 
 // updateTagsHandleResponse handles the UpdateTags response.
 func (client VpnSitesClient) updateTagsHandleResponse(resp *azcore.Response) (VpnSiteResponse, error) {
-	result := VpnSiteResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.VpnSite)
-	return result, err
+	var val *VpnSite
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return VpnSiteResponse{}, err
+	}
+	return VpnSiteResponse{RawResponse: resp.Response, VpnSite: val}, nil
 }
 
 // updateTagsHandleError handles the UpdateTags error response.

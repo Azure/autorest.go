@@ -37,11 +37,7 @@ func (client sqlScriptClient) CreateOrUpdateSQLScript(ctx context.Context, sqlSc
 	if !resp.HasStatusCode(http.StatusOK) {
 		return SQLScriptResourceResponse{}, client.createOrUpdateSqlScriptHandleError(resp)
 	}
-	result, err := client.createOrUpdateSqlScriptHandleResponse(resp)
-	if err != nil {
-		return SQLScriptResourceResponse{}, err
-	}
-	return result, nil
+	return client.createOrUpdateSqlScriptHandleResponse(resp)
 }
 
 // createOrUpdateSqlScriptCreateRequest creates the CreateOrUpdateSQLScript request.
@@ -65,9 +61,11 @@ func (client sqlScriptClient) createOrUpdateSqlScriptCreateRequest(ctx context.C
 
 // createOrUpdateSqlScriptHandleResponse handles the CreateOrUpdateSQLScript response.
 func (client sqlScriptClient) createOrUpdateSqlScriptHandleResponse(resp *azcore.Response) (SQLScriptResourceResponse, error) {
-	result := SQLScriptResourceResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.SQLScriptResource)
-	return result, err
+	var val *SQLScriptResource
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return SQLScriptResourceResponse{}, err
+	}
+	return SQLScriptResourceResponse{RawResponse: resp.Response, SQLScriptResource: val}, nil
 }
 
 // createOrUpdateSqlScriptHandleError handles the CreateOrUpdateSQLScript error response.
@@ -133,11 +131,7 @@ func (client sqlScriptClient) GetSQLScript(ctx context.Context, sqlScriptName st
 	if !resp.HasStatusCode(http.StatusOK, http.StatusNotModified) {
 		return SQLScriptResourceResponse{}, client.getSqlScriptHandleError(resp)
 	}
-	result, err := client.getSqlScriptHandleResponse(resp)
-	if err != nil {
-		return SQLScriptResourceResponse{}, err
-	}
-	return result, nil
+	return client.getSqlScriptHandleResponse(resp)
 }
 
 // getSqlScriptCreateRequest creates the GetSQLScript request.
@@ -161,9 +155,11 @@ func (client sqlScriptClient) getSqlScriptCreateRequest(ctx context.Context, sql
 
 // getSqlScriptHandleResponse handles the GetSQLScript response.
 func (client sqlScriptClient) getSqlScriptHandleResponse(resp *azcore.Response) (SQLScriptResourceResponse, error) {
-	result := SQLScriptResourceResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.SQLScriptResource)
-	return result, err
+	var val *SQLScriptResource
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return SQLScriptResourceResponse{}, err
+	}
+	return SQLScriptResourceResponse{RawResponse: resp.Response, SQLScriptResource: val}, nil
 }
 
 // getSqlScriptHandleError handles the GetSQLScript error response.
@@ -208,9 +204,11 @@ func (client sqlScriptClient) getSqlScriptsByWorkspaceCreateRequest(ctx context.
 
 // getSqlScriptsByWorkspaceHandleResponse handles the GetSQLScriptsByWorkspace response.
 func (client sqlScriptClient) getSqlScriptsByWorkspaceHandleResponse(resp *azcore.Response) (SQLScriptsListResponseResponse, error) {
-	result := SQLScriptsListResponseResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.SQLScriptsListResponse)
-	return result, err
+	var val *SQLScriptsListResponse
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return SQLScriptsListResponseResponse{}, err
+	}
+	return SQLScriptsListResponseResponse{RawResponse: resp.Response, SQLScriptsListResponse: val}, nil
 }
 
 // getSqlScriptsByWorkspaceHandleError handles the GetSQLScriptsByWorkspace error response.

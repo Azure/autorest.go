@@ -110,9 +110,11 @@ func (client SnapshotsClient) createOrUpdateCreateRequest(ctx context.Context, r
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client SnapshotsClient) createOrUpdateHandleResponse(resp *azcore.Response) (SnapshotResponse, error) {
-	result := SnapshotResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Snapshot)
-	return result, err
+	var val *Snapshot
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return SnapshotResponse{}, err
+	}
+	return SnapshotResponse{RawResponse: resp.Response, Snapshot: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -222,11 +224,7 @@ func (client SnapshotsClient) Get(ctx context.Context, resourceGroupName string,
 	if !resp.HasStatusCode(http.StatusOK) {
 		return SnapshotResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return SnapshotResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -249,9 +247,11 @@ func (client SnapshotsClient) getCreateRequest(ctx context.Context, resourceGrou
 
 // getHandleResponse handles the Get response.
 func (client SnapshotsClient) getHandleResponse(resp *azcore.Response) (SnapshotResponse, error) {
-	result := SnapshotResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Snapshot)
-	return result, err
+	var val *Snapshot
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return SnapshotResponse{}, err
+	}
+	return SnapshotResponse{RawResponse: resp.Response, Snapshot: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -339,9 +339,11 @@ func (client SnapshotsClient) grantAccessCreateRequest(ctx context.Context, reso
 
 // grantAccessHandleResponse handles the GrantAccess response.
 func (client SnapshotsClient) grantAccessHandleResponse(resp *azcore.Response) (AccessURIResponse, error) {
-	result := AccessURIResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.AccessURI)
-	return result, err
+	var val *AccessURI
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return AccessURIResponse{}, err
+	}
+	return AccessURIResponse{RawResponse: resp.Response, AccessURI: val}, nil
 }
 
 // grantAccessHandleError handles the GrantAccess error response.
@@ -390,9 +392,11 @@ func (client SnapshotsClient) listCreateRequest(ctx context.Context, options *Sn
 
 // listHandleResponse handles the List response.
 func (client SnapshotsClient) listHandleResponse(resp *azcore.Response) (SnapshotListResponse, error) {
-	result := SnapshotListResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.SnapshotList)
-	return result, err
+	var val *SnapshotList
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return SnapshotListResponse{}, err
+	}
+	return SnapshotListResponse{RawResponse: resp.Response, SnapshotList: val}, nil
 }
 
 // listHandleError handles the List error response.
@@ -442,9 +446,11 @@ func (client SnapshotsClient) listByResourceGroupCreateRequest(ctx context.Conte
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
 func (client SnapshotsClient) listByResourceGroupHandleResponse(resp *azcore.Response) (SnapshotListResponse, error) {
-	result := SnapshotListResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.SnapshotList)
-	return result, err
+	var val *SnapshotList
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return SnapshotListResponse{}, err
+	}
+	return SnapshotListResponse{RawResponse: resp.Response, SnapshotList: val}, nil
 }
 
 // listByResourceGroupHandleError handles the ListByResourceGroup error response.
@@ -614,9 +620,11 @@ func (client SnapshotsClient) updateCreateRequest(ctx context.Context, resourceG
 
 // updateHandleResponse handles the Update response.
 func (client SnapshotsClient) updateHandleResponse(resp *azcore.Response) (SnapshotResponse, error) {
-	result := SnapshotResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Snapshot)
-	return result, err
+	var val *Snapshot
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return SnapshotResponse{}, err
+	}
+	return SnapshotResponse{RawResponse: resp.Response, Snapshot: val}, nil
 }
 
 // updateHandleError handles the Update error response.

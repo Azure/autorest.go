@@ -67,9 +67,11 @@ func (client AzureFirewallFqdnTagsClient) listAllCreateRequest(ctx context.Conte
 
 // listAllHandleResponse handles the ListAll response.
 func (client AzureFirewallFqdnTagsClient) listAllHandleResponse(resp *azcore.Response) (AzureFirewallFqdnTagListResultResponse, error) {
-	result := AzureFirewallFqdnTagListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.AzureFirewallFqdnTagListResult)
-	return result, err
+	var val *AzureFirewallFqdnTagListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return AzureFirewallFqdnTagListResultResponse{}, err
+	}
+	return AzureFirewallFqdnTagListResultResponse{RawResponse: resp.Response, AzureFirewallFqdnTagListResult: val}, nil
 }
 
 // listAllHandleError handles the ListAll error response.

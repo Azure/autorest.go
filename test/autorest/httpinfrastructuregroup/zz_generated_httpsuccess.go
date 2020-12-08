@@ -153,11 +153,7 @@ func (client HTTPSuccessClient) Get200(ctx context.Context, options *HTTPSuccess
 	if !resp.HasStatusCode(http.StatusOK) {
 		return BoolResponse{}, client.get200HandleError(resp)
 	}
-	result, err := client.get200HandleResponse(resp)
-	if err != nil {
-		return BoolResponse{}, err
-	}
-	return result, nil
+	return client.get200HandleResponse(resp)
 }
 
 // get200CreateRequest creates the Get200 request.
@@ -174,9 +170,11 @@ func (client HTTPSuccessClient) get200CreateRequest(ctx context.Context, options
 
 // get200HandleResponse handles the Get200 response.
 func (client HTTPSuccessClient) get200HandleResponse(resp *azcore.Response) (BoolResponse, error) {
-	result := BoolResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Value)
-	return result, err
+	var val *bool
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return BoolResponse{}, err
+	}
+	return BoolResponse{RawResponse: resp.Response, Value: val}, nil
 }
 
 // get200HandleError handles the Get200 error response.
@@ -321,11 +319,7 @@ func (client HTTPSuccessClient) Options200(ctx context.Context, options *HTTPSuc
 	if !resp.HasStatusCode(http.StatusOK) {
 		return BoolResponse{}, client.options200HandleError(resp)
 	}
-	result, err := client.options200HandleResponse(resp)
-	if err != nil {
-		return BoolResponse{}, err
-	}
-	return result, nil
+	return client.options200HandleResponse(resp)
 }
 
 // options200CreateRequest creates the Options200 request.
@@ -342,9 +336,11 @@ func (client HTTPSuccessClient) options200CreateRequest(ctx context.Context, opt
 
 // options200HandleResponse handles the Options200 response.
 func (client HTTPSuccessClient) options200HandleResponse(resp *azcore.Response) (BoolResponse, error) {
-	result := BoolResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Value)
-	return result, err
+	var val *bool
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return BoolResponse{}, err
+	}
+	return BoolResponse{RawResponse: resp.Response, Value: val}, nil
 }
 
 // options200HandleError handles the Options200 error response.

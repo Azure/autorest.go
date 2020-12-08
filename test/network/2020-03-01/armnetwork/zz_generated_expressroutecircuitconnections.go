@@ -109,9 +109,11 @@ func (client ExpressRouteCircuitConnectionsClient) createOrUpdateCreateRequest(c
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client ExpressRouteCircuitConnectionsClient) createOrUpdateHandleResponse(resp *azcore.Response) (ExpressRouteCircuitConnectionResponse, error) {
-	result := ExpressRouteCircuitConnectionResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ExpressRouteCircuitConnection)
-	return result, err
+	var val *ExpressRouteCircuitConnection
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ExpressRouteCircuitConnectionResponse{}, err
+	}
+	return ExpressRouteCircuitConnectionResponse{RawResponse: resp.Response, ExpressRouteCircuitConnection: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -218,11 +220,7 @@ func (client ExpressRouteCircuitConnectionsClient) Get(ctx context.Context, reso
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ExpressRouteCircuitConnectionResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return ExpressRouteCircuitConnectionResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -247,9 +245,11 @@ func (client ExpressRouteCircuitConnectionsClient) getCreateRequest(ctx context.
 
 // getHandleResponse handles the Get response.
 func (client ExpressRouteCircuitConnectionsClient) getHandleResponse(resp *azcore.Response) (ExpressRouteCircuitConnectionResponse, error) {
-	result := ExpressRouteCircuitConnectionResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ExpressRouteCircuitConnection)
-	return result, err
+	var val *ExpressRouteCircuitConnection
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ExpressRouteCircuitConnectionResponse{}, err
+	}
+	return ExpressRouteCircuitConnectionResponse{RawResponse: resp.Response, ExpressRouteCircuitConnection: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -298,9 +298,11 @@ func (client ExpressRouteCircuitConnectionsClient) listCreateRequest(ctx context
 
 // listHandleResponse handles the List response.
 func (client ExpressRouteCircuitConnectionsClient) listHandleResponse(resp *azcore.Response) (ExpressRouteCircuitConnectionListResultResponse, error) {
-	result := ExpressRouteCircuitConnectionListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ExpressRouteCircuitConnectionListResult)
-	return result, err
+	var val *ExpressRouteCircuitConnectionListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ExpressRouteCircuitConnectionListResultResponse{}, err
+	}
+	return ExpressRouteCircuitConnectionListResultResponse{RawResponse: resp.Response, ExpressRouteCircuitConnectionListResult: val}, nil
 }
 
 // listHandleError handles the List error response.

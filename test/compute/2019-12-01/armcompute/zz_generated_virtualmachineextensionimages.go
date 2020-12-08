@@ -50,11 +50,7 @@ func (client VirtualMachineExtensionImagesClient) Get(ctx context.Context, locat
 	if !resp.HasStatusCode(http.StatusOK) {
 		return VirtualMachineExtensionImageResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return VirtualMachineExtensionImageResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -79,9 +75,11 @@ func (client VirtualMachineExtensionImagesClient) getCreateRequest(ctx context.C
 
 // getHandleResponse handles the Get response.
 func (client VirtualMachineExtensionImagesClient) getHandleResponse(resp *azcore.Response) (VirtualMachineExtensionImageResponse, error) {
-	result := VirtualMachineExtensionImageResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.VirtualMachineExtensionImage)
-	return result, err
+	var val *VirtualMachineExtensionImage
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return VirtualMachineExtensionImageResponse{}, err
+	}
+	return VirtualMachineExtensionImageResponse{RawResponse: resp.Response, VirtualMachineExtensionImage: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -109,11 +107,7 @@ func (client VirtualMachineExtensionImagesClient) ListTypes(ctx context.Context,
 	if !resp.HasStatusCode(http.StatusOK) {
 		return VirtualMachineExtensionImageArrayResponse{}, client.listTypesHandleError(resp)
 	}
-	result, err := client.listTypesHandleResponse(resp)
-	if err != nil {
-		return VirtualMachineExtensionImageArrayResponse{}, err
-	}
-	return result, nil
+	return client.listTypesHandleResponse(resp)
 }
 
 // listTypesCreateRequest creates the ListTypes request.
@@ -136,9 +130,11 @@ func (client VirtualMachineExtensionImagesClient) listTypesCreateRequest(ctx con
 
 // listTypesHandleResponse handles the ListTypes response.
 func (client VirtualMachineExtensionImagesClient) listTypesHandleResponse(resp *azcore.Response) (VirtualMachineExtensionImageArrayResponse, error) {
-	result := VirtualMachineExtensionImageArrayResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.VirtualMachineExtensionImageArray)
-	return result, err
+	var val *[]VirtualMachineExtensionImage
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return VirtualMachineExtensionImageArrayResponse{}, err
+	}
+	return VirtualMachineExtensionImageArrayResponse{RawResponse: resp.Response, VirtualMachineExtensionImageArray: val}, nil
 }
 
 // listTypesHandleError handles the ListTypes error response.
@@ -166,11 +162,7 @@ func (client VirtualMachineExtensionImagesClient) ListVersions(ctx context.Conte
 	if !resp.HasStatusCode(http.StatusOK) {
 		return VirtualMachineExtensionImageArrayResponse{}, client.listVersionsHandleError(resp)
 	}
-	result, err := client.listVersionsHandleResponse(resp)
-	if err != nil {
-		return VirtualMachineExtensionImageArrayResponse{}, err
-	}
-	return result, nil
+	return client.listVersionsHandleResponse(resp)
 }
 
 // listVersionsCreateRequest creates the ListVersions request.
@@ -203,9 +195,11 @@ func (client VirtualMachineExtensionImagesClient) listVersionsCreateRequest(ctx 
 
 // listVersionsHandleResponse handles the ListVersions response.
 func (client VirtualMachineExtensionImagesClient) listVersionsHandleResponse(resp *azcore.Response) (VirtualMachineExtensionImageArrayResponse, error) {
-	result := VirtualMachineExtensionImageArrayResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.VirtualMachineExtensionImageArray)
-	return result, err
+	var val *[]VirtualMachineExtensionImage
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return VirtualMachineExtensionImageArrayResponse{}, err
+	}
+	return VirtualMachineExtensionImageArrayResponse{RawResponse: resp.Response, VirtualMachineExtensionImageArray: val}, nil
 }
 
 // listVersionsHandleError handles the ListVersions error response.

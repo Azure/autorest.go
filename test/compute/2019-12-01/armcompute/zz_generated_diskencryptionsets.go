@@ -107,9 +107,11 @@ func (client DiskEncryptionSetsClient) createOrUpdateCreateRequest(ctx context.C
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client DiskEncryptionSetsClient) createOrUpdateHandleResponse(resp *azcore.Response) (DiskEncryptionSetResponse, error) {
-	result := DiskEncryptionSetResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.DiskEncryptionSet)
-	return result, err
+	var val *DiskEncryptionSet
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return DiskEncryptionSetResponse{}, err
+	}
+	return DiskEncryptionSetResponse{RawResponse: resp.Response, DiskEncryptionSet: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -214,11 +216,7 @@ func (client DiskEncryptionSetsClient) Get(ctx context.Context, resourceGroupNam
 	if !resp.HasStatusCode(http.StatusOK) {
 		return DiskEncryptionSetResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return DiskEncryptionSetResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -241,9 +239,11 @@ func (client DiskEncryptionSetsClient) getCreateRequest(ctx context.Context, res
 
 // getHandleResponse handles the Get response.
 func (client DiskEncryptionSetsClient) getHandleResponse(resp *azcore.Response) (DiskEncryptionSetResponse, error) {
-	result := DiskEncryptionSetResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.DiskEncryptionSet)
-	return result, err
+	var val *DiskEncryptionSet
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return DiskEncryptionSetResponse{}, err
+	}
+	return DiskEncryptionSetResponse{RawResponse: resp.Response, DiskEncryptionSet: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -289,9 +289,11 @@ func (client DiskEncryptionSetsClient) listCreateRequest(ctx context.Context, op
 
 // listHandleResponse handles the List response.
 func (client DiskEncryptionSetsClient) listHandleResponse(resp *azcore.Response) (DiskEncryptionSetListResponse, error) {
-	result := DiskEncryptionSetListResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.DiskEncryptionSetList)
-	return result, err
+	var val *DiskEncryptionSetList
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return DiskEncryptionSetListResponse{}, err
+	}
+	return DiskEncryptionSetListResponse{RawResponse: resp.Response, DiskEncryptionSetList: val}, nil
 }
 
 // listHandleError handles the List error response.
@@ -338,9 +340,11 @@ func (client DiskEncryptionSetsClient) listByResourceGroupCreateRequest(ctx cont
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
 func (client DiskEncryptionSetsClient) listByResourceGroupHandleResponse(resp *azcore.Response) (DiskEncryptionSetListResponse, error) {
-	result := DiskEncryptionSetListResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.DiskEncryptionSetList)
-	return result, err
+	var val *DiskEncryptionSetList
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return DiskEncryptionSetListResponse{}, err
+	}
+	return DiskEncryptionSetListResponse{RawResponse: resp.Response, DiskEncryptionSetList: val}, nil
 }
 
 // listByResourceGroupHandleError handles the ListByResourceGroup error response.
@@ -425,9 +429,11 @@ func (client DiskEncryptionSetsClient) updateCreateRequest(ctx context.Context, 
 
 // updateHandleResponse handles the Update response.
 func (client DiskEncryptionSetsClient) updateHandleResponse(resp *azcore.Response) (DiskEncryptionSetResponse, error) {
-	result := DiskEncryptionSetResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.DiskEncryptionSet)
-	return result, err
+	var val *DiskEncryptionSet
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return DiskEncryptionSetResponse{}, err
+	}
+	return DiskEncryptionSetResponse{RawResponse: resp.Response, DiskEncryptionSet: val}, nil
 }
 
 // updateHandleError handles the Update error response.

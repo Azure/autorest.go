@@ -267,9 +267,11 @@ func (client LrOSCustomHeaderClient) put201CreatingSucceeded200CreateRequest(ctx
 
 // put201CreatingSucceeded200HandleResponse handles the Put201CreatingSucceeded200 response.
 func (client LrOSCustomHeaderClient) put201CreatingSucceeded200HandleResponse(resp *azcore.Response) (ProductResponse, error) {
-	result := ProductResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Product)
-	return result, err
+	var val *Product
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ProductResponse{}, err
+	}
+	return ProductResponse{RawResponse: resp.Response, Product: val}, nil
 }
 
 // put201CreatingSucceeded200HandleError handles the Put201CreatingSucceeded200 error response.
@@ -355,9 +357,11 @@ func (client LrOSCustomHeaderClient) putAsyncRetrySucceededCreateRequest(ctx con
 
 // putAsyncRetrySucceededHandleResponse handles the PutAsyncRetrySucceeded response.
 func (client LrOSCustomHeaderClient) putAsyncRetrySucceededHandleResponse(resp *azcore.Response) (ProductResponse, error) {
-	result := ProductResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Product)
-	return result, err
+	var val *Product
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ProductResponse{}, err
+	}
+	return ProductResponse{RawResponse: resp.Response, Product: val}, nil
 }
 
 // putAsyncRetrySucceededHandleError handles the PutAsyncRetrySucceeded error response.

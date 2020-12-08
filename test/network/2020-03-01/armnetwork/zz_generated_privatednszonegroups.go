@@ -108,9 +108,11 @@ func (client PrivateDNSZoneGroupsClient) createOrUpdateCreateRequest(ctx context
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client PrivateDNSZoneGroupsClient) createOrUpdateHandleResponse(resp *azcore.Response) (PrivateDNSZoneGroupResponse, error) {
-	result := PrivateDNSZoneGroupResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.PrivateDNSZoneGroup)
-	return result, err
+	var val *PrivateDNSZoneGroup
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return PrivateDNSZoneGroupResponse{}, err
+	}
+	return PrivateDNSZoneGroupResponse{RawResponse: resp.Response, PrivateDNSZoneGroup: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -216,11 +218,7 @@ func (client PrivateDNSZoneGroupsClient) Get(ctx context.Context, resourceGroupN
 	if !resp.HasStatusCode(http.StatusOK) {
 		return PrivateDNSZoneGroupResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return PrivateDNSZoneGroupResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -244,9 +242,11 @@ func (client PrivateDNSZoneGroupsClient) getCreateRequest(ctx context.Context, r
 
 // getHandleResponse handles the Get response.
 func (client PrivateDNSZoneGroupsClient) getHandleResponse(resp *azcore.Response) (PrivateDNSZoneGroupResponse, error) {
-	result := PrivateDNSZoneGroupResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.PrivateDNSZoneGroup)
-	return result, err
+	var val *PrivateDNSZoneGroup
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return PrivateDNSZoneGroupResponse{}, err
+	}
+	return PrivateDNSZoneGroupResponse{RawResponse: resp.Response, PrivateDNSZoneGroup: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -294,9 +294,11 @@ func (client PrivateDNSZoneGroupsClient) listCreateRequest(ctx context.Context, 
 
 // listHandleResponse handles the List response.
 func (client PrivateDNSZoneGroupsClient) listHandleResponse(resp *azcore.Response) (PrivateDNSZoneGroupListResultResponse, error) {
-	result := PrivateDNSZoneGroupListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.PrivateDNSZoneGroupListResult)
-	return result, err
+	var val *PrivateDNSZoneGroupListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return PrivateDNSZoneGroupListResultResponse{}, err
+	}
+	return PrivateDNSZoneGroupListResultResponse{RawResponse: resp.Response, PrivateDNSZoneGroupListResult: val}, nil
 }
 
 // listHandleError handles the List error response.

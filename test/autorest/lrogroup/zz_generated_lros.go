@@ -100,9 +100,11 @@ func (client LrOSClient) delete202NoRetry204CreateRequest(ctx context.Context, o
 
 // delete202NoRetry204HandleResponse handles the Delete202NoRetry204 response.
 func (client LrOSClient) delete202NoRetry204HandleResponse(resp *azcore.Response) (ProductResponse, error) {
-	result := ProductResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Product)
-	return result, err
+	var val *Product
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ProductResponse{}, err
+	}
+	return ProductResponse{RawResponse: resp.Response, Product: val}, nil
 }
 
 // delete202NoRetry204HandleError handles the Delete202NoRetry204 error response.
@@ -183,9 +185,11 @@ func (client LrOSClient) delete202Retry200CreateRequest(ctx context.Context, opt
 
 // delete202Retry200HandleResponse handles the Delete202Retry200 response.
 func (client LrOSClient) delete202Retry200HandleResponse(resp *azcore.Response) (ProductResponse, error) {
-	result := ProductResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Product)
-	return result, err
+	var val *Product
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ProductResponse{}, err
+	}
+	return ProductResponse{RawResponse: resp.Response, Product: val}, nil
 }
 
 // delete202Retry200HandleError handles the Delete202Retry200 error response.
@@ -798,9 +802,11 @@ func (client LrOSClient) deleteProvisioning202Accepted200SucceededCreateRequest(
 
 // deleteProvisioning202Accepted200SucceededHandleResponse handles the DeleteProvisioning202Accepted200Succeeded response.
 func (client LrOSClient) deleteProvisioning202Accepted200SucceededHandleResponse(resp *azcore.Response) (ProductResponse, error) {
-	result := ProductResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Product)
-	return result, err
+	var val *Product
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ProductResponse{}, err
+	}
+	return ProductResponse{RawResponse: resp.Response, Product: val}, nil
 }
 
 // deleteProvisioning202Accepted200SucceededHandleError handles the DeleteProvisioning202Accepted200Succeeded error response.
@@ -883,9 +889,11 @@ func (client LrOSClient) deleteProvisioning202DeletingFailed200CreateRequest(ctx
 
 // deleteProvisioning202DeletingFailed200HandleResponse handles the DeleteProvisioning202DeletingFailed200 response.
 func (client LrOSClient) deleteProvisioning202DeletingFailed200HandleResponse(resp *azcore.Response) (ProductResponse, error) {
-	result := ProductResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Product)
-	return result, err
+	var val *Product
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ProductResponse{}, err
+	}
+	return ProductResponse{RawResponse: resp.Response, Product: val}, nil
 }
 
 // deleteProvisioning202DeletingFailed200HandleError handles the DeleteProvisioning202DeletingFailed200 error response.
@@ -968,9 +976,11 @@ func (client LrOSClient) deleteProvisioning202Deletingcanceled200CreateRequest(c
 
 // deleteProvisioning202Deletingcanceled200HandleResponse handles the DeleteProvisioning202Deletingcanceled200 response.
 func (client LrOSClient) deleteProvisioning202Deletingcanceled200HandleResponse(resp *azcore.Response) (ProductResponse, error) {
-	result := ProductResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Product)
-	return result, err
+	var val *Product
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ProductResponse{}, err
+	}
+	return ProductResponse{RawResponse: resp.Response, Product: val}, nil
 }
 
 // deleteProvisioning202Deletingcanceled200HandleError handles the DeleteProvisioning202Deletingcanceled200 error response.
@@ -1051,9 +1061,11 @@ func (client LrOSClient) post200WithPayloadCreateRequest(ctx context.Context, op
 
 // post200WithPayloadHandleResponse handles the Post200WithPayload response.
 func (client LrOSClient) post200WithPayloadHandleResponse(resp *azcore.Response) (SKUResponse, error) {
-	result := SKUResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.SKU)
-	return result, err
+	var val *SKU
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return SKUResponse{}, err
+	}
+	return SKUResponse{RawResponse: resp.Response, SKU: val}, nil
 }
 
 // post200WithPayloadHandleError handles the Post200WithPayload error response.
@@ -1134,9 +1146,11 @@ func (client LrOSClient) post202ListCreateRequest(ctx context.Context, options *
 
 // post202ListHandleResponse handles the Post202List response.
 func (client LrOSClient) post202ListHandleResponse(resp *azcore.Response) (ProductArrayResponse, error) {
-	result := ProductArrayResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ProductArray)
-	return result, err
+	var val *[]Product
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ProductArrayResponse{}, err
+	}
+	return ProductArrayResponse{RawResponse: resp.Response, ProductArray: val}, nil
 }
 
 // post202ListHandleError handles the Post202List error response.
@@ -1219,9 +1233,11 @@ func (client LrOSClient) post202NoRetry204CreateRequest(ctx context.Context, opt
 
 // post202NoRetry204HandleResponse handles the Post202NoRetry204 response.
 func (client LrOSClient) post202NoRetry204HandleResponse(resp *azcore.Response) (ProductResponse, error) {
-	result := ProductResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Product)
-	return result, err
+	var val *Product
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ProductResponse{}, err
+	}
+	return ProductResponse{RawResponse: resp.Response, Product: val}, nil
 }
 
 // post202NoRetry204HandleError handles the Post202NoRetry204 error response.
@@ -1386,9 +1402,11 @@ func (client LrOSClient) postAsyncNoRetrySucceededCreateRequest(ctx context.Cont
 
 // postAsyncNoRetrySucceededHandleResponse handles the PostAsyncNoRetrySucceeded response.
 func (client LrOSClient) postAsyncNoRetrySucceededHandleResponse(resp *azcore.Response) (ProductResponse, error) {
-	result := ProductResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Product)
-	return result, err
+	var val *Product
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ProductResponse{}, err
+	}
+	return ProductResponse{RawResponse: resp.Response, Product: val}, nil
 }
 
 // postAsyncNoRetrySucceededHandleError handles the PostAsyncNoRetrySucceeded error response.
@@ -1555,9 +1573,11 @@ func (client LrOSClient) postAsyncRetrySucceededCreateRequest(ctx context.Contex
 
 // postAsyncRetrySucceededHandleResponse handles the PostAsyncRetrySucceeded response.
 func (client LrOSClient) postAsyncRetrySucceededHandleResponse(resp *azcore.Response) (ProductResponse, error) {
-	result := ProductResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Product)
-	return result, err
+	var val *Product
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ProductResponse{}, err
+	}
+	return ProductResponse{RawResponse: resp.Response, Product: val}, nil
 }
 
 // postAsyncRetrySucceededHandleError handles the PostAsyncRetrySucceeded error response.
@@ -1719,9 +1739,11 @@ func (client LrOSClient) postDoubleHeadersFinalAzureHeaderGetCreateRequest(ctx c
 
 // postDoubleHeadersFinalAzureHeaderGetHandleResponse handles the PostDoubleHeadersFinalAzureHeaderGet response.
 func (client LrOSClient) postDoubleHeadersFinalAzureHeaderGetHandleResponse(resp *azcore.Response) (ProductResponse, error) {
-	result := ProductResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Product)
-	return result, err
+	var val *Product
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ProductResponse{}, err
+	}
+	return ProductResponse{RawResponse: resp.Response, Product: val}, nil
 }
 
 // postDoubleHeadersFinalAzureHeaderGetHandleError handles the PostDoubleHeadersFinalAzureHeaderGet error response.
@@ -1804,9 +1826,11 @@ func (client LrOSClient) postDoubleHeadersFinalAzureHeaderGetDefaultCreateReques
 
 // postDoubleHeadersFinalAzureHeaderGetDefaultHandleResponse handles the PostDoubleHeadersFinalAzureHeaderGetDefault response.
 func (client LrOSClient) postDoubleHeadersFinalAzureHeaderGetDefaultHandleResponse(resp *azcore.Response) (ProductResponse, error) {
-	result := ProductResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Product)
-	return result, err
+	var val *Product
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ProductResponse{}, err
+	}
+	return ProductResponse{RawResponse: resp.Response, Product: val}, nil
 }
 
 // postDoubleHeadersFinalAzureHeaderGetDefaultHandleError handles the PostDoubleHeadersFinalAzureHeaderGetDefault error response.
@@ -1887,9 +1911,11 @@ func (client LrOSClient) postDoubleHeadersFinalLocationGetCreateRequest(ctx cont
 
 // postDoubleHeadersFinalLocationGetHandleResponse handles the PostDoubleHeadersFinalLocationGet response.
 func (client LrOSClient) postDoubleHeadersFinalLocationGetHandleResponse(resp *azcore.Response) (ProductResponse, error) {
-	result := ProductResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Product)
-	return result, err
+	var val *Product
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ProductResponse{}, err
+	}
+	return ProductResponse{RawResponse: resp.Response, Product: val}, nil
 }
 
 // postDoubleHeadersFinalLocationGetHandleError handles the PostDoubleHeadersFinalLocationGet error response.
@@ -1975,9 +2001,11 @@ func (client LrOSClient) put200Acceptedcanceled200CreateRequest(ctx context.Cont
 
 // put200Acceptedcanceled200HandleResponse handles the Put200Acceptedcanceled200 response.
 func (client LrOSClient) put200Acceptedcanceled200HandleResponse(resp *azcore.Response) (ProductResponse, error) {
-	result := ProductResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Product)
-	return result, err
+	var val *Product
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ProductResponse{}, err
+	}
+	return ProductResponse{RawResponse: resp.Response, Product: val}, nil
 }
 
 // put200Acceptedcanceled200HandleError handles the Put200Acceptedcanceled200 error response.
@@ -2059,9 +2087,11 @@ func (client LrOSClient) put200SucceededCreateRequest(ctx context.Context, optio
 
 // put200SucceededHandleResponse handles the Put200Succeeded response.
 func (client LrOSClient) put200SucceededHandleResponse(resp *azcore.Response) (ProductResponse, error) {
-	result := ProductResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Product)
-	return result, err
+	var val *Product
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ProductResponse{}, err
+	}
+	return ProductResponse{RawResponse: resp.Response, Product: val}, nil
 }
 
 // put200SucceededHandleError handles the Put200Succeeded error response.
@@ -2143,9 +2173,11 @@ func (client LrOSClient) put200SucceededNoStateCreateRequest(ctx context.Context
 
 // put200SucceededNoStateHandleResponse handles the Put200SucceededNoState response.
 func (client LrOSClient) put200SucceededNoStateHandleResponse(resp *azcore.Response) (ProductResponse, error) {
-	result := ProductResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Product)
-	return result, err
+	var val *Product
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ProductResponse{}, err
+	}
+	return ProductResponse{RawResponse: resp.Response, Product: val}, nil
 }
 
 // put200SucceededNoStateHandleError handles the Put200SucceededNoState error response.
@@ -2231,9 +2263,11 @@ func (client LrOSClient) put200UpdatingSucceeded204CreateRequest(ctx context.Con
 
 // put200UpdatingSucceeded204HandleResponse handles the Put200UpdatingSucceeded204 response.
 func (client LrOSClient) put200UpdatingSucceeded204HandleResponse(resp *azcore.Response) (ProductResponse, error) {
-	result := ProductResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Product)
-	return result, err
+	var val *Product
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ProductResponse{}, err
+	}
+	return ProductResponse{RawResponse: resp.Response, Product: val}, nil
 }
 
 // put200UpdatingSucceeded204HandleError handles the Put200UpdatingSucceeded204 error response.
@@ -2319,9 +2353,11 @@ func (client LrOSClient) put201CreatingFailed200CreateRequest(ctx context.Contex
 
 // put201CreatingFailed200HandleResponse handles the Put201CreatingFailed200 response.
 func (client LrOSClient) put201CreatingFailed200HandleResponse(resp *azcore.Response) (ProductResponse, error) {
-	result := ProductResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Product)
-	return result, err
+	var val *Product
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ProductResponse{}, err
+	}
+	return ProductResponse{RawResponse: resp.Response, Product: val}, nil
 }
 
 // put201CreatingFailed200HandleError handles the Put201CreatingFailed200 error response.
@@ -2407,9 +2443,11 @@ func (client LrOSClient) put201CreatingSucceeded200CreateRequest(ctx context.Con
 
 // put201CreatingSucceeded200HandleResponse handles the Put201CreatingSucceeded200 response.
 func (client LrOSClient) put201CreatingSucceeded200HandleResponse(resp *azcore.Response) (ProductResponse, error) {
-	result := ProductResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Product)
-	return result, err
+	var val *Product
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ProductResponse{}, err
+	}
+	return ProductResponse{RawResponse: resp.Response, Product: val}, nil
 }
 
 // put201CreatingSucceeded200HandleError handles the Put201CreatingSucceeded200 error response.
@@ -2491,9 +2529,11 @@ func (client LrOSClient) put201SucceededCreateRequest(ctx context.Context, optio
 
 // put201SucceededHandleResponse handles the Put201Succeeded response.
 func (client LrOSClient) put201SucceededHandleResponse(resp *azcore.Response) (ProductResponse, error) {
-	result := ProductResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Product)
-	return result, err
+	var val *Product
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ProductResponse{}, err
+	}
+	return ProductResponse{RawResponse: resp.Response, Product: val}, nil
 }
 
 // put201SucceededHandleError handles the Put201Succeeded error response.
@@ -2577,9 +2617,11 @@ func (client LrOSClient) put202Retry200CreateRequest(ctx context.Context, option
 
 // put202Retry200HandleResponse handles the Put202Retry200 response.
 func (client LrOSClient) put202Retry200HandleResponse(resp *azcore.Response) (ProductResponse, error) {
-	result := ProductResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Product)
-	return result, err
+	var val *Product
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ProductResponse{}, err
+	}
+	return ProductResponse{RawResponse: resp.Response, Product: val}, nil
 }
 
 // put202Retry200HandleError handles the Put202Retry200 error response.
@@ -2663,9 +2705,11 @@ func (client LrOSClient) putAsyncNoHeaderInRetryCreateRequest(ctx context.Contex
 
 // putAsyncNoHeaderInRetryHandleResponse handles the PutAsyncNoHeaderInRetry response.
 func (client LrOSClient) putAsyncNoHeaderInRetryHandleResponse(resp *azcore.Response) (ProductResponse, error) {
-	result := ProductResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Product)
-	return result, err
+	var val *Product
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ProductResponse{}, err
+	}
+	return ProductResponse{RawResponse: resp.Response, Product: val}, nil
 }
 
 // putAsyncNoHeaderInRetryHandleError handles the PutAsyncNoHeaderInRetry error response.
@@ -2751,9 +2795,11 @@ func (client LrOSClient) putAsyncNoRetrySucceededCreateRequest(ctx context.Conte
 
 // putAsyncNoRetrySucceededHandleResponse handles the PutAsyncNoRetrySucceeded response.
 func (client LrOSClient) putAsyncNoRetrySucceededHandleResponse(resp *azcore.Response) (ProductResponse, error) {
-	result := ProductResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Product)
-	return result, err
+	var val *Product
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ProductResponse{}, err
+	}
+	return ProductResponse{RawResponse: resp.Response, Product: val}, nil
 }
 
 // putAsyncNoRetrySucceededHandleError handles the PutAsyncNoRetrySucceeded error response.
@@ -2839,9 +2885,11 @@ func (client LrOSClient) putAsyncNoRetrycanceledCreateRequest(ctx context.Contex
 
 // putAsyncNoRetrycanceledHandleResponse handles the PutAsyncNoRetrycanceled response.
 func (client LrOSClient) putAsyncNoRetrycanceledHandleResponse(resp *azcore.Response) (ProductResponse, error) {
-	result := ProductResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Product)
-	return result, err
+	var val *Product
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ProductResponse{}, err
+	}
+	return ProductResponse{RawResponse: resp.Response, Product: val}, nil
 }
 
 // putAsyncNoRetrycanceledHandleError handles the PutAsyncNoRetrycanceled error response.
@@ -2923,9 +2971,11 @@ func (client LrOSClient) putAsyncNonResourceCreateRequest(ctx context.Context, o
 
 // putAsyncNonResourceHandleResponse handles the PutAsyncNonResource response.
 func (client LrOSClient) putAsyncNonResourceHandleResponse(resp *azcore.Response) (SKUResponse, error) {
-	result := SKUResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.SKU)
-	return result, err
+	var val *SKU
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return SKUResponse{}, err
+	}
+	return SKUResponse{RawResponse: resp.Response, SKU: val}, nil
 }
 
 // putAsyncNonResourceHandleError handles the PutAsyncNonResource error response.
@@ -3011,9 +3061,11 @@ func (client LrOSClient) putAsyncRetryFailedCreateRequest(ctx context.Context, o
 
 // putAsyncRetryFailedHandleResponse handles the PutAsyncRetryFailed response.
 func (client LrOSClient) putAsyncRetryFailedHandleResponse(resp *azcore.Response) (ProductResponse, error) {
-	result := ProductResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Product)
-	return result, err
+	var val *Product
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ProductResponse{}, err
+	}
+	return ProductResponse{RawResponse: resp.Response, Product: val}, nil
 }
 
 // putAsyncRetryFailedHandleError handles the PutAsyncRetryFailed error response.
@@ -3099,9 +3151,11 @@ func (client LrOSClient) putAsyncRetrySucceededCreateRequest(ctx context.Context
 
 // putAsyncRetrySucceededHandleResponse handles the PutAsyncRetrySucceeded response.
 func (client LrOSClient) putAsyncRetrySucceededHandleResponse(resp *azcore.Response) (ProductResponse, error) {
-	result := ProductResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Product)
-	return result, err
+	var val *Product
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ProductResponse{}, err
+	}
+	return ProductResponse{RawResponse: resp.Response, Product: val}, nil
 }
 
 // putAsyncRetrySucceededHandleError handles the PutAsyncRetrySucceeded error response.
@@ -3183,9 +3237,11 @@ func (client LrOSClient) putAsyncSubResourceCreateRequest(ctx context.Context, o
 
 // putAsyncSubResourceHandleResponse handles the PutAsyncSubResource response.
 func (client LrOSClient) putAsyncSubResourceHandleResponse(resp *azcore.Response) (SubProductResponse, error) {
-	result := SubProductResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.SubProduct)
-	return result, err
+	var val *SubProduct
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return SubProductResponse{}, err
+	}
+	return SubProductResponse{RawResponse: resp.Response, SubProduct: val}, nil
 }
 
 // putAsyncSubResourceHandleError handles the PutAsyncSubResource error response.
@@ -3269,9 +3325,11 @@ func (client LrOSClient) putNoHeaderInRetryCreateRequest(ctx context.Context, op
 
 // putNoHeaderInRetryHandleResponse handles the PutNoHeaderInRetry response.
 func (client LrOSClient) putNoHeaderInRetryHandleResponse(resp *azcore.Response) (ProductResponse, error) {
-	result := ProductResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Product)
-	return result, err
+	var val *Product
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ProductResponse{}, err
+	}
+	return ProductResponse{RawResponse: resp.Response, Product: val}, nil
 }
 
 // putNoHeaderInRetryHandleError handles the PutNoHeaderInRetry error response.
@@ -3353,9 +3411,11 @@ func (client LrOSClient) putNonResourceCreateRequest(ctx context.Context, option
 
 // putNonResourceHandleResponse handles the PutNonResource response.
 func (client LrOSClient) putNonResourceHandleResponse(resp *azcore.Response) (SKUResponse, error) {
-	result := SKUResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.SKU)
-	return result, err
+	var val *SKU
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return SKUResponse{}, err
+	}
+	return SKUResponse{RawResponse: resp.Response, SKU: val}, nil
 }
 
 // putNonResourceHandleError handles the PutNonResource error response.
@@ -3437,9 +3497,11 @@ func (client LrOSClient) putSubResourceCreateRequest(ctx context.Context, option
 
 // putSubResourceHandleResponse handles the PutSubResource response.
 func (client LrOSClient) putSubResourceHandleResponse(resp *azcore.Response) (SubProductResponse, error) {
-	result := SubProductResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.SubProduct)
-	return result, err
+	var val *SubProduct
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return SubProductResponse{}, err
+	}
+	return SubProductResponse{RawResponse: resp.Response, SubProduct: val}, nil
 }
 
 // putSubResourceHandleError handles the PutSubResource error response.

@@ -108,9 +108,11 @@ func (client InboundNatRulesClient) createOrUpdateCreateRequest(ctx context.Cont
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client InboundNatRulesClient) createOrUpdateHandleResponse(resp *azcore.Response) (InboundNatRuleResponse, error) {
-	result := InboundNatRuleResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.InboundNatRule)
-	return result, err
+	var val *InboundNatRule
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return InboundNatRuleResponse{}, err
+	}
+	return InboundNatRuleResponse{RawResponse: resp.Response, InboundNatRule: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -216,11 +218,7 @@ func (client InboundNatRulesClient) Get(ctx context.Context, resourceGroupName s
 	if !resp.HasStatusCode(http.StatusOK) {
 		return InboundNatRuleResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return InboundNatRuleResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -247,9 +245,11 @@ func (client InboundNatRulesClient) getCreateRequest(ctx context.Context, resour
 
 // getHandleResponse handles the Get response.
 func (client InboundNatRulesClient) getHandleResponse(resp *azcore.Response) (InboundNatRuleResponse, error) {
-	result := InboundNatRuleResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.InboundNatRule)
-	return result, err
+	var val *InboundNatRule
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return InboundNatRuleResponse{}, err
+	}
+	return InboundNatRuleResponse{RawResponse: resp.Response, InboundNatRule: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -297,9 +297,11 @@ func (client InboundNatRulesClient) listCreateRequest(ctx context.Context, resou
 
 // listHandleResponse handles the List response.
 func (client InboundNatRulesClient) listHandleResponse(resp *azcore.Response) (InboundNatRuleListResultResponse, error) {
-	result := InboundNatRuleListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.InboundNatRuleListResult)
-	return result, err
+	var val *InboundNatRuleListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return InboundNatRuleListResultResponse{}, err
+	}
+	return InboundNatRuleListResultResponse{RawResponse: resp.Response, InboundNatRuleListResult: val}, nil
 }
 
 // listHandleError handles the List error response.

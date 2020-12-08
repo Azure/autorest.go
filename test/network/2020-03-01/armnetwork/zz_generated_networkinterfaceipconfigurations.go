@@ -46,11 +46,7 @@ func (client NetworkInterfaceIPConfigurationsClient) Get(ctx context.Context, re
 	if !resp.HasStatusCode(http.StatusOK) {
 		return NetworkInterfaceIPConfigurationResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return NetworkInterfaceIPConfigurationResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -74,9 +70,11 @@ func (client NetworkInterfaceIPConfigurationsClient) getCreateRequest(ctx contex
 
 // getHandleResponse handles the Get response.
 func (client NetworkInterfaceIPConfigurationsClient) getHandleResponse(resp *azcore.Response) (NetworkInterfaceIPConfigurationResponse, error) {
-	result := NetworkInterfaceIPConfigurationResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.NetworkInterfaceIPConfiguration)
-	return result, err
+	var val *NetworkInterfaceIPConfiguration
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return NetworkInterfaceIPConfigurationResponse{}, err
+	}
+	return NetworkInterfaceIPConfigurationResponse{RawResponse: resp.Response, NetworkInterfaceIPConfiguration: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -124,9 +122,11 @@ func (client NetworkInterfaceIPConfigurationsClient) listCreateRequest(ctx conte
 
 // listHandleResponse handles the List response.
 func (client NetworkInterfaceIPConfigurationsClient) listHandleResponse(resp *azcore.Response) (NetworkInterfaceIPConfigurationListResultResponse, error) {
-	result := NetworkInterfaceIPConfigurationListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.NetworkInterfaceIPConfigurationListResult)
-	return result, err
+	var val *NetworkInterfaceIPConfigurationListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return NetworkInterfaceIPConfigurationListResultResponse{}, err
+	}
+	return NetworkInterfaceIPConfigurationListResultResponse{RawResponse: resp.Response, NetworkInterfaceIPConfigurationListResult: val}, nil
 }
 
 // listHandleError handles the List error response.

@@ -47,11 +47,7 @@ func (client PetClient) DoSomething(ctx context.Context, whatAction string, opti
 	if !resp.HasStatusCode(http.StatusOK) {
 		return PetActionResponse{}, client.doSomethingHandleError(resp)
 	}
-	result, err := client.doSomethingHandleResponse(resp)
-	if err != nil {
-		return PetActionResponse{}, err
-	}
-	return result, nil
+	return client.doSomethingHandleResponse(resp)
 }
 
 // doSomethingCreateRequest creates the DoSomething request.
@@ -69,9 +65,11 @@ func (client PetClient) doSomethingCreateRequest(ctx context.Context, whatAction
 
 // doSomethingHandleResponse handles the DoSomething response.
 func (client PetClient) doSomethingHandleResponse(resp *azcore.Response) (PetActionResponse, error) {
-	result := PetActionResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.PetAction)
-	return result, err
+	var val *PetAction
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return PetActionResponse{}, err
+	}
+	return PetActionResponse{RawResponse: resp.Response, PetAction: val}, nil
 }
 
 // doSomethingHandleError handles the DoSomething error response.
@@ -105,11 +103,7 @@ func (client PetClient) GetPetByID(ctx context.Context, petId string, options *P
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return PetResponse{}, client.getPetByIdHandleError(resp)
 	}
-	result, err := client.getPetByIdHandleResponse(resp)
-	if err != nil {
-		return PetResponse{}, err
-	}
-	return result, nil
+	return client.getPetByIdHandleResponse(resp)
 }
 
 // getPetByIdCreateRequest creates the GetPetByID request.
@@ -127,9 +121,11 @@ func (client PetClient) getPetByIdCreateRequest(ctx context.Context, petId strin
 
 // getPetByIdHandleResponse handles the GetPetByID response.
 func (client PetClient) getPetByIdHandleResponse(resp *azcore.Response) (PetResponse, error) {
-	result := PetResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Pet)
-	return result, err
+	var val *Pet
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return PetResponse{}, err
+	}
+	return PetResponse{RawResponse: resp.Response, Pet: val}, nil
 }
 
 // getPetByIdHandleError handles the GetPetByID error response.

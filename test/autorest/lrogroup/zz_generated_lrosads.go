@@ -1333,9 +1333,11 @@ func (client LrosaDsClient) put200InvalidJsonCreateRequest(ctx context.Context, 
 
 // put200InvalidJsonHandleResponse handles the Put200InvalidJSON response.
 func (client LrosaDsClient) put200InvalidJsonHandleResponse(resp *azcore.Response) (ProductResponse, error) {
-	result := ProductResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Product)
-	return result, err
+	var val *Product
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ProductResponse{}, err
+	}
+	return ProductResponse{RawResponse: resp.Response, Product: val}, nil
 }
 
 // put200InvalidJsonHandleError handles the Put200InvalidJSON error response.
@@ -1419,9 +1421,11 @@ func (client LrosaDsClient) putAsyncRelativeRetry400CreateRequest(ctx context.Co
 
 // putAsyncRelativeRetry400HandleResponse handles the PutAsyncRelativeRetry400 response.
 func (client LrosaDsClient) putAsyncRelativeRetry400HandleResponse(resp *azcore.Response) (ProductResponse, error) {
-	result := ProductResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Product)
-	return result, err
+	var val *Product
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ProductResponse{}, err
+	}
+	return ProductResponse{RawResponse: resp.Response, Product: val}, nil
 }
 
 // putAsyncRelativeRetry400HandleError handles the PutAsyncRelativeRetry400 error response.
@@ -1505,9 +1509,11 @@ func (client LrosaDsClient) putAsyncRelativeRetryInvalidHeaderCreateRequest(ctx 
 
 // putAsyncRelativeRetryInvalidHeaderHandleResponse handles the PutAsyncRelativeRetryInvalidHeader response.
 func (client LrosaDsClient) putAsyncRelativeRetryInvalidHeaderHandleResponse(resp *azcore.Response) (ProductResponse, error) {
-	result := ProductResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Product)
-	return result, err
+	var val *Product
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ProductResponse{}, err
+	}
+	return ProductResponse{RawResponse: resp.Response, Product: val}, nil
 }
 
 // putAsyncRelativeRetryInvalidHeaderHandleError handles the PutAsyncRelativeRetryInvalidHeader error response.
@@ -1593,9 +1599,11 @@ func (client LrosaDsClient) putAsyncRelativeRetryInvalidJsonPollingCreateRequest
 
 // putAsyncRelativeRetryInvalidJsonPollingHandleResponse handles the PutAsyncRelativeRetryInvalidJSONPolling response.
 func (client LrosaDsClient) putAsyncRelativeRetryInvalidJsonPollingHandleResponse(resp *azcore.Response) (ProductResponse, error) {
-	result := ProductResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Product)
-	return result, err
+	var val *Product
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ProductResponse{}, err
+	}
+	return ProductResponse{RawResponse: resp.Response, Product: val}, nil
 }
 
 // putAsyncRelativeRetryInvalidJsonPollingHandleError handles the PutAsyncRelativeRetryInvalidJSONPolling error response.
@@ -1681,9 +1689,11 @@ func (client LrosaDsClient) putAsyncRelativeRetryNoStatusCreateRequest(ctx conte
 
 // putAsyncRelativeRetryNoStatusHandleResponse handles the PutAsyncRelativeRetryNoStatus response.
 func (client LrosaDsClient) putAsyncRelativeRetryNoStatusHandleResponse(resp *azcore.Response) (ProductResponse, error) {
-	result := ProductResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Product)
-	return result, err
+	var val *Product
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ProductResponse{}, err
+	}
+	return ProductResponse{RawResponse: resp.Response, Product: val}, nil
 }
 
 // putAsyncRelativeRetryNoStatusHandleError handles the PutAsyncRelativeRetryNoStatus error response.
@@ -1769,9 +1779,11 @@ func (client LrosaDsClient) putAsyncRelativeRetryNoStatusPayloadCreateRequest(ct
 
 // putAsyncRelativeRetryNoStatusPayloadHandleResponse handles the PutAsyncRelativeRetryNoStatusPayload response.
 func (client LrosaDsClient) putAsyncRelativeRetryNoStatusPayloadHandleResponse(resp *azcore.Response) (ProductResponse, error) {
-	result := ProductResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Product)
-	return result, err
+	var val *Product
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ProductResponse{}, err
+	}
+	return ProductResponse{RawResponse: resp.Response, Product: val}, nil
 }
 
 // putAsyncRelativeRetryNoStatusPayloadHandleError handles the PutAsyncRelativeRetryNoStatusPayload error response.
@@ -1853,9 +1865,11 @@ func (client LrosaDsClient) putError201NoProvisioningStatePayloadCreateRequest(c
 
 // putError201NoProvisioningStatePayloadHandleResponse handles the PutError201NoProvisioningStatePayload response.
 func (client LrosaDsClient) putError201NoProvisioningStatePayloadHandleResponse(resp *azcore.Response) (ProductResponse, error) {
-	result := ProductResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Product)
-	return result, err
+	var val *Product
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ProductResponse{}, err
+	}
+	return ProductResponse{RawResponse: resp.Response, Product: val}, nil
 }
 
 // putError201NoProvisioningStatePayloadHandleError handles the PutError201NoProvisioningStatePayload error response.
@@ -1937,9 +1951,11 @@ func (client LrosaDsClient) putNonRetry201Creating400CreateRequest(ctx context.C
 
 // putNonRetry201Creating400HandleResponse handles the PutNonRetry201Creating400 response.
 func (client LrosaDsClient) putNonRetry201Creating400HandleResponse(resp *azcore.Response) (ProductResponse, error) {
-	result := ProductResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Product)
-	return result, err
+	var val *Product
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ProductResponse{}, err
+	}
+	return ProductResponse{RawResponse: resp.Response, Product: val}, nil
 }
 
 // putNonRetry201Creating400HandleError handles the PutNonRetry201Creating400 error response.
@@ -2022,9 +2038,11 @@ func (client LrosaDsClient) putNonRetry201Creating400InvalidJsonCreateRequest(ct
 
 // putNonRetry201Creating400InvalidJsonHandleResponse handles the PutNonRetry201Creating400InvalidJSON response.
 func (client LrosaDsClient) putNonRetry201Creating400InvalidJsonHandleResponse(resp *azcore.Response) (ProductResponse, error) {
-	result := ProductResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Product)
-	return result, err
+	var val *Product
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ProductResponse{}, err
+	}
+	return ProductResponse{RawResponse: resp.Response, Product: val}, nil
 }
 
 // putNonRetry201Creating400InvalidJsonHandleError handles the PutNonRetry201Creating400InvalidJSON error response.
@@ -2106,9 +2124,11 @@ func (client LrosaDsClient) putNonRetry400CreateRequest(ctx context.Context, opt
 
 // putNonRetry400HandleResponse handles the PutNonRetry400 response.
 func (client LrosaDsClient) putNonRetry400HandleResponse(resp *azcore.Response) (ProductResponse, error) {
-	result := ProductResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Product)
-	return result, err
+	var val *Product
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ProductResponse{}, err
+	}
+	return ProductResponse{RawResponse: resp.Response, Product: val}, nil
 }
 
 // putNonRetry400HandleError handles the PutNonRetry400 error response.

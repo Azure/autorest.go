@@ -42,11 +42,7 @@ func (client directoryClient) Create(ctx context.Context, directoryCreateOptions
 	if !resp.HasStatusCode(http.StatusCreated) {
 		return DirectoryCreateResponse{}, client.createHandleError(resp)
 	}
-	result, err := client.createHandleResponse(resp)
-	if err != nil {
-		return DirectoryCreateResponse{}, err
-	}
-	return result, nil
+	return client.createHandleResponse(resp)
 }
 
 // createCreateRequest creates the Create request.
@@ -170,11 +166,7 @@ func (client directoryClient) Delete(ctx context.Context, recursiveDirectoryDele
 	if !resp.HasStatusCode(http.StatusOK) {
 		return DirectoryDeleteResponse{}, client.deleteHandleError(resp)
 	}
-	result, err := client.deleteHandleResponse(resp)
-	if err != nil {
-		return DirectoryDeleteResponse{}, err
-	}
-	return result, nil
+	return client.deleteHandleResponse(resp)
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -263,11 +255,7 @@ func (client directoryClient) GetAccessControl(ctx context.Context, directoryGet
 	if !resp.HasStatusCode(http.StatusOK) {
 		return DirectoryGetAccessControlResponse{}, client.getAccessControlHandleError(resp)
 	}
-	result, err := client.getAccessControlHandleResponse(resp)
-	if err != nil {
-		return DirectoryGetAccessControlResponse{}, err
-	}
-	return result, nil
+	return client.getAccessControlHandleResponse(resp)
 }
 
 // getAccessControlCreateRequest creates the GetAccessControl request.
@@ -376,11 +364,7 @@ func (client directoryClient) Rename(ctx context.Context, renameSource string, d
 	if !resp.HasStatusCode(http.StatusCreated) {
 		return DirectoryRenameResponse{}, client.renameHandleError(resp)
 	}
-	result, err := client.renameHandleResponse(resp)
-	if err != nil {
-		return DirectoryRenameResponse{}, err
-	}
-	return result, nil
+	return client.renameHandleResponse(resp)
 }
 
 // renameCreateRequest creates the Rename request.
@@ -528,11 +512,7 @@ func (client directoryClient) SetAccessControl(ctx context.Context, directorySet
 	if !resp.HasStatusCode(http.StatusOK) {
 		return DirectorySetAccessControlResponse{}, client.setAccessControlHandleError(resp)
 	}
-	result, err := client.setAccessControlHandleResponse(resp)
-	if err != nil {
-		return DirectorySetAccessControlResponse{}, err
-	}
-	return result, nil
+	return client.setAccessControlHandleResponse(resp)
 }
 
 // setAccessControlCreateRequest creates the SetAccessControl request.

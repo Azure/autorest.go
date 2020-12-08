@@ -108,9 +108,11 @@ func (client VirtualNetworkPeeringsClient) createOrUpdateCreateRequest(ctx conte
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client VirtualNetworkPeeringsClient) createOrUpdateHandleResponse(resp *azcore.Response) (VirtualNetworkPeeringResponse, error) {
-	result := VirtualNetworkPeeringResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.VirtualNetworkPeering)
-	return result, err
+	var val *VirtualNetworkPeering
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return VirtualNetworkPeeringResponse{}, err
+	}
+	return VirtualNetworkPeeringResponse{RawResponse: resp.Response, VirtualNetworkPeering: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -216,11 +218,7 @@ func (client VirtualNetworkPeeringsClient) Get(ctx context.Context, resourceGrou
 	if !resp.HasStatusCode(http.StatusOK) {
 		return VirtualNetworkPeeringResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return VirtualNetworkPeeringResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -244,9 +242,11 @@ func (client VirtualNetworkPeeringsClient) getCreateRequest(ctx context.Context,
 
 // getHandleResponse handles the Get response.
 func (client VirtualNetworkPeeringsClient) getHandleResponse(resp *azcore.Response) (VirtualNetworkPeeringResponse, error) {
-	result := VirtualNetworkPeeringResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.VirtualNetworkPeering)
-	return result, err
+	var val *VirtualNetworkPeering
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return VirtualNetworkPeeringResponse{}, err
+	}
+	return VirtualNetworkPeeringResponse{RawResponse: resp.Response, VirtualNetworkPeering: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -294,9 +294,11 @@ func (client VirtualNetworkPeeringsClient) listCreateRequest(ctx context.Context
 
 // listHandleResponse handles the List response.
 func (client VirtualNetworkPeeringsClient) listHandleResponse(resp *azcore.Response) (VirtualNetworkPeeringListResultResponse, error) {
-	result := VirtualNetworkPeeringListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.VirtualNetworkPeeringListResult)
-	return result, err
+	var val *VirtualNetworkPeeringListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return VirtualNetworkPeeringListResultResponse{}, err
+	}
+	return VirtualNetworkPeeringListResultResponse{RawResponse: resp.Response, VirtualNetworkPeeringListResult: val}, nil
 }
 
 // listHandleError handles the List error response.

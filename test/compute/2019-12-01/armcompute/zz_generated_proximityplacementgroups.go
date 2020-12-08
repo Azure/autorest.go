@@ -49,11 +49,7 @@ func (client ProximityPlacementGroupsClient) CreateOrUpdate(ctx context.Context,
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return ProximityPlacementGroupResponse{}, client.createOrUpdateHandleError(resp)
 	}
-	result, err := client.createOrUpdateHandleResponse(resp)
-	if err != nil {
-		return ProximityPlacementGroupResponse{}, err
-	}
-	return result, nil
+	return client.createOrUpdateHandleResponse(resp)
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -76,9 +72,11 @@ func (client ProximityPlacementGroupsClient) createOrUpdateCreateRequest(ctx con
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client ProximityPlacementGroupsClient) createOrUpdateHandleResponse(resp *azcore.Response) (ProximityPlacementGroupResponse, error) {
-	result := ProximityPlacementGroupResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ProximityPlacementGroup)
-	return result, err
+	var val *ProximityPlacementGroup
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ProximityPlacementGroupResponse{}, err
+	}
+	return ProximityPlacementGroupResponse{RawResponse: resp.Response, ProximityPlacementGroup: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -151,11 +149,7 @@ func (client ProximityPlacementGroupsClient) Get(ctx context.Context, resourceGr
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ProximityPlacementGroupResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return ProximityPlacementGroupResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -181,9 +175,11 @@ func (client ProximityPlacementGroupsClient) getCreateRequest(ctx context.Contex
 
 // getHandleResponse handles the Get response.
 func (client ProximityPlacementGroupsClient) getHandleResponse(resp *azcore.Response) (ProximityPlacementGroupResponse, error) {
-	result := ProximityPlacementGroupResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ProximityPlacementGroup)
-	return result, err
+	var val *ProximityPlacementGroup
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ProximityPlacementGroupResponse{}, err
+	}
+	return ProximityPlacementGroupResponse{RawResponse: resp.Response, ProximityPlacementGroup: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -233,9 +229,11 @@ func (client ProximityPlacementGroupsClient) listByResourceGroupCreateRequest(ct
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
 func (client ProximityPlacementGroupsClient) listByResourceGroupHandleResponse(resp *azcore.Response) (ProximityPlacementGroupListResultResponse, error) {
-	result := ProximityPlacementGroupListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ProximityPlacementGroupListResult)
-	return result, err
+	var val *ProximityPlacementGroupListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ProximityPlacementGroupListResultResponse{}, err
+	}
+	return ProximityPlacementGroupListResultResponse{RawResponse: resp.Response, ProximityPlacementGroupListResult: val}, nil
 }
 
 // listByResourceGroupHandleError handles the ListByResourceGroup error response.
@@ -284,9 +282,11 @@ func (client ProximityPlacementGroupsClient) listBySubscriptionCreateRequest(ctx
 
 // listBySubscriptionHandleResponse handles the ListBySubscription response.
 func (client ProximityPlacementGroupsClient) listBySubscriptionHandleResponse(resp *azcore.Response) (ProximityPlacementGroupListResultResponse, error) {
-	result := ProximityPlacementGroupListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ProximityPlacementGroupListResult)
-	return result, err
+	var val *ProximityPlacementGroupListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ProximityPlacementGroupListResultResponse{}, err
+	}
+	return ProximityPlacementGroupListResultResponse{RawResponse: resp.Response, ProximityPlacementGroupListResult: val}, nil
 }
 
 // listBySubscriptionHandleError handles the ListBySubscription error response.
@@ -314,11 +314,7 @@ func (client ProximityPlacementGroupsClient) Update(ctx context.Context, resourc
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ProximityPlacementGroupResponse{}, client.updateHandleError(resp)
 	}
-	result, err := client.updateHandleResponse(resp)
-	if err != nil {
-		return ProximityPlacementGroupResponse{}, err
-	}
-	return result, nil
+	return client.updateHandleResponse(resp)
 }
 
 // updateCreateRequest creates the Update request.
@@ -341,9 +337,11 @@ func (client ProximityPlacementGroupsClient) updateCreateRequest(ctx context.Con
 
 // updateHandleResponse handles the Update response.
 func (client ProximityPlacementGroupsClient) updateHandleResponse(resp *azcore.Response) (ProximityPlacementGroupResponse, error) {
-	result := ProximityPlacementGroupResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ProximityPlacementGroup)
-	return result, err
+	var val *ProximityPlacementGroup
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ProximityPlacementGroupResponse{}, err
+	}
+	return ProximityPlacementGroupResponse{RawResponse: resp.Response, ProximityPlacementGroup: val}, nil
 }
 
 // updateHandleError handles the Update error response.

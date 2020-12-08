@@ -43,11 +43,7 @@ func (client IntClient) GetInvalid(ctx context.Context, options *IntGetInvalidOp
 	if !resp.HasStatusCode(http.StatusOK) {
 		return Int32Response{}, client.getInvalidHandleError(resp)
 	}
-	result, err := client.getInvalidHandleResponse(resp)
-	if err != nil {
-		return Int32Response{}, err
-	}
-	return result, nil
+	return client.getInvalidHandleResponse(resp)
 }
 
 // getInvalidCreateRequest creates the GetInvalid request.
@@ -64,9 +60,11 @@ func (client IntClient) getInvalidCreateRequest(ctx context.Context, options *In
 
 // getInvalidHandleResponse handles the GetInvalid response.
 func (client IntClient) getInvalidHandleResponse(resp *azcore.Response) (Int32Response, error) {
-	result := Int32Response{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Value)
-	return result, err
+	var val *int32
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return Int32Response{}, err
+	}
+	return Int32Response{RawResponse: resp.Response, Value: val}, nil
 }
 
 // getInvalidHandleError handles the GetInvalid error response.
@@ -91,11 +89,7 @@ func (client IntClient) GetInvalidUnixTime(ctx context.Context, options *IntGetI
 	if !resp.HasStatusCode(http.StatusOK) {
 		return TimeResponse{}, client.getInvalidUnixTimeHandleError(resp)
 	}
-	result, err := client.getInvalidUnixTimeHandleResponse(resp)
-	if err != nil {
-		return TimeResponse{}, err
-	}
-	return result, nil
+	return client.getInvalidUnixTimeHandleResponse(resp)
 }
 
 // getInvalidUnixTimeCreateRequest creates the GetInvalidUnixTime request.
@@ -113,8 +107,10 @@ func (client IntClient) getInvalidUnixTimeCreateRequest(ctx context.Context, opt
 // getInvalidUnixTimeHandleResponse handles the GetInvalidUnixTime response.
 func (client IntClient) getInvalidUnixTimeHandleResponse(resp *azcore.Response) (TimeResponse, error) {
 	var aux *timeUnix
-	err := resp.UnmarshalAsJSON(&aux)
-	return TimeResponse{RawResponse: resp.Response, Value: (*time.Time)(aux)}, err
+	if err := resp.UnmarshalAsJSON(&aux); err != nil {
+		return TimeResponse{}, err
+	}
+	return TimeResponse{RawResponse: resp.Response, Value: (*time.Time)(aux)}, nil
 }
 
 // getInvalidUnixTimeHandleError handles the GetInvalidUnixTime error response.
@@ -139,11 +135,7 @@ func (client IntClient) GetNull(ctx context.Context, options *IntGetNullOptions)
 	if !resp.HasStatusCode(http.StatusOK) {
 		return Int32Response{}, client.getNullHandleError(resp)
 	}
-	result, err := client.getNullHandleResponse(resp)
-	if err != nil {
-		return Int32Response{}, err
-	}
-	return result, nil
+	return client.getNullHandleResponse(resp)
 }
 
 // getNullCreateRequest creates the GetNull request.
@@ -160,9 +152,11 @@ func (client IntClient) getNullCreateRequest(ctx context.Context, options *IntGe
 
 // getNullHandleResponse handles the GetNull response.
 func (client IntClient) getNullHandleResponse(resp *azcore.Response) (Int32Response, error) {
-	result := Int32Response{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Value)
-	return result, err
+	var val *int32
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return Int32Response{}, err
+	}
+	return Int32Response{RawResponse: resp.Response, Value: val}, nil
 }
 
 // getNullHandleError handles the GetNull error response.
@@ -187,11 +181,7 @@ func (client IntClient) GetNullUnixTime(ctx context.Context, options *IntGetNull
 	if !resp.HasStatusCode(http.StatusOK) {
 		return TimeResponse{}, client.getNullUnixTimeHandleError(resp)
 	}
-	result, err := client.getNullUnixTimeHandleResponse(resp)
-	if err != nil {
-		return TimeResponse{}, err
-	}
-	return result, nil
+	return client.getNullUnixTimeHandleResponse(resp)
 }
 
 // getNullUnixTimeCreateRequest creates the GetNullUnixTime request.
@@ -209,8 +199,10 @@ func (client IntClient) getNullUnixTimeCreateRequest(ctx context.Context, option
 // getNullUnixTimeHandleResponse handles the GetNullUnixTime response.
 func (client IntClient) getNullUnixTimeHandleResponse(resp *azcore.Response) (TimeResponse, error) {
 	var aux *timeUnix
-	err := resp.UnmarshalAsJSON(&aux)
-	return TimeResponse{RawResponse: resp.Response, Value: (*time.Time)(aux)}, err
+	if err := resp.UnmarshalAsJSON(&aux); err != nil {
+		return TimeResponse{}, err
+	}
+	return TimeResponse{RawResponse: resp.Response, Value: (*time.Time)(aux)}, nil
 }
 
 // getNullUnixTimeHandleError handles the GetNullUnixTime error response.
@@ -235,11 +227,7 @@ func (client IntClient) GetOverflowInt32(ctx context.Context, options *IntGetOve
 	if !resp.HasStatusCode(http.StatusOK) {
 		return Int32Response{}, client.getOverflowInt32HandleError(resp)
 	}
-	result, err := client.getOverflowInt32HandleResponse(resp)
-	if err != nil {
-		return Int32Response{}, err
-	}
-	return result, nil
+	return client.getOverflowInt32HandleResponse(resp)
 }
 
 // getOverflowInt32CreateRequest creates the GetOverflowInt32 request.
@@ -256,9 +244,11 @@ func (client IntClient) getOverflowInt32CreateRequest(ctx context.Context, optio
 
 // getOverflowInt32HandleResponse handles the GetOverflowInt32 response.
 func (client IntClient) getOverflowInt32HandleResponse(resp *azcore.Response) (Int32Response, error) {
-	result := Int32Response{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Value)
-	return result, err
+	var val *int32
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return Int32Response{}, err
+	}
+	return Int32Response{RawResponse: resp.Response, Value: val}, nil
 }
 
 // getOverflowInt32HandleError handles the GetOverflowInt32 error response.
@@ -283,11 +273,7 @@ func (client IntClient) GetOverflowInt64(ctx context.Context, options *IntGetOve
 	if !resp.HasStatusCode(http.StatusOK) {
 		return Int64Response{}, client.getOverflowInt64HandleError(resp)
 	}
-	result, err := client.getOverflowInt64HandleResponse(resp)
-	if err != nil {
-		return Int64Response{}, err
-	}
-	return result, nil
+	return client.getOverflowInt64HandleResponse(resp)
 }
 
 // getOverflowInt64CreateRequest creates the GetOverflowInt64 request.
@@ -304,9 +290,11 @@ func (client IntClient) getOverflowInt64CreateRequest(ctx context.Context, optio
 
 // getOverflowInt64HandleResponse handles the GetOverflowInt64 response.
 func (client IntClient) getOverflowInt64HandleResponse(resp *azcore.Response) (Int64Response, error) {
-	result := Int64Response{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Value)
-	return result, err
+	var val *int64
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return Int64Response{}, err
+	}
+	return Int64Response{RawResponse: resp.Response, Value: val}, nil
 }
 
 // getOverflowInt64HandleError handles the GetOverflowInt64 error response.
@@ -331,11 +319,7 @@ func (client IntClient) GetUnderflowInt32(ctx context.Context, options *IntGetUn
 	if !resp.HasStatusCode(http.StatusOK) {
 		return Int32Response{}, client.getUnderflowInt32HandleError(resp)
 	}
-	result, err := client.getUnderflowInt32HandleResponse(resp)
-	if err != nil {
-		return Int32Response{}, err
-	}
-	return result, nil
+	return client.getUnderflowInt32HandleResponse(resp)
 }
 
 // getUnderflowInt32CreateRequest creates the GetUnderflowInt32 request.
@@ -352,9 +336,11 @@ func (client IntClient) getUnderflowInt32CreateRequest(ctx context.Context, opti
 
 // getUnderflowInt32HandleResponse handles the GetUnderflowInt32 response.
 func (client IntClient) getUnderflowInt32HandleResponse(resp *azcore.Response) (Int32Response, error) {
-	result := Int32Response{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Value)
-	return result, err
+	var val *int32
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return Int32Response{}, err
+	}
+	return Int32Response{RawResponse: resp.Response, Value: val}, nil
 }
 
 // getUnderflowInt32HandleError handles the GetUnderflowInt32 error response.
@@ -379,11 +365,7 @@ func (client IntClient) GetUnderflowInt64(ctx context.Context, options *IntGetUn
 	if !resp.HasStatusCode(http.StatusOK) {
 		return Int64Response{}, client.getUnderflowInt64HandleError(resp)
 	}
-	result, err := client.getUnderflowInt64HandleResponse(resp)
-	if err != nil {
-		return Int64Response{}, err
-	}
-	return result, nil
+	return client.getUnderflowInt64HandleResponse(resp)
 }
 
 // getUnderflowInt64CreateRequest creates the GetUnderflowInt64 request.
@@ -400,9 +382,11 @@ func (client IntClient) getUnderflowInt64CreateRequest(ctx context.Context, opti
 
 // getUnderflowInt64HandleResponse handles the GetUnderflowInt64 response.
 func (client IntClient) getUnderflowInt64HandleResponse(resp *azcore.Response) (Int64Response, error) {
-	result := Int64Response{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Value)
-	return result, err
+	var val *int64
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return Int64Response{}, err
+	}
+	return Int64Response{RawResponse: resp.Response, Value: val}, nil
 }
 
 // getUnderflowInt64HandleError handles the GetUnderflowInt64 error response.
@@ -427,11 +411,7 @@ func (client IntClient) GetUnixTime(ctx context.Context, options *IntGetUnixTime
 	if !resp.HasStatusCode(http.StatusOK) {
 		return TimeResponse{}, client.getUnixTimeHandleError(resp)
 	}
-	result, err := client.getUnixTimeHandleResponse(resp)
-	if err != nil {
-		return TimeResponse{}, err
-	}
-	return result, nil
+	return client.getUnixTimeHandleResponse(resp)
 }
 
 // getUnixTimeCreateRequest creates the GetUnixTime request.
@@ -449,8 +429,10 @@ func (client IntClient) getUnixTimeCreateRequest(ctx context.Context, options *I
 // getUnixTimeHandleResponse handles the GetUnixTime response.
 func (client IntClient) getUnixTimeHandleResponse(resp *azcore.Response) (TimeResponse, error) {
 	var aux *timeUnix
-	err := resp.UnmarshalAsJSON(&aux)
-	return TimeResponse{RawResponse: resp.Response, Value: (*time.Time)(aux)}, err
+	if err := resp.UnmarshalAsJSON(&aux); err != nil {
+		return TimeResponse{}, err
+	}
+	return TimeResponse{RawResponse: resp.Response, Value: (*time.Time)(aux)}, nil
 }
 
 // getUnixTimeHandleError handles the GetUnixTime error response.

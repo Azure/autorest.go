@@ -42,11 +42,7 @@ func (client PolymorphicrecursiveClient) GetValid(ctx context.Context, options *
 	if !resp.HasStatusCode(http.StatusOK) {
 		return FishResponse{}, client.getValidHandleError(resp)
 	}
-	result, err := client.getValidHandleResponse(resp)
-	if err != nil {
-		return FishResponse{}, err
-	}
-	return result, nil
+	return client.getValidHandleResponse(resp)
 }
 
 // getValidCreateRequest creates the GetValid request.
@@ -64,8 +60,10 @@ func (client PolymorphicrecursiveClient) getValidCreateRequest(ctx context.Conte
 // getValidHandleResponse handles the GetValid response.
 func (client PolymorphicrecursiveClient) getValidHandleResponse(resp *azcore.Response) (FishResponse, error) {
 	result := FishResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result)
-	return result, err
+	if err := resp.UnmarshalAsJSON(&result); err != nil {
+		return FishResponse{}, err
+	}
+	return result, nil
 }
 
 // getValidHandleError handles the GetValid error response.

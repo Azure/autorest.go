@@ -39,11 +39,7 @@ func (client pageBlobClient) ClearPages(ctx context.Context, contentLength int64
 	if !resp.HasStatusCode(http.StatusCreated) {
 		return PageBlobClearPagesResponse{}, client.clearPagesHandleError(resp)
 	}
-	result, err := client.clearPagesHandleResponse(resp)
-	if err != nil {
-		return PageBlobClearPagesResponse{}, err
-	}
-	return result, nil
+	return client.clearPagesHandleResponse(resp)
 }
 
 // clearPagesCreateRequest creates the ClearPages request.
@@ -187,11 +183,7 @@ func (client pageBlobClient) CopyIncremental(ctx context.Context, copySource url
 	if !resp.HasStatusCode(http.StatusAccepted) {
 		return PageBlobCopyIncrementalResponse{}, client.copyIncrementalHandleError(resp)
 	}
-	result, err := client.copyIncrementalHandleResponse(resp)
-	if err != nil {
-		return PageBlobCopyIncrementalResponse{}, err
-	}
-	return result, nil
+	return client.copyIncrementalHandleResponse(resp)
 }
 
 // copyIncrementalCreateRequest creates the CopyIncremental request.
@@ -288,11 +280,7 @@ func (client pageBlobClient) Create(ctx context.Context, contentLength int64, bl
 	if !resp.HasStatusCode(http.StatusCreated) {
 		return PageBlobCreateResponse{}, client.createHandleError(resp)
 	}
-	result, err := client.createHandleResponse(resp)
-	if err != nil {
-		return PageBlobCreateResponse{}, err
-	}
-	return result, nil
+	return client.createHandleResponse(resp)
 }
 
 // createCreateRequest creates the Create request.
@@ -448,11 +436,7 @@ func (client pageBlobClient) GetPageRanges(ctx context.Context, pageBlobGetPageR
 	if !resp.HasStatusCode(http.StatusOK) {
 		return PageListResponse{}, client.getPageRangesHandleError(resp)
 	}
-	result, err := client.getPageRangesHandleResponse(resp)
-	if err != nil {
-		return PageListResponse{}, err
-	}
-	return result, nil
+	return client.getPageRangesHandleResponse(resp)
 }
 
 // getPageRangesCreateRequest creates the GetPageRanges request.
@@ -499,7 +483,11 @@ func (client pageBlobClient) getPageRangesCreateRequest(ctx context.Context, pag
 
 // getPageRangesHandleResponse handles the GetPageRanges response.
 func (client pageBlobClient) getPageRangesHandleResponse(resp *azcore.Response) (PageListResponse, error) {
-	result := PageListResponse{RawResponse: resp.Response}
+	var val *PageList
+	if err := resp.UnmarshalAsXML(&val); err != nil {
+		return PageListResponse{}, err
+	}
+	result := PageListResponse{RawResponse: resp.Response, PageList: val}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
@@ -533,8 +521,7 @@ func (client pageBlobClient) getPageRangesHandleResponse(resp *azcore.Response) 
 		}
 		result.Date = &date
 	}
-	err := resp.UnmarshalAsXML(&result.PageList)
-	return result, err
+	return result, nil
 }
 
 // getPageRangesHandleError handles the GetPageRanges error response.
@@ -560,11 +547,7 @@ func (client pageBlobClient) GetPageRangesDiff(ctx context.Context, pageBlobGetP
 	if !resp.HasStatusCode(http.StatusOK) {
 		return PageListResponse{}, client.getPageRangesDiffHandleError(resp)
 	}
-	result, err := client.getPageRangesDiffHandleResponse(resp)
-	if err != nil {
-		return PageListResponse{}, err
-	}
-	return result, nil
+	return client.getPageRangesDiffHandleResponse(resp)
 }
 
 // getPageRangesDiffCreateRequest creates the GetPageRangesDiff request.
@@ -617,7 +600,11 @@ func (client pageBlobClient) getPageRangesDiffCreateRequest(ctx context.Context,
 
 // getPageRangesDiffHandleResponse handles the GetPageRangesDiff response.
 func (client pageBlobClient) getPageRangesDiffHandleResponse(resp *azcore.Response) (PageListResponse, error) {
-	result := PageListResponse{RawResponse: resp.Response}
+	var val *PageList
+	if err := resp.UnmarshalAsXML(&val); err != nil {
+		return PageListResponse{}, err
+	}
+	result := PageListResponse{RawResponse: resp.Response, PageList: val}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
@@ -651,8 +638,7 @@ func (client pageBlobClient) getPageRangesDiffHandleResponse(resp *azcore.Respon
 		}
 		result.Date = &date
 	}
-	err := resp.UnmarshalAsXML(&result.PageList)
-	return result, err
+	return result, nil
 }
 
 // getPageRangesDiffHandleError handles the GetPageRangesDiff error response.
@@ -677,11 +663,7 @@ func (client pageBlobClient) Resize(ctx context.Context, blobContentLength int64
 	if !resp.HasStatusCode(http.StatusOK) {
 		return PageBlobResizeResponse{}, client.resizeHandleError(resp)
 	}
-	result, err := client.resizeHandleResponse(resp)
-	if err != nil {
-		return PageBlobResizeResponse{}, err
-	}
-	return result, nil
+	return client.resizeHandleResponse(resp)
 }
 
 // resizeCreateRequest creates the Resize request.
@@ -794,11 +776,7 @@ func (client pageBlobClient) UpdateSequenceNumber(ctx context.Context, sequenceN
 	if !resp.HasStatusCode(http.StatusOK) {
 		return PageBlobUpdateSequenceNumberResponse{}, client.updateSequenceNumberHandleError(resp)
 	}
-	result, err := client.updateSequenceNumberHandleResponse(resp)
-	if err != nil {
-		return PageBlobUpdateSequenceNumberResponse{}, err
-	}
-	return result, nil
+	return client.updateSequenceNumberHandleResponse(resp)
 }
 
 // updateSequenceNumberCreateRequest creates the UpdateSequenceNumber request.
@@ -902,11 +880,7 @@ func (client pageBlobClient) UploadPages(ctx context.Context, contentLength int6
 	if !resp.HasStatusCode(http.StatusCreated) {
 		return PageBlobUploadPagesResponse{}, client.uploadPagesHandleError(resp)
 	}
-	result, err := client.uploadPagesHandleResponse(resp)
-	if err != nil {
-		return PageBlobUploadPagesResponse{}, err
-	}
-	return result, nil
+	return client.uploadPagesHandleResponse(resp)
 }
 
 // uploadPagesCreateRequest creates the UploadPages request.
@@ -1065,11 +1039,7 @@ func (client pageBlobClient) UploadPagesFromURL(ctx context.Context, sourceUrl u
 	if !resp.HasStatusCode(http.StatusCreated) {
 		return PageBlobUploadPagesFromURLResponse{}, client.uploadPagesFromUrlHandleError(resp)
 	}
-	result, err := client.uploadPagesFromUrlHandleResponse(resp)
-	if err != nil {
-		return PageBlobUploadPagesFromURLResponse{}, err
-	}
-	return result, nil
+	return client.uploadPagesFromUrlHandleResponse(resp)
 }
 
 // uploadPagesFromUrlCreateRequest creates the UploadPagesFromURL request.

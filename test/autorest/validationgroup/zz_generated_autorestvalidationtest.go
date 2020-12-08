@@ -87,11 +87,7 @@ func (client AutoRestValidationTestClient) PostWithConstantInBody(ctx context.Co
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ProductResponse{}, client.postWithConstantInBodyHandleError(resp)
 	}
-	result, err := client.postWithConstantInBodyHandleResponse(resp)
-	if err != nil {
-		return ProductResponse{}, err
-	}
-	return result, nil
+	return client.postWithConstantInBodyHandleResponse(resp)
 }
 
 // postWithConstantInBodyCreateRequest creates the PostWithConstantInBody request.
@@ -112,9 +108,11 @@ func (client AutoRestValidationTestClient) postWithConstantInBodyCreateRequest(c
 
 // postWithConstantInBodyHandleResponse handles the PostWithConstantInBody response.
 func (client AutoRestValidationTestClient) postWithConstantInBodyHandleResponse(resp *azcore.Response) (ProductResponse, error) {
-	result := ProductResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Product)
-	return result, err
+	var val *Product
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ProductResponse{}, err
+	}
+	return ProductResponse{RawResponse: resp.Response, Product: val}, nil
 }
 
 // postWithConstantInBodyHandleError handles the PostWithConstantInBody error response.
@@ -142,11 +140,7 @@ func (client AutoRestValidationTestClient) ValidationOfBody(ctx context.Context,
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ProductResponse{}, client.validationOfBodyHandleError(resp)
 	}
-	result, err := client.validationOfBodyHandleResponse(resp)
-	if err != nil {
-		return ProductResponse{}, err
-	}
-	return result, nil
+	return client.validationOfBodyHandleResponse(resp)
 }
 
 // validationOfBodyCreateRequest creates the ValidationOfBody request.
@@ -172,9 +166,11 @@ func (client AutoRestValidationTestClient) validationOfBodyCreateRequest(ctx con
 
 // validationOfBodyHandleResponse handles the ValidationOfBody response.
 func (client AutoRestValidationTestClient) validationOfBodyHandleResponse(resp *azcore.Response) (ProductResponse, error) {
-	result := ProductResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Product)
-	return result, err
+	var val *Product
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ProductResponse{}, err
+	}
+	return ProductResponse{RawResponse: resp.Response, Product: val}, nil
 }
 
 // validationOfBodyHandleError handles the ValidationOfBody error response.
@@ -199,11 +195,7 @@ func (client AutoRestValidationTestClient) ValidationOfMethodParameters(ctx cont
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ProductResponse{}, client.validationOfMethodParametersHandleError(resp)
 	}
-	result, err := client.validationOfMethodParametersHandleResponse(resp)
-	if err != nil {
-		return ProductResponse{}, err
-	}
-	return result, nil
+	return client.validationOfMethodParametersHandleResponse(resp)
 }
 
 // validationOfMethodParametersCreateRequest creates the ValidationOfMethodParameters request.
@@ -226,9 +218,11 @@ func (client AutoRestValidationTestClient) validationOfMethodParametersCreateReq
 
 // validationOfMethodParametersHandleResponse handles the ValidationOfMethodParameters response.
 func (client AutoRestValidationTestClient) validationOfMethodParametersHandleResponse(resp *azcore.Response) (ProductResponse, error) {
-	result := ProductResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Product)
-	return result, err
+	var val *Product
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ProductResponse{}, err
+	}
+	return ProductResponse{RawResponse: resp.Response, Product: val}, nil
 }
 
 // validationOfMethodParametersHandleError handles the ValidationOfMethodParameters error response.

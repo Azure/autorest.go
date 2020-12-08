@@ -111,9 +111,11 @@ func (client DedicatedHostsClient) createOrUpdateCreateRequest(ctx context.Conte
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client DedicatedHostsClient) createOrUpdateHandleResponse(resp *azcore.Response) (DedicatedHostResponse, error) {
-	result := DedicatedHostResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.DedicatedHost)
-	return result, err
+	var val *DedicatedHost
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return DedicatedHostResponse{}, err
+	}
+	return DedicatedHostResponse{RawResponse: resp.Response, DedicatedHost: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -224,11 +226,7 @@ func (client DedicatedHostsClient) Get(ctx context.Context, resourceGroupName st
 	if !resp.HasStatusCode(http.StatusOK) {
 		return DedicatedHostResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return DedicatedHostResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -255,9 +253,11 @@ func (client DedicatedHostsClient) getCreateRequest(ctx context.Context, resourc
 
 // getHandleResponse handles the Get response.
 func (client DedicatedHostsClient) getHandleResponse(resp *azcore.Response) (DedicatedHostResponse, error) {
-	result := DedicatedHostResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.DedicatedHost)
-	return result, err
+	var val *DedicatedHost
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return DedicatedHostResponse{}, err
+	}
+	return DedicatedHostResponse{RawResponse: resp.Response, DedicatedHost: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -309,9 +309,11 @@ func (client DedicatedHostsClient) listByHostGroupCreateRequest(ctx context.Cont
 
 // listByHostGroupHandleResponse handles the ListByHostGroup response.
 func (client DedicatedHostsClient) listByHostGroupHandleResponse(resp *azcore.Response) (DedicatedHostListResultResponse, error) {
-	result := DedicatedHostListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.DedicatedHostListResult)
-	return result, err
+	var val *DedicatedHostListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return DedicatedHostListResultResponse{}, err
+	}
+	return DedicatedHostListResultResponse{RawResponse: resp.Response, DedicatedHostListResult: val}, nil
 }
 
 // listByHostGroupHandleError handles the ListByHostGroup error response.
@@ -400,9 +402,11 @@ func (client DedicatedHostsClient) updateCreateRequest(ctx context.Context, reso
 
 // updateHandleResponse handles the Update response.
 func (client DedicatedHostsClient) updateHandleResponse(resp *azcore.Response) (DedicatedHostResponse, error) {
-	result := DedicatedHostResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.DedicatedHost)
-	return result, err
+	var val *DedicatedHost
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return DedicatedHostResponse{}, err
+	}
+	return DedicatedHostResponse{RawResponse: resp.Response, DedicatedHost: val}, nil
 }
 
 // updateHandleError handles the Update error response.

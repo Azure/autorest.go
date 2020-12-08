@@ -61,9 +61,11 @@ func (client linkedServiceClient) createOrUpdateLinkedServiceCreateRequest(ctx c
 
 // createOrUpdateLinkedServiceHandleResponse handles the CreateOrUpdateLinkedService response.
 func (client linkedServiceClient) createOrUpdateLinkedServiceHandleResponse(resp *azcore.Response) (LinkedServiceResourceResponse, error) {
-	result := LinkedServiceResourceResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.LinkedServiceResource)
-	return result, err
+	var val *LinkedServiceResource
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return LinkedServiceResourceResponse{}, err
+	}
+	return LinkedServiceResourceResponse{RawResponse: resp.Response, LinkedServiceResource: val}, nil
 }
 
 // createOrUpdateLinkedServiceHandleError handles the CreateOrUpdateLinkedService error response.
@@ -129,11 +131,7 @@ func (client linkedServiceClient) GetLinkedService(ctx context.Context, linkedSe
 	if !resp.HasStatusCode(http.StatusOK, http.StatusNotModified) {
 		return LinkedServiceResourceResponse{}, client.getLinkedServiceHandleError(resp)
 	}
-	result, err := client.getLinkedServiceHandleResponse(resp)
-	if err != nil {
-		return LinkedServiceResourceResponse{}, err
-	}
-	return result, nil
+	return client.getLinkedServiceHandleResponse(resp)
 }
 
 // getLinkedServiceCreateRequest creates the GetLinkedService request.
@@ -157,9 +155,11 @@ func (client linkedServiceClient) getLinkedServiceCreateRequest(ctx context.Cont
 
 // getLinkedServiceHandleResponse handles the GetLinkedService response.
 func (client linkedServiceClient) getLinkedServiceHandleResponse(resp *azcore.Response) (LinkedServiceResourceResponse, error) {
-	result := LinkedServiceResourceResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.LinkedServiceResource)
-	return result, err
+	var val *LinkedServiceResource
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return LinkedServiceResourceResponse{}, err
+	}
+	return LinkedServiceResourceResponse{RawResponse: resp.Response, LinkedServiceResource: val}, nil
 }
 
 // getLinkedServiceHandleError handles the GetLinkedService error response.
@@ -204,9 +204,11 @@ func (client linkedServiceClient) getLinkedServicesByWorkspaceCreateRequest(ctx 
 
 // getLinkedServicesByWorkspaceHandleResponse handles the GetLinkedServicesByWorkspace response.
 func (client linkedServiceClient) getLinkedServicesByWorkspaceHandleResponse(resp *azcore.Response) (LinkedServiceListResponseResponse, error) {
-	result := LinkedServiceListResponseResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.LinkedServiceListResponse)
-	return result, err
+	var val *LinkedServiceListResponse
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return LinkedServiceListResponseResponse{}, err
+	}
+	return LinkedServiceListResponseResponse{RawResponse: resp.Response, LinkedServiceListResponse: val}, nil
 }
 
 // getLinkedServicesByWorkspaceHandleError handles the GetLinkedServicesByWorkspace error response.

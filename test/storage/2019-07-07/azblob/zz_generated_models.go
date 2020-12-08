@@ -3105,6 +3105,9 @@ type ServiceGetAccountInfoResponse struct {
 	// Date contains the information returned from the Date header response.
 	Date *time.Time
 
+	// IsHierarchicalNamespaceEnabled contains the information returned from the x-ms-is-hns-enabled header response.
+	IsHierarchicalNamespaceEnabled *bool
+
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 

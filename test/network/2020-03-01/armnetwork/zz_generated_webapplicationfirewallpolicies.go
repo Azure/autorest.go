@@ -47,11 +47,7 @@ func (client WebApplicationFirewallPoliciesClient) CreateOrUpdate(ctx context.Co
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return WebApplicationFirewallPolicyResponse{}, client.createOrUpdateHandleError(resp)
 	}
-	result, err := client.createOrUpdateHandleResponse(resp)
-	if err != nil {
-		return WebApplicationFirewallPolicyResponse{}, err
-	}
-	return result, nil
+	return client.createOrUpdateHandleResponse(resp)
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -74,9 +70,11 @@ func (client WebApplicationFirewallPoliciesClient) createOrUpdateCreateRequest(c
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client WebApplicationFirewallPoliciesClient) createOrUpdateHandleResponse(resp *azcore.Response) (WebApplicationFirewallPolicyResponse, error) {
-	result := WebApplicationFirewallPolicyResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.WebApplicationFirewallPolicy)
-	return result, err
+	var val *WebApplicationFirewallPolicy
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return WebApplicationFirewallPolicyResponse{}, err
+	}
+	return WebApplicationFirewallPolicyResponse{RawResponse: resp.Response, WebApplicationFirewallPolicy: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -181,11 +179,7 @@ func (client WebApplicationFirewallPoliciesClient) Get(ctx context.Context, reso
 	if !resp.HasStatusCode(http.StatusOK) {
 		return WebApplicationFirewallPolicyResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return WebApplicationFirewallPolicyResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -208,9 +202,11 @@ func (client WebApplicationFirewallPoliciesClient) getCreateRequest(ctx context.
 
 // getHandleResponse handles the Get response.
 func (client WebApplicationFirewallPoliciesClient) getHandleResponse(resp *azcore.Response) (WebApplicationFirewallPolicyResponse, error) {
-	result := WebApplicationFirewallPolicyResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.WebApplicationFirewallPolicy)
-	return result, err
+	var val *WebApplicationFirewallPolicy
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return WebApplicationFirewallPolicyResponse{}, err
+	}
+	return WebApplicationFirewallPolicyResponse{RawResponse: resp.Response, WebApplicationFirewallPolicy: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -257,9 +253,11 @@ func (client WebApplicationFirewallPoliciesClient) listCreateRequest(ctx context
 
 // listHandleResponse handles the List response.
 func (client WebApplicationFirewallPoliciesClient) listHandleResponse(resp *azcore.Response) (WebApplicationFirewallPolicyListResultResponse, error) {
-	result := WebApplicationFirewallPolicyListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.WebApplicationFirewallPolicyListResult)
-	return result, err
+	var val *WebApplicationFirewallPolicyListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return WebApplicationFirewallPolicyListResultResponse{}, err
+	}
+	return WebApplicationFirewallPolicyListResultResponse{RawResponse: resp.Response, WebApplicationFirewallPolicyListResult: val}, nil
 }
 
 // listHandleError handles the List error response.
@@ -305,9 +303,11 @@ func (client WebApplicationFirewallPoliciesClient) listAllCreateRequest(ctx cont
 
 // listAllHandleResponse handles the ListAll response.
 func (client WebApplicationFirewallPoliciesClient) listAllHandleResponse(resp *azcore.Response) (WebApplicationFirewallPolicyListResultResponse, error) {
-	result := WebApplicationFirewallPolicyListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.WebApplicationFirewallPolicyListResult)
-	return result, err
+	var val *WebApplicationFirewallPolicyListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return WebApplicationFirewallPolicyListResultResponse{}, err
+	}
+	return WebApplicationFirewallPolicyListResultResponse{RawResponse: resp.Response, WebApplicationFirewallPolicyListResult: val}, nil
 }
 
 // listAllHandleError handles the ListAll error response.

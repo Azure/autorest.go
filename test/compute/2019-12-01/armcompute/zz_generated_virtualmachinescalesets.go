@@ -156,9 +156,11 @@ func (client VirtualMachineScaleSetsClient) createOrUpdateCreateRequest(ctx cont
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client VirtualMachineScaleSetsClient) createOrUpdateHandleResponse(resp *azcore.Response) (VirtualMachineScaleSetResponse, error) {
-	result := VirtualMachineScaleSetResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.VirtualMachineScaleSet)
-	return result, err
+	var val *VirtualMachineScaleSet
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return VirtualMachineScaleSetResponse{}, err
+	}
+	return VirtualMachineScaleSetResponse{RawResponse: resp.Response, VirtualMachineScaleSet: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -440,11 +442,7 @@ func (client VirtualMachineScaleSetsClient) ForceRecoveryServiceFabricPlatformUp
 	if !resp.HasStatusCode(http.StatusOK) {
 		return RecoveryWalkResponseResponse{}, client.forceRecoveryServiceFabricPlatformUpdateDomainWalkHandleError(resp)
 	}
-	result, err := client.forceRecoveryServiceFabricPlatformUpdateDomainWalkHandleResponse(resp)
-	if err != nil {
-		return RecoveryWalkResponseResponse{}, err
-	}
-	return result, nil
+	return client.forceRecoveryServiceFabricPlatformUpdateDomainWalkHandleResponse(resp)
 }
 
 // forceRecoveryServiceFabricPlatformUpdateDomainWalkCreateRequest creates the ForceRecoveryServiceFabricPlatformUpdateDomainWalk request.
@@ -468,9 +466,11 @@ func (client VirtualMachineScaleSetsClient) forceRecoveryServiceFabricPlatformUp
 
 // forceRecoveryServiceFabricPlatformUpdateDomainWalkHandleResponse handles the ForceRecoveryServiceFabricPlatformUpdateDomainWalk response.
 func (client VirtualMachineScaleSetsClient) forceRecoveryServiceFabricPlatformUpdateDomainWalkHandleResponse(resp *azcore.Response) (RecoveryWalkResponseResponse, error) {
-	result := RecoveryWalkResponseResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.RecoveryWalkResponse)
-	return result, err
+	var val *RecoveryWalkResponse
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return RecoveryWalkResponseResponse{}, err
+	}
+	return RecoveryWalkResponseResponse{RawResponse: resp.Response, RecoveryWalkResponse: val}, nil
 }
 
 // forceRecoveryServiceFabricPlatformUpdateDomainWalkHandleError handles the ForceRecoveryServiceFabricPlatformUpdateDomainWalk error response.
@@ -498,11 +498,7 @@ func (client VirtualMachineScaleSetsClient) Get(ctx context.Context, resourceGro
 	if !resp.HasStatusCode(http.StatusOK) {
 		return VirtualMachineScaleSetResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return VirtualMachineScaleSetResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -525,9 +521,11 @@ func (client VirtualMachineScaleSetsClient) getCreateRequest(ctx context.Context
 
 // getHandleResponse handles the Get response.
 func (client VirtualMachineScaleSetsClient) getHandleResponse(resp *azcore.Response) (VirtualMachineScaleSetResponse, error) {
-	result := VirtualMachineScaleSetResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.VirtualMachineScaleSet)
-	return result, err
+	var val *VirtualMachineScaleSet
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return VirtualMachineScaleSetResponse{}, err
+	}
+	return VirtualMachineScaleSetResponse{RawResponse: resp.Response, VirtualMachineScaleSet: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -555,11 +553,7 @@ func (client VirtualMachineScaleSetsClient) GetInstanceView(ctx context.Context,
 	if !resp.HasStatusCode(http.StatusOK) {
 		return VirtualMachineScaleSetInstanceViewResponse{}, client.getInstanceViewHandleError(resp)
 	}
-	result, err := client.getInstanceViewHandleResponse(resp)
-	if err != nil {
-		return VirtualMachineScaleSetInstanceViewResponse{}, err
-	}
-	return result, nil
+	return client.getInstanceViewHandleResponse(resp)
 }
 
 // getInstanceViewCreateRequest creates the GetInstanceView request.
@@ -582,9 +576,11 @@ func (client VirtualMachineScaleSetsClient) getInstanceViewCreateRequest(ctx con
 
 // getInstanceViewHandleResponse handles the GetInstanceView response.
 func (client VirtualMachineScaleSetsClient) getInstanceViewHandleResponse(resp *azcore.Response) (VirtualMachineScaleSetInstanceViewResponse, error) {
-	result := VirtualMachineScaleSetInstanceViewResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.VirtualMachineScaleSetInstanceView)
-	return result, err
+	var val *VirtualMachineScaleSetInstanceView
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return VirtualMachineScaleSetInstanceViewResponse{}, err
+	}
+	return VirtualMachineScaleSetInstanceViewResponse{RawResponse: resp.Response, VirtualMachineScaleSetInstanceView: val}, nil
 }
 
 // getInstanceViewHandleError handles the GetInstanceView error response.
@@ -635,9 +631,11 @@ func (client VirtualMachineScaleSetsClient) getOSUpgradeHistoryCreateRequest(ctx
 
 // getOSUpgradeHistoryHandleResponse handles the GetOSUpgradeHistory response.
 func (client VirtualMachineScaleSetsClient) getOSUpgradeHistoryHandleResponse(resp *azcore.Response) (VirtualMachineScaleSetListOSUpgradeHistoryResponse, error) {
-	result := VirtualMachineScaleSetListOSUpgradeHistoryResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.VirtualMachineScaleSetListOSUpgradeHistory)
-	return result, err
+	var val *VirtualMachineScaleSetListOSUpgradeHistory
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return VirtualMachineScaleSetListOSUpgradeHistoryResponse{}, err
+	}
+	return VirtualMachineScaleSetListOSUpgradeHistoryResponse{RawResponse: resp.Response, VirtualMachineScaleSetListOSUpgradeHistory: val}, nil
 }
 
 // getOSUpgradeHistoryHandleError handles the GetOSUpgradeHistory error response.
@@ -687,9 +685,11 @@ func (client VirtualMachineScaleSetsClient) listCreateRequest(ctx context.Contex
 
 // listHandleResponse handles the List response.
 func (client VirtualMachineScaleSetsClient) listHandleResponse(resp *azcore.Response) (VirtualMachineScaleSetListResultResponse, error) {
-	result := VirtualMachineScaleSetListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.VirtualMachineScaleSetListResult)
-	return result, err
+	var val *VirtualMachineScaleSetListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return VirtualMachineScaleSetListResultResponse{}, err
+	}
+	return VirtualMachineScaleSetListResultResponse{RawResponse: resp.Response, VirtualMachineScaleSetListResult: val}, nil
 }
 
 // listHandleError handles the List error response.
@@ -740,9 +740,11 @@ func (client VirtualMachineScaleSetsClient) listAllCreateRequest(ctx context.Con
 
 // listAllHandleResponse handles the ListAll response.
 func (client VirtualMachineScaleSetsClient) listAllHandleResponse(resp *azcore.Response) (VirtualMachineScaleSetListWithLinkResultResponse, error) {
-	result := VirtualMachineScaleSetListWithLinkResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.VirtualMachineScaleSetListWithLinkResult)
-	return result, err
+	var val *VirtualMachineScaleSetListWithLinkResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return VirtualMachineScaleSetListWithLinkResultResponse{}, err
+	}
+	return VirtualMachineScaleSetListWithLinkResultResponse{RawResponse: resp.Response, VirtualMachineScaleSetListWithLinkResult: val}, nil
 }
 
 // listAllHandleError handles the ListAll error response.
@@ -793,9 +795,11 @@ func (client VirtualMachineScaleSetsClient) listSkUsCreateRequest(ctx context.Co
 
 // listSkUsHandleResponse handles the ListSKUs response.
 func (client VirtualMachineScaleSetsClient) listSkUsHandleResponse(resp *azcore.Response) (VirtualMachineScaleSetListSKUsResultResponse, error) {
-	result := VirtualMachineScaleSetListSKUsResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.VirtualMachineScaleSetListSKUsResult)
-	return result, err
+	var val *VirtualMachineScaleSetListSKUsResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return VirtualMachineScaleSetListSKUsResultResponse{}, err
+	}
+	return VirtualMachineScaleSetListSKUsResultResponse{RawResponse: resp.Response, VirtualMachineScaleSetListSKUsResult: val}, nil
 }
 
 // listSkUsHandleError handles the ListSKUs error response.
@@ -1577,9 +1581,11 @@ func (client VirtualMachineScaleSetsClient) updateCreateRequest(ctx context.Cont
 
 // updateHandleResponse handles the Update response.
 func (client VirtualMachineScaleSetsClient) updateHandleResponse(resp *azcore.Response) (VirtualMachineScaleSetResponse, error) {
-	result := VirtualMachineScaleSetResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.VirtualMachineScaleSet)
-	return result, err
+	var val *VirtualMachineScaleSet
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return VirtualMachineScaleSetResponse{}, err
+	}
+	return VirtualMachineScaleSetResponse{RawResponse: resp.Response, VirtualMachineScaleSet: val}, nil
 }
 
 // updateHandleError handles the Update error response.

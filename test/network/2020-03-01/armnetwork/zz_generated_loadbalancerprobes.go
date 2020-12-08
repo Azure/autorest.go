@@ -46,11 +46,7 @@ func (client LoadBalancerProbesClient) Get(ctx context.Context, resourceGroupNam
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ProbeResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return ProbeResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -74,9 +70,11 @@ func (client LoadBalancerProbesClient) getCreateRequest(ctx context.Context, res
 
 // getHandleResponse handles the Get response.
 func (client LoadBalancerProbesClient) getHandleResponse(resp *azcore.Response) (ProbeResponse, error) {
-	result := ProbeResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Probe)
-	return result, err
+	var val *Probe
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ProbeResponse{}, err
+	}
+	return ProbeResponse{RawResponse: resp.Response, Probe: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -124,9 +122,11 @@ func (client LoadBalancerProbesClient) listCreateRequest(ctx context.Context, re
 
 // listHandleResponse handles the List response.
 func (client LoadBalancerProbesClient) listHandleResponse(resp *azcore.Response) (LoadBalancerProbeListResultResponse, error) {
-	result := LoadBalancerProbeListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.LoadBalancerProbeListResult)
-	return result, err
+	var val *LoadBalancerProbeListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return LoadBalancerProbeListResultResponse{}, err
+	}
+	return LoadBalancerProbeListResultResponse{RawResponse: resp.Response, LoadBalancerProbeListResult: val}, nil
 }
 
 // listHandleError handles the List error response.

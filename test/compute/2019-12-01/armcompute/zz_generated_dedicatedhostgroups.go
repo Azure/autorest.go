@@ -50,11 +50,7 @@ func (client DedicatedHostGroupsClient) CreateOrUpdate(ctx context.Context, reso
 	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return DedicatedHostGroupResponse{}, client.createOrUpdateHandleError(resp)
 	}
-	result, err := client.createOrUpdateHandleResponse(resp)
-	if err != nil {
-		return DedicatedHostGroupResponse{}, err
-	}
-	return result, nil
+	return client.createOrUpdateHandleResponse(resp)
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
@@ -77,9 +73,11 @@ func (client DedicatedHostGroupsClient) createOrUpdateCreateRequest(ctx context.
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client DedicatedHostGroupsClient) createOrUpdateHandleResponse(resp *azcore.Response) (DedicatedHostGroupResponse, error) {
-	result := DedicatedHostGroupResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.DedicatedHostGroup)
-	return result, err
+	var val *DedicatedHostGroup
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return DedicatedHostGroupResponse{}, err
+	}
+	return DedicatedHostGroupResponse{RawResponse: resp.Response, DedicatedHostGroup: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -152,11 +150,7 @@ func (client DedicatedHostGroupsClient) Get(ctx context.Context, resourceGroupNa
 	if !resp.HasStatusCode(http.StatusOK) {
 		return DedicatedHostGroupResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return DedicatedHostGroupResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -179,9 +173,11 @@ func (client DedicatedHostGroupsClient) getCreateRequest(ctx context.Context, re
 
 // getHandleResponse handles the Get response.
 func (client DedicatedHostGroupsClient) getHandleResponse(resp *azcore.Response) (DedicatedHostGroupResponse, error) {
-	result := DedicatedHostGroupResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.DedicatedHostGroup)
-	return result, err
+	var val *DedicatedHostGroup
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return DedicatedHostGroupResponse{}, err
+	}
+	return DedicatedHostGroupResponse{RawResponse: resp.Response, DedicatedHostGroup: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -232,9 +228,11 @@ func (client DedicatedHostGroupsClient) listByResourceGroupCreateRequest(ctx con
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
 func (client DedicatedHostGroupsClient) listByResourceGroupHandleResponse(resp *azcore.Response) (DedicatedHostGroupListResultResponse, error) {
-	result := DedicatedHostGroupListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.DedicatedHostGroupListResult)
-	return result, err
+	var val *DedicatedHostGroupListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return DedicatedHostGroupListResultResponse{}, err
+	}
+	return DedicatedHostGroupListResultResponse{RawResponse: resp.Response, DedicatedHostGroupListResult: val}, nil
 }
 
 // listByResourceGroupHandleError handles the ListByResourceGroup error response.
@@ -284,9 +282,11 @@ func (client DedicatedHostGroupsClient) listBySubscriptionCreateRequest(ctx cont
 
 // listBySubscriptionHandleResponse handles the ListBySubscription response.
 func (client DedicatedHostGroupsClient) listBySubscriptionHandleResponse(resp *azcore.Response) (DedicatedHostGroupListResultResponse, error) {
-	result := DedicatedHostGroupListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.DedicatedHostGroupListResult)
-	return result, err
+	var val *DedicatedHostGroupListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return DedicatedHostGroupListResultResponse{}, err
+	}
+	return DedicatedHostGroupListResultResponse{RawResponse: resp.Response, DedicatedHostGroupListResult: val}, nil
 }
 
 // listBySubscriptionHandleError handles the ListBySubscription error response.
@@ -314,11 +314,7 @@ func (client DedicatedHostGroupsClient) Update(ctx context.Context, resourceGrou
 	if !resp.HasStatusCode(http.StatusOK) {
 		return DedicatedHostGroupResponse{}, client.updateHandleError(resp)
 	}
-	result, err := client.updateHandleResponse(resp)
-	if err != nil {
-		return DedicatedHostGroupResponse{}, err
-	}
-	return result, nil
+	return client.updateHandleResponse(resp)
 }
 
 // updateCreateRequest creates the Update request.
@@ -341,9 +337,11 @@ func (client DedicatedHostGroupsClient) updateCreateRequest(ctx context.Context,
 
 // updateHandleResponse handles the Update response.
 func (client DedicatedHostGroupsClient) updateHandleResponse(resp *azcore.Response) (DedicatedHostGroupResponse, error) {
-	result := DedicatedHostGroupResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.DedicatedHostGroup)
-	return result, err
+	var val *DedicatedHostGroup
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return DedicatedHostGroupResponse{}, err
+	}
+	return DedicatedHostGroupResponse{RawResponse: resp.Response, DedicatedHostGroup: val}, nil
 }
 
 // updateHandleError handles the Update error response.

@@ -61,9 +61,11 @@ func (client datasetClient) createOrUpdateDatasetCreateRequest(ctx context.Conte
 
 // createOrUpdateDatasetHandleResponse handles the CreateOrUpdateDataset response.
 func (client datasetClient) createOrUpdateDatasetHandleResponse(resp *azcore.Response) (DatasetResourceResponse, error) {
-	result := DatasetResourceResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.DatasetResource)
-	return result, err
+	var val *DatasetResource
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return DatasetResourceResponse{}, err
+	}
+	return DatasetResourceResponse{RawResponse: resp.Response, DatasetResource: val}, nil
 }
 
 // createOrUpdateDatasetHandleError handles the CreateOrUpdateDataset error response.
@@ -129,11 +131,7 @@ func (client datasetClient) GetDataset(ctx context.Context, datasetName string, 
 	if !resp.HasStatusCode(http.StatusOK, http.StatusNotModified) {
 		return DatasetResourceResponse{}, client.getDatasetHandleError(resp)
 	}
-	result, err := client.getDatasetHandleResponse(resp)
-	if err != nil {
-		return DatasetResourceResponse{}, err
-	}
-	return result, nil
+	return client.getDatasetHandleResponse(resp)
 }
 
 // getDatasetCreateRequest creates the GetDataset request.
@@ -157,9 +155,11 @@ func (client datasetClient) getDatasetCreateRequest(ctx context.Context, dataset
 
 // getDatasetHandleResponse handles the GetDataset response.
 func (client datasetClient) getDatasetHandleResponse(resp *azcore.Response) (DatasetResourceResponse, error) {
-	result := DatasetResourceResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.DatasetResource)
-	return result, err
+	var val *DatasetResource
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return DatasetResourceResponse{}, err
+	}
+	return DatasetResourceResponse{RawResponse: resp.Response, DatasetResource: val}, nil
 }
 
 // getDatasetHandleError handles the GetDataset error response.
@@ -204,9 +204,11 @@ func (client datasetClient) getDatasetsByWorkspaceCreateRequest(ctx context.Cont
 
 // getDatasetsByWorkspaceHandleResponse handles the GetDatasetsByWorkspace response.
 func (client datasetClient) getDatasetsByWorkspaceHandleResponse(resp *azcore.Response) (DatasetListResponseResponse, error) {
-	result := DatasetListResponseResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.DatasetListResponse)
-	return result, err
+	var val *DatasetListResponse
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return DatasetListResponseResponse{}, err
+	}
+	return DatasetListResponseResponse{RawResponse: resp.Response, DatasetListResponse: val}, nil
 }
 
 // getDatasetsByWorkspaceHandleError handles the GetDatasetsByWorkspace error response.

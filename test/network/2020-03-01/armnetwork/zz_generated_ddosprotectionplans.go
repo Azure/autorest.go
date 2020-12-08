@@ -107,9 +107,11 @@ func (client DdosProtectionPlansClient) createOrUpdateCreateRequest(ctx context.
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client DdosProtectionPlansClient) createOrUpdateHandleResponse(resp *azcore.Response) (DdosProtectionPlanResponse, error) {
-	result := DdosProtectionPlanResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.DdosProtectionPlan)
-	return result, err
+	var val *DdosProtectionPlan
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return DdosProtectionPlanResponse{}, err
+	}
+	return DdosProtectionPlanResponse{RawResponse: resp.Response, DdosProtectionPlan: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -214,11 +216,7 @@ func (client DdosProtectionPlansClient) Get(ctx context.Context, resourceGroupNa
 	if !resp.HasStatusCode(http.StatusOK) {
 		return DdosProtectionPlanResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return DdosProtectionPlanResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -241,9 +239,11 @@ func (client DdosProtectionPlansClient) getCreateRequest(ctx context.Context, re
 
 // getHandleResponse handles the Get response.
 func (client DdosProtectionPlansClient) getHandleResponse(resp *azcore.Response) (DdosProtectionPlanResponse, error) {
-	result := DdosProtectionPlanResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.DdosProtectionPlan)
-	return result, err
+	var val *DdosProtectionPlan
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return DdosProtectionPlanResponse{}, err
+	}
+	return DdosProtectionPlanResponse{RawResponse: resp.Response, DdosProtectionPlan: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -289,9 +289,11 @@ func (client DdosProtectionPlansClient) listCreateRequest(ctx context.Context, o
 
 // listHandleResponse handles the List response.
 func (client DdosProtectionPlansClient) listHandleResponse(resp *azcore.Response) (DdosProtectionPlanListResultResponse, error) {
-	result := DdosProtectionPlanListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.DdosProtectionPlanListResult)
-	return result, err
+	var val *DdosProtectionPlanListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return DdosProtectionPlanListResultResponse{}, err
+	}
+	return DdosProtectionPlanListResultResponse{RawResponse: resp.Response, DdosProtectionPlanListResult: val}, nil
 }
 
 // listHandleError handles the List error response.
@@ -338,9 +340,11 @@ func (client DdosProtectionPlansClient) listByResourceGroupCreateRequest(ctx con
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
 func (client DdosProtectionPlansClient) listByResourceGroupHandleResponse(resp *azcore.Response) (DdosProtectionPlanListResultResponse, error) {
-	result := DdosProtectionPlanListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.DdosProtectionPlanListResult)
-	return result, err
+	var val *DdosProtectionPlanListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return DdosProtectionPlanListResultResponse{}, err
+	}
+	return DdosProtectionPlanListResultResponse{RawResponse: resp.Response, DdosProtectionPlanListResult: val}, nil
 }
 
 // listByResourceGroupHandleError handles the ListByResourceGroup error response.
@@ -365,11 +369,7 @@ func (client DdosProtectionPlansClient) UpdateTags(ctx context.Context, resource
 	if !resp.HasStatusCode(http.StatusOK) {
 		return DdosProtectionPlanResponse{}, client.updateTagsHandleError(resp)
 	}
-	result, err := client.updateTagsHandleResponse(resp)
-	if err != nil {
-		return DdosProtectionPlanResponse{}, err
-	}
-	return result, nil
+	return client.updateTagsHandleResponse(resp)
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.
@@ -392,9 +392,11 @@ func (client DdosProtectionPlansClient) updateTagsCreateRequest(ctx context.Cont
 
 // updateTagsHandleResponse handles the UpdateTags response.
 func (client DdosProtectionPlansClient) updateTagsHandleResponse(resp *azcore.Response) (DdosProtectionPlanResponse, error) {
-	result := DdosProtectionPlanResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.DdosProtectionPlan)
-	return result, err
+	var val *DdosProtectionPlan
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return DdosProtectionPlanResponse{}, err
+	}
+	return DdosProtectionPlanResponse{RawResponse: resp.Response, DdosProtectionPlan: val}, nil
 }
 
 // updateTagsHandleError handles the UpdateTags error response.

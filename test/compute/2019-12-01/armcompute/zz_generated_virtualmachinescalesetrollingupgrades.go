@@ -132,11 +132,7 @@ func (client VirtualMachineScaleSetRollingUpgradesClient) GetLatest(ctx context.
 	if !resp.HasStatusCode(http.StatusOK) {
 		return RollingUpgradeStatusInfoResponse{}, client.getLatestHandleError(resp)
 	}
-	result, err := client.getLatestHandleResponse(resp)
-	if err != nil {
-		return RollingUpgradeStatusInfoResponse{}, err
-	}
-	return result, nil
+	return client.getLatestHandleResponse(resp)
 }
 
 // getLatestCreateRequest creates the GetLatest request.
@@ -159,9 +155,11 @@ func (client VirtualMachineScaleSetRollingUpgradesClient) getLatestCreateRequest
 
 // getLatestHandleResponse handles the GetLatest response.
 func (client VirtualMachineScaleSetRollingUpgradesClient) getLatestHandleResponse(resp *azcore.Response) (RollingUpgradeStatusInfoResponse, error) {
-	result := RollingUpgradeStatusInfoResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.RollingUpgradeStatusInfo)
-	return result, err
+	var val *RollingUpgradeStatusInfo
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return RollingUpgradeStatusInfoResponse{}, err
+	}
+	return RollingUpgradeStatusInfoResponse{RawResponse: resp.Response, RollingUpgradeStatusInfo: val}, nil
 }
 
 // getLatestHandleError handles the GetLatest error response.

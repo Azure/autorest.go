@@ -108,9 +108,11 @@ func (client SubnetsClient) createOrUpdateCreateRequest(ctx context.Context, res
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client SubnetsClient) createOrUpdateHandleResponse(resp *azcore.Response) (SubnetResponse, error) {
-	result := SubnetResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Subnet)
-	return result, err
+	var val *Subnet
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return SubnetResponse{}, err
+	}
+	return SubnetResponse{RawResponse: resp.Response, Subnet: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -216,11 +218,7 @@ func (client SubnetsClient) Get(ctx context.Context, resourceGroupName string, v
 	if !resp.HasStatusCode(http.StatusOK) {
 		return SubnetResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return SubnetResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -247,9 +245,11 @@ func (client SubnetsClient) getCreateRequest(ctx context.Context, resourceGroupN
 
 // getHandleResponse handles the Get response.
 func (client SubnetsClient) getHandleResponse(resp *azcore.Response) (SubnetResponse, error) {
-	result := SubnetResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Subnet)
-	return result, err
+	var val *Subnet
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return SubnetResponse{}, err
+	}
+	return SubnetResponse{RawResponse: resp.Response, Subnet: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -297,9 +297,11 @@ func (client SubnetsClient) listCreateRequest(ctx context.Context, resourceGroup
 
 // listHandleResponse handles the List response.
 func (client SubnetsClient) listHandleResponse(resp *azcore.Response) (SubnetListResultResponse, error) {
-	result := SubnetListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.SubnetListResult)
-	return result, err
+	var val *SubnetListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return SubnetListResultResponse{}, err
+	}
+	return SubnetListResultResponse{RawResponse: resp.Response, SubnetListResult: val}, nil
 }
 
 // listHandleError handles the List error response.

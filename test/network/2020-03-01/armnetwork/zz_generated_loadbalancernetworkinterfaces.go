@@ -69,9 +69,11 @@ func (client LoadBalancerNetworkInterfacesClient) listCreateRequest(ctx context.
 
 // listHandleResponse handles the List response.
 func (client LoadBalancerNetworkInterfacesClient) listHandleResponse(resp *azcore.Response) (NetworkInterfaceListResultResponse, error) {
-	result := NetworkInterfaceListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.NetworkInterfaceListResult)
-	return result, err
+	var val *NetworkInterfaceListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return NetworkInterfaceListResultResponse{}, err
+	}
+	return NetworkInterfaceListResultResponse{RawResponse: resp.Response, NetworkInterfaceListResult: val}, nil
 }
 
 // listHandleError handles the List error response.

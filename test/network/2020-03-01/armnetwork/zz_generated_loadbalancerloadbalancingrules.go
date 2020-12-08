@@ -46,11 +46,7 @@ func (client LoadBalancerLoadBalancingRulesClient) Get(ctx context.Context, reso
 	if !resp.HasStatusCode(http.StatusOK) {
 		return LoadBalancingRuleResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return LoadBalancingRuleResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -74,9 +70,11 @@ func (client LoadBalancerLoadBalancingRulesClient) getCreateRequest(ctx context.
 
 // getHandleResponse handles the Get response.
 func (client LoadBalancerLoadBalancingRulesClient) getHandleResponse(resp *azcore.Response) (LoadBalancingRuleResponse, error) {
-	result := LoadBalancingRuleResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.LoadBalancingRule)
-	return result, err
+	var val *LoadBalancingRule
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return LoadBalancingRuleResponse{}, err
+	}
+	return LoadBalancingRuleResponse{RawResponse: resp.Response, LoadBalancingRule: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -124,9 +122,11 @@ func (client LoadBalancerLoadBalancingRulesClient) listCreateRequest(ctx context
 
 // listHandleResponse handles the List response.
 func (client LoadBalancerLoadBalancingRulesClient) listHandleResponse(resp *azcore.Response) (LoadBalancerLoadBalancingRuleListResultResponse, error) {
-	result := LoadBalancerLoadBalancingRuleListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.LoadBalancerLoadBalancingRuleListResult)
-	return result, err
+	var val *LoadBalancerLoadBalancingRuleListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return LoadBalancerLoadBalancingRuleListResultResponse{}, err
+	}
+	return LoadBalancerLoadBalancingRuleListResultResponse{RawResponse: resp.Response, LoadBalancerLoadBalancingRuleListResult: val}, nil
 }
 
 // listHandleError handles the List error response.

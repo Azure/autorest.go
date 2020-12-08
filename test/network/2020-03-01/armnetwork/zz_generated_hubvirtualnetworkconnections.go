@@ -46,11 +46,7 @@ func (client HubVirtualNetworkConnectionsClient) Get(ctx context.Context, resour
 	if !resp.HasStatusCode(http.StatusOK) {
 		return HubVirtualNetworkConnectionResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return HubVirtualNetworkConnectionResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -74,9 +70,11 @@ func (client HubVirtualNetworkConnectionsClient) getCreateRequest(ctx context.Co
 
 // getHandleResponse handles the Get response.
 func (client HubVirtualNetworkConnectionsClient) getHandleResponse(resp *azcore.Response) (HubVirtualNetworkConnectionResponse, error) {
-	result := HubVirtualNetworkConnectionResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.HubVirtualNetworkConnection)
-	return result, err
+	var val *HubVirtualNetworkConnection
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return HubVirtualNetworkConnectionResponse{}, err
+	}
+	return HubVirtualNetworkConnectionResponse{RawResponse: resp.Response, HubVirtualNetworkConnection: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -124,9 +122,11 @@ func (client HubVirtualNetworkConnectionsClient) listCreateRequest(ctx context.C
 
 // listHandleResponse handles the List response.
 func (client HubVirtualNetworkConnectionsClient) listHandleResponse(resp *azcore.Response) (ListHubVirtualNetworkConnectionsResultResponse, error) {
-	result := ListHubVirtualNetworkConnectionsResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ListHubVirtualNetworkConnectionsResult)
-	return result, err
+	var val *ListHubVirtualNetworkConnectionsResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ListHubVirtualNetworkConnectionsResultResponse{}, err
+	}
+	return ListHubVirtualNetworkConnectionsResultResponse{RawResponse: resp.Response, ListHubVirtualNetworkConnectionsResult: val}, nil
 }
 
 // listHandleError handles the List error response.

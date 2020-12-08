@@ -107,9 +107,11 @@ func (client LoadBalancersClient) createOrUpdateCreateRequest(ctx context.Contex
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client LoadBalancersClient) createOrUpdateHandleResponse(resp *azcore.Response) (LoadBalancerResponse, error) {
-	result := LoadBalancerResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.LoadBalancer)
-	return result, err
+	var val *LoadBalancer
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return LoadBalancerResponse{}, err
+	}
+	return LoadBalancerResponse{RawResponse: resp.Response, LoadBalancer: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -214,11 +216,7 @@ func (client LoadBalancersClient) Get(ctx context.Context, resourceGroupName str
 	if !resp.HasStatusCode(http.StatusOK) {
 		return LoadBalancerResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return LoadBalancerResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -244,9 +242,11 @@ func (client LoadBalancersClient) getCreateRequest(ctx context.Context, resource
 
 // getHandleResponse handles the Get response.
 func (client LoadBalancersClient) getHandleResponse(resp *azcore.Response) (LoadBalancerResponse, error) {
-	result := LoadBalancerResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.LoadBalancer)
-	return result, err
+	var val *LoadBalancer
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return LoadBalancerResponse{}, err
+	}
+	return LoadBalancerResponse{RawResponse: resp.Response, LoadBalancer: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -293,9 +293,11 @@ func (client LoadBalancersClient) listCreateRequest(ctx context.Context, resourc
 
 // listHandleResponse handles the List response.
 func (client LoadBalancersClient) listHandleResponse(resp *azcore.Response) (LoadBalancerListResultResponse, error) {
-	result := LoadBalancerListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.LoadBalancerListResult)
-	return result, err
+	var val *LoadBalancerListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return LoadBalancerListResultResponse{}, err
+	}
+	return LoadBalancerListResultResponse{RawResponse: resp.Response, LoadBalancerListResult: val}, nil
 }
 
 // listHandleError handles the List error response.
@@ -341,9 +343,11 @@ func (client LoadBalancersClient) listAllCreateRequest(ctx context.Context, opti
 
 // listAllHandleResponse handles the ListAll response.
 func (client LoadBalancersClient) listAllHandleResponse(resp *azcore.Response) (LoadBalancerListResultResponse, error) {
-	result := LoadBalancerListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.LoadBalancerListResult)
-	return result, err
+	var val *LoadBalancerListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return LoadBalancerListResultResponse{}, err
+	}
+	return LoadBalancerListResultResponse{RawResponse: resp.Response, LoadBalancerListResult: val}, nil
 }
 
 // listAllHandleError handles the ListAll error response.
@@ -368,11 +372,7 @@ func (client LoadBalancersClient) UpdateTags(ctx context.Context, resourceGroupN
 	if !resp.HasStatusCode(http.StatusOK) {
 		return LoadBalancerResponse{}, client.updateTagsHandleError(resp)
 	}
-	result, err := client.updateTagsHandleResponse(resp)
-	if err != nil {
-		return LoadBalancerResponse{}, err
-	}
-	return result, nil
+	return client.updateTagsHandleResponse(resp)
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.
@@ -395,9 +395,11 @@ func (client LoadBalancersClient) updateTagsCreateRequest(ctx context.Context, r
 
 // updateTagsHandleResponse handles the UpdateTags response.
 func (client LoadBalancersClient) updateTagsHandleResponse(resp *azcore.Response) (LoadBalancerResponse, error) {
-	result := LoadBalancerResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.LoadBalancer)
-	return result, err
+	var val *LoadBalancer
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return LoadBalancerResponse{}, err
+	}
+	return LoadBalancerResponse{RawResponse: resp.Response, LoadBalancer: val}, nil
 }
 
 // updateTagsHandleError handles the UpdateTags error response.

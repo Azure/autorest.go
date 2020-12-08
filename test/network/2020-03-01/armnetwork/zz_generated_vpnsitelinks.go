@@ -46,11 +46,7 @@ func (client VpnSiteLinksClient) Get(ctx context.Context, resourceGroupName stri
 	if !resp.HasStatusCode(http.StatusOK) {
 		return VpnSiteLinkResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return VpnSiteLinkResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -74,9 +70,11 @@ func (client VpnSiteLinksClient) getCreateRequest(ctx context.Context, resourceG
 
 // getHandleResponse handles the Get response.
 func (client VpnSiteLinksClient) getHandleResponse(resp *azcore.Response) (VpnSiteLinkResponse, error) {
-	result := VpnSiteLinkResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.VpnSiteLink)
-	return result, err
+	var val *VpnSiteLink
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return VpnSiteLinkResponse{}, err
+	}
+	return VpnSiteLinkResponse{RawResponse: resp.Response, VpnSiteLink: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -124,9 +122,11 @@ func (client VpnSiteLinksClient) listByVpnSiteCreateRequest(ctx context.Context,
 
 // listByVpnSiteHandleResponse handles the ListByVpnSite response.
 func (client VpnSiteLinksClient) listByVpnSiteHandleResponse(resp *azcore.Response) (ListVpnSiteLinksResultResponse, error) {
-	result := ListVpnSiteLinksResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ListVpnSiteLinksResult)
-	return result, err
+	var val *ListVpnSiteLinksResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ListVpnSiteLinksResultResponse{}, err
+	}
+	return ListVpnSiteLinksResultResponse{RawResponse: resp.Response, ListVpnSiteLinksResult: val}, nil
 }
 
 // listByVpnSiteHandleError handles the ListByVpnSite error response.

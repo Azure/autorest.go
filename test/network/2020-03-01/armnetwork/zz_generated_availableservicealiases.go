@@ -68,9 +68,11 @@ func (client AvailableServiceAliasesClient) listCreateRequest(ctx context.Contex
 
 // listHandleResponse handles the List response.
 func (client AvailableServiceAliasesClient) listHandleResponse(resp *azcore.Response) (AvailableServiceAliasesResultResponse, error) {
-	result := AvailableServiceAliasesResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.AvailableServiceAliasesResult)
-	return result, err
+	var val *AvailableServiceAliasesResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return AvailableServiceAliasesResultResponse{}, err
+	}
+	return AvailableServiceAliasesResultResponse{RawResponse: resp.Response, AvailableServiceAliasesResult: val}, nil
 }
 
 // listHandleError handles the List error response.
@@ -118,9 +120,11 @@ func (client AvailableServiceAliasesClient) listByResourceGroupCreateRequest(ctx
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
 func (client AvailableServiceAliasesClient) listByResourceGroupHandleResponse(resp *azcore.Response) (AvailableServiceAliasesResultResponse, error) {
-	result := AvailableServiceAliasesResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.AvailableServiceAliasesResult)
-	return result, err
+	var val *AvailableServiceAliasesResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return AvailableServiceAliasesResultResponse{}, err
+	}
+	return AvailableServiceAliasesResultResponse{RawResponse: resp.Response, AvailableServiceAliasesResult: val}, nil
 }
 
 // listByResourceGroupHandleError handles the ListByResourceGroup error response.

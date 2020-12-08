@@ -108,9 +108,11 @@ func (client SecurityRulesClient) createOrUpdateCreateRequest(ctx context.Contex
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client SecurityRulesClient) createOrUpdateHandleResponse(resp *azcore.Response) (SecurityRuleResponse, error) {
-	result := SecurityRuleResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.SecurityRule)
-	return result, err
+	var val *SecurityRule
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return SecurityRuleResponse{}, err
+	}
+	return SecurityRuleResponse{RawResponse: resp.Response, SecurityRule: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -216,11 +218,7 @@ func (client SecurityRulesClient) Get(ctx context.Context, resourceGroupName str
 	if !resp.HasStatusCode(http.StatusOK) {
 		return SecurityRuleResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return SecurityRuleResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -244,9 +242,11 @@ func (client SecurityRulesClient) getCreateRequest(ctx context.Context, resource
 
 // getHandleResponse handles the Get response.
 func (client SecurityRulesClient) getHandleResponse(resp *azcore.Response) (SecurityRuleResponse, error) {
-	result := SecurityRuleResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.SecurityRule)
-	return result, err
+	var val *SecurityRule
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return SecurityRuleResponse{}, err
+	}
+	return SecurityRuleResponse{RawResponse: resp.Response, SecurityRule: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -294,9 +294,11 @@ func (client SecurityRulesClient) listCreateRequest(ctx context.Context, resourc
 
 // listHandleResponse handles the List response.
 func (client SecurityRulesClient) listHandleResponse(resp *azcore.Response) (SecurityRuleListResultResponse, error) {
-	result := SecurityRuleListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.SecurityRuleListResult)
-	return result, err
+	var val *SecurityRuleListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return SecurityRuleListResultResponse{}, err
+	}
+	return SecurityRuleListResultResponse{RawResponse: resp.Response, SecurityRuleListResult: val}, nil
 }
 
 // listHandleError handles the List error response.

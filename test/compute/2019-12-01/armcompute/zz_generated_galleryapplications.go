@@ -108,9 +108,11 @@ func (client GalleryApplicationsClient) createOrUpdateCreateRequest(ctx context.
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client GalleryApplicationsClient) createOrUpdateHandleResponse(resp *azcore.Response) (GalleryApplicationResponse, error) {
-	result := GalleryApplicationResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.GalleryApplication)
-	return result, err
+	var val *GalleryApplication
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return GalleryApplicationResponse{}, err
+	}
+	return GalleryApplicationResponse{RawResponse: resp.Response, GalleryApplication: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -216,11 +218,7 @@ func (client GalleryApplicationsClient) Get(ctx context.Context, resourceGroupNa
 	if !resp.HasStatusCode(http.StatusOK) {
 		return GalleryApplicationResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return GalleryApplicationResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -244,9 +242,11 @@ func (client GalleryApplicationsClient) getCreateRequest(ctx context.Context, re
 
 // getHandleResponse handles the Get response.
 func (client GalleryApplicationsClient) getHandleResponse(resp *azcore.Response) (GalleryApplicationResponse, error) {
-	result := GalleryApplicationResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.GalleryApplication)
-	return result, err
+	var val *GalleryApplication
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return GalleryApplicationResponse{}, err
+	}
+	return GalleryApplicationResponse{RawResponse: resp.Response, GalleryApplication: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -294,9 +294,11 @@ func (client GalleryApplicationsClient) listByGalleryCreateRequest(ctx context.C
 
 // listByGalleryHandleResponse handles the ListByGallery response.
 func (client GalleryApplicationsClient) listByGalleryHandleResponse(resp *azcore.Response) (GalleryApplicationListResponse, error) {
-	result := GalleryApplicationListResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.GalleryApplicationList)
-	return result, err
+	var val *GalleryApplicationList
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return GalleryApplicationListResponse{}, err
+	}
+	return GalleryApplicationListResponse{RawResponse: resp.Response, GalleryApplicationList: val}, nil
 }
 
 // listByGalleryHandleError handles the ListByGallery error response.
@@ -382,9 +384,11 @@ func (client GalleryApplicationsClient) updateCreateRequest(ctx context.Context,
 
 // updateHandleResponse handles the Update response.
 func (client GalleryApplicationsClient) updateHandleResponse(resp *azcore.Response) (GalleryApplicationResponse, error) {
-	result := GalleryApplicationResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.GalleryApplication)
-	return result, err
+	var val *GalleryApplication
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return GalleryApplicationResponse{}, err
+	}
+	return GalleryApplicationResponse{RawResponse: resp.Response, GalleryApplication: val}, nil
 }
 
 // updateHandleError handles the Update error response.

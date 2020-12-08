@@ -46,11 +46,7 @@ func (client PeerExpressRouteCircuitConnectionsClient) Get(ctx context.Context, 
 	if !resp.HasStatusCode(http.StatusOK) {
 		return PeerExpressRouteCircuitConnectionResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return PeerExpressRouteCircuitConnectionResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -75,9 +71,11 @@ func (client PeerExpressRouteCircuitConnectionsClient) getCreateRequest(ctx cont
 
 // getHandleResponse handles the Get response.
 func (client PeerExpressRouteCircuitConnectionsClient) getHandleResponse(resp *azcore.Response) (PeerExpressRouteCircuitConnectionResponse, error) {
-	result := PeerExpressRouteCircuitConnectionResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.PeerExpressRouteCircuitConnection)
-	return result, err
+	var val *PeerExpressRouteCircuitConnection
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return PeerExpressRouteCircuitConnectionResponse{}, err
+	}
+	return PeerExpressRouteCircuitConnectionResponse{RawResponse: resp.Response, PeerExpressRouteCircuitConnection: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -126,9 +124,11 @@ func (client PeerExpressRouteCircuitConnectionsClient) listCreateRequest(ctx con
 
 // listHandleResponse handles the List response.
 func (client PeerExpressRouteCircuitConnectionsClient) listHandleResponse(resp *azcore.Response) (PeerExpressRouteCircuitConnectionListResultResponse, error) {
-	result := PeerExpressRouteCircuitConnectionListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.PeerExpressRouteCircuitConnectionListResult)
-	return result, err
+	var val *PeerExpressRouteCircuitConnectionListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return PeerExpressRouteCircuitConnectionListResultResponse{}, err
+	}
+	return PeerExpressRouteCircuitConnectionListResultResponse{RawResponse: resp.Response, PeerExpressRouteCircuitConnectionListResult: val}, nil
 }
 
 // listHandleError handles the List error response.

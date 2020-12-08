@@ -108,9 +108,11 @@ func (client ExpressRouteCircuitAuthorizationsClient) createOrUpdateCreateReques
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client ExpressRouteCircuitAuthorizationsClient) createOrUpdateHandleResponse(resp *azcore.Response) (ExpressRouteCircuitAuthorizationResponse, error) {
-	result := ExpressRouteCircuitAuthorizationResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ExpressRouteCircuitAuthorization)
-	return result, err
+	var val *ExpressRouteCircuitAuthorization
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ExpressRouteCircuitAuthorizationResponse{}, err
+	}
+	return ExpressRouteCircuitAuthorizationResponse{RawResponse: resp.Response, ExpressRouteCircuitAuthorization: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -216,11 +218,7 @@ func (client ExpressRouteCircuitAuthorizationsClient) Get(ctx context.Context, r
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ExpressRouteCircuitAuthorizationResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return ExpressRouteCircuitAuthorizationResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -244,9 +242,11 @@ func (client ExpressRouteCircuitAuthorizationsClient) getCreateRequest(ctx conte
 
 // getHandleResponse handles the Get response.
 func (client ExpressRouteCircuitAuthorizationsClient) getHandleResponse(resp *azcore.Response) (ExpressRouteCircuitAuthorizationResponse, error) {
-	result := ExpressRouteCircuitAuthorizationResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ExpressRouteCircuitAuthorization)
-	return result, err
+	var val *ExpressRouteCircuitAuthorization
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ExpressRouteCircuitAuthorizationResponse{}, err
+	}
+	return ExpressRouteCircuitAuthorizationResponse{RawResponse: resp.Response, ExpressRouteCircuitAuthorization: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -294,9 +294,11 @@ func (client ExpressRouteCircuitAuthorizationsClient) listCreateRequest(ctx cont
 
 // listHandleResponse handles the List response.
 func (client ExpressRouteCircuitAuthorizationsClient) listHandleResponse(resp *azcore.Response) (AuthorizationListResultResponse, error) {
-	result := AuthorizationListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.AuthorizationListResult)
-	return result, err
+	var val *AuthorizationListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return AuthorizationListResultResponse{}, err
+	}
+	return AuthorizationListResultResponse{RawResponse: resp.Response, AuthorizationListResult: val}, nil
 }
 
 // listHandleError handles the List error response.

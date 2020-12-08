@@ -47,11 +47,7 @@ func (client PetClient) AddPet(ctx context.Context, options *PetAddPetOptions) (
 	if !resp.HasStatusCode(http.StatusOK) {
 		return PetResponse{}, client.addPetHandleError(resp)
 	}
-	result, err := client.addPetHandleResponse(resp)
-	if err != nil {
-		return PetResponse{}, err
-	}
-	return result, nil
+	return client.addPetHandleResponse(resp)
 }
 
 // addPetCreateRequest creates the AddPet request.
@@ -71,9 +67,11 @@ func (client PetClient) addPetCreateRequest(ctx context.Context, options *PetAdd
 
 // addPetHandleResponse handles the AddPet response.
 func (client PetClient) addPetHandleResponse(resp *azcore.Response) (PetResponse, error) {
-	result := PetResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Pet)
-	return result, err
+	var val *Pet
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return PetResponse{}, err
+	}
+	return PetResponse{RawResponse: resp.Response, Pet: val}, nil
 }
 
 // addPetHandleError handles the AddPet error response.
@@ -101,11 +99,7 @@ func (client PetClient) GetByPetID(ctx context.Context, petId string, options *P
 	if !resp.HasStatusCode(http.StatusOK) {
 		return PetResponse{}, client.getByPetIdHandleError(resp)
 	}
-	result, err := client.getByPetIdHandleResponse(resp)
-	if err != nil {
-		return PetResponse{}, err
-	}
-	return result, nil
+	return client.getByPetIdHandleResponse(resp)
 }
 
 // getByPetIdCreateRequest creates the GetByPetID request.
@@ -123,9 +117,11 @@ func (client PetClient) getByPetIdCreateRequest(ctx context.Context, petId strin
 
 // getByPetIdHandleResponse handles the GetByPetID response.
 func (client PetClient) getByPetIdHandleResponse(resp *azcore.Response) (PetResponse, error) {
-	result := PetResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Pet)
-	return result, err
+	var val *Pet
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return PetResponse{}, err
+	}
+	return PetResponse{RawResponse: resp.Response, Pet: val}, nil
 }
 
 // getByPetIdHandleError handles the GetByPetID error response.

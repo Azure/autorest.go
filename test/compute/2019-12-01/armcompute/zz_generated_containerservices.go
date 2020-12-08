@@ -110,9 +110,11 @@ func (client ContainerServicesClient) createOrUpdateCreateRequest(ctx context.Co
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client ContainerServicesClient) createOrUpdateHandleResponse(resp *azcore.Response) (ContainerServiceResponse, error) {
-	result := ContainerServiceResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ContainerService)
-	return result, err
+	var val *ContainerService
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ContainerServiceResponse{}, err
+	}
+	return ContainerServiceResponse{RawResponse: resp.Response, ContainerService: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -230,11 +232,7 @@ func (client ContainerServicesClient) Get(ctx context.Context, resourceGroupName
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ContainerServiceResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return ContainerServiceResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -257,9 +255,11 @@ func (client ContainerServicesClient) getCreateRequest(ctx context.Context, reso
 
 // getHandleResponse handles the Get response.
 func (client ContainerServicesClient) getHandleResponse(resp *azcore.Response) (ContainerServiceResponse, error) {
-	result := ContainerServiceResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ContainerService)
-	return result, err
+	var val *ContainerService
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ContainerServiceResponse{}, err
+	}
+	return ContainerServiceResponse{RawResponse: resp.Response, ContainerService: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -310,9 +310,11 @@ func (client ContainerServicesClient) listCreateRequest(ctx context.Context, opt
 
 // listHandleResponse handles the List response.
 func (client ContainerServicesClient) listHandleResponse(resp *azcore.Response) (ContainerServiceListResultResponse, error) {
-	result := ContainerServiceListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ContainerServiceListResult)
-	return result, err
+	var val *ContainerServiceListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ContainerServiceListResultResponse{}, err
+	}
+	return ContainerServiceListResultResponse{RawResponse: resp.Response, ContainerServiceListResult: val}, nil
 }
 
 // listHandleError handles the List error response.
@@ -364,9 +366,11 @@ func (client ContainerServicesClient) listByResourceGroupCreateRequest(ctx conte
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
 func (client ContainerServicesClient) listByResourceGroupHandleResponse(resp *azcore.Response) (ContainerServiceListResultResponse, error) {
-	result := ContainerServiceListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ContainerServiceListResult)
-	return result, err
+	var val *ContainerServiceListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ContainerServiceListResultResponse{}, err
+	}
+	return ContainerServiceListResultResponse{RawResponse: resp.Response, ContainerServiceListResult: val}, nil
 }
 
 // listByResourceGroupHandleError handles the ListByResourceGroup error response.

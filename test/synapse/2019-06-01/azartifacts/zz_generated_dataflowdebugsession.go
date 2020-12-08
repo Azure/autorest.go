@@ -35,11 +35,7 @@ func (client dataFlowDebugSessionClient) AddDataFlow(ctx context.Context, reques
 	if !resp.HasStatusCode(http.StatusOK) {
 		return AddDataFlowToDebugSessionResponseResponse{}, client.addDataFlowHandleError(resp)
 	}
-	result, err := client.addDataFlowHandleResponse(resp)
-	if err != nil {
-		return AddDataFlowToDebugSessionResponseResponse{}, err
-	}
-	return result, nil
+	return client.addDataFlowHandleResponse(resp)
 }
 
 // addDataFlowCreateRequest creates the AddDataFlow request.
@@ -59,9 +55,11 @@ func (client dataFlowDebugSessionClient) addDataFlowCreateRequest(ctx context.Co
 
 // addDataFlowHandleResponse handles the AddDataFlow response.
 func (client dataFlowDebugSessionClient) addDataFlowHandleResponse(resp *azcore.Response) (AddDataFlowToDebugSessionResponseResponse, error) {
-	result := AddDataFlowToDebugSessionResponseResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.AddDataFlowToDebugSessionResponse)
-	return result, err
+	var val *AddDataFlowToDebugSessionResponse
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return AddDataFlowToDebugSessionResponseResponse{}, err
+	}
+	return AddDataFlowToDebugSessionResponseResponse{RawResponse: resp.Response, AddDataFlowToDebugSessionResponse: val}, nil
 }
 
 // addDataFlowHandleError handles the AddDataFlow error response.
@@ -106,9 +104,11 @@ func (client dataFlowDebugSessionClient) createDataFlowDebugSessionCreateRequest
 
 // createDataFlowDebugSessionHandleResponse handles the CreateDataFlowDebugSession response.
 func (client dataFlowDebugSessionClient) createDataFlowDebugSessionHandleResponse(resp *azcore.Response) (CreateDataFlowDebugSessionResponseResponse, error) {
-	result := CreateDataFlowDebugSessionResponseResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.CreateDataFlowDebugSessionResponse)
-	return result, err
+	var val *CreateDataFlowDebugSessionResponse
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return CreateDataFlowDebugSessionResponseResponse{}, err
+	}
+	return CreateDataFlowDebugSessionResponseResponse{RawResponse: resp.Response, CreateDataFlowDebugSessionResponse: val}, nil
 }
 
 // createDataFlowDebugSessionHandleError handles the CreateDataFlowDebugSession error response.
@@ -193,9 +193,11 @@ func (client dataFlowDebugSessionClient) executeCommandCreateRequest(ctx context
 
 // executeCommandHandleResponse handles the ExecuteCommand response.
 func (client dataFlowDebugSessionClient) executeCommandHandleResponse(resp *azcore.Response) (DataFlowDebugCommandResponseResponse, error) {
-	result := DataFlowDebugCommandResponseResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.DataFlowDebugCommandResponse)
-	return result, err
+	var val *DataFlowDebugCommandResponse
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return DataFlowDebugCommandResponseResponse{}, err
+	}
+	return DataFlowDebugCommandResponseResponse{RawResponse: resp.Response, DataFlowDebugCommandResponse: val}, nil
 }
 
 // executeCommandHandleError handles the ExecuteCommand error response.
@@ -240,9 +242,11 @@ func (client dataFlowDebugSessionClient) queryDataFlowDebugSessionsByWorkspaceCr
 
 // queryDataFlowDebugSessionsByWorkspaceHandleResponse handles the QueryDataFlowDebugSessionsByWorkspace response.
 func (client dataFlowDebugSessionClient) queryDataFlowDebugSessionsByWorkspaceHandleResponse(resp *azcore.Response) (QueryDataFlowDebugSessionsResponseResponse, error) {
-	result := QueryDataFlowDebugSessionsResponseResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.QueryDataFlowDebugSessionsResponse)
-	return result, err
+	var val *QueryDataFlowDebugSessionsResponse
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return QueryDataFlowDebugSessionsResponseResponse{}, err
+	}
+	return QueryDataFlowDebugSessionsResponseResponse{RawResponse: resp.Response, QueryDataFlowDebugSessionsResponse: val}, nil
 }
 
 // queryDataFlowDebugSessionsByWorkspaceHandleError handles the QueryDataFlowDebugSessionsByWorkspace error response.

@@ -254,9 +254,11 @@ func (client LroRetrysClient) deleteProvisioning202Accepted200SucceededCreateReq
 
 // deleteProvisioning202Accepted200SucceededHandleResponse handles the DeleteProvisioning202Accepted200Succeeded response.
 func (client LroRetrysClient) deleteProvisioning202Accepted200SucceededHandleResponse(resp *azcore.Response) (ProductResponse, error) {
-	result := ProductResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Product)
-	return result, err
+	var val *Product
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ProductResponse{}, err
+	}
+	return ProductResponse{RawResponse: resp.Response, Product: val}, nil
 }
 
 // deleteProvisioning202Accepted200SucceededHandleError handles the DeleteProvisioning202Accepted200Succeeded error response.
@@ -502,9 +504,11 @@ func (client LroRetrysClient) put201CreatingSucceeded200CreateRequest(ctx contex
 
 // put201CreatingSucceeded200HandleResponse handles the Put201CreatingSucceeded200 response.
 func (client LroRetrysClient) put201CreatingSucceeded200HandleResponse(resp *azcore.Response) (ProductResponse, error) {
-	result := ProductResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Product)
-	return result, err
+	var val *Product
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ProductResponse{}, err
+	}
+	return ProductResponse{RawResponse: resp.Response, Product: val}, nil
 }
 
 // put201CreatingSucceeded200HandleError handles the Put201CreatingSucceeded200 error response.
@@ -590,9 +594,11 @@ func (client LroRetrysClient) putAsyncRelativeRetrySucceededCreateRequest(ctx co
 
 // putAsyncRelativeRetrySucceededHandleResponse handles the PutAsyncRelativeRetrySucceeded response.
 func (client LroRetrysClient) putAsyncRelativeRetrySucceededHandleResponse(resp *azcore.Response) (ProductResponse, error) {
-	result := ProductResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Product)
-	return result, err
+	var val *Product
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ProductResponse{}, err
+	}
+	return ProductResponse{RawResponse: resp.Response, Product: val}, nil
 }
 
 // putAsyncRelativeRetrySucceededHandleError handles the PutAsyncRelativeRetrySucceeded error response.

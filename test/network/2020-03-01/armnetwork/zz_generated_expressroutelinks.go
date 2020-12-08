@@ -46,11 +46,7 @@ func (client ExpressRouteLinksClient) Get(ctx context.Context, resourceGroupName
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ExpressRouteLinkResponse{}, client.getHandleError(resp)
 	}
-	result, err := client.getHandleResponse(resp)
-	if err != nil {
-		return ExpressRouteLinkResponse{}, err
-	}
-	return result, nil
+	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
@@ -74,9 +70,11 @@ func (client ExpressRouteLinksClient) getCreateRequest(ctx context.Context, reso
 
 // getHandleResponse handles the Get response.
 func (client ExpressRouteLinksClient) getHandleResponse(resp *azcore.Response) (ExpressRouteLinkResponse, error) {
-	result := ExpressRouteLinkResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ExpressRouteLink)
-	return result, err
+	var val *ExpressRouteLink
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ExpressRouteLinkResponse{}, err
+	}
+	return ExpressRouteLinkResponse{RawResponse: resp.Response, ExpressRouteLink: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -124,9 +122,11 @@ func (client ExpressRouteLinksClient) listCreateRequest(ctx context.Context, res
 
 // listHandleResponse handles the List response.
 func (client ExpressRouteLinksClient) listHandleResponse(resp *azcore.Response) (ExpressRouteLinkListResultResponse, error) {
-	result := ExpressRouteLinkListResultResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ExpressRouteLinkListResult)
-	return result, err
+	var val *ExpressRouteLinkListResult
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ExpressRouteLinkListResultResponse{}, err
+	}
+	return ExpressRouteLinkListResultResponse{RawResponse: resp.Response, ExpressRouteLinkListResult: val}, nil
 }
 
 // listHandleError handles the List error response.

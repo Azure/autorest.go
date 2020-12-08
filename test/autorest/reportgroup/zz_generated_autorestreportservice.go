@@ -42,11 +42,7 @@ func (client AutoRestReportServiceClient) GetOptionalReport(ctx context.Context,
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfInt32Response{}, client.getOptionalReportHandleError(resp)
 	}
-	result, err := client.getOptionalReportHandleResponse(resp)
-	if err != nil {
-		return MapOfInt32Response{}, err
-	}
-	return result, nil
+	return client.getOptionalReportHandleResponse(resp)
 }
 
 // getOptionalReportCreateRequest creates the GetOptionalReport request.
@@ -68,9 +64,11 @@ func (client AutoRestReportServiceClient) getOptionalReportCreateRequest(ctx con
 
 // getOptionalReportHandleResponse handles the GetOptionalReport response.
 func (client AutoRestReportServiceClient) getOptionalReportHandleResponse(resp *azcore.Response) (MapOfInt32Response, error) {
-	result := MapOfInt32Response{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Value)
-	return result, err
+	var val *map[string]int32
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return MapOfInt32Response{}, err
+	}
+	return MapOfInt32Response{RawResponse: resp.Response, Value: val}, nil
 }
 
 // getOptionalReportHandleError handles the GetOptionalReport error response.
@@ -95,11 +93,7 @@ func (client AutoRestReportServiceClient) GetReport(ctx context.Context, options
 	if !resp.HasStatusCode(http.StatusOK) {
 		return MapOfInt32Response{}, client.getReportHandleError(resp)
 	}
-	result, err := client.getReportHandleResponse(resp)
-	if err != nil {
-		return MapOfInt32Response{}, err
-	}
-	return result, nil
+	return client.getReportHandleResponse(resp)
 }
 
 // getReportCreateRequest creates the GetReport request.
@@ -121,9 +115,11 @@ func (client AutoRestReportServiceClient) getReportCreateRequest(ctx context.Con
 
 // getReportHandleResponse handles the GetReport response.
 func (client AutoRestReportServiceClient) getReportHandleResponse(resp *azcore.Response) (MapOfInt32Response, error) {
-	result := MapOfInt32Response{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Value)
-	return result, err
+	var val *map[string]int32
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return MapOfInt32Response{}, err
+	}
+	return MapOfInt32Response{RawResponse: resp.Response, Value: val}, nil
 }
 
 // getReportHandleError handles the GetReport error response.

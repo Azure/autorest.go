@@ -42,11 +42,7 @@ func (client ReadonlypropertyClient) GetValid(ctx context.Context, options *Read
 	if !resp.HasStatusCode(http.StatusOK) {
 		return ReadonlyObjResponse{}, client.getValidHandleError(resp)
 	}
-	result, err := client.getValidHandleResponse(resp)
-	if err != nil {
-		return ReadonlyObjResponse{}, err
-	}
-	return result, nil
+	return client.getValidHandleResponse(resp)
 }
 
 // getValidCreateRequest creates the GetValid request.
@@ -63,9 +59,11 @@ func (client ReadonlypropertyClient) getValidCreateRequest(ctx context.Context, 
 
 // getValidHandleResponse handles the GetValid response.
 func (client ReadonlypropertyClient) getValidHandleResponse(resp *azcore.Response) (ReadonlyObjResponse, error) {
-	result := ReadonlyObjResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.ReadonlyObj)
-	return result, err
+	var val *ReadonlyObj
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ReadonlyObjResponse{}, err
+	}
+	return ReadonlyObjResponse{RawResponse: resp.Response, ReadonlyObj: val}, nil
 }
 
 // getValidHandleError handles the GetValid error response.

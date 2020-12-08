@@ -96,21 +96,21 @@ func (c BigDataPoolReferenceType) ToPtr() *BigDataPoolReferenceType {
 	return &c
 }
 
-type BlobEventTypes string
+type BlobEventType string
 
 const (
-	BlobEventTypesMicrosoftStorageBlobCreated BlobEventTypes = "Microsoft.Storage.BlobCreated"
-	BlobEventTypesMicrosoftStorageBlobDeleted BlobEventTypes = "Microsoft.Storage.BlobDeleted"
+	BlobEventTypeMicrosoftStorageBlobCreated BlobEventType = "Microsoft.Storage.BlobCreated"
+	BlobEventTypeMicrosoftStorageBlobDeleted BlobEventType = "Microsoft.Storage.BlobDeleted"
 )
 
-func PossibleBlobEventTypesValues() []BlobEventTypes {
-	return []BlobEventTypes{
-		BlobEventTypesMicrosoftStorageBlobCreated,
-		BlobEventTypesMicrosoftStorageBlobDeleted,
+func PossibleBlobEventTypeValues() []BlobEventType {
+	return []BlobEventType{
+		BlobEventTypeMicrosoftStorageBlobCreated,
+		BlobEventTypeMicrosoftStorageBlobDeleted,
 	}
 }
 
-func (c BlobEventTypes) ToPtr() *BlobEventTypes {
+func (c BlobEventType) ToPtr() *BlobEventType {
 	return &c
 }
 

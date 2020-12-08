@@ -42,11 +42,7 @@ func (client InheritanceClient) GetValid(ctx context.Context, options *Inheritan
 	if !resp.HasStatusCode(http.StatusOK) {
 		return SiameseResponse{}, client.getValidHandleError(resp)
 	}
-	result, err := client.getValidHandleResponse(resp)
-	if err != nil {
-		return SiameseResponse{}, err
-	}
-	return result, nil
+	return client.getValidHandleResponse(resp)
 }
 
 // getValidCreateRequest creates the GetValid request.
@@ -63,9 +59,11 @@ func (client InheritanceClient) getValidCreateRequest(ctx context.Context, optio
 
 // getValidHandleResponse handles the GetValid response.
 func (client InheritanceClient) getValidHandleResponse(resp *azcore.Response) (SiameseResponse, error) {
-	result := SiameseResponse{RawResponse: resp.Response}
-	err := resp.UnmarshalAsJSON(&result.Siamese)
-	return result, err
+	var val *Siamese
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return SiameseResponse{}, err
+	}
+	return SiameseResponse{RawResponse: resp.Response, Siamese: val}, nil
 }
 
 // getValidHandleError handles the GetValid error response.
