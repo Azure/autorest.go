@@ -6540,7 +6540,19 @@ type CloudError struct {
 func (e CloudError) Error() string {
 	msg := ""
 	if e.InnerError != nil {
-		msg += fmt.Sprintf("InnerError: %v\n", *e.InnerError)
+		msg += "InnerError: \n"
+		if e.InnerError.Code != nil {
+			msg += fmt.Sprintf("\tCode: %v\n", *e.InnerError.Code)
+		}
+		if e.InnerError.Message != nil {
+			msg += fmt.Sprintf("\tMessage: %v\n", *e.InnerError.Message)
+		}
+		if e.InnerError.Target != nil {
+			msg += fmt.Sprintf("\tTarget: %v\n", *e.InnerError.Target)
+		}
+		if e.InnerError.Details != nil {
+			msg += fmt.Sprintf("\tDetails: %v\n", *e.InnerError.Details)
+		}
 	}
 	if msg == "" {
 		msg = "missing error info"
@@ -12008,7 +12020,22 @@ type ErrorContract struct {
 func (e ErrorContract) Error() string {
 	msg := ""
 	if e.InnerError != nil {
-		msg += fmt.Sprintf("InnerError: %v\n", *e.InnerError)
+		msg += "InnerError: \n"
+		if e.InnerError.Code != nil {
+			msg += fmt.Sprintf("\tCode: %v\n", *e.InnerError.Code)
+		}
+		if e.InnerError.Message != nil {
+			msg += fmt.Sprintf("\tMessage: %v\n", *e.InnerError.Message)
+		}
+		if e.InnerError.Target != nil {
+			msg += fmt.Sprintf("\tTarget: %v\n", *e.InnerError.Target)
+		}
+		if e.InnerError.Details != nil {
+			msg += fmt.Sprintf("\tDetails: %v\n", *e.InnerError.Details)
+		}
+		if e.InnerError.AdditionalInfo != nil {
+			msg += fmt.Sprintf("\tAdditionalInfo: %v\n", *e.InnerError.AdditionalInfo)
+		}
 	}
 	if msg == "" {
 		msg = "missing error info"

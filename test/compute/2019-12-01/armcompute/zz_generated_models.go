@@ -302,7 +302,22 @@ type CloudError struct {
 func (e CloudError) Error() string {
 	msg := ""
 	if e.InnerError != nil {
-		msg += fmt.Sprintf("InnerError: %v\n", *e.InnerError)
+		msg += "InnerError: \n"
+		if e.InnerError.Details != nil {
+			msg += fmt.Sprintf("\tDetails: %v\n", *e.InnerError.Details)
+		}
+		if e.InnerError.Innererror != nil {
+			msg += fmt.Sprintf("\tInnererror: %v\n", *e.InnerError.Innererror)
+		}
+		if e.InnerError.Code != nil {
+			msg += fmt.Sprintf("\tCode: %v\n", *e.InnerError.Code)
+		}
+		if e.InnerError.Target != nil {
+			msg += fmt.Sprintf("\tTarget: %v\n", *e.InnerError.Target)
+		}
+		if e.InnerError.Message != nil {
+			msg += fmt.Sprintf("\tMessage: %v\n", *e.InnerError.Message)
+		}
 	}
 	if msg == "" {
 		msg = "missing error info"
