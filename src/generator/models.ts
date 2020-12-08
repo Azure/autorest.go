@@ -244,7 +244,8 @@ function generateStructs(objects?: ObjectSchema[]): StructDef[] {
       text += `\tmsg := ""\n`;
       for (const prop of values(structDef.Properties)) {
         text += `\tif e.${prop.language.go!.name} != nil {\n`;
-        // check if the property is an object or a basic type and output the corresponding error message
+        // check if the property is an object or a basic type and output the corresponding error message.
+        // this will only include details for the top level information in the corresponding type. 
         if (!isObjectType(prop.schema)) {
           text += `\t\tmsg += fmt.Sprintf("${prop.language.go!.name}: %v\\n", *e.${prop.language.go!.name})\n`;
         } else {
