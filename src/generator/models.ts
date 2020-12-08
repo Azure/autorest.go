@@ -246,27 +246,25 @@ function generateStructs(objects?: ObjectSchema[]): StructDef[] {
         text += `\tif e.${prop.language.go!.name} != nil {\n`;
         // check if the property is an object or a basic type and output the corresponding error message.
         // this will only include details for the top level information in the corresponding type. 
-        if (!isObjectType(prop.schema)) {
+        if (!isObjectSchema(prop.schema)) {
           text += `\t\tmsg += fmt.Sprintf("${prop.language.go!.name}: %v\\n", *e.${prop.language.go!.name})\n`;
+        } else if (prop.language.go!.errorType) {
+          // if the field is another error type simply add that error message to the current error.
+          text += `\t\tmsg += fmt.Sprintf("${prop.language.go!.name}: %v\\n", *e.${prop.language.go!.name}.Error())\n`;
         } else {
           // if the property is an object schema add the information in the Go struct to the error message 
-          if (prop.language.go!.errorType) {
-            text += `\t\tmsg += fmt.Sprintf("${prop.language.go!.name}: %v\\n", *e.${prop.language.go!.name}.Error())\n`;
-          } else {
-            text += `\t\tmsg += "${prop.language.go!.name}: \\n"\n`;
-            for (const s of values(objects)) {
-              if (s.language.go!.name === prop.schema.language.go!.name) {
-                for (const p of values(s.properties)) {
-                  text += `\t\tif e.${prop.language.go!.name}.${p.language.go!.name} != nil {\n`;
-                  if (p.language.go!.errorType) {
-                    text += `\t\tmsg += fmt.Sprintf("${prop.language.go!.name}: %v\\n", *e.${prop.language.go!.name}.Error())\n`;
-                  } else {
-                    text += `\t\t\tmsg += fmt.Sprintf("\\t${p.language.go!.name}: %v\\n", *e.${prop.language.go!.name}.${p.language.go!.name})\n`;
-                  }
+          text += `\t\tmsg += "${prop.language.go!.name}: \\n"\n`;
+          for (const s of values(objects)) {
+            if (s.language.go!.name === prop.schema.language.go!.name) {
+              for (const p of values(s.properties)) {
+                text += `\t\tif e.${prop.language.go!.name}.${p.language.go!.name} != nil {\n`;
+                if (p.language.go!.errorType) {
+                  text += `\t\tmsg += fmt.Sprintf("${prop.language.go!.name}: %v\\n", *e.${prop.language.go!.name}.Error())\n`;
+                } else {
+                  text += `\t\t\tmsg += fmt.Sprintf("\\t${p.language.go!.name}: %v\\n", *e.${prop.language.go!.name}.${p.language.go!.name})\n`;                  }
                   text += '\t\t}\n';
-                }
-                break;
               }
+              break;
             }
           }
         }
@@ -740,14 +738,4 @@ function generateAliasType(structDef: StructDef, receiver: string, forMarshal: b
   }
   text += `\t}\n`;
   return text;
-}
-
-// differentiates between objects and basic types defined in Go. Returns true if it finds an object to expand for the error message. 
-function isObjectType(schema: Schema): boolean {
-  switch (schema.type) {
-    case SchemaType.Object:
-      return true;
-    default:
-      return false;
-  }
 }
