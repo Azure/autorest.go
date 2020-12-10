@@ -61,6 +61,7 @@ func (client HTTPClientFailureClient) Delete400(ctx context.Context, booleanValu
 	result, err = client.Delete400Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Delete400", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -128,6 +129,7 @@ func (client HTTPClientFailureClient) Delete407(ctx context.Context, booleanValu
 	result, err = client.Delete407Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Delete407", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -195,6 +197,7 @@ func (client HTTPClientFailureClient) Delete417(ctx context.Context, booleanValu
 	result, err = client.Delete417Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Delete417", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -260,6 +263,7 @@ func (client HTTPClientFailureClient) Get400(ctx context.Context) (result Error,
 	result, err = client.Get400Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Get400", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -320,6 +324,7 @@ func (client HTTPClientFailureClient) Get402(ctx context.Context) (result Error,
 	result, err = client.Get402Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Get402", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -380,6 +385,7 @@ func (client HTTPClientFailureClient) Get403(ctx context.Context) (result Error,
 	result, err = client.Get403Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Get403", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -440,6 +446,7 @@ func (client HTTPClientFailureClient) Get411(ctx context.Context) (result Error,
 	result, err = client.Get411Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Get411", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -500,6 +507,7 @@ func (client HTTPClientFailureClient) Get412(ctx context.Context) (result Error,
 	result, err = client.Get412Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Get412", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -560,6 +568,7 @@ func (client HTTPClientFailureClient) Get416(ctx context.Context) (result Error,
 	result, err = client.Get416Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Get416", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -620,6 +629,7 @@ func (client HTTPClientFailureClient) Head400(ctx context.Context) (result Error
 	result, err = client.Head400Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Head400", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -680,6 +690,7 @@ func (client HTTPClientFailureClient) Head401(ctx context.Context) (result Error
 	result, err = client.Head401Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Head401", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -740,6 +751,7 @@ func (client HTTPClientFailureClient) Head410(ctx context.Context) (result Error
 	result, err = client.Head410Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Head410", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -800,6 +812,7 @@ func (client HTTPClientFailureClient) Head429(ctx context.Context) (result Error
 	result, err = client.Head429Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Head429", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -862,6 +875,7 @@ func (client HTTPClientFailureClient) Patch400(ctx context.Context, booleanValue
 	result, err = client.Patch400Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Patch400", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -929,6 +943,7 @@ func (client HTTPClientFailureClient) Patch405(ctx context.Context, booleanValue
 	result, err = client.Patch405Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Patch405", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -996,6 +1011,7 @@ func (client HTTPClientFailureClient) Patch414(ctx context.Context, booleanValue
 	result, err = client.Patch414Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Patch414", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1063,6 +1079,7 @@ func (client HTTPClientFailureClient) Post400(ctx context.Context, booleanValue 
 	result, err = client.Post400Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Post400", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1130,6 +1147,7 @@ func (client HTTPClientFailureClient) Post406(ctx context.Context, booleanValue 
 	result, err = client.Post406Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Post406", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1197,6 +1215,7 @@ func (client HTTPClientFailureClient) Post415(ctx context.Context, booleanValue 
 	result, err = client.Post415Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Post415", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1264,6 +1283,7 @@ func (client HTTPClientFailureClient) Put400(ctx context.Context, booleanValue *
 	result, err = client.Put400Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Put400", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1331,6 +1351,7 @@ func (client HTTPClientFailureClient) Put404(ctx context.Context, booleanValue *
 	result, err = client.Put404Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Put404", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1398,6 +1419,7 @@ func (client HTTPClientFailureClient) Put409(ctx context.Context, booleanValue *
 	result, err = client.Put409Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Put409", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1465,6 +1487,7 @@ func (client HTTPClientFailureClient) Put413(ctx context.Context, booleanValue *
 	result, err = client.Put413Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Put413", resp, "Failure responding to request")
+		return
 	}
 
 	return

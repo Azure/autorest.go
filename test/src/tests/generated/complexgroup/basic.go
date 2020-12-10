@@ -58,6 +58,7 @@ func (client BasicClient) GetEmpty(ctx context.Context) (result Basic, err error
 	result, err = client.GetEmptyResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.BasicClient", "GetEmpty", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -118,6 +119,7 @@ func (client BasicClient) GetInvalid(ctx context.Context) (result Basic, err err
 	result, err = client.GetInvalidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.BasicClient", "GetInvalid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -178,6 +180,7 @@ func (client BasicClient) GetNotProvided(ctx context.Context) (result Basic, err
 	result, err = client.GetNotProvidedResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.BasicClient", "GetNotProvided", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -238,6 +241,7 @@ func (client BasicClient) GetNull(ctx context.Context) (result Basic, err error)
 	result, err = client.GetNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.BasicClient", "GetNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -298,6 +302,7 @@ func (client BasicClient) GetValid(ctx context.Context) (result Basic, err error
 	result, err = client.GetValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.BasicClient", "GetValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -360,6 +365,7 @@ func (client BasicClient) PutValid(ctx context.Context, complexBody Basic) (resu
 	result, err = client.PutValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.BasicClient", "PutValid", resp, "Failure responding to request")
+		return
 	}
 
 	return

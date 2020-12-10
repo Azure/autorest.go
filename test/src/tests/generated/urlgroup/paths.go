@@ -70,6 +70,7 @@ func (client PathsClient) ArrayCsvInPath(ctx context.Context, arrayPath []string
 	result, err = client.ArrayCsvInPathResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.PathsClient", "ArrayCsvInPath", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -135,6 +136,7 @@ func (client PathsClient) Base64URL(ctx context.Context, base64URLPath string) (
 	result, err = client.Base64URLResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.PathsClient", "Base64URL", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -198,6 +200,7 @@ func (client PathsClient) ByteEmpty(ctx context.Context) (result autorest.Respon
 	result, err = client.ByteEmptyResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.PathsClient", "ByteEmpty", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -269,6 +272,7 @@ func (client PathsClient) ByteMultiByte(ctx context.Context, bytePath []byte) (r
 	result, err = client.ByteMultiByteResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.PathsClient", "ByteMultiByte", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -340,6 +344,7 @@ func (client PathsClient) ByteNull(ctx context.Context, bytePath []byte) (result
 	result, err = client.ByteNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.PathsClient", "ByteNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -405,6 +410,7 @@ func (client PathsClient) DateNull(ctx context.Context, datePath date.Date) (res
 	result, err = client.DateNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.PathsClient", "DateNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -470,6 +476,7 @@ func (client PathsClient) DateTimeNull(ctx context.Context, dateTimePath date.Ti
 	result, err = client.DateTimeNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.PathsClient", "DateTimeNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -533,6 +540,7 @@ func (client PathsClient) DateTimeValid(ctx context.Context) (result autorest.Re
 	result, err = client.DateTimeValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.PathsClient", "DateTimeValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -596,6 +604,7 @@ func (client PathsClient) DateValid(ctx context.Context) (result autorest.Respon
 	result, err = client.DateValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.PathsClient", "DateValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -659,6 +668,7 @@ func (client PathsClient) DoubleDecimalNegative(ctx context.Context) (result aut
 	result, err = client.DoubleDecimalNegativeResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.PathsClient", "DoubleDecimalNegative", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -722,6 +732,7 @@ func (client PathsClient) DoubleDecimalPositive(ctx context.Context) (result aut
 	result, err = client.DoubleDecimalPositiveResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.PathsClient", "DoubleDecimalPositive", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -787,6 +798,7 @@ func (client PathsClient) EnumNull(ctx context.Context, enumPath URIColor) (resu
 	result, err = client.EnumNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.PathsClient", "EnumNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -852,6 +864,7 @@ func (client PathsClient) EnumValid(ctx context.Context, enumPath URIColor) (res
 	result, err = client.EnumValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.PathsClient", "EnumValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -915,6 +928,7 @@ func (client PathsClient) FloatScientificNegative(ctx context.Context) (result a
 	result, err = client.FloatScientificNegativeResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.PathsClient", "FloatScientificNegative", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -978,6 +992,7 @@ func (client PathsClient) FloatScientificPositive(ctx context.Context) (result a
 	result, err = client.FloatScientificPositiveResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.PathsClient", "FloatScientificPositive", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1041,6 +1056,7 @@ func (client PathsClient) GetBooleanFalse(ctx context.Context) (result autorest.
 	result, err = client.GetBooleanFalseResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.PathsClient", "GetBooleanFalse", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1104,6 +1120,7 @@ func (client PathsClient) GetBooleanTrue(ctx context.Context) (result autorest.R
 	result, err = client.GetBooleanTrueResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.PathsClient", "GetBooleanTrue", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1167,6 +1184,7 @@ func (client PathsClient) GetIntNegativeOneMillion(ctx context.Context) (result 
 	result, err = client.GetIntNegativeOneMillionResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.PathsClient", "GetIntNegativeOneMillion", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1230,6 +1248,7 @@ func (client PathsClient) GetIntOneMillion(ctx context.Context) (result autorest
 	result, err = client.GetIntOneMillionResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.PathsClient", "GetIntOneMillion", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1293,6 +1312,7 @@ func (client PathsClient) GetNegativeTenBillion(ctx context.Context) (result aut
 	result, err = client.GetNegativeTenBillionResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.PathsClient", "GetNegativeTenBillion", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1356,6 +1376,7 @@ func (client PathsClient) GetTenBillion(ctx context.Context) (result autorest.Re
 	result, err = client.GetTenBillionResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.PathsClient", "GetTenBillion", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1419,6 +1440,7 @@ func (client PathsClient) StringEmpty(ctx context.Context) (result autorest.Resp
 	result, err = client.StringEmptyResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.PathsClient", "StringEmpty", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1484,6 +1506,7 @@ func (client PathsClient) StringNull(ctx context.Context, stringPath string) (re
 	result, err = client.StringNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.PathsClient", "StringNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1547,6 +1570,7 @@ func (client PathsClient) StringUnicode(ctx context.Context) (result autorest.Re
 	result, err = client.StringUnicodeResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.PathsClient", "StringUnicode", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1610,6 +1634,7 @@ func (client PathsClient) StringURLEncoded(ctx context.Context) (result autorest
 	result, err = client.StringURLEncodedResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.PathsClient", "StringURLEncoded", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1675,6 +1700,7 @@ func (client PathsClient) UnixTimeURL(ctx context.Context, unixTimeURLPath date.
 	result, err = client.UnixTimeURLResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.PathsClient", "UnixTimeURL", resp, "Failure responding to request")
+		return
 	}
 
 	return

@@ -59,6 +59,7 @@ func (client ReadonlypropertyClient) GetValid(ctx context.Context) (result Reado
 	result, err = client.GetValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.ReadonlypropertyClient", "GetValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -119,6 +120,7 @@ func (client ReadonlypropertyClient) PutValid(ctx context.Context, complexBody R
 	result, err = client.PutValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.ReadonlypropertyClient", "PutValid", resp, "Failure responding to request")
+		return
 	}
 
 	return

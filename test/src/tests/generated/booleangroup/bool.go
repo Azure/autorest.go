@@ -58,6 +58,7 @@ func (client BoolClient) GetFalse(ctx context.Context) (result BoolModel, err er
 	result, err = client.GetFalseResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "booleangroup.BoolClient", "GetFalse", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -118,6 +119,7 @@ func (client BoolClient) GetInvalid(ctx context.Context) (result BoolModel, err 
 	result, err = client.GetInvalidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "booleangroup.BoolClient", "GetInvalid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -178,6 +180,7 @@ func (client BoolClient) GetNull(ctx context.Context) (result BoolModel, err err
 	result, err = client.GetNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "booleangroup.BoolClient", "GetNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -238,6 +241,7 @@ func (client BoolClient) GetTrue(ctx context.Context) (result BoolModel, err err
 	result, err = client.GetTrueResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "booleangroup.BoolClient", "GetTrue", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -298,6 +302,7 @@ func (client BoolClient) PutFalse(ctx context.Context) (result autorest.Response
 	result, err = client.PutFalseResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "booleangroup.BoolClient", "PutFalse", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -359,6 +364,7 @@ func (client BoolClient) PutTrue(ctx context.Context) (result autorest.Response,
 	result, err = client.PutTrueResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "booleangroup.BoolClient", "PutTrue", resp, "Failure responding to request")
+		return
 	}
 
 	return

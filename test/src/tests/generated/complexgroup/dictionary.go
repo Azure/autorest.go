@@ -58,6 +58,7 @@ func (client DictionaryClient) GetEmpty(ctx context.Context) (result DictionaryW
 	result, err = client.GetEmptyResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.DictionaryClient", "GetEmpty", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -118,6 +119,7 @@ func (client DictionaryClient) GetNotProvided(ctx context.Context) (result Dicti
 	result, err = client.GetNotProvidedResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.DictionaryClient", "GetNotProvided", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -178,6 +180,7 @@ func (client DictionaryClient) GetNull(ctx context.Context) (result DictionaryWr
 	result, err = client.GetNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.DictionaryClient", "GetNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -238,6 +241,7 @@ func (client DictionaryClient) GetValid(ctx context.Context) (result DictionaryW
 	result, err = client.GetValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.DictionaryClient", "GetValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -300,6 +304,7 @@ func (client DictionaryClient) PutEmpty(ctx context.Context, complexBody Diction
 	result, err = client.PutEmptyResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.DictionaryClient", "PutEmpty", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -364,6 +369,7 @@ func (client DictionaryClient) PutValid(ctx context.Context, complexBody Diction
 	result, err = client.PutValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.DictionaryClient", "PutValid", resp, "Failure responding to request")
+		return
 	}
 
 	return

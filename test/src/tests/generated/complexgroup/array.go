@@ -58,6 +58,7 @@ func (client ArrayClient) GetEmpty(ctx context.Context) (result ArrayWrapper, er
 	result, err = client.GetEmptyResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.ArrayClient", "GetEmpty", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -118,6 +119,7 @@ func (client ArrayClient) GetNotProvided(ctx context.Context) (result ArrayWrapp
 	result, err = client.GetNotProvidedResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.ArrayClient", "GetNotProvided", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -178,6 +180,7 @@ func (client ArrayClient) GetValid(ctx context.Context) (result ArrayWrapper, er
 	result, err = client.GetValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.ArrayClient", "GetValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -240,6 +243,7 @@ func (client ArrayClient) PutEmpty(ctx context.Context, complexBody ArrayWrapper
 	result, err = client.PutEmptyResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.ArrayClient", "PutEmpty", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -304,6 +308,7 @@ func (client ArrayClient) PutValid(ctx context.Context, complexBody ArrayWrapper
 	result, err = client.PutValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.ArrayClient", "PutValid", resp, "Failure responding to request")
+		return
 	}
 
 	return

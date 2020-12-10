@@ -60,6 +60,7 @@ func (client PolymorphismClient) GetComplicated(ctx context.Context) (result Sal
 	result, err = client.GetComplicatedResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "GetComplicated", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -122,6 +123,7 @@ func (client PolymorphismClient) GetComposedWithDiscriminator(ctx context.Contex
 	result, err = client.GetComposedWithDiscriminatorResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "GetComposedWithDiscriminator", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -184,6 +186,7 @@ func (client PolymorphismClient) GetComposedWithoutDiscriminator(ctx context.Con
 	result, err = client.GetComposedWithoutDiscriminatorResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "GetComposedWithoutDiscriminator", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -244,6 +247,7 @@ func (client PolymorphismClient) GetDotSyntax(ctx context.Context) (result DotFi
 	result, err = client.GetDotSyntaxResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "GetDotSyntax", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -304,6 +308,7 @@ func (client PolymorphismClient) GetValid(ctx context.Context) (result FishModel
 	result, err = client.GetValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "GetValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -365,6 +370,7 @@ func (client PolymorphismClient) PutComplicated(ctx context.Context, complexBody
 	result, err = client.PutComplicatedResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "PutComplicated", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -426,6 +432,7 @@ func (client PolymorphismClient) PutMissingDiscriminator(ctx context.Context, co
 	result, err = client.PutMissingDiscriminatorResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "PutMissingDiscriminator", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -528,6 +535,7 @@ func (client PolymorphismClient) PutValid(ctx context.Context, complexBody Basic
 	result, err = client.PutValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "PutValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -624,6 +632,7 @@ func (client PolymorphismClient) PutValidMissingRequired(ctx context.Context, co
 	result, err = client.PutValidMissingRequiredResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "PutValidMissingRequired", resp, "Failure responding to request")
+		return
 	}
 
 	return

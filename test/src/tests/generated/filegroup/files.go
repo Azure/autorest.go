@@ -58,6 +58,7 @@ func (client FilesClient) GetEmptyFile(ctx context.Context) (result ReadCloser, 
 	result, err = client.GetEmptyFileResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "filegroup.FilesClient", "GetEmptyFile", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -117,6 +118,7 @@ func (client FilesClient) GetFile(ctx context.Context) (result ReadCloser, err e
 	result, err = client.GetFileResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "filegroup.FilesClient", "GetFile", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -176,6 +178,7 @@ func (client FilesClient) GetFileLarge(ctx context.Context) (result ReadCloser, 
 	result, err = client.GetFileLargeResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "filegroup.FilesClient", "GetFileLarge", resp, "Failure responding to request")
+		return
 	}
 
 	return

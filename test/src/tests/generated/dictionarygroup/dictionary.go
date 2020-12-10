@@ -60,6 +60,7 @@ func (client DictionaryClient) GetArrayEmpty(ctx context.Context) (result SetLis
 	result, err = client.GetArrayEmptyResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetArrayEmpty", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -120,6 +121,7 @@ func (client DictionaryClient) GetArrayItemEmpty(ctx context.Context) (result Se
 	result, err = client.GetArrayItemEmptyResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetArrayItemEmpty", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -180,6 +182,7 @@ func (client DictionaryClient) GetArrayItemNull(ctx context.Context) (result Set
 	result, err = client.GetArrayItemNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetArrayItemNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -240,6 +243,7 @@ func (client DictionaryClient) GetArrayNull(ctx context.Context) (result SetList
 	result, err = client.GetArrayNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetArrayNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -300,6 +304,7 @@ func (client DictionaryClient) GetArrayValid(ctx context.Context) (result SetLis
 	result, err = client.GetArrayValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetArrayValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -361,6 +366,7 @@ func (client DictionaryClient) GetBase64URL(ctx context.Context) (result SetBase
 	result, err = client.GetBase64URLResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetBase64URL", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -421,6 +427,7 @@ func (client DictionaryClient) GetBooleanInvalidNull(ctx context.Context) (resul
 	result, err = client.GetBooleanInvalidNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetBooleanInvalidNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -481,6 +488,7 @@ func (client DictionaryClient) GetBooleanInvalidString(ctx context.Context) (res
 	result, err = client.GetBooleanInvalidStringResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetBooleanInvalidString", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -541,6 +549,7 @@ func (client DictionaryClient) GetBooleanTfft(ctx context.Context) (result SetBo
 	result, err = client.GetBooleanTfftResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetBooleanTfft", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -601,6 +610,7 @@ func (client DictionaryClient) GetByteInvalidNull(ctx context.Context) (result S
 	result, err = client.GetByteInvalidNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetByteInvalidNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -662,6 +672,7 @@ func (client DictionaryClient) GetByteValid(ctx context.Context) (result SetByte
 	result, err = client.GetByteValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetByteValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -722,6 +733,7 @@ func (client DictionaryClient) GetComplexEmpty(ctx context.Context) (result SetW
 	result, err = client.GetComplexEmptyResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetComplexEmpty", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -783,6 +795,7 @@ func (client DictionaryClient) GetComplexItemEmpty(ctx context.Context) (result 
 	result, err = client.GetComplexItemEmptyResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetComplexItemEmpty", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -844,6 +857,7 @@ func (client DictionaryClient) GetComplexItemNull(ctx context.Context) (result S
 	result, err = client.GetComplexItemNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetComplexItemNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -904,6 +918,7 @@ func (client DictionaryClient) GetComplexNull(ctx context.Context) (result SetWi
 	result, err = client.GetComplexNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetComplexNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -965,6 +980,7 @@ func (client DictionaryClient) GetComplexValid(ctx context.Context) (result SetW
 	result, err = client.GetComplexValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetComplexValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1025,6 +1041,7 @@ func (client DictionaryClient) GetDateInvalidChars(ctx context.Context) (result 
 	result, err = client.GetDateInvalidCharsResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateInvalidChars", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1085,6 +1102,7 @@ func (client DictionaryClient) GetDateInvalidNull(ctx context.Context) (result S
 	result, err = client.GetDateInvalidNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateInvalidNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1145,6 +1163,7 @@ func (client DictionaryClient) GetDateTimeInvalidChars(ctx context.Context) (res
 	result, err = client.GetDateTimeInvalidCharsResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateTimeInvalidChars", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1205,6 +1224,7 @@ func (client DictionaryClient) GetDateTimeInvalidNull(ctx context.Context) (resu
 	result, err = client.GetDateTimeInvalidNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateTimeInvalidNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1266,6 +1286,7 @@ func (client DictionaryClient) GetDateTimeRfc1123Valid(ctx context.Context) (res
 	result, err = client.GetDateTimeRfc1123ValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateTimeRfc1123Valid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1327,6 +1348,7 @@ func (client DictionaryClient) GetDateTimeValid(ctx context.Context) (result Set
 	result, err = client.GetDateTimeValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateTimeValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1387,6 +1409,7 @@ func (client DictionaryClient) GetDateValid(ctx context.Context) (result SetDate
 	result, err = client.GetDateValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1447,6 +1470,7 @@ func (client DictionaryClient) GetDictionaryEmpty(ctx context.Context) (result S
 	result, err = client.GetDictionaryEmptyResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDictionaryEmpty", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1508,6 +1532,7 @@ func (client DictionaryClient) GetDictionaryItemEmpty(ctx context.Context) (resu
 	result, err = client.GetDictionaryItemEmptyResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDictionaryItemEmpty", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1569,6 +1594,7 @@ func (client DictionaryClient) GetDictionaryItemNull(ctx context.Context) (resul
 	result, err = client.GetDictionaryItemNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDictionaryItemNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1629,6 +1655,7 @@ func (client DictionaryClient) GetDictionaryNull(ctx context.Context) (result Se
 	result, err = client.GetDictionaryNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDictionaryNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1690,6 +1717,7 @@ func (client DictionaryClient) GetDictionaryValid(ctx context.Context) (result S
 	result, err = client.GetDictionaryValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDictionaryValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1750,6 +1778,7 @@ func (client DictionaryClient) GetDoubleInvalidNull(ctx context.Context) (result
 	result, err = client.GetDoubleInvalidNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDoubleInvalidNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1810,6 +1839,7 @@ func (client DictionaryClient) GetDoubleInvalidString(ctx context.Context) (resu
 	result, err = client.GetDoubleInvalidStringResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDoubleInvalidString", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1870,6 +1900,7 @@ func (client DictionaryClient) GetDoubleValid(ctx context.Context) (result SetFl
 	result, err = client.GetDoubleValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDoubleValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1930,6 +1961,7 @@ func (client DictionaryClient) GetDurationValid(ctx context.Context) (result Set
 	result, err = client.GetDurationValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDurationValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1990,6 +2022,7 @@ func (client DictionaryClient) GetEmpty(ctx context.Context) (result SetInt32, e
 	result, err = client.GetEmptyResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetEmpty", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -2050,6 +2083,7 @@ func (client DictionaryClient) GetEmptyStringKey(ctx context.Context) (result Se
 	result, err = client.GetEmptyStringKeyResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetEmptyStringKey", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -2110,6 +2144,7 @@ func (client DictionaryClient) GetFloatInvalidNull(ctx context.Context) (result 
 	result, err = client.GetFloatInvalidNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetFloatInvalidNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -2170,6 +2205,7 @@ func (client DictionaryClient) GetFloatInvalidString(ctx context.Context) (resul
 	result, err = client.GetFloatInvalidStringResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetFloatInvalidString", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -2230,6 +2266,7 @@ func (client DictionaryClient) GetFloatValid(ctx context.Context) (result SetFlo
 	result, err = client.GetFloatValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetFloatValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -2290,6 +2327,7 @@ func (client DictionaryClient) GetIntegerValid(ctx context.Context) (result SetI
 	result, err = client.GetIntegerValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetIntegerValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -2350,6 +2388,7 @@ func (client DictionaryClient) GetIntInvalidNull(ctx context.Context) (result Se
 	result, err = client.GetIntInvalidNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetIntInvalidNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -2410,6 +2449,7 @@ func (client DictionaryClient) GetIntInvalidString(ctx context.Context) (result 
 	result, err = client.GetIntInvalidStringResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetIntInvalidString", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -2470,6 +2510,7 @@ func (client DictionaryClient) GetInvalid(ctx context.Context) (result SetString
 	result, err = client.GetInvalidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetInvalid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -2530,6 +2571,7 @@ func (client DictionaryClient) GetLongInvalidNull(ctx context.Context) (result S
 	result, err = client.GetLongInvalidNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetLongInvalidNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -2590,6 +2632,7 @@ func (client DictionaryClient) GetLongInvalidString(ctx context.Context) (result
 	result, err = client.GetLongInvalidStringResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetLongInvalidString", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -2650,6 +2693,7 @@ func (client DictionaryClient) GetLongValid(ctx context.Context) (result SetInt6
 	result, err = client.GetLongValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetLongValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -2710,6 +2754,7 @@ func (client DictionaryClient) GetNull(ctx context.Context) (result SetInt32, er
 	result, err = client.GetNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -2770,6 +2815,7 @@ func (client DictionaryClient) GetNullKey(ctx context.Context) (result SetString
 	result, err = client.GetNullKeyResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetNullKey", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -2830,6 +2876,7 @@ func (client DictionaryClient) GetNullValue(ctx context.Context) (result SetStri
 	result, err = client.GetNullValueResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetNullValue", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -2890,6 +2937,7 @@ func (client DictionaryClient) GetStringValid(ctx context.Context) (result SetSt
 	result, err = client.GetStringValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetStringValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -2950,6 +2998,7 @@ func (client DictionaryClient) GetStringWithInvalid(ctx context.Context) (result
 	result, err = client.GetStringWithInvalidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetStringWithInvalid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -3010,6 +3059,7 @@ func (client DictionaryClient) GetStringWithNull(ctx context.Context) (result Se
 	result, err = client.GetStringWithNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetStringWithNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -3076,6 +3126,7 @@ func (client DictionaryClient) PutArrayValid(ctx context.Context, arrayBody map[
 	result, err = client.PutArrayValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutArrayValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -3143,6 +3194,7 @@ func (client DictionaryClient) PutBooleanTfft(ctx context.Context, arrayBody map
 	result, err = client.PutBooleanTfftResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutBooleanTfft", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -3211,6 +3263,7 @@ func (client DictionaryClient) PutByteValid(ctx context.Context, arrayBody map[s
 	result, err = client.PutByteValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutByteValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -3279,6 +3332,7 @@ func (client DictionaryClient) PutComplexValid(ctx context.Context, arrayBody ma
 	result, err = client.PutComplexValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutComplexValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -3347,6 +3401,7 @@ func (client DictionaryClient) PutDateTimeRfc1123Valid(ctx context.Context, arra
 	result, err = client.PutDateTimeRfc1123ValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutDateTimeRfc1123Valid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -3415,6 +3470,7 @@ func (client DictionaryClient) PutDateTimeValid(ctx context.Context, arrayBody m
 	result, err = client.PutDateTimeValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutDateTimeValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -3482,6 +3538,7 @@ func (client DictionaryClient) PutDateValid(ctx context.Context, arrayBody map[s
 	result, err = client.PutDateValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutDateValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -3550,6 +3607,7 @@ func (client DictionaryClient) PutDictionaryValid(ctx context.Context, arrayBody
 	result, err = client.PutDictionaryValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutDictionaryValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -3617,6 +3675,7 @@ func (client DictionaryClient) PutDoubleValid(ctx context.Context, arrayBody map
 	result, err = client.PutDoubleValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutDoubleValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -3684,6 +3743,7 @@ func (client DictionaryClient) PutDurationValid(ctx context.Context, arrayBody m
 	result, err = client.PutDurationValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutDurationValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -3751,6 +3811,7 @@ func (client DictionaryClient) PutEmpty(ctx context.Context, arrayBody map[strin
 	result, err = client.PutEmptyResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutEmpty", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -3818,6 +3879,7 @@ func (client DictionaryClient) PutFloatValid(ctx context.Context, arrayBody map[
 	result, err = client.PutFloatValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutFloatValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -3885,6 +3947,7 @@ func (client DictionaryClient) PutIntegerValid(ctx context.Context, arrayBody ma
 	result, err = client.PutIntegerValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutIntegerValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -3952,6 +4015,7 @@ func (client DictionaryClient) PutLongValid(ctx context.Context, arrayBody map[s
 	result, err = client.PutLongValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutLongValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -4019,6 +4083,7 @@ func (client DictionaryClient) PutStringValid(ctx context.Context, arrayBody map
 	result, err = client.PutStringValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutStringValid", resp, "Failure responding to request")
+		return
 	}
 
 	return

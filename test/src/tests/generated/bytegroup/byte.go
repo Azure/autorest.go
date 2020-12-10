@@ -59,6 +59,7 @@ func (client ByteClient) GetEmpty(ctx context.Context) (result ByteArray, err er
 	result, err = client.GetEmptyResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "bytegroup.ByteClient", "GetEmpty", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -119,6 +120,7 @@ func (client ByteClient) GetInvalid(ctx context.Context) (result ByteArray, err 
 	result, err = client.GetInvalidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "bytegroup.ByteClient", "GetInvalid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -179,6 +181,7 @@ func (client ByteClient) GetNonASCII(ctx context.Context) (result ByteArray, err
 	result, err = client.GetNonASCIIResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "bytegroup.ByteClient", "GetNonASCII", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -239,6 +242,7 @@ func (client ByteClient) GetNull(ctx context.Context) (result ByteArray, err err
 	result, err = client.GetNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "bytegroup.ByteClient", "GetNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -307,6 +311,7 @@ func (client ByteClient) PutNonASCII(ctx context.Context, byteBody []byte) (resu
 	result, err = client.PutNonASCIIResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "bytegroup.ByteClient", "PutNonASCII", resp, "Failure responding to request")
+		return
 	}
 
 	return

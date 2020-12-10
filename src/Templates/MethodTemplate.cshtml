@@ -122,6 +122,7 @@ else
         @(Model.ResponseAssignTarget), err = client.@(Model.ResponderMethodName)(resp)
         if err != nil {
         err = @(Model.AutorestError("Failure responding to request", "resp"))
+        return
         }
     </text>
 
@@ -132,6 +133,7 @@ else
         <text>
             if @(Model.ResponseAssignTarget).hasNextLink() && @(Model.ResponseAssignTarget).IsEmpty() {
             err = result.NextWithContext(ctx)
+            return
             }
         </text>
     }

@@ -59,6 +59,7 @@ func (client Datetimerfc1123Client) GetInvalid(ctx context.Context) (result Date
 	result, err = client.GetInvalidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimerfc1123group.Datetimerfc1123Client", "GetInvalid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -119,6 +120,7 @@ func (client Datetimerfc1123Client) GetNull(ctx context.Context) (result DateTim
 	result, err = client.GetNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimerfc1123group.Datetimerfc1123Client", "GetNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -179,6 +181,7 @@ func (client Datetimerfc1123Client) GetOverflow(ctx context.Context) (result Dat
 	result, err = client.GetOverflowResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimerfc1123group.Datetimerfc1123Client", "GetOverflow", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -239,6 +242,7 @@ func (client Datetimerfc1123Client) GetUnderflow(ctx context.Context) (result Da
 	result, err = client.GetUnderflowResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimerfc1123group.Datetimerfc1123Client", "GetUnderflow", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -299,6 +303,7 @@ func (client Datetimerfc1123Client) GetUtcLowercaseMaxDateTime(ctx context.Conte
 	result, err = client.GetUtcLowercaseMaxDateTimeResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimerfc1123group.Datetimerfc1123Client", "GetUtcLowercaseMaxDateTime", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -359,6 +364,7 @@ func (client Datetimerfc1123Client) GetUtcMinDateTime(ctx context.Context) (resu
 	result, err = client.GetUtcMinDateTimeResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimerfc1123group.Datetimerfc1123Client", "GetUtcMinDateTime", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -419,6 +425,7 @@ func (client Datetimerfc1123Client) GetUtcUppercaseMaxDateTime(ctx context.Conte
 	result, err = client.GetUtcUppercaseMaxDateTimeResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimerfc1123group.Datetimerfc1123Client", "GetUtcUppercaseMaxDateTime", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -479,6 +486,7 @@ func (client Datetimerfc1123Client) PutUtcMaxDateTime(ctx context.Context, datet
 	result, err = client.PutUtcMaxDateTimeResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimerfc1123group.Datetimerfc1123Client", "PutUtcMaxDateTime", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -540,6 +548,7 @@ func (client Datetimerfc1123Client) PutUtcMinDateTime(ctx context.Context, datet
 	result, err = client.PutUtcMinDateTimeResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimerfc1123group.Datetimerfc1123Client", "PutUtcMinDateTime", resp, "Failure responding to request")
+		return
 	}
 
 	return

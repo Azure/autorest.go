@@ -58,6 +58,7 @@ func (client PrimitiveClient) GetBool(ctx context.Context) (result BooleanWrappe
 	result, err = client.GetBoolResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "GetBool", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -118,6 +119,7 @@ func (client PrimitiveClient) GetByte(ctx context.Context) (result ByteWrapper, 
 	result, err = client.GetByteResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "GetByte", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -178,6 +180,7 @@ func (client PrimitiveClient) GetDate(ctx context.Context) (result DateWrapper, 
 	result, err = client.GetDateResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "GetDate", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -238,6 +241,7 @@ func (client PrimitiveClient) GetDateTime(ctx context.Context) (result DatetimeW
 	result, err = client.GetDateTimeResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "GetDateTime", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -298,6 +302,7 @@ func (client PrimitiveClient) GetDateTimeRfc1123(ctx context.Context) (result Da
 	result, err = client.GetDateTimeRfc1123Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "GetDateTimeRfc1123", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -358,6 +363,7 @@ func (client PrimitiveClient) GetDouble(ctx context.Context) (result DoubleWrapp
 	result, err = client.GetDoubleResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "GetDouble", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -418,6 +424,7 @@ func (client PrimitiveClient) GetDuration(ctx context.Context) (result DurationW
 	result, err = client.GetDurationResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "GetDuration", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -478,6 +485,7 @@ func (client PrimitiveClient) GetFloat(ctx context.Context) (result FloatWrapper
 	result, err = client.GetFloatResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "GetFloat", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -538,6 +546,7 @@ func (client PrimitiveClient) GetInt(ctx context.Context) (result IntWrapper, er
 	result, err = client.GetIntResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "GetInt", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -598,6 +607,7 @@ func (client PrimitiveClient) GetLong(ctx context.Context) (result LongWrapper, 
 	result, err = client.GetLongResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "GetLong", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -658,6 +668,7 @@ func (client PrimitiveClient) GetString(ctx context.Context) (result StringWrapp
 	result, err = client.GetStringResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "GetString", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -720,6 +731,7 @@ func (client PrimitiveClient) PutBool(ctx context.Context, complexBody BooleanWr
 	result, err = client.PutBoolResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "PutBool", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -783,6 +795,7 @@ func (client PrimitiveClient) PutByte(ctx context.Context, complexBody ByteWrapp
 	result, err = client.PutByteResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "PutByte", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -846,6 +859,7 @@ func (client PrimitiveClient) PutDate(ctx context.Context, complexBody DateWrapp
 	result, err = client.PutDateResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "PutDate", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -909,6 +923,7 @@ func (client PrimitiveClient) PutDateTime(ctx context.Context, complexBody Datet
 	result, err = client.PutDateTimeResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "PutDateTime", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -972,6 +987,7 @@ func (client PrimitiveClient) PutDateTimeRfc1123(ctx context.Context, complexBod
 	result, err = client.PutDateTimeRfc1123Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "PutDateTimeRfc1123", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1035,6 +1051,7 @@ func (client PrimitiveClient) PutDouble(ctx context.Context, complexBody DoubleW
 	result, err = client.PutDoubleResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "PutDouble", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1098,6 +1115,7 @@ func (client PrimitiveClient) PutDuration(ctx context.Context, complexBody Durat
 	result, err = client.PutDurationResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "PutDuration", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1161,6 +1179,7 @@ func (client PrimitiveClient) PutFloat(ctx context.Context, complexBody FloatWra
 	result, err = client.PutFloatResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "PutFloat", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1224,6 +1243,7 @@ func (client PrimitiveClient) PutInt(ctx context.Context, complexBody IntWrapper
 	result, err = client.PutIntResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "PutInt", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1287,6 +1307,7 @@ func (client PrimitiveClient) PutLong(ctx context.Context, complexBody LongWrapp
 	result, err = client.PutLongResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "PutLong", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1350,6 +1371,7 @@ func (client PrimitiveClient) PutString(ctx context.Context, complexBody StringW
 	result, err = client.PutStringResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "PutString", resp, "Failure responding to request")
+		return
 	}
 
 	return

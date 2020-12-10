@@ -58,6 +58,7 @@ func (client StringClient) GetBase64Encoded(ctx context.Context) (result Base64U
 	result, err = client.GetBase64EncodedResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "stringgroup.StringClient", "GetBase64Encoded", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -118,6 +119,7 @@ func (client StringClient) GetBase64URLEncoded(ctx context.Context) (result Base
 	result, err = client.GetBase64URLEncodedResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "stringgroup.StringClient", "GetBase64URLEncoded", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -178,6 +180,7 @@ func (client StringClient) GetEmpty(ctx context.Context) (result StringModel, er
 	result, err = client.GetEmptyResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "stringgroup.StringClient", "GetEmpty", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -238,6 +241,7 @@ func (client StringClient) GetMbcs(ctx context.Context) (result StringModel, err
 	result, err = client.GetMbcsResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "stringgroup.StringClient", "GetMbcs", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -298,6 +302,7 @@ func (client StringClient) GetNotProvided(ctx context.Context) (result StringMod
 	result, err = client.GetNotProvidedResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "stringgroup.StringClient", "GetNotProvided", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -358,6 +363,7 @@ func (client StringClient) GetNull(ctx context.Context) (result StringModel, err
 	result, err = client.GetNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "stringgroup.StringClient", "GetNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -418,6 +424,7 @@ func (client StringClient) GetNullBase64URLEncoded(ctx context.Context) (result 
 	result, err = client.GetNullBase64URLEncodedResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "stringgroup.StringClient", "GetNullBase64URLEncoded", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -479,6 +486,7 @@ func (client StringClient) GetWhitespace(ctx context.Context) (result StringMode
 	result, err = client.GetWhitespaceResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "stringgroup.StringClient", "GetWhitespace", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -539,6 +547,7 @@ func (client StringClient) PutBase64URLEncoded(ctx context.Context, stringBody s
 	result, err = client.PutBase64URLEncodedResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "stringgroup.StringClient", "PutBase64URLEncoded", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -600,6 +609,7 @@ func (client StringClient) PutEmpty(ctx context.Context) (result autorest.Respon
 	result, err = client.PutEmptyResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "stringgroup.StringClient", "PutEmpty", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -661,6 +671,7 @@ func (client StringClient) PutMbcs(ctx context.Context) (result autorest.Respons
 	result, err = client.PutMbcsResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "stringgroup.StringClient", "PutMbcs", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -722,6 +733,7 @@ func (client StringClient) PutNull(ctx context.Context, stringBody string) (resu
 	result, err = client.PutNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "stringgroup.StringClient", "PutNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -787,6 +799,7 @@ func (client StringClient) PutWhitespace(ctx context.Context) (result autorest.R
 	result, err = client.PutWhitespaceResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "stringgroup.StringClient", "PutWhitespace", resp, "Failure responding to request")
+		return
 	}
 
 	return
