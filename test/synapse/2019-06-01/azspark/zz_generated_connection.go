@@ -23,6 +23,8 @@ type connectionOptions struct {
 	Retry azcore.RetryOptions
 	// Telemetry configures the built-in telemetry policy behavior.
 	Telemetry azcore.TelemetryOptions
+	// Logging configures the built-in logging policy behavior.
+	Logging azcore.LogOptions
 }
 
 // defaultConnectionOptions creates a connectionOptions type initialized with default values.
@@ -30,6 +32,7 @@ func defaultConnectionOptions() connectionOptions {
 	return connectionOptions{
 		Retry:     azcore.DefaultRetryOptions(),
 		Telemetry: azcore.DefaultTelemetryOptions(),
+		Logging:   azcore.DefaultLogOptions(),
 	}
 }
 
@@ -57,7 +60,7 @@ func newConnection(endpoint string, livyAPIVersion *string, sparkPoolName string
 	p := azcore.NewPipeline(options.HTTPClient,
 		azcore.NewTelemetryPolicy(options.telemetryOptions()),
 		azcore.NewRetryPolicy(&options.Retry),
-		azcore.NewLogPolicy(nil))
+		azcore.NewLogPolicy(&options.Logging))
 	return newConnectionWithPipeline(endpoint, livyAPIVersion, sparkPoolName, p)
 }
 
