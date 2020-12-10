@@ -589,6 +589,12 @@ namespace AutoRest.Go
                     }
                     else if (composite != null)
                     {
+                        if (composite.IsPolymorphic)
+                        {
+                            // we do not generate validation for the polymophic types for now.
+                            // There is an issue in go-autorest that causes that we could not properly handle null value of a polymophic type
+                            continue;
+                        }
                         if (ancestors.Contains(composite.Name))
                         {
                             x.AddNullValidation($"{name}.{propName}", p.ModelTypeName, p.IsRequired);
