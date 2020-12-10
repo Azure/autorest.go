@@ -24,17 +24,17 @@ type AvailableDelegationsClient struct {
 }
 
 // NewAvailableDelegationsClient creates a new instance of AvailableDelegationsClient with the specified values.
-func NewAvailableDelegationsClient(con *armcore.Connection, subscriptionID string) AvailableDelegationsClient {
-	return AvailableDelegationsClient{con: con, subscriptionID: subscriptionID}
+func NewAvailableDelegationsClient(con *armcore.Connection, subscriptionID string) *AvailableDelegationsClient {
+	return &AvailableDelegationsClient{con: con, subscriptionID: subscriptionID}
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client AvailableDelegationsClient) Pipeline() azcore.Pipeline {
+func (client *AvailableDelegationsClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // List - Gets all of the available subnet delegations for this subscription in this region.
-func (client AvailableDelegationsClient) List(location string, options *AvailableDelegationsListOptions) AvailableDelegationsResultPager {
+func (client *AvailableDelegationsClient) List(location string, options *AvailableDelegationsListOptions) AvailableDelegationsResultPager {
 	return &availableDelegationsResultPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
@@ -50,7 +50,7 @@ func (client AvailableDelegationsClient) List(location string, options *Availabl
 }
 
 // listCreateRequest creates the List request.
-func (client AvailableDelegationsClient) listCreateRequest(ctx context.Context, location string, options *AvailableDelegationsListOptions) (*azcore.Request, error) {
+func (client *AvailableDelegationsClient) listCreateRequest(ctx context.Context, location string, options *AvailableDelegationsListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availableDelegations"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
@@ -67,7 +67,7 @@ func (client AvailableDelegationsClient) listCreateRequest(ctx context.Context, 
 }
 
 // listHandleResponse handles the List response.
-func (client AvailableDelegationsClient) listHandleResponse(resp *azcore.Response) (AvailableDelegationsResultResponse, error) {
+func (client *AvailableDelegationsClient) listHandleResponse(resp *azcore.Response) (AvailableDelegationsResultResponse, error) {
 	var val *AvailableDelegationsResult
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return AvailableDelegationsResultResponse{}, err
@@ -76,7 +76,7 @@ func (client AvailableDelegationsClient) listHandleResponse(resp *azcore.Respons
 }
 
 // listHandleError handles the List error response.
-func (client AvailableDelegationsClient) listHandleError(resp *azcore.Response) error {
+func (client *AvailableDelegationsClient) listHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

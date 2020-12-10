@@ -20,17 +20,17 @@ type HeaderClient struct {
 }
 
 // NewHeaderClient creates a new instance of HeaderClient with the specified values.
-func NewHeaderClient(con *Connection) HeaderClient {
-	return HeaderClient{con: con}
+func NewHeaderClient(con *Connection) *HeaderClient {
+	return &HeaderClient{con: con}
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client HeaderClient) Pipeline() azcore.Pipeline {
+func (client *HeaderClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // CustomNamedRequestID - Send foo-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 in the header of the request
-func (client HeaderClient) CustomNamedRequestID(ctx context.Context, fooClientRequestId string, options *HeaderCustomNamedRequestIDOptions) (HeaderCustomNamedRequestIDResponse, error) {
+func (client *HeaderClient) CustomNamedRequestID(ctx context.Context, fooClientRequestId string, options *HeaderCustomNamedRequestIDOptions) (HeaderCustomNamedRequestIDResponse, error) {
 	req, err := client.customNamedRequestIdCreateRequest(ctx, fooClientRequestId, options)
 	if err != nil {
 		return HeaderCustomNamedRequestIDResponse{}, err
@@ -46,7 +46,7 @@ func (client HeaderClient) CustomNamedRequestID(ctx context.Context, fooClientRe
 }
 
 // customNamedRequestIdCreateRequest creates the CustomNamedRequestID request.
-func (client HeaderClient) customNamedRequestIdCreateRequest(ctx context.Context, fooClientRequestId string, options *HeaderCustomNamedRequestIDOptions) (*azcore.Request, error) {
+func (client *HeaderClient) customNamedRequestIdCreateRequest(ctx context.Context, fooClientRequestId string, options *HeaderCustomNamedRequestIDOptions) (*azcore.Request, error) {
 	urlPath := "/azurespecials/customNamedRequestId"
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -59,7 +59,7 @@ func (client HeaderClient) customNamedRequestIdCreateRequest(ctx context.Context
 }
 
 // customNamedRequestIdHandleResponse handles the CustomNamedRequestID response.
-func (client HeaderClient) customNamedRequestIdHandleResponse(resp *azcore.Response) (HeaderCustomNamedRequestIDResponse, error) {
+func (client *HeaderClient) customNamedRequestIdHandleResponse(resp *azcore.Response) (HeaderCustomNamedRequestIDResponse, error) {
 	result := HeaderCustomNamedRequestIDResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("foo-request-id"); val != "" {
 		result.FooRequestID = &val
@@ -68,7 +68,7 @@ func (client HeaderClient) customNamedRequestIdHandleResponse(resp *azcore.Respo
 }
 
 // customNamedRequestIdHandleError handles the CustomNamedRequestID error response.
-func (client HeaderClient) customNamedRequestIdHandleError(resp *azcore.Response) error {
+func (client *HeaderClient) customNamedRequestIdHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -77,7 +77,7 @@ func (client HeaderClient) customNamedRequestIdHandleError(resp *azcore.Response
 }
 
 // CustomNamedRequestIDHead - Send foo-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 in the header of the request
-func (client HeaderClient) CustomNamedRequestIDHead(ctx context.Context, fooClientRequestId string, options *HeaderCustomNamedRequestIDHeadOptions) (HeaderCustomNamedRequestIDHeadResponse, error) {
+func (client *HeaderClient) CustomNamedRequestIDHead(ctx context.Context, fooClientRequestId string, options *HeaderCustomNamedRequestIDHeadOptions) (HeaderCustomNamedRequestIDHeadResponse, error) {
 	req, err := client.customNamedRequestIdHeadCreateRequest(ctx, fooClientRequestId, options)
 	if err != nil {
 		return HeaderCustomNamedRequestIDHeadResponse{}, err
@@ -93,7 +93,7 @@ func (client HeaderClient) CustomNamedRequestIDHead(ctx context.Context, fooClie
 }
 
 // customNamedRequestIdHeadCreateRequest creates the CustomNamedRequestIDHead request.
-func (client HeaderClient) customNamedRequestIdHeadCreateRequest(ctx context.Context, fooClientRequestId string, options *HeaderCustomNamedRequestIDHeadOptions) (*azcore.Request, error) {
+func (client *HeaderClient) customNamedRequestIdHeadCreateRequest(ctx context.Context, fooClientRequestId string, options *HeaderCustomNamedRequestIDHeadOptions) (*azcore.Request, error) {
 	urlPath := "/azurespecials/customNamedRequestIdHead"
 	req, err := azcore.NewRequest(ctx, http.MethodHead, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -106,7 +106,7 @@ func (client HeaderClient) customNamedRequestIdHeadCreateRequest(ctx context.Con
 }
 
 // customNamedRequestIdHeadHandleResponse handles the CustomNamedRequestIDHead response.
-func (client HeaderClient) customNamedRequestIdHeadHandleResponse(resp *azcore.Response) (HeaderCustomNamedRequestIDHeadResponse, error) {
+func (client *HeaderClient) customNamedRequestIdHeadHandleResponse(resp *azcore.Response) (HeaderCustomNamedRequestIDHeadResponse, error) {
 	result := HeaderCustomNamedRequestIDHeadResponse{RawResponse: resp.Response}
 	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
 		result.Success = true
@@ -118,7 +118,7 @@ func (client HeaderClient) customNamedRequestIdHeadHandleResponse(resp *azcore.R
 }
 
 // customNamedRequestIdHeadHandleError handles the CustomNamedRequestIDHead error response.
-func (client HeaderClient) customNamedRequestIdHeadHandleError(resp *azcore.Response) error {
+func (client *HeaderClient) customNamedRequestIdHeadHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -127,7 +127,7 @@ func (client HeaderClient) customNamedRequestIdHeadHandleError(resp *azcore.Resp
 }
 
 // CustomNamedRequestIDParamGrouping - Send foo-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 in the header of the request, via a parameter group
-func (client HeaderClient) CustomNamedRequestIDParamGrouping(ctx context.Context, headerCustomNamedRequestIdParamGroupingParameters HeaderCustomNamedRequestIDParamGroupingParameters) (HeaderCustomNamedRequestIDParamGroupingResponse, error) {
+func (client *HeaderClient) CustomNamedRequestIDParamGrouping(ctx context.Context, headerCustomNamedRequestIdParamGroupingParameters HeaderCustomNamedRequestIDParamGroupingParameters) (HeaderCustomNamedRequestIDParamGroupingResponse, error) {
 	req, err := client.customNamedRequestIdParamGroupingCreateRequest(ctx, headerCustomNamedRequestIdParamGroupingParameters)
 	if err != nil {
 		return HeaderCustomNamedRequestIDParamGroupingResponse{}, err
@@ -143,7 +143,7 @@ func (client HeaderClient) CustomNamedRequestIDParamGrouping(ctx context.Context
 }
 
 // customNamedRequestIdParamGroupingCreateRequest creates the CustomNamedRequestIDParamGrouping request.
-func (client HeaderClient) customNamedRequestIdParamGroupingCreateRequest(ctx context.Context, headerCustomNamedRequestIdParamGroupingParameters HeaderCustomNamedRequestIDParamGroupingParameters) (*azcore.Request, error) {
+func (client *HeaderClient) customNamedRequestIdParamGroupingCreateRequest(ctx context.Context, headerCustomNamedRequestIdParamGroupingParameters HeaderCustomNamedRequestIDParamGroupingParameters) (*azcore.Request, error) {
 	urlPath := "/azurespecials/customNamedRequestIdParamGrouping"
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -156,7 +156,7 @@ func (client HeaderClient) customNamedRequestIdParamGroupingCreateRequest(ctx co
 }
 
 // customNamedRequestIdParamGroupingHandleResponse handles the CustomNamedRequestIDParamGrouping response.
-func (client HeaderClient) customNamedRequestIdParamGroupingHandleResponse(resp *azcore.Response) (HeaderCustomNamedRequestIDParamGroupingResponse, error) {
+func (client *HeaderClient) customNamedRequestIdParamGroupingHandleResponse(resp *azcore.Response) (HeaderCustomNamedRequestIDParamGroupingResponse, error) {
 	result := HeaderCustomNamedRequestIDParamGroupingResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("foo-request-id"); val != "" {
 		result.FooRequestID = &val
@@ -165,7 +165,7 @@ func (client HeaderClient) customNamedRequestIdParamGroupingHandleResponse(resp 
 }
 
 // customNamedRequestIdParamGroupingHandleError handles the CustomNamedRequestIDParamGrouping error response.
-func (client HeaderClient) customNamedRequestIdParamGroupingHandleError(resp *azcore.Response) error {
+func (client *HeaderClient) customNamedRequestIdParamGroupingHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

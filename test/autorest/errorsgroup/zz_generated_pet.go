@@ -25,17 +25,17 @@ type PetClient struct {
 }
 
 // NewPetClient creates a new instance of PetClient with the specified values.
-func NewPetClient(con *Connection) PetClient {
-	return PetClient{con: con}
+func NewPetClient(con *Connection) *PetClient {
+	return &PetClient{con: con}
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client PetClient) Pipeline() azcore.Pipeline {
+func (client *PetClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // DoSomething - Asks pet to do something
-func (client PetClient) DoSomething(ctx context.Context, whatAction string, options *PetDoSomethingOptions) (PetActionResponse, error) {
+func (client *PetClient) DoSomething(ctx context.Context, whatAction string, options *PetDoSomethingOptions) (PetActionResponse, error) {
 	req, err := client.doSomethingCreateRequest(ctx, whatAction, options)
 	if err != nil {
 		return PetActionResponse{}, err
@@ -51,7 +51,7 @@ func (client PetClient) DoSomething(ctx context.Context, whatAction string, opti
 }
 
 // doSomethingCreateRequest creates the DoSomething request.
-func (client PetClient) doSomethingCreateRequest(ctx context.Context, whatAction string, options *PetDoSomethingOptions) (*azcore.Request, error) {
+func (client *PetClient) doSomethingCreateRequest(ctx context.Context, whatAction string, options *PetDoSomethingOptions) (*azcore.Request, error) {
 	urlPath := "/errorStatusCodes/Pets/doSomething/{whatAction}"
 	urlPath = strings.ReplaceAll(urlPath, "{whatAction}", url.PathEscape(whatAction))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -64,7 +64,7 @@ func (client PetClient) doSomethingCreateRequest(ctx context.Context, whatAction
 }
 
 // doSomethingHandleResponse handles the DoSomething response.
-func (client PetClient) doSomethingHandleResponse(resp *azcore.Response) (PetActionResponse, error) {
+func (client *PetClient) doSomethingHandleResponse(resp *azcore.Response) (PetActionResponse, error) {
 	var val *PetAction
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return PetActionResponse{}, err
@@ -73,7 +73,7 @@ func (client PetClient) doSomethingHandleResponse(resp *azcore.Response) (PetAct
 }
 
 // doSomethingHandleError handles the DoSomething error response.
-func (client PetClient) doSomethingHandleError(resp *azcore.Response) error {
+func (client *PetClient) doSomethingHandleError(resp *azcore.Response) error {
 	switch resp.StatusCode {
 	case http.StatusInternalServerError:
 		var err petActionError
@@ -91,7 +91,7 @@ func (client PetClient) doSomethingHandleError(resp *azcore.Response) error {
 }
 
 // GetPetByID - Gets pets by id.
-func (client PetClient) GetPetByID(ctx context.Context, petId string, options *PetGetPetByIDOptions) (PetResponse, error) {
+func (client *PetClient) GetPetByID(ctx context.Context, petId string, options *PetGetPetByIDOptions) (PetResponse, error) {
 	req, err := client.getPetByIdCreateRequest(ctx, petId, options)
 	if err != nil {
 		return PetResponse{}, err
@@ -107,7 +107,7 @@ func (client PetClient) GetPetByID(ctx context.Context, petId string, options *P
 }
 
 // getPetByIdCreateRequest creates the GetPetByID request.
-func (client PetClient) getPetByIdCreateRequest(ctx context.Context, petId string, options *PetGetPetByIDOptions) (*azcore.Request, error) {
+func (client *PetClient) getPetByIdCreateRequest(ctx context.Context, petId string, options *PetGetPetByIDOptions) (*azcore.Request, error) {
 	urlPath := "/errorStatusCodes/Pets/{petId}/GetPet"
 	urlPath = strings.ReplaceAll(urlPath, "{petId}", url.PathEscape(petId))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -120,7 +120,7 @@ func (client PetClient) getPetByIdCreateRequest(ctx context.Context, petId strin
 }
 
 // getPetByIdHandleResponse handles the GetPetByID response.
-func (client PetClient) getPetByIdHandleResponse(resp *azcore.Response) (PetResponse, error) {
+func (client *PetClient) getPetByIdHandleResponse(resp *azcore.Response) (PetResponse, error) {
 	var val *Pet
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return PetResponse{}, err
@@ -129,7 +129,7 @@ func (client PetClient) getPetByIdHandleResponse(resp *azcore.Response) (PetResp
 }
 
 // getPetByIdHandleError handles the GetPetByID error response.
-func (client PetClient) getPetByIdHandleError(resp *azcore.Response) error {
+func (client *PetClient) getPetByIdHandleError(resp *azcore.Response) error {
 	switch resp.StatusCode {
 	case http.StatusBadRequest:
 		var err string

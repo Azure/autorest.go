@@ -11,7 +11,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
-func newHeaderClient() HeaderClient {
+func newHeaderClient() *HeaderClient {
 	return NewHeaderClient(NewDefaultConnection(nil))
 }
 

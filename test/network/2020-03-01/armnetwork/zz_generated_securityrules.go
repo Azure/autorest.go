@@ -25,17 +25,17 @@ type SecurityRulesClient struct {
 }
 
 // NewSecurityRulesClient creates a new instance of SecurityRulesClient with the specified values.
-func NewSecurityRulesClient(con *armcore.Connection, subscriptionID string) SecurityRulesClient {
-	return SecurityRulesClient{con: con, subscriptionID: subscriptionID}
+func NewSecurityRulesClient(con *armcore.Connection, subscriptionID string) *SecurityRulesClient {
+	return &SecurityRulesClient{con: con, subscriptionID: subscriptionID}
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client SecurityRulesClient) Pipeline() azcore.Pipeline {
+func (client *SecurityRulesClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // BeginCreateOrUpdate - Creates or updates a security rule in the specified network security group.
-func (client SecurityRulesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, securityRuleParameters SecurityRule, options *SecurityRulesBeginCreateOrUpdateOptions) (SecurityRulePollerResponse, error) {
+func (client *SecurityRulesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, securityRuleParameters SecurityRule, options *SecurityRulesBeginCreateOrUpdateOptions) (SecurityRulePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, networkSecurityGroupName, securityRuleName, securityRuleParameters, options)
 	if err != nil {
 		return SecurityRulePollerResponse{}, err
@@ -60,7 +60,7 @@ func (client SecurityRulesClient) BeginCreateOrUpdate(ctx context.Context, resou
 
 // ResumeCreateOrUpdate creates a new SecurityRulePoller from the specified resume token.
 // token - The value must come from a previous call to SecurityRulePoller.ResumeToken().
-func (client SecurityRulesClient) ResumeCreateOrUpdate(token string) (SecurityRulePoller, error) {
+func (client *SecurityRulesClient) ResumeCreateOrUpdate(token string) (SecurityRulePoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("SecurityRulesClient.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
@@ -72,7 +72,7 @@ func (client SecurityRulesClient) ResumeCreateOrUpdate(token string) (SecurityRu
 }
 
 // CreateOrUpdate - Creates or updates a security rule in the specified network security group.
-func (client SecurityRulesClient) createOrUpdate(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, securityRuleParameters SecurityRule, options *SecurityRulesBeginCreateOrUpdateOptions) (*azcore.Response, error) {
+func (client *SecurityRulesClient) createOrUpdate(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, securityRuleParameters SecurityRule, options *SecurityRulesBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, networkSecurityGroupName, securityRuleName, securityRuleParameters, options)
 	if err != nil {
 		return nil, err
@@ -88,7 +88,7 @@ func (client SecurityRulesClient) createOrUpdate(ctx context.Context, resourceGr
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client SecurityRulesClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, securityRuleParameters SecurityRule, options *SecurityRulesBeginCreateOrUpdateOptions) (*azcore.Request, error) {
+func (client *SecurityRulesClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, securityRuleParameters SecurityRule, options *SecurityRulesBeginCreateOrUpdateOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}/securityRules/{securityRuleName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{networkSecurityGroupName}", url.PathEscape(networkSecurityGroupName))
@@ -107,7 +107,7 @@ func (client SecurityRulesClient) createOrUpdateCreateRequest(ctx context.Contex
 }
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client SecurityRulesClient) createOrUpdateHandleResponse(resp *azcore.Response) (SecurityRuleResponse, error) {
+func (client *SecurityRulesClient) createOrUpdateHandleResponse(resp *azcore.Response) (SecurityRuleResponse, error) {
 	var val *SecurityRule
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return SecurityRuleResponse{}, err
@@ -116,7 +116,7 @@ func (client SecurityRulesClient) createOrUpdateHandleResponse(resp *azcore.Resp
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client SecurityRulesClient) createOrUpdateHandleError(resp *azcore.Response) error {
+func (client *SecurityRulesClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -125,7 +125,7 @@ func (client SecurityRulesClient) createOrUpdateHandleError(resp *azcore.Respons
 }
 
 // BeginDelete - Deletes the specified network security rule.
-func (client SecurityRulesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, options *SecurityRulesBeginDeleteOptions) (HTTPPollerResponse, error) {
+func (client *SecurityRulesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, options *SecurityRulesBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.delete(ctx, resourceGroupName, networkSecurityGroupName, securityRuleName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
@@ -150,7 +150,7 @@ func (client SecurityRulesClient) BeginDelete(ctx context.Context, resourceGroup
 
 // ResumeDelete creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client SecurityRulesClient) ResumeDelete(token string) (HTTPPoller, error) {
+func (client *SecurityRulesClient) ResumeDelete(token string) (HTTPPoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("SecurityRulesClient.Delete", token, client.deleteHandleError)
 	if err != nil {
 		return nil, err
@@ -162,7 +162,7 @@ func (client SecurityRulesClient) ResumeDelete(token string) (HTTPPoller, error)
 }
 
 // Delete - Deletes the specified network security rule.
-func (client SecurityRulesClient) delete(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, options *SecurityRulesBeginDeleteOptions) (*azcore.Response, error) {
+func (client *SecurityRulesClient) delete(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, options *SecurityRulesBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, networkSecurityGroupName, securityRuleName, options)
 	if err != nil {
 		return nil, err
@@ -178,7 +178,7 @@ func (client SecurityRulesClient) delete(ctx context.Context, resourceGroupName 
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client SecurityRulesClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, options *SecurityRulesBeginDeleteOptions) (*azcore.Request, error) {
+func (client *SecurityRulesClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, options *SecurityRulesBeginDeleteOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}/securityRules/{securityRuleName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{networkSecurityGroupName}", url.PathEscape(networkSecurityGroupName))
@@ -197,7 +197,7 @@ func (client SecurityRulesClient) deleteCreateRequest(ctx context.Context, resou
 }
 
 // deleteHandleError handles the Delete error response.
-func (client SecurityRulesClient) deleteHandleError(resp *azcore.Response) error {
+func (client *SecurityRulesClient) deleteHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -206,7 +206,7 @@ func (client SecurityRulesClient) deleteHandleError(resp *azcore.Response) error
 }
 
 // Get - Get the specified network security rule.
-func (client SecurityRulesClient) Get(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, options *SecurityRulesGetOptions) (SecurityRuleResponse, error) {
+func (client *SecurityRulesClient) Get(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, options *SecurityRulesGetOptions) (SecurityRuleResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkSecurityGroupName, securityRuleName, options)
 	if err != nil {
 		return SecurityRuleResponse{}, err
@@ -222,7 +222,7 @@ func (client SecurityRulesClient) Get(ctx context.Context, resourceGroupName str
 }
 
 // getCreateRequest creates the Get request.
-func (client SecurityRulesClient) getCreateRequest(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, options *SecurityRulesGetOptions) (*azcore.Request, error) {
+func (client *SecurityRulesClient) getCreateRequest(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, options *SecurityRulesGetOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}/securityRules/{securityRuleName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{networkSecurityGroupName}", url.PathEscape(networkSecurityGroupName))
@@ -241,7 +241,7 @@ func (client SecurityRulesClient) getCreateRequest(ctx context.Context, resource
 }
 
 // getHandleResponse handles the Get response.
-func (client SecurityRulesClient) getHandleResponse(resp *azcore.Response) (SecurityRuleResponse, error) {
+func (client *SecurityRulesClient) getHandleResponse(resp *azcore.Response) (SecurityRuleResponse, error) {
 	var val *SecurityRule
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return SecurityRuleResponse{}, err
@@ -250,7 +250,7 @@ func (client SecurityRulesClient) getHandleResponse(resp *azcore.Response) (Secu
 }
 
 // getHandleError handles the Get error response.
-func (client SecurityRulesClient) getHandleError(resp *azcore.Response) error {
+func (client *SecurityRulesClient) getHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -259,7 +259,7 @@ func (client SecurityRulesClient) getHandleError(resp *azcore.Response) error {
 }
 
 // List - Gets all security rules in a network security group.
-func (client SecurityRulesClient) List(resourceGroupName string, networkSecurityGroupName string, options *SecurityRulesListOptions) SecurityRuleListResultPager {
+func (client *SecurityRulesClient) List(resourceGroupName string, networkSecurityGroupName string, options *SecurityRulesListOptions) SecurityRuleListResultPager {
 	return &securityRuleListResultPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
@@ -275,7 +275,7 @@ func (client SecurityRulesClient) List(resourceGroupName string, networkSecurity
 }
 
 // listCreateRequest creates the List request.
-func (client SecurityRulesClient) listCreateRequest(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, options *SecurityRulesListOptions) (*azcore.Request, error) {
+func (client *SecurityRulesClient) listCreateRequest(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, options *SecurityRulesListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}/securityRules"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{networkSecurityGroupName}", url.PathEscape(networkSecurityGroupName))
@@ -293,7 +293,7 @@ func (client SecurityRulesClient) listCreateRequest(ctx context.Context, resourc
 }
 
 // listHandleResponse handles the List response.
-func (client SecurityRulesClient) listHandleResponse(resp *azcore.Response) (SecurityRuleListResultResponse, error) {
+func (client *SecurityRulesClient) listHandleResponse(resp *azcore.Response) (SecurityRuleListResultResponse, error) {
 	var val *SecurityRuleListResult
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return SecurityRuleListResultResponse{}, err
@@ -302,7 +302,7 @@ func (client SecurityRulesClient) listHandleResponse(resp *azcore.Response) (Sec
 }
 
 // listHandleError handles the List error response.
-func (client SecurityRulesClient) listHandleError(resp *azcore.Response) error {
+func (client *SecurityRulesClient) listHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

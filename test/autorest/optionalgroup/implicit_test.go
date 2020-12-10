@@ -10,7 +10,7 @@ import (
 	"testing"
 )
 
-func newImplicitClient() ImplicitClient {
+func newImplicitClient() *ImplicitClient {
 	return NewImplicitClient(NewDefaultConnection(nil), "", "", nil)
 }
 

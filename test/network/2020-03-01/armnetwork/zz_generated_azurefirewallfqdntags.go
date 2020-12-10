@@ -24,17 +24,17 @@ type AzureFirewallFqdnTagsClient struct {
 }
 
 // NewAzureFirewallFqdnTagsClient creates a new instance of AzureFirewallFqdnTagsClient with the specified values.
-func NewAzureFirewallFqdnTagsClient(con *armcore.Connection, subscriptionID string) AzureFirewallFqdnTagsClient {
-	return AzureFirewallFqdnTagsClient{con: con, subscriptionID: subscriptionID}
+func NewAzureFirewallFqdnTagsClient(con *armcore.Connection, subscriptionID string) *AzureFirewallFqdnTagsClient {
+	return &AzureFirewallFqdnTagsClient{con: con, subscriptionID: subscriptionID}
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client AzureFirewallFqdnTagsClient) Pipeline() azcore.Pipeline {
+func (client *AzureFirewallFqdnTagsClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // ListAll - Gets all the Azure Firewall FQDN Tags in a subscription.
-func (client AzureFirewallFqdnTagsClient) ListAll(options *AzureFirewallFqdnTagsListAllOptions) AzureFirewallFqdnTagListResultPager {
+func (client *AzureFirewallFqdnTagsClient) ListAll(options *AzureFirewallFqdnTagsListAllOptions) AzureFirewallFqdnTagListResultPager {
 	return &azureFirewallFqdnTagListResultPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
@@ -50,7 +50,7 @@ func (client AzureFirewallFqdnTagsClient) ListAll(options *AzureFirewallFqdnTags
 }
 
 // listAllCreateRequest creates the ListAll request.
-func (client AzureFirewallFqdnTagsClient) listAllCreateRequest(ctx context.Context, options *AzureFirewallFqdnTagsListAllOptions) (*azcore.Request, error) {
+func (client *AzureFirewallFqdnTagsClient) listAllCreateRequest(ctx context.Context, options *AzureFirewallFqdnTagsListAllOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/azureFirewallFqdnTags"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -66,7 +66,7 @@ func (client AzureFirewallFqdnTagsClient) listAllCreateRequest(ctx context.Conte
 }
 
 // listAllHandleResponse handles the ListAll response.
-func (client AzureFirewallFqdnTagsClient) listAllHandleResponse(resp *azcore.Response) (AzureFirewallFqdnTagListResultResponse, error) {
+func (client *AzureFirewallFqdnTagsClient) listAllHandleResponse(resp *azcore.Response) (AzureFirewallFqdnTagListResultResponse, error) {
 	var val *AzureFirewallFqdnTagListResult
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return AzureFirewallFqdnTagListResultResponse{}, err
@@ -75,7 +75,7 @@ func (client AzureFirewallFqdnTagsClient) listAllHandleResponse(resp *azcore.Res
 }
 
 // listAllHandleError handles the ListAll error response.
-func (client AzureFirewallFqdnTagsClient) listAllHandleError(resp *azcore.Response) error {
+func (client *AzureFirewallFqdnTagsClient) listAllHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

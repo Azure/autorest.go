@@ -24,17 +24,17 @@ type OperationsClient struct {
 }
 
 // NewOperationsClient creates a new instance of OperationsClient with the specified values.
-func NewOperationsClient(con *armcore.Connection) OperationsClient {
-	return OperationsClient{con: con}
+func NewOperationsClient(con *armcore.Connection) *OperationsClient {
+	return &OperationsClient{con: con}
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client OperationsClient) Pipeline() azcore.Pipeline {
+func (client *OperationsClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // List - Gets a list of compute operations.
-func (client OperationsClient) List(ctx context.Context, options *OperationsListOptions) (ComputeOperationListResultResponse, error) {
+func (client *OperationsClient) List(ctx context.Context, options *OperationsListOptions) (ComputeOperationListResultResponse, error) {
 	req, err := client.listCreateRequest(ctx, options)
 	if err != nil {
 		return ComputeOperationListResultResponse{}, err
@@ -50,7 +50,7 @@ func (client OperationsClient) List(ctx context.Context, options *OperationsList
 }
 
 // listCreateRequest creates the List request.
-func (client OperationsClient) listCreateRequest(ctx context.Context, options *OperationsListOptions) (*azcore.Request, error) {
+func (client *OperationsClient) listCreateRequest(ctx context.Context, options *OperationsListOptions) (*azcore.Request, error) {
 	urlPath := "/providers/Microsoft.Compute/operations"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -65,7 +65,7 @@ func (client OperationsClient) listCreateRequest(ctx context.Context, options *O
 }
 
 // listHandleResponse handles the List response.
-func (client OperationsClient) listHandleResponse(resp *azcore.Response) (ComputeOperationListResultResponse, error) {
+func (client *OperationsClient) listHandleResponse(resp *azcore.Response) (ComputeOperationListResultResponse, error) {
 	var val *ComputeOperationListResult
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return ComputeOperationListResultResponse{}, err
@@ -74,7 +74,7 @@ func (client OperationsClient) listHandleResponse(resp *azcore.Response) (Comput
 }
 
 // listHandleError handles the List error response.
-func (client OperationsClient) listHandleError(resp *azcore.Response) error {
+func (client *OperationsClient) listHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)

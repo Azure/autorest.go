@@ -23,17 +23,17 @@ type HTTPFailureClient struct {
 }
 
 // NewHTTPFailureClient creates a new instance of HTTPFailureClient with the specified values.
-func NewHTTPFailureClient(con *Connection) HTTPFailureClient {
-	return HTTPFailureClient{con: con}
+func NewHTTPFailureClient(con *Connection) *HTTPFailureClient {
+	return &HTTPFailureClient{con: con}
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client HTTPFailureClient) Pipeline() azcore.Pipeline {
+func (client *HTTPFailureClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // GetEmptyError - Get empty error form server
-func (client HTTPFailureClient) GetEmptyError(ctx context.Context, options *HTTPFailureGetEmptyErrorOptions) (BoolResponse, error) {
+func (client *HTTPFailureClient) GetEmptyError(ctx context.Context, options *HTTPFailureGetEmptyErrorOptions) (BoolResponse, error) {
 	req, err := client.getEmptyErrorCreateRequest(ctx, options)
 	if err != nil {
 		return BoolResponse{}, err
@@ -49,7 +49,7 @@ func (client HTTPFailureClient) GetEmptyError(ctx context.Context, options *HTTP
 }
 
 // getEmptyErrorCreateRequest creates the GetEmptyError request.
-func (client HTTPFailureClient) getEmptyErrorCreateRequest(ctx context.Context, options *HTTPFailureGetEmptyErrorOptions) (*azcore.Request, error) {
+func (client *HTTPFailureClient) getEmptyErrorCreateRequest(ctx context.Context, options *HTTPFailureGetEmptyErrorOptions) (*azcore.Request, error) {
 	urlPath := "/http/failure/emptybody/error"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -61,7 +61,7 @@ func (client HTTPFailureClient) getEmptyErrorCreateRequest(ctx context.Context, 
 }
 
 // getEmptyErrorHandleResponse handles the GetEmptyError response.
-func (client HTTPFailureClient) getEmptyErrorHandleResponse(resp *azcore.Response) (BoolResponse, error) {
+func (client *HTTPFailureClient) getEmptyErrorHandleResponse(resp *azcore.Response) (BoolResponse, error) {
 	var val *bool
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return BoolResponse{}, err
@@ -70,7 +70,7 @@ func (client HTTPFailureClient) getEmptyErrorHandleResponse(resp *azcore.Respons
 }
 
 // getEmptyErrorHandleError handles the GetEmptyError error response.
-func (client HTTPFailureClient) getEmptyErrorHandleError(resp *azcore.Response) error {
+func (client *HTTPFailureClient) getEmptyErrorHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -79,7 +79,7 @@ func (client HTTPFailureClient) getEmptyErrorHandleError(resp *azcore.Response) 
 }
 
 // GetNoModelEmpty - Get empty response from server
-func (client HTTPFailureClient) GetNoModelEmpty(ctx context.Context, options *HTTPFailureGetNoModelEmptyOptions) (BoolResponse, error) {
+func (client *HTTPFailureClient) GetNoModelEmpty(ctx context.Context, options *HTTPFailureGetNoModelEmptyOptions) (BoolResponse, error) {
 	req, err := client.getNoModelEmptyCreateRequest(ctx, options)
 	if err != nil {
 		return BoolResponse{}, err
@@ -95,7 +95,7 @@ func (client HTTPFailureClient) GetNoModelEmpty(ctx context.Context, options *HT
 }
 
 // getNoModelEmptyCreateRequest creates the GetNoModelEmpty request.
-func (client HTTPFailureClient) getNoModelEmptyCreateRequest(ctx context.Context, options *HTTPFailureGetNoModelEmptyOptions) (*azcore.Request, error) {
+func (client *HTTPFailureClient) getNoModelEmptyCreateRequest(ctx context.Context, options *HTTPFailureGetNoModelEmptyOptions) (*azcore.Request, error) {
 	urlPath := "/http/failure/nomodel/empty"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -107,7 +107,7 @@ func (client HTTPFailureClient) getNoModelEmptyCreateRequest(ctx context.Context
 }
 
 // getNoModelEmptyHandleResponse handles the GetNoModelEmpty response.
-func (client HTTPFailureClient) getNoModelEmptyHandleResponse(resp *azcore.Response) (BoolResponse, error) {
+func (client *HTTPFailureClient) getNoModelEmptyHandleResponse(resp *azcore.Response) (BoolResponse, error) {
 	var val *bool
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return BoolResponse{}, err
@@ -116,7 +116,7 @@ func (client HTTPFailureClient) getNoModelEmptyHandleResponse(resp *azcore.Respo
 }
 
 // getNoModelEmptyHandleError handles the GetNoModelEmpty error response.
-func (client HTTPFailureClient) getNoModelEmptyHandleError(resp *azcore.Response) error {
+func (client *HTTPFailureClient) getNoModelEmptyHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -128,7 +128,7 @@ func (client HTTPFailureClient) getNoModelEmptyHandleError(resp *azcore.Response
 }
 
 // GetNoModelError - Get empty error form server
-func (client HTTPFailureClient) GetNoModelError(ctx context.Context, options *HTTPFailureGetNoModelErrorOptions) (BoolResponse, error) {
+func (client *HTTPFailureClient) GetNoModelError(ctx context.Context, options *HTTPFailureGetNoModelErrorOptions) (BoolResponse, error) {
 	req, err := client.getNoModelErrorCreateRequest(ctx, options)
 	if err != nil {
 		return BoolResponse{}, err
@@ -144,7 +144,7 @@ func (client HTTPFailureClient) GetNoModelError(ctx context.Context, options *HT
 }
 
 // getNoModelErrorCreateRequest creates the GetNoModelError request.
-func (client HTTPFailureClient) getNoModelErrorCreateRequest(ctx context.Context, options *HTTPFailureGetNoModelErrorOptions) (*azcore.Request, error) {
+func (client *HTTPFailureClient) getNoModelErrorCreateRequest(ctx context.Context, options *HTTPFailureGetNoModelErrorOptions) (*azcore.Request, error) {
 	urlPath := "/http/failure/nomodel/error"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -156,7 +156,7 @@ func (client HTTPFailureClient) getNoModelErrorCreateRequest(ctx context.Context
 }
 
 // getNoModelErrorHandleResponse handles the GetNoModelError response.
-func (client HTTPFailureClient) getNoModelErrorHandleResponse(resp *azcore.Response) (BoolResponse, error) {
+func (client *HTTPFailureClient) getNoModelErrorHandleResponse(resp *azcore.Response) (BoolResponse, error) {
 	var val *bool
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return BoolResponse{}, err
@@ -165,7 +165,7 @@ func (client HTTPFailureClient) getNoModelErrorHandleResponse(resp *azcore.Respo
 }
 
 // getNoModelErrorHandleError handles the GetNoModelError error response.
-func (client HTTPFailureClient) getNoModelErrorHandleError(resp *azcore.Response) error {
+func (client *HTTPFailureClient) getNoModelErrorHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)

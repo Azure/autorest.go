@@ -12,7 +12,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
-func newReadonlypropertyClient() ReadonlypropertyClient {
+func newReadonlypropertyClient() *ReadonlypropertyClient {
 	return NewReadonlypropertyClient(NewDefaultConnection(nil))
 }
 

@@ -11,7 +11,7 @@ import (
 	"testing"
 )
 
-func newFilesClient() FilesClient {
+func newFilesClient() *FilesClient {
 	return NewFilesClient(NewDefaultConnection(nil))
 }
 

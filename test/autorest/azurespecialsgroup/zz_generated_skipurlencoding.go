@@ -21,17 +21,17 @@ type SkipURLEncodingClient struct {
 }
 
 // NewSkipURLEncodingClient creates a new instance of SkipURLEncodingClient with the specified values.
-func NewSkipURLEncodingClient(con *Connection) SkipURLEncodingClient {
-	return SkipURLEncodingClient{con: con}
+func NewSkipURLEncodingClient(con *Connection) *SkipURLEncodingClient {
+	return &SkipURLEncodingClient{con: con}
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client SkipURLEncodingClient) Pipeline() azcore.Pipeline {
+func (client *SkipURLEncodingClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // GetMethodPathValid - Get method with unencoded path parameter with value 'path1/path2/path3'
-func (client SkipURLEncodingClient) GetMethodPathValid(ctx context.Context, unencodedPathParam string, options *SkipURLEncodingGetMethodPathValidOptions) (*http.Response, error) {
+func (client *SkipURLEncodingClient) GetMethodPathValid(ctx context.Context, unencodedPathParam string, options *SkipURLEncodingGetMethodPathValidOptions) (*http.Response, error) {
 	req, err := client.getMethodPathValidCreateRequest(ctx, unencodedPathParam, options)
 	if err != nil {
 		return nil, err
@@ -47,7 +47,7 @@ func (client SkipURLEncodingClient) GetMethodPathValid(ctx context.Context, unen
 }
 
 // getMethodPathValidCreateRequest creates the GetMethodPathValid request.
-func (client SkipURLEncodingClient) getMethodPathValidCreateRequest(ctx context.Context, unencodedPathParam string, options *SkipURLEncodingGetMethodPathValidOptions) (*azcore.Request, error) {
+func (client *SkipURLEncodingClient) getMethodPathValidCreateRequest(ctx context.Context, unencodedPathParam string, options *SkipURLEncodingGetMethodPathValidOptions) (*azcore.Request, error) {
 	urlPath := "/azurespecials/skipUrlEncoding/method/path/valid/{unencodedPathParam}"
 	urlPath = strings.ReplaceAll(urlPath, "{unencodedPathParam}", unencodedPathParam)
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -60,7 +60,7 @@ func (client SkipURLEncodingClient) getMethodPathValidCreateRequest(ctx context.
 }
 
 // getMethodPathValidHandleError handles the GetMethodPathValid error response.
-func (client SkipURLEncodingClient) getMethodPathValidHandleError(resp *azcore.Response) error {
+func (client *SkipURLEncodingClient) getMethodPathValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -69,7 +69,7 @@ func (client SkipURLEncodingClient) getMethodPathValidHandleError(resp *azcore.R
 }
 
 // GetMethodQueryNull - Get method with unencoded query parameter with value null
-func (client SkipURLEncodingClient) GetMethodQueryNull(ctx context.Context, options *SkipURLEncodingGetMethodQueryNullOptions) (*http.Response, error) {
+func (client *SkipURLEncodingClient) GetMethodQueryNull(ctx context.Context, options *SkipURLEncodingGetMethodQueryNullOptions) (*http.Response, error) {
 	req, err := client.getMethodQueryNullCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -85,7 +85,7 @@ func (client SkipURLEncodingClient) GetMethodQueryNull(ctx context.Context, opti
 }
 
 // getMethodQueryNullCreateRequest creates the GetMethodQueryNull request.
-func (client SkipURLEncodingClient) getMethodQueryNullCreateRequest(ctx context.Context, options *SkipURLEncodingGetMethodQueryNullOptions) (*azcore.Request, error) {
+func (client *SkipURLEncodingClient) getMethodQueryNullCreateRequest(ctx context.Context, options *SkipURLEncodingGetMethodQueryNullOptions) (*azcore.Request, error) {
 	urlPath := "/azurespecials/skipUrlEncoding/method/query/null"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -102,7 +102,7 @@ func (client SkipURLEncodingClient) getMethodQueryNullCreateRequest(ctx context.
 }
 
 // getMethodQueryNullHandleError handles the GetMethodQueryNull error response.
-func (client SkipURLEncodingClient) getMethodQueryNullHandleError(resp *azcore.Response) error {
+func (client *SkipURLEncodingClient) getMethodQueryNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -111,7 +111,7 @@ func (client SkipURLEncodingClient) getMethodQueryNullHandleError(resp *azcore.R
 }
 
 // GetMethodQueryValid - Get method with unencoded query parameter with value 'value1&q2=value2&q3=value3'
-func (client SkipURLEncodingClient) GetMethodQueryValid(ctx context.Context, q1 string, options *SkipURLEncodingGetMethodQueryValidOptions) (*http.Response, error) {
+func (client *SkipURLEncodingClient) GetMethodQueryValid(ctx context.Context, q1 string, options *SkipURLEncodingGetMethodQueryValidOptions) (*http.Response, error) {
 	req, err := client.getMethodQueryValidCreateRequest(ctx, q1, options)
 	if err != nil {
 		return nil, err
@@ -127,7 +127,7 @@ func (client SkipURLEncodingClient) GetMethodQueryValid(ctx context.Context, q1 
 }
 
 // getMethodQueryValidCreateRequest creates the GetMethodQueryValid request.
-func (client SkipURLEncodingClient) getMethodQueryValidCreateRequest(ctx context.Context, q1 string, options *SkipURLEncodingGetMethodQueryValidOptions) (*azcore.Request, error) {
+func (client *SkipURLEncodingClient) getMethodQueryValidCreateRequest(ctx context.Context, q1 string, options *SkipURLEncodingGetMethodQueryValidOptions) (*azcore.Request, error) {
 	urlPath := "/azurespecials/skipUrlEncoding/method/query/valid"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -142,7 +142,7 @@ func (client SkipURLEncodingClient) getMethodQueryValidCreateRequest(ctx context
 }
 
 // getMethodQueryValidHandleError handles the GetMethodQueryValid error response.
-func (client SkipURLEncodingClient) getMethodQueryValidHandleError(resp *azcore.Response) error {
+func (client *SkipURLEncodingClient) getMethodQueryValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -151,7 +151,7 @@ func (client SkipURLEncodingClient) getMethodQueryValidHandleError(resp *azcore.
 }
 
 // GetPathQueryValid - Get method with unencoded query parameter with value 'value1&q2=value2&q3=value3'
-func (client SkipURLEncodingClient) GetPathQueryValid(ctx context.Context, q1 string, options *SkipURLEncodingGetPathQueryValidOptions) (*http.Response, error) {
+func (client *SkipURLEncodingClient) GetPathQueryValid(ctx context.Context, q1 string, options *SkipURLEncodingGetPathQueryValidOptions) (*http.Response, error) {
 	req, err := client.getPathQueryValidCreateRequest(ctx, q1, options)
 	if err != nil {
 		return nil, err
@@ -167,7 +167,7 @@ func (client SkipURLEncodingClient) GetPathQueryValid(ctx context.Context, q1 st
 }
 
 // getPathQueryValidCreateRequest creates the GetPathQueryValid request.
-func (client SkipURLEncodingClient) getPathQueryValidCreateRequest(ctx context.Context, q1 string, options *SkipURLEncodingGetPathQueryValidOptions) (*azcore.Request, error) {
+func (client *SkipURLEncodingClient) getPathQueryValidCreateRequest(ctx context.Context, q1 string, options *SkipURLEncodingGetPathQueryValidOptions) (*azcore.Request, error) {
 	urlPath := "/azurespecials/skipUrlEncoding/path/query/valid"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -182,7 +182,7 @@ func (client SkipURLEncodingClient) getPathQueryValidCreateRequest(ctx context.C
 }
 
 // getPathQueryValidHandleError handles the GetPathQueryValid error response.
-func (client SkipURLEncodingClient) getPathQueryValidHandleError(resp *azcore.Response) error {
+func (client *SkipURLEncodingClient) getPathQueryValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -191,7 +191,7 @@ func (client SkipURLEncodingClient) getPathQueryValidHandleError(resp *azcore.Re
 }
 
 // GetPathValid - Get method with unencoded path parameter with value 'path1/path2/path3'
-func (client SkipURLEncodingClient) GetPathValid(ctx context.Context, unencodedPathParam string, options *SkipURLEncodingGetPathValidOptions) (*http.Response, error) {
+func (client *SkipURLEncodingClient) GetPathValid(ctx context.Context, unencodedPathParam string, options *SkipURLEncodingGetPathValidOptions) (*http.Response, error) {
 	req, err := client.getPathValidCreateRequest(ctx, unencodedPathParam, options)
 	if err != nil {
 		return nil, err
@@ -207,7 +207,7 @@ func (client SkipURLEncodingClient) GetPathValid(ctx context.Context, unencodedP
 }
 
 // getPathValidCreateRequest creates the GetPathValid request.
-func (client SkipURLEncodingClient) getPathValidCreateRequest(ctx context.Context, unencodedPathParam string, options *SkipURLEncodingGetPathValidOptions) (*azcore.Request, error) {
+func (client *SkipURLEncodingClient) getPathValidCreateRequest(ctx context.Context, unencodedPathParam string, options *SkipURLEncodingGetPathValidOptions) (*azcore.Request, error) {
 	urlPath := "/azurespecials/skipUrlEncoding/path/path/valid/{unencodedPathParam}"
 	urlPath = strings.ReplaceAll(urlPath, "{unencodedPathParam}", unencodedPathParam)
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -220,7 +220,7 @@ func (client SkipURLEncodingClient) getPathValidCreateRequest(ctx context.Contex
 }
 
 // getPathValidHandleError handles the GetPathValid error response.
-func (client SkipURLEncodingClient) getPathValidHandleError(resp *azcore.Response) error {
+func (client *SkipURLEncodingClient) getPathValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -229,7 +229,7 @@ func (client SkipURLEncodingClient) getPathValidHandleError(resp *azcore.Respons
 }
 
 // GetSwaggerPathValid - Get method with unencoded path parameter with value 'path1/path2/path3'
-func (client SkipURLEncodingClient) GetSwaggerPathValid(ctx context.Context, options *SkipURLEncodingGetSwaggerPathValidOptions) (*http.Response, error) {
+func (client *SkipURLEncodingClient) GetSwaggerPathValid(ctx context.Context, options *SkipURLEncodingGetSwaggerPathValidOptions) (*http.Response, error) {
 	req, err := client.getSwaggerPathValidCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -245,7 +245,7 @@ func (client SkipURLEncodingClient) GetSwaggerPathValid(ctx context.Context, opt
 }
 
 // getSwaggerPathValidCreateRequest creates the GetSwaggerPathValid request.
-func (client SkipURLEncodingClient) getSwaggerPathValidCreateRequest(ctx context.Context, options *SkipURLEncodingGetSwaggerPathValidOptions) (*azcore.Request, error) {
+func (client *SkipURLEncodingClient) getSwaggerPathValidCreateRequest(ctx context.Context, options *SkipURLEncodingGetSwaggerPathValidOptions) (*azcore.Request, error) {
 	urlPath := "/azurespecials/skipUrlEncoding/swagger/path/valid/{unencodedPathParam}"
 	urlPath = strings.ReplaceAll(urlPath, "{unencodedPathParam}", "path1/path2/path3")
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -258,7 +258,7 @@ func (client SkipURLEncodingClient) getSwaggerPathValidCreateRequest(ctx context
 }
 
 // getSwaggerPathValidHandleError handles the GetSwaggerPathValid error response.
-func (client SkipURLEncodingClient) getSwaggerPathValidHandleError(resp *azcore.Response) error {
+func (client *SkipURLEncodingClient) getSwaggerPathValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -267,7 +267,7 @@ func (client SkipURLEncodingClient) getSwaggerPathValidHandleError(resp *azcore.
 }
 
 // GetSwaggerQueryValid - Get method with unencoded query parameter with value 'value1&q2=value2&q3=value3'
-func (client SkipURLEncodingClient) GetSwaggerQueryValid(ctx context.Context, options *SkipURLEncodingGetSwaggerQueryValidOptions) (*http.Response, error) {
+func (client *SkipURLEncodingClient) GetSwaggerQueryValid(ctx context.Context, options *SkipURLEncodingGetSwaggerQueryValidOptions) (*http.Response, error) {
 	req, err := client.getSwaggerQueryValidCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -283,7 +283,7 @@ func (client SkipURLEncodingClient) GetSwaggerQueryValid(ctx context.Context, op
 }
 
 // getSwaggerQueryValidCreateRequest creates the GetSwaggerQueryValid request.
-func (client SkipURLEncodingClient) getSwaggerQueryValidCreateRequest(ctx context.Context, options *SkipURLEncodingGetSwaggerQueryValidOptions) (*azcore.Request, error) {
+func (client *SkipURLEncodingClient) getSwaggerQueryValidCreateRequest(ctx context.Context, options *SkipURLEncodingGetSwaggerQueryValidOptions) (*azcore.Request, error) {
 	urlPath := "/azurespecials/skipUrlEncoding/swagger/query/valid"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -298,7 +298,7 @@ func (client SkipURLEncodingClient) getSwaggerQueryValidCreateRequest(ctx contex
 }
 
 // getSwaggerQueryValidHandleError handles the GetSwaggerQueryValid error response.
-func (client SkipURLEncodingClient) getSwaggerQueryValidHandleError(resp *azcore.Response) error {
+func (client *SkipURLEncodingClient) getSwaggerQueryValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

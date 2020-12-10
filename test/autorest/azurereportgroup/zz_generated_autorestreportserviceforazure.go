@@ -20,17 +20,17 @@ type AutoRestReportServiceForAzureClient struct {
 }
 
 // NewAutoRestReportServiceForAzureClient creates a new instance of AutoRestReportServiceForAzureClient with the specified values.
-func NewAutoRestReportServiceForAzureClient(con *Connection) AutoRestReportServiceForAzureClient {
-	return AutoRestReportServiceForAzureClient{con: con}
+func NewAutoRestReportServiceForAzureClient(con *Connection) *AutoRestReportServiceForAzureClient {
+	return &AutoRestReportServiceForAzureClient{con: con}
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client AutoRestReportServiceForAzureClient) Pipeline() azcore.Pipeline {
+func (client *AutoRestReportServiceForAzureClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // GetReport - Get test coverage report
-func (client AutoRestReportServiceForAzureClient) GetReport(ctx context.Context, options *AutoRestReportServiceForAzureGetReportOptions) (MapOfInt32Response, error) {
+func (client *AutoRestReportServiceForAzureClient) GetReport(ctx context.Context, options *AutoRestReportServiceForAzureGetReportOptions) (MapOfInt32Response, error) {
 	req, err := client.getReportCreateRequest(ctx, options)
 	if err != nil {
 		return MapOfInt32Response{}, err
@@ -46,7 +46,7 @@ func (client AutoRestReportServiceForAzureClient) GetReport(ctx context.Context,
 }
 
 // getReportCreateRequest creates the GetReport request.
-func (client AutoRestReportServiceForAzureClient) getReportCreateRequest(ctx context.Context, options *AutoRestReportServiceForAzureGetReportOptions) (*azcore.Request, error) {
+func (client *AutoRestReportServiceForAzureClient) getReportCreateRequest(ctx context.Context, options *AutoRestReportServiceForAzureGetReportOptions) (*azcore.Request, error) {
 	urlPath := "/report/azure"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -63,7 +63,7 @@ func (client AutoRestReportServiceForAzureClient) getReportCreateRequest(ctx con
 }
 
 // getReportHandleResponse handles the GetReport response.
-func (client AutoRestReportServiceForAzureClient) getReportHandleResponse(resp *azcore.Response) (MapOfInt32Response, error) {
+func (client *AutoRestReportServiceForAzureClient) getReportHandleResponse(resp *azcore.Response) (MapOfInt32Response, error) {
 	var val *map[string]int32
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return MapOfInt32Response{}, err
@@ -72,7 +72,7 @@ func (client AutoRestReportServiceForAzureClient) getReportHandleResponse(resp *
 }
 
 // getReportHandleError handles the GetReport error response.
-func (client AutoRestReportServiceForAzureClient) getReportHandleError(resp *azcore.Response) error {
+func (client *AutoRestReportServiceForAzureClient) getReportHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

@@ -24,17 +24,17 @@ type ResourceNavigationLinksClient struct {
 }
 
 // NewResourceNavigationLinksClient creates a new instance of ResourceNavigationLinksClient with the specified values.
-func NewResourceNavigationLinksClient(con *armcore.Connection, subscriptionID string) ResourceNavigationLinksClient {
-	return ResourceNavigationLinksClient{con: con, subscriptionID: subscriptionID}
+func NewResourceNavigationLinksClient(con *armcore.Connection, subscriptionID string) *ResourceNavigationLinksClient {
+	return &ResourceNavigationLinksClient{con: con, subscriptionID: subscriptionID}
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client ResourceNavigationLinksClient) Pipeline() azcore.Pipeline {
+func (client *ResourceNavigationLinksClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // List - Gets a list of resource navigation links for a subnet.
-func (client ResourceNavigationLinksClient) List(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, options *ResourceNavigationLinksListOptions) (ResourceNavigationLinksListResultResponse, error) {
+func (client *ResourceNavigationLinksClient) List(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, options *ResourceNavigationLinksListOptions) (ResourceNavigationLinksListResultResponse, error) {
 	req, err := client.listCreateRequest(ctx, resourceGroupName, virtualNetworkName, subnetName, options)
 	if err != nil {
 		return ResourceNavigationLinksListResultResponse{}, err
@@ -50,7 +50,7 @@ func (client ResourceNavigationLinksClient) List(ctx context.Context, resourceGr
 }
 
 // listCreateRequest creates the List request.
-func (client ResourceNavigationLinksClient) listCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, options *ResourceNavigationLinksListOptions) (*azcore.Request, error) {
+func (client *ResourceNavigationLinksClient) listCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, options *ResourceNavigationLinksListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}/ResourceNavigationLinks"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkName}", url.PathEscape(virtualNetworkName))
@@ -69,7 +69,7 @@ func (client ResourceNavigationLinksClient) listCreateRequest(ctx context.Contex
 }
 
 // listHandleResponse handles the List response.
-func (client ResourceNavigationLinksClient) listHandleResponse(resp *azcore.Response) (ResourceNavigationLinksListResultResponse, error) {
+func (client *ResourceNavigationLinksClient) listHandleResponse(resp *azcore.Response) (ResourceNavigationLinksListResultResponse, error) {
 	var val *ResourceNavigationLinksListResult
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return ResourceNavigationLinksListResultResponse{}, err
@@ -78,7 +78,7 @@ func (client ResourceNavigationLinksClient) listHandleResponse(resp *azcore.Resp
 }
 
 // listHandleError handles the List error response.
-func (client ResourceNavigationLinksClient) listHandleError(resp *azcore.Response) error {
+func (client *ResourceNavigationLinksClient) listHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

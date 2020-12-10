@@ -11,7 +11,7 @@ import (
 	"testing"
 )
 
-func newBoolClient() BoolClient {
+func newBoolClient() *BoolClient {
 	return NewBoolClient(NewDefaultConnection(nil))
 }
 

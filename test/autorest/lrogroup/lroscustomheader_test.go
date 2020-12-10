@@ -14,7 +14,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
-func newLrOSCustomHeaderClient() LrOSCustomHeaderClient {
+func newLrOSCustomHeaderClient() *LrOSCustomHeaderClient {
 	options := DefaultConnectionOptions()
 	options.Retry.RetryDelay = 10 * time.Millisecond
 	options.HTTPClient = httpClientWithCookieJar()

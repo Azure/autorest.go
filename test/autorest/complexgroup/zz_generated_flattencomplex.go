@@ -23,16 +23,16 @@ type FlattencomplexClient struct {
 }
 
 // NewFlattencomplexClient creates a new instance of FlattencomplexClient with the specified values.
-func NewFlattencomplexClient(con *Connection) FlattencomplexClient {
-	return FlattencomplexClient{con: con}
+func NewFlattencomplexClient(con *Connection) *FlattencomplexClient {
+	return &FlattencomplexClient{con: con}
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client FlattencomplexClient) Pipeline() azcore.Pipeline {
+func (client *FlattencomplexClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
-func (client FlattencomplexClient) GetValid(ctx context.Context, options *FlattencomplexGetValidOptions) (MyBaseTypeResponse, error) {
+func (client *FlattencomplexClient) GetValid(ctx context.Context, options *FlattencomplexGetValidOptions) (MyBaseTypeResponse, error) {
 	req, err := client.getValidCreateRequest(ctx, options)
 	if err != nil {
 		return MyBaseTypeResponse{}, err
@@ -48,7 +48,7 @@ func (client FlattencomplexClient) GetValid(ctx context.Context, options *Flatte
 }
 
 // getValidCreateRequest creates the GetValid request.
-func (client FlattencomplexClient) getValidCreateRequest(ctx context.Context, options *FlattencomplexGetValidOptions) (*azcore.Request, error) {
+func (client *FlattencomplexClient) getValidCreateRequest(ctx context.Context, options *FlattencomplexGetValidOptions) (*azcore.Request, error) {
 	urlPath := "/complex/flatten/valid"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -60,7 +60,7 @@ func (client FlattencomplexClient) getValidCreateRequest(ctx context.Context, op
 }
 
 // getValidHandleResponse handles the GetValid response.
-func (client FlattencomplexClient) getValidHandleResponse(resp *azcore.Response) (MyBaseTypeResponse, error) {
+func (client *FlattencomplexClient) getValidHandleResponse(resp *azcore.Response) (MyBaseTypeResponse, error) {
 	result := MyBaseTypeResponse{RawResponse: resp.Response}
 	if err := resp.UnmarshalAsJSON(&result); err != nil {
 		return MyBaseTypeResponse{}, err
@@ -69,7 +69,7 @@ func (client FlattencomplexClient) getValidHandleResponse(resp *azcore.Response)
 }
 
 // getValidHandleError handles the GetValid error response.
-func (client FlattencomplexClient) getValidHandleError(resp *azcore.Response) error {
+func (client *FlattencomplexClient) getValidHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)

@@ -25,17 +25,17 @@ type InboundNatRulesClient struct {
 }
 
 // NewInboundNatRulesClient creates a new instance of InboundNatRulesClient with the specified values.
-func NewInboundNatRulesClient(con *armcore.Connection, subscriptionID string) InboundNatRulesClient {
-	return InboundNatRulesClient{con: con, subscriptionID: subscriptionID}
+func NewInboundNatRulesClient(con *armcore.Connection, subscriptionID string) *InboundNatRulesClient {
+	return &InboundNatRulesClient{con: con, subscriptionID: subscriptionID}
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client InboundNatRulesClient) Pipeline() azcore.Pipeline {
+func (client *InboundNatRulesClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // BeginCreateOrUpdate - Creates or updates a load balancer inbound nat rule.
-func (client InboundNatRulesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, inboundNatRuleParameters InboundNatRule, options *InboundNatRulesBeginCreateOrUpdateOptions) (InboundNatRulePollerResponse, error) {
+func (client *InboundNatRulesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, inboundNatRuleParameters InboundNatRule, options *InboundNatRulesBeginCreateOrUpdateOptions) (InboundNatRulePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, loadBalancerName, inboundNatRuleName, inboundNatRuleParameters, options)
 	if err != nil {
 		return InboundNatRulePollerResponse{}, err
@@ -60,7 +60,7 @@ func (client InboundNatRulesClient) BeginCreateOrUpdate(ctx context.Context, res
 
 // ResumeCreateOrUpdate creates a new InboundNatRulePoller from the specified resume token.
 // token - The value must come from a previous call to InboundNatRulePoller.ResumeToken().
-func (client InboundNatRulesClient) ResumeCreateOrUpdate(token string) (InboundNatRulePoller, error) {
+func (client *InboundNatRulesClient) ResumeCreateOrUpdate(token string) (InboundNatRulePoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("InboundNatRulesClient.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
@@ -72,7 +72,7 @@ func (client InboundNatRulesClient) ResumeCreateOrUpdate(token string) (InboundN
 }
 
 // CreateOrUpdate - Creates or updates a load balancer inbound nat rule.
-func (client InboundNatRulesClient) createOrUpdate(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, inboundNatRuleParameters InboundNatRule, options *InboundNatRulesBeginCreateOrUpdateOptions) (*azcore.Response, error) {
+func (client *InboundNatRulesClient) createOrUpdate(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, inboundNatRuleParameters InboundNatRule, options *InboundNatRulesBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, loadBalancerName, inboundNatRuleName, inboundNatRuleParameters, options)
 	if err != nil {
 		return nil, err
@@ -88,7 +88,7 @@ func (client InboundNatRulesClient) createOrUpdate(ctx context.Context, resource
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client InboundNatRulesClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, inboundNatRuleParameters InboundNatRule, options *InboundNatRulesBeginCreateOrUpdateOptions) (*azcore.Request, error) {
+func (client *InboundNatRulesClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, inboundNatRuleParameters InboundNatRule, options *InboundNatRulesBeginCreateOrUpdateOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/inboundNatRules/{inboundNatRuleName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{loadBalancerName}", url.PathEscape(loadBalancerName))
@@ -107,7 +107,7 @@ func (client InboundNatRulesClient) createOrUpdateCreateRequest(ctx context.Cont
 }
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client InboundNatRulesClient) createOrUpdateHandleResponse(resp *azcore.Response) (InboundNatRuleResponse, error) {
+func (client *InboundNatRulesClient) createOrUpdateHandleResponse(resp *azcore.Response) (InboundNatRuleResponse, error) {
 	var val *InboundNatRule
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return InboundNatRuleResponse{}, err
@@ -116,7 +116,7 @@ func (client InboundNatRulesClient) createOrUpdateHandleResponse(resp *azcore.Re
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client InboundNatRulesClient) createOrUpdateHandleError(resp *azcore.Response) error {
+func (client *InboundNatRulesClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -125,7 +125,7 @@ func (client InboundNatRulesClient) createOrUpdateHandleError(resp *azcore.Respo
 }
 
 // BeginDelete - Deletes the specified load balancer inbound nat rule.
-func (client InboundNatRulesClient) BeginDelete(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, options *InboundNatRulesBeginDeleteOptions) (HTTPPollerResponse, error) {
+func (client *InboundNatRulesClient) BeginDelete(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, options *InboundNatRulesBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.delete(ctx, resourceGroupName, loadBalancerName, inboundNatRuleName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
@@ -150,7 +150,7 @@ func (client InboundNatRulesClient) BeginDelete(ctx context.Context, resourceGro
 
 // ResumeDelete creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client InboundNatRulesClient) ResumeDelete(token string) (HTTPPoller, error) {
+func (client *InboundNatRulesClient) ResumeDelete(token string) (HTTPPoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("InboundNatRulesClient.Delete", token, client.deleteHandleError)
 	if err != nil {
 		return nil, err
@@ -162,7 +162,7 @@ func (client InboundNatRulesClient) ResumeDelete(token string) (HTTPPoller, erro
 }
 
 // Delete - Deletes the specified load balancer inbound nat rule.
-func (client InboundNatRulesClient) delete(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, options *InboundNatRulesBeginDeleteOptions) (*azcore.Response, error) {
+func (client *InboundNatRulesClient) delete(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, options *InboundNatRulesBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, loadBalancerName, inboundNatRuleName, options)
 	if err != nil {
 		return nil, err
@@ -178,7 +178,7 @@ func (client InboundNatRulesClient) delete(ctx context.Context, resourceGroupNam
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client InboundNatRulesClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, options *InboundNatRulesBeginDeleteOptions) (*azcore.Request, error) {
+func (client *InboundNatRulesClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, options *InboundNatRulesBeginDeleteOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/inboundNatRules/{inboundNatRuleName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{loadBalancerName}", url.PathEscape(loadBalancerName))
@@ -197,7 +197,7 @@ func (client InboundNatRulesClient) deleteCreateRequest(ctx context.Context, res
 }
 
 // deleteHandleError handles the Delete error response.
-func (client InboundNatRulesClient) deleteHandleError(resp *azcore.Response) error {
+func (client *InboundNatRulesClient) deleteHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -206,7 +206,7 @@ func (client InboundNatRulesClient) deleteHandleError(resp *azcore.Response) err
 }
 
 // Get - Gets the specified load balancer inbound nat rule.
-func (client InboundNatRulesClient) Get(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, options *InboundNatRulesGetOptions) (InboundNatRuleResponse, error) {
+func (client *InboundNatRulesClient) Get(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, options *InboundNatRulesGetOptions) (InboundNatRuleResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, loadBalancerName, inboundNatRuleName, options)
 	if err != nil {
 		return InboundNatRuleResponse{}, err
@@ -222,7 +222,7 @@ func (client InboundNatRulesClient) Get(ctx context.Context, resourceGroupName s
 }
 
 // getCreateRequest creates the Get request.
-func (client InboundNatRulesClient) getCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, options *InboundNatRulesGetOptions) (*azcore.Request, error) {
+func (client *InboundNatRulesClient) getCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, options *InboundNatRulesGetOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/inboundNatRules/{inboundNatRuleName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{loadBalancerName}", url.PathEscape(loadBalancerName))
@@ -244,7 +244,7 @@ func (client InboundNatRulesClient) getCreateRequest(ctx context.Context, resour
 }
 
 // getHandleResponse handles the Get response.
-func (client InboundNatRulesClient) getHandleResponse(resp *azcore.Response) (InboundNatRuleResponse, error) {
+func (client *InboundNatRulesClient) getHandleResponse(resp *azcore.Response) (InboundNatRuleResponse, error) {
 	var val *InboundNatRule
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return InboundNatRuleResponse{}, err
@@ -253,7 +253,7 @@ func (client InboundNatRulesClient) getHandleResponse(resp *azcore.Response) (In
 }
 
 // getHandleError handles the Get error response.
-func (client InboundNatRulesClient) getHandleError(resp *azcore.Response) error {
+func (client *InboundNatRulesClient) getHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -262,7 +262,7 @@ func (client InboundNatRulesClient) getHandleError(resp *azcore.Response) error 
 }
 
 // List - Gets all the inbound nat rules in a load balancer.
-func (client InboundNatRulesClient) List(resourceGroupName string, loadBalancerName string, options *InboundNatRulesListOptions) InboundNatRuleListResultPager {
+func (client *InboundNatRulesClient) List(resourceGroupName string, loadBalancerName string, options *InboundNatRulesListOptions) InboundNatRuleListResultPager {
 	return &inboundNatRuleListResultPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
@@ -278,7 +278,7 @@ func (client InboundNatRulesClient) List(resourceGroupName string, loadBalancerN
 }
 
 // listCreateRequest creates the List request.
-func (client InboundNatRulesClient) listCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, options *InboundNatRulesListOptions) (*azcore.Request, error) {
+func (client *InboundNatRulesClient) listCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, options *InboundNatRulesListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/inboundNatRules"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{loadBalancerName}", url.PathEscape(loadBalancerName))
@@ -296,7 +296,7 @@ func (client InboundNatRulesClient) listCreateRequest(ctx context.Context, resou
 }
 
 // listHandleResponse handles the List response.
-func (client InboundNatRulesClient) listHandleResponse(resp *azcore.Response) (InboundNatRuleListResultResponse, error) {
+func (client *InboundNatRulesClient) listHandleResponse(resp *azcore.Response) (InboundNatRuleListResultResponse, error) {
 	var val *InboundNatRuleListResult
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return InboundNatRuleListResultResponse{}, err
@@ -305,7 +305,7 @@ func (client InboundNatRulesClient) listHandleResponse(resp *azcore.Response) (I
 }
 
 // listHandleError handles the List error response.
-func (client InboundNatRulesClient) listHandleError(resp *azcore.Response) error {
+func (client *InboundNatRulesClient) listHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

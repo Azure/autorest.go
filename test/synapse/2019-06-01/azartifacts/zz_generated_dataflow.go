@@ -20,12 +20,12 @@ type dataFlowClient struct {
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client dataFlowClient) Pipeline() azcore.Pipeline {
+func (client *dataFlowClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // CreateOrUpdateDataFlow - Creates or updates a data flow.
-func (client dataFlowClient) createOrUpdateDataFlow(ctx context.Context, dataFlowName string, dataFlow DataFlowResource, options *DataFlowBeginCreateOrUpdateDataFlowOptions) (*azcore.Response, error) {
+func (client *dataFlowClient) createOrUpdateDataFlow(ctx context.Context, dataFlowName string, dataFlow DataFlowResource, options *DataFlowBeginCreateOrUpdateDataFlowOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateDataFlowCreateRequest(ctx, dataFlowName, dataFlow, options)
 	if err != nil {
 		return nil, err
@@ -41,7 +41,7 @@ func (client dataFlowClient) createOrUpdateDataFlow(ctx context.Context, dataFlo
 }
 
 // createOrUpdateDataFlowCreateRequest creates the CreateOrUpdateDataFlow request.
-func (client dataFlowClient) createOrUpdateDataFlowCreateRequest(ctx context.Context, dataFlowName string, dataFlow DataFlowResource, options *DataFlowBeginCreateOrUpdateDataFlowOptions) (*azcore.Request, error) {
+func (client *dataFlowClient) createOrUpdateDataFlowCreateRequest(ctx context.Context, dataFlowName string, dataFlow DataFlowResource, options *DataFlowBeginCreateOrUpdateDataFlowOptions) (*azcore.Request, error) {
 	urlPath := "/dataflows/{dataFlowName}"
 	urlPath = strings.ReplaceAll(urlPath, "{dataFlowName}", url.PathEscape(dataFlowName))
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -60,7 +60,7 @@ func (client dataFlowClient) createOrUpdateDataFlowCreateRequest(ctx context.Con
 }
 
 // createOrUpdateDataFlowHandleResponse handles the CreateOrUpdateDataFlow response.
-func (client dataFlowClient) createOrUpdateDataFlowHandleResponse(resp *azcore.Response) (DataFlowResourceResponse, error) {
+func (client *dataFlowClient) createOrUpdateDataFlowHandleResponse(resp *azcore.Response) (DataFlowResourceResponse, error) {
 	var val *DataFlowResource
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return DataFlowResourceResponse{}, err
@@ -69,7 +69,7 @@ func (client dataFlowClient) createOrUpdateDataFlowHandleResponse(resp *azcore.R
 }
 
 // createOrUpdateDataFlowHandleError handles the CreateOrUpdateDataFlow error response.
-func (client dataFlowClient) createOrUpdateDataFlowHandleError(resp *azcore.Response) error {
+func (client *dataFlowClient) createOrUpdateDataFlowHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -78,7 +78,7 @@ func (client dataFlowClient) createOrUpdateDataFlowHandleError(resp *azcore.Resp
 }
 
 // DeleteDataFlow - Deletes a data flow.
-func (client dataFlowClient) deleteDataFlow(ctx context.Context, dataFlowName string, options *DataFlowBeginDeleteDataFlowOptions) (*azcore.Response, error) {
+func (client *dataFlowClient) deleteDataFlow(ctx context.Context, dataFlowName string, options *DataFlowBeginDeleteDataFlowOptions) (*azcore.Response, error) {
 	req, err := client.deleteDataFlowCreateRequest(ctx, dataFlowName, options)
 	if err != nil {
 		return nil, err
@@ -94,7 +94,7 @@ func (client dataFlowClient) deleteDataFlow(ctx context.Context, dataFlowName st
 }
 
 // deleteDataFlowCreateRequest creates the DeleteDataFlow request.
-func (client dataFlowClient) deleteDataFlowCreateRequest(ctx context.Context, dataFlowName string, options *DataFlowBeginDeleteDataFlowOptions) (*azcore.Request, error) {
+func (client *dataFlowClient) deleteDataFlowCreateRequest(ctx context.Context, dataFlowName string, options *DataFlowBeginDeleteDataFlowOptions) (*azcore.Request, error) {
 	urlPath := "/dataflows/{dataFlowName}"
 	urlPath = strings.ReplaceAll(urlPath, "{dataFlowName}", url.PathEscape(dataFlowName))
 	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -110,7 +110,7 @@ func (client dataFlowClient) deleteDataFlowCreateRequest(ctx context.Context, da
 }
 
 // deleteDataFlowHandleError handles the DeleteDataFlow error response.
-func (client dataFlowClient) deleteDataFlowHandleError(resp *azcore.Response) error {
+func (client *dataFlowClient) deleteDataFlowHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -119,7 +119,7 @@ func (client dataFlowClient) deleteDataFlowHandleError(resp *azcore.Response) er
 }
 
 // GetDataFlow - Gets a data flow.
-func (client dataFlowClient) GetDataFlow(ctx context.Context, dataFlowName string, options *DataFlowGetDataFlowOptions) (DataFlowResourceResponse, error) {
+func (client *dataFlowClient) GetDataFlow(ctx context.Context, dataFlowName string, options *DataFlowGetDataFlowOptions) (DataFlowResourceResponse, error) {
 	req, err := client.getDataFlowCreateRequest(ctx, dataFlowName, options)
 	if err != nil {
 		return DataFlowResourceResponse{}, err
@@ -135,7 +135,7 @@ func (client dataFlowClient) GetDataFlow(ctx context.Context, dataFlowName strin
 }
 
 // getDataFlowCreateRequest creates the GetDataFlow request.
-func (client dataFlowClient) getDataFlowCreateRequest(ctx context.Context, dataFlowName string, options *DataFlowGetDataFlowOptions) (*azcore.Request, error) {
+func (client *dataFlowClient) getDataFlowCreateRequest(ctx context.Context, dataFlowName string, options *DataFlowGetDataFlowOptions) (*azcore.Request, error) {
 	urlPath := "/dataflows/{dataFlowName}"
 	urlPath = strings.ReplaceAll(urlPath, "{dataFlowName}", url.PathEscape(dataFlowName))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -154,7 +154,7 @@ func (client dataFlowClient) getDataFlowCreateRequest(ctx context.Context, dataF
 }
 
 // getDataFlowHandleResponse handles the GetDataFlow response.
-func (client dataFlowClient) getDataFlowHandleResponse(resp *azcore.Response) (DataFlowResourceResponse, error) {
+func (client *dataFlowClient) getDataFlowHandleResponse(resp *azcore.Response) (DataFlowResourceResponse, error) {
 	var val *DataFlowResource
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return DataFlowResourceResponse{}, err
@@ -163,7 +163,7 @@ func (client dataFlowClient) getDataFlowHandleResponse(resp *azcore.Response) (D
 }
 
 // getDataFlowHandleError handles the GetDataFlow error response.
-func (client dataFlowClient) getDataFlowHandleError(resp *azcore.Response) error {
+func (client *dataFlowClient) getDataFlowHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -172,7 +172,7 @@ func (client dataFlowClient) getDataFlowHandleError(resp *azcore.Response) error
 }
 
 // GetDataFlowsByWorkspace - Lists data flows.
-func (client dataFlowClient) GetDataFlowsByWorkspace(options *DataFlowGetDataFlowsByWorkspaceOptions) DataFlowListResponsePager {
+func (client *dataFlowClient) GetDataFlowsByWorkspace(options *DataFlowGetDataFlowsByWorkspaceOptions) DataFlowListResponsePager {
 	return &dataFlowListResponsePager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
@@ -188,7 +188,7 @@ func (client dataFlowClient) GetDataFlowsByWorkspace(options *DataFlowGetDataFlo
 }
 
 // getDataFlowsByWorkspaceCreateRequest creates the GetDataFlowsByWorkspace request.
-func (client dataFlowClient) getDataFlowsByWorkspaceCreateRequest(ctx context.Context, options *DataFlowGetDataFlowsByWorkspaceOptions) (*azcore.Request, error) {
+func (client *dataFlowClient) getDataFlowsByWorkspaceCreateRequest(ctx context.Context, options *DataFlowGetDataFlowsByWorkspaceOptions) (*azcore.Request, error) {
 	urlPath := "/dataflows"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -203,7 +203,7 @@ func (client dataFlowClient) getDataFlowsByWorkspaceCreateRequest(ctx context.Co
 }
 
 // getDataFlowsByWorkspaceHandleResponse handles the GetDataFlowsByWorkspace response.
-func (client dataFlowClient) getDataFlowsByWorkspaceHandleResponse(resp *azcore.Response) (DataFlowListResponseResponse, error) {
+func (client *dataFlowClient) getDataFlowsByWorkspaceHandleResponse(resp *azcore.Response) (DataFlowListResponseResponse, error) {
 	var val *DataFlowListResponse
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return DataFlowListResponseResponse{}, err
@@ -212,7 +212,7 @@ func (client dataFlowClient) getDataFlowsByWorkspaceHandleResponse(resp *azcore.
 }
 
 // getDataFlowsByWorkspaceHandleError handles the GetDataFlowsByWorkspace error response.
-func (client dataFlowClient) getDataFlowsByWorkspaceHandleError(resp *azcore.Response) error {
+func (client *dataFlowClient) getDataFlowsByWorkspaceHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -221,7 +221,7 @@ func (client dataFlowClient) getDataFlowsByWorkspaceHandleError(resp *azcore.Res
 }
 
 // RenameDataFlow - Renames a dataflow.
-func (client dataFlowClient) renameDataFlow(ctx context.Context, dataFlowName string, request ArtifactRenameRequest, options *DataFlowBeginRenameDataFlowOptions) (*azcore.Response, error) {
+func (client *dataFlowClient) renameDataFlow(ctx context.Context, dataFlowName string, request ArtifactRenameRequest, options *DataFlowBeginRenameDataFlowOptions) (*azcore.Response, error) {
 	req, err := client.renameDataFlowCreateRequest(ctx, dataFlowName, request, options)
 	if err != nil {
 		return nil, err
@@ -237,7 +237,7 @@ func (client dataFlowClient) renameDataFlow(ctx context.Context, dataFlowName st
 }
 
 // renameDataFlowCreateRequest creates the RenameDataFlow request.
-func (client dataFlowClient) renameDataFlowCreateRequest(ctx context.Context, dataFlowName string, request ArtifactRenameRequest, options *DataFlowBeginRenameDataFlowOptions) (*azcore.Request, error) {
+func (client *dataFlowClient) renameDataFlowCreateRequest(ctx context.Context, dataFlowName string, request ArtifactRenameRequest, options *DataFlowBeginRenameDataFlowOptions) (*azcore.Request, error) {
 	urlPath := "/dataflows/{dataFlowName}/rename"
 	urlPath = strings.ReplaceAll(urlPath, "{dataFlowName}", url.PathEscape(dataFlowName))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -253,7 +253,7 @@ func (client dataFlowClient) renameDataFlowCreateRequest(ctx context.Context, da
 }
 
 // renameDataFlowHandleError handles the RenameDataFlow error response.
-func (client dataFlowClient) renameDataFlowHandleError(resp *azcore.Response) error {
+func (client *dataFlowClient) renameDataFlowHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

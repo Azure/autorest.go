@@ -12,7 +12,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
-func newDurationClient() DurationClient {
+func newDurationClient() *DurationClient {
 	return NewDurationClient(NewDefaultConnection(nil))
 }
 

@@ -12,7 +12,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
-func newPathsClient() PathsClient {
+func newPathsClient() *PathsClient {
 	client := NewConnection(to.StringPtr(":3000"), nil)
 	// dnsSuffix string, subscriptionID string
 	return NewPathsClient(client, "test12")

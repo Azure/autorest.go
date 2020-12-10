@@ -11,7 +11,7 @@ import (
 	"testing"
 )
 
-func newByteClient() ByteClient {
+func newByteClient() *ByteClient {
 	return NewByteClient(NewDefaultConnection(nil))
 }
 

@@ -10,7 +10,7 @@ import (
 	"testing"
 )
 
-func newAPIVersionDefaultClient() APIVersionDefaultClient {
+func newAPIVersionDefaultClient() *APIVersionDefaultClient {
 	return NewAPIVersionDefaultClient(NewDefaultConnection(nil))
 }
 

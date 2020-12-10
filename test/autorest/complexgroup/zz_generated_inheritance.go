@@ -20,17 +20,17 @@ type InheritanceClient struct {
 }
 
 // NewInheritanceClient creates a new instance of InheritanceClient with the specified values.
-func NewInheritanceClient(con *Connection) InheritanceClient {
-	return InheritanceClient{con: con}
+func NewInheritanceClient(con *Connection) *InheritanceClient {
+	return &InheritanceClient{con: con}
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client InheritanceClient) Pipeline() azcore.Pipeline {
+func (client *InheritanceClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // GetValid - Get complex types that extend others
-func (client InheritanceClient) GetValid(ctx context.Context, options *InheritanceGetValidOptions) (SiameseResponse, error) {
+func (client *InheritanceClient) GetValid(ctx context.Context, options *InheritanceGetValidOptions) (SiameseResponse, error) {
 	req, err := client.getValidCreateRequest(ctx, options)
 	if err != nil {
 		return SiameseResponse{}, err
@@ -46,7 +46,7 @@ func (client InheritanceClient) GetValid(ctx context.Context, options *Inheritan
 }
 
 // getValidCreateRequest creates the GetValid request.
-func (client InheritanceClient) getValidCreateRequest(ctx context.Context, options *InheritanceGetValidOptions) (*azcore.Request, error) {
+func (client *InheritanceClient) getValidCreateRequest(ctx context.Context, options *InheritanceGetValidOptions) (*azcore.Request, error) {
 	urlPath := "/complex/inheritance/valid"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -58,7 +58,7 @@ func (client InheritanceClient) getValidCreateRequest(ctx context.Context, optio
 }
 
 // getValidHandleResponse handles the GetValid response.
-func (client InheritanceClient) getValidHandleResponse(resp *azcore.Response) (SiameseResponse, error) {
+func (client *InheritanceClient) getValidHandleResponse(resp *azcore.Response) (SiameseResponse, error) {
 	var val *Siamese
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return SiameseResponse{}, err
@@ -67,7 +67,7 @@ func (client InheritanceClient) getValidHandleResponse(resp *azcore.Response) (S
 }
 
 // getValidHandleError handles the GetValid error response.
-func (client InheritanceClient) getValidHandleError(resp *azcore.Response) error {
+func (client *InheritanceClient) getValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -76,7 +76,7 @@ func (client InheritanceClient) getValidHandleError(resp *azcore.Response) error
 }
 
 // PutValid - Put complex types that extend others
-func (client InheritanceClient) PutValid(ctx context.Context, complexBody Siamese, options *InheritancePutValidOptions) (*http.Response, error) {
+func (client *InheritanceClient) PutValid(ctx context.Context, complexBody Siamese, options *InheritancePutValidOptions) (*http.Response, error) {
 	req, err := client.putValidCreateRequest(ctx, complexBody, options)
 	if err != nil {
 		return nil, err
@@ -92,7 +92,7 @@ func (client InheritanceClient) PutValid(ctx context.Context, complexBody Siames
 }
 
 // putValidCreateRequest creates the PutValid request.
-func (client InheritanceClient) putValidCreateRequest(ctx context.Context, complexBody Siamese, options *InheritancePutValidOptions) (*azcore.Request, error) {
+func (client *InheritanceClient) putValidCreateRequest(ctx context.Context, complexBody Siamese, options *InheritancePutValidOptions) (*azcore.Request, error) {
 	urlPath := "/complex/inheritance/valid"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -104,7 +104,7 @@ func (client InheritanceClient) putValidCreateRequest(ctx context.Context, compl
 }
 
 // putValidHandleError handles the PutValid error response.
-func (client InheritanceClient) putValidHandleError(resp *azcore.Response) error {
+func (client *InheritanceClient) putValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

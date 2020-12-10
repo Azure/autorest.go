@@ -21,17 +21,17 @@ type HTTPRedirectsClient struct {
 }
 
 // NewHTTPRedirectsClient creates a new instance of HTTPRedirectsClient with the specified values.
-func NewHTTPRedirectsClient(con *Connection) HTTPRedirectsClient {
-	return HTTPRedirectsClient{con: con}
+func NewHTTPRedirectsClient(con *Connection) *HTTPRedirectsClient {
+	return &HTTPRedirectsClient{con: con}
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client HTTPRedirectsClient) Pipeline() azcore.Pipeline {
+func (client *HTTPRedirectsClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // Delete307 - Delete redirected with 307, resulting in a 200 after redirect
-func (client HTTPRedirectsClient) Delete307(ctx context.Context, options *HTTPRedirectsDelete307Options) (*http.Response, error) {
+func (client *HTTPRedirectsClient) Delete307(ctx context.Context, options *HTTPRedirectsDelete307Options) (*http.Response, error) {
 	req, err := client.delete307CreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -47,7 +47,7 @@ func (client HTTPRedirectsClient) Delete307(ctx context.Context, options *HTTPRe
 }
 
 // delete307CreateRequest creates the Delete307 request.
-func (client HTTPRedirectsClient) delete307CreateRequest(ctx context.Context, options *HTTPRedirectsDelete307Options) (*azcore.Request, error) {
+func (client *HTTPRedirectsClient) delete307CreateRequest(ctx context.Context, options *HTTPRedirectsDelete307Options) (*azcore.Request, error) {
 	urlPath := "/http/redirect/307"
 	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -59,7 +59,7 @@ func (client HTTPRedirectsClient) delete307CreateRequest(ctx context.Context, op
 }
 
 // delete307HandleError handles the Delete307 error response.
-func (client HTTPRedirectsClient) delete307HandleError(resp *azcore.Response) error {
+func (client *HTTPRedirectsClient) delete307HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -69,7 +69,7 @@ func (client HTTPRedirectsClient) delete307HandleError(resp *azcore.Response) er
 
 // Get300 - Return 300 status code and redirect to /http/success/200
 // Possible return types are *HTTPRedirectsGet300Response, *StringArrayResponse
-func (client HTTPRedirectsClient) Get300(ctx context.Context, options *HTTPRedirectsGet300Options) (interface{}, error) {
+func (client *HTTPRedirectsClient) Get300(ctx context.Context, options *HTTPRedirectsGet300Options) (interface{}, error) {
 	req, err := client.get300CreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -85,7 +85,7 @@ func (client HTTPRedirectsClient) Get300(ctx context.Context, options *HTTPRedir
 }
 
 // get300CreateRequest creates the Get300 request.
-func (client HTTPRedirectsClient) get300CreateRequest(ctx context.Context, options *HTTPRedirectsGet300Options) (*azcore.Request, error) {
+func (client *HTTPRedirectsClient) get300CreateRequest(ctx context.Context, options *HTTPRedirectsGet300Options) (*azcore.Request, error) {
 	urlPath := "/http/redirect/300"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -97,7 +97,7 @@ func (client HTTPRedirectsClient) get300CreateRequest(ctx context.Context, optio
 }
 
 // get300HandleResponse handles the Get300 response.
-func (client HTTPRedirectsClient) get300HandleResponse(resp *azcore.Response) (interface{}, error) {
+func (client *HTTPRedirectsClient) get300HandleResponse(resp *azcore.Response) (interface{}, error) {
 	switch resp.StatusCode {
 	case http.StatusOK:
 		result := HTTPRedirectsGet300Response{RawResponse: resp.Response}
@@ -121,7 +121,7 @@ func (client HTTPRedirectsClient) get300HandleResponse(resp *azcore.Response) (i
 }
 
 // get300HandleError handles the Get300 error response.
-func (client HTTPRedirectsClient) get300HandleError(resp *azcore.Response) error {
+func (client *HTTPRedirectsClient) get300HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -130,7 +130,7 @@ func (client HTTPRedirectsClient) get300HandleError(resp *azcore.Response) error
 }
 
 // Get301 - Return 301 status code and redirect to /http/success/200
-func (client HTTPRedirectsClient) Get301(ctx context.Context, options *HTTPRedirectsGet301Options) (*http.Response, error) {
+func (client *HTTPRedirectsClient) Get301(ctx context.Context, options *HTTPRedirectsGet301Options) (*http.Response, error) {
 	req, err := client.get301CreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -146,7 +146,7 @@ func (client HTTPRedirectsClient) Get301(ctx context.Context, options *HTTPRedir
 }
 
 // get301CreateRequest creates the Get301 request.
-func (client HTTPRedirectsClient) get301CreateRequest(ctx context.Context, options *HTTPRedirectsGet301Options) (*azcore.Request, error) {
+func (client *HTTPRedirectsClient) get301CreateRequest(ctx context.Context, options *HTTPRedirectsGet301Options) (*azcore.Request, error) {
 	urlPath := "/http/redirect/301"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -158,7 +158,7 @@ func (client HTTPRedirectsClient) get301CreateRequest(ctx context.Context, optio
 }
 
 // get301HandleError handles the Get301 error response.
-func (client HTTPRedirectsClient) get301HandleError(resp *azcore.Response) error {
+func (client *HTTPRedirectsClient) get301HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -167,7 +167,7 @@ func (client HTTPRedirectsClient) get301HandleError(resp *azcore.Response) error
 }
 
 // Get302 - Return 302 status code and redirect to /http/success/200
-func (client HTTPRedirectsClient) Get302(ctx context.Context, options *HTTPRedirectsGet302Options) (*http.Response, error) {
+func (client *HTTPRedirectsClient) Get302(ctx context.Context, options *HTTPRedirectsGet302Options) (*http.Response, error) {
 	req, err := client.get302CreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -183,7 +183,7 @@ func (client HTTPRedirectsClient) Get302(ctx context.Context, options *HTTPRedir
 }
 
 // get302CreateRequest creates the Get302 request.
-func (client HTTPRedirectsClient) get302CreateRequest(ctx context.Context, options *HTTPRedirectsGet302Options) (*azcore.Request, error) {
+func (client *HTTPRedirectsClient) get302CreateRequest(ctx context.Context, options *HTTPRedirectsGet302Options) (*azcore.Request, error) {
 	urlPath := "/http/redirect/302"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -195,7 +195,7 @@ func (client HTTPRedirectsClient) get302CreateRequest(ctx context.Context, optio
 }
 
 // get302HandleError handles the Get302 error response.
-func (client HTTPRedirectsClient) get302HandleError(resp *azcore.Response) error {
+func (client *HTTPRedirectsClient) get302HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -204,7 +204,7 @@ func (client HTTPRedirectsClient) get302HandleError(resp *azcore.Response) error
 }
 
 // Get307 - Redirect get with 307, resulting in a 200 success
-func (client HTTPRedirectsClient) Get307(ctx context.Context, options *HTTPRedirectsGet307Options) (*http.Response, error) {
+func (client *HTTPRedirectsClient) Get307(ctx context.Context, options *HTTPRedirectsGet307Options) (*http.Response, error) {
 	req, err := client.get307CreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -220,7 +220,7 @@ func (client HTTPRedirectsClient) Get307(ctx context.Context, options *HTTPRedir
 }
 
 // get307CreateRequest creates the Get307 request.
-func (client HTTPRedirectsClient) get307CreateRequest(ctx context.Context, options *HTTPRedirectsGet307Options) (*azcore.Request, error) {
+func (client *HTTPRedirectsClient) get307CreateRequest(ctx context.Context, options *HTTPRedirectsGet307Options) (*azcore.Request, error) {
 	urlPath := "/http/redirect/307"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -232,7 +232,7 @@ func (client HTTPRedirectsClient) get307CreateRequest(ctx context.Context, optio
 }
 
 // get307HandleError handles the Get307 error response.
-func (client HTTPRedirectsClient) get307HandleError(resp *azcore.Response) error {
+func (client *HTTPRedirectsClient) get307HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -241,7 +241,7 @@ func (client HTTPRedirectsClient) get307HandleError(resp *azcore.Response) error
 }
 
 // Head300 - Return 300 status code and redirect to /http/success/200
-func (client HTTPRedirectsClient) Head300(ctx context.Context, options *HTTPRedirectsHead300Options) (HTTPRedirectsHead300Response, error) {
+func (client *HTTPRedirectsClient) Head300(ctx context.Context, options *HTTPRedirectsHead300Options) (HTTPRedirectsHead300Response, error) {
 	req, err := client.head300CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPRedirectsHead300Response{}, err
@@ -257,7 +257,7 @@ func (client HTTPRedirectsClient) Head300(ctx context.Context, options *HTTPRedi
 }
 
 // head300CreateRequest creates the Head300 request.
-func (client HTTPRedirectsClient) head300CreateRequest(ctx context.Context, options *HTTPRedirectsHead300Options) (*azcore.Request, error) {
+func (client *HTTPRedirectsClient) head300CreateRequest(ctx context.Context, options *HTTPRedirectsHead300Options) (*azcore.Request, error) {
 	urlPath := "/http/redirect/300"
 	req, err := azcore.NewRequest(ctx, http.MethodHead, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -269,7 +269,7 @@ func (client HTTPRedirectsClient) head300CreateRequest(ctx context.Context, opti
 }
 
 // head300HandleResponse handles the Head300 response.
-func (client HTTPRedirectsClient) head300HandleResponse(resp *azcore.Response) (HTTPRedirectsHead300Response, error) {
+func (client *HTTPRedirectsClient) head300HandleResponse(resp *azcore.Response) (HTTPRedirectsHead300Response, error) {
 	result := HTTPRedirectsHead300Response{RawResponse: resp.Response}
 	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
 		result.Success = true
@@ -281,7 +281,7 @@ func (client HTTPRedirectsClient) head300HandleResponse(resp *azcore.Response) (
 }
 
 // head300HandleError handles the Head300 error response.
-func (client HTTPRedirectsClient) head300HandleError(resp *azcore.Response) error {
+func (client *HTTPRedirectsClient) head300HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -290,7 +290,7 @@ func (client HTTPRedirectsClient) head300HandleError(resp *azcore.Response) erro
 }
 
 // Head301 - Return 301 status code and redirect to /http/success/200
-func (client HTTPRedirectsClient) Head301(ctx context.Context, options *HTTPRedirectsHead301Options) (BooleanResponse, error) {
+func (client *HTTPRedirectsClient) Head301(ctx context.Context, options *HTTPRedirectsHead301Options) (BooleanResponse, error) {
 	req, err := client.head301CreateRequest(ctx, options)
 	if err != nil {
 		return BooleanResponse{}, err
@@ -309,7 +309,7 @@ func (client HTTPRedirectsClient) Head301(ctx context.Context, options *HTTPRedi
 }
 
 // head301CreateRequest creates the Head301 request.
-func (client HTTPRedirectsClient) head301CreateRequest(ctx context.Context, options *HTTPRedirectsHead301Options) (*azcore.Request, error) {
+func (client *HTTPRedirectsClient) head301CreateRequest(ctx context.Context, options *HTTPRedirectsHead301Options) (*azcore.Request, error) {
 	urlPath := "/http/redirect/301"
 	req, err := azcore.NewRequest(ctx, http.MethodHead, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -321,7 +321,7 @@ func (client HTTPRedirectsClient) head301CreateRequest(ctx context.Context, opti
 }
 
 // head301HandleError handles the Head301 error response.
-func (client HTTPRedirectsClient) head301HandleError(resp *azcore.Response) error {
+func (client *HTTPRedirectsClient) head301HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -330,7 +330,7 @@ func (client HTTPRedirectsClient) head301HandleError(resp *azcore.Response) erro
 }
 
 // Head302 - Return 302 status code and redirect to /http/success/200
-func (client HTTPRedirectsClient) Head302(ctx context.Context, options *HTTPRedirectsHead302Options) (BooleanResponse, error) {
+func (client *HTTPRedirectsClient) Head302(ctx context.Context, options *HTTPRedirectsHead302Options) (BooleanResponse, error) {
 	req, err := client.head302CreateRequest(ctx, options)
 	if err != nil {
 		return BooleanResponse{}, err
@@ -349,7 +349,7 @@ func (client HTTPRedirectsClient) Head302(ctx context.Context, options *HTTPRedi
 }
 
 // head302CreateRequest creates the Head302 request.
-func (client HTTPRedirectsClient) head302CreateRequest(ctx context.Context, options *HTTPRedirectsHead302Options) (*azcore.Request, error) {
+func (client *HTTPRedirectsClient) head302CreateRequest(ctx context.Context, options *HTTPRedirectsHead302Options) (*azcore.Request, error) {
 	urlPath := "/http/redirect/302"
 	req, err := azcore.NewRequest(ctx, http.MethodHead, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -361,7 +361,7 @@ func (client HTTPRedirectsClient) head302CreateRequest(ctx context.Context, opti
 }
 
 // head302HandleError handles the Head302 error response.
-func (client HTTPRedirectsClient) head302HandleError(resp *azcore.Response) error {
+func (client *HTTPRedirectsClient) head302HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -370,7 +370,7 @@ func (client HTTPRedirectsClient) head302HandleError(resp *azcore.Response) erro
 }
 
 // Head307 - Redirect with 307, resulting in a 200 success
-func (client HTTPRedirectsClient) Head307(ctx context.Context, options *HTTPRedirectsHead307Options) (BooleanResponse, error) {
+func (client *HTTPRedirectsClient) Head307(ctx context.Context, options *HTTPRedirectsHead307Options) (BooleanResponse, error) {
 	req, err := client.head307CreateRequest(ctx, options)
 	if err != nil {
 		return BooleanResponse{}, err
@@ -389,7 +389,7 @@ func (client HTTPRedirectsClient) Head307(ctx context.Context, options *HTTPRedi
 }
 
 // head307CreateRequest creates the Head307 request.
-func (client HTTPRedirectsClient) head307CreateRequest(ctx context.Context, options *HTTPRedirectsHead307Options) (*azcore.Request, error) {
+func (client *HTTPRedirectsClient) head307CreateRequest(ctx context.Context, options *HTTPRedirectsHead307Options) (*azcore.Request, error) {
 	urlPath := "/http/redirect/307"
 	req, err := azcore.NewRequest(ctx, http.MethodHead, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -401,7 +401,7 @@ func (client HTTPRedirectsClient) head307CreateRequest(ctx context.Context, opti
 }
 
 // head307HandleError handles the Head307 error response.
-func (client HTTPRedirectsClient) head307HandleError(resp *azcore.Response) error {
+func (client *HTTPRedirectsClient) head307HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -410,7 +410,7 @@ func (client HTTPRedirectsClient) head307HandleError(resp *azcore.Response) erro
 }
 
 // Options307 - options redirected with 307, resulting in a 200 after redirect
-func (client HTTPRedirectsClient) Options307(ctx context.Context, options *HTTPRedirectsOptions307Options) (*http.Response, error) {
+func (client *HTTPRedirectsClient) Options307(ctx context.Context, options *HTTPRedirectsOptions307Options) (*http.Response, error) {
 	req, err := client.options307CreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -426,7 +426,7 @@ func (client HTTPRedirectsClient) Options307(ctx context.Context, options *HTTPR
 }
 
 // options307CreateRequest creates the Options307 request.
-func (client HTTPRedirectsClient) options307CreateRequest(ctx context.Context, options *HTTPRedirectsOptions307Options) (*azcore.Request, error) {
+func (client *HTTPRedirectsClient) options307CreateRequest(ctx context.Context, options *HTTPRedirectsOptions307Options) (*azcore.Request, error) {
 	urlPath := "/http/redirect/307"
 	req, err := azcore.NewRequest(ctx, http.MethodOptions, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -438,7 +438,7 @@ func (client HTTPRedirectsClient) options307CreateRequest(ctx context.Context, o
 }
 
 // options307HandleError handles the Options307 error response.
-func (client HTTPRedirectsClient) options307HandleError(resp *azcore.Response) error {
+func (client *HTTPRedirectsClient) options307HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -448,7 +448,7 @@ func (client HTTPRedirectsClient) options307HandleError(resp *azcore.Response) e
 
 // Patch302 - Patch true Boolean value in request returns 302. This request should not be automatically redirected, but should return the received 302 to
 // the caller for evaluation
-func (client HTTPRedirectsClient) Patch302(ctx context.Context, options *HTTPRedirectsPatch302Options) (HTTPRedirectsPatch302Response, error) {
+func (client *HTTPRedirectsClient) Patch302(ctx context.Context, options *HTTPRedirectsPatch302Options) (HTTPRedirectsPatch302Response, error) {
 	req, err := client.patch302CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPRedirectsPatch302Response{}, err
@@ -464,7 +464,7 @@ func (client HTTPRedirectsClient) Patch302(ctx context.Context, options *HTTPRed
 }
 
 // patch302CreateRequest creates the Patch302 request.
-func (client HTTPRedirectsClient) patch302CreateRequest(ctx context.Context, options *HTTPRedirectsPatch302Options) (*azcore.Request, error) {
+func (client *HTTPRedirectsClient) patch302CreateRequest(ctx context.Context, options *HTTPRedirectsPatch302Options) (*azcore.Request, error) {
 	urlPath := "/http/redirect/302"
 	req, err := azcore.NewRequest(ctx, http.MethodPatch, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -476,7 +476,7 @@ func (client HTTPRedirectsClient) patch302CreateRequest(ctx context.Context, opt
 }
 
 // patch302HandleResponse handles the Patch302 response.
-func (client HTTPRedirectsClient) patch302HandleResponse(resp *azcore.Response) (HTTPRedirectsPatch302Response, error) {
+func (client *HTTPRedirectsClient) patch302HandleResponse(resp *azcore.Response) (HTTPRedirectsPatch302Response, error) {
 	result := HTTPRedirectsPatch302Response{RawResponse: resp.Response}
 	if val := resp.Header.Get("Location"); val != "" {
 		result.Location = &val
@@ -485,7 +485,7 @@ func (client HTTPRedirectsClient) patch302HandleResponse(resp *azcore.Response) 
 }
 
 // patch302HandleError handles the Patch302 error response.
-func (client HTTPRedirectsClient) patch302HandleError(resp *azcore.Response) error {
+func (client *HTTPRedirectsClient) patch302HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -494,7 +494,7 @@ func (client HTTPRedirectsClient) patch302HandleError(resp *azcore.Response) err
 }
 
 // Patch307 - Patch redirected with 307, resulting in a 200 after redirect
-func (client HTTPRedirectsClient) Patch307(ctx context.Context, options *HTTPRedirectsPatch307Options) (*http.Response, error) {
+func (client *HTTPRedirectsClient) Patch307(ctx context.Context, options *HTTPRedirectsPatch307Options) (*http.Response, error) {
 	req, err := client.patch307CreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -510,7 +510,7 @@ func (client HTTPRedirectsClient) Patch307(ctx context.Context, options *HTTPRed
 }
 
 // patch307CreateRequest creates the Patch307 request.
-func (client HTTPRedirectsClient) patch307CreateRequest(ctx context.Context, options *HTTPRedirectsPatch307Options) (*azcore.Request, error) {
+func (client *HTTPRedirectsClient) patch307CreateRequest(ctx context.Context, options *HTTPRedirectsPatch307Options) (*azcore.Request, error) {
 	urlPath := "/http/redirect/307"
 	req, err := azcore.NewRequest(ctx, http.MethodPatch, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -522,7 +522,7 @@ func (client HTTPRedirectsClient) patch307CreateRequest(ctx context.Context, opt
 }
 
 // patch307HandleError handles the Patch307 error response.
-func (client HTTPRedirectsClient) patch307HandleError(resp *azcore.Response) error {
+func (client *HTTPRedirectsClient) patch307HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -532,7 +532,7 @@ func (client HTTPRedirectsClient) patch307HandleError(resp *azcore.Response) err
 
 // Post303 - Post true Boolean value in request returns 303. This request should be automatically redirected usign a get, ultimately returning a 200 status
 // code
-func (client HTTPRedirectsClient) Post303(ctx context.Context, options *HTTPRedirectsPost303Options) (HTTPRedirectsPost303Response, error) {
+func (client *HTTPRedirectsClient) Post303(ctx context.Context, options *HTTPRedirectsPost303Options) (HTTPRedirectsPost303Response, error) {
 	req, err := client.post303CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPRedirectsPost303Response{}, err
@@ -548,7 +548,7 @@ func (client HTTPRedirectsClient) Post303(ctx context.Context, options *HTTPRedi
 }
 
 // post303CreateRequest creates the Post303 request.
-func (client HTTPRedirectsClient) post303CreateRequest(ctx context.Context, options *HTTPRedirectsPost303Options) (*azcore.Request, error) {
+func (client *HTTPRedirectsClient) post303CreateRequest(ctx context.Context, options *HTTPRedirectsPost303Options) (*azcore.Request, error) {
 	urlPath := "/http/redirect/303"
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -560,7 +560,7 @@ func (client HTTPRedirectsClient) post303CreateRequest(ctx context.Context, opti
 }
 
 // post303HandleResponse handles the Post303 response.
-func (client HTTPRedirectsClient) post303HandleResponse(resp *azcore.Response) (HTTPRedirectsPost303Response, error) {
+func (client *HTTPRedirectsClient) post303HandleResponse(resp *azcore.Response) (HTTPRedirectsPost303Response, error) {
 	result := HTTPRedirectsPost303Response{RawResponse: resp.Response}
 	if val := resp.Header.Get("Location"); val != "" {
 		result.Location = &val
@@ -569,7 +569,7 @@ func (client HTTPRedirectsClient) post303HandleResponse(resp *azcore.Response) (
 }
 
 // post303HandleError handles the Post303 error response.
-func (client HTTPRedirectsClient) post303HandleError(resp *azcore.Response) error {
+func (client *HTTPRedirectsClient) post303HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -578,7 +578,7 @@ func (client HTTPRedirectsClient) post303HandleError(resp *azcore.Response) erro
 }
 
 // Post307 - Post redirected with 307, resulting in a 200 after redirect
-func (client HTTPRedirectsClient) Post307(ctx context.Context, options *HTTPRedirectsPost307Options) (*http.Response, error) {
+func (client *HTTPRedirectsClient) Post307(ctx context.Context, options *HTTPRedirectsPost307Options) (*http.Response, error) {
 	req, err := client.post307CreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -594,7 +594,7 @@ func (client HTTPRedirectsClient) Post307(ctx context.Context, options *HTTPRedi
 }
 
 // post307CreateRequest creates the Post307 request.
-func (client HTTPRedirectsClient) post307CreateRequest(ctx context.Context, options *HTTPRedirectsPost307Options) (*azcore.Request, error) {
+func (client *HTTPRedirectsClient) post307CreateRequest(ctx context.Context, options *HTTPRedirectsPost307Options) (*azcore.Request, error) {
 	urlPath := "/http/redirect/307"
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -606,7 +606,7 @@ func (client HTTPRedirectsClient) post307CreateRequest(ctx context.Context, opti
 }
 
 // post307HandleError handles the Post307 error response.
-func (client HTTPRedirectsClient) post307HandleError(resp *azcore.Response) error {
+func (client *HTTPRedirectsClient) post307HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -616,7 +616,7 @@ func (client HTTPRedirectsClient) post307HandleError(resp *azcore.Response) erro
 
 // Put301 - Put true Boolean value in request returns 301. This request should not be automatically redirected, but should return the received 301 to the
 // caller for evaluation
-func (client HTTPRedirectsClient) Put301(ctx context.Context, options *HTTPRedirectsPut301Options) (HTTPRedirectsPut301Response, error) {
+func (client *HTTPRedirectsClient) Put301(ctx context.Context, options *HTTPRedirectsPut301Options) (HTTPRedirectsPut301Response, error) {
 	req, err := client.put301CreateRequest(ctx, options)
 	if err != nil {
 		return HTTPRedirectsPut301Response{}, err
@@ -632,7 +632,7 @@ func (client HTTPRedirectsClient) Put301(ctx context.Context, options *HTTPRedir
 }
 
 // put301CreateRequest creates the Put301 request.
-func (client HTTPRedirectsClient) put301CreateRequest(ctx context.Context, options *HTTPRedirectsPut301Options) (*azcore.Request, error) {
+func (client *HTTPRedirectsClient) put301CreateRequest(ctx context.Context, options *HTTPRedirectsPut301Options) (*azcore.Request, error) {
 	urlPath := "/http/redirect/301"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -644,7 +644,7 @@ func (client HTTPRedirectsClient) put301CreateRequest(ctx context.Context, optio
 }
 
 // put301HandleResponse handles the Put301 response.
-func (client HTTPRedirectsClient) put301HandleResponse(resp *azcore.Response) (HTTPRedirectsPut301Response, error) {
+func (client *HTTPRedirectsClient) put301HandleResponse(resp *azcore.Response) (HTTPRedirectsPut301Response, error) {
 	result := HTTPRedirectsPut301Response{RawResponse: resp.Response}
 	if val := resp.Header.Get("Location"); val != "" {
 		result.Location = &val
@@ -653,7 +653,7 @@ func (client HTTPRedirectsClient) put301HandleResponse(resp *azcore.Response) (H
 }
 
 // put301HandleError handles the Put301 error response.
-func (client HTTPRedirectsClient) put301HandleError(resp *azcore.Response) error {
+func (client *HTTPRedirectsClient) put301HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -662,7 +662,7 @@ func (client HTTPRedirectsClient) put301HandleError(resp *azcore.Response) error
 }
 
 // Put307 - Put redirected with 307, resulting in a 200 after redirect
-func (client HTTPRedirectsClient) Put307(ctx context.Context, options *HTTPRedirectsPut307Options) (*http.Response, error) {
+func (client *HTTPRedirectsClient) Put307(ctx context.Context, options *HTTPRedirectsPut307Options) (*http.Response, error) {
 	req, err := client.put307CreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -678,7 +678,7 @@ func (client HTTPRedirectsClient) Put307(ctx context.Context, options *HTTPRedir
 }
 
 // put307CreateRequest creates the Put307 request.
-func (client HTTPRedirectsClient) put307CreateRequest(ctx context.Context, options *HTTPRedirectsPut307Options) (*azcore.Request, error) {
+func (client *HTTPRedirectsClient) put307CreateRequest(ctx context.Context, options *HTTPRedirectsPut307Options) (*azcore.Request, error) {
 	urlPath := "/http/redirect/307"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -690,7 +690,7 @@ func (client HTTPRedirectsClient) put307CreateRequest(ctx context.Context, optio
 }
 
 // put307HandleError handles the Put307 error response.
-func (client HTTPRedirectsClient) put307HandleError(resp *azcore.Response) error {
+func (client *HTTPRedirectsClient) put307HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

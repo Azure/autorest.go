@@ -18,12 +18,12 @@ type workspaceClient struct {
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client workspaceClient) Pipeline() azcore.Pipeline {
+func (client *workspaceClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // Get - Get Workspace
-func (client workspaceClient) Get(ctx context.Context, options *WorkspaceGetOptions) (WorkspaceResponse, error) {
+func (client *workspaceClient) Get(ctx context.Context, options *WorkspaceGetOptions) (WorkspaceResponse, error) {
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
 		return WorkspaceResponse{}, err
@@ -39,7 +39,7 @@ func (client workspaceClient) Get(ctx context.Context, options *WorkspaceGetOpti
 }
 
 // getCreateRequest creates the Get request.
-func (client workspaceClient) getCreateRequest(ctx context.Context, options *WorkspaceGetOptions) (*azcore.Request, error) {
+func (client *workspaceClient) getCreateRequest(ctx context.Context, options *WorkspaceGetOptions) (*azcore.Request, error) {
 	urlPath := "/workspace"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -54,7 +54,7 @@ func (client workspaceClient) getCreateRequest(ctx context.Context, options *Wor
 }
 
 // getHandleResponse handles the Get response.
-func (client workspaceClient) getHandleResponse(resp *azcore.Response) (WorkspaceResponse, error) {
+func (client *workspaceClient) getHandleResponse(resp *azcore.Response) (WorkspaceResponse, error) {
 	var val *Workspace
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return WorkspaceResponse{}, err
@@ -63,7 +63,7 @@ func (client workspaceClient) getHandleResponse(resp *azcore.Response) (Workspac
 }
 
 // getHandleError handles the Get error response.
-func (client workspaceClient) getHandleError(resp *azcore.Response) error {
+func (client *workspaceClient) getHandleError(resp *azcore.Response) error {
 	var err ErrorContract
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

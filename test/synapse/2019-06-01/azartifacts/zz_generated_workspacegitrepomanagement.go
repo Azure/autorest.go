@@ -21,12 +21,12 @@ type workspaceGitRepoManagementClient struct {
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client workspaceGitRepoManagementClient) Pipeline() azcore.Pipeline {
+func (client *workspaceGitRepoManagementClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // GetGitHubAccessToken - Get the GitHub access token.
-func (client workspaceGitRepoManagementClient) GetGitHubAccessToken(ctx context.Context, gitHubAccessTokenRequest GitHubAccessTokenRequest, options *WorkspaceGitRepoManagementGetGitHubAccessTokenOptions) (GitHubAccessTokenResponseResponse, error) {
+func (client *workspaceGitRepoManagementClient) GetGitHubAccessToken(ctx context.Context, gitHubAccessTokenRequest GitHubAccessTokenRequest, options *WorkspaceGitRepoManagementGetGitHubAccessTokenOptions) (GitHubAccessTokenResponseResponse, error) {
 	req, err := client.getGitHubAccessTokenCreateRequest(ctx, gitHubAccessTokenRequest, options)
 	if err != nil {
 		return GitHubAccessTokenResponseResponse{}, err
@@ -42,7 +42,7 @@ func (client workspaceGitRepoManagementClient) GetGitHubAccessToken(ctx context.
 }
 
 // getGitHubAccessTokenCreateRequest creates the GetGitHubAccessToken request.
-func (client workspaceGitRepoManagementClient) getGitHubAccessTokenCreateRequest(ctx context.Context, gitHubAccessTokenRequest GitHubAccessTokenRequest, options *WorkspaceGitRepoManagementGetGitHubAccessTokenOptions) (*azcore.Request, error) {
+func (client *workspaceGitRepoManagementClient) getGitHubAccessTokenCreateRequest(ctx context.Context, gitHubAccessTokenRequest GitHubAccessTokenRequest, options *WorkspaceGitRepoManagementGetGitHubAccessTokenOptions) (*azcore.Request, error) {
 	urlPath := "/getGitHubAccessToken"
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -60,7 +60,7 @@ func (client workspaceGitRepoManagementClient) getGitHubAccessTokenCreateRequest
 }
 
 // getGitHubAccessTokenHandleResponse handles the GetGitHubAccessToken response.
-func (client workspaceGitRepoManagementClient) getGitHubAccessTokenHandleResponse(resp *azcore.Response) (GitHubAccessTokenResponseResponse, error) {
+func (client *workspaceGitRepoManagementClient) getGitHubAccessTokenHandleResponse(resp *azcore.Response) (GitHubAccessTokenResponseResponse, error) {
 	var val *GitHubAccessTokenResponse
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return GitHubAccessTokenResponseResponse{}, err
@@ -69,7 +69,7 @@ func (client workspaceGitRepoManagementClient) getGitHubAccessTokenHandleRespons
 }
 
 // getGitHubAccessTokenHandleError handles the GetGitHubAccessToken error response.
-func (client workspaceGitRepoManagementClient) getGitHubAccessTokenHandleError(resp *azcore.Response) error {
+func (client *workspaceGitRepoManagementClient) getGitHubAccessTokenHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
