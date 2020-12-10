@@ -12248,7 +12248,7 @@ type ExecuteSsisPackageActivityTypeProperties struct {
 	LoggingLevel interface{} `json:"loggingLevel,omitempty"`
 
 	// The package level connection managers to execute the SSIS package.
-	PackageConnectionManagers *map[string]interface{} `json:"packageConnectionManagers,omitempty"`
+	PackageConnectionManagers *map[string]map[string]SsisExecutionParameter `json:"packageConnectionManagers,omitempty"`
 
 	// SSIS package location.
 	PackageLocation *SsisPackageLocation `json:"packageLocation,omitempty"`
@@ -12257,7 +12257,7 @@ type ExecuteSsisPackageActivityTypeProperties struct {
 	PackageParameters *map[string]SsisExecutionParameter `json:"packageParameters,omitempty"`
 
 	// The project level connection managers to execute the SSIS package.
-	ProjectConnectionManagers *map[string]interface{} `json:"projectConnectionManagers,omitempty"`
+	ProjectConnectionManagers *map[string]map[string]SsisExecutionParameter `json:"projectConnectionManagers,omitempty"`
 
 	// The project level parameters to execute the SSIS package.
 	ProjectParameters *map[string]SsisExecutionParameter `json:"projectParameters,omitempty"`
