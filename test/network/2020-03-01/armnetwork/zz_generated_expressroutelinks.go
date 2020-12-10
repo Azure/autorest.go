@@ -24,17 +24,17 @@ type ExpressRouteLinksClient struct {
 }
 
 // NewExpressRouteLinksClient creates a new instance of ExpressRouteLinksClient with the specified values.
-func NewExpressRouteLinksClient(con *armcore.Connection, subscriptionID string) ExpressRouteLinksClient {
-	return ExpressRouteLinksClient{con: con, subscriptionID: subscriptionID}
+func NewExpressRouteLinksClient(con *armcore.Connection, subscriptionID string) *ExpressRouteLinksClient {
+	return &ExpressRouteLinksClient{con: con, subscriptionID: subscriptionID}
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client ExpressRouteLinksClient) Pipeline() azcore.Pipeline {
+func (client *ExpressRouteLinksClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // Get - Retrieves the specified ExpressRouteLink resource.
-func (client ExpressRouteLinksClient) Get(ctx context.Context, resourceGroupName string, expressRoutePortName string, linkName string, options *ExpressRouteLinksGetOptions) (ExpressRouteLinkResponse, error) {
+func (client *ExpressRouteLinksClient) Get(ctx context.Context, resourceGroupName string, expressRoutePortName string, linkName string, options *ExpressRouteLinksGetOptions) (ExpressRouteLinkResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, expressRoutePortName, linkName, options)
 	if err != nil {
 		return ExpressRouteLinkResponse{}, err
@@ -50,7 +50,7 @@ func (client ExpressRouteLinksClient) Get(ctx context.Context, resourceGroupName
 }
 
 // getCreateRequest creates the Get request.
-func (client ExpressRouteLinksClient) getCreateRequest(ctx context.Context, resourceGroupName string, expressRoutePortName string, linkName string, options *ExpressRouteLinksGetOptions) (*azcore.Request, error) {
+func (client *ExpressRouteLinksClient) getCreateRequest(ctx context.Context, resourceGroupName string, expressRoutePortName string, linkName string, options *ExpressRouteLinksGetOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ExpressRoutePorts/{expressRoutePortName}/links/{linkName}"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
@@ -69,7 +69,7 @@ func (client ExpressRouteLinksClient) getCreateRequest(ctx context.Context, reso
 }
 
 // getHandleResponse handles the Get response.
-func (client ExpressRouteLinksClient) getHandleResponse(resp *azcore.Response) (ExpressRouteLinkResponse, error) {
+func (client *ExpressRouteLinksClient) getHandleResponse(resp *azcore.Response) (ExpressRouteLinkResponse, error) {
 	var val *ExpressRouteLink
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return ExpressRouteLinkResponse{}, err
@@ -78,7 +78,7 @@ func (client ExpressRouteLinksClient) getHandleResponse(resp *azcore.Response) (
 }
 
 // getHandleError handles the Get error response.
-func (client ExpressRouteLinksClient) getHandleError(resp *azcore.Response) error {
+func (client *ExpressRouteLinksClient) getHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -87,7 +87,7 @@ func (client ExpressRouteLinksClient) getHandleError(resp *azcore.Response) erro
 }
 
 // List - Retrieve the ExpressRouteLink sub-resources of the specified ExpressRoutePort resource.
-func (client ExpressRouteLinksClient) List(resourceGroupName string, expressRoutePortName string, options *ExpressRouteLinksListOptions) ExpressRouteLinkListResultPager {
+func (client *ExpressRouteLinksClient) List(resourceGroupName string, expressRoutePortName string, options *ExpressRouteLinksListOptions) ExpressRouteLinkListResultPager {
 	return &expressRouteLinkListResultPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
@@ -103,7 +103,7 @@ func (client ExpressRouteLinksClient) List(resourceGroupName string, expressRout
 }
 
 // listCreateRequest creates the List request.
-func (client ExpressRouteLinksClient) listCreateRequest(ctx context.Context, resourceGroupName string, expressRoutePortName string, options *ExpressRouteLinksListOptions) (*azcore.Request, error) {
+func (client *ExpressRouteLinksClient) listCreateRequest(ctx context.Context, resourceGroupName string, expressRoutePortName string, options *ExpressRouteLinksListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ExpressRoutePorts/{expressRoutePortName}/links"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
@@ -121,7 +121,7 @@ func (client ExpressRouteLinksClient) listCreateRequest(ctx context.Context, res
 }
 
 // listHandleResponse handles the List response.
-func (client ExpressRouteLinksClient) listHandleResponse(resp *azcore.Response) (ExpressRouteLinkListResultResponse, error) {
+func (client *ExpressRouteLinksClient) listHandleResponse(resp *azcore.Response) (ExpressRouteLinkListResultResponse, error) {
 	var val *ExpressRouteLinkListResult
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return ExpressRouteLinkListResultResponse{}, err
@@ -130,7 +130,7 @@ func (client ExpressRouteLinksClient) listHandleResponse(resp *azcore.Response) 
 }
 
 // listHandleError handles the List error response.
-func (client ExpressRouteLinksClient) listHandleError(resp *azcore.Response) error {
+func (client *ExpressRouteLinksClient) listHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

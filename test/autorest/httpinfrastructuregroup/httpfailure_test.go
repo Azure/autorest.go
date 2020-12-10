@@ -9,7 +9,7 @@ import (
 	"testing"
 )
 
-func newHTTPFailureClient() HTTPFailureClient {
+func newHTTPFailureClient() *HTTPFailureClient {
 	return NewHTTPFailureClient(NewDefaultConnection(nil))
 }
 

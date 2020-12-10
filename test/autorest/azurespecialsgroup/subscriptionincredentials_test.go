@@ -12,7 +12,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 )
 
-func newSubscriptionInCredentialsClient() SubscriptionInCredentialsClient {
+func newSubscriptionInCredentialsClient() *SubscriptionInCredentialsClient {
 	return NewSubscriptionInCredentialsClient(NewDefaultConnection(nil), "1234-5678-9012-3456")
 }
 

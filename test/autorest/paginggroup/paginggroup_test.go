@@ -15,7 +15,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 )
 
-func newPagingClient() PagingClient {
+func newPagingClient() *PagingClient {
 	options := DefaultConnectionOptions()
 	options.Retry.RetryDelay = 10 * time.Millisecond
 	options.HTTPClient = httpClientWithCookieJar()

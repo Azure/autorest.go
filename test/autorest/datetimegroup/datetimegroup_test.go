@@ -11,7 +11,7 @@ import (
 	"time"
 )
 
-func newDatetimeClient() DatetimeClient {
+func newDatetimeClient() *DatetimeClient {
 	return NewDatetimeClient(NewDefaultConnection(nil))
 }
 

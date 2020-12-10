@@ -24,12 +24,12 @@ type sparkBatchClient struct {
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client sparkBatchClient) Pipeline() azcore.Pipeline {
+func (client *sparkBatchClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // CancelSparkBatchJob - Cancels a running spark batch job.
-func (client sparkBatchClient) CancelSparkBatchJob(ctx context.Context, batchId int32, options *SparkBatchCancelSparkBatchJobOptions) (*http.Response, error) {
+func (client *sparkBatchClient) CancelSparkBatchJob(ctx context.Context, batchId int32, options *SparkBatchCancelSparkBatchJobOptions) (*http.Response, error) {
 	req, err := client.cancelSparkBatchJobCreateRequest(ctx, batchId, options)
 	if err != nil {
 		return nil, err
@@ -45,7 +45,7 @@ func (client sparkBatchClient) CancelSparkBatchJob(ctx context.Context, batchId 
 }
 
 // cancelSparkBatchJobCreateRequest creates the CancelSparkBatchJob request.
-func (client sparkBatchClient) cancelSparkBatchJobCreateRequest(ctx context.Context, batchId int32, options *SparkBatchCancelSparkBatchJobOptions) (*azcore.Request, error) {
+func (client *sparkBatchClient) cancelSparkBatchJobCreateRequest(ctx context.Context, batchId int32, options *SparkBatchCancelSparkBatchJobOptions) (*azcore.Request, error) {
 	urlPath := "/batches/{batchId}"
 	urlPath = strings.ReplaceAll(urlPath, "{batchId}", url.PathEscape(strconv.FormatInt(int64(batchId), 10)))
 	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -57,7 +57,7 @@ func (client sparkBatchClient) cancelSparkBatchJobCreateRequest(ctx context.Cont
 }
 
 // cancelSparkBatchJobHandleError handles the CancelSparkBatchJob error response.
-func (client sparkBatchClient) cancelSparkBatchJobHandleError(resp *azcore.Response) error {
+func (client *sparkBatchClient) cancelSparkBatchJobHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -69,7 +69,7 @@ func (client sparkBatchClient) cancelSparkBatchJobHandleError(resp *azcore.Respo
 }
 
 // CreateSparkBatchJob - Create new spark batch job.
-func (client sparkBatchClient) CreateSparkBatchJob(ctx context.Context, sparkBatchJobOptions SparkBatchJobOptions, options *SparkBatchCreateSparkBatchJobOptions) (SparkBatchJobResponse, error) {
+func (client *sparkBatchClient) CreateSparkBatchJob(ctx context.Context, sparkBatchJobOptions SparkBatchJobOptions, options *SparkBatchCreateSparkBatchJobOptions) (SparkBatchJobResponse, error) {
 	req, err := client.createSparkBatchJobCreateRequest(ctx, sparkBatchJobOptions, options)
 	if err != nil {
 		return SparkBatchJobResponse{}, err
@@ -85,7 +85,7 @@ func (client sparkBatchClient) CreateSparkBatchJob(ctx context.Context, sparkBat
 }
 
 // createSparkBatchJobCreateRequest creates the CreateSparkBatchJob request.
-func (client sparkBatchClient) createSparkBatchJobCreateRequest(ctx context.Context, sparkBatchJobOptions SparkBatchJobOptions, options *SparkBatchCreateSparkBatchJobOptions) (*azcore.Request, error) {
+func (client *sparkBatchClient) createSparkBatchJobCreateRequest(ctx context.Context, sparkBatchJobOptions SparkBatchJobOptions, options *SparkBatchCreateSparkBatchJobOptions) (*azcore.Request, error) {
 	urlPath := "/batches"
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -102,7 +102,7 @@ func (client sparkBatchClient) createSparkBatchJobCreateRequest(ctx context.Cont
 }
 
 // createSparkBatchJobHandleResponse handles the CreateSparkBatchJob response.
-func (client sparkBatchClient) createSparkBatchJobHandleResponse(resp *azcore.Response) (SparkBatchJobResponse, error) {
+func (client *sparkBatchClient) createSparkBatchJobHandleResponse(resp *azcore.Response) (SparkBatchJobResponse, error) {
 	var val *SparkBatchJob
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return SparkBatchJobResponse{}, err
@@ -111,7 +111,7 @@ func (client sparkBatchClient) createSparkBatchJobHandleResponse(resp *azcore.Re
 }
 
 // createSparkBatchJobHandleError handles the CreateSparkBatchJob error response.
-func (client sparkBatchClient) createSparkBatchJobHandleError(resp *azcore.Response) error {
+func (client *sparkBatchClient) createSparkBatchJobHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -123,7 +123,7 @@ func (client sparkBatchClient) createSparkBatchJobHandleError(resp *azcore.Respo
 }
 
 // GetSparkBatchJob - Gets a single spark batch job.
-func (client sparkBatchClient) GetSparkBatchJob(ctx context.Context, batchId int32, options *SparkBatchGetSparkBatchJobOptions) (SparkBatchJobResponse, error) {
+func (client *sparkBatchClient) GetSparkBatchJob(ctx context.Context, batchId int32, options *SparkBatchGetSparkBatchJobOptions) (SparkBatchJobResponse, error) {
 	req, err := client.getSparkBatchJobCreateRequest(ctx, batchId, options)
 	if err != nil {
 		return SparkBatchJobResponse{}, err
@@ -139,7 +139,7 @@ func (client sparkBatchClient) GetSparkBatchJob(ctx context.Context, batchId int
 }
 
 // getSparkBatchJobCreateRequest creates the GetSparkBatchJob request.
-func (client sparkBatchClient) getSparkBatchJobCreateRequest(ctx context.Context, batchId int32, options *SparkBatchGetSparkBatchJobOptions) (*azcore.Request, error) {
+func (client *sparkBatchClient) getSparkBatchJobCreateRequest(ctx context.Context, batchId int32, options *SparkBatchGetSparkBatchJobOptions) (*azcore.Request, error) {
 	urlPath := "/batches/{batchId}"
 	urlPath = strings.ReplaceAll(urlPath, "{batchId}", url.PathEscape(strconv.FormatInt(int64(batchId), 10)))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -157,7 +157,7 @@ func (client sparkBatchClient) getSparkBatchJobCreateRequest(ctx context.Context
 }
 
 // getSparkBatchJobHandleResponse handles the GetSparkBatchJob response.
-func (client sparkBatchClient) getSparkBatchJobHandleResponse(resp *azcore.Response) (SparkBatchJobResponse, error) {
+func (client *sparkBatchClient) getSparkBatchJobHandleResponse(resp *azcore.Response) (SparkBatchJobResponse, error) {
 	var val *SparkBatchJob
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return SparkBatchJobResponse{}, err
@@ -166,7 +166,7 @@ func (client sparkBatchClient) getSparkBatchJobHandleResponse(resp *azcore.Respo
 }
 
 // getSparkBatchJobHandleError handles the GetSparkBatchJob error response.
-func (client sparkBatchClient) getSparkBatchJobHandleError(resp *azcore.Response) error {
+func (client *sparkBatchClient) getSparkBatchJobHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -178,7 +178,7 @@ func (client sparkBatchClient) getSparkBatchJobHandleError(resp *azcore.Response
 }
 
 // GetSparkBatchJobs - List all spark batch jobs which are running under a particular spark pool.
-func (client sparkBatchClient) GetSparkBatchJobs(ctx context.Context, options *SparkBatchGetSparkBatchJobsOptions) (SparkBatchJobCollectionResponse, error) {
+func (client *sparkBatchClient) GetSparkBatchJobs(ctx context.Context, options *SparkBatchGetSparkBatchJobsOptions) (SparkBatchJobCollectionResponse, error) {
 	req, err := client.getSparkBatchJobsCreateRequest(ctx, options)
 	if err != nil {
 		return SparkBatchJobCollectionResponse{}, err
@@ -194,7 +194,7 @@ func (client sparkBatchClient) GetSparkBatchJobs(ctx context.Context, options *S
 }
 
 // getSparkBatchJobsCreateRequest creates the GetSparkBatchJobs request.
-func (client sparkBatchClient) getSparkBatchJobsCreateRequest(ctx context.Context, options *SparkBatchGetSparkBatchJobsOptions) (*azcore.Request, error) {
+func (client *sparkBatchClient) getSparkBatchJobsCreateRequest(ctx context.Context, options *SparkBatchGetSparkBatchJobsOptions) (*azcore.Request, error) {
 	urlPath := "/batches"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -217,7 +217,7 @@ func (client sparkBatchClient) getSparkBatchJobsCreateRequest(ctx context.Contex
 }
 
 // getSparkBatchJobsHandleResponse handles the GetSparkBatchJobs response.
-func (client sparkBatchClient) getSparkBatchJobsHandleResponse(resp *azcore.Response) (SparkBatchJobCollectionResponse, error) {
+func (client *sparkBatchClient) getSparkBatchJobsHandleResponse(resp *azcore.Response) (SparkBatchJobCollectionResponse, error) {
 	var val *SparkBatchJobCollection
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return SparkBatchJobCollectionResponse{}, err
@@ -226,7 +226,7 @@ func (client sparkBatchClient) getSparkBatchJobsHandleResponse(resp *azcore.Resp
 }
 
 // getSparkBatchJobsHandleError handles the GetSparkBatchJobs error response.
-func (client sparkBatchClient) getSparkBatchJobsHandleError(resp *azcore.Response) error {
+func (client *sparkBatchClient) getSparkBatchJobsHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)

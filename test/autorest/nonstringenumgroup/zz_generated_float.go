@@ -23,17 +23,17 @@ type FloatClient struct {
 }
 
 // NewFloatClient creates a new instance of FloatClient with the specified values.
-func NewFloatClient(con *Connection) FloatClient {
-	return FloatClient{con: con}
+func NewFloatClient(con *Connection) *FloatClient {
+	return &FloatClient{con: con}
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client FloatClient) Pipeline() azcore.Pipeline {
+func (client *FloatClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // Get - Get a float enum
-func (client FloatClient) Get(ctx context.Context, options *FloatGetOptions) (FloatEnumResponse, error) {
+func (client *FloatClient) Get(ctx context.Context, options *FloatGetOptions) (FloatEnumResponse, error) {
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
 		return FloatEnumResponse{}, err
@@ -49,7 +49,7 @@ func (client FloatClient) Get(ctx context.Context, options *FloatGetOptions) (Fl
 }
 
 // getCreateRequest creates the Get request.
-func (client FloatClient) getCreateRequest(ctx context.Context, options *FloatGetOptions) (*azcore.Request, error) {
+func (client *FloatClient) getCreateRequest(ctx context.Context, options *FloatGetOptions) (*azcore.Request, error) {
 	urlPath := "/nonStringEnums/float/get"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -61,7 +61,7 @@ func (client FloatClient) getCreateRequest(ctx context.Context, options *FloatGe
 }
 
 // getHandleResponse handles the Get response.
-func (client FloatClient) getHandleResponse(resp *azcore.Response) (FloatEnumResponse, error) {
+func (client *FloatClient) getHandleResponse(resp *azcore.Response) (FloatEnumResponse, error) {
 	var val *FloatEnum
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return FloatEnumResponse{}, err
@@ -70,7 +70,7 @@ func (client FloatClient) getHandleResponse(resp *azcore.Response) (FloatEnumRes
 }
 
 // getHandleError handles the Get error response.
-func (client FloatClient) getHandleError(resp *azcore.Response) error {
+func (client *FloatClient) getHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -82,7 +82,7 @@ func (client FloatClient) getHandleError(resp *azcore.Response) error {
 }
 
 // Put - Put a float enum
-func (client FloatClient) Put(ctx context.Context, options *FloatPutOptions) (StringResponse, error) {
+func (client *FloatClient) Put(ctx context.Context, options *FloatPutOptions) (StringResponse, error) {
 	req, err := client.putCreateRequest(ctx, options)
 	if err != nil {
 		return StringResponse{}, err
@@ -98,7 +98,7 @@ func (client FloatClient) Put(ctx context.Context, options *FloatPutOptions) (St
 }
 
 // putCreateRequest creates the Put request.
-func (client FloatClient) putCreateRequest(ctx context.Context, options *FloatPutOptions) (*azcore.Request, error) {
+func (client *FloatClient) putCreateRequest(ctx context.Context, options *FloatPutOptions) (*azcore.Request, error) {
 	urlPath := "/nonStringEnums/float/put"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -113,7 +113,7 @@ func (client FloatClient) putCreateRequest(ctx context.Context, options *FloatPu
 }
 
 // putHandleResponse handles the Put response.
-func (client FloatClient) putHandleResponse(resp *azcore.Response) (StringResponse, error) {
+func (client *FloatClient) putHandleResponse(resp *azcore.Response) (StringResponse, error) {
 	var val *string
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return StringResponse{}, err
@@ -122,7 +122,7 @@ func (client FloatClient) putHandleResponse(resp *azcore.Response) (StringRespon
 }
 
 // putHandleError handles the Put error response.
-func (client FloatClient) putHandleError(resp *azcore.Response) error {
+func (client *FloatClient) putHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)

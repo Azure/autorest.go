@@ -25,17 +25,17 @@ type PublicIPPrefixesClient struct {
 }
 
 // NewPublicIPPrefixesClient creates a new instance of PublicIPPrefixesClient with the specified values.
-func NewPublicIPPrefixesClient(con *armcore.Connection, subscriptionID string) PublicIPPrefixesClient {
-	return PublicIPPrefixesClient{con: con, subscriptionID: subscriptionID}
+func NewPublicIPPrefixesClient(con *armcore.Connection, subscriptionID string) *PublicIPPrefixesClient {
+	return &PublicIPPrefixesClient{con: con, subscriptionID: subscriptionID}
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client PublicIPPrefixesClient) Pipeline() azcore.Pipeline {
+func (client *PublicIPPrefixesClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // BeginCreateOrUpdate - Creates or updates a static or dynamic public IP prefix.
-func (client PublicIPPrefixesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, publicIPPrefixName string, parameters PublicIPPrefix, options *PublicIPPrefixesBeginCreateOrUpdateOptions) (PublicIPPrefixPollerResponse, error) {
+func (client *PublicIPPrefixesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, publicIPPrefixName string, parameters PublicIPPrefix, options *PublicIPPrefixesBeginCreateOrUpdateOptions) (PublicIPPrefixPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, publicIPPrefixName, parameters, options)
 	if err != nil {
 		return PublicIPPrefixPollerResponse{}, err
@@ -60,7 +60,7 @@ func (client PublicIPPrefixesClient) BeginCreateOrUpdate(ctx context.Context, re
 
 // ResumeCreateOrUpdate creates a new PublicIPPrefixPoller from the specified resume token.
 // token - The value must come from a previous call to PublicIPPrefixPoller.ResumeToken().
-func (client PublicIPPrefixesClient) ResumeCreateOrUpdate(token string) (PublicIPPrefixPoller, error) {
+func (client *PublicIPPrefixesClient) ResumeCreateOrUpdate(token string) (PublicIPPrefixPoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("PublicIPPrefixesClient.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
@@ -72,7 +72,7 @@ func (client PublicIPPrefixesClient) ResumeCreateOrUpdate(token string) (PublicI
 }
 
 // CreateOrUpdate - Creates or updates a static or dynamic public IP prefix.
-func (client PublicIPPrefixesClient) createOrUpdate(ctx context.Context, resourceGroupName string, publicIPPrefixName string, parameters PublicIPPrefix, options *PublicIPPrefixesBeginCreateOrUpdateOptions) (*azcore.Response, error) {
+func (client *PublicIPPrefixesClient) createOrUpdate(ctx context.Context, resourceGroupName string, publicIPPrefixName string, parameters PublicIPPrefix, options *PublicIPPrefixesBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, publicIPPrefixName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -88,7 +88,7 @@ func (client PublicIPPrefixesClient) createOrUpdate(ctx context.Context, resourc
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client PublicIPPrefixesClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, publicIPPrefixName string, parameters PublicIPPrefix, options *PublicIPPrefixesBeginCreateOrUpdateOptions) (*azcore.Request, error) {
+func (client *PublicIPPrefixesClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, publicIPPrefixName string, parameters PublicIPPrefix, options *PublicIPPrefixesBeginCreateOrUpdateOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIpPrefixName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{publicIpPrefixName}", url.PathEscape(publicIPPrefixName))
@@ -106,7 +106,7 @@ func (client PublicIPPrefixesClient) createOrUpdateCreateRequest(ctx context.Con
 }
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client PublicIPPrefixesClient) createOrUpdateHandleResponse(resp *azcore.Response) (PublicIPPrefixResponse, error) {
+func (client *PublicIPPrefixesClient) createOrUpdateHandleResponse(resp *azcore.Response) (PublicIPPrefixResponse, error) {
 	var val *PublicIPPrefix
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return PublicIPPrefixResponse{}, err
@@ -115,7 +115,7 @@ func (client PublicIPPrefixesClient) createOrUpdateHandleResponse(resp *azcore.R
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client PublicIPPrefixesClient) createOrUpdateHandleError(resp *azcore.Response) error {
+func (client *PublicIPPrefixesClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -124,7 +124,7 @@ func (client PublicIPPrefixesClient) createOrUpdateHandleError(resp *azcore.Resp
 }
 
 // BeginDelete - Deletes the specified public IP prefix.
-func (client PublicIPPrefixesClient) BeginDelete(ctx context.Context, resourceGroupName string, publicIPPrefixName string, options *PublicIPPrefixesBeginDeleteOptions) (HTTPPollerResponse, error) {
+func (client *PublicIPPrefixesClient) BeginDelete(ctx context.Context, resourceGroupName string, publicIPPrefixName string, options *PublicIPPrefixesBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.delete(ctx, resourceGroupName, publicIPPrefixName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
@@ -149,7 +149,7 @@ func (client PublicIPPrefixesClient) BeginDelete(ctx context.Context, resourceGr
 
 // ResumeDelete creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client PublicIPPrefixesClient) ResumeDelete(token string) (HTTPPoller, error) {
+func (client *PublicIPPrefixesClient) ResumeDelete(token string) (HTTPPoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("PublicIPPrefixesClient.Delete", token, client.deleteHandleError)
 	if err != nil {
 		return nil, err
@@ -161,7 +161,7 @@ func (client PublicIPPrefixesClient) ResumeDelete(token string) (HTTPPoller, err
 }
 
 // Delete - Deletes the specified public IP prefix.
-func (client PublicIPPrefixesClient) delete(ctx context.Context, resourceGroupName string, publicIPPrefixName string, options *PublicIPPrefixesBeginDeleteOptions) (*azcore.Response, error) {
+func (client *PublicIPPrefixesClient) delete(ctx context.Context, resourceGroupName string, publicIPPrefixName string, options *PublicIPPrefixesBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, publicIPPrefixName, options)
 	if err != nil {
 		return nil, err
@@ -177,7 +177,7 @@ func (client PublicIPPrefixesClient) delete(ctx context.Context, resourceGroupNa
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client PublicIPPrefixesClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, publicIPPrefixName string, options *PublicIPPrefixesBeginDeleteOptions) (*azcore.Request, error) {
+func (client *PublicIPPrefixesClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, publicIPPrefixName string, options *PublicIPPrefixesBeginDeleteOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIpPrefixName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{publicIpPrefixName}", url.PathEscape(publicIPPrefixName))
@@ -195,7 +195,7 @@ func (client PublicIPPrefixesClient) deleteCreateRequest(ctx context.Context, re
 }
 
 // deleteHandleError handles the Delete error response.
-func (client PublicIPPrefixesClient) deleteHandleError(resp *azcore.Response) error {
+func (client *PublicIPPrefixesClient) deleteHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -204,7 +204,7 @@ func (client PublicIPPrefixesClient) deleteHandleError(resp *azcore.Response) er
 }
 
 // Get - Gets the specified public IP prefix in a specified resource group.
-func (client PublicIPPrefixesClient) Get(ctx context.Context, resourceGroupName string, publicIPPrefixName string, options *PublicIPPrefixesGetOptions) (PublicIPPrefixResponse, error) {
+func (client *PublicIPPrefixesClient) Get(ctx context.Context, resourceGroupName string, publicIPPrefixName string, options *PublicIPPrefixesGetOptions) (PublicIPPrefixResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, publicIPPrefixName, options)
 	if err != nil {
 		return PublicIPPrefixResponse{}, err
@@ -220,7 +220,7 @@ func (client PublicIPPrefixesClient) Get(ctx context.Context, resourceGroupName 
 }
 
 // getCreateRequest creates the Get request.
-func (client PublicIPPrefixesClient) getCreateRequest(ctx context.Context, resourceGroupName string, publicIPPrefixName string, options *PublicIPPrefixesGetOptions) (*azcore.Request, error) {
+func (client *PublicIPPrefixesClient) getCreateRequest(ctx context.Context, resourceGroupName string, publicIPPrefixName string, options *PublicIPPrefixesGetOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIpPrefixName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{publicIpPrefixName}", url.PathEscape(publicIPPrefixName))
@@ -241,7 +241,7 @@ func (client PublicIPPrefixesClient) getCreateRequest(ctx context.Context, resou
 }
 
 // getHandleResponse handles the Get response.
-func (client PublicIPPrefixesClient) getHandleResponse(resp *azcore.Response) (PublicIPPrefixResponse, error) {
+func (client *PublicIPPrefixesClient) getHandleResponse(resp *azcore.Response) (PublicIPPrefixResponse, error) {
 	var val *PublicIPPrefix
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return PublicIPPrefixResponse{}, err
@@ -250,7 +250,7 @@ func (client PublicIPPrefixesClient) getHandleResponse(resp *azcore.Response) (P
 }
 
 // getHandleError handles the Get error response.
-func (client PublicIPPrefixesClient) getHandleError(resp *azcore.Response) error {
+func (client *PublicIPPrefixesClient) getHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -259,7 +259,7 @@ func (client PublicIPPrefixesClient) getHandleError(resp *azcore.Response) error
 }
 
 // List - Gets all public IP prefixes in a resource group.
-func (client PublicIPPrefixesClient) List(resourceGroupName string, options *PublicIPPrefixesListOptions) PublicIPPrefixListResultPager {
+func (client *PublicIPPrefixesClient) List(resourceGroupName string, options *PublicIPPrefixesListOptions) PublicIPPrefixListResultPager {
 	return &publicIPPrefixListResultPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
@@ -275,7 +275,7 @@ func (client PublicIPPrefixesClient) List(resourceGroupName string, options *Pub
 }
 
 // listCreateRequest creates the List request.
-func (client PublicIPPrefixesClient) listCreateRequest(ctx context.Context, resourceGroupName string, options *PublicIPPrefixesListOptions) (*azcore.Request, error) {
+func (client *PublicIPPrefixesClient) listCreateRequest(ctx context.Context, resourceGroupName string, options *PublicIPPrefixesListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
@@ -292,7 +292,7 @@ func (client PublicIPPrefixesClient) listCreateRequest(ctx context.Context, reso
 }
 
 // listHandleResponse handles the List response.
-func (client PublicIPPrefixesClient) listHandleResponse(resp *azcore.Response) (PublicIPPrefixListResultResponse, error) {
+func (client *PublicIPPrefixesClient) listHandleResponse(resp *azcore.Response) (PublicIPPrefixListResultResponse, error) {
 	var val *PublicIPPrefixListResult
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return PublicIPPrefixListResultResponse{}, err
@@ -301,7 +301,7 @@ func (client PublicIPPrefixesClient) listHandleResponse(resp *azcore.Response) (
 }
 
 // listHandleError handles the List error response.
-func (client PublicIPPrefixesClient) listHandleError(resp *azcore.Response) error {
+func (client *PublicIPPrefixesClient) listHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -310,7 +310,7 @@ func (client PublicIPPrefixesClient) listHandleError(resp *azcore.Response) erro
 }
 
 // ListAll - Gets all the public IP prefixes in a subscription.
-func (client PublicIPPrefixesClient) ListAll(options *PublicIPPrefixesListAllOptions) PublicIPPrefixListResultPager {
+func (client *PublicIPPrefixesClient) ListAll(options *PublicIPPrefixesListAllOptions) PublicIPPrefixListResultPager {
 	return &publicIPPrefixListResultPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
@@ -326,7 +326,7 @@ func (client PublicIPPrefixesClient) ListAll(options *PublicIPPrefixesListAllOpt
 }
 
 // listAllCreateRequest creates the ListAll request.
-func (client PublicIPPrefixesClient) listAllCreateRequest(ctx context.Context, options *PublicIPPrefixesListAllOptions) (*azcore.Request, error) {
+func (client *PublicIPPrefixesClient) listAllCreateRequest(ctx context.Context, options *PublicIPPrefixesListAllOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/publicIPPrefixes"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -342,7 +342,7 @@ func (client PublicIPPrefixesClient) listAllCreateRequest(ctx context.Context, o
 }
 
 // listAllHandleResponse handles the ListAll response.
-func (client PublicIPPrefixesClient) listAllHandleResponse(resp *azcore.Response) (PublicIPPrefixListResultResponse, error) {
+func (client *PublicIPPrefixesClient) listAllHandleResponse(resp *azcore.Response) (PublicIPPrefixListResultResponse, error) {
 	var val *PublicIPPrefixListResult
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return PublicIPPrefixListResultResponse{}, err
@@ -351,7 +351,7 @@ func (client PublicIPPrefixesClient) listAllHandleResponse(resp *azcore.Response
 }
 
 // listAllHandleError handles the ListAll error response.
-func (client PublicIPPrefixesClient) listAllHandleError(resp *azcore.Response) error {
+func (client *PublicIPPrefixesClient) listAllHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -360,7 +360,7 @@ func (client PublicIPPrefixesClient) listAllHandleError(resp *azcore.Response) e
 }
 
 // UpdateTags - Updates public IP prefix tags.
-func (client PublicIPPrefixesClient) UpdateTags(ctx context.Context, resourceGroupName string, publicIPPrefixName string, parameters TagsObject, options *PublicIPPrefixesUpdateTagsOptions) (PublicIPPrefixResponse, error) {
+func (client *PublicIPPrefixesClient) UpdateTags(ctx context.Context, resourceGroupName string, publicIPPrefixName string, parameters TagsObject, options *PublicIPPrefixesUpdateTagsOptions) (PublicIPPrefixResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, publicIPPrefixName, parameters, options)
 	if err != nil {
 		return PublicIPPrefixResponse{}, err
@@ -376,7 +376,7 @@ func (client PublicIPPrefixesClient) UpdateTags(ctx context.Context, resourceGro
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.
-func (client PublicIPPrefixesClient) updateTagsCreateRequest(ctx context.Context, resourceGroupName string, publicIPPrefixName string, parameters TagsObject, options *PublicIPPrefixesUpdateTagsOptions) (*azcore.Request, error) {
+func (client *PublicIPPrefixesClient) updateTagsCreateRequest(ctx context.Context, resourceGroupName string, publicIPPrefixName string, parameters TagsObject, options *PublicIPPrefixesUpdateTagsOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIpPrefixName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{publicIpPrefixName}", url.PathEscape(publicIPPrefixName))
@@ -394,7 +394,7 @@ func (client PublicIPPrefixesClient) updateTagsCreateRequest(ctx context.Context
 }
 
 // updateTagsHandleResponse handles the UpdateTags response.
-func (client PublicIPPrefixesClient) updateTagsHandleResponse(resp *azcore.Response) (PublicIPPrefixResponse, error) {
+func (client *PublicIPPrefixesClient) updateTagsHandleResponse(resp *azcore.Response) (PublicIPPrefixResponse, error) {
 	var val *PublicIPPrefix
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return PublicIPPrefixResponse{}, err
@@ -403,7 +403,7 @@ func (client PublicIPPrefixesClient) updateTagsHandleResponse(resp *azcore.Respo
 }
 
 // updateTagsHandleError handles the UpdateTags error response.
-func (client PublicIPPrefixesClient) updateTagsHandleError(resp *azcore.Response) error {
+func (client *PublicIPPrefixesClient) updateTagsHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

@@ -11,7 +11,7 @@ import (
 	"testing"
 )
 
-func newNumberClient() NumberClient {
+func newNumberClient() *NumberClient {
 	return NewNumberClient(NewDefaultConnection(nil))
 }
 

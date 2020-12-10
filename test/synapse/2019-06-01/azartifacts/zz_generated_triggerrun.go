@@ -20,12 +20,12 @@ type triggerRunClient struct {
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client triggerRunClient) Pipeline() azcore.Pipeline {
+func (client *triggerRunClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // CancelTriggerInstance - Cancel single trigger instance by runId.
-func (client triggerRunClient) CancelTriggerInstance(ctx context.Context, triggerName string, runId string, options *TriggerRunCancelTriggerInstanceOptions) (*http.Response, error) {
+func (client *triggerRunClient) CancelTriggerInstance(ctx context.Context, triggerName string, runId string, options *TriggerRunCancelTriggerInstanceOptions) (*http.Response, error) {
 	req, err := client.cancelTriggerInstanceCreateRequest(ctx, triggerName, runId, options)
 	if err != nil {
 		return nil, err
@@ -41,7 +41,7 @@ func (client triggerRunClient) CancelTriggerInstance(ctx context.Context, trigge
 }
 
 // cancelTriggerInstanceCreateRequest creates the CancelTriggerInstance request.
-func (client triggerRunClient) cancelTriggerInstanceCreateRequest(ctx context.Context, triggerName string, runId string, options *TriggerRunCancelTriggerInstanceOptions) (*azcore.Request, error) {
+func (client *triggerRunClient) cancelTriggerInstanceCreateRequest(ctx context.Context, triggerName string, runId string, options *TriggerRunCancelTriggerInstanceOptions) (*azcore.Request, error) {
 	urlPath := "/triggers/{triggerName}/triggerRuns/{runId}/cancel"
 	urlPath = strings.ReplaceAll(urlPath, "{triggerName}", url.PathEscape(triggerName))
 	urlPath = strings.ReplaceAll(urlPath, "{runId}", url.PathEscape(runId))
@@ -58,7 +58,7 @@ func (client triggerRunClient) cancelTriggerInstanceCreateRequest(ctx context.Co
 }
 
 // cancelTriggerInstanceHandleError handles the CancelTriggerInstance error response.
-func (client triggerRunClient) cancelTriggerInstanceHandleError(resp *azcore.Response) error {
+func (client *triggerRunClient) cancelTriggerInstanceHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -67,7 +67,7 @@ func (client triggerRunClient) cancelTriggerInstanceHandleError(resp *azcore.Res
 }
 
 // QueryTriggerRunsByWorkspace - Query trigger runs.
-func (client triggerRunClient) QueryTriggerRunsByWorkspace(ctx context.Context, filterParameters RunFilterParameters, options *TriggerRunQueryTriggerRunsByWorkspaceOptions) (TriggerRunsQueryResponseResponse, error) {
+func (client *triggerRunClient) QueryTriggerRunsByWorkspace(ctx context.Context, filterParameters RunFilterParameters, options *TriggerRunQueryTriggerRunsByWorkspaceOptions) (TriggerRunsQueryResponseResponse, error) {
 	req, err := client.queryTriggerRunsByWorkspaceCreateRequest(ctx, filterParameters, options)
 	if err != nil {
 		return TriggerRunsQueryResponseResponse{}, err
@@ -83,7 +83,7 @@ func (client triggerRunClient) QueryTriggerRunsByWorkspace(ctx context.Context, 
 }
 
 // queryTriggerRunsByWorkspaceCreateRequest creates the QueryTriggerRunsByWorkspace request.
-func (client triggerRunClient) queryTriggerRunsByWorkspaceCreateRequest(ctx context.Context, filterParameters RunFilterParameters, options *TriggerRunQueryTriggerRunsByWorkspaceOptions) (*azcore.Request, error) {
+func (client *triggerRunClient) queryTriggerRunsByWorkspaceCreateRequest(ctx context.Context, filterParameters RunFilterParameters, options *TriggerRunQueryTriggerRunsByWorkspaceOptions) (*azcore.Request, error) {
 	urlPath := "/queryTriggerRuns"
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -98,7 +98,7 @@ func (client triggerRunClient) queryTriggerRunsByWorkspaceCreateRequest(ctx cont
 }
 
 // queryTriggerRunsByWorkspaceHandleResponse handles the QueryTriggerRunsByWorkspace response.
-func (client triggerRunClient) queryTriggerRunsByWorkspaceHandleResponse(resp *azcore.Response) (TriggerRunsQueryResponseResponse, error) {
+func (client *triggerRunClient) queryTriggerRunsByWorkspaceHandleResponse(resp *azcore.Response) (TriggerRunsQueryResponseResponse, error) {
 	var val *TriggerRunsQueryResponse
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return TriggerRunsQueryResponseResponse{}, err
@@ -107,7 +107,7 @@ func (client triggerRunClient) queryTriggerRunsByWorkspaceHandleResponse(resp *a
 }
 
 // queryTriggerRunsByWorkspaceHandleError handles the QueryTriggerRunsByWorkspace error response.
-func (client triggerRunClient) queryTriggerRunsByWorkspaceHandleError(resp *azcore.Response) error {
+func (client *triggerRunClient) queryTriggerRunsByWorkspaceHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -116,7 +116,7 @@ func (client triggerRunClient) queryTriggerRunsByWorkspaceHandleError(resp *azco
 }
 
 // RerunTriggerInstance - Rerun single trigger instance by runId.
-func (client triggerRunClient) RerunTriggerInstance(ctx context.Context, triggerName string, runId string, options *TriggerRunRerunTriggerInstanceOptions) (*http.Response, error) {
+func (client *triggerRunClient) RerunTriggerInstance(ctx context.Context, triggerName string, runId string, options *TriggerRunRerunTriggerInstanceOptions) (*http.Response, error) {
 	req, err := client.rerunTriggerInstanceCreateRequest(ctx, triggerName, runId, options)
 	if err != nil {
 		return nil, err
@@ -132,7 +132,7 @@ func (client triggerRunClient) RerunTriggerInstance(ctx context.Context, trigger
 }
 
 // rerunTriggerInstanceCreateRequest creates the RerunTriggerInstance request.
-func (client triggerRunClient) rerunTriggerInstanceCreateRequest(ctx context.Context, triggerName string, runId string, options *TriggerRunRerunTriggerInstanceOptions) (*azcore.Request, error) {
+func (client *triggerRunClient) rerunTriggerInstanceCreateRequest(ctx context.Context, triggerName string, runId string, options *TriggerRunRerunTriggerInstanceOptions) (*azcore.Request, error) {
 	urlPath := "/triggers/{triggerName}/triggerRuns/{runId}/rerun"
 	urlPath = strings.ReplaceAll(urlPath, "{triggerName}", url.PathEscape(triggerName))
 	urlPath = strings.ReplaceAll(urlPath, "{runId}", url.PathEscape(runId))
@@ -149,7 +149,7 @@ func (client triggerRunClient) rerunTriggerInstanceCreateRequest(ctx context.Con
 }
 
 // rerunTriggerInstanceHandleError handles the RerunTriggerInstance error response.
-func (client triggerRunClient) rerunTriggerInstanceHandleError(resp *azcore.Response) error {
+func (client *triggerRunClient) rerunTriggerInstanceHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

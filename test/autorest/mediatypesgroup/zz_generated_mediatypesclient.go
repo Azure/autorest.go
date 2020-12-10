@@ -24,17 +24,17 @@ type MediaTypesClient struct {
 }
 
 // NewMediaTypesClient creates a new instance of MediaTypesClient with the specified values.
-func NewMediaTypesClient(con *Connection) MediaTypesClient {
-	return MediaTypesClient{con: con}
+func NewMediaTypesClient(con *Connection) *MediaTypesClient {
+	return &MediaTypesClient{con: con}
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client MediaTypesClient) Pipeline() azcore.Pipeline {
+func (client *MediaTypesClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // AnalyzeBody - Analyze body, that could be different media types.
-func (client MediaTypesClient) AnalyzeBody(ctx context.Context, contentType ContentType, input azcore.ReadSeekCloser, options *MediaTypesClientAnalyzeBodyOptions) (StringResponse, error) {
+func (client *MediaTypesClient) AnalyzeBody(ctx context.Context, contentType ContentType, input azcore.ReadSeekCloser, options *MediaTypesClientAnalyzeBodyOptions) (StringResponse, error) {
 	req, err := client.analyzeBodyCreateRequest(ctx, contentType, input, options)
 	if err != nil {
 		return StringResponse{}, err
@@ -50,7 +50,7 @@ func (client MediaTypesClient) AnalyzeBody(ctx context.Context, contentType Cont
 }
 
 // analyzeBodyCreateRequest creates the AnalyzeBody request.
-func (client MediaTypesClient) analyzeBodyCreateRequest(ctx context.Context, contentType ContentType, input azcore.ReadSeekCloser, options *MediaTypesClientAnalyzeBodyOptions) (*azcore.Request, error) {
+func (client *MediaTypesClient) analyzeBodyCreateRequest(ctx context.Context, contentType ContentType, input azcore.ReadSeekCloser, options *MediaTypesClientAnalyzeBodyOptions) (*azcore.Request, error) {
 	urlPath := "/mediatypes/analyze"
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -63,7 +63,7 @@ func (client MediaTypesClient) analyzeBodyCreateRequest(ctx context.Context, con
 }
 
 // analyzeBodyHandleResponse handles the AnalyzeBody response.
-func (client MediaTypesClient) analyzeBodyHandleResponse(resp *azcore.Response) (StringResponse, error) {
+func (client *MediaTypesClient) analyzeBodyHandleResponse(resp *azcore.Response) (StringResponse, error) {
 	var val *string
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return StringResponse{}, err
@@ -72,7 +72,7 @@ func (client MediaTypesClient) analyzeBodyHandleResponse(resp *azcore.Response) 
 }
 
 // analyzeBodyHandleError handles the AnalyzeBody error response.
-func (client MediaTypesClient) analyzeBodyHandleError(resp *azcore.Response) error {
+func (client *MediaTypesClient) analyzeBodyHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -84,7 +84,7 @@ func (client MediaTypesClient) analyzeBodyHandleError(resp *azcore.Response) err
 }
 
 // AnalyzeBodyWithSourcePath - Analyze body, that could be different media types.
-func (client MediaTypesClient) AnalyzeBodyWithSourcePath(ctx context.Context, options *MediaTypesClientAnalyzeBodyWithSourcePathOptions) (StringResponse, error) {
+func (client *MediaTypesClient) AnalyzeBodyWithSourcePath(ctx context.Context, options *MediaTypesClientAnalyzeBodyWithSourcePathOptions) (StringResponse, error) {
 	req, err := client.analyzeBodyWithSourcePathCreateRequest(ctx, options)
 	if err != nil {
 		return StringResponse{}, err
@@ -100,7 +100,7 @@ func (client MediaTypesClient) AnalyzeBodyWithSourcePath(ctx context.Context, op
 }
 
 // analyzeBodyWithSourcePathCreateRequest creates the AnalyzeBodyWithSourcePath request.
-func (client MediaTypesClient) analyzeBodyWithSourcePathCreateRequest(ctx context.Context, options *MediaTypesClientAnalyzeBodyWithSourcePathOptions) (*azcore.Request, error) {
+func (client *MediaTypesClient) analyzeBodyWithSourcePathCreateRequest(ctx context.Context, options *MediaTypesClientAnalyzeBodyWithSourcePathOptions) (*azcore.Request, error) {
 	urlPath := "/mediatypes/analyze"
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -115,7 +115,7 @@ func (client MediaTypesClient) analyzeBodyWithSourcePathCreateRequest(ctx contex
 }
 
 // analyzeBodyWithSourcePathHandleResponse handles the AnalyzeBodyWithSourcePath response.
-func (client MediaTypesClient) analyzeBodyWithSourcePathHandleResponse(resp *azcore.Response) (StringResponse, error) {
+func (client *MediaTypesClient) analyzeBodyWithSourcePathHandleResponse(resp *azcore.Response) (StringResponse, error) {
 	var val *string
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return StringResponse{}, err
@@ -124,7 +124,7 @@ func (client MediaTypesClient) analyzeBodyWithSourcePathHandleResponse(resp *azc
 }
 
 // analyzeBodyWithSourcePathHandleError handles the AnalyzeBodyWithSourcePath error response.
-func (client MediaTypesClient) analyzeBodyWithSourcePathHandleError(resp *azcore.Response) error {
+func (client *MediaTypesClient) analyzeBodyWithSourcePathHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -136,7 +136,7 @@ func (client MediaTypesClient) analyzeBodyWithSourcePathHandleError(resp *azcore
 }
 
 // ContentTypeWithEncoding - Pass in contentType 'text/plain; encoding=UTF-8' to pass test. Value for input does not matter
-func (client MediaTypesClient) ContentTypeWithEncoding(ctx context.Context, input string) (StringResponse, error) {
+func (client *MediaTypesClient) ContentTypeWithEncoding(ctx context.Context, input string) (StringResponse, error) {
 	req, err := client.contentTypeWithEncodingCreateRequest(ctx, input)
 	if err != nil {
 		return StringResponse{}, err
@@ -152,7 +152,7 @@ func (client MediaTypesClient) ContentTypeWithEncoding(ctx context.Context, inpu
 }
 
 // contentTypeWithEncodingCreateRequest creates the ContentTypeWithEncoding request.
-func (client MediaTypesClient) contentTypeWithEncodingCreateRequest(ctx context.Context, input string) (*azcore.Request, error) {
+func (client *MediaTypesClient) contentTypeWithEncodingCreateRequest(ctx context.Context, input string) (*azcore.Request, error) {
 	urlPath := "/mediatypes/contentTypeWithEncoding"
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -165,7 +165,7 @@ func (client MediaTypesClient) contentTypeWithEncodingCreateRequest(ctx context.
 }
 
 // contentTypeWithEncodingHandleResponse handles the ContentTypeWithEncoding response.
-func (client MediaTypesClient) contentTypeWithEncodingHandleResponse(resp *azcore.Response) (StringResponse, error) {
+func (client *MediaTypesClient) contentTypeWithEncodingHandleResponse(resp *azcore.Response) (StringResponse, error) {
 	var val *string
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return StringResponse{}, err
@@ -174,7 +174,7 @@ func (client MediaTypesClient) contentTypeWithEncodingHandleResponse(resp *azcor
 }
 
 // contentTypeWithEncodingHandleError handles the ContentTypeWithEncoding error response.
-func (client MediaTypesClient) contentTypeWithEncodingHandleError(resp *azcore.Response) error {
+func (client *MediaTypesClient) contentTypeWithEncodingHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)

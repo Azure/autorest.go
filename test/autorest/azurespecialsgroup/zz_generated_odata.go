@@ -21,17 +21,17 @@ type OdataClient struct {
 }
 
 // NewOdataClient creates a new instance of OdataClient with the specified values.
-func NewOdataClient(con *Connection) OdataClient {
-	return OdataClient{con: con}
+func NewOdataClient(con *Connection) *OdataClient {
+	return &OdataClient{con: con}
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client OdataClient) Pipeline() azcore.Pipeline {
+func (client *OdataClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // GetWithFilter - Specify filter parameter with value '$filter=id gt 5 and name eq 'foo'&$orderby=id&$top=10'
-func (client OdataClient) GetWithFilter(ctx context.Context, options *OdataGetWithFilterOptions) (*http.Response, error) {
+func (client *OdataClient) GetWithFilter(ctx context.Context, options *OdataGetWithFilterOptions) (*http.Response, error) {
 	req, err := client.getWithFilterCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -47,7 +47,7 @@ func (client OdataClient) GetWithFilter(ctx context.Context, options *OdataGetWi
 }
 
 // getWithFilterCreateRequest creates the GetWithFilter request.
-func (client OdataClient) getWithFilterCreateRequest(ctx context.Context, options *OdataGetWithFilterOptions) (*azcore.Request, error) {
+func (client *OdataClient) getWithFilterCreateRequest(ctx context.Context, options *OdataGetWithFilterOptions) (*azcore.Request, error) {
 	urlPath := "/azurespecials/odata/filter"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -70,7 +70,7 @@ func (client OdataClient) getWithFilterCreateRequest(ctx context.Context, option
 }
 
 // getWithFilterHandleError handles the GetWithFilter error response.
-func (client OdataClient) getWithFilterHandleError(resp *azcore.Response) error {
+func (client *OdataClient) getWithFilterHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

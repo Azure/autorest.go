@@ -21,17 +21,17 @@ type OperationsClient struct {
 }
 
 // NewOperationsClient creates a new instance of OperationsClient with the specified values.
-func NewOperationsClient(con *armcore.Connection) OperationsClient {
-	return OperationsClient{con: con}
+func NewOperationsClient(con *armcore.Connection) *OperationsClient {
+	return &OperationsClient{con: con}
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client OperationsClient) Pipeline() azcore.Pipeline {
+func (client *OperationsClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // List - Lists all of the available Network Rest API operations.
-func (client OperationsClient) List(options *OperationsListOptions) OperationListResultPager {
+func (client *OperationsClient) List(options *OperationsListOptions) OperationListResultPager {
 	return &operationListResultPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
@@ -47,7 +47,7 @@ func (client OperationsClient) List(options *OperationsListOptions) OperationLis
 }
 
 // listCreateRequest creates the List request.
-func (client OperationsClient) listCreateRequest(ctx context.Context, options *OperationsListOptions) (*azcore.Request, error) {
+func (client *OperationsClient) listCreateRequest(ctx context.Context, options *OperationsListOptions) (*azcore.Request, error) {
 	urlPath := "/providers/Microsoft.Network/operations"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -62,7 +62,7 @@ func (client OperationsClient) listCreateRequest(ctx context.Context, options *O
 }
 
 // listHandleResponse handles the List response.
-func (client OperationsClient) listHandleResponse(resp *azcore.Response) (OperationListResultResponse, error) {
+func (client *OperationsClient) listHandleResponse(resp *azcore.Response) (OperationListResultResponse, error) {
 	var val *OperationListResult
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return OperationListResultResponse{}, err
@@ -71,7 +71,7 @@ func (client OperationsClient) listHandleResponse(resp *azcore.Response) (Operat
 }
 
 // listHandleError handles the List error response.
-func (client OperationsClient) listHandleError(resp *azcore.Response) error {
+func (client *OperationsClient) listHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

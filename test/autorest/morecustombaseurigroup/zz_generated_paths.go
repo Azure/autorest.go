@@ -23,17 +23,17 @@ type PathsClient struct {
 }
 
 // NewPathsClient creates a new instance of PathsClient with the specified values.
-func NewPathsClient(con *Connection, subscriptionID string) PathsClient {
-	return PathsClient{con: con, subscriptionID: subscriptionID}
+func NewPathsClient(con *Connection, subscriptionID string) *PathsClient {
+	return &PathsClient{con: con, subscriptionID: subscriptionID}
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client PathsClient) Pipeline() azcore.Pipeline {
+func (client *PathsClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // GetEmpty - Get a 200 to test a valid base uri
-func (client PathsClient) GetEmpty(ctx context.Context, vault string, secret string, keyName string, options *PathsGetEmptyOptions) (*http.Response, error) {
+func (client *PathsClient) GetEmpty(ctx context.Context, vault string, secret string, keyName string, options *PathsGetEmptyOptions) (*http.Response, error) {
 	req, err := client.getEmptyCreateRequest(ctx, vault, secret, keyName, options)
 	if err != nil {
 		return nil, err
@@ -49,7 +49,7 @@ func (client PathsClient) GetEmpty(ctx context.Context, vault string, secret str
 }
 
 // getEmptyCreateRequest creates the GetEmpty request.
-func (client PathsClient) getEmptyCreateRequest(ctx context.Context, vault string, secret string, keyName string, options *PathsGetEmptyOptions) (*azcore.Request, error) {
+func (client *PathsClient) getEmptyCreateRequest(ctx context.Context, vault string, secret string, keyName string, options *PathsGetEmptyOptions) (*azcore.Request, error) {
 	host := "{vault}{secret}{dnsSuffix}"
 	host = strings.ReplaceAll(host, "{dnsSuffix}", client.con.DnsSuffix())
 	host = strings.ReplaceAll(host, "{vault}", vault)
@@ -72,7 +72,7 @@ func (client PathsClient) getEmptyCreateRequest(ctx context.Context, vault strin
 }
 
 // getEmptyHandleError handles the GetEmpty error response.
-func (client PathsClient) getEmptyHandleError(resp *azcore.Response) error {
+func (client *PathsClient) getEmptyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

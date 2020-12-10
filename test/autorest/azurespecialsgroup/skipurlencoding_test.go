@@ -10,7 +10,7 @@ import (
 	"testing"
 )
 
-func newSkipURLEncodingClient() SkipURLEncodingClient {
+func newSkipURLEncodingClient() *SkipURLEncodingClient {
 	return NewSkipURLEncodingClient(NewDefaultConnection(nil))
 }
 

@@ -25,17 +25,17 @@ type GalleryImagesClient struct {
 }
 
 // NewGalleryImagesClient creates a new instance of GalleryImagesClient with the specified values.
-func NewGalleryImagesClient(con *armcore.Connection, subscriptionID string) GalleryImagesClient {
-	return GalleryImagesClient{con: con, subscriptionID: subscriptionID}
+func NewGalleryImagesClient(con *armcore.Connection, subscriptionID string) *GalleryImagesClient {
+	return &GalleryImagesClient{con: con, subscriptionID: subscriptionID}
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client GalleryImagesClient) Pipeline() azcore.Pipeline {
+func (client *GalleryImagesClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // BeginCreateOrUpdate - Create or update a gallery Image Definition.
-func (client GalleryImagesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImage GalleryImage, options *GalleryImagesBeginCreateOrUpdateOptions) (GalleryImagePollerResponse, error) {
+func (client *GalleryImagesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImage GalleryImage, options *GalleryImagesBeginCreateOrUpdateOptions) (GalleryImagePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, galleryName, galleryImageName, galleryImage, options)
 	if err != nil {
 		return GalleryImagePollerResponse{}, err
@@ -60,7 +60,7 @@ func (client GalleryImagesClient) BeginCreateOrUpdate(ctx context.Context, resou
 
 // ResumeCreateOrUpdate creates a new GalleryImagePoller from the specified resume token.
 // token - The value must come from a previous call to GalleryImagePoller.ResumeToken().
-func (client GalleryImagesClient) ResumeCreateOrUpdate(token string) (GalleryImagePoller, error) {
+func (client *GalleryImagesClient) ResumeCreateOrUpdate(token string) (GalleryImagePoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("GalleryImagesClient.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
@@ -72,7 +72,7 @@ func (client GalleryImagesClient) ResumeCreateOrUpdate(token string) (GalleryIma
 }
 
 // CreateOrUpdate - Create or update a gallery Image Definition.
-func (client GalleryImagesClient) createOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImage GalleryImage, options *GalleryImagesBeginCreateOrUpdateOptions) (*azcore.Response, error) {
+func (client *GalleryImagesClient) createOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImage GalleryImage, options *GalleryImagesBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, galleryName, galleryImageName, galleryImage, options)
 	if err != nil {
 		return nil, err
@@ -88,7 +88,7 @@ func (client GalleryImagesClient) createOrUpdate(ctx context.Context, resourceGr
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client GalleryImagesClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImage GalleryImage, options *GalleryImagesBeginCreateOrUpdateOptions) (*azcore.Request, error) {
+func (client *GalleryImagesClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImage GalleryImage, options *GalleryImagesBeginCreateOrUpdateOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/images/{galleryImageName}"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
@@ -107,7 +107,7 @@ func (client GalleryImagesClient) createOrUpdateCreateRequest(ctx context.Contex
 }
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client GalleryImagesClient) createOrUpdateHandleResponse(resp *azcore.Response) (GalleryImageResponse, error) {
+func (client *GalleryImagesClient) createOrUpdateHandleResponse(resp *azcore.Response) (GalleryImageResponse, error) {
 	var val *GalleryImage
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return GalleryImageResponse{}, err
@@ -116,7 +116,7 @@ func (client GalleryImagesClient) createOrUpdateHandleResponse(resp *azcore.Resp
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client GalleryImagesClient) createOrUpdateHandleError(resp *azcore.Response) error {
+func (client *GalleryImagesClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -125,7 +125,7 @@ func (client GalleryImagesClient) createOrUpdateHandleError(resp *azcore.Respons
 }
 
 // BeginDelete - Delete a gallery image.
-func (client GalleryImagesClient) BeginDelete(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, options *GalleryImagesBeginDeleteOptions) (HTTPPollerResponse, error) {
+func (client *GalleryImagesClient) BeginDelete(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, options *GalleryImagesBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.delete(ctx, resourceGroupName, galleryName, galleryImageName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
@@ -150,7 +150,7 @@ func (client GalleryImagesClient) BeginDelete(ctx context.Context, resourceGroup
 
 // ResumeDelete creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client GalleryImagesClient) ResumeDelete(token string) (HTTPPoller, error) {
+func (client *GalleryImagesClient) ResumeDelete(token string) (HTTPPoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("GalleryImagesClient.Delete", token, client.deleteHandleError)
 	if err != nil {
 		return nil, err
@@ -162,7 +162,7 @@ func (client GalleryImagesClient) ResumeDelete(token string) (HTTPPoller, error)
 }
 
 // Delete - Delete a gallery image.
-func (client GalleryImagesClient) delete(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, options *GalleryImagesBeginDeleteOptions) (*azcore.Response, error) {
+func (client *GalleryImagesClient) delete(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, options *GalleryImagesBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, galleryName, galleryImageName, options)
 	if err != nil {
 		return nil, err
@@ -178,7 +178,7 @@ func (client GalleryImagesClient) delete(ctx context.Context, resourceGroupName 
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client GalleryImagesClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, options *GalleryImagesBeginDeleteOptions) (*azcore.Request, error) {
+func (client *GalleryImagesClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, options *GalleryImagesBeginDeleteOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/images/{galleryImageName}"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
@@ -197,7 +197,7 @@ func (client GalleryImagesClient) deleteCreateRequest(ctx context.Context, resou
 }
 
 // deleteHandleError handles the Delete error response.
-func (client GalleryImagesClient) deleteHandleError(resp *azcore.Response) error {
+func (client *GalleryImagesClient) deleteHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -206,7 +206,7 @@ func (client GalleryImagesClient) deleteHandleError(resp *azcore.Response) error
 }
 
 // Get - Retrieves information about a gallery Image Definition.
-func (client GalleryImagesClient) Get(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, options *GalleryImagesGetOptions) (GalleryImageResponse, error) {
+func (client *GalleryImagesClient) Get(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, options *GalleryImagesGetOptions) (GalleryImageResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, galleryName, galleryImageName, options)
 	if err != nil {
 		return GalleryImageResponse{}, err
@@ -222,7 +222,7 @@ func (client GalleryImagesClient) Get(ctx context.Context, resourceGroupName str
 }
 
 // getCreateRequest creates the Get request.
-func (client GalleryImagesClient) getCreateRequest(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, options *GalleryImagesGetOptions) (*azcore.Request, error) {
+func (client *GalleryImagesClient) getCreateRequest(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, options *GalleryImagesGetOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/images/{galleryImageName}"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
@@ -241,7 +241,7 @@ func (client GalleryImagesClient) getCreateRequest(ctx context.Context, resource
 }
 
 // getHandleResponse handles the Get response.
-func (client GalleryImagesClient) getHandleResponse(resp *azcore.Response) (GalleryImageResponse, error) {
+func (client *GalleryImagesClient) getHandleResponse(resp *azcore.Response) (GalleryImageResponse, error) {
 	var val *GalleryImage
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return GalleryImageResponse{}, err
@@ -250,7 +250,7 @@ func (client GalleryImagesClient) getHandleResponse(resp *azcore.Response) (Gall
 }
 
 // getHandleError handles the Get error response.
-func (client GalleryImagesClient) getHandleError(resp *azcore.Response) error {
+func (client *GalleryImagesClient) getHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -259,7 +259,7 @@ func (client GalleryImagesClient) getHandleError(resp *azcore.Response) error {
 }
 
 // ListByGallery - List gallery Image Definitions in a gallery.
-func (client GalleryImagesClient) ListByGallery(resourceGroupName string, galleryName string, options *GalleryImagesListByGalleryOptions) GalleryImageListPager {
+func (client *GalleryImagesClient) ListByGallery(resourceGroupName string, galleryName string, options *GalleryImagesListByGalleryOptions) GalleryImageListPager {
 	return &galleryImageListPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
@@ -275,7 +275,7 @@ func (client GalleryImagesClient) ListByGallery(resourceGroupName string, galler
 }
 
 // listByGalleryCreateRequest creates the ListByGallery request.
-func (client GalleryImagesClient) listByGalleryCreateRequest(ctx context.Context, resourceGroupName string, galleryName string, options *GalleryImagesListByGalleryOptions) (*azcore.Request, error) {
+func (client *GalleryImagesClient) listByGalleryCreateRequest(ctx context.Context, resourceGroupName string, galleryName string, options *GalleryImagesListByGalleryOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/images"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
@@ -293,7 +293,7 @@ func (client GalleryImagesClient) listByGalleryCreateRequest(ctx context.Context
 }
 
 // listByGalleryHandleResponse handles the ListByGallery response.
-func (client GalleryImagesClient) listByGalleryHandleResponse(resp *azcore.Response) (GalleryImageListResponse, error) {
+func (client *GalleryImagesClient) listByGalleryHandleResponse(resp *azcore.Response) (GalleryImageListResponse, error) {
 	var val *GalleryImageList
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return GalleryImageListResponse{}, err
@@ -302,7 +302,7 @@ func (client GalleryImagesClient) listByGalleryHandleResponse(resp *azcore.Respo
 }
 
 // listByGalleryHandleError handles the ListByGallery error response.
-func (client GalleryImagesClient) listByGalleryHandleError(resp *azcore.Response) error {
+func (client *GalleryImagesClient) listByGalleryHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -311,7 +311,7 @@ func (client GalleryImagesClient) listByGalleryHandleError(resp *azcore.Response
 }
 
 // BeginUpdate - Update a gallery Image Definition.
-func (client GalleryImagesClient) BeginUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImage GalleryImageUpdate, options *GalleryImagesBeginUpdateOptions) (GalleryImagePollerResponse, error) {
+func (client *GalleryImagesClient) BeginUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImage GalleryImageUpdate, options *GalleryImagesBeginUpdateOptions) (GalleryImagePollerResponse, error) {
 	resp, err := client.update(ctx, resourceGroupName, galleryName, galleryImageName, galleryImage, options)
 	if err != nil {
 		return GalleryImagePollerResponse{}, err
@@ -336,7 +336,7 @@ func (client GalleryImagesClient) BeginUpdate(ctx context.Context, resourceGroup
 
 // ResumeUpdate creates a new GalleryImagePoller from the specified resume token.
 // token - The value must come from a previous call to GalleryImagePoller.ResumeToken().
-func (client GalleryImagesClient) ResumeUpdate(token string) (GalleryImagePoller, error) {
+func (client *GalleryImagesClient) ResumeUpdate(token string) (GalleryImagePoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("GalleryImagesClient.Update", token, client.updateHandleError)
 	if err != nil {
 		return nil, err
@@ -348,7 +348,7 @@ func (client GalleryImagesClient) ResumeUpdate(token string) (GalleryImagePoller
 }
 
 // Update - Update a gallery Image Definition.
-func (client GalleryImagesClient) update(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImage GalleryImageUpdate, options *GalleryImagesBeginUpdateOptions) (*azcore.Response, error) {
+func (client *GalleryImagesClient) update(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImage GalleryImageUpdate, options *GalleryImagesBeginUpdateOptions) (*azcore.Response, error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, galleryName, galleryImageName, galleryImage, options)
 	if err != nil {
 		return nil, err
@@ -364,7 +364,7 @@ func (client GalleryImagesClient) update(ctx context.Context, resourceGroupName 
 }
 
 // updateCreateRequest creates the Update request.
-func (client GalleryImagesClient) updateCreateRequest(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImage GalleryImageUpdate, options *GalleryImagesBeginUpdateOptions) (*azcore.Request, error) {
+func (client *GalleryImagesClient) updateCreateRequest(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImage GalleryImageUpdate, options *GalleryImagesBeginUpdateOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/images/{galleryImageName}"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
@@ -383,7 +383,7 @@ func (client GalleryImagesClient) updateCreateRequest(ctx context.Context, resou
 }
 
 // updateHandleResponse handles the Update response.
-func (client GalleryImagesClient) updateHandleResponse(resp *azcore.Response) (GalleryImageResponse, error) {
+func (client *GalleryImagesClient) updateHandleResponse(resp *azcore.Response) (GalleryImageResponse, error) {
 	var val *GalleryImage
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return GalleryImageResponse{}, err
@@ -392,7 +392,7 @@ func (client GalleryImagesClient) updateHandleResponse(resp *azcore.Response) (G
 }
 
 // updateHandleError handles the Update error response.
-func (client GalleryImagesClient) updateHandleError(resp *azcore.Response) error {
+func (client *GalleryImagesClient) updateHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

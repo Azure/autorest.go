@@ -11,7 +11,7 @@ import (
 	"time"
 )
 
-func newPathsClient() PathsClient {
+func newPathsClient() *PathsClient {
 	return NewPathsClient(NewDefaultConnection(nil))
 }
 

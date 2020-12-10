@@ -10,24 +10,24 @@ import (
 	"testing"
 	"time"
 
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
-func newHeaderClient() HeaderClient {
+func newHeaderClient() *HeaderClient {
 	return NewHeaderClient(NewDefaultConnection(nil))
 }
 
-// func TestHeaderCustomRequestID(t *testing.T) {
-// 	client := newHeaderClient()
-// 	result, err := client.CustomRequestID(context.Background(), nil)
-// 	if err != nil {
-// 		t.Fatalf("CustomRequestID: %v", err)
-// 	}
-// 	expected := &HeaderCustomRequestIDResponse{
-// 		StatusCode: http.StatusOK,
-// 	}
-// 	helpers.DeepEqualOrFatal(t, result, expected)
-// }
+func TestHeaderCustomRequestID(t *testing.T) {
+	client := newHeaderClient()
+	header := http.Header{}
+	header.Set("x-ms-client-request-id", "9C4D50EE-2D56-4CD3-8152-34347DC9F2B0")
+	result, err := client.CustomRequestID(azcore.WithHTTPHeader(context.Background(), header), nil)
+	if err != nil {
+		t.Fatalf("CustomRequestID: %v", err)
+	}
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
+}
 
 func TestHeaderParamBool(t *testing.T) {
 	client := newHeaderClient()

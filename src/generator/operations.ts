@@ -93,13 +93,13 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
         }
       }
       text += `// ${clientCtor} creates a new instance of ${clientName} with the specified values.\n`;
-      text += `func ${clientCtor}(${methodParams.join(', ')}) ${clientName} {\n`;
-      text += `\treturn ${clientName}{${connectionLiterals.join(', ')}}\n`;
+      text += `func ${clientCtor}(${methodParams.join(', ')}) *${clientName} {\n`;
+      text += `\treturn &${clientName}{${connectionLiterals.join(', ')}}\n`;
       text += '}\n\n';
     }
     // operation client Pipeline method
     text += '// Pipeline returns the pipeline associated with this client.\n';
-    text += `func (client ${clientName}) Pipeline() azcore.Pipeline {\n`;
+    text += `func (client *${clientName}) Pipeline() azcore.Pipeline {\n`;
     text += '\treturn client.con.Pipeline()\n';
     text += '}\n\n';
     // add operations content last
@@ -258,7 +258,7 @@ function generateOperation(op: Operation, imports: ImportManager): string {
   if (isLROOperation(op)) {
     opName = opName[0].toLocaleLowerCase() + opName.substr(1);
   }
-  text += `func (client ${clientName}) ${opName}(${params}) (${returns.join(', ')}) {\n`;
+  text += `func (client *${clientName}) ${opName}(${params}) (${returns.join(', ')}) {\n`;
   const reqParams = getCreateRequestParameters(op);
   const statusCodes = getStatusCodes(op);
   if (isPageableOperation(op) && !isLROOperation(op)) {
@@ -341,7 +341,7 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
   }
   const returns = ['*azcore.Request', 'error'];
   let text = `${comment(name, '// ')} creates the ${info.name} request.\n`;
-  text += `func (client ${op.language.go!.clientName}) ${name}(${getCreateRequestParametersSig(op)}) (${returns.join(', ')}) {\n`;
+  text += `func (client *${op.language.go!.clientName}) ${name}(${getCreateRequestParametersSig(op)}) (${returns.join(', ')}) {\n`;
   // default to host on the connection
   let hostParam = 'client.con.Endpoint()';
   if (codeModel.language.go!.complexHostParams) {
@@ -735,7 +735,7 @@ function createProtocolResponse(op: Operation, imports: ImportManager): string {
   const name = info.protocolNaming.responseMethod;
   const clientName = op.language.go!.clientName;
   let text = `${comment(name, '// ')} handles the ${info.name} response.\n`;
-  text += `func (client ${clientName}) ${name}(resp *azcore.Response) (${generateReturnsInfo(op, 'handler').join(', ')}) {\n`;
+  text += `func (client *${clientName}) ${name}(resp *azcore.Response) (${generateReturnsInfo(op, 'handler').join(', ')}) {\n`;
   if (!isMultiRespOperation(op)) {
     text += generateResponseUnmarshaller(op, op.responses![0], imports);
   } else {
@@ -757,7 +757,7 @@ function createProtocolErrHandler(op: Operation, imports: ImportManager): string
   const info = <OperationNaming>op.language.go!;
   const name = info.protocolNaming.errorMethod;
   let text = `${comment(name, '// ')} handles the ${info.name} error response.\n`;
-  text += `func (client ${op.language.go!.clientName}) ${name}(resp *azcore.Response) error {\n`;
+  text += `func (client *${op.language.go!.clientName}) ${name}(resp *azcore.Response) error {\n`;
   // define a generic error for when there are no exceptions or no error schema
   const generateGenericError = function () {
     imports.add('errors');
@@ -981,7 +981,7 @@ function generateARMLROBeginMethod(op: Operation, imports: ImportManager): strin
     text += `${comment(`Begin${op.language.go!.name} - ${op.language.go!.description}`, "//", undefined, commentLength)}\n`;
   }
   const zeroResp = getZeroReturnValue(op, 'api');
-  text += `func (client ${clientName}) Begin${op.language.go!.name}(${params}) (${returns.join(', ')}) {\n`;
+  text += `func (client *${clientName}) Begin${op.language.go!.name}(${params}) (${returns.join(', ')}) {\n`;
   let opName = op.language.go!.name;
   opName = opName[0].toLocaleLowerCase() + opName.substr(1);
   text += `\tresp, err := client.${opName}(${getCreateRequestParameters(op)})\n`;
@@ -1051,7 +1051,7 @@ function generateARMLROResumeMethod(op: Operation): string {
   const clientName = op.language.go!.clientName;
   let text = `// Resume${op.language.go!.name} creates a new ${op.language.go!.pollerType.name} from the specified resume token.\n`;
   text += `// token - The value must come from a previous call to ${op.language.go!.pollerType.name}.ResumeToken().\n`;
-  text += `func (client ${clientName}) Resume${op.language.go!.name}(token string) (${op.language.go!.pollerType.name}, error) {\n`;
+  text += `func (client *${clientName}) Resume${op.language.go!.name}(token string) (${op.language.go!.pollerType.name}, error) {\n`;
   text += `\tpt, err := armcore.NewPollerFromResumeToken("${clientName}.${op.language.go!.name}", token, client.${info.protocolNaming.errorMethod})\n`;
   text += '\tif err != nil {\n';
   text += '\t\treturn nil, err\n';

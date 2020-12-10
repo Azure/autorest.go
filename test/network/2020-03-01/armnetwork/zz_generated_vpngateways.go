@@ -25,17 +25,17 @@ type VpnGatewaysClient struct {
 }
 
 // NewVpnGatewaysClient creates a new instance of VpnGatewaysClient with the specified values.
-func NewVpnGatewaysClient(con *armcore.Connection, subscriptionID string) VpnGatewaysClient {
-	return VpnGatewaysClient{con: con, subscriptionID: subscriptionID}
+func NewVpnGatewaysClient(con *armcore.Connection, subscriptionID string) *VpnGatewaysClient {
+	return &VpnGatewaysClient{con: con, subscriptionID: subscriptionID}
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client VpnGatewaysClient) Pipeline() azcore.Pipeline {
+func (client *VpnGatewaysClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // BeginCreateOrUpdate - Creates a virtual wan vpn gateway if it doesn't exist else updates the existing gateway.
-func (client VpnGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, vpnGatewayParameters VpnGateway, options *VpnGatewaysBeginCreateOrUpdateOptions) (VpnGatewayPollerResponse, error) {
+func (client *VpnGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, vpnGatewayParameters VpnGateway, options *VpnGatewaysBeginCreateOrUpdateOptions) (VpnGatewayPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, gatewayName, vpnGatewayParameters, options)
 	if err != nil {
 		return VpnGatewayPollerResponse{}, err
@@ -60,7 +60,7 @@ func (client VpnGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourc
 
 // ResumeCreateOrUpdate creates a new VpnGatewayPoller from the specified resume token.
 // token - The value must come from a previous call to VpnGatewayPoller.ResumeToken().
-func (client VpnGatewaysClient) ResumeCreateOrUpdate(token string) (VpnGatewayPoller, error) {
+func (client *VpnGatewaysClient) ResumeCreateOrUpdate(token string) (VpnGatewayPoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("VpnGatewaysClient.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
@@ -72,7 +72,7 @@ func (client VpnGatewaysClient) ResumeCreateOrUpdate(token string) (VpnGatewayPo
 }
 
 // CreateOrUpdate - Creates a virtual wan vpn gateway if it doesn't exist else updates the existing gateway.
-func (client VpnGatewaysClient) createOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, vpnGatewayParameters VpnGateway, options *VpnGatewaysBeginCreateOrUpdateOptions) (*azcore.Response, error) {
+func (client *VpnGatewaysClient) createOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, vpnGatewayParameters VpnGateway, options *VpnGatewaysBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, gatewayName, vpnGatewayParameters, options)
 	if err != nil {
 		return nil, err
@@ -88,7 +88,7 @@ func (client VpnGatewaysClient) createOrUpdate(ctx context.Context, resourceGrou
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client VpnGatewaysClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, gatewayName string, vpnGatewayParameters VpnGateway, options *VpnGatewaysBeginCreateOrUpdateOptions) (*azcore.Request, error) {
+func (client *VpnGatewaysClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, gatewayName string, vpnGatewayParameters VpnGateway, options *VpnGatewaysBeginCreateOrUpdateOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
@@ -106,7 +106,7 @@ func (client VpnGatewaysClient) createOrUpdateCreateRequest(ctx context.Context,
 }
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client VpnGatewaysClient) createOrUpdateHandleResponse(resp *azcore.Response) (VpnGatewayResponse, error) {
+func (client *VpnGatewaysClient) createOrUpdateHandleResponse(resp *azcore.Response) (VpnGatewayResponse, error) {
 	var val *VpnGateway
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return VpnGatewayResponse{}, err
@@ -115,7 +115,7 @@ func (client VpnGatewaysClient) createOrUpdateHandleResponse(resp *azcore.Respon
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client VpnGatewaysClient) createOrUpdateHandleError(resp *azcore.Response) error {
+func (client *VpnGatewaysClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -124,7 +124,7 @@ func (client VpnGatewaysClient) createOrUpdateHandleError(resp *azcore.Response)
 }
 
 // BeginDelete - Deletes a virtual wan vpn gateway.
-func (client VpnGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, gatewayName string, options *VpnGatewaysBeginDeleteOptions) (HTTPPollerResponse, error) {
+func (client *VpnGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, gatewayName string, options *VpnGatewaysBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.delete(ctx, resourceGroupName, gatewayName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
@@ -149,7 +149,7 @@ func (client VpnGatewaysClient) BeginDelete(ctx context.Context, resourceGroupNa
 
 // ResumeDelete creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client VpnGatewaysClient) ResumeDelete(token string) (HTTPPoller, error) {
+func (client *VpnGatewaysClient) ResumeDelete(token string) (HTTPPoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("VpnGatewaysClient.Delete", token, client.deleteHandleError)
 	if err != nil {
 		return nil, err
@@ -161,7 +161,7 @@ func (client VpnGatewaysClient) ResumeDelete(token string) (HTTPPoller, error) {
 }
 
 // Delete - Deletes a virtual wan vpn gateway.
-func (client VpnGatewaysClient) delete(ctx context.Context, resourceGroupName string, gatewayName string, options *VpnGatewaysBeginDeleteOptions) (*azcore.Response, error) {
+func (client *VpnGatewaysClient) delete(ctx context.Context, resourceGroupName string, gatewayName string, options *VpnGatewaysBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, gatewayName, options)
 	if err != nil {
 		return nil, err
@@ -177,7 +177,7 @@ func (client VpnGatewaysClient) delete(ctx context.Context, resourceGroupName st
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client VpnGatewaysClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, gatewayName string, options *VpnGatewaysBeginDeleteOptions) (*azcore.Request, error) {
+func (client *VpnGatewaysClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, gatewayName string, options *VpnGatewaysBeginDeleteOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
@@ -195,7 +195,7 @@ func (client VpnGatewaysClient) deleteCreateRequest(ctx context.Context, resourc
 }
 
 // deleteHandleError handles the Delete error response.
-func (client VpnGatewaysClient) deleteHandleError(resp *azcore.Response) error {
+func (client *VpnGatewaysClient) deleteHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -204,7 +204,7 @@ func (client VpnGatewaysClient) deleteHandleError(resp *azcore.Response) error {
 }
 
 // Get - Retrieves the details of a virtual wan vpn gateway.
-func (client VpnGatewaysClient) Get(ctx context.Context, resourceGroupName string, gatewayName string, options *VpnGatewaysGetOptions) (VpnGatewayResponse, error) {
+func (client *VpnGatewaysClient) Get(ctx context.Context, resourceGroupName string, gatewayName string, options *VpnGatewaysGetOptions) (VpnGatewayResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, gatewayName, options)
 	if err != nil {
 		return VpnGatewayResponse{}, err
@@ -220,7 +220,7 @@ func (client VpnGatewaysClient) Get(ctx context.Context, resourceGroupName strin
 }
 
 // getCreateRequest creates the Get request.
-func (client VpnGatewaysClient) getCreateRequest(ctx context.Context, resourceGroupName string, gatewayName string, options *VpnGatewaysGetOptions) (*azcore.Request, error) {
+func (client *VpnGatewaysClient) getCreateRequest(ctx context.Context, resourceGroupName string, gatewayName string, options *VpnGatewaysGetOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
@@ -238,7 +238,7 @@ func (client VpnGatewaysClient) getCreateRequest(ctx context.Context, resourceGr
 }
 
 // getHandleResponse handles the Get response.
-func (client VpnGatewaysClient) getHandleResponse(resp *azcore.Response) (VpnGatewayResponse, error) {
+func (client *VpnGatewaysClient) getHandleResponse(resp *azcore.Response) (VpnGatewayResponse, error) {
 	var val *VpnGateway
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return VpnGatewayResponse{}, err
@@ -247,7 +247,7 @@ func (client VpnGatewaysClient) getHandleResponse(resp *azcore.Response) (VpnGat
 }
 
 // getHandleError handles the Get error response.
-func (client VpnGatewaysClient) getHandleError(resp *azcore.Response) error {
+func (client *VpnGatewaysClient) getHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -256,7 +256,7 @@ func (client VpnGatewaysClient) getHandleError(resp *azcore.Response) error {
 }
 
 // List - Lists all the VpnGateways in a subscription.
-func (client VpnGatewaysClient) List(options *VpnGatewaysListOptions) ListVpnGatewaysResultPager {
+func (client *VpnGatewaysClient) List(options *VpnGatewaysListOptions) ListVpnGatewaysResultPager {
 	return &listVpnGatewaysResultPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
@@ -272,7 +272,7 @@ func (client VpnGatewaysClient) List(options *VpnGatewaysListOptions) ListVpnGat
 }
 
 // listCreateRequest creates the List request.
-func (client VpnGatewaysClient) listCreateRequest(ctx context.Context, options *VpnGatewaysListOptions) (*azcore.Request, error) {
+func (client *VpnGatewaysClient) listCreateRequest(ctx context.Context, options *VpnGatewaysListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/vpnGateways"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -288,7 +288,7 @@ func (client VpnGatewaysClient) listCreateRequest(ctx context.Context, options *
 }
 
 // listHandleResponse handles the List response.
-func (client VpnGatewaysClient) listHandleResponse(resp *azcore.Response) (ListVpnGatewaysResultResponse, error) {
+func (client *VpnGatewaysClient) listHandleResponse(resp *azcore.Response) (ListVpnGatewaysResultResponse, error) {
 	var val *ListVpnGatewaysResult
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return ListVpnGatewaysResultResponse{}, err
@@ -297,7 +297,7 @@ func (client VpnGatewaysClient) listHandleResponse(resp *azcore.Response) (ListV
 }
 
 // listHandleError handles the List error response.
-func (client VpnGatewaysClient) listHandleError(resp *azcore.Response) error {
+func (client *VpnGatewaysClient) listHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -306,7 +306,7 @@ func (client VpnGatewaysClient) listHandleError(resp *azcore.Response) error {
 }
 
 // ListByResourceGroup - Lists all the VpnGateways in a resource group.
-func (client VpnGatewaysClient) ListByResourceGroup(resourceGroupName string, options *VpnGatewaysListByResourceGroupOptions) ListVpnGatewaysResultPager {
+func (client *VpnGatewaysClient) ListByResourceGroup(resourceGroupName string, options *VpnGatewaysListByResourceGroupOptions) ListVpnGatewaysResultPager {
 	return &listVpnGatewaysResultPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
@@ -322,7 +322,7 @@ func (client VpnGatewaysClient) ListByResourceGroup(resourceGroupName string, op
 }
 
 // listByResourceGroupCreateRequest creates the ListByResourceGroup request.
-func (client VpnGatewaysClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, options *VpnGatewaysListByResourceGroupOptions) (*azcore.Request, error) {
+func (client *VpnGatewaysClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, options *VpnGatewaysListByResourceGroupOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
@@ -339,7 +339,7 @@ func (client VpnGatewaysClient) listByResourceGroupCreateRequest(ctx context.Con
 }
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
-func (client VpnGatewaysClient) listByResourceGroupHandleResponse(resp *azcore.Response) (ListVpnGatewaysResultResponse, error) {
+func (client *VpnGatewaysClient) listByResourceGroupHandleResponse(resp *azcore.Response) (ListVpnGatewaysResultResponse, error) {
 	var val *ListVpnGatewaysResult
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return ListVpnGatewaysResultResponse{}, err
@@ -348,7 +348,7 @@ func (client VpnGatewaysClient) listByResourceGroupHandleResponse(resp *azcore.R
 }
 
 // listByResourceGroupHandleError handles the ListByResourceGroup error response.
-func (client VpnGatewaysClient) listByResourceGroupHandleError(resp *azcore.Response) error {
+func (client *VpnGatewaysClient) listByResourceGroupHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -357,7 +357,7 @@ func (client VpnGatewaysClient) listByResourceGroupHandleError(resp *azcore.Resp
 }
 
 // BeginReset - Resets the primary of the vpn gateway in the specified resource group.
-func (client VpnGatewaysClient) BeginReset(ctx context.Context, resourceGroupName string, gatewayName string, options *VpnGatewaysBeginResetOptions) (VpnGatewayPollerResponse, error) {
+func (client *VpnGatewaysClient) BeginReset(ctx context.Context, resourceGroupName string, gatewayName string, options *VpnGatewaysBeginResetOptions) (VpnGatewayPollerResponse, error) {
 	resp, err := client.reset(ctx, resourceGroupName, gatewayName, options)
 	if err != nil {
 		return VpnGatewayPollerResponse{}, err
@@ -382,7 +382,7 @@ func (client VpnGatewaysClient) BeginReset(ctx context.Context, resourceGroupNam
 
 // ResumeReset creates a new VpnGatewayPoller from the specified resume token.
 // token - The value must come from a previous call to VpnGatewayPoller.ResumeToken().
-func (client VpnGatewaysClient) ResumeReset(token string) (VpnGatewayPoller, error) {
+func (client *VpnGatewaysClient) ResumeReset(token string) (VpnGatewayPoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("VpnGatewaysClient.Reset", token, client.resetHandleError)
 	if err != nil {
 		return nil, err
@@ -394,7 +394,7 @@ func (client VpnGatewaysClient) ResumeReset(token string) (VpnGatewayPoller, err
 }
 
 // Reset - Resets the primary of the vpn gateway in the specified resource group.
-func (client VpnGatewaysClient) reset(ctx context.Context, resourceGroupName string, gatewayName string, options *VpnGatewaysBeginResetOptions) (*azcore.Response, error) {
+func (client *VpnGatewaysClient) reset(ctx context.Context, resourceGroupName string, gatewayName string, options *VpnGatewaysBeginResetOptions) (*azcore.Response, error) {
 	req, err := client.resetCreateRequest(ctx, resourceGroupName, gatewayName, options)
 	if err != nil {
 		return nil, err
@@ -410,7 +410,7 @@ func (client VpnGatewaysClient) reset(ctx context.Context, resourceGroupName str
 }
 
 // resetCreateRequest creates the Reset request.
-func (client VpnGatewaysClient) resetCreateRequest(ctx context.Context, resourceGroupName string, gatewayName string, options *VpnGatewaysBeginResetOptions) (*azcore.Request, error) {
+func (client *VpnGatewaysClient) resetCreateRequest(ctx context.Context, resourceGroupName string, gatewayName string, options *VpnGatewaysBeginResetOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/reset"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{gatewayName}", url.PathEscape(gatewayName))
@@ -428,7 +428,7 @@ func (client VpnGatewaysClient) resetCreateRequest(ctx context.Context, resource
 }
 
 // resetHandleResponse handles the Reset response.
-func (client VpnGatewaysClient) resetHandleResponse(resp *azcore.Response) (VpnGatewayResponse, error) {
+func (client *VpnGatewaysClient) resetHandleResponse(resp *azcore.Response) (VpnGatewayResponse, error) {
 	var val *VpnGateway
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return VpnGatewayResponse{}, err
@@ -437,7 +437,7 @@ func (client VpnGatewaysClient) resetHandleResponse(resp *azcore.Response) (VpnG
 }
 
 // resetHandleError handles the Reset error response.
-func (client VpnGatewaysClient) resetHandleError(resp *azcore.Response) error {
+func (client *VpnGatewaysClient) resetHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -446,7 +446,7 @@ func (client VpnGatewaysClient) resetHandleError(resp *azcore.Response) error {
 }
 
 // UpdateTags - Updates virtual wan vpn gateway tags.
-func (client VpnGatewaysClient) UpdateTags(ctx context.Context, resourceGroupName string, gatewayName string, vpnGatewayParameters TagsObject, options *VpnGatewaysUpdateTagsOptions) (VpnGatewayResponse, error) {
+func (client *VpnGatewaysClient) UpdateTags(ctx context.Context, resourceGroupName string, gatewayName string, vpnGatewayParameters TagsObject, options *VpnGatewaysUpdateTagsOptions) (VpnGatewayResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, gatewayName, vpnGatewayParameters, options)
 	if err != nil {
 		return VpnGatewayResponse{}, err
@@ -462,7 +462,7 @@ func (client VpnGatewaysClient) UpdateTags(ctx context.Context, resourceGroupNam
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.
-func (client VpnGatewaysClient) updateTagsCreateRequest(ctx context.Context, resourceGroupName string, gatewayName string, vpnGatewayParameters TagsObject, options *VpnGatewaysUpdateTagsOptions) (*azcore.Request, error) {
+func (client *VpnGatewaysClient) updateTagsCreateRequest(ctx context.Context, resourceGroupName string, gatewayName string, vpnGatewayParameters TagsObject, options *VpnGatewaysUpdateTagsOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
@@ -480,7 +480,7 @@ func (client VpnGatewaysClient) updateTagsCreateRequest(ctx context.Context, res
 }
 
 // updateTagsHandleResponse handles the UpdateTags response.
-func (client VpnGatewaysClient) updateTagsHandleResponse(resp *azcore.Response) (VpnGatewayResponse, error) {
+func (client *VpnGatewaysClient) updateTagsHandleResponse(resp *azcore.Response) (VpnGatewayResponse, error) {
 	var val *VpnGateway
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return VpnGatewayResponse{}, err
@@ -489,7 +489,7 @@ func (client VpnGatewaysClient) updateTagsHandleResponse(resp *azcore.Response) 
 }
 
 // updateTagsHandleError handles the UpdateTags error response.
-func (client VpnGatewaysClient) updateTagsHandleError(resp *azcore.Response) error {
+func (client *VpnGatewaysClient) updateTagsHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

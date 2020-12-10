@@ -12,7 +12,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 )
 
-func newXMSClientRequestIDClient() XMSClientRequestIDClient {
+func newXMSClientRequestIDClient() *XMSClientRequestIDClient {
 	return NewXMSClientRequestIDClient(NewDefaultConnection(nil))
 }
 

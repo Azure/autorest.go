@@ -28,17 +28,17 @@ type VirtualMachineExtensionImagesClient struct {
 }
 
 // NewVirtualMachineExtensionImagesClient creates a new instance of VirtualMachineExtensionImagesClient with the specified values.
-func NewVirtualMachineExtensionImagesClient(con *armcore.Connection, subscriptionID string) VirtualMachineExtensionImagesClient {
-	return VirtualMachineExtensionImagesClient{con: con, subscriptionID: subscriptionID}
+func NewVirtualMachineExtensionImagesClient(con *armcore.Connection, subscriptionID string) *VirtualMachineExtensionImagesClient {
+	return &VirtualMachineExtensionImagesClient{con: con, subscriptionID: subscriptionID}
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client VirtualMachineExtensionImagesClient) Pipeline() azcore.Pipeline {
+func (client *VirtualMachineExtensionImagesClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // Get - Gets a virtual machine extension image.
-func (client VirtualMachineExtensionImagesClient) Get(ctx context.Context, location string, publisherName string, typeParameter string, version string, options *VirtualMachineExtensionImagesGetOptions) (VirtualMachineExtensionImageResponse, error) {
+func (client *VirtualMachineExtensionImagesClient) Get(ctx context.Context, location string, publisherName string, typeParameter string, version string, options *VirtualMachineExtensionImagesGetOptions) (VirtualMachineExtensionImageResponse, error) {
 	req, err := client.getCreateRequest(ctx, location, publisherName, typeParameter, version, options)
 	if err != nil {
 		return VirtualMachineExtensionImageResponse{}, err
@@ -54,7 +54,7 @@ func (client VirtualMachineExtensionImagesClient) Get(ctx context.Context, locat
 }
 
 // getCreateRequest creates the Get request.
-func (client VirtualMachineExtensionImagesClient) getCreateRequest(ctx context.Context, location string, publisherName string, typeParameter string, version string, options *VirtualMachineExtensionImagesGetOptions) (*azcore.Request, error) {
+func (client *VirtualMachineExtensionImagesClient) getCreateRequest(ctx context.Context, location string, publisherName string, typeParameter string, version string, options *VirtualMachineExtensionImagesGetOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions/{version}"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
 	urlPath = strings.ReplaceAll(urlPath, "{publisherName}", url.PathEscape(publisherName))
@@ -74,7 +74,7 @@ func (client VirtualMachineExtensionImagesClient) getCreateRequest(ctx context.C
 }
 
 // getHandleResponse handles the Get response.
-func (client VirtualMachineExtensionImagesClient) getHandleResponse(resp *azcore.Response) (VirtualMachineExtensionImageResponse, error) {
+func (client *VirtualMachineExtensionImagesClient) getHandleResponse(resp *azcore.Response) (VirtualMachineExtensionImageResponse, error) {
 	var val *VirtualMachineExtensionImage
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return VirtualMachineExtensionImageResponse{}, err
@@ -83,7 +83,7 @@ func (client VirtualMachineExtensionImagesClient) getHandleResponse(resp *azcore
 }
 
 // getHandleError handles the Get error response.
-func (client VirtualMachineExtensionImagesClient) getHandleError(resp *azcore.Response) error {
+func (client *VirtualMachineExtensionImagesClient) getHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -95,7 +95,7 @@ func (client VirtualMachineExtensionImagesClient) getHandleError(resp *azcore.Re
 }
 
 // ListTypes - Gets a list of virtual machine extension image types.
-func (client VirtualMachineExtensionImagesClient) ListTypes(ctx context.Context, location string, publisherName string, options *VirtualMachineExtensionImagesListTypesOptions) (VirtualMachineExtensionImageArrayResponse, error) {
+func (client *VirtualMachineExtensionImagesClient) ListTypes(ctx context.Context, location string, publisherName string, options *VirtualMachineExtensionImagesListTypesOptions) (VirtualMachineExtensionImageArrayResponse, error) {
 	req, err := client.listTypesCreateRequest(ctx, location, publisherName, options)
 	if err != nil {
 		return VirtualMachineExtensionImageArrayResponse{}, err
@@ -111,7 +111,7 @@ func (client VirtualMachineExtensionImagesClient) ListTypes(ctx context.Context,
 }
 
 // listTypesCreateRequest creates the ListTypes request.
-func (client VirtualMachineExtensionImagesClient) listTypesCreateRequest(ctx context.Context, location string, publisherName string, options *VirtualMachineExtensionImagesListTypesOptions) (*azcore.Request, error) {
+func (client *VirtualMachineExtensionImagesClient) listTypesCreateRequest(ctx context.Context, location string, publisherName string, options *VirtualMachineExtensionImagesListTypesOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
 	urlPath = strings.ReplaceAll(urlPath, "{publisherName}", url.PathEscape(publisherName))
@@ -129,7 +129,7 @@ func (client VirtualMachineExtensionImagesClient) listTypesCreateRequest(ctx con
 }
 
 // listTypesHandleResponse handles the ListTypes response.
-func (client VirtualMachineExtensionImagesClient) listTypesHandleResponse(resp *azcore.Response) (VirtualMachineExtensionImageArrayResponse, error) {
+func (client *VirtualMachineExtensionImagesClient) listTypesHandleResponse(resp *azcore.Response) (VirtualMachineExtensionImageArrayResponse, error) {
 	var val *[]VirtualMachineExtensionImage
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return VirtualMachineExtensionImageArrayResponse{}, err
@@ -138,7 +138,7 @@ func (client VirtualMachineExtensionImagesClient) listTypesHandleResponse(resp *
 }
 
 // listTypesHandleError handles the ListTypes error response.
-func (client VirtualMachineExtensionImagesClient) listTypesHandleError(resp *azcore.Response) error {
+func (client *VirtualMachineExtensionImagesClient) listTypesHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -150,7 +150,7 @@ func (client VirtualMachineExtensionImagesClient) listTypesHandleError(resp *azc
 }
 
 // ListVersions - Gets a list of virtual machine extension image versions.
-func (client VirtualMachineExtensionImagesClient) ListVersions(ctx context.Context, location string, publisherName string, typeParameter string, options *VirtualMachineExtensionImagesListVersionsOptions) (VirtualMachineExtensionImageArrayResponse, error) {
+func (client *VirtualMachineExtensionImagesClient) ListVersions(ctx context.Context, location string, publisherName string, typeParameter string, options *VirtualMachineExtensionImagesListVersionsOptions) (VirtualMachineExtensionImageArrayResponse, error) {
 	req, err := client.listVersionsCreateRequest(ctx, location, publisherName, typeParameter, options)
 	if err != nil {
 		return VirtualMachineExtensionImageArrayResponse{}, err
@@ -166,7 +166,7 @@ func (client VirtualMachineExtensionImagesClient) ListVersions(ctx context.Conte
 }
 
 // listVersionsCreateRequest creates the ListVersions request.
-func (client VirtualMachineExtensionImagesClient) listVersionsCreateRequest(ctx context.Context, location string, publisherName string, typeParameter string, options *VirtualMachineExtensionImagesListVersionsOptions) (*azcore.Request, error) {
+func (client *VirtualMachineExtensionImagesClient) listVersionsCreateRequest(ctx context.Context, location string, publisherName string, typeParameter string, options *VirtualMachineExtensionImagesListVersionsOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
 	urlPath = strings.ReplaceAll(urlPath, "{publisherName}", url.PathEscape(publisherName))
@@ -194,7 +194,7 @@ func (client VirtualMachineExtensionImagesClient) listVersionsCreateRequest(ctx 
 }
 
 // listVersionsHandleResponse handles the ListVersions response.
-func (client VirtualMachineExtensionImagesClient) listVersionsHandleResponse(resp *azcore.Response) (VirtualMachineExtensionImageArrayResponse, error) {
+func (client *VirtualMachineExtensionImagesClient) listVersionsHandleResponse(resp *azcore.Response) (VirtualMachineExtensionImageArrayResponse, error) {
 	var val *[]VirtualMachineExtensionImage
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return VirtualMachineExtensionImageArrayResponse{}, err
@@ -203,7 +203,7 @@ func (client VirtualMachineExtensionImagesClient) listVersionsHandleResponse(res
 }
 
 // listVersionsHandleError handles the ListVersions error response.
-func (client VirtualMachineExtensionImagesClient) listVersionsHandleError(resp *azcore.Response) error {
+func (client *VirtualMachineExtensionImagesClient) listVersionsHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)

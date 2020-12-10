@@ -13,7 +13,7 @@ import (
 	"time"
 )
 
-func newIntClient() IntClient {
+func newIntClient() *IntClient {
 	return NewIntClient(NewDefaultConnection(nil))
 }
 

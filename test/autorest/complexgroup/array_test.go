@@ -10,7 +10,7 @@ import (
 	"testing"
 )
 
-func newArrayClient() ArrayClient {
+func newArrayClient() *ArrayClient {
 	return NewArrayClient(NewDefaultConnection(nil))
 }
 

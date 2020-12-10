@@ -27,17 +27,17 @@ type VirtualMachineRunCommandsClient struct {
 }
 
 // NewVirtualMachineRunCommandsClient creates a new instance of VirtualMachineRunCommandsClient with the specified values.
-func NewVirtualMachineRunCommandsClient(con *armcore.Connection, subscriptionID string) VirtualMachineRunCommandsClient {
-	return VirtualMachineRunCommandsClient{con: con, subscriptionID: subscriptionID}
+func NewVirtualMachineRunCommandsClient(con *armcore.Connection, subscriptionID string) *VirtualMachineRunCommandsClient {
+	return &VirtualMachineRunCommandsClient{con: con, subscriptionID: subscriptionID}
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client VirtualMachineRunCommandsClient) Pipeline() azcore.Pipeline {
+func (client *VirtualMachineRunCommandsClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // Get - Gets specific run command for a subscription in a location.
-func (client VirtualMachineRunCommandsClient) Get(ctx context.Context, location string, commandId string, options *VirtualMachineRunCommandsGetOptions) (RunCommandDocumentResponse, error) {
+func (client *VirtualMachineRunCommandsClient) Get(ctx context.Context, location string, commandId string, options *VirtualMachineRunCommandsGetOptions) (RunCommandDocumentResponse, error) {
 	req, err := client.getCreateRequest(ctx, location, commandId, options)
 	if err != nil {
 		return RunCommandDocumentResponse{}, err
@@ -53,7 +53,7 @@ func (client VirtualMachineRunCommandsClient) Get(ctx context.Context, location 
 }
 
 // getCreateRequest creates the Get request.
-func (client VirtualMachineRunCommandsClient) getCreateRequest(ctx context.Context, location string, commandId string, options *VirtualMachineRunCommandsGetOptions) (*azcore.Request, error) {
+func (client *VirtualMachineRunCommandsClient) getCreateRequest(ctx context.Context, location string, commandId string, options *VirtualMachineRunCommandsGetOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/runCommands/{commandId}"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
 	urlPath = strings.ReplaceAll(urlPath, "{commandId}", url.PathEscape(commandId))
@@ -71,7 +71,7 @@ func (client VirtualMachineRunCommandsClient) getCreateRequest(ctx context.Conte
 }
 
 // getHandleResponse handles the Get response.
-func (client VirtualMachineRunCommandsClient) getHandleResponse(resp *azcore.Response) (RunCommandDocumentResponse, error) {
+func (client *VirtualMachineRunCommandsClient) getHandleResponse(resp *azcore.Response) (RunCommandDocumentResponse, error) {
 	var val *RunCommandDocument
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return RunCommandDocumentResponse{}, err
@@ -80,7 +80,7 @@ func (client VirtualMachineRunCommandsClient) getHandleResponse(resp *azcore.Res
 }
 
 // getHandleError handles the Get error response.
-func (client VirtualMachineRunCommandsClient) getHandleError(resp *azcore.Response) error {
+func (client *VirtualMachineRunCommandsClient) getHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -92,7 +92,7 @@ func (client VirtualMachineRunCommandsClient) getHandleError(resp *azcore.Respon
 }
 
 // List - Lists all available run commands for a subscription in a location.
-func (client VirtualMachineRunCommandsClient) List(location string, options *VirtualMachineRunCommandsListOptions) RunCommandListResultPager {
+func (client *VirtualMachineRunCommandsClient) List(location string, options *VirtualMachineRunCommandsListOptions) RunCommandListResultPager {
 	return &runCommandListResultPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
@@ -108,7 +108,7 @@ func (client VirtualMachineRunCommandsClient) List(location string, options *Vir
 }
 
 // listCreateRequest creates the List request.
-func (client VirtualMachineRunCommandsClient) listCreateRequest(ctx context.Context, location string, options *VirtualMachineRunCommandsListOptions) (*azcore.Request, error) {
+func (client *VirtualMachineRunCommandsClient) listCreateRequest(ctx context.Context, location string, options *VirtualMachineRunCommandsListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/runCommands"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
@@ -125,7 +125,7 @@ func (client VirtualMachineRunCommandsClient) listCreateRequest(ctx context.Cont
 }
 
 // listHandleResponse handles the List response.
-func (client VirtualMachineRunCommandsClient) listHandleResponse(resp *azcore.Response) (RunCommandListResultResponse, error) {
+func (client *VirtualMachineRunCommandsClient) listHandleResponse(resp *azcore.Response) (RunCommandListResultResponse, error) {
 	var val *RunCommandListResult
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return RunCommandListResultResponse{}, err
@@ -134,7 +134,7 @@ func (client VirtualMachineRunCommandsClient) listHandleResponse(resp *azcore.Re
 }
 
 // listHandleError handles the List error response.
-func (client VirtualMachineRunCommandsClient) listHandleError(resp *azcore.Response) error {
+func (client *VirtualMachineRunCommandsClient) listHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)

@@ -20,17 +20,17 @@ type ReadonlypropertyClient struct {
 }
 
 // NewReadonlypropertyClient creates a new instance of ReadonlypropertyClient with the specified values.
-func NewReadonlypropertyClient(con *Connection) ReadonlypropertyClient {
-	return ReadonlypropertyClient{con: con}
+func NewReadonlypropertyClient(con *Connection) *ReadonlypropertyClient {
+	return &ReadonlypropertyClient{con: con}
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client ReadonlypropertyClient) Pipeline() azcore.Pipeline {
+func (client *ReadonlypropertyClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // GetValid - Get complex types that have readonly properties
-func (client ReadonlypropertyClient) GetValid(ctx context.Context, options *ReadonlypropertyGetValidOptions) (ReadonlyObjResponse, error) {
+func (client *ReadonlypropertyClient) GetValid(ctx context.Context, options *ReadonlypropertyGetValidOptions) (ReadonlyObjResponse, error) {
 	req, err := client.getValidCreateRequest(ctx, options)
 	if err != nil {
 		return ReadonlyObjResponse{}, err
@@ -46,7 +46,7 @@ func (client ReadonlypropertyClient) GetValid(ctx context.Context, options *Read
 }
 
 // getValidCreateRequest creates the GetValid request.
-func (client ReadonlypropertyClient) getValidCreateRequest(ctx context.Context, options *ReadonlypropertyGetValidOptions) (*azcore.Request, error) {
+func (client *ReadonlypropertyClient) getValidCreateRequest(ctx context.Context, options *ReadonlypropertyGetValidOptions) (*azcore.Request, error) {
 	urlPath := "/complex/readonlyproperty/valid"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -58,7 +58,7 @@ func (client ReadonlypropertyClient) getValidCreateRequest(ctx context.Context, 
 }
 
 // getValidHandleResponse handles the GetValid response.
-func (client ReadonlypropertyClient) getValidHandleResponse(resp *azcore.Response) (ReadonlyObjResponse, error) {
+func (client *ReadonlypropertyClient) getValidHandleResponse(resp *azcore.Response) (ReadonlyObjResponse, error) {
 	var val *ReadonlyObj
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return ReadonlyObjResponse{}, err
@@ -67,7 +67,7 @@ func (client ReadonlypropertyClient) getValidHandleResponse(resp *azcore.Respons
 }
 
 // getValidHandleError handles the GetValid error response.
-func (client ReadonlypropertyClient) getValidHandleError(resp *azcore.Response) error {
+func (client *ReadonlypropertyClient) getValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -76,7 +76,7 @@ func (client ReadonlypropertyClient) getValidHandleError(resp *azcore.Response) 
 }
 
 // PutValid - Put complex types that have readonly properties
-func (client ReadonlypropertyClient) PutValid(ctx context.Context, complexBody ReadonlyObj, options *ReadonlypropertyPutValidOptions) (*http.Response, error) {
+func (client *ReadonlypropertyClient) PutValid(ctx context.Context, complexBody ReadonlyObj, options *ReadonlypropertyPutValidOptions) (*http.Response, error) {
 	req, err := client.putValidCreateRequest(ctx, complexBody, options)
 	if err != nil {
 		return nil, err
@@ -92,7 +92,7 @@ func (client ReadonlypropertyClient) PutValid(ctx context.Context, complexBody R
 }
 
 // putValidCreateRequest creates the PutValid request.
-func (client ReadonlypropertyClient) putValidCreateRequest(ctx context.Context, complexBody ReadonlyObj, options *ReadonlypropertyPutValidOptions) (*azcore.Request, error) {
+func (client *ReadonlypropertyClient) putValidCreateRequest(ctx context.Context, complexBody ReadonlyObj, options *ReadonlypropertyPutValidOptions) (*azcore.Request, error) {
 	urlPath := "/complex/readonlyproperty/valid"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -104,7 +104,7 @@ func (client ReadonlypropertyClient) putValidCreateRequest(ctx context.Context, 
 }
 
 // putValidHandleError handles the PutValid error response.
-func (client ReadonlypropertyClient) putValidHandleError(resp *azcore.Response) error {
+func (client *ReadonlypropertyClient) putValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

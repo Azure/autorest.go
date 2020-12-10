@@ -10,7 +10,7 @@ import (
 	"testing"
 )
 
-func newIntClient() IntClient {
+func newIntClient() *IntClient {
 	return NewIntClient(NewDefaultConnection(nil))
 }
 

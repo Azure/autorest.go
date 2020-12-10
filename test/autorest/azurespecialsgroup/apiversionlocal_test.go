@@ -10,7 +10,7 @@ import (
 	"testing"
 )
 
-func newAPIVersionLocalClient() APIVersionLocalClient {
+func newAPIVersionLocalClient() *APIVersionLocalClient {
 	return NewAPIVersionLocalClient(NewDefaultConnection(nil))
 }
 

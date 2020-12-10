@@ -14,7 +14,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
-func newMultipleResponsesClient() MultipleResponsesClient {
+func newMultipleResponsesClient() *MultipleResponsesClient {
 	return NewMultipleResponsesClient(NewDefaultConnection(nil))
 }
 

@@ -10,7 +10,7 @@ import (
 	"testing"
 )
 
-func newEnumClient() EnumClient {
+func newEnumClient() *EnumClient {
 	return NewEnumClient(NewDefaultConnection(nil))
 }
 

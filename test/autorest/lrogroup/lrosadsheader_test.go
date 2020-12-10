@@ -10,7 +10,7 @@ import (
 	"time"
 )
 
-func newLrosaDsClient() LrosaDsClient {
+func newLrosaDsClient() *LrosaDsClient {
 	options := DefaultConnectionOptions()
 	options.Retry.RetryDelay = 10 * time.Millisecond
 	options.HTTPClient = httpClientWithCookieJar()

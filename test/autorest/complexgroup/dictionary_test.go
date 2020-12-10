@@ -10,7 +10,7 @@ import (
 	"testing"
 )
 
-func newDictionaryClient() DictionaryClient {
+func newDictionaryClient() *DictionaryClient {
 	return NewDictionaryClient(NewDefaultConnection(nil))
 }
 

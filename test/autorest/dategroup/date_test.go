@@ -12,7 +12,7 @@ import (
 	"time"
 )
 
-func newDateClient() DateClient {
+func newDateClient() *DateClient {
 	return NewDateClient(NewDefaultConnection(nil))
 }
 

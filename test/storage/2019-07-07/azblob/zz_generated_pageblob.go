@@ -22,12 +22,12 @@ type pageBlobClient struct {
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client pageBlobClient) Pipeline() azcore.Pipeline {
+func (client *pageBlobClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // ClearPages - The Clear Pages operation clears a set of pages from a page blob
-func (client pageBlobClient) ClearPages(ctx context.Context, contentLength int64, pageBlobClearPagesOptions *PageBlobClearPagesOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, sequenceNumberAccessConditions *SequenceNumberAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (PageBlobClearPagesResponse, error) {
+func (client *pageBlobClient) ClearPages(ctx context.Context, contentLength int64, pageBlobClearPagesOptions *PageBlobClearPagesOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, sequenceNumberAccessConditions *SequenceNumberAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (PageBlobClearPagesResponse, error) {
 	req, err := client.clearPagesCreateRequest(ctx, contentLength, pageBlobClearPagesOptions, leaseAccessConditions, cpkInfo, cpkScopeInfo, sequenceNumberAccessConditions, modifiedAccessConditions)
 	if err != nil {
 		return PageBlobClearPagesResponse{}, err
@@ -43,7 +43,7 @@ func (client pageBlobClient) ClearPages(ctx context.Context, contentLength int64
 }
 
 // clearPagesCreateRequest creates the ClearPages request.
-func (client pageBlobClient) clearPagesCreateRequest(ctx context.Context, contentLength int64, pageBlobClearPagesOptions *PageBlobClearPagesOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, sequenceNumberAccessConditions *SequenceNumberAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
+func (client *pageBlobClient) clearPagesCreateRequest(ctx context.Context, contentLength int64, pageBlobClearPagesOptions *PageBlobClearPagesOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, sequenceNumberAccessConditions *SequenceNumberAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
 	req, err := azcore.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
 	if err != nil {
 		return nil, err
@@ -105,7 +105,7 @@ func (client pageBlobClient) clearPagesCreateRequest(ctx context.Context, conten
 }
 
 // clearPagesHandleResponse handles the ClearPages response.
-func (client pageBlobClient) clearPagesHandleResponse(resp *azcore.Response) (PageBlobClearPagesResponse, error) {
+func (client *pageBlobClient) clearPagesHandleResponse(resp *azcore.Response) (PageBlobClearPagesResponse, error) {
 	result := PageBlobClearPagesResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -158,7 +158,7 @@ func (client pageBlobClient) clearPagesHandleResponse(resp *azcore.Response) (Pa
 }
 
 // clearPagesHandleError handles the ClearPages error response.
-func (client pageBlobClient) clearPagesHandleError(resp *azcore.Response) error {
+func (client *pageBlobClient) clearPagesHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -171,7 +171,7 @@ func (client pageBlobClient) clearPagesHandleError(resp *azcore.Response) error 
 // snapshot are transferred to the destination. The copied snapshots are complete copies of the original snapshot and can be read or copied from as usual.
 // This API is supported since REST version
 // 2016-05-31.
-func (client pageBlobClient) CopyIncremental(ctx context.Context, copySource url.URL, pageBlobCopyIncrementalOptions *PageBlobCopyIncrementalOptions, modifiedAccessConditions *ModifiedAccessConditions) (PageBlobCopyIncrementalResponse, error) {
+func (client *pageBlobClient) CopyIncremental(ctx context.Context, copySource url.URL, pageBlobCopyIncrementalOptions *PageBlobCopyIncrementalOptions, modifiedAccessConditions *ModifiedAccessConditions) (PageBlobCopyIncrementalResponse, error) {
 	req, err := client.copyIncrementalCreateRequest(ctx, copySource, pageBlobCopyIncrementalOptions, modifiedAccessConditions)
 	if err != nil {
 		return PageBlobCopyIncrementalResponse{}, err
@@ -187,7 +187,7 @@ func (client pageBlobClient) CopyIncremental(ctx context.Context, copySource url
 }
 
 // copyIncrementalCreateRequest creates the CopyIncremental request.
-func (client pageBlobClient) copyIncrementalCreateRequest(ctx context.Context, copySource url.URL, pageBlobCopyIncrementalOptions *PageBlobCopyIncrementalOptions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
+func (client *pageBlobClient) copyIncrementalCreateRequest(ctx context.Context, copySource url.URL, pageBlobCopyIncrementalOptions *PageBlobCopyIncrementalOptions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
 	req, err := azcore.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
 	if err != nil {
 		return nil, err
@@ -221,7 +221,7 @@ func (client pageBlobClient) copyIncrementalCreateRequest(ctx context.Context, c
 }
 
 // copyIncrementalHandleResponse handles the CopyIncremental response.
-func (client pageBlobClient) copyIncrementalHandleResponse(resp *azcore.Response) (PageBlobCopyIncrementalResponse, error) {
+func (client *pageBlobClient) copyIncrementalHandleResponse(resp *azcore.Response) (PageBlobCopyIncrementalResponse, error) {
 	result := PageBlobCopyIncrementalResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -259,7 +259,7 @@ func (client pageBlobClient) copyIncrementalHandleResponse(resp *azcore.Response
 }
 
 // copyIncrementalHandleError handles the CopyIncremental error response.
-func (client pageBlobClient) copyIncrementalHandleError(resp *azcore.Response) error {
+func (client *pageBlobClient) copyIncrementalHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -268,7 +268,7 @@ func (client pageBlobClient) copyIncrementalHandleError(resp *azcore.Response) e
 }
 
 // Create - The Create operation creates a new page blob.
-func (client pageBlobClient) Create(ctx context.Context, contentLength int64, blobContentLength int64, pageBlobCreateOptions *PageBlobCreateOptions, blobHttpHeaders *BlobHttpHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (PageBlobCreateResponse, error) {
+func (client *pageBlobClient) Create(ctx context.Context, contentLength int64, blobContentLength int64, pageBlobCreateOptions *PageBlobCreateOptions, blobHttpHeaders *BlobHttpHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (PageBlobCreateResponse, error) {
 	req, err := client.createCreateRequest(ctx, contentLength, blobContentLength, pageBlobCreateOptions, blobHttpHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
 	if err != nil {
 		return PageBlobCreateResponse{}, err
@@ -284,7 +284,7 @@ func (client pageBlobClient) Create(ctx context.Context, contentLength int64, bl
 }
 
 // createCreateRequest creates the Create request.
-func (client pageBlobClient) createCreateRequest(ctx context.Context, contentLength int64, blobContentLength int64, pageBlobCreateOptions *PageBlobCreateOptions, blobHttpHeaders *BlobHttpHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
+func (client *pageBlobClient) createCreateRequest(ctx context.Context, contentLength int64, blobContentLength int64, pageBlobCreateOptions *PageBlobCreateOptions, blobHttpHeaders *BlobHttpHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
 	req, err := azcore.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
 	if err != nil {
 		return nil, err
@@ -363,7 +363,7 @@ func (client pageBlobClient) createCreateRequest(ctx context.Context, contentLen
 }
 
 // createHandleResponse handles the Create response.
-func (client pageBlobClient) createHandleResponse(resp *azcore.Response) (PageBlobCreateResponse, error) {
+func (client *pageBlobClient) createHandleResponse(resp *azcore.Response) (PageBlobCreateResponse, error) {
 	result := PageBlobCreateResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -415,7 +415,7 @@ func (client pageBlobClient) createHandleResponse(resp *azcore.Response) (PageBl
 }
 
 // createHandleError handles the Create error response.
-func (client pageBlobClient) createHandleError(resp *azcore.Response) error {
+func (client *pageBlobClient) createHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -424,7 +424,7 @@ func (client pageBlobClient) createHandleError(resp *azcore.Response) error {
 }
 
 // GetPageRanges - The Get Page Ranges operation returns the list of valid page ranges for a page blob or snapshot of a page blob
-func (client pageBlobClient) GetPageRanges(ctx context.Context, pageBlobGetPageRangesOptions *PageBlobGetPageRangesOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (PageListResponse, error) {
+func (client *pageBlobClient) GetPageRanges(ctx context.Context, pageBlobGetPageRangesOptions *PageBlobGetPageRangesOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (PageListResponse, error) {
 	req, err := client.getPageRangesCreateRequest(ctx, pageBlobGetPageRangesOptions, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
 		return PageListResponse{}, err
@@ -440,7 +440,7 @@ func (client pageBlobClient) GetPageRanges(ctx context.Context, pageBlobGetPageR
 }
 
 // getPageRangesCreateRequest creates the GetPageRanges request.
-func (client pageBlobClient) getPageRangesCreateRequest(ctx context.Context, pageBlobGetPageRangesOptions *PageBlobGetPageRangesOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
+func (client *pageBlobClient) getPageRangesCreateRequest(ctx context.Context, pageBlobGetPageRangesOptions *PageBlobGetPageRangesOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
 	req, err := azcore.NewRequest(ctx, http.MethodGet, client.con.Endpoint())
 	if err != nil {
 		return nil, err
@@ -482,7 +482,7 @@ func (client pageBlobClient) getPageRangesCreateRequest(ctx context.Context, pag
 }
 
 // getPageRangesHandleResponse handles the GetPageRanges response.
-func (client pageBlobClient) getPageRangesHandleResponse(resp *azcore.Response) (PageListResponse, error) {
+func (client *pageBlobClient) getPageRangesHandleResponse(resp *azcore.Response) (PageListResponse, error) {
 	var val *PageList
 	if err := resp.UnmarshalAsXML(&val); err != nil {
 		return PageListResponse{}, err
@@ -525,7 +525,7 @@ func (client pageBlobClient) getPageRangesHandleResponse(resp *azcore.Response) 
 }
 
 // getPageRangesHandleError handles the GetPageRanges error response.
-func (client pageBlobClient) getPageRangesHandleError(resp *azcore.Response) error {
+func (client *pageBlobClient) getPageRangesHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -535,7 +535,7 @@ func (client pageBlobClient) getPageRangesHandleError(resp *azcore.Response) err
 
 // GetPageRangesDiff - The Get Page Ranges Diff operation returns the list of valid page ranges for a page blob that were changed between target blob and
 // previous snapshot.
-func (client pageBlobClient) GetPageRangesDiff(ctx context.Context, pageBlobGetPageRangesDiffOptions *PageBlobGetPageRangesDiffOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (PageListResponse, error) {
+func (client *pageBlobClient) GetPageRangesDiff(ctx context.Context, pageBlobGetPageRangesDiffOptions *PageBlobGetPageRangesDiffOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (PageListResponse, error) {
 	req, err := client.getPageRangesDiffCreateRequest(ctx, pageBlobGetPageRangesDiffOptions, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
 		return PageListResponse{}, err
@@ -551,7 +551,7 @@ func (client pageBlobClient) GetPageRangesDiff(ctx context.Context, pageBlobGetP
 }
 
 // getPageRangesDiffCreateRequest creates the GetPageRangesDiff request.
-func (client pageBlobClient) getPageRangesDiffCreateRequest(ctx context.Context, pageBlobGetPageRangesDiffOptions *PageBlobGetPageRangesDiffOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
+func (client *pageBlobClient) getPageRangesDiffCreateRequest(ctx context.Context, pageBlobGetPageRangesDiffOptions *PageBlobGetPageRangesDiffOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
 	req, err := azcore.NewRequest(ctx, http.MethodGet, client.con.Endpoint())
 	if err != nil {
 		return nil, err
@@ -599,7 +599,7 @@ func (client pageBlobClient) getPageRangesDiffCreateRequest(ctx context.Context,
 }
 
 // getPageRangesDiffHandleResponse handles the GetPageRangesDiff response.
-func (client pageBlobClient) getPageRangesDiffHandleResponse(resp *azcore.Response) (PageListResponse, error) {
+func (client *pageBlobClient) getPageRangesDiffHandleResponse(resp *azcore.Response) (PageListResponse, error) {
 	var val *PageList
 	if err := resp.UnmarshalAsXML(&val); err != nil {
 		return PageListResponse{}, err
@@ -642,7 +642,7 @@ func (client pageBlobClient) getPageRangesDiffHandleResponse(resp *azcore.Respon
 }
 
 // getPageRangesDiffHandleError handles the GetPageRangesDiff error response.
-func (client pageBlobClient) getPageRangesDiffHandleError(resp *azcore.Response) error {
+func (client *pageBlobClient) getPageRangesDiffHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -651,7 +651,7 @@ func (client pageBlobClient) getPageRangesDiffHandleError(resp *azcore.Response)
 }
 
 // Resize - Resize the Blob
-func (client pageBlobClient) Resize(ctx context.Context, blobContentLength int64, pageBlobResizeOptions *PageBlobResizeOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (PageBlobResizeResponse, error) {
+func (client *pageBlobClient) Resize(ctx context.Context, blobContentLength int64, pageBlobResizeOptions *PageBlobResizeOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (PageBlobResizeResponse, error) {
 	req, err := client.resizeCreateRequest(ctx, blobContentLength, pageBlobResizeOptions, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
 	if err != nil {
 		return PageBlobResizeResponse{}, err
@@ -667,7 +667,7 @@ func (client pageBlobClient) Resize(ctx context.Context, blobContentLength int64
 }
 
 // resizeCreateRequest creates the Resize request.
-func (client pageBlobClient) resizeCreateRequest(ctx context.Context, blobContentLength int64, pageBlobResizeOptions *PageBlobResizeOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
+func (client *pageBlobClient) resizeCreateRequest(ctx context.Context, blobContentLength int64, pageBlobResizeOptions *PageBlobResizeOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
 	req, err := azcore.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
 	if err != nil {
 		return nil, err
@@ -716,7 +716,7 @@ func (client pageBlobClient) resizeCreateRequest(ctx context.Context, blobConten
 }
 
 // resizeHandleResponse handles the Resize response.
-func (client pageBlobClient) resizeHandleResponse(resp *azcore.Response) (PageBlobResizeResponse, error) {
+func (client *pageBlobClient) resizeHandleResponse(resp *azcore.Response) (PageBlobResizeResponse, error) {
 	result := PageBlobResizeResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -755,7 +755,7 @@ func (client pageBlobClient) resizeHandleResponse(resp *azcore.Response) (PageBl
 }
 
 // resizeHandleError handles the Resize error response.
-func (client pageBlobClient) resizeHandleError(resp *azcore.Response) error {
+func (client *pageBlobClient) resizeHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -764,7 +764,7 @@ func (client pageBlobClient) resizeHandleError(resp *azcore.Response) error {
 }
 
 // UpdateSequenceNumber - Update the sequence number of the blob
-func (client pageBlobClient) UpdateSequenceNumber(ctx context.Context, sequenceNumberAction SequenceNumberActionType, pageBlobUpdateSequenceNumberOptions *PageBlobUpdateSequenceNumberOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (PageBlobUpdateSequenceNumberResponse, error) {
+func (client *pageBlobClient) UpdateSequenceNumber(ctx context.Context, sequenceNumberAction SequenceNumberActionType, pageBlobUpdateSequenceNumberOptions *PageBlobUpdateSequenceNumberOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (PageBlobUpdateSequenceNumberResponse, error) {
 	req, err := client.updateSequenceNumberCreateRequest(ctx, sequenceNumberAction, pageBlobUpdateSequenceNumberOptions, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
 		return PageBlobUpdateSequenceNumberResponse{}, err
@@ -780,7 +780,7 @@ func (client pageBlobClient) UpdateSequenceNumber(ctx context.Context, sequenceN
 }
 
 // updateSequenceNumberCreateRequest creates the UpdateSequenceNumber request.
-func (client pageBlobClient) updateSequenceNumberCreateRequest(ctx context.Context, sequenceNumberAction SequenceNumberActionType, pageBlobUpdateSequenceNumberOptions *PageBlobUpdateSequenceNumberOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
+func (client *pageBlobClient) updateSequenceNumberCreateRequest(ctx context.Context, sequenceNumberAction SequenceNumberActionType, pageBlobUpdateSequenceNumberOptions *PageBlobUpdateSequenceNumberOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
 	req, err := azcore.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
 	if err != nil {
 		return nil, err
@@ -820,7 +820,7 @@ func (client pageBlobClient) updateSequenceNumberCreateRequest(ctx context.Conte
 }
 
 // updateSequenceNumberHandleResponse handles the UpdateSequenceNumber response.
-func (client pageBlobClient) updateSequenceNumberHandleResponse(resp *azcore.Response) (PageBlobUpdateSequenceNumberResponse, error) {
+func (client *pageBlobClient) updateSequenceNumberHandleResponse(resp *azcore.Response) (PageBlobUpdateSequenceNumberResponse, error) {
 	result := PageBlobUpdateSequenceNumberResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -859,7 +859,7 @@ func (client pageBlobClient) updateSequenceNumberHandleResponse(resp *azcore.Res
 }
 
 // updateSequenceNumberHandleError handles the UpdateSequenceNumber error response.
-func (client pageBlobClient) updateSequenceNumberHandleError(resp *azcore.Response) error {
+func (client *pageBlobClient) updateSequenceNumberHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -868,7 +868,7 @@ func (client pageBlobClient) updateSequenceNumberHandleError(resp *azcore.Respon
 }
 
 // UploadPages - The Upload Pages operation writes a range of pages to a page blob
-func (client pageBlobClient) UploadPages(ctx context.Context, contentLength int64, body azcore.ReadSeekCloser, pageBlobUploadPagesOptions *PageBlobUploadPagesOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, sequenceNumberAccessConditions *SequenceNumberAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (PageBlobUploadPagesResponse, error) {
+func (client *pageBlobClient) UploadPages(ctx context.Context, contentLength int64, body azcore.ReadSeekCloser, pageBlobUploadPagesOptions *PageBlobUploadPagesOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, sequenceNumberAccessConditions *SequenceNumberAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (PageBlobUploadPagesResponse, error) {
 	req, err := client.uploadPagesCreateRequest(ctx, contentLength, body, pageBlobUploadPagesOptions, leaseAccessConditions, cpkInfo, cpkScopeInfo, sequenceNumberAccessConditions, modifiedAccessConditions)
 	if err != nil {
 		return PageBlobUploadPagesResponse{}, err
@@ -884,7 +884,7 @@ func (client pageBlobClient) UploadPages(ctx context.Context, contentLength int6
 }
 
 // uploadPagesCreateRequest creates the UploadPages request.
-func (client pageBlobClient) uploadPagesCreateRequest(ctx context.Context, contentLength int64, body azcore.ReadSeekCloser, pageBlobUploadPagesOptions *PageBlobUploadPagesOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, sequenceNumberAccessConditions *SequenceNumberAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
+func (client *pageBlobClient) uploadPagesCreateRequest(ctx context.Context, contentLength int64, body azcore.ReadSeekCloser, pageBlobUploadPagesOptions *PageBlobUploadPagesOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, sequenceNumberAccessConditions *SequenceNumberAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
 	req, err := azcore.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
 	if err != nil {
 		return nil, err
@@ -952,7 +952,7 @@ func (client pageBlobClient) uploadPagesCreateRequest(ctx context.Context, conte
 }
 
 // uploadPagesHandleResponse handles the UploadPages response.
-func (client pageBlobClient) uploadPagesHandleResponse(resp *azcore.Response) (PageBlobUploadPagesResponse, error) {
+func (client *pageBlobClient) uploadPagesHandleResponse(resp *azcore.Response) (PageBlobUploadPagesResponse, error) {
 	result := PageBlobUploadPagesResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -1018,7 +1018,7 @@ func (client pageBlobClient) uploadPagesHandleResponse(resp *azcore.Response) (P
 }
 
 // uploadPagesHandleError handles the UploadPages error response.
-func (client pageBlobClient) uploadPagesHandleError(resp *azcore.Response) error {
+func (client *pageBlobClient) uploadPagesHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
@@ -1027,7 +1027,7 @@ func (client pageBlobClient) uploadPagesHandleError(resp *azcore.Response) error
 }
 
 // UploadPagesFromURL - The Upload Pages operation writes a range of pages to a page blob where the contents are read from a URL
-func (client pageBlobClient) UploadPagesFromURL(ctx context.Context, sourceUrl url.URL, sourceRange string, contentLength int64, rangeParameter string, pageBlobUploadPagesFromUrlOptions *PageBlobUploadPagesFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, sequenceNumberAccessConditions *SequenceNumberAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (PageBlobUploadPagesFromURLResponse, error) {
+func (client *pageBlobClient) UploadPagesFromURL(ctx context.Context, sourceUrl url.URL, sourceRange string, contentLength int64, rangeParameter string, pageBlobUploadPagesFromUrlOptions *PageBlobUploadPagesFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, sequenceNumberAccessConditions *SequenceNumberAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (PageBlobUploadPagesFromURLResponse, error) {
 	req, err := client.uploadPagesFromUrlCreateRequest(ctx, sourceUrl, sourceRange, contentLength, rangeParameter, pageBlobUploadPagesFromUrlOptions, cpkInfo, cpkScopeInfo, leaseAccessConditions, sequenceNumberAccessConditions, modifiedAccessConditions, sourceModifiedAccessConditions)
 	if err != nil {
 		return PageBlobUploadPagesFromURLResponse{}, err
@@ -1043,7 +1043,7 @@ func (client pageBlobClient) UploadPagesFromURL(ctx context.Context, sourceUrl u
 }
 
 // uploadPagesFromUrlCreateRequest creates the UploadPagesFromURL request.
-func (client pageBlobClient) uploadPagesFromUrlCreateRequest(ctx context.Context, sourceUrl url.URL, sourceRange string, contentLength int64, rangeParameter string, pageBlobUploadPagesFromUrlOptions *PageBlobUploadPagesFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, sequenceNumberAccessConditions *SequenceNumberAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*azcore.Request, error) {
+func (client *pageBlobClient) uploadPagesFromUrlCreateRequest(ctx context.Context, sourceUrl url.URL, sourceRange string, contentLength int64, rangeParameter string, pageBlobUploadPagesFromUrlOptions *PageBlobUploadPagesFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, sequenceNumberAccessConditions *SequenceNumberAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*azcore.Request, error) {
 	req, err := azcore.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
 	if err != nil {
 		return nil, err
@@ -1123,7 +1123,7 @@ func (client pageBlobClient) uploadPagesFromUrlCreateRequest(ctx context.Context
 }
 
 // uploadPagesFromUrlHandleResponse handles the UploadPagesFromURL response.
-func (client pageBlobClient) uploadPagesFromUrlHandleResponse(resp *azcore.Response) (PageBlobUploadPagesFromURLResponse, error) {
+func (client *pageBlobClient) uploadPagesFromUrlHandleResponse(resp *azcore.Response) (PageBlobUploadPagesFromURLResponse, error) {
 	result := PageBlobUploadPagesFromURLResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
@@ -1186,7 +1186,7 @@ func (client pageBlobClient) uploadPagesFromUrlHandleResponse(resp *azcore.Respo
 }
 
 // uploadPagesFromUrlHandleError handles the UploadPagesFromURL error response.
-func (client pageBlobClient) uploadPagesFromUrlHandleError(resp *azcore.Response) error {
+func (client *pageBlobClient) uploadPagesFromUrlHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err

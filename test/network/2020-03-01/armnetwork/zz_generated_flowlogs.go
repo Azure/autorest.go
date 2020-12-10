@@ -25,17 +25,17 @@ type FlowLogsClient struct {
 }
 
 // NewFlowLogsClient creates a new instance of FlowLogsClient with the specified values.
-func NewFlowLogsClient(con *armcore.Connection, subscriptionID string) FlowLogsClient {
-	return FlowLogsClient{con: con, subscriptionID: subscriptionID}
+func NewFlowLogsClient(con *armcore.Connection, subscriptionID string) *FlowLogsClient {
+	return &FlowLogsClient{con: con, subscriptionID: subscriptionID}
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client FlowLogsClient) Pipeline() azcore.Pipeline {
+func (client *FlowLogsClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // BeginCreateOrUpdate - Create or update a flow log for the specified network security group.
-func (client FlowLogsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, parameters FlowLog, options *FlowLogsBeginCreateOrUpdateOptions) (FlowLogPollerResponse, error) {
+func (client *FlowLogsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, parameters FlowLog, options *FlowLogsBeginCreateOrUpdateOptions) (FlowLogPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, networkWatcherName, flowLogName, parameters, options)
 	if err != nil {
 		return FlowLogPollerResponse{}, err
@@ -60,7 +60,7 @@ func (client FlowLogsClient) BeginCreateOrUpdate(ctx context.Context, resourceGr
 
 // ResumeCreateOrUpdate creates a new FlowLogPoller from the specified resume token.
 // token - The value must come from a previous call to FlowLogPoller.ResumeToken().
-func (client FlowLogsClient) ResumeCreateOrUpdate(token string) (FlowLogPoller, error) {
+func (client *FlowLogsClient) ResumeCreateOrUpdate(token string) (FlowLogPoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("FlowLogsClient.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
 		return nil, err
@@ -72,7 +72,7 @@ func (client FlowLogsClient) ResumeCreateOrUpdate(token string) (FlowLogPoller, 
 }
 
 // CreateOrUpdate - Create or update a flow log for the specified network security group.
-func (client FlowLogsClient) createOrUpdate(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, parameters FlowLog, options *FlowLogsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
+func (client *FlowLogsClient) createOrUpdate(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, parameters FlowLog, options *FlowLogsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, networkWatcherName, flowLogName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -88,7 +88,7 @@ func (client FlowLogsClient) createOrUpdate(ctx context.Context, resourceGroupNa
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client FlowLogsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, parameters FlowLog, options *FlowLogsBeginCreateOrUpdateOptions) (*azcore.Request, error) {
+func (client *FlowLogsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, parameters FlowLog, options *FlowLogsBeginCreateOrUpdateOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/flowLogs/{flowLogName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{networkWatcherName}", url.PathEscape(networkWatcherName))
@@ -107,7 +107,7 @@ func (client FlowLogsClient) createOrUpdateCreateRequest(ctx context.Context, re
 }
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client FlowLogsClient) createOrUpdateHandleResponse(resp *azcore.Response) (FlowLogResponse, error) {
+func (client *FlowLogsClient) createOrUpdateHandleResponse(resp *azcore.Response) (FlowLogResponse, error) {
 	var val *FlowLog
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return FlowLogResponse{}, err
@@ -116,7 +116,7 @@ func (client FlowLogsClient) createOrUpdateHandleResponse(resp *azcore.Response)
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client FlowLogsClient) createOrUpdateHandleError(resp *azcore.Response) error {
+func (client *FlowLogsClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	var err ErrorResponse
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -125,7 +125,7 @@ func (client FlowLogsClient) createOrUpdateHandleError(resp *azcore.Response) er
 }
 
 // BeginDelete - Deletes the specified flow log resource.
-func (client FlowLogsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, options *FlowLogsBeginDeleteOptions) (HTTPPollerResponse, error) {
+func (client *FlowLogsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, options *FlowLogsBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.delete(ctx, resourceGroupName, networkWatcherName, flowLogName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
@@ -150,7 +150,7 @@ func (client FlowLogsClient) BeginDelete(ctx context.Context, resourceGroupName 
 
 // ResumeDelete creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client FlowLogsClient) ResumeDelete(token string) (HTTPPoller, error) {
+func (client *FlowLogsClient) ResumeDelete(token string) (HTTPPoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("FlowLogsClient.Delete", token, client.deleteHandleError)
 	if err != nil {
 		return nil, err
@@ -162,7 +162,7 @@ func (client FlowLogsClient) ResumeDelete(token string) (HTTPPoller, error) {
 }
 
 // Delete - Deletes the specified flow log resource.
-func (client FlowLogsClient) delete(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, options *FlowLogsBeginDeleteOptions) (*azcore.Response, error) {
+func (client *FlowLogsClient) delete(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, options *FlowLogsBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, networkWatcherName, flowLogName, options)
 	if err != nil {
 		return nil, err
@@ -178,7 +178,7 @@ func (client FlowLogsClient) delete(ctx context.Context, resourceGroupName strin
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client FlowLogsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, options *FlowLogsBeginDeleteOptions) (*azcore.Request, error) {
+func (client *FlowLogsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, options *FlowLogsBeginDeleteOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/flowLogs/{flowLogName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{networkWatcherName}", url.PathEscape(networkWatcherName))
@@ -197,7 +197,7 @@ func (client FlowLogsClient) deleteCreateRequest(ctx context.Context, resourceGr
 }
 
 // deleteHandleError handles the Delete error response.
-func (client FlowLogsClient) deleteHandleError(resp *azcore.Response) error {
+func (client *FlowLogsClient) deleteHandleError(resp *azcore.Response) error {
 	var err ErrorResponse
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -206,7 +206,7 @@ func (client FlowLogsClient) deleteHandleError(resp *azcore.Response) error {
 }
 
 // Get - Gets a flow log resource by name.
-func (client FlowLogsClient) Get(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, options *FlowLogsGetOptions) (FlowLogResponse, error) {
+func (client *FlowLogsClient) Get(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, options *FlowLogsGetOptions) (FlowLogResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkWatcherName, flowLogName, options)
 	if err != nil {
 		return FlowLogResponse{}, err
@@ -222,7 +222,7 @@ func (client FlowLogsClient) Get(ctx context.Context, resourceGroupName string, 
 }
 
 // getCreateRequest creates the Get request.
-func (client FlowLogsClient) getCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, options *FlowLogsGetOptions) (*azcore.Request, error) {
+func (client *FlowLogsClient) getCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, options *FlowLogsGetOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/flowLogs/{flowLogName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{networkWatcherName}", url.PathEscape(networkWatcherName))
@@ -241,7 +241,7 @@ func (client FlowLogsClient) getCreateRequest(ctx context.Context, resourceGroup
 }
 
 // getHandleResponse handles the Get response.
-func (client FlowLogsClient) getHandleResponse(resp *azcore.Response) (FlowLogResponse, error) {
+func (client *FlowLogsClient) getHandleResponse(resp *azcore.Response) (FlowLogResponse, error) {
 	var val *FlowLog
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return FlowLogResponse{}, err
@@ -250,7 +250,7 @@ func (client FlowLogsClient) getHandleResponse(resp *azcore.Response) (FlowLogRe
 }
 
 // getHandleError handles the Get error response.
-func (client FlowLogsClient) getHandleError(resp *azcore.Response) error {
+func (client *FlowLogsClient) getHandleError(resp *azcore.Response) error {
 	var err ErrorResponse
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -259,7 +259,7 @@ func (client FlowLogsClient) getHandleError(resp *azcore.Response) error {
 }
 
 // List - Lists all flow log resources for the specified Network Watcher.
-func (client FlowLogsClient) List(resourceGroupName string, networkWatcherName string, options *FlowLogsListOptions) FlowLogListResultPager {
+func (client *FlowLogsClient) List(resourceGroupName string, networkWatcherName string, options *FlowLogsListOptions) FlowLogListResultPager {
 	return &flowLogListResultPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
@@ -275,7 +275,7 @@ func (client FlowLogsClient) List(resourceGroupName string, networkWatcherName s
 }
 
 // listCreateRequest creates the List request.
-func (client FlowLogsClient) listCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, options *FlowLogsListOptions) (*azcore.Request, error) {
+func (client *FlowLogsClient) listCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, options *FlowLogsListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/flowLogs"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{networkWatcherName}", url.PathEscape(networkWatcherName))
@@ -293,7 +293,7 @@ func (client FlowLogsClient) listCreateRequest(ctx context.Context, resourceGrou
 }
 
 // listHandleResponse handles the List response.
-func (client FlowLogsClient) listHandleResponse(resp *azcore.Response) (FlowLogListResultResponse, error) {
+func (client *FlowLogsClient) listHandleResponse(resp *azcore.Response) (FlowLogListResultResponse, error) {
 	var val *FlowLogListResult
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return FlowLogListResultResponse{}, err
@@ -302,7 +302,7 @@ func (client FlowLogsClient) listHandleResponse(resp *azcore.Response) (FlowLogL
 }
 
 // listHandleError handles the List error response.
-func (client FlowLogsClient) listHandleError(resp *azcore.Response) error {
+func (client *FlowLogsClient) listHandleError(resp *azcore.Response) error {
 	var err ErrorResponse
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

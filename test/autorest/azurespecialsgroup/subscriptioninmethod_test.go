@@ -12,7 +12,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 )
 
-func newSubscriptionInMethodClient() SubscriptionInMethodClient {
+func newSubscriptionInMethodClient() *SubscriptionInMethodClient {
 	return NewSubscriptionInMethodClient(NewDefaultConnection(nil))
 }
 

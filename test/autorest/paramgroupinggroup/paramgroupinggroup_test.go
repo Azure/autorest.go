@@ -10,7 +10,7 @@ import (
 	"testing"
 )
 
-func newParameterGroupingClient() ParameterGroupingClient {
+func newParameterGroupingClient() *ParameterGroupingClient {
 	return NewParameterGroupingClient(NewDefaultConnection(nil))
 }
 

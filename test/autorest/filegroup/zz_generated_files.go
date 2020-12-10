@@ -20,17 +20,17 @@ type FilesClient struct {
 }
 
 // NewFilesClient creates a new instance of FilesClient with the specified values.
-func NewFilesClient(con *Connection) FilesClient {
-	return FilesClient{con: con}
+func NewFilesClient(con *Connection) *FilesClient {
+	return &FilesClient{con: con}
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client FilesClient) Pipeline() azcore.Pipeline {
+func (client *FilesClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // GetEmptyFile - Get empty file
-func (client FilesClient) GetEmptyFile(ctx context.Context, options *FilesGetEmptyFileOptions) (*http.Response, error) {
+func (client *FilesClient) GetEmptyFile(ctx context.Context, options *FilesGetEmptyFileOptions) (*http.Response, error) {
 	req, err := client.getEmptyFileCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -46,7 +46,7 @@ func (client FilesClient) GetEmptyFile(ctx context.Context, options *FilesGetEmp
 }
 
 // getEmptyFileCreateRequest creates the GetEmptyFile request.
-func (client FilesClient) getEmptyFileCreateRequest(ctx context.Context, options *FilesGetEmptyFileOptions) (*azcore.Request, error) {
+func (client *FilesClient) getEmptyFileCreateRequest(ctx context.Context, options *FilesGetEmptyFileOptions) (*azcore.Request, error) {
 	urlPath := "/files/stream/empty"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -59,7 +59,7 @@ func (client FilesClient) getEmptyFileCreateRequest(ctx context.Context, options
 }
 
 // getEmptyFileHandleError handles the GetEmptyFile error response.
-func (client FilesClient) getEmptyFileHandleError(resp *azcore.Response) error {
+func (client *FilesClient) getEmptyFileHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -68,7 +68,7 @@ func (client FilesClient) getEmptyFileHandleError(resp *azcore.Response) error {
 }
 
 // GetFile - Get file
-func (client FilesClient) GetFile(ctx context.Context, options *FilesGetFileOptions) (*http.Response, error) {
+func (client *FilesClient) GetFile(ctx context.Context, options *FilesGetFileOptions) (*http.Response, error) {
 	req, err := client.getFileCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -84,7 +84,7 @@ func (client FilesClient) GetFile(ctx context.Context, options *FilesGetFileOpti
 }
 
 // getFileCreateRequest creates the GetFile request.
-func (client FilesClient) getFileCreateRequest(ctx context.Context, options *FilesGetFileOptions) (*azcore.Request, error) {
+func (client *FilesClient) getFileCreateRequest(ctx context.Context, options *FilesGetFileOptions) (*azcore.Request, error) {
 	urlPath := "/files/stream/nonempty"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -97,7 +97,7 @@ func (client FilesClient) getFileCreateRequest(ctx context.Context, options *Fil
 }
 
 // getFileHandleError handles the GetFile error response.
-func (client FilesClient) getFileHandleError(resp *azcore.Response) error {
+func (client *FilesClient) getFileHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -106,7 +106,7 @@ func (client FilesClient) getFileHandleError(resp *azcore.Response) error {
 }
 
 // GetFileLarge - Get a large file
-func (client FilesClient) GetFileLarge(ctx context.Context, options *FilesGetFileLargeOptions) (*http.Response, error) {
+func (client *FilesClient) GetFileLarge(ctx context.Context, options *FilesGetFileLargeOptions) (*http.Response, error) {
 	req, err := client.getFileLargeCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -122,7 +122,7 @@ func (client FilesClient) GetFileLarge(ctx context.Context, options *FilesGetFil
 }
 
 // getFileLargeCreateRequest creates the GetFileLarge request.
-func (client FilesClient) getFileLargeCreateRequest(ctx context.Context, options *FilesGetFileLargeOptions) (*azcore.Request, error) {
+func (client *FilesClient) getFileLargeCreateRequest(ctx context.Context, options *FilesGetFileLargeOptions) (*azcore.Request, error) {
 	urlPath := "/files/stream/verylarge"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -135,7 +135,7 @@ func (client FilesClient) getFileLargeCreateRequest(ctx context.Context, options
 }
 
 // getFileLargeHandleError handles the GetFileLarge error response.
-func (client FilesClient) getFileLargeHandleError(resp *azcore.Response) error {
+func (client *FilesClient) getFileLargeHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

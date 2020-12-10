@@ -13,7 +13,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
-func newPolymorphicrecursiveClient() PolymorphicrecursiveClient {
+func newPolymorphicrecursiveClient() *PolymorphicrecursiveClient {
 	return NewPolymorphicrecursiveClient(NewDefaultConnection(nil))
 }
 

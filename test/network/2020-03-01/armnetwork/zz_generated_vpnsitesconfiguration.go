@@ -25,17 +25,17 @@ type VpnSitesConfigurationClient struct {
 }
 
 // NewVpnSitesConfigurationClient creates a new instance of VpnSitesConfigurationClient with the specified values.
-func NewVpnSitesConfigurationClient(con *armcore.Connection, subscriptionID string) VpnSitesConfigurationClient {
-	return VpnSitesConfigurationClient{con: con, subscriptionID: subscriptionID}
+func NewVpnSitesConfigurationClient(con *armcore.Connection, subscriptionID string) *VpnSitesConfigurationClient {
+	return &VpnSitesConfigurationClient{con: con, subscriptionID: subscriptionID}
 }
 
 // Pipeline returns the pipeline associated with this client.
-func (client VpnSitesConfigurationClient) Pipeline() azcore.Pipeline {
+func (client *VpnSitesConfigurationClient) Pipeline() azcore.Pipeline {
 	return client.con.Pipeline()
 }
 
 // BeginDownload - Gives the sas-url to download the configurations for vpn-sites in a resource group.
-func (client VpnSitesConfigurationClient) BeginDownload(ctx context.Context, resourceGroupName string, virtualWanName string, request GetVpnSitesConfigurationRequest, options *VpnSitesConfigurationBeginDownloadOptions) (HTTPPollerResponse, error) {
+func (client *VpnSitesConfigurationClient) BeginDownload(ctx context.Context, resourceGroupName string, virtualWanName string, request GetVpnSitesConfigurationRequest, options *VpnSitesConfigurationBeginDownloadOptions) (HTTPPollerResponse, error) {
 	resp, err := client.download(ctx, resourceGroupName, virtualWanName, request, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
@@ -60,7 +60,7 @@ func (client VpnSitesConfigurationClient) BeginDownload(ctx context.Context, res
 
 // ResumeDownload creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client VpnSitesConfigurationClient) ResumeDownload(token string) (HTTPPoller, error) {
+func (client *VpnSitesConfigurationClient) ResumeDownload(token string) (HTTPPoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("VpnSitesConfigurationClient.Download", token, client.downloadHandleError)
 	if err != nil {
 		return nil, err
@@ -72,7 +72,7 @@ func (client VpnSitesConfigurationClient) ResumeDownload(token string) (HTTPPoll
 }
 
 // Download - Gives the sas-url to download the configurations for vpn-sites in a resource group.
-func (client VpnSitesConfigurationClient) download(ctx context.Context, resourceGroupName string, virtualWanName string, request GetVpnSitesConfigurationRequest, options *VpnSitesConfigurationBeginDownloadOptions) (*azcore.Response, error) {
+func (client *VpnSitesConfigurationClient) download(ctx context.Context, resourceGroupName string, virtualWanName string, request GetVpnSitesConfigurationRequest, options *VpnSitesConfigurationBeginDownloadOptions) (*azcore.Response, error) {
 	req, err := client.downloadCreateRequest(ctx, resourceGroupName, virtualWanName, request, options)
 	if err != nil {
 		return nil, err
@@ -88,7 +88,7 @@ func (client VpnSitesConfigurationClient) download(ctx context.Context, resource
 }
 
 // downloadCreateRequest creates the Download request.
-func (client VpnSitesConfigurationClient) downloadCreateRequest(ctx context.Context, resourceGroupName string, virtualWanName string, request GetVpnSitesConfigurationRequest, options *VpnSitesConfigurationBeginDownloadOptions) (*azcore.Request, error) {
+func (client *VpnSitesConfigurationClient) downloadCreateRequest(ctx context.Context, resourceGroupName string, virtualWanName string, request GetVpnSitesConfigurationRequest, options *VpnSitesConfigurationBeginDownloadOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/vpnConfiguration"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
@@ -106,7 +106,7 @@ func (client VpnSitesConfigurationClient) downloadCreateRequest(ctx context.Cont
 }
 
 // downloadHandleError handles the Download error response.
-func (client VpnSitesConfigurationClient) downloadHandleError(resp *azcore.Response) error {
+func (client *VpnSitesConfigurationClient) downloadHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
