@@ -59,6 +59,7 @@ func (client DateClient) GetInvalidDate(ctx context.Context) (result DateModel, 
 	result, err = client.GetInvalidDateResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dategroup.DateClient", "GetInvalidDate", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -119,6 +120,7 @@ func (client DateClient) GetMaxDate(ctx context.Context) (result DateModel, err 
 	result, err = client.GetMaxDateResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dategroup.DateClient", "GetMaxDate", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -179,6 +181,7 @@ func (client DateClient) GetMinDate(ctx context.Context) (result DateModel, err 
 	result, err = client.GetMinDateResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dategroup.DateClient", "GetMinDate", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -239,6 +242,7 @@ func (client DateClient) GetNull(ctx context.Context) (result DateModel, err err
 	result, err = client.GetNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dategroup.DateClient", "GetNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -299,6 +303,7 @@ func (client DateClient) GetOverflowDate(ctx context.Context) (result DateModel,
 	result, err = client.GetOverflowDateResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dategroup.DateClient", "GetOverflowDate", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -359,6 +364,7 @@ func (client DateClient) GetUnderflowDate(ctx context.Context) (result DateModel
 	result, err = client.GetUnderflowDateResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dategroup.DateClient", "GetUnderflowDate", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -419,6 +425,7 @@ func (client DateClient) PutMaxDate(ctx context.Context, dateBody date.Date) (re
 	result, err = client.PutMaxDateResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dategroup.DateClient", "PutMaxDate", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -480,6 +487,7 @@ func (client DateClient) PutMinDate(ctx context.Context, dateBody date.Date) (re
 	result, err = client.PutMinDateResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dategroup.DateClient", "PutMinDate", resp, "Failure responding to request")
+		return
 	}
 
 	return

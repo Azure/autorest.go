@@ -60,6 +60,7 @@ func (client HTTPSuccessClient) Delete200(ctx context.Context, booleanValue *boo
 	result, err = client.Delete200Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPSuccessClient", "Delete200", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -126,6 +127,7 @@ func (client HTTPSuccessClient) Delete202(ctx context.Context, booleanValue *boo
 	result, err = client.Delete202Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPSuccessClient", "Delete202", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -192,6 +194,7 @@ func (client HTTPSuccessClient) Delete204(ctx context.Context, booleanValue *boo
 	result, err = client.Delete204Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPSuccessClient", "Delete204", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -256,6 +259,7 @@ func (client HTTPSuccessClient) Get200(ctx context.Context) (result Bool, err er
 	result, err = client.Get200Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPSuccessClient", "Get200", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -316,6 +320,7 @@ func (client HTTPSuccessClient) Head200(ctx context.Context) (result autorest.Re
 	result, err = client.Head200Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPSuccessClient", "Head200", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -375,6 +380,7 @@ func (client HTTPSuccessClient) Head204(ctx context.Context) (result autorest.Re
 	result, err = client.Head204Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPSuccessClient", "Head204", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -434,6 +440,7 @@ func (client HTTPSuccessClient) Head404(ctx context.Context) (result autorest.Re
 	result, err = client.Head404Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPSuccessClient", "Head404", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -495,6 +502,7 @@ func (client HTTPSuccessClient) Patch200(ctx context.Context, booleanValue *bool
 	result, err = client.Patch200Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPSuccessClient", "Patch200", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -561,6 +569,7 @@ func (client HTTPSuccessClient) Patch202(ctx context.Context, booleanValue *bool
 	result, err = client.Patch202Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPSuccessClient", "Patch202", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -627,6 +636,7 @@ func (client HTTPSuccessClient) Patch204(ctx context.Context, booleanValue *bool
 	result, err = client.Patch204Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPSuccessClient", "Patch204", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -693,6 +703,7 @@ func (client HTTPSuccessClient) Post200(ctx context.Context, booleanValue *bool)
 	result, err = client.Post200Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPSuccessClient", "Post200", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -759,6 +770,7 @@ func (client HTTPSuccessClient) Post201(ctx context.Context, booleanValue *bool)
 	result, err = client.Post201Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPSuccessClient", "Post201", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -825,6 +837,7 @@ func (client HTTPSuccessClient) Post202(ctx context.Context, booleanValue *bool)
 	result, err = client.Post202Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPSuccessClient", "Post202", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -891,6 +904,7 @@ func (client HTTPSuccessClient) Post204(ctx context.Context, booleanValue *bool)
 	result, err = client.Post204Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPSuccessClient", "Post204", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -957,6 +971,7 @@ func (client HTTPSuccessClient) Put200(ctx context.Context, booleanValue *bool) 
 	result, err = client.Put200Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPSuccessClient", "Put200", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1023,6 +1038,7 @@ func (client HTTPSuccessClient) Put201(ctx context.Context, booleanValue *bool) 
 	result, err = client.Put201Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPSuccessClient", "Put201", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1089,6 +1105,7 @@ func (client HTTPSuccessClient) Put202(ctx context.Context, booleanValue *bool) 
 	result, err = client.Put202Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPSuccessClient", "Put202", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1155,6 +1172,7 @@ func (client HTTPSuccessClient) Put204(ctx context.Context, booleanValue *bool) 
 	result, err = client.Put204Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPSuccessClient", "Put204", resp, "Failure responding to request")
+		return
 	}
 
 	return

@@ -61,6 +61,7 @@ func (client HTTPServerFailureClient) Delete505(ctx context.Context, booleanValu
 	result, err = client.Delete505Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPServerFailureClient", "Delete505", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -126,6 +127,7 @@ func (client HTTPServerFailureClient) Get501(ctx context.Context) (result Error,
 	result, err = client.Get501Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPServerFailureClient", "Get501", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -186,6 +188,7 @@ func (client HTTPServerFailureClient) Head501(ctx context.Context) (result Error
 	result, err = client.Head501Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPServerFailureClient", "Head501", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -248,6 +251,7 @@ func (client HTTPServerFailureClient) Post505(ctx context.Context, booleanValue 
 	result, err = client.Post505Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPServerFailureClient", "Post505", resp, "Failure responding to request")
+		return
 	}
 
 	return

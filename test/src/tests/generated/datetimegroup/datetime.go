@@ -59,6 +59,7 @@ func (client DatetimeClient) GetInvalid(ctx context.Context) (result DateTime, e
 	result, err = client.GetInvalidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetInvalid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -120,6 +121,7 @@ func (client DatetimeClient) GetLocalNegativeOffsetLowercaseMaxDateTime(ctx cont
 	result, err = client.GetLocalNegativeOffsetLowercaseMaxDateTimeResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetLocalNegativeOffsetLowercaseMaxDateTime", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -180,6 +182,7 @@ func (client DatetimeClient) GetLocalNegativeOffsetMinDateTime(ctx context.Conte
 	result, err = client.GetLocalNegativeOffsetMinDateTimeResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetLocalNegativeOffsetMinDateTime", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -241,6 +244,7 @@ func (client DatetimeClient) GetLocalNegativeOffsetUppercaseMaxDateTime(ctx cont
 	result, err = client.GetLocalNegativeOffsetUppercaseMaxDateTimeResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetLocalNegativeOffsetUppercaseMaxDateTime", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -302,6 +306,7 @@ func (client DatetimeClient) GetLocalPositiveOffsetLowercaseMaxDateTime(ctx cont
 	result, err = client.GetLocalPositiveOffsetLowercaseMaxDateTimeResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetLocalPositiveOffsetLowercaseMaxDateTime", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -362,6 +367,7 @@ func (client DatetimeClient) GetLocalPositiveOffsetMinDateTime(ctx context.Conte
 	result, err = client.GetLocalPositiveOffsetMinDateTimeResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetLocalPositiveOffsetMinDateTime", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -423,6 +429,7 @@ func (client DatetimeClient) GetLocalPositiveOffsetUppercaseMaxDateTime(ctx cont
 	result, err = client.GetLocalPositiveOffsetUppercaseMaxDateTimeResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetLocalPositiveOffsetUppercaseMaxDateTime", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -483,6 +490,7 @@ func (client DatetimeClient) GetNull(ctx context.Context) (result DateTime, err 
 	result, err = client.GetNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -543,6 +551,7 @@ func (client DatetimeClient) GetOverflow(ctx context.Context) (result DateTime, 
 	result, err = client.GetOverflowResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetOverflow", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -603,6 +612,7 @@ func (client DatetimeClient) GetUnderflow(ctx context.Context) (result DateTime,
 	result, err = client.GetUnderflowResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetUnderflow", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -663,6 +673,7 @@ func (client DatetimeClient) GetUtcLowercaseMaxDateTime(ctx context.Context) (re
 	result, err = client.GetUtcLowercaseMaxDateTimeResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetUtcLowercaseMaxDateTime", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -723,6 +734,7 @@ func (client DatetimeClient) GetUtcMinDateTime(ctx context.Context) (result Date
 	result, err = client.GetUtcMinDateTimeResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetUtcMinDateTime", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -783,6 +795,7 @@ func (client DatetimeClient) GetUtcUppercaseMaxDateTime(ctx context.Context) (re
 	result, err = client.GetUtcUppercaseMaxDateTimeResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetUtcUppercaseMaxDateTime", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -843,6 +856,7 @@ func (client DatetimeClient) PutLocalNegativeOffsetMaxDateTime(ctx context.Conte
 	result, err = client.PutLocalNegativeOffsetMaxDateTimeResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "PutLocalNegativeOffsetMaxDateTime", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -904,6 +918,7 @@ func (client DatetimeClient) PutLocalNegativeOffsetMinDateTime(ctx context.Conte
 	result, err = client.PutLocalNegativeOffsetMinDateTimeResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "PutLocalNegativeOffsetMinDateTime", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -965,6 +980,7 @@ func (client DatetimeClient) PutLocalPositiveOffsetMaxDateTime(ctx context.Conte
 	result, err = client.PutLocalPositiveOffsetMaxDateTimeResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "PutLocalPositiveOffsetMaxDateTime", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1026,6 +1042,7 @@ func (client DatetimeClient) PutLocalPositiveOffsetMinDateTime(ctx context.Conte
 	result, err = client.PutLocalPositiveOffsetMinDateTimeResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "PutLocalPositiveOffsetMinDateTime", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1087,6 +1104,7 @@ func (client DatetimeClient) PutUtcMaxDateTime(ctx context.Context, datetimeBody
 	result, err = client.PutUtcMaxDateTimeResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "PutUtcMaxDateTime", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1148,6 +1166,7 @@ func (client DatetimeClient) PutUtcMinDateTime(ctx context.Context, datetimeBody
 	result, err = client.PutUtcMinDateTimeResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "PutUtcMinDateTime", resp, "Failure responding to request")
+		return
 	}
 
 	return

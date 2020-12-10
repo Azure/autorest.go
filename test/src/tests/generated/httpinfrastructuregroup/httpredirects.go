@@ -60,6 +60,7 @@ func (client HTTPRedirectsClient) Delete307(ctx context.Context, booleanValue *b
 	result, err = client.Delete307Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRedirectsClient", "Delete307", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -124,6 +125,7 @@ func (client HTTPRedirectsClient) Get300(ctx context.Context) (result ListString
 	result, err = client.Get300Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRedirectsClient", "Get300", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -184,6 +186,7 @@ func (client HTTPRedirectsClient) Get301(ctx context.Context) (result autorest.R
 	result, err = client.Get301Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRedirectsClient", "Get301", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -243,6 +246,7 @@ func (client HTTPRedirectsClient) Get302(ctx context.Context) (result autorest.R
 	result, err = client.Get302Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRedirectsClient", "Get302", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -302,6 +306,7 @@ func (client HTTPRedirectsClient) Get307(ctx context.Context) (result autorest.R
 	result, err = client.Get307Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRedirectsClient", "Get307", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -361,6 +366,7 @@ func (client HTTPRedirectsClient) Head300(ctx context.Context) (result autorest.
 	result, err = client.Head300Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRedirectsClient", "Head300", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -420,6 +426,7 @@ func (client HTTPRedirectsClient) Head301(ctx context.Context) (result autorest.
 	result, err = client.Head301Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRedirectsClient", "Head301", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -479,6 +486,7 @@ func (client HTTPRedirectsClient) Head302(ctx context.Context) (result autorest.
 	result, err = client.Head302Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRedirectsClient", "Head302", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -538,6 +546,7 @@ func (client HTTPRedirectsClient) Head307(ctx context.Context) (result autorest.
 	result, err = client.Head307Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRedirectsClient", "Head307", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -600,6 +609,7 @@ func (client HTTPRedirectsClient) Patch302(ctx context.Context, booleanValue *bo
 	result, err = client.Patch302Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRedirectsClient", "Patch302", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -666,6 +676,7 @@ func (client HTTPRedirectsClient) Patch307(ctx context.Context, booleanValue *bo
 	result, err = client.Patch307Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRedirectsClient", "Patch307", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -733,6 +744,7 @@ func (client HTTPRedirectsClient) Post303(ctx context.Context, booleanValue *boo
 	result, err = client.Post303Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRedirectsClient", "Post303", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -799,6 +811,7 @@ func (client HTTPRedirectsClient) Post307(ctx context.Context, booleanValue *boo
 	result, err = client.Post307Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRedirectsClient", "Post307", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -866,6 +879,7 @@ func (client HTTPRedirectsClient) Put301(ctx context.Context, booleanValue *bool
 	result, err = client.Put301Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRedirectsClient", "Put301", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -932,6 +946,7 @@ func (client HTTPRedirectsClient) Put307(ctx context.Context, booleanValue *bool
 	result, err = client.Put307Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRedirectsClient", "Put307", resp, "Failure responding to request")
+		return
 	}
 
 	return

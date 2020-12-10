@@ -73,6 +73,7 @@ func (client BaseClient) GetReport(ctx context.Context, qualifier string) (resul
 	result, err = client.GetReportResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "report.BaseClient", "GetReport", resp, "Failure responding to request")
+		return
 	}
 
 	return

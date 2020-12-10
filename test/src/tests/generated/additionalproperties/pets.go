@@ -65,6 +65,7 @@ func (client PetsClient) CreateAPInProperties(ctx context.Context, createParamet
 	result, err = client.CreateAPInPropertiesResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "additionalproperties.PetsClient", "CreateAPInProperties", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -135,6 +136,7 @@ func (client PetsClient) CreateAPInPropertiesWithAPString(ctx context.Context, c
 	result, err = client.CreateAPInPropertiesWithAPStringResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "additionalproperties.PetsClient", "CreateAPInPropertiesWithAPString", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -204,6 +206,7 @@ func (client PetsClient) CreateAPObject(ctx context.Context, createParameters Pe
 	result, err = client.CreateAPObjectResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "additionalproperties.PetsClient", "CreateAPObject", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -273,6 +276,7 @@ func (client PetsClient) CreateAPString(ctx context.Context, createParameters Pe
 	result, err = client.CreateAPStringResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "additionalproperties.PetsClient", "CreateAPString", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -342,6 +346,7 @@ func (client PetsClient) CreateAPTrue(ctx context.Context, createParameters PetA
 	result, err = client.CreateAPTrueResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "additionalproperties.PetsClient", "CreateAPTrue", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -405,6 +410,7 @@ func (client PetsClient) CreateCatAPTrue(ctx context.Context, createParameters C
 	result, err = client.CreateCatAPTrueResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "additionalproperties.PetsClient", "CreateCatAPTrue", resp, "Failure responding to request")
+		return
 	}
 
 	return

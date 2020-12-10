@@ -59,6 +59,7 @@ func (client MultipleResponsesClient) Get200Model201ModelDefaultError200Valid(ct
 	result, err = client.Get200Model201ModelDefaultError200ValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "Get200Model201ModelDefaultError200Valid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -120,6 +121,7 @@ func (client MultipleResponsesClient) Get200Model201ModelDefaultError201Valid(ct
 	result, err = client.Get200Model201ModelDefaultError201ValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "Get200Model201ModelDefaultError201Valid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -181,6 +183,7 @@ func (client MultipleResponsesClient) Get200Model201ModelDefaultError400Valid(ct
 	result, err = client.Get200Model201ModelDefaultError400ValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "Get200Model201ModelDefaultError400Valid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -241,6 +244,7 @@ func (client MultipleResponsesClient) Get200Model204NoModelDefaultError200Valid(
 	result, err = client.Get200Model204NoModelDefaultError200ValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "Get200Model204NoModelDefaultError200Valid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -301,6 +305,7 @@ func (client MultipleResponsesClient) Get200Model204NoModelDefaultError201Invali
 	result, err = client.Get200Model204NoModelDefaultError201InvalidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "Get200Model204NoModelDefaultError201Invalid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -361,6 +366,7 @@ func (client MultipleResponsesClient) Get200Model204NoModelDefaultError202None(c
 	result, err = client.Get200Model204NoModelDefaultError202NoneResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "Get200Model204NoModelDefaultError202None", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -421,6 +427,7 @@ func (client MultipleResponsesClient) Get200Model204NoModelDefaultError204Valid(
 	result, err = client.Get200Model204NoModelDefaultError204ValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "Get200Model204NoModelDefaultError204Valid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -482,6 +489,7 @@ func (client MultipleResponsesClient) Get200Model204NoModelDefaultError400Valid(
 	result, err = client.Get200Model204NoModelDefaultError400ValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "Get200Model204NoModelDefaultError400Valid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -542,6 +550,7 @@ func (client MultipleResponsesClient) Get200ModelA200Invalid(ctx context.Context
 	result, err = client.Get200ModelA200InvalidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "Get200ModelA200Invalid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -603,6 +612,7 @@ func (client MultipleResponsesClient) Get200ModelA200None(ctx context.Context) (
 	result, err = client.Get200ModelA200NoneResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "Get200ModelA200None", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -663,6 +673,7 @@ func (client MultipleResponsesClient) Get200ModelA200Valid(ctx context.Context) 
 	result, err = client.Get200ModelA200ValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "Get200ModelA200Valid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -723,6 +734,7 @@ func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError
 	result, err = client.Get200ModelA201ModelC404ModelDDefaultError200ValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "Get200ModelA201ModelC404ModelDDefaultError200Valid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -783,6 +795,7 @@ func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError
 	result, err = client.Get200ModelA201ModelC404ModelDDefaultError201ValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "Get200ModelA201ModelC404ModelDDefaultError201Valid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -844,6 +857,7 @@ func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError
 	result, err = client.Get200ModelA201ModelC404ModelDDefaultError400ValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "Get200ModelA201ModelC404ModelDDefaultError400Valid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -904,6 +918,7 @@ func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError
 	result, err = client.Get200ModelA201ModelC404ModelDDefaultError404ValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "Get200ModelA201ModelC404ModelDDefaultError404Valid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -964,6 +979,7 @@ func (client MultipleResponsesClient) Get200ModelA202Valid(ctx context.Context) 
 	result, err = client.Get200ModelA202ValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "Get200ModelA202Valid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1024,6 +1040,7 @@ func (client MultipleResponsesClient) Get200ModelA400Invalid(ctx context.Context
 	result, err = client.Get200ModelA400InvalidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "Get200ModelA400Invalid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1084,6 +1101,7 @@ func (client MultipleResponsesClient) Get200ModelA400None(ctx context.Context) (
 	result, err = client.Get200ModelA400NoneResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "Get200ModelA400None", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1144,6 +1162,7 @@ func (client MultipleResponsesClient) Get200ModelA400Valid(ctx context.Context) 
 	result, err = client.Get200ModelA400ValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "Get200ModelA400Valid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1204,6 +1223,7 @@ func (client MultipleResponsesClient) Get202None204NoneDefaultError202None(ctx c
 	result, err = client.Get202None204NoneDefaultError202NoneResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "Get202None204NoneDefaultError202None", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1263,6 +1283,7 @@ func (client MultipleResponsesClient) Get202None204NoneDefaultError204None(ctx c
 	result, err = client.Get202None204NoneDefaultError204NoneResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "Get202None204NoneDefaultError204None", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1323,6 +1344,7 @@ func (client MultipleResponsesClient) Get202None204NoneDefaultError400Valid(ctx 
 	result, err = client.Get202None204NoneDefaultError400ValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "Get202None204NoneDefaultError400Valid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1382,6 +1404,7 @@ func (client MultipleResponsesClient) Get202None204NoneDefaultNone202Invalid(ctx
 	result, err = client.Get202None204NoneDefaultNone202InvalidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "Get202None204NoneDefaultNone202Invalid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1441,6 +1464,7 @@ func (client MultipleResponsesClient) Get202None204NoneDefaultNone204None(ctx co
 	result, err = client.Get202None204NoneDefaultNone204NoneResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "Get202None204NoneDefaultNone204None", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1500,6 +1524,7 @@ func (client MultipleResponsesClient) Get202None204NoneDefaultNone400Invalid(ctx
 	result, err = client.Get202None204NoneDefaultNone400InvalidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "Get202None204NoneDefaultNone400Invalid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1559,6 +1584,7 @@ func (client MultipleResponsesClient) Get202None204NoneDefaultNone400None(ctx co
 	result, err = client.Get202None204NoneDefaultNone400NoneResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "Get202None204NoneDefaultNone400None", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1618,6 +1644,7 @@ func (client MultipleResponsesClient) GetDefaultModelA200None(ctx context.Contex
 	result, err = client.GetDefaultModelA200NoneResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "GetDefaultModelA200None", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1678,6 +1705,7 @@ func (client MultipleResponsesClient) GetDefaultModelA200Valid(ctx context.Conte
 	result, err = client.GetDefaultModelA200ValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "GetDefaultModelA200Valid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1738,6 +1766,7 @@ func (client MultipleResponsesClient) GetDefaultModelA400None(ctx context.Contex
 	result, err = client.GetDefaultModelA400NoneResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "GetDefaultModelA400None", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1797,6 +1826,7 @@ func (client MultipleResponsesClient) GetDefaultModelA400Valid(ctx context.Conte
 	result, err = client.GetDefaultModelA400ValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "GetDefaultModelA400Valid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1856,6 +1886,7 @@ func (client MultipleResponsesClient) GetDefaultNone200Invalid(ctx context.Conte
 	result, err = client.GetDefaultNone200InvalidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "GetDefaultNone200Invalid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1915,6 +1946,7 @@ func (client MultipleResponsesClient) GetDefaultNone200None(ctx context.Context)
 	result, err = client.GetDefaultNone200NoneResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "GetDefaultNone200None", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1974,6 +2006,7 @@ func (client MultipleResponsesClient) GetDefaultNone400Invalid(ctx context.Conte
 	result, err = client.GetDefaultNone400InvalidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "GetDefaultNone400Invalid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -2033,6 +2066,7 @@ func (client MultipleResponsesClient) GetDefaultNone400None(ctx context.Context)
 	result, err = client.GetDefaultNone400NoneResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "GetDefaultNone400None", resp, "Failure responding to request")
+		return
 	}
 
 	return

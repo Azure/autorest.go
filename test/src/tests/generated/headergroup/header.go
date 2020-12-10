@@ -60,6 +60,7 @@ func (client HeaderClient) CustomRequestID(ctx context.Context) (result autorest
 	result, err = client.CustomRequestIDResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "CustomRequestID", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -123,6 +124,7 @@ func (client HeaderClient) ParamBool(ctx context.Context, scenario string, value
 	result, err = client.ParamBoolResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ParamBool", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -193,6 +195,7 @@ func (client HeaderClient) ParamByte(ctx context.Context, scenario string, value
 	result, err = client.ParamByteResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ParamByte", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -258,6 +261,7 @@ func (client HeaderClient) ParamDate(ctx context.Context, scenario string, value
 	result, err = client.ParamDateResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ParamDate", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -323,6 +327,7 @@ func (client HeaderClient) ParamDatetime(ctx context.Context, scenario string, v
 	result, err = client.ParamDatetimeResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ParamDatetime", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -389,6 +394,7 @@ func (client HeaderClient) ParamDatetimeRfc1123(ctx context.Context, scenario st
 	result, err = client.ParamDatetimeRfc1123Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ParamDatetimeRfc1123", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -457,6 +463,7 @@ func (client HeaderClient) ParamDouble(ctx context.Context, scenario string, val
 	result, err = client.ParamDoubleResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ParamDouble", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -521,6 +528,7 @@ func (client HeaderClient) ParamDuration(ctx context.Context, scenario string, v
 	result, err = client.ParamDurationResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ParamDuration", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -586,6 +594,7 @@ func (client HeaderClient) ParamEnum(ctx context.Context, scenario string, value
 	result, err = client.ParamEnumResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ParamEnum", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -652,6 +661,7 @@ func (client HeaderClient) ParamExistingKey(ctx context.Context, userAgent strin
 	result, err = client.ParamExistingKeyResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ParamExistingKey", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -716,6 +726,7 @@ func (client HeaderClient) ParamFloat(ctx context.Context, scenario string, valu
 	result, err = client.ParamFloatResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ParamFloat", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -781,6 +792,7 @@ func (client HeaderClient) ParamInteger(ctx context.Context, scenario string, va
 	result, err = client.ParamIntegerResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ParamInteger", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -846,6 +858,7 @@ func (client HeaderClient) ParamLong(ctx context.Context, scenario string, value
 	result, err = client.ParamLongResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ParamLong", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -909,6 +922,7 @@ func (client HeaderClient) ParamProtectedKey(ctx context.Context, contentType st
 	result, err = client.ParamProtectedKeyResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ParamProtectedKey", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -973,6 +987,7 @@ func (client HeaderClient) ParamString(ctx context.Context, scenario string, val
 	result, err = client.ParamStringResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ParamString", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1039,6 +1054,7 @@ func (client HeaderClient) ResponseBool(ctx context.Context, scenario string) (r
 	result, err = client.ResponseBoolResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ResponseBool", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1101,6 +1117,7 @@ func (client HeaderClient) ResponseByte(ctx context.Context, scenario string) (r
 	result, err = client.ResponseByteResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ResponseByte", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1163,6 +1180,7 @@ func (client HeaderClient) ResponseDate(ctx context.Context, scenario string) (r
 	result, err = client.ResponseDateResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ResponseDate", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1225,6 +1243,7 @@ func (client HeaderClient) ResponseDatetime(ctx context.Context, scenario string
 	result, err = client.ResponseDatetimeResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ResponseDatetime", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1288,6 +1307,7 @@ func (client HeaderClient) ResponseDatetimeRfc1123(ctx context.Context, scenario
 	result, err = client.ResponseDatetimeRfc1123Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ResponseDatetimeRfc1123", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1350,6 +1370,7 @@ func (client HeaderClient) ResponseDouble(ctx context.Context, scenario string) 
 	result, err = client.ResponseDoubleResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ResponseDouble", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1412,6 +1433,7 @@ func (client HeaderClient) ResponseDuration(ctx context.Context, scenario string
 	result, err = client.ResponseDurationResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ResponseDuration", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1474,6 +1496,7 @@ func (client HeaderClient) ResponseEnum(ctx context.Context, scenario string) (r
 	result, err = client.ResponseEnumResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ResponseEnum", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1534,6 +1557,7 @@ func (client HeaderClient) ResponseExistingKey(ctx context.Context) (result auto
 	result, err = client.ResponseExistingKeyResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ResponseExistingKey", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1595,6 +1619,7 @@ func (client HeaderClient) ResponseFloat(ctx context.Context, scenario string) (
 	result, err = client.ResponseFloatResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ResponseFloat", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1657,6 +1682,7 @@ func (client HeaderClient) ResponseInteger(ctx context.Context, scenario string)
 	result, err = client.ResponseIntegerResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ResponseInteger", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1719,6 +1745,7 @@ func (client HeaderClient) ResponseLong(ctx context.Context, scenario string) (r
 	result, err = client.ResponseLongResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ResponseLong", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1779,6 +1806,7 @@ func (client HeaderClient) ResponseProtectedKey(ctx context.Context) (result aut
 	result, err = client.ResponseProtectedKeyResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ResponseProtectedKey", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1840,6 +1868,7 @@ func (client HeaderClient) ResponseString(ctx context.Context, scenario string) 
 	result, err = client.ResponseStringResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ResponseString", resp, "Failure responding to request")
+		return
 	}
 
 	return

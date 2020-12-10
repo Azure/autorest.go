@@ -62,6 +62,7 @@ func (client FormdataClient) UploadFile(ctx context.Context, fileContent io.Read
 	result, err = client.UploadFileResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "formdatagroup.FormdataClient", "UploadFile", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -129,6 +130,7 @@ func (client FormdataClient) UploadFileViaBody(ctx context.Context, fileContent 
 	result, err = client.UploadFileViaBodyResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "formdatagroup.FormdataClient", "UploadFileViaBody", resp, "Failure responding to request")
+		return
 	}
 
 	return

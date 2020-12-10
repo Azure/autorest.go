@@ -59,6 +59,7 @@ func (client NumberClient) GetBigDecimal(ctx context.Context) (result Decimal, e
 	result, err = client.GetBigDecimalResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "GetBigDecimal", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -119,6 +120,7 @@ func (client NumberClient) GetBigDecimalNegativeDecimal(ctx context.Context) (re
 	result, err = client.GetBigDecimalNegativeDecimalResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "GetBigDecimalNegativeDecimal", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -179,6 +181,7 @@ func (client NumberClient) GetBigDecimalPositiveDecimal(ctx context.Context) (re
 	result, err = client.GetBigDecimalPositiveDecimalResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "GetBigDecimalPositiveDecimal", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -239,6 +242,7 @@ func (client NumberClient) GetBigDouble(ctx context.Context) (result Float64, er
 	result, err = client.GetBigDoubleResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "GetBigDouble", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -299,6 +303,7 @@ func (client NumberClient) GetBigDoubleNegativeDecimal(ctx context.Context) (res
 	result, err = client.GetBigDoubleNegativeDecimalResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "GetBigDoubleNegativeDecimal", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -359,6 +364,7 @@ func (client NumberClient) GetBigDoublePositiveDecimal(ctx context.Context) (res
 	result, err = client.GetBigDoublePositiveDecimalResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "GetBigDoublePositiveDecimal", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -419,6 +425,7 @@ func (client NumberClient) GetBigFloat(ctx context.Context) (result Float64, err
 	result, err = client.GetBigFloatResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "GetBigFloat", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -479,6 +486,7 @@ func (client NumberClient) GetInvalidDecimal(ctx context.Context) (result Decima
 	result, err = client.GetInvalidDecimalResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "GetInvalidDecimal", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -539,6 +547,7 @@ func (client NumberClient) GetInvalidDouble(ctx context.Context) (result Float64
 	result, err = client.GetInvalidDoubleResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "GetInvalidDouble", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -599,6 +608,7 @@ func (client NumberClient) GetInvalidFloat(ctx context.Context) (result Float64,
 	result, err = client.GetInvalidFloatResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "GetInvalidFloat", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -659,6 +669,7 @@ func (client NumberClient) GetNull(ctx context.Context) (result Float64, err err
 	result, err = client.GetNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "GetNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -719,6 +730,7 @@ func (client NumberClient) GetSmallDecimal(ctx context.Context) (result Decimal,
 	result, err = client.GetSmallDecimalResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "GetSmallDecimal", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -779,6 +791,7 @@ func (client NumberClient) GetSmallDouble(ctx context.Context) (result Float64, 
 	result, err = client.GetSmallDoubleResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "GetSmallDouble", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -839,6 +852,7 @@ func (client NumberClient) GetSmallFloat(ctx context.Context) (result Float64, e
 	result, err = client.GetSmallFloatResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "GetSmallFloat", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -899,6 +913,7 @@ func (client NumberClient) PutBigDecimal(ctx context.Context, numberBody decimal
 	result, err = client.PutBigDecimalResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "PutBigDecimal", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -960,6 +975,7 @@ func (client NumberClient) PutBigDecimalNegativeDecimal(ctx context.Context) (re
 	result, err = client.PutBigDecimalNegativeDecimalResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "PutBigDecimalNegativeDecimal", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1021,6 +1037,7 @@ func (client NumberClient) PutBigDecimalPositiveDecimal(ctx context.Context) (re
 	result, err = client.PutBigDecimalPositiveDecimalResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "PutBigDecimalPositiveDecimal", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1082,6 +1099,7 @@ func (client NumberClient) PutBigDouble(ctx context.Context, numberBody float64)
 	result, err = client.PutBigDoubleResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "PutBigDouble", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1143,6 +1161,7 @@ func (client NumberClient) PutBigDoubleNegativeDecimal(ctx context.Context) (res
 	result, err = client.PutBigDoubleNegativeDecimalResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "PutBigDoubleNegativeDecimal", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1204,6 +1223,7 @@ func (client NumberClient) PutBigDoublePositiveDecimal(ctx context.Context) (res
 	result, err = client.PutBigDoublePositiveDecimalResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "PutBigDoublePositiveDecimal", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1265,6 +1285,7 @@ func (client NumberClient) PutBigFloat(ctx context.Context, numberBody float64) 
 	result, err = client.PutBigFloatResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "PutBigFloat", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1326,6 +1347,7 @@ func (client NumberClient) PutSmallDecimal(ctx context.Context, numberBody decim
 	result, err = client.PutSmallDecimalResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "PutSmallDecimal", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1387,6 +1409,7 @@ func (client NumberClient) PutSmallDouble(ctx context.Context, numberBody float6
 	result, err = client.PutSmallDoubleResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "PutSmallDouble", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1448,6 +1471,7 @@ func (client NumberClient) PutSmallFloat(ctx context.Context, numberBody float64
 	result, err = client.PutSmallFloatResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "PutSmallFloat", resp, "Failure responding to request")
+		return
 	}
 
 	return
