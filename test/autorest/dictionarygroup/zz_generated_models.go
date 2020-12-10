@@ -412,13 +412,13 @@ type MapOfInt64Response struct {
 	Value *map[string]int64
 }
 
-// MapOfInterfaceResponse is the response envelope for operations that return a map[string]interface{} type.
-type MapOfInterfaceResponse struct {
+// MapOfMapOfStringResponse is the response envelope for operations that return a map[string]map[string]string type.
+type MapOfMapOfStringResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 
 	// An dictionaries of dictionaries with value null
-	Value *map[string]interface{}
+	Value *map[string]map[string]string
 }
 
 // MapOfStringArrayResponse is the response envelope for operations that return a map[string][]string type.

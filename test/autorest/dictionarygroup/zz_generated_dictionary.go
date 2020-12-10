@@ -1119,17 +1119,17 @@ func (client DictionaryClient) getDateValidHandleError(resp *azcore.Response) er
 }
 
 // GetDictionaryEmpty - Get an dictionaries of dictionaries of type with value {}
-func (client DictionaryClient) GetDictionaryEmpty(ctx context.Context, options *DictionaryGetDictionaryEmptyOptions) (MapOfInterfaceResponse, error) {
+func (client DictionaryClient) GetDictionaryEmpty(ctx context.Context, options *DictionaryGetDictionaryEmptyOptions) (MapOfMapOfStringResponse, error) {
 	req, err := client.getDictionaryEmptyCreateRequest(ctx, options)
 	if err != nil {
-		return MapOfInterfaceResponse{}, err
+		return MapOfMapOfStringResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return MapOfInterfaceResponse{}, err
+		return MapOfMapOfStringResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return MapOfInterfaceResponse{}, client.getDictionaryEmptyHandleError(resp)
+		return MapOfMapOfStringResponse{}, client.getDictionaryEmptyHandleError(resp)
 	}
 	return client.getDictionaryEmptyHandleResponse(resp)
 }
@@ -1147,12 +1147,12 @@ func (client DictionaryClient) getDictionaryEmptyCreateRequest(ctx context.Conte
 }
 
 // getDictionaryEmptyHandleResponse handles the GetDictionaryEmpty response.
-func (client DictionaryClient) getDictionaryEmptyHandleResponse(resp *azcore.Response) (MapOfInterfaceResponse, error) {
-	var val *map[string]interface{}
+func (client DictionaryClient) getDictionaryEmptyHandleResponse(resp *azcore.Response) (MapOfMapOfStringResponse, error) {
+	var val *map[string]map[string]string
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return MapOfInterfaceResponse{}, err
+		return MapOfMapOfStringResponse{}, err
 	}
-	return MapOfInterfaceResponse{RawResponse: resp.Response, Value: val}, nil
+	return MapOfMapOfStringResponse{RawResponse: resp.Response, Value: val}, nil
 }
 
 // getDictionaryEmptyHandleError handles the GetDictionaryEmpty error response.
@@ -1166,17 +1166,17 @@ func (client DictionaryClient) getDictionaryEmptyHandleError(resp *azcore.Respon
 
 // GetDictionaryItemEmpty - Get an dictionaries of dictionaries of type with value {"0": {"1": "one", "2": "two", "3": "three"}, "1": {}, "2": {"7": "seven",
 // "8": "eight", "9": "nine"}}
-func (client DictionaryClient) GetDictionaryItemEmpty(ctx context.Context, options *DictionaryGetDictionaryItemEmptyOptions) (MapOfInterfaceResponse, error) {
+func (client DictionaryClient) GetDictionaryItemEmpty(ctx context.Context, options *DictionaryGetDictionaryItemEmptyOptions) (MapOfMapOfStringResponse, error) {
 	req, err := client.getDictionaryItemEmptyCreateRequest(ctx, options)
 	if err != nil {
-		return MapOfInterfaceResponse{}, err
+		return MapOfMapOfStringResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return MapOfInterfaceResponse{}, err
+		return MapOfMapOfStringResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return MapOfInterfaceResponse{}, client.getDictionaryItemEmptyHandleError(resp)
+		return MapOfMapOfStringResponse{}, client.getDictionaryItemEmptyHandleError(resp)
 	}
 	return client.getDictionaryItemEmptyHandleResponse(resp)
 }
@@ -1194,12 +1194,12 @@ func (client DictionaryClient) getDictionaryItemEmptyCreateRequest(ctx context.C
 }
 
 // getDictionaryItemEmptyHandleResponse handles the GetDictionaryItemEmpty response.
-func (client DictionaryClient) getDictionaryItemEmptyHandleResponse(resp *azcore.Response) (MapOfInterfaceResponse, error) {
-	var val *map[string]interface{}
+func (client DictionaryClient) getDictionaryItemEmptyHandleResponse(resp *azcore.Response) (MapOfMapOfStringResponse, error) {
+	var val *map[string]map[string]string
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return MapOfInterfaceResponse{}, err
+		return MapOfMapOfStringResponse{}, err
 	}
-	return MapOfInterfaceResponse{RawResponse: resp.Response, Value: val}, nil
+	return MapOfMapOfStringResponse{RawResponse: resp.Response, Value: val}, nil
 }
 
 // getDictionaryItemEmptyHandleError handles the GetDictionaryItemEmpty error response.
@@ -1213,17 +1213,17 @@ func (client DictionaryClient) getDictionaryItemEmptyHandleError(resp *azcore.Re
 
 // GetDictionaryItemNull - Get an dictionaries of dictionaries of type with value {"0": {"1": "one", "2": "two", "3": "three"}, "1": null, "2": {"7": "seven",
 // "8": "eight", "9": "nine"}}
-func (client DictionaryClient) GetDictionaryItemNull(ctx context.Context, options *DictionaryGetDictionaryItemNullOptions) (MapOfInterfaceResponse, error) {
+func (client DictionaryClient) GetDictionaryItemNull(ctx context.Context, options *DictionaryGetDictionaryItemNullOptions) (MapOfMapOfStringResponse, error) {
 	req, err := client.getDictionaryItemNullCreateRequest(ctx, options)
 	if err != nil {
-		return MapOfInterfaceResponse{}, err
+		return MapOfMapOfStringResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return MapOfInterfaceResponse{}, err
+		return MapOfMapOfStringResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return MapOfInterfaceResponse{}, client.getDictionaryItemNullHandleError(resp)
+		return MapOfMapOfStringResponse{}, client.getDictionaryItemNullHandleError(resp)
 	}
 	return client.getDictionaryItemNullHandleResponse(resp)
 }
@@ -1241,12 +1241,12 @@ func (client DictionaryClient) getDictionaryItemNullCreateRequest(ctx context.Co
 }
 
 // getDictionaryItemNullHandleResponse handles the GetDictionaryItemNull response.
-func (client DictionaryClient) getDictionaryItemNullHandleResponse(resp *azcore.Response) (MapOfInterfaceResponse, error) {
-	var val *map[string]interface{}
+func (client DictionaryClient) getDictionaryItemNullHandleResponse(resp *azcore.Response) (MapOfMapOfStringResponse, error) {
+	var val *map[string]map[string]string
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return MapOfInterfaceResponse{}, err
+		return MapOfMapOfStringResponse{}, err
 	}
-	return MapOfInterfaceResponse{RawResponse: resp.Response, Value: val}, nil
+	return MapOfMapOfStringResponse{RawResponse: resp.Response, Value: val}, nil
 }
 
 // getDictionaryItemNullHandleError handles the GetDictionaryItemNull error response.
@@ -1259,17 +1259,17 @@ func (client DictionaryClient) getDictionaryItemNullHandleError(resp *azcore.Res
 }
 
 // GetDictionaryNull - Get an dictionaries of dictionaries with value null
-func (client DictionaryClient) GetDictionaryNull(ctx context.Context, options *DictionaryGetDictionaryNullOptions) (MapOfInterfaceResponse, error) {
+func (client DictionaryClient) GetDictionaryNull(ctx context.Context, options *DictionaryGetDictionaryNullOptions) (MapOfMapOfStringResponse, error) {
 	req, err := client.getDictionaryNullCreateRequest(ctx, options)
 	if err != nil {
-		return MapOfInterfaceResponse{}, err
+		return MapOfMapOfStringResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return MapOfInterfaceResponse{}, err
+		return MapOfMapOfStringResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return MapOfInterfaceResponse{}, client.getDictionaryNullHandleError(resp)
+		return MapOfMapOfStringResponse{}, client.getDictionaryNullHandleError(resp)
 	}
 	return client.getDictionaryNullHandleResponse(resp)
 }
@@ -1287,12 +1287,12 @@ func (client DictionaryClient) getDictionaryNullCreateRequest(ctx context.Contex
 }
 
 // getDictionaryNullHandleResponse handles the GetDictionaryNull response.
-func (client DictionaryClient) getDictionaryNullHandleResponse(resp *azcore.Response) (MapOfInterfaceResponse, error) {
-	var val *map[string]interface{}
+func (client DictionaryClient) getDictionaryNullHandleResponse(resp *azcore.Response) (MapOfMapOfStringResponse, error) {
+	var val *map[string]map[string]string
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return MapOfInterfaceResponse{}, err
+		return MapOfMapOfStringResponse{}, err
 	}
-	return MapOfInterfaceResponse{RawResponse: resp.Response, Value: val}, nil
+	return MapOfMapOfStringResponse{RawResponse: resp.Response, Value: val}, nil
 }
 
 // getDictionaryNullHandleError handles the GetDictionaryNull error response.
@@ -1306,17 +1306,17 @@ func (client DictionaryClient) getDictionaryNullHandleError(resp *azcore.Respons
 
 // GetDictionaryValid - Get an dictionaries of dictionaries of type with value {"0": {"1": "one", "2": "two", "3": "three"}, "1": {"4": "four", "5": "five",
 // "6": "six"}, "2": {"7": "seven", "8": "eight", "9": "nine"}}
-func (client DictionaryClient) GetDictionaryValid(ctx context.Context, options *DictionaryGetDictionaryValidOptions) (MapOfInterfaceResponse, error) {
+func (client DictionaryClient) GetDictionaryValid(ctx context.Context, options *DictionaryGetDictionaryValidOptions) (MapOfMapOfStringResponse, error) {
 	req, err := client.getDictionaryValidCreateRequest(ctx, options)
 	if err != nil {
-		return MapOfInterfaceResponse{}, err
+		return MapOfMapOfStringResponse{}, err
 	}
 	resp, err := client.Pipeline().Do(req)
 	if err != nil {
-		return MapOfInterfaceResponse{}, err
+		return MapOfMapOfStringResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return MapOfInterfaceResponse{}, client.getDictionaryValidHandleError(resp)
+		return MapOfMapOfStringResponse{}, client.getDictionaryValidHandleError(resp)
 	}
 	return client.getDictionaryValidHandleResponse(resp)
 }
@@ -1334,12 +1334,12 @@ func (client DictionaryClient) getDictionaryValidCreateRequest(ctx context.Conte
 }
 
 // getDictionaryValidHandleResponse handles the GetDictionaryValid response.
-func (client DictionaryClient) getDictionaryValidHandleResponse(resp *azcore.Response) (MapOfInterfaceResponse, error) {
-	var val *map[string]interface{}
+func (client DictionaryClient) getDictionaryValidHandleResponse(resp *azcore.Response) (MapOfMapOfStringResponse, error) {
+	var val *map[string]map[string]string
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return MapOfInterfaceResponse{}, err
+		return MapOfMapOfStringResponse{}, err
 	}
-	return MapOfInterfaceResponse{RawResponse: resp.Response, Value: val}, nil
+	return MapOfMapOfStringResponse{RawResponse: resp.Response, Value: val}, nil
 }
 
 // getDictionaryValidHandleError handles the GetDictionaryValid error response.
@@ -2638,7 +2638,7 @@ func (client DictionaryClient) putDateValidHandleError(resp *azcore.Response) er
 
 // PutDictionaryValid - Get an dictionaries of dictionaries of type with value {"0": {"1": "one", "2": "two", "3": "three"}, "1": {"4": "four", "5": "five",
 // "6": "six"}, "2": {"7": "seven", "8": "eight", "9": "nine"}}
-func (client DictionaryClient) PutDictionaryValid(ctx context.Context, arrayBody map[string]interface{}, options *DictionaryPutDictionaryValidOptions) (*http.Response, error) {
+func (client DictionaryClient) PutDictionaryValid(ctx context.Context, arrayBody map[string]map[string]string, options *DictionaryPutDictionaryValidOptions) (*http.Response, error) {
 	req, err := client.putDictionaryValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
 		return nil, err
@@ -2654,7 +2654,7 @@ func (client DictionaryClient) PutDictionaryValid(ctx context.Context, arrayBody
 }
 
 // putDictionaryValidCreateRequest creates the PutDictionaryValid request.
-func (client DictionaryClient) putDictionaryValidCreateRequest(ctx context.Context, arrayBody map[string]interface{}, options *DictionaryPutDictionaryValidOptions) (*azcore.Request, error) {
+func (client DictionaryClient) putDictionaryValidCreateRequest(ctx context.Context, arrayBody map[string]map[string]string, options *DictionaryPutDictionaryValidOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/dictionary/valid"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {

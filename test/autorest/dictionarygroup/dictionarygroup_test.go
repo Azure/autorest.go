@@ -331,33 +331,65 @@ func TestGetDictionaryEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, resp.Value, &map[string]interface{}{})
+	helpers.DeepEqualOrFatal(t, resp.Value, &map[string]map[string]string{})
 }
 
 // GetDictionaryItemEmpty - Get an dictionaries of dictionaries of type <string, string> with value {"0": {"1": "one", "2": "two", "3": "three"}, "1": {}, "2": {"7": "seven", "8": "eight", "9": "nine"}}
 func TestGetDictionaryItemEmpty(t *testing.T) {
-	t.Skip("needs m4 fix (dictionary-of-dictionary")
 	client := newDictionaryClient()
 	resp, err := client.GetDictionaryItemEmpty(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, resp.Value, &map[string]interface{}{})
+	helpers.DeepEqualOrFatal(t, resp.Value, &map[string]map[string]string{
+		"0": {
+			"1": "one",
+			"2": "two",
+			"3": "three",
+		},
+		"1": {},
+		"2": {
+			"7": "seven",
+			"8": "eight",
+			"9": "nine",
+		},
+	})
 }
 
 // GetDictionaryItemNull - Get an dictionaries of dictionaries of type <string, string> with value {"0": {"1": "one", "2": "two", "3": "three"}, "1": null, "2": {"7": "seven", "8": "eight", "9": "nine"}}
 func TestGetDictionaryItemNull(t *testing.T) {
-	t.Skip("needs m4 fix (dictionary-of-dictionary")
+	t.Skip("x-nullable")
 }
 
 // GetDictionaryNull - Get an dictionaries of dictionaries with value null
 func TestGetDictionaryNull(t *testing.T) {
-	t.Skip("needs m4 fix (dictionary-of-dictionary")
+	t.Skip("x-nullable")
 }
 
 // GetDictionaryValid - Get an dictionaries of dictionaries of type <string, string> with value {"0": {"1": "one", "2": "two", "3": "three"}, "1": {"4": "four", "5": "five", "6": "six"}, "2": {"7": "seven", "8": "eight", "9": "nine"}}
 func TestGetDictionaryValid(t *testing.T) {
-	t.Skip("needs m4 fix (dictionary-of-dictionary")
+	client := newDictionaryClient()
+	resp, err := client.GetDictionaryValid(context.Background(), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	helpers.DeepEqualOrFatal(t, resp.Value, &map[string]map[string]string{
+		"0": {
+			"1": "one",
+			"2": "two",
+			"3": "three",
+		},
+		"1": {
+			"4": "four",
+			"5": "five",
+			"6": "six",
+		},
+		"2": {
+			"7": "seven",
+			"8": "eight",
+			"9": "nine",
+		},
+	})
 }
 
 // GetDoubleInvalidNull - Get float dictionary value {"0": 0.0, "1": null, "2": 1.2e20}
@@ -751,7 +783,28 @@ func TestPutDateValid(t *testing.T) {
 
 // PutDictionaryValid - Get an dictionaries of dictionaries of type <string, string> with value {"0": {"1": "one", "2": "two", "3": "three"}, "1": {"4": "four", "5": "five", "6": "six"}, "2": {"7": "seven", "8": "eight", "9": "nine"}}
 func TestPutDictionaryValid(t *testing.T) {
-	t.Skip("needs m4 fix (dictionary-of-dictionary")
+	client := newDictionaryClient()
+	resp, err := client.PutDictionaryValid(context.Background(), map[string]map[string]string{
+		"0": {
+			"1": "one",
+			"2": "two",
+			"3": "three",
+		},
+		"1": {
+			"4": "four",
+			"5": "five",
+			"6": "six",
+		},
+		"2": {
+			"7": "seven",
+			"8": "eight",
+			"9": "nine",
+		},
+	}, nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	helpers.VerifyStatusCode(t, resp, http.StatusOK)
 }
 
 // PutDoubleValid - Set dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
