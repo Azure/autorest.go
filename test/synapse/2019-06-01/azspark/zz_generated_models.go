@@ -480,12 +480,10 @@ type SparkSession struct {
 	AppID *string `json:"appId,omitempty"`
 
 	// Dictionary of
-	AppInfo    *map[string]string `json:"appInfo,omitempty"`
-	ArtifactID *string            `json:"artifactId,omitempty"`
-
-	// The error information.
-	Errors *[]SparkServiceError `json:"errorInfo,omitempty"`
-	ID     *int32               `json:"id,omitempty"`
+	AppInfo    *map[string]string   `json:"appInfo,omitempty"`
+	ArtifactID *string              `json:"artifactId,omitempty"`
+	Errors     *[]SparkServiceError `json:"errorInfo,omitempty"`
+	ID         *int32               `json:"id,omitempty"`
 
 	// The job type.
 	JobType       *SparkJobType           `json:"jobType,omitempty"`
@@ -612,9 +610,7 @@ type SparkSessionState struct {
 	RecoveringAt       *time.Time    `json:"recoveringAt,omitempty"`
 	ShuttingDownAt     *time.Time    `json:"shuttingDownAt,omitempty"`
 	StartingAt         *time.Time    `json:"startingAt,omitempty"`
-
-	// the time that at which "killed" livy state was first seen.
-	TerminatedAt *time.Time `json:"killedAt,omitempty"`
+	TerminatedAt       *time.Time    `json:"killedAt,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type SparkSessionState.
