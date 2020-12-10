@@ -24,18 +24,13 @@ func NewPolymorphicrecursiveClient(con *Connection) *PolymorphicrecursiveClient 
 	return &PolymorphicrecursiveClient{con: con}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *PolymorphicrecursiveClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // GetValid - Get complex types that are polymorphic and have recursive references
 func (client *PolymorphicrecursiveClient) GetValid(ctx context.Context, options *PolymorphicrecursiveGetValidOptions) (FishResponse, error) {
 	req, err := client.getValidCreateRequest(ctx, options)
 	if err != nil {
 		return FishResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return FishResponse{}, err
 	}
@@ -81,7 +76,7 @@ func (client *PolymorphicrecursiveClient) PutValid(ctx context.Context, complexB
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}

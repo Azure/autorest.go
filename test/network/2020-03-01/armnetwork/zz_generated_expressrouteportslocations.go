@@ -28,18 +28,13 @@ func NewExpressRoutePortsLocationsClient(con *armcore.Connection, subscriptionID
 	return &ExpressRoutePortsLocationsClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *ExpressRoutePortsLocationsClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // Get - Retrieves a single ExpressRoutePort peering location, including the list of available bandwidths available at said peering location.
 func (client *ExpressRoutePortsLocationsClient) Get(ctx context.Context, locationName string, options *ExpressRoutePortsLocationsGetOptions) (ExpressRoutePortsLocationResponse, error) {
 	req, err := client.getCreateRequest(ctx, locationName, options)
 	if err != nil {
 		return ExpressRoutePortsLocationResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return ExpressRoutePortsLocationResponse{}, err
 	}

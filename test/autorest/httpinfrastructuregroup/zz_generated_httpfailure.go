@@ -27,18 +27,13 @@ func NewHTTPFailureClient(con *Connection) *HTTPFailureClient {
 	return &HTTPFailureClient{con: con}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *HTTPFailureClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // GetEmptyError - Get empty error form server
 func (client *HTTPFailureClient) GetEmptyError(ctx context.Context, options *HTTPFailureGetEmptyErrorOptions) (BoolResponse, error) {
 	req, err := client.getEmptyErrorCreateRequest(ctx, options)
 	if err != nil {
 		return BoolResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return BoolResponse{}, err
 	}
@@ -84,7 +79,7 @@ func (client *HTTPFailureClient) GetNoModelEmpty(ctx context.Context, options *H
 	if err != nil {
 		return BoolResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return BoolResponse{}, err
 	}
@@ -133,7 +128,7 @@ func (client *HTTPFailureClient) GetNoModelError(ctx context.Context, options *H
 	if err != nil {
 		return BoolResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return BoolResponse{}, err
 	}

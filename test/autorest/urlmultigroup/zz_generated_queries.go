@@ -24,18 +24,13 @@ func NewQueriesClient(con *Connection) *QueriesClient {
 	return &QueriesClient{con: con}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *QueriesClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // ArrayStringMultiEmpty - Get an empty array [] of string using the multi-array format
 func (client *QueriesClient) ArrayStringMultiEmpty(ctx context.Context, options *QueriesArrayStringMultiEmptyOptions) (*http.Response, error) {
 	req, err := client.arrayStringMultiEmptyCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -79,7 +74,7 @@ func (client *QueriesClient) ArrayStringMultiNull(ctx context.Context, options *
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -123,7 +118,7 @@ func (client *QueriesClient) ArrayStringMultiValid(ctx context.Context, options 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}

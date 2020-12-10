@@ -29,11 +29,6 @@ func NewP2SVpnGatewaysClient(con *armcore.Connection, subscriptionID string) *P2
 	return &P2SVpnGatewaysClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *P2SVpnGatewaysClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // BeginCreateOrUpdate - Creates a virtual wan p2s vpn gateway if it doesn't exist else updates the existing gateway.
 func (client *P2SVpnGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, p2SVpnGatewayParameters P2SVpnGateway, options *P2SVpnGatewaysBeginCreateOrUpdateOptions) (P2SVpnGatewayPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, gatewayName, p2SVpnGatewayParameters, options)
@@ -77,7 +72,7 @@ func (client *P2SVpnGatewaysClient) createOrUpdate(ctx context.Context, resource
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -166,7 +161,7 @@ func (client *P2SVpnGatewaysClient) delete(ctx context.Context, resourceGroupNam
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -246,7 +241,7 @@ func (client *P2SVpnGatewaysClient) disconnectP2SVpnConnections(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -326,7 +321,7 @@ func (client *P2SVpnGatewaysClient) generateVpnProfile(ctx context.Context, reso
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -378,7 +373,7 @@ func (client *P2SVpnGatewaysClient) Get(ctx context.Context, resourceGroupName s
 	if err != nil {
 		return P2SVpnGatewayResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return P2SVpnGatewayResponse{}, err
 	}
@@ -467,7 +462,7 @@ func (client *P2SVpnGatewaysClient) getP2SVpnConnectionHealth(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -558,7 +553,7 @@ func (client *P2SVpnGatewaysClient) getP2SVpnConnectionHealthDetailed(ctx contex
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -711,7 +706,7 @@ func (client *P2SVpnGatewaysClient) UpdateTags(ctx context.Context, resourceGrou
 	if err != nil {
 		return P2SVpnGatewayResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return P2SVpnGatewayResponse{}, err
 	}

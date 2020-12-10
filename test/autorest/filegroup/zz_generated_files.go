@@ -24,18 +24,13 @@ func NewFilesClient(con *Connection) *FilesClient {
 	return &FilesClient{con: con}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *FilesClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // GetEmptyFile - Get empty file
 func (client *FilesClient) GetEmptyFile(ctx context.Context, options *FilesGetEmptyFileOptions) (*http.Response, error) {
 	req, err := client.getEmptyFileCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -73,7 +68,7 @@ func (client *FilesClient) GetFile(ctx context.Context, options *FilesGetFileOpt
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -111,7 +106,7 @@ func (client *FilesClient) GetFileLarge(ctx context.Context, options *FilesGetFi
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}

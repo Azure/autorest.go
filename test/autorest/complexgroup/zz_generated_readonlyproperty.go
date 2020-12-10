@@ -24,18 +24,13 @@ func NewReadonlypropertyClient(con *Connection) *ReadonlypropertyClient {
 	return &ReadonlypropertyClient{con: con}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *ReadonlypropertyClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // GetValid - Get complex types that have readonly properties
 func (client *ReadonlypropertyClient) GetValid(ctx context.Context, options *ReadonlypropertyGetValidOptions) (ReadonlyObjResponse, error) {
 	req, err := client.getValidCreateRequest(ctx, options)
 	if err != nil {
 		return ReadonlyObjResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return ReadonlyObjResponse{}, err
 	}
@@ -81,7 +76,7 @@ func (client *ReadonlypropertyClient) PutValid(ctx context.Context, complexBody 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}

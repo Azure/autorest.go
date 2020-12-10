@@ -23,18 +23,13 @@ type sparkBatchClient struct {
 	con *connection
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *sparkBatchClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // CancelSparkBatchJob - Cancels a running spark batch job.
 func (client *sparkBatchClient) CancelSparkBatchJob(ctx context.Context, batchId int32, options *SparkBatchCancelSparkBatchJobOptions) (*http.Response, error) {
 	req, err := client.cancelSparkBatchJobCreateRequest(ctx, batchId, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -74,7 +69,7 @@ func (client *sparkBatchClient) CreateSparkBatchJob(ctx context.Context, sparkBa
 	if err != nil {
 		return SparkBatchJobResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return SparkBatchJobResponse{}, err
 	}
@@ -128,7 +123,7 @@ func (client *sparkBatchClient) GetSparkBatchJob(ctx context.Context, batchId in
 	if err != nil {
 		return SparkBatchJobResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return SparkBatchJobResponse{}, err
 	}
@@ -183,7 +178,7 @@ func (client *sparkBatchClient) GetSparkBatchJobs(ctx context.Context, options *
 	if err != nil {
 		return SparkBatchJobCollectionResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return SparkBatchJobCollectionResponse{}, err
 	}

@@ -24,18 +24,13 @@ func NewHTTPClientFailureClient(con *Connection) *HTTPClientFailureClient {
 	return &HTTPClientFailureClient{con: con}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *HTTPClientFailureClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // Delete400 - Return 400 status code - should be represented in the client as an error
 func (client *HTTPClientFailureClient) Delete400(ctx context.Context, options *HTTPClientFailureDelete400Options) (*http.Response, error) {
 	req, err := client.delete400CreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -72,7 +67,7 @@ func (client *HTTPClientFailureClient) Delete407(ctx context.Context, options *H
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -109,7 +104,7 @@ func (client *HTTPClientFailureClient) Delete417(ctx context.Context, options *H
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -146,7 +141,7 @@ func (client *HTTPClientFailureClient) Get400(ctx context.Context, options *HTTP
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -183,7 +178,7 @@ func (client *HTTPClientFailureClient) Get402(ctx context.Context, options *HTTP
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -220,7 +215,7 @@ func (client *HTTPClientFailureClient) Get403(ctx context.Context, options *HTTP
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -257,7 +252,7 @@ func (client *HTTPClientFailureClient) Get411(ctx context.Context, options *HTTP
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -294,7 +289,7 @@ func (client *HTTPClientFailureClient) Get412(ctx context.Context, options *HTTP
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -331,7 +326,7 @@ func (client *HTTPClientFailureClient) Get416(ctx context.Context, options *HTTP
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -368,7 +363,7 @@ func (client *HTTPClientFailureClient) Head400(ctx context.Context, options *HTT
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -405,7 +400,7 @@ func (client *HTTPClientFailureClient) Head401(ctx context.Context, options *HTT
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -442,7 +437,7 @@ func (client *HTTPClientFailureClient) Head410(ctx context.Context, options *HTT
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -479,7 +474,7 @@ func (client *HTTPClientFailureClient) Head429(ctx context.Context, options *HTT
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -516,7 +511,7 @@ func (client *HTTPClientFailureClient) Options400(ctx context.Context, options *
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -553,7 +548,7 @@ func (client *HTTPClientFailureClient) Options403(ctx context.Context, options *
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -590,7 +585,7 @@ func (client *HTTPClientFailureClient) Options412(ctx context.Context, options *
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -627,7 +622,7 @@ func (client *HTTPClientFailureClient) Patch400(ctx context.Context, options *HT
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -664,7 +659,7 @@ func (client *HTTPClientFailureClient) Patch405(ctx context.Context, options *HT
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -701,7 +696,7 @@ func (client *HTTPClientFailureClient) Patch414(ctx context.Context, options *HT
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -738,7 +733,7 @@ func (client *HTTPClientFailureClient) Post400(ctx context.Context, options *HTT
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -775,7 +770,7 @@ func (client *HTTPClientFailureClient) Post406(ctx context.Context, options *HTT
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -812,7 +807,7 @@ func (client *HTTPClientFailureClient) Post415(ctx context.Context, options *HTT
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -849,7 +844,7 @@ func (client *HTTPClientFailureClient) Put400(ctx context.Context, options *HTTP
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -886,7 +881,7 @@ func (client *HTTPClientFailureClient) Put404(ctx context.Context, options *HTTP
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -923,7 +918,7 @@ func (client *HTTPClientFailureClient) Put409(ctx context.Context, options *HTTP
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -960,7 +955,7 @@ func (client *HTTPClientFailureClient) Put413(ctx context.Context, options *HTTP
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}

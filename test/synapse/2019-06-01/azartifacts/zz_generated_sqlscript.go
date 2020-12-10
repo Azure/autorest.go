@@ -19,18 +19,13 @@ type sqlScriptClient struct {
 	con *connection
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *sqlScriptClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // CreateOrUpdateSQLScript - Creates or updates a Sql Script.
 func (client *sqlScriptClient) CreateOrUpdateSQLScript(ctx context.Context, sqlScriptName string, sqlScript SQLScriptResource, options *SQLScriptCreateOrUpdateSQLScriptOptions) (SQLScriptResourceResponse, error) {
 	req, err := client.createOrUpdateSqlScriptCreateRequest(ctx, sqlScriptName, sqlScript, options)
 	if err != nil {
 		return SQLScriptResourceResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return SQLScriptResourceResponse{}, err
 	}
@@ -83,7 +78,7 @@ func (client *sqlScriptClient) DeleteSQLScript(ctx context.Context, sqlScriptNam
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -124,7 +119,7 @@ func (client *sqlScriptClient) GetSQLScript(ctx context.Context, sqlScriptName s
 	if err != nil {
 		return SQLScriptResourceResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return SQLScriptResourceResponse{}, err
 	}
@@ -226,7 +221,7 @@ func (client *sqlScriptClient) renameSQLScript(ctx context.Context, sqlScriptNam
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}

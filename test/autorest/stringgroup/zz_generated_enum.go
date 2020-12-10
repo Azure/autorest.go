@@ -24,18 +24,13 @@ func NewEnumClient(con *Connection) *EnumClient {
 	return &EnumClient{con: con}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *EnumClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // GetNotExpandable - Get enum value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'.
 func (client *EnumClient) GetNotExpandable(ctx context.Context, options *EnumGetNotExpandableOptions) (ColorsResponse, error) {
 	req, err := client.getNotExpandableCreateRequest(ctx, options)
 	if err != nil {
 		return ColorsResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return ColorsResponse{}, err
 	}
@@ -81,7 +76,7 @@ func (client *EnumClient) GetReferenced(ctx context.Context, options *EnumGetRef
 	if err != nil {
 		return ColorsResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return ColorsResponse{}, err
 	}
@@ -127,7 +122,7 @@ func (client *EnumClient) GetReferencedConstant(ctx context.Context, options *En
 	if err != nil {
 		return RefColorConstantResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return RefColorConstantResponse{}, err
 	}
@@ -173,7 +168,7 @@ func (client *EnumClient) PutNotExpandable(ctx context.Context, stringBody Color
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -210,7 +205,7 @@ func (client *EnumClient) PutReferenced(ctx context.Context, enumStringBody Colo
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -247,7 +242,7 @@ func (client *EnumClient) PutReferencedConstant(ctx context.Context, enumStringB
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}

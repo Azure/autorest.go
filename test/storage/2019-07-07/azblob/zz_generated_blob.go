@@ -23,11 +23,6 @@ type blobClient struct {
 	pathRenameMode *PathRenameMode
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *blobClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // AbortCopyFromURL - The Abort Copy From URL operation aborts a pending Copy From URL operation, and leaves a destination blob with zero length and full
 // metadata.
 func (client *blobClient) AbortCopyFromURL(ctx context.Context, copyId string, blobAbortCopyFromUrlOptions *BlobAbortCopyFromURLOptions, leaseAccessConditions *LeaseAccessConditions) (BlobAbortCopyFromURLResponse, error) {
@@ -35,7 +30,7 @@ func (client *blobClient) AbortCopyFromURL(ctx context.Context, copyId string, b
 	if err != nil {
 		return BlobAbortCopyFromURLResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return BlobAbortCopyFromURLResponse{}, err
 	}
@@ -108,7 +103,7 @@ func (client *blobClient) AcquireLease(ctx context.Context, blobAcquireLeaseOpti
 	if err != nil {
 		return BlobAcquireLeaseResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return BlobAcquireLeaseResponse{}, err
 	}
@@ -208,7 +203,7 @@ func (client *blobClient) BreakLease(ctx context.Context, blobBreakLeaseOptions 
 	if err != nil {
 		return BlobBreakLeaseResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return BlobBreakLeaseResponse{}, err
 	}
@@ -310,7 +305,7 @@ func (client *blobClient) ChangeLease(ctx context.Context, leaseId string, propo
 	if err != nil {
 		return BlobChangeLeaseResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return BlobChangeLeaseResponse{}, err
 	}
@@ -406,7 +401,7 @@ func (client *blobClient) CopyFromURL(ctx context.Context, copySource url.URL, b
 	if err != nil {
 		return BlobCopyFromURLResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return BlobCopyFromURLResponse{}, err
 	}
@@ -543,7 +538,7 @@ func (client *blobClient) CreateSnapshot(ctx context.Context, blobCreateSnapshot
 	if err != nil {
 		return BlobCreateSnapshotResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return BlobCreateSnapshotResponse{}, err
 	}
@@ -673,7 +668,7 @@ func (client *blobClient) Delete(ctx context.Context, blobDeleteOptions *BlobDel
 	if err != nil {
 		return BlobDeleteResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return BlobDeleteResponse{}, err
 	}
@@ -762,7 +757,7 @@ func (client *blobClient) Download(ctx context.Context, blobDownloadOptions *Blo
 	if err != nil {
 		return BlobDownloadResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return BlobDownloadResponse{}, err
 	}
@@ -995,7 +990,7 @@ func (client *blobClient) GetAccessControl(ctx context.Context, blobGetAccessCon
 	if err != nil {
 		return BlobGetAccessControlResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return BlobGetAccessControlResponse{}, err
 	}
@@ -1100,7 +1095,7 @@ func (client *blobClient) GetAccountInfo(ctx context.Context, options *BlobGetAc
 	if err != nil {
 		return BlobGetAccountInfoResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return BlobGetAccountInfoResponse{}, err
 	}
@@ -1170,7 +1165,7 @@ func (client *blobClient) GetProperties(ctx context.Context, blobGetPropertiesOp
 	if err != nil {
 		return BlobGetPropertiesResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return BlobGetPropertiesResponse{}, err
 	}
@@ -1413,7 +1408,7 @@ func (client *blobClient) ReleaseLease(ctx context.Context, leaseId string, blob
 	if err != nil {
 		return BlobReleaseLeaseResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return BlobReleaseLeaseResponse{}, err
 	}
@@ -1509,7 +1504,7 @@ func (client *blobClient) Rename(ctx context.Context, renameSource string, blobR
 	if err != nil {
 		return BlobRenameResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return BlobRenameResponse{}, err
 	}
@@ -1651,7 +1646,7 @@ func (client *blobClient) RenewLease(ctx context.Context, leaseId string, blobRe
 	if err != nil {
 		return BlobRenewLeaseResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return BlobRenewLeaseResponse{}, err
 	}
@@ -1746,7 +1741,7 @@ func (client *blobClient) SetAccessControl(ctx context.Context, blobSetAccessCon
 	if err != nil {
 		return BlobSetAccessControlResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return BlobSetAccessControlResponse{}, err
 	}
@@ -1848,7 +1843,7 @@ func (client *blobClient) SetHTTPHeaders(ctx context.Context, blobSetHttpHeaders
 	if err != nil {
 		return BlobSetHTTPHeadersResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return BlobSetHTTPHeadersResponse{}, err
 	}
@@ -1966,7 +1961,7 @@ func (client *blobClient) SetMetadata(ctx context.Context, blobSetMetadataOption
 	if err != nil {
 		return BlobSetMetadataResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return BlobSetMetadataResponse{}, err
 	}
@@ -2092,7 +2087,7 @@ func (client *blobClient) SetTier(ctx context.Context, tier AccessTier, blobSetT
 	if err != nil {
 		return BlobSetTierResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return BlobSetTierResponse{}, err
 	}
@@ -2160,7 +2155,7 @@ func (client *blobClient) StartCopyFromURL(ctx context.Context, copySource url.U
 	if err != nil {
 		return BlobStartCopyFromURLResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return BlobStartCopyFromURLResponse{}, err
 	}
@@ -2282,7 +2277,7 @@ func (client *blobClient) Undelete(ctx context.Context, options *BlobUndeleteOpt
 	if err != nil {
 		return BlobUndeleteResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return BlobUndeleteResponse{}, err
 	}

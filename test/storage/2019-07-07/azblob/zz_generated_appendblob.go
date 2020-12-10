@@ -21,11 +21,6 @@ type appendBlobClient struct {
 	con *connection
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *appendBlobClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // AppendBlock - The Append Block operation commits a new block of data to the end of an existing append blob. The Append Block operation is permitted only
 // if the blob was created with x-ms-blob-type set to
 // AppendBlob. Append Block is supported only on version 2015-02-21 version or later.
@@ -34,7 +29,7 @@ func (client *appendBlobClient) AppendBlock(ctx context.Context, contentLength i
 	if err != nil {
 		return AppendBlobAppendBlockResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return AppendBlobAppendBlockResponse{}, err
 	}
@@ -192,7 +187,7 @@ func (client *appendBlobClient) AppendBlockFromURL(ctx context.Context, sourceUr
 	if err != nil {
 		return AppendBlobAppendBlockFromURLResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return AppendBlobAppendBlockFromURLResponse{}, err
 	}
@@ -364,7 +359,7 @@ func (client *appendBlobClient) Create(ctx context.Context, contentLength int64,
 	if err != nil {
 		return AppendBlobCreateResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return AppendBlobCreateResponse{}, err
 	}

@@ -25,18 +25,13 @@ func NewPathsClient(con *Connection) *PathsClient {
 	return &PathsClient{con: con}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *PathsClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // GetEmpty - Get a 200 to test a valid base uri
 func (client *PathsClient) GetEmpty(ctx context.Context, accountName string, options *PathsGetEmptyOptions) (*http.Response, error) {
 	req, err := client.getEmptyCreateRequest(ctx, accountName, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}

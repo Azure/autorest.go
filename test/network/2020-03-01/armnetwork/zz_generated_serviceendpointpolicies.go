@@ -29,11 +29,6 @@ func NewServiceEndpointPoliciesClient(con *armcore.Connection, subscriptionID st
 	return &ServiceEndpointPoliciesClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *ServiceEndpointPoliciesClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // BeginCreateOrUpdate - Creates or updates a service Endpoint Policies.
 func (client *ServiceEndpointPoliciesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, parameters ServiceEndpointPolicy, options *ServiceEndpointPoliciesBeginCreateOrUpdateOptions) (ServiceEndpointPolicyPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, serviceEndpointPolicyName, parameters, options)
@@ -77,7 +72,7 @@ func (client *ServiceEndpointPoliciesClient) createOrUpdate(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -166,7 +161,7 @@ func (client *ServiceEndpointPoliciesClient) delete(ctx context.Context, resourc
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -209,7 +204,7 @@ func (client *ServiceEndpointPoliciesClient) Get(ctx context.Context, resourceGr
 	if err != nil {
 		return ServiceEndpointPolicyResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return ServiceEndpointPolicyResponse{}, err
 	}
@@ -365,7 +360,7 @@ func (client *ServiceEndpointPoliciesClient) UpdateTags(ctx context.Context, res
 	if err != nil {
 		return ServiceEndpointPolicyResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return ServiceEndpointPolicyResponse{}, err
 	}

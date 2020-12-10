@@ -32,11 +32,6 @@ func NewVirtualMachineScaleSetExtensionsClient(con *armcore.Connection, subscrip
 	return &VirtualMachineScaleSetExtensionsClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *VirtualMachineScaleSetExtensionsClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // BeginCreateOrUpdate - The operation to create or update an extension.
 func (client *VirtualMachineScaleSetExtensionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, vmssExtensionName string, extensionParameters VirtualMachineScaleSetExtension, options *VirtualMachineScaleSetExtensionsBeginCreateOrUpdateOptions) (VirtualMachineScaleSetExtensionPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, vmScaleSetName, vmssExtensionName, extensionParameters, options)
@@ -80,7 +75,7 @@ func (client *VirtualMachineScaleSetExtensionsClient) createOrUpdate(ctx context
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -173,7 +168,7 @@ func (client *VirtualMachineScaleSetExtensionsClient) delete(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -219,7 +214,7 @@ func (client *VirtualMachineScaleSetExtensionsClient) Get(ctx context.Context, r
 	if err != nil {
 		return VirtualMachineScaleSetExtensionResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return VirtualMachineScaleSetExtensionResponse{}, err
 	}
@@ -370,7 +365,7 @@ func (client *VirtualMachineScaleSetExtensionsClient) update(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}

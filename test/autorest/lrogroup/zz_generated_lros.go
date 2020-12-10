@@ -26,11 +26,6 @@ func NewLrOSClient(con *Connection) *LrOSClient {
 	return &LrOSClient{con: con}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *LrOSClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // BeginDelete202NoRetry204 - Long running delete request, service returns a 202 to the initial request. Polls return this value until the last poll returns
 // a ‘200’ with ProvisioningState=’Succeeded’
 func (client *LrOSClient) BeginDelete202NoRetry204(ctx context.Context, options *LrOSBeginDelete202NoRetry204Options) (ProductPollerResponse, error) {
@@ -76,7 +71,7 @@ func (client *LrOSClient) delete202NoRetry204(ctx context.Context, options *LrOS
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -161,7 +156,7 @@ func (client *LrOSClient) delete202Retry200(ctx context.Context, options *LrOSBe
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -244,7 +239,7 @@ func (client *LrOSClient) delete204Succeeded(ctx context.Context, options *LrOSB
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -320,7 +315,7 @@ func (client *LrOSClient) deleteAsyncNoHeaderInRetry(ctx context.Context, option
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -396,7 +391,7 @@ func (client *LrOSClient) deleteAsyncNoRetrySucceeded(ctx context.Context, optio
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -472,7 +467,7 @@ func (client *LrOSClient) deleteAsyncRetryFailed(ctx context.Context, options *L
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -548,7 +543,7 @@ func (client *LrOSClient) deleteAsyncRetrySucceeded(ctx context.Context, options
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -624,7 +619,7 @@ func (client *LrOSClient) deleteAsyncRetrycanceled(ctx context.Context, options 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -700,7 +695,7 @@ func (client *LrOSClient) deleteNoHeaderInRetry(ctx context.Context, options *Lr
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -778,7 +773,7 @@ func (client *LrOSClient) deleteProvisioning202Accepted200Succeeded(ctx context.
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -865,7 +860,7 @@ func (client *LrOSClient) deleteProvisioning202DeletingFailed200(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -952,7 +947,7 @@ func (client *LrOSClient) deleteProvisioning202Deletingcanceled200(ctx context.C
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1037,7 +1032,7 @@ func (client *LrOSClient) post200WithPayload(ctx context.Context, options *LrOSB
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1122,7 +1117,7 @@ func (client *LrOSClient) post202List(ctx context.Context, options *LrOSBeginPos
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1206,7 +1201,7 @@ func (client *LrOSClient) post202NoRetry204(ctx context.Context, options *LrOSBe
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1294,7 +1289,7 @@ func (client *LrOSClient) post202Retry200(ctx context.Context, options *LrOSBegi
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1375,7 +1370,7 @@ func (client *LrOSClient) postAsyncNoRetrySucceeded(ctx context.Context, options
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1465,7 +1460,7 @@ func (client *LrOSClient) postAsyncRetryFailed(ctx context.Context, options *LrO
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1546,7 +1541,7 @@ func (client *LrOSClient) postAsyncRetrySucceeded(ctx context.Context, options *
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1636,7 +1631,7 @@ func (client *LrOSClient) postAsyncRetrycanceled(ctx context.Context, options *L
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1715,7 +1710,7 @@ func (client *LrOSClient) postDoubleHeadersFinalAzureHeaderGet(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1802,7 +1797,7 @@ func (client *LrOSClient) postDoubleHeadersFinalAzureHeaderGetDefault(ctx contex
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1887,7 +1882,7 @@ func (client *LrOSClient) postDoubleHeadersFinalLocationGet(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1974,7 +1969,7 @@ func (client *LrOSClient) put200Acceptedcanceled200(ctx context.Context, options
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2060,7 +2055,7 @@ func (client *LrOSClient) put200Succeeded(ctx context.Context, options *LrOSBegi
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2146,7 +2141,7 @@ func (client *LrOSClient) put200SucceededNoState(ctx context.Context, options *L
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2236,7 +2231,7 @@ func (client *LrOSClient) put200UpdatingSucceeded204(ctx context.Context, option
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2326,7 +2321,7 @@ func (client *LrOSClient) put201CreatingFailed200(ctx context.Context, options *
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2416,7 +2411,7 @@ func (client *LrOSClient) put201CreatingSucceeded200(ctx context.Context, option
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2502,7 +2497,7 @@ func (client *LrOSClient) put201Succeeded(ctx context.Context, options *LrOSBegi
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2590,7 +2585,7 @@ func (client *LrOSClient) put202Retry200(ctx context.Context, options *LrOSBegin
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2678,7 +2673,7 @@ func (client *LrOSClient) putAsyncNoHeaderInRetry(ctx context.Context, options *
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2768,7 +2763,7 @@ func (client *LrOSClient) putAsyncNoRetrySucceeded(ctx context.Context, options 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2858,7 +2853,7 @@ func (client *LrOSClient) putAsyncNoRetrycanceled(ctx context.Context, options *
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2944,7 +2939,7 @@ func (client *LrOSClient) putAsyncNonResource(ctx context.Context, options *LrOS
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -3034,7 +3029,7 @@ func (client *LrOSClient) putAsyncRetryFailed(ctx context.Context, options *LrOS
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -3124,7 +3119,7 @@ func (client *LrOSClient) putAsyncRetrySucceeded(ctx context.Context, options *L
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -3210,7 +3205,7 @@ func (client *LrOSClient) putAsyncSubResource(ctx context.Context, options *LrOS
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -3298,7 +3293,7 @@ func (client *LrOSClient) putNoHeaderInRetry(ctx context.Context, options *LrOSB
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -3384,7 +3379,7 @@ func (client *LrOSClient) putNonResource(ctx context.Context, options *LrOSBegin
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -3470,7 +3465,7 @@ func (client *LrOSClient) putSubResource(ctx context.Context, options *LrOSBegin
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}

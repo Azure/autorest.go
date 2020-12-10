@@ -28,11 +28,6 @@ func NewAvailableEndpointServicesClient(con *armcore.Connection, subscriptionID 
 	return &AvailableEndpointServicesClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *AvailableEndpointServicesClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // List - List what values of endpoint services are available for use.
 func (client *AvailableEndpointServicesClient) List(location string, options *AvailableEndpointServicesListOptions) EndpointServicesListResultPager {
 	return &endpointServicesListResultPager{

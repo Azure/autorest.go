@@ -19,18 +19,13 @@ type sparkJobDefinitionClient struct {
 	con *connection
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *sparkJobDefinitionClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // CreateOrUpdateSparkJobDefinition - Creates or updates a Spark Job Definition.
 func (client *sparkJobDefinitionClient) CreateOrUpdateSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string, sparkJobDefinition SparkJobDefinitionResource, options *SparkJobDefinitionCreateOrUpdateSparkJobDefinitionOptions) (SparkJobDefinitionResourceResponse, error) {
 	req, err := client.createOrUpdateSparkJobDefinitionCreateRequest(ctx, sparkJobDefinitionName, sparkJobDefinition, options)
 	if err != nil {
 		return SparkJobDefinitionResourceResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return SparkJobDefinitionResourceResponse{}, err
 	}
@@ -83,7 +78,7 @@ func (client *sparkJobDefinitionClient) debugSparkJobDefinition(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -132,7 +127,7 @@ func (client *sparkJobDefinitionClient) DeleteSparkJobDefinition(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -173,7 +168,7 @@ func (client *sparkJobDefinitionClient) executeSparkJobDefinition(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -223,7 +218,7 @@ func (client *sparkJobDefinitionClient) GetSparkJobDefinition(ctx context.Contex
 	if err != nil {
 		return SparkJobDefinitionResourceResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return SparkJobDefinitionResourceResponse{}, err
 	}
@@ -325,7 +320,7 @@ func (client *sparkJobDefinitionClient) renameSparkJobDefinition(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}

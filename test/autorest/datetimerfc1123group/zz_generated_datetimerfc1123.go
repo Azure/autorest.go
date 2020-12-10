@@ -25,18 +25,13 @@ func NewDatetimerfc1123Client(con *Connection) *Datetimerfc1123Client {
 	return &Datetimerfc1123Client{con: con}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *Datetimerfc1123Client) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // GetInvalid - Get invalid datetime value
 func (client *Datetimerfc1123Client) GetInvalid(ctx context.Context, options *Datetimerfc1123GetInvalidOptions) (TimeResponse, error) {
 	req, err := client.getInvalidCreateRequest(ctx, options)
 	if err != nil {
 		return TimeResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return TimeResponse{}, err
 	}
@@ -82,7 +77,7 @@ func (client *Datetimerfc1123Client) GetNull(ctx context.Context, options *Datet
 	if err != nil {
 		return TimeResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return TimeResponse{}, err
 	}
@@ -128,7 +123,7 @@ func (client *Datetimerfc1123Client) GetOverflow(ctx context.Context, options *D
 	if err != nil {
 		return TimeResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return TimeResponse{}, err
 	}
@@ -174,7 +169,7 @@ func (client *Datetimerfc1123Client) GetUTCLowercaseMaxDateTime(ctx context.Cont
 	if err != nil {
 		return TimeResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return TimeResponse{}, err
 	}
@@ -220,7 +215,7 @@ func (client *Datetimerfc1123Client) GetUTCMinDateTime(ctx context.Context, opti
 	if err != nil {
 		return TimeResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return TimeResponse{}, err
 	}
@@ -266,7 +261,7 @@ func (client *Datetimerfc1123Client) GetUTCUppercaseMaxDateTime(ctx context.Cont
 	if err != nil {
 		return TimeResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return TimeResponse{}, err
 	}
@@ -312,7 +307,7 @@ func (client *Datetimerfc1123Client) GetUnderflow(ctx context.Context, options *
 	if err != nil {
 		return TimeResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return TimeResponse{}, err
 	}
@@ -358,7 +353,7 @@ func (client *Datetimerfc1123Client) PutUTCMaxDateTime(ctx context.Context, date
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -396,7 +391,7 @@ func (client *Datetimerfc1123Client) PutUTCMinDateTime(ctx context.Context, date
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}

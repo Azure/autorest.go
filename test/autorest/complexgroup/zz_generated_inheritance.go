@@ -24,18 +24,13 @@ func NewInheritanceClient(con *Connection) *InheritanceClient {
 	return &InheritanceClient{con: con}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *InheritanceClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // GetValid - Get complex types that extend others
 func (client *InheritanceClient) GetValid(ctx context.Context, options *InheritanceGetValidOptions) (SiameseResponse, error) {
 	req, err := client.getValidCreateRequest(ctx, options)
 	if err != nil {
 		return SiameseResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return SiameseResponse{}, err
 	}
@@ -81,7 +76,7 @@ func (client *InheritanceClient) PutValid(ctx context.Context, complexBody Siame
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}

@@ -20,18 +20,13 @@ type workspaceGitRepoManagementClient struct {
 	con *connection
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *workspaceGitRepoManagementClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // GetGitHubAccessToken - Get the GitHub access token.
 func (client *workspaceGitRepoManagementClient) GetGitHubAccessToken(ctx context.Context, gitHubAccessTokenRequest GitHubAccessTokenRequest, options *WorkspaceGitRepoManagementGetGitHubAccessTokenOptions) (GitHubAccessTokenResponseResponse, error) {
 	req, err := client.getGitHubAccessTokenCreateRequest(ctx, gitHubAccessTokenRequest, options)
 	if err != nil {
 		return GitHubAccessTokenResponseResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return GitHubAccessTokenResponseResponse{}, err
 	}

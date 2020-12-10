@@ -24,18 +24,13 @@ func NewPetsClient(con *Connection) *PetsClient {
 	return &PetsClient{con: con}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *PetsClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // CreateApInProperties - Create a Pet which contains more properties than what is defined.
 func (client *PetsClient) CreateApInProperties(ctx context.Context, createParameters PetApInProperties, options *PetsCreateApInPropertiesOptions) (PetApInPropertiesResponse, error) {
 	req, err := client.createApInPropertiesCreateRequest(ctx, createParameters, options)
 	if err != nil {
 		return PetApInPropertiesResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return PetApInPropertiesResponse{}, err
 	}
@@ -81,7 +76,7 @@ func (client *PetsClient) CreateApInPropertiesWithApstring(ctx context.Context, 
 	if err != nil {
 		return PetApInPropertiesWithApstringResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return PetApInPropertiesWithApstringResponse{}, err
 	}
@@ -127,7 +122,7 @@ func (client *PetsClient) CreateApObject(ctx context.Context, createParameters P
 	if err != nil {
 		return PetApObjectResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return PetApObjectResponse{}, err
 	}
@@ -173,7 +168,7 @@ func (client *PetsClient) CreateApString(ctx context.Context, createParameters P
 	if err != nil {
 		return PetApStringResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return PetApStringResponse{}, err
 	}
@@ -219,7 +214,7 @@ func (client *PetsClient) CreateApTrue(ctx context.Context, createParameters Pet
 	if err != nil {
 		return PetApTrueResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return PetApTrueResponse{}, err
 	}
@@ -265,7 +260,7 @@ func (client *PetsClient) CreateCatApTrue(ctx context.Context, createParameters 
 	if err != nil {
 		return CatApTrueResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return CatApTrueResponse{}, err
 	}

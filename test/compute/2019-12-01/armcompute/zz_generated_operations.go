@@ -28,18 +28,13 @@ func NewOperationsClient(con *armcore.Connection) *OperationsClient {
 	return &OperationsClient{con: con}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *OperationsClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // List - Gets a list of compute operations.
 func (client *OperationsClient) List(ctx context.Context, options *OperationsListOptions) (ComputeOperationListResultResponse, error) {
 	req, err := client.listCreateRequest(ctx, options)
 	if err != nil {
 		return ComputeOperationListResultResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return ComputeOperationListResultResponse{}, err
 	}

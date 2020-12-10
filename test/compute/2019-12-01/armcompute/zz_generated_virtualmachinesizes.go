@@ -31,18 +31,13 @@ func NewVirtualMachineSizesClient(con *armcore.Connection, subscriptionID string
 	return &VirtualMachineSizesClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *VirtualMachineSizesClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // List - This API is deprecated. Use Resources Skus [https://docs.microsoft.com/en-us/rest/api/compute/resourceskus/list]
 func (client *VirtualMachineSizesClient) List(ctx context.Context, location string, options *VirtualMachineSizesListOptions) (VirtualMachineSizeListResultResponse, error) {
 	req, err := client.listCreateRequest(ctx, location, options)
 	if err != nil {
 		return VirtualMachineSizeListResultResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return VirtualMachineSizeListResultResponse{}, err
 	}

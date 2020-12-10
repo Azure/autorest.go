@@ -28,18 +28,13 @@ func NewMediaTypesClient(con *Connection) *MediaTypesClient {
 	return &MediaTypesClient{con: con}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *MediaTypesClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // AnalyzeBody - Analyze body, that could be different media types.
 func (client *MediaTypesClient) AnalyzeBody(ctx context.Context, contentType ContentType, input azcore.ReadSeekCloser, options *MediaTypesClientAnalyzeBodyOptions) (StringResponse, error) {
 	req, err := client.analyzeBodyCreateRequest(ctx, contentType, input, options)
 	if err != nil {
 		return StringResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return StringResponse{}, err
 	}
@@ -89,7 +84,7 @@ func (client *MediaTypesClient) AnalyzeBodyWithSourcePath(ctx context.Context, o
 	if err != nil {
 		return StringResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return StringResponse{}, err
 	}
@@ -141,7 +136,7 @@ func (client *MediaTypesClient) ContentTypeWithEncoding(ctx context.Context, inp
 	if err != nil {
 		return StringResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return StringResponse{}, err
 	}

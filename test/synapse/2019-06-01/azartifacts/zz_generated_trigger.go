@@ -19,18 +19,13 @@ type triggerClient struct {
 	con *connection
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *triggerClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // CreateOrUpdateTrigger - Creates or updates a trigger.
 func (client *triggerClient) createOrUpdateTrigger(ctx context.Context, triggerName string, trigger TriggerResource, options *TriggerBeginCreateOrUpdateTriggerOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateTriggerCreateRequest(ctx, triggerName, trigger, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -83,7 +78,7 @@ func (client *triggerClient) deleteTrigger(ctx context.Context, triggerName stri
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -124,7 +119,7 @@ func (client *triggerClient) GetEventSubscriptionStatus(ctx context.Context, tri
 	if err != nil {
 		return TriggerSubscriptionOperationStatusResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return TriggerSubscriptionOperationStatusResponse{}, err
 	}
@@ -174,7 +169,7 @@ func (client *triggerClient) GetTrigger(ctx context.Context, triggerName string,
 	if err != nil {
 		return TriggerResourceResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return TriggerResourceResponse{}, err
 	}
@@ -276,7 +271,7 @@ func (client *triggerClient) startTrigger(ctx context.Context, triggerName strin
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -317,7 +312,7 @@ func (client *triggerClient) stopTrigger(ctx context.Context, triggerName string
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -358,7 +353,7 @@ func (client *triggerClient) subscribeTriggerToEvents(ctx context.Context, trigg
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -408,7 +403,7 @@ func (client *triggerClient) unsubscribeTriggerFromEvents(ctx context.Context, t
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}

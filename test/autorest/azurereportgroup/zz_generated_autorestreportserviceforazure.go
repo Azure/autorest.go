@@ -24,18 +24,13 @@ func NewAutoRestReportServiceForAzureClient(con *Connection) *AutoRestReportServ
 	return &AutoRestReportServiceForAzureClient{con: con}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *AutoRestReportServiceForAzureClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // GetReport - Get test coverage report
 func (client *AutoRestReportServiceForAzureClient) GetReport(ctx context.Context, options *AutoRestReportServiceForAzureGetReportOptions) (MapOfInt32Response, error) {
 	req, err := client.getReportCreateRequest(ctx, options)
 	if err != nil {
 		return MapOfInt32Response{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MapOfInt32Response{}, err
 	}

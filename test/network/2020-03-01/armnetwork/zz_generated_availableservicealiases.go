@@ -28,11 +28,6 @@ func NewAvailableServiceAliasesClient(con *armcore.Connection, subscriptionID st
 	return &AvailableServiceAliasesClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *AvailableServiceAliasesClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // List - Gets all available service aliases for this subscription in this region.
 func (client *AvailableServiceAliasesClient) List(location string, options *AvailableServiceAliasesListOptions) AvailableServiceAliasesResultPager {
 	return &availableServiceAliasesResultPager{

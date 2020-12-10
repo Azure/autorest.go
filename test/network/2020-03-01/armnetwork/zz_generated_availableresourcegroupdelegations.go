@@ -28,11 +28,6 @@ func NewAvailableResourceGroupDelegationsClient(con *armcore.Connection, subscri
 	return &AvailableResourceGroupDelegationsClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *AvailableResourceGroupDelegationsClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // List - Gets all of the available subnet delegations for this resource group in this region.
 func (client *AvailableResourceGroupDelegationsClient) List(location string, resourceGroupName string, options *AvailableResourceGroupDelegationsListOptions) AvailableDelegationsResultPager {
 	return &availableDelegationsResultPager{

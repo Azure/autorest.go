@@ -19,18 +19,13 @@ type serviceClient struct {
 	con *connection
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *serviceClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // GetAccountInfo - Returns the sku name and account kind
 func (client *serviceClient) GetAccountInfo(ctx context.Context, options *ServiceGetAccountInfoOptions) (ServiceGetAccountInfoResponse, error) {
 	req, err := client.getAccountInfoCreateRequest(ctx, options)
 	if err != nil {
 		return ServiceGetAccountInfoResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return ServiceGetAccountInfoResponse{}, err
 	}
@@ -107,7 +102,7 @@ func (client *serviceClient) GetProperties(ctx context.Context, options *Service
 	if err != nil {
 		return StorageServicePropertiesResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return StorageServicePropertiesResponse{}, err
 	}
@@ -174,7 +169,7 @@ func (client *serviceClient) GetStatistics(ctx context.Context, options *Service
 	if err != nil {
 		return StorageServiceStatsResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return StorageServiceStatsResponse{}, err
 	}
@@ -247,7 +242,7 @@ func (client *serviceClient) GetUserDelegationKey(ctx context.Context, keyInfo K
 	if err != nil {
 		return UserDelegationKeyResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return UserDelegationKeyResponse{}, err
 	}
@@ -398,7 +393,7 @@ func (client *serviceClient) SetProperties(ctx context.Context, storageServicePr
 	if err != nil {
 		return ServiceSetPropertiesResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return ServiceSetPropertiesResponse{}, err
 	}
@@ -460,7 +455,7 @@ func (client *serviceClient) SubmitBatch(ctx context.Context, contentLength int6
 	if err != nil {
 		return ServiceSubmitBatchResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return ServiceSubmitBatchResponse{}, err
 	}

@@ -26,11 +26,6 @@ func NewLrosaDsClient(con *Connection) *LrosaDsClient {
 	return &LrosaDsClient{con: con}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *LrosaDsClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // BeginDelete202NonRetry400 - Long running delete request, service returns a 202 with a location header
 func (client *LrosaDsClient) BeginDelete202NonRetry400(ctx context.Context, options *LrosaDsBeginDelete202NonRetry400Options) (HTTPPollerResponse, error) {
 	resp, err := client.delete202NonRetry400(ctx, options)
@@ -74,7 +69,7 @@ func (client *LrosaDsClient) delete202NonRetry400(ctx context.Context, options *
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -150,7 +145,7 @@ func (client *LrosaDsClient) delete202RetryInvalidHeader(ctx context.Context, op
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -224,7 +219,7 @@ func (client *LrosaDsClient) delete204Succeeded(ctx context.Context, options *Lr
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -300,7 +295,7 @@ func (client *LrosaDsClient) deleteAsyncRelativeRetry400(ctx context.Context, op
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -376,7 +371,7 @@ func (client *LrosaDsClient) deleteAsyncRelativeRetryInvalidHeader(ctx context.C
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -452,7 +447,7 @@ func (client *LrosaDsClient) deleteAsyncRelativeRetryInvalidJSONPolling(ctx cont
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -528,7 +523,7 @@ func (client *LrosaDsClient) deleteAsyncRelativeRetryNoStatus(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -602,7 +597,7 @@ func (client *LrosaDsClient) deleteNonRetry400(ctx context.Context, options *Lro
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -676,7 +671,7 @@ func (client *LrosaDsClient) post202NoLocation(ctx context.Context, options *Lro
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -753,7 +748,7 @@ func (client *LrosaDsClient) post202NonRetry400(ctx context.Context, options *Lr
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -830,7 +825,7 @@ func (client *LrosaDsClient) post202RetryInvalidHeader(ctx context.Context, opti
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -909,7 +904,7 @@ func (client *LrosaDsClient) postAsyncRelativeRetry400(ctx context.Context, opti
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -990,7 +985,7 @@ func (client *LrosaDsClient) postAsyncRelativeRetryInvalidHeader(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1071,7 +1066,7 @@ func (client *LrosaDsClient) postAsyncRelativeRetryInvalidJSONPolling(ctx contex
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1152,7 +1147,7 @@ func (client *LrosaDsClient) postAsyncRelativeRetryNoPayload(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1229,7 +1224,7 @@ func (client *LrosaDsClient) postNonRetry400(ctx context.Context, options *Lrosa
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1306,7 +1301,7 @@ func (client *LrosaDsClient) put200InvalidJSON(ctx context.Context, options *Lro
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1394,7 +1389,7 @@ func (client *LrosaDsClient) putAsyncRelativeRetry400(ctx context.Context, optio
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1482,7 +1477,7 @@ func (client *LrosaDsClient) putAsyncRelativeRetryInvalidHeader(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1572,7 +1567,7 @@ func (client *LrosaDsClient) putAsyncRelativeRetryInvalidJSONPolling(ctx context
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1662,7 +1657,7 @@ func (client *LrosaDsClient) putAsyncRelativeRetryNoStatus(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1752,7 +1747,7 @@ func (client *LrosaDsClient) putAsyncRelativeRetryNoStatusPayload(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1838,7 +1833,7 @@ func (client *LrosaDsClient) putError201NoProvisioningStatePayload(ctx context.C
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1924,7 +1919,7 @@ func (client *LrosaDsClient) putNonRetry201Creating400(ctx context.Context, opti
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2011,7 +2006,7 @@ func (client *LrosaDsClient) putNonRetry201Creating400InvalidJSON(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2097,7 +2092,7 @@ func (client *LrosaDsClient) putNonRetry400(ctx context.Context, options *LrosaD
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}

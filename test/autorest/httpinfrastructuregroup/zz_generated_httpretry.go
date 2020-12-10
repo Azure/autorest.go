@@ -24,18 +24,13 @@ func NewHTTPRetryClient(con *Connection) *HTTPRetryClient {
 	return &HTTPRetryClient{con: con}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *HTTPRetryClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // Delete503 - Return 503 status code, then 200 after retry
 func (client *HTTPRetryClient) Delete503(ctx context.Context, options *HTTPRetryDelete503Options) (*http.Response, error) {
 	req, err := client.delete503CreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -72,7 +67,7 @@ func (client *HTTPRetryClient) Get502(ctx context.Context, options *HTTPRetryGet
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -109,7 +104,7 @@ func (client *HTTPRetryClient) Head408(ctx context.Context, options *HTTPRetryHe
 	if err != nil {
 		return BooleanResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return BooleanResponse{}, err
 	}
@@ -149,7 +144,7 @@ func (client *HTTPRetryClient) Options502(ctx context.Context, options *HTTPRetr
 	if err != nil {
 		return BoolResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return BoolResponse{}, err
 	}
@@ -195,7 +190,7 @@ func (client *HTTPRetryClient) Patch500(ctx context.Context, options *HTTPRetryP
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -232,7 +227,7 @@ func (client *HTTPRetryClient) Patch504(ctx context.Context, options *HTTPRetryP
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -269,7 +264,7 @@ func (client *HTTPRetryClient) Post503(ctx context.Context, options *HTTPRetryPo
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -306,7 +301,7 @@ func (client *HTTPRetryClient) Put500(ctx context.Context, options *HTTPRetryPut
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -343,7 +338,7 @@ func (client *HTTPRetryClient) Put504(ctx context.Context, options *HTTPRetryPut
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}

@@ -31,18 +31,13 @@ func NewVirtualMachineRunCommandsClient(con *armcore.Connection, subscriptionID 
 	return &VirtualMachineRunCommandsClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *VirtualMachineRunCommandsClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // Get - Gets specific run command for a subscription in a location.
 func (client *VirtualMachineRunCommandsClient) Get(ctx context.Context, location string, commandId string, options *VirtualMachineRunCommandsGetOptions) (RunCommandDocumentResponse, error) {
 	req, err := client.getCreateRequest(ctx, location, commandId, options)
 	if err != nil {
 		return RunCommandDocumentResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return RunCommandDocumentResponse{}, err
 	}

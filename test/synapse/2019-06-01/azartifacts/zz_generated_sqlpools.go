@@ -19,18 +19,13 @@ type sqlPoolsClient struct {
 	con *connection
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *sqlPoolsClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // Get - Get Sql Pool
 func (client *sqlPoolsClient) Get(ctx context.Context, sqlPoolName string, options *SQLPoolsGetOptions) (SQLPoolResponse, error) {
 	req, err := client.getCreateRequest(ctx, sqlPoolName, options)
 	if err != nil {
 		return SQLPoolResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return SQLPoolResponse{}, err
 	}
@@ -80,7 +75,7 @@ func (client *sqlPoolsClient) List(ctx context.Context, options *SQLPoolsListOpt
 	if err != nil {
 		return SQLPoolInfoListResultResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return SQLPoolInfoListResultResponse{}, err
 	}

@@ -17,18 +17,13 @@ type workspaceClient struct {
 	con *connection
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *workspaceClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // Get - Get Workspace
 func (client *workspaceClient) Get(ctx context.Context, options *WorkspaceGetOptions) (WorkspaceResponse, error) {
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
 		return WorkspaceResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return WorkspaceResponse{}, err
 	}

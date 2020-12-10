@@ -24,18 +24,13 @@ func NewHTTPSuccessClient(con *Connection) *HTTPSuccessClient {
 	return &HTTPSuccessClient{con: con}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *HTTPSuccessClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // Delete200 - Delete simple boolean value true returns 200
 func (client *HTTPSuccessClient) Delete200(ctx context.Context, options *HTTPSuccessDelete200Options) (*http.Response, error) {
 	req, err := client.delete200CreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -72,7 +67,7 @@ func (client *HTTPSuccessClient) Delete202(ctx context.Context, options *HTTPSuc
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -109,7 +104,7 @@ func (client *HTTPSuccessClient) Delete204(ctx context.Context, options *HTTPSuc
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -146,7 +141,7 @@ func (client *HTTPSuccessClient) Get200(ctx context.Context, options *HTTPSucces
 	if err != nil {
 		return BoolResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return BoolResponse{}, err
 	}
@@ -192,7 +187,7 @@ func (client *HTTPSuccessClient) Head200(ctx context.Context, options *HTTPSucce
 	if err != nil {
 		return BooleanResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return BooleanResponse{}, err
 	}
@@ -232,7 +227,7 @@ func (client *HTTPSuccessClient) Head204(ctx context.Context, options *HTTPSucce
 	if err != nil {
 		return BooleanResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return BooleanResponse{}, err
 	}
@@ -272,7 +267,7 @@ func (client *HTTPSuccessClient) Head404(ctx context.Context, options *HTTPSucce
 	if err != nil {
 		return BooleanResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return BooleanResponse{}, err
 	}
@@ -312,7 +307,7 @@ func (client *HTTPSuccessClient) Options200(ctx context.Context, options *HTTPSu
 	if err != nil {
 		return BoolResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return BoolResponse{}, err
 	}
@@ -358,7 +353,7 @@ func (client *HTTPSuccessClient) Patch200(ctx context.Context, options *HTTPSucc
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -395,7 +390,7 @@ func (client *HTTPSuccessClient) Patch202(ctx context.Context, options *HTTPSucc
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -432,7 +427,7 @@ func (client *HTTPSuccessClient) Patch204(ctx context.Context, options *HTTPSucc
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -469,7 +464,7 @@ func (client *HTTPSuccessClient) Post200(ctx context.Context, options *HTTPSucce
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -506,7 +501,7 @@ func (client *HTTPSuccessClient) Post201(ctx context.Context, options *HTTPSucce
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -543,7 +538,7 @@ func (client *HTTPSuccessClient) Post202(ctx context.Context, options *HTTPSucce
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -580,7 +575,7 @@ func (client *HTTPSuccessClient) Post204(ctx context.Context, options *HTTPSucce
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -617,7 +612,7 @@ func (client *HTTPSuccessClient) Put200(ctx context.Context, options *HTTPSucces
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -654,7 +649,7 @@ func (client *HTTPSuccessClient) Put201(ctx context.Context, options *HTTPSucces
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -691,7 +686,7 @@ func (client *HTTPSuccessClient) Put202(ctx context.Context, options *HTTPSucces
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -728,7 +723,7 @@ func (client *HTTPSuccessClient) Put204(ctx context.Context, options *HTTPSucces
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}

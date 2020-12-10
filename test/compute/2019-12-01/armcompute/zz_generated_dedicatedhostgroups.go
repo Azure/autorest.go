@@ -31,11 +31,6 @@ func NewDedicatedHostGroupsClient(con *armcore.Connection, subscriptionID string
 	return &DedicatedHostGroupsClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *DedicatedHostGroupsClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // CreateOrUpdate - Create or update a dedicated host group. For details of Dedicated Host and Dedicated Host Groups please see Dedicated Host Documentation
 // [https://go.microsoft.com/fwlink/?linkid=2082596]
 func (client *DedicatedHostGroupsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, hostGroupName string, parameters DedicatedHostGroup, options *DedicatedHostGroupsCreateOrUpdateOptions) (DedicatedHostGroupResponse, error) {
@@ -43,7 +38,7 @@ func (client *DedicatedHostGroupsClient) CreateOrUpdate(ctx context.Context, res
 	if err != nil {
 		return DedicatedHostGroupResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return DedicatedHostGroupResponse{}, err
 	}
@@ -98,7 +93,7 @@ func (client *DedicatedHostGroupsClient) Delete(ctx context.Context, resourceGro
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -143,7 +138,7 @@ func (client *DedicatedHostGroupsClient) Get(ctx context.Context, resourceGroupN
 	if err != nil {
 		return DedicatedHostGroupResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return DedicatedHostGroupResponse{}, err
 	}
@@ -307,7 +302,7 @@ func (client *DedicatedHostGroupsClient) Update(ctx context.Context, resourceGro
 	if err != nil {
 		return DedicatedHostGroupResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return DedicatedHostGroupResponse{}, err
 	}

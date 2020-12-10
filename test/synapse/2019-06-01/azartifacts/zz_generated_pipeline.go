@@ -20,18 +20,13 @@ type pipelineClient struct {
 	con *connection
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *pipelineClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // CreateOrUpdatePipeline - Creates or updates a pipeline.
 func (client *pipelineClient) createOrUpdatePipeline(ctx context.Context, pipelineName string, pipeline PipelineResource, options *PipelineBeginCreateOrUpdatePipelineOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdatePipelineCreateRequest(ctx, pipelineName, pipeline, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -84,7 +79,7 @@ func (client *pipelineClient) CreatePipelineRun(ctx context.Context, pipelineNam
 	if err != nil {
 		return CreateRunResponseResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return CreateRunResponseResponse{}, err
 	}
@@ -146,7 +141,7 @@ func (client *pipelineClient) deletePipeline(ctx context.Context, pipelineName s
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -187,7 +182,7 @@ func (client *pipelineClient) GetPipeline(ctx context.Context, pipelineName stri
 	if err != nil {
 		return PipelineResourceResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return PipelineResourceResponse{}, err
 	}
@@ -289,7 +284,7 @@ func (client *pipelineClient) renamePipeline(ctx context.Context, pipelineName s
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}

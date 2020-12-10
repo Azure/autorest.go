@@ -32,11 +32,6 @@ func NewPagingClient(con *Connection) *PagingClient {
 	return &PagingClient{con: con}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *PagingClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // GetMultiplePages - A paging operation that includes a nextLink that has 10 pages
 func (client *PagingClient) GetMultiplePages(options *PagingGetMultiplePagesOptions) ProductResultPager {
 	return &productResultPager{
@@ -356,7 +351,7 @@ func (client *PagingClient) getMultiplePagesLro(ctx context.Context, options *Pa
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -622,7 +617,7 @@ func (client *PagingClient) GetNullNextLinkNamePages(ctx context.Context, option
 	if err != nil {
 		return ProductResultResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return ProductResultResponse{}, err
 	}

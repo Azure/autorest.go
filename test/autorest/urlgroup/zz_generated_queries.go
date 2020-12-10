@@ -28,18 +28,13 @@ func NewQueriesClient(con *Connection) *QueriesClient {
 	return &QueriesClient{con: con}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *QueriesClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // ArrayStringCSVEmpty - Get an empty array [] of string using the csv-array format
 func (client *QueriesClient) ArrayStringCSVEmpty(ctx context.Context, options *QueriesArrayStringCSVEmptyOptions) (*http.Response, error) {
 	req, err := client.arrayStringCsvEmptyCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -81,7 +76,7 @@ func (client *QueriesClient) ArrayStringCSVNull(ctx context.Context, options *Qu
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -123,7 +118,7 @@ func (client *QueriesClient) ArrayStringCSVValid(ctx context.Context, options *Q
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -166,7 +161,7 @@ func (client *QueriesClient) ArrayStringNoCollectionFormatEmpty(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -208,7 +203,7 @@ func (client *QueriesClient) ArrayStringPipesValid(ctx context.Context, options 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -250,7 +245,7 @@ func (client *QueriesClient) ArrayStringSsvValid(ctx context.Context, options *Q
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -292,7 +287,7 @@ func (client *QueriesClient) ArrayStringTsvValid(ctx context.Context, options *Q
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -334,7 +329,7 @@ func (client *QueriesClient) ByteEmpty(ctx context.Context, options *QueriesByte
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -374,7 +369,7 @@ func (client *QueriesClient) ByteMultiByte(ctx context.Context, options *Queries
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -416,7 +411,7 @@ func (client *QueriesClient) ByteNull(ctx context.Context, options *QueriesByteN
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -458,7 +453,7 @@ func (client *QueriesClient) DateNull(ctx context.Context, options *QueriesDateN
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -500,7 +495,7 @@ func (client *QueriesClient) DateTimeNull(ctx context.Context, options *QueriesD
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -542,7 +537,7 @@ func (client *QueriesClient) DateTimeValid(ctx context.Context, options *Queries
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -582,7 +577,7 @@ func (client *QueriesClient) DateValid(ctx context.Context, options *QueriesDate
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -622,7 +617,7 @@ func (client *QueriesClient) DoubleDecimalNegative(ctx context.Context, options 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -662,7 +657,7 @@ func (client *QueriesClient) DoubleDecimalPositive(ctx context.Context, options 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -702,7 +697,7 @@ func (client *QueriesClient) DoubleNull(ctx context.Context, options *QueriesDou
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -744,7 +739,7 @@ func (client *QueriesClient) EnumNull(ctx context.Context, options *QueriesEnumN
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -786,7 +781,7 @@ func (client *QueriesClient) EnumValid(ctx context.Context, options *QueriesEnum
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -828,7 +823,7 @@ func (client *QueriesClient) FloatNull(ctx context.Context, options *QueriesFloa
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -870,7 +865,7 @@ func (client *QueriesClient) FloatScientificNegative(ctx context.Context, option
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -910,7 +905,7 @@ func (client *QueriesClient) FloatScientificPositive(ctx context.Context, option
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -950,7 +945,7 @@ func (client *QueriesClient) GetBooleanFalse(ctx context.Context, options *Queri
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -990,7 +985,7 @@ func (client *QueriesClient) GetBooleanNull(ctx context.Context, options *Querie
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1032,7 +1027,7 @@ func (client *QueriesClient) GetBooleanTrue(ctx context.Context, options *Querie
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1072,7 +1067,7 @@ func (client *QueriesClient) GetIntNegativeOneMillion(ctx context.Context, optio
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1112,7 +1107,7 @@ func (client *QueriesClient) GetIntNull(ctx context.Context, options *QueriesGet
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1154,7 +1149,7 @@ func (client *QueriesClient) GetIntOneMillion(ctx context.Context, options *Quer
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1194,7 +1189,7 @@ func (client *QueriesClient) GetLongNull(ctx context.Context, options *QueriesGe
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1236,7 +1231,7 @@ func (client *QueriesClient) GetNegativeTenBillion(ctx context.Context, options 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1276,7 +1271,7 @@ func (client *QueriesClient) GetTenBillion(ctx context.Context, options *Queries
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1316,7 +1311,7 @@ func (client *QueriesClient) StringEmpty(ctx context.Context, options *QueriesSt
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1356,7 +1351,7 @@ func (client *QueriesClient) StringNull(ctx context.Context, options *QueriesStr
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1398,7 +1393,7 @@ func (client *QueriesClient) StringURLEncoded(ctx context.Context, options *Quer
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1438,7 +1433,7 @@ func (client *QueriesClient) StringUnicode(ctx context.Context, options *Queries
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}

@@ -29,11 +29,6 @@ func NewVpnServerConfigurationsAssociatedWithVirtualWanClient(con *armcore.Conne
 	return &VpnServerConfigurationsAssociatedWithVirtualWanClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *VpnServerConfigurationsAssociatedWithVirtualWanClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // BeginList - Gives the list of VpnServerConfigurations associated with Virtual Wan in a resource group.
 func (client *VpnServerConfigurationsAssociatedWithVirtualWanClient) BeginList(ctx context.Context, resourceGroupName string, virtualWanName string, options *VpnServerConfigurationsAssociatedWithVirtualWanBeginListOptions) (VpnServerConfigurationsResponsePollerResponse, error) {
 	resp, err := client.list(ctx, resourceGroupName, virtualWanName, options)
@@ -77,7 +72,7 @@ func (client *VpnServerConfigurationsAssociatedWithVirtualWanClient) list(ctx co
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}

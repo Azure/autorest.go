@@ -30,18 +30,13 @@ func NewImplicitClient(con *Connection, requiredGlobalPath string, requiredGloba
 	return &ImplicitClient{con: con, requiredGlobalPath: requiredGlobalPath, requiredGlobalQuery: requiredGlobalQuery, optionalGlobalQuery: optionalGlobalQuery}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *ImplicitClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // GetOptionalGlobalQuery - Test implicitly optional query parameter
 func (client *ImplicitClient) GetOptionalGlobalQuery(ctx context.Context, options *ImplicitGetOptionalGlobalQueryOptions) (*http.Response, error) {
 	req, err := client.getOptionalGlobalQueryCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -83,7 +78,7 @@ func (client *ImplicitClient) GetRequiredGlobalPath(ctx context.Context, options
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -121,7 +116,7 @@ func (client *ImplicitClient) GetRequiredGlobalQuery(ctx context.Context, option
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -161,7 +156,7 @@ func (client *ImplicitClient) GetRequiredPath(ctx context.Context, pathParameter
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -199,7 +194,7 @@ func (client *ImplicitClient) PutOptionalBody(ctx context.Context, options *Impl
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -239,7 +234,7 @@ func (client *ImplicitClient) PutOptionalHeader(ctx context.Context, options *Im
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -279,7 +274,7 @@ func (client *ImplicitClient) PutOptionalQuery(ctx context.Context, options *Imp
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}

@@ -27,18 +27,13 @@ func NewHeaderClient(con *Connection) *HeaderClient {
 	return &HeaderClient{con: con}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *HeaderClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // CustomRequestID - Send x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 in the header of the request
 func (client *HeaderClient) CustomRequestID(ctx context.Context, options *HeaderCustomRequestIDOptions) (*http.Response, error) {
 	req, err := client.customRequestIdCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -75,7 +70,7 @@ func (client *HeaderClient) ParamBool(ctx context.Context, scenario string, valu
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -114,7 +109,7 @@ func (client *HeaderClient) ParamByte(ctx context.Context, scenario string, valu
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -153,7 +148,7 @@ func (client *HeaderClient) ParamDate(ctx context.Context, scenario string, valu
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -192,7 +187,7 @@ func (client *HeaderClient) ParamDatetime(ctx context.Context, scenario string, 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -232,7 +227,7 @@ func (client *HeaderClient) ParamDatetimeRFC1123(ctx context.Context, scenario s
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -273,7 +268,7 @@ func (client *HeaderClient) ParamDouble(ctx context.Context, scenario string, va
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -312,7 +307,7 @@ func (client *HeaderClient) ParamDuration(ctx context.Context, scenario string, 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -351,7 +346,7 @@ func (client *HeaderClient) ParamEnum(ctx context.Context, scenario string, opti
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -392,7 +387,7 @@ func (client *HeaderClient) ParamExistingKey(ctx context.Context, userAgent stri
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -430,7 +425,7 @@ func (client *HeaderClient) ParamFloat(ctx context.Context, scenario string, val
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -469,7 +464,7 @@ func (client *HeaderClient) ParamInteger(ctx context.Context, scenario string, v
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -508,7 +503,7 @@ func (client *HeaderClient) ParamLong(ctx context.Context, scenario string, valu
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -547,7 +542,7 @@ func (client *HeaderClient) ParamProtectedKey(ctx context.Context, contentType s
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -586,7 +581,7 @@ func (client *HeaderClient) ParamString(ctx context.Context, scenario string, op
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -627,7 +622,7 @@ func (client *HeaderClient) ResponseBool(ctx context.Context, scenario string, o
 	if err != nil {
 		return HeaderResponseBoolResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return HeaderResponseBoolResponse{}, err
 	}
@@ -678,7 +673,7 @@ func (client *HeaderClient) ResponseByte(ctx context.Context, scenario string, o
 	if err != nil {
 		return HeaderResponseByteResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return HeaderResponseByteResponse{}, err
 	}
@@ -729,7 +724,7 @@ func (client *HeaderClient) ResponseDate(ctx context.Context, scenario string, o
 	if err != nil {
 		return HeaderResponseDateResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return HeaderResponseDateResponse{}, err
 	}
@@ -780,7 +775,7 @@ func (client *HeaderClient) ResponseDatetime(ctx context.Context, scenario strin
 	if err != nil {
 		return HeaderResponseDatetimeResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return HeaderResponseDatetimeResponse{}, err
 	}
@@ -831,7 +826,7 @@ func (client *HeaderClient) ResponseDatetimeRFC1123(ctx context.Context, scenari
 	if err != nil {
 		return HeaderResponseDatetimeRFC1123Response{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return HeaderResponseDatetimeRFC1123Response{}, err
 	}
@@ -882,7 +877,7 @@ func (client *HeaderClient) ResponseDouble(ctx context.Context, scenario string,
 	if err != nil {
 		return HeaderResponseDoubleResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return HeaderResponseDoubleResponse{}, err
 	}
@@ -933,7 +928,7 @@ func (client *HeaderClient) ResponseDuration(ctx context.Context, scenario strin
 	if err != nil {
 		return HeaderResponseDurationResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return HeaderResponseDurationResponse{}, err
 	}
@@ -980,7 +975,7 @@ func (client *HeaderClient) ResponseEnum(ctx context.Context, scenario string, o
 	if err != nil {
 		return HeaderResponseEnumResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return HeaderResponseEnumResponse{}, err
 	}
@@ -1027,7 +1022,7 @@ func (client *HeaderClient) ResponseExistingKey(ctx context.Context, options *He
 	if err != nil {
 		return HeaderResponseExistingKeyResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return HeaderResponseExistingKeyResponse{}, err
 	}
@@ -1073,7 +1068,7 @@ func (client *HeaderClient) ResponseFloat(ctx context.Context, scenario string, 
 	if err != nil {
 		return HeaderResponseFloatResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return HeaderResponseFloatResponse{}, err
 	}
@@ -1125,7 +1120,7 @@ func (client *HeaderClient) ResponseInteger(ctx context.Context, scenario string
 	if err != nil {
 		return HeaderResponseIntegerResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return HeaderResponseIntegerResponse{}, err
 	}
@@ -1177,7 +1172,7 @@ func (client *HeaderClient) ResponseLong(ctx context.Context, scenario string, o
 	if err != nil {
 		return HeaderResponseLongResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return HeaderResponseLongResponse{}, err
 	}
@@ -1228,7 +1223,7 @@ func (client *HeaderClient) ResponseProtectedKey(ctx context.Context, options *H
 	if err != nil {
 		return HeaderResponseProtectedKeyResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return HeaderResponseProtectedKeyResponse{}, err
 	}
@@ -1274,7 +1269,7 @@ func (client *HeaderClient) ResponseString(ctx context.Context, scenario string,
 	if err != nil {
 		return HeaderResponseStringResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return HeaderResponseStringResponse{}, err
 	}

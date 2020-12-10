@@ -21,11 +21,6 @@ type blockBlobClient struct {
 	con *connection
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *blockBlobClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // CommitBlockList - The Commit Block List operation writes a blob by specifying the list of block IDs that make up the blob. In order to be written as
 // part of a blob, a block must have been successfully written to the
 // server in a prior Put Block operation. You can call Put Block List to update a blob by uploading only those blocks that have changed, then committing
@@ -38,7 +33,7 @@ func (client *blockBlobClient) CommitBlockList(ctx context.Context, blocks Block
 	if err != nil {
 		return BlockBlobCommitBlockListResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return BlockBlobCommitBlockListResponse{}, err
 	}
@@ -202,7 +197,7 @@ func (client *blockBlobClient) GetBlockList(ctx context.Context, listType BlockL
 	if err != nil {
 		return BlockListResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return BlockListResponse{}, err
 	}
@@ -301,7 +296,7 @@ func (client *blockBlobClient) StageBlock(ctx context.Context, blockId string, c
 	if err != nil {
 		return BlockBlobStageBlockResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return BlockBlobStageBlockResponse{}, err
 	}
@@ -419,7 +414,7 @@ func (client *blockBlobClient) StageBlockFromURL(ctx context.Context, blockId st
 	if err != nil {
 		return BlockBlobStageBlockFromURLResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return BlockBlobStageBlockFromURLResponse{}, err
 	}
@@ -556,7 +551,7 @@ func (client *blockBlobClient) Upload(ctx context.Context, contentLength int64, 
 	if err != nil {
 		return BlockBlobUploadResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return BlockBlobUploadResponse{}, err
 	}

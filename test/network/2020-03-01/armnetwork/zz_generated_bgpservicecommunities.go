@@ -28,11 +28,6 @@ func NewBgpServiceCommunitiesClient(con *armcore.Connection, subscriptionID stri
 	return &BgpServiceCommunitiesClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *BgpServiceCommunitiesClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // List - Gets all the available bgp service communities.
 func (client *BgpServiceCommunitiesClient) List(options *BgpServiceCommunitiesListOptions) BgpServiceCommunityListResultPager {
 	return &bgpServiceCommunityListResultPager{

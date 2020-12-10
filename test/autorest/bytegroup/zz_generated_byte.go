@@ -24,18 +24,13 @@ func NewByteClient(con *Connection) *ByteClient {
 	return &ByteClient{con: con}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *ByteClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // GetEmpty - Get empty byte value ''
 func (client *ByteClient) GetEmpty(ctx context.Context, options *ByteGetEmptyOptions) (ByteArrayResponse, error) {
 	req, err := client.getEmptyCreateRequest(ctx, options)
 	if err != nil {
 		return ByteArrayResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return ByteArrayResponse{}, err
 	}
@@ -81,7 +76,7 @@ func (client *ByteClient) GetInvalid(ctx context.Context, options *ByteGetInvali
 	if err != nil {
 		return ByteArrayResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return ByteArrayResponse{}, err
 	}
@@ -127,7 +122,7 @@ func (client *ByteClient) GetNonASCII(ctx context.Context, options *ByteGetNonAS
 	if err != nil {
 		return ByteArrayResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return ByteArrayResponse{}, err
 	}
@@ -173,7 +168,7 @@ func (client *ByteClient) GetNull(ctx context.Context, options *ByteGetNullOptio
 	if err != nil {
 		return ByteArrayResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return ByteArrayResponse{}, err
 	}
@@ -219,7 +214,7 @@ func (client *ByteClient) PutNonASCII(ctx context.Context, byteBody []byte, opti
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}

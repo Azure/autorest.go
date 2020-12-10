@@ -24,18 +24,13 @@ func NewAPIVersionLocalClient(con *Connection) *APIVersionLocalClient {
 	return &APIVersionLocalClient{con: con}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *APIVersionLocalClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // GetMethodLocalNull - Get method with api-version modeled in the method. pass in api-version = null to succeed
 func (client *APIVersionLocalClient) GetMethodLocalNull(ctx context.Context, options *APIVersionLocalGetMethodLocalNullOptions) (*http.Response, error) {
 	req, err := client.getMethodLocalNullCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -77,7 +72,7 @@ func (client *APIVersionLocalClient) GetMethodLocalValid(ctx context.Context, op
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -117,7 +112,7 @@ func (client *APIVersionLocalClient) GetPathLocalValid(ctx context.Context, opti
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -157,7 +152,7 @@ func (client *APIVersionLocalClient) GetSwaggerLocalValid(ctx context.Context, o
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}

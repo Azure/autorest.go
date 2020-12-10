@@ -19,18 +19,13 @@ type notebookClient struct {
 	con *connection
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *notebookClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // CreateOrUpdateNotebook - Creates or updates a Note Book.
 func (client *notebookClient) createOrUpdateNotebook(ctx context.Context, notebookName string, notebook NotebookResource, options *NotebookBeginCreateOrUpdateNotebookOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateNotebookCreateRequest(ctx, notebookName, notebook, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -83,7 +78,7 @@ func (client *notebookClient) deleteNotebook(ctx context.Context, notebookName s
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -124,7 +119,7 @@ func (client *notebookClient) GetNotebook(ctx context.Context, notebookName stri
 	if err != nil {
 		return NotebookResourceResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return NotebookResourceResponse{}, err
 	}
@@ -275,7 +270,7 @@ func (client *notebookClient) renameNotebook(ctx context.Context, notebookName s
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}

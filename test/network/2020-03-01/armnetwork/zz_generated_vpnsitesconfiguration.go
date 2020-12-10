@@ -29,11 +29,6 @@ func NewVpnSitesConfigurationClient(con *armcore.Connection, subscriptionID stri
 	return &VpnSitesConfigurationClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *VpnSitesConfigurationClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // BeginDownload - Gives the sas-url to download the configurations for vpn-sites in a resource group.
 func (client *VpnSitesConfigurationClient) BeginDownload(ctx context.Context, resourceGroupName string, virtualWanName string, request GetVpnSitesConfigurationRequest, options *VpnSitesConfigurationBeginDownloadOptions) (HTTPPollerResponse, error) {
 	resp, err := client.download(ctx, resourceGroupName, virtualWanName, request, options)
@@ -77,7 +72,7 @@ func (client *VpnSitesConfigurationClient) download(ctx context.Context, resourc
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
