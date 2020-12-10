@@ -73,6 +73,7 @@ func (client BaseClient) GetWithConstantInPath(ctx context.Context) (result auto
 	result, err = client.GetWithConstantInPathResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "validationgroup.BaseClient", "GetWithConstantInPath", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -162,6 +163,7 @@ func (client BaseClient) PostWithConstantInBody(ctx context.Context, body *Produ
 	result, err = client.PostWithConstantInBodyResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "validationgroup.BaseClient", "PostWithConstantInBody", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -268,6 +270,7 @@ func (client BaseClient) ValidationOfBody(ctx context.Context, resourceGroupName
 	result, err = client.ValidationOfBodyResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "validationgroup.BaseClient", "ValidationOfBody", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -360,6 +363,7 @@ func (client BaseClient) ValidationOfMethodParameters(ctx context.Context, resou
 	result, err = client.ValidationOfMethodParametersResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "validationgroup.BaseClient", "ValidationOfMethodParameters", resp, "Failure responding to request")
+		return
 	}
 
 	return

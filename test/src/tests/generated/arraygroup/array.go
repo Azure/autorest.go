@@ -61,6 +61,7 @@ func (client ArrayClient) GetArrayEmpty(ctx context.Context) (result ListListStr
 	result, err = client.GetArrayEmptyResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetArrayEmpty", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -121,6 +122,7 @@ func (client ArrayClient) GetArrayItemEmpty(ctx context.Context) (result ListLis
 	result, err = client.GetArrayItemEmptyResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetArrayItemEmpty", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -181,6 +183,7 @@ func (client ArrayClient) GetArrayItemNull(ctx context.Context) (result ListList
 	result, err = client.GetArrayItemNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetArrayItemNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -241,6 +244,7 @@ func (client ArrayClient) GetArrayNull(ctx context.Context) (result ListListStri
 	result, err = client.GetArrayNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetArrayNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -301,6 +305,7 @@ func (client ArrayClient) GetArrayValid(ctx context.Context) (result ListListStr
 	result, err = client.GetArrayValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetArrayValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -362,6 +367,7 @@ func (client ArrayClient) GetBase64URL(ctx context.Context) (result ListBase64UR
 	result, err = client.GetBase64URLResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetBase64URL", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -422,6 +428,7 @@ func (client ArrayClient) GetBooleanInvalidNull(ctx context.Context) (result Lis
 	result, err = client.GetBooleanInvalidNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetBooleanInvalidNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -482,6 +489,7 @@ func (client ArrayClient) GetBooleanInvalidString(ctx context.Context) (result L
 	result, err = client.GetBooleanInvalidStringResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetBooleanInvalidString", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -542,6 +550,7 @@ func (client ArrayClient) GetBooleanTfft(ctx context.Context) (result ListBool, 
 	result, err = client.GetBooleanTfftResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetBooleanTfft", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -602,6 +611,7 @@ func (client ArrayClient) GetByteInvalidNull(ctx context.Context) (result ListBy
 	result, err = client.GetByteInvalidNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetByteInvalidNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -663,6 +673,7 @@ func (client ArrayClient) GetByteValid(ctx context.Context) (result ListByteArra
 	result, err = client.GetByteValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetByteValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -723,6 +734,7 @@ func (client ArrayClient) GetComplexEmpty(ctx context.Context) (result ListProdu
 	result, err = client.GetComplexEmptyResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetComplexEmpty", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -784,6 +796,7 @@ func (client ArrayClient) GetComplexItemEmpty(ctx context.Context) (result ListP
 	result, err = client.GetComplexItemEmptyResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetComplexItemEmpty", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -845,6 +858,7 @@ func (client ArrayClient) GetComplexItemNull(ctx context.Context) (result ListPr
 	result, err = client.GetComplexItemNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetComplexItemNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -905,6 +919,7 @@ func (client ArrayClient) GetComplexNull(ctx context.Context) (result ListProduc
 	result, err = client.GetComplexNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetComplexNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -966,6 +981,7 @@ func (client ArrayClient) GetComplexValid(ctx context.Context) (result ListProdu
 	result, err = client.GetComplexValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetComplexValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1026,6 +1042,7 @@ func (client ArrayClient) GetDateInvalidChars(ctx context.Context) (result ListD
 	result, err = client.GetDateInvalidCharsResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDateInvalidChars", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1086,6 +1103,7 @@ func (client ArrayClient) GetDateInvalidNull(ctx context.Context) (result ListDa
 	result, err = client.GetDateInvalidNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDateInvalidNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1146,6 +1164,7 @@ func (client ArrayClient) GetDateTimeInvalidChars(ctx context.Context) (result L
 	result, err = client.GetDateTimeInvalidCharsResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDateTimeInvalidChars", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1206,6 +1225,7 @@ func (client ArrayClient) GetDateTimeInvalidNull(ctx context.Context) (result Li
 	result, err = client.GetDateTimeInvalidNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDateTimeInvalidNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1267,6 +1287,7 @@ func (client ArrayClient) GetDateTimeRfc1123Valid(ctx context.Context) (result L
 	result, err = client.GetDateTimeRfc1123ValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDateTimeRfc1123Valid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1328,6 +1349,7 @@ func (client ArrayClient) GetDateTimeValid(ctx context.Context) (result ListDate
 	result, err = client.GetDateTimeValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDateTimeValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1388,6 +1410,7 @@ func (client ArrayClient) GetDateValid(ctx context.Context) (result ListDate, er
 	result, err = client.GetDateValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDateValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1448,6 +1471,7 @@ func (client ArrayClient) GetDictionaryEmpty(ctx context.Context) (result ListSe
 	result, err = client.GetDictionaryEmptyResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDictionaryEmpty", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1509,6 +1533,7 @@ func (client ArrayClient) GetDictionaryItemEmpty(ctx context.Context) (result Li
 	result, err = client.GetDictionaryItemEmptyResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDictionaryItemEmpty", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1570,6 +1595,7 @@ func (client ArrayClient) GetDictionaryItemNull(ctx context.Context) (result Lis
 	result, err = client.GetDictionaryItemNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDictionaryItemNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1630,6 +1656,7 @@ func (client ArrayClient) GetDictionaryNull(ctx context.Context) (result ListSet
 	result, err = client.GetDictionaryNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDictionaryNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1691,6 +1718,7 @@ func (client ArrayClient) GetDictionaryValid(ctx context.Context) (result ListSe
 	result, err = client.GetDictionaryValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDictionaryValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1751,6 +1779,7 @@ func (client ArrayClient) GetDoubleInvalidNull(ctx context.Context) (result List
 	result, err = client.GetDoubleInvalidNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDoubleInvalidNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1811,6 +1840,7 @@ func (client ArrayClient) GetDoubleInvalidString(ctx context.Context) (result Li
 	result, err = client.GetDoubleInvalidStringResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDoubleInvalidString", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1871,6 +1901,7 @@ func (client ArrayClient) GetDoubleValid(ctx context.Context) (result ListFloat6
 	result, err = client.GetDoubleValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDoubleValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1931,6 +1962,7 @@ func (client ArrayClient) GetDurationValid(ctx context.Context) (result ListTime
 	result, err = client.GetDurationValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDurationValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1991,6 +2023,7 @@ func (client ArrayClient) GetEmpty(ctx context.Context) (result ListInt32, err e
 	result, err = client.GetEmptyResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetEmpty", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -2051,6 +2084,7 @@ func (client ArrayClient) GetEnumValid(ctx context.Context) (result ListString, 
 	result, err = client.GetEnumValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetEnumValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -2111,6 +2145,7 @@ func (client ArrayClient) GetFloatInvalidNull(ctx context.Context) (result ListF
 	result, err = client.GetFloatInvalidNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetFloatInvalidNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -2171,6 +2206,7 @@ func (client ArrayClient) GetFloatInvalidString(ctx context.Context) (result Lis
 	result, err = client.GetFloatInvalidStringResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetFloatInvalidString", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -2231,6 +2267,7 @@ func (client ArrayClient) GetFloatValid(ctx context.Context) (result ListFloat64
 	result, err = client.GetFloatValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetFloatValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -2291,6 +2328,7 @@ func (client ArrayClient) GetIntegerValid(ctx context.Context) (result ListInt32
 	result, err = client.GetIntegerValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetIntegerValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -2351,6 +2389,7 @@ func (client ArrayClient) GetIntInvalidNull(ctx context.Context) (result ListInt
 	result, err = client.GetIntInvalidNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetIntInvalidNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -2411,6 +2450,7 @@ func (client ArrayClient) GetIntInvalidString(ctx context.Context) (result ListI
 	result, err = client.GetIntInvalidStringResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetIntInvalidString", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -2471,6 +2511,7 @@ func (client ArrayClient) GetInvalid(ctx context.Context) (result ListInt32, err
 	result, err = client.GetInvalidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetInvalid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -2531,6 +2572,7 @@ func (client ArrayClient) GetLongInvalidNull(ctx context.Context) (result ListIn
 	result, err = client.GetLongInvalidNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetLongInvalidNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -2591,6 +2633,7 @@ func (client ArrayClient) GetLongInvalidString(ctx context.Context) (result List
 	result, err = client.GetLongInvalidStringResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetLongInvalidString", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -2651,6 +2694,7 @@ func (client ArrayClient) GetLongValid(ctx context.Context) (result ListInt64, e
 	result, err = client.GetLongValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetLongValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -2711,6 +2755,7 @@ func (client ArrayClient) GetNull(ctx context.Context) (result ListInt32, err er
 	result, err = client.GetNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -2771,6 +2816,7 @@ func (client ArrayClient) GetStringEnumValid(ctx context.Context) (result ListSt
 	result, err = client.GetStringEnumValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetStringEnumValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -2831,6 +2877,7 @@ func (client ArrayClient) GetStringValid(ctx context.Context) (result ListString
 	result, err = client.GetStringValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetStringValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -2891,6 +2938,7 @@ func (client ArrayClient) GetStringWithInvalid(ctx context.Context) (result List
 	result, err = client.GetStringWithInvalidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetStringWithInvalid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -2951,6 +2999,7 @@ func (client ArrayClient) GetStringWithNull(ctx context.Context) (result ListStr
 	result, err = client.GetStringWithNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetStringWithNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -3011,6 +3060,7 @@ func (client ArrayClient) GetUUIDInvalidChars(ctx context.Context) (result ListU
 	result, err = client.GetUUIDInvalidCharsResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetUUIDInvalidChars", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -3072,6 +3122,7 @@ func (client ArrayClient) GetUUIDValid(ctx context.Context) (result ListUUID, er
 	result, err = client.GetUUIDValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetUUIDValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -3138,6 +3189,7 @@ func (client ArrayClient) PutArrayValid(ctx context.Context, arrayBody [][]strin
 	result, err = client.PutArrayValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutArrayValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -3205,6 +3257,7 @@ func (client ArrayClient) PutBooleanTfft(ctx context.Context, arrayBody []bool) 
 	result, err = client.PutBooleanTfftResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutBooleanTfft", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -3273,6 +3326,7 @@ func (client ArrayClient) PutByteValid(ctx context.Context, arrayBody [][]byte) 
 	result, err = client.PutByteValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutByteValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -3341,6 +3395,7 @@ func (client ArrayClient) PutComplexValid(ctx context.Context, arrayBody []Produ
 	result, err = client.PutComplexValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutComplexValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -3409,6 +3464,7 @@ func (client ArrayClient) PutDateTimeRfc1123Valid(ctx context.Context, arrayBody
 	result, err = client.PutDateTimeRfc1123ValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutDateTimeRfc1123Valid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -3476,6 +3532,7 @@ func (client ArrayClient) PutDateTimeValid(ctx context.Context, arrayBody []date
 	result, err = client.PutDateTimeValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutDateTimeValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -3543,6 +3600,7 @@ func (client ArrayClient) PutDateValid(ctx context.Context, arrayBody []date.Dat
 	result, err = client.PutDateValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutDateValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -3611,6 +3669,7 @@ func (client ArrayClient) PutDictionaryValid(ctx context.Context, arrayBody []ma
 	result, err = client.PutDictionaryValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutDictionaryValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -3678,6 +3737,7 @@ func (client ArrayClient) PutDoubleValid(ctx context.Context, arrayBody []float6
 	result, err = client.PutDoubleValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutDoubleValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -3745,6 +3805,7 @@ func (client ArrayClient) PutDurationValid(ctx context.Context, arrayBody []stri
 	result, err = client.PutDurationValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutDurationValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -3812,6 +3873,7 @@ func (client ArrayClient) PutEmpty(ctx context.Context, arrayBody []string) (res
 	result, err = client.PutEmptyResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutEmpty", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -3879,6 +3941,7 @@ func (client ArrayClient) PutEnumValid(ctx context.Context, arrayBody []FooEnum)
 	result, err = client.PutEnumValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutEnumValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -3946,6 +4009,7 @@ func (client ArrayClient) PutFloatValid(ctx context.Context, arrayBody []float64
 	result, err = client.PutFloatValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutFloatValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -4013,6 +4077,7 @@ func (client ArrayClient) PutIntegerValid(ctx context.Context, arrayBody []int32
 	result, err = client.PutIntegerValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutIntegerValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -4080,6 +4145,7 @@ func (client ArrayClient) PutLongValid(ctx context.Context, arrayBody []int64) (
 	result, err = client.PutLongValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutLongValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -4147,6 +4213,7 @@ func (client ArrayClient) PutStringEnumValid(ctx context.Context, arrayBody []st
 	result, err = client.PutStringEnumValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutStringEnumValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -4214,6 +4281,7 @@ func (client ArrayClient) PutStringValid(ctx context.Context, arrayBody []string
 	result, err = client.PutStringValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutStringValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -4282,6 +4350,7 @@ func (client ArrayClient) PutUUIDValid(ctx context.Context, arrayBody []uuid.UUI
 	result, err = client.PutUUIDValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutUUIDValid", resp, "Failure responding to request")
+		return
 	}
 
 	return

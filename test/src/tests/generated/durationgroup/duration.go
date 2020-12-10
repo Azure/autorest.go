@@ -58,6 +58,7 @@ func (client DurationClient) GetInvalid(ctx context.Context) (result TimeSpan, e
 	result, err = client.GetInvalidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "durationgroup.DurationClient", "GetInvalid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -118,6 +119,7 @@ func (client DurationClient) GetNull(ctx context.Context) (result TimeSpan, err 
 	result, err = client.GetNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "durationgroup.DurationClient", "GetNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -178,6 +180,7 @@ func (client DurationClient) GetPositiveDuration(ctx context.Context) (result Ti
 	result, err = client.GetPositiveDurationResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "durationgroup.DurationClient", "GetPositiveDuration", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -238,6 +241,7 @@ func (client DurationClient) PutPositiveDuration(ctx context.Context, durationBo
 	result, err = client.PutPositiveDurationResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "durationgroup.DurationClient", "PutPositiveDuration", resp, "Failure responding to request")
+		return
 	}
 
 	return

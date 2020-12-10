@@ -58,6 +58,7 @@ func (client HTTPFailureClient) GetEmptyError(ctx context.Context) (result Bool,
 	result, err = client.GetEmptyErrorResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPFailureClient", "GetEmptyError", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -118,6 +119,7 @@ func (client HTTPFailureClient) GetNoModelEmpty(ctx context.Context) (result Boo
 	result, err = client.GetNoModelEmptyResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPFailureClient", "GetNoModelEmpty", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -178,6 +180,7 @@ func (client HTTPFailureClient) GetNoModelError(ctx context.Context) (result Boo
 	result, err = client.GetNoModelErrorResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPFailureClient", "GetNoModelError", resp, "Failure responding to request")
+		return
 	}
 
 	return

@@ -60,6 +60,7 @@ func (client QueriesClient) ArrayStringMultiEmpty(ctx context.Context, arrayQuer
 	result, err = client.ArrayStringMultiEmptyResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlmultigroup.QueriesClient", "ArrayStringMultiEmpty", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -127,6 +128,7 @@ func (client QueriesClient) ArrayStringMultiNull(ctx context.Context, arrayQuery
 	result, err = client.ArrayStringMultiNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlmultigroup.QueriesClient", "ArrayStringMultiNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -196,6 +198,7 @@ func (client QueriesClient) ArrayStringMultiValid(ctx context.Context, arrayQuer
 	result, err = client.ArrayStringMultiValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlmultigroup.QueriesClient", "ArrayStringMultiValid", resp, "Failure responding to request")
+		return
 	}
 
 	return

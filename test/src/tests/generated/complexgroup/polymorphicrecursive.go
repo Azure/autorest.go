@@ -60,6 +60,7 @@ func (client PolymorphicrecursiveClient) GetValid(ctx context.Context) (result F
 	result, err = client.GetValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphicrecursiveClient", "GetValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -180,6 +181,7 @@ func (client PolymorphicrecursiveClient) PutValid(ctx context.Context, complexBo
 	result, err = client.PutValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphicrecursiveClient", "PutValid", resp, "Failure responding to request")
+		return
 	}
 
 	return

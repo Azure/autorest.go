@@ -58,6 +58,7 @@ func (client FlattencomplexClient) GetValid(ctx context.Context) (result MyBaseT
 	result, err = client.GetValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.FlattencomplexClient", "GetValid", resp, "Failure responding to request")
+		return
 	}
 
 	return

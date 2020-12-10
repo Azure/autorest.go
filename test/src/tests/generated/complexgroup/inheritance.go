@@ -58,6 +58,7 @@ func (client InheritanceClient) GetValid(ctx context.Context) (result Siamese, e
 	result, err = client.GetValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.InheritanceClient", "GetValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -122,6 +123,7 @@ func (client InheritanceClient) PutValid(ctx context.Context, complexBody Siames
 	result, err = client.PutValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.InheritanceClient", "PutValid", resp, "Failure responding to request")
+		return
 	}
 
 	return

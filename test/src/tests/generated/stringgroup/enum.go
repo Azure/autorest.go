@@ -59,6 +59,7 @@ func (client EnumClient) GetNotExpandable(ctx context.Context) (result StringMod
 	result, err = client.GetNotExpandableResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "stringgroup.EnumClient", "GetNotExpandable", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -119,6 +120,7 @@ func (client EnumClient) GetReferenced(ctx context.Context) (result StringModel,
 	result, err = client.GetReferencedResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "stringgroup.EnumClient", "GetReferenced", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -179,6 +181,7 @@ func (client EnumClient) GetReferencedConstant(ctx context.Context) (result RefC
 	result, err = client.GetReferencedConstantResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "stringgroup.EnumClient", "GetReferencedConstant", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -239,6 +242,7 @@ func (client EnumClient) PutNotExpandable(ctx context.Context, stringBody Colors
 	result, err = client.PutNotExpandableResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "stringgroup.EnumClient", "PutNotExpandable", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -300,6 +304,7 @@ func (client EnumClient) PutReferenced(ctx context.Context, enumStringBody Color
 	result, err = client.PutReferencedResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "stringgroup.EnumClient", "PutReferenced", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -367,6 +372,7 @@ func (client EnumClient) PutReferencedConstant(ctx context.Context, enumStringBo
 	result, err = client.PutReferencedConstantResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "stringgroup.EnumClient", "PutReferencedConstant", resp, "Failure responding to request")
+		return
 	}
 
 	return

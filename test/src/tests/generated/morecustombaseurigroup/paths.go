@@ -57,6 +57,7 @@ func (client PathsClient) GetEmpty(ctx context.Context, vault string, secret str
 	result, err = client.GetEmptyResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "morecustombaseurigroup.PathsClient", "GetEmpty", resp, "Failure responding to request")
+		return
 	}
 
 	return
