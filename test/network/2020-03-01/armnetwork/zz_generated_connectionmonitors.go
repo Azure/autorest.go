@@ -29,11 +29,6 @@ func NewConnectionMonitorsClient(con *armcore.Connection, subscriptionID string)
 	return &ConnectionMonitorsClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *ConnectionMonitorsClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // BeginCreateOrUpdate - Create or update a connection monitor.
 func (client *ConnectionMonitorsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, parameters ConnectionMonitor, options *ConnectionMonitorsBeginCreateOrUpdateOptions) (ConnectionMonitorResultPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, networkWatcherName, connectionMonitorName, parameters, options)
@@ -77,7 +72,7 @@ func (client *ConnectionMonitorsClient) createOrUpdate(ctx context.Context, reso
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -167,7 +162,7 @@ func (client *ConnectionMonitorsClient) delete(ctx context.Context, resourceGrou
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -211,7 +206,7 @@ func (client *ConnectionMonitorsClient) Get(ctx context.Context, resourceGroupNa
 	if err != nil {
 		return ConnectionMonitorResultResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return ConnectionMonitorResultResponse{}, err
 	}
@@ -264,7 +259,7 @@ func (client *ConnectionMonitorsClient) List(ctx context.Context, resourceGroupN
 	if err != nil {
 		return ConnectionMonitorListResultResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return ConnectionMonitorListResultResponse{}, err
 	}
@@ -353,7 +348,7 @@ func (client *ConnectionMonitorsClient) query(ctx context.Context, resourceGroup
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -443,7 +438,7 @@ func (client *ConnectionMonitorsClient) start(ctx context.Context, resourceGroup
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -524,7 +519,7 @@ func (client *ConnectionMonitorsClient) stop(ctx context.Context, resourceGroupN
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -568,7 +563,7 @@ func (client *ConnectionMonitorsClient) UpdateTags(ctx context.Context, resource
 	if err != nil {
 		return ConnectionMonitorResultResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return ConnectionMonitorResultResponse{}, err
 	}

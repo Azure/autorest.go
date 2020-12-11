@@ -29,11 +29,6 @@ func NewFlowLogsClient(con *armcore.Connection, subscriptionID string) *FlowLogs
 	return &FlowLogsClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *FlowLogsClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // BeginCreateOrUpdate - Create or update a flow log for the specified network security group.
 func (client *FlowLogsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, parameters FlowLog, options *FlowLogsBeginCreateOrUpdateOptions) (FlowLogPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, networkWatcherName, flowLogName, parameters, options)
@@ -77,7 +72,7 @@ func (client *FlowLogsClient) createOrUpdate(ctx context.Context, resourceGroupN
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -167,7 +162,7 @@ func (client *FlowLogsClient) delete(ctx context.Context, resourceGroupName stri
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -211,7 +206,7 @@ func (client *FlowLogsClient) Get(ctx context.Context, resourceGroupName string,
 	if err != nil {
 		return FlowLogResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return FlowLogResponse{}, err
 	}

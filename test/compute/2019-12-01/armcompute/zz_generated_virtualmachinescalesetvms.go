@@ -33,11 +33,6 @@ func NewVirtualMachineScaleSetVMSClient(con *armcore.Connection, subscriptionID 
 	return &VirtualMachineScaleSetVMSClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *VirtualMachineScaleSetVMSClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // BeginDeallocate - Deallocates a specific virtual machine in a VM scale set. Shuts down the virtual machine and releases the compute resources it uses.
 // You are not billed for the compute resources of this virtual
 // machine once it is deallocated.
@@ -85,7 +80,7 @@ func (client *VirtualMachineScaleSetVMSClient) deallocate(ctx context.Context, r
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -168,7 +163,7 @@ func (client *VirtualMachineScaleSetVMSClient) delete(ctx context.Context, resou
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -214,7 +209,7 @@ func (client *VirtualMachineScaleSetVMSClient) Get(ctx context.Context, resource
 	if err != nil {
 		return VirtualMachineScaleSetVMResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return VirtualMachineScaleSetVMResponse{}, err
 	}
@@ -273,7 +268,7 @@ func (client *VirtualMachineScaleSetVMSClient) GetInstanceView(ctx context.Conte
 	if err != nil {
 		return VirtualMachineScaleSetVMInstanceViewResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return VirtualMachineScaleSetVMInstanceViewResponse{}, err
 	}
@@ -432,7 +427,7 @@ func (client *VirtualMachineScaleSetVMSClient) performMaintenance(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -519,7 +514,7 @@ func (client *VirtualMachineScaleSetVMSClient) powerOff(ctx context.Context, res
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -605,7 +600,7 @@ func (client *VirtualMachineScaleSetVMSClient) redeploy(ctx context.Context, res
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -688,7 +683,7 @@ func (client *VirtualMachineScaleSetVMSClient) reimage(ctx context.Context, reso
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -776,7 +771,7 @@ func (client *VirtualMachineScaleSetVMSClient) reimageAll(ctx context.Context, r
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -859,7 +854,7 @@ func (client *VirtualMachineScaleSetVMSClient) restart(ctx context.Context, reso
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -942,7 +937,7 @@ func (client *VirtualMachineScaleSetVMSClient) runCommand(ctx context.Context, r
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -999,7 +994,7 @@ func (client *VirtualMachineScaleSetVMSClient) SimulateEviction(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1082,7 +1077,7 @@ func (client *VirtualMachineScaleSetVMSClient) start(ctx context.Context, resour
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1165,7 +1160,7 @@ func (client *VirtualMachineScaleSetVMSClient) update(ctx context.Context, resou
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}

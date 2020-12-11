@@ -97,11 +97,6 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       text += `\treturn &${clientName}{${connectionLiterals.join(', ')}}\n`;
       text += '}\n\n';
     }
-    // operation client Pipeline method
-    text += '// Pipeline returns the pipeline associated with this client.\n';
-    text += `func (client *${clientName}) Pipeline() azcore.Pipeline {\n`;
-    text += '\treturn client.con.Pipeline()\n';
-    text += '}\n\n';
     // add operations content last
     text += opText;
     operations.push(new OperationGroupContent(group.language.go!.name, text));
@@ -299,7 +294,7 @@ function generateOperation(op: Operation, imports: ImportManager): string {
   text += `\tif err != nil {\n`;
   text += `\t\treturn ${zeroResp}, err\n`;
   text += `\t}\n`;
-  text += `\tresp, err := client.Pipeline().Do(req)\n`;
+  text += `\tresp, err := client.con.Pipeline().Do(req)\n`;
   text += `\tif err != nil {\n`;
   text += `\t\treturn ${zeroResp}, err\n`;
   text += `\t}\n`;

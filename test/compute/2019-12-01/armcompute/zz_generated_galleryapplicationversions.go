@@ -29,11 +29,6 @@ func NewGalleryApplicationVersionsClient(con *armcore.Connection, subscriptionID
 	return &GalleryApplicationVersionsClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *GalleryApplicationVersionsClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // BeginCreateOrUpdate - Create or update a gallery Application Version.
 func (client *GalleryApplicationVersionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplicationVersionName string, galleryApplicationVersion GalleryApplicationVersion, options *GalleryApplicationVersionsBeginCreateOrUpdateOptions) (GalleryApplicationVersionPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName, galleryApplicationVersion, options)
@@ -77,7 +72,7 @@ func (client *GalleryApplicationVersionsClient) createOrUpdate(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -168,7 +163,7 @@ func (client *GalleryApplicationVersionsClient) delete(ctx context.Context, reso
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -213,7 +208,7 @@ func (client *GalleryApplicationVersionsClient) Get(ctx context.Context, resourc
 	if err != nil {
 		return GalleryApplicationVersionResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return GalleryApplicationVersionResponse{}, err
 	}
@@ -360,7 +355,7 @@ func (client *GalleryApplicationVersionsClient) update(ctx context.Context, reso
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}

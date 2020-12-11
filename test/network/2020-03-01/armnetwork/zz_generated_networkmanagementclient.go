@@ -29,18 +29,13 @@ func NewNetworkManagementClient(con *armcore.Connection, subscriptionID string) 
 	return &NetworkManagementClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *NetworkManagementClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // CheckDNSNameAvailability - Checks whether a domain name in the cloudapp.azure.com zone is available for use.
 func (client *NetworkManagementClient) CheckDNSNameAvailability(ctx context.Context, location string, domainNameLabel string, options *NetworkManagementClientCheckDNSNameAvailabilityOptions) (DNSNameAvailabilityResultResponse, error) {
 	req, err := client.checkDnsNameAvailabilityCreateRequest(ctx, location, domainNameLabel, options)
 	if err != nil {
 		return DNSNameAvailabilityResultResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return DNSNameAvailabilityResultResponse{}, err
 	}
@@ -129,7 +124,7 @@ func (client *NetworkManagementClient) deleteBastionShareableLink(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -263,7 +258,7 @@ func (client *NetworkManagementClient) generatevirtualwanvpnserverconfigurationv
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -366,7 +361,7 @@ func (client *NetworkManagementClient) getActiveSessions(ctx context.Context, re
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -521,7 +516,7 @@ func (client *NetworkManagementClient) putBastionShareableLink(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -573,7 +568,7 @@ func (client *NetworkManagementClient) SupportedSecurityProviders(ctx context.Co
 	if err != nil {
 		return VirtualWanSecurityProvidersResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return VirtualWanSecurityProvidersResponse{}, err
 	}

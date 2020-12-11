@@ -29,11 +29,6 @@ func NewNetworkVirtualAppliancesClient(con *armcore.Connection, subscriptionID s
 	return &NetworkVirtualAppliancesClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *NetworkVirtualAppliancesClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // BeginCreateOrUpdate - Creates or updates the specified Network Virtual Appliance.
 func (client *NetworkVirtualAppliancesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, parameters NetworkVirtualAppliance, options *NetworkVirtualAppliancesBeginCreateOrUpdateOptions) (NetworkVirtualAppliancePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, networkVirtualApplianceName, parameters, options)
@@ -77,7 +72,7 @@ func (client *NetworkVirtualAppliancesClient) createOrUpdate(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -166,7 +161,7 @@ func (client *NetworkVirtualAppliancesClient) delete(ctx context.Context, resour
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -209,7 +204,7 @@ func (client *NetworkVirtualAppliancesClient) Get(ctx context.Context, resourceG
 	if err != nil {
 		return NetworkVirtualApplianceResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return NetworkVirtualApplianceResponse{}, err
 	}
@@ -365,7 +360,7 @@ func (client *NetworkVirtualAppliancesClient) UpdateTags(ctx context.Context, re
 	if err != nil {
 		return NetworkVirtualApplianceResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return NetworkVirtualApplianceResponse{}, err
 	}

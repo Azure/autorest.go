@@ -29,11 +29,6 @@ func NewIPAllocationsClient(con *armcore.Connection, subscriptionID string) *IPA
 	return &IPAllocationsClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *IPAllocationsClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // BeginCreateOrUpdate - Creates or updates an IpAllocation in the specified resource group.
 func (client *IPAllocationsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, ipAllocationName string, parameters IPAllocation, options *IPAllocationsBeginCreateOrUpdateOptions) (IPAllocationPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, ipAllocationName, parameters, options)
@@ -77,7 +72,7 @@ func (client *IPAllocationsClient) createOrUpdate(ctx context.Context, resourceG
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -166,7 +161,7 @@ func (client *IPAllocationsClient) delete(ctx context.Context, resourceGroupName
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -209,7 +204,7 @@ func (client *IPAllocationsClient) Get(ctx context.Context, resourceGroupName st
 	if err != nil {
 		return IPAllocationResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return IPAllocationResponse{}, err
 	}
@@ -365,7 +360,7 @@ func (client *IPAllocationsClient) UpdateTags(ctx context.Context, resourceGroup
 	if err != nil {
 		return IPAllocationResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return IPAllocationResponse{}, err
 	}

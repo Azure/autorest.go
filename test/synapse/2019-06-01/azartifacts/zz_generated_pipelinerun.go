@@ -20,18 +20,13 @@ type pipelineRunClient struct {
 	con *connection
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *pipelineRunClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // CancelPipelineRun - Cancel a pipeline run by its run ID.
 func (client *pipelineRunClient) CancelPipelineRun(ctx context.Context, runId string, options *PipelineRunCancelPipelineRunOptions) (*http.Response, error) {
 	req, err := client.cancelPipelineRunCreateRequest(ctx, runId, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -75,7 +70,7 @@ func (client *pipelineRunClient) GetPipelineRun(ctx context.Context, runId strin
 	if err != nil {
 		return PipelineRunResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return PipelineRunResponse{}, err
 	}
@@ -125,7 +120,7 @@ func (client *pipelineRunClient) QueryActivityRuns(ctx context.Context, pipeline
 	if err != nil {
 		return ActivityRunsQueryResponseResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return ActivityRunsQueryResponseResponse{}, err
 	}
@@ -176,7 +171,7 @@ func (client *pipelineRunClient) QueryPipelineRunsByWorkspace(ctx context.Contex
 	if err != nil {
 		return PipelineRunsQueryResponseResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return PipelineRunsQueryResponseResponse{}, err
 	}

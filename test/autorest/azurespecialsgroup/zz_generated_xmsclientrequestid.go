@@ -27,18 +27,13 @@ func NewXMSClientRequestIDClient(con *Connection) *XMSClientRequestIDClient {
 	return &XMSClientRequestIDClient{con: con}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *XMSClientRequestIDClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // Get - Get method that overwrites x-ms-client-request header with value 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.
 func (client *XMSClientRequestIDClient) Get(ctx context.Context, options *XMSClientRequestIDGetOptions) (*http.Response, error) {
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -77,7 +72,7 @@ func (client *XMSClientRequestIDClient) ParamGet(ctx context.Context, xMSClientR
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}

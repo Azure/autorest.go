@@ -28,18 +28,13 @@ func NewServiceTagsClient(con *armcore.Connection, subscriptionID string) *Servi
 	return &ServiceTagsClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *ServiceTagsClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // List - Gets a list of service tag information resources.
 func (client *ServiceTagsClient) List(ctx context.Context, location string, options *ServiceTagsListOptions) (ServiceTagsListResultResponse, error) {
 	req, err := client.listCreateRequest(ctx, location, options)
 	if err != nil {
 		return ServiceTagsListResultResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return ServiceTagsListResultResponse{}, err
 	}

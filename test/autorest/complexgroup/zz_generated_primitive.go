@@ -24,18 +24,13 @@ func NewPrimitiveClient(con *Connection) *PrimitiveClient {
 	return &PrimitiveClient{con: con}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *PrimitiveClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // GetBool - Get complex types with bool properties
 func (client *PrimitiveClient) GetBool(ctx context.Context, options *PrimitiveGetBoolOptions) (BooleanWrapperResponse, error) {
 	req, err := client.getBoolCreateRequest(ctx, options)
 	if err != nil {
 		return BooleanWrapperResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return BooleanWrapperResponse{}, err
 	}
@@ -81,7 +76,7 @@ func (client *PrimitiveClient) GetByte(ctx context.Context, options *PrimitiveGe
 	if err != nil {
 		return ByteWrapperResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return ByteWrapperResponse{}, err
 	}
@@ -127,7 +122,7 @@ func (client *PrimitiveClient) GetDate(ctx context.Context, options *PrimitiveGe
 	if err != nil {
 		return DateWrapperResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return DateWrapperResponse{}, err
 	}
@@ -173,7 +168,7 @@ func (client *PrimitiveClient) GetDateTime(ctx context.Context, options *Primiti
 	if err != nil {
 		return DatetimeWrapperResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return DatetimeWrapperResponse{}, err
 	}
@@ -219,7 +214,7 @@ func (client *PrimitiveClient) GetDateTimeRFC1123(ctx context.Context, options *
 	if err != nil {
 		return Datetimerfc1123WrapperResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return Datetimerfc1123WrapperResponse{}, err
 	}
@@ -265,7 +260,7 @@ func (client *PrimitiveClient) GetDouble(ctx context.Context, options *Primitive
 	if err != nil {
 		return DoubleWrapperResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return DoubleWrapperResponse{}, err
 	}
@@ -311,7 +306,7 @@ func (client *PrimitiveClient) GetDuration(ctx context.Context, options *Primiti
 	if err != nil {
 		return DurationWrapperResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return DurationWrapperResponse{}, err
 	}
@@ -357,7 +352,7 @@ func (client *PrimitiveClient) GetFloat(ctx context.Context, options *PrimitiveG
 	if err != nil {
 		return FloatWrapperResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return FloatWrapperResponse{}, err
 	}
@@ -403,7 +398,7 @@ func (client *PrimitiveClient) GetInt(ctx context.Context, options *PrimitiveGet
 	if err != nil {
 		return IntWrapperResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return IntWrapperResponse{}, err
 	}
@@ -449,7 +444,7 @@ func (client *PrimitiveClient) GetLong(ctx context.Context, options *PrimitiveGe
 	if err != nil {
 		return LongWrapperResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return LongWrapperResponse{}, err
 	}
@@ -495,7 +490,7 @@ func (client *PrimitiveClient) GetString(ctx context.Context, options *Primitive
 	if err != nil {
 		return StringWrapperResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return StringWrapperResponse{}, err
 	}
@@ -541,7 +536,7 @@ func (client *PrimitiveClient) PutBool(ctx context.Context, complexBody BooleanW
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -578,7 +573,7 @@ func (client *PrimitiveClient) PutByte(ctx context.Context, complexBody ByteWrap
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -615,7 +610,7 @@ func (client *PrimitiveClient) PutDate(ctx context.Context, complexBody DateWrap
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -652,7 +647,7 @@ func (client *PrimitiveClient) PutDateTime(ctx context.Context, complexBody Date
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -689,7 +684,7 @@ func (client *PrimitiveClient) PutDateTimeRFC1123(ctx context.Context, complexBo
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -726,7 +721,7 @@ func (client *PrimitiveClient) PutDouble(ctx context.Context, complexBody Double
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -763,7 +758,7 @@ func (client *PrimitiveClient) PutDuration(ctx context.Context, complexBody Dura
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -800,7 +795,7 @@ func (client *PrimitiveClient) PutFloat(ctx context.Context, complexBody FloatWr
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -837,7 +832,7 @@ func (client *PrimitiveClient) PutInt(ctx context.Context, complexBody IntWrappe
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -874,7 +869,7 @@ func (client *PrimitiveClient) PutLong(ctx context.Context, complexBody LongWrap
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -911,7 +906,7 @@ func (client *PrimitiveClient) PutString(ctx context.Context, complexBody String
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}

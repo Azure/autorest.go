@@ -27,18 +27,13 @@ func NewIntClient(con *Connection) *IntClient {
 	return &IntClient{con: con}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *IntClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // Get - Get an int enum
 func (client *IntClient) Get(ctx context.Context, options *IntGetOptions) (IntEnumResponse, error) {
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
 		return IntEnumResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return IntEnumResponse{}, err
 	}
@@ -87,7 +82,7 @@ func (client *IntClient) Put(ctx context.Context, options *IntPutOptions) (Strin
 	if err != nil {
 		return StringResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return StringResponse{}, err
 	}

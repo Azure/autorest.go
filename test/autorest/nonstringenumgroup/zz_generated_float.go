@@ -27,18 +27,13 @@ func NewFloatClient(con *Connection) *FloatClient {
 	return &FloatClient{con: con}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *FloatClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // Get - Get a float enum
 func (client *FloatClient) Get(ctx context.Context, options *FloatGetOptions) (FloatEnumResponse, error) {
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
 		return FloatEnumResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return FloatEnumResponse{}, err
 	}
@@ -87,7 +82,7 @@ func (client *FloatClient) Put(ctx context.Context, options *FloatPutOptions) (S
 	if err != nil {
 		return StringResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return StringResponse{}, err
 	}

@@ -29,11 +29,6 @@ func NewAzureFirewallsClient(con *armcore.Connection, subscriptionID string) *Az
 	return &AzureFirewallsClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *AzureFirewallsClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // BeginCreateOrUpdate - Creates or updates the specified Azure Firewall.
 func (client *AzureFirewallsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, azureFirewallName string, parameters AzureFirewall, options *AzureFirewallsBeginCreateOrUpdateOptions) (AzureFirewallPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, azureFirewallName, parameters, options)
@@ -77,7 +72,7 @@ func (client *AzureFirewallsClient) createOrUpdate(ctx context.Context, resource
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -166,7 +161,7 @@ func (client *AzureFirewallsClient) delete(ctx context.Context, resourceGroupNam
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -209,7 +204,7 @@ func (client *AzureFirewallsClient) Get(ctx context.Context, resourceGroupName s
 	if err != nil {
 		return AzureFirewallResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return AzureFirewallResponse{}, err
 	}
@@ -399,7 +394,7 @@ func (client *AzureFirewallsClient) updateTags(ctx context.Context, resourceGrou
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}

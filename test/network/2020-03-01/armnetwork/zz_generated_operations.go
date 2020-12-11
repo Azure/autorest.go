@@ -25,11 +25,6 @@ func NewOperationsClient(con *armcore.Connection) *OperationsClient {
 	return &OperationsClient{con: con}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *OperationsClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // List - Lists all of the available Network Rest API operations.
 func (client *OperationsClient) List(options *OperationsListOptions) OperationListResultPager {
 	return &operationListResultPager{

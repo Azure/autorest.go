@@ -29,11 +29,6 @@ func NewNetworkSecurityGroupsClient(con *armcore.Connection, subscriptionID stri
 	return &NetworkSecurityGroupsClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *NetworkSecurityGroupsClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // BeginCreateOrUpdate - Creates or updates a network security group in the specified resource group.
 func (client *NetworkSecurityGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, parameters NetworkSecurityGroup, options *NetworkSecurityGroupsBeginCreateOrUpdateOptions) (NetworkSecurityGroupPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, networkSecurityGroupName, parameters, options)
@@ -77,7 +72,7 @@ func (client *NetworkSecurityGroupsClient) createOrUpdate(ctx context.Context, r
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -166,7 +161,7 @@ func (client *NetworkSecurityGroupsClient) delete(ctx context.Context, resourceG
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -209,7 +204,7 @@ func (client *NetworkSecurityGroupsClient) Get(ctx context.Context, resourceGrou
 	if err != nil {
 		return NetworkSecurityGroupResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return NetworkSecurityGroupResponse{}, err
 	}
@@ -365,7 +360,7 @@ func (client *NetworkSecurityGroupsClient) UpdateTags(ctx context.Context, resou
 	if err != nil {
 		return NetworkSecurityGroupResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return NetworkSecurityGroupResponse{}, err
 	}

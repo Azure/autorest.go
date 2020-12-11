@@ -24,18 +24,13 @@ func NewDurationClient(con *Connection) *DurationClient {
 	return &DurationClient{con: con}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *DurationClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // GetInvalid - Get an invalid duration value
 func (client *DurationClient) GetInvalid(ctx context.Context, options *DurationGetInvalidOptions) (StringResponse, error) {
 	req, err := client.getInvalidCreateRequest(ctx, options)
 	if err != nil {
 		return StringResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return StringResponse{}, err
 	}
@@ -81,7 +76,7 @@ func (client *DurationClient) GetNull(ctx context.Context, options *DurationGetN
 	if err != nil {
 		return StringResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return StringResponse{}, err
 	}
@@ -127,7 +122,7 @@ func (client *DurationClient) GetPositiveDuration(ctx context.Context, options *
 	if err != nil {
 		return StringResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return StringResponse{}, err
 	}
@@ -173,7 +168,7 @@ func (client *DurationClient) PutPositiveDuration(ctx context.Context, durationB
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}

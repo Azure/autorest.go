@@ -28,11 +28,6 @@ func NewUsagesClient(con *armcore.Connection, subscriptionID string) *UsagesClie
 	return &UsagesClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *UsagesClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // List - List network usages for a subscription.
 func (client *UsagesClient) List(location string, options *UsagesListOptions) UsagesListResultPager {
 	return &usagesListResultPager{

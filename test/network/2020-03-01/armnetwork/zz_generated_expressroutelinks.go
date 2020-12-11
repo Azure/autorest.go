@@ -28,18 +28,13 @@ func NewExpressRouteLinksClient(con *armcore.Connection, subscriptionID string) 
 	return &ExpressRouteLinksClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *ExpressRouteLinksClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // Get - Retrieves the specified ExpressRouteLink resource.
 func (client *ExpressRouteLinksClient) Get(ctx context.Context, resourceGroupName string, expressRoutePortName string, linkName string, options *ExpressRouteLinksGetOptions) (ExpressRouteLinkResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, expressRoutePortName, linkName, options)
 	if err != nil {
 		return ExpressRouteLinkResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return ExpressRouteLinkResponse{}, err
 	}

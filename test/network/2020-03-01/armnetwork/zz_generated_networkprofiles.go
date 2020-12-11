@@ -29,18 +29,13 @@ func NewNetworkProfilesClient(con *armcore.Connection, subscriptionID string) *N
 	return &NetworkProfilesClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *NetworkProfilesClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // CreateOrUpdate - Creates or updates a network profile.
 func (client *NetworkProfilesClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, networkProfileName string, parameters NetworkProfile, options *NetworkProfilesCreateOrUpdateOptions) (NetworkProfileResponse, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, networkProfileName, parameters, options)
 	if err != nil {
 		return NetworkProfileResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return NetworkProfileResponse{}, err
 	}
@@ -129,7 +124,7 @@ func (client *NetworkProfilesClient) delete(ctx context.Context, resourceGroupNa
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -172,7 +167,7 @@ func (client *NetworkProfilesClient) Get(ctx context.Context, resourceGroupName 
 	if err != nil {
 		return NetworkProfileResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return NetworkProfileResponse{}, err
 	}
@@ -328,7 +323,7 @@ func (client *NetworkProfilesClient) UpdateTags(ctx context.Context, resourceGro
 	if err != nil {
 		return NetworkProfileResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return NetworkProfileResponse{}, err
 	}

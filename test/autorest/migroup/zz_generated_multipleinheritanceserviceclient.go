@@ -27,18 +27,13 @@ func NewMultipleInheritanceServiceClient(con *Connection) *MultipleInheritanceSe
 	return &MultipleInheritanceServiceClient{con: con}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *MultipleInheritanceServiceClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // GetCat - Get a cat with name 'Whiskers' where likesMilk, meows, and hisses is true
 func (client *MultipleInheritanceServiceClient) GetCat(ctx context.Context, options *MultipleInheritanceServiceClientGetCatOptions) (CatResponse, error) {
 	req, err := client.getCatCreateRequest(ctx, options)
 	if err != nil {
 		return CatResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return CatResponse{}, err
 	}
@@ -84,7 +79,7 @@ func (client *MultipleInheritanceServiceClient) GetFeline(ctx context.Context, o
 	if err != nil {
 		return FelineResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return FelineResponse{}, err
 	}
@@ -130,7 +125,7 @@ func (client *MultipleInheritanceServiceClient) GetHorse(ctx context.Context, op
 	if err != nil {
 		return HorseResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return HorseResponse{}, err
 	}
@@ -176,7 +171,7 @@ func (client *MultipleInheritanceServiceClient) GetKitten(ctx context.Context, o
 	if err != nil {
 		return KittenResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return KittenResponse{}, err
 	}
@@ -222,7 +217,7 @@ func (client *MultipleInheritanceServiceClient) GetPet(ctx context.Context, opti
 	if err != nil {
 		return PetResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return PetResponse{}, err
 	}
@@ -268,7 +263,7 @@ func (client *MultipleInheritanceServiceClient) PutCat(ctx context.Context, cat 
 	if err != nil {
 		return StringResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return StringResponse{}, err
 	}
@@ -317,7 +312,7 @@ func (client *MultipleInheritanceServiceClient) PutFeline(ctx context.Context, f
 	if err != nil {
 		return StringResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return StringResponse{}, err
 	}
@@ -366,7 +361,7 @@ func (client *MultipleInheritanceServiceClient) PutHorse(ctx context.Context, ho
 	if err != nil {
 		return StringResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return StringResponse{}, err
 	}
@@ -415,7 +410,7 @@ func (client *MultipleInheritanceServiceClient) PutKitten(ctx context.Context, k
 	if err != nil {
 		return StringResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return StringResponse{}, err
 	}
@@ -464,7 +459,7 @@ func (client *MultipleInheritanceServiceClient) PutPet(ctx context.Context, pet 
 	if err != nil {
 		return StringResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return StringResponse{}, err
 	}

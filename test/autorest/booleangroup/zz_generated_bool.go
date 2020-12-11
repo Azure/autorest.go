@@ -24,18 +24,13 @@ func NewBoolClient(con *Connection) *BoolClient {
 	return &BoolClient{con: con}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *BoolClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // GetFalse - Get false Boolean value
 func (client *BoolClient) GetFalse(ctx context.Context, options *BoolGetFalseOptions) (BoolResponse, error) {
 	req, err := client.getFalseCreateRequest(ctx, options)
 	if err != nil {
 		return BoolResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return BoolResponse{}, err
 	}
@@ -81,7 +76,7 @@ func (client *BoolClient) GetInvalid(ctx context.Context, options *BoolGetInvali
 	if err != nil {
 		return BoolResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return BoolResponse{}, err
 	}
@@ -127,7 +122,7 @@ func (client *BoolClient) GetNull(ctx context.Context, options *BoolGetNullOptio
 	if err != nil {
 		return BoolResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return BoolResponse{}, err
 	}
@@ -173,7 +168,7 @@ func (client *BoolClient) GetTrue(ctx context.Context, options *BoolGetTrueOptio
 	if err != nil {
 		return BoolResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return BoolResponse{}, err
 	}
@@ -219,7 +214,7 @@ func (client *BoolClient) PutFalse(ctx context.Context, options *BoolPutFalseOpt
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -256,7 +251,7 @@ func (client *BoolClient) PutTrue(ctx context.Context, options *BoolPutTrueOptio
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}

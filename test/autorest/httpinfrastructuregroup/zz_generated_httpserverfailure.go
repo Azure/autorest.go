@@ -24,18 +24,13 @@ func NewHTTPServerFailureClient(con *Connection) *HTTPServerFailureClient {
 	return &HTTPServerFailureClient{con: con}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *HTTPServerFailureClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // Delete505 - Return 505 status code - should be represented in the client as an error
 func (client *HTTPServerFailureClient) Delete505(ctx context.Context, options *HTTPServerFailureDelete505Options) (*http.Response, error) {
 	req, err := client.delete505CreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -72,7 +67,7 @@ func (client *HTTPServerFailureClient) Get501(ctx context.Context, options *HTTP
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -109,7 +104,7 @@ func (client *HTTPServerFailureClient) Head501(ctx context.Context, options *HTT
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -146,7 +141,7 @@ func (client *HTTPServerFailureClient) Post505(ctx context.Context, options *HTT
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}

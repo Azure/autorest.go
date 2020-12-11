@@ -24,18 +24,13 @@ func NewPolymorphismClient(con *Connection) *PolymorphismClient {
 	return &PolymorphismClient{con: con}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *PolymorphismClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // GetComplicated - Get complex types that are polymorphic, but not at the root of the hierarchy; also have additional properties
 func (client *PolymorphismClient) GetComplicated(ctx context.Context, options *PolymorphismGetComplicatedOptions) (SalmonResponse, error) {
 	req, err := client.getComplicatedCreateRequest(ctx, options)
 	if err != nil {
 		return SalmonResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return SalmonResponse{}, err
 	}
@@ -83,7 +78,7 @@ func (client *PolymorphismClient) GetComposedWithDiscriminator(ctx context.Conte
 	if err != nil {
 		return DotFishMarketResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return DotFishMarketResponse{}, err
 	}
@@ -131,7 +126,7 @@ func (client *PolymorphismClient) GetComposedWithoutDiscriminator(ctx context.Co
 	if err != nil {
 		return DotFishMarketResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return DotFishMarketResponse{}, err
 	}
@@ -177,7 +172,7 @@ func (client *PolymorphismClient) GetDotSyntax(ctx context.Context, options *Pol
 	if err != nil {
 		return DotFishResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return DotFishResponse{}, err
 	}
@@ -223,7 +218,7 @@ func (client *PolymorphismClient) GetValid(ctx context.Context, options *Polymor
 	if err != nil {
 		return FishResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return FishResponse{}, err
 	}
@@ -269,7 +264,7 @@ func (client *PolymorphismClient) PutComplicated(ctx context.Context, complexBod
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -306,7 +301,7 @@ func (client *PolymorphismClient) PutMissingDiscriminator(ctx context.Context, c
 	if err != nil {
 		return SalmonResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return SalmonResponse{}, err
 	}
@@ -352,7 +347,7 @@ func (client *PolymorphismClient) PutValid(ctx context.Context, complexBody Fish
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -390,7 +385,7 @@ func (client *PolymorphismClient) PutValidMissingRequired(ctx context.Context, c
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}

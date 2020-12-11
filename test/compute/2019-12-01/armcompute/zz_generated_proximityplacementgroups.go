@@ -31,18 +31,13 @@ func NewProximityPlacementGroupsClient(con *armcore.Connection, subscriptionID s
 	return &ProximityPlacementGroupsClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *ProximityPlacementGroupsClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // CreateOrUpdate - Create or update a proximity placement group.
 func (client *ProximityPlacementGroupsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, proximityPlacementGroupName string, parameters ProximityPlacementGroup, options *ProximityPlacementGroupsCreateOrUpdateOptions) (ProximityPlacementGroupResponse, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, proximityPlacementGroupName, parameters, options)
 	if err != nil {
 		return ProximityPlacementGroupResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return ProximityPlacementGroupResponse{}, err
 	}
@@ -97,7 +92,7 @@ func (client *ProximityPlacementGroupsClient) Delete(ctx context.Context, resour
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -142,7 +137,7 @@ func (client *ProximityPlacementGroupsClient) Get(ctx context.Context, resourceG
 	if err != nil {
 		return ProximityPlacementGroupResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return ProximityPlacementGroupResponse{}, err
 	}
@@ -307,7 +302,7 @@ func (client *ProximityPlacementGroupsClient) Update(ctx context.Context, resour
 	if err != nil {
 		return ProximityPlacementGroupResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return ProximityPlacementGroupResponse{}, err
 	}

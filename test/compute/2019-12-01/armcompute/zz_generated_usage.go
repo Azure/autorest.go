@@ -31,11 +31,6 @@ func NewUsageClient(con *armcore.Connection, subscriptionID string) *UsageClient
 	return &UsageClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *UsageClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // List - Gets, for the specified location, the current compute resource usage information as well as the limits for compute resources under the subscription.
 func (client *UsageClient) List(location string, options *UsageListOptions) ListUsagesResultPager {
 	return &listUsagesResultPager{

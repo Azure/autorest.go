@@ -24,18 +24,13 @@ func NewArrayClient(con *Connection) *ArrayClient {
 	return &ArrayClient{con: con}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *ArrayClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // GetEmpty - Get complex types with array property which is empty
 func (client *ArrayClient) GetEmpty(ctx context.Context, options *ArrayGetEmptyOptions) (ArrayWrapperResponse, error) {
 	req, err := client.getEmptyCreateRequest(ctx, options)
 	if err != nil {
 		return ArrayWrapperResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return ArrayWrapperResponse{}, err
 	}
@@ -81,7 +76,7 @@ func (client *ArrayClient) GetNotProvided(ctx context.Context, options *ArrayGet
 	if err != nil {
 		return ArrayWrapperResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return ArrayWrapperResponse{}, err
 	}
@@ -127,7 +122,7 @@ func (client *ArrayClient) GetValid(ctx context.Context, options *ArrayGetValidO
 	if err != nil {
 		return ArrayWrapperResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return ArrayWrapperResponse{}, err
 	}
@@ -173,7 +168,7 @@ func (client *ArrayClient) PutEmpty(ctx context.Context, complexBody ArrayWrappe
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -210,7 +205,7 @@ func (client *ArrayClient) PutValid(ctx context.Context, complexBody ArrayWrappe
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}

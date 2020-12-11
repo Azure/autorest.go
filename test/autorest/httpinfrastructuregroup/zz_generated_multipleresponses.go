@@ -27,11 +27,6 @@ func NewMultipleResponsesClient(con *Connection) *MultipleResponsesClient {
 	return &MultipleResponsesClient{con: con}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *MultipleResponsesClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // Get200Model201ModelDefaultError200Valid - Send a 200 response with valid payload: {'statusCode': '200'}
 // Possible return types are *MyExceptionResponse, *BResponse
 func (client *MultipleResponsesClient) Get200Model201ModelDefaultError200Valid(ctx context.Context, options *MultipleResponsesGet200Model201ModelDefaultError200ValidOptions) (interface{}, error) {
@@ -39,7 +34,7 @@ func (client *MultipleResponsesClient) Get200Model201ModelDefaultError200Valid(c
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -97,7 +92,7 @@ func (client *MultipleResponsesClient) Get200Model201ModelDefaultError201Valid(c
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -155,7 +150,7 @@ func (client *MultipleResponsesClient) Get200Model201ModelDefaultError400Valid(c
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -212,7 +207,7 @@ func (client *MultipleResponsesClient) Get200Model204NoModelDefaultError200Valid
 	if err != nil {
 		return MyExceptionResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MyExceptionResponse{}, err
 	}
@@ -258,7 +253,7 @@ func (client *MultipleResponsesClient) Get200Model204NoModelDefaultError201Inval
 	if err != nil {
 		return MyExceptionResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MyExceptionResponse{}, err
 	}
@@ -304,7 +299,7 @@ func (client *MultipleResponsesClient) Get200Model204NoModelDefaultError202None(
 	if err != nil {
 		return MyExceptionResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MyExceptionResponse{}, err
 	}
@@ -350,7 +345,7 @@ func (client *MultipleResponsesClient) Get200Model204NoModelDefaultError204Valid
 	if err != nil {
 		return MyExceptionResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MyExceptionResponse{}, err
 	}
@@ -396,7 +391,7 @@ func (client *MultipleResponsesClient) Get200Model204NoModelDefaultError400Valid
 	if err != nil {
 		return MyExceptionResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MyExceptionResponse{}, err
 	}
@@ -442,7 +437,7 @@ func (client *MultipleResponsesClient) Get200ModelA200Invalid(ctx context.Contex
 	if err != nil {
 		return MyExceptionResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MyExceptionResponse{}, err
 	}
@@ -491,7 +486,7 @@ func (client *MultipleResponsesClient) Get200ModelA200None(ctx context.Context, 
 	if err != nil {
 		return MyExceptionResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MyExceptionResponse{}, err
 	}
@@ -540,7 +535,7 @@ func (client *MultipleResponsesClient) Get200ModelA200Valid(ctx context.Context,
 	if err != nil {
 		return MyExceptionResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MyExceptionResponse{}, err
 	}
@@ -590,7 +585,7 @@ func (client *MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultErro
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -654,7 +649,7 @@ func (client *MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultErro
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -718,7 +713,7 @@ func (client *MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultErro
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -782,7 +777,7 @@ func (client *MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultErro
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -845,7 +840,7 @@ func (client *MultipleResponsesClient) Get200ModelA202Valid(ctx context.Context,
 	if err != nil {
 		return MyExceptionResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MyExceptionResponse{}, err
 	}
@@ -894,7 +889,7 @@ func (client *MultipleResponsesClient) Get200ModelA400Invalid(ctx context.Contex
 	if err != nil {
 		return MyExceptionResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MyExceptionResponse{}, err
 	}
@@ -943,7 +938,7 @@ func (client *MultipleResponsesClient) Get200ModelA400None(ctx context.Context, 
 	if err != nil {
 		return MyExceptionResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MyExceptionResponse{}, err
 	}
@@ -992,7 +987,7 @@ func (client *MultipleResponsesClient) Get200ModelA400Valid(ctx context.Context,
 	if err != nil {
 		return MyExceptionResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MyExceptionResponse{}, err
 	}
@@ -1041,7 +1036,7 @@ func (client *MultipleResponsesClient) Get202None204NoneDefaultError202None(ctx 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1078,7 +1073,7 @@ func (client *MultipleResponsesClient) Get202None204NoneDefaultError204None(ctx 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1115,7 +1110,7 @@ func (client *MultipleResponsesClient) Get202None204NoneDefaultError400Valid(ctx
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1152,7 +1147,7 @@ func (client *MultipleResponsesClient) Get202None204NoneDefaultNone202Invalid(ct
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1191,7 +1186,7 @@ func (client *MultipleResponsesClient) Get202None204NoneDefaultNone204None(ctx c
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1230,7 +1225,7 @@ func (client *MultipleResponsesClient) Get202None204NoneDefaultNone400Invalid(ct
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1269,7 +1264,7 @@ func (client *MultipleResponsesClient) Get202None204NoneDefaultNone400None(ctx c
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1308,7 +1303,7 @@ func (client *MultipleResponsesClient) GetDefaultModelA200None(ctx context.Conte
 	if err != nil {
 		return MyExceptionResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MyExceptionResponse{}, err
 	}
@@ -1357,7 +1352,7 @@ func (client *MultipleResponsesClient) GetDefaultModelA200Valid(ctx context.Cont
 	if err != nil {
 		return MyExceptionResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MyExceptionResponse{}, err
 	}
@@ -1406,7 +1401,7 @@ func (client *MultipleResponsesClient) GetDefaultModelA400None(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1443,7 +1438,7 @@ func (client *MultipleResponsesClient) GetDefaultModelA400Valid(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1480,7 +1475,7 @@ func (client *MultipleResponsesClient) GetDefaultNone200Invalid(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1519,7 +1514,7 @@ func (client *MultipleResponsesClient) GetDefaultNone200None(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1558,7 +1553,7 @@ func (client *MultipleResponsesClient) GetDefaultNone400Invalid(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1597,7 +1592,7 @@ func (client *MultipleResponsesClient) GetDefaultNone400None(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}

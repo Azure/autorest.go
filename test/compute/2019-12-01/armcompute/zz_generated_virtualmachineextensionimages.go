@@ -32,18 +32,13 @@ func NewVirtualMachineExtensionImagesClient(con *armcore.Connection, subscriptio
 	return &VirtualMachineExtensionImagesClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *VirtualMachineExtensionImagesClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // Get - Gets a virtual machine extension image.
 func (client *VirtualMachineExtensionImagesClient) Get(ctx context.Context, location string, publisherName string, typeParameter string, version string, options *VirtualMachineExtensionImagesGetOptions) (VirtualMachineExtensionImageResponse, error) {
 	req, err := client.getCreateRequest(ctx, location, publisherName, typeParameter, version, options)
 	if err != nil {
 		return VirtualMachineExtensionImageResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return VirtualMachineExtensionImageResponse{}, err
 	}
@@ -100,7 +95,7 @@ func (client *VirtualMachineExtensionImagesClient) ListTypes(ctx context.Context
 	if err != nil {
 		return VirtualMachineExtensionImageArrayResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return VirtualMachineExtensionImageArrayResponse{}, err
 	}
@@ -155,7 +150,7 @@ func (client *VirtualMachineExtensionImagesClient) ListVersions(ctx context.Cont
 	if err != nil {
 		return VirtualMachineExtensionImageArrayResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return VirtualMachineExtensionImageArrayResponse{}, err
 	}

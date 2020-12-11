@@ -24,18 +24,13 @@ func NewStringClient(con *Connection) *StringClient {
 	return &StringClient{con: con}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *StringClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // GetBase64Encoded - Get value that is base64 encoded
 func (client *StringClient) GetBase64Encoded(ctx context.Context, options *StringGetBase64EncodedOptions) (ByteArrayResponse, error) {
 	req, err := client.getBase64EncodedCreateRequest(ctx, options)
 	if err != nil {
 		return ByteArrayResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return ByteArrayResponse{}, err
 	}
@@ -81,7 +76,7 @@ func (client *StringClient) GetBase64URLEncoded(ctx context.Context, options *St
 	if err != nil {
 		return ByteArrayResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return ByteArrayResponse{}, err
 	}
@@ -127,7 +122,7 @@ func (client *StringClient) GetEmpty(ctx context.Context, options *StringGetEmpt
 	if err != nil {
 		return StringResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return StringResponse{}, err
 	}
@@ -173,7 +168,7 @@ func (client *StringClient) GetMBCS(ctx context.Context, options *StringGetMBCSO
 	if err != nil {
 		return StringResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return StringResponse{}, err
 	}
@@ -219,7 +214,7 @@ func (client *StringClient) GetNotProvided(ctx context.Context, options *StringG
 	if err != nil {
 		return StringResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return StringResponse{}, err
 	}
@@ -265,7 +260,7 @@ func (client *StringClient) GetNull(ctx context.Context, options *StringGetNullO
 	if err != nil {
 		return StringResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return StringResponse{}, err
 	}
@@ -311,7 +306,7 @@ func (client *StringClient) GetNullBase64URLEncoded(ctx context.Context, options
 	if err != nil {
 		return ByteArrayResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return ByteArrayResponse{}, err
 	}
@@ -357,7 +352,7 @@ func (client *StringClient) GetWhitespace(ctx context.Context, options *StringGe
 	if err != nil {
 		return StringResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return StringResponse{}, err
 	}
@@ -403,7 +398,7 @@ func (client *StringClient) PutBase64URLEncoded(ctx context.Context, stringBody 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -440,7 +435,7 @@ func (client *StringClient) PutEmpty(ctx context.Context, options *StringPutEmpt
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -477,7 +472,7 @@ func (client *StringClient) PutMBCS(ctx context.Context, options *StringPutMBCSO
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -514,7 +509,7 @@ func (client *StringClient) PutNull(ctx context.Context, options *StringPutNullO
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -554,7 +549,7 @@ func (client *StringClient) PutWhitespace(ctx context.Context, options *StringPu
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}

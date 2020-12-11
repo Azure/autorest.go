@@ -25,18 +25,13 @@ func NewDateClient(con *Connection) *DateClient {
 	return &DateClient{con: con}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *DateClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // GetInvalidDate - Get invalid date value
 func (client *DateClient) GetInvalidDate(ctx context.Context, options *DateGetInvalidDateOptions) (TimeResponse, error) {
 	req, err := client.getInvalidDateCreateRequest(ctx, options)
 	if err != nil {
 		return TimeResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return TimeResponse{}, err
 	}
@@ -82,7 +77,7 @@ func (client *DateClient) GetMaxDate(ctx context.Context, options *DateGetMaxDat
 	if err != nil {
 		return TimeResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return TimeResponse{}, err
 	}
@@ -128,7 +123,7 @@ func (client *DateClient) GetMinDate(ctx context.Context, options *DateGetMinDat
 	if err != nil {
 		return TimeResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return TimeResponse{}, err
 	}
@@ -174,7 +169,7 @@ func (client *DateClient) GetNull(ctx context.Context, options *DateGetNullOptio
 	if err != nil {
 		return TimeResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return TimeResponse{}, err
 	}
@@ -220,7 +215,7 @@ func (client *DateClient) GetOverflowDate(ctx context.Context, options *DateGetO
 	if err != nil {
 		return TimeResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return TimeResponse{}, err
 	}
@@ -266,7 +261,7 @@ func (client *DateClient) GetUnderflowDate(ctx context.Context, options *DateGet
 	if err != nil {
 		return TimeResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return TimeResponse{}, err
 	}
@@ -312,7 +307,7 @@ func (client *DateClient) PutMaxDate(ctx context.Context, dateBody time.Time, op
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -349,7 +344,7 @@ func (client *DateClient) PutMinDate(ctx context.Context, dateBody time.Time, op
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}

@@ -26,11 +26,6 @@ func NewLroRetrysClient(con *Connection) *LroRetrysClient {
 	return &LroRetrysClient{con: con}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *LroRetrysClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // BeginDelete202Retry200 - Long running delete request, service returns a 500, then a 202 to the initial request. Polls return this value until the last
 // poll returns a ‘200’ with ProvisioningState=’Succeeded’
 func (client *LroRetrysClient) BeginDelete202Retry200(ctx context.Context, options *LroRetrysBeginDelete202Retry200Options) (HTTPPollerResponse, error) {
@@ -76,7 +71,7 @@ func (client *LroRetrysClient) delete202Retry200(ctx context.Context, options *L
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -152,7 +147,7 @@ func (client *LroRetrysClient) deleteAsyncRelativeRetrySucceeded(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -230,7 +225,7 @@ func (client *LroRetrysClient) deleteProvisioning202Accepted200Succeeded(ctx con
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -315,7 +310,7 @@ func (client *LroRetrysClient) post202Retry200(ctx context.Context, options *Lro
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -396,7 +391,7 @@ func (client *LroRetrysClient) postAsyncRelativeRetrySucceeded(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -477,7 +472,7 @@ func (client *LroRetrysClient) put201CreatingSucceeded200(ctx context.Context, o
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -567,7 +562,7 @@ func (client *LroRetrysClient) putAsyncRelativeRetrySucceeded(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}

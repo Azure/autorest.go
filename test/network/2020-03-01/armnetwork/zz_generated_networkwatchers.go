@@ -29,11 +29,6 @@ func NewNetworkWatchersClient(con *armcore.Connection, subscriptionID string) *N
 	return &NetworkWatchersClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *NetworkWatchersClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // BeginCheckConnectivity - Verifies the possibility of establishing a direct TCP connection from a virtual machine to a given endpoint including another
 // VM or an arbitrary remote server.
 func (client *NetworkWatchersClient) BeginCheckConnectivity(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters ConnectivityParameters, options *NetworkWatchersBeginCheckConnectivityOptions) (ConnectivityInformationPollerResponse, error) {
@@ -79,7 +74,7 @@ func (client *NetworkWatchersClient) checkConnectivity(ctx context.Context, reso
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -131,7 +126,7 @@ func (client *NetworkWatchersClient) CreateOrUpdate(ctx context.Context, resourc
 	if err != nil {
 		return NetworkWatcherResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return NetworkWatcherResponse{}, err
 	}
@@ -220,7 +215,7 @@ func (client *NetworkWatchersClient) delete(ctx context.Context, resourceGroupNa
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -263,7 +258,7 @@ func (client *NetworkWatchersClient) Get(ctx context.Context, resourceGroupName 
 	if err != nil {
 		return NetworkWatcherResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return NetworkWatcherResponse{}, err
 	}
@@ -354,7 +349,7 @@ func (client *NetworkWatchersClient) getAzureReachabilityReport(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -443,7 +438,7 @@ func (client *NetworkWatchersClient) getFlowLogStatus(ctx context.Context, resou
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -540,7 +535,7 @@ func (client *NetworkWatchersClient) getNetworkConfigurationDiagnostic(ctx conte
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -629,7 +624,7 @@ func (client *NetworkWatchersClient) getNextHop(ctx context.Context, resourceGro
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -681,7 +676,7 @@ func (client *NetworkWatchersClient) GetTopology(ctx context.Context, resourceGr
 	if err != nil {
 		return TopologyResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return TopologyResponse{}, err
 	}
@@ -770,7 +765,7 @@ func (client *NetworkWatchersClient) getTroubleshooting(ctx context.Context, res
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -859,7 +854,7 @@ func (client *NetworkWatchersClient) getTroubleshootingResult(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -948,7 +943,7 @@ func (client *NetworkWatchersClient) getVMSecurityRules(ctx context.Context, res
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1000,7 +995,7 @@ func (client *NetworkWatchersClient) List(ctx context.Context, resourceGroupName
 	if err != nil {
 		return NetworkWatcherListResultResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return NetworkWatcherListResultResponse{}, err
 	}
@@ -1051,7 +1046,7 @@ func (client *NetworkWatchersClient) ListAll(ctx context.Context, options *Netwo
 	if err != nil {
 		return NetworkWatcherListResultResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return NetworkWatcherListResultResponse{}, err
 	}
@@ -1140,7 +1135,7 @@ func (client *NetworkWatchersClient) listAvailableProviders(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1229,7 +1224,7 @@ func (client *NetworkWatchersClient) setFlowLogConfiguration(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1281,7 +1276,7 @@ func (client *NetworkWatchersClient) UpdateTags(ctx context.Context, resourceGro
 	if err != nil {
 		return NetworkWatcherResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return NetworkWatcherResponse{}, err
 	}
@@ -1370,7 +1365,7 @@ func (client *NetworkWatchersClient) verifyIPFlow(ctx context.Context, resourceG
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}

@@ -28,18 +28,13 @@ func NewXMLClient(con *Connection) *XMLClient {
 	return &XMLClient{con: con}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *XMLClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // GetACLs - Gets storage ACLs for a container.
 func (client *XMLClient) GetACLs(ctx context.Context, options *XMLGetACLsOptions) (SignedIDentifierArrayResponse, error) {
 	req, err := client.getAcLsCreateRequest(ctx, options)
 	if err != nil {
 		return SignedIDentifierArrayResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return SignedIDentifierArrayResponse{}, err
 	}
@@ -92,7 +87,7 @@ func (client *XMLClient) GetComplexTypeRefNoMeta(ctx context.Context, options *X
 	if err != nil {
 		return RootWithRefAndNoMetaResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return RootWithRefAndNoMetaResponse{}, err
 	}
@@ -141,7 +136,7 @@ func (client *XMLClient) GetComplexTypeRefWithMeta(ctx context.Context, options 
 	if err != nil {
 		return RootWithRefAndMetaResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return RootWithRefAndMetaResponse{}, err
 	}
@@ -190,7 +185,7 @@ func (client *XMLClient) GetEmptyChildElement(ctx context.Context, options *XMLG
 	if err != nil {
 		return BananaResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return BananaResponse{}, err
 	}
@@ -239,7 +234,7 @@ func (client *XMLClient) GetEmptyList(ctx context.Context, options *XMLGetEmptyL
 	if err != nil {
 		return SlideshowResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return SlideshowResponse{}, err
 	}
@@ -288,7 +283,7 @@ func (client *XMLClient) GetEmptyRootList(ctx context.Context, options *XMLGetEm
 	if err != nil {
 		return BananaArrayResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return BananaArrayResponse{}, err
 	}
@@ -337,7 +332,7 @@ func (client *XMLClient) GetEmptyWrappedLists(ctx context.Context, options *XMLG
 	if err != nil {
 		return AppleBarrelResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return AppleBarrelResponse{}, err
 	}
@@ -386,7 +381,7 @@ func (client *XMLClient) GetHeaders(ctx context.Context, options *XMLGetHeadersO
 	if err != nil {
 		return XMLGetHeadersResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return XMLGetHeadersResponse{}, err
 	}
@@ -434,7 +429,7 @@ func (client *XMLClient) GetRootList(ctx context.Context, options *XMLGetRootLis
 	if err != nil {
 		return BananaArrayResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return BananaArrayResponse{}, err
 	}
@@ -483,7 +478,7 @@ func (client *XMLClient) GetRootListSingleItem(ctx context.Context, options *XML
 	if err != nil {
 		return BananaArrayResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return BananaArrayResponse{}, err
 	}
@@ -532,7 +527,7 @@ func (client *XMLClient) GetServiceProperties(ctx context.Context, options *XMLG
 	if err != nil {
 		return StorageServicePropertiesResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return StorageServicePropertiesResponse{}, err
 	}
@@ -585,7 +580,7 @@ func (client *XMLClient) GetSimple(ctx context.Context, options *XMLGetSimpleOpt
 	if err != nil {
 		return SlideshowResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return SlideshowResponse{}, err
 	}
@@ -631,7 +626,7 @@ func (client *XMLClient) GetWrappedLists(ctx context.Context, options *XMLGetWra
 	if err != nil {
 		return AppleBarrelResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return AppleBarrelResponse{}, err
 	}
@@ -681,7 +676,7 @@ func (client *XMLClient) GetXMSText(ctx context.Context, options *XMLGetXMSTextO
 	if err != nil {
 		return ObjectWithXMSTextPropertyResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return ObjectWithXMSTextPropertyResponse{}, err
 	}
@@ -730,7 +725,7 @@ func (client *XMLClient) JSONInput(ctx context.Context, properties JSONInput, op
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -769,7 +764,7 @@ func (client *XMLClient) JSONOutput(ctx context.Context, options *XMLJSONOutputO
 	if err != nil {
 		return JSONOutputResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return JSONOutputResponse{}, err
 	}
@@ -818,7 +813,7 @@ func (client *XMLClient) ListBlobs(ctx context.Context, options *XMLListBlobsOpt
 	if err != nil {
 		return ListBlobsResponseResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return ListBlobsResponseResponse{}, err
 	}
@@ -871,7 +866,7 @@ func (client *XMLClient) ListContainers(ctx context.Context, options *XMLListCon
 	if err != nil {
 		return ListContainersResponseResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return ListContainersResponseResponse{}, err
 	}
@@ -923,7 +918,7 @@ func (client *XMLClient) PutACLs(ctx context.Context, properties []SignedIDentif
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -970,7 +965,7 @@ func (client *XMLClient) PutComplexTypeRefNoMeta(ctx context.Context, model Root
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1009,7 +1004,7 @@ func (client *XMLClient) PutComplexTypeRefWithMeta(ctx context.Context, model Ro
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1048,7 +1043,7 @@ func (client *XMLClient) PutEmptyChildElement(ctx context.Context, banana Banana
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1087,7 +1082,7 @@ func (client *XMLClient) PutEmptyList(ctx context.Context, slideshow Slideshow, 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1126,7 +1121,7 @@ func (client *XMLClient) PutEmptyRootList(ctx context.Context, bananas []Banana,
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1169,7 +1164,7 @@ func (client *XMLClient) PutEmptyWrappedLists(ctx context.Context, appleBarrel A
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1208,7 +1203,7 @@ func (client *XMLClient) PutRootList(ctx context.Context, bananas []Banana, opti
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1251,7 +1246,7 @@ func (client *XMLClient) PutRootListSingleItem(ctx context.Context, bananas []Ba
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1294,7 +1289,7 @@ func (client *XMLClient) PutServiceProperties(ctx context.Context, properties St
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1337,7 +1332,7 @@ func (client *XMLClient) PutSimple(ctx context.Context, slideshow Slideshow, opt
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1374,7 +1369,7 @@ func (client *XMLClient) PutWrappedLists(ctx context.Context, wrappedLists Apple
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}

@@ -28,18 +28,13 @@ func NewPeerExpressRouteCircuitConnectionsClient(con *armcore.Connection, subscr
 	return &PeerExpressRouteCircuitConnectionsClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *PeerExpressRouteCircuitConnectionsClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // Get - Gets the specified Peer Express Route Circuit Connection from the specified express route circuit.
 func (client *PeerExpressRouteCircuitConnectionsClient) Get(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, connectionName string, options *PeerExpressRouteCircuitConnectionsGetOptions) (PeerExpressRouteCircuitConnectionResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, circuitName, peeringName, connectionName, options)
 	if err != nil {
 		return PeerExpressRouteCircuitConnectionResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return PeerExpressRouteCircuitConnectionResponse{}, err
 	}

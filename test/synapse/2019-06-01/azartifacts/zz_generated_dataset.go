@@ -19,18 +19,13 @@ type datasetClient struct {
 	con *connection
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *datasetClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // CreateOrUpdateDataset - Creates or updates a dataset.
 func (client *datasetClient) createOrUpdateDataset(ctx context.Context, datasetName string, dataset DatasetResource, options *DatasetBeginCreateOrUpdateDatasetOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateDatasetCreateRequest(ctx, datasetName, dataset, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -83,7 +78,7 @@ func (client *datasetClient) deleteDataset(ctx context.Context, datasetName stri
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -124,7 +119,7 @@ func (client *datasetClient) GetDataset(ctx context.Context, datasetName string,
 	if err != nil {
 		return DatasetResourceResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return DatasetResourceResponse{}, err
 	}
@@ -226,7 +221,7 @@ func (client *datasetClient) renameDataset(ctx context.Context, datasetName stri
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}

@@ -19,18 +19,13 @@ type triggerRunClient struct {
 	con *connection
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *triggerRunClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // CancelTriggerInstance - Cancel single trigger instance by runId.
 func (client *triggerRunClient) CancelTriggerInstance(ctx context.Context, triggerName string, runId string, options *TriggerRunCancelTriggerInstanceOptions) (*http.Response, error) {
 	req, err := client.cancelTriggerInstanceCreateRequest(ctx, triggerName, runId, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -72,7 +67,7 @@ func (client *triggerRunClient) QueryTriggerRunsByWorkspace(ctx context.Context,
 	if err != nil {
 		return TriggerRunsQueryResponseResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return TriggerRunsQueryResponseResponse{}, err
 	}
@@ -121,7 +116,7 @@ func (client *triggerRunClient) RerunTriggerInstance(ctx context.Context, trigge
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}

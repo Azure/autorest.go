@@ -28,11 +28,6 @@ func NewAvailablePrivateEndpointTypesClient(con *armcore.Connection, subscriptio
 	return &AvailablePrivateEndpointTypesClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *AvailablePrivateEndpointTypesClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // List - Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region.
 func (client *AvailablePrivateEndpointTypesClient) List(location string, options *AvailablePrivateEndpointTypesListOptions) AvailablePrivateEndpointTypesResultPager {
 	return &availablePrivateEndpointTypesResultPager{

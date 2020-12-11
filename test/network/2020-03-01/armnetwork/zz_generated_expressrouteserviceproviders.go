@@ -28,11 +28,6 @@ func NewExpressRouteServiceProvidersClient(con *armcore.Connection, subscription
 	return &ExpressRouteServiceProvidersClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *ExpressRouteServiceProvidersClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // List - Gets all the available express route service providers.
 func (client *ExpressRouteServiceProvidersClient) List(options *ExpressRouteServiceProvidersListOptions) ExpressRouteServiceProviderListResultPager {
 	return &expressRouteServiceProviderListResultPager{

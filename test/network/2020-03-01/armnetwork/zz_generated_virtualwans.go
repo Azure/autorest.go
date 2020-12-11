@@ -29,11 +29,6 @@ func NewVirtualWansClient(con *armcore.Connection, subscriptionID string) *Virtu
 	return &VirtualWansClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *VirtualWansClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // BeginCreateOrUpdate - Creates a VirtualWAN resource if it doesn't exist else updates the existing VirtualWAN.
 func (client *VirtualWansClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualWanName string, wanParameters VirtualWan, options *VirtualWansBeginCreateOrUpdateOptions) (VirtualWanPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualWanName, wanParameters, options)
@@ -77,7 +72,7 @@ func (client *VirtualWansClient) createOrUpdate(ctx context.Context, resourceGro
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -166,7 +161,7 @@ func (client *VirtualWansClient) delete(ctx context.Context, resourceGroupName s
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -209,7 +204,7 @@ func (client *VirtualWansClient) Get(ctx context.Context, resourceGroupName stri
 	if err != nil {
 		return VirtualWanResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return VirtualWanResponse{}, err
 	}
@@ -362,7 +357,7 @@ func (client *VirtualWansClient) UpdateTags(ctx context.Context, resourceGroupNa
 	if err != nil {
 		return VirtualWanResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return VirtualWanResponse{}, err
 	}

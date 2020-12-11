@@ -29,11 +29,6 @@ func NewVpnServerConfigurationsClient(con *armcore.Connection, subscriptionID st
 	return &VpnServerConfigurationsClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *VpnServerConfigurationsClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // BeginCreateOrUpdate - Creates a VpnServerConfiguration resource if it doesn't exist else updates the existing VpnServerConfiguration.
 func (client *VpnServerConfigurationsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, vpnServerConfigurationName string, vpnServerConfigurationParameters VpnServerConfiguration, options *VpnServerConfigurationsBeginCreateOrUpdateOptions) (VpnServerConfigurationPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, vpnServerConfigurationName, vpnServerConfigurationParameters, options)
@@ -77,7 +72,7 @@ func (client *VpnServerConfigurationsClient) createOrUpdate(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -166,7 +161,7 @@ func (client *VpnServerConfigurationsClient) delete(ctx context.Context, resourc
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -209,7 +204,7 @@ func (client *VpnServerConfigurationsClient) Get(ctx context.Context, resourceGr
 	if err != nil {
 		return VpnServerConfigurationResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return VpnServerConfigurationResponse{}, err
 	}
@@ -362,7 +357,7 @@ func (client *VpnServerConfigurationsClient) UpdateTags(ctx context.Context, res
 	if err != nil {
 		return VpnServerConfigurationResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return VpnServerConfigurationResponse{}, err
 	}

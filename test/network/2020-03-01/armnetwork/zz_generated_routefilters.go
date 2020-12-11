@@ -29,11 +29,6 @@ func NewRouteFiltersClient(con *armcore.Connection, subscriptionID string) *Rout
 	return &RouteFiltersClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *RouteFiltersClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // BeginCreateOrUpdate - Creates or updates a route filter in a specified resource group.
 func (client *RouteFiltersClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, routeFilterName string, routeFilterParameters RouteFilter, options *RouteFiltersBeginCreateOrUpdateOptions) (RouteFilterPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, routeFilterName, routeFilterParameters, options)
@@ -77,7 +72,7 @@ func (client *RouteFiltersClient) createOrUpdate(ctx context.Context, resourceGr
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -166,7 +161,7 @@ func (client *RouteFiltersClient) delete(ctx context.Context, resourceGroupName 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -209,7 +204,7 @@ func (client *RouteFiltersClient) Get(ctx context.Context, resourceGroupName str
 	if err != nil {
 		return RouteFilterResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return RouteFilterResponse{}, err
 	}
@@ -365,7 +360,7 @@ func (client *RouteFiltersClient) UpdateTags(ctx context.Context, resourceGroupN
 	if err != nil {
 		return RouteFilterResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return RouteFilterResponse{}, err
 	}

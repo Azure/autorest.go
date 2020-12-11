@@ -29,11 +29,6 @@ func NewDdosProtectionPlansClient(con *armcore.Connection, subscriptionID string
 	return &DdosProtectionPlansClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *DdosProtectionPlansClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // BeginCreateOrUpdate - Creates or updates a DDoS protection plan.
 func (client *DdosProtectionPlansClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, parameters DdosProtectionPlan, options *DdosProtectionPlansBeginCreateOrUpdateOptions) (DdosProtectionPlanPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, ddosProtectionPlanName, parameters, options)
@@ -77,7 +72,7 @@ func (client *DdosProtectionPlansClient) createOrUpdate(ctx context.Context, res
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -166,7 +161,7 @@ func (client *DdosProtectionPlansClient) delete(ctx context.Context, resourceGro
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -209,7 +204,7 @@ func (client *DdosProtectionPlansClient) Get(ctx context.Context, resourceGroupN
 	if err != nil {
 		return DdosProtectionPlanResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return DdosProtectionPlanResponse{}, err
 	}
@@ -362,7 +357,7 @@ func (client *DdosProtectionPlansClient) UpdateTags(ctx context.Context, resourc
 	if err != nil {
 		return DdosProtectionPlanResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return DdosProtectionPlanResponse{}, err
 	}

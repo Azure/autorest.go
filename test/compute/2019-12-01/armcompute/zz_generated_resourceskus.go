@@ -31,11 +31,6 @@ func NewResourceSKUsClient(con *armcore.Connection, subscriptionID string) *Reso
 	return &ResourceSKUsClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *ResourceSKUsClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // List - Gets the list of Microsoft.Compute SKUs available for your Subscription.
 func (client *ResourceSKUsClient) List(options *ResourceSKUsListOptions) ResourceSKUsResultPager {
 	return &resourceSkUsResultPager{

@@ -28,11 +28,6 @@ func NewNetworkInterfaceLoadBalancersClient(con *armcore.Connection, subscriptio
 	return &NetworkInterfaceLoadBalancersClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *NetworkInterfaceLoadBalancersClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // List - List all load balancers in a network interface.
 func (client *NetworkInterfaceLoadBalancersClient) List(resourceGroupName string, networkInterfaceName string, options *NetworkInterfaceLoadBalancersListOptions) NetworkInterfaceLoadBalancerListResultPager {
 	return &networkInterfaceLoadBalancerListResultPager{

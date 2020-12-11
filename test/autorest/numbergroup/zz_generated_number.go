@@ -24,18 +24,13 @@ func NewNumberClient(con *Connection) *NumberClient {
 	return &NumberClient{con: con}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *NumberClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // GetBigDecimal - Get big decimal value 2.5976931e+101
 func (client *NumberClient) GetBigDecimal(ctx context.Context, options *NumberGetBigDecimalOptions) (Float64Response, error) {
 	req, err := client.getBigDecimalCreateRequest(ctx, options)
 	if err != nil {
 		return Float64Response{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return Float64Response{}, err
 	}
@@ -81,7 +76,7 @@ func (client *NumberClient) GetBigDecimalNegativeDecimal(ctx context.Context, op
 	if err != nil {
 		return Float64Response{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return Float64Response{}, err
 	}
@@ -127,7 +122,7 @@ func (client *NumberClient) GetBigDecimalPositiveDecimal(ctx context.Context, op
 	if err != nil {
 		return Float64Response{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return Float64Response{}, err
 	}
@@ -173,7 +168,7 @@ func (client *NumberClient) GetBigDouble(ctx context.Context, options *NumberGet
 	if err != nil {
 		return Float64Response{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return Float64Response{}, err
 	}
@@ -219,7 +214,7 @@ func (client *NumberClient) GetBigDoubleNegativeDecimal(ctx context.Context, opt
 	if err != nil {
 		return Float64Response{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return Float64Response{}, err
 	}
@@ -265,7 +260,7 @@ func (client *NumberClient) GetBigDoublePositiveDecimal(ctx context.Context, opt
 	if err != nil {
 		return Float64Response{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return Float64Response{}, err
 	}
@@ -311,7 +306,7 @@ func (client *NumberClient) GetBigFloat(ctx context.Context, options *NumberGetB
 	if err != nil {
 		return Float32Response{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return Float32Response{}, err
 	}
@@ -357,7 +352,7 @@ func (client *NumberClient) GetInvalidDecimal(ctx context.Context, options *Numb
 	if err != nil {
 		return Float64Response{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return Float64Response{}, err
 	}
@@ -403,7 +398,7 @@ func (client *NumberClient) GetInvalidDouble(ctx context.Context, options *Numbe
 	if err != nil {
 		return Float64Response{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return Float64Response{}, err
 	}
@@ -449,7 +444,7 @@ func (client *NumberClient) GetInvalidFloat(ctx context.Context, options *Number
 	if err != nil {
 		return Float32Response{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return Float32Response{}, err
 	}
@@ -495,7 +490,7 @@ func (client *NumberClient) GetNull(ctx context.Context, options *NumberGetNullO
 	if err != nil {
 		return Float32Response{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return Float32Response{}, err
 	}
@@ -541,7 +536,7 @@ func (client *NumberClient) GetSmallDecimal(ctx context.Context, options *Number
 	if err != nil {
 		return Float64Response{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return Float64Response{}, err
 	}
@@ -587,7 +582,7 @@ func (client *NumberClient) GetSmallDouble(ctx context.Context, options *NumberG
 	if err != nil {
 		return Float64Response{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return Float64Response{}, err
 	}
@@ -633,7 +628,7 @@ func (client *NumberClient) GetSmallFloat(ctx context.Context, options *NumberGe
 	if err != nil {
 		return Float64Response{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return Float64Response{}, err
 	}
@@ -679,7 +674,7 @@ func (client *NumberClient) PutBigDecimal(ctx context.Context, numberBody float6
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -716,7 +711,7 @@ func (client *NumberClient) PutBigDecimalNegativeDecimal(ctx context.Context, op
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -753,7 +748,7 @@ func (client *NumberClient) PutBigDecimalPositiveDecimal(ctx context.Context, op
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -790,7 +785,7 @@ func (client *NumberClient) PutBigDouble(ctx context.Context, numberBody float64
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -827,7 +822,7 @@ func (client *NumberClient) PutBigDoubleNegativeDecimal(ctx context.Context, opt
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -864,7 +859,7 @@ func (client *NumberClient) PutBigDoublePositiveDecimal(ctx context.Context, opt
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -901,7 +896,7 @@ func (client *NumberClient) PutBigFloat(ctx context.Context, numberBody float32,
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -938,7 +933,7 @@ func (client *NumberClient) PutSmallDecimal(ctx context.Context, numberBody floa
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -975,7 +970,7 @@ func (client *NumberClient) PutSmallDouble(ctx context.Context, numberBody float
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1012,7 +1007,7 @@ func (client *NumberClient) PutSmallFloat(ctx context.Context, numberBody float3
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}

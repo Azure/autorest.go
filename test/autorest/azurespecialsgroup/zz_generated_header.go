@@ -24,18 +24,13 @@ func NewHeaderClient(con *Connection) *HeaderClient {
 	return &HeaderClient{con: con}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *HeaderClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // CustomNamedRequestID - Send foo-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 in the header of the request
 func (client *HeaderClient) CustomNamedRequestID(ctx context.Context, fooClientRequestId string, options *HeaderCustomNamedRequestIDOptions) (HeaderCustomNamedRequestIDResponse, error) {
 	req, err := client.customNamedRequestIdCreateRequest(ctx, fooClientRequestId, options)
 	if err != nil {
 		return HeaderCustomNamedRequestIDResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return HeaderCustomNamedRequestIDResponse{}, err
 	}
@@ -82,7 +77,7 @@ func (client *HeaderClient) CustomNamedRequestIDHead(ctx context.Context, fooCli
 	if err != nil {
 		return HeaderCustomNamedRequestIDHeadResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return HeaderCustomNamedRequestIDHeadResponse{}, err
 	}
@@ -132,7 +127,7 @@ func (client *HeaderClient) CustomNamedRequestIDParamGrouping(ctx context.Contex
 	if err != nil {
 		return HeaderCustomNamedRequestIDParamGroupingResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return HeaderCustomNamedRequestIDParamGroupingResponse{}, err
 	}

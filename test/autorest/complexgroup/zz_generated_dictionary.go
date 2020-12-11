@@ -24,18 +24,13 @@ func NewDictionaryClient(con *Connection) *DictionaryClient {
 	return &DictionaryClient{con: con}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *DictionaryClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // GetEmpty - Get complex types with dictionary property which is empty
 func (client *DictionaryClient) GetEmpty(ctx context.Context, options *DictionaryGetEmptyOptions) (DictionaryWrapperResponse, error) {
 	req, err := client.getEmptyCreateRequest(ctx, options)
 	if err != nil {
 		return DictionaryWrapperResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryWrapperResponse{}, err
 	}
@@ -81,7 +76,7 @@ func (client *DictionaryClient) GetNotProvided(ctx context.Context, options *Dic
 	if err != nil {
 		return DictionaryWrapperResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryWrapperResponse{}, err
 	}
@@ -127,7 +122,7 @@ func (client *DictionaryClient) GetNull(ctx context.Context, options *Dictionary
 	if err != nil {
 		return DictionaryWrapperResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryWrapperResponse{}, err
 	}
@@ -173,7 +168,7 @@ func (client *DictionaryClient) GetValid(ctx context.Context, options *Dictionar
 	if err != nil {
 		return DictionaryWrapperResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return DictionaryWrapperResponse{}, err
 	}
@@ -219,7 +214,7 @@ func (client *DictionaryClient) PutEmpty(ctx context.Context, complexBody Dictio
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -256,7 +251,7 @@ func (client *DictionaryClient) PutValid(ctx context.Context, complexBody Dictio
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}

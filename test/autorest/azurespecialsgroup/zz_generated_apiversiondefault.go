@@ -24,18 +24,13 @@ func NewAPIVersionDefaultClient(con *Connection) *APIVersionDefaultClient {
 	return &APIVersionDefaultClient{con: con}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *APIVersionDefaultClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // GetMethodGlobalNotProvidedValid - GET method with api-version modeled in global settings.
 func (client *APIVersionDefaultClient) GetMethodGlobalNotProvidedValid(ctx context.Context, options *APIVersionDefaultGetMethodGlobalNotProvidedValidOptions) (*http.Response, error) {
 	req, err := client.getMethodGlobalNotProvidedValidCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -75,7 +70,7 @@ func (client *APIVersionDefaultClient) GetMethodGlobalValid(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -115,7 +110,7 @@ func (client *APIVersionDefaultClient) GetPathGlobalValid(ctx context.Context, o
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -155,7 +150,7 @@ func (client *APIVersionDefaultClient) GetSwaggerGlobalValid(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}

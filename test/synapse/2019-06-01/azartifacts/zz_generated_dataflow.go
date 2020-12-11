@@ -19,18 +19,13 @@ type dataFlowClient struct {
 	con *connection
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *dataFlowClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // CreateOrUpdateDataFlow - Creates or updates a data flow.
 func (client *dataFlowClient) createOrUpdateDataFlow(ctx context.Context, dataFlowName string, dataFlow DataFlowResource, options *DataFlowBeginCreateOrUpdateDataFlowOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateDataFlowCreateRequest(ctx, dataFlowName, dataFlow, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -83,7 +78,7 @@ func (client *dataFlowClient) deleteDataFlow(ctx context.Context, dataFlowName s
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -124,7 +119,7 @@ func (client *dataFlowClient) GetDataFlow(ctx context.Context, dataFlowName stri
 	if err != nil {
 		return DataFlowResourceResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return DataFlowResourceResponse{}, err
 	}
@@ -226,7 +221,7 @@ func (client *dataFlowClient) renameDataFlow(ctx context.Context, dataFlowName s
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}

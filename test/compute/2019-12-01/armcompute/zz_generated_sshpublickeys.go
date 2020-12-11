@@ -31,18 +31,13 @@ func NewSSHPublicKeysClient(con *armcore.Connection, subscriptionID string) *SSH
 	return &SSHPublicKeysClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *SSHPublicKeysClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // Create - Creates a new SSH public key resource.
 func (client *SSHPublicKeysClient) Create(ctx context.Context, resourceGroupName string, sshPublicKeyName string, parameters SSHPublicKeyResource, options *SSHPublicKeysCreateOptions) (SSHPublicKeyResourceResponse, error) {
 	req, err := client.createCreateRequest(ctx, resourceGroupName, sshPublicKeyName, parameters, options)
 	if err != nil {
 		return SSHPublicKeyResourceResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return SSHPublicKeyResourceResponse{}, err
 	}
@@ -97,7 +92,7 @@ func (client *SSHPublicKeysClient) Delete(ctx context.Context, resourceGroupName
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -144,7 +139,7 @@ func (client *SSHPublicKeysClient) GenerateKeyPair(ctx context.Context, resource
 	if err != nil {
 		return SSHPublicKeyGenerateKeyPairResultResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return SSHPublicKeyGenerateKeyPairResultResponse{}, err
 	}
@@ -199,7 +194,7 @@ func (client *SSHPublicKeysClient) Get(ctx context.Context, resourceGroupName st
 	if err != nil {
 		return SSHPublicKeyResourceResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return SSHPublicKeyResourceResponse{}, err
 	}
@@ -363,7 +358,7 @@ func (client *SSHPublicKeysClient) Update(ctx context.Context, resourceGroupName
 	if err != nil {
 		return SSHPublicKeyResourceResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return SSHPublicKeyResourceResponse{}, err
 	}

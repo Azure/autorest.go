@@ -20,11 +20,6 @@ type directoryClient struct {
 	pathRenameMode *PathRenameMode
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *directoryClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // Create - Create a directory. By default, the destination is overwritten and if the destination already exists and has a lease the lease is broken. This
 // operation supports conditional HTTP requests. For more
 // information, see Specifying Conditional Headers for Blob Service Operations [https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations].
@@ -35,7 +30,7 @@ func (client *directoryClient) Create(ctx context.Context, directoryCreateOption
 	if err != nil {
 		return DirectoryCreateResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return DirectoryCreateResponse{}, err
 	}
@@ -159,7 +154,7 @@ func (client *directoryClient) Delete(ctx context.Context, recursiveDirectoryDel
 	if err != nil {
 		return DirectoryDeleteResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return DirectoryDeleteResponse{}, err
 	}
@@ -248,7 +243,7 @@ func (client *directoryClient) GetAccessControl(ctx context.Context, directoryGe
 	if err != nil {
 		return DirectoryGetAccessControlResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return DirectoryGetAccessControlResponse{}, err
 	}
@@ -357,7 +352,7 @@ func (client *directoryClient) Rename(ctx context.Context, renameSource string, 
 	if err != nil {
 		return DirectoryRenameResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return DirectoryRenameResponse{}, err
 	}
@@ -505,7 +500,7 @@ func (client *directoryClient) SetAccessControl(ctx context.Context, directorySe
 	if err != nil {
 		return DirectorySetAccessControlResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return DirectorySetAccessControlResponse{}, err
 	}

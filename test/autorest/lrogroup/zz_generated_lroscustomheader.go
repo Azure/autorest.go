@@ -26,11 +26,6 @@ func NewLrOSCustomHeaderClient(con *Connection) *LrOSCustomHeaderClient {
 	return &LrOSCustomHeaderClient{con: con}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *LrOSCustomHeaderClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // BeginPost202Retry200 - x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 is required message header for all requests. Long running post request,
 // service returns a 202 to the initial request, with 'Location' and
 // 'Retry-After' headers, Polls return a 200 with a response body after success
@@ -78,7 +73,7 @@ func (client *LrOSCustomHeaderClient) post202Retry200(ctx context.Context, optio
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -159,7 +154,7 @@ func (client *LrOSCustomHeaderClient) postAsyncRetrySucceeded(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -240,7 +235,7 @@ func (client *LrOSCustomHeaderClient) put201CreatingSucceeded200(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -330,7 +325,7 @@ func (client *LrOSCustomHeaderClient) putAsyncRetrySucceeded(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}

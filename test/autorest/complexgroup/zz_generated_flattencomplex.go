@@ -27,17 +27,12 @@ func NewFlattencomplexClient(con *Connection) *FlattencomplexClient {
 	return &FlattencomplexClient{con: con}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *FlattencomplexClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 func (client *FlattencomplexClient) GetValid(ctx context.Context, options *FlattencomplexGetValidOptions) (MyBaseTypeResponse, error) {
 	req, err := client.getValidCreateRequest(ctx, options)
 	if err != nil {
 		return MyBaseTypeResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MyBaseTypeResponse{}, err
 	}

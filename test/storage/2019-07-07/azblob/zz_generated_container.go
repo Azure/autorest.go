@@ -22,18 +22,13 @@ type containerClient struct {
 	con *connection
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *containerClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // AcquireLease - [Update] establishes and manages a lock on a container for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite
 func (client *containerClient) AcquireLease(ctx context.Context, containerAcquireLeaseOptions *ContainerAcquireLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (ContainerAcquireLeaseResponse, error) {
 	req, err := client.acquireLeaseCreateRequest(ctx, containerAcquireLeaseOptions, modifiedAccessConditions)
 	if err != nil {
 		return ContainerAcquireLeaseResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return ContainerAcquireLeaseResponse{}, err
 	}
@@ -128,7 +123,7 @@ func (client *containerClient) BreakLease(ctx context.Context, containerBreakLea
 	if err != nil {
 		return ContainerBreakLeaseResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return ContainerBreakLeaseResponse{}, err
 	}
@@ -225,7 +220,7 @@ func (client *containerClient) ChangeLease(ctx context.Context, leaseId string, 
 	if err != nil {
 		return ContainerChangeLeaseResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return ContainerChangeLeaseResponse{}, err
 	}
@@ -316,7 +311,7 @@ func (client *containerClient) Create(ctx context.Context, containerCreateOption
 	if err != nil {
 		return ContainerCreateResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return ContainerCreateResponse{}, err
 	}
@@ -408,7 +403,7 @@ func (client *containerClient) Delete(ctx context.Context, containerDeleteOption
 	if err != nil {
 		return ContainerDeleteResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return ContainerDeleteResponse{}, err
 	}
@@ -485,7 +480,7 @@ func (client *containerClient) GetAccessPolicy(ctx context.Context, containerGet
 	if err != nil {
 		return SignedIDentifierArrayResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return SignedIDentifierArrayResponse{}, err
 	}
@@ -573,7 +568,7 @@ func (client *containerClient) GetAccountInfo(ctx context.Context, options *Cont
 	if err != nil {
 		return ContainerGetAccountInfoResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return ContainerGetAccountInfoResponse{}, err
 	}
@@ -643,7 +638,7 @@ func (client *containerClient) GetProperties(ctx context.Context, containerGetPr
 	if err != nil {
 		return ContainerGetPropertiesResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return ContainerGetPropertiesResponse{}, err
 	}
@@ -945,7 +940,7 @@ func (client *containerClient) ReleaseLease(ctx context.Context, leaseId string,
 	if err != nil {
 		return ContainerReleaseLeaseResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return ContainerReleaseLeaseResponse{}, err
 	}
@@ -1032,7 +1027,7 @@ func (client *containerClient) RenewLease(ctx context.Context, leaseId string, c
 	if err != nil {
 		return ContainerRenewLeaseResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return ContainerRenewLeaseResponse{}, err
 	}
@@ -1122,7 +1117,7 @@ func (client *containerClient) SetAccessPolicy(ctx context.Context, containerSet
 	if err != nil {
 		return ContainerSetAccessPolicyResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return ContainerSetAccessPolicyResponse{}, err
 	}
@@ -1220,7 +1215,7 @@ func (client *containerClient) SetMetadata(ctx context.Context, containerSetMeta
 	if err != nil {
 		return ContainerSetMetadataResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return ContainerSetMetadataResponse{}, err
 	}

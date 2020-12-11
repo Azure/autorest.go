@@ -23,18 +23,13 @@ type sparkSessionClient struct {
 	con *connection
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *sparkSessionClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // CancelSparkSession - Cancels a running spark session.
 func (client *sparkSessionClient) CancelSparkSession(ctx context.Context, sessionId int32, options *SparkSessionCancelSparkSessionOptions) (*http.Response, error) {
 	req, err := client.cancelSparkSessionCreateRequest(ctx, sessionId, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -74,7 +69,7 @@ func (client *sparkSessionClient) CancelSparkStatement(ctx context.Context, sess
 	if err != nil {
 		return SparkStatementCancellationResultResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return SparkStatementCancellationResultResponse{}, err
 	}
@@ -125,7 +120,7 @@ func (client *sparkSessionClient) CreateSparkSession(ctx context.Context, sparkS
 	if err != nil {
 		return SparkSessionResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return SparkSessionResponse{}, err
 	}
@@ -179,7 +174,7 @@ func (client *sparkSessionClient) CreateSparkStatement(ctx context.Context, sess
 	if err != nil {
 		return SparkStatementResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return SparkStatementResponse{}, err
 	}
@@ -229,7 +224,7 @@ func (client *sparkSessionClient) GetSparkSession(ctx context.Context, sessionId
 	if err != nil {
 		return SparkSessionResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return SparkSessionResponse{}, err
 	}
@@ -284,7 +279,7 @@ func (client *sparkSessionClient) GetSparkSessions(ctx context.Context, options 
 	if err != nil {
 		return SparkSessionCollectionResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return SparkSessionCollectionResponse{}, err
 	}
@@ -344,7 +339,7 @@ func (client *sparkSessionClient) GetSparkStatement(ctx context.Context, session
 	if err != nil {
 		return SparkStatementResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return SparkStatementResponse{}, err
 	}
@@ -395,7 +390,7 @@ func (client *sparkSessionClient) GetSparkStatements(ctx context.Context, sessio
 	if err != nil {
 		return SparkStatementCollectionResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return SparkStatementCollectionResponse{}, err
 	}
@@ -445,7 +440,7 @@ func (client *sparkSessionClient) ResetSparkSessionTimeout(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}

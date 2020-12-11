@@ -29,18 +29,13 @@ func NewPetClient(con *Connection) *PetClient {
 	return &PetClient{con: con}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *PetClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // DoSomething - Asks pet to do something
 func (client *PetClient) DoSomething(ctx context.Context, whatAction string, options *PetDoSomethingOptions) (PetActionResponse, error) {
 	req, err := client.doSomethingCreateRequest(ctx, whatAction, options)
 	if err != nil {
 		return PetActionResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return PetActionResponse{}, err
 	}
@@ -96,7 +91,7 @@ func (client *PetClient) GetPetByID(ctx context.Context, petId string, options *
 	if err != nil {
 		return PetResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return PetResponse{}, err
 	}

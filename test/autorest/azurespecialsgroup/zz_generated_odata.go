@@ -25,18 +25,13 @@ func NewOdataClient(con *Connection) *OdataClient {
 	return &OdataClient{con: con}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *OdataClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // GetWithFilter - Specify filter parameter with value '$filter=id gt 5 and name eq 'foo'&$orderby=id&$top=10'
 func (client *OdataClient) GetWithFilter(ctx context.Context, options *OdataGetWithFilterOptions) (*http.Response, error) {
 	req, err := client.getWithFilterCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}

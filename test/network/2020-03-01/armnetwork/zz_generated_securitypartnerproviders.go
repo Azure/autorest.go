@@ -29,11 +29,6 @@ func NewSecurityPartnerProvidersClient(con *armcore.Connection, subscriptionID s
 	return &SecurityPartnerProvidersClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *SecurityPartnerProvidersClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // BeginCreateOrUpdate - Creates or updates the specified Security Partner Provider.
 func (client *SecurityPartnerProvidersClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, parameters SecurityPartnerProvider, options *SecurityPartnerProvidersBeginCreateOrUpdateOptions) (SecurityPartnerProviderPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, securityPartnerProviderName, parameters, options)
@@ -77,7 +72,7 @@ func (client *SecurityPartnerProvidersClient) createOrUpdate(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -166,7 +161,7 @@ func (client *SecurityPartnerProvidersClient) delete(ctx context.Context, resour
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -209,7 +204,7 @@ func (client *SecurityPartnerProvidersClient) Get(ctx context.Context, resourceG
 	if err != nil {
 		return SecurityPartnerProviderResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return SecurityPartnerProviderResponse{}, err
 	}
@@ -362,7 +357,7 @@ func (client *SecurityPartnerProvidersClient) UpdateTags(ctx context.Context, re
 	if err != nil {
 		return SecurityPartnerProviderResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return SecurityPartnerProviderResponse{}, err
 	}

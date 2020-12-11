@@ -19,18 +19,13 @@ type bigDataPoolsClient struct {
 	con *connection
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *bigDataPoolsClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // Get - Get Big Data Pool
 func (client *bigDataPoolsClient) Get(ctx context.Context, bigDataPoolName string, options *BigDataPoolsGetOptions) (BigDataPoolResourceInfoResponse, error) {
 	req, err := client.getCreateRequest(ctx, bigDataPoolName, options)
 	if err != nil {
 		return BigDataPoolResourceInfoResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return BigDataPoolResourceInfoResponse{}, err
 	}
@@ -80,7 +75,7 @@ func (client *bigDataPoolsClient) List(ctx context.Context, options *BigDataPool
 	if err != nil {
 		return BigDataPoolResourceInfoListResultResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return BigDataPoolResourceInfoListResultResponse{}, err
 	}

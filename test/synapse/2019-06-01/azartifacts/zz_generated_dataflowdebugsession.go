@@ -17,18 +17,13 @@ type dataFlowDebugSessionClient struct {
 	con *connection
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *dataFlowDebugSessionClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // AddDataFlow - Add a data flow into debug session.
 func (client *dataFlowDebugSessionClient) AddDataFlow(ctx context.Context, request DataFlowDebugPackage, options *DataFlowDebugSessionAddDataFlowOptions) (AddDataFlowToDebugSessionResponseResponse, error) {
 	req, err := client.addDataFlowCreateRequest(ctx, request, options)
 	if err != nil {
 		return AddDataFlowToDebugSessionResponseResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return AddDataFlowToDebugSessionResponseResponse{}, err
 	}
@@ -77,7 +72,7 @@ func (client *dataFlowDebugSessionClient) createDataFlowDebugSession(ctx context
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -126,7 +121,7 @@ func (client *dataFlowDebugSessionClient) DeleteDataFlowDebugSession(ctx context
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -166,7 +161,7 @@ func (client *dataFlowDebugSessionClient) executeCommand(ctx context.Context, re
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}

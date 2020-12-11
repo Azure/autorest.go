@@ -21,18 +21,13 @@ type pageBlobClient struct {
 	con *connection
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *pageBlobClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // ClearPages - The Clear Pages operation clears a set of pages from a page blob
 func (client *pageBlobClient) ClearPages(ctx context.Context, contentLength int64, pageBlobClearPagesOptions *PageBlobClearPagesOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, sequenceNumberAccessConditions *SequenceNumberAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (PageBlobClearPagesResponse, error) {
 	req, err := client.clearPagesCreateRequest(ctx, contentLength, pageBlobClearPagesOptions, leaseAccessConditions, cpkInfo, cpkScopeInfo, sequenceNumberAccessConditions, modifiedAccessConditions)
 	if err != nil {
 		return PageBlobClearPagesResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return PageBlobClearPagesResponse{}, err
 	}
@@ -176,7 +171,7 @@ func (client *pageBlobClient) CopyIncremental(ctx context.Context, copySource ur
 	if err != nil {
 		return PageBlobCopyIncrementalResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return PageBlobCopyIncrementalResponse{}, err
 	}
@@ -273,7 +268,7 @@ func (client *pageBlobClient) Create(ctx context.Context, contentLength int64, b
 	if err != nil {
 		return PageBlobCreateResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return PageBlobCreateResponse{}, err
 	}
@@ -429,7 +424,7 @@ func (client *pageBlobClient) GetPageRanges(ctx context.Context, pageBlobGetPage
 	if err != nil {
 		return PageListResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return PageListResponse{}, err
 	}
@@ -540,7 +535,7 @@ func (client *pageBlobClient) GetPageRangesDiff(ctx context.Context, pageBlobGet
 	if err != nil {
 		return PageListResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return PageListResponse{}, err
 	}
@@ -656,7 +651,7 @@ func (client *pageBlobClient) Resize(ctx context.Context, blobContentLength int6
 	if err != nil {
 		return PageBlobResizeResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return PageBlobResizeResponse{}, err
 	}
@@ -769,7 +764,7 @@ func (client *pageBlobClient) UpdateSequenceNumber(ctx context.Context, sequence
 	if err != nil {
 		return PageBlobUpdateSequenceNumberResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return PageBlobUpdateSequenceNumberResponse{}, err
 	}
@@ -873,7 +868,7 @@ func (client *pageBlobClient) UploadPages(ctx context.Context, contentLength int
 	if err != nil {
 		return PageBlobUploadPagesResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return PageBlobUploadPagesResponse{}, err
 	}
@@ -1032,7 +1027,7 @@ func (client *pageBlobClient) UploadPagesFromURL(ctx context.Context, sourceUrl 
 	if err != nil {
 		return PageBlobUploadPagesFromURLResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return PageBlobUploadPagesFromURLResponse{}, err
 	}

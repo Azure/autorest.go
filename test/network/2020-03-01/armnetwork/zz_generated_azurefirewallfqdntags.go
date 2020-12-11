@@ -28,11 +28,6 @@ func NewAzureFirewallFqdnTagsClient(con *armcore.Connection, subscriptionID stri
 	return &AzureFirewallFqdnTagsClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *AzureFirewallFqdnTagsClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // ListAll - Gets all the Azure Firewall FQDN Tags in a subscription.
 func (client *AzureFirewallFqdnTagsClient) ListAll(options *AzureFirewallFqdnTagsListAllOptions) AzureFirewallFqdnTagListResultPager {
 	return &azureFirewallFqdnTagListResultPager{

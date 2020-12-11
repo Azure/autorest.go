@@ -24,18 +24,13 @@ func NewAutoRestReportServiceClient(con *Connection) *AutoRestReportServiceClien
 	return &AutoRestReportServiceClient{con: con}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *AutoRestReportServiceClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // GetOptionalReport - Get optional test coverage report
 func (client *AutoRestReportServiceClient) GetOptionalReport(ctx context.Context, options *AutoRestReportServiceGetOptionalReportOptions) (MapOfInt32Response, error) {
 	req, err := client.getOptionalReportCreateRequest(ctx, options)
 	if err != nil {
 		return MapOfInt32Response{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MapOfInt32Response{}, err
 	}
@@ -86,7 +81,7 @@ func (client *AutoRestReportServiceClient) GetReport(ctx context.Context, option
 	if err != nil {
 		return MapOfInt32Response{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MapOfInt32Response{}, err
 	}

@@ -29,11 +29,6 @@ func NewNetworkInterfacesClient(con *armcore.Connection, subscriptionID string) 
 	return &NetworkInterfacesClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *NetworkInterfacesClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // BeginCreateOrUpdate - Creates or updates a network interface.
 func (client *NetworkInterfacesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkInterfaceName string, parameters NetworkInterface, options *NetworkInterfacesBeginCreateOrUpdateOptions) (NetworkInterfacePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, networkInterfaceName, parameters, options)
@@ -77,7 +72,7 @@ func (client *NetworkInterfacesClient) createOrUpdate(ctx context.Context, resou
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -166,7 +161,7 @@ func (client *NetworkInterfacesClient) delete(ctx context.Context, resourceGroup
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -209,7 +204,7 @@ func (client *NetworkInterfacesClient) Get(ctx context.Context, resourceGroupNam
 	if err != nil {
 		return NetworkInterfaceResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return NetworkInterfaceResponse{}, err
 	}
@@ -301,7 +296,7 @@ func (client *NetworkInterfacesClient) getEffectiveRouteTable(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -353,7 +348,7 @@ func (client *NetworkInterfacesClient) GetVirtualMachineScaleSetIPConfiguration(
 	if err != nil {
 		return NetworkInterfaceIPConfigurationResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return NetworkInterfaceIPConfigurationResponse{}, err
 	}
@@ -411,7 +406,7 @@ func (client *NetworkInterfacesClient) GetVirtualMachineScaleSetNetworkInterface
 	if err != nil {
 		return NetworkInterfaceResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return NetworkInterfaceResponse{}, err
 	}
@@ -606,7 +601,7 @@ func (client *NetworkInterfacesClient) listEffectiveNetworkSecurityGroups(ctx co
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -820,7 +815,7 @@ func (client *NetworkInterfacesClient) UpdateTags(ctx context.Context, resourceG
 	if err != nil {
 		return NetworkInterfaceResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return NetworkInterfaceResponse{}, err
 	}

@@ -25,18 +25,13 @@ func NewDictionaryClient(con *Connection) *DictionaryClient {
 	return &DictionaryClient{con: con}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *DictionaryClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // GetArrayEmpty - Get an empty dictionary {}
 func (client *DictionaryClient) GetArrayEmpty(ctx context.Context, options *DictionaryGetArrayEmptyOptions) (MapOfStringArrayResponse, error) {
 	req, err := client.getArrayEmptyCreateRequest(ctx, options)
 	if err != nil {
 		return MapOfStringArrayResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MapOfStringArrayResponse{}, err
 	}
@@ -82,7 +77,7 @@ func (client *DictionaryClient) GetArrayItemEmpty(ctx context.Context, options *
 	if err != nil {
 		return MapOfStringArrayResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MapOfStringArrayResponse{}, err
 	}
@@ -128,7 +123,7 @@ func (client *DictionaryClient) GetArrayItemNull(ctx context.Context, options *D
 	if err != nil {
 		return MapOfStringArrayResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MapOfStringArrayResponse{}, err
 	}
@@ -174,7 +169,7 @@ func (client *DictionaryClient) GetArrayNull(ctx context.Context, options *Dicti
 	if err != nil {
 		return MapOfStringArrayResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MapOfStringArrayResponse{}, err
 	}
@@ -220,7 +215,7 @@ func (client *DictionaryClient) GetArrayValid(ctx context.Context, options *Dict
 	if err != nil {
 		return MapOfStringArrayResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MapOfStringArrayResponse{}, err
 	}
@@ -266,7 +261,7 @@ func (client *DictionaryClient) GetBase64URL(ctx context.Context, options *Dicti
 	if err != nil {
 		return MapOfByteArrayResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MapOfByteArrayResponse{}, err
 	}
@@ -312,7 +307,7 @@ func (client *DictionaryClient) GetBooleanInvalidNull(ctx context.Context, optio
 	if err != nil {
 		return MapOfBoolResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MapOfBoolResponse{}, err
 	}
@@ -358,7 +353,7 @@ func (client *DictionaryClient) GetBooleanInvalidString(ctx context.Context, opt
 	if err != nil {
 		return MapOfBoolResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MapOfBoolResponse{}, err
 	}
@@ -404,7 +399,7 @@ func (client *DictionaryClient) GetBooleanTfft(ctx context.Context, options *Dic
 	if err != nil {
 		return MapOfBoolResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MapOfBoolResponse{}, err
 	}
@@ -450,7 +445,7 @@ func (client *DictionaryClient) GetByteInvalidNull(ctx context.Context, options 
 	if err != nil {
 		return MapOfByteArrayResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MapOfByteArrayResponse{}, err
 	}
@@ -496,7 +491,7 @@ func (client *DictionaryClient) GetByteValid(ctx context.Context, options *Dicti
 	if err != nil {
 		return MapOfByteArrayResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MapOfByteArrayResponse{}, err
 	}
@@ -542,7 +537,7 @@ func (client *DictionaryClient) GetComplexEmpty(ctx context.Context, options *Di
 	if err != nil {
 		return MapOfWidgetResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MapOfWidgetResponse{}, err
 	}
@@ -588,7 +583,7 @@ func (client *DictionaryClient) GetComplexItemEmpty(ctx context.Context, options
 	if err != nil {
 		return MapOfWidgetResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MapOfWidgetResponse{}, err
 	}
@@ -634,7 +629,7 @@ func (client *DictionaryClient) GetComplexItemNull(ctx context.Context, options 
 	if err != nil {
 		return MapOfWidgetResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MapOfWidgetResponse{}, err
 	}
@@ -680,7 +675,7 @@ func (client *DictionaryClient) GetComplexNull(ctx context.Context, options *Dic
 	if err != nil {
 		return MapOfWidgetResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MapOfWidgetResponse{}, err
 	}
@@ -727,7 +722,7 @@ func (client *DictionaryClient) GetComplexValid(ctx context.Context, options *Di
 	if err != nil {
 		return MapOfWidgetResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MapOfWidgetResponse{}, err
 	}
@@ -773,7 +768,7 @@ func (client *DictionaryClient) GetDateInvalidChars(ctx context.Context, options
 	if err != nil {
 		return MapOfTimeResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MapOfTimeResponse{}, err
 	}
@@ -823,7 +818,7 @@ func (client *DictionaryClient) GetDateInvalidNull(ctx context.Context, options 
 	if err != nil {
 		return MapOfTimeResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MapOfTimeResponse{}, err
 	}
@@ -873,7 +868,7 @@ func (client *DictionaryClient) GetDateTimeInvalidChars(ctx context.Context, opt
 	if err != nil {
 		return MapOfTimeResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MapOfTimeResponse{}, err
 	}
@@ -923,7 +918,7 @@ func (client *DictionaryClient) GetDateTimeInvalidNull(ctx context.Context, opti
 	if err != nil {
 		return MapOfTimeResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MapOfTimeResponse{}, err
 	}
@@ -974,7 +969,7 @@ func (client *DictionaryClient) GetDateTimeRFC1123Valid(ctx context.Context, opt
 	if err != nil {
 		return MapOfTimeResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MapOfTimeResponse{}, err
 	}
@@ -1024,7 +1019,7 @@ func (client *DictionaryClient) GetDateTimeValid(ctx context.Context, options *D
 	if err != nil {
 		return MapOfTimeResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MapOfTimeResponse{}, err
 	}
@@ -1074,7 +1069,7 @@ func (client *DictionaryClient) GetDateValid(ctx context.Context, options *Dicti
 	if err != nil {
 		return MapOfTimeResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MapOfTimeResponse{}, err
 	}
@@ -1124,7 +1119,7 @@ func (client *DictionaryClient) GetDictionaryEmpty(ctx context.Context, options 
 	if err != nil {
 		return MapOfMapOfStringResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MapOfMapOfStringResponse{}, err
 	}
@@ -1171,7 +1166,7 @@ func (client *DictionaryClient) GetDictionaryItemEmpty(ctx context.Context, opti
 	if err != nil {
 		return MapOfMapOfStringResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MapOfMapOfStringResponse{}, err
 	}
@@ -1218,7 +1213,7 @@ func (client *DictionaryClient) GetDictionaryItemNull(ctx context.Context, optio
 	if err != nil {
 		return MapOfMapOfStringResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MapOfMapOfStringResponse{}, err
 	}
@@ -1264,7 +1259,7 @@ func (client *DictionaryClient) GetDictionaryNull(ctx context.Context, options *
 	if err != nil {
 		return MapOfMapOfStringResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MapOfMapOfStringResponse{}, err
 	}
@@ -1311,7 +1306,7 @@ func (client *DictionaryClient) GetDictionaryValid(ctx context.Context, options 
 	if err != nil {
 		return MapOfMapOfStringResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MapOfMapOfStringResponse{}, err
 	}
@@ -1357,7 +1352,7 @@ func (client *DictionaryClient) GetDoubleInvalidNull(ctx context.Context, option
 	if err != nil {
 		return MapOfFloat64Response{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MapOfFloat64Response{}, err
 	}
@@ -1403,7 +1398,7 @@ func (client *DictionaryClient) GetDoubleInvalidString(ctx context.Context, opti
 	if err != nil {
 		return MapOfFloat64Response{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MapOfFloat64Response{}, err
 	}
@@ -1449,7 +1444,7 @@ func (client *DictionaryClient) GetDoubleValid(ctx context.Context, options *Dic
 	if err != nil {
 		return MapOfFloat64Response{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MapOfFloat64Response{}, err
 	}
@@ -1495,7 +1490,7 @@ func (client *DictionaryClient) GetDurationValid(ctx context.Context, options *D
 	if err != nil {
 		return MapOfStringResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MapOfStringResponse{}, err
 	}
@@ -1541,7 +1536,7 @@ func (client *DictionaryClient) GetEmpty(ctx context.Context, options *Dictionar
 	if err != nil {
 		return MapOfInt32Response{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MapOfInt32Response{}, err
 	}
@@ -1587,7 +1582,7 @@ func (client *DictionaryClient) GetEmptyStringKey(ctx context.Context, options *
 	if err != nil {
 		return MapOfStringResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MapOfStringResponse{}, err
 	}
@@ -1633,7 +1628,7 @@ func (client *DictionaryClient) GetFloatInvalidNull(ctx context.Context, options
 	if err != nil {
 		return MapOfFloat32Response{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MapOfFloat32Response{}, err
 	}
@@ -1679,7 +1674,7 @@ func (client *DictionaryClient) GetFloatInvalidString(ctx context.Context, optio
 	if err != nil {
 		return MapOfFloat32Response{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MapOfFloat32Response{}, err
 	}
@@ -1725,7 +1720,7 @@ func (client *DictionaryClient) GetFloatValid(ctx context.Context, options *Dict
 	if err != nil {
 		return MapOfFloat32Response{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MapOfFloat32Response{}, err
 	}
@@ -1771,7 +1766,7 @@ func (client *DictionaryClient) GetIntInvalidNull(ctx context.Context, options *
 	if err != nil {
 		return MapOfInt32Response{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MapOfInt32Response{}, err
 	}
@@ -1817,7 +1812,7 @@ func (client *DictionaryClient) GetIntInvalidString(ctx context.Context, options
 	if err != nil {
 		return MapOfInt32Response{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MapOfInt32Response{}, err
 	}
@@ -1863,7 +1858,7 @@ func (client *DictionaryClient) GetIntegerValid(ctx context.Context, options *Di
 	if err != nil {
 		return MapOfInt32Response{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MapOfInt32Response{}, err
 	}
@@ -1909,7 +1904,7 @@ func (client *DictionaryClient) GetInvalid(ctx context.Context, options *Diction
 	if err != nil {
 		return MapOfStringResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MapOfStringResponse{}, err
 	}
@@ -1955,7 +1950,7 @@ func (client *DictionaryClient) GetLongInvalidNull(ctx context.Context, options 
 	if err != nil {
 		return MapOfInt64Response{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MapOfInt64Response{}, err
 	}
@@ -2001,7 +1996,7 @@ func (client *DictionaryClient) GetLongInvalidString(ctx context.Context, option
 	if err != nil {
 		return MapOfInt64Response{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MapOfInt64Response{}, err
 	}
@@ -2047,7 +2042,7 @@ func (client *DictionaryClient) GetLongValid(ctx context.Context, options *Dicti
 	if err != nil {
 		return MapOfInt64Response{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MapOfInt64Response{}, err
 	}
@@ -2093,7 +2088,7 @@ func (client *DictionaryClient) GetNull(ctx context.Context, options *Dictionary
 	if err != nil {
 		return MapOfInt32Response{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MapOfInt32Response{}, err
 	}
@@ -2139,7 +2134,7 @@ func (client *DictionaryClient) GetNullKey(ctx context.Context, options *Diction
 	if err != nil {
 		return MapOfStringResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MapOfStringResponse{}, err
 	}
@@ -2185,7 +2180,7 @@ func (client *DictionaryClient) GetNullValue(ctx context.Context, options *Dicti
 	if err != nil {
 		return MapOfStringResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MapOfStringResponse{}, err
 	}
@@ -2231,7 +2226,7 @@ func (client *DictionaryClient) GetStringValid(ctx context.Context, options *Dic
 	if err != nil {
 		return MapOfStringResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MapOfStringResponse{}, err
 	}
@@ -2277,7 +2272,7 @@ func (client *DictionaryClient) GetStringWithInvalid(ctx context.Context, option
 	if err != nil {
 		return MapOfStringResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MapOfStringResponse{}, err
 	}
@@ -2323,7 +2318,7 @@ func (client *DictionaryClient) GetStringWithNull(ctx context.Context, options *
 	if err != nil {
 		return MapOfStringResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return MapOfStringResponse{}, err
 	}
@@ -2369,7 +2364,7 @@ func (client *DictionaryClient) PutArrayValid(ctx context.Context, arrayBody map
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2406,7 +2401,7 @@ func (client *DictionaryClient) PutBooleanTfft(ctx context.Context, arrayBody ma
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2443,7 +2438,7 @@ func (client *DictionaryClient) PutByteValid(ctx context.Context, arrayBody map[
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2481,7 +2476,7 @@ func (client *DictionaryClient) PutComplexValid(ctx context.Context, arrayBody m
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2519,7 +2514,7 @@ func (client *DictionaryClient) PutDateTimeRFC1123Valid(ctx context.Context, arr
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2560,7 +2555,7 @@ func (client *DictionaryClient) PutDateTimeValid(ctx context.Context, arrayBody 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2601,7 +2596,7 @@ func (client *DictionaryClient) PutDateValid(ctx context.Context, arrayBody map[
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2643,7 +2638,7 @@ func (client *DictionaryClient) PutDictionaryValid(ctx context.Context, arrayBod
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2680,7 +2675,7 @@ func (client *DictionaryClient) PutDoubleValid(ctx context.Context, arrayBody ma
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2717,7 +2712,7 @@ func (client *DictionaryClient) PutDurationValid(ctx context.Context, arrayBody 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2754,7 +2749,7 @@ func (client *DictionaryClient) PutEmpty(ctx context.Context, arrayBody map[stri
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2791,7 +2786,7 @@ func (client *DictionaryClient) PutFloatValid(ctx context.Context, arrayBody map
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2828,7 +2823,7 @@ func (client *DictionaryClient) PutIntegerValid(ctx context.Context, arrayBody m
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2865,7 +2860,7 @@ func (client *DictionaryClient) PutLongValid(ctx context.Context, arrayBody map[
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2902,7 +2897,7 @@ func (client *DictionaryClient) PutStringValid(ctx context.Context, arrayBody ma
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}

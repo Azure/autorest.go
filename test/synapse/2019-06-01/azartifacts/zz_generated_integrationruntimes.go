@@ -19,18 +19,13 @@ type integrationRuntimesClient struct {
 	con *connection
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *integrationRuntimesClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // Get - Get Integration Runtime
 func (client *integrationRuntimesClient) Get(ctx context.Context, integrationRuntimeName string, options *IntegrationRuntimesGetOptions) (IntegrationRuntimeResourceResponse, error) {
 	req, err := client.getCreateRequest(ctx, integrationRuntimeName, options)
 	if err != nil {
 		return IntegrationRuntimeResourceResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return IntegrationRuntimeResourceResponse{}, err
 	}
@@ -80,7 +75,7 @@ func (client *integrationRuntimesClient) List(ctx context.Context, options *Inte
 	if err != nil {
 		return IntegrationRuntimeListResponseResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return IntegrationRuntimeListResponseResponse{}, err
 	}

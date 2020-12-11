@@ -22,6 +22,8 @@ type ConnectionOptions struct {
 	Retry azcore.RetryOptions
 	// Telemetry configures the built-in telemetry policy behavior.
 	Telemetry azcore.TelemetryOptions
+	// Logging configures the built-in logging policy behavior.
+	Logging azcore.LogOptions
 }
 
 // DefaultConnectionOptions creates a ConnectionOptions type initialized with default values.
@@ -29,6 +31,7 @@ func DefaultConnectionOptions() ConnectionOptions {
 	return ConnectionOptions{
 		Retry:     azcore.DefaultRetryOptions(),
 		Telemetry: azcore.DefaultTelemetryOptions(),
+		Logging:   azcore.DefaultLogOptions(),
 	}
 }
 
@@ -65,7 +68,7 @@ func NewConnection(endpoint string, options *ConnectionOptions) *Connection {
 	p := azcore.NewPipeline(options.HTTPClient,
 		azcore.NewTelemetryPolicy(options.telemetryOptions()),
 		azcore.NewRetryPolicy(&options.Retry),
-		azcore.NewLogPolicy(nil))
+		azcore.NewLogPolicy(&options.Logging))
 	return NewConnectionWithPipeline(endpoint, p)
 }
 

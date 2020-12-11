@@ -29,11 +29,6 @@ func NewVirtualMachineScaleSetVMExtensionsClient(con *armcore.Connection, subscr
 	return &VirtualMachineScaleSetVMExtensionsClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *VirtualMachineScaleSetVMExtensionsClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // BeginCreateOrUpdate - The operation to create or update the VMSS VM extension.
 func (client *VirtualMachineScaleSetVMExtensionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceId string, vmExtensionName string, extensionParameters VirtualMachineExtension, options *VirtualMachineScaleSetVMExtensionsBeginCreateOrUpdateOptions) (VirtualMachineExtensionPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, vmScaleSetName, instanceId, vmExtensionName, extensionParameters, options)
@@ -77,7 +72,7 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) createOrUpdate(ctx conte
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -168,7 +163,7 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) delete(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -213,7 +208,7 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) Get(ctx context.Context,
 	if err != nil {
 		return VirtualMachineExtensionResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return VirtualMachineExtensionResponse{}, err
 	}
@@ -270,7 +265,7 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) List(ctx context.Context
 	if err != nil {
 		return VirtualMachineExtensionsListResultResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return VirtualMachineExtensionsListResultResponse{}, err
 	}
@@ -363,7 +358,7 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) update(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}

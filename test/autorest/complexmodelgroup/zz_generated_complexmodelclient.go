@@ -26,18 +26,13 @@ func NewComplexModelClient(con *Connection) *ComplexModelClient {
 	return &ComplexModelClient{con: con}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *ComplexModelClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // Create - Resets products.
 func (client *ComplexModelClient) Create(ctx context.Context, subscriptionId string, resourceGroupName string, bodyParameter CatalogDictionaryOfArray, options *ComplexModelClientCreateOptions) (CatalogDictionaryResponse, error) {
 	req, err := client.createCreateRequest(ctx, subscriptionId, resourceGroupName, bodyParameter, options)
 	if err != nil {
 		return CatalogDictionaryResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return CatalogDictionaryResponse{}, err
 	}
@@ -90,7 +85,7 @@ func (client *ComplexModelClient) List(ctx context.Context, resourceGroupName st
 	if err != nil {
 		return CatalogArrayResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return CatalogArrayResponse{}, err
 	}
@@ -141,7 +136,7 @@ func (client *ComplexModelClient) Update(ctx context.Context, subscriptionId str
 	if err != nil {
 		return CatalogArrayResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return CatalogArrayResponse{}, err
 	}

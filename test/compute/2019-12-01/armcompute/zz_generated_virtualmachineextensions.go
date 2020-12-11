@@ -32,11 +32,6 @@ func NewVirtualMachineExtensionsClient(con *armcore.Connection, subscriptionID s
 	return &VirtualMachineExtensionsClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *VirtualMachineExtensionsClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // BeginCreateOrUpdate - The operation to create or update the extension.
 func (client *VirtualMachineExtensionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string, extensionParameters VirtualMachineExtension, options *VirtualMachineExtensionsBeginCreateOrUpdateOptions) (VirtualMachineExtensionPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, vmName, vmExtensionName, extensionParameters, options)
@@ -80,7 +75,7 @@ func (client *VirtualMachineExtensionsClient) createOrUpdate(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -173,7 +168,7 @@ func (client *VirtualMachineExtensionsClient) delete(ctx context.Context, resour
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -219,7 +214,7 @@ func (client *VirtualMachineExtensionsClient) Get(ctx context.Context, resourceG
 	if err != nil {
 		return VirtualMachineExtensionResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return VirtualMachineExtensionResponse{}, err
 	}
@@ -278,7 +273,7 @@ func (client *VirtualMachineExtensionsClient) List(ctx context.Context, resource
 	if err != nil {
 		return VirtualMachineExtensionsListResultResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return VirtualMachineExtensionsListResultResponse{}, err
 	}
@@ -373,7 +368,7 @@ func (client *VirtualMachineExtensionsClient) update(ctx context.Context, resour
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}

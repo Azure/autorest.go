@@ -32,18 +32,13 @@ func NewVirtualMachineImagesClient(con *armcore.Connection, subscriptionID strin
 	return &VirtualMachineImagesClient{con: con, subscriptionID: subscriptionID}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *VirtualMachineImagesClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // Get - Gets a virtual machine image.
 func (client *VirtualMachineImagesClient) Get(ctx context.Context, location string, publisherName string, offer string, skus string, version string, options *VirtualMachineImagesGetOptions) (VirtualMachineImageResponse, error) {
 	req, err := client.getCreateRequest(ctx, location, publisherName, offer, skus, version, options)
 	if err != nil {
 		return VirtualMachineImageResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return VirtualMachineImageResponse{}, err
 	}
@@ -101,7 +96,7 @@ func (client *VirtualMachineImagesClient) List(ctx context.Context, location str
 	if err != nil {
 		return VirtualMachineImageResourceArrayResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return VirtualMachineImageResourceArrayResponse{}, err
 	}
@@ -167,7 +162,7 @@ func (client *VirtualMachineImagesClient) ListOffers(ctx context.Context, locati
 	if err != nil {
 		return VirtualMachineImageResourceArrayResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return VirtualMachineImageResourceArrayResponse{}, err
 	}
@@ -222,7 +217,7 @@ func (client *VirtualMachineImagesClient) ListPublishers(ctx context.Context, lo
 	if err != nil {
 		return VirtualMachineImageResourceArrayResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return VirtualMachineImageResourceArrayResponse{}, err
 	}
@@ -276,7 +271,7 @@ func (client *VirtualMachineImagesClient) ListSKUs(ctx context.Context, location
 	if err != nil {
 		return VirtualMachineImageResourceArrayResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return VirtualMachineImageResourceArrayResponse{}, err
 	}

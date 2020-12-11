@@ -24,18 +24,13 @@ func NewBasicClient(con *Connection) *BasicClient {
 	return &BasicClient{con: con}
 }
 
-// Pipeline returns the pipeline associated with this client.
-func (client *BasicClient) Pipeline() azcore.Pipeline {
-	return client.con.Pipeline()
-}
-
 // GetEmpty - Get a basic complex type that is empty
 func (client *BasicClient) GetEmpty(ctx context.Context, options *BasicGetEmptyOptions) (BasicResponse, error) {
 	req, err := client.getEmptyCreateRequest(ctx, options)
 	if err != nil {
 		return BasicResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return BasicResponse{}, err
 	}
@@ -81,7 +76,7 @@ func (client *BasicClient) GetInvalid(ctx context.Context, options *BasicGetInva
 	if err != nil {
 		return BasicResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return BasicResponse{}, err
 	}
@@ -127,7 +122,7 @@ func (client *BasicClient) GetNotProvided(ctx context.Context, options *BasicGet
 	if err != nil {
 		return BasicResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return BasicResponse{}, err
 	}
@@ -173,7 +168,7 @@ func (client *BasicClient) GetNull(ctx context.Context, options *BasicGetNullOpt
 	if err != nil {
 		return BasicResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return BasicResponse{}, err
 	}
@@ -219,7 +214,7 @@ func (client *BasicClient) GetValid(ctx context.Context, options *BasicGetValidO
 	if err != nil {
 		return BasicResponse{}, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return BasicResponse{}, err
 	}
@@ -265,7 +260,7 @@ func (client *BasicClient) PutValid(ctx context.Context, complexBody Basic, opti
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Pipeline().Do(req)
+	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
 		return nil, err
 	}

@@ -53,6 +53,8 @@ function generateContent(session: Session<CodeModel>, exportClient: boolean): st
   text += '\tRetry azcore.RetryOptions\n';
   text += '\t// Telemetry configures the built-in telemetry policy behavior.\n';
   text += '\tTelemetry azcore.TelemetryOptions\n';
+  text += '\t// Logging configures the built-in logging policy behavior.\n';
+  text += '\tLogging azcore.LogOptions\n';
   if (isARM && session.model.security.authenticationRequired) {
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/armcore');
     text += '\t// RegisterRPOptions configures the built-in RP registration policy behavior.\n';
@@ -67,6 +69,7 @@ function generateContent(session: Session<CodeModel>, exportClient: boolean): st
     text += '\t\tRegisterRPOptions: armcore.DefaultRegistrationOptions(),\n';
   }
   text += '\t\tTelemetry: azcore.DefaultTelemetryOptions(),\n';
+  text += '\t\tLogging: azcore.DefaultLogOptions(),\n';
   text += '\t}\n';
   text += '}\n\n';
 
@@ -161,7 +164,7 @@ function generateContent(session: Session<CodeModel>, exportClient: boolean): st
   const telemetryPolicy = 'azcore.NewTelemetryPolicy(options.telemetryOptions())';
   const retryPolicy = 'azcore.NewRetryPolicy(&options.Retry)';
   const credPolicy = 'cred.AuthenticationPolicy(azcore.AuthenticationPolicyOptions{Options: azcore.TokenRequestOptions{Scopes: []string{scope}}})';
-  const logPolicy = 'azcore.NewLogPolicy(nil))';
+  const logPolicy = 'azcore.NewLogPolicy(&options.Logging))';
   // ARM will optionally inject the RP registration policy into the pipeline
   if (isARM && session.model.security.authenticationRequired) {
     text += '\tpolicies := []azcore.Policy{\n';
