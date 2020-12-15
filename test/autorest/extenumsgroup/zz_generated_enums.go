@@ -20,6 +20,7 @@ const (
 	DaysOfWeekExtensibleEnumWednesday DaysOfWeekExtensibleEnum = "Wednesday"
 )
 
+// PossibleDaysOfWeekExtensibleEnumValues returns the possible values for the DaysOfWeekExtensibleEnum const type.
 func PossibleDaysOfWeekExtensibleEnumValues() []DaysOfWeekExtensibleEnum {
 	return []DaysOfWeekExtensibleEnum{
 		DaysOfWeekExtensibleEnumFriday,
@@ -47,6 +48,7 @@ const (
 	IntEnumTwo IntEnum = "2"
 )
 
+// PossibleIntEnumValues returns the possible values for the IntEnum const type.
 func PossibleIntEnumValues() []IntEnum {
 	return []IntEnum{
 		IntEnumOne,

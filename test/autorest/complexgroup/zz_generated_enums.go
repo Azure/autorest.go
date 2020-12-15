@@ -16,6 +16,7 @@ const (
 	CMYKColorsYellow  CMYKColors = "YELLOW"
 )
 
+// PossibleCMYKColorsValues returns the possible values for the CMYKColors const type.
 func PossibleCMYKColorsValues() []CMYKColors {
 	return []CMYKColors{
 		CMYKColorsBlacK,
@@ -42,6 +43,7 @@ const (
 	GoblinSharkColorUpperRed GoblinSharkColor = "RED"
 )
 
+// PossibleGoblinSharkColorValues returns the possible values for the GoblinSharkColor const type.
 func PossibleGoblinSharkColorValues() []GoblinSharkColor {
 	return []GoblinSharkColor{
 		GoblinSharkColorBrown,
@@ -62,6 +64,7 @@ const (
 	MyKindKind1 MyKind = "Kind1"
 )
 
+// PossibleMyKindValues returns the possible values for the MyKind const type.
 func PossibleMyKindValues() []MyKind {
 	return []MyKind{
 		MyKindKind1,

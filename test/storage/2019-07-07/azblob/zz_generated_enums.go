@@ -26,6 +26,7 @@ const (
 	AccessTierP80     AccessTier = "P80"
 )
 
+// PossibleAccessTierValues returns the possible values for the AccessTier const type.
 func PossibleAccessTierValues() []AccessTier {
 	return []AccessTier{
 		AccessTierArchive,
@@ -59,6 +60,7 @@ const (
 	AccountKindBlockBlobStorage AccountKind = "BlockBlobStorage"
 )
 
+// PossibleAccountKindValues returns the possible values for the AccountKind const type.
 func PossibleAccountKindValues() []AccountKind {
 	return []AccountKind{
 		AccountKindStorage,
@@ -80,6 +82,7 @@ const (
 	ArchiveStatusRehydratePendingToHot  ArchiveStatus = "rehydrate-pending-to-hot"
 )
 
+// PossibleArchiveStatusValues returns the possible values for the ArchiveStatus const type.
 func PossibleArchiveStatusValues() []ArchiveStatus {
 	return []ArchiveStatus{
 		ArchiveStatusRehydratePendingToCool,
@@ -99,6 +102,7 @@ const (
 	BlobTypeAppendBlob BlobType = "AppendBlob"
 )
 
+// PossibleBlobTypeValues returns the possible values for the BlobType const type.
 func PossibleBlobTypeValues() []BlobType {
 	return []BlobType{
 		BlobTypeBlockBlob,
@@ -119,6 +123,7 @@ const (
 	BlockListTypeAll         BlockListType = "all"
 )
 
+// PossibleBlockListTypeValues returns the possible values for the BlockListType const type.
 func PossibleBlockListTypeValues() []BlockListType {
 	return []BlockListType{
 		BlockListTypeCommitted,
@@ -140,6 +145,7 @@ const (
 	CopyStatusTypeFailed  CopyStatusType = "failed"
 )
 
+// PossibleCopyStatusTypeValues returns the possible values for the CopyStatusType const type.
 func PossibleCopyStatusTypeValues() []CopyStatusType {
 	return []CopyStatusType{
 		CopyStatusTypePending,
@@ -160,6 +166,7 @@ const (
 	DeleteSnapshotsOptionTypeOnly    DeleteSnapshotsOptionType = "only"
 )
 
+// PossibleDeleteSnapshotsOptionTypeValues returns the possible values for the DeleteSnapshotsOptionType const type.
 func PossibleDeleteSnapshotsOptionTypeValues() []DeleteSnapshotsOptionType {
 	return []DeleteSnapshotsOptionType{
 		DeleteSnapshotsOptionTypeInclude,
@@ -180,6 +187,7 @@ const (
 	GeoReplicationStatusTypeUnavailable GeoReplicationStatusType = "unavailable"
 )
 
+// PossibleGeoReplicationStatusTypeValues returns the possible values for the GeoReplicationStatusType const type.
 func PossibleGeoReplicationStatusTypeValues() []GeoReplicationStatusType {
 	return []GeoReplicationStatusType{
 		GeoReplicationStatusTypeBootstrap,
@@ -199,6 +207,7 @@ const (
 	LeaseDurationTypeFixed    LeaseDurationType = "fixed"
 )
 
+// PossibleLeaseDurationTypeValues returns the possible values for the LeaseDurationType const type.
 func PossibleLeaseDurationTypeValues() []LeaseDurationType {
 	return []LeaseDurationType{
 		LeaseDurationTypeInfinite,
@@ -220,6 +229,7 @@ const (
 	LeaseStateTypeBroken    LeaseStateType = "broken"
 )
 
+// PossibleLeaseStateTypeValues returns the possible values for the LeaseStateType const type.
 func PossibleLeaseStateTypeValues() []LeaseStateType {
 	return []LeaseStateType{
 		LeaseStateTypeAvailable,
@@ -241,6 +251,7 @@ const (
 	LeaseStatusTypeUnlocked LeaseStatusType = "unlocked"
 )
 
+// PossibleLeaseStatusTypeValues returns the possible values for the LeaseStatusType const type.
 func PossibleLeaseStatusTypeValues() []LeaseStatusType {
 	return []LeaseStatusType{
 		LeaseStatusTypeLocked,
@@ -262,6 +273,7 @@ const (
 	ListBlobsIncludeItemUncommittedblobs ListBlobsIncludeItem = "uncommittedblobs"
 )
 
+// PossibleListBlobsIncludeItemValues returns the possible values for the ListBlobsIncludeItem const type.
 func PossibleListBlobsIncludeItemValues() []ListBlobsIncludeItem {
 	return []ListBlobsIncludeItem{
 		ListBlobsIncludeItemCopy,
@@ -283,6 +295,7 @@ const (
 	PathRenameModePosix  PathRenameMode = "posix"
 )
 
+// PossiblePathRenameModeValues returns the possible values for the PathRenameMode const type.
 func PossiblePathRenameModeValues() []PathRenameMode {
 	return []PathRenameMode{
 		PathRenameModeLegacy,
@@ -310,6 +323,7 @@ const (
 	PremiumPageBlobAccessTierP80 PremiumPageBlobAccessTier = "P80"
 )
 
+// PossiblePremiumPageBlobAccessTierValues returns the possible values for the PremiumPageBlobAccessTier const type.
 func PossiblePremiumPageBlobAccessTierValues() []PremiumPageBlobAccessTier {
 	return []PremiumPageBlobAccessTier{
 		PremiumPageBlobAccessTierP10,
@@ -337,6 +351,7 @@ const (
 	PublicAccessTypeContainer PublicAccessType = "container"
 )
 
+// PossiblePublicAccessTypeValues returns the possible values for the PublicAccessType const type.
 func PossiblePublicAccessTypeValues() []PublicAccessType {
 	return []PublicAccessType{
 		PublicAccessTypeBlob,
@@ -355,6 +370,7 @@ const (
 	RehydratePriorityStandard RehydratePriority = "Standard"
 )
 
+// PossibleRehydratePriorityValues returns the possible values for the RehydratePriority const type.
 func PossibleRehydratePriorityValues() []RehydratePriority {
 	return []RehydratePriority{
 		RehydratePriorityHigh,
@@ -376,6 +392,7 @@ const (
 	SKUNamePremiumLrs    SKUName = "Premium_LRS"
 )
 
+// PossibleSKUNameValues returns the possible values for the SKUName const type.
 func PossibleSKUNameValues() []SKUName {
 	return []SKUName{
 		SKUNameStandardLrs,
@@ -398,6 +415,7 @@ const (
 	SequenceNumberActionTypeIncrement SequenceNumberActionType = "increment"
 )
 
+// PossibleSequenceNumberActionTypeValues returns the possible values for the SequenceNumberActionType const type.
 func PossibleSequenceNumberActionTypeValues() []SequenceNumberActionType {
 	return []SequenceNumberActionType{
 		SequenceNumberActionTypeMax,
@@ -528,6 +546,7 @@ const (
 	StorageErrorCodeUnsupportedXMLNode                                StorageErrorCode = "UnsupportedXmlNode"
 )
 
+// PossibleStorageErrorCodeValues returns the possible values for the StorageErrorCode const type.
 func PossibleStorageErrorCodeValues() []StorageErrorCode {
 	return []StorageErrorCode{
 		StorageErrorCodeAccountAlreadyExists,

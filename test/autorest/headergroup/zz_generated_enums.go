@@ -15,6 +15,7 @@ const (
 	GreyscaleColorsGrey  GreyscaleColors = "GREY"
 )
 
+// PossibleGreyscaleColorsValues returns the possible values for the GreyscaleColors const type.
 func PossibleGreyscaleColorsValues() []GreyscaleColors {
 	return []GreyscaleColors{
 		GreyscaleColorsWhite,

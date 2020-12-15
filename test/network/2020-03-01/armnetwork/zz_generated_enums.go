@@ -15,6 +15,7 @@ const (
 	AccessDeny  Access = "Deny"
 )
 
+// PossibleAccessValues returns the possible values for the Access const type.
 func PossibleAccessValues() []Access {
 	return []Access{
 		AccessAllow,
@@ -37,6 +38,7 @@ const (
 	ApplicationGatewayBackendHealthServerHealthUp       ApplicationGatewayBackendHealthServerHealth = "Up"
 )
 
+// PossibleApplicationGatewayBackendHealthServerHealthValues returns the possible values for the ApplicationGatewayBackendHealthServerHealth const type.
 func PossibleApplicationGatewayBackendHealthServerHealthValues() []ApplicationGatewayBackendHealthServerHealth {
 	return []ApplicationGatewayBackendHealthServerHealth{
 		ApplicationGatewayBackendHealthServerHealthDown,
@@ -59,6 +61,7 @@ const (
 	ApplicationGatewayCookieBasedAffinityEnabled  ApplicationGatewayCookieBasedAffinity = "Enabled"
 )
 
+// PossibleApplicationGatewayCookieBasedAffinityValues returns the possible values for the ApplicationGatewayCookieBasedAffinity const type.
 func PossibleApplicationGatewayCookieBasedAffinityValues() []ApplicationGatewayCookieBasedAffinity {
 	return []ApplicationGatewayCookieBasedAffinity{
 		ApplicationGatewayCookieBasedAffinityDisabled,
@@ -78,6 +81,7 @@ const (
 	ApplicationGatewayCustomErrorStatusCodeHTTPStatus502 ApplicationGatewayCustomErrorStatusCode = "HttpStatus502"
 )
 
+// PossibleApplicationGatewayCustomErrorStatusCodeValues returns the possible values for the ApplicationGatewayCustomErrorStatusCode const type.
 func PossibleApplicationGatewayCustomErrorStatusCodeValues() []ApplicationGatewayCustomErrorStatusCode {
 	return []ApplicationGatewayCustomErrorStatusCode{
 		ApplicationGatewayCustomErrorStatusCodeHTTPStatus403,
@@ -97,6 +101,7 @@ const (
 	ApplicationGatewayFirewallModePrevention ApplicationGatewayFirewallMode = "Prevention"
 )
 
+// PossibleApplicationGatewayFirewallModeValues returns the possible values for the ApplicationGatewayFirewallMode const type.
 func PossibleApplicationGatewayFirewallModeValues() []ApplicationGatewayFirewallMode {
 	return []ApplicationGatewayFirewallMode{
 		ApplicationGatewayFirewallModeDetection,
@@ -118,6 +123,7 @@ const (
 	ApplicationGatewayOperationalStateStopping ApplicationGatewayOperationalState = "Stopping"
 )
 
+// PossibleApplicationGatewayOperationalStateValues returns the possible values for the ApplicationGatewayOperationalState const type.
 func PossibleApplicationGatewayOperationalStateValues() []ApplicationGatewayOperationalState {
 	return []ApplicationGatewayOperationalState{
 		ApplicationGatewayOperationalStateRunning,
@@ -139,6 +145,7 @@ const (
 	ApplicationGatewayProtocolHTTPs ApplicationGatewayProtocol = "Https"
 )
 
+// PossibleApplicationGatewayProtocolValues returns the possible values for the ApplicationGatewayProtocol const type.
 func PossibleApplicationGatewayProtocolValues() []ApplicationGatewayProtocol {
 	return []ApplicationGatewayProtocol{
 		ApplicationGatewayProtocolHTTP,
@@ -160,6 +167,7 @@ const (
 	ApplicationGatewayRedirectTypeTemporary ApplicationGatewayRedirectType = "Temporary"
 )
 
+// PossibleApplicationGatewayRedirectTypeValues returns the possible values for the ApplicationGatewayRedirectType const type.
 func PossibleApplicationGatewayRedirectTypeValues() []ApplicationGatewayRedirectType {
 	return []ApplicationGatewayRedirectType{
 		ApplicationGatewayRedirectTypeFound,
@@ -181,6 +189,7 @@ const (
 	ApplicationGatewayRequestRoutingRuleTypePathBasedRouting ApplicationGatewayRequestRoutingRuleType = "PathBasedRouting"
 )
 
+// PossibleApplicationGatewayRequestRoutingRuleTypeValues returns the possible values for the ApplicationGatewayRequestRoutingRuleType const type.
 func PossibleApplicationGatewayRequestRoutingRuleTypeValues() []ApplicationGatewayRequestRoutingRuleType {
 	return []ApplicationGatewayRequestRoutingRuleType{
 		ApplicationGatewayRequestRoutingRuleTypeBasic,
@@ -205,6 +214,7 @@ const (
 	ApplicationGatewaySKUNameWafv2          ApplicationGatewaySKUName = "WAF_v2"
 )
 
+// PossibleApplicationGatewaySKUNameValues returns the possible values for the ApplicationGatewaySKUName const type.
 func PossibleApplicationGatewaySKUNameValues() []ApplicationGatewaySKUName {
 	return []ApplicationGatewaySKUName{
 		ApplicationGatewaySKUNameStandardLarge,
@@ -255,6 +265,7 @@ const (
 	ApplicationGatewaySslCipherSuiteTLSrsaWithAES256GCMsha384        ApplicationGatewaySslCipherSuite = "TLS_RSA_WITH_AES_256_GCM_SHA384"
 )
 
+// PossibleApplicationGatewaySslCipherSuiteValues returns the possible values for the ApplicationGatewaySslCipherSuite const type.
 func PossibleApplicationGatewaySslCipherSuiteValues() []ApplicationGatewaySslCipherSuite {
 	return []ApplicationGatewaySslCipherSuite{
 		ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAES128Cbcsha,
@@ -301,6 +312,7 @@ const (
 	ApplicationGatewaySslPolicyNameAppGwSslPolicy20170401S ApplicationGatewaySslPolicyName = "AppGwSslPolicy20170401S"
 )
 
+// PossibleApplicationGatewaySslPolicyNameValues returns the possible values for the ApplicationGatewaySslPolicyName const type.
 func PossibleApplicationGatewaySslPolicyNameValues() []ApplicationGatewaySslPolicyName {
 	return []ApplicationGatewaySslPolicyName{
 		ApplicationGatewaySslPolicyNameAppGwSslPolicy20150501,
@@ -321,6 +333,7 @@ const (
 	ApplicationGatewaySslPolicyTypePredefined ApplicationGatewaySslPolicyType = "Predefined"
 )
 
+// PossibleApplicationGatewaySslPolicyTypeValues returns the possible values for the ApplicationGatewaySslPolicyType const type.
 func PossibleApplicationGatewaySslPolicyTypeValues() []ApplicationGatewaySslPolicyType {
 	return []ApplicationGatewaySslPolicyType{
 		ApplicationGatewaySslPolicyTypeCustom,
@@ -341,6 +354,7 @@ const (
 	ApplicationGatewaySslProtocolTlSv12 ApplicationGatewaySslProtocol = "TLSv1_2"
 )
 
+// PossibleApplicationGatewaySslProtocolValues returns the possible values for the ApplicationGatewaySslProtocol const type.
 func PossibleApplicationGatewaySslProtocolValues() []ApplicationGatewaySslProtocol {
 	return []ApplicationGatewaySslProtocol{
 		ApplicationGatewaySslProtocolTlSv10,
@@ -363,6 +377,7 @@ const (
 	ApplicationGatewayTierWafv2      ApplicationGatewayTier = "WAF_v2"
 )
 
+// PossibleApplicationGatewayTierValues returns the possible values for the ApplicationGatewayTier const type.
 func PossibleApplicationGatewayTierValues() []ApplicationGatewayTier {
 	return []ApplicationGatewayTier{
 		ApplicationGatewayTierStandard,
@@ -384,6 +399,7 @@ const (
 	AssociationTypeContains   AssociationType = "Contains"
 )
 
+// PossibleAssociationTypeValues returns the possible values for the AssociationType const type.
 func PossibleAssociationTypeValues() []AssociationType {
 	return []AssociationType{
 		AssociationTypeAssociated,
@@ -403,6 +419,7 @@ const (
 	AuthenticationMethodEaptls      AuthenticationMethod = "EAPTLS"
 )
 
+// PossibleAuthenticationMethodValues returns the possible values for the AuthenticationMethod const type.
 func PossibleAuthenticationMethodValues() []AuthenticationMethod {
 	return []AuthenticationMethod{
 		AuthenticationMethodEapmschaPv2,
@@ -422,6 +439,7 @@ const (
 	AuthorizationUseStatusInUse     AuthorizationUseStatus = "InUse"
 )
 
+// PossibleAuthorizationUseStatusValues returns the possible values for the AuthorizationUseStatus const type.
 func PossibleAuthorizationUseStatusValues() []AuthorizationUseStatus {
 	return []AuthorizationUseStatus{
 		AuthorizationUseStatusAvailable,
@@ -442,6 +460,7 @@ const (
 	AzureFirewallApplicationRuleProtocolTypeMssql AzureFirewallApplicationRuleProtocolType = "Mssql"
 )
 
+// PossibleAzureFirewallApplicationRuleProtocolTypeValues returns the possible values for the AzureFirewallApplicationRuleProtocolType const type.
 func PossibleAzureFirewallApplicationRuleProtocolTypeValues() []AzureFirewallApplicationRuleProtocolType {
 	return []AzureFirewallApplicationRuleProtocolType{
 		AzureFirewallApplicationRuleProtocolTypeHTTP,
@@ -462,6 +481,7 @@ const (
 	AzureFirewallNatRCActionTypeSnat AzureFirewallNatRCActionType = "Snat"
 )
 
+// PossibleAzureFirewallNatRCActionTypeValues returns the possible values for the AzureFirewallNatRCActionType const type.
 func PossibleAzureFirewallNatRCActionTypeValues() []AzureFirewallNatRCActionType {
 	return []AzureFirewallNatRCActionType{
 		AzureFirewallNatRCActionTypeDnat,
@@ -483,6 +503,7 @@ const (
 	AzureFirewallNetworkRuleProtocolUDP  AzureFirewallNetworkRuleProtocol = "UDP"
 )
 
+// PossibleAzureFirewallNetworkRuleProtocolValues returns the possible values for the AzureFirewallNetworkRuleProtocol const type.
 func PossibleAzureFirewallNetworkRuleProtocolValues() []AzureFirewallNetworkRuleProtocol {
 	return []AzureFirewallNetworkRuleProtocol{
 		AzureFirewallNetworkRuleProtocolAny,
@@ -504,6 +525,7 @@ const (
 	AzureFirewallRCActionTypeDeny  AzureFirewallRCActionType = "Deny"
 )
 
+// PossibleAzureFirewallRCActionTypeValues returns the possible values for the AzureFirewallRCActionType const type.
 func PossibleAzureFirewallRCActionTypeValues() []AzureFirewallRCActionType {
 	return []AzureFirewallRCActionType{
 		AzureFirewallRCActionTypeAllow,
@@ -523,6 +545,7 @@ const (
 	AzureFirewallSKUNameAzfwVnet AzureFirewallSKUName = "AZFW_VNet"
 )
 
+// PossibleAzureFirewallSKUNameValues returns the possible values for the AzureFirewallSKUName const type.
 func PossibleAzureFirewallSKUNameValues() []AzureFirewallSKUName {
 	return []AzureFirewallSKUName{
 		AzureFirewallSKUNameAzfwHub,
@@ -541,6 +564,7 @@ const (
 	AzureFirewallSKUTierStandard AzureFirewallSKUTier = "Standard"
 )
 
+// PossibleAzureFirewallSKUTierValues returns the possible values for the AzureFirewallSKUTier const type.
 func PossibleAzureFirewallSKUTierValues() []AzureFirewallSKUTier {
 	return []AzureFirewallSKUTier{
 		AzureFirewallSKUTierStandard,
@@ -560,6 +584,7 @@ const (
 	AzureFirewallThreatIntelModeOff   AzureFirewallThreatIntelMode = "Off"
 )
 
+// PossibleAzureFirewallThreatIntelModeValues returns the possible values for the AzureFirewallThreatIntelMode const type.
 func PossibleAzureFirewallThreatIntelModeValues() []AzureFirewallThreatIntelMode {
 	return []AzureFirewallThreatIntelMode{
 		AzureFirewallThreatIntelModeAlert,
@@ -580,6 +605,7 @@ const (
 	BastionConnectProtocolSSH BastionConnectProtocol = "SSH"
 )
 
+// PossibleBastionConnectProtocolValues returns the possible values for the BastionConnectProtocol const type.
 func PossibleBastionConnectProtocolValues() []BastionConnectProtocol {
 	return []BastionConnectProtocol{
 		BastionConnectProtocolRdp,
@@ -602,6 +628,7 @@ const (
 	BgpPeerStateUnknown    BgpPeerState = "Unknown"
 )
 
+// PossibleBgpPeerStateValues returns the possible values for the BgpPeerState const type.
 func PossibleBgpPeerStateValues() []BgpPeerState {
 	return []BgpPeerState{
 		BgpPeerStateConnected,
@@ -625,6 +652,7 @@ const (
 	CircuitConnectionStatusDisconnected CircuitConnectionStatus = "Disconnected"
 )
 
+// PossibleCircuitConnectionStatusValues returns the possible values for the CircuitConnectionStatus const type.
 func PossibleCircuitConnectionStatusValues() []CircuitConnectionStatus {
 	return []CircuitConnectionStatus{
 		CircuitConnectionStatusConnected,
@@ -644,6 +672,7 @@ const (
 	ConnectionMonitorEndpointFilterItemTypeAgentAddress ConnectionMonitorEndpointFilterItemType = "AgentAddress"
 )
 
+// PossibleConnectionMonitorEndpointFilterItemTypeValues returns the possible values for the ConnectionMonitorEndpointFilterItemType const type.
 func PossibleConnectionMonitorEndpointFilterItemTypeValues() []ConnectionMonitorEndpointFilterItemType {
 	return []ConnectionMonitorEndpointFilterItemType{
 		ConnectionMonitorEndpointFilterItemTypeAgentAddress,
@@ -661,6 +690,7 @@ const (
 	ConnectionMonitorEndpointFilterTypeInclude ConnectionMonitorEndpointFilterType = "Include"
 )
 
+// PossibleConnectionMonitorEndpointFilterTypeValues returns the possible values for the ConnectionMonitorEndpointFilterType const type.
 func PossibleConnectionMonitorEndpointFilterTypeValues() []ConnectionMonitorEndpointFilterType {
 	return []ConnectionMonitorEndpointFilterType{
 		ConnectionMonitorEndpointFilterTypeInclude,
@@ -680,6 +710,7 @@ const (
 	ConnectionMonitorSourceStatusUnknown  ConnectionMonitorSourceStatus = "Unknown"
 )
 
+// PossibleConnectionMonitorSourceStatusValues returns the possible values for the ConnectionMonitorSourceStatus const type.
 func PossibleConnectionMonitorSourceStatusValues() []ConnectionMonitorSourceStatus {
 	return []ConnectionMonitorSourceStatus{
 		ConnectionMonitorSourceStatusActive,
@@ -701,6 +732,7 @@ const (
 	ConnectionMonitorTestConfigurationProtocolTCP  ConnectionMonitorTestConfigurationProtocol = "Tcp"
 )
 
+// PossibleConnectionMonitorTestConfigurationProtocolValues returns the possible values for the ConnectionMonitorTestConfigurationProtocol const type.
 func PossibleConnectionMonitorTestConfigurationProtocolValues() []ConnectionMonitorTestConfigurationProtocol {
 	return []ConnectionMonitorTestConfigurationProtocol{
 		ConnectionMonitorTestConfigurationProtocolHTTP,
@@ -721,6 +753,7 @@ const (
 	ConnectionMonitorTypeSingleSourceDestination ConnectionMonitorType = "SingleSourceDestination"
 )
 
+// PossibleConnectionMonitorTypeValues returns the possible values for the ConnectionMonitorType const type.
 func PossibleConnectionMonitorTypeValues() []ConnectionMonitorType {
 	return []ConnectionMonitorType{
 		ConnectionMonitorTypeMultiEndpoint,
@@ -741,6 +774,7 @@ const (
 	ConnectionStateUnreachable ConnectionState = "Unreachable"
 )
 
+// PossibleConnectionStateValues returns the possible values for the ConnectionState const type.
 func PossibleConnectionStateValues() []ConnectionState {
 	return []ConnectionState{
 		ConnectionStateReachable,
@@ -763,6 +797,7 @@ const (
 	ConnectionStatusUnknown      ConnectionStatus = "Unknown"
 )
 
+// PossibleConnectionStatusValues returns the possible values for the ConnectionStatus const type.
 func PossibleConnectionStatusValues() []ConnectionStatus {
 	return []ConnectionStatus{
 		ConnectionStatusConnected,
@@ -785,6 +820,7 @@ const (
 	DdosCustomPolicyProtocolUDP DdosCustomPolicyProtocol = "Udp"
 )
 
+// PossibleDdosCustomPolicyProtocolValues returns the possible values for the DdosCustomPolicyProtocol const type.
 func PossibleDdosCustomPolicyProtocolValues() []DdosCustomPolicyProtocol {
 	return []DdosCustomPolicyProtocol{
 		DdosCustomPolicyProtocolSyn,
@@ -809,6 +845,7 @@ const (
 	DdosCustomPolicyTriggerSensitivityOverrideRelaxed DdosCustomPolicyTriggerSensitivityOverride = "Relaxed"
 )
 
+// PossibleDdosCustomPolicyTriggerSensitivityOverrideValues returns the possible values for the DdosCustomPolicyTriggerSensitivityOverride const type.
 func PossibleDdosCustomPolicyTriggerSensitivityOverrideValues() []DdosCustomPolicyTriggerSensitivityOverride {
 	return []DdosCustomPolicyTriggerSensitivityOverride{
 		DdosCustomPolicyTriggerSensitivityOverrideDefault,
@@ -830,6 +867,7 @@ const (
 	DdosSettingsProtectionCoverageStandard DdosSettingsProtectionCoverage = "Standard"
 )
 
+// PossibleDdosSettingsProtectionCoverageValues returns the possible values for the DdosSettingsProtectionCoverage const type.
 func PossibleDdosSettingsProtectionCoverageValues() []DdosSettingsProtectionCoverage {
 	return []DdosSettingsProtectionCoverage{
 		DdosSettingsProtectionCoverageBasic,
@@ -855,6 +893,7 @@ const (
 	DhGroupNone        DhGroup = "None"
 )
 
+// PossibleDhGroupValues returns the possible values for the DhGroup const type.
 func PossibleDhGroupValues() []DhGroup {
 	return []DhGroup{
 		DhGroupDhGroup1,
@@ -880,6 +919,7 @@ const (
 	DirectionOutbound Direction = "Outbound"
 )
 
+// PossibleDirectionValues returns the possible values for the Direction const type.
 func PossibleDirectionValues() []Direction {
 	return []Direction{
 		DirectionInbound,
@@ -901,6 +941,7 @@ const (
 	EffectiveRouteSourceVirtualNetworkGateway EffectiveRouteSource = "VirtualNetworkGateway"
 )
 
+// PossibleEffectiveRouteSourceValues returns the possible values for the EffectiveRouteSource const type.
 func PossibleEffectiveRouteSourceValues() []EffectiveRouteSource {
 	return []EffectiveRouteSource{
 		EffectiveRouteSourceDefault,
@@ -922,6 +963,7 @@ const (
 	EffectiveRouteStateInvalid EffectiveRouteState = "Invalid"
 )
 
+// PossibleEffectiveRouteStateValues returns the possible values for the EffectiveRouteState const type.
 func PossibleEffectiveRouteStateValues() []EffectiveRouteState {
 	return []EffectiveRouteState{
 		EffectiveRouteStateActive,
@@ -942,6 +984,7 @@ const (
 	EffectiveSecurityRuleProtocolUDP EffectiveSecurityRuleProtocol = "Udp"
 )
 
+// PossibleEffectiveSecurityRuleProtocolValues returns the possible values for the EffectiveSecurityRuleProtocol const type.
 func PossibleEffectiveSecurityRuleProtocolValues() []EffectiveSecurityRuleProtocol {
 	return []EffectiveSecurityRuleProtocol{
 		EffectiveSecurityRuleProtocolAll,
@@ -963,6 +1006,7 @@ const (
 	EvaluationStateNotStarted EvaluationState = "NotStarted"
 )
 
+// PossibleEvaluationStateValues returns the possible values for the EvaluationState const type.
 func PossibleEvaluationStateValues() []EvaluationState {
 	return []EvaluationState{
 		EvaluationStateCompleted,
@@ -985,6 +1029,7 @@ const (
 	ExpressRouteCircuitPeeringAdvertisedPublicPrefixStateValidationNeeded ExpressRouteCircuitPeeringAdvertisedPublicPrefixState = "ValidationNeeded"
 )
 
+// PossibleExpressRouteCircuitPeeringAdvertisedPublicPrefixStateValues returns the possible values for the ExpressRouteCircuitPeeringAdvertisedPublicPrefixState const type.
 func PossibleExpressRouteCircuitPeeringAdvertisedPublicPrefixStateValues() []ExpressRouteCircuitPeeringAdvertisedPublicPrefixState {
 	return []ExpressRouteCircuitPeeringAdvertisedPublicPrefixState{
 		ExpressRouteCircuitPeeringAdvertisedPublicPrefixStateConfigured,
@@ -1006,6 +1051,7 @@ const (
 	ExpressRouteCircuitPeeringStateEnabled  ExpressRouteCircuitPeeringState = "Enabled"
 )
 
+// PossibleExpressRouteCircuitPeeringStateValues returns the possible values for the ExpressRouteCircuitPeeringState const type.
 func PossibleExpressRouteCircuitPeeringStateValues() []ExpressRouteCircuitPeeringState {
 	return []ExpressRouteCircuitPeeringState{
 		ExpressRouteCircuitPeeringStateDisabled,
@@ -1025,6 +1071,7 @@ const (
 	ExpressRouteCircuitSKUFamilyUnlimitedData ExpressRouteCircuitSKUFamily = "UnlimitedData"
 )
 
+// PossibleExpressRouteCircuitSKUFamilyValues returns the possible values for the ExpressRouteCircuitSKUFamily const type.
 func PossibleExpressRouteCircuitSKUFamilyValues() []ExpressRouteCircuitSKUFamily {
 	return []ExpressRouteCircuitSKUFamily{
 		ExpressRouteCircuitSKUFamilyMeteredData,
@@ -1046,6 +1093,7 @@ const (
 	ExpressRouteCircuitSKUTierStandard ExpressRouteCircuitSKUTier = "Standard"
 )
 
+// PossibleExpressRouteCircuitSKUTierValues returns the possible values for the ExpressRouteCircuitSKUTier const type.
 func PossibleExpressRouteCircuitSKUTierValues() []ExpressRouteCircuitSKUTier {
 	return []ExpressRouteCircuitSKUTier{
 		ExpressRouteCircuitSKUTierBasic,
@@ -1067,6 +1115,7 @@ const (
 	ExpressRouteLinkAdminStateEnabled  ExpressRouteLinkAdminState = "Enabled"
 )
 
+// PossibleExpressRouteLinkAdminStateValues returns the possible values for the ExpressRouteLinkAdminState const type.
 func PossibleExpressRouteLinkAdminStateValues() []ExpressRouteLinkAdminState {
 	return []ExpressRouteLinkAdminState{
 		ExpressRouteLinkAdminStateDisabled,
@@ -1086,6 +1135,7 @@ const (
 	ExpressRouteLinkConnectorTypeSc ExpressRouteLinkConnectorType = "SC"
 )
 
+// PossibleExpressRouteLinkConnectorTypeValues returns the possible values for the ExpressRouteLinkConnectorType const type.
 func PossibleExpressRouteLinkConnectorTypeValues() []ExpressRouteLinkConnectorType {
 	return []ExpressRouteLinkConnectorType{
 		ExpressRouteLinkConnectorTypeLc,
@@ -1105,6 +1155,7 @@ const (
 	ExpressRouteLinkMacSecCipherGCMAES256 ExpressRouteLinkMacSecCipher = "gcm-aes-256"
 )
 
+// PossibleExpressRouteLinkMacSecCipherValues returns the possible values for the ExpressRouteLinkMacSecCipher const type.
 func PossibleExpressRouteLinkMacSecCipherValues() []ExpressRouteLinkMacSecCipher {
 	return []ExpressRouteLinkMacSecCipher{
 		ExpressRouteLinkMacSecCipherGCMAES128,
@@ -1124,6 +1175,7 @@ const (
 	ExpressRoutePeeringStateEnabled  ExpressRoutePeeringState = "Enabled"
 )
 
+// PossibleExpressRoutePeeringStateValues returns the possible values for the ExpressRoutePeeringState const type.
 func PossibleExpressRoutePeeringStateValues() []ExpressRoutePeeringState {
 	return []ExpressRoutePeeringState{
 		ExpressRoutePeeringStateDisabled,
@@ -1144,6 +1196,7 @@ const (
 	ExpressRoutePeeringTypeMicrosoftPeering    ExpressRoutePeeringType = "MicrosoftPeering"
 )
 
+// PossibleExpressRoutePeeringTypeValues returns the possible values for the ExpressRoutePeeringType const type.
 func PossibleExpressRoutePeeringTypeValues() []ExpressRoutePeeringType {
 	return []ExpressRoutePeeringType{
 		ExpressRoutePeeringTypeAzurePrivatePeering,
@@ -1164,6 +1217,7 @@ const (
 	ExpressRoutePortsEncapsulationQinQ  ExpressRoutePortsEncapsulation = "QinQ"
 )
 
+// PossibleExpressRoutePortsEncapsulationValues returns the possible values for the ExpressRoutePortsEncapsulation const type.
 func PossibleExpressRoutePortsEncapsulationValues() []ExpressRoutePortsEncapsulation {
 	return []ExpressRoutePortsEncapsulation{
 		ExpressRoutePortsEncapsulationDot1Q,
@@ -1183,6 +1237,7 @@ const (
 	FirewallPolicyFilterRuleActionTypeDeny  FirewallPolicyFilterRuleActionType = "Deny"
 )
 
+// PossibleFirewallPolicyFilterRuleActionTypeValues returns the possible values for the FirewallPolicyFilterRuleActionType const type.
 func PossibleFirewallPolicyFilterRuleActionTypeValues() []FirewallPolicyFilterRuleActionType {
 	return []FirewallPolicyFilterRuleActionType{
 		FirewallPolicyFilterRuleActionTypeAllow,
@@ -1201,6 +1256,7 @@ const (
 	FirewallPolicyNatRuleActionTypeDnat FirewallPolicyNatRuleActionType = "DNAT"
 )
 
+// PossibleFirewallPolicyNatRuleActionTypeValues returns the possible values for the FirewallPolicyNatRuleActionType const type.
 func PossibleFirewallPolicyNatRuleActionTypeValues() []FirewallPolicyNatRuleActionType {
 	return []FirewallPolicyNatRuleActionType{
 		FirewallPolicyNatRuleActionTypeDnat,
@@ -1219,6 +1275,7 @@ const (
 	FirewallPolicyRuleConditionApplicationProtocolTypeHTTPs FirewallPolicyRuleConditionApplicationProtocolType = "Https"
 )
 
+// PossibleFirewallPolicyRuleConditionApplicationProtocolTypeValues returns the possible values for the FirewallPolicyRuleConditionApplicationProtocolType const type.
 func PossibleFirewallPolicyRuleConditionApplicationProtocolTypeValues() []FirewallPolicyRuleConditionApplicationProtocolType {
 	return []FirewallPolicyRuleConditionApplicationProtocolType{
 		FirewallPolicyRuleConditionApplicationProtocolTypeHTTP,
@@ -1240,6 +1297,7 @@ const (
 	FirewallPolicyRuleConditionNetworkProtocolUDP  FirewallPolicyRuleConditionNetworkProtocol = "UDP"
 )
 
+// PossibleFirewallPolicyRuleConditionNetworkProtocolValues returns the possible values for the FirewallPolicyRuleConditionNetworkProtocol const type.
 func PossibleFirewallPolicyRuleConditionNetworkProtocolValues() []FirewallPolicyRuleConditionNetworkProtocol {
 	return []FirewallPolicyRuleConditionNetworkProtocol{
 		FirewallPolicyRuleConditionNetworkProtocolAny,
@@ -1262,6 +1320,7 @@ const (
 	FirewallPolicyRuleConditionTypeNetworkRuleCondition     FirewallPolicyRuleConditionType = "NetworkRuleCondition"
 )
 
+// PossibleFirewallPolicyRuleConditionTypeValues returns the possible values for the FirewallPolicyRuleConditionType const type.
 func PossibleFirewallPolicyRuleConditionTypeValues() []FirewallPolicyRuleConditionType {
 	return []FirewallPolicyRuleConditionType{
 		FirewallPolicyRuleConditionTypeApplicationRuleCondition,
@@ -1282,6 +1341,7 @@ const (
 	FirewallPolicyRuleTypeFirewallPolicyNatRule    FirewallPolicyRuleType = "FirewallPolicyNatRule"
 )
 
+// PossibleFirewallPolicyRuleTypeValues returns the possible values for the FirewallPolicyRuleType const type.
 func PossibleFirewallPolicyRuleTypeValues() []FirewallPolicyRuleType {
 	return []FirewallPolicyRuleType{
 		FirewallPolicyRuleTypeFirewallPolicyFilterRule,
@@ -1300,6 +1360,7 @@ const (
 	FlowLogFormatTypeJSON FlowLogFormatType = "JSON"
 )
 
+// PossibleFlowLogFormatTypeValues returns the possible values for the FlowLogFormatType const type.
 func PossibleFlowLogFormatTypeValues() []FlowLogFormatType {
 	return []FlowLogFormatType{
 		FlowLogFormatTypeJSON,
@@ -1318,6 +1379,7 @@ const (
 	HTTPConfigurationMethodPost HTTPConfigurationMethod = "Post"
 )
 
+// PossibleHTTPConfigurationMethodValues returns the possible values for the HTTPConfigurationMethod const type.
 func PossibleHTTPConfigurationMethodValues() []HTTPConfigurationMethod {
 	return []HTTPConfigurationMethod{
 		HTTPConfigurationMethodGet,
@@ -1336,6 +1398,7 @@ const (
 	HTTPMethodGet HTTPMethod = "Get"
 )
 
+// PossibleHTTPMethodValues returns the possible values for the HTTPMethod const type.
 func PossibleHTTPMethodValues() []HTTPMethod {
 	return []HTTPMethod{
 		HTTPMethodGet,
@@ -1356,6 +1419,7 @@ const (
 	HubVirtualNetworkConnectionStatusUnknown      HubVirtualNetworkConnectionStatus = "Unknown"
 )
 
+// PossibleHubVirtualNetworkConnectionStatusValues returns the possible values for the HubVirtualNetworkConnectionStatus const type.
 func PossibleHubVirtualNetworkConnectionStatusValues() []HubVirtualNetworkConnectionStatus {
 	return []HubVirtualNetworkConnectionStatus{
 		HubVirtualNetworkConnectionStatusConnected,
@@ -1377,6 +1441,7 @@ const (
 	IPAllocationMethodStatic  IPAllocationMethod = "Static"
 )
 
+// PossibleIPAllocationMethodValues returns the possible values for the IPAllocationMethod const type.
 func PossibleIPAllocationMethodValues() []IPAllocationMethod {
 	return []IPAllocationMethod{
 		IPAllocationMethodDynamic,
@@ -1396,6 +1461,7 @@ const (
 	IPAllocationTypeUndefined IPAllocationType = "Undefined"
 )
 
+// PossibleIPAllocationTypeValues returns the possible values for the IPAllocationType const type.
 func PossibleIPAllocationTypeValues() []IPAllocationType {
 	return []IPAllocationType{
 		IPAllocationTypeHypernet,
@@ -1415,6 +1481,7 @@ const (
 	IPFlowProtocolUDP IPFlowProtocol = "UDP"
 )
 
+// PossibleIPFlowProtocolValues returns the possible values for the IPFlowProtocol const type.
 func PossibleIPFlowProtocolValues() []IPFlowProtocol {
 	return []IPFlowProtocol{
 		IPFlowProtocolTCP,
@@ -1434,6 +1501,7 @@ const (
 	IPVersionIPv6 IPVersion = "IPv6"
 )
 
+// PossibleIPVersionValues returns the possible values for the IPVersion const type.
 func PossibleIPVersionValues() []IPVersion {
 	return []IPVersion{
 		IPVersionIPv4,
@@ -1460,6 +1528,7 @@ const (
 	IPsecEncryptionNone      IPsecEncryption = "None"
 )
 
+// PossibleIPsecEncryptionValues returns the possible values for the IPsecEncryption const type.
 func PossibleIPsecEncryptionValues() []IPsecEncryption {
 	return []IPsecEncryption{
 		IPsecEncryptionAES128,
@@ -1490,6 +1559,7 @@ const (
 	IPsecIntegritySHA256    IPsecIntegrity = "SHA256"
 )
 
+// PossibleIPsecIntegrityValues returns the possible values for the IPsecIntegrity const type.
 func PossibleIPsecIntegrityValues() []IPsecIntegrity {
 	return []IPsecIntegrity{
 		IPsecIntegrityGCMaes128,
@@ -1518,6 +1588,7 @@ const (
 	IkeEncryptionGCMaes256 IkeEncryption = "GCMAES256"
 )
 
+// PossibleIkeEncryptionValues returns the possible values for the IkeEncryption const type.
 func PossibleIkeEncryptionValues() []IkeEncryption {
 	return []IkeEncryption{
 		IkeEncryptionAES128,
@@ -1546,6 +1617,7 @@ const (
 	IkeIntegritySHA384    IkeIntegrity = "SHA384"
 )
 
+// PossibleIkeIntegrityValues returns the possible values for the IkeIntegrity const type.
 func PossibleIkeIntegrityValues() []IkeIntegrity {
 	return []IkeIntegrity{
 		IkeIntegrityGCMaes128,
@@ -1576,6 +1648,7 @@ const (
 	IssueTypeUserDefinedRoute    IssueType = "UserDefinedRoute"
 )
 
+// PossibleIssueTypeValues returns the possible values for the IssueType const type.
 func PossibleIssueTypeValues() []IssueType {
 	return []IssueType{
 		IssueTypeAgentStopped,
@@ -1603,6 +1676,7 @@ const (
 	LoadBalancerOutboundRuleProtocolUDP LoadBalancerOutboundRuleProtocol = "Udp"
 )
 
+// PossibleLoadBalancerOutboundRuleProtocolValues returns the possible values for the LoadBalancerOutboundRuleProtocol const type.
 func PossibleLoadBalancerOutboundRuleProtocolValues() []LoadBalancerOutboundRuleProtocol {
 	return []LoadBalancerOutboundRuleProtocol{
 		LoadBalancerOutboundRuleProtocolAll,
@@ -1623,6 +1697,7 @@ const (
 	LoadBalancerSKUNameStandard LoadBalancerSKUName = "Standard"
 )
 
+// PossibleLoadBalancerSKUNameValues returns the possible values for the LoadBalancerSKUName const type.
 func PossibleLoadBalancerSKUNameValues() []LoadBalancerSKUName {
 	return []LoadBalancerSKUName{
 		LoadBalancerSKUNameBasic,
@@ -1643,6 +1718,7 @@ const (
 	LoadDistributionSourceIPProtocol LoadDistribution = "SourceIPProtocol"
 )
 
+// PossibleLoadDistributionValues returns the possible values for the LoadDistribution const type.
 func PossibleLoadDistributionValues() []LoadDistribution {
 	return []LoadDistribution{
 		LoadDistributionDefault,
@@ -1662,6 +1738,7 @@ const (
 	ManagedRuleEnabledStateDisabled ManagedRuleEnabledState = "Disabled"
 )
 
+// PossibleManagedRuleEnabledStateValues returns the possible values for the ManagedRuleEnabledState const type.
 func PossibleManagedRuleEnabledStateValues() []ManagedRuleEnabledState {
 	return []ManagedRuleEnabledState{
 		ManagedRuleEnabledStateDisabled,
@@ -1679,6 +1756,7 @@ const (
 	NatGatewaySKUNameStandard NatGatewaySKUName = "Standard"
 )
 
+// PossibleNatGatewaySKUNameValues returns the possible values for the NatGatewaySKUName const type.
 func PossibleNatGatewaySKUNameValues() []NatGatewaySKUName {
 	return []NatGatewaySKUName{
 		NatGatewaySKUNameStandard,
@@ -1698,6 +1776,7 @@ const (
 	NetworkOperationStatusSucceeded  NetworkOperationStatus = "Succeeded"
 )
 
+// PossibleNetworkOperationStatusValues returns the possible values for the NetworkOperationStatus const type.
 func PossibleNetworkOperationStatusValues() []NetworkOperationStatus {
 	return []NetworkOperationStatus{
 		NetworkOperationStatusFailed,
@@ -1722,6 +1801,7 @@ const (
 	NextHopTypeVnetLocal             NextHopType = "VnetLocal"
 )
 
+// PossibleNextHopTypeValues returns the possible values for the NextHopType const type.
 func PossibleNextHopTypeValues() []NextHopType {
 	return []NextHopType{
 		NextHopTypeHyperNetGateway,
@@ -1747,6 +1827,7 @@ const (
 	OfficeTrafficCategoryOptimizeAndAllow OfficeTrafficCategory = "OptimizeAndAllow"
 )
 
+// PossibleOfficeTrafficCategoryValues returns the possible values for the OfficeTrafficCategory const type.
 func PossibleOfficeTrafficCategoryValues() []OfficeTrafficCategory {
 	return []OfficeTrafficCategory{
 		OfficeTrafficCategoryAll,
@@ -1769,6 +1850,7 @@ const (
 	OriginOutbound Origin = "Outbound"
 )
 
+// PossibleOriginValues returns the possible values for the Origin const type.
 func PossibleOriginValues() []Origin {
 	return []Origin{
 		OriginInbound,
@@ -1788,6 +1870,7 @@ const (
 	OutputTypeWorkspace OutputType = "Workspace"
 )
 
+// PossibleOutputTypeValues returns the possible values for the OutputType const type.
 func PossibleOutputTypeValues() []OutputType {
 	return []OutputType{
 		OutputTypeWorkspace,
@@ -1807,6 +1890,7 @@ const (
 	OwaspCrsExclusionEntryMatchVariableRequestHeaderNames OwaspCrsExclusionEntryMatchVariable = "RequestHeaderNames"
 )
 
+// PossibleOwaspCrsExclusionEntryMatchVariableValues returns the possible values for the OwaspCrsExclusionEntryMatchVariable const type.
 func PossibleOwaspCrsExclusionEntryMatchVariableValues() []OwaspCrsExclusionEntryMatchVariable {
 	return []OwaspCrsExclusionEntryMatchVariable{
 		OwaspCrsExclusionEntryMatchVariableRequestArgNames,
@@ -1831,6 +1915,7 @@ const (
 	OwaspCrsExclusionEntrySelectorMatchOperatorStartsWith OwaspCrsExclusionEntrySelectorMatchOperator = "StartsWith"
 )
 
+// PossibleOwaspCrsExclusionEntrySelectorMatchOperatorValues returns the possible values for the OwaspCrsExclusionEntrySelectorMatchOperator const type.
 func PossibleOwaspCrsExclusionEntrySelectorMatchOperatorValues() []OwaspCrsExclusionEntrySelectorMatchOperator {
 	return []OwaspCrsExclusionEntrySelectorMatchOperator{
 		OwaspCrsExclusionEntrySelectorMatchOperatorContains,
@@ -1855,6 +1940,7 @@ const (
 	PcErrorStorageFailed   PcError = "StorageFailed"
 )
 
+// PossiblePcErrorValues returns the possible values for the PcError const type.
 func PossiblePcErrorValues() []PcError {
 	return []PcError{
 		PcErrorAgentStopped,
@@ -1878,6 +1964,7 @@ const (
 	PcProtocolUDP PcProtocol = "UDP"
 )
 
+// PossiblePcProtocolValues returns the possible values for the PcProtocol const type.
 func PossiblePcProtocolValues() []PcProtocol {
 	return []PcProtocol{
 		PcProtocolAny,
@@ -1901,6 +1988,7 @@ const (
 	PcStatusUnknown    PcStatus = "Unknown"
 )
 
+// PossiblePcStatusValues returns the possible values for the PcStatus const type.
 func PossiblePcStatusValues() []PcStatus {
 	return []PcStatus{
 		PcStatusError,
@@ -1930,6 +2018,7 @@ const (
 	PfsGroupPfsmm   PfsGroup = "PFSMM"
 )
 
+// PossiblePfsGroupValues returns the possible values for the PfsGroup const type.
 func PossiblePfsGroupValues() []PfsGroup {
 	return []PfsGroup{
 		PfsGroupEcp256,
@@ -1957,6 +2046,7 @@ const (
 	PreferredIPVersionIPv6 PreferredIPVersion = "IPv6"
 )
 
+// PossiblePreferredIPVersionValues returns the possible values for the PreferredIPVersion const type.
 func PossiblePreferredIPVersionValues() []PreferredIPVersion {
 	return []PreferredIPVersion{
 		PreferredIPVersionIPv4,
@@ -1979,6 +2069,7 @@ const (
 	ProbeProtocolTCP   ProbeProtocol = "Tcp"
 )
 
+// PossibleProbeProtocolValues returns the possible values for the ProbeProtocol const type.
 func PossibleProbeProtocolValues() []ProbeProtocol {
 	return []ProbeProtocol{
 		ProbeProtocolHTTP,
@@ -1999,6 +2090,7 @@ const (
 	ProcessorArchitectureX86   ProcessorArchitecture = "X86"
 )
 
+// PossibleProcessorArchitectureValues returns the possible values for the ProcessorArchitecture const type.
 func PossibleProcessorArchitectureValues() []ProcessorArchitecture {
 	return []ProcessorArchitecture{
 		ProcessorArchitectureAmd64,
@@ -2020,6 +2112,7 @@ const (
 	ProtocolTCP   Protocol = "Tcp"
 )
 
+// PossibleProtocolValues returns the possible values for the Protocol const type.
 func PossibleProtocolValues() []Protocol {
 	return []Protocol{
 		ProtocolHTTP,
@@ -2043,6 +2136,7 @@ const (
 	ProvisioningStateUpdating  ProvisioningState = "Updating"
 )
 
+// PossibleProvisioningStateValues returns the possible values for the ProvisioningState const type.
 func PossibleProvisioningStateValues() []ProvisioningState {
 	return []ProvisioningState{
 		ProvisioningStateDeleting,
@@ -2064,6 +2158,7 @@ const (
 	PublicIPAddressSKUNameStandard PublicIPAddressSKUName = "Standard"
 )
 
+// PossiblePublicIPAddressSKUNameValues returns the possible values for the PublicIPAddressSKUName const type.
 func PossiblePublicIPAddressSKUNameValues() []PublicIPAddressSKUName {
 	return []PublicIPAddressSKUName{
 		PublicIPAddressSKUNameBasic,
@@ -2082,6 +2177,7 @@ const (
 	PublicIPPrefixSKUNameStandard PublicIPPrefixSKUName = "Standard"
 )
 
+// PossiblePublicIPPrefixSKUNameValues returns the possible values for the PublicIPPrefixSKUName const type.
 func PossiblePublicIPPrefixSKUNameValues() []PublicIPPrefixSKUName {
 	return []PublicIPPrefixSKUName{
 		PublicIPPrefixSKUNameStandard,
@@ -2104,6 +2200,7 @@ const (
 	ResourceIDentityTypeNone                       ResourceIDentityType = "None"
 )
 
+// PossibleResourceIDentityTypeValues returns the possible values for the ResourceIDentityType const type.
 func PossibleResourceIDentityTypeValues() []ResourceIDentityType {
 	return []ResourceIDentityType{
 		ResourceIDentityTypeSystemAssigned,
@@ -2124,6 +2221,7 @@ const (
 	RouteFilterRuleTypeCommunity RouteFilterRuleType = "Community"
 )
 
+// PossibleRouteFilterRuleTypeValues returns the possible values for the RouteFilterRuleType const type.
 func PossibleRouteFilterRuleTypeValues() []RouteFilterRuleType {
 	return []RouteFilterRuleType{
 		RouteFilterRuleTypeCommunity,
@@ -2145,6 +2243,7 @@ const (
 	RouteNextHopTypeVnetLocal             RouteNextHopType = "VnetLocal"
 )
 
+// PossibleRouteNextHopTypeValues returns the possible values for the RouteNextHopType const type.
 func PossibleRouteNextHopTypeValues() []RouteNextHopType {
 	return []RouteNextHopType{
 		RouteNextHopTypeInternet,
@@ -2169,6 +2268,7 @@ const (
 	SecurityPartnerProviderConnectionStatusUnknown            SecurityPartnerProviderConnectionStatus = "Unknown"
 )
 
+// PossibleSecurityPartnerProviderConnectionStatusValues returns the possible values for the SecurityPartnerProviderConnectionStatus const type.
 func PossibleSecurityPartnerProviderConnectionStatusValues() []SecurityPartnerProviderConnectionStatus {
 	return []SecurityPartnerProviderConnectionStatus{
 		SecurityPartnerProviderConnectionStatusConnected,
@@ -2191,6 +2291,7 @@ const (
 	SecurityProviderNameZScaler    SecurityProviderName = "ZScaler"
 )
 
+// PossibleSecurityProviderNameValues returns the possible values for the SecurityProviderName const type.
 func PossibleSecurityProviderNameValues() []SecurityProviderName {
 	return []SecurityProviderName{
 		SecurityProviderNameCheckpoint,
@@ -2211,6 +2312,7 @@ const (
 	SecurityRuleAccessDeny  SecurityRuleAccess = "Deny"
 )
 
+// PossibleSecurityRuleAccessValues returns the possible values for the SecurityRuleAccess const type.
 func PossibleSecurityRuleAccessValues() []SecurityRuleAccess {
 	return []SecurityRuleAccess{
 		SecurityRuleAccessAllow,
@@ -2230,6 +2332,7 @@ const (
 	SecurityRuleDirectionOutbound SecurityRuleDirection = "Outbound"
 )
 
+// PossibleSecurityRuleDirectionValues returns the possible values for the SecurityRuleDirection const type.
 func PossibleSecurityRuleDirectionValues() []SecurityRuleDirection {
 	return []SecurityRuleDirection{
 		SecurityRuleDirectionInbound,
@@ -2253,6 +2356,7 @@ const (
 	SecurityRuleProtocolUDP      SecurityRuleProtocol = "Udp"
 )
 
+// PossibleSecurityRuleProtocolValues returns the possible values for the SecurityRuleProtocol const type.
 func PossibleSecurityRuleProtocolValues() []SecurityRuleProtocol {
 	return []SecurityRuleProtocol{
 		SecurityRuleProtocolAh,
@@ -2278,6 +2382,7 @@ const (
 	ServiceProviderProvisioningStateProvisioning   ServiceProviderProvisioningState = "Provisioning"
 )
 
+// PossibleServiceProviderProvisioningStateValues returns the possible values for the ServiceProviderProvisioningState const type.
 func PossibleServiceProviderProvisioningStateValues() []ServiceProviderProvisioningState {
 	return []ServiceProviderProvisioningState{
 		ServiceProviderProvisioningStateDeprovisioning,
@@ -2299,6 +2404,7 @@ const (
 	SeverityWarning Severity = "Warning"
 )
 
+// PossibleSeverityValues returns the possible values for the Severity const type.
 func PossibleSeverityValues() []Severity {
 	return []Severity{
 		SeverityError,
@@ -2319,6 +2425,7 @@ const (
 	TransportProtocolUDP TransportProtocol = "Udp"
 )
 
+// PossibleTransportProtocolValues returns the possible values for the TransportProtocol const type.
 func PossibleTransportProtocolValues() []TransportProtocol {
 	return []TransportProtocol{
 		TransportProtocolAll,
@@ -2341,6 +2448,7 @@ const (
 	TunnelConnectionStatusUnknown      TunnelConnectionStatus = "Unknown"
 )
 
+// PossibleTunnelConnectionStatusValues returns the possible values for the TunnelConnectionStatus const type.
 func PossibleTunnelConnectionStatusValues() []TunnelConnectionStatus {
 	return []TunnelConnectionStatus{
 		TunnelConnectionStatusConnected,
@@ -2361,6 +2469,7 @@ const (
 	UsageUnitCount UsageUnit = "Count"
 )
 
+// PossibleUsageUnitValues returns the possible values for the UsageUnit const type.
 func PossibleUsageUnitValues() []UsageUnit {
 	return []UsageUnit{
 		UsageUnitCount,
@@ -2380,6 +2489,7 @@ const (
 	VerbosityLevelNormal  VerbosityLevel = "Normal"
 )
 
+// PossibleVerbosityLevelValues returns the possible values for the VerbosityLevel const type.
 func PossibleVerbosityLevelValues() []VerbosityLevel {
 	return []VerbosityLevel{
 		VerbosityLevelFull,
@@ -2400,6 +2510,7 @@ const (
 	VirtualNetworkGatewayConnectionProtocolIkEv2 VirtualNetworkGatewayConnectionProtocol = "IKEv2"
 )
 
+// PossibleVirtualNetworkGatewayConnectionProtocolValues returns the possible values for the VirtualNetworkGatewayConnectionProtocol const type.
 func PossibleVirtualNetworkGatewayConnectionProtocolValues() []VirtualNetworkGatewayConnectionProtocol {
 	return []VirtualNetworkGatewayConnectionProtocol{
 		VirtualNetworkGatewayConnectionProtocolIkEv1,
@@ -2421,6 +2532,7 @@ const (
 	VirtualNetworkGatewayConnectionStatusUnknown      VirtualNetworkGatewayConnectionStatus = "Unknown"
 )
 
+// PossibleVirtualNetworkGatewayConnectionStatusValues returns the possible values for the VirtualNetworkGatewayConnectionStatus const type.
 func PossibleVirtualNetworkGatewayConnectionStatusValues() []VirtualNetworkGatewayConnectionStatus {
 	return []VirtualNetworkGatewayConnectionStatus{
 		VirtualNetworkGatewayConnectionStatusConnected,
@@ -2444,6 +2556,7 @@ const (
 	VirtualNetworkGatewayConnectionTypeVpnClient    VirtualNetworkGatewayConnectionType = "VPNClient"
 )
 
+// PossibleVirtualNetworkGatewayConnectionTypeValues returns the possible values for the VirtualNetworkGatewayConnectionType const type.
 func PossibleVirtualNetworkGatewayConnectionTypeValues() []VirtualNetworkGatewayConnectionType {
 	return []VirtualNetworkGatewayConnectionType{
 		VirtualNetworkGatewayConnectionTypeExpressRoute,
@@ -2480,6 +2593,7 @@ const (
 	VirtualNetworkGatewaySKUNameVpnGw5Az         VirtualNetworkGatewaySKUName = "VpnGw5AZ"
 )
 
+// PossibleVirtualNetworkGatewaySKUNameValues returns the possible values for the VirtualNetworkGatewaySKUName const type.
 func PossibleVirtualNetworkGatewaySKUNameValues() []VirtualNetworkGatewaySKUName {
 	return []VirtualNetworkGatewaySKUName{
 		VirtualNetworkGatewaySKUNameBasic,
@@ -2529,6 +2643,7 @@ const (
 	VirtualNetworkGatewaySKUTierVpnGw5Az         VirtualNetworkGatewaySKUTier = "VpnGw5AZ"
 )
 
+// PossibleVirtualNetworkGatewaySKUTierValues returns the possible values for the VirtualNetworkGatewaySKUTier const type.
 func PossibleVirtualNetworkGatewaySKUTierValues() []VirtualNetworkGatewaySKUTier {
 	return []VirtualNetworkGatewaySKUTier{
 		VirtualNetworkGatewaySKUTierBasic,
@@ -2563,6 +2678,7 @@ const (
 	VirtualNetworkGatewayTypeVpn          VirtualNetworkGatewayType = "Vpn"
 )
 
+// PossibleVirtualNetworkGatewayTypeValues returns the possible values for the VirtualNetworkGatewayType const type.
 func PossibleVirtualNetworkGatewayTypeValues() []VirtualNetworkGatewayType {
 	return []VirtualNetworkGatewayType{
 		VirtualNetworkGatewayTypeExpressRoute,
@@ -2583,6 +2699,7 @@ const (
 	VirtualNetworkPeeringStateInitiated    VirtualNetworkPeeringState = "Initiated"
 )
 
+// PossibleVirtualNetworkPeeringStateValues returns the possible values for the VirtualNetworkPeeringState const type.
 func PossibleVirtualNetworkPeeringStateValues() []VirtualNetworkPeeringState {
 	return []VirtualNetworkPeeringState{
 		VirtualNetworkPeeringStateConnected,
@@ -2603,6 +2720,7 @@ const (
 	VirtualWanSecurityProviderTypeNative   VirtualWanSecurityProviderType = "Native"
 )
 
+// PossibleVirtualWanSecurityProviderTypeValues returns the possible values for the VirtualWanSecurityProviderType const type.
 func PossibleVirtualWanSecurityProviderTypeValues() []VirtualWanSecurityProviderType {
 	return []VirtualWanSecurityProviderType{
 		VirtualWanSecurityProviderTypeExternal,
@@ -2623,6 +2741,7 @@ const (
 	VpnAuthenticationTypeRadius      VpnAuthenticationType = "Radius"
 )
 
+// PossibleVpnAuthenticationTypeValues returns the possible values for the VpnAuthenticationType const type.
 func PossibleVpnAuthenticationTypeValues() []VpnAuthenticationType {
 	return []VpnAuthenticationType{
 		VpnAuthenticationTypeAad,
@@ -2644,6 +2763,7 @@ const (
 	VpnClientProtocolSstp    VpnClientProtocol = "SSTP"
 )
 
+// PossibleVpnClientProtocolValues returns the possible values for the VpnClientProtocol const type.
 func PossibleVpnClientProtocolValues() []VpnClientProtocol {
 	return []VpnClientProtocol{
 		VpnClientProtocolIkeV2,
@@ -2666,6 +2786,7 @@ const (
 	VpnConnectionStatusUnknown      VpnConnectionStatus = "Unknown"
 )
 
+// PossibleVpnConnectionStatusValues returns the possible values for the VpnConnectionStatus const type.
 func PossibleVpnConnectionStatusValues() []VpnConnectionStatus {
 	return []VpnConnectionStatus{
 		VpnConnectionStatusConnected,
@@ -2688,6 +2809,7 @@ const (
 	VpnGatewayGenerationNone        VpnGatewayGeneration = "None"
 )
 
+// PossibleVpnGatewayGenerationValues returns the possible values for the VpnGatewayGeneration const type.
 func PossibleVpnGatewayGenerationValues() []VpnGatewayGeneration {
 	return []VpnGatewayGeneration{
 		VpnGatewayGenerationGeneration1,
@@ -2708,6 +2830,7 @@ const (
 	VpnGatewayTunnelingProtocolOpenVpn VpnGatewayTunnelingProtocol = "OpenVPN"
 )
 
+// PossibleVpnGatewayTunnelingProtocolValues returns the possible values for the VpnGatewayTunnelingProtocol const type.
 func PossibleVpnGatewayTunnelingProtocolValues() []VpnGatewayTunnelingProtocol {
 	return []VpnGatewayTunnelingProtocol{
 		VpnGatewayTunnelingProtocolIkeV2,
@@ -2727,6 +2850,7 @@ const (
 	VpnTypeRouteBased  VpnType = "RouteBased"
 )
 
+// PossibleVpnTypeValues returns the possible values for the VpnType const type.
 func PossibleVpnTypeValues() []VpnType {
 	return []VpnType{
 		VpnTypePolicyBased,
@@ -2747,6 +2871,7 @@ const (
 	WebApplicationFirewallActionLog   WebApplicationFirewallAction = "Log"
 )
 
+// PossibleWebApplicationFirewallActionValues returns the possible values for the WebApplicationFirewallAction const type.
 func PossibleWebApplicationFirewallActionValues() []WebApplicationFirewallAction {
 	return []WebApplicationFirewallAction{
 		WebApplicationFirewallActionAllow,
@@ -2767,6 +2892,7 @@ const (
 	WebApplicationFirewallEnabledStateEnabled  WebApplicationFirewallEnabledState = "Enabled"
 )
 
+// PossibleWebApplicationFirewallEnabledStateValues returns the possible values for the WebApplicationFirewallEnabledState const type.
 func PossibleWebApplicationFirewallEnabledStateValues() []WebApplicationFirewallEnabledState {
 	return []WebApplicationFirewallEnabledState{
 		WebApplicationFirewallEnabledStateDisabled,
@@ -2792,6 +2918,7 @@ const (
 	WebApplicationFirewallMatchVariableRequestURI     WebApplicationFirewallMatchVariable = "RequestUri"
 )
 
+// PossibleWebApplicationFirewallMatchVariableValues returns the possible values for the WebApplicationFirewallMatchVariable const type.
 func PossibleWebApplicationFirewallMatchVariableValues() []WebApplicationFirewallMatchVariable {
 	return []WebApplicationFirewallMatchVariable{
 		WebApplicationFirewallMatchVariablePostArgs,
@@ -2817,6 +2944,7 @@ const (
 	WebApplicationFirewallModePrevention WebApplicationFirewallMode = "Prevention"
 )
 
+// PossibleWebApplicationFirewallModeValues returns the possible values for the WebApplicationFirewallMode const type.
 func PossibleWebApplicationFirewallModeValues() []WebApplicationFirewallMode {
 	return []WebApplicationFirewallMode{
 		WebApplicationFirewallModeDetection,
@@ -2845,6 +2973,7 @@ const (
 	WebApplicationFirewallOperatorRegex              WebApplicationFirewallOperator = "Regex"
 )
 
+// PossibleWebApplicationFirewallOperatorValues returns the possible values for the WebApplicationFirewallOperator const type.
 func PossibleWebApplicationFirewallOperatorValues() []WebApplicationFirewallOperator {
 	return []WebApplicationFirewallOperator{
 		WebApplicationFirewallOperatorBeginsWith,
@@ -2877,6 +3006,7 @@ const (
 	WebApplicationFirewallPolicyResourceStateEnabling  WebApplicationFirewallPolicyResourceState = "Enabling"
 )
 
+// PossibleWebApplicationFirewallPolicyResourceStateValues returns the possible values for the WebApplicationFirewallPolicyResourceState const type.
 func PossibleWebApplicationFirewallPolicyResourceStateValues() []WebApplicationFirewallPolicyResourceState {
 	return []WebApplicationFirewallPolicyResourceState{
 		WebApplicationFirewallPolicyResourceStateCreating,
@@ -2900,6 +3030,7 @@ const (
 	WebApplicationFirewallRuleTypeMatchRule WebApplicationFirewallRuleType = "MatchRule"
 )
 
+// PossibleWebApplicationFirewallRuleTypeValues returns the possible values for the WebApplicationFirewallRuleType const type.
 func PossibleWebApplicationFirewallRuleTypeValues() []WebApplicationFirewallRuleType {
 	return []WebApplicationFirewallRuleType{
 		WebApplicationFirewallRuleTypeInvalid,
@@ -2923,6 +3054,7 @@ const (
 	WebApplicationFirewallTransformURLEncode        WebApplicationFirewallTransform = "UrlEncode"
 )
 
+// PossibleWebApplicationFirewallTransformValues returns the possible values for the WebApplicationFirewallTransform const type.
 func PossibleWebApplicationFirewallTransformValues() []WebApplicationFirewallTransform {
 	return []WebApplicationFirewallTransform{
 		WebApplicationFirewallTransformHTMLEntityDecode,

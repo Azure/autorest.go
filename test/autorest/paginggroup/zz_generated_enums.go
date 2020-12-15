@@ -24,6 +24,7 @@ const (
 	OperationResultStatusUpdating  OperationResultStatus = "Updating"
 )
 
+// PossibleOperationResultStatusValues returns the possible values for the OperationResultStatus const type.
 func PossibleOperationResultStatusValues() []OperationResultStatus {
 	return []OperationResultStatus{
 		OperationResultStatusAccepted,

@@ -24,6 +24,7 @@ const (
 	OperationResultStatusUpdating  OperationResultStatus = "Updating"
 )
 
+// PossibleOperationResultStatusValues returns the possible values for the OperationResultStatus const type.
 func PossibleOperationResultStatusValues() []OperationResultStatus {
 	return []OperationResultStatus{
 		OperationResultStatusAccepted,
@@ -60,6 +61,7 @@ const (
 	ProductPropertiesProvisioningStateValuesUpdating  ProductPropertiesProvisioningStateValues = "Updating"
 )
 
+// PossibleProductPropertiesProvisioningStateValuesValues returns the possible values for the ProductPropertiesProvisioningStateValues const type.
 func PossibleProductPropertiesProvisioningStateValuesValues() []ProductPropertiesProvisioningStateValues {
 	return []ProductPropertiesProvisioningStateValues{
 		ProductPropertiesProvisioningStateValuesAccepted,
@@ -96,6 +98,7 @@ const (
 	SubProductPropertiesProvisioningStateValuesUpdating  SubProductPropertiesProvisioningStateValues = "Updating"
 )
 
+// PossibleSubProductPropertiesProvisioningStateValuesValues returns the possible values for the SubProductPropertiesProvisioningStateValues const type.
 func PossibleSubProductPropertiesProvisioningStateValuesValues() []SubProductPropertiesProvisioningStateValues {
 	return []SubProductPropertiesProvisioningStateValues{
 		SubProductPropertiesProvisioningStateValuesAccepted,

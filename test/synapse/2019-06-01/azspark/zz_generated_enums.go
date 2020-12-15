@@ -19,6 +19,7 @@ const (
 	PluginCurrentStateSubmission          PluginCurrentState = "Submission"
 )
 
+// PossiblePluginCurrentStateValues returns the possible values for the PluginCurrentState const type.
 func PossiblePluginCurrentStateValues() []PluginCurrentState {
 	return []PluginCurrentState{
 		PluginCurrentStateCleanup,
@@ -43,6 +44,7 @@ const (
 	SchedulerCurrentStateScheduled SchedulerCurrentState = "Scheduled"
 )
 
+// PossibleSchedulerCurrentStateValues returns the possible values for the SchedulerCurrentState const type.
 func PossibleSchedulerCurrentStateValues() []SchedulerCurrentState {
 	return []SchedulerCurrentState{
 		SchedulerCurrentStateEnded,
@@ -65,6 +67,7 @@ const (
 	SparkBatchJobResultTypeUncertain SparkBatchJobResultType = "Uncertain"
 )
 
+// PossibleSparkBatchJobResultTypeValues returns the possible values for the SparkBatchJobResultType const type.
 func PossibleSparkBatchJobResultTypeValues() []SparkBatchJobResultType {
 	return []SparkBatchJobResultType{
 		SparkBatchJobResultTypeCancelled,
@@ -87,6 +90,7 @@ const (
 	SparkErrorSourceUser       SparkErrorSource = "User"
 )
 
+// PossibleSparkErrorSourceValues returns the possible values for the SparkErrorSource const type.
 func PossibleSparkErrorSourceValues() []SparkErrorSource {
 	return []SparkErrorSource{
 		SparkErrorSourceDependency,
@@ -108,6 +112,7 @@ const (
 	SparkJobTypeSparkSession SparkJobType = "SparkSession"
 )
 
+// PossibleSparkJobTypeValues returns the possible values for the SparkJobType const type.
 func PossibleSparkJobTypeValues() []SparkJobType {
 	return []SparkJobType{
 		SparkJobTypeSparkBatch,
@@ -128,6 +133,7 @@ const (
 	SparkSessionResultTypeUncertain SparkSessionResultType = "Uncertain"
 )
 
+// PossibleSparkSessionResultTypeValues returns the possible values for the SparkSessionResultType const type.
 func PossibleSparkSessionResultTypeValues() []SparkSessionResultType {
 	return []SparkSessionResultType{
 		SparkSessionResultTypeCancelled,
@@ -150,6 +156,7 @@ const (
 	SparkStatementLanguageTypeSpark       SparkStatementLanguageType = "spark"
 )
 
+// PossibleSparkStatementLanguageTypeValues returns the possible values for the SparkStatementLanguageType const type.
 func PossibleSparkStatementLanguageTypeValues() []SparkStatementLanguageType {
 	return []SparkStatementLanguageType{
 		SparkStatementLanguageTypeDotnetspark,
