@@ -15,6 +15,7 @@ const (
 	Enum0Foo3 Enum0 = "foo3"
 )
 
+// PossibleEnum0Values returns the possible values for the Enum0 const type.
 func PossibleEnum0Values() []Enum0 {
 	return []Enum0{
 		Enum0Foo1,
@@ -35,6 +36,7 @@ const (
 	Enum1Foo3 Enum1 = "foo3"
 )
 
+// PossibleEnum1Values returns the possible values for the Enum1 const type.
 func PossibleEnum1Values() []Enum1 {
 	return []Enum1{
 		Enum1Foo1,
@@ -55,6 +57,7 @@ const (
 	FooEnumFoo3 FooEnum = "foo3"
 )
 
+// PossibleFooEnumValues returns the possible values for the FooEnum const type.
 func PossibleFooEnumValues() []FooEnum {
 	return []FooEnum{
 		FooEnumFoo1,

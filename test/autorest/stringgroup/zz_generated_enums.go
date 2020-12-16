@@ -15,6 +15,7 @@ const (
 	ColorsBlueColor  Colors = "blue_color"
 )
 
+// PossibleColorsValues returns the possible values for the Colors const type.
 func PossibleColorsValues() []Colors {
 	return []Colors{
 		ColorsRedColor,

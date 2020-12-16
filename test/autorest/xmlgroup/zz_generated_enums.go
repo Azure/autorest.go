@@ -22,6 +22,7 @@ const (
 	AccessTierP6      AccessTier = "P6"
 )
 
+// PossibleAccessTierValues returns the possible values for the AccessTier const type.
 func PossibleAccessTierValues() []AccessTier {
 	return []AccessTier{
 		AccessTierArchive,
@@ -48,6 +49,7 @@ const (
 	ArchiveStatusRehydratePendingToHot  ArchiveStatus = "rehydrate-pending-to-hot"
 )
 
+// PossibleArchiveStatusValues returns the possible values for the ArchiveStatus const type.
 func PossibleArchiveStatusValues() []ArchiveStatus {
 	return []ArchiveStatus{
 		ArchiveStatusRehydratePendingToCool,
@@ -67,6 +69,7 @@ const (
 	BlobTypeAppendBlob BlobType = "AppendBlob"
 )
 
+// PossibleBlobTypeValues returns the possible values for the BlobType const type.
 func PossibleBlobTypeValues() []BlobType {
 	return []BlobType{
 		BlobTypeBlockBlob,
@@ -88,6 +91,7 @@ const (
 	CopyStatusTypeFailed  CopyStatusType = "failed"
 )
 
+// PossibleCopyStatusTypeValues returns the possible values for the CopyStatusType const type.
 func PossibleCopyStatusTypeValues() []CopyStatusType {
 	return []CopyStatusType{
 		CopyStatusTypePending,
@@ -108,6 +112,7 @@ const (
 	LeaseDurationTypeFixed    LeaseDurationType = "fixed"
 )
 
+// PossibleLeaseDurationTypeValues returns the possible values for the LeaseDurationType const type.
 func PossibleLeaseDurationTypeValues() []LeaseDurationType {
 	return []LeaseDurationType{
 		LeaseDurationTypeInfinite,
@@ -129,6 +134,7 @@ const (
 	LeaseStateTypeBroken    LeaseStateType = "broken"
 )
 
+// PossibleLeaseStateTypeValues returns the possible values for the LeaseStateType const type.
 func PossibleLeaseStateTypeValues() []LeaseStateType {
 	return []LeaseStateType{
 		LeaseStateTypeAvailable,
@@ -150,6 +156,7 @@ const (
 	LeaseStatusTypeUnlocked LeaseStatusType = "unlocked"
 )
 
+// PossibleLeaseStatusTypeValues returns the possible values for the LeaseStatusType const type.
 func PossibleLeaseStatusTypeValues() []LeaseStatusType {
 	return []LeaseStatusType{
 		LeaseStatusTypeLocked,
@@ -168,6 +175,7 @@ const (
 	PublicAccessTypeContainer PublicAccessType = "container"
 )
 
+// PossiblePublicAccessTypeValues returns the possible values for the PublicAccessType const type.
 func PossiblePublicAccessTypeValues() []PublicAccessType {
 	return []PublicAccessType{
 		PublicAccessTypeBlob,

@@ -17,6 +17,7 @@ const (
 	AvroCompressionCodecXz      AvroCompressionCodec = "xz"
 )
 
+// PossibleAvroCompressionCodecValues returns the possible values for the AvroCompressionCodec const type.
 func PossibleAvroCompressionCodecValues() []AvroCompressionCodec {
 	return []AvroCompressionCodec{
 		AvroCompressionCodecBzip2,
@@ -44,6 +45,7 @@ const (
 	AzureFunctionActivityMethodTrace   AzureFunctionActivityMethod = "TRACE"
 )
 
+// PossibleAzureFunctionActivityMethodValues returns the possible values for the AzureFunctionActivityMethod const type.
 func PossibleAzureFunctionActivityMethodValues() []AzureFunctionActivityMethod {
 	return []AzureFunctionActivityMethod{
 		AzureFunctionActivityMethodDelete,
@@ -68,6 +70,7 @@ const (
 	AzureSearchIndexWriteBehaviorTypeUpload AzureSearchIndexWriteBehaviorType = "Upload"
 )
 
+// PossibleAzureSearchIndexWriteBehaviorTypeValues returns the possible values for the AzureSearchIndexWriteBehaviorType const type.
 func PossibleAzureSearchIndexWriteBehaviorTypeValues() []AzureSearchIndexWriteBehaviorType {
 	return []AzureSearchIndexWriteBehaviorType{
 		AzureSearchIndexWriteBehaviorTypeMerge,
@@ -86,6 +89,7 @@ const (
 	BigDataPoolReferenceTypeBigDataPoolReference BigDataPoolReferenceType = "BigDataPoolReference"
 )
 
+// PossibleBigDataPoolReferenceTypeValues returns the possible values for the BigDataPoolReferenceType const type.
 func PossibleBigDataPoolReferenceTypeValues() []BigDataPoolReferenceType {
 	return []BigDataPoolReferenceType{
 		BigDataPoolReferenceTypeBigDataPoolReference,
@@ -103,6 +107,7 @@ const (
 	BlobEventTypeMicrosoftStorageBlobDeleted BlobEventType = "Microsoft.Storage.BlobDeleted"
 )
 
+// PossibleBlobEventTypeValues returns the possible values for the BlobEventType const type.
 func PossibleBlobEventTypeValues() []BlobEventType {
 	return []BlobEventType{
 		BlobEventTypeMicrosoftStorageBlobCreated,
@@ -132,6 +137,7 @@ const (
 	CassandraSourceReadConsistencyLevelsTwo         CassandraSourceReadConsistencyLevels = "TWO"
 )
 
+// PossibleCassandraSourceReadConsistencyLevelsValues returns the possible values for the CassandraSourceReadConsistencyLevels const type.
 func PossibleCassandraSourceReadConsistencyLevelsValues() []CassandraSourceReadConsistencyLevels {
 	return []CassandraSourceReadConsistencyLevels{
 		CassandraSourceReadConsistencyLevelsAll,
@@ -161,6 +167,7 @@ const (
 	CellOutputTypeStream        CellOutputType = "stream"
 )
 
+// PossibleCellOutputTypeValues returns the possible values for the CellOutputType const type.
 func PossibleCellOutputTypeValues() []CellOutputType {
 	return []CellOutputType{
 		CellOutputTypeDisplayData,
@@ -183,6 +190,7 @@ const (
 	CopyBehaviorTypePreserveHierarchy CopyBehaviorType = "PreserveHierarchy"
 )
 
+// PossibleCopyBehaviorTypeValues returns the possible values for the CopyBehaviorType const type.
 func PossibleCopyBehaviorTypeValues() []CopyBehaviorType {
 	return []CopyBehaviorType{
 		CopyBehaviorTypeFlattenHierarchy,
@@ -204,6 +212,7 @@ const (
 	DataFlowComputeTypeMemoryOptimized  DataFlowComputeType = "MemoryOptimized"
 )
 
+// PossibleDataFlowComputeTypeValues returns the possible values for the DataFlowComputeType const type.
 func PossibleDataFlowComputeTypeValues() []DataFlowComputeType {
 	return []DataFlowComputeType{
 		DataFlowComputeTypeComputeOptimized,
@@ -223,6 +232,7 @@ const (
 	DataFlowReferenceTypeDataFlowReference DataFlowReferenceType = "DataFlowReference"
 )
 
+// PossibleDataFlowReferenceTypeValues returns the possible values for the DataFlowReferenceType const type.
 func PossibleDataFlowReferenceTypeValues() []DataFlowReferenceType {
 	return []DataFlowReferenceType{
 		DataFlowReferenceTypeDataFlowReference,
@@ -241,6 +251,7 @@ const (
 	DatasetCompressionLevelOptimal DatasetCompressionLevel = "Optimal"
 )
 
+// PossibleDatasetCompressionLevelValues returns the possible values for the DatasetCompressionLevel const type.
 func PossibleDatasetCompressionLevelValues() []DatasetCompressionLevel {
 	return []DatasetCompressionLevel{
 		DatasetCompressionLevelFastest,
@@ -259,6 +270,7 @@ const (
 	DatasetReferenceTypeDatasetReference DatasetReferenceType = "DatasetReference"
 )
 
+// PossibleDatasetReferenceTypeValues returns the possible values for the DatasetReferenceType const type.
 func PossibleDatasetReferenceTypeValues() []DatasetReferenceType {
 	return []DatasetReferenceType{
 		DatasetReferenceTypeDatasetReference,
@@ -281,6 +293,7 @@ const (
 	DayOfWeekSaturday  DayOfWeek = "Saturday"
 )
 
+// PossibleDayOfWeekValues returns the possible values for the DayOfWeek const type.
 func PossibleDayOfWeekValues() []DayOfWeek {
 	return []DayOfWeek{
 		DayOfWeekSunday,
@@ -304,6 +317,7 @@ const (
 	Db2AuthenticationTypeBasic Db2AuthenticationType = "Basic"
 )
 
+// PossibleDb2AuthenticationTypeValues returns the possible values for the Db2AuthenticationType const type.
 func PossibleDb2AuthenticationTypeValues() []Db2AuthenticationType {
 	return []Db2AuthenticationType{
 		Db2AuthenticationTypeBasic,
@@ -325,6 +339,7 @@ const (
 	DelimitedTextCompressionCodecZipDeflate DelimitedTextCompressionCodec = "zipDeflate"
 )
 
+// PossibleDelimitedTextCompressionCodecValues returns the possible values for the DelimitedTextCompressionCodec const type.
 func PossibleDelimitedTextCompressionCodecValues() []DelimitedTextCompressionCodec {
 	return []DelimitedTextCompressionCodec{
 		DelimitedTextCompressionCodecBzip2,
@@ -349,6 +364,7 @@ const (
 	DependencyConditionSucceeded DependencyCondition = "Succeeded"
 )
 
+// PossibleDependencyConditionValues returns the possible values for the DependencyCondition const type.
 func PossibleDependencyConditionValues() []DependencyCondition {
 	return []DependencyCondition{
 		DependencyConditionCompleted,
@@ -373,6 +389,7 @@ const (
 	DynamicsAuthenticationTypeOffice365           DynamicsAuthenticationType = "Office365"
 )
 
+// PossibleDynamicsAuthenticationTypeValues returns the possible values for the DynamicsAuthenticationType const type.
 func PossibleDynamicsAuthenticationTypeValues() []DynamicsAuthenticationType {
 	return []DynamicsAuthenticationType{
 		DynamicsAuthenticationTypeAadServicePrincipal,
@@ -394,6 +411,7 @@ const (
 	DynamicsDeploymentTypeOnline            DynamicsDeploymentType = "Online"
 )
 
+// PossibleDynamicsDeploymentTypeValues returns the possible values for the DynamicsDeploymentType const type.
 func PossibleDynamicsDeploymentTypeValues() []DynamicsDeploymentType {
 	return []DynamicsDeploymentType{
 		DynamicsDeploymentTypeOnPremisesWithIfd,
@@ -415,6 +433,7 @@ const (
 	DynamicsServicePrincipalCredentialTypeServicePrincipalKey  DynamicsServicePrincipalCredentialType = "ServicePrincipalKey"
 )
 
+// PossibleDynamicsServicePrincipalCredentialTypeValues returns the possible values for the DynamicsServicePrincipalCredentialType const type.
 func PossibleDynamicsServicePrincipalCredentialTypeValues() []DynamicsServicePrincipalCredentialType {
 	return []DynamicsServicePrincipalCredentialType{
 		DynamicsServicePrincipalCredentialTypeServicePrincipalCert,
@@ -433,6 +452,7 @@ const (
 	DynamicsSinkWriteBehaviorUpsert DynamicsSinkWriteBehavior = "Upsert"
 )
 
+// PossibleDynamicsSinkWriteBehaviorValues returns the possible values for the DynamicsSinkWriteBehavior const type.
 func PossibleDynamicsSinkWriteBehaviorValues() []DynamicsSinkWriteBehavior {
 	return []DynamicsSinkWriteBehavior{
 		DynamicsSinkWriteBehaviorUpsert,
@@ -454,6 +474,7 @@ const (
 	EventSubscriptionStatusUnknown        EventSubscriptionStatus = "Unknown"
 )
 
+// PossibleEventSubscriptionStatusValues returns the possible values for the EventSubscriptionStatus const type.
 func PossibleEventSubscriptionStatusValues() []EventSubscriptionStatus {
 	return []EventSubscriptionStatus{
 		EventSubscriptionStatusDeprovisioning,
@@ -475,6 +496,7 @@ const (
 	ExpressionTypeExpression ExpressionType = "Expression"
 )
 
+// PossibleExpressionTypeValues returns the possible values for the ExpressionType const type.
 func PossibleExpressionTypeValues() []ExpressionType {
 	return []ExpressionType{
 		ExpressionTypeExpression,
@@ -493,6 +515,7 @@ const (
 	FtpAuthenticationTypeBasic     FtpAuthenticationType = "Basic"
 )
 
+// PossibleFtpAuthenticationTypeValues returns the possible values for the FtpAuthenticationType const type.
 func PossibleFtpAuthenticationTypeValues() []FtpAuthenticationType {
 	return []FtpAuthenticationType{
 		FtpAuthenticationTypeAnonymous,
@@ -513,6 +536,7 @@ const (
 	GoogleAdWordsAuthenticationTypeUserAuthentication    GoogleAdWordsAuthenticationType = "UserAuthentication"
 )
 
+// PossibleGoogleAdWordsAuthenticationTypeValues returns the possible values for the GoogleAdWordsAuthenticationType const type.
 func PossibleGoogleAdWordsAuthenticationTypeValues() []GoogleAdWordsAuthenticationType {
 	return []GoogleAdWordsAuthenticationType{
 		GoogleAdWordsAuthenticationTypeServiceAuthentication,
@@ -533,6 +557,7 @@ const (
 	GoogleBigQueryAuthenticationTypeUserAuthentication    GoogleBigQueryAuthenticationType = "UserAuthentication"
 )
 
+// PossibleGoogleBigQueryAuthenticationTypeValues returns the possible values for the GoogleBigQueryAuthenticationType const type.
 func PossibleGoogleBigQueryAuthenticationTypeValues() []GoogleBigQueryAuthenticationType {
 	return []GoogleBigQueryAuthenticationType{
 		GoogleBigQueryAuthenticationTypeServiceAuthentication,
@@ -552,6 +577,7 @@ const (
 	HBaseAuthenticationTypeBasic     HBaseAuthenticationType = "Basic"
 )
 
+// PossibleHBaseAuthenticationTypeValues returns the possible values for the HBaseAuthenticationType const type.
 func PossibleHBaseAuthenticationTypeValues() []HBaseAuthenticationType {
 	return []HBaseAuthenticationType{
 		HBaseAuthenticationTypeAnonymous,
@@ -572,6 +598,7 @@ const (
 	HDInsightActivityDebugInfoOptionNone    HDInsightActivityDebugInfoOption = "None"
 )
 
+// PossibleHDInsightActivityDebugInfoOptionValues returns the possible values for the HDInsightActivityDebugInfoOption const type.
 func PossibleHDInsightActivityDebugInfoOptionValues() []HDInsightActivityDebugInfoOption {
 	return []HDInsightActivityDebugInfoOption{
 		HDInsightActivityDebugInfoOptionAlways,
@@ -595,6 +622,7 @@ const (
 	HTTPAuthenticationTypeWindows           HTTPAuthenticationType = "Windows"
 )
 
+// PossibleHTTPAuthenticationTypeValues returns the possible values for the HTTPAuthenticationType const type.
 func PossibleHTTPAuthenticationTypeValues() []HTTPAuthenticationType {
 	return []HTTPAuthenticationType{
 		HTTPAuthenticationTypeAnonymous,
@@ -618,6 +646,7 @@ const (
 	HdiNodeTypesZookeeper  HdiNodeTypes = "Zookeeper"
 )
 
+// PossibleHdiNodeTypesValues returns the possible values for the HdiNodeTypes const type.
 func PossibleHdiNodeTypesValues() []HdiNodeTypes {
 	return []HdiNodeTypes{
 		HdiNodeTypesHeadnode,
@@ -640,6 +669,7 @@ const (
 	HiveAuthenticationTypeWindowsAzureHdInsightService HiveAuthenticationType = "WindowsAzureHDInsightService"
 )
 
+// PossibleHiveAuthenticationTypeValues returns the possible values for the HiveAuthenticationType const type.
 func PossibleHiveAuthenticationTypeValues() []HiveAuthenticationType {
 	return []HiveAuthenticationType{
 		HiveAuthenticationTypeAnonymous,
@@ -662,6 +692,7 @@ const (
 	HiveServerTypeHiveThriftServer HiveServerType = "HiveThriftServer"
 )
 
+// PossibleHiveServerTypeValues returns the possible values for the HiveServerType const type.
 func PossibleHiveServerTypeValues() []HiveServerType {
 	return []HiveServerType{
 		HiveServerTypeHiveServer1,
@@ -683,6 +714,7 @@ const (
 	HiveThriftTransportProtocolSasl   HiveThriftTransportProtocol = "SASL"
 )
 
+// PossibleHiveThriftTransportProtocolValues returns the possible values for the HiveThriftTransportProtocol const type.
 func PossibleHiveThriftTransportProtocolValues() []HiveThriftTransportProtocol {
 	return []HiveThriftTransportProtocol{
 		HiveThriftTransportProtocolBinary,
@@ -704,6 +736,7 @@ const (
 	ImpalaAuthenticationTypeUsernameAndPassword ImpalaAuthenticationType = "UsernameAndPassword"
 )
 
+// PossibleImpalaAuthenticationTypeValues returns the possible values for the ImpalaAuthenticationType const type.
 func PossibleImpalaAuthenticationTypeValues() []ImpalaAuthenticationType {
 	return []ImpalaAuthenticationType{
 		ImpalaAuthenticationTypeAnonymous,
@@ -724,6 +757,7 @@ const (
 	IntegrationRuntimeEditionStandard   IntegrationRuntimeEdition = "Standard"
 )
 
+// PossibleIntegrationRuntimeEditionValues returns the possible values for the IntegrationRuntimeEdition const type.
 func PossibleIntegrationRuntimeEditionValues() []IntegrationRuntimeEdition {
 	return []IntegrationRuntimeEdition{
 		IntegrationRuntimeEditionEnterprise,
@@ -743,6 +777,7 @@ const (
 	IntegrationRuntimeEntityReferenceTypeLinkedServiceReference      IntegrationRuntimeEntityReferenceType = "LinkedServiceReference"
 )
 
+// PossibleIntegrationRuntimeEntityReferenceTypeValues returns the possible values for the IntegrationRuntimeEntityReferenceType const type.
 func PossibleIntegrationRuntimeEntityReferenceTypeValues() []IntegrationRuntimeEntityReferenceType {
 	return []IntegrationRuntimeEntityReferenceType{
 		IntegrationRuntimeEntityReferenceTypeIntegrationRuntimeReference,
@@ -762,6 +797,7 @@ const (
 	IntegrationRuntimeLicenseTypeLicenseIncluded IntegrationRuntimeLicenseType = "LicenseIncluded"
 )
 
+// PossibleIntegrationRuntimeLicenseTypeValues returns the possible values for the IntegrationRuntimeLicenseType const type.
 func PossibleIntegrationRuntimeLicenseTypeValues() []IntegrationRuntimeLicenseType {
 	return []IntegrationRuntimeLicenseType{
 		IntegrationRuntimeLicenseTypeBasePrice,
@@ -780,6 +816,7 @@ const (
 	IntegrationRuntimeReferenceTypeIntegrationRuntimeReference IntegrationRuntimeReferenceType = "IntegrationRuntimeReference"
 )
 
+// PossibleIntegrationRuntimeReferenceTypeValues returns the possible values for the IntegrationRuntimeReferenceType const type.
 func PossibleIntegrationRuntimeReferenceTypeValues() []IntegrationRuntimeReferenceType {
 	return []IntegrationRuntimeReferenceType{
 		IntegrationRuntimeReferenceTypeIntegrationRuntimeReference,
@@ -800,6 +837,7 @@ const (
 	IntegrationRuntimeSsisCatalogPricingTierStandard  IntegrationRuntimeSsisCatalogPricingTier = "Standard"
 )
 
+// PossibleIntegrationRuntimeSsisCatalogPricingTierValues returns the possible values for the IntegrationRuntimeSsisCatalogPricingTier const type.
 func PossibleIntegrationRuntimeSsisCatalogPricingTierValues() []IntegrationRuntimeSsisCatalogPricingTier {
 	return []IntegrationRuntimeSsisCatalogPricingTier{
 		IntegrationRuntimeSsisCatalogPricingTierBasic,
@@ -829,6 +867,7 @@ const (
 	IntegrationRuntimeStateStopping         IntegrationRuntimeState = "Stopping"
 )
 
+// PossibleIntegrationRuntimeStateValues returns the possible values for the IntegrationRuntimeState const type.
 func PossibleIntegrationRuntimeStateValues() []IntegrationRuntimeState {
 	return []IntegrationRuntimeState{
 		IntegrationRuntimeStateAccessDenied,
@@ -856,6 +895,7 @@ const (
 	IntegrationRuntimeTypeSelfHosted IntegrationRuntimeType = "SelfHosted"
 )
 
+// PossibleIntegrationRuntimeTypeValues returns the possible values for the IntegrationRuntimeType const type.
 func PossibleIntegrationRuntimeTypeValues() []IntegrationRuntimeType {
 	return []IntegrationRuntimeType{
 		IntegrationRuntimeTypeManaged,
@@ -875,6 +915,7 @@ const (
 	JSONFormatFilePatternSetOfObjects   JSONFormatFilePattern = "setOfObjects"
 )
 
+// PossibleJSONFormatFilePatternValues returns the possible values for the JSONFormatFilePattern const type.
 func PossibleJSONFormatFilePatternValues() []JSONFormatFilePattern {
 	return []JSONFormatFilePattern{
 		JSONFormatFilePatternArrayOfObjects,
@@ -895,6 +936,7 @@ const (
 	JSONWriteFilePatternSetOfObjects   JSONWriteFilePattern = "setOfObjects"
 )
 
+// PossibleJSONWriteFilePatternValues returns the possible values for the JSONWriteFilePattern const type.
 func PossibleJSONWriteFilePatternValues() []JSONWriteFilePattern {
 	return []JSONWriteFilePattern{
 		JSONWriteFilePatternArrayOfObjects,
@@ -914,6 +956,7 @@ const (
 	MongoDbAuthenticationTypeBasic     MongoDbAuthenticationType = "Basic"
 )
 
+// PossibleMongoDbAuthenticationTypeValues returns the possible values for the MongoDbAuthenticationType const type.
 func PossibleMongoDbAuthenticationTypeValues() []MongoDbAuthenticationType {
 	return []MongoDbAuthenticationType{
 		MongoDbAuthenticationTypeAnonymous,
@@ -934,6 +977,7 @@ const (
 	NetezzaPartitionOptionNone         NetezzaPartitionOption = "None"
 )
 
+// PossibleNetezzaPartitionOptionValues returns the possible values for the NetezzaPartitionOption const type.
 func PossibleNetezzaPartitionOptionValues() []NetezzaPartitionOption {
 	return []NetezzaPartitionOption{
 		NetezzaPartitionOptionDataSlice,
@@ -959,6 +1003,7 @@ const (
 	NodeSizeXxxLarge NodeSize = "XXXLarge"
 )
 
+// PossibleNodeSizeValues returns the possible values for the NodeSize const type.
 func PossibleNodeSizeValues() []NodeSize {
 	return []NodeSize{
 		NodeSizeLarge,
@@ -983,6 +1028,7 @@ const (
 	NodeSizeFamilyNone            NodeSizeFamily = "None"
 )
 
+// PossibleNodeSizeFamilyValues returns the possible values for the NodeSizeFamily const type.
 func PossibleNodeSizeFamilyValues() []NodeSizeFamily {
 	return []NodeSizeFamily{
 		NodeSizeFamilyMemoryOptimized,
@@ -1001,6 +1047,7 @@ const (
 	NotebookReferenceTypeNotebookReference NotebookReferenceType = "NotebookReference"
 )
 
+// PossibleNotebookReferenceTypeValues returns the possible values for the NotebookReferenceType const type.
 func PossibleNotebookReferenceTypeValues() []NotebookReferenceType {
 	return []NotebookReferenceType{
 		NotebookReferenceTypeNotebookReference,
@@ -1019,6 +1066,7 @@ const (
 	ODataAadServicePrincipalCredentialTypeServicePrincipalKey  ODataAadServicePrincipalCredentialType = "ServicePrincipalKey"
 )
 
+// PossibleODataAadServicePrincipalCredentialTypeValues returns the possible values for the ODataAadServicePrincipalCredentialType const type.
 func PossibleODataAadServicePrincipalCredentialTypeValues() []ODataAadServicePrincipalCredentialType {
 	return []ODataAadServicePrincipalCredentialType{
 		ODataAadServicePrincipalCredentialTypeServicePrincipalCert,
@@ -1041,6 +1089,7 @@ const (
 	ODataAuthenticationTypeWindows                ODataAuthenticationType = "Windows"
 )
 
+// PossibleODataAuthenticationTypeValues returns the possible values for the ODataAuthenticationType const type.
 func PossibleODataAuthenticationTypeValues() []ODataAuthenticationType {
 	return []ODataAuthenticationType{
 		ODataAuthenticationTypeAadServicePrincipal,
@@ -1064,6 +1113,7 @@ const (
 	OraclePartitionOptionPhysicalPartitionsOfTable OraclePartitionOption = "PhysicalPartitionsOfTable"
 )
 
+// PossibleOraclePartitionOptionValues returns the possible values for the OraclePartitionOption const type.
 func PossibleOraclePartitionOptionValues() []OraclePartitionOption {
 	return []OraclePartitionOption{
 		OraclePartitionOptionDynamicRange,
@@ -1084,6 +1134,7 @@ const (
 	OrcCompressionCodecZlib   OrcCompressionCodec = "zlib"
 )
 
+// PossibleOrcCompressionCodecValues returns the possible values for the OrcCompressionCodec const type.
 func PossibleOrcCompressionCodecValues() []OrcCompressionCodec {
 	return []OrcCompressionCodec{
 		OrcCompressionCodecNone,
@@ -1109,6 +1160,7 @@ const (
 	ParameterTypeString       ParameterType = "String"
 )
 
+// PossibleParameterTypeValues returns the possible values for the ParameterType const type.
 func PossibleParameterTypeValues() []ParameterType {
 	return []ParameterType{
 		ParameterTypeArray,
@@ -1134,6 +1186,7 @@ const (
 	ParquetCompressionCodecSnappy ParquetCompressionCodec = "snappy"
 )
 
+// PossibleParquetCompressionCodecValues returns the possible values for the ParquetCompressionCodec const type.
 func PossibleParquetCompressionCodecValues() []ParquetCompressionCodec {
 	return []ParquetCompressionCodec{
 		ParquetCompressionCodecGzip,
@@ -1156,6 +1209,7 @@ const (
 	PhoenixAuthenticationTypeWindowsAzureHdInsightService PhoenixAuthenticationType = "WindowsAzureHDInsightService"
 )
 
+// PossiblePhoenixAuthenticationTypeValues returns the possible values for the PhoenixAuthenticationType const type.
 func PossiblePhoenixAuthenticationTypeValues() []PhoenixAuthenticationType {
 	return []PhoenixAuthenticationType{
 		PhoenixAuthenticationTypeAnonymous,
@@ -1175,6 +1229,7 @@ const (
 	PipelineReferenceTypePipelineReference PipelineReferenceType = "PipelineReference"
 )
 
+// PossiblePipelineReferenceTypeValues returns the possible values for the PipelineReferenceType const type.
 func PossiblePipelineReferenceTypeValues() []PipelineReferenceType {
 	return []PipelineReferenceType{
 		PipelineReferenceTypePipelineReference,
@@ -1197,6 +1252,7 @@ const (
 	PluginCurrentStateSubmission          PluginCurrentState = "Submission"
 )
 
+// PossiblePluginCurrentStateValues returns the possible values for the PluginCurrentState const type.
 func PossiblePluginCurrentStateValues() []PluginCurrentState {
 	return []PluginCurrentState{
 		PluginCurrentStateCleanup,
@@ -1221,6 +1277,7 @@ const (
 	PolybaseSettingsRejectTypeValue      PolybaseSettingsRejectType = "value"
 )
 
+// PossiblePolybaseSettingsRejectTypeValues returns the possible values for the PolybaseSettingsRejectType const type.
 func PossiblePolybaseSettingsRejectTypeValues() []PolybaseSettingsRejectType {
 	return []PolybaseSettingsRejectType{
 		PolybaseSettingsRejectTypePercentage,
@@ -1240,6 +1297,7 @@ const (
 	PrestoAuthenticationTypeLdap      PrestoAuthenticationType = "LDAP"
 )
 
+// PossiblePrestoAuthenticationTypeValues returns the possible values for the PrestoAuthenticationType const type.
 func PossiblePrestoAuthenticationTypeValues() []PrestoAuthenticationType {
 	return []PrestoAuthenticationType{
 		PrestoAuthenticationTypeAnonymous,
@@ -1264,6 +1322,7 @@ const (
 	RecurrenceFrequencyYear         RecurrenceFrequency = "Year"
 )
 
+// PossibleRecurrenceFrequencyValues returns the possible values for the RecurrenceFrequency const type.
 func PossibleRecurrenceFrequencyValues() []RecurrenceFrequency {
 	return []RecurrenceFrequency{
 		RecurrenceFrequencyDay,
@@ -1288,6 +1347,7 @@ const (
 	ResourceIDentityTypeSystemAssigned ResourceIDentityType = "SystemAssigned"
 )
 
+// PossibleResourceIDentityTypeValues returns the possible values for the ResourceIDentityType const type.
 func PossibleResourceIDentityTypeValues() []ResourceIDentityType {
 	return []ResourceIDentityType{
 		ResourceIDentityTypeNone,
@@ -1309,6 +1369,7 @@ const (
 	RestServiceAuthenticationTypeManagedServiceIDentity RestServiceAuthenticationType = "ManagedServiceIdentity"
 )
 
+// PossibleRestServiceAuthenticationTypeValues returns the possible values for the RestServiceAuthenticationType const type.
 func PossibleRestServiceAuthenticationTypeValues() []RestServiceAuthenticationType {
 	return []RestServiceAuthenticationType{
 		RestServiceAuthenticationTypeAadServicePrincipal,
@@ -1342,6 +1403,7 @@ const (
 	RunQueryFilterOperandTriggerRunTimestamp RunQueryFilterOperand = "TriggerRunTimestamp"
 )
 
+// PossibleRunQueryFilterOperandValues returns the possible values for the RunQueryFilterOperand const type.
 func PossibleRunQueryFilterOperandValues() []RunQueryFilterOperand {
 	return []RunQueryFilterOperand{
 		RunQueryFilterOperandActivityName,
@@ -1373,6 +1435,7 @@ const (
 	RunQueryFilterOperatorNotIn     RunQueryFilterOperator = "NotIn"
 )
 
+// PossibleRunQueryFilterOperatorValues returns the possible values for the RunQueryFilterOperator const type.
 func PossibleRunQueryFilterOperatorValues() []RunQueryFilterOperator {
 	return []RunQueryFilterOperator{
 		RunQueryFilterOperatorEquals,
@@ -1394,6 +1457,7 @@ const (
 	RunQueryOrderDesc RunQueryOrder = "DESC"
 )
 
+// PossibleRunQueryOrderValues returns the possible values for the RunQueryOrder const type.
 func PossibleRunQueryOrderValues() []RunQueryOrder {
 	return []RunQueryOrder{
 		RunQueryOrderAsc,
@@ -1422,6 +1486,7 @@ const (
 	RunQueryOrderByFieldTriggerRunTimestamp RunQueryOrderByField = "TriggerRunTimestamp"
 )
 
+// PossibleRunQueryOrderByFieldValues returns the possible values for the RunQueryOrderByField const type.
 func PossibleRunQueryOrderByFieldValues() []RunQueryOrderByField {
 	return []RunQueryOrderByField{
 		RunQueryOrderByFieldActivityName,
@@ -1448,6 +1513,7 @@ const (
 	SQLConnectionTypeSQLPool     SQLConnectionType = "SqlPool"
 )
 
+// PossibleSQLConnectionTypeValues returns the possible values for the SQLConnectionType const type.
 func PossibleSQLConnectionTypeValues() []SQLConnectionType {
 	return []SQLConnectionType{
 		SQLConnectionTypeSQLOnDemand,
@@ -1466,6 +1532,7 @@ const (
 	SQLPoolReferenceTypeSQLPoolReference SQLPoolReferenceType = "SqlPoolReference"
 )
 
+// PossibleSQLPoolReferenceTypeValues returns the possible values for the SQLPoolReferenceType const type.
 func PossibleSQLPoolReferenceTypeValues() []SQLPoolReferenceType {
 	return []SQLPoolReferenceType{
 		SQLPoolReferenceTypeSQLPoolReference,
@@ -1483,6 +1550,7 @@ const (
 	SQLScriptTypeSQLQuery SQLScriptType = "SqlQuery"
 )
 
+// PossibleSQLScriptTypeValues returns the possible values for the SQLScriptType const type.
 func PossibleSQLScriptTypeValues() []SQLScriptType {
 	return []SQLScriptType{
 		SQLScriptTypeSQLQuery,
@@ -1501,6 +1569,7 @@ const (
 	SalesforceSinkWriteBehaviorUpsert SalesforceSinkWriteBehavior = "Upsert"
 )
 
+// PossibleSalesforceSinkWriteBehaviorValues returns the possible values for the SalesforceSinkWriteBehavior const type.
 func PossibleSalesforceSinkWriteBehaviorValues() []SalesforceSinkWriteBehavior {
 	return []SalesforceSinkWriteBehavior{
 		SalesforceSinkWriteBehaviorInsert,
@@ -1520,6 +1589,7 @@ const (
 	SalesforceSourceReadBehaviorQueryAll SalesforceSourceReadBehavior = "QueryAll"
 )
 
+// PossibleSalesforceSourceReadBehaviorValues returns the possible values for the SalesforceSourceReadBehavior const type.
 func PossibleSalesforceSourceReadBehaviorValues() []SalesforceSourceReadBehavior {
 	return []SalesforceSourceReadBehavior{
 		SalesforceSourceReadBehaviorQuery,
@@ -1539,6 +1609,7 @@ const (
 	SapCloudForCustomerSinkWriteBehaviorUpdate SapCloudForCustomerSinkWriteBehavior = "Update"
 )
 
+// PossibleSapCloudForCustomerSinkWriteBehaviorValues returns the possible values for the SapCloudForCustomerSinkWriteBehavior const type.
 func PossibleSapCloudForCustomerSinkWriteBehaviorValues() []SapCloudForCustomerSinkWriteBehavior {
 	return []SapCloudForCustomerSinkWriteBehavior{
 		SapCloudForCustomerSinkWriteBehaviorInsert,
@@ -1558,6 +1629,7 @@ const (
 	SapHanaAuthenticationTypeWindows SapHanaAuthenticationType = "Windows"
 )
 
+// PossibleSapHanaAuthenticationTypeValues returns the possible values for the SapHanaAuthenticationType const type.
 func PossibleSapHanaAuthenticationTypeValues() []SapHanaAuthenticationType {
 	return []SapHanaAuthenticationType{
 		SapHanaAuthenticationTypeBasic,
@@ -1578,6 +1650,7 @@ const (
 	SapHanaPartitionOptionSapHanaDynamicRange       SapHanaPartitionOption = "SapHanaDynamicRange"
 )
 
+// PossibleSapHanaPartitionOptionValues returns the possible values for the SapHanaPartitionOption const type.
 func PossibleSapHanaPartitionOptionValues() []SapHanaPartitionOption {
 	return []SapHanaPartitionOption{
 		SapHanaPartitionOptionNone,
@@ -1602,6 +1675,7 @@ const (
 	SapTablePartitionOptionPartitionOnTime          SapTablePartitionOption = "PartitionOnTime"
 )
 
+// PossibleSapTablePartitionOptionValues returns the possible values for the SapTablePartitionOption const type.
 func PossibleSapTablePartitionOptionValues() []SapTablePartitionOption {
 	return []SapTablePartitionOption{
 		SapTablePartitionOptionNone,
@@ -1625,6 +1699,7 @@ const (
 	SchedulerCurrentStateScheduled SchedulerCurrentState = "Scheduled"
 )
 
+// PossibleSchedulerCurrentStateValues returns the possible values for the SchedulerCurrentState const type.
 func PossibleSchedulerCurrentStateValues() []SchedulerCurrentState {
 	return []SchedulerCurrentState{
 		SchedulerCurrentStateEnded,
@@ -1645,6 +1720,7 @@ const (
 	ServiceNowAuthenticationTypeOAuth2 ServiceNowAuthenticationType = "OAuth2"
 )
 
+// PossibleServiceNowAuthenticationTypeValues returns the possible values for the ServiceNowAuthenticationType const type.
 func PossibleServiceNowAuthenticationTypeValues() []ServiceNowAuthenticationType {
 	return []ServiceNowAuthenticationType{
 		ServiceNowAuthenticationTypeBasic,
@@ -1664,6 +1740,7 @@ const (
 	SftpAuthenticationTypeSSHPublicKey SftpAuthenticationType = "SshPublicKey"
 )
 
+// PossibleSftpAuthenticationTypeValues returns the possible values for the SftpAuthenticationType const type.
 func PossibleSftpAuthenticationTypeValues() []SftpAuthenticationType {
 	return []SftpAuthenticationType{
 		SftpAuthenticationTypeBasic,
@@ -1685,6 +1762,7 @@ const (
 	SparkAuthenticationTypeWindowsAzureHdInsightService SparkAuthenticationType = "WindowsAzureHDInsightService"
 )
 
+// PossibleSparkAuthenticationTypeValues returns the possible values for the SparkAuthenticationType const type.
 func PossibleSparkAuthenticationTypeValues() []SparkAuthenticationType {
 	return []SparkAuthenticationType{
 		SparkAuthenticationTypeAnonymous,
@@ -1708,6 +1786,7 @@ const (
 	SparkBatchJobResultTypeUncertain SparkBatchJobResultType = "Uncertain"
 )
 
+// PossibleSparkBatchJobResultTypeValues returns the possible values for the SparkBatchJobResultType const type.
 func PossibleSparkBatchJobResultTypeValues() []SparkBatchJobResultType {
 	return []SparkBatchJobResultType{
 		SparkBatchJobResultTypeCancelled,
@@ -1730,6 +1809,7 @@ const (
 	SparkErrorSourceUser       SparkErrorSource = "User"
 )
 
+// PossibleSparkErrorSourceValues returns the possible values for the SparkErrorSource const type.
 func PossibleSparkErrorSourceValues() []SparkErrorSource {
 	return []SparkErrorSource{
 		SparkErrorSourceDependency,
@@ -1750,6 +1830,7 @@ const (
 	SparkJobReferenceTypeSparkJobDefinitionReference SparkJobReferenceType = "SparkJobDefinitionReference"
 )
 
+// PossibleSparkJobReferenceTypeValues returns the possible values for the SparkJobReferenceType const type.
 func PossibleSparkJobReferenceTypeValues() []SparkJobReferenceType {
 	return []SparkJobReferenceType{
 		SparkJobReferenceTypeSparkJobDefinitionReference,
@@ -1768,6 +1849,7 @@ const (
 	SparkJobTypeSparkSession SparkJobType = "SparkSession"
 )
 
+// PossibleSparkJobTypeValues returns the possible values for the SparkJobType const type.
 func PossibleSparkJobTypeValues() []SparkJobType {
 	return []SparkJobType{
 		SparkJobTypeSparkBatch,
@@ -1788,6 +1870,7 @@ const (
 	SparkServerTypeSparkThriftServer SparkServerType = "SparkThriftServer"
 )
 
+// PossibleSparkServerTypeValues returns the possible values for the SparkServerType const type.
 func PossibleSparkServerTypeValues() []SparkServerType {
 	return []SparkServerType{
 		SparkServerTypeSharkServer,
@@ -1809,6 +1892,7 @@ const (
 	SparkThriftTransportProtocolSasl   SparkThriftTransportProtocol = "SASL"
 )
 
+// PossibleSparkThriftTransportProtocolValues returns the possible values for the SparkThriftTransportProtocol const type.
 func PossibleSparkThriftTransportProtocolValues() []SparkThriftTransportProtocol {
 	return []SparkThriftTransportProtocol{
 		SparkThriftTransportProtocolBinary,
@@ -1828,6 +1912,7 @@ const (
 	SsisLogLocationTypeFile SsisLogLocationType = "File"
 )
 
+// PossibleSsisLogLocationTypeValues returns the possible values for the SsisLogLocationType const type.
 func PossibleSsisLogLocationTypeValues() []SsisLogLocationType {
 	return []SsisLogLocationType{
 		SsisLogLocationTypeFile,
@@ -1847,6 +1932,7 @@ const (
 	SsisPackageLocationTypeSsisdb        SsisPackageLocationType = "SSISDB"
 )
 
+// PossibleSsisPackageLocationTypeValues returns the possible values for the SsisPackageLocationType const type.
 func PossibleSsisPackageLocationTypeValues() []SsisPackageLocationType {
 	return []SsisPackageLocationType{
 		SsisPackageLocationTypeFile,
@@ -1872,6 +1958,7 @@ const (
 	StoredProcedureParameterTypeString  StoredProcedureParameterType = "String"
 )
 
+// PossibleStoredProcedureParameterTypeValues returns the possible values for the StoredProcedureParameterType const type.
 func PossibleStoredProcedureParameterTypeValues() []StoredProcedureParameterType {
 	return []StoredProcedureParameterType{
 		StoredProcedureParameterTypeBoolean,
@@ -1896,6 +1983,7 @@ const (
 	SybaseAuthenticationTypeWindows SybaseAuthenticationType = "Windows"
 )
 
+// PossibleSybaseAuthenticationTypeValues returns the possible values for the SybaseAuthenticationType const type.
 func PossibleSybaseAuthenticationTypeValues() []SybaseAuthenticationType {
 	return []SybaseAuthenticationType{
 		SybaseAuthenticationTypeBasic,
@@ -1915,6 +2003,7 @@ const (
 	TeradataAuthenticationTypeWindows TeradataAuthenticationType = "Windows"
 )
 
+// PossibleTeradataAuthenticationTypeValues returns the possible values for the TeradataAuthenticationType const type.
 func PossibleTeradataAuthenticationTypeValues() []TeradataAuthenticationType {
 	return []TeradataAuthenticationType{
 		TeradataAuthenticationTypeBasic,
@@ -1935,6 +2024,7 @@ const (
 	TeradataPartitionOptionNone         TeradataPartitionOption = "None"
 )
 
+// PossibleTeradataPartitionOptionValues returns the possible values for the TeradataPartitionOption const type.
 func PossibleTeradataPartitionOptionValues() []TeradataPartitionOption {
 	return []TeradataPartitionOption{
 		TeradataPartitionOptionDynamicRange,
@@ -1954,6 +2044,7 @@ const (
 	TriggerReferenceTypeTriggerReference TriggerReferenceType = "TriggerReference"
 )
 
+// PossibleTriggerReferenceTypeValues returns the possible values for the TriggerReferenceType const type.
 func PossibleTriggerReferenceTypeValues() []TriggerReferenceType {
 	return []TriggerReferenceType{
 		TriggerReferenceTypeTriggerReference,
@@ -1973,6 +2064,7 @@ const (
 	TriggerRunStatusSucceeded  TriggerRunStatus = "Succeeded"
 )
 
+// PossibleTriggerRunStatusValues returns the possible values for the TriggerRunStatus const type.
 func PossibleTriggerRunStatusValues() []TriggerRunStatus {
 	return []TriggerRunStatus{
 		TriggerRunStatusFailed,
@@ -1994,6 +2086,7 @@ const (
 	TriggerRuntimeStateStopped  TriggerRuntimeState = "Stopped"
 )
 
+// PossibleTriggerRuntimeStateValues returns the possible values for the TriggerRuntimeState const type.
 func PossibleTriggerRuntimeStateValues() []TriggerRuntimeState {
 	return []TriggerRuntimeState{
 		TriggerRuntimeStateDisabled,
@@ -2014,6 +2107,7 @@ const (
 	TumblingWindowFrequencyMinute TumblingWindowFrequency = "Minute"
 )
 
+// PossibleTumblingWindowFrequencyValues returns the possible values for the TumblingWindowFrequency const type.
 func PossibleTumblingWindowFrequencyValues() []TumblingWindowFrequency {
 	return []TumblingWindowFrequency{
 		TumblingWindowFrequencyHour,
@@ -2032,6 +2126,7 @@ const (
 	TypeLinkedServiceReference Type = "LinkedServiceReference"
 )
 
+// PossibleTypeValues returns the possible values for the Type const type.
 func PossibleTypeValues() []Type {
 	return []Type{
 		TypeLinkedServiceReference,
@@ -2052,6 +2147,7 @@ const (
 	VariableTypeString  VariableType = "String"
 )
 
+// PossibleVariableTypeValues returns the possible values for the VariableType const type.
 func PossibleVariableTypeValues() []VariableType {
 	return []VariableType{
 		VariableTypeArray,
@@ -2075,6 +2171,7 @@ const (
 	WebActivityMethodPut    WebActivityMethod = "PUT"
 )
 
+// PossibleWebActivityMethodValues returns the possible values for the WebActivityMethod const type.
 func PossibleWebActivityMethodValues() []WebActivityMethod {
 	return []WebActivityMethod{
 		WebActivityMethodDelete,
@@ -2097,6 +2194,7 @@ const (
 	WebAuthenticationTypeClientCertificate WebAuthenticationType = "ClientCertificate"
 )
 
+// PossibleWebAuthenticationTypeValues returns the possible values for the WebAuthenticationType const type.
 func PossibleWebAuthenticationTypeValues() []WebAuthenticationType {
 	return []WebAuthenticationType{
 		WebAuthenticationTypeAnonymous,
@@ -2116,6 +2214,7 @@ const (
 	WebHookActivityMethodPost WebHookActivityMethod = "POST"
 )
 
+// PossibleWebHookActivityMethodValues returns the possible values for the WebHookActivityMethod const type.
 func PossibleWebHookActivityMethodValues() []WebHookActivityMethod {
 	return []WebHookActivityMethod{
 		WebHookActivityMethodPost,

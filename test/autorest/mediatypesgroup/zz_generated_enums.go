@@ -21,6 +21,7 @@ const (
 	ContentTypeImageTIFF ContentType = "image/tiff"
 )
 
+// PossibleContentTypeValues returns the possible values for the ContentType const type.
 func PossibleContentTypeValues() []ContentType {
 	return []ContentType{
 		ContentTypeApplicationPDF,

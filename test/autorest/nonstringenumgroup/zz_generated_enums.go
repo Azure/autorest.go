@@ -18,6 +18,7 @@ const (
 	FloatEnumTwoHundred4            FloatEnum = 200.4
 )
 
+// PossibleFloatEnumValues returns the possible values for the FloatEnum const type.
 func PossibleFloatEnumValues() []FloatEnum {
 	return []FloatEnum{
 		FloatEnumFourHundredFive3,
@@ -43,6 +44,7 @@ const (
 	IntEnumTwoHundred            IntEnum = 200
 )
 
+// PossibleIntEnumValues returns the possible values for the IntEnum const type.
 func PossibleIntEnumValues() []IntEnum {
 	return []IntEnum{
 		IntEnumFourHundredFive,

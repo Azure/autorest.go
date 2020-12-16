@@ -15,6 +15,7 @@ const (
 	URIColorBlueColor  URIColor = "blue color"
 )
 
+// PossibleURIColorValues returns the possible values for the URIColor const type.
 func PossibleURIColorValues() []URIColor {
 	return []URIColor{
 		URIColorRedColor,

@@ -37,6 +37,7 @@ export async function generateEnums(session: Session<CodeModel>): Promise<string
       vals.push(val.language.go!.name);
     }
     text += ')\n\n';
+    text += `// ${enm.funcName} returns the possible values for the ${enm.name} const type.\n`;
     text += `func ${enm.funcName}() []${enm.name} {\n`;
     text += `\treturn []${enm.name}{\t\n`;
     for (const val of values(vals)) {
