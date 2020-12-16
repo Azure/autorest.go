@@ -76,7 +76,7 @@ function generate(inputFile, outputDir, additionalArgs) {
     sem.take(function() {
         console.log('generating ' + inputFile);
         cleanGeneratedFiles(outputDir);
-        exec('autorest --use=. --file-prefix="zz_generated_" --modelerfour.lenient-model-deduplication --license-header=MICROSOFT_MIT_NO_VERSION --input-file=' + inputFile + ' --output-folder=' + outputDir + ' ' + additionalArgs, autorestCallback(outputDir, inputFile));
+        exec('autorest --version:3.0.6338 --use=. --file-prefix="zz_generated_" --modelerfour.lenient-model-deduplication --license-header=MICROSOFT_MIT_NO_VERSION --input-file=' + inputFile + ' --output-folder=' + outputDir + ' ' + additionalArgs, autorestCallback(outputDir, inputFile));
     });
 }
 
@@ -84,7 +84,7 @@ function generateFromReadme(readme, tag, outputDir, additionalArgs) {
     sem.take(function() {
         console.log('generating ' + readme);
         cleanGeneratedFiles(outputDir);
-        exec('autorest --use=. ' + readme + ' --tag=' + tag + ' --file-prefix="zz_generated_" --modelerfour.lenient-model-deduplication --license-header=MICROSOFT_MIT_NO_VERSION --output-folder=' + outputDir + ' ' + additionalArgs, autorestCallback(outputDir, readme));
+        exec('autorest  --version:3.0.6338 --use=. ' + readme + ' --tag=' + tag + ' --file-prefix="zz_generated_" --modelerfour.lenient-model-deduplication --license-header=MICROSOFT_MIT_NO_VERSION --output-folder=' + outputDir + ' ' + additionalArgs, autorestCallback(outputDir, readme));
     });
 }
 
