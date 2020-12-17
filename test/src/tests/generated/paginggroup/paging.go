@@ -696,7 +696,7 @@ func (client PagingClient) GetMultiplePagesLROComplete(ctx context.Context, clie
 	}
 	var future PagingGetMultiplePagesLROFuture
 	future, err = client.GetMultiplePagesLRO(ctx, clientRequestID, maxresults, timeout)
-	result.Future = future.Future
+	result.FutureAPI = future.FutureAPI
 	return
 }
 

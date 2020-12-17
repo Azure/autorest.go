@@ -7,11 +7,9 @@ package lrogroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-	"context"
 	"encoding/json"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
-	"net/http"
 )
 
 // The package's fully qualified name.
