@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using AutoRest.Core.Model;
+using AutoRest.Core.Utilities;
 using System;
 
 namespace AutoRest.Go.Model
@@ -53,7 +54,12 @@ namespace AutoRest.Go.Model
 
         public override string Fields()
         {
-            return "    azure.Future";
+            var indented = new IndentedStringBuilder("    ");
+            indented.Append("azure.FutureAPI\n");
+            indented.Append("// Result returns the result of the asynchronous operation.\n");
+            indented.Append("// If the operation has not completed it will return an error.\n");
+            indented.Append($"Result func({ClientTypeName}) ({ResultTypeName}, error)\n");
+            return indented.ToString();
         }
 
         /// <summary>

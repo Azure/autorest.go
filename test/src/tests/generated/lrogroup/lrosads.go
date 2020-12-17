@@ -50,7 +50,7 @@ func (client LROSADsClient) Delete202NonRetry400(ctx context.Context) (result LR
 
 	result, err = client.Delete202NonRetry400Sender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "Delete202NonRetry400", result.Response(), "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "Delete202NonRetry400", nil, "Failure sending request")
 		return
 	}
 
@@ -74,7 +74,23 @@ func (client LROSADsClient) Delete202NonRetry400Sender(req *http.Request) (futur
 	if err != nil {
 		return
 	}
-	future.Future, err = azure.NewFutureFromResponse(resp)
+	var azf azure.Future
+	azf, err = azure.NewFutureFromResponse(resp)
+	future.FutureAPI = &azf
+	future.Result = func(client LROSADsClient) (ar autorest.Response, err error) {
+		var done bool
+		done, err = future.DoneWithContext(context.Background(), client)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsDelete202NonRetry400Future", "Result", future.Response(), "Polling failure")
+			return
+		}
+		if !done {
+			err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsDelete202NonRetry400Future")
+			return
+		}
+		ar.Response = future.Response()
+		return
+	}
 	return
 }
 
@@ -110,7 +126,7 @@ func (client LROSADsClient) Delete202RetryInvalidHeader(ctx context.Context) (re
 
 	result, err = client.Delete202RetryInvalidHeaderSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "Delete202RetryInvalidHeader", result.Response(), "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "Delete202RetryInvalidHeader", nil, "Failure sending request")
 		return
 	}
 
@@ -134,7 +150,23 @@ func (client LROSADsClient) Delete202RetryInvalidHeaderSender(req *http.Request)
 	if err != nil {
 		return
 	}
-	future.Future, err = azure.NewFutureFromResponse(resp)
+	var azf azure.Future
+	azf, err = azure.NewFutureFromResponse(resp)
+	future.FutureAPI = &azf
+	future.Result = func(client LROSADsClient) (ar autorest.Response, err error) {
+		var done bool
+		done, err = future.DoneWithContext(context.Background(), client)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsDelete202RetryInvalidHeaderFuture", "Result", future.Response(), "Polling failure")
+			return
+		}
+		if !done {
+			err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsDelete202RetryInvalidHeaderFuture")
+			return
+		}
+		ar.Response = future.Response()
+		return
+	}
 	return
 }
 
@@ -169,7 +201,7 @@ func (client LROSADsClient) Delete204Succeeded(ctx context.Context) (result LROS
 
 	result, err = client.Delete204SucceededSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "Delete204Succeeded", result.Response(), "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "Delete204Succeeded", nil, "Failure sending request")
 		return
 	}
 
@@ -193,7 +225,23 @@ func (client LROSADsClient) Delete204SucceededSender(req *http.Request) (future 
 	if err != nil {
 		return
 	}
-	future.Future, err = azure.NewFutureFromResponse(resp)
+	var azf azure.Future
+	azf, err = azure.NewFutureFromResponse(resp)
+	future.FutureAPI = &azf
+	future.Result = func(client LROSADsClient) (ar autorest.Response, err error) {
+		var done bool
+		done, err = future.DoneWithContext(context.Background(), client)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsDelete204SucceededFuture", "Result", future.Response(), "Polling failure")
+			return
+		}
+		if !done {
+			err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsDelete204SucceededFuture")
+			return
+		}
+		ar.Response = future.Response()
+		return
+	}
 	return
 }
 
@@ -229,7 +277,7 @@ func (client LROSADsClient) DeleteAsyncRelativeRetry400(ctx context.Context) (re
 
 	result, err = client.DeleteAsyncRelativeRetry400Sender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "DeleteAsyncRelativeRetry400", result.Response(), "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "DeleteAsyncRelativeRetry400", nil, "Failure sending request")
 		return
 	}
 
@@ -253,7 +301,23 @@ func (client LROSADsClient) DeleteAsyncRelativeRetry400Sender(req *http.Request)
 	if err != nil {
 		return
 	}
-	future.Future, err = azure.NewFutureFromResponse(resp)
+	var azf azure.Future
+	azf, err = azure.NewFutureFromResponse(resp)
+	future.FutureAPI = &azf
+	future.Result = func(client LROSADsClient) (ar autorest.Response, err error) {
+		var done bool
+		done, err = future.DoneWithContext(context.Background(), client)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsDeleteAsyncRelativeRetry400Future", "Result", future.Response(), "Polling failure")
+			return
+		}
+		if !done {
+			err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsDeleteAsyncRelativeRetry400Future")
+			return
+		}
+		ar.Response = future.Response()
+		return
+	}
 	return
 }
 
@@ -289,7 +353,7 @@ func (client LROSADsClient) DeleteAsyncRelativeRetryInvalidHeader(ctx context.Co
 
 	result, err = client.DeleteAsyncRelativeRetryInvalidHeaderSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "DeleteAsyncRelativeRetryInvalidHeader", result.Response(), "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "DeleteAsyncRelativeRetryInvalidHeader", nil, "Failure sending request")
 		return
 	}
 
@@ -313,7 +377,23 @@ func (client LROSADsClient) DeleteAsyncRelativeRetryInvalidHeaderSender(req *htt
 	if err != nil {
 		return
 	}
-	future.Future, err = azure.NewFutureFromResponse(resp)
+	var azf azure.Future
+	azf, err = azure.NewFutureFromResponse(resp)
+	future.FutureAPI = &azf
+	future.Result = func(client LROSADsClient) (ar autorest.Response, err error) {
+		var done bool
+		done, err = future.DoneWithContext(context.Background(), client)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsDeleteAsyncRelativeRetryInvalidHeaderFuture", "Result", future.Response(), "Polling failure")
+			return
+		}
+		if !done {
+			err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsDeleteAsyncRelativeRetryInvalidHeaderFuture")
+			return
+		}
+		ar.Response = future.Response()
+		return
+	}
 	return
 }
 
@@ -349,7 +429,7 @@ func (client LROSADsClient) DeleteAsyncRelativeRetryInvalidJSONPolling(ctx conte
 
 	result, err = client.DeleteAsyncRelativeRetryInvalidJSONPollingSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "DeleteAsyncRelativeRetryInvalidJSONPolling", result.Response(), "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "DeleteAsyncRelativeRetryInvalidJSONPolling", nil, "Failure sending request")
 		return
 	}
 
@@ -373,7 +453,23 @@ func (client LROSADsClient) DeleteAsyncRelativeRetryInvalidJSONPollingSender(req
 	if err != nil {
 		return
 	}
-	future.Future, err = azure.NewFutureFromResponse(resp)
+	var azf azure.Future
+	azf, err = azure.NewFutureFromResponse(resp)
+	future.FutureAPI = &azf
+	future.Result = func(client LROSADsClient) (ar autorest.Response, err error) {
+		var done bool
+		done, err = future.DoneWithContext(context.Background(), client)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingFuture", "Result", future.Response(), "Polling failure")
+			return
+		}
+		if !done {
+			err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingFuture")
+			return
+		}
+		ar.Response = future.Response()
+		return
+	}
 	return
 }
 
@@ -409,7 +505,7 @@ func (client LROSADsClient) DeleteAsyncRelativeRetryNoStatus(ctx context.Context
 
 	result, err = client.DeleteAsyncRelativeRetryNoStatusSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "DeleteAsyncRelativeRetryNoStatus", result.Response(), "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "DeleteAsyncRelativeRetryNoStatus", nil, "Failure sending request")
 		return
 	}
 
@@ -433,7 +529,23 @@ func (client LROSADsClient) DeleteAsyncRelativeRetryNoStatusSender(req *http.Req
 	if err != nil {
 		return
 	}
-	future.Future, err = azure.NewFutureFromResponse(resp)
+	var azf azure.Future
+	azf, err = azure.NewFutureFromResponse(resp)
+	future.FutureAPI = &azf
+	future.Result = func(client LROSADsClient) (ar autorest.Response, err error) {
+		var done bool
+		done, err = future.DoneWithContext(context.Background(), client)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsDeleteAsyncRelativeRetryNoStatusFuture", "Result", future.Response(), "Polling failure")
+			return
+		}
+		if !done {
+			err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsDeleteAsyncRelativeRetryNoStatusFuture")
+			return
+		}
+		ar.Response = future.Response()
+		return
+	}
 	return
 }
 
@@ -468,7 +580,7 @@ func (client LROSADsClient) DeleteNonRetry400(ctx context.Context) (result LROSA
 
 	result, err = client.DeleteNonRetry400Sender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "DeleteNonRetry400", result.Response(), "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "DeleteNonRetry400", nil, "Failure sending request")
 		return
 	}
 
@@ -492,7 +604,23 @@ func (client LROSADsClient) DeleteNonRetry400Sender(req *http.Request) (future L
 	if err != nil {
 		return
 	}
-	future.Future, err = azure.NewFutureFromResponse(resp)
+	var azf azure.Future
+	azf, err = azure.NewFutureFromResponse(resp)
+	future.FutureAPI = &azf
+	future.Result = func(client LROSADsClient) (ar autorest.Response, err error) {
+		var done bool
+		done, err = future.DoneWithContext(context.Background(), client)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsDeleteNonRetry400Future", "Result", future.Response(), "Polling failure")
+			return
+		}
+		if !done {
+			err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsDeleteNonRetry400Future")
+			return
+		}
+		ar.Response = future.Response()
+		return
+	}
 	return
 }
 
@@ -530,7 +658,7 @@ func (client LROSADsClient) Post202NoLocation(ctx context.Context, product *Prod
 
 	result, err = client.Post202NoLocationSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "Post202NoLocation", result.Response(), "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "Post202NoLocation", nil, "Failure sending request")
 		return
 	}
 
@@ -559,7 +687,23 @@ func (client LROSADsClient) Post202NoLocationSender(req *http.Request) (future L
 	if err != nil {
 		return
 	}
-	future.Future, err = azure.NewFutureFromResponse(resp)
+	var azf azure.Future
+	azf, err = azure.NewFutureFromResponse(resp)
+	future.FutureAPI = &azf
+	future.Result = func(client LROSADsClient) (ar autorest.Response, err error) {
+		var done bool
+		done, err = future.DoneWithContext(context.Background(), client)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPost202NoLocationFuture", "Result", future.Response(), "Polling failure")
+			return
+		}
+		if !done {
+			err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPost202NoLocationFuture")
+			return
+		}
+		ar.Response = future.Response()
+		return
+	}
 	return
 }
 
@@ -596,7 +740,7 @@ func (client LROSADsClient) Post202NonRetry400(ctx context.Context, product *Pro
 
 	result, err = client.Post202NonRetry400Sender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "Post202NonRetry400", result.Response(), "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "Post202NonRetry400", nil, "Failure sending request")
 		return
 	}
 
@@ -625,7 +769,23 @@ func (client LROSADsClient) Post202NonRetry400Sender(req *http.Request) (future 
 	if err != nil {
 		return
 	}
-	future.Future, err = azure.NewFutureFromResponse(resp)
+	var azf azure.Future
+	azf, err = azure.NewFutureFromResponse(resp)
+	future.FutureAPI = &azf
+	future.Result = func(client LROSADsClient) (ar autorest.Response, err error) {
+		var done bool
+		done, err = future.DoneWithContext(context.Background(), client)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPost202NonRetry400Future", "Result", future.Response(), "Polling failure")
+			return
+		}
+		if !done {
+			err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPost202NonRetry400Future")
+			return
+		}
+		ar.Response = future.Response()
+		return
+	}
 	return
 }
 
@@ -663,7 +823,7 @@ func (client LROSADsClient) Post202RetryInvalidHeader(ctx context.Context, produ
 
 	result, err = client.Post202RetryInvalidHeaderSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "Post202RetryInvalidHeader", result.Response(), "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "Post202RetryInvalidHeader", nil, "Failure sending request")
 		return
 	}
 
@@ -692,7 +852,23 @@ func (client LROSADsClient) Post202RetryInvalidHeaderSender(req *http.Request) (
 	if err != nil {
 		return
 	}
-	future.Future, err = azure.NewFutureFromResponse(resp)
+	var azf azure.Future
+	azf, err = azure.NewFutureFromResponse(resp)
+	future.FutureAPI = &azf
+	future.Result = func(client LROSADsClient) (ar autorest.Response, err error) {
+		var done bool
+		done, err = future.DoneWithContext(context.Background(), client)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPost202RetryInvalidHeaderFuture", "Result", future.Response(), "Polling failure")
+			return
+		}
+		if !done {
+			err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPost202RetryInvalidHeaderFuture")
+			return
+		}
+		ar.Response = future.Response()
+		return
+	}
 	return
 }
 
@@ -730,7 +906,7 @@ func (client LROSADsClient) PostAsyncRelativeRetry400(ctx context.Context, produ
 
 	result, err = client.PostAsyncRelativeRetry400Sender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PostAsyncRelativeRetry400", result.Response(), "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PostAsyncRelativeRetry400", nil, "Failure sending request")
 		return
 	}
 
@@ -759,7 +935,23 @@ func (client LROSADsClient) PostAsyncRelativeRetry400Sender(req *http.Request) (
 	if err != nil {
 		return
 	}
-	future.Future, err = azure.NewFutureFromResponse(resp)
+	var azf azure.Future
+	azf, err = azure.NewFutureFromResponse(resp)
+	future.FutureAPI = &azf
+	future.Result = func(client LROSADsClient) (ar autorest.Response, err error) {
+		var done bool
+		done, err = future.DoneWithContext(context.Background(), client)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPostAsyncRelativeRetry400Future", "Result", future.Response(), "Polling failure")
+			return
+		}
+		if !done {
+			err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPostAsyncRelativeRetry400Future")
+			return
+		}
+		ar.Response = future.Response()
+		return
+	}
 	return
 }
 
@@ -798,7 +990,7 @@ func (client LROSADsClient) PostAsyncRelativeRetryInvalidHeader(ctx context.Cont
 
 	result, err = client.PostAsyncRelativeRetryInvalidHeaderSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PostAsyncRelativeRetryInvalidHeader", result.Response(), "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PostAsyncRelativeRetryInvalidHeader", nil, "Failure sending request")
 		return
 	}
 
@@ -827,7 +1019,23 @@ func (client LROSADsClient) PostAsyncRelativeRetryInvalidHeaderSender(req *http.
 	if err != nil {
 		return
 	}
-	future.Future, err = azure.NewFutureFromResponse(resp)
+	var azf azure.Future
+	azf, err = azure.NewFutureFromResponse(resp)
+	future.FutureAPI = &azf
+	future.Result = func(client LROSADsClient) (ar autorest.Response, err error) {
+		var done bool
+		done, err = future.DoneWithContext(context.Background(), client)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPostAsyncRelativeRetryInvalidHeaderFuture", "Result", future.Response(), "Polling failure")
+			return
+		}
+		if !done {
+			err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPostAsyncRelativeRetryInvalidHeaderFuture")
+			return
+		}
+		ar.Response = future.Response()
+		return
+	}
 	return
 }
 
@@ -866,7 +1074,7 @@ func (client LROSADsClient) PostAsyncRelativeRetryInvalidJSONPolling(ctx context
 
 	result, err = client.PostAsyncRelativeRetryInvalidJSONPollingSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PostAsyncRelativeRetryInvalidJSONPolling", result.Response(), "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PostAsyncRelativeRetryInvalidJSONPolling", nil, "Failure sending request")
 		return
 	}
 
@@ -895,7 +1103,23 @@ func (client LROSADsClient) PostAsyncRelativeRetryInvalidJSONPollingSender(req *
 	if err != nil {
 		return
 	}
-	future.Future, err = azure.NewFutureFromResponse(resp)
+	var azf azure.Future
+	azf, err = azure.NewFutureFromResponse(resp)
+	future.FutureAPI = &azf
+	future.Result = func(client LROSADsClient) (ar autorest.Response, err error) {
+		var done bool
+		done, err = future.DoneWithContext(context.Background(), client)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPostAsyncRelativeRetryInvalidJSONPollingFuture", "Result", future.Response(), "Polling failure")
+			return
+		}
+		if !done {
+			err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPostAsyncRelativeRetryInvalidJSONPollingFuture")
+			return
+		}
+		ar.Response = future.Response()
+		return
+	}
 	return
 }
 
@@ -934,7 +1158,7 @@ func (client LROSADsClient) PostAsyncRelativeRetryNoPayload(ctx context.Context,
 
 	result, err = client.PostAsyncRelativeRetryNoPayloadSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PostAsyncRelativeRetryNoPayload", result.Response(), "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PostAsyncRelativeRetryNoPayload", nil, "Failure sending request")
 		return
 	}
 
@@ -963,7 +1187,23 @@ func (client LROSADsClient) PostAsyncRelativeRetryNoPayloadSender(req *http.Requ
 	if err != nil {
 		return
 	}
-	future.Future, err = azure.NewFutureFromResponse(resp)
+	var azf azure.Future
+	azf, err = azure.NewFutureFromResponse(resp)
+	future.FutureAPI = &azf
+	future.Result = func(client LROSADsClient) (ar autorest.Response, err error) {
+		var done bool
+		done, err = future.DoneWithContext(context.Background(), client)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPostAsyncRelativeRetryNoPayloadFuture", "Result", future.Response(), "Polling failure")
+			return
+		}
+		if !done {
+			err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPostAsyncRelativeRetryNoPayloadFuture")
+			return
+		}
+		ar.Response = future.Response()
+		return
+	}
 	return
 }
 
@@ -1000,7 +1240,7 @@ func (client LROSADsClient) PostNonRetry400(ctx context.Context, product *Produc
 
 	result, err = client.PostNonRetry400Sender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PostNonRetry400", result.Response(), "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PostNonRetry400", nil, "Failure sending request")
 		return
 	}
 
@@ -1029,7 +1269,23 @@ func (client LROSADsClient) PostNonRetry400Sender(req *http.Request) (future LRO
 	if err != nil {
 		return
 	}
-	future.Future, err = azure.NewFutureFromResponse(resp)
+	var azf azure.Future
+	azf, err = azure.NewFutureFromResponse(resp)
+	future.FutureAPI = &azf
+	future.Result = func(client LROSADsClient) (ar autorest.Response, err error) {
+		var done bool
+		done, err = future.DoneWithContext(context.Background(), client)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPostNonRetry400Future", "Result", future.Response(), "Polling failure")
+			return
+		}
+		if !done {
+			err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPostNonRetry400Future")
+			return
+		}
+		ar.Response = future.Response()
+		return
+	}
 	return
 }
 
@@ -1067,7 +1323,7 @@ func (client LROSADsClient) Put200InvalidJSON(ctx context.Context, product *Prod
 
 	result, err = client.Put200InvalidJSONSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "Put200InvalidJSON", result.Response(), "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "Put200InvalidJSON", nil, "Failure sending request")
 		return
 	}
 
@@ -1096,7 +1352,29 @@ func (client LROSADsClient) Put200InvalidJSONSender(req *http.Request) (future L
 	if err != nil {
 		return
 	}
-	future.Future, err = azure.NewFutureFromResponse(resp)
+	var azf azure.Future
+	azf, err = azure.NewFutureFromResponse(resp)
+	future.FutureAPI = &azf
+	future.Result = func(client LROSADsClient) (p Product, err error) {
+		var done bool
+		done, err = future.DoneWithContext(context.Background(), client)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPut200InvalidJSONFuture", "Result", future.Response(), "Polling failure")
+			return
+		}
+		if !done {
+			err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPut200InvalidJSONFuture")
+			return
+		}
+		sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+		if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+			p, err = client.Put200InvalidJSONResponder(p.Response.Response)
+			if err != nil {
+				err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPut200InvalidJSONFuture", "Result", p.Response.Response, "Failure responding to request")
+			}
+		}
+		return
+	}
 	return
 }
 
@@ -1135,7 +1413,7 @@ func (client LROSADsClient) PutAsyncRelativeRetry400(ctx context.Context, produc
 
 	result, err = client.PutAsyncRelativeRetry400Sender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PutAsyncRelativeRetry400", result.Response(), "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PutAsyncRelativeRetry400", nil, "Failure sending request")
 		return
 	}
 
@@ -1164,7 +1442,29 @@ func (client LROSADsClient) PutAsyncRelativeRetry400Sender(req *http.Request) (f
 	if err != nil {
 		return
 	}
-	future.Future, err = azure.NewFutureFromResponse(resp)
+	var azf azure.Future
+	azf, err = azure.NewFutureFromResponse(resp)
+	future.FutureAPI = &azf
+	future.Result = func(client LROSADsClient) (p Product, err error) {
+		var done bool
+		done, err = future.DoneWithContext(context.Background(), client)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutAsyncRelativeRetry400Future", "Result", future.Response(), "Polling failure")
+			return
+		}
+		if !done {
+			err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPutAsyncRelativeRetry400Future")
+			return
+		}
+		sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+		if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+			p, err = client.PutAsyncRelativeRetry400Responder(p.Response.Response)
+			if err != nil {
+				err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutAsyncRelativeRetry400Future", "Result", p.Response.Response, "Failure responding to request")
+			}
+		}
+		return
+	}
 	return
 }
 
@@ -1204,7 +1504,7 @@ func (client LROSADsClient) PutAsyncRelativeRetryInvalidHeader(ctx context.Conte
 
 	result, err = client.PutAsyncRelativeRetryInvalidHeaderSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PutAsyncRelativeRetryInvalidHeader", result.Response(), "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PutAsyncRelativeRetryInvalidHeader", nil, "Failure sending request")
 		return
 	}
 
@@ -1233,7 +1533,29 @@ func (client LROSADsClient) PutAsyncRelativeRetryInvalidHeaderSender(req *http.R
 	if err != nil {
 		return
 	}
-	future.Future, err = azure.NewFutureFromResponse(resp)
+	var azf azure.Future
+	azf, err = azure.NewFutureFromResponse(resp)
+	future.FutureAPI = &azf
+	future.Result = func(client LROSADsClient) (p Product, err error) {
+		var done bool
+		done, err = future.DoneWithContext(context.Background(), client)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutAsyncRelativeRetryInvalidHeaderFuture", "Result", future.Response(), "Polling failure")
+			return
+		}
+		if !done {
+			err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPutAsyncRelativeRetryInvalidHeaderFuture")
+			return
+		}
+		sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+		if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+			p, err = client.PutAsyncRelativeRetryInvalidHeaderResponder(p.Response.Response)
+			if err != nil {
+				err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutAsyncRelativeRetryInvalidHeaderFuture", "Result", p.Response.Response, "Failure responding to request")
+			}
+		}
+		return
+	}
 	return
 }
 
@@ -1273,7 +1595,7 @@ func (client LROSADsClient) PutAsyncRelativeRetryInvalidJSONPolling(ctx context.
 
 	result, err = client.PutAsyncRelativeRetryInvalidJSONPollingSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PutAsyncRelativeRetryInvalidJSONPolling", result.Response(), "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PutAsyncRelativeRetryInvalidJSONPolling", nil, "Failure sending request")
 		return
 	}
 
@@ -1302,7 +1624,29 @@ func (client LROSADsClient) PutAsyncRelativeRetryInvalidJSONPollingSender(req *h
 	if err != nil {
 		return
 	}
-	future.Future, err = azure.NewFutureFromResponse(resp)
+	var azf azure.Future
+	azf, err = azure.NewFutureFromResponse(resp)
+	future.FutureAPI = &azf
+	future.Result = func(client LROSADsClient) (p Product, err error) {
+		var done bool
+		done, err = future.DoneWithContext(context.Background(), client)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutAsyncRelativeRetryInvalidJSONPollingFuture", "Result", future.Response(), "Polling failure")
+			return
+		}
+		if !done {
+			err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPutAsyncRelativeRetryInvalidJSONPollingFuture")
+			return
+		}
+		sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+		if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+			p, err = client.PutAsyncRelativeRetryInvalidJSONPollingResponder(p.Response.Response)
+			if err != nil {
+				err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutAsyncRelativeRetryInvalidJSONPollingFuture", "Result", p.Response.Response, "Failure responding to request")
+			}
+		}
+		return
+	}
 	return
 }
 
@@ -1342,7 +1686,7 @@ func (client LROSADsClient) PutAsyncRelativeRetryNoStatus(ctx context.Context, p
 
 	result, err = client.PutAsyncRelativeRetryNoStatusSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PutAsyncRelativeRetryNoStatus", result.Response(), "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PutAsyncRelativeRetryNoStatus", nil, "Failure sending request")
 		return
 	}
 
@@ -1371,7 +1715,29 @@ func (client LROSADsClient) PutAsyncRelativeRetryNoStatusSender(req *http.Reques
 	if err != nil {
 		return
 	}
-	future.Future, err = azure.NewFutureFromResponse(resp)
+	var azf azure.Future
+	azf, err = azure.NewFutureFromResponse(resp)
+	future.FutureAPI = &azf
+	future.Result = func(client LROSADsClient) (p Product, err error) {
+		var done bool
+		done, err = future.DoneWithContext(context.Background(), client)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutAsyncRelativeRetryNoStatusFuture", "Result", future.Response(), "Polling failure")
+			return
+		}
+		if !done {
+			err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPutAsyncRelativeRetryNoStatusFuture")
+			return
+		}
+		sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+		if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+			p, err = client.PutAsyncRelativeRetryNoStatusResponder(p.Response.Response)
+			if err != nil {
+				err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutAsyncRelativeRetryNoStatusFuture", "Result", p.Response.Response, "Failure responding to request")
+			}
+		}
+		return
+	}
 	return
 }
 
@@ -1411,7 +1777,7 @@ func (client LROSADsClient) PutAsyncRelativeRetryNoStatusPayload(ctx context.Con
 
 	result, err = client.PutAsyncRelativeRetryNoStatusPayloadSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PutAsyncRelativeRetryNoStatusPayload", result.Response(), "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PutAsyncRelativeRetryNoStatusPayload", nil, "Failure sending request")
 		return
 	}
 
@@ -1440,7 +1806,29 @@ func (client LROSADsClient) PutAsyncRelativeRetryNoStatusPayloadSender(req *http
 	if err != nil {
 		return
 	}
-	future.Future, err = azure.NewFutureFromResponse(resp)
+	var azf azure.Future
+	azf, err = azure.NewFutureFromResponse(resp)
+	future.FutureAPI = &azf
+	future.Result = func(client LROSADsClient) (p Product, err error) {
+		var done bool
+		done, err = future.DoneWithContext(context.Background(), client)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutAsyncRelativeRetryNoStatusPayloadFuture", "Result", future.Response(), "Polling failure")
+			return
+		}
+		if !done {
+			err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPutAsyncRelativeRetryNoStatusPayloadFuture")
+			return
+		}
+		sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+		if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+			p, err = client.PutAsyncRelativeRetryNoStatusPayloadResponder(p.Response.Response)
+			if err != nil {
+				err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutAsyncRelativeRetryNoStatusPayloadFuture", "Result", p.Response.Response, "Failure responding to request")
+			}
+		}
+		return
+	}
 	return
 }
 
@@ -1479,7 +1867,7 @@ func (client LROSADsClient) PutError201NoProvisioningStatePayload(ctx context.Co
 
 	result, err = client.PutError201NoProvisioningStatePayloadSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PutError201NoProvisioningStatePayload", result.Response(), "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PutError201NoProvisioningStatePayload", nil, "Failure sending request")
 		return
 	}
 
@@ -1508,7 +1896,29 @@ func (client LROSADsClient) PutError201NoProvisioningStatePayloadSender(req *htt
 	if err != nil {
 		return
 	}
-	future.Future, err = azure.NewFutureFromResponse(resp)
+	var azf azure.Future
+	azf, err = azure.NewFutureFromResponse(resp)
+	future.FutureAPI = &azf
+	future.Result = func(client LROSADsClient) (p Product, err error) {
+		var done bool
+		done, err = future.DoneWithContext(context.Background(), client)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutError201NoProvisioningStatePayloadFuture", "Result", future.Response(), "Polling failure")
+			return
+		}
+		if !done {
+			err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPutError201NoProvisioningStatePayloadFuture")
+			return
+		}
+		sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+		if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+			p, err = client.PutError201NoProvisioningStatePayloadResponder(p.Response.Response)
+			if err != nil {
+				err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutError201NoProvisioningStatePayloadFuture", "Result", p.Response.Response, "Failure responding to request")
+			}
+		}
+		return
+	}
 	return
 }
 
@@ -1547,7 +1957,7 @@ func (client LROSADsClient) PutNonRetry201Creating400(ctx context.Context, produ
 
 	result, err = client.PutNonRetry201Creating400Sender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PutNonRetry201Creating400", result.Response(), "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PutNonRetry201Creating400", nil, "Failure sending request")
 		return
 	}
 
@@ -1576,7 +1986,29 @@ func (client LROSADsClient) PutNonRetry201Creating400Sender(req *http.Request) (
 	if err != nil {
 		return
 	}
-	future.Future, err = azure.NewFutureFromResponse(resp)
+	var azf azure.Future
+	azf, err = azure.NewFutureFromResponse(resp)
+	future.FutureAPI = &azf
+	future.Result = func(client LROSADsClient) (p Product, err error) {
+		var done bool
+		done, err = future.DoneWithContext(context.Background(), client)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutNonRetry201Creating400Future", "Result", future.Response(), "Polling failure")
+			return
+		}
+		if !done {
+			err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPutNonRetry201Creating400Future")
+			return
+		}
+		sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+		if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+			p, err = client.PutNonRetry201Creating400Responder(p.Response.Response)
+			if err != nil {
+				err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutNonRetry201Creating400Future", "Result", p.Response.Response, "Failure responding to request")
+			}
+		}
+		return
+	}
 	return
 }
 
@@ -1615,7 +2047,7 @@ func (client LROSADsClient) PutNonRetry201Creating400InvalidJSON(ctx context.Con
 
 	result, err = client.PutNonRetry201Creating400InvalidJSONSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PutNonRetry201Creating400InvalidJSON", result.Response(), "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PutNonRetry201Creating400InvalidJSON", nil, "Failure sending request")
 		return
 	}
 
@@ -1644,7 +2076,29 @@ func (client LROSADsClient) PutNonRetry201Creating400InvalidJSONSender(req *http
 	if err != nil {
 		return
 	}
-	future.Future, err = azure.NewFutureFromResponse(resp)
+	var azf azure.Future
+	azf, err = azure.NewFutureFromResponse(resp)
+	future.FutureAPI = &azf
+	future.Result = func(client LROSADsClient) (p Product, err error) {
+		var done bool
+		done, err = future.DoneWithContext(context.Background(), client)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutNonRetry201Creating400InvalidJSONFuture", "Result", future.Response(), "Polling failure")
+			return
+		}
+		if !done {
+			err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPutNonRetry201Creating400InvalidJSONFuture")
+			return
+		}
+		sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+		if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+			p, err = client.PutNonRetry201Creating400InvalidJSONResponder(p.Response.Response)
+			if err != nil {
+				err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutNonRetry201Creating400InvalidJSONFuture", "Result", p.Response.Response, "Failure responding to request")
+			}
+		}
+		return
+	}
 	return
 }
 
@@ -1682,7 +2136,7 @@ func (client LROSADsClient) PutNonRetry400(ctx context.Context, product *Product
 
 	result, err = client.PutNonRetry400Sender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PutNonRetry400", result.Response(), "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PutNonRetry400", nil, "Failure sending request")
 		return
 	}
 
@@ -1711,7 +2165,29 @@ func (client LROSADsClient) PutNonRetry400Sender(req *http.Request) (future LROS
 	if err != nil {
 		return
 	}
-	future.Future, err = azure.NewFutureFromResponse(resp)
+	var azf azure.Future
+	azf, err = azure.NewFutureFromResponse(resp)
+	future.FutureAPI = &azf
+	future.Result = func(client LROSADsClient) (p Product, err error) {
+		var done bool
+		done, err = future.DoneWithContext(context.Background(), client)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutNonRetry400Future", "Result", future.Response(), "Polling failure")
+			return
+		}
+		if !done {
+			err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPutNonRetry400Future")
+			return
+		}
+		sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+		if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+			p, err = client.PutNonRetry400Responder(p.Response.Response)
+			if err != nil {
+				err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutNonRetry400Future", "Result", p.Response.Response, "Failure responding to request")
+			}
+		}
+		return
+	}
 	return
 }
 
