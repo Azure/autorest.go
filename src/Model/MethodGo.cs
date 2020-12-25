@@ -303,9 +303,17 @@ namespace AutoRest.Go.Model
                 return
                     Parameters.Cast<ParameterGo>().Where(
                         p => p != null && p.IsMethodArgument && !string.IsNullOrWhiteSpace(p.Name))
-                                .OrderBy(item => !item.IsRequired);
+                                .OrderBy(item => !item.IsRequired).OrderBy(item => orderDict[item.Location]);
             }
         }
+
+        private IDictionary<ParameterLocation, int> orderDict = new Dictionary<ParameterLocation, int>
+            {
+                { ParameterLocation.Path, 1 },
+                { ParameterLocation.Body, 2 },
+                { ParameterLocation.Header, 3 },
+                { ParameterLocation.Query, 4 },
+            };
 
         public IEnumerable<ParameterGo> ParametersGo => Parameters.Cast<ParameterGo>();
 
@@ -616,7 +624,7 @@ namespace AutoRest.Go.Model
         /// Returns true if a ListComplete method should be generated.
         /// </summary>
         public bool NeedsListComplete => IsPageable && !IsNextMethod;
-        
+
         /// <summary>
         /// Returns the name of the type returned from a ListComplete method.
         /// This should only be called if NeedsListComplete returns true.
