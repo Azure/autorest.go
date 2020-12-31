@@ -7,19 +7,19 @@ package booleangroupapi
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-	"context"
-	"github.com/Azure/go-autorest/autorest"
-	"tests/generated/booleangroup"
+    "context"
+    "tests/generated/booleangroup"
+    "github.com/Azure/go-autorest/autorest"
 )
 
-// BoolClientAPI contains the set of methods on the BoolClient type.
-type BoolClientAPI interface {
-	GetFalse(ctx context.Context) (result booleangroup.BoolModel, err error)
-	GetInvalid(ctx context.Context) (result booleangroup.BoolModel, err error)
-	GetNull(ctx context.Context) (result booleangroup.BoolModel, err error)
-	GetTrue(ctx context.Context) (result booleangroup.BoolModel, err error)
-	PutFalse(ctx context.Context) (result autorest.Response, err error)
-	PutTrue(ctx context.Context) (result autorest.Response, err error)
-}
+        // BoolClientAPI contains the set of methods on the BoolClient type.
+        type BoolClientAPI interface {
+            GetFalse(ctx context.Context) (result booleangroup.BoolModel, err error)
+            GetInvalid(ctx context.Context) (result booleangroup.BoolModel, err error)
+            GetNull(ctx context.Context) (result booleangroup.BoolModel, err error)
+            GetTrue(ctx context.Context) (result booleangroup.BoolModel, err error)
+            PutFalse(ctx context.Context) (result autorest.Response, err error)
+            PutTrue(ctx context.Context) (result autorest.Response, err error)
+        }
 
-var _ BoolClientAPI = (*booleangroup.BoolClient)(nil)
+        var _ BoolClientAPI = (*booleangroup.BoolClient)(nil)

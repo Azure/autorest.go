@@ -7,28 +7,28 @@ package integergroupapi
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-	"context"
-	"github.com/Azure/go-autorest/autorest"
-	"github.com/Azure/go-autorest/autorest/date"
-	"tests/generated/integergroup"
+    "context"
+    "tests/generated/integergroup"
+    "github.com/Azure/go-autorest/autorest"
+    "github.com/Azure/go-autorest/autorest/date"
 )
 
-// IntClientAPI contains the set of methods on the IntClient type.
-type IntClientAPI interface {
-	GetInvalid(ctx context.Context) (result integergroup.Int32, err error)
-	GetInvalidUnixTime(ctx context.Context) (result integergroup.UnixTime, err error)
-	GetNull(ctx context.Context) (result integergroup.Int32, err error)
-	GetNullUnixTime(ctx context.Context) (result integergroup.UnixTime, err error)
-	GetOverflowInt32(ctx context.Context) (result integergroup.Int32, err error)
-	GetOverflowInt64(ctx context.Context) (result integergroup.Int64, err error)
-	GetUnderflowInt32(ctx context.Context) (result integergroup.Int32, err error)
-	GetUnderflowInt64(ctx context.Context) (result integergroup.Int64, err error)
-	GetUnixTime(ctx context.Context) (result integergroup.UnixTime, err error)
-	PutMax32(ctx context.Context, intBody int32) (result autorest.Response, err error)
-	PutMax64(ctx context.Context, intBody int64) (result autorest.Response, err error)
-	PutMin32(ctx context.Context, intBody int32) (result autorest.Response, err error)
-	PutMin64(ctx context.Context, intBody int64) (result autorest.Response, err error)
-	PutUnixTimeDate(ctx context.Context, intBody date.UnixTime) (result autorest.Response, err error)
-}
+        // IntClientAPI contains the set of methods on the IntClient type.
+        type IntClientAPI interface {
+            GetInvalid(ctx context.Context) (result integergroup.Int32, err error)
+            GetInvalidUnixTime(ctx context.Context) (result integergroup.UnixTime, err error)
+            GetNull(ctx context.Context) (result integergroup.Int32, err error)
+            GetNullUnixTime(ctx context.Context) (result integergroup.UnixTime, err error)
+            GetOverflowInt32(ctx context.Context) (result integergroup.Int32, err error)
+            GetOverflowInt64(ctx context.Context) (result integergroup.Int64, err error)
+            GetUnderflowInt32(ctx context.Context) (result integergroup.Int32, err error)
+            GetUnderflowInt64(ctx context.Context) (result integergroup.Int64, err error)
+            GetUnixTime(ctx context.Context) (result integergroup.UnixTime, err error)
+            PutMax32(ctx context.Context, intBody int32) (result autorest.Response, err error)
+            PutMax64(ctx context.Context, intBody int64) (result autorest.Response, err error)
+            PutMin32(ctx context.Context, intBody int32) (result autorest.Response, err error)
+            PutMin64(ctx context.Context, intBody int64) (result autorest.Response, err error)
+            PutUnixTimeDate(ctx context.Context, intBody date.UnixTime) (result autorest.Response, err error)
+        }
 
-var _ IntClientAPI = (*integergroup.IntClient)(nil)
+        var _ IntClientAPI = (*integergroup.IntClient)(nil)

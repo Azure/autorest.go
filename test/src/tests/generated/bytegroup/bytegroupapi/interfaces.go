@@ -7,18 +7,18 @@ package bytegroupapi
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-	"context"
-	"github.com/Azure/go-autorest/autorest"
-	"tests/generated/bytegroup"
+    "context"
+    "tests/generated/bytegroup"
+    "github.com/Azure/go-autorest/autorest"
 )
 
-// ByteClientAPI contains the set of methods on the ByteClient type.
-type ByteClientAPI interface {
-	GetEmpty(ctx context.Context) (result bytegroup.ByteArray, err error)
-	GetInvalid(ctx context.Context) (result bytegroup.ByteArray, err error)
-	GetNonASCII(ctx context.Context) (result bytegroup.ByteArray, err error)
-	GetNull(ctx context.Context) (result bytegroup.ByteArray, err error)
-	PutNonASCII(ctx context.Context, byteBody []byte) (result autorest.Response, err error)
-}
+        // ByteClientAPI contains the set of methods on the ByteClient type.
+        type ByteClientAPI interface {
+            GetEmpty(ctx context.Context) (result bytegroup.ByteArray, err error)
+            GetInvalid(ctx context.Context) (result bytegroup.ByteArray, err error)
+            GetNonASCII(ctx context.Context) (result bytegroup.ByteArray, err error)
+            GetNull(ctx context.Context) (result bytegroup.ByteArray, err error)
+            PutNonASCII(ctx context.Context, byteBody []byte) (result autorest.Response, err error)
+        }
 
-var _ ByteClientAPI = (*bytegroup.ByteClient)(nil)
+        var _ ByteClientAPI = (*bytegroup.ByteClient)(nil)

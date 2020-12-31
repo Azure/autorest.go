@@ -7,661 +7,661 @@ package complexgroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-	"context"
-	"github.com/Azure/go-autorest/autorest"
-	"github.com/Azure/go-autorest/autorest/azure"
-	"github.com/Azure/go-autorest/autorest/validation"
-	"github.com/Azure/go-autorest/tracing"
-	"net/http"
+    "github.com/Azure/go-autorest/autorest"
+    "github.com/Azure/go-autorest/autorest/azure"
+    "net/http"
+    "context"
+    "github.com/Azure/go-autorest/tracing"
+    "github.com/Azure/go-autorest/autorest/validation"
 )
 
 // PolymorphismClient is the test Infrastructure for AutoRest
 type PolymorphismClient struct {
-	BaseClient
+    BaseClient
 }
-
 // NewPolymorphismClient creates an instance of the PolymorphismClient client.
 func NewPolymorphismClient() PolymorphismClient {
-	return NewPolymorphismClientWithBaseURI(DefaultBaseURI)
+    return NewPolymorphismClientWithBaseURI(DefaultBaseURI, )
 }
 
 // NewPolymorphismClientWithBaseURI creates an instance of the PolymorphismClient client using a custom endpoint.  Use
 // this when interacting with an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure stack).
-func NewPolymorphismClientWithBaseURI(baseURI string) PolymorphismClient {
-	return PolymorphismClient{NewWithBaseURI(baseURI)}
-}
+    func NewPolymorphismClientWithBaseURI(baseURI string, ) PolymorphismClient {
+        return PolymorphismClient{ NewWithBaseURI(baseURI, )}
+    }
 
 // GetComplicated get complex types that are polymorphic, but not at the root of the hierarchy; also have additional
 // properties
 func (client PolymorphismClient) GetComplicated(ctx context.Context) (result SalmonModel, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/PolymorphismClient.GetComplicated")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetComplicatedPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "GetComplicated", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/PolymorphismClient.GetComplicated")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetComplicatedPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "GetComplicated", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetComplicatedSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "GetComplicated", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetComplicatedSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "GetComplicated", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetComplicatedResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "GetComplicated", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetComplicatedResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "GetComplicated", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetComplicatedPreparer prepares the GetComplicated request.
-func (client PolymorphismClient) GetComplicatedPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/complex/polymorphism/complicated"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetComplicatedPreparer prepares the GetComplicated request.
+    func (client PolymorphismClient) GetComplicatedPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/complex/polymorphism/complicated"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetComplicatedSender sends the GetComplicated request. The method will close the
-// http.Response Body if it receives an error.
-func (client PolymorphismClient) GetComplicatedSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetComplicatedSender sends the GetComplicated request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client PolymorphismClient) GetComplicatedSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetComplicatedResponder handles the response to the GetComplicated request. The method always
-// closes the http.Response Body.
-func (client PolymorphismClient) GetComplicatedResponder(resp *http.Response) (result SalmonModel, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetComplicatedResponder handles the response to the GetComplicated request. The method always
+    // closes the http.Response Body.
+    func (client PolymorphismClient) GetComplicatedResponder(resp *http.Response) (result SalmonModel, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetComposedWithDiscriminator get complex object composing a polymorphic scalar property and array property with
 // polymorphic element type, with discriminator specified. Deserialization must NOT fail and use the discriminator type
 // specified on the wire.
 func (client PolymorphismClient) GetComposedWithDiscriminator(ctx context.Context) (result DotFishMarket, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/PolymorphismClient.GetComposedWithDiscriminator")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetComposedWithDiscriminatorPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "GetComposedWithDiscriminator", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/PolymorphismClient.GetComposedWithDiscriminator")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetComposedWithDiscriminatorPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "GetComposedWithDiscriminator", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetComposedWithDiscriminatorSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "GetComposedWithDiscriminator", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetComposedWithDiscriminatorSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "GetComposedWithDiscriminator", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetComposedWithDiscriminatorResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "GetComposedWithDiscriminator", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetComposedWithDiscriminatorResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "GetComposedWithDiscriminator", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetComposedWithDiscriminatorPreparer prepares the GetComposedWithDiscriminator request.
-func (client PolymorphismClient) GetComposedWithDiscriminatorPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/complex/polymorphism/composedWithDiscriminator"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetComposedWithDiscriminatorPreparer prepares the GetComposedWithDiscriminator request.
+    func (client PolymorphismClient) GetComposedWithDiscriminatorPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/complex/polymorphism/composedWithDiscriminator"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetComposedWithDiscriminatorSender sends the GetComposedWithDiscriminator request. The method will close the
-// http.Response Body if it receives an error.
-func (client PolymorphismClient) GetComposedWithDiscriminatorSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetComposedWithDiscriminatorSender sends the GetComposedWithDiscriminator request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client PolymorphismClient) GetComposedWithDiscriminatorSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetComposedWithDiscriminatorResponder handles the response to the GetComposedWithDiscriminator request. The method always
-// closes the http.Response Body.
-func (client PolymorphismClient) GetComposedWithDiscriminatorResponder(resp *http.Response) (result DotFishMarket, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetComposedWithDiscriminatorResponder handles the response to the GetComposedWithDiscriminator request. The method always
+    // closes the http.Response Body.
+    func (client PolymorphismClient) GetComposedWithDiscriminatorResponder(resp *http.Response) (result DotFishMarket, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetComposedWithoutDiscriminator get complex object composing a polymorphic scalar property and array property with
 // polymorphic element type, without discriminator specified on wire. Deserialization must NOT fail and use the
 // explicit type of the property.
 func (client PolymorphismClient) GetComposedWithoutDiscriminator(ctx context.Context) (result DotFishMarket, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/PolymorphismClient.GetComposedWithoutDiscriminator")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetComposedWithoutDiscriminatorPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "GetComposedWithoutDiscriminator", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/PolymorphismClient.GetComposedWithoutDiscriminator")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetComposedWithoutDiscriminatorPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "GetComposedWithoutDiscriminator", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetComposedWithoutDiscriminatorSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "GetComposedWithoutDiscriminator", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetComposedWithoutDiscriminatorSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "GetComposedWithoutDiscriminator", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetComposedWithoutDiscriminatorResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "GetComposedWithoutDiscriminator", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetComposedWithoutDiscriminatorResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "GetComposedWithoutDiscriminator", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetComposedWithoutDiscriminatorPreparer prepares the GetComposedWithoutDiscriminator request.
-func (client PolymorphismClient) GetComposedWithoutDiscriminatorPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/complex/polymorphism/composedWithoutDiscriminator"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetComposedWithoutDiscriminatorPreparer prepares the GetComposedWithoutDiscriminator request.
+    func (client PolymorphismClient) GetComposedWithoutDiscriminatorPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/complex/polymorphism/composedWithoutDiscriminator"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetComposedWithoutDiscriminatorSender sends the GetComposedWithoutDiscriminator request. The method will close the
-// http.Response Body if it receives an error.
-func (client PolymorphismClient) GetComposedWithoutDiscriminatorSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetComposedWithoutDiscriminatorSender sends the GetComposedWithoutDiscriminator request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client PolymorphismClient) GetComposedWithoutDiscriminatorSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetComposedWithoutDiscriminatorResponder handles the response to the GetComposedWithoutDiscriminator request. The method always
-// closes the http.Response Body.
-func (client PolymorphismClient) GetComposedWithoutDiscriminatorResponder(resp *http.Response) (result DotFishMarket, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetComposedWithoutDiscriminatorResponder handles the response to the GetComposedWithoutDiscriminator request. The method always
+    // closes the http.Response Body.
+    func (client PolymorphismClient) GetComposedWithoutDiscriminatorResponder(resp *http.Response) (result DotFishMarket, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetDotSyntax get complex types that are polymorphic, JSON key contains a dot
 func (client PolymorphismClient) GetDotSyntax(ctx context.Context) (result DotFishModel, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/PolymorphismClient.GetDotSyntax")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetDotSyntaxPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "GetDotSyntax", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/PolymorphismClient.GetDotSyntax")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetDotSyntaxPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "GetDotSyntax", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetDotSyntaxSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "GetDotSyntax", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetDotSyntaxSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "GetDotSyntax", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetDotSyntaxResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "GetDotSyntax", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetDotSyntaxResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "GetDotSyntax", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetDotSyntaxPreparer prepares the GetDotSyntax request.
-func (client PolymorphismClient) GetDotSyntaxPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/complex/polymorphism/dotsyntax"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetDotSyntaxPreparer prepares the GetDotSyntax request.
+    func (client PolymorphismClient) GetDotSyntaxPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/complex/polymorphism/dotsyntax"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetDotSyntaxSender sends the GetDotSyntax request. The method will close the
-// http.Response Body if it receives an error.
-func (client PolymorphismClient) GetDotSyntaxSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetDotSyntaxSender sends the GetDotSyntax request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client PolymorphismClient) GetDotSyntaxSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetDotSyntaxResponder handles the response to the GetDotSyntax request. The method always
-// closes the http.Response Body.
-func (client PolymorphismClient) GetDotSyntaxResponder(resp *http.Response) (result DotFishModel, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetDotSyntaxResponder handles the response to the GetDotSyntax request. The method always
+    // closes the http.Response Body.
+    func (client PolymorphismClient) GetDotSyntaxResponder(resp *http.Response) (result DotFishModel, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetValid get complex types that are polymorphic
 func (client PolymorphismClient) GetValid(ctx context.Context) (result FishModel, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/PolymorphismClient.GetValid")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetValidPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "GetValid", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/PolymorphismClient.GetValid")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetValidPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "GetValid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetValidSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "GetValid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetValidSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "GetValid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "GetValid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "GetValid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetValidPreparer prepares the GetValid request.
-func (client PolymorphismClient) GetValidPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/complex/polymorphism/valid"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetValidPreparer prepares the GetValid request.
+    func (client PolymorphismClient) GetValidPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/complex/polymorphism/valid"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetValidSender sends the GetValid request. The method will close the
-// http.Response Body if it receives an error.
-func (client PolymorphismClient) GetValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetValidSender sends the GetValid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client PolymorphismClient) GetValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetValidResponder handles the response to the GetValid request. The method always
-// closes the http.Response Body.
-func (client PolymorphismClient) GetValidResponder(resp *http.Response) (result FishModel, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetValidResponder handles the response to the GetValid request. The method always
+    // closes the http.Response Body.
+    func (client PolymorphismClient) GetValidResponder(resp *http.Response) (result FishModel, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // PutComplicated put complex types that are polymorphic, but not at the root of the hierarchy; also have additional
 // properties
 func (client PolymorphismClient) PutComplicated(ctx context.Context, complexBody BasicSalmon) (result autorest.Response, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/PolymorphismClient.PutComplicated")
-		defer func() {
-			sc := -1
-			if result.Response != nil {
-				sc = result.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.PutComplicatedPreparer(ctx, complexBody)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "PutComplicated", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/PolymorphismClient.PutComplicated")
+        defer func() {
+            sc := -1
+        if result.Response != nil {
+        sc = result.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.PutComplicatedPreparer(ctx, complexBody)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "PutComplicated", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.PutComplicatedSender(req)
-	if err != nil {
-		result.Response = resp
-		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "PutComplicated", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.PutComplicatedSender(req)
+        if err != nil {
+        result.Response = resp
+        err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "PutComplicated", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.PutComplicatedResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "PutComplicated", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.PutComplicatedResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "PutComplicated", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// PutComplicatedPreparer prepares the PutComplicated request.
-func (client PolymorphismClient) PutComplicatedPreparer(ctx context.Context, complexBody BasicSalmon) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsContentType("application/json; charset=utf-8"),
-		autorest.AsPut(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/complex/polymorphism/complicated"),
-		autorest.WithJSON(complexBody))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // PutComplicatedPreparer prepares the PutComplicated request.
+    func (client PolymorphismClient) PutComplicatedPreparer(ctx context.Context, complexBody BasicSalmon) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsContentType("application/json; charset=utf-8"),
+autorest.AsPut(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/complex/polymorphism/complicated"),
+autorest.WithJSON(complexBody))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// PutComplicatedSender sends the PutComplicated request. The method will close the
-// http.Response Body if it receives an error.
-func (client PolymorphismClient) PutComplicatedSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // PutComplicatedSender sends the PutComplicated request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client PolymorphismClient) PutComplicatedSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// PutComplicatedResponder handles the response to the PutComplicated request. The method always
-// closes the http.Response Body.
-func (client PolymorphismClient) PutComplicatedResponder(resp *http.Response) (result autorest.Response, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByClosing())
-	result.Response = resp
-	return
-}
+    // PutComplicatedResponder handles the response to the PutComplicated request. The method always
+    // closes the http.Response Body.
+    func (client PolymorphismClient) PutComplicatedResponder(resp *http.Response) (result autorest.Response, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByClosing())
+            result.Response = resp
+            return
+    }
 
 // PutMissingDiscriminator put complex types that are polymorphic, omitting the discriminator
 func (client PolymorphismClient) PutMissingDiscriminator(ctx context.Context, complexBody BasicSalmon) (result SalmonModel, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/PolymorphismClient.PutMissingDiscriminator")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.PutMissingDiscriminatorPreparer(ctx, complexBody)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "PutMissingDiscriminator", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/PolymorphismClient.PutMissingDiscriminator")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.PutMissingDiscriminatorPreparer(ctx, complexBody)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "PutMissingDiscriminator", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.PutMissingDiscriminatorSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "PutMissingDiscriminator", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.PutMissingDiscriminatorSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "PutMissingDiscriminator", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.PutMissingDiscriminatorResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "PutMissingDiscriminator", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.PutMissingDiscriminatorResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "PutMissingDiscriminator", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// PutMissingDiscriminatorPreparer prepares the PutMissingDiscriminator request.
-func (client PolymorphismClient) PutMissingDiscriminatorPreparer(ctx context.Context, complexBody BasicSalmon) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsContentType("application/json; charset=utf-8"),
-		autorest.AsPut(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/complex/polymorphism/missingdiscriminator"),
-		autorest.WithJSON(complexBody))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // PutMissingDiscriminatorPreparer prepares the PutMissingDiscriminator request.
+    func (client PolymorphismClient) PutMissingDiscriminatorPreparer(ctx context.Context, complexBody BasicSalmon) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsContentType("application/json; charset=utf-8"),
+autorest.AsPut(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/complex/polymorphism/missingdiscriminator"),
+autorest.WithJSON(complexBody))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// PutMissingDiscriminatorSender sends the PutMissingDiscriminator request. The method will close the
-// http.Response Body if it receives an error.
-func (client PolymorphismClient) PutMissingDiscriminatorSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // PutMissingDiscriminatorSender sends the PutMissingDiscriminator request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client PolymorphismClient) PutMissingDiscriminatorSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// PutMissingDiscriminatorResponder handles the response to the PutMissingDiscriminator request. The method always
-// closes the http.Response Body.
-func (client PolymorphismClient) PutMissingDiscriminatorResponder(resp *http.Response) (result SalmonModel, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // PutMissingDiscriminatorResponder handles the response to the PutMissingDiscriminator request. The method always
+    // closes the http.Response Body.
+    func (client PolymorphismClient) PutMissingDiscriminatorResponder(resp *http.Response) (result SalmonModel, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // PutValid put complex types that are polymorphic
-// Parameters:
-// complexBody - please put a salmon that looks like this:
-// {
-// 'fishtype':'Salmon',
-// 'location':'alaska',
-// 'iswild':true,
-// 'species':'king',
-// 'length':1.0,
-// 'siblings':[
-// {
-// 'fishtype':'Shark',
-// 'age':6,
-// 'birthday': '2012-01-05T01:00:00Z',
-// 'length':20.0,
-// 'species':'predator',
-// },
-// {
-// 'fishtype':'Sawshark',
-// 'age':105,
-// 'birthday': '1900-01-05T01:00:00Z',
-// 'length':10.0,
-// 'picture': new Buffer([255, 255, 255, 255, 254]).toString('base64'),
-// 'species':'dangerous',
-// },
-// {
-// 'fishtype': 'goblin',
-// 'age': 1,
-// 'birthday': '2015-08-08T00:00:00Z',
-// 'length': 30.0,
-// 'species': 'scary',
-// 'jawsize': 5
-// }
-// ]
-// };
+    // Parameters:
+        // complexBody - please put a salmon that looks like this:
+        // {
+        // 'fishtype':'Salmon',
+        // 'location':'alaska',
+        // 'iswild':true,
+        // 'species':'king',
+        // 'length':1.0,
+        // 'siblings':[
+        // {
+        // 'fishtype':'Shark',
+        // 'age':6,
+        // 'birthday': '2012-01-05T01:00:00Z',
+        // 'length':20.0,
+        // 'species':'predator',
+        // },
+        // {
+        // 'fishtype':'Sawshark',
+        // 'age':105,
+        // 'birthday': '1900-01-05T01:00:00Z',
+        // 'length':10.0,
+        // 'picture': new Buffer([255, 255, 255, 255, 254]).toString('base64'),
+        // 'species':'dangerous',
+        // },
+        // {
+        // 'fishtype': 'goblin',
+        // 'age': 1,
+        // 'birthday': '2015-08-08T00:00:00Z',
+        // 'length': 30.0,
+        // 'species': 'scary',
+        // 'jawsize': 5
+        // }
+        // ]
+        // };
 func (client PolymorphismClient) PutValid(ctx context.Context, complexBody BasicFish) (result autorest.Response, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/PolymorphismClient.PutValid")
-		defer func() {
-			sc := -1
-			if result.Response != nil {
-				sc = result.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	if err := validation.Validate([]validation.Validation{
-		{TargetValue: complexBody,
-			Constraints: []validation.Constraint{{Target: "complexBody.Length", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewError("complexgroup.PolymorphismClient", "PutValid", err.Error())
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/PolymorphismClient.PutValid")
+        defer func() {
+            sc := -1
+        if result.Response != nil {
+        sc = result.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+        if err := validation.Validate([]validation.Validation{
+        { TargetValue: complexBody,
+         Constraints: []validation.Constraint{	{Target: "complexBody.Length", Name: validation.Null, Rule: true, Chain: nil }}}}); err != nil {
+        return result, validation.NewError("complexgroup.PolymorphismClient", "PutValid", err.Error())
+        }
 
-	req, err := client.PutValidPreparer(ctx, complexBody)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "PutValid", nil, "Failure preparing request")
-		return
-	}
+        req, err := client.PutValidPreparer(ctx, complexBody)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "PutValid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.PutValidSender(req)
-	if err != nil {
-		result.Response = resp
-		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "PutValid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.PutValidSender(req)
+        if err != nil {
+        result.Response = resp
+        err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "PutValid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.PutValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "PutValid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.PutValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "PutValid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// PutValidPreparer prepares the PutValid request.
-func (client PolymorphismClient) PutValidPreparer(ctx context.Context, complexBody BasicFish) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsContentType("application/json; charset=utf-8"),
-		autorest.AsPut(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/complex/polymorphism/valid"),
-		autorest.WithJSON(complexBody))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // PutValidPreparer prepares the PutValid request.
+    func (client PolymorphismClient) PutValidPreparer(ctx context.Context, complexBody BasicFish) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsContentType("application/json; charset=utf-8"),
+autorest.AsPut(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/complex/polymorphism/valid"),
+autorest.WithJSON(complexBody))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// PutValidSender sends the PutValid request. The method will close the
-// http.Response Body if it receives an error.
-func (client PolymorphismClient) PutValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // PutValidSender sends the PutValid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client PolymorphismClient) PutValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// PutValidResponder handles the response to the PutValid request. The method always
-// closes the http.Response Body.
-func (client PolymorphismClient) PutValidResponder(resp *http.Response) (result autorest.Response, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByClosing())
-	result.Response = resp
-	return
-}
+    // PutValidResponder handles the response to the PutValid request. The method always
+    // closes the http.Response Body.
+    func (client PolymorphismClient) PutValidResponder(resp *http.Response) (result autorest.Response, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByClosing())
+            result.Response = resp
+            return
+    }
 
 // PutValidMissingRequired put complex types that are polymorphic, attempting to omit required 'birthday' field - the
 // request should not be allowed from the client
-// Parameters:
-// complexBody - please attempt put a sawshark that looks like this, the client should not allow this data to
-// be sent:
-// {
-// "fishtype": "sawshark",
-// "species": "snaggle toothed",
-// "length": 18.5,
-// "age": 2,
-// "birthday": "2013-06-01T01:00:00Z",
-// "location": "alaska",
-// "picture": base64(FF FF FF FF FE),
-// "siblings": [
-// {
-// "fishtype": "shark",
-// "species": "predator",
-// "birthday": "2012-01-05T01:00:00Z",
-// "length": 20,
-// "age": 6
-// },
-// {
-// "fishtype": "sawshark",
-// "species": "dangerous",
-// "picture": base64(FF FF FF FF FE),
-// "length": 10,
-// "age": 105
-// }
-// ]
-// }
+    // Parameters:
+        // complexBody - please attempt put a sawshark that looks like this, the client should not allow this data to
+        // be sent:
+        // {
+        // "fishtype": "sawshark",
+        // "species": "snaggle toothed",
+        // "length": 18.5,
+        // "age": 2,
+        // "birthday": "2013-06-01T01:00:00Z",
+        // "location": "alaska",
+        // "picture": base64(FF FF FF FF FE),
+        // "siblings": [
+        // {
+        // "fishtype": "shark",
+        // "species": "predator",
+        // "birthday": "2012-01-05T01:00:00Z",
+        // "length": 20,
+        // "age": 6
+        // },
+        // {
+        // "fishtype": "sawshark",
+        // "species": "dangerous",
+        // "picture": base64(FF FF FF FF FE),
+        // "length": 10,
+        // "age": 105
+        // }
+        // ]
+        // }
 func (client PolymorphismClient) PutValidMissingRequired(ctx context.Context, complexBody BasicFish) (result autorest.Response, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/PolymorphismClient.PutValidMissingRequired")
-		defer func() {
-			sc := -1
-			if result.Response != nil {
-				sc = result.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	if err := validation.Validate([]validation.Validation{
-		{TargetValue: complexBody,
-			Constraints: []validation.Constraint{{Target: "complexBody.Length", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewError("complexgroup.PolymorphismClient", "PutValidMissingRequired", err.Error())
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/PolymorphismClient.PutValidMissingRequired")
+        defer func() {
+            sc := -1
+        if result.Response != nil {
+        sc = result.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+        if err := validation.Validate([]validation.Validation{
+        { TargetValue: complexBody,
+         Constraints: []validation.Constraint{	{Target: "complexBody.Length", Name: validation.Null, Rule: true, Chain: nil }}}}); err != nil {
+        return result, validation.NewError("complexgroup.PolymorphismClient", "PutValidMissingRequired", err.Error())
+        }
 
-	req, err := client.PutValidMissingRequiredPreparer(ctx, complexBody)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "PutValidMissingRequired", nil, "Failure preparing request")
-		return
-	}
+        req, err := client.PutValidMissingRequiredPreparer(ctx, complexBody)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "PutValidMissingRequired", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.PutValidMissingRequiredSender(req)
-	if err != nil {
-		result.Response = resp
-		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "PutValidMissingRequired", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.PutValidMissingRequiredSender(req)
+        if err != nil {
+        result.Response = resp
+        err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "PutValidMissingRequired", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.PutValidMissingRequiredResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "PutValidMissingRequired", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.PutValidMissingRequiredResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "PutValidMissingRequired", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// PutValidMissingRequiredPreparer prepares the PutValidMissingRequired request.
-func (client PolymorphismClient) PutValidMissingRequiredPreparer(ctx context.Context, complexBody BasicFish) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsContentType("application/json; charset=utf-8"),
-		autorest.AsPut(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/complex/polymorphism/missingrequired/invalid"),
-		autorest.WithJSON(complexBody))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // PutValidMissingRequiredPreparer prepares the PutValidMissingRequired request.
+    func (client PolymorphismClient) PutValidMissingRequiredPreparer(ctx context.Context, complexBody BasicFish) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsContentType("application/json; charset=utf-8"),
+autorest.AsPut(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/complex/polymorphism/missingrequired/invalid"),
+autorest.WithJSON(complexBody))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// PutValidMissingRequiredSender sends the PutValidMissingRequired request. The method will close the
-// http.Response Body if it receives an error.
-func (client PolymorphismClient) PutValidMissingRequiredSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // PutValidMissingRequiredSender sends the PutValidMissingRequired request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client PolymorphismClient) PutValidMissingRequiredSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// PutValidMissingRequiredResponder handles the response to the PutValidMissingRequired request. The method always
-// closes the http.Response Body.
-func (client PolymorphismClient) PutValidMissingRequiredResponder(resp *http.Response) (result autorest.Response, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByClosing())
-	result.Response = resp
-	return
-}
+    // PutValidMissingRequiredResponder handles the response to the PutValidMissingRequired request. The method always
+    // closes the http.Response Body.
+    func (client PolymorphismClient) PutValidMissingRequiredResponder(resp *http.Response) (result autorest.Response, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByClosing())
+            result.Response = resp
+            return
+    }
+

@@ -7,1195 +7,1195 @@ package datetimegroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-	"context"
-	"github.com/Azure/go-autorest/autorest"
-	"github.com/Azure/go-autorest/autorest/azure"
-	"github.com/Azure/go-autorest/autorest/date"
-	"github.com/Azure/go-autorest/tracing"
-	"net/http"
+    "github.com/Azure/go-autorest/autorest"
+    "github.com/Azure/go-autorest/autorest/azure"
+    "net/http"
+    "context"
+    "github.com/Azure/go-autorest/tracing"
+    "github.com/Azure/go-autorest/autorest/date"
 )
 
 // DatetimeClient is the test Infrastructure for AutoRest
 type DatetimeClient struct {
-	BaseClient
+    BaseClient
 }
-
 // NewDatetimeClient creates an instance of the DatetimeClient client.
 func NewDatetimeClient() DatetimeClient {
-	return NewDatetimeClientWithBaseURI(DefaultBaseURI)
+    return NewDatetimeClientWithBaseURI(DefaultBaseURI, )
 }
 
 // NewDatetimeClientWithBaseURI creates an instance of the DatetimeClient client using a custom endpoint.  Use this
 // when interacting with an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure stack).
-func NewDatetimeClientWithBaseURI(baseURI string) DatetimeClient {
-	return DatetimeClient{NewWithBaseURI(baseURI)}
-}
+    func NewDatetimeClientWithBaseURI(baseURI string, ) DatetimeClient {
+        return DatetimeClient{ NewWithBaseURI(baseURI, )}
+    }
 
 // GetInvalid get invalid datetime value
 func (client DatetimeClient) GetInvalid(ctx context.Context) (result DateTime, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DatetimeClient.GetInvalid")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetInvalidPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetInvalid", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DatetimeClient.GetInvalid")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetInvalidPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetInvalid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetInvalidSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetInvalid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetInvalidSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetInvalid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetInvalidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetInvalid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetInvalidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetInvalid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetInvalidPreparer prepares the GetInvalid request.
-func (client DatetimeClient) GetInvalidPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/datetime/invalid"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetInvalidPreparer prepares the GetInvalid request.
+    func (client DatetimeClient) GetInvalidPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/datetime/invalid"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetInvalidSender sends the GetInvalid request. The method will close the
-// http.Response Body if it receives an error.
-func (client DatetimeClient) GetInvalidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetInvalidSender sends the GetInvalid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DatetimeClient) GetInvalidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetInvalidResponder handles the response to the GetInvalid request. The method always
-// closes the http.Response Body.
-func (client DatetimeClient) GetInvalidResponder(resp *http.Response) (result DateTime, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetInvalidResponder handles the response to the GetInvalid request. The method always
+    // closes the http.Response Body.
+    func (client DatetimeClient) GetInvalidResponder(resp *http.Response) (result DateTime, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetLocalNegativeOffsetLowercaseMaxDateTime get max datetime value with positive num offset
 // 9999-12-31t23:59:59.9999999-14:00
 func (client DatetimeClient) GetLocalNegativeOffsetLowercaseMaxDateTime(ctx context.Context) (result DateTime, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DatetimeClient.GetLocalNegativeOffsetLowercaseMaxDateTime")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetLocalNegativeOffsetLowercaseMaxDateTimePreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetLocalNegativeOffsetLowercaseMaxDateTime", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DatetimeClient.GetLocalNegativeOffsetLowercaseMaxDateTime")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetLocalNegativeOffsetLowercaseMaxDateTimePreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetLocalNegativeOffsetLowercaseMaxDateTime", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetLocalNegativeOffsetLowercaseMaxDateTimeSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetLocalNegativeOffsetLowercaseMaxDateTime", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetLocalNegativeOffsetLowercaseMaxDateTimeSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetLocalNegativeOffsetLowercaseMaxDateTime", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetLocalNegativeOffsetLowercaseMaxDateTimeResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetLocalNegativeOffsetLowercaseMaxDateTime", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetLocalNegativeOffsetLowercaseMaxDateTimeResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetLocalNegativeOffsetLowercaseMaxDateTime", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetLocalNegativeOffsetLowercaseMaxDateTimePreparer prepares the GetLocalNegativeOffsetLowercaseMaxDateTime request.
-func (client DatetimeClient) GetLocalNegativeOffsetLowercaseMaxDateTimePreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/datetime/max/localnegativeoffset/lowercase"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetLocalNegativeOffsetLowercaseMaxDateTimePreparer prepares the GetLocalNegativeOffsetLowercaseMaxDateTime request.
+    func (client DatetimeClient) GetLocalNegativeOffsetLowercaseMaxDateTimePreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/datetime/max/localnegativeoffset/lowercase"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetLocalNegativeOffsetLowercaseMaxDateTimeSender sends the GetLocalNegativeOffsetLowercaseMaxDateTime request. The method will close the
-// http.Response Body if it receives an error.
-func (client DatetimeClient) GetLocalNegativeOffsetLowercaseMaxDateTimeSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetLocalNegativeOffsetLowercaseMaxDateTimeSender sends the GetLocalNegativeOffsetLowercaseMaxDateTime request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DatetimeClient) GetLocalNegativeOffsetLowercaseMaxDateTimeSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetLocalNegativeOffsetLowercaseMaxDateTimeResponder handles the response to the GetLocalNegativeOffsetLowercaseMaxDateTime request. The method always
-// closes the http.Response Body.
-func (client DatetimeClient) GetLocalNegativeOffsetLowercaseMaxDateTimeResponder(resp *http.Response) (result DateTime, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetLocalNegativeOffsetLowercaseMaxDateTimeResponder handles the response to the GetLocalNegativeOffsetLowercaseMaxDateTime request. The method always
+    // closes the http.Response Body.
+    func (client DatetimeClient) GetLocalNegativeOffsetLowercaseMaxDateTimeResponder(resp *http.Response) (result DateTime, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetLocalNegativeOffsetMinDateTime get min datetime value 0001-01-01T00:00:00-14:00
 func (client DatetimeClient) GetLocalNegativeOffsetMinDateTime(ctx context.Context) (result DateTime, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DatetimeClient.GetLocalNegativeOffsetMinDateTime")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetLocalNegativeOffsetMinDateTimePreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetLocalNegativeOffsetMinDateTime", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DatetimeClient.GetLocalNegativeOffsetMinDateTime")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetLocalNegativeOffsetMinDateTimePreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetLocalNegativeOffsetMinDateTime", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetLocalNegativeOffsetMinDateTimeSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetLocalNegativeOffsetMinDateTime", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetLocalNegativeOffsetMinDateTimeSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetLocalNegativeOffsetMinDateTime", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetLocalNegativeOffsetMinDateTimeResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetLocalNegativeOffsetMinDateTime", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetLocalNegativeOffsetMinDateTimeResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetLocalNegativeOffsetMinDateTime", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetLocalNegativeOffsetMinDateTimePreparer prepares the GetLocalNegativeOffsetMinDateTime request.
-func (client DatetimeClient) GetLocalNegativeOffsetMinDateTimePreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/datetime/min/localnegativeoffset"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetLocalNegativeOffsetMinDateTimePreparer prepares the GetLocalNegativeOffsetMinDateTime request.
+    func (client DatetimeClient) GetLocalNegativeOffsetMinDateTimePreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/datetime/min/localnegativeoffset"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetLocalNegativeOffsetMinDateTimeSender sends the GetLocalNegativeOffsetMinDateTime request. The method will close the
-// http.Response Body if it receives an error.
-func (client DatetimeClient) GetLocalNegativeOffsetMinDateTimeSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetLocalNegativeOffsetMinDateTimeSender sends the GetLocalNegativeOffsetMinDateTime request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DatetimeClient) GetLocalNegativeOffsetMinDateTimeSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetLocalNegativeOffsetMinDateTimeResponder handles the response to the GetLocalNegativeOffsetMinDateTime request. The method always
-// closes the http.Response Body.
-func (client DatetimeClient) GetLocalNegativeOffsetMinDateTimeResponder(resp *http.Response) (result DateTime, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetLocalNegativeOffsetMinDateTimeResponder handles the response to the GetLocalNegativeOffsetMinDateTime request. The method always
+    // closes the http.Response Body.
+    func (client DatetimeClient) GetLocalNegativeOffsetMinDateTimeResponder(resp *http.Response) (result DateTime, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetLocalNegativeOffsetUppercaseMaxDateTime get max datetime value with positive num offset
 // 9999-12-31T23:59:59.9999999-14:00
 func (client DatetimeClient) GetLocalNegativeOffsetUppercaseMaxDateTime(ctx context.Context) (result DateTime, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DatetimeClient.GetLocalNegativeOffsetUppercaseMaxDateTime")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetLocalNegativeOffsetUppercaseMaxDateTimePreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetLocalNegativeOffsetUppercaseMaxDateTime", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DatetimeClient.GetLocalNegativeOffsetUppercaseMaxDateTime")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetLocalNegativeOffsetUppercaseMaxDateTimePreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetLocalNegativeOffsetUppercaseMaxDateTime", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetLocalNegativeOffsetUppercaseMaxDateTimeSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetLocalNegativeOffsetUppercaseMaxDateTime", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetLocalNegativeOffsetUppercaseMaxDateTimeSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetLocalNegativeOffsetUppercaseMaxDateTime", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetLocalNegativeOffsetUppercaseMaxDateTimeResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetLocalNegativeOffsetUppercaseMaxDateTime", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetLocalNegativeOffsetUppercaseMaxDateTimeResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetLocalNegativeOffsetUppercaseMaxDateTime", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetLocalNegativeOffsetUppercaseMaxDateTimePreparer prepares the GetLocalNegativeOffsetUppercaseMaxDateTime request.
-func (client DatetimeClient) GetLocalNegativeOffsetUppercaseMaxDateTimePreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/datetime/max/localnegativeoffset/uppercase"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetLocalNegativeOffsetUppercaseMaxDateTimePreparer prepares the GetLocalNegativeOffsetUppercaseMaxDateTime request.
+    func (client DatetimeClient) GetLocalNegativeOffsetUppercaseMaxDateTimePreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/datetime/max/localnegativeoffset/uppercase"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetLocalNegativeOffsetUppercaseMaxDateTimeSender sends the GetLocalNegativeOffsetUppercaseMaxDateTime request. The method will close the
-// http.Response Body if it receives an error.
-func (client DatetimeClient) GetLocalNegativeOffsetUppercaseMaxDateTimeSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetLocalNegativeOffsetUppercaseMaxDateTimeSender sends the GetLocalNegativeOffsetUppercaseMaxDateTime request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DatetimeClient) GetLocalNegativeOffsetUppercaseMaxDateTimeSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetLocalNegativeOffsetUppercaseMaxDateTimeResponder handles the response to the GetLocalNegativeOffsetUppercaseMaxDateTime request. The method always
-// closes the http.Response Body.
-func (client DatetimeClient) GetLocalNegativeOffsetUppercaseMaxDateTimeResponder(resp *http.Response) (result DateTime, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetLocalNegativeOffsetUppercaseMaxDateTimeResponder handles the response to the GetLocalNegativeOffsetUppercaseMaxDateTime request. The method always
+    // closes the http.Response Body.
+    func (client DatetimeClient) GetLocalNegativeOffsetUppercaseMaxDateTimeResponder(resp *http.Response) (result DateTime, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetLocalPositiveOffsetLowercaseMaxDateTime get max datetime value with positive num offset
 // 9999-12-31t23:59:59.9999999+14:00
 func (client DatetimeClient) GetLocalPositiveOffsetLowercaseMaxDateTime(ctx context.Context) (result DateTime, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DatetimeClient.GetLocalPositiveOffsetLowercaseMaxDateTime")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetLocalPositiveOffsetLowercaseMaxDateTimePreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetLocalPositiveOffsetLowercaseMaxDateTime", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DatetimeClient.GetLocalPositiveOffsetLowercaseMaxDateTime")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetLocalPositiveOffsetLowercaseMaxDateTimePreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetLocalPositiveOffsetLowercaseMaxDateTime", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetLocalPositiveOffsetLowercaseMaxDateTimeSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetLocalPositiveOffsetLowercaseMaxDateTime", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetLocalPositiveOffsetLowercaseMaxDateTimeSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetLocalPositiveOffsetLowercaseMaxDateTime", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetLocalPositiveOffsetLowercaseMaxDateTimeResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetLocalPositiveOffsetLowercaseMaxDateTime", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetLocalPositiveOffsetLowercaseMaxDateTimeResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetLocalPositiveOffsetLowercaseMaxDateTime", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetLocalPositiveOffsetLowercaseMaxDateTimePreparer prepares the GetLocalPositiveOffsetLowercaseMaxDateTime request.
-func (client DatetimeClient) GetLocalPositiveOffsetLowercaseMaxDateTimePreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/datetime/max/localpositiveoffset/lowercase"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetLocalPositiveOffsetLowercaseMaxDateTimePreparer prepares the GetLocalPositiveOffsetLowercaseMaxDateTime request.
+    func (client DatetimeClient) GetLocalPositiveOffsetLowercaseMaxDateTimePreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/datetime/max/localpositiveoffset/lowercase"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetLocalPositiveOffsetLowercaseMaxDateTimeSender sends the GetLocalPositiveOffsetLowercaseMaxDateTime request. The method will close the
-// http.Response Body if it receives an error.
-func (client DatetimeClient) GetLocalPositiveOffsetLowercaseMaxDateTimeSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetLocalPositiveOffsetLowercaseMaxDateTimeSender sends the GetLocalPositiveOffsetLowercaseMaxDateTime request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DatetimeClient) GetLocalPositiveOffsetLowercaseMaxDateTimeSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetLocalPositiveOffsetLowercaseMaxDateTimeResponder handles the response to the GetLocalPositiveOffsetLowercaseMaxDateTime request. The method always
-// closes the http.Response Body.
-func (client DatetimeClient) GetLocalPositiveOffsetLowercaseMaxDateTimeResponder(resp *http.Response) (result DateTime, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetLocalPositiveOffsetLowercaseMaxDateTimeResponder handles the response to the GetLocalPositiveOffsetLowercaseMaxDateTime request. The method always
+    // closes the http.Response Body.
+    func (client DatetimeClient) GetLocalPositiveOffsetLowercaseMaxDateTimeResponder(resp *http.Response) (result DateTime, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetLocalPositiveOffsetMinDateTime get min datetime value 0001-01-01T00:00:00+14:00
 func (client DatetimeClient) GetLocalPositiveOffsetMinDateTime(ctx context.Context) (result DateTime, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DatetimeClient.GetLocalPositiveOffsetMinDateTime")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetLocalPositiveOffsetMinDateTimePreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetLocalPositiveOffsetMinDateTime", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DatetimeClient.GetLocalPositiveOffsetMinDateTime")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetLocalPositiveOffsetMinDateTimePreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetLocalPositiveOffsetMinDateTime", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetLocalPositiveOffsetMinDateTimeSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetLocalPositiveOffsetMinDateTime", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetLocalPositiveOffsetMinDateTimeSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetLocalPositiveOffsetMinDateTime", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetLocalPositiveOffsetMinDateTimeResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetLocalPositiveOffsetMinDateTime", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetLocalPositiveOffsetMinDateTimeResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetLocalPositiveOffsetMinDateTime", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetLocalPositiveOffsetMinDateTimePreparer prepares the GetLocalPositiveOffsetMinDateTime request.
-func (client DatetimeClient) GetLocalPositiveOffsetMinDateTimePreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/datetime/min/localpositiveoffset"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetLocalPositiveOffsetMinDateTimePreparer prepares the GetLocalPositiveOffsetMinDateTime request.
+    func (client DatetimeClient) GetLocalPositiveOffsetMinDateTimePreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/datetime/min/localpositiveoffset"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetLocalPositiveOffsetMinDateTimeSender sends the GetLocalPositiveOffsetMinDateTime request. The method will close the
-// http.Response Body if it receives an error.
-func (client DatetimeClient) GetLocalPositiveOffsetMinDateTimeSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetLocalPositiveOffsetMinDateTimeSender sends the GetLocalPositiveOffsetMinDateTime request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DatetimeClient) GetLocalPositiveOffsetMinDateTimeSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetLocalPositiveOffsetMinDateTimeResponder handles the response to the GetLocalPositiveOffsetMinDateTime request. The method always
-// closes the http.Response Body.
-func (client DatetimeClient) GetLocalPositiveOffsetMinDateTimeResponder(resp *http.Response) (result DateTime, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetLocalPositiveOffsetMinDateTimeResponder handles the response to the GetLocalPositiveOffsetMinDateTime request. The method always
+    // closes the http.Response Body.
+    func (client DatetimeClient) GetLocalPositiveOffsetMinDateTimeResponder(resp *http.Response) (result DateTime, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetLocalPositiveOffsetUppercaseMaxDateTime get max datetime value with positive num offset
 // 9999-12-31T23:59:59.9999999+14:00
 func (client DatetimeClient) GetLocalPositiveOffsetUppercaseMaxDateTime(ctx context.Context) (result DateTime, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DatetimeClient.GetLocalPositiveOffsetUppercaseMaxDateTime")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetLocalPositiveOffsetUppercaseMaxDateTimePreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetLocalPositiveOffsetUppercaseMaxDateTime", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DatetimeClient.GetLocalPositiveOffsetUppercaseMaxDateTime")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetLocalPositiveOffsetUppercaseMaxDateTimePreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetLocalPositiveOffsetUppercaseMaxDateTime", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetLocalPositiveOffsetUppercaseMaxDateTimeSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetLocalPositiveOffsetUppercaseMaxDateTime", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetLocalPositiveOffsetUppercaseMaxDateTimeSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetLocalPositiveOffsetUppercaseMaxDateTime", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetLocalPositiveOffsetUppercaseMaxDateTimeResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetLocalPositiveOffsetUppercaseMaxDateTime", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetLocalPositiveOffsetUppercaseMaxDateTimeResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetLocalPositiveOffsetUppercaseMaxDateTime", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetLocalPositiveOffsetUppercaseMaxDateTimePreparer prepares the GetLocalPositiveOffsetUppercaseMaxDateTime request.
-func (client DatetimeClient) GetLocalPositiveOffsetUppercaseMaxDateTimePreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/datetime/max/localpositiveoffset/uppercase"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetLocalPositiveOffsetUppercaseMaxDateTimePreparer prepares the GetLocalPositiveOffsetUppercaseMaxDateTime request.
+    func (client DatetimeClient) GetLocalPositiveOffsetUppercaseMaxDateTimePreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/datetime/max/localpositiveoffset/uppercase"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetLocalPositiveOffsetUppercaseMaxDateTimeSender sends the GetLocalPositiveOffsetUppercaseMaxDateTime request. The method will close the
-// http.Response Body if it receives an error.
-func (client DatetimeClient) GetLocalPositiveOffsetUppercaseMaxDateTimeSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetLocalPositiveOffsetUppercaseMaxDateTimeSender sends the GetLocalPositiveOffsetUppercaseMaxDateTime request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DatetimeClient) GetLocalPositiveOffsetUppercaseMaxDateTimeSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetLocalPositiveOffsetUppercaseMaxDateTimeResponder handles the response to the GetLocalPositiveOffsetUppercaseMaxDateTime request. The method always
-// closes the http.Response Body.
-func (client DatetimeClient) GetLocalPositiveOffsetUppercaseMaxDateTimeResponder(resp *http.Response) (result DateTime, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetLocalPositiveOffsetUppercaseMaxDateTimeResponder handles the response to the GetLocalPositiveOffsetUppercaseMaxDateTime request. The method always
+    // closes the http.Response Body.
+    func (client DatetimeClient) GetLocalPositiveOffsetUppercaseMaxDateTimeResponder(resp *http.Response) (result DateTime, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetNull get null datetime value
 func (client DatetimeClient) GetNull(ctx context.Context) (result DateTime, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DatetimeClient.GetNull")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetNullPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetNull", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DatetimeClient.GetNull")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetNullPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetNull", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetNullSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetNull", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetNullSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetNull", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetNullResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetNull", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetNullResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetNull", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetNullPreparer prepares the GetNull request.
-func (client DatetimeClient) GetNullPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/datetime/null"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetNullPreparer prepares the GetNull request.
+    func (client DatetimeClient) GetNullPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/datetime/null"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetNullSender sends the GetNull request. The method will close the
-// http.Response Body if it receives an error.
-func (client DatetimeClient) GetNullSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetNullSender sends the GetNull request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DatetimeClient) GetNullSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetNullResponder handles the response to the GetNull request. The method always
-// closes the http.Response Body.
-func (client DatetimeClient) GetNullResponder(resp *http.Response) (result DateTime, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetNullResponder handles the response to the GetNull request. The method always
+    // closes the http.Response Body.
+    func (client DatetimeClient) GetNullResponder(resp *http.Response) (result DateTime, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetOverflow get overflow datetime value
 func (client DatetimeClient) GetOverflow(ctx context.Context) (result DateTime, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DatetimeClient.GetOverflow")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetOverflowPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetOverflow", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DatetimeClient.GetOverflow")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetOverflowPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetOverflow", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetOverflowSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetOverflow", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetOverflowSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetOverflow", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetOverflowResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetOverflow", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetOverflowResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetOverflow", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetOverflowPreparer prepares the GetOverflow request.
-func (client DatetimeClient) GetOverflowPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/datetime/overflow"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetOverflowPreparer prepares the GetOverflow request.
+    func (client DatetimeClient) GetOverflowPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/datetime/overflow"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetOverflowSender sends the GetOverflow request. The method will close the
-// http.Response Body if it receives an error.
-func (client DatetimeClient) GetOverflowSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetOverflowSender sends the GetOverflow request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DatetimeClient) GetOverflowSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetOverflowResponder handles the response to the GetOverflow request. The method always
-// closes the http.Response Body.
-func (client DatetimeClient) GetOverflowResponder(resp *http.Response) (result DateTime, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetOverflowResponder handles the response to the GetOverflow request. The method always
+    // closes the http.Response Body.
+    func (client DatetimeClient) GetOverflowResponder(resp *http.Response) (result DateTime, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetUnderflow get underflow datetime value
 func (client DatetimeClient) GetUnderflow(ctx context.Context) (result DateTime, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DatetimeClient.GetUnderflow")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetUnderflowPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetUnderflow", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DatetimeClient.GetUnderflow")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetUnderflowPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetUnderflow", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetUnderflowSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetUnderflow", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetUnderflowSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetUnderflow", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetUnderflowResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetUnderflow", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetUnderflowResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetUnderflow", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetUnderflowPreparer prepares the GetUnderflow request.
-func (client DatetimeClient) GetUnderflowPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/datetime/underflow"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetUnderflowPreparer prepares the GetUnderflow request.
+    func (client DatetimeClient) GetUnderflowPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/datetime/underflow"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetUnderflowSender sends the GetUnderflow request. The method will close the
-// http.Response Body if it receives an error.
-func (client DatetimeClient) GetUnderflowSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetUnderflowSender sends the GetUnderflow request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DatetimeClient) GetUnderflowSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetUnderflowResponder handles the response to the GetUnderflow request. The method always
-// closes the http.Response Body.
-func (client DatetimeClient) GetUnderflowResponder(resp *http.Response) (result DateTime, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetUnderflowResponder handles the response to the GetUnderflow request. The method always
+    // closes the http.Response Body.
+    func (client DatetimeClient) GetUnderflowResponder(resp *http.Response) (result DateTime, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetUtcLowercaseMaxDateTime get max datetime value 9999-12-31t23:59:59.9999999z
 func (client DatetimeClient) GetUtcLowercaseMaxDateTime(ctx context.Context) (result DateTime, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DatetimeClient.GetUtcLowercaseMaxDateTime")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetUtcLowercaseMaxDateTimePreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetUtcLowercaseMaxDateTime", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DatetimeClient.GetUtcLowercaseMaxDateTime")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetUtcLowercaseMaxDateTimePreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetUtcLowercaseMaxDateTime", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetUtcLowercaseMaxDateTimeSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetUtcLowercaseMaxDateTime", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetUtcLowercaseMaxDateTimeSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetUtcLowercaseMaxDateTime", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetUtcLowercaseMaxDateTimeResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetUtcLowercaseMaxDateTime", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetUtcLowercaseMaxDateTimeResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetUtcLowercaseMaxDateTime", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetUtcLowercaseMaxDateTimePreparer prepares the GetUtcLowercaseMaxDateTime request.
-func (client DatetimeClient) GetUtcLowercaseMaxDateTimePreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/datetime/max/utc/lowercase"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetUtcLowercaseMaxDateTimePreparer prepares the GetUtcLowercaseMaxDateTime request.
+    func (client DatetimeClient) GetUtcLowercaseMaxDateTimePreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/datetime/max/utc/lowercase"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetUtcLowercaseMaxDateTimeSender sends the GetUtcLowercaseMaxDateTime request. The method will close the
-// http.Response Body if it receives an error.
-func (client DatetimeClient) GetUtcLowercaseMaxDateTimeSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetUtcLowercaseMaxDateTimeSender sends the GetUtcLowercaseMaxDateTime request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DatetimeClient) GetUtcLowercaseMaxDateTimeSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetUtcLowercaseMaxDateTimeResponder handles the response to the GetUtcLowercaseMaxDateTime request. The method always
-// closes the http.Response Body.
-func (client DatetimeClient) GetUtcLowercaseMaxDateTimeResponder(resp *http.Response) (result DateTime, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetUtcLowercaseMaxDateTimeResponder handles the response to the GetUtcLowercaseMaxDateTime request. The method always
+    // closes the http.Response Body.
+    func (client DatetimeClient) GetUtcLowercaseMaxDateTimeResponder(resp *http.Response) (result DateTime, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetUtcMinDateTime get min datetime value 0001-01-01T00:00:00Z
 func (client DatetimeClient) GetUtcMinDateTime(ctx context.Context) (result DateTime, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DatetimeClient.GetUtcMinDateTime")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetUtcMinDateTimePreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetUtcMinDateTime", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DatetimeClient.GetUtcMinDateTime")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetUtcMinDateTimePreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetUtcMinDateTime", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetUtcMinDateTimeSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetUtcMinDateTime", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetUtcMinDateTimeSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetUtcMinDateTime", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetUtcMinDateTimeResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetUtcMinDateTime", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetUtcMinDateTimeResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetUtcMinDateTime", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetUtcMinDateTimePreparer prepares the GetUtcMinDateTime request.
-func (client DatetimeClient) GetUtcMinDateTimePreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/datetime/min/utc"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetUtcMinDateTimePreparer prepares the GetUtcMinDateTime request.
+    func (client DatetimeClient) GetUtcMinDateTimePreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/datetime/min/utc"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetUtcMinDateTimeSender sends the GetUtcMinDateTime request. The method will close the
-// http.Response Body if it receives an error.
-func (client DatetimeClient) GetUtcMinDateTimeSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetUtcMinDateTimeSender sends the GetUtcMinDateTime request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DatetimeClient) GetUtcMinDateTimeSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetUtcMinDateTimeResponder handles the response to the GetUtcMinDateTime request. The method always
-// closes the http.Response Body.
-func (client DatetimeClient) GetUtcMinDateTimeResponder(resp *http.Response) (result DateTime, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetUtcMinDateTimeResponder handles the response to the GetUtcMinDateTime request. The method always
+    // closes the http.Response Body.
+    func (client DatetimeClient) GetUtcMinDateTimeResponder(resp *http.Response) (result DateTime, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetUtcUppercaseMaxDateTime get max datetime value 9999-12-31T23:59:59.9999999Z
 func (client DatetimeClient) GetUtcUppercaseMaxDateTime(ctx context.Context) (result DateTime, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DatetimeClient.GetUtcUppercaseMaxDateTime")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetUtcUppercaseMaxDateTimePreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetUtcUppercaseMaxDateTime", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DatetimeClient.GetUtcUppercaseMaxDateTime")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetUtcUppercaseMaxDateTimePreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetUtcUppercaseMaxDateTime", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetUtcUppercaseMaxDateTimeSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetUtcUppercaseMaxDateTime", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetUtcUppercaseMaxDateTimeSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetUtcUppercaseMaxDateTime", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetUtcUppercaseMaxDateTimeResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetUtcUppercaseMaxDateTime", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetUtcUppercaseMaxDateTimeResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetUtcUppercaseMaxDateTime", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetUtcUppercaseMaxDateTimePreparer prepares the GetUtcUppercaseMaxDateTime request.
-func (client DatetimeClient) GetUtcUppercaseMaxDateTimePreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/datetime/max/utc/uppercase"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetUtcUppercaseMaxDateTimePreparer prepares the GetUtcUppercaseMaxDateTime request.
+    func (client DatetimeClient) GetUtcUppercaseMaxDateTimePreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/datetime/max/utc/uppercase"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetUtcUppercaseMaxDateTimeSender sends the GetUtcUppercaseMaxDateTime request. The method will close the
-// http.Response Body if it receives an error.
-func (client DatetimeClient) GetUtcUppercaseMaxDateTimeSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetUtcUppercaseMaxDateTimeSender sends the GetUtcUppercaseMaxDateTime request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DatetimeClient) GetUtcUppercaseMaxDateTimeSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetUtcUppercaseMaxDateTimeResponder handles the response to the GetUtcUppercaseMaxDateTime request. The method always
-// closes the http.Response Body.
-func (client DatetimeClient) GetUtcUppercaseMaxDateTimeResponder(resp *http.Response) (result DateTime, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetUtcUppercaseMaxDateTimeResponder handles the response to the GetUtcUppercaseMaxDateTime request. The method always
+    // closes the http.Response Body.
+    func (client DatetimeClient) GetUtcUppercaseMaxDateTimeResponder(resp *http.Response) (result DateTime, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // PutLocalNegativeOffsetMaxDateTime put max datetime value with positive numoffset 9999-12-31t23:59:59.9999999-14:00
 func (client DatetimeClient) PutLocalNegativeOffsetMaxDateTime(ctx context.Context, datetimeBody date.Time) (result autorest.Response, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DatetimeClient.PutLocalNegativeOffsetMaxDateTime")
-		defer func() {
-			sc := -1
-			if result.Response != nil {
-				sc = result.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.PutLocalNegativeOffsetMaxDateTimePreparer(ctx, datetimeBody)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "PutLocalNegativeOffsetMaxDateTime", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DatetimeClient.PutLocalNegativeOffsetMaxDateTime")
+        defer func() {
+            sc := -1
+        if result.Response != nil {
+        sc = result.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.PutLocalNegativeOffsetMaxDateTimePreparer(ctx, datetimeBody)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "PutLocalNegativeOffsetMaxDateTime", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.PutLocalNegativeOffsetMaxDateTimeSender(req)
-	if err != nil {
-		result.Response = resp
-		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "PutLocalNegativeOffsetMaxDateTime", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.PutLocalNegativeOffsetMaxDateTimeSender(req)
+        if err != nil {
+        result.Response = resp
+        err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "PutLocalNegativeOffsetMaxDateTime", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.PutLocalNegativeOffsetMaxDateTimeResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "PutLocalNegativeOffsetMaxDateTime", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.PutLocalNegativeOffsetMaxDateTimeResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "PutLocalNegativeOffsetMaxDateTime", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// PutLocalNegativeOffsetMaxDateTimePreparer prepares the PutLocalNegativeOffsetMaxDateTime request.
-func (client DatetimeClient) PutLocalNegativeOffsetMaxDateTimePreparer(ctx context.Context, datetimeBody date.Time) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsContentType("application/json; charset=utf-8"),
-		autorest.AsPut(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/datetime/max/localnegativeoffset"),
-		autorest.WithJSON(datetimeBody))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // PutLocalNegativeOffsetMaxDateTimePreparer prepares the PutLocalNegativeOffsetMaxDateTime request.
+    func (client DatetimeClient) PutLocalNegativeOffsetMaxDateTimePreparer(ctx context.Context, datetimeBody date.Time) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsContentType("application/json; charset=utf-8"),
+autorest.AsPut(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/datetime/max/localnegativeoffset"),
+autorest.WithJSON(datetimeBody))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// PutLocalNegativeOffsetMaxDateTimeSender sends the PutLocalNegativeOffsetMaxDateTime request. The method will close the
-// http.Response Body if it receives an error.
-func (client DatetimeClient) PutLocalNegativeOffsetMaxDateTimeSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // PutLocalNegativeOffsetMaxDateTimeSender sends the PutLocalNegativeOffsetMaxDateTime request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DatetimeClient) PutLocalNegativeOffsetMaxDateTimeSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// PutLocalNegativeOffsetMaxDateTimeResponder handles the response to the PutLocalNegativeOffsetMaxDateTime request. The method always
-// closes the http.Response Body.
-func (client DatetimeClient) PutLocalNegativeOffsetMaxDateTimeResponder(resp *http.Response) (result autorest.Response, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByClosing())
-	result.Response = resp
-	return
-}
+    // PutLocalNegativeOffsetMaxDateTimeResponder handles the response to the PutLocalNegativeOffsetMaxDateTime request. The method always
+    // closes the http.Response Body.
+    func (client DatetimeClient) PutLocalNegativeOffsetMaxDateTimeResponder(resp *http.Response) (result autorest.Response, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByClosing())
+            result.Response = resp
+            return
+    }
 
 // PutLocalNegativeOffsetMinDateTime put min datetime value 0001-01-01T00:00:00-14:00
 func (client DatetimeClient) PutLocalNegativeOffsetMinDateTime(ctx context.Context, datetimeBody date.Time) (result autorest.Response, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DatetimeClient.PutLocalNegativeOffsetMinDateTime")
-		defer func() {
-			sc := -1
-			if result.Response != nil {
-				sc = result.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.PutLocalNegativeOffsetMinDateTimePreparer(ctx, datetimeBody)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "PutLocalNegativeOffsetMinDateTime", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DatetimeClient.PutLocalNegativeOffsetMinDateTime")
+        defer func() {
+            sc := -1
+        if result.Response != nil {
+        sc = result.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.PutLocalNegativeOffsetMinDateTimePreparer(ctx, datetimeBody)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "PutLocalNegativeOffsetMinDateTime", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.PutLocalNegativeOffsetMinDateTimeSender(req)
-	if err != nil {
-		result.Response = resp
-		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "PutLocalNegativeOffsetMinDateTime", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.PutLocalNegativeOffsetMinDateTimeSender(req)
+        if err != nil {
+        result.Response = resp
+        err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "PutLocalNegativeOffsetMinDateTime", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.PutLocalNegativeOffsetMinDateTimeResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "PutLocalNegativeOffsetMinDateTime", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.PutLocalNegativeOffsetMinDateTimeResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "PutLocalNegativeOffsetMinDateTime", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// PutLocalNegativeOffsetMinDateTimePreparer prepares the PutLocalNegativeOffsetMinDateTime request.
-func (client DatetimeClient) PutLocalNegativeOffsetMinDateTimePreparer(ctx context.Context, datetimeBody date.Time) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsContentType("application/json; charset=utf-8"),
-		autorest.AsPut(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/datetime/min/localnegativeoffset"),
-		autorest.WithJSON(datetimeBody))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // PutLocalNegativeOffsetMinDateTimePreparer prepares the PutLocalNegativeOffsetMinDateTime request.
+    func (client DatetimeClient) PutLocalNegativeOffsetMinDateTimePreparer(ctx context.Context, datetimeBody date.Time) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsContentType("application/json; charset=utf-8"),
+autorest.AsPut(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/datetime/min/localnegativeoffset"),
+autorest.WithJSON(datetimeBody))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// PutLocalNegativeOffsetMinDateTimeSender sends the PutLocalNegativeOffsetMinDateTime request. The method will close the
-// http.Response Body if it receives an error.
-func (client DatetimeClient) PutLocalNegativeOffsetMinDateTimeSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // PutLocalNegativeOffsetMinDateTimeSender sends the PutLocalNegativeOffsetMinDateTime request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DatetimeClient) PutLocalNegativeOffsetMinDateTimeSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// PutLocalNegativeOffsetMinDateTimeResponder handles the response to the PutLocalNegativeOffsetMinDateTime request. The method always
-// closes the http.Response Body.
-func (client DatetimeClient) PutLocalNegativeOffsetMinDateTimeResponder(resp *http.Response) (result autorest.Response, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByClosing())
-	result.Response = resp
-	return
-}
+    // PutLocalNegativeOffsetMinDateTimeResponder handles the response to the PutLocalNegativeOffsetMinDateTime request. The method always
+    // closes the http.Response Body.
+    func (client DatetimeClient) PutLocalNegativeOffsetMinDateTimeResponder(resp *http.Response) (result autorest.Response, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByClosing())
+            result.Response = resp
+            return
+    }
 
 // PutLocalPositiveOffsetMaxDateTime put max datetime value with positive numoffset 9999-12-31t23:59:59.9999999+14:00
 func (client DatetimeClient) PutLocalPositiveOffsetMaxDateTime(ctx context.Context, datetimeBody date.Time) (result autorest.Response, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DatetimeClient.PutLocalPositiveOffsetMaxDateTime")
-		defer func() {
-			sc := -1
-			if result.Response != nil {
-				sc = result.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.PutLocalPositiveOffsetMaxDateTimePreparer(ctx, datetimeBody)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "PutLocalPositiveOffsetMaxDateTime", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DatetimeClient.PutLocalPositiveOffsetMaxDateTime")
+        defer func() {
+            sc := -1
+        if result.Response != nil {
+        sc = result.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.PutLocalPositiveOffsetMaxDateTimePreparer(ctx, datetimeBody)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "PutLocalPositiveOffsetMaxDateTime", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.PutLocalPositiveOffsetMaxDateTimeSender(req)
-	if err != nil {
-		result.Response = resp
-		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "PutLocalPositiveOffsetMaxDateTime", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.PutLocalPositiveOffsetMaxDateTimeSender(req)
+        if err != nil {
+        result.Response = resp
+        err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "PutLocalPositiveOffsetMaxDateTime", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.PutLocalPositiveOffsetMaxDateTimeResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "PutLocalPositiveOffsetMaxDateTime", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.PutLocalPositiveOffsetMaxDateTimeResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "PutLocalPositiveOffsetMaxDateTime", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// PutLocalPositiveOffsetMaxDateTimePreparer prepares the PutLocalPositiveOffsetMaxDateTime request.
-func (client DatetimeClient) PutLocalPositiveOffsetMaxDateTimePreparer(ctx context.Context, datetimeBody date.Time) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsContentType("application/json; charset=utf-8"),
-		autorest.AsPut(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/datetime/max/localpositiveoffset"),
-		autorest.WithJSON(datetimeBody))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // PutLocalPositiveOffsetMaxDateTimePreparer prepares the PutLocalPositiveOffsetMaxDateTime request.
+    func (client DatetimeClient) PutLocalPositiveOffsetMaxDateTimePreparer(ctx context.Context, datetimeBody date.Time) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsContentType("application/json; charset=utf-8"),
+autorest.AsPut(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/datetime/max/localpositiveoffset"),
+autorest.WithJSON(datetimeBody))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// PutLocalPositiveOffsetMaxDateTimeSender sends the PutLocalPositiveOffsetMaxDateTime request. The method will close the
-// http.Response Body if it receives an error.
-func (client DatetimeClient) PutLocalPositiveOffsetMaxDateTimeSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // PutLocalPositiveOffsetMaxDateTimeSender sends the PutLocalPositiveOffsetMaxDateTime request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DatetimeClient) PutLocalPositiveOffsetMaxDateTimeSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// PutLocalPositiveOffsetMaxDateTimeResponder handles the response to the PutLocalPositiveOffsetMaxDateTime request. The method always
-// closes the http.Response Body.
-func (client DatetimeClient) PutLocalPositiveOffsetMaxDateTimeResponder(resp *http.Response) (result autorest.Response, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByClosing())
-	result.Response = resp
-	return
-}
+    // PutLocalPositiveOffsetMaxDateTimeResponder handles the response to the PutLocalPositiveOffsetMaxDateTime request. The method always
+    // closes the http.Response Body.
+    func (client DatetimeClient) PutLocalPositiveOffsetMaxDateTimeResponder(resp *http.Response) (result autorest.Response, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByClosing())
+            result.Response = resp
+            return
+    }
 
 // PutLocalPositiveOffsetMinDateTime put min datetime value 0001-01-01T00:00:00+14:00
 func (client DatetimeClient) PutLocalPositiveOffsetMinDateTime(ctx context.Context, datetimeBody date.Time) (result autorest.Response, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DatetimeClient.PutLocalPositiveOffsetMinDateTime")
-		defer func() {
-			sc := -1
-			if result.Response != nil {
-				sc = result.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.PutLocalPositiveOffsetMinDateTimePreparer(ctx, datetimeBody)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "PutLocalPositiveOffsetMinDateTime", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DatetimeClient.PutLocalPositiveOffsetMinDateTime")
+        defer func() {
+            sc := -1
+        if result.Response != nil {
+        sc = result.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.PutLocalPositiveOffsetMinDateTimePreparer(ctx, datetimeBody)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "PutLocalPositiveOffsetMinDateTime", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.PutLocalPositiveOffsetMinDateTimeSender(req)
-	if err != nil {
-		result.Response = resp
-		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "PutLocalPositiveOffsetMinDateTime", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.PutLocalPositiveOffsetMinDateTimeSender(req)
+        if err != nil {
+        result.Response = resp
+        err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "PutLocalPositiveOffsetMinDateTime", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.PutLocalPositiveOffsetMinDateTimeResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "PutLocalPositiveOffsetMinDateTime", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.PutLocalPositiveOffsetMinDateTimeResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "PutLocalPositiveOffsetMinDateTime", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// PutLocalPositiveOffsetMinDateTimePreparer prepares the PutLocalPositiveOffsetMinDateTime request.
-func (client DatetimeClient) PutLocalPositiveOffsetMinDateTimePreparer(ctx context.Context, datetimeBody date.Time) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsContentType("application/json; charset=utf-8"),
-		autorest.AsPut(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/datetime/min/localpositiveoffset"),
-		autorest.WithJSON(datetimeBody))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // PutLocalPositiveOffsetMinDateTimePreparer prepares the PutLocalPositiveOffsetMinDateTime request.
+    func (client DatetimeClient) PutLocalPositiveOffsetMinDateTimePreparer(ctx context.Context, datetimeBody date.Time) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsContentType("application/json; charset=utf-8"),
+autorest.AsPut(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/datetime/min/localpositiveoffset"),
+autorest.WithJSON(datetimeBody))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// PutLocalPositiveOffsetMinDateTimeSender sends the PutLocalPositiveOffsetMinDateTime request. The method will close the
-// http.Response Body if it receives an error.
-func (client DatetimeClient) PutLocalPositiveOffsetMinDateTimeSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // PutLocalPositiveOffsetMinDateTimeSender sends the PutLocalPositiveOffsetMinDateTime request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DatetimeClient) PutLocalPositiveOffsetMinDateTimeSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// PutLocalPositiveOffsetMinDateTimeResponder handles the response to the PutLocalPositiveOffsetMinDateTime request. The method always
-// closes the http.Response Body.
-func (client DatetimeClient) PutLocalPositiveOffsetMinDateTimeResponder(resp *http.Response) (result autorest.Response, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByClosing())
-	result.Response = resp
-	return
-}
+    // PutLocalPositiveOffsetMinDateTimeResponder handles the response to the PutLocalPositiveOffsetMinDateTime request. The method always
+    // closes the http.Response Body.
+    func (client DatetimeClient) PutLocalPositiveOffsetMinDateTimeResponder(resp *http.Response) (result autorest.Response, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByClosing())
+            result.Response = resp
+            return
+    }
 
 // PutUtcMaxDateTime put max datetime value 9999-12-31T23:59:59.9999999Z
 func (client DatetimeClient) PutUtcMaxDateTime(ctx context.Context, datetimeBody date.Time) (result autorest.Response, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DatetimeClient.PutUtcMaxDateTime")
-		defer func() {
-			sc := -1
-			if result.Response != nil {
-				sc = result.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.PutUtcMaxDateTimePreparer(ctx, datetimeBody)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "PutUtcMaxDateTime", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DatetimeClient.PutUtcMaxDateTime")
+        defer func() {
+            sc := -1
+        if result.Response != nil {
+        sc = result.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.PutUtcMaxDateTimePreparer(ctx, datetimeBody)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "PutUtcMaxDateTime", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.PutUtcMaxDateTimeSender(req)
-	if err != nil {
-		result.Response = resp
-		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "PutUtcMaxDateTime", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.PutUtcMaxDateTimeSender(req)
+        if err != nil {
+        result.Response = resp
+        err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "PutUtcMaxDateTime", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.PutUtcMaxDateTimeResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "PutUtcMaxDateTime", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.PutUtcMaxDateTimeResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "PutUtcMaxDateTime", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// PutUtcMaxDateTimePreparer prepares the PutUtcMaxDateTime request.
-func (client DatetimeClient) PutUtcMaxDateTimePreparer(ctx context.Context, datetimeBody date.Time) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsContentType("application/json; charset=utf-8"),
-		autorest.AsPut(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/datetime/max/utc"),
-		autorest.WithJSON(datetimeBody))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // PutUtcMaxDateTimePreparer prepares the PutUtcMaxDateTime request.
+    func (client DatetimeClient) PutUtcMaxDateTimePreparer(ctx context.Context, datetimeBody date.Time) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsContentType("application/json; charset=utf-8"),
+autorest.AsPut(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/datetime/max/utc"),
+autorest.WithJSON(datetimeBody))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// PutUtcMaxDateTimeSender sends the PutUtcMaxDateTime request. The method will close the
-// http.Response Body if it receives an error.
-func (client DatetimeClient) PutUtcMaxDateTimeSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // PutUtcMaxDateTimeSender sends the PutUtcMaxDateTime request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DatetimeClient) PutUtcMaxDateTimeSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// PutUtcMaxDateTimeResponder handles the response to the PutUtcMaxDateTime request. The method always
-// closes the http.Response Body.
-func (client DatetimeClient) PutUtcMaxDateTimeResponder(resp *http.Response) (result autorest.Response, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByClosing())
-	result.Response = resp
-	return
-}
+    // PutUtcMaxDateTimeResponder handles the response to the PutUtcMaxDateTime request. The method always
+    // closes the http.Response Body.
+    func (client DatetimeClient) PutUtcMaxDateTimeResponder(resp *http.Response) (result autorest.Response, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByClosing())
+            result.Response = resp
+            return
+    }
 
 // PutUtcMinDateTime put min datetime value 0001-01-01T00:00:00Z
 func (client DatetimeClient) PutUtcMinDateTime(ctx context.Context, datetimeBody date.Time) (result autorest.Response, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DatetimeClient.PutUtcMinDateTime")
-		defer func() {
-			sc := -1
-			if result.Response != nil {
-				sc = result.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.PutUtcMinDateTimePreparer(ctx, datetimeBody)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "PutUtcMinDateTime", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DatetimeClient.PutUtcMinDateTime")
+        defer func() {
+            sc := -1
+        if result.Response != nil {
+        sc = result.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.PutUtcMinDateTimePreparer(ctx, datetimeBody)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "PutUtcMinDateTime", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.PutUtcMinDateTimeSender(req)
-	if err != nil {
-		result.Response = resp
-		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "PutUtcMinDateTime", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.PutUtcMinDateTimeSender(req)
+        if err != nil {
+        result.Response = resp
+        err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "PutUtcMinDateTime", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.PutUtcMinDateTimeResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "PutUtcMinDateTime", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.PutUtcMinDateTimeResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "PutUtcMinDateTime", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// PutUtcMinDateTimePreparer prepares the PutUtcMinDateTime request.
-func (client DatetimeClient) PutUtcMinDateTimePreparer(ctx context.Context, datetimeBody date.Time) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsContentType("application/json; charset=utf-8"),
-		autorest.AsPut(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/datetime/min/utc"),
-		autorest.WithJSON(datetimeBody))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // PutUtcMinDateTimePreparer prepares the PutUtcMinDateTime request.
+    func (client DatetimeClient) PutUtcMinDateTimePreparer(ctx context.Context, datetimeBody date.Time) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsContentType("application/json; charset=utf-8"),
+autorest.AsPut(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/datetime/min/utc"),
+autorest.WithJSON(datetimeBody))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// PutUtcMinDateTimeSender sends the PutUtcMinDateTime request. The method will close the
-// http.Response Body if it receives an error.
-func (client DatetimeClient) PutUtcMinDateTimeSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // PutUtcMinDateTimeSender sends the PutUtcMinDateTime request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DatetimeClient) PutUtcMinDateTimeSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// PutUtcMinDateTimeResponder handles the response to the PutUtcMinDateTime request. The method always
-// closes the http.Response Body.
-func (client DatetimeClient) PutUtcMinDateTimeResponder(resp *http.Response) (result autorest.Response, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByClosing())
-	result.Response = resp
-	return
-}
+    // PutUtcMinDateTimeResponder handles the response to the PutUtcMinDateTime request. The method always
+    // closes the http.Response Body.
+    func (client DatetimeClient) PutUtcMinDateTimeResponder(resp *http.Response) (result autorest.Response, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByClosing())
+            result.Response = resp
+            return
+    }
+

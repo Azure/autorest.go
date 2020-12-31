@@ -7,4112 +7,4112 @@ package dictionarygroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-	"context"
-	"github.com/Azure/go-autorest/autorest"
-	"github.com/Azure/go-autorest/autorest/azure"
-	"github.com/Azure/go-autorest/autorest/date"
-	"github.com/Azure/go-autorest/autorest/validation"
-	"github.com/Azure/go-autorest/tracing"
-	"net/http"
+    "github.com/Azure/go-autorest/autorest"
+    "github.com/Azure/go-autorest/autorest/azure"
+    "net/http"
+    "context"
+    "github.com/Azure/go-autorest/tracing"
+    "github.com/Azure/go-autorest/autorest/validation"
+    "github.com/Azure/go-autorest/autorest/date"
 )
 
 // DictionaryClient is the test Infrastructure for AutoRest Swagger BAT
 type DictionaryClient struct {
-	BaseClient
+    BaseClient
 }
-
 // NewDictionaryClient creates an instance of the DictionaryClient client.
 func NewDictionaryClient() DictionaryClient {
-	return NewDictionaryClientWithBaseURI(DefaultBaseURI)
+    return NewDictionaryClientWithBaseURI(DefaultBaseURI, )
 }
 
 // NewDictionaryClientWithBaseURI creates an instance of the DictionaryClient client using a custom endpoint.  Use this
 // when interacting with an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure stack).
-func NewDictionaryClientWithBaseURI(baseURI string) DictionaryClient {
-	return DictionaryClient{NewWithBaseURI(baseURI)}
-}
+    func NewDictionaryClientWithBaseURI(baseURI string, ) DictionaryClient {
+        return DictionaryClient{ NewWithBaseURI(baseURI, )}
+    }
 
 // GetArrayEmpty get an empty dictionary {}
 func (client DictionaryClient) GetArrayEmpty(ctx context.Context) (result SetListString, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.GetArrayEmpty")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetArrayEmptyPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetArrayEmpty", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.GetArrayEmpty")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetArrayEmptyPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetArrayEmpty", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetArrayEmptySender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetArrayEmpty", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetArrayEmptySender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetArrayEmpty", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetArrayEmptyResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetArrayEmpty", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetArrayEmptyResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetArrayEmpty", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetArrayEmptyPreparer prepares the GetArrayEmpty request.
-func (client DictionaryClient) GetArrayEmptyPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/array/empty"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetArrayEmptyPreparer prepares the GetArrayEmpty request.
+    func (client DictionaryClient) GetArrayEmptyPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/array/empty"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetArrayEmptySender sends the GetArrayEmpty request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) GetArrayEmptySender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetArrayEmptySender sends the GetArrayEmpty request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) GetArrayEmptySender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetArrayEmptyResponder handles the response to the GetArrayEmpty request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) GetArrayEmptyResponder(resp *http.Response) (result SetListString, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetArrayEmptyResponder handles the response to the GetArrayEmpty request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) GetArrayEmptyResponder(resp *http.Response) (result SetListString, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetArrayItemEmpty get an array of array of strings [{"0": ["1", "2", "3"], "1": [], "2": ["7", "8", "9"]}
 func (client DictionaryClient) GetArrayItemEmpty(ctx context.Context) (result SetListString, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.GetArrayItemEmpty")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetArrayItemEmptyPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetArrayItemEmpty", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.GetArrayItemEmpty")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetArrayItemEmptyPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetArrayItemEmpty", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetArrayItemEmptySender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetArrayItemEmpty", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetArrayItemEmptySender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetArrayItemEmpty", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetArrayItemEmptyResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetArrayItemEmpty", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetArrayItemEmptyResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetArrayItemEmpty", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetArrayItemEmptyPreparer prepares the GetArrayItemEmpty request.
-func (client DictionaryClient) GetArrayItemEmptyPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/array/itemempty"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetArrayItemEmptyPreparer prepares the GetArrayItemEmpty request.
+    func (client DictionaryClient) GetArrayItemEmptyPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/array/itemempty"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetArrayItemEmptySender sends the GetArrayItemEmpty request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) GetArrayItemEmptySender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetArrayItemEmptySender sends the GetArrayItemEmpty request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) GetArrayItemEmptySender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetArrayItemEmptyResponder handles the response to the GetArrayItemEmpty request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) GetArrayItemEmptyResponder(resp *http.Response) (result SetListString, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetArrayItemEmptyResponder handles the response to the GetArrayItemEmpty request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) GetArrayItemEmptyResponder(resp *http.Response) (result SetListString, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetArrayItemNull get an dictionary of array of strings {"0": ["1", "2", "3"], "1": null, "2": ["7", "8", "9"]}
 func (client DictionaryClient) GetArrayItemNull(ctx context.Context) (result SetListString, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.GetArrayItemNull")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetArrayItemNullPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetArrayItemNull", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.GetArrayItemNull")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetArrayItemNullPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetArrayItemNull", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetArrayItemNullSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetArrayItemNull", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetArrayItemNullSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetArrayItemNull", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetArrayItemNullResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetArrayItemNull", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetArrayItemNullResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetArrayItemNull", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetArrayItemNullPreparer prepares the GetArrayItemNull request.
-func (client DictionaryClient) GetArrayItemNullPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/array/itemnull"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetArrayItemNullPreparer prepares the GetArrayItemNull request.
+    func (client DictionaryClient) GetArrayItemNullPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/array/itemnull"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetArrayItemNullSender sends the GetArrayItemNull request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) GetArrayItemNullSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetArrayItemNullSender sends the GetArrayItemNull request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) GetArrayItemNullSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetArrayItemNullResponder handles the response to the GetArrayItemNull request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) GetArrayItemNullResponder(resp *http.Response) (result SetListString, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetArrayItemNullResponder handles the response to the GetArrayItemNull request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) GetArrayItemNullResponder(resp *http.Response) (result SetListString, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetArrayNull get a null array
 func (client DictionaryClient) GetArrayNull(ctx context.Context) (result SetListString, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.GetArrayNull")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetArrayNullPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetArrayNull", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.GetArrayNull")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetArrayNullPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetArrayNull", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetArrayNullSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetArrayNull", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetArrayNullSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetArrayNull", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetArrayNullResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetArrayNull", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetArrayNullResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetArrayNull", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetArrayNullPreparer prepares the GetArrayNull request.
-func (client DictionaryClient) GetArrayNullPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/array/null"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetArrayNullPreparer prepares the GetArrayNull request.
+    func (client DictionaryClient) GetArrayNullPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/array/null"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetArrayNullSender sends the GetArrayNull request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) GetArrayNullSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetArrayNullSender sends the GetArrayNull request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) GetArrayNullSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetArrayNullResponder handles the response to the GetArrayNull request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) GetArrayNullResponder(resp *http.Response) (result SetListString, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetArrayNullResponder handles the response to the GetArrayNull request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) GetArrayNullResponder(resp *http.Response) (result SetListString, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetArrayValid get an array of array of strings {"0": ["1", "2", "3"], "1": ["4", "5", "6"], "2": ["7", "8", "9"]}
 func (client DictionaryClient) GetArrayValid(ctx context.Context) (result SetListString, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.GetArrayValid")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetArrayValidPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetArrayValid", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.GetArrayValid")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetArrayValidPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetArrayValid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetArrayValidSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetArrayValid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetArrayValidSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetArrayValid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetArrayValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetArrayValid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetArrayValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetArrayValid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetArrayValidPreparer prepares the GetArrayValid request.
-func (client DictionaryClient) GetArrayValidPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/array/valid"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetArrayValidPreparer prepares the GetArrayValid request.
+    func (client DictionaryClient) GetArrayValidPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/array/valid"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetArrayValidSender sends the GetArrayValid request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) GetArrayValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetArrayValidSender sends the GetArrayValid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) GetArrayValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetArrayValidResponder handles the response to the GetArrayValid request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) GetArrayValidResponder(resp *http.Response) (result SetListString, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetArrayValidResponder handles the response to the GetArrayValid request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) GetArrayValidResponder(resp *http.Response) (result SetListString, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetBase64URL get base64url dictionary value {"0": "a string that gets encoded with base64url", "1": "test string",
 // "2": "Lorem ipsum"}
 func (client DictionaryClient) GetBase64URL(ctx context.Context) (result SetBase64URL, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.GetBase64URL")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetBase64URLPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetBase64URL", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.GetBase64URL")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetBase64URLPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetBase64URL", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetBase64URLSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetBase64URL", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetBase64URLSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetBase64URL", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetBase64URLResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetBase64URL", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetBase64URLResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetBase64URL", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetBase64URLPreparer prepares the GetBase64URL request.
-func (client DictionaryClient) GetBase64URLPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/prim/base64url/valid"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetBase64URLPreparer prepares the GetBase64URL request.
+    func (client DictionaryClient) GetBase64URLPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/prim/base64url/valid"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetBase64URLSender sends the GetBase64URL request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) GetBase64URLSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetBase64URLSender sends the GetBase64URL request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) GetBase64URLSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetBase64URLResponder handles the response to the GetBase64URL request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) GetBase64URLResponder(resp *http.Response) (result SetBase64URL, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetBase64URLResponder handles the response to the GetBase64URL request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) GetBase64URLResponder(resp *http.Response) (result SetBase64URL, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetBooleanInvalidNull get boolean dictionary value {"0": true, "1": null, "2": false }
 func (client DictionaryClient) GetBooleanInvalidNull(ctx context.Context) (result SetBool, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.GetBooleanInvalidNull")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetBooleanInvalidNullPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetBooleanInvalidNull", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.GetBooleanInvalidNull")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetBooleanInvalidNullPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetBooleanInvalidNull", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetBooleanInvalidNullSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetBooleanInvalidNull", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetBooleanInvalidNullSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetBooleanInvalidNull", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetBooleanInvalidNullResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetBooleanInvalidNull", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetBooleanInvalidNullResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetBooleanInvalidNull", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetBooleanInvalidNullPreparer prepares the GetBooleanInvalidNull request.
-func (client DictionaryClient) GetBooleanInvalidNullPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/prim/boolean/true.null.false"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetBooleanInvalidNullPreparer prepares the GetBooleanInvalidNull request.
+    func (client DictionaryClient) GetBooleanInvalidNullPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/prim/boolean/true.null.false"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetBooleanInvalidNullSender sends the GetBooleanInvalidNull request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) GetBooleanInvalidNullSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetBooleanInvalidNullSender sends the GetBooleanInvalidNull request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) GetBooleanInvalidNullSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetBooleanInvalidNullResponder handles the response to the GetBooleanInvalidNull request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) GetBooleanInvalidNullResponder(resp *http.Response) (result SetBool, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetBooleanInvalidNullResponder handles the response to the GetBooleanInvalidNull request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) GetBooleanInvalidNullResponder(resp *http.Response) (result SetBool, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetBooleanInvalidString get boolean dictionary value '{"0": true, "1": "boolean", "2": false}'
 func (client DictionaryClient) GetBooleanInvalidString(ctx context.Context) (result SetBool, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.GetBooleanInvalidString")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetBooleanInvalidStringPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetBooleanInvalidString", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.GetBooleanInvalidString")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetBooleanInvalidStringPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetBooleanInvalidString", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetBooleanInvalidStringSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetBooleanInvalidString", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetBooleanInvalidStringSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetBooleanInvalidString", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetBooleanInvalidStringResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetBooleanInvalidString", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetBooleanInvalidStringResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetBooleanInvalidString", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetBooleanInvalidStringPreparer prepares the GetBooleanInvalidString request.
-func (client DictionaryClient) GetBooleanInvalidStringPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/prim/boolean/true.boolean.false"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetBooleanInvalidStringPreparer prepares the GetBooleanInvalidString request.
+    func (client DictionaryClient) GetBooleanInvalidStringPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/prim/boolean/true.boolean.false"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetBooleanInvalidStringSender sends the GetBooleanInvalidString request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) GetBooleanInvalidStringSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetBooleanInvalidStringSender sends the GetBooleanInvalidString request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) GetBooleanInvalidStringSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetBooleanInvalidStringResponder handles the response to the GetBooleanInvalidString request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) GetBooleanInvalidStringResponder(resp *http.Response) (result SetBool, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetBooleanInvalidStringResponder handles the response to the GetBooleanInvalidString request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) GetBooleanInvalidStringResponder(resp *http.Response) (result SetBool, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetBooleanTfft get boolean dictionary value {"0": true, "1": false, "2": false, "3": true }
 func (client DictionaryClient) GetBooleanTfft(ctx context.Context) (result SetBool, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.GetBooleanTfft")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetBooleanTfftPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetBooleanTfft", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.GetBooleanTfft")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetBooleanTfftPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetBooleanTfft", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetBooleanTfftSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetBooleanTfft", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetBooleanTfftSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetBooleanTfft", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetBooleanTfftResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetBooleanTfft", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetBooleanTfftResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetBooleanTfft", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetBooleanTfftPreparer prepares the GetBooleanTfft request.
-func (client DictionaryClient) GetBooleanTfftPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/prim/boolean/tfft"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetBooleanTfftPreparer prepares the GetBooleanTfft request.
+    func (client DictionaryClient) GetBooleanTfftPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/prim/boolean/tfft"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetBooleanTfftSender sends the GetBooleanTfft request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) GetBooleanTfftSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetBooleanTfftSender sends the GetBooleanTfft request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) GetBooleanTfftSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetBooleanTfftResponder handles the response to the GetBooleanTfft request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) GetBooleanTfftResponder(resp *http.Response) (result SetBool, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetBooleanTfftResponder handles the response to the GetBooleanTfft request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) GetBooleanTfftResponder(resp *http.Response) (result SetBool, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetByteInvalidNull get byte dictionary value {"0": hex(FF FF FF FA), "1": null} with the first item base64 encoded
 func (client DictionaryClient) GetByteInvalidNull(ctx context.Context) (result SetByteArray, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.GetByteInvalidNull")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetByteInvalidNullPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetByteInvalidNull", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.GetByteInvalidNull")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetByteInvalidNullPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetByteInvalidNull", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetByteInvalidNullSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetByteInvalidNull", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetByteInvalidNullSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetByteInvalidNull", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetByteInvalidNullResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetByteInvalidNull", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetByteInvalidNullResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetByteInvalidNull", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetByteInvalidNullPreparer prepares the GetByteInvalidNull request.
-func (client DictionaryClient) GetByteInvalidNullPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/prim/byte/invalidnull"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetByteInvalidNullPreparer prepares the GetByteInvalidNull request.
+    func (client DictionaryClient) GetByteInvalidNullPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/prim/byte/invalidnull"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetByteInvalidNullSender sends the GetByteInvalidNull request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) GetByteInvalidNullSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetByteInvalidNullSender sends the GetByteInvalidNull request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) GetByteInvalidNullSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetByteInvalidNullResponder handles the response to the GetByteInvalidNull request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) GetByteInvalidNullResponder(resp *http.Response) (result SetByteArray, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetByteInvalidNullResponder handles the response to the GetByteInvalidNull request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) GetByteInvalidNullResponder(resp *http.Response) (result SetByteArray, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetByteValid get byte dictionary value {"0": hex(FF FF FF FA), "1": hex(01 02 03), "2": hex (25, 29, 43)} with each
 // item encoded in base64
 func (client DictionaryClient) GetByteValid(ctx context.Context) (result SetByteArray, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.GetByteValid")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetByteValidPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetByteValid", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.GetByteValid")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetByteValidPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetByteValid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetByteValidSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetByteValid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetByteValidSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetByteValid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetByteValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetByteValid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetByteValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetByteValid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetByteValidPreparer prepares the GetByteValid request.
-func (client DictionaryClient) GetByteValidPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/prim/byte/valid"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetByteValidPreparer prepares the GetByteValid request.
+    func (client DictionaryClient) GetByteValidPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/prim/byte/valid"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetByteValidSender sends the GetByteValid request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) GetByteValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetByteValidSender sends the GetByteValid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) GetByteValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetByteValidResponder handles the response to the GetByteValid request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) GetByteValidResponder(resp *http.Response) (result SetByteArray, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetByteValidResponder handles the response to the GetByteValid request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) GetByteValidResponder(resp *http.Response) (result SetByteArray, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetComplexEmpty get empty dictionary of complex type {}
 func (client DictionaryClient) GetComplexEmpty(ctx context.Context) (result SetWidget, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.GetComplexEmpty")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetComplexEmptyPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetComplexEmpty", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.GetComplexEmpty")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetComplexEmptyPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetComplexEmpty", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetComplexEmptySender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetComplexEmpty", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetComplexEmptySender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetComplexEmpty", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetComplexEmptyResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetComplexEmpty", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetComplexEmptyResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetComplexEmpty", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetComplexEmptyPreparer prepares the GetComplexEmpty request.
-func (client DictionaryClient) GetComplexEmptyPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/complex/empty"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetComplexEmptyPreparer prepares the GetComplexEmpty request.
+    func (client DictionaryClient) GetComplexEmptyPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/complex/empty"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetComplexEmptySender sends the GetComplexEmpty request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) GetComplexEmptySender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetComplexEmptySender sends the GetComplexEmpty request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) GetComplexEmptySender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetComplexEmptyResponder handles the response to the GetComplexEmpty request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) GetComplexEmptyResponder(resp *http.Response) (result SetWidget, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetComplexEmptyResponder handles the response to the GetComplexEmpty request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) GetComplexEmptyResponder(resp *http.Response) (result SetWidget, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetComplexItemEmpty get dictionary of complex type with empty item {"0": {"integer": 1, "string": "2"}, "1:" {},
 // "2": {"integer": 5, "string": "6"}}
 func (client DictionaryClient) GetComplexItemEmpty(ctx context.Context) (result SetWidget, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.GetComplexItemEmpty")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetComplexItemEmptyPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetComplexItemEmpty", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.GetComplexItemEmpty")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetComplexItemEmptyPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetComplexItemEmpty", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetComplexItemEmptySender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetComplexItemEmpty", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetComplexItemEmptySender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetComplexItemEmpty", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetComplexItemEmptyResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetComplexItemEmpty", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetComplexItemEmptyResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetComplexItemEmpty", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetComplexItemEmptyPreparer prepares the GetComplexItemEmpty request.
-func (client DictionaryClient) GetComplexItemEmptyPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/complex/itemempty"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetComplexItemEmptyPreparer prepares the GetComplexItemEmpty request.
+    func (client DictionaryClient) GetComplexItemEmptyPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/complex/itemempty"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetComplexItemEmptySender sends the GetComplexItemEmpty request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) GetComplexItemEmptySender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetComplexItemEmptySender sends the GetComplexItemEmpty request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) GetComplexItemEmptySender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetComplexItemEmptyResponder handles the response to the GetComplexItemEmpty request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) GetComplexItemEmptyResponder(resp *http.Response) (result SetWidget, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetComplexItemEmptyResponder handles the response to the GetComplexItemEmpty request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) GetComplexItemEmptyResponder(resp *http.Response) (result SetWidget, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetComplexItemNull get dictionary of complex type with null item {"0": {"integer": 1, "string": "2"}, "1": null,
 // "2": {"integer": 5, "string": "6"}}
 func (client DictionaryClient) GetComplexItemNull(ctx context.Context) (result SetWidget, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.GetComplexItemNull")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetComplexItemNullPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetComplexItemNull", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.GetComplexItemNull")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetComplexItemNullPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetComplexItemNull", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetComplexItemNullSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetComplexItemNull", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetComplexItemNullSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetComplexItemNull", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetComplexItemNullResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetComplexItemNull", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetComplexItemNullResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetComplexItemNull", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetComplexItemNullPreparer prepares the GetComplexItemNull request.
-func (client DictionaryClient) GetComplexItemNullPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/complex/itemnull"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetComplexItemNullPreparer prepares the GetComplexItemNull request.
+    func (client DictionaryClient) GetComplexItemNullPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/complex/itemnull"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetComplexItemNullSender sends the GetComplexItemNull request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) GetComplexItemNullSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetComplexItemNullSender sends the GetComplexItemNull request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) GetComplexItemNullSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetComplexItemNullResponder handles the response to the GetComplexItemNull request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) GetComplexItemNullResponder(resp *http.Response) (result SetWidget, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetComplexItemNullResponder handles the response to the GetComplexItemNull request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) GetComplexItemNullResponder(resp *http.Response) (result SetWidget, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetComplexNull get dictionary of complex type null value
 func (client DictionaryClient) GetComplexNull(ctx context.Context) (result SetWidget, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.GetComplexNull")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetComplexNullPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetComplexNull", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.GetComplexNull")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetComplexNullPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetComplexNull", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetComplexNullSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetComplexNull", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetComplexNullSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetComplexNull", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetComplexNullResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetComplexNull", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetComplexNullResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetComplexNull", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetComplexNullPreparer prepares the GetComplexNull request.
-func (client DictionaryClient) GetComplexNullPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/complex/null"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetComplexNullPreparer prepares the GetComplexNull request.
+    func (client DictionaryClient) GetComplexNullPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/complex/null"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetComplexNullSender sends the GetComplexNull request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) GetComplexNullSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetComplexNullSender sends the GetComplexNull request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) GetComplexNullSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetComplexNullResponder handles the response to the GetComplexNull request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) GetComplexNullResponder(resp *http.Response) (result SetWidget, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetComplexNullResponder handles the response to the GetComplexNull request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) GetComplexNullResponder(resp *http.Response) (result SetWidget, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetComplexValid get dictionary of complex type with {"0": {"integer": 1, "string": "2"}, "1": {"integer": 3,
 // "string": "4"}, "2": {"integer": 5, "string": "6"}}
 func (client DictionaryClient) GetComplexValid(ctx context.Context) (result SetWidget, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.GetComplexValid")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetComplexValidPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetComplexValid", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.GetComplexValid")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetComplexValidPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetComplexValid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetComplexValidSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetComplexValid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetComplexValidSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetComplexValid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetComplexValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetComplexValid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetComplexValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetComplexValid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetComplexValidPreparer prepares the GetComplexValid request.
-func (client DictionaryClient) GetComplexValidPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/complex/valid"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetComplexValidPreparer prepares the GetComplexValid request.
+    func (client DictionaryClient) GetComplexValidPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/complex/valid"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetComplexValidSender sends the GetComplexValid request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) GetComplexValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetComplexValidSender sends the GetComplexValid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) GetComplexValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetComplexValidResponder handles the response to the GetComplexValid request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) GetComplexValidResponder(resp *http.Response) (result SetWidget, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetComplexValidResponder handles the response to the GetComplexValid request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) GetComplexValidResponder(resp *http.Response) (result SetWidget, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetDateInvalidChars get date dictionary value {"0": "2011-03-22", "1": "date"}
 func (client DictionaryClient) GetDateInvalidChars(ctx context.Context) (result SetDate, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.GetDateInvalidChars")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetDateInvalidCharsPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateInvalidChars", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.GetDateInvalidChars")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetDateInvalidCharsPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateInvalidChars", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetDateInvalidCharsSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateInvalidChars", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetDateInvalidCharsSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateInvalidChars", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetDateInvalidCharsResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateInvalidChars", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetDateInvalidCharsResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateInvalidChars", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetDateInvalidCharsPreparer prepares the GetDateInvalidChars request.
-func (client DictionaryClient) GetDateInvalidCharsPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/prim/date/invalidchars"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetDateInvalidCharsPreparer prepares the GetDateInvalidChars request.
+    func (client DictionaryClient) GetDateInvalidCharsPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/prim/date/invalidchars"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetDateInvalidCharsSender sends the GetDateInvalidChars request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) GetDateInvalidCharsSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetDateInvalidCharsSender sends the GetDateInvalidChars request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) GetDateInvalidCharsSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetDateInvalidCharsResponder handles the response to the GetDateInvalidChars request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) GetDateInvalidCharsResponder(resp *http.Response) (result SetDate, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetDateInvalidCharsResponder handles the response to the GetDateInvalidChars request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) GetDateInvalidCharsResponder(resp *http.Response) (result SetDate, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetDateInvalidNull get date dictionary value {"0": "2012-01-01", "1": null, "2": "1776-07-04"}
 func (client DictionaryClient) GetDateInvalidNull(ctx context.Context) (result SetDate, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.GetDateInvalidNull")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetDateInvalidNullPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateInvalidNull", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.GetDateInvalidNull")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetDateInvalidNullPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateInvalidNull", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetDateInvalidNullSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateInvalidNull", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetDateInvalidNullSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateInvalidNull", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetDateInvalidNullResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateInvalidNull", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetDateInvalidNullResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateInvalidNull", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetDateInvalidNullPreparer prepares the GetDateInvalidNull request.
-func (client DictionaryClient) GetDateInvalidNullPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/prim/date/invalidnull"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetDateInvalidNullPreparer prepares the GetDateInvalidNull request.
+    func (client DictionaryClient) GetDateInvalidNullPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/prim/date/invalidnull"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetDateInvalidNullSender sends the GetDateInvalidNull request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) GetDateInvalidNullSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetDateInvalidNullSender sends the GetDateInvalidNull request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) GetDateInvalidNullSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetDateInvalidNullResponder handles the response to the GetDateInvalidNull request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) GetDateInvalidNullResponder(resp *http.Response) (result SetDate, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetDateInvalidNullResponder handles the response to the GetDateInvalidNull request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) GetDateInvalidNullResponder(resp *http.Response) (result SetDate, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetDateTimeInvalidChars get date dictionary value {"0": "2000-12-01t00:00:01z", "1": "date-time"}
 func (client DictionaryClient) GetDateTimeInvalidChars(ctx context.Context) (result SetDateTime, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.GetDateTimeInvalidChars")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetDateTimeInvalidCharsPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateTimeInvalidChars", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.GetDateTimeInvalidChars")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetDateTimeInvalidCharsPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateTimeInvalidChars", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetDateTimeInvalidCharsSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateTimeInvalidChars", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetDateTimeInvalidCharsSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateTimeInvalidChars", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetDateTimeInvalidCharsResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateTimeInvalidChars", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetDateTimeInvalidCharsResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateTimeInvalidChars", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetDateTimeInvalidCharsPreparer prepares the GetDateTimeInvalidChars request.
-func (client DictionaryClient) GetDateTimeInvalidCharsPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/prim/date-time/invalidchars"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetDateTimeInvalidCharsPreparer prepares the GetDateTimeInvalidChars request.
+    func (client DictionaryClient) GetDateTimeInvalidCharsPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/prim/date-time/invalidchars"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetDateTimeInvalidCharsSender sends the GetDateTimeInvalidChars request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) GetDateTimeInvalidCharsSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetDateTimeInvalidCharsSender sends the GetDateTimeInvalidChars request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) GetDateTimeInvalidCharsSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetDateTimeInvalidCharsResponder handles the response to the GetDateTimeInvalidChars request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) GetDateTimeInvalidCharsResponder(resp *http.Response) (result SetDateTime, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetDateTimeInvalidCharsResponder handles the response to the GetDateTimeInvalidChars request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) GetDateTimeInvalidCharsResponder(resp *http.Response) (result SetDateTime, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetDateTimeInvalidNull get date dictionary value {"0": "2000-12-01t00:00:01z", "1": null}
 func (client DictionaryClient) GetDateTimeInvalidNull(ctx context.Context) (result SetDateTime, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.GetDateTimeInvalidNull")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetDateTimeInvalidNullPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateTimeInvalidNull", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.GetDateTimeInvalidNull")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetDateTimeInvalidNullPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateTimeInvalidNull", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetDateTimeInvalidNullSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateTimeInvalidNull", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetDateTimeInvalidNullSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateTimeInvalidNull", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetDateTimeInvalidNullResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateTimeInvalidNull", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetDateTimeInvalidNullResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateTimeInvalidNull", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetDateTimeInvalidNullPreparer prepares the GetDateTimeInvalidNull request.
-func (client DictionaryClient) GetDateTimeInvalidNullPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/prim/date-time/invalidnull"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetDateTimeInvalidNullPreparer prepares the GetDateTimeInvalidNull request.
+    func (client DictionaryClient) GetDateTimeInvalidNullPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/prim/date-time/invalidnull"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetDateTimeInvalidNullSender sends the GetDateTimeInvalidNull request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) GetDateTimeInvalidNullSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetDateTimeInvalidNullSender sends the GetDateTimeInvalidNull request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) GetDateTimeInvalidNullSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetDateTimeInvalidNullResponder handles the response to the GetDateTimeInvalidNull request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) GetDateTimeInvalidNullResponder(resp *http.Response) (result SetDateTime, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetDateTimeInvalidNullResponder handles the response to the GetDateTimeInvalidNull request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) GetDateTimeInvalidNullResponder(resp *http.Response) (result SetDateTime, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetDateTimeRfc1123Valid get date-time-rfc1123 dictionary value {"0": "Fri, 01 Dec 2000 00:00:01 GMT", "1": "Wed, 02
 // Jan 1980 00:11:35 GMT", "2": "Wed, 12 Oct 1492 10:15:01 GMT"}
 func (client DictionaryClient) GetDateTimeRfc1123Valid(ctx context.Context) (result SetDateTimeRfc1123, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.GetDateTimeRfc1123Valid")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetDateTimeRfc1123ValidPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateTimeRfc1123Valid", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.GetDateTimeRfc1123Valid")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetDateTimeRfc1123ValidPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateTimeRfc1123Valid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetDateTimeRfc1123ValidSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateTimeRfc1123Valid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetDateTimeRfc1123ValidSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateTimeRfc1123Valid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetDateTimeRfc1123ValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateTimeRfc1123Valid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetDateTimeRfc1123ValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateTimeRfc1123Valid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetDateTimeRfc1123ValidPreparer prepares the GetDateTimeRfc1123Valid request.
-func (client DictionaryClient) GetDateTimeRfc1123ValidPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/prim/date-time-rfc1123/valid"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetDateTimeRfc1123ValidPreparer prepares the GetDateTimeRfc1123Valid request.
+    func (client DictionaryClient) GetDateTimeRfc1123ValidPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/prim/date-time-rfc1123/valid"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetDateTimeRfc1123ValidSender sends the GetDateTimeRfc1123Valid request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) GetDateTimeRfc1123ValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetDateTimeRfc1123ValidSender sends the GetDateTimeRfc1123Valid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) GetDateTimeRfc1123ValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetDateTimeRfc1123ValidResponder handles the response to the GetDateTimeRfc1123Valid request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) GetDateTimeRfc1123ValidResponder(resp *http.Response) (result SetDateTimeRfc1123, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetDateTimeRfc1123ValidResponder handles the response to the GetDateTimeRfc1123Valid request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) GetDateTimeRfc1123ValidResponder(resp *http.Response) (result SetDateTimeRfc1123, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetDateTimeValid get date-time dictionary value {"0": "2000-12-01t00:00:01z", "1": "1980-01-02T00:11:35+01:00", "2":
 // "1492-10-12T10:15:01-08:00"}
 func (client DictionaryClient) GetDateTimeValid(ctx context.Context) (result SetDateTime, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.GetDateTimeValid")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetDateTimeValidPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateTimeValid", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.GetDateTimeValid")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetDateTimeValidPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateTimeValid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetDateTimeValidSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateTimeValid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetDateTimeValidSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateTimeValid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetDateTimeValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateTimeValid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetDateTimeValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateTimeValid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetDateTimeValidPreparer prepares the GetDateTimeValid request.
-func (client DictionaryClient) GetDateTimeValidPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/prim/date-time/valid"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetDateTimeValidPreparer prepares the GetDateTimeValid request.
+    func (client DictionaryClient) GetDateTimeValidPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/prim/date-time/valid"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetDateTimeValidSender sends the GetDateTimeValid request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) GetDateTimeValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetDateTimeValidSender sends the GetDateTimeValid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) GetDateTimeValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetDateTimeValidResponder handles the response to the GetDateTimeValid request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) GetDateTimeValidResponder(resp *http.Response) (result SetDateTime, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetDateTimeValidResponder handles the response to the GetDateTimeValid request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) GetDateTimeValidResponder(resp *http.Response) (result SetDateTime, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetDateValid get integer dictionary value {"0": "2000-12-01", "1": "1980-01-02", "2": "1492-10-12"}
 func (client DictionaryClient) GetDateValid(ctx context.Context) (result SetDate, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.GetDateValid")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetDateValidPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateValid", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.GetDateValid")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetDateValidPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateValid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetDateValidSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateValid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetDateValidSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateValid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetDateValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateValid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetDateValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateValid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetDateValidPreparer prepares the GetDateValid request.
-func (client DictionaryClient) GetDateValidPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/prim/date/valid"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetDateValidPreparer prepares the GetDateValid request.
+    func (client DictionaryClient) GetDateValidPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/prim/date/valid"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetDateValidSender sends the GetDateValid request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) GetDateValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetDateValidSender sends the GetDateValid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) GetDateValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetDateValidResponder handles the response to the GetDateValid request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) GetDateValidResponder(resp *http.Response) (result SetDate, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetDateValidResponder handles the response to the GetDateValid request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) GetDateValidResponder(resp *http.Response) (result SetDate, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetDictionaryEmpty get an dictionaries of dictionaries of type <string, string> with value {}
 func (client DictionaryClient) GetDictionaryEmpty(ctx context.Context) (result SetSetString, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.GetDictionaryEmpty")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetDictionaryEmptyPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDictionaryEmpty", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.GetDictionaryEmpty")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetDictionaryEmptyPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDictionaryEmpty", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetDictionaryEmptySender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDictionaryEmpty", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetDictionaryEmptySender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDictionaryEmpty", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetDictionaryEmptyResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDictionaryEmpty", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetDictionaryEmptyResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDictionaryEmpty", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetDictionaryEmptyPreparer prepares the GetDictionaryEmpty request.
-func (client DictionaryClient) GetDictionaryEmptyPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/dictionary/empty"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetDictionaryEmptyPreparer prepares the GetDictionaryEmpty request.
+    func (client DictionaryClient) GetDictionaryEmptyPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/dictionary/empty"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetDictionaryEmptySender sends the GetDictionaryEmpty request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) GetDictionaryEmptySender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetDictionaryEmptySender sends the GetDictionaryEmpty request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) GetDictionaryEmptySender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetDictionaryEmptyResponder handles the response to the GetDictionaryEmpty request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) GetDictionaryEmptyResponder(resp *http.Response) (result SetSetString, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetDictionaryEmptyResponder handles the response to the GetDictionaryEmpty request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) GetDictionaryEmptyResponder(resp *http.Response) (result SetSetString, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetDictionaryItemEmpty get an dictionaries of dictionaries of type <string, string> with value {"0": {"1": "one",
 // "2": "two", "3": "three"}, "1": {}, "2": {"7": "seven", "8": "eight", "9": "nine"}}
 func (client DictionaryClient) GetDictionaryItemEmpty(ctx context.Context) (result SetSetString, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.GetDictionaryItemEmpty")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetDictionaryItemEmptyPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDictionaryItemEmpty", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.GetDictionaryItemEmpty")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetDictionaryItemEmptyPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDictionaryItemEmpty", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetDictionaryItemEmptySender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDictionaryItemEmpty", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetDictionaryItemEmptySender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDictionaryItemEmpty", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetDictionaryItemEmptyResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDictionaryItemEmpty", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetDictionaryItemEmptyResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDictionaryItemEmpty", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetDictionaryItemEmptyPreparer prepares the GetDictionaryItemEmpty request.
-func (client DictionaryClient) GetDictionaryItemEmptyPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/dictionary/itemempty"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetDictionaryItemEmptyPreparer prepares the GetDictionaryItemEmpty request.
+    func (client DictionaryClient) GetDictionaryItemEmptyPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/dictionary/itemempty"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetDictionaryItemEmptySender sends the GetDictionaryItemEmpty request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) GetDictionaryItemEmptySender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetDictionaryItemEmptySender sends the GetDictionaryItemEmpty request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) GetDictionaryItemEmptySender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetDictionaryItemEmptyResponder handles the response to the GetDictionaryItemEmpty request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) GetDictionaryItemEmptyResponder(resp *http.Response) (result SetSetString, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetDictionaryItemEmptyResponder handles the response to the GetDictionaryItemEmpty request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) GetDictionaryItemEmptyResponder(resp *http.Response) (result SetSetString, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetDictionaryItemNull get an dictionaries of dictionaries of type <string, string> with value {"0": {"1": "one",
 // "2": "two", "3": "three"}, "1": null, "2": {"7": "seven", "8": "eight", "9": "nine"}}
 func (client DictionaryClient) GetDictionaryItemNull(ctx context.Context) (result SetSetString, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.GetDictionaryItemNull")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetDictionaryItemNullPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDictionaryItemNull", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.GetDictionaryItemNull")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetDictionaryItemNullPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDictionaryItemNull", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetDictionaryItemNullSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDictionaryItemNull", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetDictionaryItemNullSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDictionaryItemNull", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetDictionaryItemNullResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDictionaryItemNull", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetDictionaryItemNullResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDictionaryItemNull", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetDictionaryItemNullPreparer prepares the GetDictionaryItemNull request.
-func (client DictionaryClient) GetDictionaryItemNullPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/dictionary/itemnull"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetDictionaryItemNullPreparer prepares the GetDictionaryItemNull request.
+    func (client DictionaryClient) GetDictionaryItemNullPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/dictionary/itemnull"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetDictionaryItemNullSender sends the GetDictionaryItemNull request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) GetDictionaryItemNullSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetDictionaryItemNullSender sends the GetDictionaryItemNull request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) GetDictionaryItemNullSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetDictionaryItemNullResponder handles the response to the GetDictionaryItemNull request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) GetDictionaryItemNullResponder(resp *http.Response) (result SetSetString, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetDictionaryItemNullResponder handles the response to the GetDictionaryItemNull request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) GetDictionaryItemNullResponder(resp *http.Response) (result SetSetString, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetDictionaryNull get an dictionaries of dictionaries with value null
 func (client DictionaryClient) GetDictionaryNull(ctx context.Context) (result SetSetString, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.GetDictionaryNull")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetDictionaryNullPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDictionaryNull", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.GetDictionaryNull")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetDictionaryNullPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDictionaryNull", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetDictionaryNullSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDictionaryNull", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetDictionaryNullSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDictionaryNull", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetDictionaryNullResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDictionaryNull", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetDictionaryNullResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDictionaryNull", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetDictionaryNullPreparer prepares the GetDictionaryNull request.
-func (client DictionaryClient) GetDictionaryNullPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/dictionary/null"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetDictionaryNullPreparer prepares the GetDictionaryNull request.
+    func (client DictionaryClient) GetDictionaryNullPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/dictionary/null"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetDictionaryNullSender sends the GetDictionaryNull request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) GetDictionaryNullSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetDictionaryNullSender sends the GetDictionaryNull request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) GetDictionaryNullSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetDictionaryNullResponder handles the response to the GetDictionaryNull request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) GetDictionaryNullResponder(resp *http.Response) (result SetSetString, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetDictionaryNullResponder handles the response to the GetDictionaryNull request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) GetDictionaryNullResponder(resp *http.Response) (result SetSetString, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetDictionaryValid get an dictionaries of dictionaries of type <string, string> with value {"0": {"1": "one", "2":
 // "two", "3": "three"}, "1": {"4": "four", "5": "five", "6": "six"}, "2": {"7": "seven", "8": "eight", "9": "nine"}}
 func (client DictionaryClient) GetDictionaryValid(ctx context.Context) (result SetSetString, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.GetDictionaryValid")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetDictionaryValidPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDictionaryValid", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.GetDictionaryValid")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetDictionaryValidPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDictionaryValid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetDictionaryValidSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDictionaryValid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetDictionaryValidSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDictionaryValid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetDictionaryValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDictionaryValid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetDictionaryValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDictionaryValid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetDictionaryValidPreparer prepares the GetDictionaryValid request.
-func (client DictionaryClient) GetDictionaryValidPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/dictionary/valid"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetDictionaryValidPreparer prepares the GetDictionaryValid request.
+    func (client DictionaryClient) GetDictionaryValidPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/dictionary/valid"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetDictionaryValidSender sends the GetDictionaryValid request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) GetDictionaryValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetDictionaryValidSender sends the GetDictionaryValid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) GetDictionaryValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetDictionaryValidResponder handles the response to the GetDictionaryValid request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) GetDictionaryValidResponder(resp *http.Response) (result SetSetString, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetDictionaryValidResponder handles the response to the GetDictionaryValid request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) GetDictionaryValidResponder(resp *http.Response) (result SetSetString, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetDoubleInvalidNull get float dictionary value {"0": 0.0, "1": null, "2": 1.2e20}
 func (client DictionaryClient) GetDoubleInvalidNull(ctx context.Context) (result SetFloat64, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.GetDoubleInvalidNull")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetDoubleInvalidNullPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDoubleInvalidNull", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.GetDoubleInvalidNull")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetDoubleInvalidNullPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDoubleInvalidNull", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetDoubleInvalidNullSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDoubleInvalidNull", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetDoubleInvalidNullSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDoubleInvalidNull", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetDoubleInvalidNullResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDoubleInvalidNull", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetDoubleInvalidNullResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDoubleInvalidNull", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetDoubleInvalidNullPreparer prepares the GetDoubleInvalidNull request.
-func (client DictionaryClient) GetDoubleInvalidNullPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/prim/double/0.0-null-1.2e20"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetDoubleInvalidNullPreparer prepares the GetDoubleInvalidNull request.
+    func (client DictionaryClient) GetDoubleInvalidNullPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/prim/double/0.0-null-1.2e20"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetDoubleInvalidNullSender sends the GetDoubleInvalidNull request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) GetDoubleInvalidNullSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetDoubleInvalidNullSender sends the GetDoubleInvalidNull request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) GetDoubleInvalidNullSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetDoubleInvalidNullResponder handles the response to the GetDoubleInvalidNull request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) GetDoubleInvalidNullResponder(resp *http.Response) (result SetFloat64, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetDoubleInvalidNullResponder handles the response to the GetDoubleInvalidNull request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) GetDoubleInvalidNullResponder(resp *http.Response) (result SetFloat64, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetDoubleInvalidString get boolean dictionary value {"0": 1.0, "1": "number", "2": 0.0}
 func (client DictionaryClient) GetDoubleInvalidString(ctx context.Context) (result SetFloat64, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.GetDoubleInvalidString")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetDoubleInvalidStringPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDoubleInvalidString", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.GetDoubleInvalidString")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetDoubleInvalidStringPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDoubleInvalidString", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetDoubleInvalidStringSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDoubleInvalidString", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetDoubleInvalidStringSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDoubleInvalidString", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetDoubleInvalidStringResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDoubleInvalidString", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetDoubleInvalidStringResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDoubleInvalidString", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetDoubleInvalidStringPreparer prepares the GetDoubleInvalidString request.
-func (client DictionaryClient) GetDoubleInvalidStringPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/prim/double/1.number.0"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetDoubleInvalidStringPreparer prepares the GetDoubleInvalidString request.
+    func (client DictionaryClient) GetDoubleInvalidStringPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/prim/double/1.number.0"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetDoubleInvalidStringSender sends the GetDoubleInvalidString request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) GetDoubleInvalidStringSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetDoubleInvalidStringSender sends the GetDoubleInvalidString request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) GetDoubleInvalidStringSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetDoubleInvalidStringResponder handles the response to the GetDoubleInvalidString request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) GetDoubleInvalidStringResponder(resp *http.Response) (result SetFloat64, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetDoubleInvalidStringResponder handles the response to the GetDoubleInvalidString request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) GetDoubleInvalidStringResponder(resp *http.Response) (result SetFloat64, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetDoubleValid get float dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
 func (client DictionaryClient) GetDoubleValid(ctx context.Context) (result SetFloat64, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.GetDoubleValid")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetDoubleValidPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDoubleValid", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.GetDoubleValid")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetDoubleValidPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDoubleValid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetDoubleValidSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDoubleValid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetDoubleValidSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDoubleValid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetDoubleValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDoubleValid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetDoubleValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDoubleValid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetDoubleValidPreparer prepares the GetDoubleValid request.
-func (client DictionaryClient) GetDoubleValidPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/prim/double/0--0.01-1.2e20"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetDoubleValidPreparer prepares the GetDoubleValid request.
+    func (client DictionaryClient) GetDoubleValidPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/prim/double/0--0.01-1.2e20"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetDoubleValidSender sends the GetDoubleValid request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) GetDoubleValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetDoubleValidSender sends the GetDoubleValid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) GetDoubleValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetDoubleValidResponder handles the response to the GetDoubleValid request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) GetDoubleValidResponder(resp *http.Response) (result SetFloat64, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetDoubleValidResponder handles the response to the GetDoubleValid request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) GetDoubleValidResponder(resp *http.Response) (result SetFloat64, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetDurationValid get duration dictionary value {"0": "P123DT22H14M12.011S", "1": "P5DT1H0M0S"}
 func (client DictionaryClient) GetDurationValid(ctx context.Context) (result SetTimeSpan, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.GetDurationValid")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetDurationValidPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDurationValid", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.GetDurationValid")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetDurationValidPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDurationValid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetDurationValidSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDurationValid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetDurationValidSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDurationValid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetDurationValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDurationValid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetDurationValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDurationValid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetDurationValidPreparer prepares the GetDurationValid request.
-func (client DictionaryClient) GetDurationValidPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/prim/duration/valid"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetDurationValidPreparer prepares the GetDurationValid request.
+    func (client DictionaryClient) GetDurationValidPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/prim/duration/valid"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetDurationValidSender sends the GetDurationValid request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) GetDurationValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetDurationValidSender sends the GetDurationValid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) GetDurationValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetDurationValidResponder handles the response to the GetDurationValid request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) GetDurationValidResponder(resp *http.Response) (result SetTimeSpan, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetDurationValidResponder handles the response to the GetDurationValid request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) GetDurationValidResponder(resp *http.Response) (result SetTimeSpan, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetEmpty get empty dictionary value {}
 func (client DictionaryClient) GetEmpty(ctx context.Context) (result SetInt32, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.GetEmpty")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetEmptyPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetEmpty", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.GetEmpty")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetEmptyPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetEmpty", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetEmptySender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetEmpty", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetEmptySender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetEmpty", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetEmptyResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetEmpty", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetEmptyResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetEmpty", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetEmptyPreparer prepares the GetEmpty request.
-func (client DictionaryClient) GetEmptyPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/empty"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetEmptyPreparer prepares the GetEmpty request.
+    func (client DictionaryClient) GetEmptyPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/empty"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetEmptySender sends the GetEmpty request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) GetEmptySender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetEmptySender sends the GetEmpty request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) GetEmptySender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetEmptyResponder handles the response to the GetEmpty request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) GetEmptyResponder(resp *http.Response) (result SetInt32, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetEmptyResponder handles the response to the GetEmpty request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) GetEmptyResponder(resp *http.Response) (result SetInt32, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetEmptyStringKey get Dictionary with key as empty string
 func (client DictionaryClient) GetEmptyStringKey(ctx context.Context) (result SetString, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.GetEmptyStringKey")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetEmptyStringKeyPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetEmptyStringKey", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.GetEmptyStringKey")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetEmptyStringKeyPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetEmptyStringKey", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetEmptyStringKeySender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetEmptyStringKey", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetEmptyStringKeySender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetEmptyStringKey", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetEmptyStringKeyResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetEmptyStringKey", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetEmptyStringKeyResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetEmptyStringKey", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetEmptyStringKeyPreparer prepares the GetEmptyStringKey request.
-func (client DictionaryClient) GetEmptyStringKeyPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/keyemptystring"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetEmptyStringKeyPreparer prepares the GetEmptyStringKey request.
+    func (client DictionaryClient) GetEmptyStringKeyPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/keyemptystring"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetEmptyStringKeySender sends the GetEmptyStringKey request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) GetEmptyStringKeySender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetEmptyStringKeySender sends the GetEmptyStringKey request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) GetEmptyStringKeySender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetEmptyStringKeyResponder handles the response to the GetEmptyStringKey request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) GetEmptyStringKeyResponder(resp *http.Response) (result SetString, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetEmptyStringKeyResponder handles the response to the GetEmptyStringKey request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) GetEmptyStringKeyResponder(resp *http.Response) (result SetString, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetFloatInvalidNull get float dictionary value {"0": 0.0, "1": null, "2": 1.2e20}
 func (client DictionaryClient) GetFloatInvalidNull(ctx context.Context) (result SetFloat64, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.GetFloatInvalidNull")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetFloatInvalidNullPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetFloatInvalidNull", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.GetFloatInvalidNull")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetFloatInvalidNullPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetFloatInvalidNull", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetFloatInvalidNullSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetFloatInvalidNull", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetFloatInvalidNullSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetFloatInvalidNull", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetFloatInvalidNullResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetFloatInvalidNull", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetFloatInvalidNullResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetFloatInvalidNull", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetFloatInvalidNullPreparer prepares the GetFloatInvalidNull request.
-func (client DictionaryClient) GetFloatInvalidNullPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/prim/float/0.0-null-1.2e20"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetFloatInvalidNullPreparer prepares the GetFloatInvalidNull request.
+    func (client DictionaryClient) GetFloatInvalidNullPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/prim/float/0.0-null-1.2e20"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetFloatInvalidNullSender sends the GetFloatInvalidNull request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) GetFloatInvalidNullSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetFloatInvalidNullSender sends the GetFloatInvalidNull request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) GetFloatInvalidNullSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetFloatInvalidNullResponder handles the response to the GetFloatInvalidNull request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) GetFloatInvalidNullResponder(resp *http.Response) (result SetFloat64, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetFloatInvalidNullResponder handles the response to the GetFloatInvalidNull request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) GetFloatInvalidNullResponder(resp *http.Response) (result SetFloat64, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetFloatInvalidString get boolean dictionary value {"0": 1.0, "1": "number", "2": 0.0}
 func (client DictionaryClient) GetFloatInvalidString(ctx context.Context) (result SetFloat64, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.GetFloatInvalidString")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetFloatInvalidStringPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetFloatInvalidString", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.GetFloatInvalidString")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetFloatInvalidStringPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetFloatInvalidString", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetFloatInvalidStringSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetFloatInvalidString", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetFloatInvalidStringSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetFloatInvalidString", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetFloatInvalidStringResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetFloatInvalidString", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetFloatInvalidStringResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetFloatInvalidString", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetFloatInvalidStringPreparer prepares the GetFloatInvalidString request.
-func (client DictionaryClient) GetFloatInvalidStringPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/prim/float/1.number.0"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetFloatInvalidStringPreparer prepares the GetFloatInvalidString request.
+    func (client DictionaryClient) GetFloatInvalidStringPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/prim/float/1.number.0"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetFloatInvalidStringSender sends the GetFloatInvalidString request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) GetFloatInvalidStringSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetFloatInvalidStringSender sends the GetFloatInvalidString request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) GetFloatInvalidStringSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetFloatInvalidStringResponder handles the response to the GetFloatInvalidString request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) GetFloatInvalidStringResponder(resp *http.Response) (result SetFloat64, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetFloatInvalidStringResponder handles the response to the GetFloatInvalidString request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) GetFloatInvalidStringResponder(resp *http.Response) (result SetFloat64, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetFloatValid get float dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
 func (client DictionaryClient) GetFloatValid(ctx context.Context) (result SetFloat64, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.GetFloatValid")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetFloatValidPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetFloatValid", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.GetFloatValid")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetFloatValidPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetFloatValid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetFloatValidSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetFloatValid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetFloatValidSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetFloatValid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetFloatValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetFloatValid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetFloatValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetFloatValid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetFloatValidPreparer prepares the GetFloatValid request.
-func (client DictionaryClient) GetFloatValidPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/prim/float/0--0.01-1.2e20"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetFloatValidPreparer prepares the GetFloatValid request.
+    func (client DictionaryClient) GetFloatValidPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/prim/float/0--0.01-1.2e20"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetFloatValidSender sends the GetFloatValid request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) GetFloatValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetFloatValidSender sends the GetFloatValid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) GetFloatValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetFloatValidResponder handles the response to the GetFloatValid request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) GetFloatValidResponder(resp *http.Response) (result SetFloat64, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetFloatValidResponder handles the response to the GetFloatValid request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) GetFloatValidResponder(resp *http.Response) (result SetFloat64, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetIntegerValid get integer dictionary value {"0": 1, "1": -1, "2": 3, "3": 300}
 func (client DictionaryClient) GetIntegerValid(ctx context.Context) (result SetInt32, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.GetIntegerValid")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetIntegerValidPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetIntegerValid", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.GetIntegerValid")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetIntegerValidPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetIntegerValid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetIntegerValidSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetIntegerValid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetIntegerValidSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetIntegerValid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetIntegerValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetIntegerValid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetIntegerValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetIntegerValid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetIntegerValidPreparer prepares the GetIntegerValid request.
-func (client DictionaryClient) GetIntegerValidPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/prim/integer/1.-1.3.300"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetIntegerValidPreparer prepares the GetIntegerValid request.
+    func (client DictionaryClient) GetIntegerValidPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/prim/integer/1.-1.3.300"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetIntegerValidSender sends the GetIntegerValid request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) GetIntegerValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetIntegerValidSender sends the GetIntegerValid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) GetIntegerValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetIntegerValidResponder handles the response to the GetIntegerValid request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) GetIntegerValidResponder(resp *http.Response) (result SetInt32, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetIntegerValidResponder handles the response to the GetIntegerValid request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) GetIntegerValidResponder(resp *http.Response) (result SetInt32, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetIntInvalidNull get integer dictionary value {"0": 1, "1": null, "2": 0}
 func (client DictionaryClient) GetIntInvalidNull(ctx context.Context) (result SetInt32, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.GetIntInvalidNull")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetIntInvalidNullPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetIntInvalidNull", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.GetIntInvalidNull")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetIntInvalidNullPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetIntInvalidNull", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetIntInvalidNullSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetIntInvalidNull", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetIntInvalidNullSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetIntInvalidNull", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetIntInvalidNullResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetIntInvalidNull", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetIntInvalidNullResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetIntInvalidNull", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetIntInvalidNullPreparer prepares the GetIntInvalidNull request.
-func (client DictionaryClient) GetIntInvalidNullPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/prim/integer/1.null.zero"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetIntInvalidNullPreparer prepares the GetIntInvalidNull request.
+    func (client DictionaryClient) GetIntInvalidNullPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/prim/integer/1.null.zero"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetIntInvalidNullSender sends the GetIntInvalidNull request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) GetIntInvalidNullSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetIntInvalidNullSender sends the GetIntInvalidNull request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) GetIntInvalidNullSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetIntInvalidNullResponder handles the response to the GetIntInvalidNull request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) GetIntInvalidNullResponder(resp *http.Response) (result SetInt32, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetIntInvalidNullResponder handles the response to the GetIntInvalidNull request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) GetIntInvalidNullResponder(resp *http.Response) (result SetInt32, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetIntInvalidString get integer dictionary value {"0": 1, "1": "integer", "2": 0}
 func (client DictionaryClient) GetIntInvalidString(ctx context.Context) (result SetInt32, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.GetIntInvalidString")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetIntInvalidStringPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetIntInvalidString", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.GetIntInvalidString")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetIntInvalidStringPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetIntInvalidString", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetIntInvalidStringSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetIntInvalidString", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetIntInvalidStringSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetIntInvalidString", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetIntInvalidStringResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetIntInvalidString", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetIntInvalidStringResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetIntInvalidString", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetIntInvalidStringPreparer prepares the GetIntInvalidString request.
-func (client DictionaryClient) GetIntInvalidStringPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/prim/integer/1.integer.0"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetIntInvalidStringPreparer prepares the GetIntInvalidString request.
+    func (client DictionaryClient) GetIntInvalidStringPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/prim/integer/1.integer.0"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetIntInvalidStringSender sends the GetIntInvalidString request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) GetIntInvalidStringSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetIntInvalidStringSender sends the GetIntInvalidString request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) GetIntInvalidStringSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetIntInvalidStringResponder handles the response to the GetIntInvalidString request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) GetIntInvalidStringResponder(resp *http.Response) (result SetInt32, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetIntInvalidStringResponder handles the response to the GetIntInvalidString request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) GetIntInvalidStringResponder(resp *http.Response) (result SetInt32, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetInvalid get invalid Dictionary value
 func (client DictionaryClient) GetInvalid(ctx context.Context) (result SetString, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.GetInvalid")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetInvalidPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetInvalid", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.GetInvalid")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetInvalidPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetInvalid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetInvalidSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetInvalid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetInvalidSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetInvalid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetInvalidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetInvalid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetInvalidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetInvalid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetInvalidPreparer prepares the GetInvalid request.
-func (client DictionaryClient) GetInvalidPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/invalid"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetInvalidPreparer prepares the GetInvalid request.
+    func (client DictionaryClient) GetInvalidPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/invalid"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetInvalidSender sends the GetInvalid request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) GetInvalidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetInvalidSender sends the GetInvalid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) GetInvalidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetInvalidResponder handles the response to the GetInvalid request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) GetInvalidResponder(resp *http.Response) (result SetString, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetInvalidResponder handles the response to the GetInvalid request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) GetInvalidResponder(resp *http.Response) (result SetString, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetLongInvalidNull get long dictionary value {"0": 1, "1": null, "2": 0}
 func (client DictionaryClient) GetLongInvalidNull(ctx context.Context) (result SetInt64, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.GetLongInvalidNull")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetLongInvalidNullPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetLongInvalidNull", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.GetLongInvalidNull")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetLongInvalidNullPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetLongInvalidNull", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetLongInvalidNullSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetLongInvalidNull", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetLongInvalidNullSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetLongInvalidNull", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetLongInvalidNullResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetLongInvalidNull", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetLongInvalidNullResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetLongInvalidNull", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetLongInvalidNullPreparer prepares the GetLongInvalidNull request.
-func (client DictionaryClient) GetLongInvalidNullPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/prim/long/1.null.zero"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetLongInvalidNullPreparer prepares the GetLongInvalidNull request.
+    func (client DictionaryClient) GetLongInvalidNullPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/prim/long/1.null.zero"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetLongInvalidNullSender sends the GetLongInvalidNull request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) GetLongInvalidNullSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetLongInvalidNullSender sends the GetLongInvalidNull request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) GetLongInvalidNullSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetLongInvalidNullResponder handles the response to the GetLongInvalidNull request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) GetLongInvalidNullResponder(resp *http.Response) (result SetInt64, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetLongInvalidNullResponder handles the response to the GetLongInvalidNull request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) GetLongInvalidNullResponder(resp *http.Response) (result SetInt64, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetLongInvalidString get long dictionary value {"0": 1, "1": "integer", "2": 0}
 func (client DictionaryClient) GetLongInvalidString(ctx context.Context) (result SetInt64, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.GetLongInvalidString")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetLongInvalidStringPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetLongInvalidString", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.GetLongInvalidString")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetLongInvalidStringPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetLongInvalidString", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetLongInvalidStringSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetLongInvalidString", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetLongInvalidStringSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetLongInvalidString", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetLongInvalidStringResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetLongInvalidString", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetLongInvalidStringResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetLongInvalidString", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetLongInvalidStringPreparer prepares the GetLongInvalidString request.
-func (client DictionaryClient) GetLongInvalidStringPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/prim/long/1.integer.0"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetLongInvalidStringPreparer prepares the GetLongInvalidString request.
+    func (client DictionaryClient) GetLongInvalidStringPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/prim/long/1.integer.0"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetLongInvalidStringSender sends the GetLongInvalidString request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) GetLongInvalidStringSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetLongInvalidStringSender sends the GetLongInvalidString request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) GetLongInvalidStringSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetLongInvalidStringResponder handles the response to the GetLongInvalidString request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) GetLongInvalidStringResponder(resp *http.Response) (result SetInt64, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetLongInvalidStringResponder handles the response to the GetLongInvalidString request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) GetLongInvalidStringResponder(resp *http.Response) (result SetInt64, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetLongValid get integer dictionary value {"0": 1, "1": -1, "2": 3, "3": 300}
 func (client DictionaryClient) GetLongValid(ctx context.Context) (result SetInt64, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.GetLongValid")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetLongValidPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetLongValid", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.GetLongValid")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetLongValidPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetLongValid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetLongValidSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetLongValid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetLongValidSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetLongValid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetLongValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetLongValid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetLongValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetLongValid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetLongValidPreparer prepares the GetLongValid request.
-func (client DictionaryClient) GetLongValidPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/prim/long/1.-1.3.300"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetLongValidPreparer prepares the GetLongValid request.
+    func (client DictionaryClient) GetLongValidPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/prim/long/1.-1.3.300"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetLongValidSender sends the GetLongValid request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) GetLongValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetLongValidSender sends the GetLongValid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) GetLongValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetLongValidResponder handles the response to the GetLongValid request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) GetLongValidResponder(resp *http.Response) (result SetInt64, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetLongValidResponder handles the response to the GetLongValid request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) GetLongValidResponder(resp *http.Response) (result SetInt64, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetNull get null dictionary value
 func (client DictionaryClient) GetNull(ctx context.Context) (result SetInt32, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.GetNull")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetNullPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetNull", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.GetNull")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetNullPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetNull", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetNullSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetNull", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetNullSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetNull", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetNullResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetNull", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetNullResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetNull", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetNullPreparer prepares the GetNull request.
-func (client DictionaryClient) GetNullPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/null"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetNullPreparer prepares the GetNull request.
+    func (client DictionaryClient) GetNullPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/null"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetNullSender sends the GetNull request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) GetNullSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetNullSender sends the GetNull request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) GetNullSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetNullResponder handles the response to the GetNull request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) GetNullResponder(resp *http.Response) (result SetInt32, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetNullResponder handles the response to the GetNull request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) GetNullResponder(resp *http.Response) (result SetInt32, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetNullKey get Dictionary with null key
 func (client DictionaryClient) GetNullKey(ctx context.Context) (result SetString, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.GetNullKey")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetNullKeyPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetNullKey", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.GetNullKey")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetNullKeyPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetNullKey", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetNullKeySender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetNullKey", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetNullKeySender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetNullKey", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetNullKeyResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetNullKey", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetNullKeyResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetNullKey", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetNullKeyPreparer prepares the GetNullKey request.
-func (client DictionaryClient) GetNullKeyPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/nullkey"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetNullKeyPreparer prepares the GetNullKey request.
+    func (client DictionaryClient) GetNullKeyPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/nullkey"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetNullKeySender sends the GetNullKey request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) GetNullKeySender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetNullKeySender sends the GetNullKey request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) GetNullKeySender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetNullKeyResponder handles the response to the GetNullKey request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) GetNullKeyResponder(resp *http.Response) (result SetString, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetNullKeyResponder handles the response to the GetNullKey request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) GetNullKeyResponder(resp *http.Response) (result SetString, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetNullValue get Dictionary with null value
 func (client DictionaryClient) GetNullValue(ctx context.Context) (result SetString, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.GetNullValue")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetNullValuePreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetNullValue", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.GetNullValue")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetNullValuePreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetNullValue", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetNullValueSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetNullValue", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetNullValueSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetNullValue", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetNullValueResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetNullValue", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetNullValueResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetNullValue", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetNullValuePreparer prepares the GetNullValue request.
-func (client DictionaryClient) GetNullValuePreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/nullvalue"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetNullValuePreparer prepares the GetNullValue request.
+    func (client DictionaryClient) GetNullValuePreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/nullvalue"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetNullValueSender sends the GetNullValue request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) GetNullValueSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetNullValueSender sends the GetNullValue request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) GetNullValueSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetNullValueResponder handles the response to the GetNullValue request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) GetNullValueResponder(resp *http.Response) (result SetString, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetNullValueResponder handles the response to the GetNullValue request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) GetNullValueResponder(resp *http.Response) (result SetString, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetStringValid get string dictionary value {"0": "foo1", "1": "foo2", "2": "foo3"}
 func (client DictionaryClient) GetStringValid(ctx context.Context) (result SetString, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.GetStringValid")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetStringValidPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetStringValid", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.GetStringValid")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetStringValidPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetStringValid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetStringValidSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetStringValid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetStringValidSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetStringValid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetStringValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetStringValid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetStringValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetStringValid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetStringValidPreparer prepares the GetStringValid request.
-func (client DictionaryClient) GetStringValidPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/prim/string/foo1.foo2.foo3"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetStringValidPreparer prepares the GetStringValid request.
+    func (client DictionaryClient) GetStringValidPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/prim/string/foo1.foo2.foo3"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetStringValidSender sends the GetStringValid request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) GetStringValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetStringValidSender sends the GetStringValid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) GetStringValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetStringValidResponder handles the response to the GetStringValid request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) GetStringValidResponder(resp *http.Response) (result SetString, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetStringValidResponder handles the response to the GetStringValid request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) GetStringValidResponder(resp *http.Response) (result SetString, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetStringWithInvalid get string dictionary value {"0": "foo", "1": 123, "2": "foo2"}
 func (client DictionaryClient) GetStringWithInvalid(ctx context.Context) (result SetString, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.GetStringWithInvalid")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetStringWithInvalidPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetStringWithInvalid", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.GetStringWithInvalid")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetStringWithInvalidPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetStringWithInvalid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetStringWithInvalidSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetStringWithInvalid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetStringWithInvalidSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetStringWithInvalid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetStringWithInvalidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetStringWithInvalid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetStringWithInvalidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetStringWithInvalid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetStringWithInvalidPreparer prepares the GetStringWithInvalid request.
-func (client DictionaryClient) GetStringWithInvalidPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/prim/string/foo.123.foo2"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetStringWithInvalidPreparer prepares the GetStringWithInvalid request.
+    func (client DictionaryClient) GetStringWithInvalidPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/prim/string/foo.123.foo2"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetStringWithInvalidSender sends the GetStringWithInvalid request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) GetStringWithInvalidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetStringWithInvalidSender sends the GetStringWithInvalid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) GetStringWithInvalidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetStringWithInvalidResponder handles the response to the GetStringWithInvalid request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) GetStringWithInvalidResponder(resp *http.Response) (result SetString, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetStringWithInvalidResponder handles the response to the GetStringWithInvalid request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) GetStringWithInvalidResponder(resp *http.Response) (result SetString, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetStringWithNull get string dictionary value {"0": "foo", "1": null, "2": "foo2"}
 func (client DictionaryClient) GetStringWithNull(ctx context.Context) (result SetString, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.GetStringWithNull")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetStringWithNullPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetStringWithNull", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.GetStringWithNull")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetStringWithNullPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetStringWithNull", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetStringWithNullSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetStringWithNull", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetStringWithNullSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetStringWithNull", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetStringWithNullResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetStringWithNull", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetStringWithNullResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetStringWithNull", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetStringWithNullPreparer prepares the GetStringWithNull request.
-func (client DictionaryClient) GetStringWithNullPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/prim/string/foo.null.foo2"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetStringWithNullPreparer prepares the GetStringWithNull request.
+    func (client DictionaryClient) GetStringWithNullPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/prim/string/foo.null.foo2"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetStringWithNullSender sends the GetStringWithNull request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) GetStringWithNullSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetStringWithNullSender sends the GetStringWithNull request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) GetStringWithNullSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetStringWithNullResponder handles the response to the GetStringWithNull request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) GetStringWithNullResponder(resp *http.Response) (result SetString, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetStringWithNullResponder handles the response to the GetStringWithNull request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) GetStringWithNullResponder(resp *http.Response) (result SetString, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // PutArrayValid put An array of array of strings {"0": ["1", "2", "3"], "1": ["4", "5", "6"], "2": ["7", "8", "9"]}
 func (client DictionaryClient) PutArrayValid(ctx context.Context, arrayBody map[string][]string) (result autorest.Response, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.PutArrayValid")
-		defer func() {
-			sc := -1
-			if result.Response != nil {
-				sc = result.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	if err := validation.Validate([]validation.Validation{
-		{TargetValue: arrayBody,
-			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewError("dictionarygroup.DictionaryClient", "PutArrayValid", err.Error())
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.PutArrayValid")
+        defer func() {
+            sc := -1
+        if result.Response != nil {
+        sc = result.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+        if err := validation.Validate([]validation.Validation{
+        { TargetValue: arrayBody,
+         Constraints: []validation.Constraint{	{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil }}}}); err != nil {
+        return result, validation.NewError("dictionarygroup.DictionaryClient", "PutArrayValid", err.Error())
+        }
 
-	req, err := client.PutArrayValidPreparer(ctx, arrayBody)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutArrayValid", nil, "Failure preparing request")
-		return
-	}
+        req, err := client.PutArrayValidPreparer(ctx, arrayBody)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutArrayValid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.PutArrayValidSender(req)
-	if err != nil {
-		result.Response = resp
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutArrayValid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.PutArrayValidSender(req)
+        if err != nil {
+        result.Response = resp
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutArrayValid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.PutArrayValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutArrayValid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.PutArrayValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutArrayValid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// PutArrayValidPreparer prepares the PutArrayValid request.
-func (client DictionaryClient) PutArrayValidPreparer(ctx context.Context, arrayBody map[string][]string) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsContentType("application/json; charset=utf-8"),
-		autorest.AsPut(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/array/valid"),
-		autorest.WithJSON(arrayBody))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // PutArrayValidPreparer prepares the PutArrayValid request.
+    func (client DictionaryClient) PutArrayValidPreparer(ctx context.Context, arrayBody map[string][]string) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsContentType("application/json; charset=utf-8"),
+autorest.AsPut(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/array/valid"),
+autorest.WithJSON(arrayBody))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// PutArrayValidSender sends the PutArrayValid request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) PutArrayValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // PutArrayValidSender sends the PutArrayValid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) PutArrayValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// PutArrayValidResponder handles the response to the PutArrayValid request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) PutArrayValidResponder(resp *http.Response) (result autorest.Response, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByClosing())
-	result.Response = resp
-	return
-}
+    // PutArrayValidResponder handles the response to the PutArrayValid request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) PutArrayValidResponder(resp *http.Response) (result autorest.Response, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByClosing())
+            result.Response = resp
+            return
+    }
 
 // PutBooleanTfft set dictionary value empty {"0": true, "1": false, "2": false, "3": true }
 func (client DictionaryClient) PutBooleanTfft(ctx context.Context, arrayBody map[string]*bool) (result autorest.Response, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.PutBooleanTfft")
-		defer func() {
-			sc := -1
-			if result.Response != nil {
-				sc = result.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	if err := validation.Validate([]validation.Validation{
-		{TargetValue: arrayBody,
-			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewError("dictionarygroup.DictionaryClient", "PutBooleanTfft", err.Error())
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.PutBooleanTfft")
+        defer func() {
+            sc := -1
+        if result.Response != nil {
+        sc = result.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+        if err := validation.Validate([]validation.Validation{
+        { TargetValue: arrayBody,
+         Constraints: []validation.Constraint{	{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil }}}}); err != nil {
+        return result, validation.NewError("dictionarygroup.DictionaryClient", "PutBooleanTfft", err.Error())
+        }
 
-	req, err := client.PutBooleanTfftPreparer(ctx, arrayBody)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutBooleanTfft", nil, "Failure preparing request")
-		return
-	}
+        req, err := client.PutBooleanTfftPreparer(ctx, arrayBody)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutBooleanTfft", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.PutBooleanTfftSender(req)
-	if err != nil {
-		result.Response = resp
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutBooleanTfft", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.PutBooleanTfftSender(req)
+        if err != nil {
+        result.Response = resp
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutBooleanTfft", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.PutBooleanTfftResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutBooleanTfft", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.PutBooleanTfftResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutBooleanTfft", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// PutBooleanTfftPreparer prepares the PutBooleanTfft request.
-func (client DictionaryClient) PutBooleanTfftPreparer(ctx context.Context, arrayBody map[string]*bool) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsContentType("application/json; charset=utf-8"),
-		autorest.AsPut(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/prim/boolean/tfft"),
-		autorest.WithJSON(arrayBody))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // PutBooleanTfftPreparer prepares the PutBooleanTfft request.
+    func (client DictionaryClient) PutBooleanTfftPreparer(ctx context.Context, arrayBody map[string]*bool) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsContentType("application/json; charset=utf-8"),
+autorest.AsPut(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/prim/boolean/tfft"),
+autorest.WithJSON(arrayBody))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// PutBooleanTfftSender sends the PutBooleanTfft request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) PutBooleanTfftSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // PutBooleanTfftSender sends the PutBooleanTfft request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) PutBooleanTfftSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// PutBooleanTfftResponder handles the response to the PutBooleanTfft request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) PutBooleanTfftResponder(resp *http.Response) (result autorest.Response, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByClosing())
-	result.Response = resp
-	return
-}
+    // PutBooleanTfftResponder handles the response to the PutBooleanTfft request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) PutBooleanTfftResponder(resp *http.Response) (result autorest.Response, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByClosing())
+            result.Response = resp
+            return
+    }
 
 // PutByteValid put the dictionary value {"0": hex(FF FF FF FA), "1": hex(01 02 03), "2": hex (25, 29, 43)} with each
 // elementencoded in base 64
 func (client DictionaryClient) PutByteValid(ctx context.Context, arrayBody map[string][]byte) (result autorest.Response, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.PutByteValid")
-		defer func() {
-			sc := -1
-			if result.Response != nil {
-				sc = result.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	if err := validation.Validate([]validation.Validation{
-		{TargetValue: arrayBody,
-			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewError("dictionarygroup.DictionaryClient", "PutByteValid", err.Error())
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.PutByteValid")
+        defer func() {
+            sc := -1
+        if result.Response != nil {
+        sc = result.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+        if err := validation.Validate([]validation.Validation{
+        { TargetValue: arrayBody,
+         Constraints: []validation.Constraint{	{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil }}}}); err != nil {
+        return result, validation.NewError("dictionarygroup.DictionaryClient", "PutByteValid", err.Error())
+        }
 
-	req, err := client.PutByteValidPreparer(ctx, arrayBody)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutByteValid", nil, "Failure preparing request")
-		return
-	}
+        req, err := client.PutByteValidPreparer(ctx, arrayBody)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutByteValid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.PutByteValidSender(req)
-	if err != nil {
-		result.Response = resp
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutByteValid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.PutByteValidSender(req)
+        if err != nil {
+        result.Response = resp
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutByteValid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.PutByteValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutByteValid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.PutByteValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutByteValid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// PutByteValidPreparer prepares the PutByteValid request.
-func (client DictionaryClient) PutByteValidPreparer(ctx context.Context, arrayBody map[string][]byte) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsContentType("application/json; charset=utf-8"),
-		autorest.AsPut(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/prim/byte/valid"),
-		autorest.WithJSON(arrayBody))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // PutByteValidPreparer prepares the PutByteValid request.
+    func (client DictionaryClient) PutByteValidPreparer(ctx context.Context, arrayBody map[string][]byte) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsContentType("application/json; charset=utf-8"),
+autorest.AsPut(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/prim/byte/valid"),
+autorest.WithJSON(arrayBody))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// PutByteValidSender sends the PutByteValid request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) PutByteValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // PutByteValidSender sends the PutByteValid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) PutByteValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// PutByteValidResponder handles the response to the PutByteValid request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) PutByteValidResponder(resp *http.Response) (result autorest.Response, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByClosing())
-	result.Response = resp
-	return
-}
+    // PutByteValidResponder handles the response to the PutByteValid request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) PutByteValidResponder(resp *http.Response) (result autorest.Response, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByClosing())
+            result.Response = resp
+            return
+    }
 
 // PutComplexValid put an dictionary of complex type with values {"0": {"integer": 1, "string": "2"}, "1": {"integer":
 // 3, "string": "4"}, "2": {"integer": 5, "string": "6"}}
 func (client DictionaryClient) PutComplexValid(ctx context.Context, arrayBody map[string]*Widget) (result autorest.Response, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.PutComplexValid")
-		defer func() {
-			sc := -1
-			if result.Response != nil {
-				sc = result.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	if err := validation.Validate([]validation.Validation{
-		{TargetValue: arrayBody,
-			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewError("dictionarygroup.DictionaryClient", "PutComplexValid", err.Error())
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.PutComplexValid")
+        defer func() {
+            sc := -1
+        if result.Response != nil {
+        sc = result.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+        if err := validation.Validate([]validation.Validation{
+        { TargetValue: arrayBody,
+         Constraints: []validation.Constraint{	{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil }}}}); err != nil {
+        return result, validation.NewError("dictionarygroup.DictionaryClient", "PutComplexValid", err.Error())
+        }
 
-	req, err := client.PutComplexValidPreparer(ctx, arrayBody)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutComplexValid", nil, "Failure preparing request")
-		return
-	}
+        req, err := client.PutComplexValidPreparer(ctx, arrayBody)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutComplexValid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.PutComplexValidSender(req)
-	if err != nil {
-		result.Response = resp
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutComplexValid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.PutComplexValidSender(req)
+        if err != nil {
+        result.Response = resp
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutComplexValid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.PutComplexValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutComplexValid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.PutComplexValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutComplexValid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// PutComplexValidPreparer prepares the PutComplexValid request.
-func (client DictionaryClient) PutComplexValidPreparer(ctx context.Context, arrayBody map[string]*Widget) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsContentType("application/json; charset=utf-8"),
-		autorest.AsPut(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/complex/valid"),
-		autorest.WithJSON(arrayBody))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // PutComplexValidPreparer prepares the PutComplexValid request.
+    func (client DictionaryClient) PutComplexValidPreparer(ctx context.Context, arrayBody map[string]*Widget) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsContentType("application/json; charset=utf-8"),
+autorest.AsPut(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/complex/valid"),
+autorest.WithJSON(arrayBody))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// PutComplexValidSender sends the PutComplexValid request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) PutComplexValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // PutComplexValidSender sends the PutComplexValid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) PutComplexValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// PutComplexValidResponder handles the response to the PutComplexValid request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) PutComplexValidResponder(resp *http.Response) (result autorest.Response, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByClosing())
-	result.Response = resp
-	return
-}
+    // PutComplexValidResponder handles the response to the PutComplexValid request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) PutComplexValidResponder(resp *http.Response) (result autorest.Response, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByClosing())
+            result.Response = resp
+            return
+    }
 
 // PutDateTimeRfc1123Valid set dictionary value empty {"0": "Fri, 01 Dec 2000 00:00:01 GMT", "1": "Wed, 02 Jan 1980
 // 00:11:35 GMT", "2": "Wed, 12 Oct 1492 10:15:01 GMT"}
 func (client DictionaryClient) PutDateTimeRfc1123Valid(ctx context.Context, arrayBody map[string]*date.TimeRFC1123) (result autorest.Response, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.PutDateTimeRfc1123Valid")
-		defer func() {
-			sc := -1
-			if result.Response != nil {
-				sc = result.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	if err := validation.Validate([]validation.Validation{
-		{TargetValue: arrayBody,
-			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewError("dictionarygroup.DictionaryClient", "PutDateTimeRfc1123Valid", err.Error())
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.PutDateTimeRfc1123Valid")
+        defer func() {
+            sc := -1
+        if result.Response != nil {
+        sc = result.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+        if err := validation.Validate([]validation.Validation{
+        { TargetValue: arrayBody,
+         Constraints: []validation.Constraint{	{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil }}}}); err != nil {
+        return result, validation.NewError("dictionarygroup.DictionaryClient", "PutDateTimeRfc1123Valid", err.Error())
+        }
 
-	req, err := client.PutDateTimeRfc1123ValidPreparer(ctx, arrayBody)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutDateTimeRfc1123Valid", nil, "Failure preparing request")
-		return
-	}
+        req, err := client.PutDateTimeRfc1123ValidPreparer(ctx, arrayBody)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutDateTimeRfc1123Valid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.PutDateTimeRfc1123ValidSender(req)
-	if err != nil {
-		result.Response = resp
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutDateTimeRfc1123Valid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.PutDateTimeRfc1123ValidSender(req)
+        if err != nil {
+        result.Response = resp
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutDateTimeRfc1123Valid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.PutDateTimeRfc1123ValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutDateTimeRfc1123Valid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.PutDateTimeRfc1123ValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutDateTimeRfc1123Valid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// PutDateTimeRfc1123ValidPreparer prepares the PutDateTimeRfc1123Valid request.
-func (client DictionaryClient) PutDateTimeRfc1123ValidPreparer(ctx context.Context, arrayBody map[string]*date.TimeRFC1123) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsContentType("application/json; charset=utf-8"),
-		autorest.AsPut(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/prim/date-time-rfc1123/valid"),
-		autorest.WithJSON(arrayBody))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // PutDateTimeRfc1123ValidPreparer prepares the PutDateTimeRfc1123Valid request.
+    func (client DictionaryClient) PutDateTimeRfc1123ValidPreparer(ctx context.Context, arrayBody map[string]*date.TimeRFC1123) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsContentType("application/json; charset=utf-8"),
+autorest.AsPut(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/prim/date-time-rfc1123/valid"),
+autorest.WithJSON(arrayBody))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// PutDateTimeRfc1123ValidSender sends the PutDateTimeRfc1123Valid request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) PutDateTimeRfc1123ValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // PutDateTimeRfc1123ValidSender sends the PutDateTimeRfc1123Valid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) PutDateTimeRfc1123ValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// PutDateTimeRfc1123ValidResponder handles the response to the PutDateTimeRfc1123Valid request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) PutDateTimeRfc1123ValidResponder(resp *http.Response) (result autorest.Response, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByClosing())
-	result.Response = resp
-	return
-}
+    // PutDateTimeRfc1123ValidResponder handles the response to the PutDateTimeRfc1123Valid request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) PutDateTimeRfc1123ValidResponder(resp *http.Response) (result autorest.Response, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByClosing())
+            result.Response = resp
+            return
+    }
 
 // PutDateTimeValid set dictionary value  {"0": "2000-12-01t00:00:01z", "1": "1980-01-02T00:11:35+01:00", "2":
 // "1492-10-12T10:15:01-08:00"}
 func (client DictionaryClient) PutDateTimeValid(ctx context.Context, arrayBody map[string]*date.Time) (result autorest.Response, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.PutDateTimeValid")
-		defer func() {
-			sc := -1
-			if result.Response != nil {
-				sc = result.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	if err := validation.Validate([]validation.Validation{
-		{TargetValue: arrayBody,
-			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewError("dictionarygroup.DictionaryClient", "PutDateTimeValid", err.Error())
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.PutDateTimeValid")
+        defer func() {
+            sc := -1
+        if result.Response != nil {
+        sc = result.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+        if err := validation.Validate([]validation.Validation{
+        { TargetValue: arrayBody,
+         Constraints: []validation.Constraint{	{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil }}}}); err != nil {
+        return result, validation.NewError("dictionarygroup.DictionaryClient", "PutDateTimeValid", err.Error())
+        }
 
-	req, err := client.PutDateTimeValidPreparer(ctx, arrayBody)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutDateTimeValid", nil, "Failure preparing request")
-		return
-	}
+        req, err := client.PutDateTimeValidPreparer(ctx, arrayBody)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutDateTimeValid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.PutDateTimeValidSender(req)
-	if err != nil {
-		result.Response = resp
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutDateTimeValid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.PutDateTimeValidSender(req)
+        if err != nil {
+        result.Response = resp
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutDateTimeValid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.PutDateTimeValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutDateTimeValid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.PutDateTimeValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutDateTimeValid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// PutDateTimeValidPreparer prepares the PutDateTimeValid request.
-func (client DictionaryClient) PutDateTimeValidPreparer(ctx context.Context, arrayBody map[string]*date.Time) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsContentType("application/json; charset=utf-8"),
-		autorest.AsPut(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/prim/date-time/valid"),
-		autorest.WithJSON(arrayBody))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // PutDateTimeValidPreparer prepares the PutDateTimeValid request.
+    func (client DictionaryClient) PutDateTimeValidPreparer(ctx context.Context, arrayBody map[string]*date.Time) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsContentType("application/json; charset=utf-8"),
+autorest.AsPut(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/prim/date-time/valid"),
+autorest.WithJSON(arrayBody))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// PutDateTimeValidSender sends the PutDateTimeValid request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) PutDateTimeValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // PutDateTimeValidSender sends the PutDateTimeValid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) PutDateTimeValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// PutDateTimeValidResponder handles the response to the PutDateTimeValid request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) PutDateTimeValidResponder(resp *http.Response) (result autorest.Response, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByClosing())
-	result.Response = resp
-	return
-}
+    // PutDateTimeValidResponder handles the response to the PutDateTimeValid request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) PutDateTimeValidResponder(resp *http.Response) (result autorest.Response, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByClosing())
+            result.Response = resp
+            return
+    }
 
 // PutDateValid set dictionary value  {"0": "2000-12-01", "1": "1980-01-02", "2": "1492-10-12"}
 func (client DictionaryClient) PutDateValid(ctx context.Context, arrayBody map[string]*date.Date) (result autorest.Response, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.PutDateValid")
-		defer func() {
-			sc := -1
-			if result.Response != nil {
-				sc = result.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	if err := validation.Validate([]validation.Validation{
-		{TargetValue: arrayBody,
-			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewError("dictionarygroup.DictionaryClient", "PutDateValid", err.Error())
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.PutDateValid")
+        defer func() {
+            sc := -1
+        if result.Response != nil {
+        sc = result.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+        if err := validation.Validate([]validation.Validation{
+        { TargetValue: arrayBody,
+         Constraints: []validation.Constraint{	{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil }}}}); err != nil {
+        return result, validation.NewError("dictionarygroup.DictionaryClient", "PutDateValid", err.Error())
+        }
 
-	req, err := client.PutDateValidPreparer(ctx, arrayBody)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutDateValid", nil, "Failure preparing request")
-		return
-	}
+        req, err := client.PutDateValidPreparer(ctx, arrayBody)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutDateValid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.PutDateValidSender(req)
-	if err != nil {
-		result.Response = resp
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutDateValid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.PutDateValidSender(req)
+        if err != nil {
+        result.Response = resp
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutDateValid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.PutDateValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutDateValid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.PutDateValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutDateValid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// PutDateValidPreparer prepares the PutDateValid request.
-func (client DictionaryClient) PutDateValidPreparer(ctx context.Context, arrayBody map[string]*date.Date) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsContentType("application/json; charset=utf-8"),
-		autorest.AsPut(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/prim/date/valid"),
-		autorest.WithJSON(arrayBody))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // PutDateValidPreparer prepares the PutDateValid request.
+    func (client DictionaryClient) PutDateValidPreparer(ctx context.Context, arrayBody map[string]*date.Date) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsContentType("application/json; charset=utf-8"),
+autorest.AsPut(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/prim/date/valid"),
+autorest.WithJSON(arrayBody))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// PutDateValidSender sends the PutDateValid request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) PutDateValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // PutDateValidSender sends the PutDateValid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) PutDateValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// PutDateValidResponder handles the response to the PutDateValid request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) PutDateValidResponder(resp *http.Response) (result autorest.Response, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByClosing())
-	result.Response = resp
-	return
-}
+    // PutDateValidResponder handles the response to the PutDateValid request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) PutDateValidResponder(resp *http.Response) (result autorest.Response, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByClosing())
+            result.Response = resp
+            return
+    }
 
 // PutDictionaryValid get an dictionaries of dictionaries of type <string, string> with value {"0": {"1": "one", "2":
 // "two", "3": "three"}, "1": {"4": "four", "5": "five", "6": "six"}, "2": {"7": "seven", "8": "eight", "9": "nine"}}
 func (client DictionaryClient) PutDictionaryValid(ctx context.Context, arrayBody map[string]map[string]*string) (result autorest.Response, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.PutDictionaryValid")
-		defer func() {
-			sc := -1
-			if result.Response != nil {
-				sc = result.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	if err := validation.Validate([]validation.Validation{
-		{TargetValue: arrayBody,
-			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewError("dictionarygroup.DictionaryClient", "PutDictionaryValid", err.Error())
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.PutDictionaryValid")
+        defer func() {
+            sc := -1
+        if result.Response != nil {
+        sc = result.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+        if err := validation.Validate([]validation.Validation{
+        { TargetValue: arrayBody,
+         Constraints: []validation.Constraint{	{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil }}}}); err != nil {
+        return result, validation.NewError("dictionarygroup.DictionaryClient", "PutDictionaryValid", err.Error())
+        }
 
-	req, err := client.PutDictionaryValidPreparer(ctx, arrayBody)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutDictionaryValid", nil, "Failure preparing request")
-		return
-	}
+        req, err := client.PutDictionaryValidPreparer(ctx, arrayBody)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutDictionaryValid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.PutDictionaryValidSender(req)
-	if err != nil {
-		result.Response = resp
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutDictionaryValid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.PutDictionaryValidSender(req)
+        if err != nil {
+        result.Response = resp
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutDictionaryValid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.PutDictionaryValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutDictionaryValid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.PutDictionaryValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutDictionaryValid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// PutDictionaryValidPreparer prepares the PutDictionaryValid request.
-func (client DictionaryClient) PutDictionaryValidPreparer(ctx context.Context, arrayBody map[string]map[string]*string) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsContentType("application/json; charset=utf-8"),
-		autorest.AsPut(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/dictionary/valid"),
-		autorest.WithJSON(arrayBody))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // PutDictionaryValidPreparer prepares the PutDictionaryValid request.
+    func (client DictionaryClient) PutDictionaryValidPreparer(ctx context.Context, arrayBody map[string]map[string]*string) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsContentType("application/json; charset=utf-8"),
+autorest.AsPut(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/dictionary/valid"),
+autorest.WithJSON(arrayBody))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// PutDictionaryValidSender sends the PutDictionaryValid request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) PutDictionaryValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // PutDictionaryValidSender sends the PutDictionaryValid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) PutDictionaryValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// PutDictionaryValidResponder handles the response to the PutDictionaryValid request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) PutDictionaryValidResponder(resp *http.Response) (result autorest.Response, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByClosing())
-	result.Response = resp
-	return
-}
+    // PutDictionaryValidResponder handles the response to the PutDictionaryValid request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) PutDictionaryValidResponder(resp *http.Response) (result autorest.Response, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByClosing())
+            result.Response = resp
+            return
+    }
 
 // PutDoubleValid set dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
 func (client DictionaryClient) PutDoubleValid(ctx context.Context, arrayBody map[string]*float64) (result autorest.Response, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.PutDoubleValid")
-		defer func() {
-			sc := -1
-			if result.Response != nil {
-				sc = result.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	if err := validation.Validate([]validation.Validation{
-		{TargetValue: arrayBody,
-			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewError("dictionarygroup.DictionaryClient", "PutDoubleValid", err.Error())
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.PutDoubleValid")
+        defer func() {
+            sc := -1
+        if result.Response != nil {
+        sc = result.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+        if err := validation.Validate([]validation.Validation{
+        { TargetValue: arrayBody,
+         Constraints: []validation.Constraint{	{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil }}}}); err != nil {
+        return result, validation.NewError("dictionarygroup.DictionaryClient", "PutDoubleValid", err.Error())
+        }
 
-	req, err := client.PutDoubleValidPreparer(ctx, arrayBody)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutDoubleValid", nil, "Failure preparing request")
-		return
-	}
+        req, err := client.PutDoubleValidPreparer(ctx, arrayBody)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutDoubleValid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.PutDoubleValidSender(req)
-	if err != nil {
-		result.Response = resp
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutDoubleValid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.PutDoubleValidSender(req)
+        if err != nil {
+        result.Response = resp
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutDoubleValid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.PutDoubleValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutDoubleValid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.PutDoubleValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutDoubleValid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// PutDoubleValidPreparer prepares the PutDoubleValid request.
-func (client DictionaryClient) PutDoubleValidPreparer(ctx context.Context, arrayBody map[string]*float64) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsContentType("application/json; charset=utf-8"),
-		autorest.AsPut(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/prim/double/0--0.01-1.2e20"),
-		autorest.WithJSON(arrayBody))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // PutDoubleValidPreparer prepares the PutDoubleValid request.
+    func (client DictionaryClient) PutDoubleValidPreparer(ctx context.Context, arrayBody map[string]*float64) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsContentType("application/json; charset=utf-8"),
+autorest.AsPut(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/prim/double/0--0.01-1.2e20"),
+autorest.WithJSON(arrayBody))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// PutDoubleValidSender sends the PutDoubleValid request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) PutDoubleValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // PutDoubleValidSender sends the PutDoubleValid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) PutDoubleValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// PutDoubleValidResponder handles the response to the PutDoubleValid request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) PutDoubleValidResponder(resp *http.Response) (result autorest.Response, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByClosing())
-	result.Response = resp
-	return
-}
+    // PutDoubleValidResponder handles the response to the PutDoubleValid request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) PutDoubleValidResponder(resp *http.Response) (result autorest.Response, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByClosing())
+            result.Response = resp
+            return
+    }
 
 // PutDurationValid set dictionary value  {"0": "P123DT22H14M12.011S", "1": "P5DT1H0M0S"}
 func (client DictionaryClient) PutDurationValid(ctx context.Context, arrayBody map[string]*string) (result autorest.Response, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.PutDurationValid")
-		defer func() {
-			sc := -1
-			if result.Response != nil {
-				sc = result.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	if err := validation.Validate([]validation.Validation{
-		{TargetValue: arrayBody,
-			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewError("dictionarygroup.DictionaryClient", "PutDurationValid", err.Error())
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.PutDurationValid")
+        defer func() {
+            sc := -1
+        if result.Response != nil {
+        sc = result.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+        if err := validation.Validate([]validation.Validation{
+        { TargetValue: arrayBody,
+         Constraints: []validation.Constraint{	{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil }}}}); err != nil {
+        return result, validation.NewError("dictionarygroup.DictionaryClient", "PutDurationValid", err.Error())
+        }
 
-	req, err := client.PutDurationValidPreparer(ctx, arrayBody)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutDurationValid", nil, "Failure preparing request")
-		return
-	}
+        req, err := client.PutDurationValidPreparer(ctx, arrayBody)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutDurationValid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.PutDurationValidSender(req)
-	if err != nil {
-		result.Response = resp
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutDurationValid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.PutDurationValidSender(req)
+        if err != nil {
+        result.Response = resp
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutDurationValid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.PutDurationValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutDurationValid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.PutDurationValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutDurationValid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// PutDurationValidPreparer prepares the PutDurationValid request.
-func (client DictionaryClient) PutDurationValidPreparer(ctx context.Context, arrayBody map[string]*string) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsContentType("application/json; charset=utf-8"),
-		autorest.AsPut(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/prim/duration/valid"),
-		autorest.WithJSON(arrayBody))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // PutDurationValidPreparer prepares the PutDurationValid request.
+    func (client DictionaryClient) PutDurationValidPreparer(ctx context.Context, arrayBody map[string]*string) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsContentType("application/json; charset=utf-8"),
+autorest.AsPut(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/prim/duration/valid"),
+autorest.WithJSON(arrayBody))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// PutDurationValidSender sends the PutDurationValid request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) PutDurationValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // PutDurationValidSender sends the PutDurationValid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) PutDurationValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// PutDurationValidResponder handles the response to the PutDurationValid request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) PutDurationValidResponder(resp *http.Response) (result autorest.Response, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByClosing())
-	result.Response = resp
-	return
-}
+    // PutDurationValidResponder handles the response to the PutDurationValid request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) PutDurationValidResponder(resp *http.Response) (result autorest.Response, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByClosing())
+            result.Response = resp
+            return
+    }
 
 // PutEmpty set dictionary value empty {}
 func (client DictionaryClient) PutEmpty(ctx context.Context, arrayBody map[string]*string) (result autorest.Response, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.PutEmpty")
-		defer func() {
-			sc := -1
-			if result.Response != nil {
-				sc = result.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	if err := validation.Validate([]validation.Validation{
-		{TargetValue: arrayBody,
-			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewError("dictionarygroup.DictionaryClient", "PutEmpty", err.Error())
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.PutEmpty")
+        defer func() {
+            sc := -1
+        if result.Response != nil {
+        sc = result.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+        if err := validation.Validate([]validation.Validation{
+        { TargetValue: arrayBody,
+         Constraints: []validation.Constraint{	{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil }}}}); err != nil {
+        return result, validation.NewError("dictionarygroup.DictionaryClient", "PutEmpty", err.Error())
+        }
 
-	req, err := client.PutEmptyPreparer(ctx, arrayBody)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutEmpty", nil, "Failure preparing request")
-		return
-	}
+        req, err := client.PutEmptyPreparer(ctx, arrayBody)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutEmpty", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.PutEmptySender(req)
-	if err != nil {
-		result.Response = resp
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutEmpty", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.PutEmptySender(req)
+        if err != nil {
+        result.Response = resp
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutEmpty", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.PutEmptyResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutEmpty", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.PutEmptyResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutEmpty", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// PutEmptyPreparer prepares the PutEmpty request.
-func (client DictionaryClient) PutEmptyPreparer(ctx context.Context, arrayBody map[string]*string) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsContentType("application/json; charset=utf-8"),
-		autorest.AsPut(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/empty"),
-		autorest.WithJSON(arrayBody))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // PutEmptyPreparer prepares the PutEmpty request.
+    func (client DictionaryClient) PutEmptyPreparer(ctx context.Context, arrayBody map[string]*string) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsContentType("application/json; charset=utf-8"),
+autorest.AsPut(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/empty"),
+autorest.WithJSON(arrayBody))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// PutEmptySender sends the PutEmpty request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) PutEmptySender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // PutEmptySender sends the PutEmpty request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) PutEmptySender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// PutEmptyResponder handles the response to the PutEmpty request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) PutEmptyResponder(resp *http.Response) (result autorest.Response, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByClosing())
-	result.Response = resp
-	return
-}
+    // PutEmptyResponder handles the response to the PutEmpty request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) PutEmptyResponder(resp *http.Response) (result autorest.Response, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByClosing())
+            result.Response = resp
+            return
+    }
 
 // PutFloatValid set dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
 func (client DictionaryClient) PutFloatValid(ctx context.Context, arrayBody map[string]*float64) (result autorest.Response, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.PutFloatValid")
-		defer func() {
-			sc := -1
-			if result.Response != nil {
-				sc = result.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	if err := validation.Validate([]validation.Validation{
-		{TargetValue: arrayBody,
-			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewError("dictionarygroup.DictionaryClient", "PutFloatValid", err.Error())
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.PutFloatValid")
+        defer func() {
+            sc := -1
+        if result.Response != nil {
+        sc = result.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+        if err := validation.Validate([]validation.Validation{
+        { TargetValue: arrayBody,
+         Constraints: []validation.Constraint{	{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil }}}}); err != nil {
+        return result, validation.NewError("dictionarygroup.DictionaryClient", "PutFloatValid", err.Error())
+        }
 
-	req, err := client.PutFloatValidPreparer(ctx, arrayBody)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutFloatValid", nil, "Failure preparing request")
-		return
-	}
+        req, err := client.PutFloatValidPreparer(ctx, arrayBody)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutFloatValid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.PutFloatValidSender(req)
-	if err != nil {
-		result.Response = resp
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutFloatValid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.PutFloatValidSender(req)
+        if err != nil {
+        result.Response = resp
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutFloatValid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.PutFloatValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutFloatValid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.PutFloatValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutFloatValid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// PutFloatValidPreparer prepares the PutFloatValid request.
-func (client DictionaryClient) PutFloatValidPreparer(ctx context.Context, arrayBody map[string]*float64) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsContentType("application/json; charset=utf-8"),
-		autorest.AsPut(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/prim/float/0--0.01-1.2e20"),
-		autorest.WithJSON(arrayBody))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // PutFloatValidPreparer prepares the PutFloatValid request.
+    func (client DictionaryClient) PutFloatValidPreparer(ctx context.Context, arrayBody map[string]*float64) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsContentType("application/json; charset=utf-8"),
+autorest.AsPut(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/prim/float/0--0.01-1.2e20"),
+autorest.WithJSON(arrayBody))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// PutFloatValidSender sends the PutFloatValid request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) PutFloatValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // PutFloatValidSender sends the PutFloatValid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) PutFloatValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// PutFloatValidResponder handles the response to the PutFloatValid request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) PutFloatValidResponder(resp *http.Response) (result autorest.Response, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByClosing())
-	result.Response = resp
-	return
-}
+    // PutFloatValidResponder handles the response to the PutFloatValid request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) PutFloatValidResponder(resp *http.Response) (result autorest.Response, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByClosing())
+            result.Response = resp
+            return
+    }
 
 // PutIntegerValid set dictionary value empty {"0": 1, "1": -1, "2": 3, "3": 300}
 func (client DictionaryClient) PutIntegerValid(ctx context.Context, arrayBody map[string]*int32) (result autorest.Response, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.PutIntegerValid")
-		defer func() {
-			sc := -1
-			if result.Response != nil {
-				sc = result.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	if err := validation.Validate([]validation.Validation{
-		{TargetValue: arrayBody,
-			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewError("dictionarygroup.DictionaryClient", "PutIntegerValid", err.Error())
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.PutIntegerValid")
+        defer func() {
+            sc := -1
+        if result.Response != nil {
+        sc = result.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+        if err := validation.Validate([]validation.Validation{
+        { TargetValue: arrayBody,
+         Constraints: []validation.Constraint{	{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil }}}}); err != nil {
+        return result, validation.NewError("dictionarygroup.DictionaryClient", "PutIntegerValid", err.Error())
+        }
 
-	req, err := client.PutIntegerValidPreparer(ctx, arrayBody)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutIntegerValid", nil, "Failure preparing request")
-		return
-	}
+        req, err := client.PutIntegerValidPreparer(ctx, arrayBody)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutIntegerValid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.PutIntegerValidSender(req)
-	if err != nil {
-		result.Response = resp
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutIntegerValid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.PutIntegerValidSender(req)
+        if err != nil {
+        result.Response = resp
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutIntegerValid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.PutIntegerValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutIntegerValid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.PutIntegerValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutIntegerValid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// PutIntegerValidPreparer prepares the PutIntegerValid request.
-func (client DictionaryClient) PutIntegerValidPreparer(ctx context.Context, arrayBody map[string]*int32) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsContentType("application/json; charset=utf-8"),
-		autorest.AsPut(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/prim/integer/1.-1.3.300"),
-		autorest.WithJSON(arrayBody))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // PutIntegerValidPreparer prepares the PutIntegerValid request.
+    func (client DictionaryClient) PutIntegerValidPreparer(ctx context.Context, arrayBody map[string]*int32) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsContentType("application/json; charset=utf-8"),
+autorest.AsPut(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/prim/integer/1.-1.3.300"),
+autorest.WithJSON(arrayBody))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// PutIntegerValidSender sends the PutIntegerValid request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) PutIntegerValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // PutIntegerValidSender sends the PutIntegerValid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) PutIntegerValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// PutIntegerValidResponder handles the response to the PutIntegerValid request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) PutIntegerValidResponder(resp *http.Response) (result autorest.Response, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByClosing())
-	result.Response = resp
-	return
-}
+    // PutIntegerValidResponder handles the response to the PutIntegerValid request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) PutIntegerValidResponder(resp *http.Response) (result autorest.Response, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByClosing())
+            result.Response = resp
+            return
+    }
 
 // PutLongValid set dictionary value empty {"0": 1, "1": -1, "2": 3, "3": 300}
 func (client DictionaryClient) PutLongValid(ctx context.Context, arrayBody map[string]*int64) (result autorest.Response, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.PutLongValid")
-		defer func() {
-			sc := -1
-			if result.Response != nil {
-				sc = result.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	if err := validation.Validate([]validation.Validation{
-		{TargetValue: arrayBody,
-			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewError("dictionarygroup.DictionaryClient", "PutLongValid", err.Error())
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.PutLongValid")
+        defer func() {
+            sc := -1
+        if result.Response != nil {
+        sc = result.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+        if err := validation.Validate([]validation.Validation{
+        { TargetValue: arrayBody,
+         Constraints: []validation.Constraint{	{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil }}}}); err != nil {
+        return result, validation.NewError("dictionarygroup.DictionaryClient", "PutLongValid", err.Error())
+        }
 
-	req, err := client.PutLongValidPreparer(ctx, arrayBody)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutLongValid", nil, "Failure preparing request")
-		return
-	}
+        req, err := client.PutLongValidPreparer(ctx, arrayBody)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutLongValid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.PutLongValidSender(req)
-	if err != nil {
-		result.Response = resp
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutLongValid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.PutLongValidSender(req)
+        if err != nil {
+        result.Response = resp
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutLongValid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.PutLongValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutLongValid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.PutLongValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutLongValid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// PutLongValidPreparer prepares the PutLongValid request.
-func (client DictionaryClient) PutLongValidPreparer(ctx context.Context, arrayBody map[string]*int64) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsContentType("application/json; charset=utf-8"),
-		autorest.AsPut(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/prim/long/1.-1.3.300"),
-		autorest.WithJSON(arrayBody))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // PutLongValidPreparer prepares the PutLongValid request.
+    func (client DictionaryClient) PutLongValidPreparer(ctx context.Context, arrayBody map[string]*int64) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsContentType("application/json; charset=utf-8"),
+autorest.AsPut(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/prim/long/1.-1.3.300"),
+autorest.WithJSON(arrayBody))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// PutLongValidSender sends the PutLongValid request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) PutLongValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // PutLongValidSender sends the PutLongValid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) PutLongValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// PutLongValidResponder handles the response to the PutLongValid request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) PutLongValidResponder(resp *http.Response) (result autorest.Response, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByClosing())
-	result.Response = resp
-	return
-}
+    // PutLongValidResponder handles the response to the PutLongValid request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) PutLongValidResponder(resp *http.Response) (result autorest.Response, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByClosing())
+            result.Response = resp
+            return
+    }
 
 // PutStringValid set dictionary value {"0": "foo1", "1": "foo2", "2": "foo3"}
 func (client DictionaryClient) PutStringValid(ctx context.Context, arrayBody map[string]*string) (result autorest.Response, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.PutStringValid")
-		defer func() {
-			sc := -1
-			if result.Response != nil {
-				sc = result.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	if err := validation.Validate([]validation.Validation{
-		{TargetValue: arrayBody,
-			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewError("dictionarygroup.DictionaryClient", "PutStringValid", err.Error())
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/DictionaryClient.PutStringValid")
+        defer func() {
+            sc := -1
+        if result.Response != nil {
+        sc = result.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+        if err := validation.Validate([]validation.Validation{
+        { TargetValue: arrayBody,
+         Constraints: []validation.Constraint{	{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil }}}}); err != nil {
+        return result, validation.NewError("dictionarygroup.DictionaryClient", "PutStringValid", err.Error())
+        }
 
-	req, err := client.PutStringValidPreparer(ctx, arrayBody)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutStringValid", nil, "Failure preparing request")
-		return
-	}
+        req, err := client.PutStringValidPreparer(ctx, arrayBody)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutStringValid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.PutStringValidSender(req)
-	if err != nil {
-		result.Response = resp
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutStringValid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.PutStringValidSender(req)
+        if err != nil {
+        result.Response = resp
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutStringValid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.PutStringValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutStringValid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.PutStringValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutStringValid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// PutStringValidPreparer prepares the PutStringValid request.
-func (client DictionaryClient) PutStringValidPreparer(ctx context.Context, arrayBody map[string]*string) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsContentType("application/json; charset=utf-8"),
-		autorest.AsPut(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/dictionary/prim/string/foo1.foo2.foo3"),
-		autorest.WithJSON(arrayBody))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // PutStringValidPreparer prepares the PutStringValid request.
+    func (client DictionaryClient) PutStringValidPreparer(ctx context.Context, arrayBody map[string]*string) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsContentType("application/json; charset=utf-8"),
+autorest.AsPut(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/dictionary/prim/string/foo1.foo2.foo3"),
+autorest.WithJSON(arrayBody))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// PutStringValidSender sends the PutStringValid request. The method will close the
-// http.Response Body if it receives an error.
-func (client DictionaryClient) PutStringValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // PutStringValidSender sends the PutStringValid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client DictionaryClient) PutStringValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// PutStringValidResponder handles the response to the PutStringValid request. The method always
-// closes the http.Response Body.
-func (client DictionaryClient) PutStringValidResponder(resp *http.Response) (result autorest.Response, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByClosing())
-	result.Response = resp
-	return
-}
+    // PutStringValidResponder handles the response to the PutStringValid request. The method always
+    // closes the http.Response Body.
+    func (client DictionaryClient) PutStringValidResponder(resp *http.Response) (result autorest.Response, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByClosing())
+            result.Response = resp
+            return
+    }
+

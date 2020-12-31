@@ -7,1883 +7,1896 @@ package complexgroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-	"encoding/json"
-	"github.com/Azure/go-autorest/autorest"
-	"github.com/Azure/go-autorest/autorest/date"
+    "encoding/json"
+    "github.com/Azure/go-autorest/autorest"
+    "github.com/Azure/go-autorest/autorest/date"
 )
 
 // The package's fully qualified name.
 const fqdn = "tests/generated/complexgroup"
 
-// ArrayWrapper ...
-type ArrayWrapper struct {
-	autorest.Response `json:"-"`
-	Array             *[]string `json:"array,omitempty"`
-}
+            // ArrayWrapper ...
+            type ArrayWrapper struct {
+            autorest.Response `json:"-"`
+            Array *[]string `json:"array,omitempty"`
+            }
 
-// Basic ...
-type Basic struct {
-	autorest.Response `json:"-"`
-	// ID - Basic Id
-	ID *int32 `json:"id,omitempty"`
-	// Name - Name property with a very long description that does not fit on a single line and a line break.
-	Name *string `json:"name,omitempty"`
-	// Color - Possible values include: 'Cyan', 'Magenta', 'YELLOW', 'BlacK'
-	Color CMYKColors `json:"color,omitempty"`
-}
+            // Basic ...
+            type Basic struct {
+            autorest.Response `json:"-"`
+            // ID - Basic Id
+            ID *int32 `json:"id,omitempty"`
+            // Name - Name property with a very long description that does not fit on a single line and a line break.
+            Name *string `json:"name,omitempty"`
+            // Color - Possible values include: 'Cyan', 'Magenta', 'YELLOW', 'BlacK'
+            Color CMYKColors `json:"color,omitempty"`
+            }
 
-// BooleanWrapper ...
-type BooleanWrapper struct {
-	autorest.Response `json:"-"`
-	FieldTrue         *bool `json:"field_true,omitempty"`
-	FieldFalse        *bool `json:"field_false,omitempty"`
-}
+            // BooleanWrapper ...
+            type BooleanWrapper struct {
+            autorest.Response `json:"-"`
+            FieldTrue *bool `json:"field_true,omitempty"`
+            FieldFalse *bool `json:"field_false,omitempty"`
+            }
 
-// ByteWrapper ...
-type ByteWrapper struct {
-	autorest.Response `json:"-"`
-	Field             *[]byte `json:"field,omitempty"`
-}
+            // ByteWrapper ...
+            type ByteWrapper struct {
+            autorest.Response `json:"-"`
+            Field *[]byte `json:"field,omitempty"`
+            }
 
-// Cat ...
-type Cat struct {
-	Color *string `json:"color,omitempty"`
-	Hates *[]Dog  `json:"hates,omitempty"`
-	ID    *int32  `json:"id,omitempty"`
-	Name  *string `json:"name,omitempty"`
-}
+            // Cat ...
+            type Cat struct {
+            Color *string `json:"color,omitempty"`
+            Hates *[]Dog `json:"hates,omitempty"`
+            ID *int32 `json:"id,omitempty"`
+            Name *string `json:"name,omitempty"`
+            }
 
-// Cookiecuttershark ...
-type Cookiecuttershark struct {
-	Age      *int32       `json:"age,omitempty"`
-	Birthday *date.Time   `json:"birthday,omitempty"`
-	Species  *string      `json:"species,omitempty"`
-	Length   *float64     `json:"length,omitempty"`
-	Siblings *[]BasicFish `json:"siblings,omitempty"`
-	// Fishtype - Possible values include: 'FishtypeFish', 'FishtypeSalmon', 'FishtypeSmartSalmon', 'FishtypeShark', 'FishtypeSawshark', 'FishtypeGoblin', 'FishtypeCookiecuttershark'
-	Fishtype FishtypeBasicFish `json:"fishtype,omitempty"`
-}
+            // Cookiecuttershark ...
+            type Cookiecuttershark struct {
+            Age *int32 `json:"age,omitempty"`
+            Birthday *date.Time `json:"birthday,omitempty"`
+            Species *string `json:"species,omitempty"`
+            Length *float64 `json:"length,omitempty"`
+            Siblings *[]BasicFish `json:"siblings,omitempty"`
+            // Fishtype - Possible values include: 'FishtypeFish', 'FishtypeSalmon', 'FishtypeSmartSalmon', 'FishtypeShark', 'FishtypeSawshark', 'FishtypeGoblin', 'FishtypeCookiecuttershark'
+            Fishtype FishtypeBasicFish `json:"fishtype,omitempty"`
+            }
 
-// MarshalJSON is the custom marshaler for Cookiecuttershark.
-func (c Cookiecuttershark) MarshalJSON() ([]byte, error) {
-	c.Fishtype = FishtypeCookiecuttershark
-	objectMap := make(map[string]interface{})
-	if c.Age != nil {
-		objectMap["age"] = c.Age
-	}
-	if c.Birthday != nil {
-		objectMap["birthday"] = c.Birthday
-	}
-	if c.Species != nil {
-		objectMap["species"] = c.Species
-	}
-	if c.Length != nil {
-		objectMap["length"] = c.Length
-	}
-	if c.Siblings != nil {
-		objectMap["siblings"] = c.Siblings
-	}
-	if c.Fishtype != "" {
-		objectMap["fishtype"] = c.Fishtype
-	}
-	return json.Marshal(objectMap)
-}
+        // MarshalJSON is the custom marshaler for Cookiecuttershark.
+        func (c Cookiecuttershark)MarshalJSON() ([]byte, error){
+            c.Fishtype = FishtypeCookiecuttershark
+            objectMap := make(map[string]interface{})
+                if(c.Age != nil) {
+                objectMap["age"] = c.Age
+                }
+                if(c.Birthday != nil) {
+                objectMap["birthday"] = c.Birthday
+                }
+                if(c.Species != nil) {
+                objectMap["species"] = c.Species
+                }
+                if(c.Length != nil) {
+                objectMap["length"] = c.Length
+                }
+                if(c.Siblings != nil) {
+                objectMap["siblings"] = c.Siblings
+                }
+                if(c.Fishtype != "") {
+                objectMap["fishtype"] = c.Fishtype
+                }
+                return json.Marshal(objectMap)
+        }
 
-// AsSalmon is the BasicFish implementation for Cookiecuttershark.
-func (c Cookiecuttershark) AsSalmon() (*Salmon, bool) {
-	return nil, false
-}
+            // AsSalmon is the BasicFish implementation for Cookiecuttershark.
+            func (c Cookiecuttershark) AsSalmon() (*Salmon, bool) {
+                return nil, false
+            }
 
-// AsBasicSalmon is the BasicFish implementation for Cookiecuttershark.
-func (c Cookiecuttershark) AsBasicSalmon() (BasicSalmon, bool) {
-	return nil, false
-}
+                // AsBasicSalmon is the BasicFish implementation for Cookiecuttershark.
+                func(c Cookiecuttershark) AsBasicSalmon()(BasicSalmon, bool) {
+                    return nil, false
+                }
 
-// AsSmartSalmon is the BasicFish implementation for Cookiecuttershark.
-func (c Cookiecuttershark) AsSmartSalmon() (*SmartSalmon, bool) {
-	return nil, false
-}
 
-// AsShark is the BasicFish implementation for Cookiecuttershark.
-func (c Cookiecuttershark) AsShark() (*Shark, bool) {
-	return nil, false
-}
+            // AsSmartSalmon is the BasicFish implementation for Cookiecuttershark.
+            func (c Cookiecuttershark) AsSmartSalmon() (*SmartSalmon, bool) {
+                return nil, false
+            }
 
-// AsBasicShark is the BasicFish implementation for Cookiecuttershark.
-func (c Cookiecuttershark) AsBasicShark() (BasicShark, bool) {
-	return &c, true
-}
+            // AsShark is the BasicFish implementation for Cookiecuttershark.
+            func (c Cookiecuttershark) AsShark() (*Shark, bool) {
+                return nil, false
+            }
 
-// AsSawshark is the BasicFish implementation for Cookiecuttershark.
-func (c Cookiecuttershark) AsSawshark() (*Sawshark, bool) {
-	return nil, false
-}
+                // AsBasicShark is the BasicFish implementation for Cookiecuttershark.
+                func(c Cookiecuttershark) AsBasicShark()(BasicShark, bool) {
+                    return &c, true
+                }
 
-// AsGoblinshark is the BasicFish implementation for Cookiecuttershark.
-func (c Cookiecuttershark) AsGoblinshark() (*Goblinshark, bool) {
-	return nil, false
-}
 
-// AsCookiecuttershark is the BasicFish implementation for Cookiecuttershark.
-func (c Cookiecuttershark) AsCookiecuttershark() (*Cookiecuttershark, bool) {
-	return &c, true
-}
+            // AsSawshark is the BasicFish implementation for Cookiecuttershark.
+            func (c Cookiecuttershark) AsSawshark() (*Sawshark, bool) {
+                return nil, false
+            }
 
-// AsFish is the BasicFish implementation for Cookiecuttershark.
-func (c Cookiecuttershark) AsFish() (*Fish, bool) {
-	return nil, false
-}
+            // AsGoblinshark is the BasicFish implementation for Cookiecuttershark.
+            func (c Cookiecuttershark) AsGoblinshark() (*Goblinshark, bool) {
+                return nil, false
+            }
 
-// AsBasicFish is the BasicFish implementation for Cookiecuttershark.
-func (c Cookiecuttershark) AsBasicFish() (BasicFish, bool) {
-	return &c, true
-}
+            // AsCookiecuttershark is the BasicFish implementation for Cookiecuttershark.
+            func (c Cookiecuttershark) AsCookiecuttershark() (*Cookiecuttershark, bool) {
+                return &c, true
+            }
 
-// UnmarshalJSON is the custom unmarshaler for Cookiecuttershark struct.
-func (c *Cookiecuttershark) UnmarshalJSON(body []byte) error {
-	var m map[string]*json.RawMessage
-	err := json.Unmarshal(body, &m)
-	if err != nil {
-		return err
-	}
-	for k, v := range m {
-		switch k {
-		case "age":
-			if v != nil {
-				var age int32
-				err = json.Unmarshal(*v, &age)
-				if err != nil {
-					return err
-				}
-				c.Age = &age
-			}
-		case "birthday":
-			if v != nil {
-				var birthday date.Time
-				err = json.Unmarshal(*v, &birthday)
-				if err != nil {
-					return err
-				}
-				c.Birthday = &birthday
-			}
-		case "species":
-			if v != nil {
-				var species string
-				err = json.Unmarshal(*v, &species)
-				if err != nil {
-					return err
-				}
-				c.Species = &species
-			}
-		case "length":
-			if v != nil {
-				var length float64
-				err = json.Unmarshal(*v, &length)
-				if err != nil {
-					return err
-				}
-				c.Length = &length
-			}
-		case "siblings":
-			if v != nil {
-				siblings, err := unmarshalBasicFishArray(*v)
-				if err != nil {
-					return err
-				}
-				c.Siblings = &siblings
-			}
-		case "fishtype":
-			if v != nil {
-				var fishtype FishtypeBasicFish
-				err = json.Unmarshal(*v, &fishtype)
-				if err != nil {
-					return err
-				}
-				c.Fishtype = fishtype
-			}
-		}
-	}
+            // AsFish is the BasicFish implementation for Cookiecuttershark.
+            func (c Cookiecuttershark) AsFish() (*Fish, bool) {
+                return nil, false
+            }
 
-	return nil
-}
+                // AsBasicFish is the BasicFish implementation for Cookiecuttershark.
+                func(c Cookiecuttershark) AsBasicFish()(BasicFish, bool) {
+                    return &c, true
+                }
 
-// Datetimerfc1123Wrapper ...
-type Datetimerfc1123Wrapper struct {
-	autorest.Response `json:"-"`
-	Field             *date.TimeRFC1123 `json:"field,omitempty"`
-	Now               *date.TimeRFC1123 `json:"now,omitempty"`
-}
+        // UnmarshalJSON is the custom unmarshaler for Cookiecuttershark struct.
+        func (c *Cookiecuttershark) UnmarshalJSON(body []byte) error {
+        var m map[string]*json.RawMessage
+        err := json.Unmarshal(body, &m)
+        if err != nil {
+        return err
+        }
+        for k, v := range  m {
+        switch k {
+                case "age":
+    if v != nil {
+        var age int32
+        err = json.Unmarshal(*v, &age)
+    if err != nil {
+    return err
+    }
+        c.Age = &age
+    }
+                case "birthday":
+    if v != nil {
+        var birthday date.Time
+        err = json.Unmarshal(*v, &birthday)
+    if err != nil {
+    return err
+    }
+        c.Birthday = &birthday
+    }
+                case "species":
+    if v != nil {
+        var species string
+        err = json.Unmarshal(*v, &species)
+    if err != nil {
+    return err
+    }
+        c.Species = &species
+    }
+                case "length":
+    if v != nil {
+        var length float64
+        err = json.Unmarshal(*v, &length)
+    if err != nil {
+    return err
+    }
+        c.Length = &length
+    }
+                case "siblings":
+    if v != nil {
+        siblings, err := unmarshalBasicFishArray(*v)
+    if err != nil {
+    return err
+    }
+        c.Siblings = &siblings
+    }
+                case "fishtype":
+    if v != nil {
+        var fishtype FishtypeBasicFish
+        err = json.Unmarshal(*v, &fishtype)
+    if err != nil {
+    return err
+    }
+        c.Fishtype = fishtype
+    }
+            }
+        }
 
-// DatetimeWrapper ...
-type DatetimeWrapper struct {
-	autorest.Response `json:"-"`
-	Field             *date.Time `json:"field,omitempty"`
-	Now               *date.Time `json:"now,omitempty"`
-}
+        return nil
+        }
 
-// DateWrapper ...
-type DateWrapper struct {
-	autorest.Response `json:"-"`
-	Field             *date.Date `json:"field,omitempty"`
-	Leap              *date.Date `json:"leap,omitempty"`
-}
+            // Datetimerfc1123Wrapper ...
+            type Datetimerfc1123Wrapper struct {
+            autorest.Response `json:"-"`
+            Field *date.TimeRFC1123 `json:"field,omitempty"`
+            Now *date.TimeRFC1123 `json:"now,omitempty"`
+            }
 
-// DictionaryWrapper ...
-type DictionaryWrapper struct {
-	autorest.Response `json:"-"`
-	DefaultProgram    map[string]*string `json:"defaultProgram"`
-}
+            // DatetimeWrapper ...
+            type DatetimeWrapper struct {
+            autorest.Response `json:"-"`
+            Field *date.Time `json:"field,omitempty"`
+            Now *date.Time `json:"now,omitempty"`
+            }
 
-// MarshalJSON is the custom marshaler for DictionaryWrapper.
-func (d DictionaryWrapper) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if d.DefaultProgram != nil {
-		objectMap["defaultProgram"] = d.DefaultProgram
-	}
-	return json.Marshal(objectMap)
-}
+            // DateWrapper ...
+            type DateWrapper struct {
+            autorest.Response `json:"-"`
+            Field *date.Date `json:"field,omitempty"`
+            Leap *date.Date `json:"leap,omitempty"`
+            }
 
-// Dog ...
-type Dog struct {
-	Food *string `json:"food,omitempty"`
-	ID   *int32  `json:"id,omitempty"`
-	Name *string `json:"name,omitempty"`
-}
+            // DictionaryWrapper ...
+            type DictionaryWrapper struct {
+            autorest.Response `json:"-"`
+            DefaultProgram map[string]*string `json:"defaultProgram"`
+            }
+
+        // MarshalJSON is the custom marshaler for DictionaryWrapper.
+        func (d DictionaryWrapper)MarshalJSON() ([]byte, error){
+        objectMap := make(map[string]interface{})
+                if(d.DefaultProgram != nil) {
+                objectMap["defaultProgram"] = d.DefaultProgram
+                }
+                return json.Marshal(objectMap)
+        }
+
+            // Dog ...
+            type Dog struct {
+            Food *string `json:"food,omitempty"`
+            ID *int32 `json:"id,omitempty"`
+            Name *string `json:"name,omitempty"`
+            }
 
 // BasicDotFish ...
-type BasicDotFish interface {
-	AsDotSalmon() (*DotSalmon, bool)
-	AsDotFish() (*DotFish, bool)
-}
+        type BasicDotFish interface {
+            AsDotSalmon () (*DotSalmon, bool)
+        AsDotFish () (*DotFish, bool)
+        }
 
-// DotFish ...
-type DotFish struct {
-	autorest.Response `json:"-"`
-	Species           *string `json:"species,omitempty"`
-	// FishType - Possible values include: 'FishTypeDotFish', 'FishTypeDotSalmon'
-	FishType FishType `json:"fish.type,omitempty"`
-}
+        // DotFish ...
+        type DotFish struct {
+        autorest.Response `json:"-"`
+        Species *string `json:"species,omitempty"`
+        // FishType - Possible values include: 'FishTypeDotFish', 'FishTypeDotSalmon'
+        FishType FishType `json:"fish.type,omitempty"`
+        }
 
-func unmarshalBasicDotFish(body []byte) (BasicDotFish, error) {
-	var m map[string]interface{}
-	err := json.Unmarshal(body, &m)
-	if err != nil {
-		return nil, err
-	}
+        func unmarshalBasicDotFish(body []byte) (BasicDotFish, error){
+        var m map[string]interface{}
+        err := json.Unmarshal(body, &m)
+        if err != nil {
+        return nil, err
+        }
 
-	switch m["fish.type"] {
-	case string(FishTypeDotSalmon):
-		var ds DotSalmon
-		err := json.Unmarshal(body, &ds)
-		return ds, err
-	default:
-		var df DotFish
-		err := json.Unmarshal(body, &df)
-		return df, err
-	}
-}
-func unmarshalBasicDotFishArray(body []byte) ([]BasicDotFish, error) {
-	var rawMessages []*json.RawMessage
-	err := json.Unmarshal(body, &rawMessages)
-	if err != nil {
-		return nil, err
-	}
+        switch m["fish.type"] {
+            case string(FishTypeDotSalmon):
+            var ds DotSalmon
+            err := json.Unmarshal(body, &ds)
+            return ds, err
+            default:
+        var df DotFish
+        err := json.Unmarshal(body, &df)
+        return df, err
+        }
+        }
+        func unmarshalBasicDotFishArray(body []byte) ([]BasicDotFish, error){
+        var rawMessages []*json.RawMessage
+        err := json.Unmarshal(body, &rawMessages)
+        if err != nil {
+        return nil, err
+        }
 
-	dfArray := make([]BasicDotFish, len(rawMessages))
+        dfArray := make([]BasicDotFish, len(rawMessages))
 
-	for index, rawMessage := range rawMessages {
-		df, err := unmarshalBasicDotFish(*rawMessage)
-		if err != nil {
-			return nil, err
-		}
-		dfArray[index] = df
-	}
-	return dfArray, nil
-}
+        for index, rawMessage := range rawMessages {
+        df, err := unmarshalBasicDotFish(*rawMessage)
+        if err != nil {
+        return nil, err
+        }
+        dfArray[index] = df
+        }
+        return dfArray, nil
+        }
 
-// MarshalJSON is the custom marshaler for DotFish.
-func (df DotFish) MarshalJSON() ([]byte, error) {
-	df.FishType = FishTypeDotFish
-	objectMap := make(map[string]interface{})
-	if df.Species != nil {
-		objectMap["species"] = df.Species
-	}
-	if df.FishType != "" {
-		objectMap["fish.type"] = df.FishType
-	}
-	return json.Marshal(objectMap)
-}
+        // MarshalJSON is the custom marshaler for DotFish.
+        func (df DotFish)MarshalJSON() ([]byte, error){
+            df.FishType = FishTypeDotFish
+            objectMap := make(map[string]interface{})
+                if(df.Species != nil) {
+                objectMap["species"] = df.Species
+                }
+                if(df.FishType != "") {
+                objectMap["fish.type"] = df.FishType
+                }
+                return json.Marshal(objectMap)
+        }
 
-// AsDotSalmon is the BasicDotFish implementation for DotFish.
-func (df DotFish) AsDotSalmon() (*DotSalmon, bool) {
-	return nil, false
-}
+            // AsDotSalmon is the BasicDotFish implementation for DotFish.
+            func (df DotFish) AsDotSalmon() (*DotSalmon, bool) {
+                return nil, false
+            }
 
-// AsDotFish is the BasicDotFish implementation for DotFish.
-func (df DotFish) AsDotFish() (*DotFish, bool) {
-	return &df, true
-}
+            // AsDotFish is the BasicDotFish implementation for DotFish.
+            func (df DotFish) AsDotFish() (*DotFish, bool) {
+                return &df, true
+            }
 
-// AsBasicDotFish is the BasicDotFish implementation for DotFish.
-func (df DotFish) AsBasicDotFish() (BasicDotFish, bool) {
-	return &df, true
-}
+                // AsBasicDotFish is the BasicDotFish implementation for DotFish.
+                func(df DotFish) AsBasicDotFish()(BasicDotFish, bool) {
+                    return &df, true
+                }
 
-// DotFishMarket ...
-type DotFishMarket struct {
-	autorest.Response `json:"-"`
-	SampleSalmon      *DotSalmon      `json:"sampleSalmon,omitempty"`
-	Salmons           *[]DotSalmon    `json:"salmons,omitempty"`
-	SampleFish        BasicDotFish    `json:"sampleFish,omitempty"`
-	Fishes            *[]BasicDotFish `json:"fishes,omitempty"`
-}
 
-// UnmarshalJSON is the custom unmarshaler for DotFishMarket struct.
-func (dfm *DotFishMarket) UnmarshalJSON(body []byte) error {
-	var m map[string]*json.RawMessage
-	err := json.Unmarshal(body, &m)
-	if err != nil {
-		return err
-	}
-	for k, v := range m {
-		switch k {
-		case "sampleSalmon":
-			if v != nil {
-				var sampleSalmon DotSalmon
-				err = json.Unmarshal(*v, &sampleSalmon)
-				if err != nil {
-					return err
-				}
-				dfm.SampleSalmon = &sampleSalmon
-			}
-		case "salmons":
-			if v != nil {
-				var salmons []DotSalmon
-				err = json.Unmarshal(*v, &salmons)
-				if err != nil {
-					return err
-				}
-				dfm.Salmons = &salmons
-			}
-		case "sampleFish":
-			if v != nil {
-				sampleFish, err := unmarshalBasicDotFish(*v)
-				if err != nil {
-					return err
-				}
-				dfm.SampleFish = sampleFish
-			}
-		case "fishes":
-			if v != nil {
-				fishes, err := unmarshalBasicDotFishArray(*v)
-				if err != nil {
-					return err
-				}
-				dfm.Fishes = &fishes
-			}
-		}
-	}
+            // DotFishMarket ...
+            type DotFishMarket struct {
+            autorest.Response `json:"-"`
+            SampleSalmon *DotSalmon `json:"sampleSalmon,omitempty"`
+            Salmons *[]DotSalmon `json:"salmons,omitempty"`
+            SampleFish BasicDotFish `json:"sampleFish,omitempty"`
+            Fishes *[]BasicDotFish `json:"fishes,omitempty"`
+            }
+        // UnmarshalJSON is the custom unmarshaler for DotFishMarket struct.
+        func (dfm *DotFishMarket) UnmarshalJSON(body []byte) error {
+        var m map[string]*json.RawMessage
+        err := json.Unmarshal(body, &m)
+        if err != nil {
+        return err
+        }
+        for k, v := range  m {
+        switch k {
+                case "sampleSalmon":
+    if v != nil {
+        var sampleSalmon DotSalmon
+        err = json.Unmarshal(*v, &sampleSalmon)
+    if err != nil {
+    return err
+    }
+        dfm.SampleSalmon = &sampleSalmon
+    }
+                case "salmons":
+    if v != nil {
+        var salmons []DotSalmon
+        err = json.Unmarshal(*v, &salmons)
+    if err != nil {
+    return err
+    }
+        dfm.Salmons = &salmons
+    }
+                case "sampleFish":
+    if v != nil {
+        sampleFish, err := unmarshalBasicDotFish(*v)
+    if err != nil {
+    return err
+    }
+        dfm.SampleFish = sampleFish
+    }
+                case "fishes":
+    if v != nil {
+        fishes, err := unmarshalBasicDotFishArray(*v)
+    if err != nil {
+    return err
+    }
+        dfm.Fishes = &fishes
+    }
+            }
+        }
 
-	return nil
-}
+        return nil
+        }
 
-// DotFishModel ...
-type DotFishModel struct {
-	autorest.Response `json:"-"`
-	Value             BasicDotFish `json:"value,omitempty"`
-}
+            // DotFishModel ...
+            type DotFishModel struct {
+            autorest.Response `json:"-"`
+            Value BasicDotFish `json:"value,omitempty"`
+            }
+        // UnmarshalJSON is the custom unmarshaler for DotFishModel struct.
+        func (dfm *DotFishModel) UnmarshalJSON(body []byte) error {
+                df, err := unmarshalBasicDotFish(body)
+            if err != nil {
+            return err
+            }
+            dfm.Value = df
 
-// UnmarshalJSON is the custom unmarshaler for DotFishModel struct.
-func (dfm *DotFishModel) UnmarshalJSON(body []byte) error {
-	df, err := unmarshalBasicDotFish(body)
-	if err != nil {
-		return err
-	}
-	dfm.Value = df
+        return nil
+        }
 
-	return nil
-}
+            // DotSalmon ...
+            type DotSalmon struct {
+            Location *string `json:"location,omitempty"`
+            Iswild *bool `json:"iswild,omitempty"`
+            Species *string `json:"species,omitempty"`
+            // FishType - Possible values include: 'FishTypeDotFish', 'FishTypeDotSalmon'
+            FishType FishType `json:"fish.type,omitempty"`
+            }
 
-// DotSalmon ...
-type DotSalmon struct {
-	Location *string `json:"location,omitempty"`
-	Iswild   *bool   `json:"iswild,omitempty"`
-	Species  *string `json:"species,omitempty"`
-	// FishType - Possible values include: 'FishTypeDotFish', 'FishTypeDotSalmon'
-	FishType FishType `json:"fish.type,omitempty"`
-}
+        // MarshalJSON is the custom marshaler for DotSalmon.
+        func (ds DotSalmon)MarshalJSON() ([]byte, error){
+            ds.FishType = FishTypeDotSalmon
+            objectMap := make(map[string]interface{})
+                if(ds.Location != nil) {
+                objectMap["location"] = ds.Location
+                }
+                if(ds.Iswild != nil) {
+                objectMap["iswild"] = ds.Iswild
+                }
+                if(ds.Species != nil) {
+                objectMap["species"] = ds.Species
+                }
+                if(ds.FishType != "") {
+                objectMap["fish.type"] = ds.FishType
+                }
+                return json.Marshal(objectMap)
+        }
 
-// MarshalJSON is the custom marshaler for DotSalmon.
-func (ds DotSalmon) MarshalJSON() ([]byte, error) {
-	ds.FishType = FishTypeDotSalmon
-	objectMap := make(map[string]interface{})
-	if ds.Location != nil {
-		objectMap["location"] = ds.Location
-	}
-	if ds.Iswild != nil {
-		objectMap["iswild"] = ds.Iswild
-	}
-	if ds.Species != nil {
-		objectMap["species"] = ds.Species
-	}
-	if ds.FishType != "" {
-		objectMap["fish.type"] = ds.FishType
-	}
-	return json.Marshal(objectMap)
-}
+            // AsDotSalmon is the BasicDotFish implementation for DotSalmon.
+            func (ds DotSalmon) AsDotSalmon() (*DotSalmon, bool) {
+                return &ds, true
+            }
 
-// AsDotSalmon is the BasicDotFish implementation for DotSalmon.
-func (ds DotSalmon) AsDotSalmon() (*DotSalmon, bool) {
-	return &ds, true
-}
+            // AsDotFish is the BasicDotFish implementation for DotSalmon.
+            func (ds DotSalmon) AsDotFish() (*DotFish, bool) {
+                return nil, false
+            }
 
-// AsDotFish is the BasicDotFish implementation for DotSalmon.
-func (ds DotSalmon) AsDotFish() (*DotFish, bool) {
-	return nil, false
-}
+                // AsBasicDotFish is the BasicDotFish implementation for DotSalmon.
+                func(ds DotSalmon) AsBasicDotFish()(BasicDotFish, bool) {
+                    return &ds, true
+                }
 
-// AsBasicDotFish is the BasicDotFish implementation for DotSalmon.
-func (ds DotSalmon) AsBasicDotFish() (BasicDotFish, bool) {
-	return &ds, true
-}
 
-// DoubleWrapper ...
-type DoubleWrapper struct {
-	autorest.Response                                                               `json:"-"`
-	Field1                                                                          *float64 `json:"field1,omitempty"`
-	Field56ZerosAfterTheDotAndNegativeZeroBeforeDotAndThisIsALongFieldNameOnPurpose *float64 `json:"field_56_zeros_after_the_dot_and_negative_zero_before_dot_and_this_is_a_long_field_name_on_purpose,omitempty"`
-}
+            // DoubleWrapper ...
+            type DoubleWrapper struct {
+            autorest.Response `json:"-"`
+            Field1 *float64 `json:"field1,omitempty"`
+            Field56ZerosAfterTheDotAndNegativeZeroBeforeDotAndThisIsALongFieldNameOnPurpose *float64 `json:"field_56_zeros_after_the_dot_and_negative_zero_before_dot_and_this_is_a_long_field_name_on_purpose,omitempty"`
+            }
 
-// DurationWrapper ...
-type DurationWrapper struct {
-	autorest.Response `json:"-"`
-	Field             *string `json:"field,omitempty"`
-}
+            // DurationWrapper ...
+            type DurationWrapper struct {
+            autorest.Response `json:"-"`
+            Field *string `json:"field,omitempty"`
+            }
 
-// Error ...
-type Error struct {
-	Status  *int32  `json:"status,omitempty"`
-	Message *string `json:"message,omitempty"`
-}
+            // Error ...
+            type Error struct {
+            Status *int32 `json:"status,omitempty"`
+            Message *string `json:"message,omitempty"`
+            }
 
 // BasicFish ...
-type BasicFish interface {
-	AsSalmon() (*Salmon, bool)
-	AsBasicSalmon() (BasicSalmon, bool)
-	AsSmartSalmon() (*SmartSalmon, bool)
-	AsShark() (*Shark, bool)
-	AsBasicShark() (BasicShark, bool)
-	AsSawshark() (*Sawshark, bool)
-	AsGoblinshark() (*Goblinshark, bool)
-	AsCookiecuttershark() (*Cookiecuttershark, bool)
-	AsFish() (*Fish, bool)
-}
+        type BasicFish interface {
+            AsSalmon () (*Salmon, bool)
+                AsBasicSalmon () (BasicSalmon, bool)
+            AsSmartSalmon () (*SmartSalmon, bool)
+            AsShark () (*Shark, bool)
+                AsBasicShark () (BasicShark, bool)
+            AsSawshark () (*Sawshark, bool)
+            AsGoblinshark () (*Goblinshark, bool)
+            AsCookiecuttershark () (*Cookiecuttershark, bool)
+        AsFish () (*Fish, bool)
+        }
 
-// Fish ...
-type Fish struct {
-	autorest.Response `json:"-"`
-	Species           *string      `json:"species,omitempty"`
-	Length            *float64     `json:"length,omitempty"`
-	Siblings          *[]BasicFish `json:"siblings,omitempty"`
-	// Fishtype - Possible values include: 'FishtypeFish', 'FishtypeSalmon', 'FishtypeSmartSalmon', 'FishtypeShark', 'FishtypeSawshark', 'FishtypeGoblin', 'FishtypeCookiecuttershark'
-	Fishtype FishtypeBasicFish `json:"fishtype,omitempty"`
-}
+        // Fish ...
+        type Fish struct {
+        autorest.Response `json:"-"`
+        Species *string `json:"species,omitempty"`
+        Length *float64 `json:"length,omitempty"`
+        Siblings *[]BasicFish `json:"siblings,omitempty"`
+        // Fishtype - Possible values include: 'FishtypeFish', 'FishtypeSalmon', 'FishtypeSmartSalmon', 'FishtypeShark', 'FishtypeSawshark', 'FishtypeGoblin', 'FishtypeCookiecuttershark'
+        Fishtype FishtypeBasicFish `json:"fishtype,omitempty"`
+        }
 
-func unmarshalBasicFish(body []byte) (BasicFish, error) {
-	var m map[string]interface{}
-	err := json.Unmarshal(body, &m)
-	if err != nil {
-		return nil, err
-	}
+        func unmarshalBasicFish(body []byte) (BasicFish, error){
+        var m map[string]interface{}
+        err := json.Unmarshal(body, &m)
+        if err != nil {
+        return nil, err
+        }
 
-	switch m["fishtype"] {
-	case string(FishtypeSalmon):
-		var s Salmon
-		err := json.Unmarshal(body, &s)
-		return s, err
-	case string(FishtypeSmartSalmon):
-		var s SmartSalmon
-		err := json.Unmarshal(body, &s)
-		return s, err
-	case string(FishtypeShark):
-		var s Shark
-		err := json.Unmarshal(body, &s)
-		return s, err
-	case string(FishtypeSawshark):
-		var s Sawshark
-		err := json.Unmarshal(body, &s)
-		return s, err
-	case string(FishtypeGoblin):
-		var g Goblinshark
-		err := json.Unmarshal(body, &g)
-		return g, err
-	case string(FishtypeCookiecuttershark):
-		var c Cookiecuttershark
-		err := json.Unmarshal(body, &c)
-		return c, err
-	default:
-		var f Fish
-		err := json.Unmarshal(body, &f)
-		return f, err
-	}
-}
-func unmarshalBasicFishArray(body []byte) ([]BasicFish, error) {
-	var rawMessages []*json.RawMessage
-	err := json.Unmarshal(body, &rawMessages)
-	if err != nil {
-		return nil, err
-	}
+        switch m["fishtype"] {
+            case string(FishtypeSalmon):
+            var s Salmon
+            err := json.Unmarshal(body, &s)
+            return s, err
+            case string(FishtypeSmartSalmon):
+            var s SmartSalmon
+            err := json.Unmarshal(body, &s)
+            return s, err
+            case string(FishtypeShark):
+            var s Shark
+            err := json.Unmarshal(body, &s)
+            return s, err
+            case string(FishtypeSawshark):
+            var s Sawshark
+            err := json.Unmarshal(body, &s)
+            return s, err
+            case string(FishtypeGoblin):
+            var g Goblinshark
+            err := json.Unmarshal(body, &g)
+            return g, err
+            case string(FishtypeCookiecuttershark):
+            var c Cookiecuttershark
+            err := json.Unmarshal(body, &c)
+            return c, err
+            default:
+        var f Fish
+        err := json.Unmarshal(body, &f)
+        return f, err
+        }
+        }
+        func unmarshalBasicFishArray(body []byte) ([]BasicFish, error){
+        var rawMessages []*json.RawMessage
+        err := json.Unmarshal(body, &rawMessages)
+        if err != nil {
+        return nil, err
+        }
 
-	fArray := make([]BasicFish, len(rawMessages))
+        fArray := make([]BasicFish, len(rawMessages))
 
-	for index, rawMessage := range rawMessages {
-		f, err := unmarshalBasicFish(*rawMessage)
-		if err != nil {
-			return nil, err
-		}
-		fArray[index] = f
-	}
-	return fArray, nil
-}
+        for index, rawMessage := range rawMessages {
+        f, err := unmarshalBasicFish(*rawMessage)
+        if err != nil {
+        return nil, err
+        }
+        fArray[index] = f
+        }
+        return fArray, nil
+        }
 
-// MarshalJSON is the custom marshaler for Fish.
-func (f Fish) MarshalJSON() ([]byte, error) {
-	f.Fishtype = FishtypeFish
-	objectMap := make(map[string]interface{})
-	if f.Species != nil {
-		objectMap["species"] = f.Species
-	}
-	if f.Length != nil {
-		objectMap["length"] = f.Length
-	}
-	if f.Siblings != nil {
-		objectMap["siblings"] = f.Siblings
-	}
-	if f.Fishtype != "" {
-		objectMap["fishtype"] = f.Fishtype
-	}
-	return json.Marshal(objectMap)
-}
+        // MarshalJSON is the custom marshaler for Fish.
+        func (f Fish)MarshalJSON() ([]byte, error){
+            f.Fishtype = FishtypeFish
+            objectMap := make(map[string]interface{})
+                if(f.Species != nil) {
+                objectMap["species"] = f.Species
+                }
+                if(f.Length != nil) {
+                objectMap["length"] = f.Length
+                }
+                if(f.Siblings != nil) {
+                objectMap["siblings"] = f.Siblings
+                }
+                if(f.Fishtype != "") {
+                objectMap["fishtype"] = f.Fishtype
+                }
+                return json.Marshal(objectMap)
+        }
 
-// AsSalmon is the BasicFish implementation for Fish.
-func (f Fish) AsSalmon() (*Salmon, bool) {
-	return nil, false
-}
+            // AsSalmon is the BasicFish implementation for Fish.
+            func (f Fish) AsSalmon() (*Salmon, bool) {
+                return nil, false
+            }
 
-// AsBasicSalmon is the BasicFish implementation for Fish.
-func (f Fish) AsBasicSalmon() (BasicSalmon, bool) {
-	return nil, false
-}
+                // AsBasicSalmon is the BasicFish implementation for Fish.
+                func(f Fish) AsBasicSalmon()(BasicSalmon, bool) {
+                    return nil, false
+                }
 
-// AsSmartSalmon is the BasicFish implementation for Fish.
-func (f Fish) AsSmartSalmon() (*SmartSalmon, bool) {
-	return nil, false
-}
 
-// AsShark is the BasicFish implementation for Fish.
-func (f Fish) AsShark() (*Shark, bool) {
-	return nil, false
-}
+            // AsSmartSalmon is the BasicFish implementation for Fish.
+            func (f Fish) AsSmartSalmon() (*SmartSalmon, bool) {
+                return nil, false
+            }
 
-// AsBasicShark is the BasicFish implementation for Fish.
-func (f Fish) AsBasicShark() (BasicShark, bool) {
-	return nil, false
-}
+            // AsShark is the BasicFish implementation for Fish.
+            func (f Fish) AsShark() (*Shark, bool) {
+                return nil, false
+            }
 
-// AsSawshark is the BasicFish implementation for Fish.
-func (f Fish) AsSawshark() (*Sawshark, bool) {
-	return nil, false
-}
+                // AsBasicShark is the BasicFish implementation for Fish.
+                func(f Fish) AsBasicShark()(BasicShark, bool) {
+                    return nil, false
+                }
 
-// AsGoblinshark is the BasicFish implementation for Fish.
-func (f Fish) AsGoblinshark() (*Goblinshark, bool) {
-	return nil, false
-}
 
-// AsCookiecuttershark is the BasicFish implementation for Fish.
-func (f Fish) AsCookiecuttershark() (*Cookiecuttershark, bool) {
-	return nil, false
-}
+            // AsSawshark is the BasicFish implementation for Fish.
+            func (f Fish) AsSawshark() (*Sawshark, bool) {
+                return nil, false
+            }
 
-// AsFish is the BasicFish implementation for Fish.
-func (f Fish) AsFish() (*Fish, bool) {
-	return &f, true
-}
+            // AsGoblinshark is the BasicFish implementation for Fish.
+            func (f Fish) AsGoblinshark() (*Goblinshark, bool) {
+                return nil, false
+            }
 
-// AsBasicFish is the BasicFish implementation for Fish.
-func (f Fish) AsBasicFish() (BasicFish, bool) {
-	return &f, true
-}
+            // AsCookiecuttershark is the BasicFish implementation for Fish.
+            func (f Fish) AsCookiecuttershark() (*Cookiecuttershark, bool) {
+                return nil, false
+            }
 
-// UnmarshalJSON is the custom unmarshaler for Fish struct.
-func (f *Fish) UnmarshalJSON(body []byte) error {
-	var m map[string]*json.RawMessage
-	err := json.Unmarshal(body, &m)
-	if err != nil {
-		return err
-	}
-	for k, v := range m {
-		switch k {
-		case "species":
-			if v != nil {
-				var species string
-				err = json.Unmarshal(*v, &species)
-				if err != nil {
-					return err
-				}
-				f.Species = &species
-			}
-		case "length":
-			if v != nil {
-				var length float64
-				err = json.Unmarshal(*v, &length)
-				if err != nil {
-					return err
-				}
-				f.Length = &length
-			}
-		case "siblings":
-			if v != nil {
-				siblings, err := unmarshalBasicFishArray(*v)
-				if err != nil {
-					return err
-				}
-				f.Siblings = &siblings
-			}
-		case "fishtype":
-			if v != nil {
-				var fishtype FishtypeBasicFish
-				err = json.Unmarshal(*v, &fishtype)
-				if err != nil {
-					return err
-				}
-				f.Fishtype = fishtype
-			}
-		}
-	}
+            // AsFish is the BasicFish implementation for Fish.
+            func (f Fish) AsFish() (*Fish, bool) {
+                return &f, true
+            }
 
-	return nil
-}
+                // AsBasicFish is the BasicFish implementation for Fish.
+                func(f Fish) AsBasicFish()(BasicFish, bool) {
+                    return &f, true
+                }
 
-// FishModel ...
-type FishModel struct {
-	autorest.Response `json:"-"`
-	Value             BasicFish `json:"value,omitempty"`
-}
+        // UnmarshalJSON is the custom unmarshaler for Fish struct.
+        func (f *Fish) UnmarshalJSON(body []byte) error {
+        var m map[string]*json.RawMessage
+        err := json.Unmarshal(body, &m)
+        if err != nil {
+        return err
+        }
+        for k, v := range  m {
+        switch k {
+                case "species":
+    if v != nil {
+        var species string
+        err = json.Unmarshal(*v, &species)
+    if err != nil {
+    return err
+    }
+        f.Species = &species
+    }
+                case "length":
+    if v != nil {
+        var length float64
+        err = json.Unmarshal(*v, &length)
+    if err != nil {
+    return err
+    }
+        f.Length = &length
+    }
+                case "siblings":
+    if v != nil {
+        siblings, err := unmarshalBasicFishArray(*v)
+    if err != nil {
+    return err
+    }
+        f.Siblings = &siblings
+    }
+                case "fishtype":
+    if v != nil {
+        var fishtype FishtypeBasicFish
+        err = json.Unmarshal(*v, &fishtype)
+    if err != nil {
+    return err
+    }
+        f.Fishtype = fishtype
+    }
+            }
+        }
 
-// UnmarshalJSON is the custom unmarshaler for FishModel struct.
-func (fm *FishModel) UnmarshalJSON(body []byte) error {
-	f, err := unmarshalBasicFish(body)
-	if err != nil {
-		return err
-	}
-	fm.Value = f
+        return nil
+        }
 
-	return nil
-}
+            // FishModel ...
+            type FishModel struct {
+            autorest.Response `json:"-"`
+            Value BasicFish `json:"value,omitempty"`
+            }
+        // UnmarshalJSON is the custom unmarshaler for FishModel struct.
+        func (fm *FishModel) UnmarshalJSON(body []byte) error {
+                f, err := unmarshalBasicFish(body)
+            if err != nil {
+            return err
+            }
+            fm.Value = f
 
-// FloatWrapper ...
-type FloatWrapper struct {
-	autorest.Response `json:"-"`
-	Field1            *float64 `json:"field1,omitempty"`
-	Field2            *float64 `json:"field2,omitempty"`
-}
+        return nil
+        }
 
-// Goblinshark ...
-type Goblinshark struct {
-	Jawsize *int32 `json:"jawsize,omitempty"`
-	// Color - Colors possible. Possible values include: 'Pink', 'Gray', 'Brown'
-	Color    GoblinSharkColor `json:"color,omitempty"`
-	Age      *int32           `json:"age,omitempty"`
-	Birthday *date.Time       `json:"birthday,omitempty"`
-	Species  *string          `json:"species,omitempty"`
-	Length   *float64         `json:"length,omitempty"`
-	Siblings *[]BasicFish     `json:"siblings,omitempty"`
-	// Fishtype - Possible values include: 'FishtypeFish', 'FishtypeSalmon', 'FishtypeSmartSalmon', 'FishtypeShark', 'FishtypeSawshark', 'FishtypeGoblin', 'FishtypeCookiecuttershark'
-	Fishtype FishtypeBasicFish `json:"fishtype,omitempty"`
-}
+            // FloatWrapper ...
+            type FloatWrapper struct {
+            autorest.Response `json:"-"`
+            Field1 *float64 `json:"field1,omitempty"`
+            Field2 *float64 `json:"field2,omitempty"`
+            }
 
-// MarshalJSON is the custom marshaler for Goblinshark.
-func (g Goblinshark) MarshalJSON() ([]byte, error) {
-	g.Fishtype = FishtypeGoblin
-	objectMap := make(map[string]interface{})
-	if g.Jawsize != nil {
-		objectMap["jawsize"] = g.Jawsize
-	}
-	if g.Color != "" {
-		objectMap["color"] = g.Color
-	}
-	if g.Age != nil {
-		objectMap["age"] = g.Age
-	}
-	if g.Birthday != nil {
-		objectMap["birthday"] = g.Birthday
-	}
-	if g.Species != nil {
-		objectMap["species"] = g.Species
-	}
-	if g.Length != nil {
-		objectMap["length"] = g.Length
-	}
-	if g.Siblings != nil {
-		objectMap["siblings"] = g.Siblings
-	}
-	if g.Fishtype != "" {
-		objectMap["fishtype"] = g.Fishtype
-	}
-	return json.Marshal(objectMap)
-}
+            // Goblinshark ...
+            type Goblinshark struct {
+            Jawsize *int32 `json:"jawsize,omitempty"`
+            // Color - Colors possible. Possible values include: 'Pink', 'Gray', 'Brown'
+            Color GoblinSharkColor `json:"color,omitempty"`
+            Age *int32 `json:"age,omitempty"`
+            Birthday *date.Time `json:"birthday,omitempty"`
+            Species *string `json:"species,omitempty"`
+            Length *float64 `json:"length,omitempty"`
+            Siblings *[]BasicFish `json:"siblings,omitempty"`
+            // Fishtype - Possible values include: 'FishtypeFish', 'FishtypeSalmon', 'FishtypeSmartSalmon', 'FishtypeShark', 'FishtypeSawshark', 'FishtypeGoblin', 'FishtypeCookiecuttershark'
+            Fishtype FishtypeBasicFish `json:"fishtype,omitempty"`
+            }
 
-// AsSalmon is the BasicFish implementation for Goblinshark.
-func (g Goblinshark) AsSalmon() (*Salmon, bool) {
-	return nil, false
-}
+        // MarshalJSON is the custom marshaler for Goblinshark.
+        func (g Goblinshark)MarshalJSON() ([]byte, error){
+            g.Fishtype = FishtypeGoblin
+            objectMap := make(map[string]interface{})
+                if(g.Jawsize != nil) {
+                objectMap["jawsize"] = g.Jawsize
+                }
+                if(g.Color != "") {
+                objectMap["color"] = g.Color
+                }
+                if(g.Age != nil) {
+                objectMap["age"] = g.Age
+                }
+                if(g.Birthday != nil) {
+                objectMap["birthday"] = g.Birthday
+                }
+                if(g.Species != nil) {
+                objectMap["species"] = g.Species
+                }
+                if(g.Length != nil) {
+                objectMap["length"] = g.Length
+                }
+                if(g.Siblings != nil) {
+                objectMap["siblings"] = g.Siblings
+                }
+                if(g.Fishtype != "") {
+                objectMap["fishtype"] = g.Fishtype
+                }
+                return json.Marshal(objectMap)
+        }
 
-// AsBasicSalmon is the BasicFish implementation for Goblinshark.
-func (g Goblinshark) AsBasicSalmon() (BasicSalmon, bool) {
-	return nil, false
-}
+            // AsSalmon is the BasicFish implementation for Goblinshark.
+            func (g Goblinshark) AsSalmon() (*Salmon, bool) {
+                return nil, false
+            }
 
-// AsSmartSalmon is the BasicFish implementation for Goblinshark.
-func (g Goblinshark) AsSmartSalmon() (*SmartSalmon, bool) {
-	return nil, false
-}
+                // AsBasicSalmon is the BasicFish implementation for Goblinshark.
+                func(g Goblinshark) AsBasicSalmon()(BasicSalmon, bool) {
+                    return nil, false
+                }
 
-// AsShark is the BasicFish implementation for Goblinshark.
-func (g Goblinshark) AsShark() (*Shark, bool) {
-	return nil, false
-}
 
-// AsBasicShark is the BasicFish implementation for Goblinshark.
-func (g Goblinshark) AsBasicShark() (BasicShark, bool) {
-	return &g, true
-}
+            // AsSmartSalmon is the BasicFish implementation for Goblinshark.
+            func (g Goblinshark) AsSmartSalmon() (*SmartSalmon, bool) {
+                return nil, false
+            }
 
-// AsSawshark is the BasicFish implementation for Goblinshark.
-func (g Goblinshark) AsSawshark() (*Sawshark, bool) {
-	return nil, false
-}
+            // AsShark is the BasicFish implementation for Goblinshark.
+            func (g Goblinshark) AsShark() (*Shark, bool) {
+                return nil, false
+            }
 
-// AsGoblinshark is the BasicFish implementation for Goblinshark.
-func (g Goblinshark) AsGoblinshark() (*Goblinshark, bool) {
-	return &g, true
-}
+                // AsBasicShark is the BasicFish implementation for Goblinshark.
+                func(g Goblinshark) AsBasicShark()(BasicShark, bool) {
+                    return &g, true
+                }
 
-// AsCookiecuttershark is the BasicFish implementation for Goblinshark.
-func (g Goblinshark) AsCookiecuttershark() (*Cookiecuttershark, bool) {
-	return nil, false
-}
 
-// AsFish is the BasicFish implementation for Goblinshark.
-func (g Goblinshark) AsFish() (*Fish, bool) {
-	return nil, false
-}
+            // AsSawshark is the BasicFish implementation for Goblinshark.
+            func (g Goblinshark) AsSawshark() (*Sawshark, bool) {
+                return nil, false
+            }
 
-// AsBasicFish is the BasicFish implementation for Goblinshark.
-func (g Goblinshark) AsBasicFish() (BasicFish, bool) {
-	return &g, true
-}
+            // AsGoblinshark is the BasicFish implementation for Goblinshark.
+            func (g Goblinshark) AsGoblinshark() (*Goblinshark, bool) {
+                return &g, true
+            }
 
-// UnmarshalJSON is the custom unmarshaler for Goblinshark struct.
-func (g *Goblinshark) UnmarshalJSON(body []byte) error {
-	var m map[string]*json.RawMessage
-	err := json.Unmarshal(body, &m)
-	if err != nil {
-		return err
-	}
-	for k, v := range m {
-		switch k {
-		case "jawsize":
-			if v != nil {
-				var jawsize int32
-				err = json.Unmarshal(*v, &jawsize)
-				if err != nil {
-					return err
-				}
-				g.Jawsize = &jawsize
-			}
-		case "color":
-			if v != nil {
-				var colorVar GoblinSharkColor
-				err = json.Unmarshal(*v, &colorVar)
-				if err != nil {
-					return err
-				}
-				g.Color = colorVar
-			}
-		case "age":
-			if v != nil {
-				var age int32
-				err = json.Unmarshal(*v, &age)
-				if err != nil {
-					return err
-				}
-				g.Age = &age
-			}
-		case "birthday":
-			if v != nil {
-				var birthday date.Time
-				err = json.Unmarshal(*v, &birthday)
-				if err != nil {
-					return err
-				}
-				g.Birthday = &birthday
-			}
-		case "species":
-			if v != nil {
-				var species string
-				err = json.Unmarshal(*v, &species)
-				if err != nil {
-					return err
-				}
-				g.Species = &species
-			}
-		case "length":
-			if v != nil {
-				var length float64
-				err = json.Unmarshal(*v, &length)
-				if err != nil {
-					return err
-				}
-				g.Length = &length
-			}
-		case "siblings":
-			if v != nil {
-				siblings, err := unmarshalBasicFishArray(*v)
-				if err != nil {
-					return err
-				}
-				g.Siblings = &siblings
-			}
-		case "fishtype":
-			if v != nil {
-				var fishtype FishtypeBasicFish
-				err = json.Unmarshal(*v, &fishtype)
-				if err != nil {
-					return err
-				}
-				g.Fishtype = fishtype
-			}
-		}
-	}
+            // AsCookiecuttershark is the BasicFish implementation for Goblinshark.
+            func (g Goblinshark) AsCookiecuttershark() (*Cookiecuttershark, bool) {
+                return nil, false
+            }
 
-	return nil
-}
+            // AsFish is the BasicFish implementation for Goblinshark.
+            func (g Goblinshark) AsFish() (*Fish, bool) {
+                return nil, false
+            }
 
-// IntWrapper ...
-type IntWrapper struct {
-	autorest.Response `json:"-"`
-	Field1            *int32 `json:"field1,omitempty"`
-	Field2            *int32 `json:"field2,omitempty"`
-}
+                // AsBasicFish is the BasicFish implementation for Goblinshark.
+                func(g Goblinshark) AsBasicFish()(BasicFish, bool) {
+                    return &g, true
+                }
 
-// LongWrapper ...
-type LongWrapper struct {
-	autorest.Response `json:"-"`
-	Field1            *int64 `json:"field1,omitempty"`
-	Field2            *int64 `json:"field2,omitempty"`
-}
+        // UnmarshalJSON is the custom unmarshaler for Goblinshark struct.
+        func (g *Goblinshark) UnmarshalJSON(body []byte) error {
+        var m map[string]*json.RawMessage
+        err := json.Unmarshal(body, &m)
+        if err != nil {
+        return err
+        }
+        for k, v := range  m {
+        switch k {
+                case "jawsize":
+    if v != nil {
+        var jawsize int32
+        err = json.Unmarshal(*v, &jawsize)
+    if err != nil {
+    return err
+    }
+        g.Jawsize = &jawsize
+    }
+                case "color":
+    if v != nil {
+        var colorVar GoblinSharkColor
+        err = json.Unmarshal(*v, &colorVar)
+    if err != nil {
+    return err
+    }
+        g.Color = colorVar
+    }
+                case "age":
+    if v != nil {
+        var age int32
+        err = json.Unmarshal(*v, &age)
+    if err != nil {
+    return err
+    }
+        g.Age = &age
+    }
+                case "birthday":
+    if v != nil {
+        var birthday date.Time
+        err = json.Unmarshal(*v, &birthday)
+    if err != nil {
+    return err
+    }
+        g.Birthday = &birthday
+    }
+                case "species":
+    if v != nil {
+        var species string
+        err = json.Unmarshal(*v, &species)
+    if err != nil {
+    return err
+    }
+        g.Species = &species
+    }
+                case "length":
+    if v != nil {
+        var length float64
+        err = json.Unmarshal(*v, &length)
+    if err != nil {
+    return err
+    }
+        g.Length = &length
+    }
+                case "siblings":
+    if v != nil {
+        siblings, err := unmarshalBasicFishArray(*v)
+    if err != nil {
+    return err
+    }
+        g.Siblings = &siblings
+    }
+                case "fishtype":
+    if v != nil {
+        var fishtype FishtypeBasicFish
+        err = json.Unmarshal(*v, &fishtype)
+    if err != nil {
+    return err
+    }
+        g.Fishtype = fishtype
+    }
+            }
+        }
 
-// MyBaseHelperType ...
-type MyBaseHelperType struct {
-	PropBH1 *string `json:"propBH1,omitempty"`
-}
+        return nil
+        }
+
+            // IntWrapper ...
+            type IntWrapper struct {
+            autorest.Response `json:"-"`
+            Field1 *int32 `json:"field1,omitempty"`
+            Field2 *int32 `json:"field2,omitempty"`
+            }
+
+            // LongWrapper ...
+            type LongWrapper struct {
+            autorest.Response `json:"-"`
+            Field1 *int64 `json:"field1,omitempty"`
+            Field2 *int64 `json:"field2,omitempty"`
+            }
+
+            // MyBaseHelperType ...
+            type MyBaseHelperType struct {
+            PropBH1 *string `json:"propBH1,omitempty"`
+            }
 
 // BasicMyBaseType ...
-type BasicMyBaseType interface {
-	AsMyDerivedType() (*MyDerivedType, bool)
-	AsMyBaseType() (*MyBaseType, bool)
-}
+        type BasicMyBaseType interface {
+            AsMyDerivedType () (*MyDerivedType, bool)
+        AsMyBaseType () (*MyBaseType, bool)
+        }
 
-// MyBaseType ...
-type MyBaseType struct {
-	autorest.Response `json:"-"`
-	PropB1            *string `json:"propB1,omitempty"`
-	*MyBaseHelperType `json:"helper,omitempty"`
-	// Kind - Possible values include: 'KindMyBaseType', 'KindKind1'
-	Kind Kind `json:"kind,omitempty"`
-}
+        // MyBaseType ...
+        type MyBaseType struct {
+        autorest.Response `json:"-"`
+        PropB1 *string `json:"propB1,omitempty"`
+        *MyBaseHelperType `json:"helper,omitempty"`
+        // Kind - Possible values include: 'KindMyBaseType', 'KindKind1'
+        Kind Kind `json:"kind,omitempty"`
+        }
 
-func unmarshalBasicMyBaseType(body []byte) (BasicMyBaseType, error) {
-	var m map[string]interface{}
-	err := json.Unmarshal(body, &m)
-	if err != nil {
-		return nil, err
-	}
+        func unmarshalBasicMyBaseType(body []byte) (BasicMyBaseType, error){
+        var m map[string]interface{}
+        err := json.Unmarshal(body, &m)
+        if err != nil {
+        return nil, err
+        }
 
-	switch m["kind"] {
-	case string(KindKind1):
-		var mdt MyDerivedType
-		err := json.Unmarshal(body, &mdt)
-		return mdt, err
-	default:
-		var mbt MyBaseType
-		err := json.Unmarshal(body, &mbt)
-		return mbt, err
-	}
-}
-func unmarshalBasicMyBaseTypeArray(body []byte) ([]BasicMyBaseType, error) {
-	var rawMessages []*json.RawMessage
-	err := json.Unmarshal(body, &rawMessages)
-	if err != nil {
-		return nil, err
-	}
+        switch m["kind"] {
+            case string(KindKind1):
+            var mdt MyDerivedType
+            err := json.Unmarshal(body, &mdt)
+            return mdt, err
+            default:
+        var mbt MyBaseType
+        err := json.Unmarshal(body, &mbt)
+        return mbt, err
+        }
+        }
+        func unmarshalBasicMyBaseTypeArray(body []byte) ([]BasicMyBaseType, error){
+        var rawMessages []*json.RawMessage
+        err := json.Unmarshal(body, &rawMessages)
+        if err != nil {
+        return nil, err
+        }
 
-	mbtArray := make([]BasicMyBaseType, len(rawMessages))
+        mbtArray := make([]BasicMyBaseType, len(rawMessages))
 
-	for index, rawMessage := range rawMessages {
-		mbt, err := unmarshalBasicMyBaseType(*rawMessage)
-		if err != nil {
-			return nil, err
-		}
-		mbtArray[index] = mbt
-	}
-	return mbtArray, nil
-}
+        for index, rawMessage := range rawMessages {
+        mbt, err := unmarshalBasicMyBaseType(*rawMessage)
+        if err != nil {
+        return nil, err
+        }
+        mbtArray[index] = mbt
+        }
+        return mbtArray, nil
+        }
 
-// MarshalJSON is the custom marshaler for MyBaseType.
-func (mbt MyBaseType) MarshalJSON() ([]byte, error) {
-	mbt.Kind = KindMyBaseType
-	objectMap := make(map[string]interface{})
-	if mbt.PropB1 != nil {
-		objectMap["propB1"] = mbt.PropB1
-	}
-	if mbt.MyBaseHelperType != nil {
-		objectMap["helper"] = mbt.MyBaseHelperType
-	}
-	if mbt.Kind != "" {
-		objectMap["kind"] = mbt.Kind
-	}
-	return json.Marshal(objectMap)
-}
+        // MarshalJSON is the custom marshaler for MyBaseType.
+        func (mbt MyBaseType)MarshalJSON() ([]byte, error){
+            mbt.Kind = KindMyBaseType
+            objectMap := make(map[string]interface{})
+                if(mbt.PropB1 != nil) {
+                objectMap["propB1"] = mbt.PropB1
+                }
+                if(mbt.MyBaseHelperType != nil) {
+                objectMap["helper"] = mbt.MyBaseHelperType
+                }
+                if(mbt.Kind != "") {
+                objectMap["kind"] = mbt.Kind
+                }
+                return json.Marshal(objectMap)
+        }
 
-// AsMyDerivedType is the BasicMyBaseType implementation for MyBaseType.
-func (mbt MyBaseType) AsMyDerivedType() (*MyDerivedType, bool) {
-	return nil, false
-}
+            // AsMyDerivedType is the BasicMyBaseType implementation for MyBaseType.
+            func (mbt MyBaseType) AsMyDerivedType() (*MyDerivedType, bool) {
+                return nil, false
+            }
 
-// AsMyBaseType is the BasicMyBaseType implementation for MyBaseType.
-func (mbt MyBaseType) AsMyBaseType() (*MyBaseType, bool) {
-	return &mbt, true
-}
+            // AsMyBaseType is the BasicMyBaseType implementation for MyBaseType.
+            func (mbt MyBaseType) AsMyBaseType() (*MyBaseType, bool) {
+                return &mbt, true
+            }
 
-// AsBasicMyBaseType is the BasicMyBaseType implementation for MyBaseType.
-func (mbt MyBaseType) AsBasicMyBaseType() (BasicMyBaseType, bool) {
-	return &mbt, true
-}
+                // AsBasicMyBaseType is the BasicMyBaseType implementation for MyBaseType.
+                func(mbt MyBaseType) AsBasicMyBaseType()(BasicMyBaseType, bool) {
+                    return &mbt, true
+                }
 
-// UnmarshalJSON is the custom unmarshaler for MyBaseType struct.
-func (mbt *MyBaseType) UnmarshalJSON(body []byte) error {
-	var m map[string]*json.RawMessage
-	err := json.Unmarshal(body, &m)
-	if err != nil {
-		return err
-	}
-	for k, v := range m {
-		switch k {
-		case "propB1":
-			if v != nil {
-				var propB1 string
-				err = json.Unmarshal(*v, &propB1)
-				if err != nil {
-					return err
-				}
-				mbt.PropB1 = &propB1
-			}
-		case "helper":
-			if v != nil {
-				var myBaseHelperType MyBaseHelperType
-				err = json.Unmarshal(*v, &myBaseHelperType)
-				if err != nil {
-					return err
-				}
-				mbt.MyBaseHelperType = &myBaseHelperType
-			}
-		case "kind":
-			if v != nil {
-				var kind Kind
-				err = json.Unmarshal(*v, &kind)
-				if err != nil {
-					return err
-				}
-				mbt.Kind = kind
-			}
-		}
-	}
+        // UnmarshalJSON is the custom unmarshaler for MyBaseType struct.
+        func (mbt *MyBaseType) UnmarshalJSON(body []byte) error {
+        var m map[string]*json.RawMessage
+        err := json.Unmarshal(body, &m)
+        if err != nil {
+        return err
+        }
+        for k, v := range  m {
+        switch k {
+                case "propB1":
+    if v != nil {
+        var propB1 string
+        err = json.Unmarshal(*v, &propB1)
+    if err != nil {
+    return err
+    }
+        mbt.PropB1 = &propB1
+    }
+                case "helper":
+    if v != nil {
+        var myBaseHelperType MyBaseHelperType
+        err = json.Unmarshal(*v, &myBaseHelperType)
+    if err != nil {
+    return err
+    }
+        mbt.MyBaseHelperType = &myBaseHelperType
+    }
+                case "kind":
+    if v != nil {
+        var kind Kind
+        err = json.Unmarshal(*v, &kind)
+    if err != nil {
+    return err
+    }
+        mbt.Kind = kind
+    }
+            }
+        }
 
-	return nil
-}
+        return nil
+        }
 
-// MyBaseTypeModel ...
-type MyBaseTypeModel struct {
-	autorest.Response `json:"-"`
-	Value             BasicMyBaseType `json:"value,omitempty"`
-}
+            // MyBaseTypeModel ...
+            type MyBaseTypeModel struct {
+            autorest.Response `json:"-"`
+            Value BasicMyBaseType `json:"value,omitempty"`
+            }
+        // UnmarshalJSON is the custom unmarshaler for MyBaseTypeModel struct.
+        func (mbtm *MyBaseTypeModel) UnmarshalJSON(body []byte) error {
+                mbt, err := unmarshalBasicMyBaseType(body)
+            if err != nil {
+            return err
+            }
+            mbtm.Value = mbt
 
-// UnmarshalJSON is the custom unmarshaler for MyBaseTypeModel struct.
-func (mbtm *MyBaseTypeModel) UnmarshalJSON(body []byte) error {
-	mbt, err := unmarshalBasicMyBaseType(body)
-	if err != nil {
-		return err
-	}
-	mbtm.Value = mbt
+        return nil
+        }
 
-	return nil
-}
+            // MyDerivedType ...
+            type MyDerivedType struct {
+            PropD1 *string `json:"propD1,omitempty"`
+            PropB1 *string `json:"propB1,omitempty"`
+            *MyBaseHelperType `json:"helper,omitempty"`
+            // Kind - Possible values include: 'KindMyBaseType', 'KindKind1'
+            Kind Kind `json:"kind,omitempty"`
+            }
 
-// MyDerivedType ...
-type MyDerivedType struct {
-	PropD1            *string `json:"propD1,omitempty"`
-	PropB1            *string `json:"propB1,omitempty"`
-	*MyBaseHelperType `json:"helper,omitempty"`
-	// Kind - Possible values include: 'KindMyBaseType', 'KindKind1'
-	Kind Kind `json:"kind,omitempty"`
-}
+        // MarshalJSON is the custom marshaler for MyDerivedType.
+        func (mdt MyDerivedType)MarshalJSON() ([]byte, error){
+            mdt.Kind = KindKind1
+            objectMap := make(map[string]interface{})
+                if(mdt.PropD1 != nil) {
+                objectMap["propD1"] = mdt.PropD1
+                }
+                if(mdt.PropB1 != nil) {
+                objectMap["propB1"] = mdt.PropB1
+                }
+                if(mdt.MyBaseHelperType != nil) {
+                objectMap["helper"] = mdt.MyBaseHelperType
+                }
+                if(mdt.Kind != "") {
+                objectMap["kind"] = mdt.Kind
+                }
+                return json.Marshal(objectMap)
+        }
 
-// MarshalJSON is the custom marshaler for MyDerivedType.
-func (mdt MyDerivedType) MarshalJSON() ([]byte, error) {
-	mdt.Kind = KindKind1
-	objectMap := make(map[string]interface{})
-	if mdt.PropD1 != nil {
-		objectMap["propD1"] = mdt.PropD1
-	}
-	if mdt.PropB1 != nil {
-		objectMap["propB1"] = mdt.PropB1
-	}
-	if mdt.MyBaseHelperType != nil {
-		objectMap["helper"] = mdt.MyBaseHelperType
-	}
-	if mdt.Kind != "" {
-		objectMap["kind"] = mdt.Kind
-	}
-	return json.Marshal(objectMap)
-}
+            // AsMyDerivedType is the BasicMyBaseType implementation for MyDerivedType.
+            func (mdt MyDerivedType) AsMyDerivedType() (*MyDerivedType, bool) {
+                return &mdt, true
+            }
 
-// AsMyDerivedType is the BasicMyBaseType implementation for MyDerivedType.
-func (mdt MyDerivedType) AsMyDerivedType() (*MyDerivedType, bool) {
-	return &mdt, true
-}
+            // AsMyBaseType is the BasicMyBaseType implementation for MyDerivedType.
+            func (mdt MyDerivedType) AsMyBaseType() (*MyBaseType, bool) {
+                return nil, false
+            }
 
-// AsMyBaseType is the BasicMyBaseType implementation for MyDerivedType.
-func (mdt MyDerivedType) AsMyBaseType() (*MyBaseType, bool) {
-	return nil, false
-}
+                // AsBasicMyBaseType is the BasicMyBaseType implementation for MyDerivedType.
+                func(mdt MyDerivedType) AsBasicMyBaseType()(BasicMyBaseType, bool) {
+                    return &mdt, true
+                }
 
-// AsBasicMyBaseType is the BasicMyBaseType implementation for MyDerivedType.
-func (mdt MyDerivedType) AsBasicMyBaseType() (BasicMyBaseType, bool) {
-	return &mdt, true
-}
 
-// Pet ...
-type Pet struct {
-	ID   *int32  `json:"id,omitempty"`
-	Name *string `json:"name,omitempty"`
-}
+            // Pet ...
+            type Pet struct {
+            ID *int32 `json:"id,omitempty"`
+            Name *string `json:"name,omitempty"`
+            }
 
-// ReadonlyObj ...
-type ReadonlyObj struct {
-	autorest.Response `json:"-"`
-	// ID - READ-ONLY
-	ID   *string `json:"id,omitempty"`
-	Size *int32  `json:"size,omitempty"`
-}
+            // ReadonlyObj ...
+            type ReadonlyObj struct {
+            autorest.Response `json:"-"`
+            // ID - READ-ONLY
+            ID *string `json:"id,omitempty"`
+            Size *int32 `json:"size,omitempty"`
+            }
 
-// MarshalJSON is the custom marshaler for ReadonlyObj.
-func (r ReadonlyObj) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if r.Size != nil {
-		objectMap["size"] = r.Size
-	}
-	return json.Marshal(objectMap)
-}
+        // MarshalJSON is the custom marshaler for ReadonlyObj.
+        func (r ReadonlyObj)MarshalJSON() ([]byte, error){
+        objectMap := make(map[string]interface{})
+                if(r.Size != nil) {
+                objectMap["size"] = r.Size
+                }
+                return json.Marshal(objectMap)
+        }
 
 // BasicSalmon ...
-type BasicSalmon interface {
-	AsSmartSalmon() (*SmartSalmon, bool)
-	AsSalmon() (*Salmon, bool)
-}
+        type BasicSalmon interface {
+            AsSmartSalmon () (*SmartSalmon, bool)
+        AsSalmon () (*Salmon, bool)
+        }
 
-// Salmon ...
-type Salmon struct {
-	autorest.Response `json:"-"`
-	Location          *string      `json:"location,omitempty"`
-	Iswild            *bool        `json:"iswild,omitempty"`
-	Species           *string      `json:"species,omitempty"`
-	Length            *float64     `json:"length,omitempty"`
-	Siblings          *[]BasicFish `json:"siblings,omitempty"`
-	// Fishtype - Possible values include: 'FishtypeFish', 'FishtypeSalmon', 'FishtypeSmartSalmon', 'FishtypeShark', 'FishtypeSawshark', 'FishtypeGoblin', 'FishtypeCookiecuttershark'
-	Fishtype FishtypeBasicFish `json:"fishtype,omitempty"`
-}
+        // Salmon ...
+        type Salmon struct {
+        autorest.Response `json:"-"`
+        Location *string `json:"location,omitempty"`
+        Iswild *bool `json:"iswild,omitempty"`
+        Species *string `json:"species,omitempty"`
+        Length *float64 `json:"length,omitempty"`
+        Siblings *[]BasicFish `json:"siblings,omitempty"`
+        // Fishtype - Possible values include: 'FishtypeFish', 'FishtypeSalmon', 'FishtypeSmartSalmon', 'FishtypeShark', 'FishtypeSawshark', 'FishtypeGoblin', 'FishtypeCookiecuttershark'
+        Fishtype FishtypeBasicFish `json:"fishtype,omitempty"`
+        }
 
-func unmarshalBasicSalmon(body []byte) (BasicSalmon, error) {
-	var m map[string]interface{}
-	err := json.Unmarshal(body, &m)
-	if err != nil {
-		return nil, err
-	}
+        func unmarshalBasicSalmon(body []byte) (BasicSalmon, error){
+        var m map[string]interface{}
+        err := json.Unmarshal(body, &m)
+        if err != nil {
+        return nil, err
+        }
 
-	switch m["fishtype"] {
-	case string(FishtypeSmartSalmon):
-		var s SmartSalmon
-		err := json.Unmarshal(body, &s)
-		return s, err
-	default:
-		var s Salmon
-		err := json.Unmarshal(body, &s)
-		return s, err
-	}
-}
-func unmarshalBasicSalmonArray(body []byte) ([]BasicSalmon, error) {
-	var rawMessages []*json.RawMessage
-	err := json.Unmarshal(body, &rawMessages)
-	if err != nil {
-		return nil, err
-	}
+        switch m["fishtype"] {
+            case string(FishtypeSmartSalmon):
+            var s SmartSalmon
+            err := json.Unmarshal(body, &s)
+            return s, err
+            default:
+        var s Salmon
+        err := json.Unmarshal(body, &s)
+        return s, err
+        }
+        }
+        func unmarshalBasicSalmonArray(body []byte) ([]BasicSalmon, error){
+        var rawMessages []*json.RawMessage
+        err := json.Unmarshal(body, &rawMessages)
+        if err != nil {
+        return nil, err
+        }
 
-	sArray := make([]BasicSalmon, len(rawMessages))
+        sArray := make([]BasicSalmon, len(rawMessages))
 
-	for index, rawMessage := range rawMessages {
-		s, err := unmarshalBasicSalmon(*rawMessage)
-		if err != nil {
-			return nil, err
-		}
-		sArray[index] = s
-	}
-	return sArray, nil
-}
+        for index, rawMessage := range rawMessages {
+        s, err := unmarshalBasicSalmon(*rawMessage)
+        if err != nil {
+        return nil, err
+        }
+        sArray[index] = s
+        }
+        return sArray, nil
+        }
 
-// MarshalJSON is the custom marshaler for Salmon.
-func (s Salmon) MarshalJSON() ([]byte, error) {
-	s.Fishtype = FishtypeSalmon
-	objectMap := make(map[string]interface{})
-	if s.Location != nil {
-		objectMap["location"] = s.Location
-	}
-	if s.Iswild != nil {
-		objectMap["iswild"] = s.Iswild
-	}
-	if s.Species != nil {
-		objectMap["species"] = s.Species
-	}
-	if s.Length != nil {
-		objectMap["length"] = s.Length
-	}
-	if s.Siblings != nil {
-		objectMap["siblings"] = s.Siblings
-	}
-	if s.Fishtype != "" {
-		objectMap["fishtype"] = s.Fishtype
-	}
-	return json.Marshal(objectMap)
-}
+        // MarshalJSON is the custom marshaler for Salmon.
+        func (s Salmon)MarshalJSON() ([]byte, error){
+            s.Fishtype = FishtypeSalmon
+            objectMap := make(map[string]interface{})
+                if(s.Location != nil) {
+                objectMap["location"] = s.Location
+                }
+                if(s.Iswild != nil) {
+                objectMap["iswild"] = s.Iswild
+                }
+                if(s.Species != nil) {
+                objectMap["species"] = s.Species
+                }
+                if(s.Length != nil) {
+                objectMap["length"] = s.Length
+                }
+                if(s.Siblings != nil) {
+                objectMap["siblings"] = s.Siblings
+                }
+                if(s.Fishtype != "") {
+                objectMap["fishtype"] = s.Fishtype
+                }
+                return json.Marshal(objectMap)
+        }
 
-// AsSalmon is the BasicFish implementation for Salmon.
-func (s Salmon) AsSalmon() (*Salmon, bool) {
-	return &s, true
-}
+            // AsSalmon is the BasicFish implementation for Salmon.
+            func (s Salmon) AsSalmon() (*Salmon, bool) {
+                return &s, true
+            }
 
-// AsBasicSalmon is the BasicFish implementation for Salmon.
-func (s Salmon) AsBasicSalmon() (BasicSalmon, bool) {
-	return &s, true
-}
+                // AsBasicSalmon is the BasicFish implementation for Salmon.
+                func(s Salmon) AsBasicSalmon()(BasicSalmon, bool) {
+                    return &s, true
+                }
 
-// AsSmartSalmon is the BasicFish implementation for Salmon.
-func (s Salmon) AsSmartSalmon() (*SmartSalmon, bool) {
-	return nil, false
-}
 
-// AsShark is the BasicFish implementation for Salmon.
-func (s Salmon) AsShark() (*Shark, bool) {
-	return nil, false
-}
+            // AsSmartSalmon is the BasicFish implementation for Salmon.
+            func (s Salmon) AsSmartSalmon() (*SmartSalmon, bool) {
+                return nil, false
+            }
 
-// AsBasicShark is the BasicFish implementation for Salmon.
-func (s Salmon) AsBasicShark() (BasicShark, bool) {
-	return nil, false
-}
+            // AsShark is the BasicFish implementation for Salmon.
+            func (s Salmon) AsShark() (*Shark, bool) {
+                return nil, false
+            }
 
-// AsSawshark is the BasicFish implementation for Salmon.
-func (s Salmon) AsSawshark() (*Sawshark, bool) {
-	return nil, false
-}
+                // AsBasicShark is the BasicFish implementation for Salmon.
+                func(s Salmon) AsBasicShark()(BasicShark, bool) {
+                    return nil, false
+                }
 
-// AsGoblinshark is the BasicFish implementation for Salmon.
-func (s Salmon) AsGoblinshark() (*Goblinshark, bool) {
-	return nil, false
-}
 
-// AsCookiecuttershark is the BasicFish implementation for Salmon.
-func (s Salmon) AsCookiecuttershark() (*Cookiecuttershark, bool) {
-	return nil, false
-}
+            // AsSawshark is the BasicFish implementation for Salmon.
+            func (s Salmon) AsSawshark() (*Sawshark, bool) {
+                return nil, false
+            }
 
-// AsFish is the BasicFish implementation for Salmon.
-func (s Salmon) AsFish() (*Fish, bool) {
-	return nil, false
-}
+            // AsGoblinshark is the BasicFish implementation for Salmon.
+            func (s Salmon) AsGoblinshark() (*Goblinshark, bool) {
+                return nil, false
+            }
 
-// AsBasicFish is the BasicFish implementation for Salmon.
-func (s Salmon) AsBasicFish() (BasicFish, bool) {
-	return &s, true
-}
+            // AsCookiecuttershark is the BasicFish implementation for Salmon.
+            func (s Salmon) AsCookiecuttershark() (*Cookiecuttershark, bool) {
+                return nil, false
+            }
 
-// UnmarshalJSON is the custom unmarshaler for Salmon struct.
-func (s *Salmon) UnmarshalJSON(body []byte) error {
-	var m map[string]*json.RawMessage
-	err := json.Unmarshal(body, &m)
-	if err != nil {
-		return err
-	}
-	for k, v := range m {
-		switch k {
-		case "location":
-			if v != nil {
-				var location string
-				err = json.Unmarshal(*v, &location)
-				if err != nil {
-					return err
-				}
-				s.Location = &location
-			}
-		case "iswild":
-			if v != nil {
-				var iswild bool
-				err = json.Unmarshal(*v, &iswild)
-				if err != nil {
-					return err
-				}
-				s.Iswild = &iswild
-			}
-		case "species":
-			if v != nil {
-				var species string
-				err = json.Unmarshal(*v, &species)
-				if err != nil {
-					return err
-				}
-				s.Species = &species
-			}
-		case "length":
-			if v != nil {
-				var length float64
-				err = json.Unmarshal(*v, &length)
-				if err != nil {
-					return err
-				}
-				s.Length = &length
-			}
-		case "siblings":
-			if v != nil {
-				siblings, err := unmarshalBasicFishArray(*v)
-				if err != nil {
-					return err
-				}
-				s.Siblings = &siblings
-			}
-		case "fishtype":
-			if v != nil {
-				var fishtype FishtypeBasicFish
-				err = json.Unmarshal(*v, &fishtype)
-				if err != nil {
-					return err
-				}
-				s.Fishtype = fishtype
-			}
-		}
-	}
+            // AsFish is the BasicFish implementation for Salmon.
+            func (s Salmon) AsFish() (*Fish, bool) {
+                return nil, false
+            }
 
-	return nil
-}
+                // AsBasicFish is the BasicFish implementation for Salmon.
+                func(s Salmon) AsBasicFish()(BasicFish, bool) {
+                    return &s, true
+                }
 
-// SalmonModel ...
-type SalmonModel struct {
-	autorest.Response `json:"-"`
-	Value             BasicSalmon `json:"value,omitempty"`
-}
+        // UnmarshalJSON is the custom unmarshaler for Salmon struct.
+        func (s *Salmon) UnmarshalJSON(body []byte) error {
+        var m map[string]*json.RawMessage
+        err := json.Unmarshal(body, &m)
+        if err != nil {
+        return err
+        }
+        for k, v := range  m {
+        switch k {
+                case "location":
+    if v != nil {
+        var location string
+        err = json.Unmarshal(*v, &location)
+    if err != nil {
+    return err
+    }
+        s.Location = &location
+    }
+                case "iswild":
+    if v != nil {
+        var iswild bool
+        err = json.Unmarshal(*v, &iswild)
+    if err != nil {
+    return err
+    }
+        s.Iswild = &iswild
+    }
+                case "species":
+    if v != nil {
+        var species string
+        err = json.Unmarshal(*v, &species)
+    if err != nil {
+    return err
+    }
+        s.Species = &species
+    }
+                case "length":
+    if v != nil {
+        var length float64
+        err = json.Unmarshal(*v, &length)
+    if err != nil {
+    return err
+    }
+        s.Length = &length
+    }
+                case "siblings":
+    if v != nil {
+        siblings, err := unmarshalBasicFishArray(*v)
+    if err != nil {
+    return err
+    }
+        s.Siblings = &siblings
+    }
+                case "fishtype":
+    if v != nil {
+        var fishtype FishtypeBasicFish
+        err = json.Unmarshal(*v, &fishtype)
+    if err != nil {
+    return err
+    }
+        s.Fishtype = fishtype
+    }
+            }
+        }
 
-// UnmarshalJSON is the custom unmarshaler for SalmonModel struct.
-func (sm *SalmonModel) UnmarshalJSON(body []byte) error {
-	s, err := unmarshalBasicSalmon(body)
-	if err != nil {
-		return err
-	}
-	sm.Value = s
+        return nil
+        }
 
-	return nil
-}
+            // SalmonModel ...
+            type SalmonModel struct {
+            autorest.Response `json:"-"`
+            Value BasicSalmon `json:"value,omitempty"`
+            }
+        // UnmarshalJSON is the custom unmarshaler for SalmonModel struct.
+        func (sm *SalmonModel) UnmarshalJSON(body []byte) error {
+                s, err := unmarshalBasicSalmon(body)
+            if err != nil {
+            return err
+            }
+            sm.Value = s
 
-// Sawshark ...
-type Sawshark struct {
-	Picture  *[]byte      `json:"picture,omitempty"`
-	Age      *int32       `json:"age,omitempty"`
-	Birthday *date.Time   `json:"birthday,omitempty"`
-	Species  *string      `json:"species,omitempty"`
-	Length   *float64     `json:"length,omitempty"`
-	Siblings *[]BasicFish `json:"siblings,omitempty"`
-	// Fishtype - Possible values include: 'FishtypeFish', 'FishtypeSalmon', 'FishtypeSmartSalmon', 'FishtypeShark', 'FishtypeSawshark', 'FishtypeGoblin', 'FishtypeCookiecuttershark'
-	Fishtype FishtypeBasicFish `json:"fishtype,omitempty"`
-}
+        return nil
+        }
 
-// MarshalJSON is the custom marshaler for Sawshark.
-func (s Sawshark) MarshalJSON() ([]byte, error) {
-	s.Fishtype = FishtypeSawshark
-	objectMap := make(map[string]interface{})
-	if s.Picture != nil {
-		objectMap["picture"] = s.Picture
-	}
-	if s.Age != nil {
-		objectMap["age"] = s.Age
-	}
-	if s.Birthday != nil {
-		objectMap["birthday"] = s.Birthday
-	}
-	if s.Species != nil {
-		objectMap["species"] = s.Species
-	}
-	if s.Length != nil {
-		objectMap["length"] = s.Length
-	}
-	if s.Siblings != nil {
-		objectMap["siblings"] = s.Siblings
-	}
-	if s.Fishtype != "" {
-		objectMap["fishtype"] = s.Fishtype
-	}
-	return json.Marshal(objectMap)
-}
+            // Sawshark ...
+            type Sawshark struct {
+            Picture *[]byte `json:"picture,omitempty"`
+            Age *int32 `json:"age,omitempty"`
+            Birthday *date.Time `json:"birthday,omitempty"`
+            Species *string `json:"species,omitempty"`
+            Length *float64 `json:"length,omitempty"`
+            Siblings *[]BasicFish `json:"siblings,omitempty"`
+            // Fishtype - Possible values include: 'FishtypeFish', 'FishtypeSalmon', 'FishtypeSmartSalmon', 'FishtypeShark', 'FishtypeSawshark', 'FishtypeGoblin', 'FishtypeCookiecuttershark'
+            Fishtype FishtypeBasicFish `json:"fishtype,omitempty"`
+            }
 
-// AsSalmon is the BasicFish implementation for Sawshark.
-func (s Sawshark) AsSalmon() (*Salmon, bool) {
-	return nil, false
-}
+        // MarshalJSON is the custom marshaler for Sawshark.
+        func (s Sawshark)MarshalJSON() ([]byte, error){
+            s.Fishtype = FishtypeSawshark
+            objectMap := make(map[string]interface{})
+                if(s.Picture != nil) {
+                objectMap["picture"] = s.Picture
+                }
+                if(s.Age != nil) {
+                objectMap["age"] = s.Age
+                }
+                if(s.Birthday != nil) {
+                objectMap["birthday"] = s.Birthday
+                }
+                if(s.Species != nil) {
+                objectMap["species"] = s.Species
+                }
+                if(s.Length != nil) {
+                objectMap["length"] = s.Length
+                }
+                if(s.Siblings != nil) {
+                objectMap["siblings"] = s.Siblings
+                }
+                if(s.Fishtype != "") {
+                objectMap["fishtype"] = s.Fishtype
+                }
+                return json.Marshal(objectMap)
+        }
 
-// AsBasicSalmon is the BasicFish implementation for Sawshark.
-func (s Sawshark) AsBasicSalmon() (BasicSalmon, bool) {
-	return nil, false
-}
+            // AsSalmon is the BasicFish implementation for Sawshark.
+            func (s Sawshark) AsSalmon() (*Salmon, bool) {
+                return nil, false
+            }
 
-// AsSmartSalmon is the BasicFish implementation for Sawshark.
-func (s Sawshark) AsSmartSalmon() (*SmartSalmon, bool) {
-	return nil, false
-}
+                // AsBasicSalmon is the BasicFish implementation for Sawshark.
+                func(s Sawshark) AsBasicSalmon()(BasicSalmon, bool) {
+                    return nil, false
+                }
 
-// AsShark is the BasicFish implementation for Sawshark.
-func (s Sawshark) AsShark() (*Shark, bool) {
-	return nil, false
-}
 
-// AsBasicShark is the BasicFish implementation for Sawshark.
-func (s Sawshark) AsBasicShark() (BasicShark, bool) {
-	return &s, true
-}
+            // AsSmartSalmon is the BasicFish implementation for Sawshark.
+            func (s Sawshark) AsSmartSalmon() (*SmartSalmon, bool) {
+                return nil, false
+            }
 
-// AsSawshark is the BasicFish implementation for Sawshark.
-func (s Sawshark) AsSawshark() (*Sawshark, bool) {
-	return &s, true
-}
+            // AsShark is the BasicFish implementation for Sawshark.
+            func (s Sawshark) AsShark() (*Shark, bool) {
+                return nil, false
+            }
 
-// AsGoblinshark is the BasicFish implementation for Sawshark.
-func (s Sawshark) AsGoblinshark() (*Goblinshark, bool) {
-	return nil, false
-}
+                // AsBasicShark is the BasicFish implementation for Sawshark.
+                func(s Sawshark) AsBasicShark()(BasicShark, bool) {
+                    return &s, true
+                }
 
-// AsCookiecuttershark is the BasicFish implementation for Sawshark.
-func (s Sawshark) AsCookiecuttershark() (*Cookiecuttershark, bool) {
-	return nil, false
-}
 
-// AsFish is the BasicFish implementation for Sawshark.
-func (s Sawshark) AsFish() (*Fish, bool) {
-	return nil, false
-}
+            // AsSawshark is the BasicFish implementation for Sawshark.
+            func (s Sawshark) AsSawshark() (*Sawshark, bool) {
+                return &s, true
+            }
 
-// AsBasicFish is the BasicFish implementation for Sawshark.
-func (s Sawshark) AsBasicFish() (BasicFish, bool) {
-	return &s, true
-}
+            // AsGoblinshark is the BasicFish implementation for Sawshark.
+            func (s Sawshark) AsGoblinshark() (*Goblinshark, bool) {
+                return nil, false
+            }
 
-// UnmarshalJSON is the custom unmarshaler for Sawshark struct.
-func (s *Sawshark) UnmarshalJSON(body []byte) error {
-	var m map[string]*json.RawMessage
-	err := json.Unmarshal(body, &m)
-	if err != nil {
-		return err
-	}
-	for k, v := range m {
-		switch k {
-		case "picture":
-			if v != nil {
-				var picture []byte
-				err = json.Unmarshal(*v, &picture)
-				if err != nil {
-					return err
-				}
-				s.Picture = &picture
-			}
-		case "age":
-			if v != nil {
-				var age int32
-				err = json.Unmarshal(*v, &age)
-				if err != nil {
-					return err
-				}
-				s.Age = &age
-			}
-		case "birthday":
-			if v != nil {
-				var birthday date.Time
-				err = json.Unmarshal(*v, &birthday)
-				if err != nil {
-					return err
-				}
-				s.Birthday = &birthday
-			}
-		case "species":
-			if v != nil {
-				var species string
-				err = json.Unmarshal(*v, &species)
-				if err != nil {
-					return err
-				}
-				s.Species = &species
-			}
-		case "length":
-			if v != nil {
-				var length float64
-				err = json.Unmarshal(*v, &length)
-				if err != nil {
-					return err
-				}
-				s.Length = &length
-			}
-		case "siblings":
-			if v != nil {
-				siblings, err := unmarshalBasicFishArray(*v)
-				if err != nil {
-					return err
-				}
-				s.Siblings = &siblings
-			}
-		case "fishtype":
-			if v != nil {
-				var fishtype FishtypeBasicFish
-				err = json.Unmarshal(*v, &fishtype)
-				if err != nil {
-					return err
-				}
-				s.Fishtype = fishtype
-			}
-		}
-	}
+            // AsCookiecuttershark is the BasicFish implementation for Sawshark.
+            func (s Sawshark) AsCookiecuttershark() (*Cookiecuttershark, bool) {
+                return nil, false
+            }
 
-	return nil
-}
+            // AsFish is the BasicFish implementation for Sawshark.
+            func (s Sawshark) AsFish() (*Fish, bool) {
+                return nil, false
+            }
+
+                // AsBasicFish is the BasicFish implementation for Sawshark.
+                func(s Sawshark) AsBasicFish()(BasicFish, bool) {
+                    return &s, true
+                }
+
+        // UnmarshalJSON is the custom unmarshaler for Sawshark struct.
+        func (s *Sawshark) UnmarshalJSON(body []byte) error {
+        var m map[string]*json.RawMessage
+        err := json.Unmarshal(body, &m)
+        if err != nil {
+        return err
+        }
+        for k, v := range  m {
+        switch k {
+                case "picture":
+    if v != nil {
+        var picture []byte
+        err = json.Unmarshal(*v, &picture)
+    if err != nil {
+    return err
+    }
+        s.Picture = &picture
+    }
+                case "age":
+    if v != nil {
+        var age int32
+        err = json.Unmarshal(*v, &age)
+    if err != nil {
+    return err
+    }
+        s.Age = &age
+    }
+                case "birthday":
+    if v != nil {
+        var birthday date.Time
+        err = json.Unmarshal(*v, &birthday)
+    if err != nil {
+    return err
+    }
+        s.Birthday = &birthday
+    }
+                case "species":
+    if v != nil {
+        var species string
+        err = json.Unmarshal(*v, &species)
+    if err != nil {
+    return err
+    }
+        s.Species = &species
+    }
+                case "length":
+    if v != nil {
+        var length float64
+        err = json.Unmarshal(*v, &length)
+    if err != nil {
+    return err
+    }
+        s.Length = &length
+    }
+                case "siblings":
+    if v != nil {
+        siblings, err := unmarshalBasicFishArray(*v)
+    if err != nil {
+    return err
+    }
+        s.Siblings = &siblings
+    }
+                case "fishtype":
+    if v != nil {
+        var fishtype FishtypeBasicFish
+        err = json.Unmarshal(*v, &fishtype)
+    if err != nil {
+    return err
+    }
+        s.Fishtype = fishtype
+    }
+            }
+        }
+
+        return nil
+        }
 
 // BasicShark ...
-type BasicShark interface {
-	AsSawshark() (*Sawshark, bool)
-	AsGoblinshark() (*Goblinshark, bool)
-	AsCookiecuttershark() (*Cookiecuttershark, bool)
-	AsShark() (*Shark, bool)
-}
+        type BasicShark interface {
+            AsSawshark () (*Sawshark, bool)
+            AsGoblinshark () (*Goblinshark, bool)
+            AsCookiecuttershark () (*Cookiecuttershark, bool)
+        AsShark () (*Shark, bool)
+        }
 
-// Shark ...
-type Shark struct {
-	Age      *int32       `json:"age,omitempty"`
-	Birthday *date.Time   `json:"birthday,omitempty"`
-	Species  *string      `json:"species,omitempty"`
-	Length   *float64     `json:"length,omitempty"`
-	Siblings *[]BasicFish `json:"siblings,omitempty"`
-	// Fishtype - Possible values include: 'FishtypeFish', 'FishtypeSalmon', 'FishtypeSmartSalmon', 'FishtypeShark', 'FishtypeSawshark', 'FishtypeGoblin', 'FishtypeCookiecuttershark'
-	Fishtype FishtypeBasicFish `json:"fishtype,omitempty"`
-}
+        // Shark ...
+        type Shark struct {
+        Age *int32 `json:"age,omitempty"`
+        Birthday *date.Time `json:"birthday,omitempty"`
+        Species *string `json:"species,omitempty"`
+        Length *float64 `json:"length,omitempty"`
+        Siblings *[]BasicFish `json:"siblings,omitempty"`
+        // Fishtype - Possible values include: 'FishtypeFish', 'FishtypeSalmon', 'FishtypeSmartSalmon', 'FishtypeShark', 'FishtypeSawshark', 'FishtypeGoblin', 'FishtypeCookiecuttershark'
+        Fishtype FishtypeBasicFish `json:"fishtype,omitempty"`
+        }
 
-func unmarshalBasicShark(body []byte) (BasicShark, error) {
-	var m map[string]interface{}
-	err := json.Unmarshal(body, &m)
-	if err != nil {
-		return nil, err
-	}
+        func unmarshalBasicShark(body []byte) (BasicShark, error){
+        var m map[string]interface{}
+        err := json.Unmarshal(body, &m)
+        if err != nil {
+        return nil, err
+        }
 
-	switch m["fishtype"] {
-	case string(FishtypeSawshark):
-		var s Sawshark
-		err := json.Unmarshal(body, &s)
-		return s, err
-	case string(FishtypeGoblin):
-		var g Goblinshark
-		err := json.Unmarshal(body, &g)
-		return g, err
-	case string(FishtypeCookiecuttershark):
-		var c Cookiecuttershark
-		err := json.Unmarshal(body, &c)
-		return c, err
-	default:
-		var s Shark
-		err := json.Unmarshal(body, &s)
-		return s, err
-	}
-}
-func unmarshalBasicSharkArray(body []byte) ([]BasicShark, error) {
-	var rawMessages []*json.RawMessage
-	err := json.Unmarshal(body, &rawMessages)
-	if err != nil {
-		return nil, err
-	}
+        switch m["fishtype"] {
+            case string(FishtypeSawshark):
+            var s Sawshark
+            err := json.Unmarshal(body, &s)
+            return s, err
+            case string(FishtypeGoblin):
+            var g Goblinshark
+            err := json.Unmarshal(body, &g)
+            return g, err
+            case string(FishtypeCookiecuttershark):
+            var c Cookiecuttershark
+            err := json.Unmarshal(body, &c)
+            return c, err
+            default:
+        var s Shark
+        err := json.Unmarshal(body, &s)
+        return s, err
+        }
+        }
+        func unmarshalBasicSharkArray(body []byte) ([]BasicShark, error){
+        var rawMessages []*json.RawMessage
+        err := json.Unmarshal(body, &rawMessages)
+        if err != nil {
+        return nil, err
+        }
 
-	sArray := make([]BasicShark, len(rawMessages))
+        sArray := make([]BasicShark, len(rawMessages))
 
-	for index, rawMessage := range rawMessages {
-		s, err := unmarshalBasicShark(*rawMessage)
-		if err != nil {
-			return nil, err
-		}
-		sArray[index] = s
-	}
-	return sArray, nil
-}
+        for index, rawMessage := range rawMessages {
+        s, err := unmarshalBasicShark(*rawMessage)
+        if err != nil {
+        return nil, err
+        }
+        sArray[index] = s
+        }
+        return sArray, nil
+        }
 
-// MarshalJSON is the custom marshaler for Shark.
-func (s Shark) MarshalJSON() ([]byte, error) {
-	s.Fishtype = FishtypeShark
-	objectMap := make(map[string]interface{})
-	if s.Age != nil {
-		objectMap["age"] = s.Age
-	}
-	if s.Birthday != nil {
-		objectMap["birthday"] = s.Birthday
-	}
-	if s.Species != nil {
-		objectMap["species"] = s.Species
-	}
-	if s.Length != nil {
-		objectMap["length"] = s.Length
-	}
-	if s.Siblings != nil {
-		objectMap["siblings"] = s.Siblings
-	}
-	if s.Fishtype != "" {
-		objectMap["fishtype"] = s.Fishtype
-	}
-	return json.Marshal(objectMap)
-}
+        // MarshalJSON is the custom marshaler for Shark.
+        func (s Shark)MarshalJSON() ([]byte, error){
+            s.Fishtype = FishtypeShark
+            objectMap := make(map[string]interface{})
+                if(s.Age != nil) {
+                objectMap["age"] = s.Age
+                }
+                if(s.Birthday != nil) {
+                objectMap["birthday"] = s.Birthday
+                }
+                if(s.Species != nil) {
+                objectMap["species"] = s.Species
+                }
+                if(s.Length != nil) {
+                objectMap["length"] = s.Length
+                }
+                if(s.Siblings != nil) {
+                objectMap["siblings"] = s.Siblings
+                }
+                if(s.Fishtype != "") {
+                objectMap["fishtype"] = s.Fishtype
+                }
+                return json.Marshal(objectMap)
+        }
 
-// AsSalmon is the BasicFish implementation for Shark.
-func (s Shark) AsSalmon() (*Salmon, bool) {
-	return nil, false
-}
+            // AsSalmon is the BasicFish implementation for Shark.
+            func (s Shark) AsSalmon() (*Salmon, bool) {
+                return nil, false
+            }
 
-// AsBasicSalmon is the BasicFish implementation for Shark.
-func (s Shark) AsBasicSalmon() (BasicSalmon, bool) {
-	return nil, false
-}
+                // AsBasicSalmon is the BasicFish implementation for Shark.
+                func(s Shark) AsBasicSalmon()(BasicSalmon, bool) {
+                    return nil, false
+                }
 
-// AsSmartSalmon is the BasicFish implementation for Shark.
-func (s Shark) AsSmartSalmon() (*SmartSalmon, bool) {
-	return nil, false
-}
 
-// AsShark is the BasicFish implementation for Shark.
-func (s Shark) AsShark() (*Shark, bool) {
-	return &s, true
-}
+            // AsSmartSalmon is the BasicFish implementation for Shark.
+            func (s Shark) AsSmartSalmon() (*SmartSalmon, bool) {
+                return nil, false
+            }
 
-// AsBasicShark is the BasicFish implementation for Shark.
-func (s Shark) AsBasicShark() (BasicShark, bool) {
-	return &s, true
-}
+            // AsShark is the BasicFish implementation for Shark.
+            func (s Shark) AsShark() (*Shark, bool) {
+                return &s, true
+            }
 
-// AsSawshark is the BasicFish implementation for Shark.
-func (s Shark) AsSawshark() (*Sawshark, bool) {
-	return nil, false
-}
+                // AsBasicShark is the BasicFish implementation for Shark.
+                func(s Shark) AsBasicShark()(BasicShark, bool) {
+                    return &s, true
+                }
 
-// AsGoblinshark is the BasicFish implementation for Shark.
-func (s Shark) AsGoblinshark() (*Goblinshark, bool) {
-	return nil, false
-}
 
-// AsCookiecuttershark is the BasicFish implementation for Shark.
-func (s Shark) AsCookiecuttershark() (*Cookiecuttershark, bool) {
-	return nil, false
-}
+            // AsSawshark is the BasicFish implementation for Shark.
+            func (s Shark) AsSawshark() (*Sawshark, bool) {
+                return nil, false
+            }
 
-// AsFish is the BasicFish implementation for Shark.
-func (s Shark) AsFish() (*Fish, bool) {
-	return nil, false
-}
+            // AsGoblinshark is the BasicFish implementation for Shark.
+            func (s Shark) AsGoblinshark() (*Goblinshark, bool) {
+                return nil, false
+            }
 
-// AsBasicFish is the BasicFish implementation for Shark.
-func (s Shark) AsBasicFish() (BasicFish, bool) {
-	return &s, true
-}
+            // AsCookiecuttershark is the BasicFish implementation for Shark.
+            func (s Shark) AsCookiecuttershark() (*Cookiecuttershark, bool) {
+                return nil, false
+            }
 
-// UnmarshalJSON is the custom unmarshaler for Shark struct.
-func (s *Shark) UnmarshalJSON(body []byte) error {
-	var m map[string]*json.RawMessage
-	err := json.Unmarshal(body, &m)
-	if err != nil {
-		return err
-	}
-	for k, v := range m {
-		switch k {
-		case "age":
-			if v != nil {
-				var age int32
-				err = json.Unmarshal(*v, &age)
-				if err != nil {
-					return err
-				}
-				s.Age = &age
-			}
-		case "birthday":
-			if v != nil {
-				var birthday date.Time
-				err = json.Unmarshal(*v, &birthday)
-				if err != nil {
-					return err
-				}
-				s.Birthday = &birthday
-			}
-		case "species":
-			if v != nil {
-				var species string
-				err = json.Unmarshal(*v, &species)
-				if err != nil {
-					return err
-				}
-				s.Species = &species
-			}
-		case "length":
-			if v != nil {
-				var length float64
-				err = json.Unmarshal(*v, &length)
-				if err != nil {
-					return err
-				}
-				s.Length = &length
-			}
-		case "siblings":
-			if v != nil {
-				siblings, err := unmarshalBasicFishArray(*v)
-				if err != nil {
-					return err
-				}
-				s.Siblings = &siblings
-			}
-		case "fishtype":
-			if v != nil {
-				var fishtype FishtypeBasicFish
-				err = json.Unmarshal(*v, &fishtype)
-				if err != nil {
-					return err
-				}
-				s.Fishtype = fishtype
-			}
-		}
-	}
+            // AsFish is the BasicFish implementation for Shark.
+            func (s Shark) AsFish() (*Fish, bool) {
+                return nil, false
+            }
 
-	return nil
-}
+                // AsBasicFish is the BasicFish implementation for Shark.
+                func(s Shark) AsBasicFish()(BasicFish, bool) {
+                    return &s, true
+                }
 
-// Siamese ...
-type Siamese struct {
-	autorest.Response `json:"-"`
-	Breed             *string `json:"breed,omitempty"`
-	Color             *string `json:"color,omitempty"`
-	Hates             *[]Dog  `json:"hates,omitempty"`
-	ID                *int32  `json:"id,omitempty"`
-	Name              *string `json:"name,omitempty"`
-}
+        // UnmarshalJSON is the custom unmarshaler for Shark struct.
+        func (s *Shark) UnmarshalJSON(body []byte) error {
+        var m map[string]*json.RawMessage
+        err := json.Unmarshal(body, &m)
+        if err != nil {
+        return err
+        }
+        for k, v := range  m {
+        switch k {
+                case "age":
+    if v != nil {
+        var age int32
+        err = json.Unmarshal(*v, &age)
+    if err != nil {
+    return err
+    }
+        s.Age = &age
+    }
+                case "birthday":
+    if v != nil {
+        var birthday date.Time
+        err = json.Unmarshal(*v, &birthday)
+    if err != nil {
+    return err
+    }
+        s.Birthday = &birthday
+    }
+                case "species":
+    if v != nil {
+        var species string
+        err = json.Unmarshal(*v, &species)
+    if err != nil {
+    return err
+    }
+        s.Species = &species
+    }
+                case "length":
+    if v != nil {
+        var length float64
+        err = json.Unmarshal(*v, &length)
+    if err != nil {
+    return err
+    }
+        s.Length = &length
+    }
+                case "siblings":
+    if v != nil {
+        siblings, err := unmarshalBasicFishArray(*v)
+    if err != nil {
+    return err
+    }
+        s.Siblings = &siblings
+    }
+                case "fishtype":
+    if v != nil {
+        var fishtype FishtypeBasicFish
+        err = json.Unmarshal(*v, &fishtype)
+    if err != nil {
+    return err
+    }
+        s.Fishtype = fishtype
+    }
+            }
+        }
 
-// SmartSalmon ...
-type SmartSalmon struct {
-	// AdditionalProperties - Unmatched properties from the message are deserialized this collection
-	AdditionalProperties map[string]interface{} `json:""`
-	CollegeDegree        *string                `json:"college_degree,omitempty"`
-	Location             *string                `json:"location,omitempty"`
-	Iswild               *bool                  `json:"iswild,omitempty"`
-	Species              *string                `json:"species,omitempty"`
-	Length               *float64               `json:"length,omitempty"`
-	Siblings             *[]BasicFish           `json:"siblings,omitempty"`
-	// Fishtype - Possible values include: 'FishtypeFish', 'FishtypeSalmon', 'FishtypeSmartSalmon', 'FishtypeShark', 'FishtypeSawshark', 'FishtypeGoblin', 'FishtypeCookiecuttershark'
-	Fishtype FishtypeBasicFish `json:"fishtype,omitempty"`
-}
+        return nil
+        }
 
-// MarshalJSON is the custom marshaler for SmartSalmon.
-func (s SmartSalmon) MarshalJSON() ([]byte, error) {
-	s.Fishtype = FishtypeSmartSalmon
-	objectMap := make(map[string]interface{})
-	if s.CollegeDegree != nil {
-		objectMap["college_degree"] = s.CollegeDegree
-	}
-	if s.Location != nil {
-		objectMap["location"] = s.Location
-	}
-	if s.Iswild != nil {
-		objectMap["iswild"] = s.Iswild
-	}
-	if s.Species != nil {
-		objectMap["species"] = s.Species
-	}
-	if s.Length != nil {
-		objectMap["length"] = s.Length
-	}
-	if s.Siblings != nil {
-		objectMap["siblings"] = s.Siblings
-	}
-	if s.Fishtype != "" {
-		objectMap["fishtype"] = s.Fishtype
-	}
-	for k, v := range s.AdditionalProperties {
-		objectMap[k] = v
-	}
-	return json.Marshal(objectMap)
-}
+            // Siamese ...
+            type Siamese struct {
+            autorest.Response `json:"-"`
+            Breed *string `json:"breed,omitempty"`
+            Color *string `json:"color,omitempty"`
+            Hates *[]Dog `json:"hates,omitempty"`
+            ID *int32 `json:"id,omitempty"`
+            Name *string `json:"name,omitempty"`
+            }
 
-// AsSalmon is the BasicFish implementation for SmartSalmon.
-func (s SmartSalmon) AsSalmon() (*Salmon, bool) {
-	return nil, false
-}
+            // SmartSalmon ...
+            type SmartSalmon struct {
+            // AdditionalProperties - Unmatched properties from the message are deserialized this collection
+            AdditionalProperties map[string]interface{} `json:""`
+            CollegeDegree *string `json:"college_degree,omitempty"`
+            Location *string `json:"location,omitempty"`
+            Iswild *bool `json:"iswild,omitempty"`
+            Species *string `json:"species,omitempty"`
+            Length *float64 `json:"length,omitempty"`
+            Siblings *[]BasicFish `json:"siblings,omitempty"`
+            // Fishtype - Possible values include: 'FishtypeFish', 'FishtypeSalmon', 'FishtypeSmartSalmon', 'FishtypeShark', 'FishtypeSawshark', 'FishtypeGoblin', 'FishtypeCookiecuttershark'
+            Fishtype FishtypeBasicFish `json:"fishtype,omitempty"`
+            }
 
-// AsBasicSalmon is the BasicFish implementation for SmartSalmon.
-func (s SmartSalmon) AsBasicSalmon() (BasicSalmon, bool) {
-	return &s, true
-}
+        // MarshalJSON is the custom marshaler for SmartSalmon.
+        func (s SmartSalmon)MarshalJSON() ([]byte, error){
+            s.Fishtype = FishtypeSmartSalmon
+            objectMap := make(map[string]interface{})
+                if(s.CollegeDegree != nil) {
+                objectMap["college_degree"] = s.CollegeDegree
+                }
+                if(s.Location != nil) {
+                objectMap["location"] = s.Location
+                }
+                if(s.Iswild != nil) {
+                objectMap["iswild"] = s.Iswild
+                }
+                if(s.Species != nil) {
+                objectMap["species"] = s.Species
+                }
+                if(s.Length != nil) {
+                objectMap["length"] = s.Length
+                }
+                if(s.Siblings != nil) {
+                objectMap["siblings"] = s.Siblings
+                }
+                if(s.Fishtype != "") {
+                objectMap["fishtype"] = s.Fishtype
+                }
+                    for k, v := range s.AdditionalProperties {
+                objectMap[k] = v
+            }
+        return json.Marshal(objectMap)
+        }
 
-// AsSmartSalmon is the BasicFish implementation for SmartSalmon.
-func (s SmartSalmon) AsSmartSalmon() (*SmartSalmon, bool) {
-	return &s, true
-}
+            // AsSalmon is the BasicFish implementation for SmartSalmon.
+            func (s SmartSalmon) AsSalmon() (*Salmon, bool) {
+                return nil, false
+            }
 
-// AsShark is the BasicFish implementation for SmartSalmon.
-func (s SmartSalmon) AsShark() (*Shark, bool) {
-	return nil, false
-}
+                // AsBasicSalmon is the BasicFish implementation for SmartSalmon.
+                func(s SmartSalmon) AsBasicSalmon()(BasicSalmon, bool) {
+                    return &s, true
+                }
 
-// AsBasicShark is the BasicFish implementation for SmartSalmon.
-func (s SmartSalmon) AsBasicShark() (BasicShark, bool) {
-	return nil, false
-}
 
-// AsSawshark is the BasicFish implementation for SmartSalmon.
-func (s SmartSalmon) AsSawshark() (*Sawshark, bool) {
-	return nil, false
-}
+            // AsSmartSalmon is the BasicFish implementation for SmartSalmon.
+            func (s SmartSalmon) AsSmartSalmon() (*SmartSalmon, bool) {
+                return &s, true
+            }
 
-// AsGoblinshark is the BasicFish implementation for SmartSalmon.
-func (s SmartSalmon) AsGoblinshark() (*Goblinshark, bool) {
-	return nil, false
-}
+            // AsShark is the BasicFish implementation for SmartSalmon.
+            func (s SmartSalmon) AsShark() (*Shark, bool) {
+                return nil, false
+            }
 
-// AsCookiecuttershark is the BasicFish implementation for SmartSalmon.
-func (s SmartSalmon) AsCookiecuttershark() (*Cookiecuttershark, bool) {
-	return nil, false
-}
+                // AsBasicShark is the BasicFish implementation for SmartSalmon.
+                func(s SmartSalmon) AsBasicShark()(BasicShark, bool) {
+                    return nil, false
+                }
 
-// AsFish is the BasicFish implementation for SmartSalmon.
-func (s SmartSalmon) AsFish() (*Fish, bool) {
-	return nil, false
-}
 
-// AsBasicFish is the BasicFish implementation for SmartSalmon.
-func (s SmartSalmon) AsBasicFish() (BasicFish, bool) {
-	return &s, true
-}
+            // AsSawshark is the BasicFish implementation for SmartSalmon.
+            func (s SmartSalmon) AsSawshark() (*Sawshark, bool) {
+                return nil, false
+            }
 
-// UnmarshalJSON is the custom unmarshaler for SmartSalmon struct.
-func (s *SmartSalmon) UnmarshalJSON(body []byte) error {
-	var m map[string]*json.RawMessage
-	err := json.Unmarshal(body, &m)
-	if err != nil {
-		return err
-	}
-	for k, v := range m {
-		switch k {
-		default:
-			if v != nil {
-				var additionalProperties interface{}
-				err = json.Unmarshal(*v, &additionalProperties)
-				if err != nil {
-					return err
-				}
-				if s.AdditionalProperties == nil {
-					s.AdditionalProperties = make(map[string]interface{})
-				}
-				s.AdditionalProperties[k] = additionalProperties
-			}
-		case "college_degree":
-			if v != nil {
-				var collegeDegree string
-				err = json.Unmarshal(*v, &collegeDegree)
-				if err != nil {
-					return err
-				}
-				s.CollegeDegree = &collegeDegree
-			}
-		case "location":
-			if v != nil {
-				var location string
-				err = json.Unmarshal(*v, &location)
-				if err != nil {
-					return err
-				}
-				s.Location = &location
-			}
-		case "iswild":
-			if v != nil {
-				var iswild bool
-				err = json.Unmarshal(*v, &iswild)
-				if err != nil {
-					return err
-				}
-				s.Iswild = &iswild
-			}
-		case "species":
-			if v != nil {
-				var species string
-				err = json.Unmarshal(*v, &species)
-				if err != nil {
-					return err
-				}
-				s.Species = &species
-			}
-		case "length":
-			if v != nil {
-				var length float64
-				err = json.Unmarshal(*v, &length)
-				if err != nil {
-					return err
-				}
-				s.Length = &length
-			}
-		case "siblings":
-			if v != nil {
-				siblings, err := unmarshalBasicFishArray(*v)
-				if err != nil {
-					return err
-				}
-				s.Siblings = &siblings
-			}
-		case "fishtype":
-			if v != nil {
-				var fishtype FishtypeBasicFish
-				err = json.Unmarshal(*v, &fishtype)
-				if err != nil {
-					return err
-				}
-				s.Fishtype = fishtype
-			}
-		}
-	}
+            // AsGoblinshark is the BasicFish implementation for SmartSalmon.
+            func (s SmartSalmon) AsGoblinshark() (*Goblinshark, bool) {
+                return nil, false
+            }
 
-	return nil
-}
+            // AsCookiecuttershark is the BasicFish implementation for SmartSalmon.
+            func (s SmartSalmon) AsCookiecuttershark() (*Cookiecuttershark, bool) {
+                return nil, false
+            }
 
-// StringWrapper ...
-type StringWrapper struct {
-	autorest.Response `json:"-"`
-	Field             *string `json:"field,omitempty"`
-	Empty             *string `json:"empty,omitempty"`
-	Null              *string `json:"null,omitempty"`
-}
+            // AsFish is the BasicFish implementation for SmartSalmon.
+            func (s SmartSalmon) AsFish() (*Fish, bool) {
+                return nil, false
+            }
+
+                // AsBasicFish is the BasicFish implementation for SmartSalmon.
+                func(s SmartSalmon) AsBasicFish()(BasicFish, bool) {
+                    return &s, true
+                }
+
+        // UnmarshalJSON is the custom unmarshaler for SmartSalmon struct.
+        func (s *SmartSalmon) UnmarshalJSON(body []byte) error {
+        var m map[string]*json.RawMessage
+        err := json.Unmarshal(body, &m)
+        if err != nil {
+        return err
+        }
+        for k, v := range  m {
+        switch k {
+        default:
+    if v != nil {
+        var additionalProperties interface{}
+        err = json.Unmarshal(*v, &additionalProperties)
+    if err != nil {
+    return err
+    }
+        if(s.AdditionalProperties == nil) {
+         s.AdditionalProperties = make(map[string]interface{})
+        }
+            s.AdditionalProperties[k] = additionalProperties
+    }
+                case "college_degree":
+    if v != nil {
+        var collegeDegree string
+        err = json.Unmarshal(*v, &collegeDegree)
+    if err != nil {
+    return err
+    }
+        s.CollegeDegree = &collegeDegree
+    }
+                case "location":
+    if v != nil {
+        var location string
+        err = json.Unmarshal(*v, &location)
+    if err != nil {
+    return err
+    }
+        s.Location = &location
+    }
+                case "iswild":
+    if v != nil {
+        var iswild bool
+        err = json.Unmarshal(*v, &iswild)
+    if err != nil {
+    return err
+    }
+        s.Iswild = &iswild
+    }
+                case "species":
+    if v != nil {
+        var species string
+        err = json.Unmarshal(*v, &species)
+    if err != nil {
+    return err
+    }
+        s.Species = &species
+    }
+                case "length":
+    if v != nil {
+        var length float64
+        err = json.Unmarshal(*v, &length)
+    if err != nil {
+    return err
+    }
+        s.Length = &length
+    }
+                case "siblings":
+    if v != nil {
+        siblings, err := unmarshalBasicFishArray(*v)
+    if err != nil {
+    return err
+    }
+        s.Siblings = &siblings
+    }
+                case "fishtype":
+    if v != nil {
+        var fishtype FishtypeBasicFish
+        err = json.Unmarshal(*v, &fishtype)
+    if err != nil {
+    return err
+    }
+        s.Fishtype = fishtype
+    }
+            }
+        }
+
+        return nil
+        }
+
+            // StringWrapper ...
+            type StringWrapper struct {
+            autorest.Response `json:"-"`
+            Field *string `json:"field,omitempty"`
+            Empty *string `json:"empty,omitempty"`
+            Null *string `json:"null,omitempty"`
+            }
+

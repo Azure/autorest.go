@@ -7,21 +7,22 @@ package filegroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-	"github.com/Azure/go-autorest/autorest"
-	"io"
+    "github.com/Azure/go-autorest/autorest"
+    "io"
 )
 
 // The package's fully qualified name.
 const fqdn = "tests/generated/filegroup"
 
-// Error ...
-type Error struct {
-	Status  *int32  `json:"status,omitempty"`
-	Message *string `json:"message,omitempty"`
-}
+            // Error ...
+            type Error struct {
+            Status *int32 `json:"status,omitempty"`
+            Message *string `json:"message,omitempty"`
+            }
 
-// ReadCloser ...
-type ReadCloser struct {
-	autorest.Response `json:"-"`
-	Value             *io.ReadCloser `json:"value,omitempty"`
-}
+            // ReadCloser ...
+            type ReadCloser struct {
+            autorest.Response `json:"-"`
+            Value *io.ReadCloser `json:"value,omitempty"`
+            }
+

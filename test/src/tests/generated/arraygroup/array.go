@@ -7,4379 +7,4379 @@ package arraygroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-	"context"
-	"github.com/Azure/go-autorest/autorest"
-	"github.com/Azure/go-autorest/autorest/azure"
-	"github.com/Azure/go-autorest/autorest/date"
-	"github.com/Azure/go-autorest/autorest/validation"
-	"github.com/Azure/go-autorest/tracing"
-	"github.com/satori/go.uuid"
-	"net/http"
+    "github.com/Azure/go-autorest/autorest"
+    "github.com/Azure/go-autorest/autorest/azure"
+    "net/http"
+    "context"
+    "github.com/Azure/go-autorest/tracing"
+    "github.com/Azure/go-autorest/autorest/validation"
+    "github.com/satori/go.uuid"
+    "github.com/Azure/go-autorest/autorest/date"
 )
 
 // ArrayClient is the test Infrastructure for AutoRest Swagger BAT
 type ArrayClient struct {
-	BaseClient
+    BaseClient
 }
-
 // NewArrayClient creates an instance of the ArrayClient client.
 func NewArrayClient() ArrayClient {
-	return NewArrayClientWithBaseURI(DefaultBaseURI)
+    return NewArrayClientWithBaseURI(DefaultBaseURI, )
 }
 
 // NewArrayClientWithBaseURI creates an instance of the ArrayClient client using a custom endpoint.  Use this when
 // interacting with an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure stack).
-func NewArrayClientWithBaseURI(baseURI string) ArrayClient {
-	return ArrayClient{NewWithBaseURI(baseURI)}
-}
+    func NewArrayClientWithBaseURI(baseURI string, ) ArrayClient {
+        return ArrayClient{ NewWithBaseURI(baseURI, )}
+    }
 
 // GetArrayEmpty get an empty array []
 func (client ArrayClient) GetArrayEmpty(ctx context.Context) (result ListListString, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.GetArrayEmpty")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetArrayEmptyPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetArrayEmpty", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.GetArrayEmpty")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetArrayEmptyPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetArrayEmpty", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetArrayEmptySender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetArrayEmpty", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetArrayEmptySender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetArrayEmpty", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetArrayEmptyResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetArrayEmpty", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetArrayEmptyResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetArrayEmpty", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetArrayEmptyPreparer prepares the GetArrayEmpty request.
-func (client ArrayClient) GetArrayEmptyPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/array/empty"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetArrayEmptyPreparer prepares the GetArrayEmpty request.
+    func (client ArrayClient) GetArrayEmptyPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/array/empty"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetArrayEmptySender sends the GetArrayEmpty request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) GetArrayEmptySender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetArrayEmptySender sends the GetArrayEmpty request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) GetArrayEmptySender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetArrayEmptyResponder handles the response to the GetArrayEmpty request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) GetArrayEmptyResponder(resp *http.Response) (result ListListString, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetArrayEmptyResponder handles the response to the GetArrayEmpty request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) GetArrayEmptyResponder(resp *http.Response) (result ListListString, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetArrayItemEmpty get an array of array of strings [['1', '2', '3'], [], ['7', '8', '9']]
 func (client ArrayClient) GetArrayItemEmpty(ctx context.Context) (result ListListString, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.GetArrayItemEmpty")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetArrayItemEmptyPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetArrayItemEmpty", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.GetArrayItemEmpty")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetArrayItemEmptyPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetArrayItemEmpty", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetArrayItemEmptySender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetArrayItemEmpty", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetArrayItemEmptySender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetArrayItemEmpty", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetArrayItemEmptyResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetArrayItemEmpty", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetArrayItemEmptyResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetArrayItemEmpty", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetArrayItemEmptyPreparer prepares the GetArrayItemEmpty request.
-func (client ArrayClient) GetArrayItemEmptyPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/array/itemempty"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetArrayItemEmptyPreparer prepares the GetArrayItemEmpty request.
+    func (client ArrayClient) GetArrayItemEmptyPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/array/itemempty"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetArrayItemEmptySender sends the GetArrayItemEmpty request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) GetArrayItemEmptySender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetArrayItemEmptySender sends the GetArrayItemEmpty request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) GetArrayItemEmptySender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetArrayItemEmptyResponder handles the response to the GetArrayItemEmpty request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) GetArrayItemEmptyResponder(resp *http.Response) (result ListListString, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetArrayItemEmptyResponder handles the response to the GetArrayItemEmpty request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) GetArrayItemEmptyResponder(resp *http.Response) (result ListListString, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetArrayItemNull get an array of array of strings [['1', '2', '3'], null, ['7', '8', '9']]
 func (client ArrayClient) GetArrayItemNull(ctx context.Context) (result ListListString, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.GetArrayItemNull")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetArrayItemNullPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetArrayItemNull", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.GetArrayItemNull")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetArrayItemNullPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetArrayItemNull", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetArrayItemNullSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetArrayItemNull", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetArrayItemNullSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetArrayItemNull", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetArrayItemNullResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetArrayItemNull", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetArrayItemNullResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetArrayItemNull", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetArrayItemNullPreparer prepares the GetArrayItemNull request.
-func (client ArrayClient) GetArrayItemNullPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/array/itemnull"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetArrayItemNullPreparer prepares the GetArrayItemNull request.
+    func (client ArrayClient) GetArrayItemNullPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/array/itemnull"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetArrayItemNullSender sends the GetArrayItemNull request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) GetArrayItemNullSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetArrayItemNullSender sends the GetArrayItemNull request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) GetArrayItemNullSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetArrayItemNullResponder handles the response to the GetArrayItemNull request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) GetArrayItemNullResponder(resp *http.Response) (result ListListString, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetArrayItemNullResponder handles the response to the GetArrayItemNull request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) GetArrayItemNullResponder(resp *http.Response) (result ListListString, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetArrayNull get a null array
 func (client ArrayClient) GetArrayNull(ctx context.Context) (result ListListString, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.GetArrayNull")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetArrayNullPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetArrayNull", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.GetArrayNull")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetArrayNullPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetArrayNull", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetArrayNullSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetArrayNull", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetArrayNullSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetArrayNull", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetArrayNullResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetArrayNull", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetArrayNullResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetArrayNull", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetArrayNullPreparer prepares the GetArrayNull request.
-func (client ArrayClient) GetArrayNullPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/array/null"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetArrayNullPreparer prepares the GetArrayNull request.
+    func (client ArrayClient) GetArrayNullPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/array/null"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetArrayNullSender sends the GetArrayNull request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) GetArrayNullSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetArrayNullSender sends the GetArrayNull request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) GetArrayNullSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetArrayNullResponder handles the response to the GetArrayNull request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) GetArrayNullResponder(resp *http.Response) (result ListListString, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetArrayNullResponder handles the response to the GetArrayNull request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) GetArrayNullResponder(resp *http.Response) (result ListListString, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetArrayValid get an array of array of strings [['1', '2', '3'], ['4', '5', '6'], ['7', '8', '9']]
 func (client ArrayClient) GetArrayValid(ctx context.Context) (result ListListString, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.GetArrayValid")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetArrayValidPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetArrayValid", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.GetArrayValid")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetArrayValidPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetArrayValid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetArrayValidSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetArrayValid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetArrayValidSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetArrayValid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetArrayValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetArrayValid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetArrayValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetArrayValid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetArrayValidPreparer prepares the GetArrayValid request.
-func (client ArrayClient) GetArrayValidPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/array/valid"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetArrayValidPreparer prepares the GetArrayValid request.
+    func (client ArrayClient) GetArrayValidPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/array/valid"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetArrayValidSender sends the GetArrayValid request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) GetArrayValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetArrayValidSender sends the GetArrayValid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) GetArrayValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetArrayValidResponder handles the response to the GetArrayValid request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) GetArrayValidResponder(resp *http.Response) (result ListListString, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetArrayValidResponder handles the response to the GetArrayValid request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) GetArrayValidResponder(resp *http.Response) (result ListListString, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetBase64URL get array value ['a string that gets encoded with base64url', 'test string' 'Lorem ipsum'] with the
 // items base64url encoded
 func (client ArrayClient) GetBase64URL(ctx context.Context) (result ListBase64URL, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.GetBase64URL")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetBase64URLPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetBase64URL", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.GetBase64URL")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetBase64URLPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetBase64URL", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetBase64URLSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetBase64URL", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetBase64URLSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetBase64URL", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetBase64URLResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetBase64URL", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetBase64URLResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetBase64URL", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetBase64URLPreparer prepares the GetBase64URL request.
-func (client ArrayClient) GetBase64URLPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/prim/base64url/valid"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetBase64URLPreparer prepares the GetBase64URL request.
+    func (client ArrayClient) GetBase64URLPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/prim/base64url/valid"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetBase64URLSender sends the GetBase64URL request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) GetBase64URLSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetBase64URLSender sends the GetBase64URL request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) GetBase64URLSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetBase64URLResponder handles the response to the GetBase64URL request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) GetBase64URLResponder(resp *http.Response) (result ListBase64URL, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetBase64URLResponder handles the response to the GetBase64URL request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) GetBase64URLResponder(resp *http.Response) (result ListBase64URL, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetBooleanInvalidNull get boolean array value [true, null, false]
 func (client ArrayClient) GetBooleanInvalidNull(ctx context.Context) (result ListBool, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.GetBooleanInvalidNull")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetBooleanInvalidNullPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetBooleanInvalidNull", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.GetBooleanInvalidNull")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetBooleanInvalidNullPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetBooleanInvalidNull", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetBooleanInvalidNullSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetBooleanInvalidNull", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetBooleanInvalidNullSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetBooleanInvalidNull", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetBooleanInvalidNullResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetBooleanInvalidNull", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetBooleanInvalidNullResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetBooleanInvalidNull", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetBooleanInvalidNullPreparer prepares the GetBooleanInvalidNull request.
-func (client ArrayClient) GetBooleanInvalidNullPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/prim/boolean/true.null.false"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetBooleanInvalidNullPreparer prepares the GetBooleanInvalidNull request.
+    func (client ArrayClient) GetBooleanInvalidNullPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/prim/boolean/true.null.false"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetBooleanInvalidNullSender sends the GetBooleanInvalidNull request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) GetBooleanInvalidNullSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetBooleanInvalidNullSender sends the GetBooleanInvalidNull request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) GetBooleanInvalidNullSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetBooleanInvalidNullResponder handles the response to the GetBooleanInvalidNull request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) GetBooleanInvalidNullResponder(resp *http.Response) (result ListBool, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetBooleanInvalidNullResponder handles the response to the GetBooleanInvalidNull request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) GetBooleanInvalidNullResponder(resp *http.Response) (result ListBool, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetBooleanInvalidString get boolean array value [true, 'boolean', false]
 func (client ArrayClient) GetBooleanInvalidString(ctx context.Context) (result ListBool, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.GetBooleanInvalidString")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetBooleanInvalidStringPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetBooleanInvalidString", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.GetBooleanInvalidString")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetBooleanInvalidStringPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetBooleanInvalidString", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetBooleanInvalidStringSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetBooleanInvalidString", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetBooleanInvalidStringSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetBooleanInvalidString", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetBooleanInvalidStringResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetBooleanInvalidString", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetBooleanInvalidStringResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetBooleanInvalidString", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetBooleanInvalidStringPreparer prepares the GetBooleanInvalidString request.
-func (client ArrayClient) GetBooleanInvalidStringPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/prim/boolean/true.boolean.false"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetBooleanInvalidStringPreparer prepares the GetBooleanInvalidString request.
+    func (client ArrayClient) GetBooleanInvalidStringPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/prim/boolean/true.boolean.false"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetBooleanInvalidStringSender sends the GetBooleanInvalidString request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) GetBooleanInvalidStringSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetBooleanInvalidStringSender sends the GetBooleanInvalidString request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) GetBooleanInvalidStringSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetBooleanInvalidStringResponder handles the response to the GetBooleanInvalidString request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) GetBooleanInvalidStringResponder(resp *http.Response) (result ListBool, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetBooleanInvalidStringResponder handles the response to the GetBooleanInvalidString request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) GetBooleanInvalidStringResponder(resp *http.Response) (result ListBool, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetBooleanTfft get boolean array value [true, false, false, true]
 func (client ArrayClient) GetBooleanTfft(ctx context.Context) (result ListBool, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.GetBooleanTfft")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetBooleanTfftPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetBooleanTfft", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.GetBooleanTfft")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetBooleanTfftPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetBooleanTfft", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetBooleanTfftSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetBooleanTfft", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetBooleanTfftSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetBooleanTfft", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetBooleanTfftResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetBooleanTfft", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetBooleanTfftResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetBooleanTfft", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetBooleanTfftPreparer prepares the GetBooleanTfft request.
-func (client ArrayClient) GetBooleanTfftPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/prim/boolean/tfft"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetBooleanTfftPreparer prepares the GetBooleanTfft request.
+    func (client ArrayClient) GetBooleanTfftPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/prim/boolean/tfft"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetBooleanTfftSender sends the GetBooleanTfft request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) GetBooleanTfftSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetBooleanTfftSender sends the GetBooleanTfft request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) GetBooleanTfftSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetBooleanTfftResponder handles the response to the GetBooleanTfft request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) GetBooleanTfftResponder(resp *http.Response) (result ListBool, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetBooleanTfftResponder handles the response to the GetBooleanTfft request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) GetBooleanTfftResponder(resp *http.Response) (result ListBool, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetByteInvalidNull get byte array value [hex(AB, AC, AD), null] with the first item base64 encoded
 func (client ArrayClient) GetByteInvalidNull(ctx context.Context) (result ListByteArray, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.GetByteInvalidNull")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetByteInvalidNullPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetByteInvalidNull", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.GetByteInvalidNull")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetByteInvalidNullPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetByteInvalidNull", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetByteInvalidNullSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetByteInvalidNull", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetByteInvalidNullSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetByteInvalidNull", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetByteInvalidNullResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetByteInvalidNull", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetByteInvalidNullResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetByteInvalidNull", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetByteInvalidNullPreparer prepares the GetByteInvalidNull request.
-func (client ArrayClient) GetByteInvalidNullPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/prim/byte/invalidnull"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetByteInvalidNullPreparer prepares the GetByteInvalidNull request.
+    func (client ArrayClient) GetByteInvalidNullPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/prim/byte/invalidnull"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetByteInvalidNullSender sends the GetByteInvalidNull request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) GetByteInvalidNullSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetByteInvalidNullSender sends the GetByteInvalidNull request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) GetByteInvalidNullSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetByteInvalidNullResponder handles the response to the GetByteInvalidNull request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) GetByteInvalidNullResponder(resp *http.Response) (result ListByteArray, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetByteInvalidNullResponder handles the response to the GetByteInvalidNull request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) GetByteInvalidNullResponder(resp *http.Response) (result ListByteArray, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetByteValid get byte array value [hex(FF FF FF FA), hex(01 02 03), hex (25, 29, 43)] with each item encoded in
 // base64
 func (client ArrayClient) GetByteValid(ctx context.Context) (result ListByteArray, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.GetByteValid")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetByteValidPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetByteValid", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.GetByteValid")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetByteValidPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetByteValid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetByteValidSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetByteValid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetByteValidSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetByteValid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetByteValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetByteValid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetByteValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetByteValid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetByteValidPreparer prepares the GetByteValid request.
-func (client ArrayClient) GetByteValidPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/prim/byte/valid"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetByteValidPreparer prepares the GetByteValid request.
+    func (client ArrayClient) GetByteValidPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/prim/byte/valid"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetByteValidSender sends the GetByteValid request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) GetByteValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetByteValidSender sends the GetByteValid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) GetByteValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetByteValidResponder handles the response to the GetByteValid request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) GetByteValidResponder(resp *http.Response) (result ListByteArray, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetByteValidResponder handles the response to the GetByteValid request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) GetByteValidResponder(resp *http.Response) (result ListByteArray, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetComplexEmpty get empty array of complex type []
 func (client ArrayClient) GetComplexEmpty(ctx context.Context) (result ListProduct, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.GetComplexEmpty")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetComplexEmptyPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetComplexEmpty", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.GetComplexEmpty")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetComplexEmptyPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetComplexEmpty", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetComplexEmptySender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetComplexEmpty", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetComplexEmptySender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetComplexEmpty", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetComplexEmptyResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetComplexEmpty", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetComplexEmptyResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetComplexEmpty", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetComplexEmptyPreparer prepares the GetComplexEmpty request.
-func (client ArrayClient) GetComplexEmptyPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/complex/empty"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetComplexEmptyPreparer prepares the GetComplexEmpty request.
+    func (client ArrayClient) GetComplexEmptyPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/complex/empty"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetComplexEmptySender sends the GetComplexEmpty request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) GetComplexEmptySender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetComplexEmptySender sends the GetComplexEmpty request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) GetComplexEmptySender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetComplexEmptyResponder handles the response to the GetComplexEmpty request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) GetComplexEmptyResponder(resp *http.Response) (result ListProduct, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetComplexEmptyResponder handles the response to the GetComplexEmpty request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) GetComplexEmptyResponder(resp *http.Response) (result ListProduct, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetComplexItemEmpty get array of complex type with empty item [{'integer': 1 'string': '2'}, {}, {'integer': 5,
 // 'string': '6'}]
 func (client ArrayClient) GetComplexItemEmpty(ctx context.Context) (result ListProduct, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.GetComplexItemEmpty")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetComplexItemEmptyPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetComplexItemEmpty", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.GetComplexItemEmpty")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetComplexItemEmptyPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetComplexItemEmpty", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetComplexItemEmptySender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetComplexItemEmpty", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetComplexItemEmptySender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetComplexItemEmpty", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetComplexItemEmptyResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetComplexItemEmpty", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetComplexItemEmptyResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetComplexItemEmpty", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetComplexItemEmptyPreparer prepares the GetComplexItemEmpty request.
-func (client ArrayClient) GetComplexItemEmptyPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/complex/itemempty"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetComplexItemEmptyPreparer prepares the GetComplexItemEmpty request.
+    func (client ArrayClient) GetComplexItemEmptyPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/complex/itemempty"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetComplexItemEmptySender sends the GetComplexItemEmpty request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) GetComplexItemEmptySender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetComplexItemEmptySender sends the GetComplexItemEmpty request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) GetComplexItemEmptySender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetComplexItemEmptyResponder handles the response to the GetComplexItemEmpty request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) GetComplexItemEmptyResponder(resp *http.Response) (result ListProduct, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetComplexItemEmptyResponder handles the response to the GetComplexItemEmpty request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) GetComplexItemEmptyResponder(resp *http.Response) (result ListProduct, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetComplexItemNull get array of complex type with null item [{'integer': 1 'string': '2'}, null, {'integer': 5,
 // 'string': '6'}]
 func (client ArrayClient) GetComplexItemNull(ctx context.Context) (result ListProduct, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.GetComplexItemNull")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetComplexItemNullPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetComplexItemNull", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.GetComplexItemNull")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetComplexItemNullPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetComplexItemNull", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetComplexItemNullSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetComplexItemNull", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetComplexItemNullSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetComplexItemNull", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetComplexItemNullResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetComplexItemNull", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetComplexItemNullResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetComplexItemNull", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetComplexItemNullPreparer prepares the GetComplexItemNull request.
-func (client ArrayClient) GetComplexItemNullPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/complex/itemnull"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetComplexItemNullPreparer prepares the GetComplexItemNull request.
+    func (client ArrayClient) GetComplexItemNullPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/complex/itemnull"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetComplexItemNullSender sends the GetComplexItemNull request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) GetComplexItemNullSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetComplexItemNullSender sends the GetComplexItemNull request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) GetComplexItemNullSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetComplexItemNullResponder handles the response to the GetComplexItemNull request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) GetComplexItemNullResponder(resp *http.Response) (result ListProduct, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetComplexItemNullResponder handles the response to the GetComplexItemNull request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) GetComplexItemNullResponder(resp *http.Response) (result ListProduct, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetComplexNull get array of complex type null value
 func (client ArrayClient) GetComplexNull(ctx context.Context) (result ListProduct, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.GetComplexNull")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetComplexNullPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetComplexNull", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.GetComplexNull")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetComplexNullPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetComplexNull", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetComplexNullSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetComplexNull", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetComplexNullSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetComplexNull", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetComplexNullResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetComplexNull", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetComplexNullResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetComplexNull", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetComplexNullPreparer prepares the GetComplexNull request.
-func (client ArrayClient) GetComplexNullPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/complex/null"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetComplexNullPreparer prepares the GetComplexNull request.
+    func (client ArrayClient) GetComplexNullPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/complex/null"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetComplexNullSender sends the GetComplexNull request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) GetComplexNullSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetComplexNullSender sends the GetComplexNull request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) GetComplexNullSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetComplexNullResponder handles the response to the GetComplexNull request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) GetComplexNullResponder(resp *http.Response) (result ListProduct, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetComplexNullResponder handles the response to the GetComplexNull request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) GetComplexNullResponder(resp *http.Response) (result ListProduct, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetComplexValid get array of complex type with [{'integer': 1 'string': '2'}, {'integer': 3, 'string': '4'},
 // {'integer': 5, 'string': '6'}]
 func (client ArrayClient) GetComplexValid(ctx context.Context) (result ListProduct, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.GetComplexValid")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetComplexValidPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetComplexValid", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.GetComplexValid")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetComplexValidPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetComplexValid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetComplexValidSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetComplexValid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetComplexValidSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetComplexValid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetComplexValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetComplexValid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetComplexValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetComplexValid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetComplexValidPreparer prepares the GetComplexValid request.
-func (client ArrayClient) GetComplexValidPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/complex/valid"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetComplexValidPreparer prepares the GetComplexValid request.
+    func (client ArrayClient) GetComplexValidPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/complex/valid"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetComplexValidSender sends the GetComplexValid request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) GetComplexValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetComplexValidSender sends the GetComplexValid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) GetComplexValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetComplexValidResponder handles the response to the GetComplexValid request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) GetComplexValidResponder(resp *http.Response) (result ListProduct, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetComplexValidResponder handles the response to the GetComplexValid request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) GetComplexValidResponder(resp *http.Response) (result ListProduct, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetDateInvalidChars get date array value ['2011-03-22', 'date']
 func (client ArrayClient) GetDateInvalidChars(ctx context.Context) (result ListDate, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.GetDateInvalidChars")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetDateInvalidCharsPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDateInvalidChars", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.GetDateInvalidChars")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetDateInvalidCharsPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDateInvalidChars", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetDateInvalidCharsSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDateInvalidChars", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetDateInvalidCharsSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDateInvalidChars", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetDateInvalidCharsResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDateInvalidChars", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetDateInvalidCharsResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDateInvalidChars", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetDateInvalidCharsPreparer prepares the GetDateInvalidChars request.
-func (client ArrayClient) GetDateInvalidCharsPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/prim/date/invalidchars"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetDateInvalidCharsPreparer prepares the GetDateInvalidChars request.
+    func (client ArrayClient) GetDateInvalidCharsPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/prim/date/invalidchars"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetDateInvalidCharsSender sends the GetDateInvalidChars request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) GetDateInvalidCharsSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetDateInvalidCharsSender sends the GetDateInvalidChars request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) GetDateInvalidCharsSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetDateInvalidCharsResponder handles the response to the GetDateInvalidChars request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) GetDateInvalidCharsResponder(resp *http.Response) (result ListDate, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetDateInvalidCharsResponder handles the response to the GetDateInvalidChars request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) GetDateInvalidCharsResponder(resp *http.Response) (result ListDate, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetDateInvalidNull get date array value ['2012-01-01', null, '1776-07-04']
 func (client ArrayClient) GetDateInvalidNull(ctx context.Context) (result ListDate, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.GetDateInvalidNull")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetDateInvalidNullPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDateInvalidNull", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.GetDateInvalidNull")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetDateInvalidNullPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDateInvalidNull", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetDateInvalidNullSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDateInvalidNull", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetDateInvalidNullSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDateInvalidNull", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetDateInvalidNullResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDateInvalidNull", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetDateInvalidNullResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDateInvalidNull", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetDateInvalidNullPreparer prepares the GetDateInvalidNull request.
-func (client ArrayClient) GetDateInvalidNullPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/prim/date/invalidnull"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetDateInvalidNullPreparer prepares the GetDateInvalidNull request.
+    func (client ArrayClient) GetDateInvalidNullPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/prim/date/invalidnull"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetDateInvalidNullSender sends the GetDateInvalidNull request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) GetDateInvalidNullSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetDateInvalidNullSender sends the GetDateInvalidNull request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) GetDateInvalidNullSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetDateInvalidNullResponder handles the response to the GetDateInvalidNull request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) GetDateInvalidNullResponder(resp *http.Response) (result ListDate, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetDateInvalidNullResponder handles the response to the GetDateInvalidNull request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) GetDateInvalidNullResponder(resp *http.Response) (result ListDate, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetDateTimeInvalidChars get date array value ['2000-12-01t00:00:01z', 'date-time']
 func (client ArrayClient) GetDateTimeInvalidChars(ctx context.Context) (result ListDateTime, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.GetDateTimeInvalidChars")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetDateTimeInvalidCharsPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDateTimeInvalidChars", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.GetDateTimeInvalidChars")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetDateTimeInvalidCharsPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDateTimeInvalidChars", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetDateTimeInvalidCharsSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDateTimeInvalidChars", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetDateTimeInvalidCharsSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDateTimeInvalidChars", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetDateTimeInvalidCharsResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDateTimeInvalidChars", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetDateTimeInvalidCharsResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDateTimeInvalidChars", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetDateTimeInvalidCharsPreparer prepares the GetDateTimeInvalidChars request.
-func (client ArrayClient) GetDateTimeInvalidCharsPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/prim/date-time/invalidchars"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetDateTimeInvalidCharsPreparer prepares the GetDateTimeInvalidChars request.
+    func (client ArrayClient) GetDateTimeInvalidCharsPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/prim/date-time/invalidchars"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetDateTimeInvalidCharsSender sends the GetDateTimeInvalidChars request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) GetDateTimeInvalidCharsSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetDateTimeInvalidCharsSender sends the GetDateTimeInvalidChars request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) GetDateTimeInvalidCharsSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetDateTimeInvalidCharsResponder handles the response to the GetDateTimeInvalidChars request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) GetDateTimeInvalidCharsResponder(resp *http.Response) (result ListDateTime, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetDateTimeInvalidCharsResponder handles the response to the GetDateTimeInvalidChars request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) GetDateTimeInvalidCharsResponder(resp *http.Response) (result ListDateTime, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetDateTimeInvalidNull get date array value ['2000-12-01t00:00:01z', null]
 func (client ArrayClient) GetDateTimeInvalidNull(ctx context.Context) (result ListDateTime, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.GetDateTimeInvalidNull")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetDateTimeInvalidNullPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDateTimeInvalidNull", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.GetDateTimeInvalidNull")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetDateTimeInvalidNullPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDateTimeInvalidNull", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetDateTimeInvalidNullSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDateTimeInvalidNull", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetDateTimeInvalidNullSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDateTimeInvalidNull", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetDateTimeInvalidNullResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDateTimeInvalidNull", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetDateTimeInvalidNullResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDateTimeInvalidNull", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetDateTimeInvalidNullPreparer prepares the GetDateTimeInvalidNull request.
-func (client ArrayClient) GetDateTimeInvalidNullPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/prim/date-time/invalidnull"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetDateTimeInvalidNullPreparer prepares the GetDateTimeInvalidNull request.
+    func (client ArrayClient) GetDateTimeInvalidNullPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/prim/date-time/invalidnull"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetDateTimeInvalidNullSender sends the GetDateTimeInvalidNull request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) GetDateTimeInvalidNullSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetDateTimeInvalidNullSender sends the GetDateTimeInvalidNull request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) GetDateTimeInvalidNullSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetDateTimeInvalidNullResponder handles the response to the GetDateTimeInvalidNull request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) GetDateTimeInvalidNullResponder(resp *http.Response) (result ListDateTime, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetDateTimeInvalidNullResponder handles the response to the GetDateTimeInvalidNull request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) GetDateTimeInvalidNullResponder(resp *http.Response) (result ListDateTime, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetDateTimeRfc1123Valid get date-time array value ['Fri, 01 Dec 2000 00:00:01 GMT', 'Wed, 02 Jan 1980 00:11:35 GMT',
 // 'Wed, 12 Oct 1492 10:15:01 GMT']
 func (client ArrayClient) GetDateTimeRfc1123Valid(ctx context.Context) (result ListDateTimeRfc1123, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.GetDateTimeRfc1123Valid")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetDateTimeRfc1123ValidPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDateTimeRfc1123Valid", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.GetDateTimeRfc1123Valid")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetDateTimeRfc1123ValidPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDateTimeRfc1123Valid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetDateTimeRfc1123ValidSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDateTimeRfc1123Valid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetDateTimeRfc1123ValidSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDateTimeRfc1123Valid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetDateTimeRfc1123ValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDateTimeRfc1123Valid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetDateTimeRfc1123ValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDateTimeRfc1123Valid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetDateTimeRfc1123ValidPreparer prepares the GetDateTimeRfc1123Valid request.
-func (client ArrayClient) GetDateTimeRfc1123ValidPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/prim/date-time-rfc1123/valid"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetDateTimeRfc1123ValidPreparer prepares the GetDateTimeRfc1123Valid request.
+    func (client ArrayClient) GetDateTimeRfc1123ValidPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/prim/date-time-rfc1123/valid"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetDateTimeRfc1123ValidSender sends the GetDateTimeRfc1123Valid request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) GetDateTimeRfc1123ValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetDateTimeRfc1123ValidSender sends the GetDateTimeRfc1123Valid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) GetDateTimeRfc1123ValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetDateTimeRfc1123ValidResponder handles the response to the GetDateTimeRfc1123Valid request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) GetDateTimeRfc1123ValidResponder(resp *http.Response) (result ListDateTimeRfc1123, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetDateTimeRfc1123ValidResponder handles the response to the GetDateTimeRfc1123Valid request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) GetDateTimeRfc1123ValidResponder(resp *http.Response) (result ListDateTimeRfc1123, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetDateTimeValid get date-time array value ['2000-12-01t00:00:01z', '1980-01-02T00:11:35+01:00',
 // '1492-10-12T10:15:01-08:00']
 func (client ArrayClient) GetDateTimeValid(ctx context.Context) (result ListDateTime, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.GetDateTimeValid")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetDateTimeValidPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDateTimeValid", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.GetDateTimeValid")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetDateTimeValidPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDateTimeValid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetDateTimeValidSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDateTimeValid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetDateTimeValidSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDateTimeValid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetDateTimeValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDateTimeValid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetDateTimeValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDateTimeValid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetDateTimeValidPreparer prepares the GetDateTimeValid request.
-func (client ArrayClient) GetDateTimeValidPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/prim/date-time/valid"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetDateTimeValidPreparer prepares the GetDateTimeValid request.
+    func (client ArrayClient) GetDateTimeValidPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/prim/date-time/valid"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetDateTimeValidSender sends the GetDateTimeValid request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) GetDateTimeValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetDateTimeValidSender sends the GetDateTimeValid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) GetDateTimeValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetDateTimeValidResponder handles the response to the GetDateTimeValid request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) GetDateTimeValidResponder(resp *http.Response) (result ListDateTime, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetDateTimeValidResponder handles the response to the GetDateTimeValid request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) GetDateTimeValidResponder(resp *http.Response) (result ListDateTime, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetDateValid get integer array value ['2000-12-01', '1980-01-02', '1492-10-12']
 func (client ArrayClient) GetDateValid(ctx context.Context) (result ListDate, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.GetDateValid")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetDateValidPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDateValid", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.GetDateValid")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetDateValidPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDateValid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetDateValidSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDateValid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetDateValidSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDateValid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetDateValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDateValid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetDateValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDateValid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetDateValidPreparer prepares the GetDateValid request.
-func (client ArrayClient) GetDateValidPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/prim/date/valid"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetDateValidPreparer prepares the GetDateValid request.
+    func (client ArrayClient) GetDateValidPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/prim/date/valid"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetDateValidSender sends the GetDateValid request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) GetDateValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetDateValidSender sends the GetDateValid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) GetDateValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetDateValidResponder handles the response to the GetDateValid request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) GetDateValidResponder(resp *http.Response) (result ListDate, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetDateValidResponder handles the response to the GetDateValid request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) GetDateValidResponder(resp *http.Response) (result ListDate, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetDictionaryEmpty get an array of Dictionaries of type <string, string> with value []
 func (client ArrayClient) GetDictionaryEmpty(ctx context.Context) (result ListSetString, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.GetDictionaryEmpty")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetDictionaryEmptyPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDictionaryEmpty", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.GetDictionaryEmpty")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetDictionaryEmptyPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDictionaryEmpty", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetDictionaryEmptySender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDictionaryEmpty", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetDictionaryEmptySender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDictionaryEmpty", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetDictionaryEmptyResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDictionaryEmpty", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetDictionaryEmptyResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDictionaryEmpty", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetDictionaryEmptyPreparer prepares the GetDictionaryEmpty request.
-func (client ArrayClient) GetDictionaryEmptyPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/dictionary/empty"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetDictionaryEmptyPreparer prepares the GetDictionaryEmpty request.
+    func (client ArrayClient) GetDictionaryEmptyPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/dictionary/empty"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetDictionaryEmptySender sends the GetDictionaryEmpty request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) GetDictionaryEmptySender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetDictionaryEmptySender sends the GetDictionaryEmpty request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) GetDictionaryEmptySender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetDictionaryEmptyResponder handles the response to the GetDictionaryEmpty request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) GetDictionaryEmptyResponder(resp *http.Response) (result ListSetString, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetDictionaryEmptyResponder handles the response to the GetDictionaryEmpty request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) GetDictionaryEmptyResponder(resp *http.Response) (result ListSetString, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetDictionaryItemEmpty get an array of Dictionaries of type <string, string> with value [{'1': 'one', '2': 'two',
 // '3': 'three'}, {}, {'7': 'seven', '8': 'eight', '9': 'nine'}]
 func (client ArrayClient) GetDictionaryItemEmpty(ctx context.Context) (result ListSetString, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.GetDictionaryItemEmpty")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetDictionaryItemEmptyPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDictionaryItemEmpty", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.GetDictionaryItemEmpty")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetDictionaryItemEmptyPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDictionaryItemEmpty", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetDictionaryItemEmptySender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDictionaryItemEmpty", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetDictionaryItemEmptySender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDictionaryItemEmpty", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetDictionaryItemEmptyResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDictionaryItemEmpty", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetDictionaryItemEmptyResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDictionaryItemEmpty", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetDictionaryItemEmptyPreparer prepares the GetDictionaryItemEmpty request.
-func (client ArrayClient) GetDictionaryItemEmptyPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/dictionary/itemempty"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetDictionaryItemEmptyPreparer prepares the GetDictionaryItemEmpty request.
+    func (client ArrayClient) GetDictionaryItemEmptyPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/dictionary/itemempty"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetDictionaryItemEmptySender sends the GetDictionaryItemEmpty request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) GetDictionaryItemEmptySender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetDictionaryItemEmptySender sends the GetDictionaryItemEmpty request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) GetDictionaryItemEmptySender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetDictionaryItemEmptyResponder handles the response to the GetDictionaryItemEmpty request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) GetDictionaryItemEmptyResponder(resp *http.Response) (result ListSetString, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetDictionaryItemEmptyResponder handles the response to the GetDictionaryItemEmpty request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) GetDictionaryItemEmptyResponder(resp *http.Response) (result ListSetString, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetDictionaryItemNull get an array of Dictionaries of type <string, string> with value [{'1': 'one', '2': 'two',
 // '3': 'three'}, null, {'7': 'seven', '8': 'eight', '9': 'nine'}]
 func (client ArrayClient) GetDictionaryItemNull(ctx context.Context) (result ListSetString, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.GetDictionaryItemNull")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetDictionaryItemNullPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDictionaryItemNull", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.GetDictionaryItemNull")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetDictionaryItemNullPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDictionaryItemNull", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetDictionaryItemNullSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDictionaryItemNull", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetDictionaryItemNullSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDictionaryItemNull", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetDictionaryItemNullResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDictionaryItemNull", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetDictionaryItemNullResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDictionaryItemNull", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetDictionaryItemNullPreparer prepares the GetDictionaryItemNull request.
-func (client ArrayClient) GetDictionaryItemNullPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/dictionary/itemnull"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetDictionaryItemNullPreparer prepares the GetDictionaryItemNull request.
+    func (client ArrayClient) GetDictionaryItemNullPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/dictionary/itemnull"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetDictionaryItemNullSender sends the GetDictionaryItemNull request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) GetDictionaryItemNullSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetDictionaryItemNullSender sends the GetDictionaryItemNull request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) GetDictionaryItemNullSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetDictionaryItemNullResponder handles the response to the GetDictionaryItemNull request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) GetDictionaryItemNullResponder(resp *http.Response) (result ListSetString, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetDictionaryItemNullResponder handles the response to the GetDictionaryItemNull request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) GetDictionaryItemNullResponder(resp *http.Response) (result ListSetString, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetDictionaryNull get an array of Dictionaries with value null
 func (client ArrayClient) GetDictionaryNull(ctx context.Context) (result ListSetString, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.GetDictionaryNull")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetDictionaryNullPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDictionaryNull", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.GetDictionaryNull")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetDictionaryNullPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDictionaryNull", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetDictionaryNullSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDictionaryNull", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetDictionaryNullSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDictionaryNull", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetDictionaryNullResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDictionaryNull", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetDictionaryNullResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDictionaryNull", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetDictionaryNullPreparer prepares the GetDictionaryNull request.
-func (client ArrayClient) GetDictionaryNullPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/dictionary/null"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetDictionaryNullPreparer prepares the GetDictionaryNull request.
+    func (client ArrayClient) GetDictionaryNullPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/dictionary/null"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetDictionaryNullSender sends the GetDictionaryNull request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) GetDictionaryNullSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetDictionaryNullSender sends the GetDictionaryNull request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) GetDictionaryNullSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetDictionaryNullResponder handles the response to the GetDictionaryNull request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) GetDictionaryNullResponder(resp *http.Response) (result ListSetString, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetDictionaryNullResponder handles the response to the GetDictionaryNull request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) GetDictionaryNullResponder(resp *http.Response) (result ListSetString, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetDictionaryValid get an array of Dictionaries of type <string, string> with value [{'1': 'one', '2': 'two', '3':
 // 'three'}, {'4': 'four', '5': 'five', '6': 'six'}, {'7': 'seven', '8': 'eight', '9': 'nine'}]
 func (client ArrayClient) GetDictionaryValid(ctx context.Context) (result ListSetString, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.GetDictionaryValid")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetDictionaryValidPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDictionaryValid", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.GetDictionaryValid")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetDictionaryValidPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDictionaryValid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetDictionaryValidSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDictionaryValid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetDictionaryValidSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDictionaryValid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetDictionaryValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDictionaryValid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetDictionaryValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDictionaryValid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetDictionaryValidPreparer prepares the GetDictionaryValid request.
-func (client ArrayClient) GetDictionaryValidPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/dictionary/valid"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetDictionaryValidPreparer prepares the GetDictionaryValid request.
+    func (client ArrayClient) GetDictionaryValidPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/dictionary/valid"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetDictionaryValidSender sends the GetDictionaryValid request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) GetDictionaryValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetDictionaryValidSender sends the GetDictionaryValid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) GetDictionaryValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetDictionaryValidResponder handles the response to the GetDictionaryValid request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) GetDictionaryValidResponder(resp *http.Response) (result ListSetString, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetDictionaryValidResponder handles the response to the GetDictionaryValid request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) GetDictionaryValidResponder(resp *http.Response) (result ListSetString, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetDoubleInvalidNull get float array value [0.0, null, -1.2e20]
 func (client ArrayClient) GetDoubleInvalidNull(ctx context.Context) (result ListFloat64, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.GetDoubleInvalidNull")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetDoubleInvalidNullPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDoubleInvalidNull", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.GetDoubleInvalidNull")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetDoubleInvalidNullPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDoubleInvalidNull", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetDoubleInvalidNullSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDoubleInvalidNull", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetDoubleInvalidNullSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDoubleInvalidNull", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetDoubleInvalidNullResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDoubleInvalidNull", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetDoubleInvalidNullResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDoubleInvalidNull", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetDoubleInvalidNullPreparer prepares the GetDoubleInvalidNull request.
-func (client ArrayClient) GetDoubleInvalidNullPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/prim/double/0.0-null-1.2e20"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetDoubleInvalidNullPreparer prepares the GetDoubleInvalidNull request.
+    func (client ArrayClient) GetDoubleInvalidNullPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/prim/double/0.0-null-1.2e20"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetDoubleInvalidNullSender sends the GetDoubleInvalidNull request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) GetDoubleInvalidNullSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetDoubleInvalidNullSender sends the GetDoubleInvalidNull request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) GetDoubleInvalidNullSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetDoubleInvalidNullResponder handles the response to the GetDoubleInvalidNull request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) GetDoubleInvalidNullResponder(resp *http.Response) (result ListFloat64, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetDoubleInvalidNullResponder handles the response to the GetDoubleInvalidNull request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) GetDoubleInvalidNullResponder(resp *http.Response) (result ListFloat64, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetDoubleInvalidString get boolean array value [1.0, 'number', 0.0]
 func (client ArrayClient) GetDoubleInvalidString(ctx context.Context) (result ListFloat64, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.GetDoubleInvalidString")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetDoubleInvalidStringPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDoubleInvalidString", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.GetDoubleInvalidString")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetDoubleInvalidStringPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDoubleInvalidString", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetDoubleInvalidStringSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDoubleInvalidString", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetDoubleInvalidStringSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDoubleInvalidString", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetDoubleInvalidStringResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDoubleInvalidString", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetDoubleInvalidStringResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDoubleInvalidString", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetDoubleInvalidStringPreparer prepares the GetDoubleInvalidString request.
-func (client ArrayClient) GetDoubleInvalidStringPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/prim/double/1.number.0"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetDoubleInvalidStringPreparer prepares the GetDoubleInvalidString request.
+    func (client ArrayClient) GetDoubleInvalidStringPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/prim/double/1.number.0"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetDoubleInvalidStringSender sends the GetDoubleInvalidString request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) GetDoubleInvalidStringSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetDoubleInvalidStringSender sends the GetDoubleInvalidString request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) GetDoubleInvalidStringSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetDoubleInvalidStringResponder handles the response to the GetDoubleInvalidString request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) GetDoubleInvalidStringResponder(resp *http.Response) (result ListFloat64, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetDoubleInvalidStringResponder handles the response to the GetDoubleInvalidString request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) GetDoubleInvalidStringResponder(resp *http.Response) (result ListFloat64, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetDoubleValid get float array value [0, -0.01, 1.2e20]
 func (client ArrayClient) GetDoubleValid(ctx context.Context) (result ListFloat64, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.GetDoubleValid")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetDoubleValidPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDoubleValid", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.GetDoubleValid")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetDoubleValidPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDoubleValid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetDoubleValidSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDoubleValid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetDoubleValidSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDoubleValid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetDoubleValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDoubleValid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetDoubleValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDoubleValid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetDoubleValidPreparer prepares the GetDoubleValid request.
-func (client ArrayClient) GetDoubleValidPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/prim/double/0--0.01-1.2e20"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetDoubleValidPreparer prepares the GetDoubleValid request.
+    func (client ArrayClient) GetDoubleValidPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/prim/double/0--0.01-1.2e20"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetDoubleValidSender sends the GetDoubleValid request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) GetDoubleValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetDoubleValidSender sends the GetDoubleValid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) GetDoubleValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetDoubleValidResponder handles the response to the GetDoubleValid request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) GetDoubleValidResponder(resp *http.Response) (result ListFloat64, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetDoubleValidResponder handles the response to the GetDoubleValid request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) GetDoubleValidResponder(resp *http.Response) (result ListFloat64, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetDurationValid get duration array value ['P123DT22H14M12.011S', 'P5DT1H0M0S']
 func (client ArrayClient) GetDurationValid(ctx context.Context) (result ListTimeSpan, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.GetDurationValid")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetDurationValidPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDurationValid", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.GetDurationValid")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetDurationValidPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDurationValid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetDurationValidSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDurationValid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetDurationValidSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDurationValid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetDurationValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDurationValid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetDurationValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDurationValid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetDurationValidPreparer prepares the GetDurationValid request.
-func (client ArrayClient) GetDurationValidPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/prim/duration/valid"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetDurationValidPreparer prepares the GetDurationValid request.
+    func (client ArrayClient) GetDurationValidPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/prim/duration/valid"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetDurationValidSender sends the GetDurationValid request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) GetDurationValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetDurationValidSender sends the GetDurationValid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) GetDurationValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetDurationValidResponder handles the response to the GetDurationValid request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) GetDurationValidResponder(resp *http.Response) (result ListTimeSpan, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetDurationValidResponder handles the response to the GetDurationValid request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) GetDurationValidResponder(resp *http.Response) (result ListTimeSpan, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetEmpty get empty array value []
 func (client ArrayClient) GetEmpty(ctx context.Context) (result ListInt32, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.GetEmpty")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetEmptyPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetEmpty", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.GetEmpty")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetEmptyPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetEmpty", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetEmptySender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetEmpty", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetEmptySender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetEmpty", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetEmptyResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetEmpty", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetEmptyResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetEmpty", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetEmptyPreparer prepares the GetEmpty request.
-func (client ArrayClient) GetEmptyPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/empty"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetEmptyPreparer prepares the GetEmpty request.
+    func (client ArrayClient) GetEmptyPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/empty"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetEmptySender sends the GetEmpty request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) GetEmptySender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetEmptySender sends the GetEmpty request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) GetEmptySender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetEmptyResponder handles the response to the GetEmpty request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) GetEmptyResponder(resp *http.Response) (result ListInt32, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetEmptyResponder handles the response to the GetEmpty request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) GetEmptyResponder(resp *http.Response) (result ListInt32, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetEnumValid get enum array value ['foo1', 'foo2', 'foo3']
 func (client ArrayClient) GetEnumValid(ctx context.Context) (result ListString, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.GetEnumValid")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetEnumValidPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetEnumValid", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.GetEnumValid")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetEnumValidPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetEnumValid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetEnumValidSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetEnumValid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetEnumValidSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetEnumValid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetEnumValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetEnumValid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetEnumValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetEnumValid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetEnumValidPreparer prepares the GetEnumValid request.
-func (client ArrayClient) GetEnumValidPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/prim/enum/foo1.foo2.foo3"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetEnumValidPreparer prepares the GetEnumValid request.
+    func (client ArrayClient) GetEnumValidPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/prim/enum/foo1.foo2.foo3"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetEnumValidSender sends the GetEnumValid request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) GetEnumValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetEnumValidSender sends the GetEnumValid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) GetEnumValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetEnumValidResponder handles the response to the GetEnumValid request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) GetEnumValidResponder(resp *http.Response) (result ListString, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetEnumValidResponder handles the response to the GetEnumValid request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) GetEnumValidResponder(resp *http.Response) (result ListString, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetFloatInvalidNull get float array value [0.0, null, -1.2e20]
 func (client ArrayClient) GetFloatInvalidNull(ctx context.Context) (result ListFloat64, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.GetFloatInvalidNull")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetFloatInvalidNullPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetFloatInvalidNull", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.GetFloatInvalidNull")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetFloatInvalidNullPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetFloatInvalidNull", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetFloatInvalidNullSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetFloatInvalidNull", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetFloatInvalidNullSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetFloatInvalidNull", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetFloatInvalidNullResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetFloatInvalidNull", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetFloatInvalidNullResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetFloatInvalidNull", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetFloatInvalidNullPreparer prepares the GetFloatInvalidNull request.
-func (client ArrayClient) GetFloatInvalidNullPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/prim/float/0.0-null-1.2e20"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetFloatInvalidNullPreparer prepares the GetFloatInvalidNull request.
+    func (client ArrayClient) GetFloatInvalidNullPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/prim/float/0.0-null-1.2e20"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetFloatInvalidNullSender sends the GetFloatInvalidNull request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) GetFloatInvalidNullSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetFloatInvalidNullSender sends the GetFloatInvalidNull request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) GetFloatInvalidNullSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetFloatInvalidNullResponder handles the response to the GetFloatInvalidNull request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) GetFloatInvalidNullResponder(resp *http.Response) (result ListFloat64, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetFloatInvalidNullResponder handles the response to the GetFloatInvalidNull request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) GetFloatInvalidNullResponder(resp *http.Response) (result ListFloat64, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetFloatInvalidString get boolean array value [1.0, 'number', 0.0]
 func (client ArrayClient) GetFloatInvalidString(ctx context.Context) (result ListFloat64, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.GetFloatInvalidString")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetFloatInvalidStringPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetFloatInvalidString", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.GetFloatInvalidString")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetFloatInvalidStringPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetFloatInvalidString", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetFloatInvalidStringSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetFloatInvalidString", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetFloatInvalidStringSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetFloatInvalidString", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetFloatInvalidStringResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetFloatInvalidString", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetFloatInvalidStringResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetFloatInvalidString", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetFloatInvalidStringPreparer prepares the GetFloatInvalidString request.
-func (client ArrayClient) GetFloatInvalidStringPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/prim/float/1.number.0"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetFloatInvalidStringPreparer prepares the GetFloatInvalidString request.
+    func (client ArrayClient) GetFloatInvalidStringPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/prim/float/1.number.0"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetFloatInvalidStringSender sends the GetFloatInvalidString request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) GetFloatInvalidStringSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetFloatInvalidStringSender sends the GetFloatInvalidString request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) GetFloatInvalidStringSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetFloatInvalidStringResponder handles the response to the GetFloatInvalidString request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) GetFloatInvalidStringResponder(resp *http.Response) (result ListFloat64, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetFloatInvalidStringResponder handles the response to the GetFloatInvalidString request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) GetFloatInvalidStringResponder(resp *http.Response) (result ListFloat64, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetFloatValid get float array value [0, -0.01, 1.2e20]
 func (client ArrayClient) GetFloatValid(ctx context.Context) (result ListFloat64, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.GetFloatValid")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetFloatValidPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetFloatValid", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.GetFloatValid")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetFloatValidPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetFloatValid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetFloatValidSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetFloatValid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetFloatValidSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetFloatValid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetFloatValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetFloatValid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetFloatValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetFloatValid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetFloatValidPreparer prepares the GetFloatValid request.
-func (client ArrayClient) GetFloatValidPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/prim/float/0--0.01-1.2e20"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetFloatValidPreparer prepares the GetFloatValid request.
+    func (client ArrayClient) GetFloatValidPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/prim/float/0--0.01-1.2e20"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetFloatValidSender sends the GetFloatValid request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) GetFloatValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetFloatValidSender sends the GetFloatValid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) GetFloatValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetFloatValidResponder handles the response to the GetFloatValid request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) GetFloatValidResponder(resp *http.Response) (result ListFloat64, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetFloatValidResponder handles the response to the GetFloatValid request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) GetFloatValidResponder(resp *http.Response) (result ListFloat64, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetIntegerValid get integer array value [1, -1, 3, 300]
 func (client ArrayClient) GetIntegerValid(ctx context.Context) (result ListInt32, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.GetIntegerValid")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetIntegerValidPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetIntegerValid", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.GetIntegerValid")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetIntegerValidPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetIntegerValid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetIntegerValidSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetIntegerValid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetIntegerValidSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetIntegerValid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetIntegerValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetIntegerValid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetIntegerValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetIntegerValid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetIntegerValidPreparer prepares the GetIntegerValid request.
-func (client ArrayClient) GetIntegerValidPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/prim/integer/1.-1.3.300"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetIntegerValidPreparer prepares the GetIntegerValid request.
+    func (client ArrayClient) GetIntegerValidPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/prim/integer/1.-1.3.300"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetIntegerValidSender sends the GetIntegerValid request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) GetIntegerValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetIntegerValidSender sends the GetIntegerValid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) GetIntegerValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetIntegerValidResponder handles the response to the GetIntegerValid request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) GetIntegerValidResponder(resp *http.Response) (result ListInt32, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetIntegerValidResponder handles the response to the GetIntegerValid request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) GetIntegerValidResponder(resp *http.Response) (result ListInt32, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetIntInvalidNull get integer array value [1, null, 0]
 func (client ArrayClient) GetIntInvalidNull(ctx context.Context) (result ListInt32, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.GetIntInvalidNull")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetIntInvalidNullPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetIntInvalidNull", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.GetIntInvalidNull")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetIntInvalidNullPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetIntInvalidNull", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetIntInvalidNullSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetIntInvalidNull", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetIntInvalidNullSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetIntInvalidNull", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetIntInvalidNullResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetIntInvalidNull", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetIntInvalidNullResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetIntInvalidNull", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetIntInvalidNullPreparer prepares the GetIntInvalidNull request.
-func (client ArrayClient) GetIntInvalidNullPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/prim/integer/1.null.zero"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetIntInvalidNullPreparer prepares the GetIntInvalidNull request.
+    func (client ArrayClient) GetIntInvalidNullPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/prim/integer/1.null.zero"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetIntInvalidNullSender sends the GetIntInvalidNull request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) GetIntInvalidNullSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetIntInvalidNullSender sends the GetIntInvalidNull request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) GetIntInvalidNullSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetIntInvalidNullResponder handles the response to the GetIntInvalidNull request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) GetIntInvalidNullResponder(resp *http.Response) (result ListInt32, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetIntInvalidNullResponder handles the response to the GetIntInvalidNull request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) GetIntInvalidNullResponder(resp *http.Response) (result ListInt32, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetIntInvalidString get integer array value [1, 'integer', 0]
 func (client ArrayClient) GetIntInvalidString(ctx context.Context) (result ListInt32, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.GetIntInvalidString")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetIntInvalidStringPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetIntInvalidString", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.GetIntInvalidString")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetIntInvalidStringPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetIntInvalidString", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetIntInvalidStringSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetIntInvalidString", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetIntInvalidStringSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetIntInvalidString", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetIntInvalidStringResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetIntInvalidString", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetIntInvalidStringResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetIntInvalidString", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetIntInvalidStringPreparer prepares the GetIntInvalidString request.
-func (client ArrayClient) GetIntInvalidStringPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/prim/integer/1.integer.0"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetIntInvalidStringPreparer prepares the GetIntInvalidString request.
+    func (client ArrayClient) GetIntInvalidStringPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/prim/integer/1.integer.0"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetIntInvalidStringSender sends the GetIntInvalidString request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) GetIntInvalidStringSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetIntInvalidStringSender sends the GetIntInvalidString request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) GetIntInvalidStringSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetIntInvalidStringResponder handles the response to the GetIntInvalidString request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) GetIntInvalidStringResponder(resp *http.Response) (result ListInt32, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetIntInvalidStringResponder handles the response to the GetIntInvalidString request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) GetIntInvalidStringResponder(resp *http.Response) (result ListInt32, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetInvalid get invalid array [1, 2, 3
 func (client ArrayClient) GetInvalid(ctx context.Context) (result ListInt32, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.GetInvalid")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetInvalidPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetInvalid", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.GetInvalid")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetInvalidPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetInvalid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetInvalidSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetInvalid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetInvalidSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetInvalid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetInvalidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetInvalid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetInvalidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetInvalid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetInvalidPreparer prepares the GetInvalid request.
-func (client ArrayClient) GetInvalidPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/invalid"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetInvalidPreparer prepares the GetInvalid request.
+    func (client ArrayClient) GetInvalidPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/invalid"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetInvalidSender sends the GetInvalid request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) GetInvalidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetInvalidSender sends the GetInvalid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) GetInvalidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetInvalidResponder handles the response to the GetInvalid request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) GetInvalidResponder(resp *http.Response) (result ListInt32, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetInvalidResponder handles the response to the GetInvalid request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) GetInvalidResponder(resp *http.Response) (result ListInt32, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetLongInvalidNull get long array value [1, null, 0]
 func (client ArrayClient) GetLongInvalidNull(ctx context.Context) (result ListInt64, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.GetLongInvalidNull")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetLongInvalidNullPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetLongInvalidNull", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.GetLongInvalidNull")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetLongInvalidNullPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetLongInvalidNull", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetLongInvalidNullSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetLongInvalidNull", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetLongInvalidNullSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetLongInvalidNull", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetLongInvalidNullResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetLongInvalidNull", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetLongInvalidNullResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetLongInvalidNull", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetLongInvalidNullPreparer prepares the GetLongInvalidNull request.
-func (client ArrayClient) GetLongInvalidNullPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/prim/long/1.null.zero"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetLongInvalidNullPreparer prepares the GetLongInvalidNull request.
+    func (client ArrayClient) GetLongInvalidNullPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/prim/long/1.null.zero"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetLongInvalidNullSender sends the GetLongInvalidNull request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) GetLongInvalidNullSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetLongInvalidNullSender sends the GetLongInvalidNull request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) GetLongInvalidNullSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetLongInvalidNullResponder handles the response to the GetLongInvalidNull request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) GetLongInvalidNullResponder(resp *http.Response) (result ListInt64, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetLongInvalidNullResponder handles the response to the GetLongInvalidNull request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) GetLongInvalidNullResponder(resp *http.Response) (result ListInt64, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetLongInvalidString get long array value [1, 'integer', 0]
 func (client ArrayClient) GetLongInvalidString(ctx context.Context) (result ListInt64, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.GetLongInvalidString")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetLongInvalidStringPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetLongInvalidString", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.GetLongInvalidString")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetLongInvalidStringPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetLongInvalidString", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetLongInvalidStringSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetLongInvalidString", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetLongInvalidStringSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetLongInvalidString", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetLongInvalidStringResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetLongInvalidString", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetLongInvalidStringResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetLongInvalidString", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetLongInvalidStringPreparer prepares the GetLongInvalidString request.
-func (client ArrayClient) GetLongInvalidStringPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/prim/long/1.integer.0"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetLongInvalidStringPreparer prepares the GetLongInvalidString request.
+    func (client ArrayClient) GetLongInvalidStringPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/prim/long/1.integer.0"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetLongInvalidStringSender sends the GetLongInvalidString request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) GetLongInvalidStringSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetLongInvalidStringSender sends the GetLongInvalidString request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) GetLongInvalidStringSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetLongInvalidStringResponder handles the response to the GetLongInvalidString request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) GetLongInvalidStringResponder(resp *http.Response) (result ListInt64, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetLongInvalidStringResponder handles the response to the GetLongInvalidString request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) GetLongInvalidStringResponder(resp *http.Response) (result ListInt64, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetLongValid get integer array value [1, -1, 3, 300]
 func (client ArrayClient) GetLongValid(ctx context.Context) (result ListInt64, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.GetLongValid")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetLongValidPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetLongValid", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.GetLongValid")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetLongValidPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetLongValid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetLongValidSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetLongValid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetLongValidSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetLongValid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetLongValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetLongValid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetLongValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetLongValid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetLongValidPreparer prepares the GetLongValid request.
-func (client ArrayClient) GetLongValidPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/prim/long/1.-1.3.300"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetLongValidPreparer prepares the GetLongValid request.
+    func (client ArrayClient) GetLongValidPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/prim/long/1.-1.3.300"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetLongValidSender sends the GetLongValid request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) GetLongValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetLongValidSender sends the GetLongValid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) GetLongValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetLongValidResponder handles the response to the GetLongValid request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) GetLongValidResponder(resp *http.Response) (result ListInt64, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetLongValidResponder handles the response to the GetLongValid request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) GetLongValidResponder(resp *http.Response) (result ListInt64, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetNull get null array value
 func (client ArrayClient) GetNull(ctx context.Context) (result ListInt32, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.GetNull")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetNullPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetNull", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.GetNull")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetNullPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetNull", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetNullSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetNull", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetNullSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetNull", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetNullResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetNull", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetNullResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetNull", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetNullPreparer prepares the GetNull request.
-func (client ArrayClient) GetNullPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/null"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetNullPreparer prepares the GetNull request.
+    func (client ArrayClient) GetNullPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/null"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetNullSender sends the GetNull request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) GetNullSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetNullSender sends the GetNull request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) GetNullSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetNullResponder handles the response to the GetNull request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) GetNullResponder(resp *http.Response) (result ListInt32, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetNullResponder handles the response to the GetNull request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) GetNullResponder(resp *http.Response) (result ListInt32, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetStringEnumValid get enum array value ['foo1', 'foo2', 'foo3']
 func (client ArrayClient) GetStringEnumValid(ctx context.Context) (result ListString, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.GetStringEnumValid")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetStringEnumValidPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetStringEnumValid", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.GetStringEnumValid")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetStringEnumValidPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetStringEnumValid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetStringEnumValidSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetStringEnumValid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetStringEnumValidSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetStringEnumValid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetStringEnumValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetStringEnumValid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetStringEnumValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetStringEnumValid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetStringEnumValidPreparer prepares the GetStringEnumValid request.
-func (client ArrayClient) GetStringEnumValidPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/prim/string-enum/foo1.foo2.foo3"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetStringEnumValidPreparer prepares the GetStringEnumValid request.
+    func (client ArrayClient) GetStringEnumValidPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/prim/string-enum/foo1.foo2.foo3"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetStringEnumValidSender sends the GetStringEnumValid request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) GetStringEnumValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetStringEnumValidSender sends the GetStringEnumValid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) GetStringEnumValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetStringEnumValidResponder handles the response to the GetStringEnumValid request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) GetStringEnumValidResponder(resp *http.Response) (result ListString, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetStringEnumValidResponder handles the response to the GetStringEnumValid request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) GetStringEnumValidResponder(resp *http.Response) (result ListString, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetStringValid get string array value ['foo1', 'foo2', 'foo3']
 func (client ArrayClient) GetStringValid(ctx context.Context) (result ListString, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.GetStringValid")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetStringValidPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetStringValid", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.GetStringValid")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetStringValidPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetStringValid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetStringValidSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetStringValid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetStringValidSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetStringValid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetStringValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetStringValid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetStringValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetStringValid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetStringValidPreparer prepares the GetStringValid request.
-func (client ArrayClient) GetStringValidPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/prim/string/foo1.foo2.foo3"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetStringValidPreparer prepares the GetStringValid request.
+    func (client ArrayClient) GetStringValidPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/prim/string/foo1.foo2.foo3"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetStringValidSender sends the GetStringValid request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) GetStringValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetStringValidSender sends the GetStringValid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) GetStringValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetStringValidResponder handles the response to the GetStringValid request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) GetStringValidResponder(resp *http.Response) (result ListString, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetStringValidResponder handles the response to the GetStringValid request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) GetStringValidResponder(resp *http.Response) (result ListString, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetStringWithInvalid get string array value ['foo', 123, 'foo2']
 func (client ArrayClient) GetStringWithInvalid(ctx context.Context) (result ListString, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.GetStringWithInvalid")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetStringWithInvalidPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetStringWithInvalid", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.GetStringWithInvalid")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetStringWithInvalidPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetStringWithInvalid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetStringWithInvalidSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetStringWithInvalid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetStringWithInvalidSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetStringWithInvalid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetStringWithInvalidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetStringWithInvalid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetStringWithInvalidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetStringWithInvalid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetStringWithInvalidPreparer prepares the GetStringWithInvalid request.
-func (client ArrayClient) GetStringWithInvalidPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/prim/string/foo.123.foo2"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetStringWithInvalidPreparer prepares the GetStringWithInvalid request.
+    func (client ArrayClient) GetStringWithInvalidPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/prim/string/foo.123.foo2"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetStringWithInvalidSender sends the GetStringWithInvalid request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) GetStringWithInvalidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetStringWithInvalidSender sends the GetStringWithInvalid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) GetStringWithInvalidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetStringWithInvalidResponder handles the response to the GetStringWithInvalid request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) GetStringWithInvalidResponder(resp *http.Response) (result ListString, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetStringWithInvalidResponder handles the response to the GetStringWithInvalid request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) GetStringWithInvalidResponder(resp *http.Response) (result ListString, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetStringWithNull get string array value ['foo', null, 'foo2']
 func (client ArrayClient) GetStringWithNull(ctx context.Context) (result ListString, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.GetStringWithNull")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetStringWithNullPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetStringWithNull", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.GetStringWithNull")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetStringWithNullPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetStringWithNull", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetStringWithNullSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetStringWithNull", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetStringWithNullSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetStringWithNull", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetStringWithNullResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetStringWithNull", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetStringWithNullResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetStringWithNull", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetStringWithNullPreparer prepares the GetStringWithNull request.
-func (client ArrayClient) GetStringWithNullPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/prim/string/foo.null.foo2"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetStringWithNullPreparer prepares the GetStringWithNull request.
+    func (client ArrayClient) GetStringWithNullPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/prim/string/foo.null.foo2"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetStringWithNullSender sends the GetStringWithNull request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) GetStringWithNullSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetStringWithNullSender sends the GetStringWithNull request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) GetStringWithNullSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetStringWithNullResponder handles the response to the GetStringWithNull request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) GetStringWithNullResponder(resp *http.Response) (result ListString, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetStringWithNullResponder handles the response to the GetStringWithNull request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) GetStringWithNullResponder(resp *http.Response) (result ListString, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetUUIDInvalidChars get uuid array value ['6dcc7237-45fe-45c4-8a6b-3a8a3f625652', 'foo']
 func (client ArrayClient) GetUUIDInvalidChars(ctx context.Context) (result ListUUID, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.GetUUIDInvalidChars")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetUUIDInvalidCharsPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetUUIDInvalidChars", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.GetUUIDInvalidChars")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetUUIDInvalidCharsPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetUUIDInvalidChars", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetUUIDInvalidCharsSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetUUIDInvalidChars", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetUUIDInvalidCharsSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetUUIDInvalidChars", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetUUIDInvalidCharsResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetUUIDInvalidChars", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetUUIDInvalidCharsResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetUUIDInvalidChars", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetUUIDInvalidCharsPreparer prepares the GetUUIDInvalidChars request.
-func (client ArrayClient) GetUUIDInvalidCharsPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/prim/uuid/invalidchars"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetUUIDInvalidCharsPreparer prepares the GetUUIDInvalidChars request.
+    func (client ArrayClient) GetUUIDInvalidCharsPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/prim/uuid/invalidchars"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetUUIDInvalidCharsSender sends the GetUUIDInvalidChars request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) GetUUIDInvalidCharsSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetUUIDInvalidCharsSender sends the GetUUIDInvalidChars request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) GetUUIDInvalidCharsSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetUUIDInvalidCharsResponder handles the response to the GetUUIDInvalidChars request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) GetUUIDInvalidCharsResponder(resp *http.Response) (result ListUUID, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetUUIDInvalidCharsResponder handles the response to the GetUUIDInvalidChars request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) GetUUIDInvalidCharsResponder(resp *http.Response) (result ListUUID, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // GetUUIDValid get uuid array value ['6dcc7237-45fe-45c4-8a6b-3a8a3f625652', 'd1399005-30f7-40d6-8da6-dd7c89ad34db',
 // 'f42f6aa1-a5bc-4ddf-907e-5f915de43205']
 func (client ArrayClient) GetUUIDValid(ctx context.Context) (result ListUUID, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.GetUUIDValid")
-		defer func() {
-			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetUUIDValidPreparer(ctx)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetUUIDValid", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.GetUUIDValid")
+        defer func() {
+            sc := -1
+        if result.Response.Response != nil {
+        sc = result.Response.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetUUIDValidPreparer(ctx)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetUUIDValid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetUUIDValidSender(req)
-	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetUUIDValid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetUUIDValidSender(req)
+        if err != nil {
+        result.Response = autorest.Response{Response: resp}
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetUUIDValid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetUUIDValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetUUIDValid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetUUIDValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetUUIDValid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetUUIDValidPreparer prepares the GetUUIDValid request.
-func (client ArrayClient) GetUUIDValidPreparer(ctx context.Context) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/prim/uuid/valid"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // GetUUIDValidPreparer prepares the GetUUIDValid request.
+    func (client ArrayClient) GetUUIDValidPreparer(ctx context.Context) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/prim/uuid/valid"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetUUIDValidSender sends the GetUUIDValid request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) GetUUIDValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetUUIDValidSender sends the GetUUIDValid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) GetUUIDValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetUUIDValidResponder handles the response to the GetUUIDValid request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) GetUUIDValidResponder(resp *http.Response) (result ListUUID, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
-}
+    // GetUUIDValidResponder handles the response to the GetUUIDValid request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) GetUUIDValidResponder(resp *http.Response) (result ListUUID, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByUnmarshallingJSON(&result.Value),
+            autorest.ByClosing())
+            result.Response = autorest.Response{Response: resp}
+            return
+    }
 
 // PutArrayValid put An array of array of strings [['1', '2', '3'], ['4', '5', '6'], ['7', '8', '9']]
 func (client ArrayClient) PutArrayValid(ctx context.Context, arrayBody [][]string) (result autorest.Response, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.PutArrayValid")
-		defer func() {
-			sc := -1
-			if result.Response != nil {
-				sc = result.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	if err := validation.Validate([]validation.Validation{
-		{TargetValue: arrayBody,
-			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewError("arraygroup.ArrayClient", "PutArrayValid", err.Error())
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.PutArrayValid")
+        defer func() {
+            sc := -1
+        if result.Response != nil {
+        sc = result.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+        if err := validation.Validate([]validation.Validation{
+        { TargetValue: arrayBody,
+         Constraints: []validation.Constraint{	{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil }}}}); err != nil {
+        return result, validation.NewError("arraygroup.ArrayClient", "PutArrayValid", err.Error())
+        }
 
-	req, err := client.PutArrayValidPreparer(ctx, arrayBody)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutArrayValid", nil, "Failure preparing request")
-		return
-	}
+        req, err := client.PutArrayValidPreparer(ctx, arrayBody)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutArrayValid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.PutArrayValidSender(req)
-	if err != nil {
-		result.Response = resp
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutArrayValid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.PutArrayValidSender(req)
+        if err != nil {
+        result.Response = resp
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutArrayValid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.PutArrayValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutArrayValid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.PutArrayValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutArrayValid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// PutArrayValidPreparer prepares the PutArrayValid request.
-func (client ArrayClient) PutArrayValidPreparer(ctx context.Context, arrayBody [][]string) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsContentType("application/json; charset=utf-8"),
-		autorest.AsPut(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/array/valid"),
-		autorest.WithJSON(arrayBody))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // PutArrayValidPreparer prepares the PutArrayValid request.
+    func (client ArrayClient) PutArrayValidPreparer(ctx context.Context, arrayBody [][]string) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsContentType("application/json; charset=utf-8"),
+autorest.AsPut(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/array/valid"),
+autorest.WithJSON(arrayBody))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// PutArrayValidSender sends the PutArrayValid request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) PutArrayValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // PutArrayValidSender sends the PutArrayValid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) PutArrayValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// PutArrayValidResponder handles the response to the PutArrayValid request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) PutArrayValidResponder(resp *http.Response) (result autorest.Response, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByClosing())
-	result.Response = resp
-	return
-}
+    // PutArrayValidResponder handles the response to the PutArrayValid request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) PutArrayValidResponder(resp *http.Response) (result autorest.Response, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByClosing())
+            result.Response = resp
+            return
+    }
 
 // PutBooleanTfft set array value empty [true, false, false, true]
 func (client ArrayClient) PutBooleanTfft(ctx context.Context, arrayBody []bool) (result autorest.Response, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.PutBooleanTfft")
-		defer func() {
-			sc := -1
-			if result.Response != nil {
-				sc = result.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	if err := validation.Validate([]validation.Validation{
-		{TargetValue: arrayBody,
-			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewError("arraygroup.ArrayClient", "PutBooleanTfft", err.Error())
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.PutBooleanTfft")
+        defer func() {
+            sc := -1
+        if result.Response != nil {
+        sc = result.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+        if err := validation.Validate([]validation.Validation{
+        { TargetValue: arrayBody,
+         Constraints: []validation.Constraint{	{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil }}}}); err != nil {
+        return result, validation.NewError("arraygroup.ArrayClient", "PutBooleanTfft", err.Error())
+        }
 
-	req, err := client.PutBooleanTfftPreparer(ctx, arrayBody)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutBooleanTfft", nil, "Failure preparing request")
-		return
-	}
+        req, err := client.PutBooleanTfftPreparer(ctx, arrayBody)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutBooleanTfft", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.PutBooleanTfftSender(req)
-	if err != nil {
-		result.Response = resp
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutBooleanTfft", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.PutBooleanTfftSender(req)
+        if err != nil {
+        result.Response = resp
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutBooleanTfft", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.PutBooleanTfftResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutBooleanTfft", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.PutBooleanTfftResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutBooleanTfft", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// PutBooleanTfftPreparer prepares the PutBooleanTfft request.
-func (client ArrayClient) PutBooleanTfftPreparer(ctx context.Context, arrayBody []bool) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsContentType("application/json; charset=utf-8"),
-		autorest.AsPut(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/prim/boolean/tfft"),
-		autorest.WithJSON(arrayBody))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // PutBooleanTfftPreparer prepares the PutBooleanTfft request.
+    func (client ArrayClient) PutBooleanTfftPreparer(ctx context.Context, arrayBody []bool) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsContentType("application/json; charset=utf-8"),
+autorest.AsPut(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/prim/boolean/tfft"),
+autorest.WithJSON(arrayBody))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// PutBooleanTfftSender sends the PutBooleanTfft request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) PutBooleanTfftSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // PutBooleanTfftSender sends the PutBooleanTfft request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) PutBooleanTfftSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// PutBooleanTfftResponder handles the response to the PutBooleanTfft request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) PutBooleanTfftResponder(resp *http.Response) (result autorest.Response, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByClosing())
-	result.Response = resp
-	return
-}
+    // PutBooleanTfftResponder handles the response to the PutBooleanTfft request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) PutBooleanTfftResponder(resp *http.Response) (result autorest.Response, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByClosing())
+            result.Response = resp
+            return
+    }
 
 // PutByteValid put the array value [hex(FF FF FF FA), hex(01 02 03), hex (25, 29, 43)] with each elementencoded in
 // base 64
 func (client ArrayClient) PutByteValid(ctx context.Context, arrayBody [][]byte) (result autorest.Response, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.PutByteValid")
-		defer func() {
-			sc := -1
-			if result.Response != nil {
-				sc = result.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	if err := validation.Validate([]validation.Validation{
-		{TargetValue: arrayBody,
-			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewError("arraygroup.ArrayClient", "PutByteValid", err.Error())
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.PutByteValid")
+        defer func() {
+            sc := -1
+        if result.Response != nil {
+        sc = result.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+        if err := validation.Validate([]validation.Validation{
+        { TargetValue: arrayBody,
+         Constraints: []validation.Constraint{	{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil }}}}); err != nil {
+        return result, validation.NewError("arraygroup.ArrayClient", "PutByteValid", err.Error())
+        }
 
-	req, err := client.PutByteValidPreparer(ctx, arrayBody)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutByteValid", nil, "Failure preparing request")
-		return
-	}
+        req, err := client.PutByteValidPreparer(ctx, arrayBody)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutByteValid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.PutByteValidSender(req)
-	if err != nil {
-		result.Response = resp
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutByteValid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.PutByteValidSender(req)
+        if err != nil {
+        result.Response = resp
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutByteValid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.PutByteValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutByteValid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.PutByteValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutByteValid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// PutByteValidPreparer prepares the PutByteValid request.
-func (client ArrayClient) PutByteValidPreparer(ctx context.Context, arrayBody [][]byte) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsContentType("application/json; charset=utf-8"),
-		autorest.AsPut(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/prim/byte/valid"),
-		autorest.WithJSON(arrayBody))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // PutByteValidPreparer prepares the PutByteValid request.
+    func (client ArrayClient) PutByteValidPreparer(ctx context.Context, arrayBody [][]byte) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsContentType("application/json; charset=utf-8"),
+autorest.AsPut(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/prim/byte/valid"),
+autorest.WithJSON(arrayBody))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// PutByteValidSender sends the PutByteValid request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) PutByteValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // PutByteValidSender sends the PutByteValid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) PutByteValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// PutByteValidResponder handles the response to the PutByteValid request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) PutByteValidResponder(resp *http.Response) (result autorest.Response, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByClosing())
-	result.Response = resp
-	return
-}
+    // PutByteValidResponder handles the response to the PutByteValid request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) PutByteValidResponder(resp *http.Response) (result autorest.Response, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByClosing())
+            result.Response = resp
+            return
+    }
 
 // PutComplexValid put an array of complex type with values [{'integer': 1 'string': '2'}, {'integer': 3, 'string':
 // '4'}, {'integer': 5, 'string': '6'}]
 func (client ArrayClient) PutComplexValid(ctx context.Context, arrayBody []Product) (result autorest.Response, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.PutComplexValid")
-		defer func() {
-			sc := -1
-			if result.Response != nil {
-				sc = result.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	if err := validation.Validate([]validation.Validation{
-		{TargetValue: arrayBody,
-			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewError("arraygroup.ArrayClient", "PutComplexValid", err.Error())
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.PutComplexValid")
+        defer func() {
+            sc := -1
+        if result.Response != nil {
+        sc = result.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+        if err := validation.Validate([]validation.Validation{
+        { TargetValue: arrayBody,
+         Constraints: []validation.Constraint{	{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil }}}}); err != nil {
+        return result, validation.NewError("arraygroup.ArrayClient", "PutComplexValid", err.Error())
+        }
 
-	req, err := client.PutComplexValidPreparer(ctx, arrayBody)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutComplexValid", nil, "Failure preparing request")
-		return
-	}
+        req, err := client.PutComplexValidPreparer(ctx, arrayBody)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutComplexValid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.PutComplexValidSender(req)
-	if err != nil {
-		result.Response = resp
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutComplexValid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.PutComplexValidSender(req)
+        if err != nil {
+        result.Response = resp
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutComplexValid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.PutComplexValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutComplexValid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.PutComplexValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutComplexValid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// PutComplexValidPreparer prepares the PutComplexValid request.
-func (client ArrayClient) PutComplexValidPreparer(ctx context.Context, arrayBody []Product) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsContentType("application/json; charset=utf-8"),
-		autorest.AsPut(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/complex/valid"),
-		autorest.WithJSON(arrayBody))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // PutComplexValidPreparer prepares the PutComplexValid request.
+    func (client ArrayClient) PutComplexValidPreparer(ctx context.Context, arrayBody []Product) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsContentType("application/json; charset=utf-8"),
+autorest.AsPut(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/complex/valid"),
+autorest.WithJSON(arrayBody))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// PutComplexValidSender sends the PutComplexValid request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) PutComplexValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // PutComplexValidSender sends the PutComplexValid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) PutComplexValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// PutComplexValidResponder handles the response to the PutComplexValid request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) PutComplexValidResponder(resp *http.Response) (result autorest.Response, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByClosing())
-	result.Response = resp
-	return
-}
+    // PutComplexValidResponder handles the response to the PutComplexValid request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) PutComplexValidResponder(resp *http.Response) (result autorest.Response, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByClosing())
+            result.Response = resp
+            return
+    }
 
 // PutDateTimeRfc1123Valid set array value  ['Fri, 01 Dec 2000 00:00:01 GMT', 'Wed, 02 Jan 1980 00:11:35 GMT', 'Wed, 12
 // Oct 1492 10:15:01 GMT']
 func (client ArrayClient) PutDateTimeRfc1123Valid(ctx context.Context, arrayBody []date.TimeRFC1123) (result autorest.Response, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.PutDateTimeRfc1123Valid")
-		defer func() {
-			sc := -1
-			if result.Response != nil {
-				sc = result.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	if err := validation.Validate([]validation.Validation{
-		{TargetValue: arrayBody,
-			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewError("arraygroup.ArrayClient", "PutDateTimeRfc1123Valid", err.Error())
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.PutDateTimeRfc1123Valid")
+        defer func() {
+            sc := -1
+        if result.Response != nil {
+        sc = result.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+        if err := validation.Validate([]validation.Validation{
+        { TargetValue: arrayBody,
+         Constraints: []validation.Constraint{	{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil }}}}); err != nil {
+        return result, validation.NewError("arraygroup.ArrayClient", "PutDateTimeRfc1123Valid", err.Error())
+        }
 
-	req, err := client.PutDateTimeRfc1123ValidPreparer(ctx, arrayBody)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutDateTimeRfc1123Valid", nil, "Failure preparing request")
-		return
-	}
+        req, err := client.PutDateTimeRfc1123ValidPreparer(ctx, arrayBody)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutDateTimeRfc1123Valid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.PutDateTimeRfc1123ValidSender(req)
-	if err != nil {
-		result.Response = resp
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutDateTimeRfc1123Valid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.PutDateTimeRfc1123ValidSender(req)
+        if err != nil {
+        result.Response = resp
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutDateTimeRfc1123Valid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.PutDateTimeRfc1123ValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutDateTimeRfc1123Valid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.PutDateTimeRfc1123ValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutDateTimeRfc1123Valid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// PutDateTimeRfc1123ValidPreparer prepares the PutDateTimeRfc1123Valid request.
-func (client ArrayClient) PutDateTimeRfc1123ValidPreparer(ctx context.Context, arrayBody []date.TimeRFC1123) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsContentType("application/json; charset=utf-8"),
-		autorest.AsPut(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/prim/date-time-rfc1123/valid"),
-		autorest.WithJSON(arrayBody))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // PutDateTimeRfc1123ValidPreparer prepares the PutDateTimeRfc1123Valid request.
+    func (client ArrayClient) PutDateTimeRfc1123ValidPreparer(ctx context.Context, arrayBody []date.TimeRFC1123) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsContentType("application/json; charset=utf-8"),
+autorest.AsPut(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/prim/date-time-rfc1123/valid"),
+autorest.WithJSON(arrayBody))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// PutDateTimeRfc1123ValidSender sends the PutDateTimeRfc1123Valid request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) PutDateTimeRfc1123ValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // PutDateTimeRfc1123ValidSender sends the PutDateTimeRfc1123Valid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) PutDateTimeRfc1123ValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// PutDateTimeRfc1123ValidResponder handles the response to the PutDateTimeRfc1123Valid request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) PutDateTimeRfc1123ValidResponder(resp *http.Response) (result autorest.Response, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByClosing())
-	result.Response = resp
-	return
-}
+    // PutDateTimeRfc1123ValidResponder handles the response to the PutDateTimeRfc1123Valid request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) PutDateTimeRfc1123ValidResponder(resp *http.Response) (result autorest.Response, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByClosing())
+            result.Response = resp
+            return
+    }
 
 // PutDateTimeValid set array value  ['2000-12-01t00:00:01z', '1980-01-02T00:11:35+01:00', '1492-10-12T10:15:01-08:00']
 func (client ArrayClient) PutDateTimeValid(ctx context.Context, arrayBody []date.Time) (result autorest.Response, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.PutDateTimeValid")
-		defer func() {
-			sc := -1
-			if result.Response != nil {
-				sc = result.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	if err := validation.Validate([]validation.Validation{
-		{TargetValue: arrayBody,
-			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewError("arraygroup.ArrayClient", "PutDateTimeValid", err.Error())
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.PutDateTimeValid")
+        defer func() {
+            sc := -1
+        if result.Response != nil {
+        sc = result.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+        if err := validation.Validate([]validation.Validation{
+        { TargetValue: arrayBody,
+         Constraints: []validation.Constraint{	{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil }}}}); err != nil {
+        return result, validation.NewError("arraygroup.ArrayClient", "PutDateTimeValid", err.Error())
+        }
 
-	req, err := client.PutDateTimeValidPreparer(ctx, arrayBody)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutDateTimeValid", nil, "Failure preparing request")
-		return
-	}
+        req, err := client.PutDateTimeValidPreparer(ctx, arrayBody)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutDateTimeValid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.PutDateTimeValidSender(req)
-	if err != nil {
-		result.Response = resp
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutDateTimeValid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.PutDateTimeValidSender(req)
+        if err != nil {
+        result.Response = resp
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutDateTimeValid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.PutDateTimeValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutDateTimeValid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.PutDateTimeValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutDateTimeValid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// PutDateTimeValidPreparer prepares the PutDateTimeValid request.
-func (client ArrayClient) PutDateTimeValidPreparer(ctx context.Context, arrayBody []date.Time) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsContentType("application/json; charset=utf-8"),
-		autorest.AsPut(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/prim/date-time/valid"),
-		autorest.WithJSON(arrayBody))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // PutDateTimeValidPreparer prepares the PutDateTimeValid request.
+    func (client ArrayClient) PutDateTimeValidPreparer(ctx context.Context, arrayBody []date.Time) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsContentType("application/json; charset=utf-8"),
+autorest.AsPut(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/prim/date-time/valid"),
+autorest.WithJSON(arrayBody))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// PutDateTimeValidSender sends the PutDateTimeValid request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) PutDateTimeValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // PutDateTimeValidSender sends the PutDateTimeValid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) PutDateTimeValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// PutDateTimeValidResponder handles the response to the PutDateTimeValid request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) PutDateTimeValidResponder(resp *http.Response) (result autorest.Response, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByClosing())
-	result.Response = resp
-	return
-}
+    // PutDateTimeValidResponder handles the response to the PutDateTimeValid request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) PutDateTimeValidResponder(resp *http.Response) (result autorest.Response, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByClosing())
+            result.Response = resp
+            return
+    }
 
 // PutDateValid set array value  ['2000-12-01', '1980-01-02', '1492-10-12']
 func (client ArrayClient) PutDateValid(ctx context.Context, arrayBody []date.Date) (result autorest.Response, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.PutDateValid")
-		defer func() {
-			sc := -1
-			if result.Response != nil {
-				sc = result.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	if err := validation.Validate([]validation.Validation{
-		{TargetValue: arrayBody,
-			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewError("arraygroup.ArrayClient", "PutDateValid", err.Error())
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.PutDateValid")
+        defer func() {
+            sc := -1
+        if result.Response != nil {
+        sc = result.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+        if err := validation.Validate([]validation.Validation{
+        { TargetValue: arrayBody,
+         Constraints: []validation.Constraint{	{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil }}}}); err != nil {
+        return result, validation.NewError("arraygroup.ArrayClient", "PutDateValid", err.Error())
+        }
 
-	req, err := client.PutDateValidPreparer(ctx, arrayBody)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutDateValid", nil, "Failure preparing request")
-		return
-	}
+        req, err := client.PutDateValidPreparer(ctx, arrayBody)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutDateValid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.PutDateValidSender(req)
-	if err != nil {
-		result.Response = resp
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutDateValid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.PutDateValidSender(req)
+        if err != nil {
+        result.Response = resp
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutDateValid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.PutDateValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutDateValid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.PutDateValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutDateValid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// PutDateValidPreparer prepares the PutDateValid request.
-func (client ArrayClient) PutDateValidPreparer(ctx context.Context, arrayBody []date.Date) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsContentType("application/json; charset=utf-8"),
-		autorest.AsPut(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/prim/date/valid"),
-		autorest.WithJSON(arrayBody))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // PutDateValidPreparer prepares the PutDateValid request.
+    func (client ArrayClient) PutDateValidPreparer(ctx context.Context, arrayBody []date.Date) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsContentType("application/json; charset=utf-8"),
+autorest.AsPut(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/prim/date/valid"),
+autorest.WithJSON(arrayBody))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// PutDateValidSender sends the PutDateValid request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) PutDateValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // PutDateValidSender sends the PutDateValid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) PutDateValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// PutDateValidResponder handles the response to the PutDateValid request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) PutDateValidResponder(resp *http.Response) (result autorest.Response, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByClosing())
-	result.Response = resp
-	return
-}
+    // PutDateValidResponder handles the response to the PutDateValid request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) PutDateValidResponder(resp *http.Response) (result autorest.Response, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByClosing())
+            result.Response = resp
+            return
+    }
 
 // PutDictionaryValid get an array of Dictionaries of type <string, string> with value [{'1': 'one', '2': 'two', '3':
 // 'three'}, {'4': 'four', '5': 'five', '6': 'six'}, {'7': 'seven', '8': 'eight', '9': 'nine'}]
 func (client ArrayClient) PutDictionaryValid(ctx context.Context, arrayBody []map[string]*string) (result autorest.Response, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.PutDictionaryValid")
-		defer func() {
-			sc := -1
-			if result.Response != nil {
-				sc = result.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	if err := validation.Validate([]validation.Validation{
-		{TargetValue: arrayBody,
-			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewError("arraygroup.ArrayClient", "PutDictionaryValid", err.Error())
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.PutDictionaryValid")
+        defer func() {
+            sc := -1
+        if result.Response != nil {
+        sc = result.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+        if err := validation.Validate([]validation.Validation{
+        { TargetValue: arrayBody,
+         Constraints: []validation.Constraint{	{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil }}}}); err != nil {
+        return result, validation.NewError("arraygroup.ArrayClient", "PutDictionaryValid", err.Error())
+        }
 
-	req, err := client.PutDictionaryValidPreparer(ctx, arrayBody)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutDictionaryValid", nil, "Failure preparing request")
-		return
-	}
+        req, err := client.PutDictionaryValidPreparer(ctx, arrayBody)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutDictionaryValid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.PutDictionaryValidSender(req)
-	if err != nil {
-		result.Response = resp
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutDictionaryValid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.PutDictionaryValidSender(req)
+        if err != nil {
+        result.Response = resp
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutDictionaryValid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.PutDictionaryValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutDictionaryValid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.PutDictionaryValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutDictionaryValid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// PutDictionaryValidPreparer prepares the PutDictionaryValid request.
-func (client ArrayClient) PutDictionaryValidPreparer(ctx context.Context, arrayBody []map[string]*string) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsContentType("application/json; charset=utf-8"),
-		autorest.AsPut(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/dictionary/valid"),
-		autorest.WithJSON(arrayBody))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // PutDictionaryValidPreparer prepares the PutDictionaryValid request.
+    func (client ArrayClient) PutDictionaryValidPreparer(ctx context.Context, arrayBody []map[string]*string) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsContentType("application/json; charset=utf-8"),
+autorest.AsPut(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/dictionary/valid"),
+autorest.WithJSON(arrayBody))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// PutDictionaryValidSender sends the PutDictionaryValid request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) PutDictionaryValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // PutDictionaryValidSender sends the PutDictionaryValid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) PutDictionaryValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// PutDictionaryValidResponder handles the response to the PutDictionaryValid request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) PutDictionaryValidResponder(resp *http.Response) (result autorest.Response, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByClosing())
-	result.Response = resp
-	return
-}
+    // PutDictionaryValidResponder handles the response to the PutDictionaryValid request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) PutDictionaryValidResponder(resp *http.Response) (result autorest.Response, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByClosing())
+            result.Response = resp
+            return
+    }
 
 // PutDoubleValid set array value [0, -0.01, 1.2e20]
 func (client ArrayClient) PutDoubleValid(ctx context.Context, arrayBody []float64) (result autorest.Response, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.PutDoubleValid")
-		defer func() {
-			sc := -1
-			if result.Response != nil {
-				sc = result.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	if err := validation.Validate([]validation.Validation{
-		{TargetValue: arrayBody,
-			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewError("arraygroup.ArrayClient", "PutDoubleValid", err.Error())
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.PutDoubleValid")
+        defer func() {
+            sc := -1
+        if result.Response != nil {
+        sc = result.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+        if err := validation.Validate([]validation.Validation{
+        { TargetValue: arrayBody,
+         Constraints: []validation.Constraint{	{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil }}}}); err != nil {
+        return result, validation.NewError("arraygroup.ArrayClient", "PutDoubleValid", err.Error())
+        }
 
-	req, err := client.PutDoubleValidPreparer(ctx, arrayBody)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutDoubleValid", nil, "Failure preparing request")
-		return
-	}
+        req, err := client.PutDoubleValidPreparer(ctx, arrayBody)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutDoubleValid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.PutDoubleValidSender(req)
-	if err != nil {
-		result.Response = resp
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutDoubleValid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.PutDoubleValidSender(req)
+        if err != nil {
+        result.Response = resp
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutDoubleValid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.PutDoubleValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutDoubleValid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.PutDoubleValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutDoubleValid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// PutDoubleValidPreparer prepares the PutDoubleValid request.
-func (client ArrayClient) PutDoubleValidPreparer(ctx context.Context, arrayBody []float64) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsContentType("application/json; charset=utf-8"),
-		autorest.AsPut(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/prim/double/0--0.01-1.2e20"),
-		autorest.WithJSON(arrayBody))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // PutDoubleValidPreparer prepares the PutDoubleValid request.
+    func (client ArrayClient) PutDoubleValidPreparer(ctx context.Context, arrayBody []float64) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsContentType("application/json; charset=utf-8"),
+autorest.AsPut(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/prim/double/0--0.01-1.2e20"),
+autorest.WithJSON(arrayBody))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// PutDoubleValidSender sends the PutDoubleValid request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) PutDoubleValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // PutDoubleValidSender sends the PutDoubleValid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) PutDoubleValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// PutDoubleValidResponder handles the response to the PutDoubleValid request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) PutDoubleValidResponder(resp *http.Response) (result autorest.Response, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByClosing())
-	result.Response = resp
-	return
-}
+    // PutDoubleValidResponder handles the response to the PutDoubleValid request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) PutDoubleValidResponder(resp *http.Response) (result autorest.Response, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByClosing())
+            result.Response = resp
+            return
+    }
 
 // PutDurationValid set array value  ['P123DT22H14M12.011S', 'P5DT1H0M0S']
 func (client ArrayClient) PutDurationValid(ctx context.Context, arrayBody []string) (result autorest.Response, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.PutDurationValid")
-		defer func() {
-			sc := -1
-			if result.Response != nil {
-				sc = result.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	if err := validation.Validate([]validation.Validation{
-		{TargetValue: arrayBody,
-			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewError("arraygroup.ArrayClient", "PutDurationValid", err.Error())
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.PutDurationValid")
+        defer func() {
+            sc := -1
+        if result.Response != nil {
+        sc = result.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+        if err := validation.Validate([]validation.Validation{
+        { TargetValue: arrayBody,
+         Constraints: []validation.Constraint{	{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil }}}}); err != nil {
+        return result, validation.NewError("arraygroup.ArrayClient", "PutDurationValid", err.Error())
+        }
 
-	req, err := client.PutDurationValidPreparer(ctx, arrayBody)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutDurationValid", nil, "Failure preparing request")
-		return
-	}
+        req, err := client.PutDurationValidPreparer(ctx, arrayBody)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutDurationValid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.PutDurationValidSender(req)
-	if err != nil {
-		result.Response = resp
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutDurationValid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.PutDurationValidSender(req)
+        if err != nil {
+        result.Response = resp
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutDurationValid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.PutDurationValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutDurationValid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.PutDurationValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutDurationValid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// PutDurationValidPreparer prepares the PutDurationValid request.
-func (client ArrayClient) PutDurationValidPreparer(ctx context.Context, arrayBody []string) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsContentType("application/json; charset=utf-8"),
-		autorest.AsPut(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/prim/duration/valid"),
-		autorest.WithJSON(arrayBody))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // PutDurationValidPreparer prepares the PutDurationValid request.
+    func (client ArrayClient) PutDurationValidPreparer(ctx context.Context, arrayBody []string) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsContentType("application/json; charset=utf-8"),
+autorest.AsPut(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/prim/duration/valid"),
+autorest.WithJSON(arrayBody))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// PutDurationValidSender sends the PutDurationValid request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) PutDurationValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // PutDurationValidSender sends the PutDurationValid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) PutDurationValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// PutDurationValidResponder handles the response to the PutDurationValid request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) PutDurationValidResponder(resp *http.Response) (result autorest.Response, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByClosing())
-	result.Response = resp
-	return
-}
+    // PutDurationValidResponder handles the response to the PutDurationValid request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) PutDurationValidResponder(resp *http.Response) (result autorest.Response, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByClosing())
+            result.Response = resp
+            return
+    }
 
 // PutEmpty set array value empty []
 func (client ArrayClient) PutEmpty(ctx context.Context, arrayBody []string) (result autorest.Response, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.PutEmpty")
-		defer func() {
-			sc := -1
-			if result.Response != nil {
-				sc = result.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	if err := validation.Validate([]validation.Validation{
-		{TargetValue: arrayBody,
-			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewError("arraygroup.ArrayClient", "PutEmpty", err.Error())
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.PutEmpty")
+        defer func() {
+            sc := -1
+        if result.Response != nil {
+        sc = result.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+        if err := validation.Validate([]validation.Validation{
+        { TargetValue: arrayBody,
+         Constraints: []validation.Constraint{	{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil }}}}); err != nil {
+        return result, validation.NewError("arraygroup.ArrayClient", "PutEmpty", err.Error())
+        }
 
-	req, err := client.PutEmptyPreparer(ctx, arrayBody)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutEmpty", nil, "Failure preparing request")
-		return
-	}
+        req, err := client.PutEmptyPreparer(ctx, arrayBody)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutEmpty", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.PutEmptySender(req)
-	if err != nil {
-		result.Response = resp
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutEmpty", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.PutEmptySender(req)
+        if err != nil {
+        result.Response = resp
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutEmpty", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.PutEmptyResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutEmpty", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.PutEmptyResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutEmpty", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// PutEmptyPreparer prepares the PutEmpty request.
-func (client ArrayClient) PutEmptyPreparer(ctx context.Context, arrayBody []string) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsContentType("application/json; charset=utf-8"),
-		autorest.AsPut(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/empty"),
-		autorest.WithJSON(arrayBody))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // PutEmptyPreparer prepares the PutEmpty request.
+    func (client ArrayClient) PutEmptyPreparer(ctx context.Context, arrayBody []string) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsContentType("application/json; charset=utf-8"),
+autorest.AsPut(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/empty"),
+autorest.WithJSON(arrayBody))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// PutEmptySender sends the PutEmpty request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) PutEmptySender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // PutEmptySender sends the PutEmpty request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) PutEmptySender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// PutEmptyResponder handles the response to the PutEmpty request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) PutEmptyResponder(resp *http.Response) (result autorest.Response, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByClosing())
-	result.Response = resp
-	return
-}
+    // PutEmptyResponder handles the response to the PutEmpty request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) PutEmptyResponder(resp *http.Response) (result autorest.Response, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByClosing())
+            result.Response = resp
+            return
+    }
 
 // PutEnumValid set array value ['foo1', 'foo2', 'foo3']
 func (client ArrayClient) PutEnumValid(ctx context.Context, arrayBody []FooEnum) (result autorest.Response, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.PutEnumValid")
-		defer func() {
-			sc := -1
-			if result.Response != nil {
-				sc = result.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	if err := validation.Validate([]validation.Validation{
-		{TargetValue: arrayBody,
-			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewError("arraygroup.ArrayClient", "PutEnumValid", err.Error())
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.PutEnumValid")
+        defer func() {
+            sc := -1
+        if result.Response != nil {
+        sc = result.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+        if err := validation.Validate([]validation.Validation{
+        { TargetValue: arrayBody,
+         Constraints: []validation.Constraint{	{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil }}}}); err != nil {
+        return result, validation.NewError("arraygroup.ArrayClient", "PutEnumValid", err.Error())
+        }
 
-	req, err := client.PutEnumValidPreparer(ctx, arrayBody)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutEnumValid", nil, "Failure preparing request")
-		return
-	}
+        req, err := client.PutEnumValidPreparer(ctx, arrayBody)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutEnumValid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.PutEnumValidSender(req)
-	if err != nil {
-		result.Response = resp
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutEnumValid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.PutEnumValidSender(req)
+        if err != nil {
+        result.Response = resp
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutEnumValid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.PutEnumValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutEnumValid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.PutEnumValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutEnumValid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// PutEnumValidPreparer prepares the PutEnumValid request.
-func (client ArrayClient) PutEnumValidPreparer(ctx context.Context, arrayBody []FooEnum) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsContentType("application/json; charset=utf-8"),
-		autorest.AsPut(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/prim/enum/foo1.foo2.foo3"),
-		autorest.WithJSON(arrayBody))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // PutEnumValidPreparer prepares the PutEnumValid request.
+    func (client ArrayClient) PutEnumValidPreparer(ctx context.Context, arrayBody []FooEnum) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsContentType("application/json; charset=utf-8"),
+autorest.AsPut(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/prim/enum/foo1.foo2.foo3"),
+autorest.WithJSON(arrayBody))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// PutEnumValidSender sends the PutEnumValid request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) PutEnumValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // PutEnumValidSender sends the PutEnumValid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) PutEnumValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// PutEnumValidResponder handles the response to the PutEnumValid request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) PutEnumValidResponder(resp *http.Response) (result autorest.Response, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByClosing())
-	result.Response = resp
-	return
-}
+    // PutEnumValidResponder handles the response to the PutEnumValid request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) PutEnumValidResponder(resp *http.Response) (result autorest.Response, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByClosing())
+            result.Response = resp
+            return
+    }
 
 // PutFloatValid set array value [0, -0.01, 1.2e20]
 func (client ArrayClient) PutFloatValid(ctx context.Context, arrayBody []float64) (result autorest.Response, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.PutFloatValid")
-		defer func() {
-			sc := -1
-			if result.Response != nil {
-				sc = result.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	if err := validation.Validate([]validation.Validation{
-		{TargetValue: arrayBody,
-			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewError("arraygroup.ArrayClient", "PutFloatValid", err.Error())
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.PutFloatValid")
+        defer func() {
+            sc := -1
+        if result.Response != nil {
+        sc = result.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+        if err := validation.Validate([]validation.Validation{
+        { TargetValue: arrayBody,
+         Constraints: []validation.Constraint{	{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil }}}}); err != nil {
+        return result, validation.NewError("arraygroup.ArrayClient", "PutFloatValid", err.Error())
+        }
 
-	req, err := client.PutFloatValidPreparer(ctx, arrayBody)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutFloatValid", nil, "Failure preparing request")
-		return
-	}
+        req, err := client.PutFloatValidPreparer(ctx, arrayBody)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutFloatValid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.PutFloatValidSender(req)
-	if err != nil {
-		result.Response = resp
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutFloatValid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.PutFloatValidSender(req)
+        if err != nil {
+        result.Response = resp
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutFloatValid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.PutFloatValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutFloatValid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.PutFloatValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutFloatValid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// PutFloatValidPreparer prepares the PutFloatValid request.
-func (client ArrayClient) PutFloatValidPreparer(ctx context.Context, arrayBody []float64) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsContentType("application/json; charset=utf-8"),
-		autorest.AsPut(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/prim/float/0--0.01-1.2e20"),
-		autorest.WithJSON(arrayBody))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // PutFloatValidPreparer prepares the PutFloatValid request.
+    func (client ArrayClient) PutFloatValidPreparer(ctx context.Context, arrayBody []float64) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsContentType("application/json; charset=utf-8"),
+autorest.AsPut(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/prim/float/0--0.01-1.2e20"),
+autorest.WithJSON(arrayBody))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// PutFloatValidSender sends the PutFloatValid request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) PutFloatValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // PutFloatValidSender sends the PutFloatValid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) PutFloatValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// PutFloatValidResponder handles the response to the PutFloatValid request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) PutFloatValidResponder(resp *http.Response) (result autorest.Response, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByClosing())
-	result.Response = resp
-	return
-}
+    // PutFloatValidResponder handles the response to the PutFloatValid request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) PutFloatValidResponder(resp *http.Response) (result autorest.Response, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByClosing())
+            result.Response = resp
+            return
+    }
 
 // PutIntegerValid set array value empty [1, -1, 3, 300]
 func (client ArrayClient) PutIntegerValid(ctx context.Context, arrayBody []int32) (result autorest.Response, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.PutIntegerValid")
-		defer func() {
-			sc := -1
-			if result.Response != nil {
-				sc = result.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	if err := validation.Validate([]validation.Validation{
-		{TargetValue: arrayBody,
-			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewError("arraygroup.ArrayClient", "PutIntegerValid", err.Error())
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.PutIntegerValid")
+        defer func() {
+            sc := -1
+        if result.Response != nil {
+        sc = result.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+        if err := validation.Validate([]validation.Validation{
+        { TargetValue: arrayBody,
+         Constraints: []validation.Constraint{	{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil }}}}); err != nil {
+        return result, validation.NewError("arraygroup.ArrayClient", "PutIntegerValid", err.Error())
+        }
 
-	req, err := client.PutIntegerValidPreparer(ctx, arrayBody)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutIntegerValid", nil, "Failure preparing request")
-		return
-	}
+        req, err := client.PutIntegerValidPreparer(ctx, arrayBody)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutIntegerValid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.PutIntegerValidSender(req)
-	if err != nil {
-		result.Response = resp
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutIntegerValid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.PutIntegerValidSender(req)
+        if err != nil {
+        result.Response = resp
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutIntegerValid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.PutIntegerValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutIntegerValid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.PutIntegerValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutIntegerValid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// PutIntegerValidPreparer prepares the PutIntegerValid request.
-func (client ArrayClient) PutIntegerValidPreparer(ctx context.Context, arrayBody []int32) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsContentType("application/json; charset=utf-8"),
-		autorest.AsPut(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/prim/integer/1.-1.3.300"),
-		autorest.WithJSON(arrayBody))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // PutIntegerValidPreparer prepares the PutIntegerValid request.
+    func (client ArrayClient) PutIntegerValidPreparer(ctx context.Context, arrayBody []int32) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsContentType("application/json; charset=utf-8"),
+autorest.AsPut(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/prim/integer/1.-1.3.300"),
+autorest.WithJSON(arrayBody))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// PutIntegerValidSender sends the PutIntegerValid request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) PutIntegerValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // PutIntegerValidSender sends the PutIntegerValid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) PutIntegerValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// PutIntegerValidResponder handles the response to the PutIntegerValid request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) PutIntegerValidResponder(resp *http.Response) (result autorest.Response, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByClosing())
-	result.Response = resp
-	return
-}
+    // PutIntegerValidResponder handles the response to the PutIntegerValid request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) PutIntegerValidResponder(resp *http.Response) (result autorest.Response, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByClosing())
+            result.Response = resp
+            return
+    }
 
 // PutLongValid set array value empty [1, -1, 3, 300]
 func (client ArrayClient) PutLongValid(ctx context.Context, arrayBody []int64) (result autorest.Response, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.PutLongValid")
-		defer func() {
-			sc := -1
-			if result.Response != nil {
-				sc = result.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	if err := validation.Validate([]validation.Validation{
-		{TargetValue: arrayBody,
-			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewError("arraygroup.ArrayClient", "PutLongValid", err.Error())
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.PutLongValid")
+        defer func() {
+            sc := -1
+        if result.Response != nil {
+        sc = result.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+        if err := validation.Validate([]validation.Validation{
+        { TargetValue: arrayBody,
+         Constraints: []validation.Constraint{	{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil }}}}); err != nil {
+        return result, validation.NewError("arraygroup.ArrayClient", "PutLongValid", err.Error())
+        }
 
-	req, err := client.PutLongValidPreparer(ctx, arrayBody)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutLongValid", nil, "Failure preparing request")
-		return
-	}
+        req, err := client.PutLongValidPreparer(ctx, arrayBody)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutLongValid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.PutLongValidSender(req)
-	if err != nil {
-		result.Response = resp
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutLongValid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.PutLongValidSender(req)
+        if err != nil {
+        result.Response = resp
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutLongValid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.PutLongValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutLongValid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.PutLongValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutLongValid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// PutLongValidPreparer prepares the PutLongValid request.
-func (client ArrayClient) PutLongValidPreparer(ctx context.Context, arrayBody []int64) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsContentType("application/json; charset=utf-8"),
-		autorest.AsPut(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/prim/long/1.-1.3.300"),
-		autorest.WithJSON(arrayBody))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // PutLongValidPreparer prepares the PutLongValid request.
+    func (client ArrayClient) PutLongValidPreparer(ctx context.Context, arrayBody []int64) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsContentType("application/json; charset=utf-8"),
+autorest.AsPut(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/prim/long/1.-1.3.300"),
+autorest.WithJSON(arrayBody))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// PutLongValidSender sends the PutLongValid request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) PutLongValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // PutLongValidSender sends the PutLongValid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) PutLongValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// PutLongValidResponder handles the response to the PutLongValid request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) PutLongValidResponder(resp *http.Response) (result autorest.Response, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByClosing())
-	result.Response = resp
-	return
-}
+    // PutLongValidResponder handles the response to the PutLongValid request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) PutLongValidResponder(resp *http.Response) (result autorest.Response, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByClosing())
+            result.Response = resp
+            return
+    }
 
 // PutStringEnumValid set array value ['foo1', 'foo2', 'foo3']
 func (client ArrayClient) PutStringEnumValid(ctx context.Context, arrayBody []string) (result autorest.Response, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.PutStringEnumValid")
-		defer func() {
-			sc := -1
-			if result.Response != nil {
-				sc = result.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	if err := validation.Validate([]validation.Validation{
-		{TargetValue: arrayBody,
-			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewError("arraygroup.ArrayClient", "PutStringEnumValid", err.Error())
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.PutStringEnumValid")
+        defer func() {
+            sc := -1
+        if result.Response != nil {
+        sc = result.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+        if err := validation.Validate([]validation.Validation{
+        { TargetValue: arrayBody,
+         Constraints: []validation.Constraint{	{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil }}}}); err != nil {
+        return result, validation.NewError("arraygroup.ArrayClient", "PutStringEnumValid", err.Error())
+        }
 
-	req, err := client.PutStringEnumValidPreparer(ctx, arrayBody)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutStringEnumValid", nil, "Failure preparing request")
-		return
-	}
+        req, err := client.PutStringEnumValidPreparer(ctx, arrayBody)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutStringEnumValid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.PutStringEnumValidSender(req)
-	if err != nil {
-		result.Response = resp
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutStringEnumValid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.PutStringEnumValidSender(req)
+        if err != nil {
+        result.Response = resp
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutStringEnumValid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.PutStringEnumValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutStringEnumValid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.PutStringEnumValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutStringEnumValid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// PutStringEnumValidPreparer prepares the PutStringEnumValid request.
-func (client ArrayClient) PutStringEnumValidPreparer(ctx context.Context, arrayBody []string) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsContentType("application/json; charset=utf-8"),
-		autorest.AsPut(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/prim/string-enum/foo1.foo2.foo3"),
-		autorest.WithJSON(arrayBody))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // PutStringEnumValidPreparer prepares the PutStringEnumValid request.
+    func (client ArrayClient) PutStringEnumValidPreparer(ctx context.Context, arrayBody []string) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsContentType("application/json; charset=utf-8"),
+autorest.AsPut(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/prim/string-enum/foo1.foo2.foo3"),
+autorest.WithJSON(arrayBody))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// PutStringEnumValidSender sends the PutStringEnumValid request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) PutStringEnumValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // PutStringEnumValidSender sends the PutStringEnumValid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) PutStringEnumValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// PutStringEnumValidResponder handles the response to the PutStringEnumValid request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) PutStringEnumValidResponder(resp *http.Response) (result autorest.Response, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByClosing())
-	result.Response = resp
-	return
-}
+    // PutStringEnumValidResponder handles the response to the PutStringEnumValid request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) PutStringEnumValidResponder(resp *http.Response) (result autorest.Response, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByClosing())
+            result.Response = resp
+            return
+    }
 
 // PutStringValid set array value ['foo1', 'foo2', 'foo3']
 func (client ArrayClient) PutStringValid(ctx context.Context, arrayBody []string) (result autorest.Response, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.PutStringValid")
-		defer func() {
-			sc := -1
-			if result.Response != nil {
-				sc = result.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	if err := validation.Validate([]validation.Validation{
-		{TargetValue: arrayBody,
-			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewError("arraygroup.ArrayClient", "PutStringValid", err.Error())
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.PutStringValid")
+        defer func() {
+            sc := -1
+        if result.Response != nil {
+        sc = result.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+        if err := validation.Validate([]validation.Validation{
+        { TargetValue: arrayBody,
+         Constraints: []validation.Constraint{	{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil }}}}); err != nil {
+        return result, validation.NewError("arraygroup.ArrayClient", "PutStringValid", err.Error())
+        }
 
-	req, err := client.PutStringValidPreparer(ctx, arrayBody)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutStringValid", nil, "Failure preparing request")
-		return
-	}
+        req, err := client.PutStringValidPreparer(ctx, arrayBody)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutStringValid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.PutStringValidSender(req)
-	if err != nil {
-		result.Response = resp
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutStringValid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.PutStringValidSender(req)
+        if err != nil {
+        result.Response = resp
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutStringValid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.PutStringValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutStringValid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.PutStringValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutStringValid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// PutStringValidPreparer prepares the PutStringValid request.
-func (client ArrayClient) PutStringValidPreparer(ctx context.Context, arrayBody []string) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsContentType("application/json; charset=utf-8"),
-		autorest.AsPut(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/prim/string/foo1.foo2.foo3"),
-		autorest.WithJSON(arrayBody))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // PutStringValidPreparer prepares the PutStringValid request.
+    func (client ArrayClient) PutStringValidPreparer(ctx context.Context, arrayBody []string) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsContentType("application/json; charset=utf-8"),
+autorest.AsPut(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/prim/string/foo1.foo2.foo3"),
+autorest.WithJSON(arrayBody))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// PutStringValidSender sends the PutStringValid request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) PutStringValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // PutStringValidSender sends the PutStringValid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) PutStringValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// PutStringValidResponder handles the response to the PutStringValid request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) PutStringValidResponder(resp *http.Response) (result autorest.Response, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByClosing())
-	result.Response = resp
-	return
-}
+    // PutStringValidResponder handles the response to the PutStringValid request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) PutStringValidResponder(resp *http.Response) (result autorest.Response, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByClosing())
+            result.Response = resp
+            return
+    }
 
 // PutUUIDValid set array value  ['6dcc7237-45fe-45c4-8a6b-3a8a3f625652', 'd1399005-30f7-40d6-8da6-dd7c89ad34db',
 // 'f42f6aa1-a5bc-4ddf-907e-5f915de43205']
 func (client ArrayClient) PutUUIDValid(ctx context.Context, arrayBody []uuid.UUID) (result autorest.Response, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.PutUUIDValid")
-		defer func() {
-			sc := -1
-			if result.Response != nil {
-				sc = result.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	if err := validation.Validate([]validation.Validation{
-		{TargetValue: arrayBody,
-			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewError("arraygroup.ArrayClient", "PutUUIDValid", err.Error())
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/ArrayClient.PutUUIDValid")
+        defer func() {
+            sc := -1
+        if result.Response != nil {
+        sc = result.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+        if err := validation.Validate([]validation.Validation{
+        { TargetValue: arrayBody,
+         Constraints: []validation.Constraint{	{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil }}}}); err != nil {
+        return result, validation.NewError("arraygroup.ArrayClient", "PutUUIDValid", err.Error())
+        }
 
-	req, err := client.PutUUIDValidPreparer(ctx, arrayBody)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutUUIDValid", nil, "Failure preparing request")
-		return
-	}
+        req, err := client.PutUUIDValidPreparer(ctx, arrayBody)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutUUIDValid", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.PutUUIDValidSender(req)
-	if err != nil {
-		result.Response = resp
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutUUIDValid", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.PutUUIDValidSender(req)
+        if err != nil {
+        result.Response = resp
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutUUIDValid", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.PutUUIDValidResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutUUIDValid", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.PutUUIDValidResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutUUIDValid", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// PutUUIDValidPreparer prepares the PutUUIDValid request.
-func (client ArrayClient) PutUUIDValidPreparer(ctx context.Context, arrayBody []uuid.UUID) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsContentType("application/json; charset=utf-8"),
-		autorest.AsPut(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/array/prim/uuid/valid"),
-		autorest.WithJSON(arrayBody))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    // PutUUIDValidPreparer prepares the PutUUIDValid request.
+    func (client ArrayClient) PutUUIDValidPreparer(ctx context.Context, arrayBody []uuid.UUID) (*http.Request, error) {
+    preparer := autorest.CreatePreparer(
+autorest.AsContentType("application/json; charset=utf-8"),
+autorest.AsPut(),
+autorest.WithBaseURL(client.BaseURI),
+autorest.WithPath("/array/prim/uuid/valid"),
+autorest.WithJSON(arrayBody))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// PutUUIDValidSender sends the PutUUIDValid request. The method will close the
-// http.Response Body if it receives an error.
-func (client ArrayClient) PutUUIDValidSender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // PutUUIDValidSender sends the PutUUIDValid request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client ArrayClient) PutUUIDValidSender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// PutUUIDValidResponder handles the response to the PutUUIDValid request. The method always
-// closes the http.Response Body.
-func (client ArrayClient) PutUUIDValidResponder(resp *http.Response) (result autorest.Response, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByClosing())
-	result.Response = resp
-	return
-}
+    // PutUUIDValidResponder handles the response to the PutUUIDValid request. The method always
+    // closes the http.Response Body.
+    func (client ArrayClient) PutUUIDValidResponder(resp *http.Response) (result autorest.Response, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByClosing())
+            result.Response = resp
+            return
+    }
+

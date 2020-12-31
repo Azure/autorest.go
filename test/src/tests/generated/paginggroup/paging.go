@@ -361,9 +361,9 @@ func (client PagingClient) GetMultiplePagesFailureURIComplete(ctx context.Contex
 
 // GetMultiplePagesFragmentNextLink a paging operation that doesn't return a full URL, just a fragment
 // Parameters:
-// APIVersion - sets the api version to use.
 // tenant - sets the tenant to use.
-func (client PagingClient) GetMultiplePagesFragmentNextLink(ctx context.Context, APIVersion string, tenant string) (result OdataProductResultPage, err error) {
+// APIVersion - sets the api version to use.
+func (client PagingClient) GetMultiplePagesFragmentNextLink(ctx context.Context, tenant string, APIVersion string) (result OdataProductResultPage, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/PagingClient.GetMultiplePagesFragmentNextLink")
 		defer func() {
@@ -378,9 +378,9 @@ func (client PagingClient) GetMultiplePagesFragmentNextLink(ctx context.Context,
 		if lastResult.OdataNextLink == nil || len(to.String(lastResult.OdataNextLink)) < 1 {
 			return OdataProductResult{}, nil
 		}
-		return client.NextFragment(ctx, APIVersion, tenant, *lastResult.OdataNextLink)
+		return client.NextFragment(ctx, tenant, APIVersion, *lastResult.OdataNextLink)
 	}
-	req, err := client.GetMultiplePagesFragmentNextLinkPreparer(ctx, APIVersion, tenant)
+	req, err := client.GetMultiplePagesFragmentNextLinkPreparer(ctx, tenant, APIVersion)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetMultiplePagesFragmentNextLink", nil, "Failure preparing request")
 		return
@@ -407,7 +407,7 @@ func (client PagingClient) GetMultiplePagesFragmentNextLink(ctx context.Context,
 }
 
 // GetMultiplePagesFragmentNextLinkPreparer prepares the GetMultiplePagesFragmentNextLink request.
-func (client PagingClient) GetMultiplePagesFragmentNextLinkPreparer(ctx context.Context, APIVersion string, tenant string) (*http.Request, error) {
+func (client PagingClient) GetMultiplePagesFragmentNextLinkPreparer(ctx context.Context, tenant string, APIVersion string) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
 		"tenant": autorest.Encode("path", tenant),
 	}
@@ -443,7 +443,7 @@ func (client PagingClient) GetMultiplePagesFragmentNextLinkResponder(resp *http.
 }
 
 // GetMultiplePagesFragmentNextLinkComplete enumerates all values, automatically crossing page boundaries as required.
-func (client PagingClient) GetMultiplePagesFragmentNextLinkComplete(ctx context.Context, APIVersion string, tenant string) (result OdataProductResultIterator, err error) {
+func (client PagingClient) GetMultiplePagesFragmentNextLinkComplete(ctx context.Context, tenant string, APIVersion string) (result OdataProductResultIterator, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/PagingClient.GetMultiplePagesFragmentNextLink")
 		defer func() {
@@ -454,16 +454,16 @@ func (client PagingClient) GetMultiplePagesFragmentNextLinkComplete(ctx context.
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	result.page, err = client.GetMultiplePagesFragmentNextLink(ctx, APIVersion, tenant)
+	result.page, err = client.GetMultiplePagesFragmentNextLink(ctx, tenant, APIVersion)
 	return
 }
 
 // GetMultiplePagesFragmentWithGroupingNextLink a paging operation that doesn't return a full URL, just a fragment with
 // parameters grouped
 // Parameters:
-// APIVersion - sets the api version to use.
 // tenant - sets the tenant to use.
-func (client PagingClient) GetMultiplePagesFragmentWithGroupingNextLink(ctx context.Context, APIVersion string, tenant string) (result OdataProductResultPage, err error) {
+// APIVersion - sets the api version to use.
+func (client PagingClient) GetMultiplePagesFragmentWithGroupingNextLink(ctx context.Context, tenant string, APIVersion string) (result OdataProductResultPage, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/PagingClient.GetMultiplePagesFragmentWithGroupingNextLink")
 		defer func() {
@@ -478,9 +478,9 @@ func (client PagingClient) GetMultiplePagesFragmentWithGroupingNextLink(ctx cont
 		if lastResult.OdataNextLink == nil || len(to.String(lastResult.OdataNextLink)) < 1 {
 			return OdataProductResult{}, nil
 		}
-		return client.NextFragmentWithGrouping(ctx, APIVersion, tenant, *lastResult.OdataNextLink)
+		return client.NextFragmentWithGrouping(ctx, tenant, APIVersion, *lastResult.OdataNextLink)
 	}
-	req, err := client.GetMultiplePagesFragmentWithGroupingNextLinkPreparer(ctx, APIVersion, tenant)
+	req, err := client.GetMultiplePagesFragmentWithGroupingNextLinkPreparer(ctx, tenant, APIVersion)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetMultiplePagesFragmentWithGroupingNextLink", nil, "Failure preparing request")
 		return
@@ -507,7 +507,7 @@ func (client PagingClient) GetMultiplePagesFragmentWithGroupingNextLink(ctx cont
 }
 
 // GetMultiplePagesFragmentWithGroupingNextLinkPreparer prepares the GetMultiplePagesFragmentWithGroupingNextLink request.
-func (client PagingClient) GetMultiplePagesFragmentWithGroupingNextLinkPreparer(ctx context.Context, APIVersion string, tenant string) (*http.Request, error) {
+func (client PagingClient) GetMultiplePagesFragmentWithGroupingNextLinkPreparer(ctx context.Context, tenant string, APIVersion string) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
 		"tenant": autorest.Encode("path", tenant),
 	}
@@ -543,7 +543,7 @@ func (client PagingClient) GetMultiplePagesFragmentWithGroupingNextLinkResponder
 }
 
 // GetMultiplePagesFragmentWithGroupingNextLinkComplete enumerates all values, automatically crossing page boundaries as required.
-func (client PagingClient) GetMultiplePagesFragmentWithGroupingNextLinkComplete(ctx context.Context, APIVersion string, tenant string) (result OdataProductResultIterator, err error) {
+func (client PagingClient) GetMultiplePagesFragmentWithGroupingNextLinkComplete(ctx context.Context, tenant string, APIVersion string) (result OdataProductResultIterator, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/PagingClient.GetMultiplePagesFragmentWithGroupingNextLink")
 		defer func() {
@@ -554,7 +554,7 @@ func (client PagingClient) GetMultiplePagesFragmentWithGroupingNextLinkComplete(
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	result.page, err = client.GetMultiplePagesFragmentWithGroupingNextLink(ctx, APIVersion, tenant)
+	result.page, err = client.GetMultiplePagesFragmentWithGroupingNextLink(ctx, tenant, APIVersion)
 	return
 }
 
@@ -1507,10 +1507,10 @@ func (client PagingClient) GetSinglePagesFailureComplete(ctx context.Context) (r
 
 // NextFragment a paging operation that doesn't return a full URL, just a fragment
 // Parameters:
-// APIVersion - sets the api version to use.
 // tenant - sets the tenant to use.
 // nextLink - next link for list operation.
-func (client PagingClient) NextFragment(ctx context.Context, APIVersion string, tenant string, nextLink string) (result OdataProductResult, err error) {
+// APIVersion - sets the api version to use.
+func (client PagingClient) NextFragment(ctx context.Context, tenant string, nextLink string, APIVersion string) (result OdataProductResult, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/PagingClient.NextFragment")
 		defer func() {
@@ -1521,7 +1521,7 @@ func (client PagingClient) NextFragment(ctx context.Context, APIVersion string, 
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	req, err := client.NextFragmentPreparer(ctx, APIVersion, tenant, nextLink)
+	req, err := client.NextFragmentPreparer(ctx, tenant, nextLink, APIVersion)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "NextFragment", nil, "Failure preparing request")
 		return
@@ -1544,7 +1544,7 @@ func (client PagingClient) NextFragment(ctx context.Context, APIVersion string, 
 }
 
 // NextFragmentPreparer prepares the NextFragment request.
-func (client PagingClient) NextFragmentPreparer(ctx context.Context, APIVersion string, tenant string, nextLink string) (*http.Request, error) {
+func (client PagingClient) NextFragmentPreparer(ctx context.Context, tenant string, nextLink string, APIVersion string) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
 		"nextLink": nextLink,
 		"tenant":   autorest.Encode("path", tenant),
@@ -1582,10 +1582,10 @@ func (client PagingClient) NextFragmentResponder(resp *http.Response) (result Od
 
 // NextFragmentWithGrouping a paging operation that doesn't return a full URL, just a fragment
 // Parameters:
-// APIVersion - sets the api version to use.
 // tenant - sets the tenant to use.
 // nextLink - next link for list operation.
-func (client PagingClient) NextFragmentWithGrouping(ctx context.Context, APIVersion string, tenant string, nextLink string) (result OdataProductResult, err error) {
+// APIVersion - sets the api version to use.
+func (client PagingClient) NextFragmentWithGrouping(ctx context.Context, tenant string, nextLink string, APIVersion string) (result OdataProductResult, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/PagingClient.NextFragmentWithGrouping")
 		defer func() {
@@ -1596,7 +1596,7 @@ func (client PagingClient) NextFragmentWithGrouping(ctx context.Context, APIVers
 			tracing.EndSpan(ctx, sc, err)
 		}()
 	}
-	req, err := client.NextFragmentWithGroupingPreparer(ctx, APIVersion, tenant, nextLink)
+	req, err := client.NextFragmentWithGroupingPreparer(ctx, tenant, nextLink, APIVersion)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "NextFragmentWithGrouping", nil, "Failure preparing request")
 		return
@@ -1619,7 +1619,7 @@ func (client PagingClient) NextFragmentWithGrouping(ctx context.Context, APIVers
 }
 
 // NextFragmentWithGroupingPreparer prepares the NextFragmentWithGrouping request.
-func (client PagingClient) NextFragmentWithGroupingPreparer(ctx context.Context, APIVersion string, tenant string, nextLink string) (*http.Request, error) {
+func (client PagingClient) NextFragmentWithGroupingPreparer(ctx context.Context, tenant string, nextLink string, APIVersion string) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
 		"nextLink": nextLink,
 		"tenant":   autorest.Encode("path", tenant),

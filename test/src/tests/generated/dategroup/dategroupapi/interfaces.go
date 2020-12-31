@@ -7,22 +7,22 @@ package dategroupapi
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-	"context"
-	"github.com/Azure/go-autorest/autorest"
-	"github.com/Azure/go-autorest/autorest/date"
-	"tests/generated/dategroup"
+    "context"
+    "tests/generated/dategroup"
+    "github.com/Azure/go-autorest/autorest/date"
+    "github.com/Azure/go-autorest/autorest"
 )
 
-// DateClientAPI contains the set of methods on the DateClient type.
-type DateClientAPI interface {
-	GetInvalidDate(ctx context.Context) (result dategroup.DateModel, err error)
-	GetMaxDate(ctx context.Context) (result dategroup.DateModel, err error)
-	GetMinDate(ctx context.Context) (result dategroup.DateModel, err error)
-	GetNull(ctx context.Context) (result dategroup.DateModel, err error)
-	GetOverflowDate(ctx context.Context) (result dategroup.DateModel, err error)
-	GetUnderflowDate(ctx context.Context) (result dategroup.DateModel, err error)
-	PutMaxDate(ctx context.Context, dateBody date.Date) (result autorest.Response, err error)
-	PutMinDate(ctx context.Context, dateBody date.Date) (result autorest.Response, err error)
-}
+        // DateClientAPI contains the set of methods on the DateClient type.
+        type DateClientAPI interface {
+            GetInvalidDate(ctx context.Context) (result dategroup.DateModel, err error)
+            GetMaxDate(ctx context.Context) (result dategroup.DateModel, err error)
+            GetMinDate(ctx context.Context) (result dategroup.DateModel, err error)
+            GetNull(ctx context.Context) (result dategroup.DateModel, err error)
+            GetOverflowDate(ctx context.Context) (result dategroup.DateModel, err error)
+            GetUnderflowDate(ctx context.Context) (result dategroup.DateModel, err error)
+            PutMaxDate(ctx context.Context, dateBody date.Date) (result autorest.Response, err error)
+            PutMinDate(ctx context.Context, dateBody date.Date) (result autorest.Response, err error)
+        }
 
-var _ DateClientAPI = (*dategroup.DateClient)(nil)
+        var _ DateClientAPI = (*dategroup.DateClient)(nil)

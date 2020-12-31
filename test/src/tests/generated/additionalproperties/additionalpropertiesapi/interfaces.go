@@ -7,18 +7,18 @@ package additionalpropertiesapi
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-	"context"
-	"tests/generated/additionalproperties"
+    "context"
+    "tests/generated/additionalproperties"
 )
 
-// PetsClientAPI contains the set of methods on the PetsClient type.
-type PetsClientAPI interface {
-	CreateAPInProperties(ctx context.Context, createParameters additionalproperties.PetAPInProperties) (result additionalproperties.PetAPInProperties, err error)
-	CreateAPInPropertiesWithAPString(ctx context.Context, createParameters additionalproperties.PetAPInPropertiesWithAPString) (result additionalproperties.PetAPInPropertiesWithAPString, err error)
-	CreateAPObject(ctx context.Context, createParameters additionalproperties.PetAPObject) (result additionalproperties.PetAPObject, err error)
-	CreateAPString(ctx context.Context, createParameters additionalproperties.PetAPString) (result additionalproperties.PetAPString, err error)
-	CreateAPTrue(ctx context.Context, createParameters additionalproperties.PetAPTrue) (result additionalproperties.PetAPTrue, err error)
-	CreateCatAPTrue(ctx context.Context, createParameters additionalproperties.CatAPTrue) (result additionalproperties.CatAPTrue, err error)
-}
+        // PetsClientAPI contains the set of methods on the PetsClient type.
+        type PetsClientAPI interface {
+            CreateAPInProperties(ctx context.Context, createParameters additionalproperties.PetAPInProperties) (result additionalproperties.PetAPInProperties, err error)
+            CreateAPInPropertiesWithAPString(ctx context.Context, createParameters additionalproperties.PetAPInPropertiesWithAPString) (result additionalproperties.PetAPInPropertiesWithAPString, err error)
+            CreateAPObject(ctx context.Context, createParameters additionalproperties.PetAPObject) (result additionalproperties.PetAPObject, err error)
+            CreateAPString(ctx context.Context, createParameters additionalproperties.PetAPString) (result additionalproperties.PetAPString, err error)
+            CreateAPTrue(ctx context.Context, createParameters additionalproperties.PetAPTrue) (result additionalproperties.PetAPTrue, err error)
+            CreateCatAPTrue(ctx context.Context, createParameters additionalproperties.CatAPTrue) (result additionalproperties.CatAPTrue, err error)
+        }
 
-var _ PetsClientAPI = (*additionalproperties.PetsClient)(nil)
+        var _ PetsClientAPI = (*additionalproperties.PetsClient)(nil)

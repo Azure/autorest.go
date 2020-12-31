@@ -7,21 +7,22 @@ package datetimerfc1123group
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-	"github.com/Azure/go-autorest/autorest"
-	"github.com/Azure/go-autorest/autorest/date"
+    "github.com/Azure/go-autorest/autorest"
+    "github.com/Azure/go-autorest/autorest/date"
 )
 
 // The package's fully qualified name.
 const fqdn = "tests/generated/datetimerfc1123group"
 
-// DateTimeRfc1123 ...
-type DateTimeRfc1123 struct {
-	autorest.Response `json:"-"`
-	Value             *date.TimeRFC1123 `json:"value,omitempty"`
-}
+            // DateTimeRfc1123 ...
+            type DateTimeRfc1123 struct {
+            autorest.Response `json:"-"`
+            Value *date.TimeRFC1123 `json:"value,omitempty"`
+            }
 
-// Error ...
-type Error struct {
-	Status  *int32  `json:"status,omitempty"`
-	Message *string `json:"message,omitempty"`
-}
+            // Error ...
+            type Error struct {
+            Status *int32 `json:"status,omitempty"`
+            Message *string `json:"message,omitempty"`
+            }
+

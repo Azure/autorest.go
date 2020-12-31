@@ -7,27 +7,28 @@ package numbergroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-	"github.com/Azure/go-autorest/autorest"
-	"github.com/shopspring/decimal"
+    "github.com/Azure/go-autorest/autorest"
+    "github.com/shopspring/decimal"
 )
 
 // The package's fully qualified name.
 const fqdn = "tests/generated/numbergroup"
 
-// Decimal ...
-type Decimal struct {
-	autorest.Response `json:"-"`
-	Value             *decimal.Decimal `json:"value,omitempty"`
-}
+            // Decimal ...
+            type Decimal struct {
+            autorest.Response `json:"-"`
+            Value *decimal.Decimal `json:"value,omitempty"`
+            }
 
-// Error ...
-type Error struct {
-	Status  *int32  `json:"status,omitempty"`
-	Message *string `json:"message,omitempty"`
-}
+            // Error ...
+            type Error struct {
+            Status *int32 `json:"status,omitempty"`
+            Message *string `json:"message,omitempty"`
+            }
 
-// Float64 ...
-type Float64 struct {
-	autorest.Response `json:"-"`
-	Value             *float64 `json:"value,omitempty"`
-}
+            // Float64 ...
+            type Float64 struct {
+            autorest.Response `json:"-"`
+            Value *float64 `json:"value,omitempty"`
+            }
+

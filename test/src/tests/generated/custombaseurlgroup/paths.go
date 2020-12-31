@@ -7,86 +7,86 @@ package custombaseurlgroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-	"context"
-	"github.com/Azure/go-autorest/autorest"
-	"github.com/Azure/go-autorest/autorest/azure"
-	"github.com/Azure/go-autorest/tracing"
-	"net/http"
+    "github.com/Azure/go-autorest/autorest"
+    "github.com/Azure/go-autorest/autorest/azure"
+    "net/http"
+    "context"
+    "github.com/Azure/go-autorest/tracing"
 )
 
 // PathsClient is the test Infrastructure for AutoRest
 type PathsClient struct {
-	BaseClient
+    BaseClient
 }
-
 // NewPathsClient creates an instance of the PathsClient client.
 func NewPathsClient() PathsClient {
-	return PathsClient{New()}
+    return PathsClient{ New()}
 }
 
 // GetEmpty get a 200 to test a valid base uri
-// Parameters:
-// accountName - account Name
+    // Parameters:
+        // accountName - account Name
 func (client PathsClient) GetEmpty(ctx context.Context, accountName string) (result autorest.Response, err error) {
-	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fqdn+"/PathsClient.GetEmpty")
-		defer func() {
-			sc := -1
-			if result.Response != nil {
-				sc = result.Response.StatusCode
-			}
-			tracing.EndSpan(ctx, sc, err)
-		}()
-	}
-	req, err := client.GetEmptyPreparer(ctx, accountName)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "custombaseurlgroup.PathsClient", "GetEmpty", nil, "Failure preparing request")
-		return
-	}
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fqdn + "/PathsClient.GetEmpty")
+        defer func() {
+            sc := -1
+        if result.Response != nil {
+        sc = result.Response.StatusCode
+        }
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
+    req, err := client.GetEmptyPreparer(ctx, accountName)
+    if err != nil {
+    err = autorest.NewErrorWithError(err, "custombaseurlgroup.PathsClient", "GetEmpty", nil , "Failure preparing request")
+    return
+    }
 
-	resp, err := client.GetEmptySender(req)
-	if err != nil {
-		result.Response = resp
-		err = autorest.NewErrorWithError(err, "custombaseurlgroup.PathsClient", "GetEmpty", resp, "Failure sending request")
-		return
-	}
+        resp, err := client.GetEmptySender(req)
+        if err != nil {
+        result.Response = resp
+        err = autorest.NewErrorWithError(err, "custombaseurlgroup.PathsClient", "GetEmpty", resp, "Failure sending request")
+        return
+        }
 
-	result, err = client.GetEmptyResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "custombaseurlgroup.PathsClient", "GetEmpty", resp, "Failure responding to request")
-		return
-	}
+        result, err = client.GetEmptyResponder(resp)
+        if err != nil {
+        err = autorest.NewErrorWithError(err, "custombaseurlgroup.PathsClient", "GetEmpty", resp, "Failure responding to request")
+        return
+        }
 
-	return
+    return
 }
 
-// GetEmptyPreparer prepares the GetEmpty request.
-func (client PathsClient) GetEmptyPreparer(ctx context.Context, accountName string) (*http.Request, error) {
-	urlParameters := map[string]interface{}{
-		"accountName": accountName,
-		"host":        client.Host,
-	}
+    // GetEmptyPreparer prepares the GetEmpty request.
+    func (client PathsClient) GetEmptyPreparer(ctx context.Context, accountName string) (*http.Request, error) {
+        urlParameters := map[string]interface{} {
+        "accountName": accountName,
+        "host": client.Host,
+        }
 
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithCustomBaseURL("http://{accountName}{host}", urlParameters),
-		autorest.WithPath("/customuri"))
-	return preparer.Prepare((&http.Request{}).WithContext(ctx))
-}
+    preparer := autorest.CreatePreparer(
+autorest.AsGet(),
+autorest.WithCustomBaseURL("http://{accountName}{host}", urlParameters),
+autorest.WithPath("/customuri"))
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
+    }
 
-// GetEmptySender sends the GetEmpty request. The method will close the
-// http.Response Body if it receives an error.
-func (client PathsClient) GetEmptySender(req *http.Request) (*http.Response, error) {
-	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
+    // GetEmptySender sends the GetEmpty request. The method will close the
+    // http.Response Body if it receives an error.
+    func (client PathsClient) GetEmptySender(req *http.Request) (*http.Response, error) {
+            return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            }
 
-// GetEmptyResponder handles the response to the GetEmpty request. The method always
-// closes the http.Response Body.
-func (client PathsClient) GetEmptyResponder(resp *http.Response) (result autorest.Response, err error) {
-	err = autorest.Respond(
-		resp,
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByClosing())
-	result.Response = resp
-	return
-}
+    // GetEmptyResponder handles the response to the GetEmpty request. The method always
+    // closes the http.Response Body.
+    func (client PathsClient) GetEmptyResponder(resp *http.Response) (result autorest.Response, err error) {
+            err = autorest.Respond(
+            resp,
+            azure.WithErrorUnlessStatusCode(http.StatusOK),
+            autorest.ByClosing())
+            result.Response = resp
+            return
+    }
+

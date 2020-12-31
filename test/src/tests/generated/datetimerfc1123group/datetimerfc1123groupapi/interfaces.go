@@ -7,23 +7,23 @@ package datetimerfc1123groupapi
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-	"context"
-	"github.com/Azure/go-autorest/autorest"
-	"github.com/Azure/go-autorest/autorest/date"
-	"tests/generated/datetimerfc1123group"
+    "context"
+    "tests/generated/datetimerfc1123group"
+    "github.com/Azure/go-autorest/autorest/date"
+    "github.com/Azure/go-autorest/autorest"
 )
 
-// Datetimerfc1123ClientAPI contains the set of methods on the Datetimerfc1123Client type.
-type Datetimerfc1123ClientAPI interface {
-	GetInvalid(ctx context.Context) (result datetimerfc1123group.DateTimeRfc1123, err error)
-	GetNull(ctx context.Context) (result datetimerfc1123group.DateTimeRfc1123, err error)
-	GetOverflow(ctx context.Context) (result datetimerfc1123group.DateTimeRfc1123, err error)
-	GetUnderflow(ctx context.Context) (result datetimerfc1123group.DateTimeRfc1123, err error)
-	GetUtcLowercaseMaxDateTime(ctx context.Context) (result datetimerfc1123group.DateTimeRfc1123, err error)
-	GetUtcMinDateTime(ctx context.Context) (result datetimerfc1123group.DateTimeRfc1123, err error)
-	GetUtcUppercaseMaxDateTime(ctx context.Context) (result datetimerfc1123group.DateTimeRfc1123, err error)
-	PutUtcMaxDateTime(ctx context.Context, datetimeBody date.TimeRFC1123) (result autorest.Response, err error)
-	PutUtcMinDateTime(ctx context.Context, datetimeBody date.TimeRFC1123) (result autorest.Response, err error)
-}
+        // Datetimerfc1123ClientAPI contains the set of methods on the Datetimerfc1123Client type.
+        type Datetimerfc1123ClientAPI interface {
+            GetInvalid(ctx context.Context) (result datetimerfc1123group.DateTimeRfc1123, err error)
+            GetNull(ctx context.Context) (result datetimerfc1123group.DateTimeRfc1123, err error)
+            GetOverflow(ctx context.Context) (result datetimerfc1123group.DateTimeRfc1123, err error)
+            GetUnderflow(ctx context.Context) (result datetimerfc1123group.DateTimeRfc1123, err error)
+            GetUtcLowercaseMaxDateTime(ctx context.Context) (result datetimerfc1123group.DateTimeRfc1123, err error)
+            GetUtcMinDateTime(ctx context.Context) (result datetimerfc1123group.DateTimeRfc1123, err error)
+            GetUtcUppercaseMaxDateTime(ctx context.Context) (result datetimerfc1123group.DateTimeRfc1123, err error)
+            PutUtcMaxDateTime(ctx context.Context, datetimeBody date.TimeRFC1123) (result autorest.Response, err error)
+            PutUtcMinDateTime(ctx context.Context, datetimeBody date.TimeRFC1123) (result autorest.Response, err error)
+        }
 
-var _ Datetimerfc1123ClientAPI = (*datetimerfc1123group.Datetimerfc1123Client)(nil)
+        var _ Datetimerfc1123ClientAPI = (*datetimerfc1123group.Datetimerfc1123Client)(nil)

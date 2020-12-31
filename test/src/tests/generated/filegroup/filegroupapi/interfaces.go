@@ -7,15 +7,15 @@ package filegroupapi
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-	"context"
-	"tests/generated/filegroup"
+    "context"
+    "tests/generated/filegroup"
 )
 
-// FilesClientAPI contains the set of methods on the FilesClient type.
-type FilesClientAPI interface {
-	GetEmptyFile(ctx context.Context) (result filegroup.ReadCloser, err error)
-	GetFile(ctx context.Context) (result filegroup.ReadCloser, err error)
-	GetFileLarge(ctx context.Context) (result filegroup.ReadCloser, err error)
-}
+        // FilesClientAPI contains the set of methods on the FilesClient type.
+        type FilesClientAPI interface {
+            GetEmptyFile(ctx context.Context) (result filegroup.ReadCloser, err error)
+            GetFile(ctx context.Context) (result filegroup.ReadCloser, err error)
+            GetFileLarge(ctx context.Context) (result filegroup.ReadCloser, err error)
+        }
 
-var _ FilesClientAPI = (*filegroup.FilesClient)(nil)
+        var _ FilesClientAPI = (*filegroup.FilesClient)(nil)

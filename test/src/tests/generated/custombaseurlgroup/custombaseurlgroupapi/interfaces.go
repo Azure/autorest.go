@@ -7,14 +7,14 @@ package custombaseurlgroupapi
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-	"context"
-	"github.com/Azure/go-autorest/autorest"
-	"tests/generated/custombaseurlgroup"
+    "context"
+    "tests/generated/custombaseurlgroup"
+    "github.com/Azure/go-autorest/autorest"
 )
 
-// PathsClientAPI contains the set of methods on the PathsClient type.
-type PathsClientAPI interface {
-	GetEmpty(ctx context.Context, accountName string) (result autorest.Response, err error)
-}
+        // PathsClientAPI contains the set of methods on the PathsClient type.
+        type PathsClientAPI interface {
+            GetEmpty(ctx context.Context, accountName string) (result autorest.Response, err error)
+        }
 
-var _ PathsClientAPI = (*custombaseurlgroup.PathsClient)(nil)
+        var _ PathsClientAPI = (*custombaseurlgroup.PathsClient)(nil)
