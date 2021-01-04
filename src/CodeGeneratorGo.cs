@@ -155,7 +155,7 @@ namespace AutoRest.Go
             {
                 var metadataTemplate = new MetadataTemplate
                 {
-                    Model = new MetadataGo(Settings.Instance.Host.GetValue<string[]>("input-file").Result, folder)
+                    Model = new MetadataGo(Settings.Instance.Host.GetValue<string[]>("input-file").Result, folder, ns)
                 };
                 var tag = Settings.Instance.Host.GetValue<string>("tag").Result;
                 await Write(metadataTemplate, $"{metadataOutputFolder}/{tag}.json");
