@@ -6,13 +6,15 @@
 @inherits AutoRest.Core.Template<AutoRest.Go.Model.MetadataGo>
 
 @{
-    var inputFiles = Model.InputFiles.Select(file => $"\"{file}\"");
-    var outputFolder = $"\"{Model.OutputFolder}\"";
+    // Escape the backslashes to avoid JSON syntax errors
+    var inputFiles = Model.InputFiles.Select(file => $"\"{file.Replace("\\", "\\\\")}\"");
+    var outputFolder = $"\"{Model.OutputFolder.Replace("\\", "\\\\")}\"";
+    var ns = $"\"{Model.Namespace}\"";
 }
 {
     "inputFiles": [
         @(string.Join(",\n", inputFiles))
     ],
-    "outputFolder": @outputFolder
+    "outputFolder": @outputFolder,
+    "namespace": @ns
 }
-

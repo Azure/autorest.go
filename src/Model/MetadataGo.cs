@@ -10,8 +10,11 @@ namespace AutoRest.Go.Model
 
         public string OutputFolder { get; }
 
-        public MetadataGo(string[] inputFiles, string outputFolder)
+        public string Namespace { get; }
+
+        public MetadataGo(string[] inputFiles, string outputFolder, string ns)
         {
+            this.Namespace = ns;
             this.InputFiles = inputFiles;
             this.OutputFolder = outputFolder;
         }
