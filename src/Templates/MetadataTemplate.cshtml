@@ -8,7 +8,7 @@
 @{
     // Escape the backslashes to avoid JSON syntax errors
     var inputFiles = Model.InputFiles.Select(file => $"\"{file.Replace("\\", "\\\\")}\"");
-    var outputFolder = $"\"{Model.OutputFolder}\"";
+    var outputFolder = $"\"{Model.OutputFolder.Replace("\\", "\\\\")}\"";
     var ns = $"\"{Model.Namespace}\"";
 }
 {
