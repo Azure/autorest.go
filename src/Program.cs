@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoRest.Core;
+using AutoRest.Core.Logging;
 using AutoRest.Core.Model;
 using AutoRest.Core.Parsing;
 using Microsoft.Perks.JsonRPC;
@@ -96,6 +97,12 @@ namespace AutoRest.Go
             using (plugin.Activate())
             {
                 Settings.Instance.Namespace = Settings.Instance.Namespace ?? CodeNamer.Instance.GetNamespaceName(altNamespace);
+                var intermediate = Settings.Instance.Host.GetValue<bool>("intermediate").Result;
+                if (intermediate)
+                {
+                    Logger.Instance.Log(new LogMessage(Category.Information, "Outputting intermediate model..."));
+                    WriteFile("./intermediate/model.json", modelAsJson, null);
+                }
                 var codeModel = plugin.Serializer.Load(modelAsJson);
                 codeModel = plugin.Transformer.TransformCodeModel(codeModel);
                 if (await GetValue<bool?>("sample-generation") ?? false)

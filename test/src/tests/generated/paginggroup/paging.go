@@ -582,7 +582,7 @@ func (client PagingClient) GetMultiplePagesLRO(ctx context.Context, clientReques
 
 	result, err = client.GetMultiplePagesLROSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetMultiplePagesLRO", result.Response(), "Failure sending request")
+		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetMultiplePagesLRO", nil, "Failure sending request")
 		return
 	}
 
@@ -621,7 +621,29 @@ func (client PagingClient) GetMultiplePagesLROSender(req *http.Request) (future 
 	if err != nil {
 		return
 	}
-	future.Future, err = azure.NewFutureFromResponse(resp)
+	var azf azure.Future
+	azf, err = azure.NewFutureFromResponse(resp)
+	future.FutureAPI = &azf
+	future.Result = func(client PagingClient) (prp ProductResultPage, err error) {
+		var done bool
+		done, err = future.DoneWithContext(context.Background(), client)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "paginggroup.PagingGetMultiplePagesLROFuture", "Result", future.Response(), "Polling failure")
+			return
+		}
+		if !done {
+			err = azure.NewAsyncOpIncompleteError("paginggroup.PagingGetMultiplePagesLROFuture")
+			return
+		}
+		sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+		if prp.pr.Response.Response, err = future.GetResult(sender); err == nil && prp.pr.Response.Response.StatusCode != http.StatusNoContent {
+			prp, err = client.GetMultiplePagesLROResponder(prp.pr.Response.Response)
+			if err != nil {
+				err = autorest.NewErrorWithError(err, "paginggroup.PagingGetMultiplePagesLROFuture", "Result", prp.pr.Response.Response, "Failure responding to request")
+			}
+		}
+		return
+	}
 	return
 }
 
@@ -674,7 +696,7 @@ func (client PagingClient) GetMultiplePagesLROComplete(ctx context.Context, clie
 	}
 	var future PagingGetMultiplePagesLROFuture
 	future, err = client.GetMultiplePagesLRO(ctx, clientRequestID, maxresults, timeout)
-	result.Future = future.Future
+	result.FutureAPI = future.FutureAPI
 	return
 }
 
