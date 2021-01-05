@@ -104,7 +104,7 @@ else
     <text>
         result, err = client.@(Model.SenderMethodName)(req)
         if err != nil {
-        err = @(Model.AutorestError("Failure sending request", "result.Response()"))
+        err = @(Model.AutorestError("Failure sending request"))
         return
         }
     </text>
@@ -283,13 +283,57 @@ else
     func (client @(Model.Owner)) @(Model.SenderMethodName)(req *http.Request) (@senderRetSig) {
     @if (Model.IsLongRunningOperation())
     {
+        var ftg = Model.ReturnType.Body.Cast<FutureTypeGo>();
+        var resultVar = ftg.ResultTypeName.ToVariableName();
+        var resultVarTarget = resultVar;
+        var futureTypeName = $"{Model.CodeModel.Namespace}.{ftg.Name}";
+        if (ftg.ResultType is PageTypeGo ptg)
+        {
+            resultVarTarget = $"{resultVarTarget}.{ptg.ResultFieldName}";
+        }
         <text>
             var resp *http.Response
             resp, err = client.Send(req, @Model.SendDecorators.EmitAsArguments())
             if err != nil {
             return
             }
-            future.Future, err = azure.NewFutureFromResponse(resp)
+            var azf azure.Future
+            azf, err = azure.NewFutureFromResponse(resp)
+            future.FutureAPI = &azf
+            future.Result = func(client @(Model.Owner)) (@resultVar @ftg.ResultTypeName, err error) {
+		        var done bool
+		        done, err = future.DoneWithContext(context.Background(), client)
+		        if err != nil {
+			        err = autorest.NewErrorWithError(err, "@futureTypeName", "Result", future.Response(), "Polling failure")
+			        return
+		        }
+		        if !done {
+			        err = azure.NewAsyncOpIncompleteError("@futureTypeName")
+			        return
+		        }
+		        @if (ftg.IsDefaultReturnType)
+                {
+                    // for default return types (i.e. autorest.Response)
+                    // assign the raw HTTP response to the *http.Response field
+                    @:@(resultVarTarget).Response = future.Response()
+                }
+                else
+                {
+                    // modeled return types embed autorest.Response as an anonymous field
+                    // so in order to assign the raw HTTP response to the *http.Response field
+                    // in it we need an extra ".Response" :(
+                    <text>
+                    sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+                    if @(resultVarTarget).Response.Response, err = future.GetResult(sender); err == nil && @(resultVarTarget).Response.Response.StatusCode != http.StatusNoContent {
+                        @resultVar, err = client.@(ftg.ResponderMethodName)(@(resultVarTarget).Response.Response)
+                        if err != nil {
+                            err = autorest.NewErrorWithError(err, "@futureTypeName", "Result", @(resultVarTarget).Response.Response, "Failure responding to request")
+                        }
+                    }
+                    </text>
+                }
+		        return
+	        }
             return
         </text>
     }
@@ -437,7 +481,7 @@ else
                 <text>
                     var future @Model.MethodReturnType()
                     future, err = client.@(Model.Name)(@(Model.HelperInvocationParameters()))
-                    result.Future = future.Future
+                    result.FutureAPI = future.FutureAPI
                 </text>
             }
             else
