@@ -59,6 +59,7 @@ func (client IntClient) GetInvalid(ctx context.Context) (result Int32, err error
 	result, err = client.GetInvalidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "integergroup.IntClient", "GetInvalid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -119,6 +120,7 @@ func (client IntClient) GetInvalidUnixTime(ctx context.Context) (result UnixTime
 	result, err = client.GetInvalidUnixTimeResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "integergroup.IntClient", "GetInvalidUnixTime", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -179,6 +181,7 @@ func (client IntClient) GetNull(ctx context.Context) (result Int32, err error) {
 	result, err = client.GetNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "integergroup.IntClient", "GetNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -239,6 +242,7 @@ func (client IntClient) GetNullUnixTime(ctx context.Context) (result UnixTime, e
 	result, err = client.GetNullUnixTimeResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "integergroup.IntClient", "GetNullUnixTime", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -299,6 +303,7 @@ func (client IntClient) GetOverflowInt32(ctx context.Context) (result Int32, err
 	result, err = client.GetOverflowInt32Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "integergroup.IntClient", "GetOverflowInt32", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -359,6 +364,7 @@ func (client IntClient) GetOverflowInt64(ctx context.Context) (result Int64, err
 	result, err = client.GetOverflowInt64Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "integergroup.IntClient", "GetOverflowInt64", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -419,6 +425,7 @@ func (client IntClient) GetUnderflowInt32(ctx context.Context) (result Int32, er
 	result, err = client.GetUnderflowInt32Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "integergroup.IntClient", "GetUnderflowInt32", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -479,6 +486,7 @@ func (client IntClient) GetUnderflowInt64(ctx context.Context) (result Int64, er
 	result, err = client.GetUnderflowInt64Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "integergroup.IntClient", "GetUnderflowInt64", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -539,6 +547,7 @@ func (client IntClient) GetUnixTime(ctx context.Context) (result UnixTime, err e
 	result, err = client.GetUnixTimeResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "integergroup.IntClient", "GetUnixTime", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -599,6 +608,7 @@ func (client IntClient) PutMax32(ctx context.Context, intBody int32) (result aut
 	result, err = client.PutMax32Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "integergroup.IntClient", "PutMax32", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -660,6 +670,7 @@ func (client IntClient) PutMax64(ctx context.Context, intBody int64) (result aut
 	result, err = client.PutMax64Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "integergroup.IntClient", "PutMax64", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -721,6 +732,7 @@ func (client IntClient) PutMin32(ctx context.Context, intBody int32) (result aut
 	result, err = client.PutMin32Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "integergroup.IntClient", "PutMin32", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -782,6 +794,7 @@ func (client IntClient) PutMin64(ctx context.Context, intBody int64) (result aut
 	result, err = client.PutMin64Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "integergroup.IntClient", "PutMin64", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -843,6 +856,7 @@ func (client IntClient) PutUnixTimeDate(ctx context.Context, intBody date.UnixTi
 	result, err = client.PutUnixTimeDateResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "integergroup.IntClient", "PutUnixTimeDate", resp, "Failure responding to request")
+		return
 	}
 
 	return

@@ -60,6 +60,7 @@ func (client HTTPRetryClient) Delete503(ctx context.Context, booleanValue *bool)
 	result, err = client.Delete503Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRetryClient", "Delete503", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -124,6 +125,7 @@ func (client HTTPRetryClient) Get502(ctx context.Context) (result autorest.Respo
 	result, err = client.Get502Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRetryClient", "Get502", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -183,6 +185,7 @@ func (client HTTPRetryClient) Head408(ctx context.Context) (result autorest.Resp
 	result, err = client.Head408Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRetryClient", "Head408", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -244,6 +247,7 @@ func (client HTTPRetryClient) Patch500(ctx context.Context, booleanValue *bool) 
 	result, err = client.Patch500Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRetryClient", "Patch500", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -310,6 +314,7 @@ func (client HTTPRetryClient) Patch504(ctx context.Context, booleanValue *bool) 
 	result, err = client.Patch504Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRetryClient", "Patch504", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -376,6 +381,7 @@ func (client HTTPRetryClient) Post503(ctx context.Context, booleanValue *bool) (
 	result, err = client.Post503Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRetryClient", "Post503", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -442,6 +448,7 @@ func (client HTTPRetryClient) Put500(ctx context.Context, booleanValue *bool) (r
 	result, err = client.Put500Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRetryClient", "Put500", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -508,6 +515,7 @@ func (client HTTPRetryClient) Put504(ctx context.Context, booleanValue *bool) (r
 	result, err = client.Put504Responder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRetryClient", "Put504", resp, "Failure responding to request")
+		return
 	}
 
 	return

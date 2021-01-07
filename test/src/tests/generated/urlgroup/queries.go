@@ -61,6 +61,7 @@ func (client QueriesClient) ArrayStringCsvEmpty(ctx context.Context, arrayQuery 
 	result, err = client.ArrayStringCsvEmptyResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "ArrayStringCsvEmpty", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -128,6 +129,7 @@ func (client QueriesClient) ArrayStringCsvNull(ctx context.Context, arrayQuery [
 	result, err = client.ArrayStringCsvNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "ArrayStringCsvNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -197,6 +199,7 @@ func (client QueriesClient) ArrayStringCsvValid(ctx context.Context, arrayQuery 
 	result, err = client.ArrayStringCsvValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "ArrayStringCsvValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -266,6 +269,7 @@ func (client QueriesClient) ArrayStringPipesValid(ctx context.Context, arrayQuer
 	result, err = client.ArrayStringPipesValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "ArrayStringPipesValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -335,6 +339,7 @@ func (client QueriesClient) ArrayStringSsvValid(ctx context.Context, arrayQuery 
 	result, err = client.ArrayStringSsvValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "ArrayStringSsvValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -404,6 +409,7 @@ func (client QueriesClient) ArrayStringTsvValid(ctx context.Context, arrayQuery 
 	result, err = client.ArrayStringTsvValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "ArrayStringTsvValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -469,6 +475,7 @@ func (client QueriesClient) ByteEmpty(ctx context.Context) (result autorest.Resp
 	result, err = client.ByteEmptyResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "ByteEmpty", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -535,6 +542,7 @@ func (client QueriesClient) ByteMultiByte(ctx context.Context, byteQuery []byte)
 	result, err = client.ByteMultiByteResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "ByteMultiByte", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -602,6 +610,7 @@ func (client QueriesClient) ByteNull(ctx context.Context, byteQuery []byte) (res
 	result, err = client.ByteNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "ByteNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -669,6 +678,7 @@ func (client QueriesClient) DateNull(ctx context.Context, dateQuery *date.Date) 
 	result, err = client.DateNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "DateNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -736,6 +746,7 @@ func (client QueriesClient) DateTimeNull(ctx context.Context, dateTimeQuery *dat
 	result, err = client.DateTimeNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "DateTimeNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -801,6 +812,7 @@ func (client QueriesClient) DateTimeValid(ctx context.Context) (result autorest.
 	result, err = client.DateTimeValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "DateTimeValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -865,6 +877,7 @@ func (client QueriesClient) DateValid(ctx context.Context) (result autorest.Resp
 	result, err = client.DateValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "DateValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -929,6 +942,7 @@ func (client QueriesClient) DoubleDecimalNegative(ctx context.Context) (result a
 	result, err = client.DoubleDecimalNegativeResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "DoubleDecimalNegative", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -993,6 +1007,7 @@ func (client QueriesClient) DoubleDecimalPositive(ctx context.Context) (result a
 	result, err = client.DoubleDecimalPositiveResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "DoubleDecimalPositive", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1059,6 +1074,7 @@ func (client QueriesClient) DoubleNull(ctx context.Context, doubleQuery *float64
 	result, err = client.DoubleNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "DoubleNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1126,6 +1142,7 @@ func (client QueriesClient) EnumNull(ctx context.Context, enumQuery URIColor) (r
 	result, err = client.EnumNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "EnumNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1193,6 +1210,7 @@ func (client QueriesClient) EnumValid(ctx context.Context, enumQuery URIColor) (
 	result, err = client.EnumValidResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "EnumValid", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1260,6 +1278,7 @@ func (client QueriesClient) FloatNull(ctx context.Context, floatQuery *float64) 
 	result, err = client.FloatNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "FloatNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1325,6 +1344,7 @@ func (client QueriesClient) FloatScientificNegative(ctx context.Context) (result
 	result, err = client.FloatScientificNegativeResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "FloatScientificNegative", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1389,6 +1409,7 @@ func (client QueriesClient) FloatScientificPositive(ctx context.Context) (result
 	result, err = client.FloatScientificPositiveResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "FloatScientificPositive", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1453,6 +1474,7 @@ func (client QueriesClient) GetBooleanFalse(ctx context.Context) (result autores
 	result, err = client.GetBooleanFalseResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "GetBooleanFalse", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1519,6 +1541,7 @@ func (client QueriesClient) GetBooleanNull(ctx context.Context, boolQuery *bool)
 	result, err = client.GetBooleanNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "GetBooleanNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1584,6 +1607,7 @@ func (client QueriesClient) GetBooleanTrue(ctx context.Context) (result autorest
 	result, err = client.GetBooleanTrueResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "GetBooleanTrue", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1648,6 +1672,7 @@ func (client QueriesClient) GetIntNegativeOneMillion(ctx context.Context) (resul
 	result, err = client.GetIntNegativeOneMillionResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "GetIntNegativeOneMillion", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1714,6 +1739,7 @@ func (client QueriesClient) GetIntNull(ctx context.Context, intQuery *int32) (re
 	result, err = client.GetIntNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "GetIntNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1779,6 +1805,7 @@ func (client QueriesClient) GetIntOneMillion(ctx context.Context) (result autore
 	result, err = client.GetIntOneMillionResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "GetIntOneMillion", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1845,6 +1872,7 @@ func (client QueriesClient) GetLongNull(ctx context.Context, longQuery *int64) (
 	result, err = client.GetLongNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "GetLongNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1910,6 +1938,7 @@ func (client QueriesClient) GetNegativeTenBillion(ctx context.Context) (result a
 	result, err = client.GetNegativeTenBillionResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "GetNegativeTenBillion", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1974,6 +2003,7 @@ func (client QueriesClient) GetTenBillion(ctx context.Context) (result autorest.
 	result, err = client.GetTenBillionResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "GetTenBillion", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -2038,6 +2068,7 @@ func (client QueriesClient) StringEmpty(ctx context.Context) (result autorest.Re
 	result, err = client.StringEmptyResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "StringEmpty", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -2104,6 +2135,7 @@ func (client QueriesClient) StringNull(ctx context.Context, stringQuery string) 
 	result, err = client.StringNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "StringNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -2169,6 +2201,7 @@ func (client QueriesClient) StringUnicode(ctx context.Context) (result autorest.
 	result, err = client.StringUnicodeResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "StringUnicode", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -2233,6 +2266,7 @@ func (client QueriesClient) StringURLEncoded(ctx context.Context) (result autore
 	result, err = client.StringURLEncodedResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "StringURLEncoded", resp, "Failure responding to request")
+		return
 	}
 
 	return

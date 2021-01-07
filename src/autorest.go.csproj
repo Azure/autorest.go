@@ -69,5 +69,8 @@
   <ItemGroup>
     <DotnetRazor Remove="Templates\EnumsTemplate.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <DotnetRazor Remove="Templates\MetadataTemplate.cshtml" />
+  </ItemGroup>
 
 </Project>

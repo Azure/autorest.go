@@ -71,6 +71,7 @@ func (client BaseClient) GetArray(ctx context.Context) (result ListFlattenedProd
 	result, err = client.GetArrayResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "modelflatteninggroup.BaseClient", "GetArray", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -131,6 +132,7 @@ func (client BaseClient) GetDictionary(ctx context.Context) (result SetFlattened
 	result, err = client.GetDictionaryResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "modelflatteninggroup.BaseClient", "GetDictionary", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -191,6 +193,7 @@ func (client BaseClient) GetResourceCollection(ctx context.Context) (result Reso
 	result, err = client.GetResourceCollectionResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "modelflatteninggroup.BaseClient", "GetResourceCollection", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -252,6 +255,7 @@ func (client BaseClient) GetWrappedArray(ctx context.Context) (result ListProduc
 	result, err = client.GetWrappedArrayResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "modelflatteninggroup.BaseClient", "GetWrappedArray", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -325,6 +329,7 @@ func (client BaseClient) PostFlattenedSimpleProduct(ctx context.Context, simpleB
 	result, err = client.PostFlattenedSimpleProductResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "modelflatteninggroup.BaseClient", "PostFlattenedSimpleProduct", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -392,6 +397,7 @@ func (client BaseClient) PutArray(ctx context.Context, resourceArray []Resource)
 	result, err = client.PutArrayResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "modelflatteninggroup.BaseClient", "PutArray", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -458,6 +464,7 @@ func (client BaseClient) PutDictionary(ctx context.Context, resourceDictionary m
 	result, err = client.PutDictionaryResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "modelflatteninggroup.BaseClient", "PutDictionary", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -524,6 +531,7 @@ func (client BaseClient) PutResourceCollection(ctx context.Context, resourceComp
 	result, err = client.PutResourceCollectionResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "modelflatteninggroup.BaseClient", "PutResourceCollection", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -601,6 +609,7 @@ func (client BaseClient) PutSimpleProduct(ctx context.Context, simpleBodyProduct
 	result, err = client.PutSimpleProductResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "modelflatteninggroup.BaseClient", "PutSimpleProduct", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -680,6 +689,7 @@ func (client BaseClient) PutSimpleProductWithGrouping(ctx context.Context, name 
 	result, err = client.PutSimpleProductWithGroupingResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "modelflatteninggroup.BaseClient", "PutSimpleProductWithGrouping", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -752,6 +762,7 @@ func (client BaseClient) PutWrappedArray(ctx context.Context, resourceArray []Wr
 	result, err = client.PutWrappedArrayResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "modelflatteninggroup.BaseClient", "PutWrappedArray", resp, "Failure responding to request")
+		return
 	}
 
 	return

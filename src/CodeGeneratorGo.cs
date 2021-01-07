@@ -43,7 +43,7 @@ namespace AutoRest.Go
         /// <returns></returns>
         public override async Task Generate(CodeModel cm)
         {
-            var folder = Settings.Instance.Host.GetValue<string>("output-folder").Result;
+            var folder = Path.GetFullPath(Settings.Instance.Host.GetValue<string>("output-folder").Result).Replace('\\', '/');
             // check if the namespace contains illegal characters
             var ns = Settings.Instance.Host.GetValue<string>("namespace").Result;
             var r = new Regex(@"^[a-z][a-z0-9_]*[a-z0-9]?$");
@@ -134,11 +134,10 @@ namespace AutoRest.Go
             var modRoot = Settings.Instance.Host.GetValue<string>("gomod-root").Result;
             if (!string.IsNullOrWhiteSpace(modRoot))
             {
-                var normalized = Path.GetFullPath(Settings.Instance.Host.GetValue<string>("output-folder").Result).Replace('\\', '/');
-                var i = normalized.IndexOf(modRoot);
+                var i = folder.IndexOf(modRoot);
                 if (i == -1)
                 {
-                    throw new Exception($"didn't find module root '{modRoot}' in output path '{normalized}'");
+                    throw new Exception($"didn't find module root '{modRoot}' in output path '{folder}'");
                 }
                 var goVersion = Settings.Instance.Host.GetValue<string>("go-version").Result;
                 if (string.IsNullOrWhiteSpace(goVersion)) 
@@ -146,8 +145,20 @@ namespace AutoRest.Go
                     goVersion = defaultGoVersion;
                 }
                 // module name is everything to the right of the start of the module root
-                var gomodTemplate = new GoModTemplate { Model = new GoMod(normalized.Substring(i), goVersion) };
+                var gomodTemplate = new GoModTemplate { Model = new GoMod(folder.Substring(i), goVersion) };
                 await Write(gomodTemplate, $"{StagingDir()}go.mod");
+            }
+
+            // metadata
+            var metadataOutputFolder = Settings.Instance.Host.GetValue<string>("metadata-output-folder").Result;
+            if (!string.IsNullOrWhiteSpace(metadataOutputFolder))
+            {
+                var metadataTemplate = new MetadataTemplate
+                {
+                    Model = new MetadataGo(Settings.Instance.Host.GetValue<string[]>("input-file").Result, folder, ns)
+                };
+                var tag = Settings.Instance.Host.GetValue<string>("tag").Result;
+                await Write(metadataTemplate, $"{metadataOutputFolder}/{tag}.json");
             }
         }
 

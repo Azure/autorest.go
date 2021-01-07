@@ -184,59 +184,19 @@ type OperationResult struct {
 // PagingGetMultiplePagesLROAllFuture an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type PagingGetMultiplePagesLROAllFuture struct {
-	azure.Future
-}
-
-// Result returns the result of the asynchronous operation.
-// If the operation has not completed it will return an error.
-func (future *PagingGetMultiplePagesLROAllFuture) Result(client PagingClient) (prp ProductResultPage, err error) {
-	var done bool
-	done, err = future.DoneWithContext(context.Background(), client)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "paginggroup.PagingGetMultiplePagesLROAllFuture", "Result", future.Response(), "Polling failure")
-		return
-	}
-	if !done {
-		err = azure.NewAsyncOpIncompleteError("paginggroup.PagingGetMultiplePagesLROAllFuture")
-		return
-	}
-	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if prp.pr.Response.Response, err = future.GetResult(sender); err == nil && prp.pr.Response.Response.StatusCode != http.StatusNoContent {
-		prp, err = client.GetMultiplePagesLROResponder(prp.pr.Response.Response)
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "paginggroup.PagingGetMultiplePagesLROAllFuture", "Result", prp.pr.Response.Response, "Failure responding to request")
-		}
-	}
-	return
+	azure.FutureAPI
+	// Result returns the result of the asynchronous operation.
+	// If the operation has not completed it will return an error.
+	Result func(PagingClient) (ProductResultPage, error)
 }
 
 // PagingGetMultiplePagesLROFuture an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type PagingGetMultiplePagesLROFuture struct {
-	azure.Future
-}
-
-// Result returns the result of the asynchronous operation.
-// If the operation has not completed it will return an error.
-func (future *PagingGetMultiplePagesLROFuture) Result(client PagingClient) (prp ProductResultPage, err error) {
-	var done bool
-	done, err = future.DoneWithContext(context.Background(), client)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "paginggroup.PagingGetMultiplePagesLROFuture", "Result", future.Response(), "Polling failure")
-		return
-	}
-	if !done {
-		err = azure.NewAsyncOpIncompleteError("paginggroup.PagingGetMultiplePagesLROFuture")
-		return
-	}
-	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if prp.pr.Response.Response, err = future.GetResult(sender); err == nil && prp.pr.Response.Response.StatusCode != http.StatusNoContent {
-		prp, err = client.GetMultiplePagesLROResponder(prp.pr.Response.Response)
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "paginggroup.PagingGetMultiplePagesLROFuture", "Result", prp.pr.Response.Response, "Failure responding to request")
-		}
-	}
-	return
+	azure.FutureAPI
+	// Result returns the result of the asynchronous operation.
+	// If the operation has not completed it will return an error.
+	Result func(PagingClient) (ProductResultPage, error)
 }
 
 // Product ...

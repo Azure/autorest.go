@@ -58,6 +58,7 @@ func (client ImplicitClient) GetOptionalGlobalQuery(ctx context.Context) (result
 	result, err = client.GetOptionalGlobalQueryResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ImplicitClient", "GetOptionalGlobalQuery", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -123,6 +124,7 @@ func (client ImplicitClient) GetRequiredGlobalPath(ctx context.Context) (result 
 	result, err = client.GetRequiredGlobalPathResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ImplicitClient", "GetRequiredGlobalPath", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -186,6 +188,7 @@ func (client ImplicitClient) GetRequiredGlobalQuery(ctx context.Context) (result
 	result, err = client.GetRequiredGlobalQueryResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ImplicitClient", "GetRequiredGlobalQuery", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -250,6 +253,7 @@ func (client ImplicitClient) GetRequiredPath(ctx context.Context, pathParameter 
 	result, err = client.GetRequiredPathResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ImplicitClient", "GetRequiredPath", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -313,6 +317,7 @@ func (client ImplicitClient) PutOptionalBody(ctx context.Context, bodyParameter 
 	result, err = client.PutOptionalBodyResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ImplicitClient", "PutOptionalBody", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -377,6 +382,7 @@ func (client ImplicitClient) PutOptionalHeader(ctx context.Context, queryParamet
 	result, err = client.PutOptionalHeaderResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ImplicitClient", "PutOptionalHeader", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -440,6 +446,7 @@ func (client ImplicitClient) PutOptionalQuery(ctx context.Context, queryParamete
 	result, err = client.PutOptionalQueryResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ImplicitClient", "PutOptionalQuery", resp, "Failure responding to request")
+		return
 	}
 
 	return

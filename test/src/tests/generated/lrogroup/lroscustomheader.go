@@ -55,7 +55,7 @@ func (client LROsCustomHeaderClient) Post202Retry200(ctx context.Context, produc
 
 	result, err = client.Post202Retry200Sender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsCustomHeaderClient", "Post202Retry200", result.Response(), "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsCustomHeaderClient", "Post202Retry200", nil, "Failure sending request")
 		return
 	}
 
@@ -84,7 +84,23 @@ func (client LROsCustomHeaderClient) Post202Retry200Sender(req *http.Request) (f
 	if err != nil {
 		return
 	}
-	future.Future, err = azure.NewFutureFromResponse(resp)
+	var azf azure.Future
+	azf, err = azure.NewFutureFromResponse(resp)
+	future.FutureAPI = &azf
+	future.Result = func(client LROsCustomHeaderClient) (ar autorest.Response, err error) {
+		var done bool
+		done, err = future.DoneWithContext(context.Background(), client)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsCustomHeaderPost202Retry200Future", "Result", future.Response(), "Polling failure")
+			return
+		}
+		if !done {
+			err = azure.NewAsyncOpIncompleteError("lrogroup.LROsCustomHeaderPost202Retry200Future")
+			return
+		}
+		ar.Response = future.Response()
+		return
+	}
 	return
 }
 
@@ -123,7 +139,7 @@ func (client LROsCustomHeaderClient) PostAsyncRetrySucceeded(ctx context.Context
 
 	result, err = client.PostAsyncRetrySucceededSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsCustomHeaderClient", "PostAsyncRetrySucceeded", result.Response(), "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsCustomHeaderClient", "PostAsyncRetrySucceeded", nil, "Failure sending request")
 		return
 	}
 
@@ -152,7 +168,23 @@ func (client LROsCustomHeaderClient) PostAsyncRetrySucceededSender(req *http.Req
 	if err != nil {
 		return
 	}
-	future.Future, err = azure.NewFutureFromResponse(resp)
+	var azf azure.Future
+	azf, err = azure.NewFutureFromResponse(resp)
+	future.FutureAPI = &azf
+	future.Result = func(client LROsCustomHeaderClient) (ar autorest.Response, err error) {
+		var done bool
+		done, err = future.DoneWithContext(context.Background(), client)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsCustomHeaderPostAsyncRetrySucceededFuture", "Result", future.Response(), "Polling failure")
+			return
+		}
+		if !done {
+			err = azure.NewAsyncOpIncompleteError("lrogroup.LROsCustomHeaderPostAsyncRetrySucceededFuture")
+			return
+		}
+		ar.Response = future.Response()
+		return
+	}
 	return
 }
 
@@ -192,7 +224,7 @@ func (client LROsCustomHeaderClient) Put201CreatingSucceeded200(ctx context.Cont
 
 	result, err = client.Put201CreatingSucceeded200Sender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsCustomHeaderClient", "Put201CreatingSucceeded200", result.Response(), "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsCustomHeaderClient", "Put201CreatingSucceeded200", nil, "Failure sending request")
 		return
 	}
 
@@ -221,7 +253,29 @@ func (client LROsCustomHeaderClient) Put201CreatingSucceeded200Sender(req *http.
 	if err != nil {
 		return
 	}
-	future.Future, err = azure.NewFutureFromResponse(resp)
+	var azf azure.Future
+	azf, err = azure.NewFutureFromResponse(resp)
+	future.FutureAPI = &azf
+	future.Result = func(client LROsCustomHeaderClient) (p Product, err error) {
+		var done bool
+		done, err = future.DoneWithContext(context.Background(), client)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsCustomHeaderPut201CreatingSucceeded200Future", "Result", future.Response(), "Polling failure")
+			return
+		}
+		if !done {
+			err = azure.NewAsyncOpIncompleteError("lrogroup.LROsCustomHeaderPut201CreatingSucceeded200Future")
+			return
+		}
+		sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+		if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+			p, err = client.Put201CreatingSucceeded200Responder(p.Response.Response)
+			if err != nil {
+				err = autorest.NewErrorWithError(err, "lrogroup.LROsCustomHeaderPut201CreatingSucceeded200Future", "Result", p.Response.Response, "Failure responding to request")
+			}
+		}
+		return
+	}
 	return
 }
 
@@ -261,7 +315,7 @@ func (client LROsCustomHeaderClient) PutAsyncRetrySucceeded(ctx context.Context,
 
 	result, err = client.PutAsyncRetrySucceededSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsCustomHeaderClient", "PutAsyncRetrySucceeded", result.Response(), "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsCustomHeaderClient", "PutAsyncRetrySucceeded", nil, "Failure sending request")
 		return
 	}
 
@@ -290,7 +344,29 @@ func (client LROsCustomHeaderClient) PutAsyncRetrySucceededSender(req *http.Requ
 	if err != nil {
 		return
 	}
-	future.Future, err = azure.NewFutureFromResponse(resp)
+	var azf azure.Future
+	azf, err = azure.NewFutureFromResponse(resp)
+	future.FutureAPI = &azf
+	future.Result = func(client LROsCustomHeaderClient) (p Product, err error) {
+		var done bool
+		done, err = future.DoneWithContext(context.Background(), client)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsCustomHeaderPutAsyncRetrySucceededFuture", "Result", future.Response(), "Polling failure")
+			return
+		}
+		if !done {
+			err = azure.NewAsyncOpIncompleteError("lrogroup.LROsCustomHeaderPutAsyncRetrySucceededFuture")
+			return
+		}
+		sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+		if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+			p, err = client.PutAsyncRetrySucceededResponder(p.Response.Response)
+			if err != nil {
+				err = autorest.NewErrorWithError(err, "lrogroup.LROsCustomHeaderPutAsyncRetrySucceededFuture", "Result", p.Response.Response, "Failure responding to request")
+			}
+		}
+		return
+	}
 	return
 }
 

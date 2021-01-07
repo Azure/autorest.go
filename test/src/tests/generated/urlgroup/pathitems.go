@@ -65,6 +65,7 @@ func (client PathItemsClient) GetAllWithValues(ctx context.Context, localStringP
 	result, err = client.GetAllWithValuesResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.PathItemsClient", "GetAllWithValues", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -149,6 +150,7 @@ func (client PathItemsClient) GetGlobalAndLocalQueryNull(ctx context.Context, lo
 	result, err = client.GetGlobalAndLocalQueryNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.PathItemsClient", "GetGlobalAndLocalQueryNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -233,6 +235,7 @@ func (client PathItemsClient) GetGlobalQueryNull(ctx context.Context, localStrin
 	result, err = client.GetGlobalQueryNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.PathItemsClient", "GetGlobalQueryNull", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -317,6 +320,7 @@ func (client PathItemsClient) GetLocalPathItemQueryNull(ctx context.Context, loc
 	result, err = client.GetLocalPathItemQueryNullResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.PathItemsClient", "GetLocalPathItemQueryNull", resp, "Failure responding to request")
+		return
 	}
 
 	return

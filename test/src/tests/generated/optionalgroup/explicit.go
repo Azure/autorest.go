@@ -59,6 +59,7 @@ func (client ExplicitClient) PostOptionalArrayHeader(ctx context.Context, header
 	result, err = client.PostOptionalArrayHeaderResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ExplicitClient", "PostOptionalArrayHeader", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -122,6 +123,7 @@ func (client ExplicitClient) PostOptionalArrayParameter(ctx context.Context, bod
 	result, err = client.PostOptionalArrayParameterResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ExplicitClient", "PostOptionalArrayParameter", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -186,6 +188,7 @@ func (client ExplicitClient) PostOptionalArrayProperty(ctx context.Context, body
 	result, err = client.PostOptionalArrayPropertyResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ExplicitClient", "PostOptionalArrayProperty", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -257,6 +260,7 @@ func (client ExplicitClient) PostOptionalClassParameter(ctx context.Context, bod
 	result, err = client.PostOptionalClassParameterResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ExplicitClient", "PostOptionalClassParameter", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -331,6 +335,7 @@ func (client ExplicitClient) PostOptionalClassProperty(ctx context.Context, body
 	result, err = client.PostOptionalClassPropertyResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ExplicitClient", "PostOptionalClassProperty", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -395,6 +400,7 @@ func (client ExplicitClient) PostOptionalIntegerHeader(ctx context.Context, head
 	result, err = client.PostOptionalIntegerHeaderResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ExplicitClient", "PostOptionalIntegerHeader", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -458,6 +464,7 @@ func (client ExplicitClient) PostOptionalIntegerParameter(ctx context.Context, b
 	result, err = client.PostOptionalIntegerParameterResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ExplicitClient", "PostOptionalIntegerParameter", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -522,6 +529,7 @@ func (client ExplicitClient) PostOptionalIntegerProperty(ctx context.Context, bo
 	result, err = client.PostOptionalIntegerPropertyResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ExplicitClient", "PostOptionalIntegerProperty", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -586,6 +594,7 @@ func (client ExplicitClient) PostOptionalStringHeader(ctx context.Context, bodyP
 	result, err = client.PostOptionalStringHeaderResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ExplicitClient", "PostOptionalStringHeader", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -649,6 +658,7 @@ func (client ExplicitClient) PostOptionalStringParameter(ctx context.Context, bo
 	result, err = client.PostOptionalStringParameterResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ExplicitClient", "PostOptionalStringParameter", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -713,6 +723,7 @@ func (client ExplicitClient) PostOptionalStringProperty(ctx context.Context, bod
 	result, err = client.PostOptionalStringPropertyResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ExplicitClient", "PostOptionalStringProperty", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -784,6 +795,7 @@ func (client ExplicitClient) PostRequiredArrayHeader(ctx context.Context, header
 	result, err = client.PostRequiredArrayHeaderResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ExplicitClient", "PostRequiredArrayHeader", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -851,6 +863,7 @@ func (client ExplicitClient) PostRequiredArrayParameter(ctx context.Context, bod
 	result, err = client.PostRequiredArrayParameterResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ExplicitClient", "PostRequiredArrayParameter", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -919,6 +932,7 @@ func (client ExplicitClient) PostRequiredArrayProperty(ctx context.Context, body
 	result, err = client.PostRequiredArrayPropertyResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ExplicitClient", "PostRequiredArrayProperty", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -987,6 +1001,7 @@ func (client ExplicitClient) PostRequiredClassParameter(ctx context.Context, bod
 	result, err = client.PostRequiredClassParameterResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ExplicitClient", "PostRequiredClassParameter", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1056,6 +1071,7 @@ func (client ExplicitClient) PostRequiredClassProperty(ctx context.Context, body
 	result, err = client.PostRequiredClassPropertyResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ExplicitClient", "PostRequiredClassProperty", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1118,6 +1134,7 @@ func (client ExplicitClient) PostRequiredIntegerHeader(ctx context.Context, head
 	result, err = client.PostRequiredIntegerHeaderResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ExplicitClient", "PostRequiredIntegerHeader", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1179,6 +1196,7 @@ func (client ExplicitClient) PostRequiredIntegerParameter(ctx context.Context, b
 	result, err = client.PostRequiredIntegerParameterResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ExplicitClient", "PostRequiredIntegerParameter", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1247,6 +1265,7 @@ func (client ExplicitClient) PostRequiredIntegerProperty(ctx context.Context, bo
 	result, err = client.PostRequiredIntegerPropertyResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ExplicitClient", "PostRequiredIntegerProperty", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1309,6 +1328,7 @@ func (client ExplicitClient) PostRequiredStringHeader(ctx context.Context, heade
 	result, err = client.PostRequiredStringHeaderResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ExplicitClient", "PostRequiredStringHeader", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1370,6 +1390,7 @@ func (client ExplicitClient) PostRequiredStringParameter(ctx context.Context, bo
 	result, err = client.PostRequiredStringParameterResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ExplicitClient", "PostRequiredStringParameter", resp, "Failure responding to request")
+		return
 	}
 
 	return
@@ -1438,6 +1459,7 @@ func (client ExplicitClient) PostRequiredStringProperty(ctx context.Context, bod
 	result, err = client.PostRequiredStringPropertyResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ExplicitClient", "PostRequiredStringProperty", resp, "Failure responding to request")
+		return
 	}
 
 	return

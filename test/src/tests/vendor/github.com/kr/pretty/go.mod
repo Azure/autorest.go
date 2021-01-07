@@ -1,4 +1,4 @@
-module github.com/niemeyer/pretty
+module github.com/kr/pretty
 
 go 1.12
 

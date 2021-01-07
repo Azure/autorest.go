@@ -1,0 +1,20 @@
+﻿@using AutoRest.Go
+@using AutoRest.Go.Model
+@using AutoRest.Go.Templates
+@using System.Linq;
+
+@inherits AutoRest.Core.Template<AutoRest.Go.Model.MetadataGo>
+
+@{
+    // Escape the backslashes to avoid JSON syntax errors
+    var inputFiles = Model.InputFiles.Select(file => $"\"{file.Replace("\\", "\\\\")}\"");
+    var outputFolder = $"\"{Model.OutputFolder.Replace("\\", "\\\\")}\"";
+    var ns = $"\"{Model.Namespace}\"";
+}
+{
+    "inputFiles": [
+        @(string.Join(",\n", inputFiles))
+    ],
+    "outputFolder": @outputFolder,
+    "namespace": @ns
+}

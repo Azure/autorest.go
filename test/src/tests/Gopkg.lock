@@ -2,9 +2,10 @@
 
 
 [[projects]]
-  digest = "1:e4833d0e094df9a75369caccfa3d286cd8a790add00c3bcaae42f586a5f26038"
+  digest = "1:2cc71529fbafa70658600878d33405407968b3643f59b51205d5e6385eebb48d"
   name = "github.com/Azure/go-autorest"
   packages = [
+    ".",
     "autorest",
     "autorest/adal",
     "autorest/azure",
@@ -15,16 +16,15 @@
     "tracing",
   ]
   pruneopts = "UT"
-  revision = "8bc6e816b320b20dd49a3e77f8b90e9b993efd95"
-  version = "v13.4.1"
+  revision = "cbd6c47773f1a521faa3a39f3e9455620a751ae8"
 
 [[projects]]
-  digest = "1:76dc72490af7174349349838f2fe118996381b31ea83243812a97e5a0fd5ed55"
-  name = "github.com/dgrijalva/jwt-go"
+  digest = "1:3be7b7206a3fd8686175fd974eb33a1c9dd109c149bdf19801e32b8f48733530"
+  name = "github.com/form3tech-oss/jwt-go"
   packages = ["."]
   pruneopts = "UT"
-  revision = "06ea1031745cb8b3dab3f6a236daf2b0aa468b7e"
-  version = "v3.2.0"
+  revision = "9162a5abdbc046b7c8b03ee90052cee67e25caa7"
+  version = "v3.2.2"
 
 [[projects]]
   digest = "1:73770491417b7cb646b28610eec6481187aba7b5c3703da0d42f8d590d016f5f"
@@ -32,7 +32,15 @@
   packages = ["."]
   pruneopts = "UT"
   revision = "abfe1881e60ef34074c1b8d8c63b42565c356ed6"
-  version = "v3.3.0"
+  version = "v3.4.0"
+
+[[projects]]
+  digest = "1:759375161ead34b8a830e14e75196bb51a999f125531d2faf0a1a944551a586f"
+  name = "github.com/kr/pretty"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "ead452280cd055b2ae8a7f0db5eb37a878d902f7"
+  version = "v0.2.1"
 
 [[projects]]
   digest = "1:7218fd69ff5436d016101bbc6183cdc289aa45ac37b48e78846318e4ef389bea"
@@ -43,14 +51,6 @@
   version = "v0.2.0"
 
 [[projects]]
-  branch = "master"
-  digest = "1:4454a22e87e1aacfb4c7e9550ab98c711a5285a0cc7f9ff8952c44a9b0dbbb05"
-  name = "github.com/niemeyer/pretty"
-  packages = ["."]
-  pruneopts = "UT"
-  revision = "a10e7caefd8e0d600cea437f5c3613aeb1553d56"
-
-[[projects]]
   digest = "1:ae3c4c486b4de2c71f6e1b9e53d125d13c80aaecc549e9a93342e8274ec761f4"
   name = "github.com/shopspring/decimal"
   packages = ["."]
@@ -59,12 +59,23 @@
   version = "v1.2.0"
 
 [[projects]]
+  branch = "master"
+  digest = "1:3c9c113a5e5475facaa56d1690def66c4b5077d1c57c190c180835cae6440118"
+  name = "golang.org/x/crypto"
+  packages = [
+    "pkcs12",
+    "pkcs12/internal/rc2",
+  ]
+  pruneopts = "UT"
+  revision = "eec23a3978adcfd26c29f4153eaa3e3d9b2cc53a"
+
+[[projects]]
   branch = "v1"
-  digest = "1:bcc487fe614a1d561dfc3fd179328f5e9777ceaea29cdb25b775309e9b85858d"
+  digest = "1:b39f3febddd151ee9993a0a10c20393efeddb1d31c0c706c9d03d054dbafd308"
   name = "gopkg.in/check.v1"
   packages = ["."]
   pruneopts = "UT"
-  revision = "038fdea0a05bc030b0bfda479dc2e08d2220ec74"
+  revision = "10cb98267c6cb43ea9cd6793f29ff4089c306974"
 
 [solve-meta]
   analyzer-name = "dep"

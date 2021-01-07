@@ -54,6 +54,7 @@ func (client PathsClient) GetEmpty(ctx context.Context, accountName string) (res
 	result, err = client.GetEmptyResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "custombaseurlgroup.PathsClient", "GetEmpty", resp, "Failure responding to request")
+		return
 	}
 
 	return
