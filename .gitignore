@@ -306,3 +306,5 @@ package/
 *.tgz
 src/obj/
 *.log
+
+**/npm-shrinkwrap.json
