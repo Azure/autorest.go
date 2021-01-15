@@ -15,6 +15,7 @@ import (
 const telemetryInfo = "azsdk-go-custombaseurlgroup/<version>"
 
 // ConnectionOptions contains configuration settings for the connection's pipeline.
+// All zero-value fields will be initialized with their default values.
 type ConnectionOptions struct {
 	// HTTPClient sets the transport for making HTTP requests.
 	HTTPClient azcore.Transport
@@ -43,6 +44,7 @@ type Connection struct {
 }
 
 // NewConnection creates an instance of the Connection type with the specified endpoint.
+// Pass nil to accept the default options; this is the same as passing a zero-value options.
 func NewConnection(host *string, options *ConnectionOptions) *Connection {
 	if options == nil {
 		options = &ConnectionOptions{}

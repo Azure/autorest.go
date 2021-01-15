@@ -44,6 +44,7 @@ function generateContent(session: Session<CodeModel>, exportClient: boolean): st
     connectionOptions = camelCase(connectionOptions);
   }
   text += `// ${connectionOptions} contains configuration settings for the connection's pipeline.\n`;
+  text += '// All zero-value fields will be initialized with their default values.\n';
   text += `type ${connectionOptions} struct {\n`;
   text += '\t// HTTPClient sets the transport for making HTTP requests.\n';
   text += '\tHTTPClient azcore.Transport\n';
@@ -110,6 +111,7 @@ function generateContent(session: Session<CodeModel>, exportClient: boolean): st
     text += `// ${defaultEndpoint} is the default service endpoint.\n`;
     text += `const ${defaultEndpoint} = "${endpoint}"\n\n`;
     text += `// ${newDefaultConnection} creates an instance of the ${connection} type using the ${defaultEndpoint}.\n`;
+    text += '// Pass nil to accept the default options; this is the same as passing a zero-value options.\n';
     text += `func ${newDefaultConnection}(${credParam}options *${connectionOptions}) *${connection} {\n`;
     let cred = 'cred, ';
     if (!session.model.security.authenticationRequired) {
@@ -143,6 +145,7 @@ function generateContent(session: Session<CodeModel>, exportClient: boolean): st
   }
 
   text += `// ${newConnection} creates an instance of the ${connection} type with the specified endpoint.\n`;
+  text += '// Pass nil to accept the default options; this is the same as passing a zero-value options.\n';
   text += `func ${newConnection}(${ctorParamsSig}, ${credParam}options *${connectionOptions}) *${connection} {\n`;
   text += '\tif options == nil {\n';
   text += `\t\toptions = &${connectionOptions}{}\n`;
