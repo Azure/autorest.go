@@ -18,7 +18,7 @@ import (
 )
 
 func newLROSClient() *LrOSClient {
-	options := DefaultConnectionOptions()
+	options := ConnectionOptions{}
 	options.Retry.RetryDelay = 10 * time.Millisecond
 	options.HTTPClient = httpClientWithCookieJar()
 	return NewLrOSClient(NewDefaultConnection(&options))

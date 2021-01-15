@@ -40,10 +40,8 @@ function generateContent(session: Session<CodeModel>, exportClient: boolean): st
     return text;
   }
   let connectionOptions = 'ConnectionOptions';
-  let defaultConnectionOptions = 'DefaultConnectionOptions';
   if (!exportClient) {
     connectionOptions = camelCase(connectionOptions);
-    defaultConnectionOptions = camelCase(defaultConnectionOptions);
   }
   text += `// ${connectionOptions} contains configuration settings for the connection's pipeline.\n`;
   text += `type ${connectionOptions} struct {\n`;
@@ -60,17 +58,6 @@ function generateContent(session: Session<CodeModel>, exportClient: boolean): st
     text += '\t// RegisterRPOptions configures the built-in RP registration policy behavior.\n';
     text += '\tRegisterRPOptions armcore.RegistrationOptions\n';
   }
-  text += '}\n\n';
-  text += `// ${defaultConnectionOptions} creates a ${connectionOptions} type initialized with default values.\n`;
-  text += `func ${defaultConnectionOptions}() ${connectionOptions} {\n`;
-  text += `\treturn ${connectionOptions}{\n`;
-  text += '\t\tRetry: azcore.DefaultRetryOptions(),\n';
-  if (isARM && session.model.security.authenticationRequired) {
-    text += '\t\tRegisterRPOptions: armcore.DefaultRegistrationOptions(),\n';
-  }
-  text += '\t\tTelemetry: azcore.DefaultTelemetryOptions(),\n';
-  text += '\t\tLogging: azcore.DefaultLogOptions(),\n';
-  text += '\t}\n';
   text += '}\n\n';
 
   text += `func (c *${connectionOptions}) telemetryOptions() *azcore.TelemetryOptions {\n`;
@@ -158,8 +145,7 @@ function generateContent(session: Session<CodeModel>, exportClient: boolean): st
   text += `// ${newConnection} creates an instance of the ${connection} type with the specified endpoint.\n`;
   text += `func ${newConnection}(${ctorParamsSig}, ${credParam}options *${connectionOptions}) *${connection} {\n`;
   text += '\tif options == nil {\n';
-  text += `\t\to := ${defaultConnectionOptions}()\n`;
-  text += '\t\toptions = &o\n';
+  text += `\t\toptions = &${connectionOptions}{}\n`;
   text += '\t}\n';
   const telemetryPolicy = 'azcore.NewTelemetryPolicy(options.telemetryOptions())';
   const retryPolicy = 'azcore.NewRetryPolicy(&options.Retry)';

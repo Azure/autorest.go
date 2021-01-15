@@ -27,15 +27,6 @@ type connectionOptions struct {
 	Logging azcore.LogOptions
 }
 
-// defaultConnectionOptions creates a connectionOptions type initialized with default values.
-func defaultConnectionOptions() connectionOptions {
-	return connectionOptions{
-		Retry:     azcore.DefaultRetryOptions(),
-		Telemetry: azcore.DefaultTelemetryOptions(),
-		Logging:   azcore.DefaultLogOptions(),
-	}
-}
-
 func (c *connectionOptions) telemetryOptions() *azcore.TelemetryOptions {
 	to := c.Telemetry
 	if to.Value == "" {
@@ -54,8 +45,7 @@ type connection struct {
 // newConnection creates an instance of the connection type with the specified endpoint.
 func newConnection(endpoint string, cred azcore.Credential, options *connectionOptions) *connection {
 	if options == nil {
-		o := defaultConnectionOptions()
-		options = &o
+		options = &connectionOptions{}
 	}
 	p := azcore.NewPipeline(options.HTTPClient,
 		azcore.NewTelemetryPolicy(options.telemetryOptions()),
