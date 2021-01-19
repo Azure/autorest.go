@@ -750,7 +750,8 @@ type SparkStatement struct {
 }
 
 type SparkStatementCancellationResult struct {
-	Msg *string `json:"msg,omitempty"`
+	// The msg property from the Livy API. The value is always "canceled".
+	Message *string `json:"msg,omitempty"`
 }
 
 // SparkStatementCancellationResultResponse is the response envelope for operations that return a SparkStatementCancellationResult type.

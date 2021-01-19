@@ -15,6 +15,7 @@ import (
 const telemetryInfo = "azsdk-go-datetimerfc1123group/<version>"
 
 // ConnectionOptions contains configuration settings for the connection's pipeline.
+// All zero-value fields will be initialized with their default values.
 type ConnectionOptions struct {
 	// HTTPClient sets the transport for making HTTP requests.
 	HTTPClient azcore.Transport
@@ -24,15 +25,6 @@ type ConnectionOptions struct {
 	Telemetry azcore.TelemetryOptions
 	// Logging configures the built-in logging policy behavior.
 	Logging azcore.LogOptions
-}
-
-// DefaultConnectionOptions creates a ConnectionOptions type initialized with default values.
-func DefaultConnectionOptions() ConnectionOptions {
-	return ConnectionOptions{
-		Retry:     azcore.DefaultRetryOptions(),
-		Telemetry: azcore.DefaultTelemetryOptions(),
-		Logging:   azcore.DefaultLogOptions(),
-	}
 }
 
 func (c *ConnectionOptions) telemetryOptions() *azcore.TelemetryOptions {
@@ -55,15 +47,16 @@ type Connection struct {
 const DefaultEndpoint = "http://localhost:3000"
 
 // NewDefaultConnection creates an instance of the Connection type using the DefaultEndpoint.
+// Pass nil to accept the default options; this is the same as passing a zero-value options.
 func NewDefaultConnection(options *ConnectionOptions) *Connection {
 	return NewConnection(DefaultEndpoint, options)
 }
 
 // NewConnection creates an instance of the Connection type with the specified endpoint.
+// Pass nil to accept the default options; this is the same as passing a zero-value options.
 func NewConnection(endpoint string, options *ConnectionOptions) *Connection {
 	if options == nil {
-		o := DefaultConnectionOptions()
-		options = &o
+		options = &ConnectionOptions{}
 	}
 	p := azcore.NewPipeline(options.HTTPClient,
 		azcore.NewTelemetryPolicy(options.telemetryOptions()),

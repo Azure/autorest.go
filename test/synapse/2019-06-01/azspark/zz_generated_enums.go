@@ -150,8 +150,8 @@ func (c SparkSessionResultType) ToPtr() *SparkSessionResultType {
 type SparkStatementLanguageType string
 
 const (
-	SparkStatementLanguageTypeDotnetspark SparkStatementLanguageType = "dotnetspark"
-	SparkStatementLanguageTypePyspark     SparkStatementLanguageType = "pyspark"
+	SparkStatementLanguageTypeDotNetSpark SparkStatementLanguageType = "dotnetspark"
+	SparkStatementLanguageTypePySpark     SparkStatementLanguageType = "pyspark"
 	SparkStatementLanguageTypeSQL         SparkStatementLanguageType = "sql"
 	SparkStatementLanguageTypeSpark       SparkStatementLanguageType = "spark"
 )
@@ -159,8 +159,8 @@ const (
 // PossibleSparkStatementLanguageTypeValues returns the possible values for the SparkStatementLanguageType const type.
 func PossibleSparkStatementLanguageTypeValues() []SparkStatementLanguageType {
 	return []SparkStatementLanguageType{
-		SparkStatementLanguageTypeDotnetspark,
-		SparkStatementLanguageTypePyspark,
+		SparkStatementLanguageTypeDotNetSpark,
+		SparkStatementLanguageTypePySpark,
 		SparkStatementLanguageTypeSQL,
 		SparkStatementLanguageTypeSpark,
 	}

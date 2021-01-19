@@ -16,6 +16,7 @@ const scope = "https://storage.azure.com/.default"
 const telemetryInfo = "azsdk-go-azblob/<version>"
 
 // connectionOptions contains configuration settings for the connection's pipeline.
+// All zero-value fields will be initialized with their default values.
 type connectionOptions struct {
 	// HTTPClient sets the transport for making HTTP requests.
 	HTTPClient azcore.Transport
@@ -25,15 +26,6 @@ type connectionOptions struct {
 	Telemetry azcore.TelemetryOptions
 	// Logging configures the built-in logging policy behavior.
 	Logging azcore.LogOptions
-}
-
-// defaultConnectionOptions creates a connectionOptions type initialized with default values.
-func defaultConnectionOptions() connectionOptions {
-	return connectionOptions{
-		Retry:     azcore.DefaultRetryOptions(),
-		Telemetry: azcore.DefaultTelemetryOptions(),
-		Logging:   azcore.DefaultLogOptions(),
-	}
 }
 
 func (c *connectionOptions) telemetryOptions() *azcore.TelemetryOptions {
@@ -52,10 +44,10 @@ type connection struct {
 }
 
 // newConnection creates an instance of the connection type with the specified endpoint.
+// Pass nil to accept the default options; this is the same as passing a zero-value options.
 func newConnection(endpoint string, cred azcore.Credential, options *connectionOptions) *connection {
 	if options == nil {
-		o := defaultConnectionOptions()
-		options = &o
+		options = &connectionOptions{}
 	}
 	p := azcore.NewPipeline(options.HTTPClient,
 		azcore.NewTelemetryPolicy(options.telemetryOptions()),

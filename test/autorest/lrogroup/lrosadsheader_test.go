@@ -11,7 +11,7 @@ import (
 )
 
 func newLrosaDsClient() *LrosaDsClient {
-	options := DefaultConnectionOptions()
+	options := ConnectionOptions{}
 	options.Retry.RetryDelay = 10 * time.Millisecond
 	options.HTTPClient = httpClientWithCookieJar()
 	return NewLrosaDsClient(NewDefaultConnection(&options))

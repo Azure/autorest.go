@@ -16,7 +16,7 @@ import (
 )
 
 func newPetClient() *PetClient {
-	options := DefaultConnectionOptions()
+	options := ConnectionOptions{}
 	options.Retry.MaxRetryDelay = 20 * time.Millisecond
 	client := NewConnection("http://localhost:3000", &options)
 	return NewPetClient(client)

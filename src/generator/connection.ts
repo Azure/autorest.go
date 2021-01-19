@@ -40,12 +40,11 @@ function generateContent(session: Session<CodeModel>, exportClient: boolean): st
     return text;
   }
   let connectionOptions = 'ConnectionOptions';
-  let defaultConnectionOptions = 'DefaultConnectionOptions';
   if (!exportClient) {
     connectionOptions = camelCase(connectionOptions);
-    defaultConnectionOptions = camelCase(defaultConnectionOptions);
   }
   text += `// ${connectionOptions} contains configuration settings for the connection's pipeline.\n`;
+  text += '// All zero-value fields will be initialized with their default values.\n';
   text += `type ${connectionOptions} struct {\n`;
   text += '\t// HTTPClient sets the transport for making HTTP requests.\n';
   text += '\tHTTPClient azcore.Transport\n';
@@ -60,17 +59,6 @@ function generateContent(session: Session<CodeModel>, exportClient: boolean): st
     text += '\t// RegisterRPOptions configures the built-in RP registration policy behavior.\n';
     text += '\tRegisterRPOptions armcore.RegistrationOptions\n';
   }
-  text += '}\n\n';
-  text += `// ${defaultConnectionOptions} creates a ${connectionOptions} type initialized with default values.\n`;
-  text += `func ${defaultConnectionOptions}() ${connectionOptions} {\n`;
-  text += `\treturn ${connectionOptions}{\n`;
-  text += '\t\tRetry: azcore.DefaultRetryOptions(),\n';
-  if (isARM && session.model.security.authenticationRequired) {
-    text += '\t\tRegisterRPOptions: armcore.DefaultRegistrationOptions(),\n';
-  }
-  text += '\t\tTelemetry: azcore.DefaultTelemetryOptions(),\n';
-  text += '\t\tLogging: azcore.DefaultLogOptions(),\n';
-  text += '\t}\n';
   text += '}\n\n';
 
   text += `func (c *${connectionOptions}) telemetryOptions() *azcore.TelemetryOptions {\n`;
@@ -123,6 +111,7 @@ function generateContent(session: Session<CodeModel>, exportClient: boolean): st
     text += `// ${defaultEndpoint} is the default service endpoint.\n`;
     text += `const ${defaultEndpoint} = "${endpoint}"\n\n`;
     text += `// ${newDefaultConnection} creates an instance of the ${connection} type using the ${defaultEndpoint}.\n`;
+    text += '// Pass nil to accept the default options; this is the same as passing a zero-value options.\n';
     text += `func ${newDefaultConnection}(${credParam}options *${connectionOptions}) *${connection} {\n`;
     let cred = 'cred, ';
     if (!session.model.security.authenticationRequired) {
@@ -156,10 +145,10 @@ function generateContent(session: Session<CodeModel>, exportClient: boolean): st
   }
 
   text += `// ${newConnection} creates an instance of the ${connection} type with the specified endpoint.\n`;
+  text += '// Pass nil to accept the default options; this is the same as passing a zero-value options.\n';
   text += `func ${newConnection}(${ctorParamsSig}, ${credParam}options *${connectionOptions}) *${connection} {\n`;
   text += '\tif options == nil {\n';
-  text += `\t\to := ${defaultConnectionOptions}()\n`;
-  text += '\t\toptions = &o\n';
+  text += `\t\toptions = &${connectionOptions}{}\n`;
   text += '\t}\n';
   const telemetryPolicy = 'azcore.NewTelemetryPolicy(options.telemetryOptions())';
   const retryPolicy = 'azcore.NewRetryPolicy(&options.Retry)';
