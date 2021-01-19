@@ -5678,14 +5678,17 @@ type BigDataPoolResourceProperties struct {
 	// Auto-scaling properties
 	AutoScale *AutoScaleProperties `json:"autoScale,omitempty"`
 
+	// The cache size
+	CacheSize *int32 `json:"cacheSize,omitempty"`
+
 	// The time when the Big Data pool was created.
 	CreationDate *time.Time `json:"creationDate,omitempty"`
 
 	// The default folder where Spark logs will be written.
 	DefaultSparkLogFolder *string `json:"defaultSparkLogFolder,omitempty"`
 
-	// Whether library requirements changed.
-	HaveLibraryRequirementsChanged *bool `json:"haveLibraryRequirementsChanged,omitempty"`
+	// Dynamic Executor Allocation
+	DynamicExecutorAllocation *DynamicExecutorAllocation `json:"dynamicExecutorAllocation,omitempty"`
 
 	// Whether compute isolation is required or not.
 	IsComputeIsolationEnabled *bool `json:"isComputeIsolationEnabled,omitempty"`
@@ -5727,14 +5730,17 @@ func (b BigDataPoolResourceProperties) MarshalJSON() ([]byte, error) {
 	if b.AutoScale != nil {
 		objectMap["autoScale"] = b.AutoScale
 	}
+	if b.CacheSize != nil {
+		objectMap["cacheSize"] = b.CacheSize
+	}
 	if b.CreationDate != nil {
 		objectMap["creationDate"] = (*timeRFC3339)(b.CreationDate)
 	}
 	if b.DefaultSparkLogFolder != nil {
 		objectMap["defaultSparkLogFolder"] = b.DefaultSparkLogFolder
 	}
-	if b.HaveLibraryRequirementsChanged != nil {
-		objectMap["haveLibraryRequirementsChanged"] = b.HaveLibraryRequirementsChanged
+	if b.DynamicExecutorAllocation != nil {
+		objectMap["dynamicExecutorAllocation"] = b.DynamicExecutorAllocation
 	}
 	if b.IsComputeIsolationEnabled != nil {
 		objectMap["isComputeIsolationEnabled"] = b.IsComputeIsolationEnabled
@@ -5788,6 +5794,11 @@ func (b *BigDataPoolResourceProperties) UnmarshalJSON(data []byte) error {
 				err = json.Unmarshal(*val, &b.AutoScale)
 			}
 			delete(rawMsg, key)
+		case "cacheSize":
+			if val != nil {
+				err = json.Unmarshal(*val, &b.CacheSize)
+			}
+			delete(rawMsg, key)
 		case "creationDate":
 			if val != nil {
 				var aux timeRFC3339
@@ -5800,9 +5811,9 @@ func (b *BigDataPoolResourceProperties) UnmarshalJSON(data []byte) error {
 				err = json.Unmarshal(*val, &b.DefaultSparkLogFolder)
 			}
 			delete(rawMsg, key)
-		case "haveLibraryRequirementsChanged":
+		case "dynamicExecutorAllocation":
 			if val != nil {
-				err = json.Unmarshal(*val, &b.HaveLibraryRequirementsChanged)
+				err = json.Unmarshal(*val, &b.DynamicExecutorAllocation)
 			}
 			delete(rawMsg, key)
 		case "isComputeIsolationEnabled":
@@ -10976,6 +10987,12 @@ type DwCopyCommandSettings struct {
 	// identity column cannot have a default value. Type:
 	// array of objects (or Expression with resultType array of objects).
 	DefaultValues *[]DwCopyCommandDefaultValue `json:"defaultValues,omitempty"`
+}
+
+// Dynamic Executor Allocation Properties
+type DynamicExecutorAllocation struct {
+	// Indicates whether Dynamic Executor Allocation is enabled or not.
+	Enabled *bool `json:"enabled,omitempty"`
 }
 
 // Dynamics AX linked service.
@@ -33435,6 +33452,9 @@ type WorkspaceKeyDetails struct {
 
 // Workspace properties
 type WorkspaceProperties struct {
+	// READ-ONLY; The ADLA resource ID.
+	AdlaResourceID *string `json:"adlaResourceId,omitempty" azure:"ro"`
+
 	// Connectivity endpoints
 	ConnectivityEndpoints *map[string]string `json:"connectivityEndpoints,omitempty"`
 
@@ -33494,6 +33514,9 @@ type WorkspaceRepositoryConfiguration struct {
 	// GitHub Enterprise host name. For example: https://github.mydomain.com
 	HostName *string `json:"hostName,omitempty"`
 
+	// The last commit ID
+	LastCommitID *string `json:"lastCommitId,omitempty"`
+
 	// VSTS project name
 	ProjectName *string `json:"projectName,omitempty"`
 
@@ -33502,6 +33525,9 @@ type WorkspaceRepositoryConfiguration struct {
 
 	// Root folder to use in the repository
 	RootFolder *string `json:"rootFolder,omitempty"`
+
+	// The VSTS tenant ID
+	TenantID *string `json:"tenantId,omitempty"`
 
 	// Type of workspace repositoryID configuration. Example WorkspaceVSTSConfiguration, WorkspaceGitHubConfiguration
 	Type *string `json:"type,omitempty"`
