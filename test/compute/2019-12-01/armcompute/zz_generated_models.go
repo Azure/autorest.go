@@ -1827,21 +1827,19 @@ type GalleryApplicationVersionProperties struct {
 	// READ-ONLY; The provisioning state, which only appears in the response.
 	ProvisioningState *GalleryApplicationVersionPropertiesProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 
-	// The publishing profile of a gallery Image Version.
+	// The publishing profile of a gallery image version.
 	PublishingProfile *GalleryApplicationVersionPublishingProfile `json:"publishingProfile,omitempty"`
 
 	// READ-ONLY; This is the replication status of the gallery Image Version.
 	ReplicationStatus *ReplicationStatus `json:"replicationStatus,omitempty" azure:"ro"`
 }
 
-// The publishing profile of a gallery Image Version.
+// The publishing profile of a gallery image version.
 type GalleryApplicationVersionPublishingProfile struct {
 	GalleryArtifactPublishingProfileBase
-	// Optional. May be used to help process this file. The type of file contained in the source, e.g. zip, json, etc.
-	ContentType *string `json:"contentType,omitempty"`
-
 	// Optional. Whether or not this application reports health.
-	EnableHealthCheck *bool `json:"enableHealthCheck,omitempty"`
+	EnableHealthCheck *bool               `json:"enableHealthCheck,omitempty"`
+	ManageActions     *UserArtifactManage `json:"manageActions,omitempty"`
 
 	// The source image from which the Image Version is going to be created.
 	Source *UserArtifactSource `json:"source,omitempty"`
@@ -1850,11 +1848,11 @@ type GalleryApplicationVersionPublishingProfile struct {
 // MarshalJSON implements the json.Marshaller interface for type GalleryApplicationVersionPublishingProfile.
 func (g GalleryApplicationVersionPublishingProfile) MarshalJSON() ([]byte, error) {
 	objectMap := g.GalleryArtifactPublishingProfileBase.marshalInternal()
-	if g.ContentType != nil {
-		objectMap["contentType"] = g.ContentType
-	}
 	if g.EnableHealthCheck != nil {
 		objectMap["enableHealthCheck"] = g.EnableHealthCheck
+	}
+	if g.ManageActions != nil {
+		objectMap["manageActions"] = g.ManageActions
 	}
 	if g.Source != nil {
 		objectMap["source"] = g.Source
@@ -1871,14 +1869,14 @@ func (g *GalleryApplicationVersionPublishingProfile) UnmarshalJSON(data []byte) 
 	for key, val := range rawMsg {
 		var err error
 		switch key {
-		case "contentType":
-			if val != nil {
-				err = json.Unmarshal(*val, &g.ContentType)
-			}
-			delete(rawMsg, key)
 		case "enableHealthCheck":
 			if val != nil {
 				err = json.Unmarshal(*val, &g.EnableHealthCheck)
+			}
+			delete(rawMsg, key)
+		case "manageActions":
+			if val != nil {
+				err = json.Unmarshal(*val, &g.ManageActions)
 			}
 			delete(rawMsg, key)
 		case "source":
@@ -4753,12 +4751,25 @@ type UsageName struct {
 	Value *string `json:"value,omitempty"`
 }
 
+type UserArtifactManage struct {
+	// Required. The path and arguments to install the gallery application. This is limited to 4096 characters.
+	Install *string `json:"install,omitempty"`
+
+	// Required. The path and arguments to remove the gallery application. This is limited to 4096 characters.
+	Remove *string `json:"remove,omitempty"`
+
+	// Optional. The path and arguments to update the gallery application. If not present, then update operation will invoke remove command on the previous
+	// version and install command on the current version
+	// of the gallery application. This is limited to 4096 characters.
+	Update *string `json:"update,omitempty"`
+}
+
 // The source image from which the Image Version is going to be created.
 type UserArtifactSource struct {
-	// Required. The fileName of the artifact.
-	FileName *string `json:"fileName,omitempty"`
+	// Optional. The defaultConfigurationLink of the artifact, must be a readable storage page blob.
+	DefaultConfigurationLink *string `json:"defaultConfigurationLink,omitempty"`
 
-	// Required. The mediaLink of the artifact, must be a readable storage blob.
+	// Required. The mediaLink of the artifact, must be a readable storage page blob.
 	MediaLink *string `json:"mediaLink,omitempty"`
 }
 

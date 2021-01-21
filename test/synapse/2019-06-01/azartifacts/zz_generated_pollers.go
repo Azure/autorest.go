@@ -68,8 +68,22 @@ type PipelineResourcePoller interface {
 	ResumeToken() (string, error)
 }
 
+// SQLScriptResourcePoller provides polling facilities until the operation completes
+type SQLScriptResourcePoller interface {
+	Done() bool
+	Poll(ctx context.Context) (*http.Response, error)
+	ResumeToken() (string, error)
+}
+
 // SparkBatchJobPoller provides polling facilities until the operation completes
 type SparkBatchJobPoller interface {
+	Done() bool
+	Poll(ctx context.Context) (*http.Response, error)
+	ResumeToken() (string, error)
+}
+
+// SparkJobDefinitionResourcePoller provides polling facilities until the operation completes
+type SparkJobDefinitionResourcePoller interface {
 	Done() bool
 	Poll(ctx context.Context) (*http.Response, error)
 	ResumeToken() (string, error)

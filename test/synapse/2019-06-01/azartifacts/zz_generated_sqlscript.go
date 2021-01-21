@@ -20,23 +20,23 @@ type sqlScriptClient struct {
 }
 
 // CreateOrUpdateSQLScript - Creates or updates a Sql Script.
-func (client *sqlScriptClient) CreateOrUpdateSQLScript(ctx context.Context, sqlScriptName string, sqlScript SQLScriptResource, options *SQLScriptCreateOrUpdateSQLScriptOptions) (SQLScriptResourceResponse, error) {
+func (client *sqlScriptClient) createOrUpdateSQLScript(ctx context.Context, sqlScriptName string, sqlScript SQLScriptResource, options *SQLScriptBeginCreateOrUpdateSQLScriptOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateSqlScriptCreateRequest(ctx, sqlScriptName, sqlScript, options)
 	if err != nil {
-		return SQLScriptResourceResponse{}, err
+		return nil, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return SQLScriptResourceResponse{}, err
+		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
-		return SQLScriptResourceResponse{}, client.createOrUpdateSqlScriptHandleError(resp)
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.createOrUpdateSqlScriptHandleError(resp)
 	}
-	return client.createOrUpdateSqlScriptHandleResponse(resp)
+	return resp, nil
 }
 
 // createOrUpdateSqlScriptCreateRequest creates the CreateOrUpdateSQLScript request.
-func (client *sqlScriptClient) createOrUpdateSqlScriptCreateRequest(ctx context.Context, sqlScriptName string, sqlScript SQLScriptResource, options *SQLScriptCreateOrUpdateSQLScriptOptions) (*azcore.Request, error) {
+func (client *sqlScriptClient) createOrUpdateSqlScriptCreateRequest(ctx context.Context, sqlScriptName string, sqlScript SQLScriptResource, options *SQLScriptBeginCreateOrUpdateSQLScriptOptions) (*azcore.Request, error) {
 	urlPath := "/sqlScripts/{sqlScriptName}"
 	urlPath = strings.ReplaceAll(urlPath, "{sqlScriptName}", url.PathEscape(sqlScriptName))
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -73,7 +73,7 @@ func (client *sqlScriptClient) createOrUpdateSqlScriptHandleError(resp *azcore.R
 }
 
 // DeleteSQLScript - Deletes a Sql Script.
-func (client *sqlScriptClient) DeleteSQLScript(ctx context.Context, sqlScriptName string, options *SQLScriptDeleteSQLScriptOptions) (*http.Response, error) {
+func (client *sqlScriptClient) deleteSQLScript(ctx context.Context, sqlScriptName string, options *SQLScriptBeginDeleteSQLScriptOptions) (*azcore.Response, error) {
 	req, err := client.deleteSqlScriptCreateRequest(ctx, sqlScriptName, options)
 	if err != nil {
 		return nil, err
@@ -82,14 +82,14 @@ func (client *sqlScriptClient) DeleteSQLScript(ctx context.Context, sqlScriptNam
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusNoContent) {
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.deleteSqlScriptHandleError(resp)
 	}
-	return resp.Response, nil
+	return resp, nil
 }
 
 // deleteSqlScriptCreateRequest creates the DeleteSQLScript request.
-func (client *sqlScriptClient) deleteSqlScriptCreateRequest(ctx context.Context, sqlScriptName string, options *SQLScriptDeleteSQLScriptOptions) (*azcore.Request, error) {
+func (client *sqlScriptClient) deleteSqlScriptCreateRequest(ctx context.Context, sqlScriptName string, options *SQLScriptBeginDeleteSQLScriptOptions) (*azcore.Request, error) {
 	urlPath := "/sqlScripts/{sqlScriptName}"
 	urlPath = strings.ReplaceAll(urlPath, "{sqlScriptName}", url.PathEscape(sqlScriptName))
 	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
