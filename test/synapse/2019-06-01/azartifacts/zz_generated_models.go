@@ -25326,6 +25326,17 @@ func (s *SQLScript) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// SQLScriptBeginCreateOrUpdateSQLScriptOptions contains the optional parameters for the SQLScript.BeginCreateOrUpdateSQLScript method.
+type SQLScriptBeginCreateOrUpdateSQLScriptOptions struct {
+	// ETag of the SQL script entity. Should only be specified for update, for which it should match existing entity or can be * for unconditional update.
+	IfMatch *string
+}
+
+// SQLScriptBeginDeleteSQLScriptOptions contains the optional parameters for the SQLScript.BeginDeleteSQLScript method.
+type SQLScriptBeginDeleteSQLScriptOptions struct {
+	// placeholder for future optional parameters
+}
+
 // SQLScriptBeginRenameSQLScriptOptions contains the optional parameters for the SQLScript.BeginRenameSQLScript method.
 type SQLScriptBeginRenameSQLScriptOptions struct {
 	// placeholder for future optional parameters
@@ -25406,17 +25417,6 @@ func (s *SQLScriptContent) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return nil
-}
-
-// SQLScriptCreateOrUpdateSQLScriptOptions contains the optional parameters for the SQLScript.CreateOrUpdateSQLScript method.
-type SQLScriptCreateOrUpdateSQLScriptOptions struct {
-	// ETag of the SQL script entity. Should only be specified for update, for which it should match existing entity or can be * for unconditional update.
-	IfMatch *string
-}
-
-// SQLScriptDeleteSQLScriptOptions contains the optional parameters for the SQLScript.DeleteSQLScript method.
-type SQLScriptDeleteSQLScriptOptions struct {
-	// placeholder for future optional parameters
 }
 
 // SQLScriptGetSQLScriptOptions contains the optional parameters for the SQLScript.GetSQLScript method.
@@ -25502,6 +25502,18 @@ type SQLScriptResource struct {
 
 	// READ-ONLY; The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
 	Type *string `json:"type,omitempty" azure:"ro"`
+}
+
+// SQLScriptResourcePollerResponse is the response envelope for operations that asynchronously return a SQLScriptResource type.
+type SQLScriptResourcePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (SQLScriptResourceResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller SQLScriptResourcePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // SQLScriptResourceResponse is the response envelope for operations that return a SQLScriptResource type.
@@ -29538,8 +29550,21 @@ func (s *SparkJobDefinition) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// SparkJobDefinitionBeginCreateOrUpdateSparkJobDefinitionOptions contains the optional parameters for the SparkJobDefinition.BeginCreateOrUpdateSparkJobDefinition
+// method.
+type SparkJobDefinitionBeginCreateOrUpdateSparkJobDefinitionOptions struct {
+	// ETag of the Spark Job Definition entity. Should only be specified for update, for which it should match existing entity or can be * for unconditional
+	// update.
+	IfMatch *string
+}
+
 // SparkJobDefinitionBeginDebugSparkJobDefinitionOptions contains the optional parameters for the SparkJobDefinition.BeginDebugSparkJobDefinition method.
 type SparkJobDefinitionBeginDebugSparkJobDefinitionOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SparkJobDefinitionBeginDeleteSparkJobDefinitionOptions contains the optional parameters for the SparkJobDefinition.BeginDeleteSparkJobDefinition method.
+type SparkJobDefinitionBeginDeleteSparkJobDefinitionOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -29550,19 +29575,6 @@ type SparkJobDefinitionBeginExecuteSparkJobDefinitionOptions struct {
 
 // SparkJobDefinitionBeginRenameSparkJobDefinitionOptions contains the optional parameters for the SparkJobDefinition.BeginRenameSparkJobDefinition method.
 type SparkJobDefinitionBeginRenameSparkJobDefinitionOptions struct {
-	// placeholder for future optional parameters
-}
-
-// SparkJobDefinitionCreateOrUpdateSparkJobDefinitionOptions contains the optional parameters for the SparkJobDefinition.CreateOrUpdateSparkJobDefinition
-// method.
-type SparkJobDefinitionCreateOrUpdateSparkJobDefinitionOptions struct {
-	// ETag of the Spark Job Definition entity. Should only be specified for update, for which it should match existing entity or can be * for unconditional
-	// update.
-	IfMatch *string
-}
-
-// SparkJobDefinitionDeleteSparkJobDefinitionOptions contains the optional parameters for the SparkJobDefinition.DeleteSparkJobDefinition method.
-type SparkJobDefinitionDeleteSparkJobDefinitionOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -29584,6 +29596,18 @@ type SparkJobDefinitionResource struct {
 	AzureEntityResource
 	// Properties of spark job definition.
 	Properties *SparkJobDefinition `json:"properties,omitempty"`
+}
+
+// SparkJobDefinitionResourcePollerResponse is the response envelope for operations that asynchronously return a SparkJobDefinitionResource type.
+type SparkJobDefinitionResourcePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (SparkJobDefinitionResourceResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller SparkJobDefinitionResourcePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // SparkJobDefinitionResourceResponse is the response envelope for operations that return a SparkJobDefinitionResource type.

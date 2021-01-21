@@ -20,23 +20,23 @@ type sparkJobDefinitionClient struct {
 }
 
 // CreateOrUpdateSparkJobDefinition - Creates or updates a Spark Job Definition.
-func (client *sparkJobDefinitionClient) CreateOrUpdateSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string, sparkJobDefinition SparkJobDefinitionResource, options *SparkJobDefinitionCreateOrUpdateSparkJobDefinitionOptions) (SparkJobDefinitionResourceResponse, error) {
+func (client *sparkJobDefinitionClient) createOrUpdateSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string, sparkJobDefinition SparkJobDefinitionResource, options *SparkJobDefinitionBeginCreateOrUpdateSparkJobDefinitionOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateSparkJobDefinitionCreateRequest(ctx, sparkJobDefinitionName, sparkJobDefinition, options)
 	if err != nil {
-		return SparkJobDefinitionResourceResponse{}, err
+		return nil, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return SparkJobDefinitionResourceResponse{}, err
+		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
-		return SparkJobDefinitionResourceResponse{}, client.createOrUpdateSparkJobDefinitionHandleError(resp)
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+		return nil, client.createOrUpdateSparkJobDefinitionHandleError(resp)
 	}
-	return client.createOrUpdateSparkJobDefinitionHandleResponse(resp)
+	return resp, nil
 }
 
 // createOrUpdateSparkJobDefinitionCreateRequest creates the CreateOrUpdateSparkJobDefinition request.
-func (client *sparkJobDefinitionClient) createOrUpdateSparkJobDefinitionCreateRequest(ctx context.Context, sparkJobDefinitionName string, sparkJobDefinition SparkJobDefinitionResource, options *SparkJobDefinitionCreateOrUpdateSparkJobDefinitionOptions) (*azcore.Request, error) {
+func (client *sparkJobDefinitionClient) createOrUpdateSparkJobDefinitionCreateRequest(ctx context.Context, sparkJobDefinitionName string, sparkJobDefinition SparkJobDefinitionResource, options *SparkJobDefinitionBeginCreateOrUpdateSparkJobDefinitionOptions) (*azcore.Request, error) {
 	urlPath := "/sparkJobDefinitions/{sparkJobDefinitionName}"
 	urlPath = strings.ReplaceAll(urlPath, "{sparkJobDefinitionName}", url.PathEscape(sparkJobDefinitionName))
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -122,7 +122,7 @@ func (client *sparkJobDefinitionClient) debugSparkJobDefinitionHandleError(resp 
 }
 
 // DeleteSparkJobDefinition - Deletes a Spark Job Definition.
-func (client *sparkJobDefinitionClient) DeleteSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string, options *SparkJobDefinitionDeleteSparkJobDefinitionOptions) (*http.Response, error) {
+func (client *sparkJobDefinitionClient) deleteSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string, options *SparkJobDefinitionBeginDeleteSparkJobDefinitionOptions) (*azcore.Response, error) {
 	req, err := client.deleteSparkJobDefinitionCreateRequest(ctx, sparkJobDefinitionName, options)
 	if err != nil {
 		return nil, err
@@ -131,14 +131,14 @@ func (client *sparkJobDefinitionClient) DeleteSparkJobDefinition(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusNoContent) {
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.deleteSparkJobDefinitionHandleError(resp)
 	}
-	return resp.Response, nil
+	return resp, nil
 }
 
 // deleteSparkJobDefinitionCreateRequest creates the DeleteSparkJobDefinition request.
-func (client *sparkJobDefinitionClient) deleteSparkJobDefinitionCreateRequest(ctx context.Context, sparkJobDefinitionName string, options *SparkJobDefinitionDeleteSparkJobDefinitionOptions) (*azcore.Request, error) {
+func (client *sparkJobDefinitionClient) deleteSparkJobDefinitionCreateRequest(ctx context.Context, sparkJobDefinitionName string, options *SparkJobDefinitionBeginDeleteSparkJobDefinitionOptions) (*azcore.Request, error) {
 	urlPath := "/sparkJobDefinitions/{sparkJobDefinitionName}"
 	urlPath = strings.ReplaceAll(urlPath, "{sparkJobDefinitionName}", url.PathEscape(sparkJobDefinitionName))
 	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
