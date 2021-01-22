@@ -29,6 +29,7 @@ func PossibleFloatEnumValues() []FloatEnum {
 	}
 }
 
+// ToPtr() returns a *FloatEnum pointing to the current value.
 func (c FloatEnum) ToPtr() *FloatEnum {
 	return &c
 }
@@ -55,6 +56,7 @@ func PossibleIntEnumValues() []IntEnum {
 	}
 }
 
+// ToPtr() returns a *IntEnum pointing to the current value.
 func (c IntEnum) ToPtr() *IntEnum {
 	return &c
 }

@@ -10,8 +10,8 @@ import { values } from '@azure-tools/linq';
 import { contentPreamble, hasDescription, sortAscending } from './helpers';
 import { commentLength } from '../common/helpers';
 
-// Creates the content in enums.go
-export async function generateEnums(session: Session<CodeModel>): Promise<string> {
+// Creates the content in constants.go
+export async function generateConstants(session: Session<CodeModel>): Promise<string> {
   const enums = getEnums(session.model.schemas);
   if (enums.length === 0) {
     // no enums to generate
@@ -45,6 +45,7 @@ export async function generateEnums(session: Session<CodeModel>): Promise<string
     }
     text += '\t}\n';
     text += '}\n\n';
+    text += `// ToPtr() returns a *${enm.name} pointing to the current value.\n`;
     text += `func (c ${enm.name}) ToPtr() *${enm.name} {\n`;
     text += '\treturn &c\n';
     text += `}\n\n`;

@@ -38,6 +38,7 @@ func PossibleAccessTierValues() []AccessTier {
 	}
 }
 
+// ToPtr() returns a *AccessTier pointing to the current value.
 func (c AccessTier) ToPtr() *AccessTier {
 	return &c
 }
@@ -57,6 +58,7 @@ func PossibleArchiveStatusValues() []ArchiveStatus {
 	}
 }
 
+// ToPtr() returns a *ArchiveStatus pointing to the current value.
 func (c ArchiveStatus) ToPtr() *ArchiveStatus {
 	return &c
 }
@@ -78,6 +80,7 @@ func PossibleBlobTypeValues() []BlobType {
 	}
 }
 
+// ToPtr() returns a *BlobType pointing to the current value.
 func (c BlobType) ToPtr() *BlobType {
 	return &c
 }
@@ -101,6 +104,7 @@ func PossibleCopyStatusTypeValues() []CopyStatusType {
 	}
 }
 
+// ToPtr() returns a *CopyStatusType pointing to the current value.
 func (c CopyStatusType) ToPtr() *CopyStatusType {
 	return &c
 }
@@ -120,6 +124,7 @@ func PossibleLeaseDurationTypeValues() []LeaseDurationType {
 	}
 }
 
+// ToPtr() returns a *LeaseDurationType pointing to the current value.
 func (c LeaseDurationType) ToPtr() *LeaseDurationType {
 	return &c
 }
@@ -145,6 +150,7 @@ func PossibleLeaseStateTypeValues() []LeaseStateType {
 	}
 }
 
+// ToPtr() returns a *LeaseStateType pointing to the current value.
 func (c LeaseStateType) ToPtr() *LeaseStateType {
 	return &c
 }
@@ -164,6 +170,7 @@ func PossibleLeaseStatusTypeValues() []LeaseStatusType {
 	}
 }
 
+// ToPtr() returns a *LeaseStatusType pointing to the current value.
 func (c LeaseStatusType) ToPtr() *LeaseStatusType {
 	return &c
 }
@@ -183,6 +190,7 @@ func PossiblePublicAccessTypeValues() []PublicAccessType {
 	}
 }
 
+// ToPtr() returns a *PublicAccessType pointing to the current value.
 func (c PublicAccessType) ToPtr() *PublicAccessType {
 	return &c
 }

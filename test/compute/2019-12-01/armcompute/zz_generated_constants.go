@@ -24,6 +24,7 @@ func PossibleAccessLevelValues() []AccessLevel {
 	}
 }
 
+// ToPtr() returns a *AccessLevel pointing to the current value.
 func (c AccessLevel) ToPtr() *AccessLevel {
 	return &c
 }
@@ -48,6 +49,7 @@ func PossibleAggregatedReplicationStateValues() []AggregatedReplicationState {
 	}
 }
 
+// ToPtr() returns a *AggregatedReplicationState pointing to the current value.
 func (c AggregatedReplicationState) ToPtr() *AggregatedReplicationState {
 	return &c
 }
@@ -69,6 +71,7 @@ func PossibleAvailabilitySetSKUTypesValues() []AvailabilitySetSKUTypes {
 	}
 }
 
+// ToPtr() returns a *AvailabilitySetSKUTypes pointing to the current value.
 func (c AvailabilitySetSKUTypes) ToPtr() *AvailabilitySetSKUTypes {
 	return &c
 }
@@ -96,6 +99,7 @@ func PossibleCachingTypesValues() []CachingTypes {
 	}
 }
 
+// ToPtr() returns a *CachingTypes pointing to the current value.
 func (c CachingTypes) ToPtr() *CachingTypes {
 	return &c
 }
@@ -120,6 +124,7 @@ func PossibleContainerServiceOrchestratorTypesValues() []ContainerServiceOrchest
 	}
 }
 
+// ToPtr() returns a *ContainerServiceOrchestratorTypes pointing to the current value.
 func (c ContainerServiceOrchestratorTypes) ToPtr() *ContainerServiceOrchestratorTypes {
 	return &c
 }
@@ -230,6 +235,7 @@ func PossibleContainerServiceVMSizeTypesValues() []ContainerServiceVMSizeTypes {
 	}
 }
 
+// ToPtr() returns a *ContainerServiceVMSizeTypes pointing to the current value.
 func (c ContainerServiceVMSizeTypes) ToPtr() *ContainerServiceVMSizeTypes {
 	return &c
 }
@@ -257,6 +263,7 @@ func PossibleDedicatedHostLicenseTypesValues() []DedicatedHostLicenseTypes {
 	}
 }
 
+// ToPtr() returns a *DedicatedHostLicenseTypes pointing to the current value.
 func (c DedicatedHostLicenseTypes) ToPtr() *DedicatedHostLicenseTypes {
 	return &c
 }
@@ -275,6 +282,7 @@ func PossibleDiffDiskOptionsValues() []DiffDiskOptions {
 	}
 }
 
+// ToPtr() returns a *DiffDiskOptions pointing to the current value.
 func (c DiffDiskOptions) ToPtr() *DiffDiskOptions {
 	return &c
 }
@@ -299,6 +307,7 @@ func PossibleDiffDiskPlacementValues() []DiffDiskPlacement {
 	}
 }
 
+// ToPtr() returns a *DiffDiskPlacement pointing to the current value.
 func (c DiffDiskPlacement) ToPtr() *DiffDiskPlacement {
 	return &c
 }
@@ -336,6 +345,7 @@ func PossibleDiskCreateOptionValues() []DiskCreateOption {
 	}
 }
 
+// ToPtr() returns a *DiskCreateOption pointing to the current value.
 func (c DiskCreateOption) ToPtr() *DiskCreateOption {
 	return &c
 }
@@ -363,6 +373,7 @@ func PossibleDiskCreateOptionTypesValues() []DiskCreateOptionTypes {
 	}
 }
 
+// ToPtr() returns a *DiskCreateOptionTypes pointing to the current value.
 func (c DiskCreateOptionTypes) ToPtr() *DiskCreateOptionTypes {
 	return &c
 }
@@ -381,6 +392,7 @@ func PossibleDiskEncryptionSetIDentityTypeValues() []DiskEncryptionSetIDentityTy
 	}
 }
 
+// ToPtr() returns a *DiskEncryptionSetIDentityType pointing to the current value.
 func (c DiskEncryptionSetIDentityType) ToPtr() *DiskEncryptionSetIDentityType {
 	return &c
 }
@@ -415,6 +427,7 @@ func PossibleDiskStateValues() []DiskState {
 	}
 }
 
+// ToPtr() returns a *DiskState pointing to the current value.
 func (c DiskState) ToPtr() *DiskState {
 	return &c
 }
@@ -444,6 +457,7 @@ func PossibleDiskStorageAccountTypesValues() []DiskStorageAccountTypes {
 	}
 }
 
+// ToPtr() returns a *DiskStorageAccountTypes pointing to the current value.
 func (c DiskStorageAccountTypes) ToPtr() *DiskStorageAccountTypes {
 	return &c
 }
@@ -466,6 +480,7 @@ func PossibleEncryptionTypeValues() []EncryptionType {
 	}
 }
 
+// ToPtr() returns a *EncryptionType pointing to the current value.
 func (c EncryptionType) ToPtr() *EncryptionType {
 	return &c
 }
@@ -488,6 +503,7 @@ func PossibleEnum31Values() []Enum31 {
 	}
 }
 
+// ToPtr() returns a *Enum31 pointing to the current value.
 func (c Enum31) ToPtr() *Enum31 {
 	return &c
 }
@@ -516,6 +532,7 @@ func PossibleGalleryApplicationVersionPropertiesProvisioningStateValues() []Gall
 	}
 }
 
+// ToPtr() returns a *GalleryApplicationVersionPropertiesProvisioningState pointing to the current value.
 func (c GalleryApplicationVersionPropertiesProvisioningState) ToPtr() *GalleryApplicationVersionPropertiesProvisioningState {
 	return &c
 }
@@ -544,6 +561,7 @@ func PossibleGalleryImagePropertiesProvisioningStateValues() []GalleryImagePrope
 	}
 }
 
+// ToPtr() returns a *GalleryImagePropertiesProvisioningState pointing to the current value.
 func (c GalleryImagePropertiesProvisioningState) ToPtr() *GalleryImagePropertiesProvisioningState {
 	return &c
 }
@@ -572,6 +590,7 @@ func PossibleGalleryImageVersionPropertiesProvisioningStateValues() []GalleryIma
 	}
 }
 
+// ToPtr() returns a *GalleryImageVersionPropertiesProvisioningState pointing to the current value.
 func (c GalleryImageVersionPropertiesProvisioningState) ToPtr() *GalleryImageVersionPropertiesProvisioningState {
 	return &c
 }
@@ -600,6 +619,7 @@ func PossibleGalleryPropertiesProvisioningStateValues() []GalleryPropertiesProvi
 	}
 }
 
+// ToPtr() returns a *GalleryPropertiesProvisioningState pointing to the current value.
 func (c GalleryPropertiesProvisioningState) ToPtr() *GalleryPropertiesProvisioningState {
 	return &c
 }
@@ -622,6 +642,7 @@ func PossibleHostCachingValues() []HostCaching {
 	}
 }
 
+// ToPtr() returns a *HostCaching pointing to the current value.
 func (c HostCaching) ToPtr() *HostCaching {
 	return &c
 }
@@ -642,6 +663,7 @@ func PossibleHyperVGenerationValues() []HyperVGeneration {
 	}
 }
 
+// ToPtr() returns a *HyperVGeneration pointing to the current value.
 func (c HyperVGeneration) ToPtr() *HyperVGeneration {
 	return &c
 }
@@ -662,6 +684,7 @@ func PossibleHyperVGenerationTypeValues() []HyperVGenerationType {
 	}
 }
 
+// ToPtr() returns a *HyperVGenerationType pointing to the current value.
 func (c HyperVGenerationType) ToPtr() *HyperVGenerationType {
 	return &c
 }
@@ -682,6 +705,7 @@ func PossibleHyperVGenerationTypesValues() []HyperVGenerationTypes {
 	}
 }
 
+// ToPtr() returns a *HyperVGenerationTypes pointing to the current value.
 func (c HyperVGenerationTypes) ToPtr() *HyperVGenerationTypes {
 	return &c
 }
@@ -703,6 +727,7 @@ func PossibleIPVersionValues() []IPVersion {
 	}
 }
 
+// ToPtr() returns a *IPVersion pointing to the current value.
 func (c IPVersion) ToPtr() *IPVersion {
 	return &c
 }
@@ -727,6 +752,7 @@ func PossibleIntervalInMinsValues() []IntervalInMins {
 	}
 }
 
+// ToPtr() returns a *IntervalInMins pointing to the current value.
 func (c IntervalInMins) ToPtr() *IntervalInMins {
 	return &c
 }
@@ -751,6 +777,7 @@ func PossibleMaintenanceOperationResultCodeTypesValues() []MaintenanceOperationR
 	}
 }
 
+// ToPtr() returns a *MaintenanceOperationResultCodeTypes pointing to the current value.
 func (c MaintenanceOperationResultCodeTypes) ToPtr() *MaintenanceOperationResultCodeTypes {
 	return &c
 }
@@ -773,6 +800,7 @@ func PossibleOperatingSystemStateTypesValues() []OperatingSystemStateTypes {
 	}
 }
 
+// ToPtr() returns a *OperatingSystemStateTypes pointing to the current value.
 func (c OperatingSystemStateTypes) ToPtr() *OperatingSystemStateTypes {
 	return &c
 }
@@ -793,6 +821,7 @@ func PossibleOperatingSystemTypesValues() []OperatingSystemTypes {
 	}
 }
 
+// ToPtr() returns a *OperatingSystemTypes pointing to the current value.
 func (c OperatingSystemTypes) ToPtr() *OperatingSystemTypes {
 	return &c
 }
@@ -811,6 +840,7 @@ func PossibleOrchestrationServiceNamesValues() []OrchestrationServiceNames {
 	}
 }
 
+// ToPtr() returns a *OrchestrationServiceNames pointing to the current value.
 func (c OrchestrationServiceNames) ToPtr() *OrchestrationServiceNames {
 	return &c
 }
@@ -833,6 +863,7 @@ func PossibleOrchestrationServiceStateValues() []OrchestrationServiceState {
 	}
 }
 
+// ToPtr() returns a *OrchestrationServiceState pointing to the current value.
 func (c OrchestrationServiceState) ToPtr() *OrchestrationServiceState {
 	return &c
 }
@@ -853,6 +884,7 @@ func PossibleOrchestrationServiceStateActionValues() []OrchestrationServiceState
 	}
 }
 
+// ToPtr() returns a *OrchestrationServiceStateAction pointing to the current value.
 func (c OrchestrationServiceStateAction) ToPtr() *OrchestrationServiceStateAction {
 	return &c
 }
@@ -876,6 +908,7 @@ func PossibleProtocolTypesValues() []ProtocolTypes {
 	}
 }
 
+// ToPtr() returns a *ProtocolTypes pointing to the current value.
 func (c ProtocolTypes) ToPtr() *ProtocolTypes {
 	return &c
 }
@@ -899,6 +932,7 @@ func PossibleProximityPlacementGroupTypeValues() []ProximityPlacementGroupType {
 	}
 }
 
+// ToPtr() returns a *ProximityPlacementGroupType pointing to the current value.
 func (c ProximityPlacementGroupType) ToPtr() *ProximityPlacementGroupType {
 	return &c
 }
@@ -923,6 +957,7 @@ func PossibleReplicationStateValues() []ReplicationState {
 	}
 }
 
+// ToPtr() returns a *ReplicationState pointing to the current value.
 func (c ReplicationState) ToPtr() *ReplicationState {
 	return &c
 }
@@ -940,6 +975,7 @@ func PossibleReplicationStatusTypesValues() []ReplicationStatusTypes {
 	}
 }
 
+// ToPtr() returns a *ReplicationStatusTypes pointing to the current value.
 func (c ReplicationStatusTypes) ToPtr() *ReplicationStatusTypes {
 	return &c
 }
@@ -966,6 +1002,7 @@ func PossibleResourceIDentityTypeValues() []ResourceIDentityType {
 	}
 }
 
+// ToPtr() returns a *ResourceIDentityType pointing to the current value.
 func (c ResourceIDentityType) ToPtr() *ResourceIDentityType {
 	return &c
 }
@@ -988,6 +1025,7 @@ func PossibleResourceSKUCapacityScaleTypeValues() []ResourceSKUCapacityScaleType
 	}
 }
 
+// ToPtr() returns a *ResourceSKUCapacityScaleType pointing to the current value.
 func (c ResourceSKUCapacityScaleType) ToPtr() *ResourceSKUCapacityScaleType {
 	return &c
 }
@@ -1008,6 +1046,7 @@ func PossibleResourceSKURestrictionsReasonCodeValues() []ResourceSKURestrictions
 	}
 }
 
+// ToPtr() returns a *ResourceSKURestrictionsReasonCode pointing to the current value.
 func (c ResourceSKURestrictionsReasonCode) ToPtr() *ResourceSKURestrictionsReasonCode {
 	return &c
 }
@@ -1028,6 +1067,7 @@ func PossibleResourceSKURestrictionsTypeValues() []ResourceSKURestrictionsType {
 	}
 }
 
+// ToPtr() returns a *ResourceSKURestrictionsType pointing to the current value.
 func (c ResourceSKURestrictionsType) ToPtr() *ResourceSKURestrictionsType {
 	return &c
 }
@@ -1048,6 +1088,7 @@ func PossibleRollingUpgradeActionTypeValues() []RollingUpgradeActionType {
 	}
 }
 
+// ToPtr() returns a *RollingUpgradeActionType pointing to the current value.
 func (c RollingUpgradeActionType) ToPtr() *RollingUpgradeActionType {
 	return &c
 }
@@ -1072,6 +1113,7 @@ func PossibleRollingUpgradeStatusCodeValues() []RollingUpgradeStatusCode {
 	}
 }
 
+// ToPtr() returns a *RollingUpgradeStatusCode pointing to the current value.
 func (c RollingUpgradeStatusCode) ToPtr() *RollingUpgradeStatusCode {
 	return &c
 }
@@ -1092,6 +1134,7 @@ func PossibleSettingNamesValues() []SettingNames {
 	}
 }
 
+// ToPtr() returns a *SettingNames pointing to the current value.
 func (c SettingNames) ToPtr() *SettingNames {
 	return &c
 }
@@ -1117,6 +1160,7 @@ func PossibleSnapshotStorageAccountTypesValues() []SnapshotStorageAccountTypes {
 	}
 }
 
+// ToPtr() returns a *SnapshotStorageAccountTypes pointing to the current value.
 func (c SnapshotStorageAccountTypes) ToPtr() *SnapshotStorageAccountTypes {
 	return &c
 }
@@ -1139,6 +1183,7 @@ func PossibleStatusLevelTypesValues() []StatusLevelTypes {
 	}
 }
 
+// ToPtr() returns a *StatusLevelTypes pointing to the current value.
 func (c StatusLevelTypes) ToPtr() *StatusLevelTypes {
 	return &c
 }
@@ -1161,6 +1206,7 @@ func PossibleStorageAccountTypeValues() []StorageAccountType {
 	}
 }
 
+// ToPtr() returns a *StorageAccountType pointing to the current value.
 func (c StorageAccountType) ToPtr() *StorageAccountType {
 	return &c
 }
@@ -1191,6 +1237,7 @@ func PossibleStorageAccountTypesValues() []StorageAccountTypes {
 	}
 }
 
+// ToPtr() returns a *StorageAccountTypes pointing to the current value.
 func (c StorageAccountTypes) ToPtr() *StorageAccountTypes {
 	return &c
 }
@@ -1216,6 +1263,7 @@ func PossibleUpgradeModeValues() []UpgradeMode {
 	}
 }
 
+// ToPtr() returns a *UpgradeMode pointing to the current value.
 func (c UpgradeMode) ToPtr() *UpgradeMode {
 	return &c
 }
@@ -1238,6 +1286,7 @@ func PossibleUpgradeOperationInvokerValues() []UpgradeOperationInvoker {
 	}
 }
 
+// ToPtr() returns a *UpgradeOperationInvoker pointing to the current value.
 func (c UpgradeOperationInvoker) ToPtr() *UpgradeOperationInvoker {
 	return &c
 }
@@ -1262,6 +1311,7 @@ func PossibleUpgradeStateValues() []UpgradeState {
 	}
 }
 
+// ToPtr() returns a *UpgradeState pointing to the current value.
 func (c UpgradeState) ToPtr() *UpgradeState {
 	return &c
 }
@@ -1282,6 +1332,7 @@ func PossibleVirtualMachineEvictionPolicyTypesValues() []VirtualMachineEvictionP
 	}
 }
 
+// ToPtr() returns a *VirtualMachineEvictionPolicyTypes pointing to the current value.
 func (c VirtualMachineEvictionPolicyTypes) ToPtr() *VirtualMachineEvictionPolicyTypes {
 	return &c
 }
@@ -1305,6 +1356,7 @@ func PossibleVirtualMachinePriorityTypesValues() []VirtualMachinePriorityTypes {
 	}
 }
 
+// ToPtr() returns a *VirtualMachinePriorityTypes pointing to the current value.
 func (c VirtualMachinePriorityTypes) ToPtr() *VirtualMachinePriorityTypes {
 	return &c
 }
@@ -1325,6 +1377,7 @@ func PossibleVirtualMachineScaleSetSKUScaleTypeValues() []VirtualMachineScaleSet
 	}
 }
 
+// ToPtr() returns a *VirtualMachineScaleSetSKUScaleType pointing to the current value.
 func (c VirtualMachineScaleSetSKUScaleType) ToPtr() *VirtualMachineScaleSetSKUScaleType {
 	return &c
 }
@@ -1346,6 +1399,7 @@ func PossibleVirtualMachineScaleSetScaleInRulesValues() []VirtualMachineScaleSet
 	}
 }
 
+// ToPtr() returns a *VirtualMachineScaleSetScaleInRules pointing to the current value.
 func (c VirtualMachineScaleSetScaleInRules) ToPtr() *VirtualMachineScaleSetScaleInRules {
 	return &c
 }
@@ -1699,6 +1753,7 @@ func PossibleVirtualMachineSizeTypesValues() []VirtualMachineSizeTypes {
 	}
 }
 
+// ToPtr() returns a *VirtualMachineSizeTypes pointing to the current value.
 func (c VirtualMachineSizeTypes) ToPtr() *VirtualMachineSizeTypes {
 	return &c
 }

@@ -33,6 +33,7 @@ func PossibleDaysOfWeekExtensibleEnumValues() []DaysOfWeekExtensibleEnum {
 	}
 }
 
+// ToPtr() returns a *DaysOfWeekExtensibleEnum pointing to the current value.
 func (c DaysOfWeekExtensibleEnum) ToPtr() *DaysOfWeekExtensibleEnum {
 	return &c
 }
@@ -57,6 +58,7 @@ func PossibleIntEnumValues() []IntEnum {
 	}
 }
 
+// ToPtr() returns a *IntEnum pointing to the current value.
 func (c IntEnum) ToPtr() *IntEnum {
 	return &c
 }
