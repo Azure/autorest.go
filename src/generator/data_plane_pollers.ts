@@ -15,7 +15,7 @@ import { generateARMPollers } from './arm_pollers';
 // Creates the content in pollers.go
 export async function generatePollers(session: Session<CodeModel>): Promise<string> {
   // get the openapi-type value specified. Default to ARM behavior, unless "data-plane" is specified
-  let isARM = session.model.language.go!.openApiType === 'arm';
+  const isARM = session.model.language.go!.openApiType === 'arm';
   if (isARM) {
     return generateARMPollers(session);
   }

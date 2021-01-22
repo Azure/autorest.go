@@ -8,23 +8,21 @@ import { CodeModel, Parameter } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 import { contentPreamble, formatParameterTypeName } from './helpers';
 import { ImportManager } from './imports';
-import { exportClients } from '../common/helpers'
 import { camelCase, pascalCase } from '@azure-tools/codegen';
 
 // generates content for connection.go
 export async function generateConnection(session: Session<CodeModel>): Promise<string> {
-  if (!session.model.language.go!.armcoreConnection) {
+  if (!<boolean>session.model.language.go!.azureARM) {
     // add standard imports
     imports.add('fmt');
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
   }
 
   let text = await contentPreamble(session);
-  const exportClient = await exportClients(session);
   // content generation can add to the imports list, so execute it before emitting any text
-  const content = generateContent(session, exportClient);
+  const content = generateContent(session);
   text += imports.text();
-  if (session.model.security.authenticationRequired && !session.model.language.go!.armcoreConnection) {
+  if (session.model.security.authenticationRequired && !<boolean>session.model.language.go!.azureARM) {
     const scope = await session.getValue('credential-scope');
     text += `const scope = "${scope}"\n`;
   }
@@ -32,15 +30,15 @@ export async function generateConnection(session: Session<CodeModel>): Promise<s
   return text;
 }
 
-function generateContent(session: Session<CodeModel>, exportClient: boolean): string {
-  const isARM = session.model.language.go!.openApiType === 'arm';
+function generateContent(session: Session<CodeModel>): string {
   let text = `const telemetryInfo = "azsdk-go-${session.model.language.go!.packageName}/<version>"\n`;
-  if (session.model.language.go!.armcoreConnection) {
+  if (<boolean>session.model.language.go!.azureARM) {
     // use the Connection type in armcore instead of generating one
     return text;
   }
+  const isARM = session.model.language.go!.openApiType === 'arm';
   let connectionOptions = 'ConnectionOptions';
-  if (!exportClient) {
+  if (!isARM) {
     connectionOptions = camelCase(connectionOptions);
   }
   text += `// ${connectionOptions} contains configuration settings for the connection's pipeline.\n`;
@@ -77,7 +75,7 @@ function generateContent(session: Session<CodeModel>, exportClient: boolean): st
   let newDefaultConnection = 'NewDefaultConnection';
   let newConnection = 'NewConnection';
   let newConnectionWithPipeline = 'NewConnectionWithPipeline';
-  if (!exportClient) {
+  if (!isARM) {
     connection = camelCase(connection);
     defaultEndpoint = camelCase(defaultEndpoint);
     newDefaultConnection = camelCase(newDefaultConnection);

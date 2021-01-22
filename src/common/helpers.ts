@@ -118,9 +118,3 @@ export function getRelationship(obj: ObjectSchema): 'none' | 'root' | 'parent' |
     return 'parent';
   }
 }
-
-// returns true if client types should be exported
-export async function exportClients(session: Session<CodeModel>): Promise<boolean> {
-  const specType = await session.getValue('openapi-type', 'not_specified');
-  return specType === 'arm';
-}
