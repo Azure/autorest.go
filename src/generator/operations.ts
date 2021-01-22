@@ -7,7 +7,7 @@ import { Session } from '@azure-tools/autorest-extension-base';
 import { comment, KnownMediaType, pascalCase, camelCase } from '@azure-tools/codegen';
 import { ArraySchema, ByteArraySchema, CodeModel, ConstantSchema, DateTimeSchema, DictionarySchema, GroupProperty, ImplementationLocation, NumberSchema, Operation, OperationGroup, Parameter, Property, Protocols, Response, Schema, SchemaResponse, SchemaType } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
-import { aggregateParameters, isArraySchema, isPageableOperation, isSchemaResponse, PagerInfo, isLROOperation, exportClients, commentLength } from '../common/helpers';
+import { aggregateParameters, isArraySchema, isPageableOperation, isSchemaResponse, PagerInfo, isLROOperation, commentLength } from '../common/helpers';
 import { OperationNaming } from '../transform/namer';
 import { contentPreamble, formatParameterTypeName, formatStatusCodes, getStatusCodes, hasDescription, hasSchemaResponse, skipURLEncoding, sortAscending, getCreateRequestParameters, getCreateRequestParametersSig, getMethodParameters, getParamName, formatParamValue, dateFormat, datetimeRFC1123Format, datetimeRFC3339Format, sortParametersByRequired } from './helpers';
 import { ImportManager } from './imports';
@@ -34,7 +34,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     // add standard imorts
     imports.add('net/http');
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
-    if (session.model.language.go!.armcoreConnection) {
+    if (<boolean>session.model.language.go!.azureARM) {
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/armcore');
     }
 
@@ -55,12 +55,11 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     }
     // stitch it all together
     let text = await contentPreamble(session);
-    const exportClient = await exportClients(session);
     let connection = 'Connection';
     let clientName = group.language.go!.clientName;
-    if (!exportClient) {
+    if (!isARM) {
       connection = camelCase(connection);
-    } else if (session.model.language.go!.armcoreConnection) {
+    } else if (<boolean>session.model.language.go!.azureARM) {
       connection = 'armcore.Connection';
     }
     const clientCtor = group.language.go!.clientCtorName;
@@ -225,7 +224,7 @@ function getZeroReturnValue(op: Operation, apiType: 'api' | 'op' | 'handler'): s
   } else if (hasSchemaResponse(op)) {
     // simple schema response
     returnType = `${(<SchemaResponse>op.responses![0]).schema.language.go!.responseType.name}{}`;
-  } else if (op.language.go!.headAsBoolean) {
+  } else if (op.language.go!.headAsBoolean === true) {
     // NOTE: this case must come after the hasSchemaResponse() check to properly handle
     //       the intersection of head-as-boolean with modeled response headers
     returnType = 'BooleanResponse{}';
@@ -299,7 +298,7 @@ function generateOperation(op: Operation, imports: ImportManager): string {
   text += `\t\treturn ${zeroResp}, err\n`;
   text += `\t}\n`;
   // HAB with schema response is handled in protocol responder
-  if (op.language.go!.headAsBoolean && !(op.responses && isSchemaResponse(op.responses[0]))) {
+  if (op.language.go!.headAsBoolean === true && op.responses && !isSchemaResponse(op.responses[0])) {
     let respEnv = 'BooleanResponse';
     text += '\tif resp.StatusCode >= 200 && resp.StatusCode < 300 {\n';
     text += `\t\treturn ${respEnv}{RawResponse: resp.Response, Success: true}, nil\n`;
@@ -678,7 +677,7 @@ function generateResponseUnmarshaller(op: Operation, response: Response, imports
       unmarshallerText += formatHeaderResponseValue(headerVal.language.go!.name, headerVal.language.go!.fromHeader, headerVal.schema, imports, 'result', `${response.schema.language.go!.responseType.name}{}`);
     }
   };
-  if (op.language.go!.headAsBoolean) {
+  if (op.language.go!.headAsBoolean === true) {
     unmarshallerText += `\tresult := ${schemaResponse.schema.language.go!.responseType.name}{RawResponse: resp.Response}\n`;
     unmarshallerText += '\tif resp.StatusCode >= 200 && resp.StatusCode < 300 {\n';
     unmarshallerText += '\t\tresult.Success = true\n';
@@ -956,7 +955,7 @@ function generateReturnsInfo(op: Operation, apiType: 'api' | 'op' | 'handler'): 
   } else if (hasSchemaResponse(op)) {
     // simple schema response
     returnType = (<SchemaResponse>op.responses![0]).schema.language.go!.responseType.name;
-  } else if (op.language.go!.headAsBoolean) {
+  } else if (op.language.go!.headAsBoolean === true) {
     // NOTE: this case must come after the hasSchemaResponse() check to properly handle
     //       the intersection of head-as-boolean with modeled response headers
     return ['BooleanResponse', 'error'];

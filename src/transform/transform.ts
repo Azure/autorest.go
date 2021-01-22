@@ -35,11 +35,6 @@ export async function transform(host: Host) {
 }
 
 async function process(session: Session<CodeModel>) {
-  const specType = await session.getValue('openapi-type', 'not_specified');
-  const headAsBoolean = await session.getValue('head-as-boolean', false);
-  session.model.language.go!.openApiType = specType;
-  session.model.language.go!.headAsBoolean = headAsBoolean;
-  session.model.language.go!.armcoreConnection = await session.getValue('armcore-connection', false);
   processOperationRequests(session);
   processOperationResponses(session);
   // fix up dictionary element types (additional properties)
@@ -610,12 +605,12 @@ function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op:
     successProp.language.go!.byValue = true;
     return newProperty('Success', 'Success indicates if the operation succeeded or failed.', successProp);
   }
-  // if head-as-boolean (HAB) is enabled and this is a HEAD method then return a BooleanResponse
+  // if this is an ARM spec and this is a HEAD method then return a BooleanResponse
   // response envelope instead of http.Response.  only do this if the operation doesn't model any
   // header values (HAB will be enabled for that response envelope).
-  if (codeModel.language.go!.headAsBoolean && op.requests![0].protocol.http!.method === 'head' && headers.size === 0) {
+  if (op.language.go!.openApiType === 'arm' && op.requests![0].protocol.http!.method === 'head' && headers.size === 0) {
     // enable treating HEAD requests as boolean responses.
-    op.language.go!.headAsBoolean = codeModel.language.go!.headAsBoolean;
+    op.language.go!.headAsBoolean = true;
     const name = 'BooleanResponse';
     if (!responseEnvelopeExists(codeModel, name)) {
       const description = `${name} contains a boolean response.`;
@@ -656,9 +651,9 @@ function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op:
           prop.language.go!.fromHeader = item.value.header;
           (<Array<Property>>respEnv.language.go!.properties).push(prop);
         }
-        if (codeModel.language.go!.headAsBoolean && op.requests![0].protocol.http!.method === 'head') {
+        if (op.language.go!.openApiType === 'arm' && op.requests![0].protocol.http!.method === 'head') {
           // this is the intersection of head-as-boolean with modeled header responses
-          op.language.go!.headAsBoolean = codeModel.language.go!.headAsBoolean;
+          op.language.go!.headAsBoolean = true;
           (<Array<Property>>respEnv.language.go!.properties).push(createSuccessProp());
         }
         // mark as a response type

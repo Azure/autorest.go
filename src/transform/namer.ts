@@ -8,7 +8,7 @@ import { Session } from '@azure-tools/autorest-extension-base';
 import { CodeModel, HttpHeader, Language } from '@azure-tools/codemodel';
 import { visitor, clone, values } from '@azure-tools/linq';
 import { CommonAcronyms, ReservedWords } from './mappings';
-import { aggregateParameters, exportClients, hasAdditionalProperties } from '../common/helpers';
+import { aggregateParameters, hasAdditionalProperties } from '../common/helpers';
 
 const requestMethodSuffix = 'CreateRequest';
 const responseMethodSuffix = 'HandleResponse';
@@ -54,6 +54,11 @@ export async function namer(session: Session<CodeModel>) {
   const outputFolder = await session.getValue<string>('output-folder');
   model.language.go!.packageName = outputFolder.substr(outputFolder.lastIndexOf('/') + 1);
 
+  const specType = await session.getValue('openapi-type');
+  model.language.go!.openApiType = specType;
+  const azureARM = await session.getValue('azure-arm', false);
+  model.language.go!.azureARM = azureARM;
+
   // pascal-case and capitzalize acronym names of objects and their fields
   for (const obj of values(model.schemas.objects)) {
     const details = <Language>obj.language.go;
@@ -79,7 +84,7 @@ export async function namer(session: Session<CodeModel>) {
     }
   }
 
-  const exportClient = await exportClients(session);
+  const exportClient = session.model.language.go!.openApiType === 'arm';
   // pascal-case and capitzalize acronym operation groups and their operations
   for (const group of values(model.operationGroups)) {
     const groupDetails = <Language>group.language.go;
@@ -100,6 +105,9 @@ export async function namer(session: Session<CodeModel>) {
     }
     for (const op of values(group.operations)) {
       const details = <OperationNaming>op.language.go;
+      // propagate these settings to each operation for ease of access
+      details.azureARM = model.language.go!.azureARM
+      details.openApiType = model.language.go!.openApiType
       details.name = getEscapedReservedName(capitalizeAcronyms(pascalCase(details.name)), 'Method');
       // add the client name to the operation as it's needed all over the place
       details.clientName = groupDetails.clientName;

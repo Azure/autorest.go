@@ -319,6 +319,8 @@ export function formatStatusCode(statusCode: string): string {
       return 'http.StatusNotFound';
     case '409':
       return 'http.StatusConflict';
+    case '412':
+      return 'http.StatusPreconditionFailed';
     case '500':
       return 'http.StatusInternalServerError';
     case '501':
