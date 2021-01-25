@@ -9,7 +9,7 @@ import { codeModelSchema, CodeModel } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 import { generateOperations } from './operations';
 import { generateModels } from './models';
-import { generateEnums } from './enums';
+import { generateConstants } from './constants';
 import { generateConnection } from './connection';
 import { generateTimeHelpers } from './time';
 import { generatePagers } from './pagers';
@@ -40,9 +40,9 @@ export async function protocolGen(host: Host) {
       host.WriteFile(`${filePrefix}${op.name.toLowerCase()}.go`, op.content, undefined, 'source-file-go');
     }
 
-    const enums = await generateEnums(session);
+    const enums = await generateConstants(session);
     if (enums.length > 0) {
-      host.WriteFile(`${filePrefix}enums.go`, enums, undefined, 'source-file-go');
+      host.WriteFile(`${filePrefix}constants.go`, enums, undefined, 'source-file-go');
     }
 
     const models = await generateModels(session);

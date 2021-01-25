@@ -24,6 +24,7 @@ func PossibleEnum0Values() []Enum0 {
 	}
 }
 
+// ToPtr() returns a *Enum0 pointing to the current value.
 func (c Enum0) ToPtr() *Enum0 {
 	return &c
 }
@@ -45,6 +46,7 @@ func PossibleEnum1Values() []Enum1 {
 	}
 }
 
+// ToPtr() returns a *Enum1 pointing to the current value.
 func (c Enum1) ToPtr() *Enum1 {
 	return &c
 }
@@ -66,6 +68,7 @@ func PossibleFooEnumValues() []FooEnum {
 	}
 }
 
+// ToPtr() returns a *FooEnum pointing to the current value.
 func (c FooEnum) ToPtr() *FooEnum {
 	return &c
 }

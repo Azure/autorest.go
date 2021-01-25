@@ -24,6 +24,7 @@ func PossibleGreyscaleColorsValues() []GreyscaleColors {
 	}
 }
 
+// ToPtr() returns a *GreyscaleColors pointing to the current value.
 func (c GreyscaleColors) ToPtr() *GreyscaleColors {
 	return &c
 }

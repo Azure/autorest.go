@@ -31,6 +31,7 @@ func PossibleContentTypeValues() []ContentType {
 	}
 }
 
+// ToPtr() returns a *ContentType pointing to the current value.
 func (c ContentType) ToPtr() *ContentType {
 	return &c
 }
