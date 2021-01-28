@@ -88,22 +88,26 @@ namespace AutoRest.Go.Model
             RegisterRP = cmg.APIType.EqualsIgnoreCase("arm") && Url.Split("/").Any(p => p.EqualsIgnoreCase("subscriptions"));
 
             // Fixing the returnType in modeler
-            // find all the non-error responses
-            var nonErrorResponses = Responses.Where(kv => !kv.Value.IsErrorResponse());
+            // find all the non-error responses with non-empty body
+            // we have to ignore those non-error responses with empty bodies, because there are quite plenty of swaggers with one response with body and the other without body
+            Logger.Instance.Log(Category.Debug, $"All responses of {SerializedName}: {string.Join(", ", Responses.Select(kv => $"{(int)kv.Key}: {kv.Value?.Body?.Name}"))}");
+            var nonErrorNonEmptyResponses = Responses.Where(kv => !kv.Value.IsErrorResponse() && kv.Value.Body != null);
+            Logger.Instance.Log(Category.Debug, $"Method {SerializedName} has the following non-error & non-empty responses (total {nonErrorNonEmptyResponses.Count()}): {string.Join(", ", nonErrorNonEmptyResponses.Select(resp => resp.Value?.Body?.Name))}");
             // categorize the models by its name
-            var nonErrorModels = nonErrorResponses.Select(kv => kv.Value).Distinct(new ResponseEqualityComparer()).ToList();
-            Logger.Instance.Log(Category.Debug, $"NonErrorModels: {nonErrorModels}");
+            var nonErrorNonEmptyModels = nonErrorNonEmptyResponses.Select(kv => kv.Value).Distinct(new ResponseEqualityComparer()).ToList();
+            Logger.Instance.Log(Category.Debug, $"Non-error & non-empty models: {string.Join(", ", nonErrorNonEmptyModels.Select(model => model.Body.Name))}");
             // throw exception if we have more than one valid body model
-            if (nonErrorModels.Count > 1)
+            if (nonErrorNonEmptyModels.Count > 1)
             {
-                throw new InvalidOperationException($"cannot have more than one non-error responses with non-empty schema, but we got {string.Join(", ", nonErrorResponses.Select(kv => $"{(int)kv.Key}: {kv.Value?.Body?.Name}"))} in operationId {SerializedName}");
+                throw new InvalidOperationException($"cannot have more than one non-error responses with non-empty but different schemas, but we got {string.Join(", ", nonErrorNonEmptyResponses.Select(kv => $"{(int)kv.Key}: {kv.Value?.Body?.ClassName}"))} in operationId {SerializedName}");
             }
-            if (nonErrorModels.Count == 0) ReturnType = DefaultResponse;
+            if (nonErrorNonEmptyModels.Count == 0) ReturnType = new Response();
             else
             {
                 // in this case we have only one return type candidate
-                ReturnType = nonErrorModels.First();
+                ReturnType = nonErrorNonEmptyModels.First();
             }
+            Logger.Instance.Log(Category.Debug, $"Return Type of {SerializedName}: {ReturnType?.Body?.Name}");
         }
 
         private struct ResponseEqualityComparer : IEqualityComparer<Response>
@@ -621,6 +625,7 @@ namespace AutoRest.Go.Model
         /// <returns></returns>
         public Response ReturnValue()
         {
+            // TODO -- do we really need this since ReturnType will never be null?
             return ReturnType ?? DefaultResponse;
         }
 
