@@ -15,7 +15,6 @@ using System.Linq;
 using System.Net;
 using Newtonsoft.Json.Linq;
 using AutoRest.Core.Logging;
-using static AutoRest.Core.Utilities.DependencyInjection;
 
 namespace AutoRest.Go.Model
 {
@@ -50,6 +49,8 @@ namespace AutoRest.Go.Model
 
         internal void Transform(CodeModelGo cmg)
         {
+            Logger.Instance.Log(Category.Information, $"Begin of transform of method {Name}");
+
             Owner = (MethodGroup as MethodGroupGo).ClientName;
             PackageName = cmg.Namespace;
             NextAlreadyDefined = NextMethodExists(cmg.Methods.Cast<MethodGo>());
@@ -87,6 +88,40 @@ namespace AutoRest.Go.Model
             // As registering needs the Azure subscription ID, we take it from the operation path, on the
             // assumption that ARM APIs should include the subscription ID right after `subscriptions`
             RegisterRP = cmg.APIType.EqualsIgnoreCase("arm") && Url.Split("/").Any(p => p.EqualsIgnoreCase("subscriptions"));
+
+            // Fixing the returnType in modeler
+            // find all the non-error responses
+            var nonErrorResponses = Responses.Where(kv => !kv.Value.IsErrorResponse());
+            // categorize the models by its name
+            var nonErrorModels = nonErrorResponses.Select(kv => kv.Value).Distinct(new ResponseEqualityComparer()).ToList();
+            Logger.Instance.Log(Category.Debug, $"NonErrorModels: {nonErrorModels}");
+            // throw exception if we have more than one valid body model
+            if (nonErrorModels.Count > 1)
+            {
+                throw new InvalidOperationException($"cannot have more than one non-error responses with non-empty schema, but we got {string.Join(", ", nonErrorResponses.Select(kv => $"{(int)kv.Key}: {kv.Value.Body.Name}"))} in operationId {SerializedName}");
+            }
+            if (nonErrorModels.Count == 0) ReturnType = DefaultResponse;
+            else
+            {
+                // in this case we have only one return type candidate
+                ReturnType = nonErrorModels.First();
+            }
+
+            Logger.Instance.Log(Category.Information, $"End of transform of method {Name}");
+        }
+
+        private struct ResponseEqualityComparer : IEqualityComparer<Response>
+        {
+
+            public bool Equals(Response x, Response y)
+            {
+                return x?.Body?.Name == y?.Body?.Name;
+            }
+
+            public int GetHashCode(Response obj)
+            {
+                return obj?.Body?.Name.GetHashCode() ?? 0;
+            }
         }
 
         /// <summary>
@@ -593,20 +628,6 @@ namespace AutoRest.Go.Model
             return ReturnType ?? DefaultResponse;
         }
 
-        public new Response ReturnType
-        {
-            get
-            {
-                Logger.Instance.Log(Category.Information, "calling fixed returnType");
-                if (base.ReturnType.IsErrorResponse()) return New<Response>();
-                return base.ReturnType;
-            }
-            set
-            {
-                base.ReturnType = value;
-            }
-        }
-
         /// <summary>
         /// Returns true if method has pageable extension (x-ms-pageable) with a non-null nextLinkName.
         /// </summary>
@@ -634,7 +655,7 @@ namespace AutoRest.Go.Model
         /// Returns true if a ListComplete method should be generated.
         /// </summary>
         public bool NeedsListComplete => IsPageable && !IsNextMethod;
-        
+
         /// <summary>
         /// Returns the name of the type returned from a ListComplete method.
         /// This should only be called if NeedsListComplete returns true.
