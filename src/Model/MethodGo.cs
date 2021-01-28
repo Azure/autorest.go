@@ -13,8 +13,9 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Net;
-using System.Text;
 using Newtonsoft.Json.Linq;
+using AutoRest.Core.Logging;
+using static AutoRest.Core.Utilities.DependencyInjection;
 
 namespace AutoRest.Go.Model
 {
@@ -348,10 +349,13 @@ namespace AutoRest.Go.Model
                 {
                     codes.Add(CodeNamerGo.Instance.StatusCodeToGoString[HttpStatusCode.OK]);
                 }
-                // Refactor -> generator
-                foreach (var sc in Responses.Keys)
+                // Only add the response to responseCodes when it is not marked by x-ms-error-response: true
+                foreach (var response in Responses)
                 {
-                    codes.Add(CodeNamerGo.Instance.StatusCodeToGoString[sc]);
+                    if (!response.Value.IsErrorResponse())
+                    {
+                        codes.Add(CodeNamerGo.Instance.StatusCodeToGoString[response.Key]);
+                    }
                 }
                 return codes;
             }
@@ -587,6 +591,20 @@ namespace AutoRest.Go.Model
         public Response ReturnValue()
         {
             return ReturnType ?? DefaultResponse;
+        }
+
+        public new Response ReturnType
+        {
+            get
+            {
+                Logger.Instance.Log(Category.Information, "calling fixed returnType");
+                if (base.ReturnType.IsErrorResponse()) return New<Response>();
+                return base.ReturnType;
+            }
+            set
+            {
+                base.ReturnType = value;
+            }
         }
 
         /// <summary>
