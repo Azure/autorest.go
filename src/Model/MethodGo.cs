@@ -49,8 +49,6 @@ namespace AutoRest.Go.Model
 
         internal void Transform(CodeModelGo cmg)
         {
-            Logger.Instance.Log(Category.Information, $"Begin of transform of method {Name}");
-
             Owner = (MethodGroup as MethodGroupGo).ClientName;
             PackageName = cmg.Namespace;
             NextAlreadyDefined = NextMethodExists(cmg.Methods.Cast<MethodGo>());
@@ -98,7 +96,7 @@ namespace AutoRest.Go.Model
             // throw exception if we have more than one valid body model
             if (nonErrorModels.Count > 1)
             {
-                throw new InvalidOperationException($"cannot have more than one non-error responses with non-empty schema, but we got {string.Join(", ", nonErrorResponses.Select(kv => $"{(int)kv.Key}: {kv.Value.Body.Name}"))} in operationId {SerializedName}");
+                throw new InvalidOperationException($"cannot have more than one non-error responses with non-empty schema, but we got {string.Join(", ", nonErrorResponses.Select(kv => $"{(int)kv.Key}: {kv.Value?.Body?.Name}"))} in operationId {SerializedName}");
             }
             if (nonErrorModels.Count == 0) ReturnType = DefaultResponse;
             else
@@ -106,8 +104,6 @@ namespace AutoRest.Go.Model
                 // in this case we have only one return type candidate
                 ReturnType = nonErrorModels.First();
             }
-
-            Logger.Instance.Log(Category.Information, $"End of transform of method {Name}");
         }
 
         private struct ResponseEqualityComparer : IEqualityComparer<Response>
