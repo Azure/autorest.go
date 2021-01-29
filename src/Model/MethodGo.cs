@@ -97,15 +97,18 @@ namespace AutoRest.Go.Model
             var nonErrorNonEmptyModels = nonErrorNonEmptyResponses.Select(kv => kv.Value).Distinct(new ResponseEqualityComparer()).ToList();
             Logger.Instance.Log(Category.Debug, $"Non-error & non-empty models: {string.Join(", ", nonErrorNonEmptyModels.Select(model => model.Body.Name))}");
             // throw exception if we have more than one valid body model
-            if (nonErrorNonEmptyModels.Count > 1)
+            switch (nonErrorNonEmptyModels.Count)
             {
-                throw new InvalidOperationException($"cannot have more than one non-error responses with non-empty but different schemas, but we got {string.Join(", ", nonErrorNonEmptyResponses.Select(kv => $"{(int)kv.Key}: {kv.Value?.Body?.ClassName}"))} in operationId {SerializedName}");
-            }
-            if (nonErrorNonEmptyModels.Count == 0) ReturnType = new Response();
-            else
-            {
-                // in this case we have only one return type candidate
-                ReturnType = nonErrorNonEmptyModels.First();
+                case 0:
+                    ReturnType = new Response();
+                    break;
+                case 1:
+                    ReturnType = nonErrorNonEmptyModels.First();
+                    break;
+                default:
+                    // In this case, we do nothing but let the original value in ReturnType to take effect
+                    Logger.Instance.Log(Category.Debug, $"we have more than one non-error responses with non-empty but different schemas, but we got {string.Join(", ", nonErrorNonEmptyResponses.Select(kv => $"{(int)kv.Key}: {kv.Value?.Body?.ClassName}"))} in operationId {SerializedName}");
+                    break;
             }
             Logger.Instance.Log(Category.Debug, $"Return Type of {SerializedName}: {ReturnType?.Body?.Name}");
         }
