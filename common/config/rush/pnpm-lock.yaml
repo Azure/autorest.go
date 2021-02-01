@@ -1,7 +1,7 @@
 dependencies:
   '@autorest/autorest': 3.0.6187
+  '@autorest/extension-base': 3.1.0
   '@azure-tools/async-io': 3.0.252
-  '@autorest/extension-base': 3.1.266
   '@azure-tools/codegen': 2.5.290
   '@azure-tools/codemodel': 4.13.348
   '@azure-tools/linq': 3.1.261
@@ -33,6 +33,14 @@ packages:
     requiresBuild: true
     resolution:
       integrity: sha512-BUTLfV6GufjgcSp0ysB1wdhMIG8RGQMiY4ZQnP76fHcR2KZW0QinnEAR99mMy7BVOdXiurWkNW7rilEJfKhXWg==
+  /@autorest/extension-base/3.1.0:
+    dependencies:
+      '@azure-tools/codegen': 2.5.290
+      js-yaml: 3.13.1
+      vscode-jsonrpc: 3.6.2
+    dev: false
+    resolution:
+      integrity: sha512-LHSLvPDG0uoMsOmzh0wOtxHu0dvoTaqDRJkgJVAZFVz4VfLocXhFActkwQ31yoB0IO7phZnuvcG8NcvKObURAQ==
   /@azure-tools/async-io/3.0.252:
     dependencies:
       '@azure-tools/tasks': 3.0.252
@@ -42,7 +50,7 @@ packages:
       node: '>=10.12.0'
     resolution:
       integrity: sha512-RpoaEWGwpdp4FR9YKgnSkvwhdeR1gIzRFFOBotOyd3ow8FMfRIvMZ/eHar2iM3OXUnRKbHnv1M6oapdZah1JWw==
-  /@autorest/extension-base/3.1.266:
+  /@azure-tools/autorest-extension-base/3.1.266:
     dependencies:
       '@azure-tools/codegen': 2.5.290
       js-yaml: 3.13.1
@@ -61,7 +69,7 @@ packages:
       integrity: sha512-D9TuBY9YE+CE/EpbMaB3oVJq1xp7koIAQGlFrRNTLPgKNMelqkWK8HLnYSk810HL0rJFQjJE/BLx5lQsOjMYRQ==
   /@azure-tools/codemodel/4.13.348:
     dependencies:
-      '@autorest/extension-base': 3.1.266
+      '@azure-tools/autorest-extension-base': 3.1.266
       '@azure-tools/codegen': 2.5.290
       '@azure-tools/linq': 3.1.261
     dev: false
@@ -3326,8 +3334,9 @@ packages:
   'file:projects/go.tgz':
     dependencies:
       '@autorest/autorest': 3.0.6187
+      '@autorest/extension-base': 3.1.0
       '@azure-tools/async-io': 3.0.252
-      '@autorest/extension-base': 3.1.266
+      '@azure-tools/autorest-extension-base': 3.1.266
       '@azure-tools/codegen': 2.5.290
       '@azure-tools/codemodel': 4.13.348
       '@azure-tools/linq': 3.1.261
@@ -3351,13 +3360,14 @@ packages:
     dev: false
     name: '@rush-temp/go'
     resolution:
-      integrity: sha512-03lh+hdRjCS+QUZ7oglQRHxVecGPiSnlh8PN8yCn/8lY04f4uagaOtXhxvRNSz+VUPSZA7iKOrZCmACxsDZMuw==
+      integrity: sha512-U306jCR2BhZ7AS9jAU91JDVlsB9JJkAFVv3HDDPYN7+mbvIUdZeLRC9uB/VZkKCqM/YZrA+DL2ZHZx5ifzgDqg==
       tarball: 'file:projects/go.tgz'
     version: 0.0.0
+registry: ''
 specifiers:
   '@autorest/autorest': ~3.0.6173
-  '@azure-tools/async-io': ~3.0.0
   '@autorest/extension-base': ~3.1.0
+  '@azure-tools/async-io': ~3.0.0
   '@azure-tools/codegen': ~2.5.288
   '@azure-tools/codemodel': ~4.13.348
   '@azure-tools/linq': ~3.1.0
