@@ -1,7 +1,7 @@
 dependencies:
   '@autorest/autorest': 3.0.6187
   '@azure-tools/async-io': 3.0.252
-  '@azure-tools/autorest-extension-base': 3.1.266
+  '@autorest/extension-base': 3.1.266
   '@azure-tools/codegen': 2.5.290
   '@azure-tools/codemodel': 4.13.348
   '@azure-tools/linq': 3.1.261
@@ -42,7 +42,7 @@ packages:
       node: '>=10.12.0'
     resolution:
       integrity: sha512-RpoaEWGwpdp4FR9YKgnSkvwhdeR1gIzRFFOBotOyd3ow8FMfRIvMZ/eHar2iM3OXUnRKbHnv1M6oapdZah1JWw==
-  /@azure-tools/autorest-extension-base/3.1.266:
+  /@autorest/extension-base/3.1.266:
     dependencies:
       '@azure-tools/codegen': 2.5.290
       js-yaml: 3.13.1
@@ -61,7 +61,7 @@ packages:
       integrity: sha512-D9TuBY9YE+CE/EpbMaB3oVJq1xp7koIAQGlFrRNTLPgKNMelqkWK8HLnYSk810HL0rJFQjJE/BLx5lQsOjMYRQ==
   /@azure-tools/codemodel/4.13.348:
     dependencies:
-      '@azure-tools/autorest-extension-base': 3.1.266
+      '@autorest/extension-base': 3.1.266
       '@azure-tools/codegen': 2.5.290
       '@azure-tools/linq': 3.1.261
     dev: false
@@ -3327,7 +3327,7 @@ packages:
     dependencies:
       '@autorest/autorest': 3.0.6187
       '@azure-tools/async-io': 3.0.252
-      '@azure-tools/autorest-extension-base': 3.1.266
+      '@autorest/extension-base': 3.1.266
       '@azure-tools/codegen': 2.5.290
       '@azure-tools/codemodel': 4.13.348
       '@azure-tools/linq': 3.1.261
@@ -3357,7 +3357,7 @@ packages:
 specifiers:
   '@autorest/autorest': ~3.0.6173
   '@azure-tools/async-io': ~3.0.0
-  '@azure-tools/autorest-extension-base': ~3.1.0
+  '@autorest/extension-base': ~3.1.0
   '@azure-tools/codegen': ~2.5.288
   '@azure-tools/codemodel': ~4.13.348
   '@azure-tools/linq': ~3.1.0

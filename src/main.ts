@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { AutoRestExtension, } from '@azure-tools/autorest-extension-base';
+import { AutoRestExtension, } from '@autorest/extension-base';
 import { transform } from './transform/transform';
 import { protocolGen } from './generator/generator';
 

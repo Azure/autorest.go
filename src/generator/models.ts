@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { Session } from '@azure-tools/autorest-extension-base';
+import { Session } from '@autorest/extension-base';
 import { comment, pascalCase } from '@azure-tools/codegen';
 import { CodeModel, ComplexSchema, ConstantSchema, DictionarySchema, GroupProperty, ImplementationLocation, ObjectSchema, Language, Schema, SchemaType, Parameter, Property } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';

@@ -4,7 +4,7 @@
  *  --------------------------------------------------------------------------------------------  */
 
 import { pascalCase, camelCase } from '@azure-tools/codegen';
-import { Session } from '@azure-tools/autorest-extension-base';
+import { Session } from '@autorest/extension-base';
 import { CodeModel, HttpHeader, Language } from '@azure-tools/codemodel';
 import { visitor, clone, values } from '@azure-tools/linq';
 import { CommonAcronyms, ReservedWords } from './mappings';

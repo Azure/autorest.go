@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { camelCase, KnownMediaType, pascalCase, serialize } from '@azure-tools/codegen';
-import { Host, startSession, Session } from '@azure-tools/autorest-extension-base';
+import { Host, startSession, Session } from '@autorest/extension-base';
 import { ObjectSchema, ArraySchema, ChoiceValue, codeModelSchema, CodeModel, DateTimeSchema, GroupProperty, HttpHeader, HttpResponse, ImplementationLocation, Language, OperationGroup, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Response, Schema, DictionarySchema, Protocol, ChoiceSchema, SealedChoiceSchema, ConstantSchema, Request, DateSchema } from '@azure-tools/codemodel';
 import { items, values } from '@azure-tools/linq';
 import { aggregateParameters, hasAdditionalProperties, isPageableOperation, isObjectSchema, isSchemaResponse, PagerInfo, isLROOperation, PollerInfo } from '../common/helpers';
