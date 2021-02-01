@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { Session } from '@azure-tools/autorest-extension-base';
+import { Session } from '@autorest/extension-base';
 import { ArraySchema, CodeModel, DictionarySchema, ObjectSchema, Operation, Parameter, Response, Schema, SchemaResponse, SchemaType } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 
