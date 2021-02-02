@@ -104,47 +104,47 @@ func (client *appendBlobClient) appendBlockCreateRequest(ctx context.Context, co
 func (client *appendBlobClient) appendBlockHandleResponse(resp *azcore.Response) (AppendBlobAppendBlockResponse, error) {
 	result := AppendBlobAppendBlockResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
-		result.ETag = &val
+		result.ETag = val
 	}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return AppendBlobAppendBlockResponse{}, err
 		}
-		result.LastModified = &lastModified
+		result.LastModified = lastModified
 	}
 	if val := resp.Header.Get("Content-MD5"); val != "" {
 		contentMd5, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
 			return AppendBlobAppendBlockResponse{}, err
 		}
-		result.ContentMD5 = &contentMd5
+		result.ContentMD5 = contentMd5
 	}
 	if val := resp.Header.Get("x-ms-content-crc64"); val != "" {
 		contentCrc64, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
 			return AppendBlobAppendBlockResponse{}, err
 		}
-		result.ContentCRC64 = &contentCrc64
+		result.ContentCRC64 = contentCrc64
 	}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
-		result.ClientRequestID = &val
+		result.ClientRequestID = val
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestID = &val
+		result.RequestID = val
 	}
 	if val := resp.Header.Get("x-ms-version"); val != "" {
-		result.Version = &val
+		result.Version = val
 	}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return AppendBlobAppendBlockResponse{}, err
 		}
-		result.Date = &date
+		result.Date = date
 	}
 	if val := resp.Header.Get("x-ms-blob-append-offset"); val != "" {
-		result.BlobAppendOffset = &val
+		result.BlobAppendOffset = val
 	}
 	if val := resp.Header.Get("x-ms-blob-committed-block-count"); val != "" {
 		blobCommittedBlockCount32, err := strconv.ParseInt(val, 10, 32)
@@ -152,20 +152,20 @@ func (client *appendBlobClient) appendBlockHandleResponse(resp *azcore.Response)
 		if err != nil {
 			return AppendBlobAppendBlockResponse{}, err
 		}
-		result.BlobCommittedBlockCount = &blobCommittedBlockCount
+		result.BlobCommittedBlockCount = blobCommittedBlockCount
 	}
 	if val := resp.Header.Get("x-ms-request-server-encrypted"); val != "" {
 		isServerEncrypted, err := strconv.ParseBool(val)
 		if err != nil {
 			return AppendBlobAppendBlockResponse{}, err
 		}
-		result.IsServerEncrypted = &isServerEncrypted
+		result.IsServerEncrypted = isServerEncrypted
 	}
 	if val := resp.Header.Get("x-ms-encryption-key-sha256"); val != "" {
-		result.EncryptionKeySHA256 = &val
+		result.EncryptionKeySHA256 = val
 	}
 	if val := resp.Header.Get("x-ms-encryption-scope"); val != "" {
-		result.EncryptionScope = &val
+		result.EncryptionScope = val
 	}
 	return result, nil
 }
@@ -281,44 +281,44 @@ func (client *appendBlobClient) appendBlockFromUrlCreateRequest(ctx context.Cont
 func (client *appendBlobClient) appendBlockFromUrlHandleResponse(resp *azcore.Response) (AppendBlobAppendBlockFromURLResponse, error) {
 	result := AppendBlobAppendBlockFromURLResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
-		result.ETag = &val
+		result.ETag = val
 	}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return AppendBlobAppendBlockFromURLResponse{}, err
 		}
-		result.LastModified = &lastModified
+		result.LastModified = lastModified
 	}
 	if val := resp.Header.Get("Content-MD5"); val != "" {
 		contentMd5, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
 			return AppendBlobAppendBlockFromURLResponse{}, err
 		}
-		result.ContentMD5 = &contentMd5
+		result.ContentMD5 = contentMd5
 	}
 	if val := resp.Header.Get("x-ms-content-crc64"); val != "" {
 		contentCrc64, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
 			return AppendBlobAppendBlockFromURLResponse{}, err
 		}
-		result.ContentCRC64 = &contentCrc64
+		result.ContentCRC64 = contentCrc64
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestID = &val
+		result.RequestID = val
 	}
 	if val := resp.Header.Get("x-ms-version"); val != "" {
-		result.Version = &val
+		result.Version = val
 	}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return AppendBlobAppendBlockFromURLResponse{}, err
 		}
-		result.Date = &date
+		result.Date = date
 	}
 	if val := resp.Header.Get("x-ms-blob-append-offset"); val != "" {
-		result.BlobAppendOffset = &val
+		result.BlobAppendOffset = val
 	}
 	if val := resp.Header.Get("x-ms-blob-committed-block-count"); val != "" {
 		blobCommittedBlockCount32, err := strconv.ParseInt(val, 10, 32)
@@ -326,20 +326,20 @@ func (client *appendBlobClient) appendBlockFromUrlHandleResponse(resp *azcore.Re
 		if err != nil {
 			return AppendBlobAppendBlockFromURLResponse{}, err
 		}
-		result.BlobCommittedBlockCount = &blobCommittedBlockCount
+		result.BlobCommittedBlockCount = blobCommittedBlockCount
 	}
 	if val := resp.Header.Get("x-ms-encryption-key-sha256"); val != "" {
-		result.EncryptionKeySHA256 = &val
+		result.EncryptionKeySHA256 = val
 	}
 	if val := resp.Header.Get("x-ms-encryption-scope"); val != "" {
-		result.EncryptionScope = &val
+		result.EncryptionScope = val
 	}
 	if val := resp.Header.Get("x-ms-request-server-encrypted"); val != "" {
 		isServerEncrypted, err := strconv.ParseBool(val)
 		if err != nil {
 			return AppendBlobAppendBlockFromURLResponse{}, err
 		}
-		result.IsServerEncrypted = &isServerEncrypted
+		result.IsServerEncrypted = isServerEncrypted
 	}
 	return result, nil
 }
@@ -445,50 +445,50 @@ func (client *appendBlobClient) createCreateRequest(ctx context.Context, content
 func (client *appendBlobClient) createHandleResponse(resp *azcore.Response) (AppendBlobCreateResponse, error) {
 	result := AppendBlobCreateResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
-		result.ETag = &val
+		result.ETag = val
 	}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return AppendBlobCreateResponse{}, err
 		}
-		result.LastModified = &lastModified
+		result.LastModified = lastModified
 	}
 	if val := resp.Header.Get("Content-MD5"); val != "" {
 		contentMd5, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
 			return AppendBlobCreateResponse{}, err
 		}
-		result.ContentMD5 = &contentMd5
+		result.ContentMD5 = contentMd5
 	}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
-		result.ClientRequestID = &val
+		result.ClientRequestID = val
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestID = &val
+		result.RequestID = val
 	}
 	if val := resp.Header.Get("x-ms-version"); val != "" {
-		result.Version = &val
+		result.Version = val
 	}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return AppendBlobCreateResponse{}, err
 		}
-		result.Date = &date
+		result.Date = date
 	}
 	if val := resp.Header.Get("x-ms-request-server-encrypted"); val != "" {
 		isServerEncrypted, err := strconv.ParseBool(val)
 		if err != nil {
 			return AppendBlobCreateResponse{}, err
 		}
-		result.IsServerEncrypted = &isServerEncrypted
+		result.IsServerEncrypted = isServerEncrypted
 	}
 	if val := resp.Header.Get("x-ms-encryption-key-sha256"); val != "" {
-		result.EncryptionKeySHA256 = &val
+		result.EncryptionKeySHA256 = val
 	}
 	if val := resp.Header.Get("x-ms-encryption-scope"); val != "" {
-		result.EncryptionScope = &val
+		result.EncryptionScope = val
 	}
 	return result, nil
 }

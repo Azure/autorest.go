@@ -406,7 +406,7 @@ func (client *XMLClient) getHeadersCreateRequest(ctx context.Context, options *X
 func (client *XMLClient) getHeadersHandleResponse(resp *azcore.Response) (XMLGetHeadersResponse, error) {
 	result := XMLGetHeadersResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("Custom-Header"); val != "" {
-		result.CustomHeader = &val
+		result.CustomHeader = val
 	}
 	return result, nil
 }

@@ -104,37 +104,37 @@ func (client *directoryClient) createCreateRequest(ctx context.Context, director
 func (client *directoryClient) createHandleResponse(resp *azcore.Response) (DirectoryCreateResponse, error) {
 	result := DirectoryCreateResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
-		result.ETag = &val
+		result.ETag = val
 	}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return DirectoryCreateResponse{}, err
 		}
-		result.LastModified = &lastModified
+		result.LastModified = lastModified
 	}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
-		result.ClientRequestID = &val
+		result.ClientRequestID = val
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestID = &val
+		result.RequestID = val
 	}
 	if val := resp.Header.Get("x-ms-version"); val != "" {
-		result.Version = &val
+		result.Version = val
 	}
 	if val := resp.Header.Get("Content-Length"); val != "" {
 		contentLength, err := strconv.ParseInt(val, 10, 64)
 		if err != nil {
 			return DirectoryCreateResponse{}, err
 		}
-		result.ContentLength = &contentLength
+		result.ContentLength = contentLength
 	}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return DirectoryCreateResponse{}, err
 		}
-		result.Date = &date
+		result.Date = date
 	}
 	return result, nil
 }
@@ -207,23 +207,23 @@ func (client *directoryClient) deleteCreateRequest(ctx context.Context, recursiv
 func (client *directoryClient) deleteHandleResponse(resp *azcore.Response) (DirectoryDeleteResponse, error) {
 	result := DirectoryDeleteResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("x-ms-continuation"); val != "" {
-		result.Marker = &val
+		result.Marker = val
 	}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
-		result.ClientRequestID = &val
+		result.ClientRequestID = val
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestID = &val
+		result.RequestID = val
 	}
 	if val := resp.Header.Get("x-ms-version"); val != "" {
-		result.Version = &val
+		result.Version = val
 	}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return DirectoryDeleteResponse{}, err
 		}
-		result.Date = &date
+		result.Date = date
 	}
 	return result, nil
 }
@@ -300,35 +300,35 @@ func (client *directoryClient) getAccessControlHandleResponse(resp *azcore.Respo
 		if err != nil {
 			return DirectoryGetAccessControlResponse{}, err
 		}
-		result.Date = &date
+		result.Date = date
 	}
 	if val := resp.Header.Get("ETag"); val != "" {
-		result.ETag = &val
+		result.ETag = val
 	}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return DirectoryGetAccessControlResponse{}, err
 		}
-		result.LastModified = &lastModified
+		result.LastModified = lastModified
 	}
 	if val := resp.Header.Get("x-ms-owner"); val != "" {
-		result.Owner = &val
+		result.Owner = val
 	}
 	if val := resp.Header.Get("x-ms-group"); val != "" {
-		result.Group = &val
+		result.Group = val
 	}
 	if val := resp.Header.Get("x-ms-permissions"); val != "" {
-		result.Permissions = &val
+		result.Permissions = val
 	}
 	if val := resp.Header.Get("x-ms-acl"); val != "" {
-		result.ACL = &val
+		result.ACL = val
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestID = &val
+		result.RequestID = val
 	}
 	if val := resp.Header.Get("x-ms-version"); val != "" {
-		result.Version = &val
+		result.Version = val
 	}
 	return result, nil
 }
@@ -447,40 +447,40 @@ func (client *directoryClient) renameCreateRequest(ctx context.Context, renameSo
 func (client *directoryClient) renameHandleResponse(resp *azcore.Response) (DirectoryRenameResponse, error) {
 	result := DirectoryRenameResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("x-ms-continuation"); val != "" {
-		result.Marker = &val
+		result.Marker = val
 	}
 	if val := resp.Header.Get("ETag"); val != "" {
-		result.ETag = &val
+		result.ETag = val
 	}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return DirectoryRenameResponse{}, err
 		}
-		result.LastModified = &lastModified
+		result.LastModified = lastModified
 	}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
-		result.ClientRequestID = &val
+		result.ClientRequestID = val
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestID = &val
+		result.RequestID = val
 	}
 	if val := resp.Header.Get("x-ms-version"); val != "" {
-		result.Version = &val
+		result.Version = val
 	}
 	if val := resp.Header.Get("Content-Length"); val != "" {
 		contentLength, err := strconv.ParseInt(val, 10, 64)
 		if err != nil {
 			return DirectoryRenameResponse{}, err
 		}
-		result.ContentLength = &contentLength
+		result.ContentLength = contentLength
 	}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return DirectoryRenameResponse{}, err
 		}
-		result.Date = &date
+		result.Date = date
 	}
 	return result, nil
 }
@@ -566,23 +566,23 @@ func (client *directoryClient) setAccessControlHandleResponse(resp *azcore.Respo
 		if err != nil {
 			return DirectorySetAccessControlResponse{}, err
 		}
-		result.Date = &date
+		result.Date = date
 	}
 	if val := resp.Header.Get("ETag"); val != "" {
-		result.ETag = &val
+		result.ETag = val
 	}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return DirectorySetAccessControlResponse{}, err
 		}
-		result.LastModified = &lastModified
+		result.LastModified = lastModified
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestID = &val
+		result.RequestID = val
 	}
 	if val := resp.Header.Get("x-ms-version"); val != "" {
-		result.Version = &val
+		result.Version = val
 	}
 	return result, nil
 }

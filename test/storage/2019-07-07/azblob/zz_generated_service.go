@@ -55,33 +55,33 @@ func (client *serviceClient) getAccountInfoCreateRequest(ctx context.Context, op
 func (client *serviceClient) getAccountInfoHandleResponse(resp *azcore.Response) (ServiceGetAccountInfoResponse, error) {
 	result := ServiceGetAccountInfoResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
-		result.ClientRequestID = &val
+		result.ClientRequestID = val
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestID = &val
+		result.RequestID = val
 	}
 	if val := resp.Header.Get("x-ms-version"); val != "" {
-		result.Version = &val
+		result.Version = val
 	}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return ServiceGetAccountInfoResponse{}, err
 		}
-		result.Date = &date
+		result.Date = date
 	}
 	if val := resp.Header.Get("x-ms-sku-name"); val != "" {
-		result.SKUName = (*SKUName)(&val)
+		result.SKUName = SKUName(val)
 	}
 	if val := resp.Header.Get("x-ms-account-kind"); val != "" {
-		result.AccountKind = (*AccountKind)(&val)
+		result.AccountKind = AccountKind(val)
 	}
 	if val := resp.Header.Get("x-ms-is-hns-enabled"); val != "" {
 		isHierarchicalNamespaceEnabled, err := strconv.ParseBool(val)
 		if err != nil {
 			return ServiceGetAccountInfoResponse{}, err
 		}
-		result.IsHierarchicalNamespaceEnabled = &isHierarchicalNamespaceEnabled
+		result.IsHierarchicalNamespaceEnabled = isHierarchicalNamespaceEnabled
 	}
 	return result, nil
 }
@@ -142,13 +142,13 @@ func (client *serviceClient) getPropertiesHandleResponse(resp *azcore.Response) 
 	}
 	result := StorageServicePropertiesResponse{RawResponse: resp.Response, StorageServiceProperties: val}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
-		result.ClientRequestID = &val
+		result.ClientRequestID = val
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestID = &val
+		result.RequestID = val
 	}
 	if val := resp.Header.Get("x-ms-version"); val != "" {
-		result.Version = &val
+		result.Version = val
 	}
 	return result, nil
 }
@@ -209,20 +209,20 @@ func (client *serviceClient) getStatisticsHandleResponse(resp *azcore.Response) 
 	}
 	result := StorageServiceStatsResponse{RawResponse: resp.Response, StorageServiceStats: val}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
-		result.ClientRequestID = &val
+		result.ClientRequestID = val
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestID = &val
+		result.RequestID = val
 	}
 	if val := resp.Header.Get("x-ms-version"); val != "" {
-		result.Version = &val
+		result.Version = val
 	}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return StorageServiceStatsResponse{}, err
 		}
-		result.Date = &date
+		result.Date = date
 	}
 	return result, nil
 }
@@ -282,20 +282,20 @@ func (client *serviceClient) getUserDelegationKeyHandleResponse(resp *azcore.Res
 	}
 	result := UserDelegationKeyResponse{RawResponse: resp.Response, UserDelegationKey: val}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
-		result.ClientRequestID = &val
+		result.ClientRequestID = val
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestID = &val
+		result.RequestID = val
 	}
 	if val := resp.Header.Get("x-ms-version"); val != "" {
-		result.Version = &val
+		result.Version = val
 	}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return UserDelegationKeyResponse{}, err
 		}
-		result.Date = &date
+		result.Date = date
 	}
 	return result, nil
 }
@@ -366,13 +366,13 @@ func (client *serviceClient) listContainersSegmentHandleResponse(resp *azcore.Re
 	}
 	result := ListContainersSegmentResponseResponse{RawResponse: resp.Response, EnumerationResults: val}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
-		result.ClientRequestID = &val
+		result.ClientRequestID = val
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestID = &val
+		result.RequestID = val
 	}
 	if val := resp.Header.Get("x-ms-version"); val != "" {
-		result.Version = &val
+		result.Version = val
 	}
 	return result, nil
 }
@@ -429,13 +429,13 @@ func (client *serviceClient) setPropertiesCreateRequest(ctx context.Context, sto
 func (client *serviceClient) setPropertiesHandleResponse(resp *azcore.Response) (ServiceSetPropertiesResponse, error) {
 	result := ServiceSetPropertiesResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
-		result.ClientRequestID = &val
+		result.ClientRequestID = val
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestID = &val
+		result.RequestID = val
 	}
 	if val := resp.Header.Get("x-ms-version"); val != "" {
-		result.Version = &val
+		result.Version = val
 	}
 	return result, nil
 }
@@ -493,13 +493,13 @@ func (client *serviceClient) submitBatchCreateRequest(ctx context.Context, conte
 func (client *serviceClient) submitBatchHandleResponse(resp *azcore.Response) (ServiceSubmitBatchResponse, error) {
 	result := ServiceSubmitBatchResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("Content-Type"); val != "" {
-		result.ContentType = &val
+		result.ContentType = val
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestID = &val
+		result.RequestID = val
 	}
 	if val := resp.Header.Get("x-ms-version"); val != "" {
-		result.Version = &val
+		result.Version = val
 	}
 	return result, nil
 }

@@ -245,7 +245,7 @@ type HTTPRedirectsGet300Options struct {
 // HTTPRedirectsGet300Response contains the response from method HTTPRedirects.Get300.
 type HTTPRedirectsGet300Response struct {
 	// Location contains the information returned from the Location header response.
-	Location *string
+	Location string
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -274,7 +274,7 @@ type HTTPRedirectsHead300Options struct {
 // HTTPRedirectsHead300Response contains the response from method HTTPRedirects.Head300.
 type HTTPRedirectsHead300Response struct {
 	// Location contains the information returned from the Location header response.
-	Location *string
+	Location string
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -311,7 +311,7 @@ type HTTPRedirectsPatch302Options struct {
 // HTTPRedirectsPatch302Response contains the response from method HTTPRedirects.Patch302.
 type HTTPRedirectsPatch302Response struct {
 	// Location contains the information returned from the Location header response.
-	Location *string
+	Location string
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -330,7 +330,7 @@ type HTTPRedirectsPost303Options struct {
 // HTTPRedirectsPost303Response contains the response from method HTTPRedirects.Post303.
 type HTTPRedirectsPost303Response struct {
 	// Location contains the information returned from the Location header response.
-	Location *string
+	Location string
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -349,7 +349,7 @@ type HTTPRedirectsPut301Options struct {
 // HTTPRedirectsPut301Response contains the response from method HTTPRedirects.Put301.
 type HTTPRedirectsPut301Response struct {
 	// Location contains the information returned from the Location header response.
-	Location *string
+	Location string
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -736,7 +736,7 @@ type MyExceptionResponse struct {
 // StringArrayResponse is the response envelope for operations that return a []string type.
 type StringArrayResponse struct {
 	// Location contains the information returned from the Location header response.
-	Location *string
+	Location string
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response

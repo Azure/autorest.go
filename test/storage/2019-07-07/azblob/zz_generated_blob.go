@@ -70,20 +70,20 @@ func (client *blobClient) abortCopyFromUrlCreateRequest(ctx context.Context, cop
 func (client *blobClient) abortCopyFromUrlHandleResponse(resp *azcore.Response) (BlobAbortCopyFromURLResponse, error) {
 	result := BlobAbortCopyFromURLResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
-		result.ClientRequestID = &val
+		result.ClientRequestID = val
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestID = &val
+		result.RequestID = val
 	}
 	if val := resp.Header.Get("x-ms-version"); val != "" {
-		result.Version = &val
+		result.Version = val
 	}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return BlobAbortCopyFromURLResponse{}, err
 		}
-		result.Date = &date
+		result.Date = date
 	}
 	return result, nil
 }
@@ -157,33 +157,33 @@ func (client *blobClient) acquireLeaseCreateRequest(ctx context.Context, blobAcq
 func (client *blobClient) acquireLeaseHandleResponse(resp *azcore.Response) (BlobAcquireLeaseResponse, error) {
 	result := BlobAcquireLeaseResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
-		result.ETag = &val
+		result.ETag = val
 	}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return BlobAcquireLeaseResponse{}, err
 		}
-		result.LastModified = &lastModified
+		result.LastModified = lastModified
 	}
 	if val := resp.Header.Get("x-ms-lease-id"); val != "" {
-		result.LeaseID = &val
+		result.LeaseID = val
 	}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
-		result.ClientRequestID = &val
+		result.ClientRequestID = val
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestID = &val
+		result.RequestID = val
 	}
 	if val := resp.Header.Get("x-ms-version"); val != "" {
-		result.Version = &val
+		result.Version = val
 	}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return BlobAcquireLeaseResponse{}, err
 		}
-		result.Date = &date
+		result.Date = date
 	}
 	return result, nil
 }
@@ -254,14 +254,14 @@ func (client *blobClient) breakLeaseCreateRequest(ctx context.Context, blobBreak
 func (client *blobClient) breakLeaseHandleResponse(resp *azcore.Response) (BlobBreakLeaseResponse, error) {
 	result := BlobBreakLeaseResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
-		result.ETag = &val
+		result.ETag = val
 	}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return BlobBreakLeaseResponse{}, err
 		}
-		result.LastModified = &lastModified
+		result.LastModified = lastModified
 	}
 	if val := resp.Header.Get("x-ms-lease-time"); val != "" {
 		leaseTime32, err := strconv.ParseInt(val, 10, 32)
@@ -269,23 +269,23 @@ func (client *blobClient) breakLeaseHandleResponse(resp *azcore.Response) (BlobB
 		if err != nil {
 			return BlobBreakLeaseResponse{}, err
 		}
-		result.LeaseTime = &leaseTime
+		result.LeaseTime = leaseTime
 	}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
-		result.ClientRequestID = &val
+		result.ClientRequestID = val
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestID = &val
+		result.RequestID = val
 	}
 	if val := resp.Header.Get("x-ms-version"); val != "" {
-		result.Version = &val
+		result.Version = val
 	}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return BlobBreakLeaseResponse{}, err
 		}
-		result.Date = &date
+		result.Date = date
 	}
 	return result, nil
 }
@@ -355,33 +355,33 @@ func (client *blobClient) changeLeaseCreateRequest(ctx context.Context, leaseId 
 func (client *blobClient) changeLeaseHandleResponse(resp *azcore.Response) (BlobChangeLeaseResponse, error) {
 	result := BlobChangeLeaseResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
-		result.ETag = &val
+		result.ETag = val
 	}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return BlobChangeLeaseResponse{}, err
 		}
-		result.LastModified = &lastModified
+		result.LastModified = lastModified
 	}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
-		result.ClientRequestID = &val
+		result.ClientRequestID = val
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestID = &val
+		result.RequestID = val
 	}
 	if val := resp.Header.Get("x-ms-lease-id"); val != "" {
-		result.LeaseID = &val
+		result.LeaseID = val
 	}
 	if val := resp.Header.Get("x-ms-version"); val != "" {
-		result.Version = &val
+		result.Version = val
 	}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return BlobChangeLeaseResponse{}, err
 		}
-		result.Date = &date
+		result.Date = date
 	}
 	return result, nil
 }
@@ -475,50 +475,50 @@ func (client *blobClient) copyFromUrlCreateRequest(ctx context.Context, copySour
 func (client *blobClient) copyFromUrlHandleResponse(resp *azcore.Response) (BlobCopyFromURLResponse, error) {
 	result := BlobCopyFromURLResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
-		result.ETag = &val
+		result.ETag = val
 	}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return BlobCopyFromURLResponse{}, err
 		}
-		result.LastModified = &lastModified
+		result.LastModified = lastModified
 	}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
-		result.ClientRequestID = &val
+		result.ClientRequestID = val
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestID = &val
+		result.RequestID = val
 	}
 	if val := resp.Header.Get("x-ms-version"); val != "" {
-		result.Version = &val
+		result.Version = val
 	}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return BlobCopyFromURLResponse{}, err
 		}
-		result.Date = &date
+		result.Date = date
 	}
 	if val := resp.Header.Get("x-ms-copy-id"); val != "" {
-		result.CopyID = &val
+		result.CopyID = val
 	}
 	if val := resp.Header.Get("x-ms-copy-status"); val != "" {
-		result.CopyStatus = &val
+		result.CopyStatus = val
 	}
 	if val := resp.Header.Get("Content-MD5"); val != "" {
 		contentMd5, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
 			return BlobCopyFromURLResponse{}, err
 		}
-		result.ContentMD5 = &contentMd5
+		result.ContentMD5 = contentMd5
 	}
 	if val := resp.Header.Get("x-ms-content-crc64"); val != "" {
 		contentCrc64, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
 			return BlobCopyFromURLResponse{}, err
 		}
-		result.ContentCRC64 = &contentCrc64
+		result.ContentCRC64 = contentCrc64
 	}
 	return result, nil
 }
@@ -605,40 +605,40 @@ func (client *blobClient) createSnapshotCreateRequest(ctx context.Context, blobC
 func (client *blobClient) createSnapshotHandleResponse(resp *azcore.Response) (BlobCreateSnapshotResponse, error) {
 	result := BlobCreateSnapshotResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("x-ms-snapshot"); val != "" {
-		result.Snapshot = &val
+		result.Snapshot = val
 	}
 	if val := resp.Header.Get("ETag"); val != "" {
-		result.ETag = &val
+		result.ETag = val
 	}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return BlobCreateSnapshotResponse{}, err
 		}
-		result.LastModified = &lastModified
+		result.LastModified = lastModified
 	}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
-		result.ClientRequestID = &val
+		result.ClientRequestID = val
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestID = &val
+		result.RequestID = val
 	}
 	if val := resp.Header.Get("x-ms-version"); val != "" {
-		result.Version = &val
+		result.Version = val
 	}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return BlobCreateSnapshotResponse{}, err
 		}
-		result.Date = &date
+		result.Date = date
 	}
 	if val := resp.Header.Get("x-ms-request-server-encrypted"); val != "" {
 		isServerEncrypted, err := strconv.ParseBool(val)
 		if err != nil {
 			return BlobCreateSnapshotResponse{}, err
 		}
-		result.IsServerEncrypted = &isServerEncrypted
+		result.IsServerEncrypted = isServerEncrypted
 	}
 	return result, nil
 }
@@ -723,20 +723,20 @@ func (client *blobClient) deleteCreateRequest(ctx context.Context, blobDeleteOpt
 func (client *blobClient) deleteHandleResponse(resp *azcore.Response) (BlobDeleteResponse, error) {
 	result := BlobDeleteResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
-		result.ClientRequestID = &val
+		result.ClientRequestID = val
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestID = &val
+		result.RequestID = val
 	}
 	if val := resp.Header.Get("x-ms-version"); val != "" {
-		result.Version = &val
+		result.Version = val
 	}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return BlobDeleteResponse{}, err
 		}
-		result.Date = &date
+		result.Date = date
 	}
 	return result, nil
 }
@@ -832,14 +832,14 @@ func (client *blobClient) downloadHandleResponse(resp *azcore.Response) (BlobDow
 		if err != nil {
 			return BlobDownloadResponse{}, err
 		}
-		result.LastModified = &lastModified
+		result.LastModified = lastModified
 	}
 	for hh := range resp.Header {
 		if strings.HasPrefix(hh, "x-ms-meta-") {
 			if result.Metadata == nil {
-				result.Metadata = &map[string]string{}
+				result.Metadata = map[string]string{}
 			}
-			(*result.Metadata)[hh[len("x-ms-meta-"):]] = resp.Header.Get(hh)
+			result.Metadata[hh[len("x-ms-meta-"):]] = resp.Header.Get(hh)
 		}
 	}
 	if val := resp.Header.Get("Content-Length"); val != "" {
@@ -847,95 +847,95 @@ func (client *blobClient) downloadHandleResponse(resp *azcore.Response) (BlobDow
 		if err != nil {
 			return BlobDownloadResponse{}, err
 		}
-		result.ContentLength = &contentLength
+		result.ContentLength = contentLength
 	}
 	if val := resp.Header.Get("Content-Type"); val != "" {
-		result.ContentType = &val
+		result.ContentType = val
 	}
 	if val := resp.Header.Get("Content-Range"); val != "" {
-		result.ContentRange = &val
+		result.ContentRange = val
 	}
 	if val := resp.Header.Get("ETag"); val != "" {
-		result.ETag = &val
+		result.ETag = val
 	}
 	if val := resp.Header.Get("Content-MD5"); val != "" {
 		contentMd5, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
 			return BlobDownloadResponse{}, err
 		}
-		result.ContentMD5 = &contentMd5
+		result.ContentMD5 = contentMd5
 	}
 	if val := resp.Header.Get("Content-Encoding"); val != "" {
-		result.ContentEncoding = &val
+		result.ContentEncoding = val
 	}
 	if val := resp.Header.Get("Cache-Control"); val != "" {
-		result.CacheControl = &val
+		result.CacheControl = val
 	}
 	if val := resp.Header.Get("Content-Disposition"); val != "" {
-		result.ContentDisposition = &val
+		result.ContentDisposition = val
 	}
 	if val := resp.Header.Get("Content-Language"); val != "" {
-		result.ContentLanguage = &val
+		result.ContentLanguage = val
 	}
 	if val := resp.Header.Get("x-ms-blob-sequence-number"); val != "" {
 		blobSequenceNumber, err := strconv.ParseInt(val, 10, 64)
 		if err != nil {
 			return BlobDownloadResponse{}, err
 		}
-		result.BlobSequenceNumber = &blobSequenceNumber
+		result.BlobSequenceNumber = blobSequenceNumber
 	}
 	if val := resp.Header.Get("x-ms-blob-type"); val != "" {
-		result.BlobType = (*BlobType)(&val)
+		result.BlobType = BlobType(val)
 	}
 	if val := resp.Header.Get("x-ms-copy-completion-time"); val != "" {
 		copyCompletionTime, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return BlobDownloadResponse{}, err
 		}
-		result.CopyCompletionTime = &copyCompletionTime
+		result.CopyCompletionTime = copyCompletionTime
 	}
 	if val := resp.Header.Get("x-ms-copy-status-description"); val != "" {
-		result.CopyStatusDescription = &val
+		result.CopyStatusDescription = val
 	}
 	if val := resp.Header.Get("x-ms-copy-id"); val != "" {
-		result.CopyID = &val
+		result.CopyID = val
 	}
 	if val := resp.Header.Get("x-ms-copy-progress"); val != "" {
-		result.CopyProgress = &val
+		result.CopyProgress = val
 	}
 	if val := resp.Header.Get("x-ms-copy-source"); val != "" {
-		result.CopySource = &val
+		result.CopySource = val
 	}
 	if val := resp.Header.Get("x-ms-copy-status"); val != "" {
-		result.CopyStatus = (*CopyStatusType)(&val)
+		result.CopyStatus = CopyStatusType(val)
 	}
 	if val := resp.Header.Get("x-ms-lease-duration"); val != "" {
-		result.LeaseDuration = (*LeaseDurationType)(&val)
+		result.LeaseDuration = LeaseDurationType(val)
 	}
 	if val := resp.Header.Get("x-ms-lease-state"); val != "" {
-		result.LeaseState = (*LeaseStateType)(&val)
+		result.LeaseState = LeaseStateType(val)
 	}
 	if val := resp.Header.Get("x-ms-lease-status"); val != "" {
-		result.LeaseStatus = (*LeaseStatusType)(&val)
+		result.LeaseStatus = LeaseStatusType(val)
 	}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
-		result.ClientRequestID = &val
+		result.ClientRequestID = val
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestID = &val
+		result.RequestID = val
 	}
 	if val := resp.Header.Get("x-ms-version"); val != "" {
-		result.Version = &val
+		result.Version = val
 	}
 	if val := resp.Header.Get("Accept-Ranges"); val != "" {
-		result.AcceptRanges = &val
+		result.AcceptRanges = val
 	}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return BlobDownloadResponse{}, err
 		}
-		result.Date = &date
+		result.Date = date
 	}
 	if val := resp.Header.Get("x-ms-blob-committed-block-count"); val != "" {
 		blobCommittedBlockCount32, err := strconv.ParseInt(val, 10, 32)
@@ -943,34 +943,34 @@ func (client *blobClient) downloadHandleResponse(resp *azcore.Response) (BlobDow
 		if err != nil {
 			return BlobDownloadResponse{}, err
 		}
-		result.BlobCommittedBlockCount = &blobCommittedBlockCount
+		result.BlobCommittedBlockCount = blobCommittedBlockCount
 	}
 	if val := resp.Header.Get("x-ms-server-encrypted"); val != "" {
 		isServerEncrypted, err := strconv.ParseBool(val)
 		if err != nil {
 			return BlobDownloadResponse{}, err
 		}
-		result.IsServerEncrypted = &isServerEncrypted
+		result.IsServerEncrypted = isServerEncrypted
 	}
 	if val := resp.Header.Get("x-ms-encryption-key-sha256"); val != "" {
-		result.EncryptionKeySHA256 = &val
+		result.EncryptionKeySHA256 = val
 	}
 	if val := resp.Header.Get("x-ms-encryption-scope"); val != "" {
-		result.EncryptionScope = &val
+		result.EncryptionScope = val
 	}
 	if val := resp.Header.Get("x-ms-blob-content-md5"); val != "" {
 		blobContentMd5, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
 			return BlobDownloadResponse{}, err
 		}
-		result.BlobContentMD5 = &blobContentMd5
+		result.BlobContentMD5 = blobContentMd5
 	}
 	if val := resp.Header.Get("x-ms-content-crc64"); val != "" {
 		contentCrc64, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
 			return BlobDownloadResponse{}, err
 		}
-		result.ContentCRC64 = &contentCrc64
+		result.ContentCRC64 = contentCrc64
 	}
 	return result, nil
 }
@@ -1047,35 +1047,35 @@ func (client *blobClient) getAccessControlHandleResponse(resp *azcore.Response) 
 		if err != nil {
 			return BlobGetAccessControlResponse{}, err
 		}
-		result.Date = &date
+		result.Date = date
 	}
 	if val := resp.Header.Get("ETag"); val != "" {
-		result.ETag = &val
+		result.ETag = val
 	}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return BlobGetAccessControlResponse{}, err
 		}
-		result.LastModified = &lastModified
+		result.LastModified = lastModified
 	}
 	if val := resp.Header.Get("x-ms-owner"); val != "" {
-		result.Owner = &val
+		result.Owner = val
 	}
 	if val := resp.Header.Get("x-ms-group"); val != "" {
-		result.Group = &val
+		result.Group = val
 	}
 	if val := resp.Header.Get("x-ms-permissions"); val != "" {
-		result.Permissions = &val
+		result.Permissions = val
 	}
 	if val := resp.Header.Get("x-ms-acl"); val != "" {
-		result.ACL = &val
+		result.ACL = val
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestID = &val
+		result.RequestID = val
 	}
 	if val := resp.Header.Get("x-ms-version"); val != "" {
-		result.Version = &val
+		result.Version = val
 	}
 	return result, nil
 }
@@ -1125,26 +1125,26 @@ func (client *blobClient) getAccountInfoCreateRequest(ctx context.Context, optio
 func (client *blobClient) getAccountInfoHandleResponse(resp *azcore.Response) (BlobGetAccountInfoResponse, error) {
 	result := BlobGetAccountInfoResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
-		result.ClientRequestID = &val
+		result.ClientRequestID = val
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestID = &val
+		result.RequestID = val
 	}
 	if val := resp.Header.Get("x-ms-version"); val != "" {
-		result.Version = &val
+		result.Version = val
 	}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return BlobGetAccountInfoResponse{}, err
 		}
-		result.Date = &date
+		result.Date = date
 	}
 	if val := resp.Header.Get("x-ms-sku-name"); val != "" {
-		result.SKUName = (*SKUName)(&val)
+		result.SKUName = SKUName(val)
 	}
 	if val := resp.Header.Get("x-ms-account-kind"); val != "" {
-		result.AccountKind = (*AccountKind)(&val)
+		result.AccountKind = AccountKind(val)
 	}
 	return result, nil
 }
@@ -1230,124 +1230,124 @@ func (client *blobClient) getPropertiesHandleResponse(resp *azcore.Response) (Bl
 		if err != nil {
 			return BlobGetPropertiesResponse{}, err
 		}
-		result.LastModified = &lastModified
+		result.LastModified = lastModified
 	}
 	if val := resp.Header.Get("x-ms-creation-time"); val != "" {
 		creationTime, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return BlobGetPropertiesResponse{}, err
 		}
-		result.CreationTime = &creationTime
+		result.CreationTime = creationTime
 	}
 	for hh := range resp.Header {
 		if strings.HasPrefix(hh, "x-ms-meta-") {
 			if result.Metadata == nil {
-				result.Metadata = &map[string]string{}
+				result.Metadata = map[string]string{}
 			}
-			(*result.Metadata)[hh[len("x-ms-meta-"):]] = resp.Header.Get(hh)
+			result.Metadata[hh[len("x-ms-meta-"):]] = resp.Header.Get(hh)
 		}
 	}
 	if val := resp.Header.Get("x-ms-blob-type"); val != "" {
-		result.BlobType = (*BlobType)(&val)
+		result.BlobType = BlobType(val)
 	}
 	if val := resp.Header.Get("x-ms-copy-completion-time"); val != "" {
 		copyCompletionTime, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return BlobGetPropertiesResponse{}, err
 		}
-		result.CopyCompletionTime = &copyCompletionTime
+		result.CopyCompletionTime = copyCompletionTime
 	}
 	if val := resp.Header.Get("x-ms-copy-status-description"); val != "" {
-		result.CopyStatusDescription = &val
+		result.CopyStatusDescription = val
 	}
 	if val := resp.Header.Get("x-ms-copy-id"); val != "" {
-		result.CopyID = &val
+		result.CopyID = val
 	}
 	if val := resp.Header.Get("x-ms-copy-progress"); val != "" {
-		result.CopyProgress = &val
+		result.CopyProgress = val
 	}
 	if val := resp.Header.Get("x-ms-copy-source"); val != "" {
-		result.CopySource = &val
+		result.CopySource = val
 	}
 	if val := resp.Header.Get("x-ms-copy-status"); val != "" {
-		result.CopyStatus = (*CopyStatusType)(&val)
+		result.CopyStatus = CopyStatusType(val)
 	}
 	if val := resp.Header.Get("x-ms-incremental-copy"); val != "" {
 		isIncrementalCopy, err := strconv.ParseBool(val)
 		if err != nil {
 			return BlobGetPropertiesResponse{}, err
 		}
-		result.IsIncrementalCopy = &isIncrementalCopy
+		result.IsIncrementalCopy = isIncrementalCopy
 	}
 	if val := resp.Header.Get("x-ms-copy-destination-snapshot"); val != "" {
-		result.DestinationSnapshot = &val
+		result.DestinationSnapshot = val
 	}
 	if val := resp.Header.Get("x-ms-lease-duration"); val != "" {
-		result.LeaseDuration = (*LeaseDurationType)(&val)
+		result.LeaseDuration = LeaseDurationType(val)
 	}
 	if val := resp.Header.Get("x-ms-lease-state"); val != "" {
-		result.LeaseState = (*LeaseStateType)(&val)
+		result.LeaseState = LeaseStateType(val)
 	}
 	if val := resp.Header.Get("x-ms-lease-status"); val != "" {
-		result.LeaseStatus = (*LeaseStatusType)(&val)
+		result.LeaseStatus = LeaseStatusType(val)
 	}
 	if val := resp.Header.Get("Content-Length"); val != "" {
 		contentLength, err := strconv.ParseInt(val, 10, 64)
 		if err != nil {
 			return BlobGetPropertiesResponse{}, err
 		}
-		result.ContentLength = &contentLength
+		result.ContentLength = contentLength
 	}
 	if val := resp.Header.Get("Content-Type"); val != "" {
-		result.ContentType = &val
+		result.ContentType = val
 	}
 	if val := resp.Header.Get("ETag"); val != "" {
-		result.ETag = &val
+		result.ETag = val
 	}
 	if val := resp.Header.Get("Content-MD5"); val != "" {
 		contentMd5, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
 			return BlobGetPropertiesResponse{}, err
 		}
-		result.ContentMD5 = &contentMd5
+		result.ContentMD5 = contentMd5
 	}
 	if val := resp.Header.Get("Content-Encoding"); val != "" {
-		result.ContentEncoding = &val
+		result.ContentEncoding = val
 	}
 	if val := resp.Header.Get("Content-Disposition"); val != "" {
-		result.ContentDisposition = &val
+		result.ContentDisposition = val
 	}
 	if val := resp.Header.Get("Content-Language"); val != "" {
-		result.ContentLanguage = &val
+		result.ContentLanguage = val
 	}
 	if val := resp.Header.Get("Cache-Control"); val != "" {
-		result.CacheControl = &val
+		result.CacheControl = val
 	}
 	if val := resp.Header.Get("x-ms-blob-sequence-number"); val != "" {
 		blobSequenceNumber, err := strconv.ParseInt(val, 10, 64)
 		if err != nil {
 			return BlobGetPropertiesResponse{}, err
 		}
-		result.BlobSequenceNumber = &blobSequenceNumber
+		result.BlobSequenceNumber = blobSequenceNumber
 	}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
-		result.ClientRequestID = &val
+		result.ClientRequestID = val
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestID = &val
+		result.RequestID = val
 	}
 	if val := resp.Header.Get("x-ms-version"); val != "" {
-		result.Version = &val
+		result.Version = val
 	}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return BlobGetPropertiesResponse{}, err
 		}
-		result.Date = &date
+		result.Date = date
 	}
 	if val := resp.Header.Get("Accept-Ranges"); val != "" {
-		result.AcceptRanges = &val
+		result.AcceptRanges = val
 	}
 	if val := resp.Header.Get("x-ms-blob-committed-block-count"); val != "" {
 		blobCommittedBlockCount32, err := strconv.ParseInt(val, 10, 32)
@@ -1355,40 +1355,40 @@ func (client *blobClient) getPropertiesHandleResponse(resp *azcore.Response) (Bl
 		if err != nil {
 			return BlobGetPropertiesResponse{}, err
 		}
-		result.BlobCommittedBlockCount = &blobCommittedBlockCount
+		result.BlobCommittedBlockCount = blobCommittedBlockCount
 	}
 	if val := resp.Header.Get("x-ms-server-encrypted"); val != "" {
 		isServerEncrypted, err := strconv.ParseBool(val)
 		if err != nil {
 			return BlobGetPropertiesResponse{}, err
 		}
-		result.IsServerEncrypted = &isServerEncrypted
+		result.IsServerEncrypted = isServerEncrypted
 	}
 	if val := resp.Header.Get("x-ms-encryption-key-sha256"); val != "" {
-		result.EncryptionKeySHA256 = &val
+		result.EncryptionKeySHA256 = val
 	}
 	if val := resp.Header.Get("x-ms-encryption-scope"); val != "" {
-		result.EncryptionScope = &val
+		result.EncryptionScope = val
 	}
 	if val := resp.Header.Get("x-ms-access-tier"); val != "" {
-		result.AccessTier = &val
+		result.AccessTier = val
 	}
 	if val := resp.Header.Get("x-ms-access-tier-inferred"); val != "" {
 		accessTierInferred, err := strconv.ParseBool(val)
 		if err != nil {
 			return BlobGetPropertiesResponse{}, err
 		}
-		result.AccessTierInferred = &accessTierInferred
+		result.AccessTierInferred = accessTierInferred
 	}
 	if val := resp.Header.Get("x-ms-archive-status"); val != "" {
-		result.ArchiveStatus = &val
+		result.ArchiveStatus = val
 	}
 	if val := resp.Header.Get("x-ms-access-tier-change-time"); val != "" {
 		accessTierChangeTime, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return BlobGetPropertiesResponse{}, err
 		}
-		result.AccessTierChangeTime = &accessTierChangeTime
+		result.AccessTierChangeTime = accessTierChangeTime
 	}
 	return result, nil
 }
@@ -1457,30 +1457,30 @@ func (client *blobClient) releaseLeaseCreateRequest(ctx context.Context, leaseId
 func (client *blobClient) releaseLeaseHandleResponse(resp *azcore.Response) (BlobReleaseLeaseResponse, error) {
 	result := BlobReleaseLeaseResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
-		result.ETag = &val
+		result.ETag = val
 	}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return BlobReleaseLeaseResponse{}, err
 		}
-		result.LastModified = &lastModified
+		result.LastModified = lastModified
 	}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
-		result.ClientRequestID = &val
+		result.ClientRequestID = val
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestID = &val
+		result.RequestID = val
 	}
 	if val := resp.Header.Get("x-ms-version"); val != "" {
-		result.Version = &val
+		result.Version = val
 	}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return BlobReleaseLeaseResponse{}, err
 		}
-		result.Date = &date
+		result.Date = date
 	}
 	return result, nil
 }
@@ -1596,37 +1596,37 @@ func (client *blobClient) renameCreateRequest(ctx context.Context, renameSource 
 func (client *blobClient) renameHandleResponse(resp *azcore.Response) (BlobRenameResponse, error) {
 	result := BlobRenameResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
-		result.ETag = &val
+		result.ETag = val
 	}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return BlobRenameResponse{}, err
 		}
-		result.LastModified = &lastModified
+		result.LastModified = lastModified
 	}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
-		result.ClientRequestID = &val
+		result.ClientRequestID = val
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestID = &val
+		result.RequestID = val
 	}
 	if val := resp.Header.Get("x-ms-version"); val != "" {
-		result.Version = &val
+		result.Version = val
 	}
 	if val := resp.Header.Get("Content-Length"); val != "" {
 		contentLength, err := strconv.ParseInt(val, 10, 64)
 		if err != nil {
 			return BlobRenameResponse{}, err
 		}
-		result.ContentLength = &contentLength
+		result.ContentLength = contentLength
 	}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return BlobRenameResponse{}, err
 		}
-		result.Date = &date
+		result.Date = date
 	}
 	return result, nil
 }
@@ -1695,33 +1695,33 @@ func (client *blobClient) renewLeaseCreateRequest(ctx context.Context, leaseId s
 func (client *blobClient) renewLeaseHandleResponse(resp *azcore.Response) (BlobRenewLeaseResponse, error) {
 	result := BlobRenewLeaseResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
-		result.ETag = &val
+		result.ETag = val
 	}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return BlobRenewLeaseResponse{}, err
 		}
-		result.LastModified = &lastModified
+		result.LastModified = lastModified
 	}
 	if val := resp.Header.Get("x-ms-lease-id"); val != "" {
-		result.LeaseID = &val
+		result.LeaseID = val
 	}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
-		result.ClientRequestID = &val
+		result.ClientRequestID = val
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestID = &val
+		result.RequestID = val
 	}
 	if val := resp.Header.Get("x-ms-version"); val != "" {
-		result.Version = &val
+		result.Version = val
 	}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return BlobRenewLeaseResponse{}, err
 		}
-		result.Date = &date
+		result.Date = date
 	}
 	return result, nil
 }
@@ -1807,23 +1807,23 @@ func (client *blobClient) setAccessControlHandleResponse(resp *azcore.Response) 
 		if err != nil {
 			return BlobSetAccessControlResponse{}, err
 		}
-		result.Date = &date
+		result.Date = date
 	}
 	if val := resp.Header.Get("ETag"); val != "" {
-		result.ETag = &val
+		result.ETag = val
 	}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return BlobSetAccessControlResponse{}, err
 		}
-		result.LastModified = &lastModified
+		result.LastModified = lastModified
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestID = &val
+		result.RequestID = val
 	}
 	if val := resp.Header.Get("x-ms-version"); val != "" {
-		result.Version = &val
+		result.Version = val
 	}
 	return result, nil
 }
@@ -1911,37 +1911,37 @@ func (client *blobClient) setHttpHeadersCreateRequest(ctx context.Context, blobS
 func (client *blobClient) setHttpHeadersHandleResponse(resp *azcore.Response) (BlobSetHTTPHeadersResponse, error) {
 	result := BlobSetHTTPHeadersResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
-		result.ETag = &val
+		result.ETag = val
 	}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return BlobSetHTTPHeadersResponse{}, err
 		}
-		result.LastModified = &lastModified
+		result.LastModified = lastModified
 	}
 	if val := resp.Header.Get("x-ms-blob-sequence-number"); val != "" {
 		blobSequenceNumber, err := strconv.ParseInt(val, 10, 64)
 		if err != nil {
 			return BlobSetHTTPHeadersResponse{}, err
 		}
-		result.BlobSequenceNumber = &blobSequenceNumber
+		result.BlobSequenceNumber = blobSequenceNumber
 	}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
-		result.ClientRequestID = &val
+		result.ClientRequestID = val
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestID = &val
+		result.RequestID = val
 	}
 	if val := resp.Header.Get("x-ms-version"); val != "" {
-		result.Version = &val
+		result.Version = val
 	}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return BlobSetHTTPHeadersResponse{}, err
 		}
-		result.Date = &date
+		result.Date = date
 	}
 	return result, nil
 }
@@ -2028,43 +2028,43 @@ func (client *blobClient) setMetadataCreateRequest(ctx context.Context, blobSetM
 func (client *blobClient) setMetadataHandleResponse(resp *azcore.Response) (BlobSetMetadataResponse, error) {
 	result := BlobSetMetadataResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
-		result.ETag = &val
+		result.ETag = val
 	}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return BlobSetMetadataResponse{}, err
 		}
-		result.LastModified = &lastModified
+		result.LastModified = lastModified
 	}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
-		result.ClientRequestID = &val
+		result.ClientRequestID = val
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestID = &val
+		result.RequestID = val
 	}
 	if val := resp.Header.Get("x-ms-version"); val != "" {
-		result.Version = &val
+		result.Version = val
 	}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return BlobSetMetadataResponse{}, err
 		}
-		result.Date = &date
+		result.Date = date
 	}
 	if val := resp.Header.Get("x-ms-request-server-encrypted"); val != "" {
 		isServerEncrypted, err := strconv.ParseBool(val)
 		if err != nil {
 			return BlobSetMetadataResponse{}, err
 		}
-		result.IsServerEncrypted = &isServerEncrypted
+		result.IsServerEncrypted = isServerEncrypted
 	}
 	if val := resp.Header.Get("x-ms-encryption-key-sha256"); val != "" {
-		result.EncryptionKeySHA256 = &val
+		result.EncryptionKeySHA256 = val
 	}
 	if val := resp.Header.Get("x-ms-encryption-scope"); val != "" {
-		result.EncryptionScope = &val
+		result.EncryptionScope = val
 	}
 	return result, nil
 }
@@ -2129,13 +2129,13 @@ func (client *blobClient) setTierCreateRequest(ctx context.Context, tier AccessT
 func (client *blobClient) setTierHandleResponse(resp *azcore.Response) (BlobSetTierResponse, error) {
 	result := BlobSetTierResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
-		result.ClientRequestID = &val
+		result.ClientRequestID = val
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestID = &val
+		result.RequestID = val
 	}
 	if val := resp.Header.Get("x-ms-version"); val != "" {
-		result.Version = &val
+		result.Version = val
 	}
 	return result, nil
 }
@@ -2228,36 +2228,36 @@ func (client *blobClient) startCopyFromUrlCreateRequest(ctx context.Context, cop
 func (client *blobClient) startCopyFromUrlHandleResponse(resp *azcore.Response) (BlobStartCopyFromURLResponse, error) {
 	result := BlobStartCopyFromURLResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
-		result.ETag = &val
+		result.ETag = val
 	}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return BlobStartCopyFromURLResponse{}, err
 		}
-		result.LastModified = &lastModified
+		result.LastModified = lastModified
 	}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
-		result.ClientRequestID = &val
+		result.ClientRequestID = val
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestID = &val
+		result.RequestID = val
 	}
 	if val := resp.Header.Get("x-ms-version"); val != "" {
-		result.Version = &val
+		result.Version = val
 	}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return BlobStartCopyFromURLResponse{}, err
 		}
-		result.Date = &date
+		result.Date = date
 	}
 	if val := resp.Header.Get("x-ms-copy-id"); val != "" {
-		result.CopyID = &val
+		result.CopyID = val
 	}
 	if val := resp.Header.Get("x-ms-copy-status"); val != "" {
-		result.CopyStatus = (*CopyStatusType)(&val)
+		result.CopyStatus = CopyStatusType(val)
 	}
 	return result, nil
 }
@@ -2312,20 +2312,20 @@ func (client *blobClient) undeleteCreateRequest(ctx context.Context, options *Bl
 func (client *blobClient) undeleteHandleResponse(resp *azcore.Response) (BlobUndeleteResponse, error) {
 	result := BlobUndeleteResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
-		result.ClientRequestID = &val
+		result.ClientRequestID = val
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestID = &val
+		result.RequestID = val
 	}
 	if val := resp.Header.Get("x-ms-version"); val != "" {
-		result.Version = &val
+		result.Version = val
 	}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return BlobUndeleteResponse{}, err
 		}
-		result.Date = &date
+		result.Date = date
 	}
 	return result, nil
 }

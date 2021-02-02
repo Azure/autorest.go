@@ -653,7 +653,7 @@ func (client *HeaderClient) responseBoolHandleResponse(resp *azcore.Response) (H
 		if err != nil {
 			return HeaderResponseBoolResponse{}, err
 		}
-		result.Value = &value
+		result.Value = value
 	}
 	return result, nil
 }
@@ -704,7 +704,7 @@ func (client *HeaderClient) responseByteHandleResponse(resp *azcore.Response) (H
 		if err != nil {
 			return HeaderResponseByteResponse{}, err
 		}
-		result.Value = &value
+		result.Value = value
 	}
 	return result, nil
 }
@@ -755,7 +755,7 @@ func (client *HeaderClient) responseDateHandleResponse(resp *azcore.Response) (H
 		if err != nil {
 			return HeaderResponseDateResponse{}, err
 		}
-		result.Value = &value
+		result.Value = value
 	}
 	return result, nil
 }
@@ -806,7 +806,7 @@ func (client *HeaderClient) responseDatetimeHandleResponse(resp *azcore.Response
 		if err != nil {
 			return HeaderResponseDatetimeResponse{}, err
 		}
-		result.Value = &value
+		result.Value = value
 	}
 	return result, nil
 }
@@ -857,7 +857,7 @@ func (client *HeaderClient) responseDatetimeRfc1123HandleResponse(resp *azcore.R
 		if err != nil {
 			return HeaderResponseDatetimeRFC1123Response{}, err
 		}
-		result.Value = &value
+		result.Value = value
 	}
 	return result, nil
 }
@@ -908,7 +908,7 @@ func (client *HeaderClient) responseDoubleHandleResponse(resp *azcore.Response) 
 		if err != nil {
 			return HeaderResponseDoubleResponse{}, err
 		}
-		result.Value = &value
+		result.Value = value
 	}
 	return result, nil
 }
@@ -955,7 +955,7 @@ func (client *HeaderClient) responseDurationCreateRequest(ctx context.Context, s
 func (client *HeaderClient) responseDurationHandleResponse(resp *azcore.Response) (HeaderResponseDurationResponse, error) {
 	result := HeaderResponseDurationResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("value"); val != "" {
-		result.Value = &val
+		result.Value = val
 	}
 	return result, nil
 }
@@ -1002,7 +1002,7 @@ func (client *HeaderClient) responseEnumCreateRequest(ctx context.Context, scena
 func (client *HeaderClient) responseEnumHandleResponse(resp *azcore.Response) (HeaderResponseEnumResponse, error) {
 	result := HeaderResponseEnumResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("value"); val != "" {
-		result.Value = (*GreyscaleColors)(&val)
+		result.Value = GreyscaleColors(val)
 	}
 	return result, nil
 }
@@ -1048,7 +1048,7 @@ func (client *HeaderClient) responseExistingKeyCreateRequest(ctx context.Context
 func (client *HeaderClient) responseExistingKeyHandleResponse(resp *azcore.Response) (HeaderResponseExistingKeyResponse, error) {
 	result := HeaderResponseExistingKeyResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("User-Agent"); val != "" {
-		result.UserAgent = &val
+		result.UserAgent = val
 	}
 	return result, nil
 }
@@ -1100,7 +1100,7 @@ func (client *HeaderClient) responseFloatHandleResponse(resp *azcore.Response) (
 		if err != nil {
 			return HeaderResponseFloatResponse{}, err
 		}
-		result.Value = &value
+		result.Value = value
 	}
 	return result, nil
 }
@@ -1152,7 +1152,7 @@ func (client *HeaderClient) responseIntegerHandleResponse(resp *azcore.Response)
 		if err != nil {
 			return HeaderResponseIntegerResponse{}, err
 		}
-		result.Value = &value
+		result.Value = value
 	}
 	return result, nil
 }
@@ -1203,7 +1203,7 @@ func (client *HeaderClient) responseLongHandleResponse(resp *azcore.Response) (H
 		if err != nil {
 			return HeaderResponseLongResponse{}, err
 		}
-		result.Value = &value
+		result.Value = value
 	}
 	return result, nil
 }
@@ -1249,7 +1249,7 @@ func (client *HeaderClient) responseProtectedKeyCreateRequest(ctx context.Contex
 func (client *HeaderClient) responseProtectedKeyHandleResponse(resp *azcore.Response) (HeaderResponseProtectedKeyResponse, error) {
 	result := HeaderResponseProtectedKeyResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("Content-Type"); val != "" {
-		result.ContentType = &val
+		result.ContentType = val
 	}
 	return result, nil
 }
@@ -1296,7 +1296,7 @@ func (client *HeaderClient) responseStringCreateRequest(ctx context.Context, sce
 func (client *HeaderClient) responseStringHandleResponse(resp *azcore.Response) (HeaderResponseStringResponse, error) {
 	result := HeaderResponseStringResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("value"); val != "" {
-		result.Value = &val
+		result.Value = val
 	}
 	return result, nil
 }

@@ -111,9 +111,9 @@ function formatHeaderResponseValue(propName: string, header: string, schema: Sch
     let text = '\tfor hh := range resp.Header {\n';
     text += `\t\tif strings.HasPrefix(hh, "${schema.language.go!.headerCollectionPrefix}") {\n`;
     text += `\t\t\tif ${respObj}.Metadata == nil {\n`;
-    text += `\t\t\t\t${respObj}.Metadata = &map[string]string{}\n`;
+    text += `\t\t\t\t${respObj}.Metadata = map[string]string{}\n`;
     text += '\t\t\t}\n';
-    text += `\t\t\t(*${respObj}.Metadata)[hh[len("${schema.language.go!.headerCollectionPrefix}"):]] = resp.Header.Get(hh)\n`;
+    text += `\t\t\t${respObj}.Metadata[hh[len("${schema.language.go!.headerCollectionPrefix}"):]] = resp.Header.Get(hh)\n`;
     text += '\t\t}\n';
     text += '\t}\n';
     return text;
@@ -136,13 +136,13 @@ function formatHeaderResponseValue(propName: string, header: string, schema: Sch
       break;
     case SchemaType.Choice:
     case SchemaType.SealedChoice:
-      text += `\t\t${respObj}.${propName} = (*${schema.language.go!.name})(&val)\n`;
+      text += `\t\t${respObj}.${propName} = ${schema.language.go!.name}(val)\n`;
       text += '\t}\n';
       return text;
     case SchemaType.Constant:
     case SchemaType.Duration:
     case SchemaType.String:
-      text += `\t\t${respObj}.${propName} = &val\n`;
+      text += `\t\t${respObj}.${propName} = val\n`;
       text += '\t}\n';
       return text;
     case SchemaType.Date:
@@ -184,7 +184,7 @@ function formatHeaderResponseValue(propName: string, header: string, schema: Sch
   text += `\t\tif err != nil {\n`;
   text += `\t\t\treturn ${zeroResp}, err\n`;
   text += `\t\t}\n`;
-  text += `\t\t${respObj}.${propName} = &${name}\n`;
+  text += `\t\t${respObj}.${propName} = ${name}\n`;
   text += '\t}\n';
   return text;
 }

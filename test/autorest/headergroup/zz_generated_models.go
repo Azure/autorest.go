@@ -122,7 +122,7 @@ type HeaderResponseBoolResponse struct {
 	RawResponse *http.Response
 
 	// Value contains the information returned from the value header response.
-	Value *bool
+	Value bool
 }
 
 // HeaderResponseByteOptions contains the optional parameters for the Header.ResponseByte method.
@@ -136,7 +136,7 @@ type HeaderResponseByteResponse struct {
 	RawResponse *http.Response
 
 	// Value contains the information returned from the value header response.
-	Value *[]byte
+	Value []byte
 }
 
 // HeaderResponseDateOptions contains the optional parameters for the Header.ResponseDate method.
@@ -150,7 +150,7 @@ type HeaderResponseDateResponse struct {
 	RawResponse *http.Response
 
 	// Value contains the information returned from the value header response.
-	Value *time.Time
+	Value time.Time
 }
 
 // HeaderResponseDatetimeOptions contains the optional parameters for the Header.ResponseDatetime method.
@@ -169,7 +169,7 @@ type HeaderResponseDatetimeRFC1123Response struct {
 	RawResponse *http.Response
 
 	// Value contains the information returned from the value header response.
-	Value *time.Time
+	Value time.Time
 }
 
 // HeaderResponseDatetimeResponse contains the response from method Header.ResponseDatetime.
@@ -178,7 +178,7 @@ type HeaderResponseDatetimeResponse struct {
 	RawResponse *http.Response
 
 	// Value contains the information returned from the value header response.
-	Value *time.Time
+	Value time.Time
 }
 
 // HeaderResponseDoubleOptions contains the optional parameters for the Header.ResponseDouble method.
@@ -192,7 +192,7 @@ type HeaderResponseDoubleResponse struct {
 	RawResponse *http.Response
 
 	// Value contains the information returned from the value header response.
-	Value *float64
+	Value float64
 }
 
 // HeaderResponseDurationOptions contains the optional parameters for the Header.ResponseDuration method.
@@ -206,7 +206,7 @@ type HeaderResponseDurationResponse struct {
 	RawResponse *http.Response
 
 	// Value contains the information returned from the value header response.
-	Value *string
+	Value string
 }
 
 // HeaderResponseEnumOptions contains the optional parameters for the Header.ResponseEnum method.
@@ -220,7 +220,7 @@ type HeaderResponseEnumResponse struct {
 	RawResponse *http.Response
 
 	// Value contains the information returned from the value header response.
-	Value *GreyscaleColors
+	Value GreyscaleColors
 }
 
 // HeaderResponseExistingKeyOptions contains the optional parameters for the Header.ResponseExistingKey method.
@@ -234,7 +234,7 @@ type HeaderResponseExistingKeyResponse struct {
 	RawResponse *http.Response
 
 	// UserAgent contains the information returned from the User-Agent header response.
-	UserAgent *string
+	UserAgent string
 }
 
 // HeaderResponseFloatOptions contains the optional parameters for the Header.ResponseFloat method.
@@ -248,7 +248,7 @@ type HeaderResponseFloatResponse struct {
 	RawResponse *http.Response
 
 	// Value contains the information returned from the value header response.
-	Value *float32
+	Value float32
 }
 
 // HeaderResponseIntegerOptions contains the optional parameters for the Header.ResponseInteger method.
@@ -262,7 +262,7 @@ type HeaderResponseIntegerResponse struct {
 	RawResponse *http.Response
 
 	// Value contains the information returned from the value header response.
-	Value *int32
+	Value int32
 }
 
 // HeaderResponseLongOptions contains the optional parameters for the Header.ResponseLong method.
@@ -276,7 +276,7 @@ type HeaderResponseLongResponse struct {
 	RawResponse *http.Response
 
 	// Value contains the information returned from the value header response.
-	Value *int64
+	Value int64
 }
 
 // HeaderResponseProtectedKeyOptions contains the optional parameters for the Header.ResponseProtectedKey method.
@@ -287,7 +287,7 @@ type HeaderResponseProtectedKeyOptions struct {
 // HeaderResponseProtectedKeyResponse contains the response from method Header.ResponseProtectedKey.
 type HeaderResponseProtectedKeyResponse struct {
 	// ContentType contains the information returned from the Content-Type header response.
-	ContentType *string
+	ContentType string
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -304,5 +304,5 @@ type HeaderResponseStringResponse struct {
 	RawResponse *http.Response
 
 	// Value contains the information returned from the value header response.
-	Value *string
+	Value string
 }

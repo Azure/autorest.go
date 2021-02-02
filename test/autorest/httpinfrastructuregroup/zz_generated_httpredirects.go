@@ -97,7 +97,7 @@ func (client *HTTPRedirectsClient) get300HandleResponse(resp *azcore.Response) (
 	case http.StatusOK:
 		result := HTTPRedirectsGet300Response{RawResponse: resp.Response}
 		if val := resp.Header.Get("Location"); val != "" {
-			result.Location = &val
+			result.Location = val
 		}
 		return result, nil
 	case http.StatusMultipleChoices:
@@ -107,7 +107,7 @@ func (client *HTTPRedirectsClient) get300HandleResponse(resp *azcore.Response) (
 		}
 		result := StringArrayResponse{RawResponse: resp.Response, StringArray: val}
 		if val := resp.Header.Get("Location"); val != "" {
-			result.Location = &val
+			result.Location = val
 		}
 		return result, nil
 	default:
@@ -270,7 +270,7 @@ func (client *HTTPRedirectsClient) head300HandleResponse(resp *azcore.Response) 
 		result.Success = true
 	}
 	if val := resp.Header.Get("Location"); val != "" {
-		result.Location = &val
+		result.Location = val
 	}
 	return result, nil
 }
@@ -474,7 +474,7 @@ func (client *HTTPRedirectsClient) patch302CreateRequest(ctx context.Context, op
 func (client *HTTPRedirectsClient) patch302HandleResponse(resp *azcore.Response) (HTTPRedirectsPatch302Response, error) {
 	result := HTTPRedirectsPatch302Response{RawResponse: resp.Response}
 	if val := resp.Header.Get("Location"); val != "" {
-		result.Location = &val
+		result.Location = val
 	}
 	return result, nil
 }
@@ -558,7 +558,7 @@ func (client *HTTPRedirectsClient) post303CreateRequest(ctx context.Context, opt
 func (client *HTTPRedirectsClient) post303HandleResponse(resp *azcore.Response) (HTTPRedirectsPost303Response, error) {
 	result := HTTPRedirectsPost303Response{RawResponse: resp.Response}
 	if val := resp.Header.Get("Location"); val != "" {
-		result.Location = &val
+		result.Location = val
 	}
 	return result, nil
 }
@@ -642,7 +642,7 @@ func (client *HTTPRedirectsClient) put301CreateRequest(ctx context.Context, opti
 func (client *HTTPRedirectsClient) put301HandleResponse(resp *azcore.Response) (HTTPRedirectsPut301Response, error) {
 	result := HTTPRedirectsPut301Response{RawResponse: resp.Response}
 	if val := resp.Header.Get("Location"); val != "" {
-		result.Location = &val
+		result.Location = val
 	}
 	return result, nil
 }

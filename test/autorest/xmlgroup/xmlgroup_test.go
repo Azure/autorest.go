@@ -131,7 +131,7 @@ func TestGetHeaders(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, result.CustomHeader, to.StringPtr("custom-value"))
+	helpers.DeepEqualOrFatal(t, result.CustomHeader, "custom-value")
 }
 
 func TestGetRootList(t *testing.T) {

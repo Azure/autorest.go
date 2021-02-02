@@ -127,57 +127,57 @@ func (client *blockBlobClient) commitBlockListCreateRequest(ctx context.Context,
 func (client *blockBlobClient) commitBlockListHandleResponse(resp *azcore.Response) (BlockBlobCommitBlockListResponse, error) {
 	result := BlockBlobCommitBlockListResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
-		result.ETag = &val
+		result.ETag = val
 	}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return BlockBlobCommitBlockListResponse{}, err
 		}
-		result.LastModified = &lastModified
+		result.LastModified = lastModified
 	}
 	if val := resp.Header.Get("Content-MD5"); val != "" {
 		contentMd5, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
 			return BlockBlobCommitBlockListResponse{}, err
 		}
-		result.ContentMD5 = &contentMd5
+		result.ContentMD5 = contentMd5
 	}
 	if val := resp.Header.Get("x-ms-content-crc64"); val != "" {
 		contentCrc64, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
 			return BlockBlobCommitBlockListResponse{}, err
 		}
-		result.ContentCRC64 = &contentCrc64
+		result.ContentCRC64 = contentCrc64
 	}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
-		result.ClientRequestID = &val
+		result.ClientRequestID = val
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestID = &val
+		result.RequestID = val
 	}
 	if val := resp.Header.Get("x-ms-version"); val != "" {
-		result.Version = &val
+		result.Version = val
 	}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return BlockBlobCommitBlockListResponse{}, err
 		}
-		result.Date = &date
+		result.Date = date
 	}
 	if val := resp.Header.Get("x-ms-request-server-encrypted"); val != "" {
 		isServerEncrypted, err := strconv.ParseBool(val)
 		if err != nil {
 			return BlockBlobCommitBlockListResponse{}, err
 		}
-		result.IsServerEncrypted = &isServerEncrypted
+		result.IsServerEncrypted = isServerEncrypted
 	}
 	if val := resp.Header.Get("x-ms-encryption-key-sha256"); val != "" {
-		result.EncryptionKeySHA256 = &val
+		result.EncryptionKeySHA256 = val
 	}
 	if val := resp.Header.Get("x-ms-encryption-scope"); val != "" {
-		result.EncryptionScope = &val
+		result.EncryptionScope = val
 	}
 	return result, nil
 }
@@ -247,36 +247,36 @@ func (client *blockBlobClient) getBlockListHandleResponse(resp *azcore.Response)
 		if err != nil {
 			return BlockListResponse{}, err
 		}
-		result.LastModified = &lastModified
+		result.LastModified = lastModified
 	}
 	if val := resp.Header.Get("ETag"); val != "" {
-		result.ETag = &val
+		result.ETag = val
 	}
 	if val := resp.Header.Get("Content-Type"); val != "" {
-		result.ContentType = &val
+		result.ContentType = val
 	}
 	if val := resp.Header.Get("x-ms-blob-content-length"); val != "" {
 		blobContentLength, err := strconv.ParseInt(val, 10, 64)
 		if err != nil {
 			return BlockListResponse{}, err
 		}
-		result.BlobContentLength = &blobContentLength
+		result.BlobContentLength = blobContentLength
 	}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
-		result.ClientRequestID = &val
+		result.ClientRequestID = val
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestID = &val
+		result.RequestID = val
 	}
 	if val := resp.Header.Get("x-ms-version"); val != "" {
-		result.Version = &val
+		result.Version = val
 	}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return BlockListResponse{}, err
 		}
-		result.Date = &date
+		result.Date = date
 	}
 	return result, nil
 }
@@ -358,43 +358,43 @@ func (client *blockBlobClient) stageBlockHandleResponse(resp *azcore.Response) (
 		if err != nil {
 			return BlockBlobStageBlockResponse{}, err
 		}
-		result.ContentMD5 = &contentMd5
+		result.ContentMD5 = contentMd5
 	}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
-		result.ClientRequestID = &val
+		result.ClientRequestID = val
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestID = &val
+		result.RequestID = val
 	}
 	if val := resp.Header.Get("x-ms-version"); val != "" {
-		result.Version = &val
+		result.Version = val
 	}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return BlockBlobStageBlockResponse{}, err
 		}
-		result.Date = &date
+		result.Date = date
 	}
 	if val := resp.Header.Get("x-ms-content-crc64"); val != "" {
 		contentCrc64, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
 			return BlockBlobStageBlockResponse{}, err
 		}
-		result.ContentCRC64 = &contentCrc64
+		result.ContentCRC64 = contentCrc64
 	}
 	if val := resp.Header.Get("x-ms-request-server-encrypted"); val != "" {
 		isServerEncrypted, err := strconv.ParseBool(val)
 		if err != nil {
 			return BlockBlobStageBlockResponse{}, err
 		}
-		result.IsServerEncrypted = &isServerEncrypted
+		result.IsServerEncrypted = isServerEncrypted
 	}
 	if val := resp.Header.Get("x-ms-encryption-key-sha256"); val != "" {
-		result.EncryptionKeySHA256 = &val
+		result.EncryptionKeySHA256 = val
 	}
 	if val := resp.Header.Get("x-ms-encryption-scope"); val != "" {
-		result.EncryptionScope = &val
+		result.EncryptionScope = val
 	}
 	return result, nil
 }
@@ -492,43 +492,43 @@ func (client *blockBlobClient) stageBlockFromUrlHandleResponse(resp *azcore.Resp
 		if err != nil {
 			return BlockBlobStageBlockFromURLResponse{}, err
 		}
-		result.ContentMD5 = &contentMd5
+		result.ContentMD5 = contentMd5
 	}
 	if val := resp.Header.Get("x-ms-content-crc64"); val != "" {
 		contentCrc64, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
 			return BlockBlobStageBlockFromURLResponse{}, err
 		}
-		result.ContentCRC64 = &contentCrc64
+		result.ContentCRC64 = contentCrc64
 	}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
-		result.ClientRequestID = &val
+		result.ClientRequestID = val
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestID = &val
+		result.RequestID = val
 	}
 	if val := resp.Header.Get("x-ms-version"); val != "" {
-		result.Version = &val
+		result.Version = val
 	}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return BlockBlobStageBlockFromURLResponse{}, err
 		}
-		result.Date = &date
+		result.Date = date
 	}
 	if val := resp.Header.Get("x-ms-request-server-encrypted"); val != "" {
 		isServerEncrypted, err := strconv.ParseBool(val)
 		if err != nil {
 			return BlockBlobStageBlockFromURLResponse{}, err
 		}
-		result.IsServerEncrypted = &isServerEncrypted
+		result.IsServerEncrypted = isServerEncrypted
 	}
 	if val := resp.Header.Get("x-ms-encryption-key-sha256"); val != "" {
-		result.EncryptionKeySHA256 = &val
+		result.EncryptionKeySHA256 = val
 	}
 	if val := resp.Header.Get("x-ms-encryption-scope"); val != "" {
-		result.EncryptionScope = &val
+		result.EncryptionScope = val
 	}
 	return result, nil
 }
@@ -643,50 +643,50 @@ func (client *blockBlobClient) uploadCreateRequest(ctx context.Context, contentL
 func (client *blockBlobClient) uploadHandleResponse(resp *azcore.Response) (BlockBlobUploadResponse, error) {
 	result := BlockBlobUploadResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
-		result.ETag = &val
+		result.ETag = val
 	}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return BlockBlobUploadResponse{}, err
 		}
-		result.LastModified = &lastModified
+		result.LastModified = lastModified
 	}
 	if val := resp.Header.Get("Content-MD5"); val != "" {
 		contentMd5, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
 			return BlockBlobUploadResponse{}, err
 		}
-		result.ContentMD5 = &contentMd5
+		result.ContentMD5 = contentMd5
 	}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
-		result.ClientRequestID = &val
+		result.ClientRequestID = val
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestID = &val
+		result.RequestID = val
 	}
 	if val := resp.Header.Get("x-ms-version"); val != "" {
-		result.Version = &val
+		result.Version = val
 	}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return BlockBlobUploadResponse{}, err
 		}
-		result.Date = &date
+		result.Date = date
 	}
 	if val := resp.Header.Get("x-ms-request-server-encrypted"); val != "" {
 		isServerEncrypted, err := strconv.ParseBool(val)
 		if err != nil {
 			return BlockBlobUploadResponse{}, err
 		}
-		result.IsServerEncrypted = &isServerEncrypted
+		result.IsServerEncrypted = isServerEncrypted
 	}
 	if val := resp.Header.Get("x-ms-encryption-key-sha256"); val != "" {
-		result.EncryptionKeySHA256 = &val
+		result.EncryptionKeySHA256 = val
 	}
 	if val := resp.Header.Get("x-ms-encryption-scope"); val != "" {
-		result.EncryptionScope = &val
+		result.EncryptionScope = val
 	}
 	return result, nil
 }

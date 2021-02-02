@@ -85,7 +85,7 @@ type HeaderCustomNamedRequestIDHeadOptions struct {
 // HeaderCustomNamedRequestIDHeadResponse contains the response from method Header.CustomNamedRequestIDHead.
 type HeaderCustomNamedRequestIDHeadResponse struct {
 	// FooRequestID contains the information returned from the foo-request-id header response.
-	FooRequestID *string
+	FooRequestID string
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -113,7 +113,7 @@ type HeaderCustomNamedRequestIDParamGroupingParameters struct {
 // HeaderCustomNamedRequestIDParamGroupingResponse contains the response from method Header.CustomNamedRequestIDParamGrouping.
 type HeaderCustomNamedRequestIDParamGroupingResponse struct {
 	// FooRequestID contains the information returned from the foo-request-id header response.
-	FooRequestID *string
+	FooRequestID string
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -122,7 +122,7 @@ type HeaderCustomNamedRequestIDParamGroupingResponse struct {
 // HeaderCustomNamedRequestIDResponse contains the response from method Header.CustomNamedRequestID.
 type HeaderCustomNamedRequestIDResponse struct {
 	// FooRequestID contains the information returned from the foo-request-id header response.
-	FooRequestID *string
+	FooRequestID string
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response

@@ -639,7 +639,7 @@ type XMLGetHeadersOptions struct {
 // XMLGetHeadersResponse contains the response from method XML.GetHeaders.
 type XMLGetHeadersResponse struct {
 	// CustomHeader contains the information returned from the Custom-Header header response.
-	CustomHeader *string
+	CustomHeader string
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response

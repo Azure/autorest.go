@@ -169,7 +169,7 @@ class StructDef {
         tag = '';
       }
       let pointer = '*';
-      if (prop.schema.language.go!.byValue) {
+      if (prop.schema.language.go!.byValue || prop.language.go!.fromHeader) {
         pointer = '';
       }
       text += `\t${prop.language.go!.name} ${pointer}${typeName}${tag}\n`;
@@ -261,8 +261,9 @@ function generateStructs(objects?: ObjectSchema[]): StructDef[] {
                 if (p.language.go!.errorType) {
                   text += `\t\tmsg += fmt.Sprintf("${prop.language.go!.name}: %v\\n", *e.${prop.language.go!.name}.Error())\n`;
                 } else {
-                  text += `\t\t\tmsg += fmt.Sprintf("\\t${p.language.go!.name}: %v\\n", *e.${prop.language.go!.name}.${p.language.go!.name})\n`;                  }
-                  text += '\t\t}\n';
+                  text += `\t\t\tmsg += fmt.Sprintf("\\t${p.language.go!.name}: %v\\n", *e.${prop.language.go!.name}.${p.language.go!.name})\n`;
+                }
+                text += '\t\t}\n';
               }
               break;
             }

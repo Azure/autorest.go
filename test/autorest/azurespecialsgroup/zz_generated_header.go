@@ -57,7 +57,7 @@ func (client *HeaderClient) customNamedRequestIdCreateRequest(ctx context.Contex
 func (client *HeaderClient) customNamedRequestIdHandleResponse(resp *azcore.Response) (HeaderCustomNamedRequestIDResponse, error) {
 	result := HeaderCustomNamedRequestIDResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("foo-request-id"); val != "" {
-		result.FooRequestID = &val
+		result.FooRequestID = val
 	}
 	return result, nil
 }
@@ -107,7 +107,7 @@ func (client *HeaderClient) customNamedRequestIdHeadHandleResponse(resp *azcore.
 		result.Success = true
 	}
 	if val := resp.Header.Get("foo-request-id"); val != "" {
-		result.FooRequestID = &val
+		result.FooRequestID = val
 	}
 	return result, nil
 }
@@ -154,7 +154,7 @@ func (client *HeaderClient) customNamedRequestIdParamGroupingCreateRequest(ctx c
 func (client *HeaderClient) customNamedRequestIdParamGroupingHandleResponse(resp *azcore.Response) (HeaderCustomNamedRequestIDParamGroupingResponse, error) {
 	result := HeaderCustomNamedRequestIDParamGroupingResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("foo-request-id"); val != "" {
-		result.FooRequestID = &val
+		result.FooRequestID = val
 	}
 	return result, nil
 }
