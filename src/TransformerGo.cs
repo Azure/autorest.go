@@ -20,8 +20,8 @@ namespace AutoRest.Go
             var cmg = cm as CodeModelGo;
 
             SwaggerExtensions.ProcessGlobalParameters(cmg);
-            TransformMethods(cmg);
             TransformEnumTypes(cmg);
+            TransformMethods(cmg);
             TransformModelTypes(cmg);
             // FixUpPolymorphicTypes can generate new enum types so to avoid
             // name collisions call it after transforming enums and models
