@@ -112,8 +112,9 @@ func (opr OdataProductResult) odataProductResultPreparer(ctx context.Context) (*
 
 // OdataProductResultPage contains a page of Product values.
 type OdataProductResultPage struct {
-	fn  func(context.Context, OdataProductResult) (OdataProductResult, error)
-	opr OdataProductResult
+	autorest.Response `json:"-"`
+	fn                func(context.Context, OdataProductResult) (OdataProductResult, error)
+	opr               OdataProductResult
 }
 
 // NextWithContext advances to the next page of values.  If there was an error making
@@ -193,6 +194,7 @@ type PagingGetMultiplePagesLROAllFuture struct {
 // PagingGetMultiplePagesLROFuture an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type PagingGetMultiplePagesLROFuture struct {
+	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -304,8 +306,9 @@ func (pr ProductResult) productResultPreparer(ctx context.Context) (*http.Reques
 
 // ProductResultPage contains a page of Product values.
 type ProductResultPage struct {
-	fn func(context.Context, ProductResult) (ProductResult, error)
-	pr ProductResult
+	autorest.Response `json:"-"`
+	fn                func(context.Context, ProductResult) (ProductResult, error)
+	pr                ProductResult
 }
 
 // NextWithContext advances to the next page of values.  If there was an error making
@@ -369,9 +372,8 @@ func NewProductResultPage(cur ProductResult, getNextPage func(context.Context, P
 
 // ProductResultValue ...
 type ProductResultValue struct {
-	autorest.Response `json:"-"`
-	Value             *[]Product `json:"value,omitempty"`
-	NextLink          *string    `json:"nextLink,omitempty"`
+	Value    *[]Product `json:"value,omitempty"`
+	NextLink *string    `json:"nextLink,omitempty"`
 }
 
 // ProductResultValueIterator provides access to a complete listing of Product values.
@@ -461,8 +463,9 @@ func (prv ProductResultValue) productResultValuePreparer(ctx context.Context) (*
 
 // ProductResultValuePage contains a page of Product values.
 type ProductResultValuePage struct {
-	fn  func(context.Context, ProductResultValue) (ProductResultValue, error)
-	prv ProductResultValue
+	autorest.Response `json:"-"`
+	fn                func(context.Context, ProductResultValue) (ProductResultValue, error)
+	prv               ProductResultValue
 }
 
 // NextWithContext advances to the next page of values.  If there was an error making

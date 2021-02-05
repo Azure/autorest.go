@@ -33,7 +33,7 @@ func NewPolymorphicrecursiveClientWithBaseURI(baseURI string) Polymorphicrecursi
 }
 
 // GetValid get complex types that are polymorphic and have recursive references
-func (client PolymorphicrecursiveClient) GetValid(ctx context.Context) (result FishModel, err error) {
+func (client PolymorphicrecursiveClient) GetValid(ctx context.Context) (result Fish, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/PolymorphicrecursiveClient.GetValid")
 		defer func() {
@@ -83,7 +83,7 @@ func (client PolymorphicrecursiveClient) GetValidSender(req *http.Request) (*htt
 
 // GetValidResponder handles the response to the GetValid request. The method always
 // closes the http.Response Body.
-func (client PolymorphicrecursiveClient) GetValidResponder(resp *http.Response) (result FishModel, err error) {
+func (client PolymorphicrecursiveClient) GetValidResponder(resp *http.Response) (result Fish, err error) {
 	err = autorest.Respond(
 		resp,
 		azure.WithErrorUnlessStatusCode(http.StatusOK),

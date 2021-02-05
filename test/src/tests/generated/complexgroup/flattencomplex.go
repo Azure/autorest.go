@@ -31,7 +31,7 @@ func NewFlattencomplexClientWithBaseURI(baseURI string) FlattencomplexClient {
 }
 
 // GetValid sends the get valid request.
-func (client FlattencomplexClient) GetValid(ctx context.Context) (result MyBaseTypeModel, err error) {
+func (client FlattencomplexClient) GetValid(ctx context.Context) (result MyBaseType, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/FlattencomplexClient.GetValid")
 		defer func() {
@@ -81,7 +81,7 @@ func (client FlattencomplexClient) GetValidSender(req *http.Request) (*http.Resp
 
 // GetValidResponder handles the response to the GetValid request. The method always
 // closes the http.Response Body.
-func (client FlattencomplexClient) GetValidResponder(resp *http.Response) (result MyBaseTypeModel, err error) {
+func (client FlattencomplexClient) GetValidResponder(resp *http.Response) (result MyBaseType, err error) {
 	err = autorest.Respond(
 		resp,
 		azure.WithErrorUnlessStatusCode(http.StatusOK),

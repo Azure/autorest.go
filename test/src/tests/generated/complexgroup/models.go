@@ -387,23 +387,6 @@ func (dfm *DotFishMarket) UnmarshalJSON(body []byte) error {
 	return nil
 }
 
-// DotFishModel ...
-type DotFishModel struct {
-	autorest.Response `json:"-"`
-	Value             BasicDotFish `json:"value,omitempty"`
-}
-
-// UnmarshalJSON is the custom unmarshaler for DotFishModel struct.
-func (dfm *DotFishModel) UnmarshalJSON(body []byte) error {
-	df, err := unmarshalBasicDotFish(body)
-	if err != nil {
-		return err
-	}
-	dfm.Value = df
-
-	return nil
-}
-
 // DotSalmon ...
 type DotSalmon struct {
 	Location *string `json:"location,omitempty"`
@@ -661,23 +644,6 @@ func (f *Fish) UnmarshalJSON(body []byte) error {
 			}
 		}
 	}
-
-	return nil
-}
-
-// FishModel ...
-type FishModel struct {
-	autorest.Response `json:"-"`
-	Value             BasicFish `json:"value,omitempty"`
-}
-
-// UnmarshalJSON is the custom unmarshaler for FishModel struct.
-func (fm *FishModel) UnmarshalJSON(body []byte) error {
-	f, err := unmarshalBasicFish(body)
-	if err != nil {
-		return err
-	}
-	fm.Value = f
 
 	return nil
 }
@@ -1014,23 +980,6 @@ func (mbt *MyBaseType) UnmarshalJSON(body []byte) error {
 	return nil
 }
 
-// MyBaseTypeModel ...
-type MyBaseTypeModel struct {
-	autorest.Response `json:"-"`
-	Value             BasicMyBaseType `json:"value,omitempty"`
-}
-
-// UnmarshalJSON is the custom unmarshaler for MyBaseTypeModel struct.
-func (mbtm *MyBaseTypeModel) UnmarshalJSON(body []byte) error {
-	mbt, err := unmarshalBasicMyBaseType(body)
-	if err != nil {
-		return err
-	}
-	mbtm.Value = mbt
-
-	return nil
-}
-
 // MyDerivedType ...
 type MyDerivedType struct {
 	PropD1            *string `json:"propD1,omitempty"`
@@ -1291,23 +1240,6 @@ func (s *Salmon) UnmarshalJSON(body []byte) error {
 			}
 		}
 	}
-
-	return nil
-}
-
-// SalmonModel ...
-type SalmonModel struct {
-	autorest.Response `json:"-"`
-	Value             BasicSalmon `json:"value,omitempty"`
-}
-
-// UnmarshalJSON is the custom unmarshaler for SalmonModel struct.
-func (sm *SalmonModel) UnmarshalJSON(body []byte) error {
-	s, err := unmarshalBasicSalmon(body)
-	if err != nil {
-		return err
-	}
-	sm.Value = s
 
 	return nil
 }
