@@ -91,10 +91,10 @@ namespace AutoRest.Go.Model
             // find all the non-error responses with non-empty body
             // we have to ignore those non-error responses with empty bodies, because there are quite plenty of swaggers with one response with body and the other without body
             Logger.Instance.Log(Category.Debug, $"All responses of {SerializedName}: {string.Join(", ", Responses.Select(kv => $"{(int)kv.Key}: {kv.Value?.Body?.Name}"))}");
-            var nonErrorNonEmptyResponses = Responses.Where(kv => !kv.Value.IsErrorResponse() && kv.Value.Body != null);
+            var nonErrorNonEmptyResponses = NonErrorNonEmptyStatusCodeDict;
             Logger.Instance.Log(Category.Debug, $"Method {SerializedName} has the following non-error & non-empty responses (total {nonErrorNonEmptyResponses.Count()}): {string.Join(", ", nonErrorNonEmptyResponses.Select(resp => resp.Value?.Body?.Name))}");
             // categorize the models by its name
-            var nonErrorNonEmptyModels = nonErrorNonEmptyResponses.Select(kv => kv.Value).Distinct(new ResponseEqualityComparer()).ToList();
+            var nonErrorNonEmptyModels = NonErrorNonEmptyResponses.ToList();
             Logger.Instance.Log(Category.Debug, $"Non-error & non-empty models: {string.Join(", ", nonErrorNonEmptyModels.Select(model => model.Body.Name))}");
             // throw exception if we have more than one valid body model
             switch (nonErrorNonEmptyModels.Count)
@@ -107,11 +107,17 @@ namespace AutoRest.Go.Model
                     break;
                 default:
                     // In this case, we do nothing but let the original value in ReturnType to take effect
-                    Logger.Instance.Log(Category.Debug, $"we have more than one non-error responses with non-empty but different schemas, but we got {string.Join(", ", nonErrorNonEmptyResponses.Select(kv => $"{(int)kv.Key}: {kv.Value?.Body?.ClassName}"))} in operationId {SerializedName}");
+                    Logger.Instance.Log(Category.Debug, $"we have more than one non-error responses with non-empty but different schemas in operationId {SerializedName}, but in this case we just honor the return type in the modeler");
                     break;
             }
             Logger.Instance.Log(Category.Debug, $"Return Type of {SerializedName}: {ReturnType?.Body?.Name}");
         }
+
+        public IEnumerable<KeyValuePair<HttpStatusCode, Response>> NonErrorNonEmptyStatusCodeDict => Responses.Where(kv => !kv.Value.IsErrorResponse() && kv.Value.Body != null);
+
+        public IEnumerable<Response> NonErrorNonEmptyResponses => NonErrorNonEmptyStatusCodeDict.Select(kv => kv.Value).Distinct(new ResponseEqualityComparer());
+
+        public IEnumerable<IModelType> NonErrorNonEmptyResponseModels => NonErrorNonEmptyResponses.Select(r => r.Body);
 
         private struct ResponseEqualityComparer : IEqualityComparer<Response>
         {
