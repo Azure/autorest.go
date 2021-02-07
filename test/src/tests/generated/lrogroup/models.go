@@ -24,7 +24,6 @@ type CloudError struct {
 // LRORetrysDelete202Retry200Future an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type LRORetrysDelete202Retry200Future struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -34,7 +33,6 @@ type LRORetrysDelete202Retry200Future struct {
 // LRORetrysDeleteAsyncRelativeRetrySucceededFuture an abstraction for monitoring and retrieving the
 // results of a long-running operation.
 type LRORetrysDeleteAsyncRelativeRetrySucceededFuture struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -44,7 +42,6 @@ type LRORetrysDeleteAsyncRelativeRetrySucceededFuture struct {
 // LRORetrysDeleteProvisioning202Accepted200SucceededFuture an abstraction for monitoring and retrieving
 // the results of a long-running operation.
 type LRORetrysDeleteProvisioning202Accepted200SucceededFuture struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -54,7 +51,6 @@ type LRORetrysDeleteProvisioning202Accepted200SucceededFuture struct {
 // LRORetrysPost202Retry200Future an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type LRORetrysPost202Retry200Future struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -64,7 +60,6 @@ type LRORetrysPost202Retry200Future struct {
 // LRORetrysPostAsyncRelativeRetrySucceededFuture an abstraction for monitoring and retrieving the results
 // of a long-running operation.
 type LRORetrysPostAsyncRelativeRetrySucceededFuture struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -74,7 +69,6 @@ type LRORetrysPostAsyncRelativeRetrySucceededFuture struct {
 // LRORetrysPut201CreatingSucceeded200Future an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type LRORetrysPut201CreatingSucceeded200Future struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -84,7 +78,6 @@ type LRORetrysPut201CreatingSucceeded200Future struct {
 // LRORetrysPutAsyncRelativeRetrySucceededFuture an abstraction for monitoring and retrieving the results
 // of a long-running operation.
 type LRORetrysPutAsyncRelativeRetrySucceededFuture struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -94,7 +87,6 @@ type LRORetrysPutAsyncRelativeRetrySucceededFuture struct {
 // LROSADsDelete202NonRetry400Future an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type LROSADsDelete202NonRetry400Future struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -104,7 +96,6 @@ type LROSADsDelete202NonRetry400Future struct {
 // LROSADsDelete202RetryInvalidHeaderFuture an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type LROSADsDelete202RetryInvalidHeaderFuture struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -114,7 +105,6 @@ type LROSADsDelete202RetryInvalidHeaderFuture struct {
 // LROSADsDelete204SucceededFuture an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type LROSADsDelete204SucceededFuture struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -124,7 +114,6 @@ type LROSADsDelete204SucceededFuture struct {
 // LROSADsDeleteAsyncRelativeRetry400Future an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type LROSADsDeleteAsyncRelativeRetry400Future struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -134,7 +123,6 @@ type LROSADsDeleteAsyncRelativeRetry400Future struct {
 // LROSADsDeleteAsyncRelativeRetryInvalidHeaderFuture an abstraction for monitoring and retrieving the
 // results of a long-running operation.
 type LROSADsDeleteAsyncRelativeRetryInvalidHeaderFuture struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -144,7 +132,6 @@ type LROSADsDeleteAsyncRelativeRetryInvalidHeaderFuture struct {
 // LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingFuture an abstraction for monitoring and retrieving the
 // results of a long-running operation.
 type LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingFuture struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -154,7 +141,6 @@ type LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingFuture struct {
 // LROSADsDeleteAsyncRelativeRetryNoStatusFuture an abstraction for monitoring and retrieving the results
 // of a long-running operation.
 type LROSADsDeleteAsyncRelativeRetryNoStatusFuture struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -164,7 +150,6 @@ type LROSADsDeleteAsyncRelativeRetryNoStatusFuture struct {
 // LROSADsDeleteNonRetry400Future an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type LROSADsDeleteNonRetry400Future struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -174,7 +159,6 @@ type LROSADsDeleteNonRetry400Future struct {
 // LROSADsPost202NoLocationFuture an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type LROSADsPost202NoLocationFuture struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -184,7 +168,6 @@ type LROSADsPost202NoLocationFuture struct {
 // LROSADsPost202NonRetry400Future an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type LROSADsPost202NonRetry400Future struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -194,7 +177,6 @@ type LROSADsPost202NonRetry400Future struct {
 // LROSADsPost202RetryInvalidHeaderFuture an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type LROSADsPost202RetryInvalidHeaderFuture struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -204,7 +186,6 @@ type LROSADsPost202RetryInvalidHeaderFuture struct {
 // LROSADsPostAsyncRelativeRetry400Future an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type LROSADsPostAsyncRelativeRetry400Future struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -214,7 +195,6 @@ type LROSADsPostAsyncRelativeRetry400Future struct {
 // LROSADsPostAsyncRelativeRetryInvalidHeaderFuture an abstraction for monitoring and retrieving the
 // results of a long-running operation.
 type LROSADsPostAsyncRelativeRetryInvalidHeaderFuture struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -224,7 +204,6 @@ type LROSADsPostAsyncRelativeRetryInvalidHeaderFuture struct {
 // LROSADsPostAsyncRelativeRetryInvalidJSONPollingFuture an abstraction for monitoring and retrieving the
 // results of a long-running operation.
 type LROSADsPostAsyncRelativeRetryInvalidJSONPollingFuture struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -234,7 +213,6 @@ type LROSADsPostAsyncRelativeRetryInvalidJSONPollingFuture struct {
 // LROSADsPostAsyncRelativeRetryNoPayloadFuture an abstraction for monitoring and retrieving the results of
 // a long-running operation.
 type LROSADsPostAsyncRelativeRetryNoPayloadFuture struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -244,7 +222,6 @@ type LROSADsPostAsyncRelativeRetryNoPayloadFuture struct {
 // LROSADsPostNonRetry400Future an abstraction for monitoring and retrieving the results of a long-running
 // operation.
 type LROSADsPostNonRetry400Future struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -254,7 +231,6 @@ type LROSADsPostNonRetry400Future struct {
 // LROSADsPut200InvalidJSONFuture an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type LROSADsPut200InvalidJSONFuture struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -264,7 +240,6 @@ type LROSADsPut200InvalidJSONFuture struct {
 // LROSADsPutAsyncRelativeRetry400Future an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type LROSADsPutAsyncRelativeRetry400Future struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -274,7 +249,6 @@ type LROSADsPutAsyncRelativeRetry400Future struct {
 // LROSADsPutAsyncRelativeRetryInvalidHeaderFuture an abstraction for monitoring and retrieving the results
 // of a long-running operation.
 type LROSADsPutAsyncRelativeRetryInvalidHeaderFuture struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -284,7 +258,6 @@ type LROSADsPutAsyncRelativeRetryInvalidHeaderFuture struct {
 // LROSADsPutAsyncRelativeRetryInvalidJSONPollingFuture an abstraction for monitoring and retrieving the
 // results of a long-running operation.
 type LROSADsPutAsyncRelativeRetryInvalidJSONPollingFuture struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -294,7 +267,6 @@ type LROSADsPutAsyncRelativeRetryInvalidJSONPollingFuture struct {
 // LROSADsPutAsyncRelativeRetryNoStatusFuture an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type LROSADsPutAsyncRelativeRetryNoStatusFuture struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -304,7 +276,6 @@ type LROSADsPutAsyncRelativeRetryNoStatusFuture struct {
 // LROSADsPutAsyncRelativeRetryNoStatusPayloadFuture an abstraction for monitoring and retrieving the
 // results of a long-running operation.
 type LROSADsPutAsyncRelativeRetryNoStatusPayloadFuture struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -314,7 +285,6 @@ type LROSADsPutAsyncRelativeRetryNoStatusPayloadFuture struct {
 // LROSADsPutError201NoProvisioningStatePayloadFuture an abstraction for monitoring and retrieving the
 // results of a long-running operation.
 type LROSADsPutError201NoProvisioningStatePayloadFuture struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -324,7 +294,6 @@ type LROSADsPutError201NoProvisioningStatePayloadFuture struct {
 // LROSADsPutNonRetry201Creating400Future an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type LROSADsPutNonRetry201Creating400Future struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -334,7 +303,6 @@ type LROSADsPutNonRetry201Creating400Future struct {
 // LROSADsPutNonRetry201Creating400InvalidJSONFuture an abstraction for monitoring and retrieving the
 // results of a long-running operation.
 type LROSADsPutNonRetry201Creating400InvalidJSONFuture struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -344,7 +312,6 @@ type LROSADsPutNonRetry201Creating400InvalidJSONFuture struct {
 // LROSADsPutNonRetry400Future an abstraction for monitoring and retrieving the results of a long-running
 // operation.
 type LROSADsPutNonRetry400Future struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -354,7 +321,6 @@ type LROSADsPutNonRetry400Future struct {
 // LROsCustomHeaderPost202Retry200Future an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type LROsCustomHeaderPost202Retry200Future struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -364,7 +330,6 @@ type LROsCustomHeaderPost202Retry200Future struct {
 // LROsCustomHeaderPostAsyncRetrySucceededFuture an abstraction for monitoring and retrieving the results
 // of a long-running operation.
 type LROsCustomHeaderPostAsyncRetrySucceededFuture struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -374,7 +339,6 @@ type LROsCustomHeaderPostAsyncRetrySucceededFuture struct {
 // LROsCustomHeaderPut201CreatingSucceeded200Future an abstraction for monitoring and retrieving the
 // results of a long-running operation.
 type LROsCustomHeaderPut201CreatingSucceeded200Future struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -384,7 +348,6 @@ type LROsCustomHeaderPut201CreatingSucceeded200Future struct {
 // LROsCustomHeaderPutAsyncRetrySucceededFuture an abstraction for monitoring and retrieving the results of
 // a long-running operation.
 type LROsCustomHeaderPutAsyncRetrySucceededFuture struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -394,7 +357,6 @@ type LROsCustomHeaderPutAsyncRetrySucceededFuture struct {
 // LROsDelete202NoRetry204Future an abstraction for monitoring and retrieving the results of a long-running
 // operation.
 type LROsDelete202NoRetry204Future struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -404,7 +366,6 @@ type LROsDelete202NoRetry204Future struct {
 // LROsDelete202Retry200Future an abstraction for monitoring and retrieving the results of a long-running
 // operation.
 type LROsDelete202Retry200Future struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -414,7 +375,6 @@ type LROsDelete202Retry200Future struct {
 // LROsDelete204SucceededFuture an abstraction for monitoring and retrieving the results of a long-running
 // operation.
 type LROsDelete204SucceededFuture struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -424,7 +384,6 @@ type LROsDelete204SucceededFuture struct {
 // LROsDeleteAsyncNoHeaderInRetryFuture an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type LROsDeleteAsyncNoHeaderInRetryFuture struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -434,7 +393,6 @@ type LROsDeleteAsyncNoHeaderInRetryFuture struct {
 // LROsDeleteAsyncNoRetrySucceededFuture an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type LROsDeleteAsyncNoRetrySucceededFuture struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -444,7 +402,6 @@ type LROsDeleteAsyncNoRetrySucceededFuture struct {
 // LROsDeleteAsyncRetrycanceledFuture an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type LROsDeleteAsyncRetrycanceledFuture struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -454,7 +411,6 @@ type LROsDeleteAsyncRetrycanceledFuture struct {
 // LROsDeleteAsyncRetryFailedFuture an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type LROsDeleteAsyncRetryFailedFuture struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -464,7 +420,6 @@ type LROsDeleteAsyncRetryFailedFuture struct {
 // LROsDeleteAsyncRetrySucceededFuture an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type LROsDeleteAsyncRetrySucceededFuture struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -474,7 +429,6 @@ type LROsDeleteAsyncRetrySucceededFuture struct {
 // LROsDeleteNoHeaderInRetryFuture an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type LROsDeleteNoHeaderInRetryFuture struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -484,7 +438,6 @@ type LROsDeleteNoHeaderInRetryFuture struct {
 // LROsDeleteProvisioning202Accepted200SucceededFuture an abstraction for monitoring and retrieving the
 // results of a long-running operation.
 type LROsDeleteProvisioning202Accepted200SucceededFuture struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -494,7 +447,6 @@ type LROsDeleteProvisioning202Accepted200SucceededFuture struct {
 // LROsDeleteProvisioning202Deletingcanceled200Future an abstraction for monitoring and retrieving the
 // results of a long-running operation.
 type LROsDeleteProvisioning202Deletingcanceled200Future struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -504,7 +456,6 @@ type LROsDeleteProvisioning202Deletingcanceled200Future struct {
 // LROsDeleteProvisioning202DeletingFailed200Future an abstraction for monitoring and retrieving the
 // results of a long-running operation.
 type LROsDeleteProvisioning202DeletingFailed200Future struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -514,7 +465,6 @@ type LROsDeleteProvisioning202DeletingFailed200Future struct {
 // LROsPost200WithPayloadFuture an abstraction for monitoring and retrieving the results of a long-running
 // operation.
 type LROsPost200WithPayloadFuture struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -524,7 +474,6 @@ type LROsPost200WithPayloadFuture struct {
 // LROsPost202NoRetry204Future an abstraction for monitoring and retrieving the results of a long-running
 // operation.
 type LROsPost202NoRetry204Future struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -534,7 +483,6 @@ type LROsPost202NoRetry204Future struct {
 // LROsPost202Retry200Future an abstraction for monitoring and retrieving the results of a long-running
 // operation.
 type LROsPost202Retry200Future struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -544,7 +492,6 @@ type LROsPost202Retry200Future struct {
 // LROsPostAsyncNoRetrySucceededFuture an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type LROsPostAsyncNoRetrySucceededFuture struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -554,7 +501,6 @@ type LROsPostAsyncNoRetrySucceededFuture struct {
 // LROsPostAsyncRetrycanceledFuture an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type LROsPostAsyncRetrycanceledFuture struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -564,7 +510,6 @@ type LROsPostAsyncRetrycanceledFuture struct {
 // LROsPostAsyncRetryFailedFuture an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type LROsPostAsyncRetryFailedFuture struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -574,7 +519,6 @@ type LROsPostAsyncRetryFailedFuture struct {
 // LROsPostAsyncRetrySucceededFuture an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type LROsPostAsyncRetrySucceededFuture struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -584,7 +528,6 @@ type LROsPostAsyncRetrySucceededFuture struct {
 // LROsPostDoubleHeadersFinalAzureHeaderGetDefaultFuture an abstraction for monitoring and retrieving the
 // results of a long-running operation.
 type LROsPostDoubleHeadersFinalAzureHeaderGetDefaultFuture struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -594,7 +537,6 @@ type LROsPostDoubleHeadersFinalAzureHeaderGetDefaultFuture struct {
 // LROsPostDoubleHeadersFinalAzureHeaderGetFuture an abstraction for monitoring and retrieving the results
 // of a long-running operation.
 type LROsPostDoubleHeadersFinalAzureHeaderGetFuture struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -604,7 +546,6 @@ type LROsPostDoubleHeadersFinalAzureHeaderGetFuture struct {
 // LROsPostDoubleHeadersFinalLocationGetFuture an abstraction for monitoring and retrieving the results of
 // a long-running operation.
 type LROsPostDoubleHeadersFinalLocationGetFuture struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -614,7 +555,6 @@ type LROsPostDoubleHeadersFinalLocationGetFuture struct {
 // LROsPut200Acceptedcanceled200Future an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type LROsPut200Acceptedcanceled200Future struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -624,7 +564,6 @@ type LROsPut200Acceptedcanceled200Future struct {
 // LROsPut200SucceededFuture an abstraction for monitoring and retrieving the results of a long-running
 // operation.
 type LROsPut200SucceededFuture struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -634,7 +573,6 @@ type LROsPut200SucceededFuture struct {
 // LROsPut200SucceededNoStateFuture an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type LROsPut200SucceededNoStateFuture struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -644,7 +582,6 @@ type LROsPut200SucceededNoStateFuture struct {
 // LROsPut200UpdatingSucceeded204Future an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type LROsPut200UpdatingSucceeded204Future struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -654,7 +591,6 @@ type LROsPut200UpdatingSucceeded204Future struct {
 // LROsPut201CreatingFailed200Future an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type LROsPut201CreatingFailed200Future struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -664,7 +600,6 @@ type LROsPut201CreatingFailed200Future struct {
 // LROsPut201CreatingSucceeded200Future an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type LROsPut201CreatingSucceeded200Future struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -674,7 +609,6 @@ type LROsPut201CreatingSucceeded200Future struct {
 // LROsPut202Retry200Future an abstraction for monitoring and retrieving the results of a long-running
 // operation.
 type LROsPut202Retry200Future struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -684,7 +618,6 @@ type LROsPut202Retry200Future struct {
 // LROsPutAsyncNoHeaderInRetryFuture an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type LROsPutAsyncNoHeaderInRetryFuture struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -694,7 +627,6 @@ type LROsPutAsyncNoHeaderInRetryFuture struct {
 // LROsPutAsyncNonResourceFuture an abstraction for monitoring and retrieving the results of a long-running
 // operation.
 type LROsPutAsyncNonResourceFuture struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -704,7 +636,6 @@ type LROsPutAsyncNonResourceFuture struct {
 // LROsPutAsyncNoRetrycanceledFuture an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type LROsPutAsyncNoRetrycanceledFuture struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -714,7 +645,6 @@ type LROsPutAsyncNoRetrycanceledFuture struct {
 // LROsPutAsyncNoRetrySucceededFuture an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type LROsPutAsyncNoRetrySucceededFuture struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -724,7 +654,6 @@ type LROsPutAsyncNoRetrySucceededFuture struct {
 // LROsPutAsyncRetryFailedFuture an abstraction for monitoring and retrieving the results of a long-running
 // operation.
 type LROsPutAsyncRetryFailedFuture struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -734,7 +663,6 @@ type LROsPutAsyncRetryFailedFuture struct {
 // LROsPutAsyncRetrySucceededFuture an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type LROsPutAsyncRetrySucceededFuture struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -744,7 +672,6 @@ type LROsPutAsyncRetrySucceededFuture struct {
 // LROsPutAsyncSubResourceFuture an abstraction for monitoring and retrieving the results of a long-running
 // operation.
 type LROsPutAsyncSubResourceFuture struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -754,7 +681,6 @@ type LROsPutAsyncSubResourceFuture struct {
 // LROsPutNoHeaderInRetryFuture an abstraction for monitoring and retrieving the results of a long-running
 // operation.
 type LROsPutNoHeaderInRetryFuture struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -764,7 +690,6 @@ type LROsPutNoHeaderInRetryFuture struct {
 // LROsPutNonResourceFuture an abstraction for monitoring and retrieving the results of a long-running
 // operation.
 type LROsPutNonResourceFuture struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -774,7 +699,6 @@ type LROsPutNonResourceFuture struct {
 // LROsPutSubResourceFuture an abstraction for monitoring and retrieving the results of a long-running
 // operation.
 type LROsPutSubResourceFuture struct {
-	autorest.Response `json:"-"`
 	azure.FutureAPI
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
@@ -798,6 +722,7 @@ type OperationResultError struct {
 
 // Product ...
 type Product struct {
+	autorest.Response  `json:"-"`
 	*ProductProperties `json:"properties,omitempty"`
 	// ID - READ-ONLY; Resource Id
 	ID *string `json:"id,omitempty"`
@@ -937,12 +862,14 @@ func (r Resource) MarshalJSON() ([]byte, error) {
 
 // Sku ...
 type Sku struct {
-	Name *string `json:"name,omitempty"`
-	ID   *string `json:"id,omitempty"`
+	autorest.Response `json:"-"`
+	Name              *string `json:"name,omitempty"`
+	ID                *string `json:"id,omitempty"`
 }
 
 // SubProduct ...
 type SubProduct struct {
+	autorest.Response     `json:"-"`
 	*SubProductProperties `json:"properties,omitempty"`
 	// ID - READ-ONLY; Sub Resource Id
 	ID *string `json:"id,omitempty"`

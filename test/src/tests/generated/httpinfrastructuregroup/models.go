@@ -43,8 +43,9 @@ type D struct {
 
 // Error ...
 type Error struct {
-	Status  *int32  `json:"status,omitempty"`
-	Message *string `json:"message,omitempty"`
+	autorest.Response `json:"-"`
+	Status            *int32  `json:"status,omitempty"`
+	Message           *string `json:"message,omitempty"`
 }
 
 // ListString ...

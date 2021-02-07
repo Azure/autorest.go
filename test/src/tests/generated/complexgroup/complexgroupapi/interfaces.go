@@ -85,13 +85,13 @@ var _ InheritanceClientAPI = (*complexgroup.InheritanceClient)(nil)
 
 // PolymorphismClientAPI contains the set of methods on the PolymorphismClient type.
 type PolymorphismClientAPI interface {
-	GetComplicated(ctx context.Context) (result complexgroup.Salmon, err error)
+	GetComplicated(ctx context.Context) (result complexgroup.SalmonModel, err error)
 	GetComposedWithDiscriminator(ctx context.Context) (result complexgroup.DotFishMarket, err error)
 	GetComposedWithoutDiscriminator(ctx context.Context) (result complexgroup.DotFishMarket, err error)
-	GetDotSyntax(ctx context.Context) (result complexgroup.DotFish, err error)
-	GetValid(ctx context.Context) (result complexgroup.Fish, err error)
+	GetDotSyntax(ctx context.Context) (result complexgroup.DotFishModel, err error)
+	GetValid(ctx context.Context) (result complexgroup.FishModel, err error)
 	PutComplicated(ctx context.Context, complexBody complexgroup.BasicSalmon) (result autorest.Response, err error)
-	PutMissingDiscriminator(ctx context.Context, complexBody complexgroup.BasicSalmon) (result complexgroup.Salmon, err error)
+	PutMissingDiscriminator(ctx context.Context, complexBody complexgroup.BasicSalmon) (result complexgroup.SalmonModel, err error)
 	PutValid(ctx context.Context, complexBody complexgroup.BasicFish) (result autorest.Response, err error)
 	PutValidMissingRequired(ctx context.Context, complexBody complexgroup.BasicFish) (result autorest.Response, err error)
 }
@@ -100,7 +100,7 @@ var _ PolymorphismClientAPI = (*complexgroup.PolymorphismClient)(nil)
 
 // PolymorphicrecursiveClientAPI contains the set of methods on the PolymorphicrecursiveClient type.
 type PolymorphicrecursiveClientAPI interface {
-	GetValid(ctx context.Context) (result complexgroup.Fish, err error)
+	GetValid(ctx context.Context) (result complexgroup.FishModel, err error)
 	PutValid(ctx context.Context, complexBody complexgroup.BasicFish) (result autorest.Response, err error)
 }
 
@@ -116,7 +116,7 @@ var _ ReadonlypropertyClientAPI = (*complexgroup.ReadonlypropertyClient)(nil)
 
 // FlattencomplexClientAPI contains the set of methods on the FlattencomplexClient type.
 type FlattencomplexClientAPI interface {
-	GetValid(ctx context.Context) (result complexgroup.MyBaseType, err error)
+	GetValid(ctx context.Context) (result complexgroup.MyBaseTypeModel, err error)
 }
 
 var _ FlattencomplexClientAPI = (*complexgroup.FlattencomplexClient)(nil)

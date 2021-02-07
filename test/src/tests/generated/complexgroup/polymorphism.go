@@ -33,7 +33,7 @@ func NewPolymorphismClientWithBaseURI(baseURI string) PolymorphismClient {
 
 // GetComplicated get complex types that are polymorphic, but not at the root of the hierarchy; also have additional
 // properties
-func (client PolymorphismClient) GetComplicated(ctx context.Context) (result Salmon, err error) {
+func (client PolymorphismClient) GetComplicated(ctx context.Context) (result SalmonModel, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/PolymorphismClient.GetComplicated")
 		defer func() {
@@ -83,7 +83,7 @@ func (client PolymorphismClient) GetComplicatedSender(req *http.Request) (*http.
 
 // GetComplicatedResponder handles the response to the GetComplicated request. The method always
 // closes the http.Response Body.
-func (client PolymorphismClient) GetComplicatedResponder(resp *http.Response) (result Salmon, err error) {
+func (client PolymorphismClient) GetComplicatedResponder(resp *http.Response) (result SalmonModel, err error) {
 	err = autorest.Respond(
 		resp,
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
@@ -220,7 +220,7 @@ func (client PolymorphismClient) GetComposedWithoutDiscriminatorResponder(resp *
 }
 
 // GetDotSyntax get complex types that are polymorphic, JSON key contains a dot
-func (client PolymorphismClient) GetDotSyntax(ctx context.Context) (result DotFish, err error) {
+func (client PolymorphismClient) GetDotSyntax(ctx context.Context) (result DotFishModel, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/PolymorphismClient.GetDotSyntax")
 		defer func() {
@@ -270,7 +270,7 @@ func (client PolymorphismClient) GetDotSyntaxSender(req *http.Request) (*http.Re
 
 // GetDotSyntaxResponder handles the response to the GetDotSyntax request. The method always
 // closes the http.Response Body.
-func (client PolymorphismClient) GetDotSyntaxResponder(resp *http.Response) (result DotFish, err error) {
+func (client PolymorphismClient) GetDotSyntaxResponder(resp *http.Response) (result DotFishModel, err error) {
 	err = autorest.Respond(
 		resp,
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
@@ -281,7 +281,7 @@ func (client PolymorphismClient) GetDotSyntaxResponder(resp *http.Response) (res
 }
 
 // GetValid get complex types that are polymorphic
-func (client PolymorphismClient) GetValid(ctx context.Context) (result Fish, err error) {
+func (client PolymorphismClient) GetValid(ctx context.Context) (result FishModel, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/PolymorphismClient.GetValid")
 		defer func() {
@@ -331,7 +331,7 @@ func (client PolymorphismClient) GetValidSender(req *http.Request) (*http.Respon
 
 // GetValidResponder handles the response to the GetValid request. The method always
 // closes the http.Response Body.
-func (client PolymorphismClient) GetValidResponder(resp *http.Response) (result Fish, err error) {
+func (client PolymorphismClient) GetValidResponder(resp *http.Response) (result FishModel, err error) {
 	err = autorest.Respond(
 		resp,
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
@@ -405,7 +405,7 @@ func (client PolymorphismClient) PutComplicatedResponder(resp *http.Response) (r
 }
 
 // PutMissingDiscriminator put complex types that are polymorphic, omitting the discriminator
-func (client PolymorphismClient) PutMissingDiscriminator(ctx context.Context, complexBody BasicSalmon) (result Salmon, err error) {
+func (client PolymorphismClient) PutMissingDiscriminator(ctx context.Context, complexBody BasicSalmon) (result SalmonModel, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/PolymorphismClient.PutMissingDiscriminator")
 		defer func() {
@@ -457,7 +457,7 @@ func (client PolymorphismClient) PutMissingDiscriminatorSender(req *http.Request
 
 // PutMissingDiscriminatorResponder handles the response to the PutMissingDiscriminator request. The method always
 // closes the http.Response Body.
-func (client PolymorphismClient) PutMissingDiscriminatorResponder(resp *http.Response) (result Salmon, err error) {
+func (client PolymorphismClient) PutMissingDiscriminatorResponder(resp *http.Response) (result SalmonModel, err error) {
 	err = autorest.Respond(
 		resp,
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
