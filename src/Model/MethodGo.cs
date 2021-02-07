@@ -91,26 +91,30 @@ namespace AutoRest.Go.Model
             // find all the non-error responses with non-empty body
             // we have to ignore those non-error responses with empty bodies, because there are quite plenty of swaggers with one response with body and the other without body
             Logger.Instance.Log(Category.Debug, $"All responses of {SerializedName}: {string.Join(", ", Responses.Select(kv => $"{(int)kv.Key}: {kv.Value?.Body?.Name}"))}");
-            var nonErrorNonEmptyResponses = NonErrorNonEmptyStatusCodeDict;
-            Logger.Instance.Log(Category.Debug, $"Method {SerializedName} has the following non-error & non-empty responses (total {nonErrorNonEmptyResponses.Count()}): {string.Join(", ", nonErrorNonEmptyResponses.Select(resp => resp.Value?.Body?.Name))}");
+            var nonErrorNonEmptyStatusCodes = NonErrorNonEmptyStatusCodeDict;
+            Logger.Instance.Log(Category.Debug, $"Method {SerializedName} has the following non-error & non-empty responses (total {nonErrorNonEmptyStatusCodes.Count()}): {string.Join(", ", nonErrorNonEmptyStatusCodes.Select(resp => resp.Value?.Body?.Name))}");
             // categorize the models by its name
-            var nonErrorNonEmptyModels = NonErrorNonEmptyResponses.ToList();
-            Logger.Instance.Log(Category.Debug, $"Non-error & non-empty models: {string.Join(", ", nonErrorNonEmptyModels.Select(model => model.Body.Name))}");
-            // throw exception if we have more than one valid body model
-            switch (nonErrorNonEmptyModels.Count)
+            var nonErrorNonEmptyResponses = NonErrorNonEmptyResponses.ToList();
+            Logger.Instance.Log(Category.Debug, $"Non-error & non-empty models: {string.Join(", ", nonErrorNonEmptyResponses.Select(model => model.Body.Name))}");
+            // fix the original return type from the modeler
+            ReturnType = FixedReturnType();
+            Logger.Instance.Log(Category.Debug, $"Return Type of {SerializedName}: {ReturnType?.Body?.Name}");
+        }
+
+        public Response FixedReturnType()
+        {
+            var nonErrorNonEmptyResponses = NonErrorNonEmptyResponses;
+            switch (nonErrorNonEmptyResponses.Count())
             {
                 case 0:
-                    ReturnType = new Response();
-                    break;
+                    return new Response();
                 case 1:
-                    ReturnType = nonErrorNonEmptyModels.First();
-                    break;
+                    return nonErrorNonEmptyResponses.First();
                 default:
                     // In this case, we do nothing but let the original value in ReturnType to take effect
                     Logger.Instance.Log(Category.Debug, $"we have more than one non-error responses with non-empty but different schemas in operationId {SerializedName}, but in this case we just honor the return type in the modeler");
-                    break;
+                    return ReturnType;
             }
-            Logger.Instance.Log(Category.Debug, $"Return Type of {SerializedName}: {ReturnType?.Body?.Name}");
         }
 
         public IEnumerable<KeyValuePair<HttpStatusCode, Response>> NonErrorNonEmptyStatusCodeDict => Responses.Where(kv => !kv.Value.IsErrorResponse() && kv.Value.Body != null);

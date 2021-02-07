@@ -21,9 +21,8 @@ type A struct {
 
 // B ...
 type B struct {
-	autorest.Response `json:"-"`
-	TextStatusCode    *string `json:"textStatusCode,omitempty"`
-	StatusCode        *string `json:"statusCode,omitempty"`
+	TextStatusCode *string `json:"textStatusCode,omitempty"`
+	StatusCode     *string `json:"statusCode,omitempty"`
 }
 
 // Bool ...
@@ -34,14 +33,12 @@ type Bool struct {
 
 // C ...
 type C struct {
-	autorest.Response `json:"-"`
-	HTTPCode          *string `json:"httpCode,omitempty"`
+	HTTPCode *string `json:"httpCode,omitempty"`
 }
 
 // D ...
 type D struct {
-	autorest.Response `json:"-"`
-	HTTPStatusCode    *string `json:"httpStatusCode,omitempty"`
+	HTTPStatusCode *string `json:"httpStatusCode,omitempty"`
 }
 
 // Error ...

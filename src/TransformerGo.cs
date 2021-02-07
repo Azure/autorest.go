@@ -250,8 +250,7 @@ namespace AutoRest.Go
             cmg.ModelTypes.Cast<CompositeTypeGo>()
                 .Where(mtm =>
                 {
-                    //return cmg.Methods.Cast<MethodGo>().Any(m => m.HasReturnValue() && m.ReturnValue().Body.Equals(mtm));
-                    return cmg.Methods.Cast<MethodGo>().Any(m => m.NonErrorNonEmptyResponseModels.Any(model => model.Equals(mtm)));
+                    return cmg.Methods.Cast<MethodGo>().Any(m => m.FixedReturnType()?.Body?.Equals(mtm) ?? false);
                 })
                 .ForEach(mtm =>
                 {
