@@ -19,6 +19,7 @@ namespace AutoRest.Go
         {
             var cmg = cm as CodeModelGo;
 
+            // DON'T EVER CHANGE THE ORDERING OF THESE METHODS, CHANGING THE ORDER OF THESE METHODS MIGHT LEAD TO UNEXPECTED RESULTS
             SwaggerExtensions.ProcessGlobalParameters(cmg);
             TransformEnumTypes(cmg);
             TransformModelTypes(cmg);
