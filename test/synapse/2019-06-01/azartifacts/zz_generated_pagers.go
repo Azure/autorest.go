@@ -15,15 +15,10 @@ import (
 
 // DataFlowListResponsePager provides iteration over DataFlowListResponse pages.
 type DataFlowListResponsePager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current DataFlowListResponseResponse.
 	PageResponse() DataFlowListResponseResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type dataFlowListResponseCreateRequest func(context.Context) (*azcore.Request, error)
@@ -96,15 +91,10 @@ func (p *dataFlowListResponsePager) PageResponse() DataFlowListResponseResponse 
 
 // DatasetListResponsePager provides iteration over DatasetListResponse pages.
 type DatasetListResponsePager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current DatasetListResponseResponse.
 	PageResponse() DatasetListResponseResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type datasetListResponseCreateRequest func(context.Context) (*azcore.Request, error)
@@ -177,15 +167,10 @@ func (p *datasetListResponsePager) PageResponse() DatasetListResponseResponse {
 
 // LinkedServiceListResponsePager provides iteration over LinkedServiceListResponse pages.
 type LinkedServiceListResponsePager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current LinkedServiceListResponseResponse.
 	PageResponse() LinkedServiceListResponseResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type linkedServiceListResponseCreateRequest func(context.Context) (*azcore.Request, error)
@@ -258,15 +243,10 @@ func (p *linkedServiceListResponsePager) PageResponse() LinkedServiceListRespons
 
 // NotebookListResponsePager provides iteration over NotebookListResponse pages.
 type NotebookListResponsePager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current NotebookListResponseResponse.
 	PageResponse() NotebookListResponseResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type notebookListResponseCreateRequest func(context.Context) (*azcore.Request, error)
@@ -339,15 +319,10 @@ func (p *notebookListResponsePager) PageResponse() NotebookListResponseResponse 
 
 // PipelineListResponsePager provides iteration over PipelineListResponse pages.
 type PipelineListResponsePager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current PipelineListResponseResponse.
 	PageResponse() PipelineListResponseResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type pipelineListResponseCreateRequest func(context.Context) (*azcore.Request, error)
@@ -420,15 +395,10 @@ func (p *pipelineListResponsePager) PageResponse() PipelineListResponseResponse 
 
 // QueryDataFlowDebugSessionsResponsePager provides iteration over QueryDataFlowDebugSessionsResponse pages.
 type QueryDataFlowDebugSessionsResponsePager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current QueryDataFlowDebugSessionsResponseResponse.
 	PageResponse() QueryDataFlowDebugSessionsResponseResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type queryDataFlowDebugSessionsResponseCreateRequest func(context.Context) (*azcore.Request, error)
@@ -501,15 +471,10 @@ func (p *queryDataFlowDebugSessionsResponsePager) PageResponse() QueryDataFlowDe
 
 // SQLScriptsListResponsePager provides iteration over SQLScriptsListResponse pages.
 type SQLScriptsListResponsePager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current SQLScriptsListResponseResponse.
 	PageResponse() SQLScriptsListResponseResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type sqlScriptsListResponseCreateRequest func(context.Context) (*azcore.Request, error)
@@ -582,15 +547,10 @@ func (p *sqlScriptsListResponsePager) PageResponse() SQLScriptsListResponseRespo
 
 // SparkJobDefinitionsListResponsePager provides iteration over SparkJobDefinitionsListResponse pages.
 type SparkJobDefinitionsListResponsePager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current SparkJobDefinitionsListResponseResponse.
 	PageResponse() SparkJobDefinitionsListResponseResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type sparkJobDefinitionsListResponseCreateRequest func(context.Context) (*azcore.Request, error)
@@ -663,15 +623,10 @@ func (p *sparkJobDefinitionsListResponsePager) PageResponse() SparkJobDefinition
 
 // TriggerListResponsePager provides iteration over TriggerListResponse pages.
 type TriggerListResponsePager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current TriggerListResponseResponse.
 	PageResponse() TriggerListResponseResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type triggerListResponseCreateRequest func(context.Context) (*azcore.Request, error)

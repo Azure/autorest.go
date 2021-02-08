@@ -51,15 +51,10 @@ export async function generatePagers(session: Session<CodeModel>): Promise<strin
     const advanceType = `${camelCase(pager.respType)}AdvancePage`;
     text += `// ${pager.name} provides iteration over ${pager.respType} pages.
 type ${pager.name} interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current ${pager.respEnv}.
 	PageResponse() ${pager.respEnv}
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type ${requesterType} func(context.Context) (*azcore.Request, error)

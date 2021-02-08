@@ -15,15 +15,10 @@ import (
 
 // ApplicationGatewayAvailableSslPredefinedPoliciesPager provides iteration over ApplicationGatewayAvailableSslPredefinedPolicies pages.
 type ApplicationGatewayAvailableSslPredefinedPoliciesPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current ApplicationGatewayAvailableSslPredefinedPoliciesResponse.
 	PageResponse() ApplicationGatewayAvailableSslPredefinedPoliciesResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type applicationGatewayAvailableSslPredefinedPoliciesCreateRequest func(context.Context) (*azcore.Request, error)
@@ -96,15 +91,10 @@ func (p *applicationGatewayAvailableSslPredefinedPoliciesPager) PageResponse() A
 
 // ApplicationGatewayListResultPager provides iteration over ApplicationGatewayListResult pages.
 type ApplicationGatewayListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current ApplicationGatewayListResultResponse.
 	PageResponse() ApplicationGatewayListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type applicationGatewayListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -177,15 +167,10 @@ func (p *applicationGatewayListResultPager) PageResponse() ApplicationGatewayLis
 
 // ApplicationSecurityGroupListResultPager provides iteration over ApplicationSecurityGroupListResult pages.
 type ApplicationSecurityGroupListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current ApplicationSecurityGroupListResultResponse.
 	PageResponse() ApplicationSecurityGroupListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type applicationSecurityGroupListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -258,15 +243,10 @@ func (p *applicationSecurityGroupListResultPager) PageResponse() ApplicationSecu
 
 // AuthorizationListResultPager provides iteration over AuthorizationListResult pages.
 type AuthorizationListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current AuthorizationListResultResponse.
 	PageResponse() AuthorizationListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type authorizationListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -339,15 +319,10 @@ func (p *authorizationListResultPager) PageResponse() AuthorizationListResultRes
 
 // AutoApprovedPrivateLinkServicesResultPager provides iteration over AutoApprovedPrivateLinkServicesResult pages.
 type AutoApprovedPrivateLinkServicesResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current AutoApprovedPrivateLinkServicesResultResponse.
 	PageResponse() AutoApprovedPrivateLinkServicesResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type autoApprovedPrivateLinkServicesResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -420,15 +395,10 @@ func (p *autoApprovedPrivateLinkServicesResultPager) PageResponse() AutoApproved
 
 // AvailableDelegationsResultPager provides iteration over AvailableDelegationsResult pages.
 type AvailableDelegationsResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current AvailableDelegationsResultResponse.
 	PageResponse() AvailableDelegationsResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type availableDelegationsResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -501,15 +471,10 @@ func (p *availableDelegationsResultPager) PageResponse() AvailableDelegationsRes
 
 // AvailablePrivateEndpointTypesResultPager provides iteration over AvailablePrivateEndpointTypesResult pages.
 type AvailablePrivateEndpointTypesResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current AvailablePrivateEndpointTypesResultResponse.
 	PageResponse() AvailablePrivateEndpointTypesResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type availablePrivateEndpointTypesResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -582,15 +547,10 @@ func (p *availablePrivateEndpointTypesResultPager) PageResponse() AvailablePriva
 
 // AvailableServiceAliasesResultPager provides iteration over AvailableServiceAliasesResult pages.
 type AvailableServiceAliasesResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current AvailableServiceAliasesResultResponse.
 	PageResponse() AvailableServiceAliasesResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type availableServiceAliasesResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -663,15 +623,10 @@ func (p *availableServiceAliasesResultPager) PageResponse() AvailableServiceAlia
 
 // AzureFirewallFqdnTagListResultPager provides iteration over AzureFirewallFqdnTagListResult pages.
 type AzureFirewallFqdnTagListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current AzureFirewallFqdnTagListResultResponse.
 	PageResponse() AzureFirewallFqdnTagListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type azureFirewallFqdnTagListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -744,15 +699,10 @@ func (p *azureFirewallFqdnTagListResultPager) PageResponse() AzureFirewallFqdnTa
 
 // AzureFirewallListResultPager provides iteration over AzureFirewallListResult pages.
 type AzureFirewallListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current AzureFirewallListResultResponse.
 	PageResponse() AzureFirewallListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type azureFirewallListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -825,15 +775,10 @@ func (p *azureFirewallListResultPager) PageResponse() AzureFirewallListResultRes
 
 // BastionActiveSessionListResultPager provides iteration over BastionActiveSessionListResult pages.
 type BastionActiveSessionListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current BastionActiveSessionListResultResponse.
 	PageResponse() BastionActiveSessionListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type bastionActiveSessionListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -913,15 +858,10 @@ func (p *bastionActiveSessionListResultPager) PageResponse() BastionActiveSessio
 
 // BastionHostListResultPager provides iteration over BastionHostListResult pages.
 type BastionHostListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current BastionHostListResultResponse.
 	PageResponse() BastionHostListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type bastionHostListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -994,15 +934,10 @@ func (p *bastionHostListResultPager) PageResponse() BastionHostListResultRespons
 
 // BastionSessionDeleteResultPager provides iteration over BastionSessionDeleteResult pages.
 type BastionSessionDeleteResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current BastionSessionDeleteResultResponse.
 	PageResponse() BastionSessionDeleteResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type bastionSessionDeleteResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -1075,15 +1010,10 @@ func (p *bastionSessionDeleteResultPager) PageResponse() BastionSessionDeleteRes
 
 // BastionShareableLinkListResultPager provides iteration over BastionShareableLinkListResult pages.
 type BastionShareableLinkListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current BastionShareableLinkListResultResponse.
 	PageResponse() BastionShareableLinkListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type bastionShareableLinkListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -1163,15 +1093,10 @@ func (p *bastionShareableLinkListResultPager) PageResponse() BastionShareableLin
 
 // BgpServiceCommunityListResultPager provides iteration over BgpServiceCommunityListResult pages.
 type BgpServiceCommunityListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current BgpServiceCommunityListResultResponse.
 	PageResponse() BgpServiceCommunityListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type bgpServiceCommunityListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -1244,15 +1169,10 @@ func (p *bgpServiceCommunityListResultPager) PageResponse() BgpServiceCommunityL
 
 // DdosProtectionPlanListResultPager provides iteration over DdosProtectionPlanListResult pages.
 type DdosProtectionPlanListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current DdosProtectionPlanListResultResponse.
 	PageResponse() DdosProtectionPlanListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type ddosProtectionPlanListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -1325,15 +1245,10 @@ func (p *ddosProtectionPlanListResultPager) PageResponse() DdosProtectionPlanLis
 
 // EndpointServicesListResultPager provides iteration over EndpointServicesListResult pages.
 type EndpointServicesListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current EndpointServicesListResultResponse.
 	PageResponse() EndpointServicesListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type endpointServicesListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -1406,15 +1321,10 @@ func (p *endpointServicesListResultPager) PageResponse() EndpointServicesListRes
 
 // ExpressRouteCircuitConnectionListResultPager provides iteration over ExpressRouteCircuitConnectionListResult pages.
 type ExpressRouteCircuitConnectionListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current ExpressRouteCircuitConnectionListResultResponse.
 	PageResponse() ExpressRouteCircuitConnectionListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type expressRouteCircuitConnectionListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -1487,15 +1397,10 @@ func (p *expressRouteCircuitConnectionListResultPager) PageResponse() ExpressRou
 
 // ExpressRouteCircuitListResultPager provides iteration over ExpressRouteCircuitListResult pages.
 type ExpressRouteCircuitListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current ExpressRouteCircuitListResultResponse.
 	PageResponse() ExpressRouteCircuitListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type expressRouteCircuitListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -1568,15 +1473,10 @@ func (p *expressRouteCircuitListResultPager) PageResponse() ExpressRouteCircuitL
 
 // ExpressRouteCircuitPeeringListResultPager provides iteration over ExpressRouteCircuitPeeringListResult pages.
 type ExpressRouteCircuitPeeringListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current ExpressRouteCircuitPeeringListResultResponse.
 	PageResponse() ExpressRouteCircuitPeeringListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type expressRouteCircuitPeeringListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -1649,15 +1549,10 @@ func (p *expressRouteCircuitPeeringListResultPager) PageResponse() ExpressRouteC
 
 // ExpressRouteCrossConnectionListResultPager provides iteration over ExpressRouteCrossConnectionListResult pages.
 type ExpressRouteCrossConnectionListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current ExpressRouteCrossConnectionListResultResponse.
 	PageResponse() ExpressRouteCrossConnectionListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type expressRouteCrossConnectionListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -1730,15 +1625,10 @@ func (p *expressRouteCrossConnectionListResultPager) PageResponse() ExpressRoute
 
 // ExpressRouteCrossConnectionPeeringListPager provides iteration over ExpressRouteCrossConnectionPeeringList pages.
 type ExpressRouteCrossConnectionPeeringListPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current ExpressRouteCrossConnectionPeeringListResponse.
 	PageResponse() ExpressRouteCrossConnectionPeeringListResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type expressRouteCrossConnectionPeeringListCreateRequest func(context.Context) (*azcore.Request, error)
@@ -1811,15 +1701,10 @@ func (p *expressRouteCrossConnectionPeeringListPager) PageResponse() ExpressRout
 
 // ExpressRouteLinkListResultPager provides iteration over ExpressRouteLinkListResult pages.
 type ExpressRouteLinkListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current ExpressRouteLinkListResultResponse.
 	PageResponse() ExpressRouteLinkListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type expressRouteLinkListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -1892,15 +1777,10 @@ func (p *expressRouteLinkListResultPager) PageResponse() ExpressRouteLinkListRes
 
 // ExpressRoutePortListResultPager provides iteration over ExpressRoutePortListResult pages.
 type ExpressRoutePortListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current ExpressRoutePortListResultResponse.
 	PageResponse() ExpressRoutePortListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type expressRoutePortListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -1973,15 +1853,10 @@ func (p *expressRoutePortListResultPager) PageResponse() ExpressRoutePortListRes
 
 // ExpressRoutePortsLocationListResultPager provides iteration over ExpressRoutePortsLocationListResult pages.
 type ExpressRoutePortsLocationListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current ExpressRoutePortsLocationListResultResponse.
 	PageResponse() ExpressRoutePortsLocationListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type expressRoutePortsLocationListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -2054,15 +1929,10 @@ func (p *expressRoutePortsLocationListResultPager) PageResponse() ExpressRoutePo
 
 // ExpressRouteServiceProviderListResultPager provides iteration over ExpressRouteServiceProviderListResult pages.
 type ExpressRouteServiceProviderListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current ExpressRouteServiceProviderListResultResponse.
 	PageResponse() ExpressRouteServiceProviderListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type expressRouteServiceProviderListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -2135,15 +2005,10 @@ func (p *expressRouteServiceProviderListResultPager) PageResponse() ExpressRoute
 
 // FirewallPolicyListResultPager provides iteration over FirewallPolicyListResult pages.
 type FirewallPolicyListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current FirewallPolicyListResultResponse.
 	PageResponse() FirewallPolicyListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type firewallPolicyListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -2216,15 +2081,10 @@ func (p *firewallPolicyListResultPager) PageResponse() FirewallPolicyListResultR
 
 // FirewallPolicyRuleGroupListResultPager provides iteration over FirewallPolicyRuleGroupListResult pages.
 type FirewallPolicyRuleGroupListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current FirewallPolicyRuleGroupListResultResponse.
 	PageResponse() FirewallPolicyRuleGroupListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type firewallPolicyRuleGroupListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -2297,15 +2157,10 @@ func (p *firewallPolicyRuleGroupListResultPager) PageResponse() FirewallPolicyRu
 
 // FlowLogListResultPager provides iteration over FlowLogListResult pages.
 type FlowLogListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current FlowLogListResultResponse.
 	PageResponse() FlowLogListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type flowLogListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -2378,15 +2233,10 @@ func (p *flowLogListResultPager) PageResponse() FlowLogListResultResponse {
 
 // IPAllocationListResultPager provides iteration over IPAllocationListResult pages.
 type IPAllocationListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current IPAllocationListResultResponse.
 	PageResponse() IPAllocationListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type ipAllocationListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -2459,15 +2309,10 @@ func (p *ipAllocationListResultPager) PageResponse() IPAllocationListResultRespo
 
 // IPGroupListResultPager provides iteration over IPGroupListResult pages.
 type IPGroupListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current IPGroupListResultResponse.
 	PageResponse() IPGroupListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type ipGroupListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -2540,15 +2385,10 @@ func (p *ipGroupListResultPager) PageResponse() IPGroupListResultResponse {
 
 // InboundNatRuleListResultPager provides iteration over InboundNatRuleListResult pages.
 type InboundNatRuleListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current InboundNatRuleListResultResponse.
 	PageResponse() InboundNatRuleListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type inboundNatRuleListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -2621,15 +2461,10 @@ func (p *inboundNatRuleListResultPager) PageResponse() InboundNatRuleListResultR
 
 // ListHubVirtualNetworkConnectionsResultPager provides iteration over ListHubVirtualNetworkConnectionsResult pages.
 type ListHubVirtualNetworkConnectionsResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current ListHubVirtualNetworkConnectionsResultResponse.
 	PageResponse() ListHubVirtualNetworkConnectionsResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type listHubVirtualNetworkConnectionsResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -2702,15 +2537,10 @@ func (p *listHubVirtualNetworkConnectionsResultPager) PageResponse() ListHubVirt
 
 // ListP2SVpnGatewaysResultPager provides iteration over ListP2SVpnGatewaysResult pages.
 type ListP2SVpnGatewaysResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current ListP2SVpnGatewaysResultResponse.
 	PageResponse() ListP2SVpnGatewaysResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type listP2SVpnGatewaysResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -2783,15 +2613,10 @@ func (p *listP2SVpnGatewaysResultPager) PageResponse() ListP2SVpnGatewaysResultR
 
 // ListVirtualHubRouteTableV2SResultPager provides iteration over ListVirtualHubRouteTableV2SResult pages.
 type ListVirtualHubRouteTableV2SResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current ListVirtualHubRouteTableV2SResultResponse.
 	PageResponse() ListVirtualHubRouteTableV2SResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type listVirtualHubRouteTableV2SResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -2864,15 +2689,10 @@ func (p *listVirtualHubRouteTableV2SResultPager) PageResponse() ListVirtualHubRo
 
 // ListVirtualHubsResultPager provides iteration over ListVirtualHubsResult pages.
 type ListVirtualHubsResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current ListVirtualHubsResultResponse.
 	PageResponse() ListVirtualHubsResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type listVirtualHubsResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -2945,15 +2765,10 @@ func (p *listVirtualHubsResultPager) PageResponse() ListVirtualHubsResultRespons
 
 // ListVirtualWaNsResultPager provides iteration over ListVirtualWaNsResult pages.
 type ListVirtualWaNsResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current ListVirtualWaNsResultResponse.
 	PageResponse() ListVirtualWaNsResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type listVirtualWaNsResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -3026,15 +2841,10 @@ func (p *listVirtualWaNsResultPager) PageResponse() ListVirtualWaNsResultRespons
 
 // ListVpnConnectionsResultPager provides iteration over ListVpnConnectionsResult pages.
 type ListVpnConnectionsResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current ListVpnConnectionsResultResponse.
 	PageResponse() ListVpnConnectionsResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type listVpnConnectionsResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -3107,15 +2917,10 @@ func (p *listVpnConnectionsResultPager) PageResponse() ListVpnConnectionsResultR
 
 // ListVpnGatewaysResultPager provides iteration over ListVpnGatewaysResult pages.
 type ListVpnGatewaysResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current ListVpnGatewaysResultResponse.
 	PageResponse() ListVpnGatewaysResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type listVpnGatewaysResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -3188,15 +2993,10 @@ func (p *listVpnGatewaysResultPager) PageResponse() ListVpnGatewaysResultRespons
 
 // ListVpnServerConfigurationsResultPager provides iteration over ListVpnServerConfigurationsResult pages.
 type ListVpnServerConfigurationsResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current ListVpnServerConfigurationsResultResponse.
 	PageResponse() ListVpnServerConfigurationsResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type listVpnServerConfigurationsResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -3269,15 +3069,10 @@ func (p *listVpnServerConfigurationsResultPager) PageResponse() ListVpnServerCon
 
 // ListVpnSiteLinkConnectionsResultPager provides iteration over ListVpnSiteLinkConnectionsResult pages.
 type ListVpnSiteLinkConnectionsResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current ListVpnSiteLinkConnectionsResultResponse.
 	PageResponse() ListVpnSiteLinkConnectionsResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type listVpnSiteLinkConnectionsResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -3350,15 +3145,10 @@ func (p *listVpnSiteLinkConnectionsResultPager) PageResponse() ListVpnSiteLinkCo
 
 // ListVpnSiteLinksResultPager provides iteration over ListVpnSiteLinksResult pages.
 type ListVpnSiteLinksResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current ListVpnSiteLinksResultResponse.
 	PageResponse() ListVpnSiteLinksResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type listVpnSiteLinksResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -3431,15 +3221,10 @@ func (p *listVpnSiteLinksResultPager) PageResponse() ListVpnSiteLinksResultRespo
 
 // ListVpnSitesResultPager provides iteration over ListVpnSitesResult pages.
 type ListVpnSitesResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current ListVpnSitesResultResponse.
 	PageResponse() ListVpnSitesResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type listVpnSitesResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -3512,15 +3297,10 @@ func (p *listVpnSitesResultPager) PageResponse() ListVpnSitesResultResponse {
 
 // LoadBalancerBackendAddressPoolListResultPager provides iteration over LoadBalancerBackendAddressPoolListResult pages.
 type LoadBalancerBackendAddressPoolListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current LoadBalancerBackendAddressPoolListResultResponse.
 	PageResponse() LoadBalancerBackendAddressPoolListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type loadBalancerBackendAddressPoolListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -3593,15 +3373,10 @@ func (p *loadBalancerBackendAddressPoolListResultPager) PageResponse() LoadBalan
 
 // LoadBalancerFrontendIPConfigurationListResultPager provides iteration over LoadBalancerFrontendIPConfigurationListResult pages.
 type LoadBalancerFrontendIPConfigurationListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current LoadBalancerFrontendIPConfigurationListResultResponse.
 	PageResponse() LoadBalancerFrontendIPConfigurationListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type loadBalancerFrontendIPConfigurationListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -3674,15 +3449,10 @@ func (p *loadBalancerFrontendIPConfigurationListResultPager) PageResponse() Load
 
 // LoadBalancerListResultPager provides iteration over LoadBalancerListResult pages.
 type LoadBalancerListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current LoadBalancerListResultResponse.
 	PageResponse() LoadBalancerListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type loadBalancerListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -3755,15 +3525,10 @@ func (p *loadBalancerListResultPager) PageResponse() LoadBalancerListResultRespo
 
 // LoadBalancerLoadBalancingRuleListResultPager provides iteration over LoadBalancerLoadBalancingRuleListResult pages.
 type LoadBalancerLoadBalancingRuleListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current LoadBalancerLoadBalancingRuleListResultResponse.
 	PageResponse() LoadBalancerLoadBalancingRuleListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type loadBalancerLoadBalancingRuleListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -3836,15 +3601,10 @@ func (p *loadBalancerLoadBalancingRuleListResultPager) PageResponse() LoadBalanc
 
 // LoadBalancerOutboundRuleListResultPager provides iteration over LoadBalancerOutboundRuleListResult pages.
 type LoadBalancerOutboundRuleListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current LoadBalancerOutboundRuleListResultResponse.
 	PageResponse() LoadBalancerOutboundRuleListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type loadBalancerOutboundRuleListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -3917,15 +3677,10 @@ func (p *loadBalancerOutboundRuleListResultPager) PageResponse() LoadBalancerOut
 
 // LoadBalancerProbeListResultPager provides iteration over LoadBalancerProbeListResult pages.
 type LoadBalancerProbeListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current LoadBalancerProbeListResultResponse.
 	PageResponse() LoadBalancerProbeListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type loadBalancerProbeListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -3998,15 +3753,10 @@ func (p *loadBalancerProbeListResultPager) PageResponse() LoadBalancerProbeListR
 
 // LocalNetworkGatewayListResultPager provides iteration over LocalNetworkGatewayListResult pages.
 type LocalNetworkGatewayListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current LocalNetworkGatewayListResultResponse.
 	PageResponse() LocalNetworkGatewayListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type localNetworkGatewayListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -4079,15 +3829,10 @@ func (p *localNetworkGatewayListResultPager) PageResponse() LocalNetworkGatewayL
 
 // NatGatewayListResultPager provides iteration over NatGatewayListResult pages.
 type NatGatewayListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current NatGatewayListResultResponse.
 	PageResponse() NatGatewayListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type natGatewayListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -4160,15 +3905,10 @@ func (p *natGatewayListResultPager) PageResponse() NatGatewayListResultResponse 
 
 // NetworkInterfaceIPConfigurationListResultPager provides iteration over NetworkInterfaceIPConfigurationListResult pages.
 type NetworkInterfaceIPConfigurationListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current NetworkInterfaceIPConfigurationListResultResponse.
 	PageResponse() NetworkInterfaceIPConfigurationListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type networkInterfaceIPConfigurationListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -4241,15 +3981,10 @@ func (p *networkInterfaceIPConfigurationListResultPager) PageResponse() NetworkI
 
 // NetworkInterfaceListResultPager provides iteration over NetworkInterfaceListResult pages.
 type NetworkInterfaceListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current NetworkInterfaceListResultResponse.
 	PageResponse() NetworkInterfaceListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type networkInterfaceListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -4322,15 +4057,10 @@ func (p *networkInterfaceListResultPager) PageResponse() NetworkInterfaceListRes
 
 // NetworkInterfaceLoadBalancerListResultPager provides iteration over NetworkInterfaceLoadBalancerListResult pages.
 type NetworkInterfaceLoadBalancerListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current NetworkInterfaceLoadBalancerListResultResponse.
 	PageResponse() NetworkInterfaceLoadBalancerListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type networkInterfaceLoadBalancerListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -4403,15 +4133,10 @@ func (p *networkInterfaceLoadBalancerListResultPager) PageResponse() NetworkInte
 
 // NetworkInterfaceTapConfigurationListResultPager provides iteration over NetworkInterfaceTapConfigurationListResult pages.
 type NetworkInterfaceTapConfigurationListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current NetworkInterfaceTapConfigurationListResultResponse.
 	PageResponse() NetworkInterfaceTapConfigurationListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type networkInterfaceTapConfigurationListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -4484,15 +4209,10 @@ func (p *networkInterfaceTapConfigurationListResultPager) PageResponse() Network
 
 // NetworkProfileListResultPager provides iteration over NetworkProfileListResult pages.
 type NetworkProfileListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current NetworkProfileListResultResponse.
 	PageResponse() NetworkProfileListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type networkProfileListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -4565,15 +4285,10 @@ func (p *networkProfileListResultPager) PageResponse() NetworkProfileListResultR
 
 // NetworkSecurityGroupListResultPager provides iteration over NetworkSecurityGroupListResult pages.
 type NetworkSecurityGroupListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current NetworkSecurityGroupListResultResponse.
 	PageResponse() NetworkSecurityGroupListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type networkSecurityGroupListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -4646,15 +4361,10 @@ func (p *networkSecurityGroupListResultPager) PageResponse() NetworkSecurityGrou
 
 // NetworkVirtualApplianceListResultPager provides iteration over NetworkVirtualApplianceListResult pages.
 type NetworkVirtualApplianceListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current NetworkVirtualApplianceListResultResponse.
 	PageResponse() NetworkVirtualApplianceListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type networkVirtualApplianceListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -4727,15 +4437,10 @@ func (p *networkVirtualApplianceListResultPager) PageResponse() NetworkVirtualAp
 
 // OperationListResultPager provides iteration over OperationListResult pages.
 type OperationListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current OperationListResultResponse.
 	PageResponse() OperationListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type operationListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -4808,15 +4513,10 @@ func (p *operationListResultPager) PageResponse() OperationListResultResponse {
 
 // PeerExpressRouteCircuitConnectionListResultPager provides iteration over PeerExpressRouteCircuitConnectionListResult pages.
 type PeerExpressRouteCircuitConnectionListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current PeerExpressRouteCircuitConnectionListResultResponse.
 	PageResponse() PeerExpressRouteCircuitConnectionListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type peerExpressRouteCircuitConnectionListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -4889,15 +4589,10 @@ func (p *peerExpressRouteCircuitConnectionListResultPager) PageResponse() PeerEx
 
 // PrivateDNSZoneGroupListResultPager provides iteration over PrivateDNSZoneGroupListResult pages.
 type PrivateDNSZoneGroupListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current PrivateDNSZoneGroupListResultResponse.
 	PageResponse() PrivateDNSZoneGroupListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type privateDnsZoneGroupListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -4970,15 +4665,10 @@ func (p *privateDnsZoneGroupListResultPager) PageResponse() PrivateDNSZoneGroupL
 
 // PrivateEndpointConnectionListResultPager provides iteration over PrivateEndpointConnectionListResult pages.
 type PrivateEndpointConnectionListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current PrivateEndpointConnectionListResultResponse.
 	PageResponse() PrivateEndpointConnectionListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type privateEndpointConnectionListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -5051,15 +4741,10 @@ func (p *privateEndpointConnectionListResultPager) PageResponse() PrivateEndpoin
 
 // PrivateEndpointListResultPager provides iteration over PrivateEndpointListResult pages.
 type PrivateEndpointListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current PrivateEndpointListResultResponse.
 	PageResponse() PrivateEndpointListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type privateEndpointListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -5132,15 +4817,10 @@ func (p *privateEndpointListResultPager) PageResponse() PrivateEndpointListResul
 
 // PrivateLinkServiceListResultPager provides iteration over PrivateLinkServiceListResult pages.
 type PrivateLinkServiceListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current PrivateLinkServiceListResultResponse.
 	PageResponse() PrivateLinkServiceListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type privateLinkServiceListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -5213,15 +4893,10 @@ func (p *privateLinkServiceListResultPager) PageResponse() PrivateLinkServiceLis
 
 // PublicIPAddressListResultPager provides iteration over PublicIPAddressListResult pages.
 type PublicIPAddressListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current PublicIPAddressListResultResponse.
 	PageResponse() PublicIPAddressListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type publicIPAddressListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -5294,15 +4969,10 @@ func (p *publicIPAddressListResultPager) PageResponse() PublicIPAddressListResul
 
 // PublicIPPrefixListResultPager provides iteration over PublicIPPrefixListResult pages.
 type PublicIPPrefixListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current PublicIPPrefixListResultResponse.
 	PageResponse() PublicIPPrefixListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type publicIPPrefixListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -5375,15 +5045,10 @@ func (p *publicIPPrefixListResultPager) PageResponse() PublicIPPrefixListResultR
 
 // RouteFilterListResultPager provides iteration over RouteFilterListResult pages.
 type RouteFilterListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current RouteFilterListResultResponse.
 	PageResponse() RouteFilterListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type routeFilterListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -5456,15 +5121,10 @@ func (p *routeFilterListResultPager) PageResponse() RouteFilterListResultRespons
 
 // RouteFilterRuleListResultPager provides iteration over RouteFilterRuleListResult pages.
 type RouteFilterRuleListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current RouteFilterRuleListResultResponse.
 	PageResponse() RouteFilterRuleListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type routeFilterRuleListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -5537,15 +5197,10 @@ func (p *routeFilterRuleListResultPager) PageResponse() RouteFilterRuleListResul
 
 // RouteListResultPager provides iteration over RouteListResult pages.
 type RouteListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current RouteListResultResponse.
 	PageResponse() RouteListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type routeListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -5618,15 +5273,10 @@ func (p *routeListResultPager) PageResponse() RouteListResultResponse {
 
 // RouteTableListResultPager provides iteration over RouteTableListResult pages.
 type RouteTableListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current RouteTableListResultResponse.
 	PageResponse() RouteTableListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type routeTableListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -5699,15 +5349,10 @@ func (p *routeTableListResultPager) PageResponse() RouteTableListResultResponse 
 
 // SecurityPartnerProviderListResultPager provides iteration over SecurityPartnerProviderListResult pages.
 type SecurityPartnerProviderListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current SecurityPartnerProviderListResultResponse.
 	PageResponse() SecurityPartnerProviderListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type securityPartnerProviderListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -5780,15 +5425,10 @@ func (p *securityPartnerProviderListResultPager) PageResponse() SecurityPartnerP
 
 // SecurityRuleListResultPager provides iteration over SecurityRuleListResult pages.
 type SecurityRuleListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current SecurityRuleListResultResponse.
 	PageResponse() SecurityRuleListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type securityRuleListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -5861,15 +5501,10 @@ func (p *securityRuleListResultPager) PageResponse() SecurityRuleListResultRespo
 
 // ServiceEndpointPolicyDefinitionListResultPager provides iteration over ServiceEndpointPolicyDefinitionListResult pages.
 type ServiceEndpointPolicyDefinitionListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current ServiceEndpointPolicyDefinitionListResultResponse.
 	PageResponse() ServiceEndpointPolicyDefinitionListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type serviceEndpointPolicyDefinitionListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -5942,15 +5577,10 @@ func (p *serviceEndpointPolicyDefinitionListResultPager) PageResponse() ServiceE
 
 // ServiceEndpointPolicyListResultPager provides iteration over ServiceEndpointPolicyListResult pages.
 type ServiceEndpointPolicyListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current ServiceEndpointPolicyListResultResponse.
 	PageResponse() ServiceEndpointPolicyListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type serviceEndpointPolicyListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -6023,15 +5653,10 @@ func (p *serviceEndpointPolicyListResultPager) PageResponse() ServiceEndpointPol
 
 // SubnetListResultPager provides iteration over SubnetListResult pages.
 type SubnetListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current SubnetListResultResponse.
 	PageResponse() SubnetListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type subnetListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -6104,15 +5729,10 @@ func (p *subnetListResultPager) PageResponse() SubnetListResultResponse {
 
 // UsagesListResultPager provides iteration over UsagesListResult pages.
 type UsagesListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current UsagesListResultResponse.
 	PageResponse() UsagesListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type usagesListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -6185,15 +5805,10 @@ func (p *usagesListResultPager) PageResponse() UsagesListResultResponse {
 
 // VirtualNetworkGatewayConnectionListResultPager provides iteration over VirtualNetworkGatewayConnectionListResult pages.
 type VirtualNetworkGatewayConnectionListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current VirtualNetworkGatewayConnectionListResultResponse.
 	PageResponse() VirtualNetworkGatewayConnectionListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type virtualNetworkGatewayConnectionListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -6266,15 +5881,10 @@ func (p *virtualNetworkGatewayConnectionListResultPager) PageResponse() VirtualN
 
 // VirtualNetworkGatewayListConnectionsResultPager provides iteration over VirtualNetworkGatewayListConnectionsResult pages.
 type VirtualNetworkGatewayListConnectionsResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current VirtualNetworkGatewayListConnectionsResultResponse.
 	PageResponse() VirtualNetworkGatewayListConnectionsResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type virtualNetworkGatewayListConnectionsResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -6347,15 +5957,10 @@ func (p *virtualNetworkGatewayListConnectionsResultPager) PageResponse() Virtual
 
 // VirtualNetworkGatewayListResultPager provides iteration over VirtualNetworkGatewayListResult pages.
 type VirtualNetworkGatewayListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current VirtualNetworkGatewayListResultResponse.
 	PageResponse() VirtualNetworkGatewayListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type virtualNetworkGatewayListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -6428,15 +6033,10 @@ func (p *virtualNetworkGatewayListResultPager) PageResponse() VirtualNetworkGate
 
 // VirtualNetworkListResultPager provides iteration over VirtualNetworkListResult pages.
 type VirtualNetworkListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current VirtualNetworkListResultResponse.
 	PageResponse() VirtualNetworkListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type virtualNetworkListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -6509,15 +6109,10 @@ func (p *virtualNetworkListResultPager) PageResponse() VirtualNetworkListResultR
 
 // VirtualNetworkListUsageResultPager provides iteration over VirtualNetworkListUsageResult pages.
 type VirtualNetworkListUsageResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current VirtualNetworkListUsageResultResponse.
 	PageResponse() VirtualNetworkListUsageResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type virtualNetworkListUsageResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -6590,15 +6185,10 @@ func (p *virtualNetworkListUsageResultPager) PageResponse() VirtualNetworkListUs
 
 // VirtualNetworkPeeringListResultPager provides iteration over VirtualNetworkPeeringListResult pages.
 type VirtualNetworkPeeringListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current VirtualNetworkPeeringListResultResponse.
 	PageResponse() VirtualNetworkPeeringListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type virtualNetworkPeeringListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -6671,15 +6261,10 @@ func (p *virtualNetworkPeeringListResultPager) PageResponse() VirtualNetworkPeer
 
 // VirtualNetworkTapListResultPager provides iteration over VirtualNetworkTapListResult pages.
 type VirtualNetworkTapListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current VirtualNetworkTapListResultResponse.
 	PageResponse() VirtualNetworkTapListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type virtualNetworkTapListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -6752,15 +6337,10 @@ func (p *virtualNetworkTapListResultPager) PageResponse() VirtualNetworkTapListR
 
 // VirtualRouterListResultPager provides iteration over VirtualRouterListResult pages.
 type VirtualRouterListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current VirtualRouterListResultResponse.
 	PageResponse() VirtualRouterListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type virtualRouterListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -6833,15 +6413,10 @@ func (p *virtualRouterListResultPager) PageResponse() VirtualRouterListResultRes
 
 // VirtualRouterPeeringListResultPager provides iteration over VirtualRouterPeeringListResult pages.
 type VirtualRouterPeeringListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current VirtualRouterPeeringListResultResponse.
 	PageResponse() VirtualRouterPeeringListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type virtualRouterPeeringListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -6914,15 +6489,10 @@ func (p *virtualRouterPeeringListResultPager) PageResponse() VirtualRouterPeerin
 
 // WebApplicationFirewallPolicyListResultPager provides iteration over WebApplicationFirewallPolicyListResult pages.
 type WebApplicationFirewallPolicyListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current WebApplicationFirewallPolicyListResultResponse.
 	PageResponse() WebApplicationFirewallPolicyListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type webApplicationFirewallPolicyListResultCreateRequest func(context.Context) (*azcore.Request, error)

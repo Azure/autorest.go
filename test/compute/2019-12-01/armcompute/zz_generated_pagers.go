@@ -15,15 +15,10 @@ import (
 
 // AvailabilitySetListResultPager provides iteration over AvailabilitySetListResult pages.
 type AvailabilitySetListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current AvailabilitySetListResultResponse.
 	PageResponse() AvailabilitySetListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type availabilitySetListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -96,15 +91,10 @@ func (p *availabilitySetListResultPager) PageResponse() AvailabilitySetListResul
 
 // ContainerServiceListResultPager provides iteration over ContainerServiceListResult pages.
 type ContainerServiceListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current ContainerServiceListResultResponse.
 	PageResponse() ContainerServiceListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type containerServiceListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -177,15 +167,10 @@ func (p *containerServiceListResultPager) PageResponse() ContainerServiceListRes
 
 // DedicatedHostGroupListResultPager provides iteration over DedicatedHostGroupListResult pages.
 type DedicatedHostGroupListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current DedicatedHostGroupListResultResponse.
 	PageResponse() DedicatedHostGroupListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type dedicatedHostGroupListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -258,15 +243,10 @@ func (p *dedicatedHostGroupListResultPager) PageResponse() DedicatedHostGroupLis
 
 // DedicatedHostListResultPager provides iteration over DedicatedHostListResult pages.
 type DedicatedHostListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current DedicatedHostListResultResponse.
 	PageResponse() DedicatedHostListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type dedicatedHostListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -339,15 +319,10 @@ func (p *dedicatedHostListResultPager) PageResponse() DedicatedHostListResultRes
 
 // DiskEncryptionSetListPager provides iteration over DiskEncryptionSetList pages.
 type DiskEncryptionSetListPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current DiskEncryptionSetListResponse.
 	PageResponse() DiskEncryptionSetListResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type diskEncryptionSetListCreateRequest func(context.Context) (*azcore.Request, error)
@@ -420,15 +395,10 @@ func (p *diskEncryptionSetListPager) PageResponse() DiskEncryptionSetListRespons
 
 // DiskListPager provides iteration over DiskList pages.
 type DiskListPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current DiskListResponse.
 	PageResponse() DiskListResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type diskListCreateRequest func(context.Context) (*azcore.Request, error)
@@ -501,15 +471,10 @@ func (p *diskListPager) PageResponse() DiskListResponse {
 
 // GalleryApplicationListPager provides iteration over GalleryApplicationList pages.
 type GalleryApplicationListPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current GalleryApplicationListResponse.
 	PageResponse() GalleryApplicationListResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type galleryApplicationListCreateRequest func(context.Context) (*azcore.Request, error)
@@ -582,15 +547,10 @@ func (p *galleryApplicationListPager) PageResponse() GalleryApplicationListRespo
 
 // GalleryApplicationVersionListPager provides iteration over GalleryApplicationVersionList pages.
 type GalleryApplicationVersionListPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current GalleryApplicationVersionListResponse.
 	PageResponse() GalleryApplicationVersionListResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type galleryApplicationVersionListCreateRequest func(context.Context) (*azcore.Request, error)
@@ -663,15 +623,10 @@ func (p *galleryApplicationVersionListPager) PageResponse() GalleryApplicationVe
 
 // GalleryImageListPager provides iteration over GalleryImageList pages.
 type GalleryImageListPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current GalleryImageListResponse.
 	PageResponse() GalleryImageListResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type galleryImageListCreateRequest func(context.Context) (*azcore.Request, error)
@@ -744,15 +699,10 @@ func (p *galleryImageListPager) PageResponse() GalleryImageListResponse {
 
 // GalleryImageVersionListPager provides iteration over GalleryImageVersionList pages.
 type GalleryImageVersionListPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current GalleryImageVersionListResponse.
 	PageResponse() GalleryImageVersionListResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type galleryImageVersionListCreateRequest func(context.Context) (*azcore.Request, error)
@@ -825,15 +775,10 @@ func (p *galleryImageVersionListPager) PageResponse() GalleryImageVersionListRes
 
 // GalleryListPager provides iteration over GalleryList pages.
 type GalleryListPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current GalleryListResponse.
 	PageResponse() GalleryListResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type galleryListCreateRequest func(context.Context) (*azcore.Request, error)
@@ -906,15 +851,10 @@ func (p *galleryListPager) PageResponse() GalleryListResponse {
 
 // ImageListResultPager provides iteration over ImageListResult pages.
 type ImageListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current ImageListResultResponse.
 	PageResponse() ImageListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type imageListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -987,15 +927,10 @@ func (p *imageListResultPager) PageResponse() ImageListResultResponse {
 
 // ListUsagesResultPager provides iteration over ListUsagesResult pages.
 type ListUsagesResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current ListUsagesResultResponse.
 	PageResponse() ListUsagesResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type listUsagesResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -1068,15 +1003,10 @@ func (p *listUsagesResultPager) PageResponse() ListUsagesResultResponse {
 
 // ProximityPlacementGroupListResultPager provides iteration over ProximityPlacementGroupListResult pages.
 type ProximityPlacementGroupListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current ProximityPlacementGroupListResultResponse.
 	PageResponse() ProximityPlacementGroupListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type proximityPlacementGroupListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -1149,15 +1079,10 @@ func (p *proximityPlacementGroupListResultPager) PageResponse() ProximityPlaceme
 
 // ResourceSKUsResultPager provides iteration over ResourceSKUsResult pages.
 type ResourceSKUsResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current ResourceSKUsResultResponse.
 	PageResponse() ResourceSKUsResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type resourceSkUsResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -1230,15 +1155,10 @@ func (p *resourceSkUsResultPager) PageResponse() ResourceSKUsResultResponse {
 
 // RunCommandListResultPager provides iteration over RunCommandListResult pages.
 type RunCommandListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current RunCommandListResultResponse.
 	PageResponse() RunCommandListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type runCommandListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -1311,15 +1231,10 @@ func (p *runCommandListResultPager) PageResponse() RunCommandListResultResponse 
 
 // SSHPublicKeysGroupListResultPager provides iteration over SSHPublicKeysGroupListResult pages.
 type SSHPublicKeysGroupListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current SSHPublicKeysGroupListResultResponse.
 	PageResponse() SSHPublicKeysGroupListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type sshPublicKeysGroupListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -1392,15 +1307,10 @@ func (p *sshPublicKeysGroupListResultPager) PageResponse() SSHPublicKeysGroupLis
 
 // SnapshotListPager provides iteration over SnapshotList pages.
 type SnapshotListPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current SnapshotListResponse.
 	PageResponse() SnapshotListResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type snapshotListCreateRequest func(context.Context) (*azcore.Request, error)
@@ -1473,15 +1383,10 @@ func (p *snapshotListPager) PageResponse() SnapshotListResponse {
 
 // VirtualMachineListResultPager provides iteration over VirtualMachineListResult pages.
 type VirtualMachineListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current VirtualMachineListResultResponse.
 	PageResponse() VirtualMachineListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type virtualMachineListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -1554,15 +1459,10 @@ func (p *virtualMachineListResultPager) PageResponse() VirtualMachineListResultR
 
 // VirtualMachineScaleSetExtensionListResultPager provides iteration over VirtualMachineScaleSetExtensionListResult pages.
 type VirtualMachineScaleSetExtensionListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current VirtualMachineScaleSetExtensionListResultResponse.
 	PageResponse() VirtualMachineScaleSetExtensionListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type virtualMachineScaleSetExtensionListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -1635,15 +1535,10 @@ func (p *virtualMachineScaleSetExtensionListResultPager) PageResponse() VirtualM
 
 // VirtualMachineScaleSetListOSUpgradeHistoryPager provides iteration over VirtualMachineScaleSetListOSUpgradeHistory pages.
 type VirtualMachineScaleSetListOSUpgradeHistoryPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current VirtualMachineScaleSetListOSUpgradeHistoryResponse.
 	PageResponse() VirtualMachineScaleSetListOSUpgradeHistoryResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type virtualMachineScaleSetListOSUpgradeHistoryCreateRequest func(context.Context) (*azcore.Request, error)
@@ -1716,15 +1611,10 @@ func (p *virtualMachineScaleSetListOSUpgradeHistoryPager) PageResponse() Virtual
 
 // VirtualMachineScaleSetListResultPager provides iteration over VirtualMachineScaleSetListResult pages.
 type VirtualMachineScaleSetListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current VirtualMachineScaleSetListResultResponse.
 	PageResponse() VirtualMachineScaleSetListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type virtualMachineScaleSetListResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -1797,15 +1687,10 @@ func (p *virtualMachineScaleSetListResultPager) PageResponse() VirtualMachineSca
 
 // VirtualMachineScaleSetListSKUsResultPager provides iteration over VirtualMachineScaleSetListSKUsResult pages.
 type VirtualMachineScaleSetListSKUsResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current VirtualMachineScaleSetListSKUsResultResponse.
 	PageResponse() VirtualMachineScaleSetListSKUsResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type virtualMachineScaleSetListSkUsResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -1878,15 +1763,10 @@ func (p *virtualMachineScaleSetListSkUsResultPager) PageResponse() VirtualMachin
 
 // VirtualMachineScaleSetListWithLinkResultPager provides iteration over VirtualMachineScaleSetListWithLinkResult pages.
 type VirtualMachineScaleSetListWithLinkResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current VirtualMachineScaleSetListWithLinkResultResponse.
 	PageResponse() VirtualMachineScaleSetListWithLinkResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type virtualMachineScaleSetListWithLinkResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -1959,15 +1839,10 @@ func (p *virtualMachineScaleSetListWithLinkResultPager) PageResponse() VirtualMa
 
 // VirtualMachineScaleSetVMListResultPager provides iteration over VirtualMachineScaleSetVMListResult pages.
 type VirtualMachineScaleSetVMListResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current VirtualMachineScaleSetVMListResultResponse.
 	PageResponse() VirtualMachineScaleSetVMListResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type virtualMachineScaleSetVMListResultCreateRequest func(context.Context) (*azcore.Request, error)

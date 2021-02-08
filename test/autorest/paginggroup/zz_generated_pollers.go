@@ -17,10 +17,12 @@ import (
 
 // ProductResultPagerPoller provides polling facilities until the operation completes
 type ProductResultPagerPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final ProductResultPager will be returned.
 	FinalResponse(ctx context.Context) (ProductResultPager, error)
-	ResumeToken() (string, error)
 }
 
 type productResultPagerPoller struct {

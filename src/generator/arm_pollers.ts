@@ -116,10 +116,12 @@ export async function generateARMPollers(session: Session<CodeModel>): Promise<s
     }
     bodyText += `// ${pollerInterface} provides polling facilities until the operation completes
       type ${pollerInterface} interface {
-        Done() bool
-        Poll(ctx context.Context) (*http.Response, error)
+        azcore.Poller
+
+        // FinalResponse performs a final GET to the service and returns the final response
+        // for the polling operation. If there is an error performing the final GET then an error is returned.
+        // If the final GET succeeded then the final ${responseType} will be returned.
         ${finalResponseDeclaration}
-        ResumeToken() (string, error)
       }
 
       type ${pollerName} struct {
