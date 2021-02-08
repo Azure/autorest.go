@@ -15,15 +15,10 @@ import (
 
 // ListBlobsFlatSegmentResponsePager provides iteration over ListBlobsFlatSegmentResponse pages.
 type ListBlobsFlatSegmentResponsePager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current ListBlobsFlatSegmentResponseResponse.
 	PageResponse() ListBlobsFlatSegmentResponseResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type listBlobsFlatSegmentResponseCreateRequest func(context.Context) (*azcore.Request, error)
@@ -96,15 +91,10 @@ func (p *listBlobsFlatSegmentResponsePager) PageResponse() ListBlobsFlatSegmentR
 
 // ListBlobsHierarchySegmentResponsePager provides iteration over ListBlobsHierarchySegmentResponse pages.
 type ListBlobsHierarchySegmentResponsePager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current ListBlobsHierarchySegmentResponseResponse.
 	PageResponse() ListBlobsHierarchySegmentResponseResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type listBlobsHierarchySegmentResponseCreateRequest func(context.Context) (*azcore.Request, error)
@@ -177,15 +167,10 @@ func (p *listBlobsHierarchySegmentResponsePager) PageResponse() ListBlobsHierarc
 
 // ListContainersSegmentResponsePager provides iteration over ListContainersSegmentResponse pages.
 type ListContainersSegmentResponsePager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current ListContainersSegmentResponseResponse.
 	PageResponse() ListContainersSegmentResponseResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type listContainersSegmentResponseCreateRequest func(context.Context) (*azcore.Request, error)

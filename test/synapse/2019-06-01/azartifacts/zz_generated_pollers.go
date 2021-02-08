@@ -7,98 +7,69 @@
 
 package azartifacts
 
-import (
-	"context"
-	"net/http"
-)
+import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 
 // CreateDataFlowDebugSessionResponsePoller provides polling facilities until the operation completes
 type CreateDataFlowDebugSessionResponsePoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
-	ResumeToken() (string, error)
+	azcore.Poller
 }
 
 // DataFlowDebugCommandResponsePoller provides polling facilities until the operation completes
 type DataFlowDebugCommandResponsePoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
-	ResumeToken() (string, error)
+	azcore.Poller
 }
 
 // DataFlowResourcePoller provides polling facilities until the operation completes
 type DataFlowResourcePoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
-	ResumeToken() (string, error)
+	azcore.Poller
 }
 
 // DatasetResourcePoller provides polling facilities until the operation completes
 type DatasetResourcePoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
-	ResumeToken() (string, error)
+	azcore.Poller
 }
 
 // HTTPPoller provides polling facilities until the operation completes
 type HTTPPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
-	ResumeToken() (string, error)
+	azcore.Poller
 }
 
 // LinkedServiceResourcePoller provides polling facilities until the operation completes
 type LinkedServiceResourcePoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
-	ResumeToken() (string, error)
+	azcore.Poller
 }
 
 // NotebookResourcePoller provides polling facilities until the operation completes
 type NotebookResourcePoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
-	ResumeToken() (string, error)
+	azcore.Poller
 }
 
 // PipelineResourcePoller provides polling facilities until the operation completes
 type PipelineResourcePoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
-	ResumeToken() (string, error)
+	azcore.Poller
 }
 
 // SQLScriptResourcePoller provides polling facilities until the operation completes
 type SQLScriptResourcePoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
-	ResumeToken() (string, error)
+	azcore.Poller
 }
 
 // SparkBatchJobPoller provides polling facilities until the operation completes
 type SparkBatchJobPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
-	ResumeToken() (string, error)
+	azcore.Poller
 }
 
 // SparkJobDefinitionResourcePoller provides polling facilities until the operation completes
 type SparkJobDefinitionResourcePoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
-	ResumeToken() (string, error)
+	azcore.Poller
 }
 
 // TriggerResourcePoller provides polling facilities until the operation completes
 type TriggerResourcePoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
-	ResumeToken() (string, error)
+	azcore.Poller
 }
 
 // TriggerSubscriptionOperationStatusPoller provides polling facilities until the operation completes
 type TriggerSubscriptionOperationStatusPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
-	ResumeToken() (string, error)
+	azcore.Poller
 }

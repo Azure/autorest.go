@@ -15,15 +15,10 @@ import (
 
 // OdataProductResultPager provides iteration over OdataProductResult pages.
 type OdataProductResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current OdataProductResultResponse.
 	PageResponse() OdataProductResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type odataProductResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -96,15 +91,10 @@ func (p *odataProductResultPager) PageResponse() OdataProductResultResponse {
 
 // ProductResultPager provides iteration over ProductResult pages.
 type ProductResultPager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current ProductResultResponse.
 	PageResponse() ProductResultResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type productResultCreateRequest func(context.Context) (*azcore.Request, error)
@@ -184,15 +174,10 @@ func (p *productResultPager) PageResponse() ProductResultResponse {
 
 // ProductResultValuePager provides iteration over ProductResultValue pages.
 type ProductResultValuePager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current ProductResultValueResponse.
 	PageResponse() ProductResultValueResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type productResultValueCreateRequest func(context.Context) (*azcore.Request, error)
@@ -265,15 +250,10 @@ func (p *productResultValuePager) PageResponse() ProductResultValueResponse {
 
 // ProductResultValueWithXmsClientNamePager provides iteration over ProductResultValueWithXmsClientName pages.
 type ProductResultValueWithXmsClientNamePager interface {
-	// NextPage returns true if the pager advanced to the next page.
-	// Returns false if there are no more pages or an error occurred.
-	NextPage(context.Context) bool
+	azcore.Pager
 
 	// Page returns the current ProductResultValueWithXmsClientNameResponse.
 	PageResponse() ProductResultValueWithXmsClientNameResponse
-
-	// Err returns the last error encountered while paging.
-	Err() error
 }
 
 type productResultValueWithXmsClientNameCreateRequest func(context.Context) (*azcore.Request, error)

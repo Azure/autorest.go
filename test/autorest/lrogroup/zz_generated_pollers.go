@@ -17,10 +17,12 @@ import (
 
 // HTTPPoller provides polling facilities until the operation completes
 type HTTPPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final HTTPResponse will be returned.
 	FinalResponse(ctx context.Context) (*http.Response, error)
-	ResumeToken() (string, error)
 }
 
 type httpPoller struct {
@@ -55,10 +57,12 @@ func (p *httpPoller) pollUntilDone(ctx context.Context, frequency time.Duration)
 
 // ProductArrayPoller provides polling facilities until the operation completes
 type ProductArrayPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final ProductArrayResponse will be returned.
 	FinalResponse(ctx context.Context) (ProductArrayResponse, error)
-	ResumeToken() (string, error)
 }
 
 type productArrayPoller struct {
@@ -105,10 +109,12 @@ func (p *productArrayPoller) pollUntilDone(ctx context.Context, frequency time.D
 
 // ProductPoller provides polling facilities until the operation completes
 type ProductPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final ProductResponse will be returned.
 	FinalResponse(ctx context.Context) (ProductResponse, error)
-	ResumeToken() (string, error)
 }
 
 type productPoller struct {
@@ -155,10 +161,12 @@ func (p *productPoller) pollUntilDone(ctx context.Context, frequency time.Durati
 
 // SKUPoller provides polling facilities until the operation completes
 type SKUPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final SKUResponse will be returned.
 	FinalResponse(ctx context.Context) (SKUResponse, error)
-	ResumeToken() (string, error)
 }
 
 type skuPoller struct {
@@ -205,10 +213,12 @@ func (p *skuPoller) pollUntilDone(ctx context.Context, frequency time.Duration) 
 
 // SubProductPoller provides polling facilities until the operation completes
 type SubProductPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final SubProductResponse will be returned.
 	FinalResponse(ctx context.Context) (SubProductResponse, error)
-	ResumeToken() (string, error)
 }
 
 type subProductPoller struct {

@@ -27,8 +27,7 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
 
   // add standard imports
   const imports = new ImportManager();
-  imports.add('context');
-  imports.add('net/http');
+  imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
   let bodyText = '';
   const pollers = <Array<PollerInfo>>session.model.language.go!.pollerTypes;
   pollers.sort((a: PollerInfo, b: PollerInfo) => { return sortAscending(a.name, b.name) });
@@ -36,9 +35,7 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
     const pollerInterface = poller.name;
     bodyText += `// ${pollerInterface} provides polling facilities until the operation completes
       type ${pollerInterface} interface {
-        Done() bool
-        Poll(ctx context.Context) (*http.Response, error)
-        ResumeToken() (string, error)
+        azcore.Poller
       }
   `;
   }

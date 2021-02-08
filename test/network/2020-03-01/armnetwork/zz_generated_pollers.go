@@ -17,10 +17,12 @@ import (
 
 // ApplicationGatewayBackendHealthOnDemandPoller provides polling facilities until the operation completes
 type ApplicationGatewayBackendHealthOnDemandPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final ApplicationGatewayBackendHealthOnDemandResponse will be returned.
 	FinalResponse(ctx context.Context) (ApplicationGatewayBackendHealthOnDemandResponse, error)
-	ResumeToken() (string, error)
 }
 
 type applicationGatewayBackendHealthOnDemandPoller struct {
@@ -67,10 +69,12 @@ func (p *applicationGatewayBackendHealthOnDemandPoller) pollUntilDone(ctx contex
 
 // ApplicationGatewayBackendHealthPoller provides polling facilities until the operation completes
 type ApplicationGatewayBackendHealthPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final ApplicationGatewayBackendHealthResponse will be returned.
 	FinalResponse(ctx context.Context) (ApplicationGatewayBackendHealthResponse, error)
-	ResumeToken() (string, error)
 }
 
 type applicationGatewayBackendHealthPoller struct {
@@ -117,10 +121,12 @@ func (p *applicationGatewayBackendHealthPoller) pollUntilDone(ctx context.Contex
 
 // ApplicationGatewayPoller provides polling facilities until the operation completes
 type ApplicationGatewayPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final ApplicationGatewayResponse will be returned.
 	FinalResponse(ctx context.Context) (ApplicationGatewayResponse, error)
-	ResumeToken() (string, error)
 }
 
 type applicationGatewayPoller struct {
@@ -167,10 +173,12 @@ func (p *applicationGatewayPoller) pollUntilDone(ctx context.Context, frequency 
 
 // ApplicationSecurityGroupPoller provides polling facilities until the operation completes
 type ApplicationSecurityGroupPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final ApplicationSecurityGroupResponse will be returned.
 	FinalResponse(ctx context.Context) (ApplicationSecurityGroupResponse, error)
-	ResumeToken() (string, error)
 }
 
 type applicationSecurityGroupPoller struct {
@@ -217,10 +225,12 @@ func (p *applicationSecurityGroupPoller) pollUntilDone(ctx context.Context, freq
 
 // AvailableProvidersListPoller provides polling facilities until the operation completes
 type AvailableProvidersListPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final AvailableProvidersListResponse will be returned.
 	FinalResponse(ctx context.Context) (AvailableProvidersListResponse, error)
-	ResumeToken() (string, error)
 }
 
 type availableProvidersListPoller struct {
@@ -267,10 +277,12 @@ func (p *availableProvidersListPoller) pollUntilDone(ctx context.Context, freque
 
 // AzureFirewallPoller provides polling facilities until the operation completes
 type AzureFirewallPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final AzureFirewallResponse will be returned.
 	FinalResponse(ctx context.Context) (AzureFirewallResponse, error)
-	ResumeToken() (string, error)
 }
 
 type azureFirewallPoller struct {
@@ -317,10 +329,12 @@ func (p *azureFirewallPoller) pollUntilDone(ctx context.Context, frequency time.
 
 // AzureReachabilityReportPoller provides polling facilities until the operation completes
 type AzureReachabilityReportPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final AzureReachabilityReportResponse will be returned.
 	FinalResponse(ctx context.Context) (AzureReachabilityReportResponse, error)
-	ResumeToken() (string, error)
 }
 
 type azureReachabilityReportPoller struct {
@@ -367,10 +381,12 @@ func (p *azureReachabilityReportPoller) pollUntilDone(ctx context.Context, frequ
 
 // BastionActiveSessionListResultPagerPoller provides polling facilities until the operation completes
 type BastionActiveSessionListResultPagerPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final BastionActiveSessionListResultPager will be returned.
 	FinalResponse(ctx context.Context) (BastionActiveSessionListResultPager, error)
-	ResumeToken() (string, error)
 }
 
 type bastionActiveSessionListResultPagerPoller struct {
@@ -431,10 +447,12 @@ func (p *bastionActiveSessionListResultPagerPoller) handleResponse(resp *azcore.
 
 // BastionHostPoller provides polling facilities until the operation completes
 type BastionHostPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final BastionHostResponse will be returned.
 	FinalResponse(ctx context.Context) (BastionHostResponse, error)
-	ResumeToken() (string, error)
 }
 
 type bastionHostPoller struct {
@@ -481,10 +499,12 @@ func (p *bastionHostPoller) pollUntilDone(ctx context.Context, frequency time.Du
 
 // BastionShareableLinkListResultPagerPoller provides polling facilities until the operation completes
 type BastionShareableLinkListResultPagerPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final BastionShareableLinkListResultPager will be returned.
 	FinalResponse(ctx context.Context) (BastionShareableLinkListResultPager, error)
-	ResumeToken() (string, error)
 }
 
 type bastionShareableLinkListResultPagerPoller struct {
@@ -545,10 +565,12 @@ func (p *bastionShareableLinkListResultPagerPoller) handleResponse(resp *azcore.
 
 // BgpPeerStatusListResultPoller provides polling facilities until the operation completes
 type BgpPeerStatusListResultPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final BgpPeerStatusListResultResponse will be returned.
 	FinalResponse(ctx context.Context) (BgpPeerStatusListResultResponse, error)
-	ResumeToken() (string, error)
 }
 
 type bgpPeerStatusListResultPoller struct {
@@ -595,10 +617,12 @@ func (p *bgpPeerStatusListResultPoller) pollUntilDone(ctx context.Context, frequ
 
 // ConnectionMonitorQueryResultPoller provides polling facilities until the operation completes
 type ConnectionMonitorQueryResultPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final ConnectionMonitorQueryResultResponse will be returned.
 	FinalResponse(ctx context.Context) (ConnectionMonitorQueryResultResponse, error)
-	ResumeToken() (string, error)
 }
 
 type connectionMonitorQueryResultPoller struct {
@@ -645,10 +669,12 @@ func (p *connectionMonitorQueryResultPoller) pollUntilDone(ctx context.Context, 
 
 // ConnectionMonitorResultPoller provides polling facilities until the operation completes
 type ConnectionMonitorResultPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final ConnectionMonitorResultResponse will be returned.
 	FinalResponse(ctx context.Context) (ConnectionMonitorResultResponse, error)
-	ResumeToken() (string, error)
 }
 
 type connectionMonitorResultPoller struct {
@@ -695,10 +721,12 @@ func (p *connectionMonitorResultPoller) pollUntilDone(ctx context.Context, frequ
 
 // ConnectionResetSharedKeyPoller provides polling facilities until the operation completes
 type ConnectionResetSharedKeyPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final ConnectionResetSharedKeyResponse will be returned.
 	FinalResponse(ctx context.Context) (ConnectionResetSharedKeyResponse, error)
-	ResumeToken() (string, error)
 }
 
 type connectionResetSharedKeyPoller struct {
@@ -745,10 +773,12 @@ func (p *connectionResetSharedKeyPoller) pollUntilDone(ctx context.Context, freq
 
 // ConnectionSharedKeyPoller provides polling facilities until the operation completes
 type ConnectionSharedKeyPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final ConnectionSharedKeyResponse will be returned.
 	FinalResponse(ctx context.Context) (ConnectionSharedKeyResponse, error)
-	ResumeToken() (string, error)
 }
 
 type connectionSharedKeyPoller struct {
@@ -795,10 +825,12 @@ func (p *connectionSharedKeyPoller) pollUntilDone(ctx context.Context, frequency
 
 // ConnectivityInformationPoller provides polling facilities until the operation completes
 type ConnectivityInformationPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final ConnectivityInformationResponse will be returned.
 	FinalResponse(ctx context.Context) (ConnectivityInformationResponse, error)
-	ResumeToken() (string, error)
 }
 
 type connectivityInformationPoller struct {
@@ -845,10 +877,12 @@ func (p *connectivityInformationPoller) pollUntilDone(ctx context.Context, frequ
 
 // DdosCustomPolicyPoller provides polling facilities until the operation completes
 type DdosCustomPolicyPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final DdosCustomPolicyResponse will be returned.
 	FinalResponse(ctx context.Context) (DdosCustomPolicyResponse, error)
-	ResumeToken() (string, error)
 }
 
 type ddosCustomPolicyPoller struct {
@@ -895,10 +929,12 @@ func (p *ddosCustomPolicyPoller) pollUntilDone(ctx context.Context, frequency ti
 
 // DdosProtectionPlanPoller provides polling facilities until the operation completes
 type DdosProtectionPlanPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final DdosProtectionPlanResponse will be returned.
 	FinalResponse(ctx context.Context) (DdosProtectionPlanResponse, error)
-	ResumeToken() (string, error)
 }
 
 type ddosProtectionPlanPoller struct {
@@ -945,10 +981,12 @@ func (p *ddosProtectionPlanPoller) pollUntilDone(ctx context.Context, frequency 
 
 // EffectiveNetworkSecurityGroupListResultPoller provides polling facilities until the operation completes
 type EffectiveNetworkSecurityGroupListResultPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final EffectiveNetworkSecurityGroupListResultResponse will be returned.
 	FinalResponse(ctx context.Context) (EffectiveNetworkSecurityGroupListResultResponse, error)
-	ResumeToken() (string, error)
 }
 
 type effectiveNetworkSecurityGroupListResultPoller struct {
@@ -995,10 +1033,12 @@ func (p *effectiveNetworkSecurityGroupListResultPoller) pollUntilDone(ctx contex
 
 // EffectiveRouteListResultPoller provides polling facilities until the operation completes
 type EffectiveRouteListResultPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final EffectiveRouteListResultResponse will be returned.
 	FinalResponse(ctx context.Context) (EffectiveRouteListResultResponse, error)
-	ResumeToken() (string, error)
 }
 
 type effectiveRouteListResultPoller struct {
@@ -1045,10 +1085,12 @@ func (p *effectiveRouteListResultPoller) pollUntilDone(ctx context.Context, freq
 
 // ExpressRouteCircuitAuthorizationPoller provides polling facilities until the operation completes
 type ExpressRouteCircuitAuthorizationPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final ExpressRouteCircuitAuthorizationResponse will be returned.
 	FinalResponse(ctx context.Context) (ExpressRouteCircuitAuthorizationResponse, error)
-	ResumeToken() (string, error)
 }
 
 type expressRouteCircuitAuthorizationPoller struct {
@@ -1095,10 +1137,12 @@ func (p *expressRouteCircuitAuthorizationPoller) pollUntilDone(ctx context.Conte
 
 // ExpressRouteCircuitConnectionPoller provides polling facilities until the operation completes
 type ExpressRouteCircuitConnectionPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final ExpressRouteCircuitConnectionResponse will be returned.
 	FinalResponse(ctx context.Context) (ExpressRouteCircuitConnectionResponse, error)
-	ResumeToken() (string, error)
 }
 
 type expressRouteCircuitConnectionPoller struct {
@@ -1145,10 +1189,12 @@ func (p *expressRouteCircuitConnectionPoller) pollUntilDone(ctx context.Context,
 
 // ExpressRouteCircuitPeeringPoller provides polling facilities until the operation completes
 type ExpressRouteCircuitPeeringPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final ExpressRouteCircuitPeeringResponse will be returned.
 	FinalResponse(ctx context.Context) (ExpressRouteCircuitPeeringResponse, error)
-	ResumeToken() (string, error)
 }
 
 type expressRouteCircuitPeeringPoller struct {
@@ -1195,10 +1241,12 @@ func (p *expressRouteCircuitPeeringPoller) pollUntilDone(ctx context.Context, fr
 
 // ExpressRouteCircuitPoller provides polling facilities until the operation completes
 type ExpressRouteCircuitPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final ExpressRouteCircuitResponse will be returned.
 	FinalResponse(ctx context.Context) (ExpressRouteCircuitResponse, error)
-	ResumeToken() (string, error)
 }
 
 type expressRouteCircuitPoller struct {
@@ -1245,10 +1293,12 @@ func (p *expressRouteCircuitPoller) pollUntilDone(ctx context.Context, frequency
 
 // ExpressRouteCircuitsArpTableListResultPoller provides polling facilities until the operation completes
 type ExpressRouteCircuitsArpTableListResultPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final ExpressRouteCircuitsArpTableListResultResponse will be returned.
 	FinalResponse(ctx context.Context) (ExpressRouteCircuitsArpTableListResultResponse, error)
-	ResumeToken() (string, error)
 }
 
 type expressRouteCircuitsArpTableListResultPoller struct {
@@ -1295,10 +1345,12 @@ func (p *expressRouteCircuitsArpTableListResultPoller) pollUntilDone(ctx context
 
 // ExpressRouteCircuitsRoutesTableListResultPoller provides polling facilities until the operation completes
 type ExpressRouteCircuitsRoutesTableListResultPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final ExpressRouteCircuitsRoutesTableListResultResponse will be returned.
 	FinalResponse(ctx context.Context) (ExpressRouteCircuitsRoutesTableListResultResponse, error)
-	ResumeToken() (string, error)
 }
 
 type expressRouteCircuitsRoutesTableListResultPoller struct {
@@ -1345,10 +1397,12 @@ func (p *expressRouteCircuitsRoutesTableListResultPoller) pollUntilDone(ctx cont
 
 // ExpressRouteCircuitsRoutesTableSummaryListResultPoller provides polling facilities until the operation completes
 type ExpressRouteCircuitsRoutesTableSummaryListResultPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final ExpressRouteCircuitsRoutesTableSummaryListResultResponse will be returned.
 	FinalResponse(ctx context.Context) (ExpressRouteCircuitsRoutesTableSummaryListResultResponse, error)
-	ResumeToken() (string, error)
 }
 
 type expressRouteCircuitsRoutesTableSummaryListResultPoller struct {
@@ -1395,10 +1449,12 @@ func (p *expressRouteCircuitsRoutesTableSummaryListResultPoller) pollUntilDone(c
 
 // ExpressRouteConnectionPoller provides polling facilities until the operation completes
 type ExpressRouteConnectionPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final ExpressRouteConnectionResponse will be returned.
 	FinalResponse(ctx context.Context) (ExpressRouteConnectionResponse, error)
-	ResumeToken() (string, error)
 }
 
 type expressRouteConnectionPoller struct {
@@ -1445,10 +1501,12 @@ func (p *expressRouteConnectionPoller) pollUntilDone(ctx context.Context, freque
 
 // ExpressRouteCrossConnectionPeeringPoller provides polling facilities until the operation completes
 type ExpressRouteCrossConnectionPeeringPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final ExpressRouteCrossConnectionPeeringResponse will be returned.
 	FinalResponse(ctx context.Context) (ExpressRouteCrossConnectionPeeringResponse, error)
-	ResumeToken() (string, error)
 }
 
 type expressRouteCrossConnectionPeeringPoller struct {
@@ -1495,10 +1553,12 @@ func (p *expressRouteCrossConnectionPeeringPoller) pollUntilDone(ctx context.Con
 
 // ExpressRouteCrossConnectionPoller provides polling facilities until the operation completes
 type ExpressRouteCrossConnectionPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final ExpressRouteCrossConnectionResponse will be returned.
 	FinalResponse(ctx context.Context) (ExpressRouteCrossConnectionResponse, error)
-	ResumeToken() (string, error)
 }
 
 type expressRouteCrossConnectionPoller struct {
@@ -1545,10 +1605,12 @@ func (p *expressRouteCrossConnectionPoller) pollUntilDone(ctx context.Context, f
 
 // ExpressRouteCrossConnectionsRoutesTableSummaryListResultPoller provides polling facilities until the operation completes
 type ExpressRouteCrossConnectionsRoutesTableSummaryListResultPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final ExpressRouteCrossConnectionsRoutesTableSummaryListResultResponse will be returned.
 	FinalResponse(ctx context.Context) (ExpressRouteCrossConnectionsRoutesTableSummaryListResultResponse, error)
-	ResumeToken() (string, error)
 }
 
 type expressRouteCrossConnectionsRoutesTableSummaryListResultPoller struct {
@@ -1595,10 +1657,12 @@ func (p *expressRouteCrossConnectionsRoutesTableSummaryListResultPoller) pollUnt
 
 // ExpressRouteGatewayPoller provides polling facilities until the operation completes
 type ExpressRouteGatewayPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final ExpressRouteGatewayResponse will be returned.
 	FinalResponse(ctx context.Context) (ExpressRouteGatewayResponse, error)
-	ResumeToken() (string, error)
 }
 
 type expressRouteGatewayPoller struct {
@@ -1645,10 +1709,12 @@ func (p *expressRouteGatewayPoller) pollUntilDone(ctx context.Context, frequency
 
 // ExpressRoutePortPoller provides polling facilities until the operation completes
 type ExpressRoutePortPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final ExpressRoutePortResponse will be returned.
 	FinalResponse(ctx context.Context) (ExpressRoutePortResponse, error)
-	ResumeToken() (string, error)
 }
 
 type expressRoutePortPoller struct {
@@ -1695,10 +1761,12 @@ func (p *expressRoutePortPoller) pollUntilDone(ctx context.Context, frequency ti
 
 // FirewallPolicyPoller provides polling facilities until the operation completes
 type FirewallPolicyPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final FirewallPolicyResponse will be returned.
 	FinalResponse(ctx context.Context) (FirewallPolicyResponse, error)
-	ResumeToken() (string, error)
 }
 
 type firewallPolicyPoller struct {
@@ -1745,10 +1813,12 @@ func (p *firewallPolicyPoller) pollUntilDone(ctx context.Context, frequency time
 
 // FirewallPolicyRuleGroupPoller provides polling facilities until the operation completes
 type FirewallPolicyRuleGroupPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final FirewallPolicyRuleGroupResponse will be returned.
 	FinalResponse(ctx context.Context) (FirewallPolicyRuleGroupResponse, error)
-	ResumeToken() (string, error)
 }
 
 type firewallPolicyRuleGroupPoller struct {
@@ -1795,10 +1865,12 @@ func (p *firewallPolicyRuleGroupPoller) pollUntilDone(ctx context.Context, frequ
 
 // FlowLogInformationPoller provides polling facilities until the operation completes
 type FlowLogInformationPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final FlowLogInformationResponse will be returned.
 	FinalResponse(ctx context.Context) (FlowLogInformationResponse, error)
-	ResumeToken() (string, error)
 }
 
 type flowLogInformationPoller struct {
@@ -1845,10 +1917,12 @@ func (p *flowLogInformationPoller) pollUntilDone(ctx context.Context, frequency 
 
 // FlowLogPoller provides polling facilities until the operation completes
 type FlowLogPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final FlowLogResponse will be returned.
 	FinalResponse(ctx context.Context) (FlowLogResponse, error)
-	ResumeToken() (string, error)
 }
 
 type flowLogPoller struct {
@@ -1895,10 +1969,12 @@ func (p *flowLogPoller) pollUntilDone(ctx context.Context, frequency time.Durati
 
 // GatewayRouteListResultPoller provides polling facilities until the operation completes
 type GatewayRouteListResultPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final GatewayRouteListResultResponse will be returned.
 	FinalResponse(ctx context.Context) (GatewayRouteListResultResponse, error)
-	ResumeToken() (string, error)
 }
 
 type gatewayRouteListResultPoller struct {
@@ -1945,10 +2021,12 @@ func (p *gatewayRouteListResultPoller) pollUntilDone(ctx context.Context, freque
 
 // HTTPPoller provides polling facilities until the operation completes
 type HTTPPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final HTTPResponse will be returned.
 	FinalResponse(ctx context.Context) (*http.Response, error)
-	ResumeToken() (string, error)
 }
 
 type httpPoller struct {
@@ -1983,10 +2061,12 @@ func (p *httpPoller) pollUntilDone(ctx context.Context, frequency time.Duration)
 
 // IPAllocationPoller provides polling facilities until the operation completes
 type IPAllocationPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final IPAllocationResponse will be returned.
 	FinalResponse(ctx context.Context) (IPAllocationResponse, error)
-	ResumeToken() (string, error)
 }
 
 type ipAllocationPoller struct {
@@ -2033,10 +2113,12 @@ func (p *ipAllocationPoller) pollUntilDone(ctx context.Context, frequency time.D
 
 // IPGroupPoller provides polling facilities until the operation completes
 type IPGroupPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final IPGroupResponse will be returned.
 	FinalResponse(ctx context.Context) (IPGroupResponse, error)
-	ResumeToken() (string, error)
 }
 
 type ipGroupPoller struct {
@@ -2083,10 +2165,12 @@ func (p *ipGroupPoller) pollUntilDone(ctx context.Context, frequency time.Durati
 
 // InboundNatRulePoller provides polling facilities until the operation completes
 type InboundNatRulePoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final InboundNatRuleResponse will be returned.
 	FinalResponse(ctx context.Context) (InboundNatRuleResponse, error)
-	ResumeToken() (string, error)
 }
 
 type inboundNatRulePoller struct {
@@ -2133,10 +2217,12 @@ func (p *inboundNatRulePoller) pollUntilDone(ctx context.Context, frequency time
 
 // LoadBalancerPoller provides polling facilities until the operation completes
 type LoadBalancerPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LoadBalancerResponse will be returned.
 	FinalResponse(ctx context.Context) (LoadBalancerResponse, error)
-	ResumeToken() (string, error)
 }
 
 type loadBalancerPoller struct {
@@ -2183,10 +2269,12 @@ func (p *loadBalancerPoller) pollUntilDone(ctx context.Context, frequency time.D
 
 // LocalNetworkGatewayPoller provides polling facilities until the operation completes
 type LocalNetworkGatewayPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LocalNetworkGatewayResponse will be returned.
 	FinalResponse(ctx context.Context) (LocalNetworkGatewayResponse, error)
-	ResumeToken() (string, error)
 }
 
 type localNetworkGatewayPoller struct {
@@ -2233,10 +2321,12 @@ func (p *localNetworkGatewayPoller) pollUntilDone(ctx context.Context, frequency
 
 // NatGatewayPoller provides polling facilities until the operation completes
 type NatGatewayPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final NatGatewayResponse will be returned.
 	FinalResponse(ctx context.Context) (NatGatewayResponse, error)
-	ResumeToken() (string, error)
 }
 
 type natGatewayPoller struct {
@@ -2283,10 +2373,12 @@ func (p *natGatewayPoller) pollUntilDone(ctx context.Context, frequency time.Dur
 
 // NetworkConfigurationDiagnosticResponsePoller provides polling facilities until the operation completes
 type NetworkConfigurationDiagnosticResponsePoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final NetworkConfigurationDiagnosticResponseResponse will be returned.
 	FinalResponse(ctx context.Context) (NetworkConfigurationDiagnosticResponseResponse, error)
-	ResumeToken() (string, error)
 }
 
 type networkConfigurationDiagnosticResponsePoller struct {
@@ -2333,10 +2425,12 @@ func (p *networkConfigurationDiagnosticResponsePoller) pollUntilDone(ctx context
 
 // NetworkInterfacePoller provides polling facilities until the operation completes
 type NetworkInterfacePoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final NetworkInterfaceResponse will be returned.
 	FinalResponse(ctx context.Context) (NetworkInterfaceResponse, error)
-	ResumeToken() (string, error)
 }
 
 type networkInterfacePoller struct {
@@ -2383,10 +2477,12 @@ func (p *networkInterfacePoller) pollUntilDone(ctx context.Context, frequency ti
 
 // NetworkInterfaceTapConfigurationPoller provides polling facilities until the operation completes
 type NetworkInterfaceTapConfigurationPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final NetworkInterfaceTapConfigurationResponse will be returned.
 	FinalResponse(ctx context.Context) (NetworkInterfaceTapConfigurationResponse, error)
-	ResumeToken() (string, error)
 }
 
 type networkInterfaceTapConfigurationPoller struct {
@@ -2433,10 +2529,12 @@ func (p *networkInterfaceTapConfigurationPoller) pollUntilDone(ctx context.Conte
 
 // NetworkSecurityGroupPoller provides polling facilities until the operation completes
 type NetworkSecurityGroupPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final NetworkSecurityGroupResponse will be returned.
 	FinalResponse(ctx context.Context) (NetworkSecurityGroupResponse, error)
-	ResumeToken() (string, error)
 }
 
 type networkSecurityGroupPoller struct {
@@ -2483,10 +2581,12 @@ func (p *networkSecurityGroupPoller) pollUntilDone(ctx context.Context, frequenc
 
 // NetworkVirtualAppliancePoller provides polling facilities until the operation completes
 type NetworkVirtualAppliancePoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final NetworkVirtualApplianceResponse will be returned.
 	FinalResponse(ctx context.Context) (NetworkVirtualApplianceResponse, error)
-	ResumeToken() (string, error)
 }
 
 type networkVirtualAppliancePoller struct {
@@ -2533,10 +2633,12 @@ func (p *networkVirtualAppliancePoller) pollUntilDone(ctx context.Context, frequ
 
 // NextHopResultPoller provides polling facilities until the operation completes
 type NextHopResultPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final NextHopResultResponse will be returned.
 	FinalResponse(ctx context.Context) (NextHopResultResponse, error)
-	ResumeToken() (string, error)
 }
 
 type nextHopResultPoller struct {
@@ -2583,10 +2685,12 @@ func (p *nextHopResultPoller) pollUntilDone(ctx context.Context, frequency time.
 
 // P2SVpnConnectionHealthPoller provides polling facilities until the operation completes
 type P2SVpnConnectionHealthPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final P2SVpnConnectionHealthResponse will be returned.
 	FinalResponse(ctx context.Context) (P2SVpnConnectionHealthResponse, error)
-	ResumeToken() (string, error)
 }
 
 type p2SVpnConnectionHealthPoller struct {
@@ -2633,10 +2737,12 @@ func (p *p2SVpnConnectionHealthPoller) pollUntilDone(ctx context.Context, freque
 
 // P2SVpnGatewayPoller provides polling facilities until the operation completes
 type P2SVpnGatewayPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final P2SVpnGatewayResponse will be returned.
 	FinalResponse(ctx context.Context) (P2SVpnGatewayResponse, error)
-	ResumeToken() (string, error)
 }
 
 type p2SVpnGatewayPoller struct {
@@ -2683,10 +2789,12 @@ func (p *p2SVpnGatewayPoller) pollUntilDone(ctx context.Context, frequency time.
 
 // PacketCaptureQueryStatusResultPoller provides polling facilities until the operation completes
 type PacketCaptureQueryStatusResultPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final PacketCaptureQueryStatusResultResponse will be returned.
 	FinalResponse(ctx context.Context) (PacketCaptureQueryStatusResultResponse, error)
-	ResumeToken() (string, error)
 }
 
 type packetCaptureQueryStatusResultPoller struct {
@@ -2733,10 +2841,12 @@ func (p *packetCaptureQueryStatusResultPoller) pollUntilDone(ctx context.Context
 
 // PacketCaptureResultPoller provides polling facilities until the operation completes
 type PacketCaptureResultPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final PacketCaptureResultResponse will be returned.
 	FinalResponse(ctx context.Context) (PacketCaptureResultResponse, error)
-	ResumeToken() (string, error)
 }
 
 type packetCaptureResultPoller struct {
@@ -2783,10 +2893,12 @@ func (p *packetCaptureResultPoller) pollUntilDone(ctx context.Context, frequency
 
 // PrivateDNSZoneGroupPoller provides polling facilities until the operation completes
 type PrivateDNSZoneGroupPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final PrivateDNSZoneGroupResponse will be returned.
 	FinalResponse(ctx context.Context) (PrivateDNSZoneGroupResponse, error)
-	ResumeToken() (string, error)
 }
 
 type privateDnsZoneGroupPoller struct {
@@ -2833,10 +2945,12 @@ func (p *privateDnsZoneGroupPoller) pollUntilDone(ctx context.Context, frequency
 
 // PrivateEndpointPoller provides polling facilities until the operation completes
 type PrivateEndpointPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final PrivateEndpointResponse will be returned.
 	FinalResponse(ctx context.Context) (PrivateEndpointResponse, error)
-	ResumeToken() (string, error)
 }
 
 type privateEndpointPoller struct {
@@ -2883,10 +2997,12 @@ func (p *privateEndpointPoller) pollUntilDone(ctx context.Context, frequency tim
 
 // PrivateLinkServicePoller provides polling facilities until the operation completes
 type PrivateLinkServicePoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final PrivateLinkServiceResponse will be returned.
 	FinalResponse(ctx context.Context) (PrivateLinkServiceResponse, error)
-	ResumeToken() (string, error)
 }
 
 type privateLinkServicePoller struct {
@@ -2933,10 +3049,12 @@ func (p *privateLinkServicePoller) pollUntilDone(ctx context.Context, frequency 
 
 // PrivateLinkServiceVisibilityPoller provides polling facilities until the operation completes
 type PrivateLinkServiceVisibilityPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final PrivateLinkServiceVisibilityResponse will be returned.
 	FinalResponse(ctx context.Context) (PrivateLinkServiceVisibilityResponse, error)
-	ResumeToken() (string, error)
 }
 
 type privateLinkServiceVisibilityPoller struct {
@@ -2983,10 +3101,12 @@ func (p *privateLinkServiceVisibilityPoller) pollUntilDone(ctx context.Context, 
 
 // PublicIPAddressPoller provides polling facilities until the operation completes
 type PublicIPAddressPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final PublicIPAddressResponse will be returned.
 	FinalResponse(ctx context.Context) (PublicIPAddressResponse, error)
-	ResumeToken() (string, error)
 }
 
 type publicIPAddressPoller struct {
@@ -3033,10 +3153,12 @@ func (p *publicIPAddressPoller) pollUntilDone(ctx context.Context, frequency tim
 
 // PublicIPPrefixPoller provides polling facilities until the operation completes
 type PublicIPPrefixPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final PublicIPPrefixResponse will be returned.
 	FinalResponse(ctx context.Context) (PublicIPPrefixResponse, error)
-	ResumeToken() (string, error)
 }
 
 type publicIPPrefixPoller struct {
@@ -3083,10 +3205,12 @@ func (p *publicIPPrefixPoller) pollUntilDone(ctx context.Context, frequency time
 
 // RouteFilterPoller provides polling facilities until the operation completes
 type RouteFilterPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final RouteFilterResponse will be returned.
 	FinalResponse(ctx context.Context) (RouteFilterResponse, error)
-	ResumeToken() (string, error)
 }
 
 type routeFilterPoller struct {
@@ -3133,10 +3257,12 @@ func (p *routeFilterPoller) pollUntilDone(ctx context.Context, frequency time.Du
 
 // RouteFilterRulePoller provides polling facilities until the operation completes
 type RouteFilterRulePoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final RouteFilterRuleResponse will be returned.
 	FinalResponse(ctx context.Context) (RouteFilterRuleResponse, error)
-	ResumeToken() (string, error)
 }
 
 type routeFilterRulePoller struct {
@@ -3183,10 +3309,12 @@ func (p *routeFilterRulePoller) pollUntilDone(ctx context.Context, frequency tim
 
 // RoutePoller provides polling facilities until the operation completes
 type RoutePoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final RouteResponse will be returned.
 	FinalResponse(ctx context.Context) (RouteResponse, error)
-	ResumeToken() (string, error)
 }
 
 type routePoller struct {
@@ -3233,10 +3361,12 @@ func (p *routePoller) pollUntilDone(ctx context.Context, frequency time.Duration
 
 // RouteTablePoller provides polling facilities until the operation completes
 type RouteTablePoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final RouteTableResponse will be returned.
 	FinalResponse(ctx context.Context) (RouteTableResponse, error)
-	ResumeToken() (string, error)
 }
 
 type routeTablePoller struct {
@@ -3283,10 +3413,12 @@ func (p *routeTablePoller) pollUntilDone(ctx context.Context, frequency time.Dur
 
 // SecurityGroupViewResultPoller provides polling facilities until the operation completes
 type SecurityGroupViewResultPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final SecurityGroupViewResultResponse will be returned.
 	FinalResponse(ctx context.Context) (SecurityGroupViewResultResponse, error)
-	ResumeToken() (string, error)
 }
 
 type securityGroupViewResultPoller struct {
@@ -3333,10 +3465,12 @@ func (p *securityGroupViewResultPoller) pollUntilDone(ctx context.Context, frequ
 
 // SecurityPartnerProviderPoller provides polling facilities until the operation completes
 type SecurityPartnerProviderPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final SecurityPartnerProviderResponse will be returned.
 	FinalResponse(ctx context.Context) (SecurityPartnerProviderResponse, error)
-	ResumeToken() (string, error)
 }
 
 type securityPartnerProviderPoller struct {
@@ -3383,10 +3517,12 @@ func (p *securityPartnerProviderPoller) pollUntilDone(ctx context.Context, frequ
 
 // SecurityRulePoller provides polling facilities until the operation completes
 type SecurityRulePoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final SecurityRuleResponse will be returned.
 	FinalResponse(ctx context.Context) (SecurityRuleResponse, error)
-	ResumeToken() (string, error)
 }
 
 type securityRulePoller struct {
@@ -3433,10 +3569,12 @@ func (p *securityRulePoller) pollUntilDone(ctx context.Context, frequency time.D
 
 // ServiceEndpointPolicyDefinitionPoller provides polling facilities until the operation completes
 type ServiceEndpointPolicyDefinitionPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final ServiceEndpointPolicyDefinitionResponse will be returned.
 	FinalResponse(ctx context.Context) (ServiceEndpointPolicyDefinitionResponse, error)
-	ResumeToken() (string, error)
 }
 
 type serviceEndpointPolicyDefinitionPoller struct {
@@ -3483,10 +3621,12 @@ func (p *serviceEndpointPolicyDefinitionPoller) pollUntilDone(ctx context.Contex
 
 // ServiceEndpointPolicyPoller provides polling facilities until the operation completes
 type ServiceEndpointPolicyPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final ServiceEndpointPolicyResponse will be returned.
 	FinalResponse(ctx context.Context) (ServiceEndpointPolicyResponse, error)
-	ResumeToken() (string, error)
 }
 
 type serviceEndpointPolicyPoller struct {
@@ -3533,10 +3673,12 @@ func (p *serviceEndpointPolicyPoller) pollUntilDone(ctx context.Context, frequen
 
 // StringPoller provides polling facilities until the operation completes
 type StringPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final StringResponse will be returned.
 	FinalResponse(ctx context.Context) (StringResponse, error)
-	ResumeToken() (string, error)
 }
 
 type stringPoller struct {
@@ -3585,10 +3727,12 @@ func (p *stringPoller) pollUntilDone(ctx context.Context, frequency time.Duratio
 
 // SubnetPoller provides polling facilities until the operation completes
 type SubnetPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final SubnetResponse will be returned.
 	FinalResponse(ctx context.Context) (SubnetResponse, error)
-	ResumeToken() (string, error)
 }
 
 type subnetPoller struct {
@@ -3635,10 +3779,12 @@ func (p *subnetPoller) pollUntilDone(ctx context.Context, frequency time.Duratio
 
 // TroubleshootingResultPoller provides polling facilities until the operation completes
 type TroubleshootingResultPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final TroubleshootingResultResponse will be returned.
 	FinalResponse(ctx context.Context) (TroubleshootingResultResponse, error)
-	ResumeToken() (string, error)
 }
 
 type troubleshootingResultPoller struct {
@@ -3685,10 +3831,12 @@ func (p *troubleshootingResultPoller) pollUntilDone(ctx context.Context, frequen
 
 // VerificationIPFlowResultPoller provides polling facilities until the operation completes
 type VerificationIPFlowResultPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final VerificationIPFlowResultResponse will be returned.
 	FinalResponse(ctx context.Context) (VerificationIPFlowResultResponse, error)
-	ResumeToken() (string, error)
 }
 
 type verificationIPFlowResultPoller struct {
@@ -3735,10 +3883,12 @@ func (p *verificationIPFlowResultPoller) pollUntilDone(ctx context.Context, freq
 
 // VirtualHubPoller provides polling facilities until the operation completes
 type VirtualHubPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final VirtualHubResponse will be returned.
 	FinalResponse(ctx context.Context) (VirtualHubResponse, error)
-	ResumeToken() (string, error)
 }
 
 type virtualHubPoller struct {
@@ -3785,10 +3935,12 @@ func (p *virtualHubPoller) pollUntilDone(ctx context.Context, frequency time.Dur
 
 // VirtualHubRouteTableV2Poller provides polling facilities until the operation completes
 type VirtualHubRouteTableV2Poller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final VirtualHubRouteTableV2Response will be returned.
 	FinalResponse(ctx context.Context) (VirtualHubRouteTableV2Response, error)
-	ResumeToken() (string, error)
 }
 
 type virtualHubRouteTableV2Poller struct {
@@ -3835,10 +3987,12 @@ func (p *virtualHubRouteTableV2Poller) pollUntilDone(ctx context.Context, freque
 
 // VirtualNetworkGatewayConnectionPoller provides polling facilities until the operation completes
 type VirtualNetworkGatewayConnectionPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final VirtualNetworkGatewayConnectionResponse will be returned.
 	FinalResponse(ctx context.Context) (VirtualNetworkGatewayConnectionResponse, error)
-	ResumeToken() (string, error)
 }
 
 type virtualNetworkGatewayConnectionPoller struct {
@@ -3885,10 +4039,12 @@ func (p *virtualNetworkGatewayConnectionPoller) pollUntilDone(ctx context.Contex
 
 // VirtualNetworkGatewayPoller provides polling facilities until the operation completes
 type VirtualNetworkGatewayPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final VirtualNetworkGatewayResponse will be returned.
 	FinalResponse(ctx context.Context) (VirtualNetworkGatewayResponse, error)
-	ResumeToken() (string, error)
 }
 
 type virtualNetworkGatewayPoller struct {
@@ -3935,10 +4091,12 @@ func (p *virtualNetworkGatewayPoller) pollUntilDone(ctx context.Context, frequen
 
 // VirtualNetworkPeeringPoller provides polling facilities until the operation completes
 type VirtualNetworkPeeringPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final VirtualNetworkPeeringResponse will be returned.
 	FinalResponse(ctx context.Context) (VirtualNetworkPeeringResponse, error)
-	ResumeToken() (string, error)
 }
 
 type virtualNetworkPeeringPoller struct {
@@ -3985,10 +4143,12 @@ func (p *virtualNetworkPeeringPoller) pollUntilDone(ctx context.Context, frequen
 
 // VirtualNetworkPoller provides polling facilities until the operation completes
 type VirtualNetworkPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final VirtualNetworkResponse will be returned.
 	FinalResponse(ctx context.Context) (VirtualNetworkResponse, error)
-	ResumeToken() (string, error)
 }
 
 type virtualNetworkPoller struct {
@@ -4035,10 +4195,12 @@ func (p *virtualNetworkPoller) pollUntilDone(ctx context.Context, frequency time
 
 // VirtualNetworkTapPoller provides polling facilities until the operation completes
 type VirtualNetworkTapPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final VirtualNetworkTapResponse will be returned.
 	FinalResponse(ctx context.Context) (VirtualNetworkTapResponse, error)
-	ResumeToken() (string, error)
 }
 
 type virtualNetworkTapPoller struct {
@@ -4085,10 +4247,12 @@ func (p *virtualNetworkTapPoller) pollUntilDone(ctx context.Context, frequency t
 
 // VirtualRouterPeeringPoller provides polling facilities until the operation completes
 type VirtualRouterPeeringPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final VirtualRouterPeeringResponse will be returned.
 	FinalResponse(ctx context.Context) (VirtualRouterPeeringResponse, error)
-	ResumeToken() (string, error)
 }
 
 type virtualRouterPeeringPoller struct {
@@ -4135,10 +4299,12 @@ func (p *virtualRouterPeeringPoller) pollUntilDone(ctx context.Context, frequenc
 
 // VirtualRouterPoller provides polling facilities until the operation completes
 type VirtualRouterPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final VirtualRouterResponse will be returned.
 	FinalResponse(ctx context.Context) (VirtualRouterResponse, error)
-	ResumeToken() (string, error)
 }
 
 type virtualRouterPoller struct {
@@ -4185,10 +4351,12 @@ func (p *virtualRouterPoller) pollUntilDone(ctx context.Context, frequency time.
 
 // VirtualWanPoller provides polling facilities until the operation completes
 type VirtualWanPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final VirtualWanResponse will be returned.
 	FinalResponse(ctx context.Context) (VirtualWanResponse, error)
-	ResumeToken() (string, error)
 }
 
 type virtualWanPoller struct {
@@ -4235,10 +4403,12 @@ func (p *virtualWanPoller) pollUntilDone(ctx context.Context, frequency time.Dur
 
 // VpnClientConnectionHealthDetailListResultPoller provides polling facilities until the operation completes
 type VpnClientConnectionHealthDetailListResultPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final VpnClientConnectionHealthDetailListResultResponse will be returned.
 	FinalResponse(ctx context.Context) (VpnClientConnectionHealthDetailListResultResponse, error)
-	ResumeToken() (string, error)
 }
 
 type vpnClientConnectionHealthDetailListResultPoller struct {
@@ -4285,10 +4455,12 @@ func (p *vpnClientConnectionHealthDetailListResultPoller) pollUntilDone(ctx cont
 
 // VpnClientIPsecParametersPoller provides polling facilities until the operation completes
 type VpnClientIPsecParametersPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final VpnClientIPsecParametersResponse will be returned.
 	FinalResponse(ctx context.Context) (VpnClientIPsecParametersResponse, error)
-	ResumeToken() (string, error)
 }
 
 type vpnClientIPsecParametersPoller struct {
@@ -4335,10 +4507,12 @@ func (p *vpnClientIPsecParametersPoller) pollUntilDone(ctx context.Context, freq
 
 // VpnConnectionPoller provides polling facilities until the operation completes
 type VpnConnectionPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final VpnConnectionResponse will be returned.
 	FinalResponse(ctx context.Context) (VpnConnectionResponse, error)
-	ResumeToken() (string, error)
 }
 
 type vpnConnectionPoller struct {
@@ -4385,10 +4559,12 @@ func (p *vpnConnectionPoller) pollUntilDone(ctx context.Context, frequency time.
 
 // VpnGatewayPoller provides polling facilities until the operation completes
 type VpnGatewayPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final VpnGatewayResponse will be returned.
 	FinalResponse(ctx context.Context) (VpnGatewayResponse, error)
-	ResumeToken() (string, error)
 }
 
 type vpnGatewayPoller struct {
@@ -4435,10 +4611,12 @@ func (p *vpnGatewayPoller) pollUntilDone(ctx context.Context, frequency time.Dur
 
 // VpnProfileResponsePoller provides polling facilities until the operation completes
 type VpnProfileResponsePoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final VpnProfileResponseResponse will be returned.
 	FinalResponse(ctx context.Context) (VpnProfileResponseResponse, error)
-	ResumeToken() (string, error)
 }
 
 type vpnProfileResponsePoller struct {
@@ -4485,10 +4663,12 @@ func (p *vpnProfileResponsePoller) pollUntilDone(ctx context.Context, frequency 
 
 // VpnServerConfigurationPoller provides polling facilities until the operation completes
 type VpnServerConfigurationPoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final VpnServerConfigurationResponse will be returned.
 	FinalResponse(ctx context.Context) (VpnServerConfigurationResponse, error)
-	ResumeToken() (string, error)
 }
 
 type vpnServerConfigurationPoller struct {
@@ -4535,10 +4715,12 @@ func (p *vpnServerConfigurationPoller) pollUntilDone(ctx context.Context, freque
 
 // VpnServerConfigurationsResponsePoller provides polling facilities until the operation completes
 type VpnServerConfigurationsResponsePoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final VpnServerConfigurationsResponseResponse will be returned.
 	FinalResponse(ctx context.Context) (VpnServerConfigurationsResponseResponse, error)
-	ResumeToken() (string, error)
 }
 
 type vpnServerConfigurationsResponsePoller struct {
@@ -4585,10 +4767,12 @@ func (p *vpnServerConfigurationsResponsePoller) pollUntilDone(ctx context.Contex
 
 // VpnSitePoller provides polling facilities until the operation completes
 type VpnSitePoller interface {
-	Done() bool
-	Poll(ctx context.Context) (*http.Response, error)
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final VpnSiteResponse will be returned.
 	FinalResponse(ctx context.Context) (VpnSiteResponse, error)
-	ResumeToken() (string, error)
 }
 
 type vpnSitePoller struct {
