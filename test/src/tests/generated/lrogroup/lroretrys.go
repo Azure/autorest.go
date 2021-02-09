@@ -243,7 +243,11 @@ func (client LRORetrysClient) DeleteProvisioning202Accepted200SucceededSender(re
 			return
 		}
 		sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-		if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p.Response.Response, err = future.GetResult(sender)
+		if p.Response.Response == nil && err == nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysDeleteProvisioning202Accepted200SucceededFuture", "Result", nil, "received nil response and error")
+		}
+		if err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
 			p, err = client.DeleteProvisioning202Accepted200SucceededResponder(p.Response.Response)
 			if err != nil {
 				err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysDeleteProvisioning202Accepted200SucceededFuture", "Result", p.Response.Response, "Failure responding to request")
@@ -501,7 +505,11 @@ func (client LRORetrysClient) Put201CreatingSucceeded200Sender(req *http.Request
 			return
 		}
 		sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-		if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p.Response.Response, err = future.GetResult(sender)
+		if p.Response.Response == nil && err == nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysPut201CreatingSucceeded200Future", "Result", nil, "received nil response and error")
+		}
+		if err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
 			p, err = client.Put201CreatingSucceeded200Responder(p.Response.Response)
 			if err != nil {
 				err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysPut201CreatingSucceeded200Future", "Result", p.Response.Response, "Failure responding to request")
@@ -592,7 +600,11 @@ func (client LRORetrysClient) PutAsyncRelativeRetrySucceededSender(req *http.Req
 			return
 		}
 		sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-		if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p.Response.Response, err = future.GetResult(sender)
+		if p.Response.Response == nil && err == nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysPutAsyncRelativeRetrySucceededFuture", "Result", nil, "received nil response and error")
+		}
+		if err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
 			p, err = client.PutAsyncRelativeRetrySucceededResponder(p.Response.Response)
 			if err != nil {
 				err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysPutAsyncRelativeRetrySucceededFuture", "Result", p.Response.Response, "Failure responding to request")

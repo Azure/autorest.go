@@ -1367,7 +1367,11 @@ func (client LROSADsClient) Put200InvalidJSONSender(req *http.Request) (future L
 			return
 		}
 		sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-		if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p.Response.Response, err = future.GetResult(sender)
+		if p.Response.Response == nil && err == nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPut200InvalidJSONFuture", "Result", nil, "received nil response and error")
+		}
+		if err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
 			p, err = client.Put200InvalidJSONResponder(p.Response.Response)
 			if err != nil {
 				err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPut200InvalidJSONFuture", "Result", p.Response.Response, "Failure responding to request")
@@ -1457,7 +1461,11 @@ func (client LROSADsClient) PutAsyncRelativeRetry400Sender(req *http.Request) (f
 			return
 		}
 		sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-		if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p.Response.Response, err = future.GetResult(sender)
+		if p.Response.Response == nil && err == nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutAsyncRelativeRetry400Future", "Result", nil, "received nil response and error")
+		}
+		if err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
 			p, err = client.PutAsyncRelativeRetry400Responder(p.Response.Response)
 			if err != nil {
 				err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutAsyncRelativeRetry400Future", "Result", p.Response.Response, "Failure responding to request")
@@ -1548,7 +1556,11 @@ func (client LROSADsClient) PutAsyncRelativeRetryInvalidHeaderSender(req *http.R
 			return
 		}
 		sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-		if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p.Response.Response, err = future.GetResult(sender)
+		if p.Response.Response == nil && err == nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutAsyncRelativeRetryInvalidHeaderFuture", "Result", nil, "received nil response and error")
+		}
+		if err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
 			p, err = client.PutAsyncRelativeRetryInvalidHeaderResponder(p.Response.Response)
 			if err != nil {
 				err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutAsyncRelativeRetryInvalidHeaderFuture", "Result", p.Response.Response, "Failure responding to request")
@@ -1639,7 +1651,11 @@ func (client LROSADsClient) PutAsyncRelativeRetryInvalidJSONPollingSender(req *h
 			return
 		}
 		sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-		if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p.Response.Response, err = future.GetResult(sender)
+		if p.Response.Response == nil && err == nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutAsyncRelativeRetryInvalidJSONPollingFuture", "Result", nil, "received nil response and error")
+		}
+		if err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
 			p, err = client.PutAsyncRelativeRetryInvalidJSONPollingResponder(p.Response.Response)
 			if err != nil {
 				err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutAsyncRelativeRetryInvalidJSONPollingFuture", "Result", p.Response.Response, "Failure responding to request")
@@ -1730,7 +1746,11 @@ func (client LROSADsClient) PutAsyncRelativeRetryNoStatusSender(req *http.Reques
 			return
 		}
 		sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-		if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p.Response.Response, err = future.GetResult(sender)
+		if p.Response.Response == nil && err == nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutAsyncRelativeRetryNoStatusFuture", "Result", nil, "received nil response and error")
+		}
+		if err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
 			p, err = client.PutAsyncRelativeRetryNoStatusResponder(p.Response.Response)
 			if err != nil {
 				err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutAsyncRelativeRetryNoStatusFuture", "Result", p.Response.Response, "Failure responding to request")
@@ -1821,7 +1841,11 @@ func (client LROSADsClient) PutAsyncRelativeRetryNoStatusPayloadSender(req *http
 			return
 		}
 		sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-		if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p.Response.Response, err = future.GetResult(sender)
+		if p.Response.Response == nil && err == nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutAsyncRelativeRetryNoStatusPayloadFuture", "Result", nil, "received nil response and error")
+		}
+		if err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
 			p, err = client.PutAsyncRelativeRetryNoStatusPayloadResponder(p.Response.Response)
 			if err != nil {
 				err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutAsyncRelativeRetryNoStatusPayloadFuture", "Result", p.Response.Response, "Failure responding to request")
@@ -1911,7 +1935,11 @@ func (client LROSADsClient) PutError201NoProvisioningStatePayloadSender(req *htt
 			return
 		}
 		sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-		if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p.Response.Response, err = future.GetResult(sender)
+		if p.Response.Response == nil && err == nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutError201NoProvisioningStatePayloadFuture", "Result", nil, "received nil response and error")
+		}
+		if err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
 			p, err = client.PutError201NoProvisioningStatePayloadResponder(p.Response.Response)
 			if err != nil {
 				err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutError201NoProvisioningStatePayloadFuture", "Result", p.Response.Response, "Failure responding to request")
@@ -2001,7 +2029,11 @@ func (client LROSADsClient) PutNonRetry201Creating400Sender(req *http.Request) (
 			return
 		}
 		sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-		if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p.Response.Response, err = future.GetResult(sender)
+		if p.Response.Response == nil && err == nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutNonRetry201Creating400Future", "Result", nil, "received nil response and error")
+		}
+		if err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
 			p, err = client.PutNonRetry201Creating400Responder(p.Response.Response)
 			if err != nil {
 				err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutNonRetry201Creating400Future", "Result", p.Response.Response, "Failure responding to request")
@@ -2091,7 +2123,11 @@ func (client LROSADsClient) PutNonRetry201Creating400InvalidJSONSender(req *http
 			return
 		}
 		sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-		if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p.Response.Response, err = future.GetResult(sender)
+		if p.Response.Response == nil && err == nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutNonRetry201Creating400InvalidJSONFuture", "Result", nil, "received nil response and error")
+		}
+		if err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
 			p, err = client.PutNonRetry201Creating400InvalidJSONResponder(p.Response.Response)
 			if err != nil {
 				err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutNonRetry201Creating400InvalidJSONFuture", "Result", p.Response.Response, "Failure responding to request")
@@ -2180,7 +2216,11 @@ func (client LROSADsClient) PutNonRetry400Sender(req *http.Request) (future LROS
 			return
 		}
 		sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-		if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p.Response.Response, err = future.GetResult(sender)
+		if p.Response.Response == nil && err == nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutNonRetry400Future", "Result", nil, "received nil response and error")
+		}
+		if err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
 			p, err = client.PutNonRetry400Responder(p.Response.Response)
 			if err != nil {
 				err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutNonRetry400Future", "Result", p.Response.Response, "Failure responding to request")

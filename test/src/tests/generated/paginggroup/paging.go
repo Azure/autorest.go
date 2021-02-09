@@ -636,7 +636,11 @@ func (client PagingClient) GetMultiplePagesLROSender(req *http.Request) (future 
 			return
 		}
 		sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-		if prp.pr.Response.Response, err = future.GetResult(sender); err == nil && prp.pr.Response.Response.StatusCode != http.StatusNoContent {
+		prp.pr.Response.Response, err = future.GetResult(sender)
+		if prp.pr.Response.Response == nil && err == nil {
+			err = autorest.NewErrorWithError(err, "paginggroup.PagingGetMultiplePagesLROFuture", "Result", nil, "received nil response and error")
+		}
+		if err == nil && prp.pr.Response.Response.StatusCode != http.StatusNoContent {
 			prp, err = client.GetMultiplePagesLROResponder(prp.pr.Response.Response)
 			if err != nil {
 				err = autorest.NewErrorWithError(err, "paginggroup.PagingGetMultiplePagesLROFuture", "Result", prp.pr.Response.Response, "Failure responding to request")
