@@ -12,7 +12,8 @@
     "publish-preview": "gulp publish-preview",
     "regenerate": "gulp regenerate",
     "clean": "gulp clean",
-    "nuke": "git clean -xdf"
+    "nuke": "git clean -xdf",
+    "preinstall": "node preinstall.js"
   },
   "repository": {
     "type": "git",

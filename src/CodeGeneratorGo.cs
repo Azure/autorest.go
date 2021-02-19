@@ -46,11 +46,9 @@ namespace AutoRest.Go
             var folder = Path.GetFullPath(Settings.Instance.Host.GetValue<string>("output-folder").Result).Replace('\\', '/');
             // check if the namespace contains illegal characters
             var ns = Settings.Instance.Host.GetValue<string>("namespace").Result;
-            var r = new Regex(@"^[a-z][a-z0-9_]*[a-z0-9]?$");
-            // skip this check if namespace is not specified
-            if (!string.IsNullOrEmpty(ns) && !r.IsMatch(ns))
+            if (Settings.Instance.Host.GetValue<bool>("namespace-chk").Result)
             {
-                throw new InvalidOperationException($"namespace can only contains lower case letters, numbers and underscore");
+                NamespaceCheck(ns);
             }
 
             // if preview-chk:true is specified verify that preview swagger is output under a preview subdirectory.
@@ -176,6 +174,16 @@ namespace AutoRest.Go
                 return "";
             }
             return "stage/";
+        }
+
+        private void NamespaceCheck(string ns)
+        {
+            var r = new Regex(@"^[a-z][a-z0-9_]*[a-z0-9]?$");
+            // skip this check if namespace is not specified
+            if (!string.IsNullOrEmpty(ns) && !r.IsMatch(ns))
+            {
+                throw new InvalidOperationException($"namespace can only contains lower case letters, numbers and underscore");
+            }
         }
 
         private void PreviewCheck(string folder)
