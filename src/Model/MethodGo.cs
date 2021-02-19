@@ -194,8 +194,8 @@ namespace AutoRest.Go.Model
         {
             return HasReturnValue()
                 ? includePkgName
-                    ? $"{CodeModel.Namespace}.{ReturnValue().Body.Name.ToString()}"
-                    : ReturnValue().Body.Name.ToString()
+                    ? $"{CodeModel.Namespace}.{ReturnType.Body.Name}"
+                    : ReturnType.Body.Name.ToString()
                 : DefaultReturnType;
         }
 
@@ -247,7 +247,7 @@ namespace AutoRest.Go.Model
         /// <returns>The "next results" method parameter type name.</returns>
         public string LastResultsTypeName()
         {
-            var type = ReturnValue().Body;
+            var type = ReturnType.Body;
             if (IsLongRunningOperation())
             {
                 type = type.Cast<FutureTypeGo>().ResultType;
@@ -530,9 +530,9 @@ namespace AutoRest.Go.Model
                     string.Format("azure.WithErrorUnlessStatusCode({0})", string.Join(",", ResponseCodes.ToArray()))
                 };
 
-                if (HasReturnValue() && !ReturnValue().Body.IsStreamType() && !LroWrapsDefaultResp())
+                if (HasReturnValue() && !ReturnType.Body.IsStreamType() && !LroWrapsDefaultResp())
                 {
-                    if (((CompositeTypeGo)ReturnValue().Body).IsWrapperType && !((CompositeTypeGo)ReturnValue().Body).HasPolymorphicFields)
+                    if (((CompositeTypeGo)ReturnType.Body).IsWrapperType && !((CompositeTypeGo)ReturnType.Body).HasPolymorphicFields)
                     {
                         decorators.Add("autorest.ByUnmarshallingJSON(&result.Value)");
                     }
@@ -542,7 +542,7 @@ namespace AutoRest.Go.Model
                     }
                 }
 
-                if (!HasReturnValue() || !ReturnValue().Body.IsStreamType())
+                if (!HasReturnValue() || !ReturnType.Body.IsStreamType())
                 {
                     decorators.Add("autorest.ByClosing()");
                 }
@@ -568,7 +568,7 @@ namespace AutoRest.Go.Model
                 return false;
             }
 
-            var retType = ReturnValue().Body as FutureTypeGo;
+            var retType = ReturnType.Body as FutureTypeGo;
             return string.CompareOrdinal(retType.ResultTypeName, DefaultReturnType) == 0;
         }
 
@@ -629,17 +629,7 @@ namespace AutoRest.Go.Model
         /// <returns></returns>
         public bool HasReturnValue()
         {
-            return ReturnValue()?.Body != null;
-        }
-
-        /// <summary>
-        /// Return response object for the method.
-        /// </summary>
-        /// <returns></returns>
-        public Response ReturnValue()
-        {
-            // TODO -- do we really need this since ReturnType will never be null?
-            return ReturnType ?? DefaultResponse;
+            return ReturnType?.Body != null;
         }
 
         /// <summary>
