@@ -101,6 +101,10 @@ namespace AutoRest.Go.Model
             Logger.Instance.Log(Category.Debug, $"Return Type of {SerializedName}: {ReturnType?.Body?.Name}");
         }
 
+        /// <summary>
+        /// This function should only be used in the transformation to get the non-error return type ahead of time.
+        /// </summary>
+        /// <returns></returns>
         public Response FixedReturnType()
         {
             var nonErrorNonEmptyResponses = NonErrorNonEmptyResponses;
