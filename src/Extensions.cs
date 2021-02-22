@@ -347,7 +347,7 @@ namespace AutoRest.Go
         /// <returns>True if the specified type can be null.</returns>
         public static bool CanBeNull(this IModelType type)
         {
-            return 
+            return
                 type is DictionaryType
                 || type is SequenceType
                 || (type is PrimaryType primaryType
@@ -757,6 +757,13 @@ namespace AutoRest.Go
                 return false;
             }
             return true;
+        }
+
+        private const string xMsErrorResponse = "x-ms-error-response";
+
+        public static bool IsErrorResponse(this Response response)
+        {
+            return response.Extensions?.Get<bool>(xMsErrorResponse) ?? false;
         }
     }
 }

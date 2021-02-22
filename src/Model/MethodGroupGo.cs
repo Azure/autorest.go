@@ -85,7 +85,7 @@ namespace AutoRest.Go.Model
                         imports.UnionWith(CodeNamerGo.Instance.ValidationImports);
                     }
                     mg.ParametersGo.ForEach(p => p.AddImports(imports));
-                    if (mg.HasReturnValue() && !mg.ReturnValue().Body.PrimaryType(KnownPrimaryType.Stream))
+                    if (mg.HasReturnValue() && !mg.ReturnType.Body.PrimaryType(KnownPrimaryType.Stream))
                     {
                         mg.ReturnType.Body.AddImports(imports);
                     }
