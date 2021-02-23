@@ -10,7 +10,7 @@ import (
 	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/date"
-	"github.com/satori/go.uuid"
+	"github.com/gofrs/uuid"
 	"tests/generated/arraygroup"
 )
 

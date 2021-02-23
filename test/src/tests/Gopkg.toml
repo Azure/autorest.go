@@ -28,8 +28,8 @@
   revision = "cbd6c47773f1a521faa3a39f3e9455620a751ae8"
 
 [[constraint]]
-  name = "github.com/satori/go.uuid"
-  version = "1.2.0"
+  name = "github.com/gofrs/uuid"
+  version = "3.3.0"
 
 [[constraint]]
   name = "github.com/shopspring/decimal"

@@ -50,7 +50,7 @@ namespace AutoRest.Go.Model
                     case KnownPrimaryType.UnixTime:
                         return GetImportLine(package: "github.com/Azure/go-autorest/autorest/date");
                     case KnownPrimaryType.Uuid:
-                        return GetImportLine(package: "github.com/satori/go.uuid");
+                        return GetImportLine(package: "github.com/gofrs/uuid");
                     default:
                         return string.Empty;
                 }

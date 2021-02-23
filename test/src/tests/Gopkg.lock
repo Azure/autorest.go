@@ -2,55 +2,94 @@
 
 
 [[projects]]
+  digest = "1:2cc71529fbafa70658600878d33405407968b3643f59b51205d5e6385eebb48d"
   name = "github.com/Azure/go-autorest"
-  packages = [".","autorest","autorest/adal","autorest/azure","autorest/date","autorest/to","autorest/validation","logger","tracing"]
+  packages = [
+    ".",
+    "autorest",
+    "autorest/adal",
+    "autorest/azure",
+    "autorest/date",
+    "autorest/to",
+    "autorest/validation",
+    "logger",
+    "tracing",
+  ]
+  pruneopts = "UT"
   revision = "cbd6c47773f1a521faa3a39f3e9455620a751ae8"
 
 [[projects]]
+  digest = "1:3be7b7206a3fd8686175fd974eb33a1c9dd109c149bdf19801e32b8f48733530"
   name = "github.com/form3tech-oss/jwt-go"
   packages = ["."]
+  pruneopts = "UT"
   revision = "9162a5abdbc046b7c8b03ee90052cee67e25caa7"
   version = "v3.2.2"
 
 [[projects]]
+  digest = "1:73770491417b7cb646b28610eec6481187aba7b5c3703da0d42f8d590d016f5f"
+  name = "github.com/gofrs/uuid"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "abfe1881e60ef34074c1b8d8c63b42565c356ed6"
+  version = "v3.4.0"
+
+[[projects]]
+  digest = "1:759375161ead34b8a830e14e75196bb51a999f125531d2faf0a1a944551a586f"
   name = "github.com/kr/pretty"
   packages = ["."]
+  pruneopts = "UT"
   revision = "ead452280cd055b2ae8a7f0db5eb37a878d902f7"
   version = "v0.2.1"
 
 [[projects]]
+  digest = "1:7218fd69ff5436d016101bbc6183cdc289aa45ac37b48e78846318e4ef389bea"
   name = "github.com/kr/text"
   packages = ["."]
+  pruneopts = "UT"
   revision = "702c74938df48b97370179f33ce2107bd7ff3b3e"
   version = "v0.2.0"
 
 [[projects]]
-  name = "github.com/satori/go.uuid"
-  packages = ["."]
-  revision = "f58768cc1a7a7e77a3bd49e98cdd21419399b6a3"
-  version = "v1.2.0"
-
-[[projects]]
+  digest = "1:ae3c4c486b4de2c71f6e1b9e53d125d13c80aaecc549e9a93342e8274ec761f4"
   name = "github.com/shopspring/decimal"
   packages = ["."]
+  pruneopts = "UT"
   revision = "2568a29459476f824f35433dfbef158d6ad8618c"
   version = "v1.2.0"
 
 [[projects]]
   branch = "master"
+  digest = "1:3c9c113a5e5475facaa56d1690def66c4b5077d1c57c190c180835cae6440118"
   name = "golang.org/x/crypto"
-  packages = ["pkcs12","pkcs12/internal/rc2"]
-  revision = "9d1352758620574fd6fc23c31c59c4333b4b3fff"
+  packages = [
+    "pkcs12",
+    "pkcs12/internal/rc2",
+  ]
+  pruneopts = "UT"
+  revision = "eec23a3978adcfd26c29f4153eaa3e3d9b2cc53a"
 
 [[projects]]
   branch = "v1"
+  digest = "1:b39f3febddd151ee9993a0a10c20393efeddb1d31c0c706c9d03d054dbafd308"
   name = "gopkg.in/check.v1"
   packages = ["."]
+  pruneopts = "UT"
   revision = "10cb98267c6cb43ea9cd6793f29ff4089c306974"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "6d15e3ca1d91f6685642461f8ce05563e14b691cea1e8326c5cda43c4de45642"
+  input-imports = [
+    "github.com/Azure/go-autorest/autorest",
+    "github.com/Azure/go-autorest/autorest/azure",
+    "github.com/Azure/go-autorest/autorest/date",
+    "github.com/Azure/go-autorest/autorest/to",
+    "github.com/Azure/go-autorest/autorest/validation",
+    "github.com/Azure/go-autorest/tracing",
+    "github.com/gofrs/uuid",
+    "github.com/shopspring/decimal",
+    "gopkg.in/check.v1",
+  ]
   solver-name = "gps-cdcl"
   solver-version = 1
