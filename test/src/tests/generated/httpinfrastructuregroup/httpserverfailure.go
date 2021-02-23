@@ -34,13 +34,13 @@ func NewHTTPServerFailureClientWithBaseURI(baseURI string) HTTPServerFailureClie
 // Delete505 return 505 status code - should be represented in the client as an error
 // Parameters:
 // booleanValue - simple boolean value true
-func (client HTTPServerFailureClient) Delete505(ctx context.Context, booleanValue *bool) (result Error, err error) {
+func (client HTTPServerFailureClient) Delete505(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPServerFailureClient.Delete505")
 		defer func() {
 			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
+			if result.Response != nil {
+				sc = result.Response.StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -53,7 +53,7 @@ func (client HTTPServerFailureClient) Delete505(ctx context.Context, booleanValu
 
 	resp, err := client.Delete505Sender(req)
 	if err != nil {
-		result.Response = autorest.Response{Response: resp}
+		result.Response = resp
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPServerFailureClient", "Delete505", resp, "Failure sending request")
 		return
 	}
@@ -89,24 +89,23 @@ func (client HTTPServerFailureClient) Delete505Sender(req *http.Request) (*http.
 
 // Delete505Responder handles the response to the Delete505 request. The method always
 // closes the http.Response Body.
-func (client HTTPServerFailureClient) Delete505Responder(resp *http.Response) (result Error, err error) {
+func (client HTTPServerFailureClient) Delete505Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
+	result.Response = resp
 	return
 }
 
 // Get501 return 501 status code - should be represented in the client as an error
-func (client HTTPServerFailureClient) Get501(ctx context.Context) (result Error, err error) {
+func (client HTTPServerFailureClient) Get501(ctx context.Context) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPServerFailureClient.Get501")
 		defer func() {
 			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
+			if result.Response != nil {
+				sc = result.Response.StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -119,7 +118,7 @@ func (client HTTPServerFailureClient) Get501(ctx context.Context) (result Error,
 
 	resp, err := client.Get501Sender(req)
 	if err != nil {
-		result.Response = autorest.Response{Response: resp}
+		result.Response = resp
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPServerFailureClient", "Get501", resp, "Failure sending request")
 		return
 	}
@@ -150,24 +149,23 @@ func (client HTTPServerFailureClient) Get501Sender(req *http.Request) (*http.Res
 
 // Get501Responder handles the response to the Get501 request. The method always
 // closes the http.Response Body.
-func (client HTTPServerFailureClient) Get501Responder(resp *http.Response) (result Error, err error) {
+func (client HTTPServerFailureClient) Get501Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
+	result.Response = resp
 	return
 }
 
 // Head501 return 501 status code - should be represented in the client as an error
-func (client HTTPServerFailureClient) Head501(ctx context.Context) (result Error, err error) {
+func (client HTTPServerFailureClient) Head501(ctx context.Context) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPServerFailureClient.Head501")
 		defer func() {
 			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
+			if result.Response != nil {
+				sc = result.Response.StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -180,7 +178,7 @@ func (client HTTPServerFailureClient) Head501(ctx context.Context) (result Error
 
 	resp, err := client.Head501Sender(req)
 	if err != nil {
-		result.Response = autorest.Response{Response: resp}
+		result.Response = resp
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPServerFailureClient", "Head501", resp, "Failure sending request")
 		return
 	}
@@ -211,26 +209,25 @@ func (client HTTPServerFailureClient) Head501Sender(req *http.Request) (*http.Re
 
 // Head501Responder handles the response to the Head501 request. The method always
 // closes the http.Response Body.
-func (client HTTPServerFailureClient) Head501Responder(resp *http.Response) (result Error, err error) {
+func (client HTTPServerFailureClient) Head501Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
+	result.Response = resp
 	return
 }
 
 // Post505 return 505 status code - should be represented in the client as an error
 // Parameters:
 // booleanValue - simple boolean value true
-func (client HTTPServerFailureClient) Post505(ctx context.Context, booleanValue *bool) (result Error, err error) {
+func (client HTTPServerFailureClient) Post505(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPServerFailureClient.Post505")
 		defer func() {
 			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
+			if result.Response != nil {
+				sc = result.Response.StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -243,7 +240,7 @@ func (client HTTPServerFailureClient) Post505(ctx context.Context, booleanValue 
 
 	resp, err := client.Post505Sender(req)
 	if err != nil {
-		result.Response = autorest.Response{Response: resp}
+		result.Response = resp
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPServerFailureClient", "Post505", resp, "Failure sending request")
 		return
 	}
@@ -279,12 +276,11 @@ func (client HTTPServerFailureClient) Post505Sender(req *http.Request) (*http.Re
 
 // Post505Responder handles the response to the Post505 request. The method always
 // closes the http.Response Body.
-func (client HTTPServerFailureClient) Post505Responder(resp *http.Response) (result Error, err error) {
+func (client HTTPServerFailureClient) Post505Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
+	result.Response = resp
 	return
 }
