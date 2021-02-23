@@ -41,8 +41,8 @@ func (client LROsCustomHeaderClient) Post202Retry200(ctx context.Context, produc
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROsCustomHeaderClient.Post202Retry200")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -125,8 +125,8 @@ func (client LROsCustomHeaderClient) PostAsyncRetrySucceeded(ctx context.Context
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROsCustomHeaderClient.PostAsyncRetrySucceeded")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -210,8 +210,8 @@ func (client LROsCustomHeaderClient) Put201CreatingSucceeded200(ctx context.Cont
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROsCustomHeaderClient.Put201CreatingSucceeded200")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -305,8 +305,8 @@ func (client LROsCustomHeaderClient) PutAsyncRetrySucceeded(ctx context.Context,
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROsCustomHeaderClient.PutAsyncRetrySucceeded")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
