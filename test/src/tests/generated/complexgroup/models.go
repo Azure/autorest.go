@@ -1074,6 +1074,57 @@ func (mdt MyDerivedType) AsBasicMyBaseType() (BasicMyBaseType, bool) {
 	return &mdt, true
 }
 
+// UnmarshalJSON is the custom unmarshaler for MyDerivedType struct.
+func (mdt *MyDerivedType) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "propD1":
+			if v != nil {
+				var propD1 string
+				err = json.Unmarshal(*v, &propD1)
+				if err != nil {
+					return err
+				}
+				mdt.PropD1 = &propD1
+			}
+		case "propB1":
+			if v != nil {
+				var propB1 string
+				err = json.Unmarshal(*v, &propB1)
+				if err != nil {
+					return err
+				}
+				mdt.PropB1 = &propB1
+			}
+		case "helper":
+			if v != nil {
+				var myBaseHelperType MyBaseHelperType
+				err = json.Unmarshal(*v, &myBaseHelperType)
+				if err != nil {
+					return err
+				}
+				mdt.MyBaseHelperType = &myBaseHelperType
+			}
+		case "kind":
+			if v != nil {
+				var kind Kind
+				err = json.Unmarshal(*v, &kind)
+				if err != nil {
+					return err
+				}
+				mdt.Kind = kind
+			}
+		}
+	}
+
+	return nil
+}
+
 // Pet ...
 type Pet struct {
 	ID   *int32  `json:"id,omitempty"`

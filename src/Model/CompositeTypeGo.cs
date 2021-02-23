@@ -155,7 +155,7 @@ namespace AutoRest.Go.Model
         /// <summary>
         /// Gets if there are any flattened fields.
         /// </summary>
-        public bool HasFlattenedFields => Properties.Any(p => p.ModelType is CompositeTypeGo && p.ShouldBeFlattened());
+        public bool HasFlattenedFields => AllProperties.Any(p => p.ModelType is CompositeTypeGo && p.ShouldBeFlattened());
 
         public string PolymorphicProperty => !string.IsNullOrEmpty(PolymorphicDiscriminator)
             ? CodeNamerGo.Instance.GetPropertyName(PolymorphicDiscriminator)
