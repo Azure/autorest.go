@@ -36,8 +36,8 @@ func (client LROSADsClient) Delete202NonRetry400(ctx context.Context) (result LR
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROSADsClient.Delete202NonRetry400")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -112,8 +112,8 @@ func (client LROSADsClient) Delete202RetryInvalidHeader(ctx context.Context) (re
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROSADsClient.Delete202RetryInvalidHeader")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -187,8 +187,8 @@ func (client LROSADsClient) Delete204Succeeded(ctx context.Context) (result LROS
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROSADsClient.Delete204Succeeded")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -263,8 +263,8 @@ func (client LROSADsClient) DeleteAsyncRelativeRetry400(ctx context.Context) (re
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROSADsClient.DeleteAsyncRelativeRetry400")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -339,8 +339,8 @@ func (client LROSADsClient) DeleteAsyncRelativeRetryInvalidHeader(ctx context.Co
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROSADsClient.DeleteAsyncRelativeRetryInvalidHeader")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -415,8 +415,8 @@ func (client LROSADsClient) DeleteAsyncRelativeRetryInvalidJSONPolling(ctx conte
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROSADsClient.DeleteAsyncRelativeRetryInvalidJSONPolling")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -491,8 +491,8 @@ func (client LROSADsClient) DeleteAsyncRelativeRetryNoStatus(ctx context.Context
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROSADsClient.DeleteAsyncRelativeRetryNoStatus")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -566,8 +566,8 @@ func (client LROSADsClient) DeleteNonRetry400(ctx context.Context) (result LROSA
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROSADsClient.DeleteNonRetry400")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -644,8 +644,8 @@ func (client LROSADsClient) Post202NoLocation(ctx context.Context, product *Prod
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROSADsClient.Post202NoLocation")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -726,8 +726,8 @@ func (client LROSADsClient) Post202NonRetry400(ctx context.Context, product *Pro
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROSADsClient.Post202NonRetry400")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -809,8 +809,8 @@ func (client LROSADsClient) Post202RetryInvalidHeader(ctx context.Context, produ
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROSADsClient.Post202RetryInvalidHeader")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -892,8 +892,8 @@ func (client LROSADsClient) PostAsyncRelativeRetry400(ctx context.Context, produ
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROSADsClient.PostAsyncRelativeRetry400")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -976,8 +976,8 @@ func (client LROSADsClient) PostAsyncRelativeRetryInvalidHeader(ctx context.Cont
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROSADsClient.PostAsyncRelativeRetryInvalidHeader")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -1060,8 +1060,8 @@ func (client LROSADsClient) PostAsyncRelativeRetryInvalidJSONPolling(ctx context
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROSADsClient.PostAsyncRelativeRetryInvalidJSONPolling")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -1144,8 +1144,8 @@ func (client LROSADsClient) PostAsyncRelativeRetryNoPayload(ctx context.Context,
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROSADsClient.PostAsyncRelativeRetryNoPayload")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -1226,8 +1226,8 @@ func (client LROSADsClient) PostNonRetry400(ctx context.Context, product *Produc
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROSADsClient.PostNonRetry400")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -1309,8 +1309,8 @@ func (client LROSADsClient) Put200InvalidJSON(ctx context.Context, product *Prod
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROSADsClient.Put200InvalidJSON")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -1403,8 +1403,8 @@ func (client LROSADsClient) PutAsyncRelativeRetry400(ctx context.Context, produc
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROSADsClient.PutAsyncRelativeRetry400")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -1498,8 +1498,8 @@ func (client LROSADsClient) PutAsyncRelativeRetryInvalidHeader(ctx context.Conte
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROSADsClient.PutAsyncRelativeRetryInvalidHeader")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -1593,8 +1593,8 @@ func (client LROSADsClient) PutAsyncRelativeRetryInvalidJSONPolling(ctx context.
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROSADsClient.PutAsyncRelativeRetryInvalidJSONPolling")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -1688,8 +1688,8 @@ func (client LROSADsClient) PutAsyncRelativeRetryNoStatus(ctx context.Context, p
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROSADsClient.PutAsyncRelativeRetryNoStatus")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -1783,8 +1783,8 @@ func (client LROSADsClient) PutAsyncRelativeRetryNoStatusPayload(ctx context.Con
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROSADsClient.PutAsyncRelativeRetryNoStatusPayload")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -1877,8 +1877,8 @@ func (client LROSADsClient) PutError201NoProvisioningStatePayload(ctx context.Co
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROSADsClient.PutError201NoProvisioningStatePayload")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -1971,8 +1971,8 @@ func (client LROSADsClient) PutNonRetry201Creating400(ctx context.Context, produ
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROSADsClient.PutNonRetry201Creating400")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -2065,8 +2065,8 @@ func (client LROSADsClient) PutNonRetry201Creating400InvalidJSON(ctx context.Con
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROSADsClient.PutNonRetry201Creating400InvalidJSON")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -2158,8 +2158,8 @@ func (client LROSADsClient) PutNonRetry400(ctx context.Context, product *Product
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROSADsClient.PutNonRetry400")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
