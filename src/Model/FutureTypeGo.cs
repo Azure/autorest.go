@@ -26,7 +26,7 @@ namespace AutoRest.Go.Model
             CodeModel = method.CodeModel;
             Documentation = "An abstraction for monitoring and retrieving the results of a long-running operation.";
             ClientTypeName = method.Owner;
-            ResultType = method.ReturnValue().Body;
+            ResultType = method.ReturnType.Body;
             ResponderMethodName = method.ResponderMethodName;
             if (method.Deprecated)
             {
@@ -48,7 +48,7 @@ namespace AutoRest.Go.Model
             CodeModel = method.CodeModel;
             Documentation = "An abstraction for monitoring and retrieving the results of a long-running operation.";
             ClientTypeName = method.Owner;
-            ResultType = method.ReturnValue().Body;
+            ResultType = method.ReturnType.Body;
             ResponderMethodName = method.ResponderMethodName;
         }
 

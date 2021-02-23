@@ -368,7 +368,7 @@ else
     else
     {
         <text>
-            @if (Model.ReturnValue().Body.IsStreamType())
+            @if (Model.ReturnType.Body.IsStreamType())
             {
                 @:result.Value = &resp.Body
             }
@@ -387,7 +387,7 @@ else
         <text>
             @EmptyLine
             func (client @(Model.Owner)) @(Model.ResponderMethodName.ToCamelCase())(resp *http.Response) (result @pageType.ContentType.Name, err error) {
-            @if (Model.ReturnValue().Body.IsStreamType())
+            @if (Model.ReturnType.Body.IsStreamType())
             {
                 @:result.Value = &resp.Body
             }
@@ -402,7 +402,7 @@ else
 
     @if (Model.IsPageable && !Model.NextAlreadyDefined)
     {
-        var preparerName = Model.ReturnValue().Body.Cast<CompositeTypeGo>().UnwrapPageType().PreparerMethodName;
+        var preparerName = Model.ReturnType.Body.Cast<CompositeTypeGo>().UnwrapPageType().PreparerMethodName;
         if (Model.IsLongRunningOperation())
         {
             preparerName = $"{Model.LastResultsTypeName().ToCamelCase()}Preparer";
