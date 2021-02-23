@@ -37,8 +37,8 @@ func (client LROsClient) Delete202NoRetry204(ctx context.Context) (result LROsDe
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROsClient.Delete202NoRetry204")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -124,8 +124,8 @@ func (client LROsClient) Delete202Retry200(ctx context.Context) (result LROsDele
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROsClient.Delete202Retry200")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -210,8 +210,8 @@ func (client LROsClient) Delete204Succeeded(ctx context.Context) (result LROsDel
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROsClient.Delete204Succeeded")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -286,8 +286,8 @@ func (client LROsClient) DeleteAsyncNoHeaderInRetry(ctx context.Context) (result
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROsClient.DeleteAsyncNoHeaderInRetry")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -362,8 +362,8 @@ func (client LROsClient) DeleteAsyncNoRetrySucceeded(ctx context.Context) (resul
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROsClient.DeleteAsyncNoRetrySucceeded")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -438,8 +438,8 @@ func (client LROsClient) DeleteAsyncRetrycanceled(ctx context.Context) (result L
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROsClient.DeleteAsyncRetrycanceled")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -514,8 +514,8 @@ func (client LROsClient) DeleteAsyncRetryFailed(ctx context.Context) (result LRO
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROsClient.DeleteAsyncRetryFailed")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -590,8 +590,8 @@ func (client LROsClient) DeleteAsyncRetrySucceeded(ctx context.Context) (result 
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROsClient.DeleteAsyncRetrySucceeded")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -666,8 +666,8 @@ func (client LROsClient) DeleteNoHeaderInRetry(ctx context.Context) (result LROs
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROsClient.DeleteNoHeaderInRetry")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -743,8 +743,8 @@ func (client LROsClient) DeleteProvisioning202Accepted200Succeeded(ctx context.C
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROsClient.DeleteProvisioning202Accepted200Succeeded")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -831,8 +831,8 @@ func (client LROsClient) DeleteProvisioning202Deletingcanceled200(ctx context.Co
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROsClient.DeleteProvisioning202Deletingcanceled200")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -919,8 +919,8 @@ func (client LROsClient) DeleteProvisioning202DeletingFailed200(ctx context.Cont
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROsClient.DeleteProvisioning202DeletingFailed200")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -1006,8 +1006,8 @@ func (client LROsClient) Post200WithPayload(ctx context.Context) (result LROsPos
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROsClient.Post200WithPayload")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -1095,8 +1095,8 @@ func (client LROsClient) Post202NoRetry204(ctx context.Context, product *Product
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROsClient.Post202NoRetry204")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -1189,8 +1189,8 @@ func (client LROsClient) Post202Retry200(ctx context.Context, product *Product) 
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROsClient.Post202Retry200")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -1273,8 +1273,8 @@ func (client LROsClient) PostAsyncNoRetrySucceeded(ctx context.Context, product 
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROsClient.PostAsyncNoRetrySucceeded")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -1368,8 +1368,8 @@ func (client LROsClient) PostAsyncRetrycanceled(ctx context.Context, product *Pr
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROsClient.PostAsyncRetrycanceled")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -1452,8 +1452,8 @@ func (client LROsClient) PostAsyncRetryFailed(ctx context.Context, product *Prod
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROsClient.PostAsyncRetryFailed")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -1536,8 +1536,8 @@ func (client LROsClient) PostAsyncRetrySucceeded(ctx context.Context, product *P
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROsClient.PostAsyncRetrySucceeded")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -1629,8 +1629,8 @@ func (client LROsClient) PostDoubleHeadersFinalAzureHeaderGet(ctx context.Contex
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROsClient.PostDoubleHeadersFinalAzureHeaderGet")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -1717,8 +1717,8 @@ func (client LROsClient) PostDoubleHeadersFinalAzureHeaderGetDefault(ctx context
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROsClient.PostDoubleHeadersFinalAzureHeaderGetDefault")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -1804,8 +1804,8 @@ func (client LROsClient) PostDoubleHeadersFinalLocationGet(ctx context.Context) 
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROsClient.PostDoubleHeadersFinalLocationGet")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -1894,8 +1894,8 @@ func (client LROsClient) Put200Acceptedcanceled200(ctx context.Context, product 
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROsClient.Put200Acceptedcanceled200")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -1988,8 +1988,8 @@ func (client LROsClient) Put200Succeeded(ctx context.Context, product *Product) 
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROsClient.Put200Succeeded")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -2082,8 +2082,8 @@ func (client LROsClient) Put200SucceededNoState(ctx context.Context, product *Pr
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROsClient.Put200SucceededNoState")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -2177,8 +2177,8 @@ func (client LROsClient) Put200UpdatingSucceeded204(ctx context.Context, product
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROsClient.Put200UpdatingSucceeded204")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -2272,8 +2272,8 @@ func (client LROsClient) Put201CreatingFailed200(ctx context.Context, product *P
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROsClient.Put201CreatingFailed200")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -2367,8 +2367,8 @@ func (client LROsClient) Put201CreatingSucceeded200(ctx context.Context, product
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROsClient.Put201CreatingSucceeded200")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -2461,8 +2461,8 @@ func (client LROsClient) Put202Retry200(ctx context.Context, product *Product) (
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROsClient.Put202Retry200")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -2555,8 +2555,8 @@ func (client LROsClient) PutAsyncNoHeaderInRetry(ctx context.Context, product *P
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROsClient.PutAsyncNoHeaderInRetry")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -2648,8 +2648,8 @@ func (client LROsClient) PutAsyncNonResource(ctx context.Context, sku *Sku) (res
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROsClient.PutAsyncNonResource")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -2743,8 +2743,8 @@ func (client LROsClient) PutAsyncNoRetrycanceled(ctx context.Context, product *P
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROsClient.PutAsyncNoRetrycanceled")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -2838,8 +2838,8 @@ func (client LROsClient) PutAsyncNoRetrySucceeded(ctx context.Context, product *
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROsClient.PutAsyncNoRetrySucceeded")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -2933,8 +2933,8 @@ func (client LROsClient) PutAsyncRetryFailed(ctx context.Context, product *Produ
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROsClient.PutAsyncRetryFailed")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -3028,8 +3028,8 @@ func (client LROsClient) PutAsyncRetrySucceeded(ctx context.Context, product *Pr
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROsClient.PutAsyncRetrySucceeded")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -3121,8 +3121,8 @@ func (client LROsClient) PutAsyncSubResource(ctx context.Context, product *SubPr
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROsClient.PutAsyncSubResource")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -3215,8 +3215,8 @@ func (client LROsClient) PutNoHeaderInRetry(ctx context.Context, product *Produc
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROsClient.PutNoHeaderInRetry")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -3308,8 +3308,8 @@ func (client LROsClient) PutNonResource(ctx context.Context, sku *Sku) (result L
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROsClient.PutNonResource")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -3401,8 +3401,8 @@ func (client LROsClient) PutSubResource(ctx context.Context, product *SubProduct
 		ctx = tracing.StartSpan(ctx, fqdn+"/LROsClient.PutSubResource")
 		defer func() {
 			sc := -1
-			if result.Response() != nil {
-				sc = result.Response().StatusCode
+			if result.FutureAPI != nil && result.FutureAPI.Response() != nil {
+				sc = result.FutureAPI.Response().StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
