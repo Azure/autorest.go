@@ -13,8 +13,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Net;
-using System.Text;
 using Newtonsoft.Json.Linq;
+using AutoRest.Core.Logging;
 
 namespace AutoRest.Go.Model
 {
@@ -86,6 +86,59 @@ namespace AutoRest.Go.Model
             // As registering needs the Azure subscription ID, we take it from the operation path, on the
             // assumption that ARM APIs should include the subscription ID right after `subscriptions`
             RegisterRP = cmg.APIType.EqualsIgnoreCase("arm") && Url.Split("/").Any(p => p.EqualsIgnoreCase("subscriptions"));
+
+            // Fixing the returnType in modeler
+            // find all the non-error responses with non-empty body
+            // we have to ignore those non-error responses with empty bodies, because there are quite plenty of swaggers with one response with body and the other without body
+            Logger.Instance.Log(Category.Debug, $"All responses of {SerializedName}: {string.Join(", ", Responses.Select(kv => $"{(int)kv.Key}: {kv.Value?.Body?.Name}"))}");
+            var nonErrorNonEmptyStatusCodes = NonErrorNonEmptyStatusCodeDict;
+            Logger.Instance.Log(Category.Debug, $"Method {SerializedName} has the following non-error & non-empty responses (total {nonErrorNonEmptyStatusCodes.Count()}): {string.Join(", ", nonErrorNonEmptyStatusCodes.Select(resp => resp.Value?.Body?.Name))}");
+            // categorize the models by its name
+            var nonErrorNonEmptyResponses = NonErrorNonEmptyResponses.ToList();
+            Logger.Instance.Log(Category.Debug, $"Non-error & non-empty models: {string.Join(", ", nonErrorNonEmptyResponses.Select(model => model.Body.Name))}");
+            // fix the original return type from the modeler
+            ReturnType = FixedReturnType();
+            Logger.Instance.Log(Category.Debug, $"Return Type of {SerializedName}: {ReturnType?.Body?.Name}");
+        }
+
+        /// <summary>
+        /// This function should only be used in the transformation to get the non-error return type ahead of time.
+        /// </summary>
+        /// <returns></returns>
+        public Response FixedReturnType()
+        {
+            var nonErrorNonEmptyResponses = NonErrorNonEmptyResponses;
+            switch (nonErrorNonEmptyResponses.Count())
+            {
+                case 0:
+                    return new Response();
+                case 1:
+                    return nonErrorNonEmptyResponses.First();
+                default:
+                    // In this case, we do nothing but let the original value in ReturnType to take effect
+                    Logger.Instance.Log(Category.Debug, $"we have more than one non-error responses with non-empty but different schemas in operationId {SerializedName}, but in this case we just honor the return type in the modeler");
+                    return ReturnType;
+            }
+        }
+
+        public IEnumerable<KeyValuePair<HttpStatusCode, Response>> NonErrorNonEmptyStatusCodeDict => Responses.Where(kv => !kv.Value.IsErrorResponse() && kv.Value.Body != null);
+
+        public IEnumerable<Response> NonErrorNonEmptyResponses => NonErrorNonEmptyStatusCodeDict.Select(kv => kv.Value).Distinct(new ResponseEqualityComparer());
+
+        public IEnumerable<IModelType> NonErrorNonEmptyResponseModels => NonErrorNonEmptyResponses.Select(r => r.Body);
+
+        private struct ResponseEqualityComparer : IEqualityComparer<Response>
+        {
+
+            public bool Equals(Response x, Response y)
+            {
+                return x?.Body?.Name == y?.Body?.Name;
+            }
+
+            public int GetHashCode(Response obj)
+            {
+                return obj?.Body?.Name.GetHashCode() ?? 0;
+            }
         }
 
         /// <summary>
@@ -145,8 +198,8 @@ namespace AutoRest.Go.Model
         {
             return HasReturnValue()
                 ? includePkgName
-                    ? $"{CodeModel.Namespace}.{ReturnValue().Body.Name.ToString()}"
-                    : ReturnValue().Body.Name.ToString()
+                    ? $"{CodeModel.Namespace}.{ReturnType.Body.Name}"
+                    : ReturnType.Body.Name.ToString()
                 : DefaultReturnType;
         }
 
@@ -198,7 +251,7 @@ namespace AutoRest.Go.Model
         /// <returns>The "next results" method parameter type name.</returns>
         public string LastResultsTypeName()
         {
-            var type = ReturnValue().Body;
+            var type = ReturnType.Body;
             if (IsLongRunningOperation())
             {
                 type = type.Cast<FutureTypeGo>().ResultType;
@@ -348,10 +401,13 @@ namespace AutoRest.Go.Model
                 {
                     codes.Add(CodeNamerGo.Instance.StatusCodeToGoString[HttpStatusCode.OK]);
                 }
-                // Refactor -> generator
-                foreach (var sc in Responses.Keys)
+                // Only add the response to responseCodes when it is not marked by x-ms-error-response: true
+                foreach (var response in Responses)
                 {
-                    codes.Add(CodeNamerGo.Instance.StatusCodeToGoString[sc]);
+                    if (!response.Value.IsErrorResponse())
+                    {
+                        codes.Add(CodeNamerGo.Instance.StatusCodeToGoString[response.Key]);
+                    }
                 }
                 return codes;
             }
@@ -478,9 +534,9 @@ namespace AutoRest.Go.Model
                     string.Format("azure.WithErrorUnlessStatusCode({0})", string.Join(",", ResponseCodes.ToArray()))
                 };
 
-                if (HasReturnValue() && !ReturnValue().Body.IsStreamType() && !LroWrapsDefaultResp())
+                if (HasReturnValue() && !ReturnType.Body.IsStreamType() && !LroWrapsDefaultResp())
                 {
-                    if (((CompositeTypeGo)ReturnValue().Body).IsWrapperType && !((CompositeTypeGo)ReturnValue().Body).HasPolymorphicFields)
+                    if (((CompositeTypeGo)ReturnType.Body).IsWrapperType && !((CompositeTypeGo)ReturnType.Body).HasPolymorphicFields)
                     {
                         decorators.Add("autorest.ByUnmarshallingJSON(&result.Value)");
                     }
@@ -490,7 +546,7 @@ namespace AutoRest.Go.Model
                     }
                 }
 
-                if (!HasReturnValue() || !ReturnValue().Body.IsStreamType())
+                if (!HasReturnValue() || !ReturnType.Body.IsStreamType())
                 {
                     decorators.Add("autorest.ByClosing()");
                 }
@@ -516,7 +572,7 @@ namespace AutoRest.Go.Model
                 return false;
             }
 
-            var retType = ReturnValue().Body as FutureTypeGo;
+            var retType = ReturnType.Body as FutureTypeGo;
             return string.CompareOrdinal(retType.ResultTypeName, DefaultReturnType) == 0;
         }
 
@@ -577,16 +633,7 @@ namespace AutoRest.Go.Model
         /// <returns></returns>
         public bool HasReturnValue()
         {
-            return ReturnValue()?.Body != null;
-        }
-
-        /// <summary>
-        /// Return response object for the method.
-        /// </summary>
-        /// <returns></returns>
-        public Response ReturnValue()
-        {
-            return ReturnType ?? DefaultResponse;
+            return ReturnType?.Body != null;
         }
 
         /// <summary>
@@ -616,7 +663,7 @@ namespace AutoRest.Go.Model
         /// Returns true if a ListComplete method should be generated.
         /// </summary>
         public bool NeedsListComplete => IsPageable && !IsNextMethod;
-        
+
         /// <summary>
         /// Returns the name of the type returned from a ListComplete method.
         /// This should only be called if NeedsListComplete returns true.

@@ -19,6 +19,7 @@ namespace AutoRest.Go
         {
             var cmg = cm as CodeModelGo;
 
+            // DON'T EVER CHANGE THE ORDERING OF THESE METHODS, CHANGING THE ORDER OF THESE METHODS MIGHT LEAD TO UNEXPECTED RESULTS
             SwaggerExtensions.ProcessGlobalParameters(cmg);
             TransformEnumTypes(cmg);
             TransformModelTypes(cmg);
@@ -249,7 +250,7 @@ namespace AutoRest.Go
             cmg.ModelTypes.Cast<CompositeTypeGo>()
                 .Where(mtm =>
                 {
-                    return cmg.Methods.Cast<MethodGo>().Any(m => m.HasReturnValue() && m.ReturnValue().Body.Equals(mtm));
+                    return cmg.Methods.Cast<MethodGo>().Any(m => m.FixedReturnType()?.Body?.Equals(mtm) ?? false);
                 })
                 .ForEach(mtm =>
                 {

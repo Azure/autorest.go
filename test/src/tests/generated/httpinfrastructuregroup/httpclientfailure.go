@@ -34,13 +34,13 @@ func NewHTTPClientFailureClientWithBaseURI(baseURI string) HTTPClientFailureClie
 // Delete400 return 400 status code - should be represented in the client as an error
 // Parameters:
 // booleanValue - simple boolean value true
-func (client HTTPClientFailureClient) Delete400(ctx context.Context, booleanValue *bool) (result Error, err error) {
+func (client HTTPClientFailureClient) Delete400(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPClientFailureClient.Delete400")
 		defer func() {
 			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
+			if result.Response != nil {
+				sc = result.Response.StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -53,7 +53,7 @@ func (client HTTPClientFailureClient) Delete400(ctx context.Context, booleanValu
 
 	resp, err := client.Delete400Sender(req)
 	if err != nil {
-		result.Response = autorest.Response{Response: resp}
+		result.Response = resp
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Delete400", resp, "Failure sending request")
 		return
 	}
@@ -89,26 +89,25 @@ func (client HTTPClientFailureClient) Delete400Sender(req *http.Request) (*http.
 
 // Delete400Responder handles the response to the Delete400 request. The method always
 // closes the http.Response Body.
-func (client HTTPClientFailureClient) Delete400Responder(resp *http.Response) (result Error, err error) {
+func (client HTTPClientFailureClient) Delete400Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
+	result.Response = resp
 	return
 }
 
 // Delete407 return 407 status code - should be represented in the client as an error
 // Parameters:
 // booleanValue - simple boolean value true
-func (client HTTPClientFailureClient) Delete407(ctx context.Context, booleanValue *bool) (result Error, err error) {
+func (client HTTPClientFailureClient) Delete407(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPClientFailureClient.Delete407")
 		defer func() {
 			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
+			if result.Response != nil {
+				sc = result.Response.StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -121,7 +120,7 @@ func (client HTTPClientFailureClient) Delete407(ctx context.Context, booleanValu
 
 	resp, err := client.Delete407Sender(req)
 	if err != nil {
-		result.Response = autorest.Response{Response: resp}
+		result.Response = resp
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Delete407", resp, "Failure sending request")
 		return
 	}
@@ -157,26 +156,25 @@ func (client HTTPClientFailureClient) Delete407Sender(req *http.Request) (*http.
 
 // Delete407Responder handles the response to the Delete407 request. The method always
 // closes the http.Response Body.
-func (client HTTPClientFailureClient) Delete407Responder(resp *http.Response) (result Error, err error) {
+func (client HTTPClientFailureClient) Delete407Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
+	result.Response = resp
 	return
 }
 
 // Delete417 return 417 status code - should be represented in the client as an error
 // Parameters:
 // booleanValue - simple boolean value true
-func (client HTTPClientFailureClient) Delete417(ctx context.Context, booleanValue *bool) (result Error, err error) {
+func (client HTTPClientFailureClient) Delete417(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPClientFailureClient.Delete417")
 		defer func() {
 			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
+			if result.Response != nil {
+				sc = result.Response.StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -189,7 +187,7 @@ func (client HTTPClientFailureClient) Delete417(ctx context.Context, booleanValu
 
 	resp, err := client.Delete417Sender(req)
 	if err != nil {
-		result.Response = autorest.Response{Response: resp}
+		result.Response = resp
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Delete417", resp, "Failure sending request")
 		return
 	}
@@ -225,24 +223,23 @@ func (client HTTPClientFailureClient) Delete417Sender(req *http.Request) (*http.
 
 // Delete417Responder handles the response to the Delete417 request. The method always
 // closes the http.Response Body.
-func (client HTTPClientFailureClient) Delete417Responder(resp *http.Response) (result Error, err error) {
+func (client HTTPClientFailureClient) Delete417Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
+	result.Response = resp
 	return
 }
 
 // Get400 return 400 status code - should be represented in the client as an error
-func (client HTTPClientFailureClient) Get400(ctx context.Context) (result Error, err error) {
+func (client HTTPClientFailureClient) Get400(ctx context.Context) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPClientFailureClient.Get400")
 		defer func() {
 			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
+			if result.Response != nil {
+				sc = result.Response.StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -255,7 +252,7 @@ func (client HTTPClientFailureClient) Get400(ctx context.Context) (result Error,
 
 	resp, err := client.Get400Sender(req)
 	if err != nil {
-		result.Response = autorest.Response{Response: resp}
+		result.Response = resp
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Get400", resp, "Failure sending request")
 		return
 	}
@@ -286,24 +283,23 @@ func (client HTTPClientFailureClient) Get400Sender(req *http.Request) (*http.Res
 
 // Get400Responder handles the response to the Get400 request. The method always
 // closes the http.Response Body.
-func (client HTTPClientFailureClient) Get400Responder(resp *http.Response) (result Error, err error) {
+func (client HTTPClientFailureClient) Get400Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
+	result.Response = resp
 	return
 }
 
 // Get402 return 402 status code - should be represented in the client as an error
-func (client HTTPClientFailureClient) Get402(ctx context.Context) (result Error, err error) {
+func (client HTTPClientFailureClient) Get402(ctx context.Context) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPClientFailureClient.Get402")
 		defer func() {
 			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
+			if result.Response != nil {
+				sc = result.Response.StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -316,7 +312,7 @@ func (client HTTPClientFailureClient) Get402(ctx context.Context) (result Error,
 
 	resp, err := client.Get402Sender(req)
 	if err != nil {
-		result.Response = autorest.Response{Response: resp}
+		result.Response = resp
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Get402", resp, "Failure sending request")
 		return
 	}
@@ -347,24 +343,23 @@ func (client HTTPClientFailureClient) Get402Sender(req *http.Request) (*http.Res
 
 // Get402Responder handles the response to the Get402 request. The method always
 // closes the http.Response Body.
-func (client HTTPClientFailureClient) Get402Responder(resp *http.Response) (result Error, err error) {
+func (client HTTPClientFailureClient) Get402Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
+	result.Response = resp
 	return
 }
 
 // Get403 return 403 status code - should be represented in the client as an error
-func (client HTTPClientFailureClient) Get403(ctx context.Context) (result Error, err error) {
+func (client HTTPClientFailureClient) Get403(ctx context.Context) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPClientFailureClient.Get403")
 		defer func() {
 			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
+			if result.Response != nil {
+				sc = result.Response.StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -377,7 +372,7 @@ func (client HTTPClientFailureClient) Get403(ctx context.Context) (result Error,
 
 	resp, err := client.Get403Sender(req)
 	if err != nil {
-		result.Response = autorest.Response{Response: resp}
+		result.Response = resp
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Get403", resp, "Failure sending request")
 		return
 	}
@@ -408,24 +403,23 @@ func (client HTTPClientFailureClient) Get403Sender(req *http.Request) (*http.Res
 
 // Get403Responder handles the response to the Get403 request. The method always
 // closes the http.Response Body.
-func (client HTTPClientFailureClient) Get403Responder(resp *http.Response) (result Error, err error) {
+func (client HTTPClientFailureClient) Get403Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
+	result.Response = resp
 	return
 }
 
 // Get411 return 411 status code - should be represented in the client as an error
-func (client HTTPClientFailureClient) Get411(ctx context.Context) (result Error, err error) {
+func (client HTTPClientFailureClient) Get411(ctx context.Context) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPClientFailureClient.Get411")
 		defer func() {
 			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
+			if result.Response != nil {
+				sc = result.Response.StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -438,7 +432,7 @@ func (client HTTPClientFailureClient) Get411(ctx context.Context) (result Error,
 
 	resp, err := client.Get411Sender(req)
 	if err != nil {
-		result.Response = autorest.Response{Response: resp}
+		result.Response = resp
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Get411", resp, "Failure sending request")
 		return
 	}
@@ -469,24 +463,23 @@ func (client HTTPClientFailureClient) Get411Sender(req *http.Request) (*http.Res
 
 // Get411Responder handles the response to the Get411 request. The method always
 // closes the http.Response Body.
-func (client HTTPClientFailureClient) Get411Responder(resp *http.Response) (result Error, err error) {
+func (client HTTPClientFailureClient) Get411Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
+	result.Response = resp
 	return
 }
 
 // Get412 return 412 status code - should be represented in the client as an error
-func (client HTTPClientFailureClient) Get412(ctx context.Context) (result Error, err error) {
+func (client HTTPClientFailureClient) Get412(ctx context.Context) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPClientFailureClient.Get412")
 		defer func() {
 			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
+			if result.Response != nil {
+				sc = result.Response.StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -499,7 +492,7 @@ func (client HTTPClientFailureClient) Get412(ctx context.Context) (result Error,
 
 	resp, err := client.Get412Sender(req)
 	if err != nil {
-		result.Response = autorest.Response{Response: resp}
+		result.Response = resp
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Get412", resp, "Failure sending request")
 		return
 	}
@@ -530,24 +523,23 @@ func (client HTTPClientFailureClient) Get412Sender(req *http.Request) (*http.Res
 
 // Get412Responder handles the response to the Get412 request. The method always
 // closes the http.Response Body.
-func (client HTTPClientFailureClient) Get412Responder(resp *http.Response) (result Error, err error) {
+func (client HTTPClientFailureClient) Get412Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
+	result.Response = resp
 	return
 }
 
 // Get416 return 416 status code - should be represented in the client as an error
-func (client HTTPClientFailureClient) Get416(ctx context.Context) (result Error, err error) {
+func (client HTTPClientFailureClient) Get416(ctx context.Context) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPClientFailureClient.Get416")
 		defer func() {
 			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
+			if result.Response != nil {
+				sc = result.Response.StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -560,7 +552,7 @@ func (client HTTPClientFailureClient) Get416(ctx context.Context) (result Error,
 
 	resp, err := client.Get416Sender(req)
 	if err != nil {
-		result.Response = autorest.Response{Response: resp}
+		result.Response = resp
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Get416", resp, "Failure sending request")
 		return
 	}
@@ -591,24 +583,23 @@ func (client HTTPClientFailureClient) Get416Sender(req *http.Request) (*http.Res
 
 // Get416Responder handles the response to the Get416 request. The method always
 // closes the http.Response Body.
-func (client HTTPClientFailureClient) Get416Responder(resp *http.Response) (result Error, err error) {
+func (client HTTPClientFailureClient) Get416Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
+	result.Response = resp
 	return
 }
 
 // Head400 return 400 status code - should be represented in the client as an error
-func (client HTTPClientFailureClient) Head400(ctx context.Context) (result Error, err error) {
+func (client HTTPClientFailureClient) Head400(ctx context.Context) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPClientFailureClient.Head400")
 		defer func() {
 			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
+			if result.Response != nil {
+				sc = result.Response.StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -621,7 +612,7 @@ func (client HTTPClientFailureClient) Head400(ctx context.Context) (result Error
 
 	resp, err := client.Head400Sender(req)
 	if err != nil {
-		result.Response = autorest.Response{Response: resp}
+		result.Response = resp
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Head400", resp, "Failure sending request")
 		return
 	}
@@ -652,24 +643,23 @@ func (client HTTPClientFailureClient) Head400Sender(req *http.Request) (*http.Re
 
 // Head400Responder handles the response to the Head400 request. The method always
 // closes the http.Response Body.
-func (client HTTPClientFailureClient) Head400Responder(resp *http.Response) (result Error, err error) {
+func (client HTTPClientFailureClient) Head400Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
+	result.Response = resp
 	return
 }
 
 // Head401 return 401 status code - should be represented in the client as an error
-func (client HTTPClientFailureClient) Head401(ctx context.Context) (result Error, err error) {
+func (client HTTPClientFailureClient) Head401(ctx context.Context) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPClientFailureClient.Head401")
 		defer func() {
 			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
+			if result.Response != nil {
+				sc = result.Response.StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -682,7 +672,7 @@ func (client HTTPClientFailureClient) Head401(ctx context.Context) (result Error
 
 	resp, err := client.Head401Sender(req)
 	if err != nil {
-		result.Response = autorest.Response{Response: resp}
+		result.Response = resp
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Head401", resp, "Failure sending request")
 		return
 	}
@@ -713,24 +703,23 @@ func (client HTTPClientFailureClient) Head401Sender(req *http.Request) (*http.Re
 
 // Head401Responder handles the response to the Head401 request. The method always
 // closes the http.Response Body.
-func (client HTTPClientFailureClient) Head401Responder(resp *http.Response) (result Error, err error) {
+func (client HTTPClientFailureClient) Head401Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
+	result.Response = resp
 	return
 }
 
 // Head410 return 410 status code - should be represented in the client as an error
-func (client HTTPClientFailureClient) Head410(ctx context.Context) (result Error, err error) {
+func (client HTTPClientFailureClient) Head410(ctx context.Context) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPClientFailureClient.Head410")
 		defer func() {
 			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
+			if result.Response != nil {
+				sc = result.Response.StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -743,7 +732,7 @@ func (client HTTPClientFailureClient) Head410(ctx context.Context) (result Error
 
 	resp, err := client.Head410Sender(req)
 	if err != nil {
-		result.Response = autorest.Response{Response: resp}
+		result.Response = resp
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Head410", resp, "Failure sending request")
 		return
 	}
@@ -774,24 +763,23 @@ func (client HTTPClientFailureClient) Head410Sender(req *http.Request) (*http.Re
 
 // Head410Responder handles the response to the Head410 request. The method always
 // closes the http.Response Body.
-func (client HTTPClientFailureClient) Head410Responder(resp *http.Response) (result Error, err error) {
+func (client HTTPClientFailureClient) Head410Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
+	result.Response = resp
 	return
 }
 
 // Head429 return 429 status code - should be represented in the client as an error
-func (client HTTPClientFailureClient) Head429(ctx context.Context) (result Error, err error) {
+func (client HTTPClientFailureClient) Head429(ctx context.Context) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPClientFailureClient.Head429")
 		defer func() {
 			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
+			if result.Response != nil {
+				sc = result.Response.StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -804,7 +792,7 @@ func (client HTTPClientFailureClient) Head429(ctx context.Context) (result Error
 
 	resp, err := client.Head429Sender(req)
 	if err != nil {
-		result.Response = autorest.Response{Response: resp}
+		result.Response = resp
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Head429", resp, "Failure sending request")
 		return
 	}
@@ -835,26 +823,25 @@ func (client HTTPClientFailureClient) Head429Sender(req *http.Request) (*http.Re
 
 // Head429Responder handles the response to the Head429 request. The method always
 // closes the http.Response Body.
-func (client HTTPClientFailureClient) Head429Responder(resp *http.Response) (result Error, err error) {
+func (client HTTPClientFailureClient) Head429Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
+	result.Response = resp
 	return
 }
 
 // Patch400 return 400 status code - should be represented in the client as an error
 // Parameters:
 // booleanValue - simple boolean value true
-func (client HTTPClientFailureClient) Patch400(ctx context.Context, booleanValue *bool) (result Error, err error) {
+func (client HTTPClientFailureClient) Patch400(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPClientFailureClient.Patch400")
 		defer func() {
 			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
+			if result.Response != nil {
+				sc = result.Response.StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -867,7 +854,7 @@ func (client HTTPClientFailureClient) Patch400(ctx context.Context, booleanValue
 
 	resp, err := client.Patch400Sender(req)
 	if err != nil {
-		result.Response = autorest.Response{Response: resp}
+		result.Response = resp
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Patch400", resp, "Failure sending request")
 		return
 	}
@@ -903,26 +890,25 @@ func (client HTTPClientFailureClient) Patch400Sender(req *http.Request) (*http.R
 
 // Patch400Responder handles the response to the Patch400 request. The method always
 // closes the http.Response Body.
-func (client HTTPClientFailureClient) Patch400Responder(resp *http.Response) (result Error, err error) {
+func (client HTTPClientFailureClient) Patch400Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
+	result.Response = resp
 	return
 }
 
 // Patch405 return 405 status code - should be represented in the client as an error
 // Parameters:
 // booleanValue - simple boolean value true
-func (client HTTPClientFailureClient) Patch405(ctx context.Context, booleanValue *bool) (result Error, err error) {
+func (client HTTPClientFailureClient) Patch405(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPClientFailureClient.Patch405")
 		defer func() {
 			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
+			if result.Response != nil {
+				sc = result.Response.StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -935,7 +921,7 @@ func (client HTTPClientFailureClient) Patch405(ctx context.Context, booleanValue
 
 	resp, err := client.Patch405Sender(req)
 	if err != nil {
-		result.Response = autorest.Response{Response: resp}
+		result.Response = resp
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Patch405", resp, "Failure sending request")
 		return
 	}
@@ -971,26 +957,25 @@ func (client HTTPClientFailureClient) Patch405Sender(req *http.Request) (*http.R
 
 // Patch405Responder handles the response to the Patch405 request. The method always
 // closes the http.Response Body.
-func (client HTTPClientFailureClient) Patch405Responder(resp *http.Response) (result Error, err error) {
+func (client HTTPClientFailureClient) Patch405Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
+	result.Response = resp
 	return
 }
 
 // Patch414 return 414 status code - should be represented in the client as an error
 // Parameters:
 // booleanValue - simple boolean value true
-func (client HTTPClientFailureClient) Patch414(ctx context.Context, booleanValue *bool) (result Error, err error) {
+func (client HTTPClientFailureClient) Patch414(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPClientFailureClient.Patch414")
 		defer func() {
 			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
+			if result.Response != nil {
+				sc = result.Response.StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -1003,7 +988,7 @@ func (client HTTPClientFailureClient) Patch414(ctx context.Context, booleanValue
 
 	resp, err := client.Patch414Sender(req)
 	if err != nil {
-		result.Response = autorest.Response{Response: resp}
+		result.Response = resp
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Patch414", resp, "Failure sending request")
 		return
 	}
@@ -1039,26 +1024,25 @@ func (client HTTPClientFailureClient) Patch414Sender(req *http.Request) (*http.R
 
 // Patch414Responder handles the response to the Patch414 request. The method always
 // closes the http.Response Body.
-func (client HTTPClientFailureClient) Patch414Responder(resp *http.Response) (result Error, err error) {
+func (client HTTPClientFailureClient) Patch414Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
+	result.Response = resp
 	return
 }
 
 // Post400 return 400 status code - should be represented in the client as an error
 // Parameters:
 // booleanValue - simple boolean value true
-func (client HTTPClientFailureClient) Post400(ctx context.Context, booleanValue *bool) (result Error, err error) {
+func (client HTTPClientFailureClient) Post400(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPClientFailureClient.Post400")
 		defer func() {
 			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
+			if result.Response != nil {
+				sc = result.Response.StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -1071,7 +1055,7 @@ func (client HTTPClientFailureClient) Post400(ctx context.Context, booleanValue 
 
 	resp, err := client.Post400Sender(req)
 	if err != nil {
-		result.Response = autorest.Response{Response: resp}
+		result.Response = resp
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Post400", resp, "Failure sending request")
 		return
 	}
@@ -1107,26 +1091,25 @@ func (client HTTPClientFailureClient) Post400Sender(req *http.Request) (*http.Re
 
 // Post400Responder handles the response to the Post400 request. The method always
 // closes the http.Response Body.
-func (client HTTPClientFailureClient) Post400Responder(resp *http.Response) (result Error, err error) {
+func (client HTTPClientFailureClient) Post400Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
+	result.Response = resp
 	return
 }
 
 // Post406 return 406 status code - should be represented in the client as an error
 // Parameters:
 // booleanValue - simple boolean value true
-func (client HTTPClientFailureClient) Post406(ctx context.Context, booleanValue *bool) (result Error, err error) {
+func (client HTTPClientFailureClient) Post406(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPClientFailureClient.Post406")
 		defer func() {
 			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
+			if result.Response != nil {
+				sc = result.Response.StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -1139,7 +1122,7 @@ func (client HTTPClientFailureClient) Post406(ctx context.Context, booleanValue 
 
 	resp, err := client.Post406Sender(req)
 	if err != nil {
-		result.Response = autorest.Response{Response: resp}
+		result.Response = resp
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Post406", resp, "Failure sending request")
 		return
 	}
@@ -1175,26 +1158,25 @@ func (client HTTPClientFailureClient) Post406Sender(req *http.Request) (*http.Re
 
 // Post406Responder handles the response to the Post406 request. The method always
 // closes the http.Response Body.
-func (client HTTPClientFailureClient) Post406Responder(resp *http.Response) (result Error, err error) {
+func (client HTTPClientFailureClient) Post406Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
+	result.Response = resp
 	return
 }
 
 // Post415 return 415 status code - should be represented in the client as an error
 // Parameters:
 // booleanValue - simple boolean value true
-func (client HTTPClientFailureClient) Post415(ctx context.Context, booleanValue *bool) (result Error, err error) {
+func (client HTTPClientFailureClient) Post415(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPClientFailureClient.Post415")
 		defer func() {
 			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
+			if result.Response != nil {
+				sc = result.Response.StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -1207,7 +1189,7 @@ func (client HTTPClientFailureClient) Post415(ctx context.Context, booleanValue 
 
 	resp, err := client.Post415Sender(req)
 	if err != nil {
-		result.Response = autorest.Response{Response: resp}
+		result.Response = resp
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Post415", resp, "Failure sending request")
 		return
 	}
@@ -1243,26 +1225,25 @@ func (client HTTPClientFailureClient) Post415Sender(req *http.Request) (*http.Re
 
 // Post415Responder handles the response to the Post415 request. The method always
 // closes the http.Response Body.
-func (client HTTPClientFailureClient) Post415Responder(resp *http.Response) (result Error, err error) {
+func (client HTTPClientFailureClient) Post415Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
+	result.Response = resp
 	return
 }
 
 // Put400 return 400 status code - should be represented in the client as an error
 // Parameters:
 // booleanValue - simple boolean value true
-func (client HTTPClientFailureClient) Put400(ctx context.Context, booleanValue *bool) (result Error, err error) {
+func (client HTTPClientFailureClient) Put400(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPClientFailureClient.Put400")
 		defer func() {
 			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
+			if result.Response != nil {
+				sc = result.Response.StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -1275,7 +1256,7 @@ func (client HTTPClientFailureClient) Put400(ctx context.Context, booleanValue *
 
 	resp, err := client.Put400Sender(req)
 	if err != nil {
-		result.Response = autorest.Response{Response: resp}
+		result.Response = resp
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Put400", resp, "Failure sending request")
 		return
 	}
@@ -1311,26 +1292,25 @@ func (client HTTPClientFailureClient) Put400Sender(req *http.Request) (*http.Res
 
 // Put400Responder handles the response to the Put400 request. The method always
 // closes the http.Response Body.
-func (client HTTPClientFailureClient) Put400Responder(resp *http.Response) (result Error, err error) {
+func (client HTTPClientFailureClient) Put400Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
+	result.Response = resp
 	return
 }
 
 // Put404 return 404 status code - should be represented in the client as an error
 // Parameters:
 // booleanValue - simple boolean value true
-func (client HTTPClientFailureClient) Put404(ctx context.Context, booleanValue *bool) (result Error, err error) {
+func (client HTTPClientFailureClient) Put404(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPClientFailureClient.Put404")
 		defer func() {
 			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
+			if result.Response != nil {
+				sc = result.Response.StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -1343,7 +1323,7 @@ func (client HTTPClientFailureClient) Put404(ctx context.Context, booleanValue *
 
 	resp, err := client.Put404Sender(req)
 	if err != nil {
-		result.Response = autorest.Response{Response: resp}
+		result.Response = resp
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Put404", resp, "Failure sending request")
 		return
 	}
@@ -1379,26 +1359,25 @@ func (client HTTPClientFailureClient) Put404Sender(req *http.Request) (*http.Res
 
 // Put404Responder handles the response to the Put404 request. The method always
 // closes the http.Response Body.
-func (client HTTPClientFailureClient) Put404Responder(resp *http.Response) (result Error, err error) {
+func (client HTTPClientFailureClient) Put404Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
+	result.Response = resp
 	return
 }
 
 // Put409 return 409 status code - should be represented in the client as an error
 // Parameters:
 // booleanValue - simple boolean value true
-func (client HTTPClientFailureClient) Put409(ctx context.Context, booleanValue *bool) (result Error, err error) {
+func (client HTTPClientFailureClient) Put409(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPClientFailureClient.Put409")
 		defer func() {
 			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
+			if result.Response != nil {
+				sc = result.Response.StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -1411,7 +1390,7 @@ func (client HTTPClientFailureClient) Put409(ctx context.Context, booleanValue *
 
 	resp, err := client.Put409Sender(req)
 	if err != nil {
-		result.Response = autorest.Response{Response: resp}
+		result.Response = resp
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Put409", resp, "Failure sending request")
 		return
 	}
@@ -1447,26 +1426,25 @@ func (client HTTPClientFailureClient) Put409Sender(req *http.Request) (*http.Res
 
 // Put409Responder handles the response to the Put409 request. The method always
 // closes the http.Response Body.
-func (client HTTPClientFailureClient) Put409Responder(resp *http.Response) (result Error, err error) {
+func (client HTTPClientFailureClient) Put409Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
+	result.Response = resp
 	return
 }
 
 // Put413 return 413 status code - should be represented in the client as an error
 // Parameters:
 // booleanValue - simple boolean value true
-func (client HTTPClientFailureClient) Put413(ctx context.Context, booleanValue *bool) (result Error, err error) {
+func (client HTTPClientFailureClient) Put413(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPClientFailureClient.Put413")
 		defer func() {
 			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
+			if result.Response != nil {
+				sc = result.Response.StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -1479,7 +1457,7 @@ func (client HTTPClientFailureClient) Put413(ctx context.Context, booleanValue *
 
 	resp, err := client.Put413Sender(req)
 	if err != nil {
-		result.Response = autorest.Response{Response: resp}
+		result.Response = resp
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Put413", resp, "Failure sending request")
 		return
 	}
@@ -1515,12 +1493,11 @@ func (client HTTPClientFailureClient) Put413Sender(req *http.Request) (*http.Res
 
 // Put413Responder handles the response to the Put413 request. The method always
 // closes the http.Response Body.
-func (client HTTPClientFailureClient) Put413Responder(resp *http.Response) (result Error, err error) {
+func (client HTTPClientFailureClient) Put413Responder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
+	result.Response = resp
 	return
 }
