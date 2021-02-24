@@ -5,9 +5,10 @@ package stringgroup
 
 import (
 	"context"
-	"generatortests/helpers"
 	"net/http"
 	"testing"
+
+	"github.com/google/go-cmp/cmp"
 )
 
 func newEnumClient() *EnumClient {
@@ -20,8 +21,12 @@ func TestEnumGetNotExpandable(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetNotExpandable: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
-	helpers.DeepEqualOrFatal(t, result.Value, ColorsRedColor.ToPtr())
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
+	if r := cmp.Diff(result.Value, ColorsRedColor.ToPtr()); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestEnumGetReferenced(t *testing.T) {
@@ -30,8 +35,12 @@ func TestEnumGetReferenced(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetReferenced: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
-	helpers.DeepEqualOrFatal(t, result.Value, ColorsRedColor.ToPtr())
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
+	if r := cmp.Diff(result.Value, ColorsRedColor.ToPtr()); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestEnumGetReferencedConstant(t *testing.T) {
@@ -40,9 +49,13 @@ func TestEnumGetReferencedConstant(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetReferencedConstant: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 	val := "Sample String"
-	helpers.DeepEqualOrFatal(t, result.RefColorConstant, &RefColorConstant{Field1: &val})
+	if r := cmp.Diff(result.RefColorConstant, &RefColorConstant{Field1: &val}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestEnumPutNotExpandable(t *testing.T) {
@@ -51,7 +64,9 @@ func TestEnumPutNotExpandable(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutNotExpandable: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestEnumPutReferenced(t *testing.T) {
@@ -60,7 +75,9 @@ func TestEnumPutReferenced(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutReferenced: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestEnumPutReferencedConstant(t *testing.T) {
@@ -70,6 +87,8 @@ func TestEnumPutReferencedConstant(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutReferencedConstant: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 
 }

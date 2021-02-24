@@ -5,12 +5,12 @@ package xmlgroup
 
 import (
 	"context"
-	"generatortests/helpers"
 	"net/http"
 	"testing"
 	"time"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
+	"github.com/google/go-cmp/cmp"
 )
 
 func toTimePtr(layout string, value string) *time.Time {
@@ -31,7 +31,9 @@ func TestGetACLs(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 	expected := &[]SignedIDentifier{
 		{
 			ID: to.StringPtr("MTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTI="),
@@ -42,7 +44,9 @@ func TestGetACLs(t *testing.T) {
 			},
 		},
 	}
-	helpers.DeepEqualOrFatal(t, result.SignedIdentifiers, expected)
+	if r := cmp.Diff(result.SignedIdentifiers, expected); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestGetComplexTypeRefNoMeta(t *testing.T) {
@@ -51,14 +55,18 @@ func TestGetComplexTypeRefNoMeta(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 	expected := &RootWithRefAndNoMeta{
 		RefToModel: &ComplexTypeNoMeta{
 			ID: to.StringPtr("myid"),
 		},
 		Something: to.StringPtr("else"),
 	}
-	helpers.DeepEqualOrFatal(t, result.RootWithRefAndNoMeta, expected)
+	if r := cmp.Diff(result.RootWithRefAndNoMeta, expected); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestGetComplexTypeRefWithMeta(t *testing.T) {
@@ -73,7 +81,9 @@ func TestGetComplexTypeRefWithMeta(t *testing.T) {
 		},
 		Something: to.StringPtr("else"),
 	}
-	helpers.DeepEqualOrFatal(t, result.RootWithRefAndMeta, expected)
+	if r := cmp.Diff(result.RootWithRefAndMeta, expected); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestGetEmptyChildElement(t *testing.T) {
@@ -82,13 +92,17 @@ func TestGetEmptyChildElement(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 	expected := &Banana{
 		Name:       to.StringPtr("Unknown Banana"),
 		Expiration: toTimePtr(time.RFC3339Nano, "2012-02-24T00:53:52.789Z"),
 		Flavor:     to.StringPtr(""),
 	}
-	helpers.DeepEqualOrFatal(t, result.Banana, expected)
+	if r := cmp.Diff(result.Banana, expected); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestGetEmptyList(t *testing.T) {
@@ -97,9 +111,13 @@ func TestGetEmptyList(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 	expected := &Slideshow{}
-	helpers.DeepEqualOrFatal(t, result.Slideshow, expected)
+	if r := cmp.Diff(result.Slideshow, expected); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestGetEmptyRootList(t *testing.T) {
@@ -108,7 +126,9 @@ func TestGetEmptyRootList(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 	if result.Bananas != nil {
 		t.Fatal("expected nil slice")
 	}
@@ -120,9 +140,13 @@ func TestGetEmptyWrappedLists(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 	expected := &AppleBarrel{}
-	helpers.DeepEqualOrFatal(t, result.AppleBarrel, expected)
+	if r := cmp.Diff(result.AppleBarrel, expected); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestGetHeaders(t *testing.T) {
@@ -131,7 +155,9 @@ func TestGetHeaders(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, result.CustomHeader, to.StringPtr("custom-value"))
+	if r := cmp.Diff(result.CustomHeader, to.StringPtr("custom-value")); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestGetRootList(t *testing.T) {
@@ -140,7 +166,9 @@ func TestGetRootList(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 	expected := &[]Banana{
 		{
 			Name:       to.StringPtr("Cavendish"),
@@ -153,7 +181,9 @@ func TestGetRootList(t *testing.T) {
 			Expiration: toTimePtr(time.RFC3339Nano, "2018-02-28T00:40:00.123Z"),
 		},
 	}
-	helpers.DeepEqualOrFatal(t, result.Bananas, expected)
+	if r := cmp.Diff(result.Bananas, expected); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestGetRootListSingleItem(t *testing.T) {
@@ -162,7 +192,9 @@ func TestGetRootListSingleItem(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 	expected := &[]Banana{
 		{
 			Name:       to.StringPtr("Cavendish"),
@@ -170,7 +202,9 @@ func TestGetRootListSingleItem(t *testing.T) {
 			Expiration: toTimePtr(time.RFC3339Nano, "2018-02-28T00:40:00.123Z"),
 		},
 	}
-	helpers.DeepEqualOrFatal(t, result.Bananas, expected)
+	if r := cmp.Diff(result.Bananas, expected); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestGetServiceProperties(t *testing.T) {
@@ -179,7 +213,9 @@ func TestGetServiceProperties(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 	expected := &StorageServiceProperties{
 		HourMetrics: &Metrics{
 			Version:     to.StringPtr("1.0"),
@@ -210,7 +246,9 @@ func TestGetServiceProperties(t *testing.T) {
 			},
 		},
 	}
-	helpers.DeepEqualOrFatal(t, result.StorageServiceProperties, expected)
+	if r := cmp.Diff(result.StorageServiceProperties, expected); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestGetSimple(t *testing.T) {
@@ -219,7 +257,9 @@ func TestGetSimple(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 	expected := &Slideshow{
 		Author: to.StringPtr("Yours Truly"),
 		Date:   to.StringPtr("Date of publication"),
@@ -236,7 +276,9 @@ func TestGetSimple(t *testing.T) {
 			},
 		},
 	}
-	helpers.DeepEqualOrFatal(t, result.Slideshow, expected)
+	if r := cmp.Diff(result.Slideshow, expected); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestGetWrappedLists(t *testing.T) {
@@ -245,12 +287,16 @@ func TestGetWrappedLists(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 	expected := &AppleBarrel{
 		BadApples:  &[]string{"Red Delicious"},
 		GoodApples: &[]string{"Fuji", "Gala"},
 	}
-	helpers.DeepEqualOrFatal(t, result.AppleBarrel, expected)
+	if r := cmp.Diff(result.AppleBarrel, expected); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestJSONInput(t *testing.T) {
@@ -261,7 +307,9 @@ func TestJSONInput(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestJSONOutput(t *testing.T) {
@@ -273,7 +321,9 @@ func TestJSONOutput(t *testing.T) {
 	expected := JSONOutput{
 		ID: to.Int32Ptr(42),
 	}
-	helpers.DeepEqualOrFatal(t, result.JSONOutput, &expected)
+	if r := cmp.Diff(result.JSONOutput, &expected); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestListBlobs(t *testing.T) {
@@ -400,7 +450,9 @@ func TestListBlobs(t *testing.T) {
 		ContainerName: to.StringPtr("https://myaccount.blob.core.windows.net/mycontainer"),
 		NextMarker:    to.StringPtr(""),
 	}
-	helpers.DeepEqualOrFatal(t, result.EnumerationResults, &expected)
+	if r := cmp.Diff(result.EnumerationResults, &expected); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestListContainers(t *testing.T) {
@@ -409,7 +461,9 @@ func TestListContainers(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 	expected := &ListContainersResponse{
 		ServiceEndpoint: to.StringPtr("https://myaccount.blob.core.windows.net/"),
 		MaxResults:      to.Int32Ptr(3),
@@ -439,7 +493,9 @@ func TestListContainers(t *testing.T) {
 			},
 		},
 	}
-	helpers.DeepEqualOrFatal(t, result.EnumerationResults, expected)
+	if r := cmp.Diff(result.EnumerationResults, expected); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestPutACLs(t *testing.T) {
@@ -457,7 +513,9 @@ func TestPutACLs(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusCreated)
+	if s := result.StatusCode; s != http.StatusCreated {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestPutComplexTypeRefNoMeta(t *testing.T) {
@@ -471,7 +529,9 @@ func TestPutComplexTypeRefNoMeta(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusCreated)
+	if s := result.StatusCode; s != http.StatusCreated {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestPutComplexTypeRefWithMeta(t *testing.T) {
@@ -485,7 +545,9 @@ func TestPutComplexTypeRefWithMeta(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusCreated)
+	if s := result.StatusCode; s != http.StatusCreated {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestPutEmptyChildElement(t *testing.T) {
@@ -498,7 +560,9 @@ func TestPutEmptyChildElement(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusCreated)
+	if s := result.StatusCode; s != http.StatusCreated {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestPutEmptyList(t *testing.T) {
@@ -509,7 +573,9 @@ func TestPutEmptyList(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusCreated)
+	if s := result.StatusCode; s != http.StatusCreated {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestPutEmptyRootList(t *testing.T) {
@@ -518,7 +584,9 @@ func TestPutEmptyRootList(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusCreated)
+	if s := result.StatusCode; s != http.StatusCreated {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestPutEmptyWrappedLists(t *testing.T) {
@@ -530,7 +598,9 @@ func TestPutEmptyWrappedLists(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusCreated)
+	if s := result.StatusCode; s != http.StatusCreated {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestPutRootList(t *testing.T) {
@@ -550,7 +620,9 @@ func TestPutRootList(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusCreated)
+	if s := result.StatusCode; s != http.StatusCreated {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestPutRootListSingleItem(t *testing.T) {
@@ -565,7 +637,9 @@ func TestPutRootListSingleItem(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusCreated)
+	if s := result.StatusCode; s != http.StatusCreated {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestPutServiceProperties(t *testing.T) {
@@ -603,7 +677,9 @@ func TestPutServiceProperties(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusCreated)
+	if s := result.StatusCode; s != http.StatusCreated {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestPutSimple(t *testing.T) {
@@ -627,7 +703,9 @@ func TestPutSimple(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusCreated)
+	if s := result.StatusCode; s != http.StatusCreated {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestPutWrappedLists(t *testing.T) {
@@ -639,5 +717,7 @@ func TestPutWrappedLists(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusCreated)
+	if s := result.StatusCode; s != http.StatusCreated {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }

@@ -5,7 +5,6 @@ package filegroup
 
 import (
 	"context"
-	"generatortests/helpers"
 	"io/ioutil"
 	"net/http"
 	"testing"
@@ -21,7 +20,9 @@ func TestGetEmptyFile(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 	if result.Body == nil {
 		t.Fatal("unexpected nil response body")
 	}
@@ -37,7 +38,9 @@ func TestGetFile(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 	if result.Body == nil {
 		t.Fatal("unexpected nil response body")
 	}
@@ -58,7 +61,9 @@ func TestGetFileLarge(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 	if result.Body == nil {
 		t.Fatal("unexpected nil response body")
 	}

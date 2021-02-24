@@ -5,13 +5,13 @@ package arraygroup
 
 import (
 	"context"
-	"generatortests/helpers"
 	"net/http"
 	"reflect"
 	"testing"
 	"time"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
+	"github.com/google/go-cmp/cmp"
 )
 
 func newArrayClient() *ArrayClient {
@@ -28,8 +28,8 @@ func TestGetArrayEmpty(t *testing.T) {
 	if resp.StringArrayArray == nil {
 		t.Fatal("unexpected nil array")
 	}
-	if l := len(*resp.StringArrayArray); l != 0 {
-		helpers.DeepEqualOrFatal(t, l, 0)
+	if r := cmp.Diff(len(*resp.StringArrayArray), 0); r != "" {
+		t.Fatal(r)
 	}
 }
 
@@ -40,11 +40,13 @@ func TestGetArrayItemEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, resp.StringArrayArray, &[][]string{
+	if r := cmp.Diff(resp.StringArrayArray, &[][]string{
 		{"1", "2", "3"},
 		{},
 		{"7", "8", "9"},
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetArrayItemNull - Get an array of array of strings [['1', '2', '3'], null, ['7', '8', '9']]
@@ -54,11 +56,13 @@ func TestGetArrayItemNull(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, resp.StringArrayArray, &[][]string{
+	if r := cmp.Diff(resp.StringArrayArray, &[][]string{
 		{"1", "2", "3"},
 		nil,
 		{"7", "8", "9"},
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetArrayNull - Get a null array
@@ -80,11 +84,13 @@ func TestGetArrayValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, resp.StringArrayArray, &[][]string{
+	if r := cmp.Diff(resp.StringArrayArray, &[][]string{
 		{"1", "2", "3"},
 		{"4", "5", "6"},
 		{"7", "8", "9"},
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetBase64URL - Get array value ['a string that gets encoded with base64url', 'test string' 'Lorem ipsum'] with the items base64url encoded
@@ -95,11 +101,13 @@ func TestGetBase64URL(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, resp.ByteArrayArray, &[][]byte{
+	if r := cmp.Diff(resp.ByteArrayArray, &[][]byte{
 		{0},
 		{0},
 		{0},
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetBooleanInvalidNull - Get boolean array value [true, null, false]
@@ -134,7 +142,9 @@ func TestGetBooleanTfft(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, resp.BoolArray, &[]bool{true, false, false, true})
+	if r := cmp.Diff(resp.BoolArray, &[]bool{true, false, false, true}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetByteInvalidNull - Get byte array value [hex(AB, AC, AD), null] with the first item base64 encoded
@@ -157,11 +167,13 @@ func TestGetByteValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, resp.ByteArrayArray, &[][]byte{
+	if r := cmp.Diff(resp.ByteArrayArray, &[][]byte{
 		{255, 255, 255, 250},
 		{1, 2, 3},
 		{37, 41, 67},
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetComplexEmpty - Get empty array of complex type []
@@ -174,8 +186,8 @@ func TestGetComplexEmpty(t *testing.T) {
 	if resp.ProductArray == nil {
 		t.Fatal("unexpected nil array")
 	}
-	if l := len(*resp.ProductArray); l != 0 {
-		helpers.DeepEqualOrFatal(t, l, 0)
+	if r := cmp.Diff(len(*resp.ProductArray), 0); r != "" {
+		t.Fatal(r)
 	}
 }
 
@@ -186,11 +198,13 @@ func TestGetComplexItemEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, resp.ProductArray, &[]Product{
+	if r := cmp.Diff(resp.ProductArray, &[]Product{
 		{Integer: to.Int32Ptr(1), String: to.StringPtr("2")},
 		{},
 		{Integer: to.Int32Ptr(5), String: to.StringPtr("6")},
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetComplexItemNull - Get array of complex type with null item [{'integer': 1 'string': '2'}, null, {'integer': 5, 'string': '6'}]
@@ -217,11 +231,13 @@ func TestGetComplexValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, resp.ProductArray, &[]Product{
+	if r := cmp.Diff(resp.ProductArray, &[]Product{
 		{Integer: to.Int32Ptr(1), String: to.StringPtr("2")},
 		{Integer: to.Int32Ptr(3), String: to.StringPtr("4")},
 		{Integer: to.Int32Ptr(5), String: to.StringPtr("6")},
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetDateInvalidChars - Get date array value ['2011-03-22', 'date']
@@ -275,11 +291,13 @@ func TestGetDateTimeRFC1123Valid(t *testing.T) {
 	v1, _ := time.Parse(time.RFC1123, "Fri, 01 Dec 2000 00:00:01 GMT")
 	v2, _ := time.Parse(time.RFC1123, "Wed, 02 Jan 1980 00:11:35 GMT")
 	v3, _ := time.Parse(time.RFC1123, "Wed, 12 Oct 1492 10:15:01 GMT")
-	helpers.DeepEqualOrFatal(t, resp.TimeArray, &[]time.Time{
+	if r := cmp.Diff(resp.TimeArray, &[]time.Time{
 		v1,
 		v2,
 		v3,
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetDateTimeValid - Get date-time array value ['2000-12-01t00:00:01z', '1980-01-02T00:11:35+01:00', '1492-10-12T10:15:01-08:00']
@@ -292,11 +310,13 @@ func TestGetDateTimeValid(t *testing.T) {
 	v1, _ := time.Parse(time.RFC3339, "2000-12-01T00:00:01Z")
 	v2, _ := time.Parse(time.RFC3339, "1980-01-02T01:11:35+01:00")
 	v3, _ := time.Parse(time.RFC3339, "1492-10-12T02:15:01-08:00")
-	helpers.DeepEqualOrFatal(t, resp.TimeArray, &[]time.Time{
+	if r := cmp.Diff(resp.TimeArray, &[]time.Time{
 		v1,
 		v2,
 		v3,
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetDateValid - Get integer array value ['2000-12-01', '1980-01-02', '1492-10-12']
@@ -306,11 +326,13 @@ func TestGetDateValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, resp.TimeArray, &[]time.Time{
+	if r := cmp.Diff(resp.TimeArray, &[]time.Time{
 		time.Date(2000, time.December, 01, 0, 0, 0, 0, time.UTC),
 		time.Date(1980, time.January, 02, 0, 0, 0, 0, time.UTC),
 		time.Date(1492, time.October, 12, 0, 0, 0, 0, time.UTC),
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetDictionaryEmpty - Get an array of Dictionaries of type <string, string> with value []
@@ -320,7 +342,9 @@ func TestGetDictionaryEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, resp.MapOfStringArray, &[]map[string]string{})
+	if r := cmp.Diff(resp.MapOfStringArray, &[]map[string]string{}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetDictionaryItemEmpty - Get an array of Dictionaries of type <string, string> with value [{'1': 'one', '2': 'two', '3': 'three'}, {}, {'7': 'seven', '8': 'eight', '9': 'nine'}]
@@ -330,7 +354,7 @@ func TestGetDictionaryItemEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, resp.MapOfStringArray, &[]map[string]string{
+	if r := cmp.Diff(resp.MapOfStringArray, &[]map[string]string{
 		{
 			"1": "one",
 			"2": "two",
@@ -342,7 +366,9 @@ func TestGetDictionaryItemEmpty(t *testing.T) {
 			"8": "eight",
 			"9": "nine",
 		},
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetDictionaryItemNull - Get an array of Dictionaries of type <string, string> with value [{'1': 'one', '2': 'two', '3': 'three'}, null, {'7': 'seven', '8': 'eight', '9': 'nine'}]
@@ -352,7 +378,7 @@ func TestGetDictionaryItemNull(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, resp.MapOfStringArray, &[]map[string]string{
+	if r := cmp.Diff(resp.MapOfStringArray, &[]map[string]string{
 		{
 			"1": "one",
 			"2": "two",
@@ -364,7 +390,9 @@ func TestGetDictionaryItemNull(t *testing.T) {
 			"8": "eight",
 			"9": "nine",
 		},
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetDictionaryNull - Get an array of Dictionaries with value null
@@ -386,7 +414,7 @@ func TestGetDictionaryValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, resp.MapOfStringArray, &[]map[string]string{
+	if r := cmp.Diff(resp.MapOfStringArray, &[]map[string]string{
 		{
 			"1": "one",
 			"2": "two",
@@ -402,7 +430,9 @@ func TestGetDictionaryValid(t *testing.T) {
 			"8": "eight",
 			"9": "nine",
 		},
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetDoubleInvalidNull - Get float array value [0.0, null, -1.2e20]
@@ -437,7 +467,9 @@ func TestGetDoubleValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, resp.Float64Array, &[]float64{0, -0.01, -1.2e20})
+	if r := cmp.Diff(resp.Float64Array, &[]float64{0, -0.01, -1.2e20}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetDurationValid - Get duration array value ['P123DT22H14M12.011S', 'P5DT1H0M0S']
@@ -447,7 +479,9 @@ func TestGetDurationValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, resp.StringArray, &[]string{"P123DT22H14M12.011S", "P5DT1H0M0S"})
+	if r := cmp.Diff(resp.StringArray, &[]string{"P123DT22H14M12.011S", "P5DT1H0M0S"}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetEmpty - Get empty array value []
@@ -460,8 +494,8 @@ func TestGetEmpty(t *testing.T) {
 	if resp.Int32Array == nil {
 		t.Fatal("unexpected nil array")
 	}
-	if l := len(*resp.Int32Array); l != 0 {
-		helpers.DeepEqualOrFatal(t, l, 0)
+	if r := cmp.Diff(len(*resp.Int32Array), 0); r != "" {
+		t.Fatal(r)
 	}
 }
 
@@ -472,7 +506,9 @@ func TestGetEnumValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, resp.FooEnumArray, &[]FooEnum{FooEnumFoo1, FooEnumFoo2, FooEnumFoo3})
+	if r := cmp.Diff(resp.FooEnumArray, &[]FooEnum{FooEnumFoo1, FooEnumFoo2, FooEnumFoo3}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetFloatInvalidNull - Get float array value [0.0, null, -1.2e20]
@@ -507,7 +543,9 @@ func TestGetFloatValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, resp.Float32Array, &[]float32{0, -0.01, -1.2e20})
+	if r := cmp.Diff(resp.Float32Array, &[]float32{0, -0.01, -1.2e20}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetIntInvalidNull - Get integer array value [1, null, 0]
@@ -542,7 +580,9 @@ func TestGetIntegerValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, resp.Int32Array, &[]int32{1, -1, 3, 300})
+	if r := cmp.Diff(resp.Int32Array, &[]int32{1, -1, 3, 300}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetInvalid - Get invalid array [1, 2, 3
@@ -589,7 +629,9 @@ func TestGetLongValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, resp.Int64Array, &[]int64{1, -1, 3, 300})
+	if r := cmp.Diff(resp.Int64Array, &[]int64{1, -1, 3, 300}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetNull - Get null array value
@@ -611,7 +653,9 @@ func TestGetStringEnumValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, resp.Enum0Array, &[]Enum0{Enum0Foo1, Enum0Foo2, Enum0Foo3})
+	if r := cmp.Diff(resp.Enum0Array, &[]Enum0{Enum0Foo1, Enum0Foo2, Enum0Foo3}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetStringValid - Get string array value ['foo1', 'foo2', 'foo3']
@@ -621,7 +665,9 @@ func TestGetStringValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, resp.StringArray, &[]string{"foo1", "foo2", "foo3"})
+	if r := cmp.Diff(resp.StringArray, &[]string{"foo1", "foo2", "foo3"}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetStringWithInvalid - Get string array value ['foo', 123, 'foo2']
@@ -661,7 +707,9 @@ func TestGetUUIDValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, resp.StringArray, &[]string{"6dcc7237-45fe-45c4-8a6b-3a8a3f625652", "d1399005-30f7-40d6-8da6-dd7c89ad34db", "f42f6aa1-a5bc-4ddf-907e-5f915de43205"})
+	if r := cmp.Diff(resp.StringArray, &[]string{"6dcc7237-45fe-45c4-8a6b-3a8a3f625652", "d1399005-30f7-40d6-8da6-dd7c89ad34db", "f42f6aa1-a5bc-4ddf-907e-5f915de43205"}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // PutArrayValid - Put An array of array of strings [['1', '2', '3'], ['4', '5', '6'], ['7', '8', '9']]
@@ -675,7 +723,9 @@ func TestPutArrayValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, resp, http.StatusOK)
+	if s := resp.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 // PutBooleanTfft - Set array value empty [true, false, false, true]
@@ -685,7 +735,9 @@ func TestPutBooleanTfft(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, resp, http.StatusOK)
+	if s := resp.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 // PutByteValid - Put the array value [hex(FF FF FF FA), hex(01 02 03), hex (25, 29, 43)] with each elementencoded in base 64
@@ -699,7 +751,9 @@ func TestPutByteValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, resp, http.StatusOK)
+	if s := resp.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 // PutComplexValid - Put an array of complex type with values [{'integer': 1 'string': '2'}, {'integer': 3, 'string': '4'}, {'integer': 5, 'string': '6'}]
@@ -713,7 +767,9 @@ func TestPutComplexValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, resp, http.StatusOK)
+	if s := resp.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 // PutDateTimeRFC1123Valid - Set array value  ['Fri, 01 Dec 2000 00:00:01 GMT', 'Wed, 02 Jan 1980 00:11:35 GMT', 'Wed, 12 Oct 1492 10:15:01 GMT']
@@ -726,7 +782,9 @@ func TestPutDateTimeRFC1123Valid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, resp, http.StatusOK)
+	if s := resp.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 // PutDateTimeValid - Set array value  ['2000-12-01t00:00:01z', '1980-01-02T00:11:35+01:00', '1492-10-12T10:15:01-08:00']
@@ -739,7 +797,9 @@ func TestPutDateTimeValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, resp, http.StatusOK)
+	if s := resp.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 // PutDateValid - Set array value  ['2000-12-01', '1980-01-02', '1492-10-12']
@@ -753,7 +813,9 @@ func TestPutDateValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, resp, http.StatusOK)
+	if s := resp.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 // PutDictionaryValid - Get an array of Dictionaries of type <string, string> with value [{'1': 'one', '2': 'two', '3': 'three'}, {'4': 'four', '5': 'five', '6': 'six'}, {'7': 'seven', '8': 'eight', '9': 'nine'}]
@@ -779,7 +841,9 @@ func TestPutDictionaryValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, resp, http.StatusOK)
+	if s := resp.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 // PutDoubleValid - Set array value [0, -0.01, 1.2e20]
@@ -789,7 +853,9 @@ func TestPutDoubleValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, resp, http.StatusOK)
+	if s := resp.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 // PutDurationValid - Set array value  ['P123DT22H14M12.011S', 'P5DT1H0M0S']
@@ -799,7 +865,9 @@ func TestPutDurationValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, resp, http.StatusOK)
+	if s := resp.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 // PutEmpty - Set array value empty []
@@ -809,7 +877,9 @@ func TestPutEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, resp, http.StatusOK)
+	if s := resp.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 // PutEnumValid - Set array value ['foo1', 'foo2', 'foo3']
@@ -819,7 +889,9 @@ func TestPutEnumValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, resp, http.StatusOK)
+	if s := resp.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 // PutFloatValid - Set array value [0, -0.01, 1.2e20]
@@ -829,7 +901,9 @@ func TestPutFloatValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, resp, http.StatusOK)
+	if s := resp.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 // PutIntegerValid - Set array value empty [1, -1, 3, 300]
@@ -839,7 +913,9 @@ func TestPutIntegerValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, resp, http.StatusOK)
+	if s := resp.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 // PutLongValid - Set array value empty [1, -1, 3, 300]
@@ -849,7 +925,9 @@ func TestPutLongValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, resp, http.StatusOK)
+	if s := resp.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 // PutStringEnumValid - Set array value ['foo1', 'foo2', 'foo3']
@@ -859,7 +937,9 @@ func TestPutStringEnumValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, resp, http.StatusOK)
+	if s := resp.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 // PutStringValid - Set array value ['foo1', 'foo2', 'foo3']
@@ -869,7 +949,9 @@ func TestPutStringValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, resp, http.StatusOK)
+	if s := resp.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 // PutUUIDValid - Set array value  ['6dcc7237-45fe-45c4-8a6b-3a8a3f625652', 'd1399005-30f7-40d6-8da6-dd7c89ad34db', 'f42f6aa1-a5bc-4ddf-907e-5f915de43205']
@@ -879,5 +961,7 @@ func TestPutUUIDValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, resp, http.StatusOK)
+	if s := resp.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }

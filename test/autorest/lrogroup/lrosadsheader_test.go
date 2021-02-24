@@ -5,9 +5,11 @@ package lrogroup
 
 import (
 	"context"
-	"generatortests/helpers"
+	"net/http"
 	"testing"
 	"time"
+
+	"github.com/google/go-cmp/cmp"
 )
 
 func newLrosaDsClient() *LrosaDsClient {
@@ -63,11 +65,13 @@ func TestLROSADSBeginDelete204Succeeded(t *testing.T) {
 	if rt != "" {
 		t.Fatal("expected an empty resume token")
 	}
-	res, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	pollResp, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, res, 204)
+	if s := pollResp.StatusCode; s != http.StatusNoContent {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestLROSADSBeginDeleteAsyncRelativeRetry400(t *testing.T) {
@@ -313,7 +317,9 @@ func TestLROSADSBeginPutAsyncRelativeRetry400(t *testing.T) {
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
-	helpers.DeepEqualOrFatal(t, res, ProductResponse{})
+	if r := cmp.Diff(res, ProductResponse{}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestLROSADSBeginPutAsyncRelativeRetryInvalidHeader(t *testing.T) {
@@ -343,7 +349,9 @@ func TestLROSADSBeginPutAsyncRelativeRetryInvalidJSONPolling(t *testing.T) {
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
-	helpers.DeepEqualOrFatal(t, res, ProductResponse{})
+	if r := cmp.Diff(res, ProductResponse{}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestLROSADSBeginPutAsyncRelativeRetryNoStatus(t *testing.T) {
@@ -365,7 +373,9 @@ func TestLROSADSBeginPutAsyncRelativeRetryNoStatus(t *testing.T) {
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
-	helpers.DeepEqualOrFatal(t, res, ProductResponse{})
+	if r := cmp.Diff(res, ProductResponse{}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestLROSADSBeginPutAsyncRelativeRetryNoStatusPayload(t *testing.T) {
@@ -387,7 +397,9 @@ func TestLROSADSBeginPutAsyncRelativeRetryNoStatusPayload(t *testing.T) {
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
-	helpers.DeepEqualOrFatal(t, res, ProductResponse{})
+	if r := cmp.Diff(res, ProductResponse{}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestLROSADSBeginPutError201NoProvisioningStatePayload(t *testing.T) {
@@ -409,7 +421,9 @@ func TestLROSADSBeginPutError201NoProvisioningStatePayload(t *testing.T) {
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
-	helpers.DeepEqualOrFatal(t, res, ProductResponse{})
+	if r := cmp.Diff(res, ProductResponse{}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestLROSADSBeginPutNonRetry201Creating400(t *testing.T) {
@@ -431,7 +445,9 @@ func TestLROSADSBeginPutNonRetry201Creating400(t *testing.T) {
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
-	helpers.DeepEqualOrFatal(t, res, ProductResponse{})
+	if r := cmp.Diff(res, ProductResponse{}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestLROSADSBeginPutNonRetry201Creating400InvalidJSON(t *testing.T) {
@@ -453,7 +469,9 @@ func TestLROSADSBeginPutNonRetry201Creating400InvalidJSON(t *testing.T) {
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
-	helpers.DeepEqualOrFatal(t, res, ProductResponse{})
+	if r := cmp.Diff(res, ProductResponse{}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestLROSADSBeginPutNonRetry400(t *testing.T) {

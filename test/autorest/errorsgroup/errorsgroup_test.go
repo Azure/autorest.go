@@ -6,13 +6,13 @@ package errorsgroup
 import (
 	"context"
 	"errors"
-	"generatortests/helpers"
 	"net/http"
 	"reflect"
 	"testing"
 	"time"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
+	"github.com/google/go-cmp/cmp"
 )
 
 func newPetClient() *PetClient {
@@ -30,7 +30,9 @@ func TestDoSomethingSuccess(t *testing.T) {
 		t.Fatal(err)
 	}
 	// bug in test server, route returns wrong JSON model so PetAction is empty
-	helpers.DeepEqualOrFatal(t, result.PetAction, &PetAction{})
+	if r := cmp.Diff(result.PetAction, &PetAction{}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestDoSomethingError1(t *testing.T) {
@@ -40,13 +42,15 @@ func TestDoSomethingError1(t *testing.T) {
 	if !errors.As(err, &sadErr) {
 		t.Fatalf("expected PetSadError: %v", err)
 	}
-	helpers.DeepEqualOrFatal(t, sadErr, &PetSadError{
+	if r := cmp.Diff(sadErr, &PetSadError{
 		PetActionError: PetActionError{
 			ErrorMessage: to.StringPtr("casper aint happy"),
 			ErrorType:    to.StringPtr("PetSadError"),
 		},
 		Reason: to.StringPtr("need more treats"),
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected empty response")
 	}
@@ -59,7 +63,7 @@ func TestDoSomethingError2(t *testing.T) {
 	if !errors.As(err, &hungrErr) {
 		t.Fatal("expected PetHungryOrThirstyError")
 	}
-	helpers.DeepEqualOrFatal(t, hungrErr, &PetHungryOrThirstyError{
+	if r := cmp.Diff(hungrErr, &PetHungryOrThirstyError{
 		PetSadError: PetSadError{
 			PetActionError: PetActionError{
 				ErrorMessage: to.StringPtr("scooby is low"),
@@ -68,7 +72,9 @@ func TestDoSomethingError2(t *testing.T) {
 			Reason: to.StringPtr("need more everything"),
 		},
 		HungryOrThirsty: to.StringPtr("hungry and thirsty"),
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected empty response")
 	}
@@ -81,7 +87,9 @@ func TestDoSomethingError3(t *testing.T) {
 	if !errors.As(err, &actErr) {
 		t.Fatal("expected PetActionError")
 	}
-	helpers.DeepEqualOrFatal(t, actErr, &PetActionError{})
+	if r := cmp.Diff(actErr, &PetActionError{}); r != "" {
+		t.Fatal(r)
+	}
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected empty response")
 	}
@@ -94,12 +102,14 @@ func TestGetPetByIDSuccess1(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, result.Pet, &Pet{
+	if r := cmp.Diff(result.Pet, &Pet{
 		Animal: Animal{
 			AniType: to.StringPtr("Dog"),
 		},
 		Name: to.StringPtr("Tommy Tomson"),
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestGetPetByIDSuccess2(t *testing.T) {
@@ -108,7 +118,9 @@ func TestGetPetByIDSuccess2(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusAccepted)
+	if s := result.RawResponse.StatusCode; s != http.StatusAccepted {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestGetPetByIDError1(t *testing.T) {
@@ -118,7 +130,7 @@ func TestGetPetByIDError1(t *testing.T) {
 	if !errors.As(err, &anfe) {
 		t.Fatal("expected AnimalNotFoundError")
 	}
-	helpers.DeepEqualOrFatal(t, anfe, &AnimalNotFound{
+	if r := cmp.Diff(anfe, &AnimalNotFound{
 		NotFoundErrorBase: NotFoundErrorBase{
 			BaseError: BaseError{
 				SomeBaseProp: to.StringPtr("problem finding animal"),
@@ -127,7 +139,9 @@ func TestGetPetByIDError1(t *testing.T) {
 			WhatNotFound: to.StringPtr("AnimalNotFound"),
 		},
 		Name: to.StringPtr("coyote"),
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected empty response")
 	}
@@ -140,7 +154,7 @@ func TestGetPetByIDError2(t *testing.T) {
 	if !errors.As(err, &lnfe) {
 		t.Fatal("expected LinkNotFoundError")
 	}
-	helpers.DeepEqualOrFatal(t, lnfe, &LinkNotFound{
+	if r := cmp.Diff(lnfe, &LinkNotFound{
 		NotFoundErrorBase: NotFoundErrorBase{
 			BaseError: BaseError{
 				SomeBaseProp: to.StringPtr("problem finding pet"),
@@ -149,7 +163,9 @@ func TestGetPetByIDError2(t *testing.T) {
 			WhatNotFound: to.StringPtr("InvalidResourceLink"),
 		},
 		WhatSubAddress: to.StringPtr("pet/yourpet was not found"),
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected empty response")
 	}
@@ -189,7 +205,9 @@ func TestGetPetByIDError5(t *testing.T) {
 	client := newPetClient()
 	result, err := client.GetPetByID(context.Background(), "unknown", nil)
 	// default generic error (no schema)
-	helpers.DeepEqualOrFatal(t, err.Error(), "That's all folks!!")
+	if r := cmp.Diff(err.Error(), "That's all folks!!"); r != "" {
+		t.Fatal(r)
+	}
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected empty response")
 	}

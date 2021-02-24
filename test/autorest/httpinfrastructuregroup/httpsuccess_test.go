@@ -5,7 +5,6 @@ package httpinfrastructuregroup
 
 import (
 	"context"
-	"generatortests/helpers"
 	"net/http"
 	"testing"
 )
@@ -20,7 +19,9 @@ func TestHTTPSuccessDelete200(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestHTTPSuccessDelete202(t *testing.T) {
@@ -29,7 +30,9 @@ func TestHTTPSuccessDelete202(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusAccepted)
+	if s := result.StatusCode; s != http.StatusAccepted {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestHTTPSuccessDelete204(t *testing.T) {
@@ -38,7 +41,9 @@ func TestHTTPSuccessDelete204(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusNoContent)
+	if s := result.StatusCode; s != http.StatusNoContent {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestHTTPSuccessGet200(t *testing.T) {
@@ -47,7 +52,9 @@ func TestHTTPSuccessGet200(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestHTTPSuccessHead200(t *testing.T) {
@@ -90,7 +97,9 @@ func TestHTTPSuccessOptions200(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestHTTPSuccessPatch200(t *testing.T) {
@@ -99,7 +108,9 @@ func TestHTTPSuccessPatch200(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestHTTPSuccessPatch202(t *testing.T) {
@@ -108,7 +119,9 @@ func TestHTTPSuccessPatch202(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusAccepted)
+	if s := result.StatusCode; s != http.StatusAccepted {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestHTTPSuccessPatch204(t *testing.T) {
@@ -117,7 +130,9 @@ func TestHTTPSuccessPatch204(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusNoContent)
+	if s := result.StatusCode; s != http.StatusNoContent {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestHTTPSuccessPost200(t *testing.T) {
@@ -126,7 +141,9 @@ func TestHTTPSuccessPost200(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestHTTPSuccessPost201(t *testing.T) {
@@ -135,7 +152,9 @@ func TestHTTPSuccessPost201(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusCreated)
+	if s := result.StatusCode; s != http.StatusCreated {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestHTTPSuccessPost202(t *testing.T) {
@@ -144,7 +163,9 @@ func TestHTTPSuccessPost202(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusAccepted)
+	if s := result.StatusCode; s != http.StatusAccepted {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestHTTPSuccessPost204(t *testing.T) {
@@ -153,7 +174,9 @@ func TestHTTPSuccessPost204(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusNoContent)
+	if s := result.StatusCode; s != http.StatusNoContent {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestHTTPSuccessPut200(t *testing.T) {
@@ -162,7 +185,9 @@ func TestHTTPSuccessPut200(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestHTTPSuccessPut201(t *testing.T) {
@@ -171,7 +196,9 @@ func TestHTTPSuccessPut201(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusCreated)
+	if s := result.StatusCode; s != http.StatusCreated {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestHTTPSuccessPut202(t *testing.T) {
@@ -180,7 +207,9 @@ func TestHTTPSuccessPut202(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusAccepted)
+	if s := result.StatusCode; s != http.StatusAccepted {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestHTTPSuccessPut204(t *testing.T) {
@@ -189,5 +218,7 @@ func TestHTTPSuccessPut204(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusNoContent)
+	if s := result.StatusCode; s != http.StatusNoContent {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }

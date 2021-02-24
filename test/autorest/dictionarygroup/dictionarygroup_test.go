@@ -5,13 +5,13 @@ package dictionarygroup
 
 import (
 	"context"
-	"generatortests/helpers"
 	"net/http"
 	"reflect"
 	"testing"
 	"time"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
+	"github.com/google/go-cmp/cmp"
 )
 
 func newDictionaryClient() *DictionaryClient {
@@ -25,8 +25,8 @@ func TestGetArrayEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if l := len(*resp.Value); l != 0 {
-		helpers.DeepEqualOrFatal(t, l, 0)
+	if r := cmp.Diff(len(*resp.Value), 0); r != "" {
+		t.Fatal(r)
 	}
 }
 
@@ -37,11 +37,13 @@ func TestGetArrayItemEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, resp.Value, &map[string][]string{
+	if r := cmp.Diff(resp.Value, &map[string][]string{
 		"0": {"1", "2", "3"},
 		"1": {},
 		"2": {"7", "8", "9"},
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetArrayItemNull - Get an dictionary of array of strings {"0": ["1", "2", "3"], "1": null, "2": ["7", "8", "9"]}
@@ -52,11 +54,13 @@ func TestGetArrayItemNull(t *testing.T) {
 		t.Fatal(err)
 	}
 	// TODO: this should technically fail since there's no x-nullable
-	helpers.DeepEqualOrFatal(t, resp.Value, &map[string][]string{
+	if r := cmp.Diff(resp.Value, &map[string][]string{
 		"0": {"1", "2", "3"},
 		"1": nil,
 		"2": {"7", "8", "9"},
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetArrayNull - Get a null array
@@ -78,11 +82,13 @@ func TestGetArrayValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, resp.Value, &map[string][]string{
+	if r := cmp.Diff(resp.Value, &map[string][]string{
 		"0": {"1", "2", "3"},
 		"1": {"4", "5", "6"},
 		"2": {"7", "8", "9"},
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetBase64URL - Get base64url dictionary value {"0": "a string that gets encoded with base64url", "1": "test string", "2": "Lorem ipsum"}
@@ -93,11 +99,13 @@ func TestGetBase64URL(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, resp.Value, &map[string][]byte{
+	if r := cmp.Diff(resp.Value, &map[string][]byte{
 		"0": {},
 		"1": {},
 		"2": {},
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetBooleanInvalidNull - Get boolean dictionary value {"0": true, "1": null, "2": false }
@@ -132,12 +140,14 @@ func TestGetBooleanTfft(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, resp.Value, &map[string]bool{
+	if r := cmp.Diff(resp.Value, &map[string]bool{
 		"0": true,
 		"1": false,
 		"2": false,
 		"3": true,
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetByteInvalidNull - Get byte dictionary value {"0": hex(FF FF FF FA), "1": null} with the first item base64 encoded
@@ -160,11 +170,13 @@ func TestGetByteValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, resp.Value, &map[string][]byte{
+	if r := cmp.Diff(resp.Value, &map[string][]byte{
 		"0": {255, 255, 255, 250},
 		"1": {1, 2, 3},
 		"2": {37, 41, 67},
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetComplexEmpty - Get empty dictionary of complex type {}
@@ -174,7 +186,9 @@ func TestGetComplexEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, resp.Value, &map[string]Widget{})
+	if r := cmp.Diff(resp.Value, &map[string]Widget{}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetComplexItemEmpty - Get dictionary of complex type with empty item {"0": {"integer": 1, "string": "2"}, "1:" {}, "2": {"integer": 5, "string": "6"}}
@@ -184,11 +198,13 @@ func TestGetComplexItemEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, resp.Value, &map[string]Widget{
+	if r := cmp.Diff(resp.Value, &map[string]Widget{
 		"0": {Integer: to.Int32Ptr(1), String: to.StringPtr("2")},
 		"1": {},
 		"2": {Integer: to.Int32Ptr(5), String: to.StringPtr("6")},
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetComplexItemNull - Get dictionary of complex type with null item {"0": {"integer": 1, "string": "2"}, "1": null, "2": {"integer": 5, "string": "6"}}
@@ -199,7 +215,7 @@ func TestGetComplexItemNull(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, resp.Value, &map[string]Widget{
+	if r := cmp.Diff(resp.Value, &map[string]Widget{
 		"0": Widget{Integer: to.Int32Ptr(1), String: to.StringPtr("2")},
 		"1": nil,
 		"2": Widget{Integer: to.Int32Ptr(5), String: to.StringPtr("6")},
@@ -225,11 +241,13 @@ func TestGetComplexValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, resp.Value, &map[string]Widget{
+	if r := cmp.Diff(resp.Value, &map[string]Widget{
 		"0": {Integer: to.Int32Ptr(1), String: to.StringPtr("2")},
 		"1": {Integer: to.Int32Ptr(3), String: to.StringPtr("4")},
 		"2": {Integer: to.Int32Ptr(5), String: to.StringPtr("6")},
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetDateInvalidChars - Get date dictionary value {"0": "2011-03-22", "1": "date"}
@@ -283,11 +301,13 @@ func TestGetDateTimeRFC1123Valid(t *testing.T) {
 	dt1, _ := time.Parse(time.RFC1123, "Fri, 01 Dec 2000 00:00:01 GMT")
 	dt2, _ := time.Parse(time.RFC1123, "Wed, 02 Jan 1980 00:11:35 GMT")
 	dt3, _ := time.Parse(time.RFC1123, "Wed, 12 Oct 1492 10:15:01 GMT")
-	helpers.DeepEqualOrFatal(t, resp.Value, &map[string]time.Time{
+	if r := cmp.Diff(resp.Value, &map[string]time.Time{
 		"0": dt1,
 		"1": dt2,
 		"2": dt3,
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetDateTimeValid - Get date-time dictionary value {"0": "2000-12-01t00:00:01z", "1": "1980-01-02T00:11:35+01:00", "2": "1492-10-12T10:15:01-08:00"}
@@ -300,11 +320,13 @@ func TestGetDateTimeValid(t *testing.T) {
 	dt1, _ := time.Parse(time.RFC3339, "2000-12-01T00:00:01Z")
 	dt2, _ := time.Parse(time.RFC3339, "1980-01-02T00:11:35+01:00")
 	dt3, _ := time.Parse(time.RFC3339, "1492-10-12T10:15:01-08:00")
-	helpers.DeepEqualOrFatal(t, resp.Value, &map[string]time.Time{
+	if r := cmp.Diff(resp.Value, &map[string]time.Time{
 		"0": dt1,
 		"1": dt2,
 		"2": dt3,
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetDateValid - Get integer dictionary value {"0": "2000-12-01", "1": "1980-01-02", "2": "1492-10-12"}
@@ -317,11 +339,13 @@ func TestGetDateValid(t *testing.T) {
 	dt1 := time.Date(2000, 12, 01, 0, 0, 0, 0, time.UTC)
 	dt2 := time.Date(1980, 01, 02, 0, 0, 0, 0, time.UTC)
 	dt3 := time.Date(1492, 10, 12, 0, 0, 0, 0, time.UTC)
-	helpers.DeepEqualOrFatal(t, resp.Value, &map[string]time.Time{
+	if r := cmp.Diff(resp.Value, &map[string]time.Time{
 		"0": dt1,
 		"1": dt2,
 		"2": dt3,
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetDictionaryEmpty - Get an dictionaries of dictionaries of type <string, string> with value {}
@@ -331,7 +355,9 @@ func TestGetDictionaryEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, resp.Value, &map[string]map[string]string{})
+	if r := cmp.Diff(resp.Value, &map[string]map[string]string{}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetDictionaryItemEmpty - Get an dictionaries of dictionaries of type <string, string> with value {"0": {"1": "one", "2": "two", "3": "three"}, "1": {}, "2": {"7": "seven", "8": "eight", "9": "nine"}}
@@ -341,7 +367,7 @@ func TestGetDictionaryItemEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, resp.Value, &map[string]map[string]string{
+	if r := cmp.Diff(resp.Value, &map[string]map[string]string{
 		"0": {
 			"1": "one",
 			"2": "two",
@@ -353,7 +379,9 @@ func TestGetDictionaryItemEmpty(t *testing.T) {
 			"8": "eight",
 			"9": "nine",
 		},
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetDictionaryItemNull - Get an dictionaries of dictionaries of type <string, string> with value {"0": {"1": "one", "2": "two", "3": "three"}, "1": null, "2": {"7": "seven", "8": "eight", "9": "nine"}}
@@ -373,7 +401,7 @@ func TestGetDictionaryValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, resp.Value, &map[string]map[string]string{
+	if r := cmp.Diff(resp.Value, &map[string]map[string]string{
 		"0": {
 			"1": "one",
 			"2": "two",
@@ -389,7 +417,9 @@ func TestGetDictionaryValid(t *testing.T) {
 			"8": "eight",
 			"9": "nine",
 		},
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetDoubleInvalidNull - Get float dictionary value {"0": 0.0, "1": null, "2": 1.2e20}
@@ -424,11 +454,13 @@ func TestGetDoubleValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, resp.Value, &map[string]float64{
+	if r := cmp.Diff(resp.Value, &map[string]float64{
 		"0": 0,
 		"1": -0.01,
 		"2": -1.2e20,
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetDurationValid - Get duration dictionary value {"0": "P123DT22H14M12.011S", "1": "P5DT1H0M0S"}
@@ -438,10 +470,12 @@ func TestGetDurationValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, resp.Value, &map[string]string{
+	if r := cmp.Diff(resp.Value, &map[string]string{
 		"0": "P123DT22H14M12.011S",
 		"1": "P5DT1H",
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetEmpty - Get empty dictionary value {}
@@ -463,7 +497,9 @@ func TestGetEmptyStringKey(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, resp.Value, &map[string]string{"": "val1"})
+	if r := cmp.Diff(resp.Value, &map[string]string{"": "val1"}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetFloatInvalidNull - Get float dictionary value {"0": 0.0, "1": null, "2": 1.2e20}
@@ -498,11 +534,13 @@ func TestGetFloatValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, resp.Value, &map[string]float32{
+	if r := cmp.Diff(resp.Value, &map[string]float32{
 		"0": 0,
 		"1": -0.01,
 		"2": -1.2e20,
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetIntInvalidNull - Get integer dictionary value {"0": 1, "1": null, "2": 0}
@@ -537,12 +575,14 @@ func TestGetIntegerValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, resp.Value, &map[string]int32{
+	if r := cmp.Diff(resp.Value, &map[string]int32{
 		"0": 1,
 		"1": -1,
 		"2": 3,
 		"3": 300,
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetInvalid - Get invalid Dictionary value
@@ -589,12 +629,14 @@ func TestGetLongValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, resp.Value, &map[string]int64{
+	if r := cmp.Diff(resp.Value, &map[string]int64{
 		"0": 1,
 		"1": -1,
 		"2": 3,
 		"3": 300,
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetNull - Get null dictionary value
@@ -641,11 +683,13 @@ func TestGetStringValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, resp.Value, &map[string]string{
+	if r := cmp.Diff(resp.Value, &map[string]string{
 		"0": "foo1",
 		"1": "foo2",
 		"2": "foo3",
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetStringWithInvalid - Get string dictionary value {"0": "foo", "1": 123, "2": "foo2"}
@@ -684,7 +728,9 @@ func TestPutArrayValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, resp, http.StatusOK)
+	if s := resp.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 // PutBooleanTfft - Set dictionary value empty {"0": true, "1": false, "2": false, "3": true }
@@ -699,7 +745,9 @@ func TestPutBooleanTfft(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, resp, http.StatusOK)
+	if s := resp.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 // PutByteValid - Put the dictionary value {"0": hex(FF FF FF FA), "1": hex(01 02 03), "2": hex (25, 29, 43)} with each elementencoded in base 64
@@ -713,7 +761,9 @@ func TestPutByteValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, resp, http.StatusOK)
+	if s := resp.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 // PutComplexValid - Put an dictionary of complex type with values {"0": {"integer": 1, "string": "2"}, "1": {"integer": 3, "string": "4"}, "2": {"integer": 5, "string": "6"}}
@@ -727,7 +777,9 @@ func TestPutComplexValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, resp, http.StatusOK)
+	if s := resp.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 // PutDateTimeRFC1123Valid - Set dictionary value empty {"0": "Fri, 01 Dec 2000 00:00:01 GMT", "1": "Wed, 02 Jan 1980 00:11:35 GMT", "2": "Wed, 12 Oct 1492 10:15:01 GMT"}
@@ -744,7 +796,9 @@ func TestPutDateTimeRFC1123Valid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, resp, http.StatusOK)
+	if s := resp.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 // PutDateTimeValid - Set dictionary value  {"0": "2000-12-01t00:00:01z", "1": "1980-01-02T00:11:35+01:00", "2": "1492-10-12T10:15:01-08:00"}
@@ -761,7 +815,9 @@ func TestPutDateTimeValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, resp, http.StatusOK)
+	if s := resp.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 // PutDateValid - Set dictionary value  {"0": "2000-12-01", "1": "1980-01-02", "2": "1492-10-12"}
@@ -778,7 +834,9 @@ func TestPutDateValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, resp, http.StatusOK)
+	if s := resp.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 // PutDictionaryValid - Get an dictionaries of dictionaries of type <string, string> with value {"0": {"1": "one", "2": "two", "3": "three"}, "1": {"4": "four", "5": "five", "6": "six"}, "2": {"7": "seven", "8": "eight", "9": "nine"}}
@@ -804,7 +862,9 @@ func TestPutDictionaryValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, resp, http.StatusOK)
+	if s := resp.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 // PutDoubleValid - Set dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
@@ -818,7 +878,9 @@ func TestPutDoubleValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, resp, http.StatusOK)
+	if s := resp.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 // PutDurationValid - Set dictionary value  {"0": "P123DT22H14M12.011S", "1": "P5DT1H0M0S"}
@@ -831,7 +893,9 @@ func TestPutDurationValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, resp, http.StatusOK)
+	if s := resp.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 // PutEmpty - Set dictionary value empty {}
@@ -841,7 +905,9 @@ func TestPutEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, resp, http.StatusOK)
+	if s := resp.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 // PutFloatValid - Set dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
@@ -855,7 +921,9 @@ func TestPutFloatValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, resp, http.StatusOK)
+	if s := resp.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 // PutIntegerValid - Set dictionary value empty {"0": 1, "1": -1, "2": 3, "3": 300}
@@ -870,7 +938,9 @@ func TestPutIntegerValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, resp, http.StatusOK)
+	if s := resp.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 // PutLongValid - Set dictionary value empty {"0": 1, "1": -1, "2": 3, "3": 300}
@@ -885,7 +955,9 @@ func TestPutLongValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, resp, http.StatusOK)
+	if s := resp.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 // PutStringValid - Set dictionary value {"0": "foo1", "1": "foo2", "2": "foo3"}
@@ -899,5 +971,7 @@ func TestPutStringValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, resp, http.StatusOK)
+	if s := resp.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }

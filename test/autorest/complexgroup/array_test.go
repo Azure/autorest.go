@@ -5,9 +5,10 @@ package complexgroup
 
 import (
 	"context"
-	"generatortests/helpers"
 	"net/http"
 	"testing"
+
+	"github.com/google/go-cmp/cmp"
 )
 
 func newArrayClient() *ArrayClient {
@@ -20,9 +21,11 @@ func TestArrayGetEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetEmpty: %v", err)
 	}
-	helpers.DeepEqualOrFatal(t, result.ArrayWrapper, &ArrayWrapper{
+	if r := cmp.Diff(result.ArrayWrapper, &ArrayWrapper{
 		Array: &[]string{},
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestArrayGetNotProvided(t *testing.T) {
@@ -31,7 +34,9 @@ func TestArrayGetNotProvided(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetNotProvided: %v", err)
 	}
-	helpers.DeepEqualOrFatal(t, result.ArrayWrapper, &ArrayWrapper{})
+	if r := cmp.Diff(result.ArrayWrapper, &ArrayWrapper{}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestArrayGetValid(t *testing.T) {
@@ -40,9 +45,11 @@ func TestArrayGetValid(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetValid: %v", err)
 	}
-	helpers.DeepEqualOrFatal(t, result.ArrayWrapper, &ArrayWrapper{
+	if r := cmp.Diff(result.ArrayWrapper, &ArrayWrapper{
 		Array: &[]string{"1, 2, 3, 4", "", "", "&S#$(*Y", "The quick brown fox jumps over the lazy dog"},
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestArrayPutEmpty(t *testing.T) {
@@ -51,7 +58,9 @@ func TestArrayPutEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutEmpty: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 /*

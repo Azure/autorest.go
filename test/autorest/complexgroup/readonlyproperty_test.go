@@ -5,11 +5,11 @@ package complexgroup
 
 import (
 	"context"
-	"generatortests/helpers"
 	"net/http"
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
+	"github.com/google/go-cmp/cmp"
 )
 
 func newReadonlypropertyClient() *ReadonlypropertyClient {
@@ -22,7 +22,9 @@ func TestReadonlypropertyGetValid(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetValid: %v", err)
 	}
-	helpers.DeepEqualOrFatal(t, result.ReadonlyObj, &ReadonlyObj{ID: to.StringPtr("1234"), Size: to.Int32Ptr(2)})
+	if r := cmp.Diff(result.ReadonlyObj, &ReadonlyObj{ID: to.StringPtr("1234"), Size: to.Int32Ptr(2)}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestReadonlypropertyPutValid(t *testing.T) {
@@ -32,5 +34,7 @@ func TestReadonlypropertyPutValid(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutValid: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }

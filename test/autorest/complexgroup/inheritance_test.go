@@ -5,11 +5,11 @@ package complexgroup
 
 import (
 	"context"
-	"generatortests/helpers"
 	"net/http"
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
+	"github.com/google/go-cmp/cmp"
 )
 
 func newInheritanceClient() *InheritanceClient {
@@ -22,7 +22,7 @@ func TestInheritanceGetValid(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetValid: %v", err)
 	}
-	helpers.DeepEqualOrFatal(t, result.Siamese, &Siamese{
+	if r := cmp.Diff(result.Siamese, &Siamese{
 		Cat: Cat{
 			Pet: Pet{
 				ID:   to.Int32Ptr(2),
@@ -47,7 +47,9 @@ func TestInheritanceGetValid(t *testing.T) {
 			},
 		},
 		Breed: to.StringPtr("persian"),
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestInheritancePutValid(t *testing.T) {
@@ -81,5 +83,7 @@ func TestInheritancePutValid(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutValid: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }

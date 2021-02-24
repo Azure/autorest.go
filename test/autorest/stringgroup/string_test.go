@@ -5,11 +5,11 @@ package stringgroup
 
 import (
 	"context"
-	"generatortests/helpers"
 	"net/http"
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
+	"github.com/google/go-cmp/cmp"
 )
 
 func newStringClient() *StringClient {
@@ -22,8 +22,12 @@ func TestStringGetMBCS(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetMBCS: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
-	helpers.DeepEqualOrFatal(t, result.Value, to.StringPtr("啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€"))
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
+	if r := cmp.Diff(result.Value, to.StringPtr("啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€")); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestStringPutMBCS(t *testing.T) {
@@ -32,7 +36,9 @@ func TestStringPutMBCS(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutMBCS: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestStringGetBase64Encoded(t *testing.T) {
@@ -41,9 +47,13 @@ func TestStringGetBase64Encoded(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetBase64Encoded: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 	val := []byte("a string that gets encoded with base64")
-	helpers.DeepEqualOrFatal(t, result.Value, &val)
+	if r := cmp.Diff(result.Value, &val); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestStringGetBase64URLEncoded(t *testing.T) {
@@ -52,8 +62,12 @@ func TestStringGetBase64URLEncoded(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetBase64URLEncoded: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
-	helpers.DeepEqualOrFatal(t, *result.Value, []byte("a string that gets encoded with base64url"))
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
+	if r := cmp.Diff(*result.Value, []byte("a string that gets encoded with base64url")); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestStringGetEmpty(t *testing.T) {
@@ -62,8 +76,12 @@ func TestStringGetEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetEmpty: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
-	helpers.DeepEqualOrFatal(t, result.Value, to.StringPtr(""))
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
+	if r := cmp.Diff(result.Value, to.StringPtr("")); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestStringGetNotProvided(t *testing.T) {
@@ -72,7 +90,9 @@ func TestStringGetNotProvided(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetNotProvided: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestStringGetNull(t *testing.T) {
@@ -81,7 +101,9 @@ func TestStringGetNull(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetNull: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestStringGetNullBase64URLEncoded(t *testing.T) {
@@ -90,8 +112,12 @@ func TestStringGetNullBase64URLEncoded(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetNullBase64URLEncoded: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
-	helpers.DeepEqualOrFatal(t, result.Value, (*[]byte)(nil))
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
+	if r := cmp.Diff(result.Value, (*[]byte)(nil)); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestStringGetWhitespace(t *testing.T) {
@@ -100,8 +126,12 @@ func TestStringGetWhitespace(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetWhitespace: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
-	helpers.DeepEqualOrFatal(t, result.Value, to.StringPtr("    Now is the time for all good men to come to the aid of their country    "))
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
+	if r := cmp.Diff(result.Value, to.StringPtr("    Now is the time for all good men to come to the aid of their country    ")); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestStringPutBase64URLEncoded(t *testing.T) {
@@ -110,7 +140,9 @@ func TestStringPutBase64URLEncoded(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutBase64URLEncoded: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestStringPutEmpty(t *testing.T) {
@@ -119,7 +151,9 @@ func TestStringPutEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutEmpty: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestStringPutNull(t *testing.T) {
@@ -128,7 +162,9 @@ func TestStringPutNull(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutNull: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestStringPutWhitespace(t *testing.T) {
@@ -137,5 +173,7 @@ func TestStringPutWhitespace(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutWhitespace: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }

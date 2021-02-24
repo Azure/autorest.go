@@ -5,11 +5,12 @@ package dategroup
 
 import (
 	"context"
-	"generatortests/helpers"
 	"net/http"
 	"reflect"
 	"testing"
 	"time"
+
+	"github.com/google/go-cmp/cmp"
 )
 
 func newDateClient() *DateClient {
@@ -34,7 +35,9 @@ func TestGetMaxDate(t *testing.T) {
 		t.Fatal(err)
 	}
 	dt := time.Date(9999, 12, 31, 0, 0, 0, 0, time.UTC)
-	helpers.DeepEqualOrFatal(t, resp.Value, &dt)
+	if r := cmp.Diff(resp.Value, &dt); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestGetMinDate(t *testing.T) {
@@ -44,7 +47,9 @@ func TestGetMinDate(t *testing.T) {
 		t.Fatal(err)
 	}
 	dt := time.Date(0001, 01, 01, 0, 0, 0, 0, time.UTC)
-	helpers.DeepEqualOrFatal(t, resp.Value, &dt)
+	if r := cmp.Diff(resp.Value, &dt); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestGetNull(t *testing.T) {
@@ -54,7 +59,9 @@ func TestGetNull(t *testing.T) {
 		t.Fatal(err)
 	}
 	var dt *time.Time
-	helpers.DeepEqualOrFatal(t, resp.Value, dt)
+	if r := cmp.Diff(resp.Value, dt); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestGetOverflowDate(t *testing.T) {
@@ -86,7 +93,9 @@ func TestPutMaxDate(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, resp.StatusCode, http.StatusOK)
+	if r := cmp.Diff(resp.StatusCode, http.StatusOK); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestPutMinDate(t *testing.T) {
@@ -96,5 +105,7 @@ func TestPutMinDate(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, resp.StatusCode, http.StatusOK)
+	if r := cmp.Diff(resp.StatusCode, http.StatusOK); r != "" {
+		t.Fatal(r)
+	}
 }

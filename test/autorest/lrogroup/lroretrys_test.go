@@ -5,11 +5,12 @@ package lrogroup
 
 import (
 	"context"
-	"generatortests/helpers"
+	"net/http"
 	"testing"
 	"time"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
+	"github.com/google/go-cmp/cmp"
 )
 
 func newLRORetrysClient() *LroRetrysClient {
@@ -38,7 +39,9 @@ func TestLRORetrysBeginDelete202Retry200(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, res, 200)
+	if s := res.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestLRORetrysBeginDeleteAsyncRelativeRetrySucceeded(t *testing.T) {
@@ -60,7 +63,9 @@ func TestLRORetrysBeginDeleteAsyncRelativeRetrySucceeded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, res, 200)
+	if s := res.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestLRORetrysBeginDeleteProvisioning202Accepted200Succeeded(t *testing.T) {
@@ -82,8 +87,10 @@ func TestLRORetrysBeginDeleteProvisioning202Accepted200Succeeded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, res.RawResponse, 200)
-	helpers.DeepEqualOrFatal(t, res.Product, &Product{
+	if s := res.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
+	if r := cmp.Diff(res.Product, &Product{
 		Resource: Resource{
 			ID:   to.StringPtr("100"),
 			Name: to.StringPtr("foo"),
@@ -91,7 +98,9 @@ func TestLRORetrysBeginDeleteProvisioning202Accepted200Succeeded(t *testing.T) {
 		Properties: &ProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestLRORetrysBeginPost202Retry200(t *testing.T) {
@@ -113,7 +122,9 @@ func TestLRORetrysBeginPost202Retry200(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, res, 200)
+	if s := res.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestLRORetrysBeginPostAsyncRelativeRetrySucceeded(t *testing.T) {
@@ -135,7 +146,9 @@ func TestLRORetrysBeginPostAsyncRelativeRetrySucceeded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, res, 200)
+	if s := res.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestLRORetrysBeginPut201CreatingSucceeded200(t *testing.T) {
@@ -157,8 +170,10 @@ func TestLRORetrysBeginPut201CreatingSucceeded200(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, res.RawResponse, 200)
-	helpers.DeepEqualOrFatal(t, res.Product, &Product{
+	if s := res.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
+	if r := cmp.Diff(res.Product, &Product{
 		Resource: Resource{
 			ID:   to.StringPtr("100"),
 			Name: to.StringPtr("foo"),
@@ -166,7 +181,9 @@ func TestLRORetrysBeginPut201CreatingSucceeded200(t *testing.T) {
 		Properties: &ProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestLRORetrysBeginPutAsyncRelativeRetrySucceeded(t *testing.T) {
@@ -188,8 +205,10 @@ func TestLRORetrysBeginPutAsyncRelativeRetrySucceeded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, res.RawResponse, 200)
-	helpers.DeepEqualOrFatal(t, res.Product, &Product{
+	if s := res.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
+	if r := cmp.Diff(res.Product, &Product{
 		Resource: Resource{
 			ID:   to.StringPtr("100"),
 			Name: to.StringPtr("foo"),
@@ -197,5 +216,7 @@ func TestLRORetrysBeginPutAsyncRelativeRetrySucceeded(t *testing.T) {
 		Properties: &ProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }

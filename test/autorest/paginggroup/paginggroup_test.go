@@ -5,7 +5,6 @@ package paginggroup
 
 import (
 	"context"
-	"generatortests/helpers"
 	"net/http"
 	"net/http/cookiejar"
 	"reflect"
@@ -13,6 +12,7 @@ import (
 	"time"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/google/go-cmp/cmp"
 )
 
 func newPagingClient() *PagingClient {
@@ -48,8 +48,8 @@ func TestGetMultiplePages(t *testing.T) {
 	if err := page.Err(); err != nil {
 		t.Fatal(err)
 	}
-	if count != 10 {
-		helpers.DeepEqualOrFatal(t, count, 10)
+	if r := cmp.Diff(count, 10); r != "" {
+		t.Fatal(r)
 	}
 	if reflect.ValueOf(page.PageResponse()).IsZero() {
 		t.Fatal("unexpected empty payload")
@@ -71,8 +71,8 @@ func TestGetMultiplePagesFailure(t *testing.T) {
 	if page.Err() == nil {
 		t.Fatal("unexpected nil error")
 	}
-	if count != 1 {
-		helpers.DeepEqualOrFatal(t, count, 1)
+	if r := cmp.Diff(count, 1); r != "" {
+		t.Fatal(r)
 	}
 	if reflect.ValueOf(page.PageResponse()).IsZero() {
 		t.Fatal("unexpected empty payload")
@@ -94,8 +94,8 @@ func TestGetMultiplePagesFailureURI(t *testing.T) {
 	if page.Err() == nil {
 		t.Fatal("unexpected nil error")
 	}
-	if count != 1 {
-		helpers.DeepEqualOrFatal(t, count, 1)
+	if r := cmp.Diff(count, 1); r != "" {
+		t.Fatal(r)
 	}
 	if reflect.ValueOf(page.PageResponse()).IsZero() {
 		t.Fatal("unexpected empty payload")
@@ -117,8 +117,8 @@ func TestGetMultiplePagesFragmentNextLink(t *testing.T) {
 	if err := page.Err(); err != nil {
 		t.Fatal(err)
 	}
-	if count != 10 {
-		helpers.DeepEqualOrFatal(t, count, 10)
+	if r := cmp.Diff(count, 10); r != "" {
+		t.Fatal(r)
 	}
 	if reflect.ValueOf(page.PageResponse()).IsZero() {
 		t.Fatal("unexpected empty payload")
@@ -143,8 +143,8 @@ func TestGetMultiplePagesFragmentWithGroupingNextLink(t *testing.T) {
 	if err := page.Err(); err != nil {
 		t.Fatal(err)
 	}
-	if count != 10 {
-		helpers.DeepEqualOrFatal(t, count, 10)
+	if r := cmp.Diff(count, 10); r != "" {
+		t.Fatal(r)
 	}
 	if reflect.ValueOf(page.PageResponse()).IsZero() {
 		t.Fatal("unexpected empty payload")
@@ -183,8 +183,8 @@ func TestGetMultiplePagesLro(t *testing.T) {
 		t.Fatal(err)
 	}
 	const pageCount = 10
-	if count != pageCount {
-		helpers.DeepEqualOrFatal(t, count, pageCount)
+	if r := cmp.Diff(count, pageCount); r != "" {
+		t.Fatal(r)
 	}
 }
 
@@ -203,8 +203,8 @@ func TestGetMultiplePagesRetryFirst(t *testing.T) {
 	if err := page.Err(); err != nil {
 		t.Fatal(err)
 	}
-	if count != 10 {
-		helpers.DeepEqualOrFatal(t, count, 10)
+	if r := cmp.Diff(count, 10); r != "" {
+		t.Fatal(r)
 	}
 	if reflect.ValueOf(page.PageResponse()).IsZero() {
 		t.Fatal("unexpected empty payload")
@@ -226,8 +226,8 @@ func TestGetMultiplePagesRetrySecond(t *testing.T) {
 	if err := page.Err(); err != nil {
 		t.Fatal(err)
 	}
-	if count != 10 {
-		helpers.DeepEqualOrFatal(t, count, 10)
+	if r := cmp.Diff(count, 10); r != "" {
+		t.Fatal(r)
 	}
 	if reflect.ValueOf(page.PageResponse()).IsZero() {
 		t.Fatal("unexpected empty payload")
@@ -249,8 +249,8 @@ func TestGetMultiplePagesWithOffset(t *testing.T) {
 	if err := page.Err(); err != nil {
 		t.Fatal(err)
 	}
-	if count != 10 {
-		helpers.DeepEqualOrFatal(t, count, 10)
+	if r := cmp.Diff(count, 10); r != "" {
+		t.Fatal(r)
 	}
 	if reflect.ValueOf(page.PageResponse()).IsZero() {
 		t.Fatal("unexpected empty payload")
@@ -272,8 +272,8 @@ func TestGetNoItemNamePages(t *testing.T) {
 	if err := page.Err(); err != nil {
 		t.Fatal(err)
 	}
-	if count != 1 {
-		helpers.DeepEqualOrFatal(t, count, 1)
+	if r := cmp.Diff(count, 1); r != "" {
+		t.Fatal(r)
 	}
 	if reflect.ValueOf(page.PageResponse()).IsZero() {
 		t.Fatal("unexpected empty payload")
@@ -307,8 +307,8 @@ func TestGetOdataMultiplePages(t *testing.T) {
 	if err := page.Err(); err != nil {
 		t.Fatal(err)
 	}
-	if count != 10 {
-		helpers.DeepEqualOrFatal(t, count, 10)
+	if r := cmp.Diff(count, 10); r != "" {
+		t.Fatal(r)
 	}
 	if reflect.ValueOf(page.PageResponse()).IsZero() {
 		t.Fatal("unexpected empty payload")
@@ -330,8 +330,8 @@ func TestGetPagingModelWithItemNameWithXmsClientName(t *testing.T) {
 	if err := page.Err(); err != nil {
 		t.Fatal(err)
 	}
-	if count != 1 {
-		helpers.DeepEqualOrFatal(t, count, 1)
+	if r := cmp.Diff(count, 1); r != "" {
+		t.Fatal(r)
 	}
 	if reflect.ValueOf(page.PageResponse()).IsZero() {
 		t.Fatal("unexpected empty payload")
@@ -353,8 +353,8 @@ func TestGetSinglePages(t *testing.T) {
 	if err := page.Err(); err != nil {
 		t.Fatal(err)
 	}
-	if count != 1 {
-		helpers.DeepEqualOrFatal(t, count, 1)
+	if r := cmp.Diff(count, 1); r != "" {
+		t.Fatal(r)
 	}
 	if reflect.ValueOf(page.PageResponse()).IsZero() {
 		t.Fatal("unexpected empty payload")
@@ -376,8 +376,8 @@ func TestGetSinglePagesFailure(t *testing.T) {
 	if page.Err() == nil {
 		t.Fatal("unexpected nil error")
 	}
-	if count != 0 {
-		helpers.DeepEqualOrFatal(t, count, 0)
+	if r := cmp.Diff(count, 0); r != "" {
+		t.Fatal(r)
 	}
 	if !reflect.ValueOf(page.PageResponse()).IsZero() {
 		t.Fatal("expected empty payload")
@@ -399,8 +399,8 @@ func TestGetWithQueryParams(t *testing.T) {
 	if err := page.Err(); err != nil {
 		t.Fatal(err)
 	}
-	if count != 0 {
-		helpers.DeepEqualOrFatal(t, count, 2)
+	if r := cmp.Diff(count, 2); r != "" {
+		t.Fatal(r)
 	}
 	if reflect.ValueOf(page.PageResponse()).IsZero() {
 		t.Fatal("unexpected empty payload")

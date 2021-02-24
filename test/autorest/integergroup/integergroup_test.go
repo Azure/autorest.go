@@ -5,12 +5,13 @@ package integergroup
 
 import (
 	"context"
-	"generatortests/helpers"
 	"math"
 	"net/http"
 	"reflect"
 	"testing"
 	"time"
+
+	"github.com/google/go-cmp/cmp"
 )
 
 func newIntClient() *IntClient {
@@ -45,8 +46,12 @@ func TestIntGetNull(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetNull: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
-	helpers.DeepEqualOrFatal(t, result.Value, (*int32)(nil))
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
+	if r := cmp.Diff(result.Value, (*int32)(nil)); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestIntGetNullUnixTime(t *testing.T) {
@@ -55,8 +60,12 @@ func TestIntGetNullUnixTime(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetNullUnixTime: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
-	helpers.DeepEqualOrFatal(t, result.Value, (*time.Time)(nil))
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
+	if r := cmp.Diff(result.Value, (*time.Time)(nil)); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestIntGetOverflowInt32(t *testing.T) {
@@ -110,8 +119,12 @@ func TestIntGetUnixTime(t *testing.T) {
 		t.Fatalf("GetUnixTime: %v", err)
 	}
 	t1 := time.Unix(1460505600, 0)
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
-	helpers.DeepEqualOrFatal(t, result.Value, &t1)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
+	if r := cmp.Diff(result.Value, &t1); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestIntPutMax32(t *testing.T) {
@@ -120,7 +133,9 @@ func TestIntPutMax32(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutMax32: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestIntPutMax64(t *testing.T) {
@@ -129,7 +144,9 @@ func TestIntPutMax64(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutMax64: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestIntPutMin32(t *testing.T) {
@@ -138,7 +155,9 @@ func TestIntPutMin32(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutMin32: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestIntPutMin64(t *testing.T) {
@@ -147,7 +166,9 @@ func TestIntPutMin64(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutMin64: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestIntPutUnixTimeDate(t *testing.T) {
@@ -157,5 +178,7 @@ func TestIntPutUnixTimeDate(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutUnixTimeDate: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }

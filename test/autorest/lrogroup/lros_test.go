@@ -6,15 +6,14 @@ package lrogroup
 import (
 	"context"
 	"errors"
-	"generatortests/helpers"
 	"net/http"
 	"net/http/cookiejar"
 	"testing"
 	"time"
 
-	"github.com/Azure/azure-sdk-for-go/sdk/to"
-
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/to"
+	"github.com/google/go-cmp/cmp"
 )
 
 func newLROSClient() *LrOSClient {
@@ -70,11 +69,13 @@ func TestLROBeginDelete202NoRetry204(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	prodResp, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	pollResp, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, prodResp.RawResponse, 204)
+	if s := pollResp.RawResponse.StatusCode; s != http.StatusNoContent {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestLROBeginDelete202Retry200(t *testing.T) {
@@ -92,11 +93,13 @@ func TestLROBeginDelete202Retry200(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	prodResp, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	pollResp, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, prodResp.RawResponse, 200)
+	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestLROBeginDelete204Succeeded(t *testing.T) {
@@ -114,7 +117,9 @@ func TestLROBeginDelete204Succeeded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, res, 204)
+	if s := res.StatusCode; s != http.StatusNoContent {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestLROBeginDeleteAsyncNoHeaderInRetry(t *testing.T) {
@@ -136,7 +141,9 @@ func TestLROBeginDeleteAsyncNoHeaderInRetry(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, res, 200)
+	if s := res.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestLROBeginDeleteAsyncNoRetrySucceeded(t *testing.T) {
@@ -158,7 +165,9 @@ func TestLROBeginDeleteAsyncNoRetrySucceeded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, res, 200)
+	if s := res.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestLROBeginDeleteAsyncRetryFailed(t *testing.T) {
@@ -214,7 +223,9 @@ func TestLROBeginDeleteAsyncRetrySucceeded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, res, 200)
+	if s := res.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestLROBeginDeleteAsyncRetrycanceled(t *testing.T) {
@@ -270,7 +281,9 @@ func TestLROBeginDeleteNoHeaderInRetry(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, res, 204)
+	if s := res.StatusCode; s != http.StatusNoContent {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestLROBeginDeleteProvisioning202Accepted200Succeeded(t *testing.T) {
@@ -288,11 +301,13 @@ func TestLROBeginDeleteProvisioning202Accepted200Succeeded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	prodResp, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	pollResp, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, prodResp.RawResponse, 200)
+	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestLROBeginDeleteProvisioning202DeletingFailed200(t *testing.T) {
@@ -352,15 +367,19 @@ func TestLROBeginPost200WithPayload(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	skuResp, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	pollResp, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, skuResp.RawResponse, 200)
-	helpers.DeepEqualOrFatal(t, skuResp.SKU, &SKU{
+	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
+	if r := cmp.Diff(pollResp.SKU, &SKU{
 		ID:   to.StringPtr("1"),
 		Name: to.StringPtr("product"),
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestLROBeginPost202List(t *testing.T) {
@@ -378,19 +397,23 @@ func TestLROBeginPost202List(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	prodArrayResp, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	pollResp, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, prodArrayResp.RawResponse, 200)
-	helpers.DeepEqualOrFatal(t, prodArrayResp.ProductArray, &[]Product{
+	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
+	if r := cmp.Diff(pollResp.ProductArray, &[]Product{
 		{
 			Resource: Resource{
 				ID:   to.StringPtr("100"),
 				Name: to.StringPtr("foo"),
 			},
 		},
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestLROBeginPost202NoRetry204(t *testing.T) {
@@ -408,11 +431,13 @@ func TestLROBeginPost202NoRetry204(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	prodResp, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	pollResp, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, prodResp.RawResponse, 204)
+	if s := pollResp.RawResponse.StatusCode; s != http.StatusNoContent {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestLROBeginPost202Retry200(t *testing.T) {
@@ -434,7 +459,9 @@ func TestLROBeginPost202Retry200(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, res, 200)
+	if s := res.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestLROBeginPostAsyncNoRetrySucceeded(t *testing.T) {
@@ -452,12 +479,14 @@ func TestLROBeginPostAsyncNoRetrySucceeded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	res, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	pollResp, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, res.RawResponse, 200)
-	helpers.DeepEqualOrFatal(t, res.Product, &Product{
+	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
+	if r := cmp.Diff(pollResp.Product, &Product{
 		Resource: Resource{
 			ID:   to.StringPtr("100"),
 			Name: to.StringPtr("foo"),
@@ -465,7 +494,9 @@ func TestLROBeginPostAsyncNoRetrySucceeded(t *testing.T) {
 		Properties: &ProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestLROBeginPostAsyncRetryFailed(t *testing.T) {
@@ -517,12 +548,14 @@ func TestLROBeginPostAsyncRetrySucceeded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	res, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	pollResp, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, res.RawResponse, 200)
-	helpers.DeepEqualOrFatal(t, res.Product, &Product{
+	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
+	if r := cmp.Diff(pollResp.Product, &Product{
 		Resource: Resource{
 			ID:   to.StringPtr("100"),
 			Name: to.StringPtr("foo"),
@@ -530,7 +563,9 @@ func TestLROBeginPostAsyncRetrySucceeded(t *testing.T) {
 		Properties: &ProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestLROBeginPostAsyncRetrycanceled(t *testing.T) {
@@ -582,16 +617,20 @@ func TestLROBeginPostDoubleHeadersFinalAzureHeaderGet(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	res, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	pollResp, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, res.RawResponse, 200)
-	helpers.DeepEqualOrFatal(t, res.Product, &Product{
+	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
+	if r := cmp.Diff(pollResp.Product, &Product{
 		Resource: Resource{
 			ID: to.StringPtr("100"),
 		},
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestLROBeginPostDoubleHeadersFinalAzureHeaderGetDefault(t *testing.T) {
@@ -609,17 +648,21 @@ func TestLROBeginPostDoubleHeadersFinalAzureHeaderGetDefault(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	res, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	pollResp, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, res.RawResponse, 200)
-	helpers.DeepEqualOrFatal(t, res.Product, &Product{
+	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
+	if r := cmp.Diff(pollResp.Product, &Product{
 		Resource: Resource{
 			ID:   to.StringPtr("100"),
 			Name: to.StringPtr("foo"),
 		},
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestLROBeginPostDoubleHeadersFinalLocationGet(t *testing.T) {
@@ -637,12 +680,16 @@ func TestLROBeginPostDoubleHeadersFinalLocationGet(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	res, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	pollResp, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, res.RawResponse, 200)
-	helpers.DeepEqualOrFatal(t, res.Product, &Product{})
+	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
+	if r := cmp.Diff(pollResp.Product, &Product{}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestLROBeginPut200Acceptedcanceled200(t *testing.T) {
@@ -664,7 +711,9 @@ func TestLROBeginPut200Acceptedcanceled200(t *testing.T) {
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
-	helpers.DeepEqualOrFatal(t, res, ProductResponse{})
+	if r := cmp.Diff(res, ProductResponse{}); r != "" {
+		t.Fatal(r)
+	}
 	var cloudErr *CloudError
 	if !errors.As(err, &cloudErr) {
 		t.Fatal("expected a CloudError but did not receive one")
@@ -688,12 +737,14 @@ func TestLROBeginPut200Succeeded(t *testing.T) {
 	if err == nil {
 		t.Fatal("Expected an error but did not receive one")
 	}
-	res, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	pollResp, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, res.RawResponse, 200)
-	helpers.DeepEqualOrFatal(t, res.Product, &Product{
+	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
+	if r := cmp.Diff(pollResp.Product, &Product{
 		Resource: Resource{
 			ID:   to.StringPtr("100"),
 			Name: to.StringPtr("foo"),
@@ -701,7 +752,9 @@ func TestLROBeginPut200Succeeded(t *testing.T) {
 		Properties: &ProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestLROBeginPut200SucceededNoState(t *testing.T) {
@@ -715,17 +768,21 @@ func TestLROBeginPut200SucceededNoState(t *testing.T) {
 	if err == nil {
 		t.Fatal("Expected an error but did not receive one")
 	}
-	res, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	pollResp, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, res.RawResponse, 200)
-	helpers.DeepEqualOrFatal(t, res.Product, &Product{
+	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
+	if r := cmp.Diff(pollResp.Product, &Product{
 		Resource: Resource{
 			ID:   to.StringPtr("100"),
 			Name: to.StringPtr("foo"),
 		},
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // TODO check if this test should actually be returning a 200 or a 204
@@ -744,12 +801,14 @@ func TestLROBeginPut200UpdatingSucceeded204(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	res, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	pollResp, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, res.RawResponse, 200)
-	helpers.DeepEqualOrFatal(t, res.Product, &Product{
+	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
+	if r := cmp.Diff(pollResp.Product, &Product{
 		Resource: Resource{
 			ID:   to.StringPtr("100"),
 			Name: to.StringPtr("foo"),
@@ -757,7 +816,9 @@ func TestLROBeginPut200UpdatingSucceeded204(t *testing.T) {
 		Properties: &ProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestLROBeginPut201CreatingFailed200(t *testing.T) {
@@ -779,7 +840,9 @@ func TestLROBeginPut201CreatingFailed200(t *testing.T) {
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
-	helpers.DeepEqualOrFatal(t, res, ProductResponse{})
+	if r := cmp.Diff(res, ProductResponse{}); r != "" {
+		t.Fatal(r)
+	}
 	var cloudErr *CloudError
 	if !errors.As(err, &cloudErr) {
 		t.Fatal("expected a CloudError but did not receive one")
@@ -807,12 +870,14 @@ func TestLROBeginPut201CreatingSucceeded200(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	res, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	pollResp, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, res.RawResponse, 200)
-	helpers.DeepEqualOrFatal(t, res.Product, &Product{
+	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
+	if r := cmp.Diff(pollResp.Product, &Product{
 		Resource: Resource{
 			ID:   to.StringPtr("100"),
 			Name: to.StringPtr("foo"),
@@ -820,7 +885,9 @@ func TestLROBeginPut201CreatingSucceeded200(t *testing.T) {
 		Properties: &ProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestLROBeginPut202Retry200(t *testing.T) {
@@ -838,17 +905,21 @@ func TestLROBeginPut202Retry200(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	res, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	pollResp, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, res.RawResponse, 200)
-	helpers.DeepEqualOrFatal(t, res.Product, &Product{
+	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
+	if r := cmp.Diff(pollResp.Product, &Product{
 		Resource: Resource{
 			ID:   to.StringPtr("100"),
 			Name: to.StringPtr("foo"),
 		},
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestLROBeginPutAsyncNoHeaderInRetry(t *testing.T) {
@@ -866,12 +937,14 @@ func TestLROBeginPutAsyncNoHeaderInRetry(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	res, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	pollResp, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, res.RawResponse, 200)
-	helpers.DeepEqualOrFatal(t, res.Product, &Product{
+	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
+	if r := cmp.Diff(pollResp.Product, &Product{
 		Resource: Resource{
 			ID:   to.StringPtr("100"),
 			Name: to.StringPtr("foo"),
@@ -879,7 +952,9 @@ func TestLROBeginPutAsyncNoHeaderInRetry(t *testing.T) {
 		Properties: &ProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestLROBeginPutAsyncNoRetrySucceeded(t *testing.T) {
@@ -897,12 +972,14 @@ func TestLROBeginPutAsyncNoRetrySucceeded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	res, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	pollResp, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, res.RawResponse, 200)
-	helpers.DeepEqualOrFatal(t, res.Product, &Product{
+	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
+	if r := cmp.Diff(pollResp.Product, &Product{
 		Resource: Resource{
 			ID:   to.StringPtr("100"),
 			Name: to.StringPtr("foo"),
@@ -910,7 +987,9 @@ func TestLROBeginPutAsyncNoRetrySucceeded(t *testing.T) {
 		Properties: &ProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestLROBeginPutAsyncNoRetrycanceled(t *testing.T) {
@@ -932,7 +1011,9 @@ func TestLROBeginPutAsyncNoRetrycanceled(t *testing.T) {
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
-	helpers.DeepEqualOrFatal(t, res, ProductResponse{})
+	if r := cmp.Diff(res, ProductResponse{}); r != "" {
+		t.Fatal(r)
+	}
 	var cloudErr *CloudError
 	if !errors.As(err, &cloudErr) {
 		t.Fatal("expected a CloudError but did not receive one")
@@ -960,15 +1041,19 @@ func TestLROBeginPutAsyncNonResource(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	res, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	pollResp, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, res.RawResponse, 200)
-	helpers.DeepEqualOrFatal(t, res.SKU, &SKU{
+	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
+	if r := cmp.Diff(pollResp.SKU, &SKU{
 		ID:   to.StringPtr("100"),
 		Name: to.StringPtr("sku"),
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestLROBeginPutAsyncRetryFailed(t *testing.T) {
@@ -990,7 +1075,9 @@ func TestLROBeginPutAsyncRetryFailed(t *testing.T) {
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
-	helpers.DeepEqualOrFatal(t, res, ProductResponse{})
+	if r := cmp.Diff(res, ProductResponse{}); r != "" {
+		t.Fatal(r)
+	}
 	var cloudErr *CloudError
 	if !errors.As(err, &cloudErr) {
 		t.Fatal("expected a CloudError but did not receive one")
@@ -1018,12 +1105,14 @@ func TestLROBeginPutAsyncRetrySucceeded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	res, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	pollResp, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, res.RawResponse, 200)
-	helpers.DeepEqualOrFatal(t, res.Product, &Product{
+	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
+	if r := cmp.Diff(pollResp.Product, &Product{
 		Resource: Resource{
 			ID:   to.StringPtr("100"),
 			Name: to.StringPtr("foo"),
@@ -1031,7 +1120,9 @@ func TestLROBeginPutAsyncRetrySucceeded(t *testing.T) {
 		Properties: &ProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestLROBeginPutAsyncSubResource(t *testing.T) {
@@ -1049,19 +1140,23 @@ func TestLROBeginPutAsyncSubResource(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	res, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	pollResp, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, res.RawResponse, 200)
-	helpers.DeepEqualOrFatal(t, res.SubProduct, &SubProduct{
+	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
+	if r := cmp.Diff(pollResp.SubProduct, &SubProduct{
 		SubResource: SubResource{
 			ID: to.StringPtr("100"),
 		},
 		Properties: &SubProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestLROBeginPutNoHeaderInRetry(t *testing.T) {
@@ -1080,19 +1175,23 @@ func TestLROBeginPutNoHeaderInRetry(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	res, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	pollResp, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, res.RawResponse, 200)
-	helpers.DeepEqualOrFatal(t, res.Product, &Product{
+	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
+	if r := cmp.Diff(pollResp.Product, &Product{
 		Resource: Resource{
 			ID: to.StringPtr("100"),
 		},
 		Properties: &ProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestLROBeginPutNonResource(t *testing.T) {
@@ -1111,15 +1210,19 @@ func TestLROBeginPutNonResource(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	res, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	pollResp, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, res.RawResponse, 200)
-	helpers.DeepEqualOrFatal(t, res.SKU, &SKU{
+	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
+	if r := cmp.Diff(pollResp.SKU, &SKU{
 		ID:   to.StringPtr("100"),
 		Name: to.StringPtr("sku"),
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestLROBeginPutSubResource(t *testing.T) {
@@ -1138,17 +1241,21 @@ func TestLROBeginPutSubResource(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	res, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	pollResp, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, res.RawResponse, 200)
-	helpers.DeepEqualOrFatal(t, res.SubProduct, &SubProduct{
+	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
+	if r := cmp.Diff(pollResp.SubProduct, &SubProduct{
 		SubResource: SubResource{
 			ID: to.StringPtr("100"),
 		},
 		Properties: &SubProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }

@@ -5,13 +5,13 @@ package headergroup
 
 import (
 	"context"
-	"generatortests/helpers"
 	"net/http"
 	"testing"
 	"time"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
+	"github.com/google/go-cmp/cmp"
 )
 
 func newHeaderClient() *HeaderClient {
@@ -26,7 +26,9 @@ func TestHeaderCustomRequestID(t *testing.T) {
 	if err != nil {
 		t.Fatalf("CustomRequestID: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestHeaderParamBool(t *testing.T) {
@@ -35,13 +37,17 @@ func TestHeaderParamBool(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamBool: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 
 	result, err = client.ParamBool(context.Background(), "false", false, nil)
 	if err != nil {
 		t.Fatalf("ParamBool: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestHeaderParamByte(t *testing.T) {
@@ -50,7 +56,9 @@ func TestHeaderParamByte(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamByte: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestHeaderParamDate(t *testing.T) {
@@ -63,7 +71,9 @@ func TestHeaderParamDate(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamDate: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestHeaderParamDatetime(t *testing.T) {
@@ -76,7 +86,9 @@ func TestHeaderParamDatetime(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamDatetime: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestHeaderParamDatetimeRFC1123(t *testing.T) {
@@ -89,7 +101,9 @@ func TestHeaderParamDatetimeRFC1123(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamDatetimeRFC1123: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestHeaderParamDouble(t *testing.T) {
@@ -98,13 +112,17 @@ func TestHeaderParamDouble(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamDouble: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 
 	result, err = client.ParamDouble(context.Background(), "negative", -3.0, nil)
 	if err != nil {
 		t.Fatalf("ParamDouble: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestHeaderParamDuration(t *testing.T) {
@@ -113,7 +131,9 @@ func TestHeaderParamDuration(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamDuration: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestHeaderParamEnum(t *testing.T) {
@@ -123,13 +143,17 @@ func TestHeaderParamEnum(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamEnum: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 
 	result, err = client.ParamEnum(context.Background(), "null", nil)
 	if err != nil {
 		t.Fatalf("ParamEnum: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 // func TestHeaderParamExistingKey(t *testing.T) {
@@ -138,7 +162,9 @@ func TestHeaderParamEnum(t *testing.T) {
 // 	if err != nil {
 // 		t.Fatalf("ParamExistingKey: %v", err)
 // 	}
-// 	helpers.VerifyStatusCode(t, result, http.StatusOK)
+// 	if s := result.StatusCode; s != http.StatusOK {
+//		t.Fatalf("unexpected status code %d", s)
+//	}
 // }
 
 func TestHeaderParamFloat(t *testing.T) {
@@ -147,13 +173,17 @@ func TestHeaderParamFloat(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamFloat: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 
 	result, err = client.ParamFloat(context.Background(), "negative", -3.0, nil)
 	if err != nil {
 		t.Fatalf("ParamFloat: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestHeaderParamInteger(t *testing.T) {
@@ -162,13 +192,17 @@ func TestHeaderParamInteger(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamInteger: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 
 	result, err = client.ParamInteger(context.Background(), "negative", -2, nil)
 	if err != nil {
 		t.Fatalf("ParamInteger: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestHeaderParamLong(t *testing.T) {
@@ -177,13 +211,17 @@ func TestHeaderParamLong(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamLong: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 
 	result, err = client.ParamLong(context.Background(), "negative", -2, nil)
 	if err != nil {
 		t.Fatalf("ParamLong: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestHeaderParamProtectedKey(t *testing.T) {
@@ -192,7 +230,9 @@ func TestHeaderParamProtectedKey(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamProtectedKey: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestHeaderParamString(t *testing.T) {
@@ -202,42 +242,52 @@ func TestHeaderParamString(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamString: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 
 	result, err = client.ParamString(context.Background(), "null", nil)
 	if err != nil {
 		t.Fatalf("ParamString: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 
 	val = ""
 	result, err = client.ParamString(context.Background(), "empty", &HeaderParamStringOptions{Value: &val})
 	if err != nil {
 		t.Fatalf("ParamString: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
-// TODO check why we dont check for the value returned in all of the tests below this comment
 func TestHeaderResponseBool(t *testing.T) {
 	client := newHeaderClient()
 	result, err := client.ResponseBool(context.Background(), "true", nil)
 	if err != nil {
 		t.Fatalf("ResponseBool: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 	val := true
-	expected := HeaderResponseBoolResponse{RawResponse: result.RawResponse, Value: &val}
-	helpers.DeepEqualOrFatal(t, result, expected)
+	if r := cmp.Diff(result.Value, &val); r != "" {
+		t.Fatal(r)
+	}
 	result, err = client.ResponseBool(context.Background(), "false", nil)
 	if err != nil {
 		t.Fatalf("ResponseBool: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 	val = false
-	expected = HeaderResponseBoolResponse{RawResponse: result.RawResponse, Value: &val}
-	helpers.DeepEqualOrFatal(t, result, expected)
-
+	if r := cmp.Diff(result.Value, &val); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestHeaderResponseByte(t *testing.T) {
@@ -246,9 +296,13 @@ func TestHeaderResponseByte(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ResponseByte: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 	val := []byte("啊齄丂狛狜隣郎隣兀﨩")
-	helpers.DeepEqualOrFatal(t, result, HeaderResponseByteResponse{RawResponse: result.RawResponse, Value: &val})
+	if r := cmp.Diff(result.Value, &val); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestHeaderResponseDate(t *testing.T) {
@@ -257,30 +311,30 @@ func TestHeaderResponseDate(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ResponseDate: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 	val, err := time.Parse("2006-01-02", "2010-01-01")
 	if err != nil {
 		t.Fatalf("Unable to parse time: %v", err)
 	}
-	helpers.DeepEqualOrFatal(t, result,
-		HeaderResponseDateResponse{
-			RawResponse: result.RawResponse,
-			Value:       &val,
-		})
+	if r := cmp.Diff(result.Value, &val); r != "" {
+		t.Fatal(r)
+	}
 	result, err = client.ResponseDate(context.Background(), "min", nil)
 	if err != nil {
 		t.Fatalf("ResponseDate: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 	val, err = time.Parse("2006-01-02", "0001-01-01")
 	if err != nil {
 		t.Fatalf("Unable to parse time: %v", err)
 	}
-	helpers.DeepEqualOrFatal(t, result,
-		HeaderResponseDateResponse{
-			RawResponse: result.RawResponse,
-			Value:       &val,
-		})
+	if r := cmp.Diff(result.Value, &val); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestHeaderResponseDatetime(t *testing.T) {
@@ -289,30 +343,30 @@ func TestHeaderResponseDatetime(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ResponseDatetime: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 	val, err := time.Parse(time.RFC3339, "2010-01-01T12:34:56Z")
 	if err != nil {
 		t.Fatalf("Unable to parse time: %v", err)
 	}
-	helpers.DeepEqualOrFatal(t, result,
-		HeaderResponseDatetimeResponse{
-			RawResponse: result.RawResponse,
-			Value:       &val,
-		})
+	if r := cmp.Diff(result.Value, &val); r != "" {
+		t.Fatal(r)
+	}
 	result, err = client.ResponseDatetime(context.Background(), "min", nil)
 	if err != nil {
 		t.Fatalf("ResponseDatetime: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 	val, err = time.Parse(time.RFC3339, "0001-01-01T00:00:00Z")
 	if err != nil {
 		t.Fatalf("Unable to parse time: %v", err)
 	}
-	helpers.DeepEqualOrFatal(t, result,
-		HeaderResponseDatetimeResponse{
-			RawResponse: result.RawResponse,
-			Value:       &val,
-		})
+	if r := cmp.Diff(result.Value, &val); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestHeaderResponseDatetimeRFC1123(t *testing.T) {
@@ -321,30 +375,30 @@ func TestHeaderResponseDatetimeRFC1123(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ResponseDatetimeRFC1123: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 	val, err := time.Parse(time.RFC1123, "Wed, 01 Jan 2010 12:34:56 GMT")
 	if err != nil {
 		t.Fatalf("Unable to parse time: %v", err)
 	}
-	helpers.DeepEqualOrFatal(t, result,
-		HeaderResponseDatetimeRFC1123Response{
-			RawResponse: result.RawResponse,
-			Value:       &val,
-		})
+	if r := cmp.Diff(result.Value, &val); r != "" {
+		t.Fatal(r)
+	}
 	result, err = client.ResponseDatetimeRFC1123(context.Background(), "min", nil)
 	if err != nil {
 		t.Fatalf("ResponseDatetimeRFC1123: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 	val, err = time.Parse(time.RFC1123, "Mon, 01 Jan 0001 00:00:00 GMT")
 	if err != nil {
 		t.Fatalf("Unable to parse time: %v", err)
 	}
-	helpers.DeepEqualOrFatal(t, result,
-		HeaderResponseDatetimeRFC1123Response{
-			RawResponse: result.RawResponse,
-			Value:       &val,
-		})
+	if r := cmp.Diff(result.Value, &val); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestHeaderResponseDouble(t *testing.T) {
@@ -353,13 +407,17 @@ func TestHeaderResponseDouble(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ResponseDouble: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 
 	result, err = client.ResponseDouble(context.Background(), "negative", nil)
 	if err != nil {
 		t.Fatalf("ResponseDouble: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestHeaderResponseDuration(t *testing.T) {
@@ -368,7 +426,9 @@ func TestHeaderResponseDuration(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ResponseDuration: %v", err)
 	}
-	helpers.DeepEqualOrFatal(t, result.Value, to.StringPtr("P123DT22H14M12.011S"))
+	if r := cmp.Diff(result.Value, to.StringPtr("P123DT22H14M12.011S")); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestHeaderResponseEnum(t *testing.T) {
@@ -377,14 +437,20 @@ func TestHeaderResponseEnum(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ResponseEnum: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 	val := GreyscaleColors("GREY")
-	helpers.DeepEqualOrFatal(t, result, HeaderResponseEnumResponse{RawResponse: result.RawResponse, Value: &val})
+	if r := cmp.Diff(result.Value, &val); r != "" {
+		t.Fatal(r)
+	}
 	result, err = client.ResponseEnum(context.Background(), "null", nil)
 	if err != nil {
 		t.Fatalf("ResponseEnum: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestHeaderResponseExistingKey(t *testing.T) {
@@ -393,7 +459,9 @@ func TestHeaderResponseExistingKey(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ResponseExistingKey: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestHeaderResponseFloat(t *testing.T) {
@@ -402,13 +470,17 @@ func TestHeaderResponseFloat(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ResponseFloat: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 
 	result, err = client.ResponseFloat(context.Background(), "negative", nil)
 	if err != nil {
 		t.Fatalf("ResponseFloat: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestHeaderResponseInteger(t *testing.T) {
@@ -417,13 +489,17 @@ func TestHeaderResponseInteger(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ResponseInteger: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 
 	result, err = client.ResponseInteger(context.Background(), "negative", nil)
 	if err != nil {
 		t.Fatalf("ResponseInteger: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestHeaderResponseLong(t *testing.T) {
@@ -432,13 +508,17 @@ func TestHeaderResponseLong(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ResponseLong: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 
 	result, err = client.ResponseLong(context.Background(), "negative", nil)
 	if err != nil {
 		t.Fatalf("ResponseLong: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestHeaderResponseProtectedKey(t *testing.T) {
@@ -447,7 +527,9 @@ func TestHeaderResponseProtectedKey(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ResponseProtectedKey: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestHeaderResponseString(t *testing.T) {
@@ -456,17 +538,23 @@ func TestHeaderResponseString(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ResponseString: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 
 	result, err = client.ResponseString(context.Background(), "null", nil)
 	if err != nil {
 		t.Fatalf("ResponseString: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 
 	result, err = client.ResponseString(context.Background(), "empty", nil)
 	if err != nil {
 		t.Fatalf("ResponseString: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
