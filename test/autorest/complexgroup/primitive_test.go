@@ -5,12 +5,12 @@ package complexgroup
 
 import (
 	"context"
-	"generatortests/helpers"
 	"net/http"
 	"testing"
 	"time"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
+	"github.com/google/go-cmp/cmp"
 )
 
 func newPrimitiveClient() *PrimitiveClient {
@@ -23,7 +23,9 @@ func TestPrimitiveGetInt(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetInt: %v", err)
 	}
-	helpers.DeepEqualOrFatal(t, result.IntWrapper, &IntWrapper{Field1: to.Int32Ptr(-1), Field2: to.Int32Ptr(2)})
+	if r := cmp.Diff(result.IntWrapper, &IntWrapper{Field1: to.Int32Ptr(-1), Field2: to.Int32Ptr(2)}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestPrimitivePutInt(t *testing.T) {
@@ -33,7 +35,9 @@ func TestPrimitivePutInt(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutInt: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestPrimitiveGetLong(t *testing.T) {
@@ -42,10 +46,12 @@ func TestPrimitiveGetLong(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetLong: %v", err)
 	}
-	helpers.DeepEqualOrFatal(t, result.LongWrapper, &LongWrapper{
+	if r := cmp.Diff(result.LongWrapper, &LongWrapper{
 		Field1: to.Int64Ptr(1099511627775),
 		Field2: to.Int64Ptr(-999511627788),
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestPrimitivePutLong(t *testing.T) {
@@ -55,7 +61,9 @@ func TestPrimitivePutLong(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutLong: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestPrimitiveGetFloat(t *testing.T) {
@@ -64,10 +72,12 @@ func TestPrimitiveGetFloat(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetFloat: %v", err)
 	}
-	helpers.DeepEqualOrFatal(t, result.FloatWrapper, &FloatWrapper{
+	if r := cmp.Diff(result.FloatWrapper, &FloatWrapper{
 		Field1: to.Float32Ptr(1.05),
 		Field2: to.Float32Ptr(-0.003),
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestPrimitivePutFloat(t *testing.T) {
@@ -77,7 +87,9 @@ func TestPrimitivePutFloat(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutFloat: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestPrimitiveGetDouble(t *testing.T) {
@@ -86,10 +98,12 @@ func TestPrimitiveGetDouble(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetDouble: %v", err)
 	}
-	helpers.DeepEqualOrFatal(t, result.DoubleWrapper, &DoubleWrapper{
+	if r := cmp.Diff(result.DoubleWrapper, &DoubleWrapper{
 		Field1: to.Float64Ptr(3e-100),
 		Field56ZerosAfterTheDotAndNegativeZeroBeforeDotAndThisIsALongFieldNameOnPurpose: to.Float64Ptr(-0.000000000000000000000000000000000000000000000000000000005),
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestPrimitivePutDouble(t *testing.T) {
@@ -99,7 +113,9 @@ func TestPrimitivePutDouble(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutDouble: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestPrimitiveGetBool(t *testing.T) {
@@ -108,10 +124,12 @@ func TestPrimitiveGetBool(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetBool: %v", err)
 	}
-	helpers.DeepEqualOrFatal(t, result.BooleanWrapper, &BooleanWrapper{
+	if r := cmp.Diff(result.BooleanWrapper, &BooleanWrapper{
 		FieldFalse: to.BoolPtr(false),
 		FieldTrue:  to.BoolPtr(true),
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestPrimitiveGetByte(t *testing.T) {
@@ -120,7 +138,9 @@ func TestPrimitiveGetByte(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetByte: %v", err)
 	}
-	helpers.DeepEqualOrFatal(t, result.ByteWrapper, &ByteWrapper{Field: &[]byte{255, 254, 253, 252, 0, 250, 249, 248, 247, 246}})
+	if r := cmp.Diff(result.ByteWrapper, &ByteWrapper{Field: &[]byte{255, 254, 253, 252, 0, 250, 249, 248, 247, 246}}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestPrimitivePutBool(t *testing.T) {
@@ -130,7 +150,9 @@ func TestPrimitivePutBool(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutBool: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestPrimitivePutByte(t *testing.T) {
@@ -140,7 +162,9 @@ func TestPrimitivePutByte(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutByte: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestPrimitiveGetString(t *testing.T) {
@@ -149,10 +173,12 @@ func TestPrimitiveGetString(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetString: %v", err)
 	}
-	helpers.DeepEqualOrFatal(t, result.StringWrapper, &StringWrapper{
+	if r := cmp.Diff(result.StringWrapper, &StringWrapper{
 		Empty: to.StringPtr(""),
 		Field: to.StringPtr("goodrequest"),
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestPrimitivePutString(t *testing.T) {
@@ -163,7 +189,9 @@ func TestPrimitivePutString(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutString: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestPrimitiveGetDate(t *testing.T) {
@@ -181,7 +209,9 @@ func TestPrimitiveGetDate(t *testing.T) {
 		t.Fatalf("Unable to parse leap year date string: %v", err)
 	}
 	dw := &DateWrapper{Field: &a, Leap: &b}
-	helpers.DeepEqualOrFatal(t, result.DateWrapper, dw)
+	if r := cmp.Diff(result.DateWrapper, dw); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestPrimitivePutDate(t *testing.T) {
@@ -198,7 +228,9 @@ func TestPrimitivePutDate(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutDate: %v", err)
 	}
-	helpers.VerifyStatusCode(t, resp, http.StatusOK)
+	if s := resp.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestPrimitiveGetDuration(t *testing.T) {
@@ -207,9 +239,11 @@ func TestPrimitiveGetDuration(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetDuration: %v", err)
 	}
-	helpers.DeepEqualOrFatal(t, result.DurationWrapper, &DurationWrapper{
+	if r := cmp.Diff(result.DurationWrapper, &DurationWrapper{
 		Field: to.StringPtr("P123DT22H14M12.011S"),
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestPrimitivePutDuration(t *testing.T) {
@@ -218,7 +252,9 @@ func TestPrimitivePutDuration(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutDuration: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestPrimitiveGetDateTime(t *testing.T) {
@@ -229,10 +265,12 @@ func TestPrimitiveGetDateTime(t *testing.T) {
 	}
 	f, _ := time.Parse(time.RFC3339, "0001-01-01T00:00:00Z")
 	n, _ := time.Parse(time.RFC3339, "2015-05-18T18:38:00Z")
-	helpers.DeepEqualOrFatal(t, result.DatetimeWrapper, &DatetimeWrapper{
+	if r := cmp.Diff(result.DatetimeWrapper, &DatetimeWrapper{
 		Field: &f,
 		Now:   &n,
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestPrimitiveGetDateTimeRFC1123(t *testing.T) {
@@ -243,10 +281,12 @@ func TestPrimitiveGetDateTimeRFC1123(t *testing.T) {
 	}
 	f, _ := time.Parse(time.RFC1123, "Mon, 01 Jan 0001 00:00:00 GMT")
 	n, _ := time.Parse(time.RFC1123, "Mon, 18 May 2015 11:38:00 GMT")
-	helpers.DeepEqualOrFatal(t, result.Datetimerfc1123Wrapper, &Datetimerfc1123Wrapper{
+	if r := cmp.Diff(result.Datetimerfc1123Wrapper, &Datetimerfc1123Wrapper{
 		Field: &f,
 		Now:   &n,
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestPrimitivePutDateTime(t *testing.T) {
@@ -260,7 +300,9 @@ func TestPrimitivePutDateTime(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutDateTime: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestPrimitivePutDateTimeRFC1123(t *testing.T) {
@@ -274,5 +316,7 @@ func TestPrimitivePutDateTimeRFC1123(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutDateTimeRFC1123: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }

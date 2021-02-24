@@ -5,7 +5,6 @@ package optionalgroup
 
 import (
 	"context"
-	"generatortests/helpers"
 	"net/http"
 	"testing"
 )
@@ -20,7 +19,9 @@ func TestExplicitPostOptionalArrayHeader(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PostOptionalArrayHeader: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestExplicitPostOptionalArrayParameter(t *testing.T) {
@@ -29,7 +30,9 @@ func TestExplicitPostOptionalArrayParameter(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PostOptionalArrayParameter: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestExplicitPostOptionalArrayProperty(t *testing.T) {
@@ -38,7 +41,9 @@ func TestExplicitPostOptionalArrayProperty(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PostOptionalArrayProperty: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestExplicitPostOptionalClassParameter(t *testing.T) {
@@ -47,7 +52,9 @@ func TestExplicitPostOptionalClassParameter(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PostOptionalClassParameter: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestExplicitPostOptionalClassProperty(t *testing.T) {
@@ -56,7 +63,9 @@ func TestExplicitPostOptionalClassProperty(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PostOptionalClassProperty: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestExplicitPostOptionalIntegerHeader(t *testing.T) {
@@ -65,7 +74,9 @@ func TestExplicitPostOptionalIntegerHeader(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PostOptionalIntegerHeader: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestExplicitPostOptionalIntegerParameter(t *testing.T) {
@@ -74,7 +85,9 @@ func TestExplicitPostOptionalIntegerParameter(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PostOptionalIntegerParameter: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestExplicitPostOptionalIntegerProperty(t *testing.T) {
@@ -83,7 +96,9 @@ func TestExplicitPostOptionalIntegerProperty(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PostOptionalIntegerProperty: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestExplicitPostOptionalStringHeader(t *testing.T) {
@@ -92,7 +107,9 @@ func TestExplicitPostOptionalStringHeader(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PostOptionalStringHeader: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestExplicitPostOptionalStringParameter(t *testing.T) {
@@ -101,7 +118,9 @@ func TestExplicitPostOptionalStringParameter(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PostOptionalStringParameter: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestExplicitPostOptionalStringProperty(t *testing.T) {
@@ -110,7 +129,9 @@ func TestExplicitPostOptionalStringProperty(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PostOptionalStringProperty: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 // TODO the goal of this test is to throw an exception but nils are acceptable for  []strings in go

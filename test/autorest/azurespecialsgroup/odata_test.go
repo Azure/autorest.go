@@ -5,7 +5,6 @@ package azurespecialsgroup
 
 import (
 	"context"
-	"generatortests/helpers"
 	"net/http"
 	"testing"
 
@@ -27,5 +26,7 @@ func TestGetWithFilter(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }

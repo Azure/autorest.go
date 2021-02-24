@@ -5,10 +5,11 @@ package numbergroup
 
 import (
 	"context"
-	"generatortests/helpers"
 	"net/http"
 	"reflect"
 	"testing"
+
+	"github.com/google/go-cmp/cmp"
 )
 
 func newNumberClient() *NumberClient {
@@ -22,8 +23,12 @@ func TestNumberGetBigDecimal(t *testing.T) {
 		t.Fatalf("GetBigDecimal: %v", err)
 	}
 	val := 2.5976931e+101
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
-	helpers.DeepEqualOrFatal(t, result.Value, &val)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
+	if r := cmp.Diff(result.Value, &val); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestNumberGetBigDecimalNegativeDecimal(t *testing.T) {
@@ -33,8 +38,12 @@ func TestNumberGetBigDecimalNegativeDecimal(t *testing.T) {
 		t.Fatalf("GetBigDecimalNegativeDecimal: %v", err)
 	}
 	val := -99999999.99
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
-	helpers.DeepEqualOrFatal(t, result.Value, &val)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
+	if r := cmp.Diff(result.Value, &val); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestNumberGetBigDecimalPositiveDecimal(t *testing.T) {
@@ -44,8 +53,12 @@ func TestNumberGetBigDecimalPositiveDecimal(t *testing.T) {
 		t.Fatalf("GetBigDecimalPositiveDecimal: %v", err)
 	}
 	val := 99999999.99
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
-	helpers.DeepEqualOrFatal(t, result.Value, &val)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
+	if r := cmp.Diff(result.Value, &val); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestNumberGetBigDouble(t *testing.T) {
@@ -55,8 +68,12 @@ func TestNumberGetBigDouble(t *testing.T) {
 		t.Fatalf("GetBigDouble: %v", err)
 	}
 	val := 2.5976931e+101
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
-	helpers.DeepEqualOrFatal(t, result.Value, &val)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
+	if r := cmp.Diff(result.Value, &val); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestNumberGetBigDoubleNegativeDecimal(t *testing.T) {
@@ -66,8 +83,12 @@ func TestNumberGetBigDoubleNegativeDecimal(t *testing.T) {
 		t.Fatalf("GetBigDoubleNegativeDecimal: %v", err)
 	}
 	val := -99999999.99
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
-	helpers.DeepEqualOrFatal(t, result.Value, &val)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
+	if r := cmp.Diff(result.Value, &val); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestNumberGetBigDoublePositiveDecimal(t *testing.T) {
@@ -77,8 +98,12 @@ func TestNumberGetBigDoublePositiveDecimal(t *testing.T) {
 		t.Fatalf("GetBigDoublePositiveDecimal: %v", err)
 	}
 	val := 99999999.99
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
-	helpers.DeepEqualOrFatal(t, result.Value, &val)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
+	if r := cmp.Diff(result.Value, &val); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestNumberGetBigFloat(t *testing.T) {
@@ -88,8 +113,12 @@ func TestNumberGetBigFloat(t *testing.T) {
 		t.Fatalf("GetBigFloat: %v", err)
 	}
 	val := float32(3.402823e+20)
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
-	helpers.DeepEqualOrFatal(t, result.Value, &val)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
+	if r := cmp.Diff(result.Value, &val); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestNumberGetInvalidDecimal(t *testing.T) {
@@ -131,8 +160,12 @@ func TestNumberGetNull(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetNull: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
-	helpers.DeepEqualOrFatal(t, result.Value, (*float32)(nil))
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
+	if r := cmp.Diff(result.Value, (*float32)(nil)); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestNumberGetSmallDecimal(t *testing.T) {
@@ -142,8 +175,12 @@ func TestNumberGetSmallDecimal(t *testing.T) {
 		t.Fatalf("GetSmallDecimal: %v", err)
 	}
 	val := 2.5976931e-101
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
-	helpers.DeepEqualOrFatal(t, result.Value, &val)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
+	if r := cmp.Diff(result.Value, &val); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestNumberGetSmallDouble(t *testing.T) {
@@ -153,8 +190,12 @@ func TestNumberGetSmallDouble(t *testing.T) {
 		t.Fatalf("GetSmallDouble: %v", err)
 	}
 	val := 2.5976931e-101
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
-	helpers.DeepEqualOrFatal(t, result.Value, &val)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
+	if r := cmp.Diff(result.Value, &val); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestNumberGetSmallFloat(t *testing.T) {
@@ -164,8 +205,12 @@ func TestNumberGetSmallFloat(t *testing.T) {
 		t.Fatalf("GetSmallFloat: %v", err)
 	}
 	val := 3.402823e-20
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
-	helpers.DeepEqualOrFatal(t, result.Value, &val)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
+	if r := cmp.Diff(result.Value, &val); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestNumberPutBigDecimal(t *testing.T) {
@@ -174,7 +219,9 @@ func TestNumberPutBigDecimal(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutBigDecimal: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestNumberPutBigDecimalNegativeDecimal(t *testing.T) {
@@ -183,7 +230,9 @@ func TestNumberPutBigDecimalNegativeDecimal(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutBigDecimalNegativeDecimal: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestNumberPutBigDecimalPositiveDecimal(t *testing.T) {
@@ -192,7 +241,9 @@ func TestNumberPutBigDecimalPositiveDecimal(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutBigDecimalPositiveDecimal: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestNumberPutBigDouble(t *testing.T) {
@@ -201,7 +252,9 @@ func TestNumberPutBigDouble(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutBigDouble: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestNumberPutBigDoubleNegativeDecimal(t *testing.T) {
@@ -210,7 +263,9 @@ func TestNumberPutBigDoubleNegativeDecimal(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutBigDoubleNegativeDecimal: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestNumberPutBigDoublePositiveDecimal(t *testing.T) {
@@ -219,7 +274,9 @@ func TestNumberPutBigDoublePositiveDecimal(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutBigDeoublePositiveDecimal: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestNumberPutBigFloat(t *testing.T) {
@@ -228,7 +285,9 @@ func TestNumberPutBigFloat(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutBigFloat: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestNumberPutSmallDecimal(t *testing.T) {
@@ -237,7 +296,9 @@ func TestNumberPutSmallDecimal(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutSmallDecimal: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestNumberPutSmallDouble(t *testing.T) {
@@ -246,7 +307,9 @@ func TestNumberPutSmallDouble(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutSmallDouble: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestNumberPutSmallFloat(t *testing.T) {
@@ -255,5 +318,7 @@ func TestNumberPutSmallFloat(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutSmallFloat: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }

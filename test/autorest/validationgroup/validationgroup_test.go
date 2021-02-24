@@ -5,7 +5,6 @@ package validationgroup
 
 import (
 	"context"
-	"generatortests/helpers"
 	"net/http"
 	"testing"
 
@@ -22,7 +21,9 @@ func TestValidationGetWithConstantInPath(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetWithConstantInPath: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestValidationPostWithConstantInBody(t *testing.T) {
@@ -38,7 +39,9 @@ func TestValidationPostWithConstantInBody(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PostWithConstantInBody: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestValidationValidationOfBody(t *testing.T) {
@@ -58,5 +61,7 @@ func TestValidationValidationOfBody(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ValidationOfBody: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }

@@ -5,10 +5,11 @@ package datetimerfc1123group
 
 import (
 	"context"
-	"generatortests/helpers"
 	"net/http"
 	"testing"
 	"time"
+
+	"github.com/google/go-cmp/cmp"
 )
 
 func newDatetimerfc1123Client() *Datetimerfc1123Client {
@@ -30,7 +31,9 @@ func TestGetNull(t *testing.T) {
 		t.Fatal(err)
 	}
 	var expected *time.Time
-	helpers.DeepEqualOrFatal(t, result.Value, expected)
+	if r := cmp.Diff(result.Value, expected); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestGetOverflow(t *testing.T) {
@@ -52,7 +55,9 @@ func TestGetUTCLowercaseMaxDateTime(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, result.Value, &expected)
+	if r := cmp.Diff(result.Value, &expected); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetUTCMinDateTime - Get min datetime value Mon, 1 Jan 0001 00:00:00 GMT
@@ -66,7 +71,9 @@ func TestGetUTCMinDateTime(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, result.Value, &expected)
+	if r := cmp.Diff(result.Value, &expected); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetUTCUppercaseMaxDateTime - Get max datetime value FRI, 31 DEC 9999 23:59:59 GMT
@@ -80,7 +87,9 @@ func TestGetUTCUppercaseMaxDateTime(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, result.Value, &expected)
+	if r := cmp.Diff(result.Value, &expected); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestGetUnderflow(t *testing.T) {
@@ -102,7 +111,9 @@ func TestPutUTCMaxDateTime(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 // PutUTCMinDateTime - Put min datetime value Mon, 1 Jan 0001 00:00:00 GMT
@@ -116,5 +127,7 @@ func TestPutUTCMinDateTime(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }

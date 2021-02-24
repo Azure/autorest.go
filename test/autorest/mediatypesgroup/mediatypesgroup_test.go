@@ -6,7 +6,6 @@ package mediatypesgroup
 import (
 	"bytes"
 	"context"
-	"generatortests/helpers"
 	"net/http"
 	"testing"
 
@@ -25,7 +24,9 @@ func TestAnalyzeBody(t *testing.T) {
 	if err != nil {
 		t.Fatalf("AnalyzeBody: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestAnalyzeBodyWithSourcePath(t *testing.T) {
@@ -37,7 +38,9 @@ func TestAnalyzeBodyWithSourcePath(t *testing.T) {
 	if err != nil {
 		t.Fatalf("AnalyzeBodyWithSourcePath: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestContentTypeWithEncoding(t *testing.T) {
@@ -46,5 +49,7 @@ func TestContentTypeWithEncoding(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ContentTypeWithEncoding: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }

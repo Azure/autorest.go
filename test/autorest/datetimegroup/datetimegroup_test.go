@@ -5,10 +5,11 @@ package datetimegroup
 
 import (
 	"context"
-	"generatortests/helpers"
 	"net/http"
 	"testing"
 	"time"
+
+	"github.com/google/go-cmp/cmp"
 )
 
 func newDatetimeClient() *DatetimeClient {
@@ -33,7 +34,9 @@ func TestGetLocalNegativeOffsetLowercaseMaxDateTime(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, result.Value, &expected)
+	if r := cmp.Diff(result.Value, &expected); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestGetLocalNegativeOffsetMinDateTime(t *testing.T) {
@@ -46,7 +49,9 @@ func TestGetLocalNegativeOffsetMinDateTime(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, result.Value, &expected)
+	if r := cmp.Diff(result.Value, &expected); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestGetLocalNegativeOffsetUppercaseMaxDateTime(t *testing.T) {
@@ -59,7 +64,9 @@ func TestGetLocalNegativeOffsetUppercaseMaxDateTime(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, result.Value, &expected)
+	if r := cmp.Diff(result.Value, &expected); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestGetLocalPositiveOffsetLowercaseMaxDateTime(t *testing.T) {
@@ -72,7 +79,9 @@ func TestGetLocalPositiveOffsetLowercaseMaxDateTime(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, result.Value, &expected)
+	if r := cmp.Diff(result.Value, &expected); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestGetLocalPositiveOffsetMinDateTime(t *testing.T) {
@@ -85,7 +94,9 @@ func TestGetLocalPositiveOffsetMinDateTime(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, result.Value, &expected)
+	if r := cmp.Diff(result.Value, &expected); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestGetLocalNoOffsetMinDateTime(t *testing.T) {
@@ -98,7 +109,9 @@ func TestGetLocalNoOffsetMinDateTime(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, result.Value, &expected)
+	if r := cmp.Diff(result.Value, &expected); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestGetLocalPositiveOffsetUppercaseMaxDateTime(t *testing.T) {
@@ -111,7 +124,9 @@ func TestGetLocalPositiveOffsetUppercaseMaxDateTime(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, result.Value, &expected)
+	if r := cmp.Diff(result.Value, &expected); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestGetNull(t *testing.T) {
@@ -121,7 +136,9 @@ func TestGetNull(t *testing.T) {
 		t.Fatal(err)
 	}
 	var expected *time.Time
-	helpers.DeepEqualOrFatal(t, result.Value, expected)
+	if r := cmp.Diff(result.Value, expected); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestGetOverflow(t *testing.T) {
@@ -151,7 +168,9 @@ func TestGetUTCLowercaseMaxDateTime(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, result.Value, &expected)
+	if r := cmp.Diff(result.Value, &expected); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestGetUTCMinDateTime(t *testing.T) {
@@ -164,7 +183,9 @@ func TestGetUTCMinDateTime(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, result.Value, &expected)
+	if r := cmp.Diff(result.Value, &expected); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestGetUTCUppercaseMaxDateTime(t *testing.T) {
@@ -177,7 +198,9 @@ func TestGetUTCUppercaseMaxDateTime(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, result.Value, &expected)
+	if r := cmp.Diff(result.Value, &expected); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestGetUTCUppercaseMaxDateTime7Digits(t *testing.T) {
@@ -190,7 +213,9 @@ func TestGetUTCUppercaseMaxDateTime7Digits(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, result.Value, &expected)
+	if r := cmp.Diff(result.Value, &expected); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestPutLocalNegativeOffsetMaxDateTime(t *testing.T) {
@@ -203,7 +228,9 @@ func TestPutLocalNegativeOffsetMaxDateTime(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestPutLocalNegativeOffsetMinDateTime(t *testing.T) {
@@ -216,7 +243,9 @@ func TestPutLocalNegativeOffsetMinDateTime(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestPutLocalPositiveOffsetMaxDateTime(t *testing.T) {
@@ -229,7 +258,9 @@ func TestPutLocalPositiveOffsetMaxDateTime(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestPutLocalPositiveOffsetMinDateTime(t *testing.T) {
@@ -242,7 +273,9 @@ func TestPutLocalPositiveOffsetMinDateTime(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestPutUTCMaxDateTime(t *testing.T) {
@@ -255,7 +288,9 @@ func TestPutUTCMaxDateTime(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestPutUTCMaxDateTime7Digits(t *testing.T) {
@@ -268,7 +303,9 @@ func TestPutUTCMaxDateTime7Digits(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestPutUTCMinDateTime(t *testing.T) {
@@ -281,5 +318,7 @@ func TestPutUTCMinDateTime(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }

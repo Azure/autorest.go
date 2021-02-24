@@ -6,12 +6,12 @@ package httpinfrastructuregroup
 import (
 	"context"
 	"errors"
-	"generatortests/helpers"
 	"net/http"
 	"reflect"
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
+	"github.com/google/go-cmp/cmp"
 )
 
 func newMultipleResponsesClient() *MultipleResponsesClient {
@@ -27,9 +27,13 @@ func TestGet200Model201ModelDefaultError200Valid(t *testing.T) {
 	}
 	switch x := result.(type) {
 	case MyExceptionResponse:
-		helpers.DeepEqualOrFatal(t, x.MyException.StatusCode, to.StringPtr("200"))
+		if r := cmp.Diff(x.MyException.StatusCode, to.StringPtr("200")); r != "" {
+			t.Fatal(r)
+		}
 	case BResponse:
-		helpers.VerifyStatusCode(t, x.RawResponse, http.StatusCreated)
+		if s := x.RawResponse.StatusCode; s != http.StatusCreated {
+			t.Fatalf("unexpected status code %d", s)
+		}
 	default:
 		t.Fatalf("unhandled response type %T", x)
 	}
@@ -46,12 +50,14 @@ func TestGet200Model201ModelDefaultError201Valid(t *testing.T) {
 	if !ok {
 		t.Fatalf("unexpected response type %T", result)
 	}
-	helpers.DeepEqualOrFatal(t, r.B, &B{
+	if r := cmp.Diff(r.B, &B{
 		MyException: MyException{
 			StatusCode: to.StringPtr("201"),
 		},
 		TextStatusCode: to.StringPtr("Created"),
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // Get200Model201ModelDefaultError400Valid - Send a 400 response with valid payload: {'code': '400', 'message': 'client error'}
@@ -62,10 +68,12 @@ func TestGet200Model201ModelDefaultError400Valid(t *testing.T) {
 	if !errors.As(err, &r) {
 		t.Fatalf("unexpected error type %T", err)
 	}
-	helpers.DeepEqualOrFatal(t, r, &Error{
+	if r := cmp.Diff(r, &Error{
 		Message: to.StringPtr("client error"),
 		Status:  to.Int32Ptr(400),
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 	if result != nil {
 		t.Fatal("expected nil result")
 	}
@@ -78,9 +86,11 @@ func TestGet200Model204NoModelDefaultError200Valid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, result.MyException, &MyException{
+	if r := cmp.Diff(result.MyException, &MyException{
 		StatusCode: to.StringPtr("200"),
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // Get200Model204NoModelDefaultError201Invalid - Send a 201 response with valid payload: {'statusCode': '201'}
@@ -91,7 +101,9 @@ func TestGet200Model204NoModelDefaultError201Invalid(t *testing.T) {
 	if !errors.As(err, &r) {
 		t.Fatal("unexpected error type")
 	}
-	helpers.DeepEqualOrFatal(t, r, &Error{})
+	if r := cmp.Diff(r, &Error{}); r != "" {
+		t.Fatal(r)
+	}
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected empty response")
 	}
@@ -105,7 +117,9 @@ func TestGet200Model204NoModelDefaultError202None(t *testing.T) {
 	if !errors.As(err, &r) {
 		t.Fatal("unexpected error type")
 	}
-	helpers.DeepEqualOrFatal(t, r, &Error{})
+	if r := cmp.Diff(r, &Error{}); r != "" {
+		t.Fatal(r)
+	}
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected empty response")
 	}
@@ -118,7 +132,9 @@ func TestGet200Model204NoModelDefaultError204Valid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusNoContent)
+	if s := result.RawResponse.StatusCode; s != http.StatusNoContent {
+		t.Fatalf("unexpected status code %d", s)
+	}
 	if result.MyException != nil {
 		t.Fatal("expected nil payload")
 	}
@@ -132,10 +148,12 @@ func TestGet200Model204NoModelDefaultError400Valid(t *testing.T) {
 	if !errors.As(err, &r) {
 		t.Fatal("unexpected error type")
 	}
-	helpers.DeepEqualOrFatal(t, r, &Error{
+	if r := cmp.Diff(r, &Error{
 		Message: to.StringPtr("client error"),
 		Status:  to.Int32Ptr(400),
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected empty response")
 	}
@@ -165,9 +183,11 @@ func TestGet200ModelA200Valid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, result.MyException, &MyException{
+	if r := cmp.Diff(result.MyException, &MyException{
 		StatusCode: to.StringPtr("200"),
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // Get200ModelA201ModelC404ModelDDefaultError200Valid - Send a 200 response with valid payload: {'statusCode': '200'}
@@ -181,9 +201,11 @@ func TestGet200ModelA201ModelC404ModelDDefaultError200Valid(t *testing.T) {
 	if !ok {
 		t.Fatalf("unexpected result type %T", result)
 	}
-	helpers.DeepEqualOrFatal(t, r.MyException, &MyException{
+	if r := cmp.Diff(r.MyException, &MyException{
 		StatusCode: to.StringPtr("200"),
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // Get200ModelA201ModelC404ModelDDefaultError201Valid - Send a 200 response with valid payload: {'httpCode': '201'}
@@ -197,9 +219,11 @@ func TestGet200ModelA201ModelC404ModelDDefaultError201Valid(t *testing.T) {
 	if !ok {
 		t.Fatalf("unexpected result type %T", result)
 	}
-	helpers.DeepEqualOrFatal(t, r.C, &C{
+	if r := cmp.Diff(r.C, &C{
 		HTTPCode: to.StringPtr("201"),
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // Get200ModelA201ModelC404ModelDDefaultError400Valid - Send a 400 response with valid payload: {'code': '400', 'message': 'client error'}
@@ -210,10 +234,12 @@ func TestGet200ModelA201ModelC404ModelDDefaultError400Valid(t *testing.T) {
 	if !errors.As(err, &r) {
 		t.Fatal("unexpected error type")
 	}
-	helpers.DeepEqualOrFatal(t, r, &Error{
+	if r := cmp.Diff(r, &Error{
 		Message: to.StringPtr("client error"),
 		Status:  to.Int32Ptr(400),
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 	if result != nil {
 		t.Fatal("expected nil result")
 	}
@@ -230,9 +256,11 @@ func TestGet200ModelA201ModelC404ModelDDefaultError404Valid(t *testing.T) {
 	if !ok {
 		t.Fatalf("unexpected result type %T", result)
 	}
-	helpers.DeepEqualOrFatal(t, r.D, &D{
+	if r := cmp.Diff(r.D, &D{
 		HTTPStatusCode: to.StringPtr("404"),
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // Get200ModelA202Valid - Send a 202 response with payload {'statusCode': '202'}
@@ -242,9 +270,11 @@ func TestGet200ModelA202Valid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, result.MyException, &MyException{
+	if r := cmp.Diff(result.MyException, &MyException{
 		StatusCode: to.StringPtr("200"),
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // Get200ModelA400Invalid - Send a 200 response with invalid payload {'statusCodeInvalid': '400'}
@@ -283,7 +313,9 @@ func TestGet202None204NoneDefaultError202None(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusAccepted)
+	if s := result.StatusCode; s != http.StatusAccepted {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 // Get202None204NoneDefaultError204None - Send a 204 response with no payload
@@ -293,7 +325,9 @@ func TestGet202None204NoneDefaultError204None(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusNoContent)
+	if s := result.StatusCode; s != http.StatusNoContent {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 // Get202None204NoneDefaultError400Valid - Send a 400 response with valid payload: {'code': '400', 'message': 'client error'}
@@ -315,7 +349,9 @@ func TestGet202None204NoneDefaultNone202Invalid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusAccepted)
+	if s := result.StatusCode; s != http.StatusAccepted {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 // Get202None204NoneDefaultNone204None - Send a 204 response with no payload
@@ -325,7 +361,9 @@ func TestGet202None204NoneDefaultNone204None(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusNoContent)
+	if s := result.StatusCode; s != http.StatusNoContent {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 // Get202None204NoneDefaultNone400Invalid - Send a 400 response with an unexpected payload {'property': 'value'}
@@ -371,9 +409,11 @@ func TestGetDefaultModelA200Valid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, result.MyException, &MyException{
+	if r := cmp.Diff(result.MyException, &MyException{
 		StatusCode: to.StringPtr("200"),
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetDefaultModelA400None - Send a 400 response with no payload
@@ -412,7 +452,9 @@ func TestGetDefaultNone200None(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 // GetDefaultNone400Invalid - Send a 400 response with valid payload: {'statusCode': '400'}

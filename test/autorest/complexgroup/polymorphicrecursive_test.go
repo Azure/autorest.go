@@ -5,12 +5,12 @@ package complexgroup
 
 import (
 	"context"
-	"generatortests/helpers"
 	"net/http"
 	"testing"
 	"time"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
+	"github.com/google/go-cmp/cmp"
 )
 
 func newPolymorphicrecursiveClient() *PolymorphicrecursiveClient {
@@ -26,7 +26,7 @@ func TestGetValid(t *testing.T) {
 	}
 	sawBday := time.Date(1900, time.January, 5, 1, 0, 0, 0, time.UTC)
 	sharkBday := time.Date(2012, time.January, 5, 1, 0, 0, 0, time.UTC)
-	helpers.DeepEqualOrFatal(t, result.Fish, &Salmon{
+	if r := cmp.Diff(result.Fish, &Salmon{
 		Fish: Fish{
 			Fishtype: to.StringPtr("salmon"),
 			Length:   to.Float32Ptr(1),
@@ -105,7 +105,9 @@ func TestGetValid(t *testing.T) {
 		},
 		Iswild:   to.BoolPtr(true),
 		Location: to.StringPtr("alaska"),
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // PutValid - Put complex types that are polymorphic and have recursive references
@@ -196,5 +198,7 @@ func TestPutValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }

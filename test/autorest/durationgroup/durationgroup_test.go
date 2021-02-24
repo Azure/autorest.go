@@ -5,11 +5,11 @@ package durationgroup
 
 import (
 	"context"
-	"generatortests/helpers"
 	"net/http"
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
+	"github.com/google/go-cmp/cmp"
 )
 
 func newDurationClient() *DurationClient {
@@ -32,7 +32,9 @@ func TestGetNull(t *testing.T) {
 		t.Fatal(err)
 	}
 	var s *string
-	helpers.DeepEqualOrFatal(t, result.Value, s)
+	if r := cmp.Diff(result.Value, s); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestGetPositiveDuration(t *testing.T) {
@@ -41,7 +43,9 @@ func TestGetPositiveDuration(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, result.Value, to.StringPtr("P3Y6M4DT12H30M5S"))
+	if r := cmp.Diff(result.Value, to.StringPtr("P3Y6M4DT12H30M5S")); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestPutPositiveDuration(t *testing.T) {
@@ -50,5 +54,7 @@ func TestPutPositiveDuration(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }

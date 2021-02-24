@@ -6,10 +6,10 @@ package additionalpropsgroup
 import (
 	"context"
 	"encoding/base64"
-	"generatortests/helpers"
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
+	"github.com/google/go-cmp/cmp"
 )
 
 func newPetsClient() *PetsClient {
@@ -31,7 +31,7 @@ func TestCreateApInProperties(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, result.PetApInProperties, &PetApInProperties{
+	if r := cmp.Diff(result.PetApInProperties, &PetApInProperties{
 		ID:     to.Int32Ptr(4),
 		Name:   to.StringPtr("Bunny"),
 		Status: to.BoolPtr(true),
@@ -40,7 +40,9 @@ func TestCreateApInProperties(t *testing.T) {
 			"weight":   599,
 			"footsize": 11.5,
 		},
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // CreateApInPropertiesWithApstring - Create a Pet which contains more properties than what is defined.
@@ -64,7 +66,7 @@ func TestCreateApInPropertiesWithApstring(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, result.PetApInPropertiesWithApstring, &PetApInPropertiesWithApstring{
+	if r := cmp.Diff(result.PetApInPropertiesWithApstring, &PetApInPropertiesWithApstring{
 		ID:            to.Int32Ptr(5),
 		Name:          to.StringPtr("Funny"),
 		OdataLocation: to.StringPtr("westus"),
@@ -79,7 +81,9 @@ func TestCreateApInPropertiesWithApstring(t *testing.T) {
 			"weight":   599,
 			"footsize": 11.5,
 		},
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // CreateApObject - Create a Pet which contains more properties than what is defined.
@@ -105,7 +109,7 @@ func TestCreateApObject(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, result.PetApObject, &PetApObject{
+	if r := cmp.Diff(result.PetApObject, &PetApObject{
 		ID:     to.Int32Ptr(2),
 		Name:   to.StringPtr("Hira"),
 		Status: to.BoolPtr(true),
@@ -122,7 +126,9 @@ func TestCreateApObject(t *testing.T) {
 			},
 			"picture": base64.StdEncoding.EncodeToString([]byte{255, 255, 255, 255, 254}),
 		},
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // CreateApString - Create a Pet which contains more properties than what is defined.
@@ -140,7 +146,7 @@ func TestCreateApString(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, result.PetApString, &PetApString{
+	if r := cmp.Diff(result.PetApString, &PetApString{
 		ID:     to.Int32Ptr(3),
 		Name:   to.StringPtr("Tommy"),
 		Status: to.BoolPtr(true),
@@ -149,7 +155,9 @@ func TestCreateApString(t *testing.T) {
 			"weight": "10 kg",
 			"city":   "Bombay",
 		},
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // CreateApTrue - Create a Pet which contains more properties than what is defined.
@@ -168,7 +176,7 @@ func TestCreateApTrue(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, result.PetApTrue, &PetApTrue{
+	if r := cmp.Diff(result.PetApTrue, &PetApTrue{
 		ID:     to.Int32Ptr(1),
 		Name:   to.StringPtr("Puppy"),
 		Status: to.BoolPtr(true),
@@ -178,7 +186,9 @@ func TestCreateApTrue(t *testing.T) {
 				"color": "Red",
 			},
 		},
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // CreateCatApTrue - Create a CatAPTrue which contains more properties than what is defined.
@@ -200,7 +210,7 @@ func TestCreateCatApTrue(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, result.CatApTrue, &CatApTrue{
+	if r := cmp.Diff(result.CatApTrue, &CatApTrue{
 		PetApTrue: PetApTrue{
 			ID:     to.Int32Ptr(1),
 			Name:   to.StringPtr("Lisa"),
@@ -213,5 +223,7 @@ func TestCreateCatApTrue(t *testing.T) {
 			},
 		},
 		Friendly: to.BoolPtr(true),
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }

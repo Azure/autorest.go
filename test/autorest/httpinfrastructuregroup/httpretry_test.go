@@ -5,7 +5,6 @@ package httpinfrastructuregroup
 
 import (
 	"context"
-	"generatortests/helpers"
 	"net/http"
 	"net/http/cookiejar"
 	"testing"
@@ -38,7 +37,9 @@ func TestHTTPRetryDelete503(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Did not expect an error but received: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestHTTPRetryGet502(t *testing.T) {
@@ -47,7 +48,9 @@ func TestHTTPRetryGet502(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestHTTPRetryHead408(t *testing.T) {
@@ -68,7 +71,9 @@ func TestHTTPRetryOptions502(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestHTTPRetryPatch500(t *testing.T) {
@@ -77,7 +82,9 @@ func TestHTTPRetryPatch500(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestHTTPRetryPatch504(t *testing.T) {
@@ -86,7 +93,9 @@ func TestHTTPRetryPatch504(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestHTTPRetryPost503(t *testing.T) {
@@ -95,7 +104,9 @@ func TestHTTPRetryPost503(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestHTTPRetryPut500(t *testing.T) {
@@ -104,7 +115,9 @@ func TestHTTPRetryPut500(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestHTTPRetryPut504(t *testing.T) {
@@ -113,5 +126,7 @@ func TestHTTPRetryPut504(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }

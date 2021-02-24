@@ -5,11 +5,11 @@ package complexgroup
 
 import (
 	"context"
-	"generatortests/helpers"
 	"net/http"
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
+	"github.com/google/go-cmp/cmp"
 )
 
 func newBasicClient() *BasicClient {
@@ -22,7 +22,9 @@ func TestBasicGetValid(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetValid: %v", err)
 	}
-	helpers.DeepEqualOrFatal(t, result.Basic, &Basic{ID: to.Int32Ptr(2), Name: to.StringPtr("abc"), Color: CMYKColorsYellow.ToPtr()})
+	if r := cmp.Diff(result.Basic, &Basic{ID: to.Int32Ptr(2), Name: to.StringPtr("abc"), Color: CMYKColorsYellow.ToPtr()}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestBasicPutValid(t *testing.T) {
@@ -35,7 +37,9 @@ func TestBasicPutValid(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutValid: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestBasicGetInvalid(t *testing.T) {
@@ -44,7 +48,9 @@ func TestBasicGetInvalid(t *testing.T) {
 	if err == nil {
 		t.Fatal("GetInvalid expected an error")
 	}
-	helpers.DeepEqualOrFatal(t, result, BasicResponse{})
+	if r := cmp.Diff(result, BasicResponse{}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestBasicGetEmpty(t *testing.T) {
@@ -53,7 +59,9 @@ func TestBasicGetEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetEmpty: %v", err)
 	}
-	helpers.DeepEqualOrFatal(t, result.Basic, &Basic{})
+	if r := cmp.Diff(result.Basic, &Basic{}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestBasicGetNull(t *testing.T) {
@@ -62,7 +70,9 @@ func TestBasicGetNull(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetNull: %v", err)
 	}
-	helpers.DeepEqualOrFatal(t, result.Basic, &Basic{})
+	if r := cmp.Diff(result.Basic, &Basic{}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestBasicGetNotProvided(t *testing.T) {
@@ -71,5 +81,7 @@ func TestBasicGetNotProvided(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetNotProvided: %v", err)
 	}
-	helpers.DeepEqualOrFatal(t, result.Basic, (*Basic)(nil))
+	if r := cmp.Diff(result.Basic, (*Basic)(nil)); r != "" {
+		t.Fatal(r)
+	}
 }

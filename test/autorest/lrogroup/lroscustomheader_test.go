@@ -5,13 +5,13 @@ package lrogroup
 
 import (
 	"context"
-	"generatortests/helpers"
 	"net/http"
 	"testing"
 	"time"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
+	"github.com/google/go-cmp/cmp"
 )
 
 func newLrOSCustomHeaderClient() *LrOSCustomHeaderClient {
@@ -56,7 +56,9 @@ func TestBeginPost202Retry200(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Unexpected error: %v", err)
 	}
-	helpers.VerifyStatusCode(t, resp, http.StatusOK)
+	if s := resp.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 // BeginPostAsyncRetrySucceeded - x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 is required message header for all requests. Long running post request, service returns a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
@@ -88,7 +90,9 @@ func TestBeginPostAsyncRetrySucceeded(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Unexpected error: %v", err)
 	}
-	helpers.VerifyStatusCode(t, resp, http.StatusOK)
+	if s := resp.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 // BeginPut201CreatingSucceeded200 - x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 is required message header for all requests. Long running put request, service returns a 201 to the initial request, with an entity that contains ProvisioningState=’Creating’.  Polls return this value until the last poll returns a ‘200’ with ProvisioningState=’Succeeded’
@@ -119,8 +123,10 @@ func TestBeginPut201CreatingSucceeded200(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, pr.RawResponse, http.StatusOK)
-	helpers.DeepEqualOrFatal(t, pr.Product, &Product{
+	if s := pr.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
+	if r := cmp.Diff(pr.Product, &Product{
 		Resource: Resource{
 			ID:   to.StringPtr("100"),
 			Name: to.StringPtr("foo"),
@@ -128,7 +134,9 @@ func TestBeginPut201CreatingSucceeded200(t *testing.T) {
 		Properties: &ProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // BeginPutAsyncRetrySucceeded - x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 is required message header for all requests. Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
@@ -159,8 +167,10 @@ func TestBeginPutAsyncRetrySucceeded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, pr.RawResponse, http.StatusOK)
-	helpers.DeepEqualOrFatal(t, pr.Product, &Product{
+	if s := pr.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
+	if r := cmp.Diff(pr.Product, &Product{
 		Resource: Resource{
 			ID:   to.StringPtr("100"),
 			Name: to.StringPtr("foo"),
@@ -168,5 +178,7 @@ func TestBeginPutAsyncRetrySucceeded(t *testing.T) {
 		Properties: &ProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }

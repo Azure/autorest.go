@@ -5,12 +5,12 @@ package complexgroup
 
 import (
 	"context"
-	"generatortests/helpers"
 	"net/http"
 	"testing"
 	"time"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
+	"github.com/google/go-cmp/cmp"
 )
 
 func newPolymorphismClient() *PolymorphismClient {
@@ -76,7 +76,7 @@ func TestPolymorphismGetComplicated(t *testing.T) {
 		Iswild:   to.BoolPtr(true),
 		Location: to.StringPtr("alaska"),
 	}
-	helpers.DeepEqualOrFatal(t, salmon, &SmartSalmon{
+	if r := cmp.Diff(salmon, &SmartSalmon{
 		Salmon: expectedSalmon,
 		AdditionalProperties: &map[string]interface{}{
 			"additionalProperty1": float64(1),
@@ -90,9 +90,15 @@ func TestPolymorphismGetComplicated(t *testing.T) {
 				float64(1), float64(3),
 			},
 		},
-	})
-	helpers.DeepEqualOrFatal(t, result.Salmon.GetSalmon(), &expectedSalmon)
-	helpers.DeepEqualOrFatal(t, result.Salmon.GetFish(), &expectedFish)
+	}); r != "" {
+		t.Fatal(r)
+	}
+	if r := cmp.Diff(result.Salmon.GetSalmon(), &expectedSalmon); r != "" {
+		t.Fatal(r)
+	}
+	if r := cmp.Diff(result.Salmon.GetFish(), &expectedFish); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetComposedWithDiscriminator - Get complex object composing a polymorphic scalar property and array property with polymorphic element type, with discriminator specified. Deserialization must NOT fail and use the discriminator type specified on the wire.
@@ -102,7 +108,7 @@ func TestPolymorphismGetComposedWithDiscriminator(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, result.DotFishMarket, &DotFishMarket{
+	if r := cmp.Diff(result.DotFishMarket, &DotFishMarket{
 		Fishes: &[]DotFishClassification{
 			&DotSalmon{
 				DotFish: DotFish{
@@ -155,7 +161,9 @@ func TestPolymorphismGetComposedWithDiscriminator(t *testing.T) {
 			Location: to.StringPtr("sweden"),
 			Iswild:   to.BoolPtr(false),
 		},
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetComposedWithoutDiscriminator - Get complex object composing a polymorphic scalar property and array property with polymorphic element type, without discriminator specified on wire. Deserialization must NOT fail and use the explicit type of the property.
@@ -165,7 +173,7 @@ func TestPolymorphismGetComposedWithoutDiscriminator(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, result.DotFishMarket, &DotFishMarket{
+	if r := cmp.Diff(result.DotFishMarket, &DotFishMarket{
 		Fishes: &[]DotFishClassification{
 			&DotFish{
 				Species: to.StringPtr("king"),
@@ -200,7 +208,9 @@ func TestPolymorphismGetComposedWithoutDiscriminator(t *testing.T) {
 			Location: to.StringPtr("sweden"),
 			Iswild:   to.BoolPtr(false),
 		},
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetDotSyntax - Get complex types that are polymorphic, JSON key contains a dot
@@ -210,14 +220,16 @@ func TestPolymorphismGetDotSyntax(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, result.DotFish, &DotSalmon{
+	if r := cmp.Diff(result.DotFish, &DotSalmon{
 		DotFish: DotFish{
 			FishType: to.StringPtr("DotSalmon"),
 			Species:  to.StringPtr("king"),
 		},
 		Location: to.StringPtr("sweden"),
 		Iswild:   to.BoolPtr(true),
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetValid - Get complex types that are polymorphic
@@ -234,7 +246,7 @@ func TestPolymorphismGetValid(t *testing.T) {
 	goblinBday := time.Date(2015, time.August, 8, 0, 0, 0, 0, time.UTC)
 	sawBday := time.Date(1900, time.January, 5, 1, 0, 0, 0, time.UTC)
 	sharkBday := time.Date(2012, time.January, 5, 1, 0, 0, 0, time.UTC)
-	helpers.DeepEqualOrFatal(t, salmon, &Salmon{
+	if r := cmp.Diff(salmon, &Salmon{
 		Fish: Fish{
 			Fishtype: to.StringPtr("salmon"),
 			Length:   to.Float32Ptr(1),
@@ -278,7 +290,9 @@ func TestPolymorphismGetValid(t *testing.T) {
 		},
 		Iswild:   to.BoolPtr(true),
 		Location: to.StringPtr("alaska"),
-	})
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // PutComplicated - Put complex types that are polymorphic, but not at the root of the hierarchy; also have additional properties
@@ -348,7 +362,9 @@ func TestPolymorphismPutComplicated(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 // PutMissingDiscriminator - Put complex types that are polymorphic, omitting the discriminator
@@ -401,7 +417,9 @@ func TestPolymorphismPutMissingDiscriminator(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 // PutValid - Put complex types that are polymorphic
@@ -454,7 +472,9 @@ func TestPolymorphismPutValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, resp, http.StatusOK)
+	if s := resp.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 // PutValidMissingRequired - Put complex types that are polymorphic, attempting to omit required 'birthday' field - the request should not be allowed from the client

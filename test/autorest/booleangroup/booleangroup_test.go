@@ -5,10 +5,11 @@ package booleangroup
 
 import (
 	"context"
-	"generatortests/helpers"
 	"net/http"
 	"reflect"
 	"testing"
+
+	"github.com/google/go-cmp/cmp"
 )
 
 func newBoolClient() *BoolClient {
@@ -22,8 +23,12 @@ func TestGetTrue(t *testing.T) {
 		t.Fatalf("GetTrue: %v", err)
 	}
 	val := true
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
-	helpers.DeepEqualOrFatal(t, result.Value, &val)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
+	if r := cmp.Diff(result.Value, &val); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestGetFalse(t *testing.T) {
@@ -33,8 +38,12 @@ func TestGetFalse(t *testing.T) {
 		t.Fatalf("GetFalse: %v", err)
 	}
 	val := false
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
-	helpers.DeepEqualOrFatal(t, result.Value, &val)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
+	if r := cmp.Diff(result.Value, &val); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestGetNull(t *testing.T) {
@@ -43,8 +52,12 @@ func TestGetNull(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetNull: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
-	helpers.DeepEqualOrFatal(t, result.Value, (*bool)(nil))
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
+	if r := cmp.Diff(result.Value, (*bool)(nil)); r != "" {
+		t.Fatal(r)
+	}
 }
 
 func TestGetInvalid(t *testing.T) {
@@ -65,7 +78,9 @@ func TestPutTrue(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutTrue: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
 
 func TestPutFalse(t *testing.T) {
@@ -74,5 +89,7 @@ func TestPutFalse(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutFalse: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }

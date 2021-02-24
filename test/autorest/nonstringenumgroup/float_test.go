@@ -5,9 +5,10 @@ package nonstringenumgroup
 
 import (
 	"context"
-	"generatortests/helpers"
 	"net/http"
 	"testing"
+
+	"github.com/google/go-cmp/cmp"
 )
 
 func newFloatClient() *FloatClient {
@@ -21,7 +22,9 @@ func TestFloatGet(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, result.Value, FloatEnumFourHundredTwentyNine1.ToPtr())
+	if r := cmp.Diff(result.Value, FloatEnumFourHundredTwentyNine1.ToPtr()); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // Put - Put a float enum
@@ -33,5 +36,7 @@ func TestFloatPut(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
 }
