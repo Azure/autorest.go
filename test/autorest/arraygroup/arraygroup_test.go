@@ -28,7 +28,7 @@ func TestGetArrayEmpty(t *testing.T) {
 	if resp.StringArrayArray == nil {
 		t.Fatal("unexpected nil array")
 	}
-	if r := cmp.Diff(len(*resp.StringArrayArray), 0); r != "" {
+	if r := cmp.Diff(len(resp.StringArrayArray), 0); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -40,7 +40,7 @@ func TestGetArrayItemEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.StringArrayArray, &[][]string{
+	if r := cmp.Diff(resp.StringArrayArray, [][]string{
 		{"1", "2", "3"},
 		{},
 		{"7", "8", "9"},
@@ -56,7 +56,7 @@ func TestGetArrayItemNull(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.StringArrayArray, &[][]string{
+	if r := cmp.Diff(resp.StringArrayArray, [][]string{
 		{"1", "2", "3"},
 		nil,
 		{"7", "8", "9"},
@@ -84,7 +84,7 @@ func TestGetArrayValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.StringArrayArray, &[][]string{
+	if r := cmp.Diff(resp.StringArrayArray, [][]string{
 		{"1", "2", "3"},
 		{"4", "5", "6"},
 		{"7", "8", "9"},
@@ -101,7 +101,7 @@ func TestGetBase64URL(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.ByteArrayArray, &[][]byte{
+	if r := cmp.Diff(resp.ByteArrayArray, [][]byte{
 		{0},
 		{0},
 		{0},
@@ -142,7 +142,7 @@ func TestGetBooleanTfft(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.BoolArray, &[]bool{true, false, false, true}); r != "" {
+	if r := cmp.Diff(resp.BoolArray, []bool{true, false, false, true}); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -167,7 +167,7 @@ func TestGetByteValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.ByteArrayArray, &[][]byte{
+	if r := cmp.Diff(resp.ByteArrayArray, [][]byte{
 		{255, 255, 255, 250},
 		{1, 2, 3},
 		{37, 41, 67},
@@ -186,7 +186,7 @@ func TestGetComplexEmpty(t *testing.T) {
 	if resp.ProductArray == nil {
 		t.Fatal("unexpected nil array")
 	}
-	if r := cmp.Diff(len(*resp.ProductArray), 0); r != "" {
+	if r := cmp.Diff(len(resp.ProductArray), 0); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -198,7 +198,7 @@ func TestGetComplexItemEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.ProductArray, &[]Product{
+	if r := cmp.Diff(resp.ProductArray, []Product{
 		{Integer: to.Int32Ptr(1), String: to.StringPtr("2")},
 		{},
 		{Integer: to.Int32Ptr(5), String: to.StringPtr("6")},
@@ -231,7 +231,7 @@ func TestGetComplexValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.ProductArray, &[]Product{
+	if r := cmp.Diff(resp.ProductArray, []Product{
 		{Integer: to.Int32Ptr(1), String: to.StringPtr("2")},
 		{Integer: to.Int32Ptr(3), String: to.StringPtr("4")},
 		{Integer: to.Int32Ptr(5), String: to.StringPtr("6")},
@@ -291,7 +291,7 @@ func TestGetDateTimeRFC1123Valid(t *testing.T) {
 	v1, _ := time.Parse(time.RFC1123, "Fri, 01 Dec 2000 00:00:01 GMT")
 	v2, _ := time.Parse(time.RFC1123, "Wed, 02 Jan 1980 00:11:35 GMT")
 	v3, _ := time.Parse(time.RFC1123, "Wed, 12 Oct 1492 10:15:01 GMT")
-	if r := cmp.Diff(resp.TimeArray, &[]time.Time{
+	if r := cmp.Diff(resp.TimeArray, []time.Time{
 		v1,
 		v2,
 		v3,
@@ -310,7 +310,7 @@ func TestGetDateTimeValid(t *testing.T) {
 	v1, _ := time.Parse(time.RFC3339, "2000-12-01T00:00:01Z")
 	v2, _ := time.Parse(time.RFC3339, "1980-01-02T01:11:35+01:00")
 	v3, _ := time.Parse(time.RFC3339, "1492-10-12T02:15:01-08:00")
-	if r := cmp.Diff(resp.TimeArray, &[]time.Time{
+	if r := cmp.Diff(resp.TimeArray, []time.Time{
 		v1,
 		v2,
 		v3,
@@ -326,7 +326,7 @@ func TestGetDateValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.TimeArray, &[]time.Time{
+	if r := cmp.Diff(resp.TimeArray, []time.Time{
 		time.Date(2000, time.December, 01, 0, 0, 0, 0, time.UTC),
 		time.Date(1980, time.January, 02, 0, 0, 0, 0, time.UTC),
 		time.Date(1492, time.October, 12, 0, 0, 0, 0, time.UTC),
@@ -342,7 +342,7 @@ func TestGetDictionaryEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.MapOfStringArray, &[]map[string]string{}); r != "" {
+	if r := cmp.Diff(resp.MapOfStringArray, []map[string]string{}); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -354,7 +354,7 @@ func TestGetDictionaryItemEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.MapOfStringArray, &[]map[string]string{
+	if r := cmp.Diff(resp.MapOfStringArray, []map[string]string{
 		{
 			"1": "one",
 			"2": "two",
@@ -378,7 +378,7 @@ func TestGetDictionaryItemNull(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.MapOfStringArray, &[]map[string]string{
+	if r := cmp.Diff(resp.MapOfStringArray, []map[string]string{
 		{
 			"1": "one",
 			"2": "two",
@@ -414,7 +414,7 @@ func TestGetDictionaryValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.MapOfStringArray, &[]map[string]string{
+	if r := cmp.Diff(resp.MapOfStringArray, []map[string]string{
 		{
 			"1": "one",
 			"2": "two",
@@ -467,7 +467,7 @@ func TestGetDoubleValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.Float64Array, &[]float64{0, -0.01, -1.2e20}); r != "" {
+	if r := cmp.Diff(resp.Float64Array, []float64{0, -0.01, -1.2e20}); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -479,7 +479,7 @@ func TestGetDurationValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.StringArray, &[]string{"P123DT22H14M12.011S", "P5DT1H0M0S"}); r != "" {
+	if r := cmp.Diff(resp.StringArray, []string{"P123DT22H14M12.011S", "P5DT1H0M0S"}); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -494,7 +494,7 @@ func TestGetEmpty(t *testing.T) {
 	if resp.Int32Array == nil {
 		t.Fatal("unexpected nil array")
 	}
-	if r := cmp.Diff(len(*resp.Int32Array), 0); r != "" {
+	if r := cmp.Diff(len(resp.Int32Array), 0); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -506,7 +506,7 @@ func TestGetEnumValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.FooEnumArray, &[]FooEnum{FooEnumFoo1, FooEnumFoo2, FooEnumFoo3}); r != "" {
+	if r := cmp.Diff(resp.FooEnumArray, []FooEnum{FooEnumFoo1, FooEnumFoo2, FooEnumFoo3}); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -543,7 +543,7 @@ func TestGetFloatValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.Float32Array, &[]float32{0, -0.01, -1.2e20}); r != "" {
+	if r := cmp.Diff(resp.Float32Array, []float32{0, -0.01, -1.2e20}); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -580,7 +580,7 @@ func TestGetIntegerValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.Int32Array, &[]int32{1, -1, 3, 300}); r != "" {
+	if r := cmp.Diff(resp.Int32Array, []int32{1, -1, 3, 300}); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -629,7 +629,7 @@ func TestGetLongValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.Int64Array, &[]int64{1, -1, 3, 300}); r != "" {
+	if r := cmp.Diff(resp.Int64Array, []int64{1, -1, 3, 300}); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -653,7 +653,7 @@ func TestGetStringEnumValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.Enum0Array, &[]Enum0{Enum0Foo1, Enum0Foo2, Enum0Foo3}); r != "" {
+	if r := cmp.Diff(resp.Enum0Array, []Enum0{Enum0Foo1, Enum0Foo2, Enum0Foo3}); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -665,7 +665,7 @@ func TestGetStringValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.StringArray, &[]string{"foo1", "foo2", "foo3"}); r != "" {
+	if r := cmp.Diff(resp.StringArray, []string{"foo1", "foo2", "foo3"}); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -707,7 +707,7 @@ func TestGetUUIDValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.StringArray, &[]string{"6dcc7237-45fe-45c4-8a6b-3a8a3f625652", "d1399005-30f7-40d6-8da6-dd7c89ad34db", "f42f6aa1-a5bc-4ddf-907e-5f915de43205"}); r != "" {
+	if r := cmp.Diff(resp.StringArray, []string{"6dcc7237-45fe-45c4-8a6b-3a8a3f625652", "d1399005-30f7-40d6-8da6-dd7c89ad34db", "f42f6aa1-a5bc-4ddf-907e-5f915de43205"}); r != "" {
 		t.Fatal(r)
 	}
 }

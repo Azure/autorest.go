@@ -111,9 +111,9 @@ function formatHeaderResponseValue(propName: string, header: string, schema: Sch
     let text = '\tfor hh := range resp.Header {\n';
     text += `\t\tif strings.HasPrefix(hh, "${schema.language.go!.headerCollectionPrefix}") {\n`;
     text += `\t\t\tif ${respObj}.Metadata == nil {\n`;
-    text += `\t\t\t\t${respObj}.Metadata = &map[string]string{}\n`;
+    text += `\t\t\t\t${respObj}.Metadata = map[string]string{}\n`;
     text += '\t\t\t}\n';
-    text += `\t\t\t(*${respObj}.Metadata)[hh[len("${schema.language.go!.headerCollectionPrefix}"):]] = resp.Header.Get(hh)\n`;
+    text += `\t\t\t${respObj}.Metadata[hh[len("${schema.language.go!.headerCollectionPrefix}"):]] = resp.Header.Get(hh)\n`;
     text += '\t\t}\n';
     text += '\t}\n';
     return text;
@@ -640,15 +640,15 @@ function generateResponseUnmarshaller(op: Operation, response: Response, imports
     return unmarshallerText;
   } else if (isArrayOfDateTime(response.schema) || isArrayOfDate(response.schema)) {
     // unmarshalling arrays of date/time is a little more involved
-    unmarshallerText += `\tvar aux *[]${(<ArraySchema>response.schema).elementType.language.go!.internalTimeType}\n`;
+    unmarshallerText += `\tvar aux []${(<ArraySchema>response.schema).elementType.language.go!.internalTimeType}\n`;
     unmarshallerText += `\tif err := resp.UnmarshalAs${getMediaType(response.protocol)}(&aux); err != nil {\n`;
     unmarshallerText += `\t\treturn ${zeroValue}, err\n`;
     unmarshallerText += '\t}\n';
-    unmarshallerText += '\tcp := make([]time.Time, len(*aux), len(*aux))\n';
-    unmarshallerText += '\tfor i := 0; i < len(*aux); i++ {\n';
-    unmarshallerText += '\t\tcp[i] = time.Time((*aux)[i])\n';
+    unmarshallerText += '\tcp := make([]time.Time, len(aux), len(aux))\n';
+    unmarshallerText += '\tfor i := 0; i < len(aux); i++ {\n';
+    unmarshallerText += '\t\tcp[i] = time.Time(aux[i])\n';
     unmarshallerText += '\t}\n';
-    const resp = `${response.schema.language.go!.responseType.name}{RawResponse: resp.Response, ${response.schema.language.go!.responseType.value}: &cp}`;
+    const resp = `${response.schema.language.go!.responseType.name}{RawResponse: resp.Response, ${response.schema.language.go!.responseType.value}: cp}`;
     unmarshallerText += `\treturn ${resp}, nil\n`;
     return unmarshallerText;
   } else if (isMapOfDateTime(response.schema) || isMapOfDate(response.schema)) {
@@ -660,7 +660,7 @@ function generateResponseUnmarshaller(op: Operation, response: Response, imports
     unmarshallerText += `\tfor k, v := range aux {\n`;
     unmarshallerText += `\t\tcp[k] = time.Time(v)\n`;
     unmarshallerText += `\t}\n`;
-    const resp = `${response.schema.language.go!.responseType.name}{RawResponse: resp.Response, ${response.schema.language.go!.responseType.value}: &cp}`;
+    const resp = `${response.schema.language.go!.responseType.name}{RawResponse: resp.Response, ${response.schema.language.go!.responseType.value}: cp}`;
     unmarshallerText += `\treturn ${resp}, nil\n`;
     return unmarshallerText;
   }
@@ -698,7 +698,11 @@ function generateResponseUnmarshaller(op: Operation, response: Response, imports
       unmarshallerText += `\treturn result, nil\n`;
     } else {
       // unmarshall the result into a temp, this is to avoid allocating the response envelope on the heap
-      unmarshallerText += `\tvar val *${schemaResponse.schema.language.go!.name}\n`;
+      let pointer = '*';
+      if (schemaResponse.schema.language.go!.responseType.byValue === true) {
+        pointer = '';
+      }
+      unmarshallerText += `\tvar val ${pointer}${schemaResponse.schema.language.go!.name}\n`;
       unmarshalInto('val');
       if (headerVals.length === 0) {
         unmarshallerText += `return ${schemaResponse.schema.language.go!.responseType.name}{RawResponse: resp.Response, ${schemaResponse.schema.language.go!.responseType.value}: val}, nil\n`;

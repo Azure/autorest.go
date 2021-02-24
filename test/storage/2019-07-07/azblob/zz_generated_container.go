@@ -678,9 +678,9 @@ func (client *containerClient) getPropertiesHandleResponse(resp *azcore.Response
 	for hh := range resp.Header {
 		if strings.HasPrefix(hh, "x-ms-meta-") {
 			if result.Metadata == nil {
-				result.Metadata = &map[string]string{}
+				result.Metadata = map[string]string{}
 			}
-			(*result.Metadata)[hh[len("x-ms-meta-"):]] = resp.Header.Get(hh)
+			result.Metadata[hh[len("x-ms-meta-"):]] = resp.Header.Get(hh)
 		}
 	}
 	if val := resp.Header.Get("ETag"); val != "" {

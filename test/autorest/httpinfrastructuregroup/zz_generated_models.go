@@ -742,5 +742,5 @@ type StringArrayResponse struct {
 	RawResponse *http.Response
 
 	// A list of location options for the request ['/http/success/get/200']
-	StringArray *[]string
+	StringArray []string
 }

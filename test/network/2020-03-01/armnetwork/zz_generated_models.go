@@ -11999,7 +11999,7 @@ type StringArrayResponse struct {
 	RawResponse *http.Response
 
 	// Response for ApplicationGatewayAvailableServerVariables API service call.
-	StringArray *[]string
+	StringArray []string
 }
 
 // StringPollerResponse is the response envelope for operations that asynchronously return a string type.

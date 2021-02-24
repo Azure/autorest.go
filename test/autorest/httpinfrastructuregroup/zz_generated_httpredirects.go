@@ -101,7 +101,7 @@ func (client *HTTPRedirectsClient) get300HandleResponse(resp *azcore.Response) (
 		}
 		return result, nil
 	case http.StatusMultipleChoices:
-		var val *[]string
+		var val []string
 		if err := resp.UnmarshalAsJSON(&val); err != nil {
 			return nil, err
 		}

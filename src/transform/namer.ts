@@ -66,7 +66,6 @@ export async function namer(session: Session<CodeModel>) {
     if (obj.discriminator) {
       // if this is a discriminator add the interface name
       details.discriminatorInterface = createPolymorphicInterfaceName(details.name);
-      details.byValue = true;
       details.discriminatorTypes = new Array<string>();
       details.discriminatorTypes.push('*' + details.name);
       for (const child of values(obj.discriminator.all)) {

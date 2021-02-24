@@ -25,7 +25,7 @@ func TestGetArrayEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(len(*resp.Value), 0); r != "" {
+	if r := cmp.Diff(len(resp.Value), 0); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -37,7 +37,7 @@ func TestGetArrayItemEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.Value, &map[string][]string{
+	if r := cmp.Diff(resp.Value, map[string][]string{
 		"0": {"1", "2", "3"},
 		"1": {},
 		"2": {"7", "8", "9"},
@@ -54,7 +54,7 @@ func TestGetArrayItemNull(t *testing.T) {
 		t.Fatal(err)
 	}
 	// TODO: this should technically fail since there's no x-nullable
-	if r := cmp.Diff(resp.Value, &map[string][]string{
+	if r := cmp.Diff(resp.Value, map[string][]string{
 		"0": {"1", "2", "3"},
 		"1": nil,
 		"2": {"7", "8", "9"},
@@ -82,7 +82,7 @@ func TestGetArrayValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.Value, &map[string][]string{
+	if r := cmp.Diff(resp.Value, map[string][]string{
 		"0": {"1", "2", "3"},
 		"1": {"4", "5", "6"},
 		"2": {"7", "8", "9"},
@@ -99,7 +99,7 @@ func TestGetBase64URL(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.Value, &map[string][]byte{
+	if r := cmp.Diff(resp.Value, map[string][]byte{
 		"0": {},
 		"1": {},
 		"2": {},
@@ -140,7 +140,7 @@ func TestGetBooleanTfft(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.Value, &map[string]bool{
+	if r := cmp.Diff(resp.Value, map[string]bool{
 		"0": true,
 		"1": false,
 		"2": false,
@@ -170,7 +170,7 @@ func TestGetByteValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.Value, &map[string][]byte{
+	if r := cmp.Diff(resp.Value, map[string][]byte{
 		"0": {255, 255, 255, 250},
 		"1": {1, 2, 3},
 		"2": {37, 41, 67},
@@ -186,7 +186,7 @@ func TestGetComplexEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.Value, &map[string]Widget{}); r != "" {
+	if r := cmp.Diff(resp.Value, map[string]Widget{}); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -198,7 +198,7 @@ func TestGetComplexItemEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.Value, &map[string]Widget{
+	if r := cmp.Diff(resp.Value, map[string]Widget{
 		"0": {Integer: to.Int32Ptr(1), String: to.StringPtr("2")},
 		"1": {},
 		"2": {Integer: to.Int32Ptr(5), String: to.StringPtr("6")},
@@ -215,7 +215,7 @@ func TestGetComplexItemNull(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.Value, &map[string]Widget{
+	if r := cmp.Diff(resp.Value, map[string]Widget{
 		"0": Widget{Integer: to.Int32Ptr(1), String: to.StringPtr("2")},
 		"1": nil,
 		"2": Widget{Integer: to.Int32Ptr(5), String: to.StringPtr("6")},
@@ -241,7 +241,7 @@ func TestGetComplexValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.Value, &map[string]Widget{
+	if r := cmp.Diff(resp.Value, map[string]Widget{
 		"0": {Integer: to.Int32Ptr(1), String: to.StringPtr("2")},
 		"1": {Integer: to.Int32Ptr(3), String: to.StringPtr("4")},
 		"2": {Integer: to.Int32Ptr(5), String: to.StringPtr("6")},
@@ -301,7 +301,7 @@ func TestGetDateTimeRFC1123Valid(t *testing.T) {
 	dt1, _ := time.Parse(time.RFC1123, "Fri, 01 Dec 2000 00:00:01 GMT")
 	dt2, _ := time.Parse(time.RFC1123, "Wed, 02 Jan 1980 00:11:35 GMT")
 	dt3, _ := time.Parse(time.RFC1123, "Wed, 12 Oct 1492 10:15:01 GMT")
-	if r := cmp.Diff(resp.Value, &map[string]time.Time{
+	if r := cmp.Diff(resp.Value, map[string]time.Time{
 		"0": dt1,
 		"1": dt2,
 		"2": dt3,
@@ -320,7 +320,7 @@ func TestGetDateTimeValid(t *testing.T) {
 	dt1, _ := time.Parse(time.RFC3339, "2000-12-01T00:00:01Z")
 	dt2, _ := time.Parse(time.RFC3339, "1980-01-02T00:11:35+01:00")
 	dt3, _ := time.Parse(time.RFC3339, "1492-10-12T10:15:01-08:00")
-	if r := cmp.Diff(resp.Value, &map[string]time.Time{
+	if r := cmp.Diff(resp.Value, map[string]time.Time{
 		"0": dt1,
 		"1": dt2,
 		"2": dt3,
@@ -339,7 +339,7 @@ func TestGetDateValid(t *testing.T) {
 	dt1 := time.Date(2000, 12, 01, 0, 0, 0, 0, time.UTC)
 	dt2 := time.Date(1980, 01, 02, 0, 0, 0, 0, time.UTC)
 	dt3 := time.Date(1492, 10, 12, 0, 0, 0, 0, time.UTC)
-	if r := cmp.Diff(resp.Value, &map[string]time.Time{
+	if r := cmp.Diff(resp.Value, map[string]time.Time{
 		"0": dt1,
 		"1": dt2,
 		"2": dt3,
@@ -355,7 +355,7 @@ func TestGetDictionaryEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.Value, &map[string]map[string]string{}); r != "" {
+	if r := cmp.Diff(resp.Value, map[string]map[string]string{}); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -367,7 +367,7 @@ func TestGetDictionaryItemEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.Value, &map[string]map[string]string{
+	if r := cmp.Diff(resp.Value, map[string]map[string]string{
 		"0": {
 			"1": "one",
 			"2": "two",
@@ -401,7 +401,7 @@ func TestGetDictionaryValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.Value, &map[string]map[string]string{
+	if r := cmp.Diff(resp.Value, map[string]map[string]string{
 		"0": {
 			"1": "one",
 			"2": "two",
@@ -454,7 +454,7 @@ func TestGetDoubleValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.Value, &map[string]float64{
+	if r := cmp.Diff(resp.Value, map[string]float64{
 		"0": 0,
 		"1": -0.01,
 		"2": -1.2e20,
@@ -470,7 +470,7 @@ func TestGetDurationValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.Value, &map[string]string{
+	if r := cmp.Diff(resp.Value, map[string]string{
 		"0": "P123DT22H14M12.011S",
 		"1": "P5DT1H",
 	}); r != "" {
@@ -485,7 +485,7 @@ func TestGetEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if len(*resp.Value) != 0 {
+	if len(resp.Value) != 0 {
 		t.Fatal("expected empty dictionary")
 	}
 }
@@ -497,7 +497,7 @@ func TestGetEmptyStringKey(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.Value, &map[string]string{"": "val1"}); r != "" {
+	if r := cmp.Diff(resp.Value, map[string]string{"": "val1"}); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -534,7 +534,7 @@ func TestGetFloatValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.Value, &map[string]float32{
+	if r := cmp.Diff(resp.Value, map[string]float32{
 		"0": 0,
 		"1": -0.01,
 		"2": -1.2e20,
@@ -575,7 +575,7 @@ func TestGetIntegerValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.Value, &map[string]int32{
+	if r := cmp.Diff(resp.Value, map[string]int32{
 		"0": 1,
 		"1": -1,
 		"2": 3,
@@ -629,7 +629,7 @@ func TestGetLongValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.Value, &map[string]int64{
+	if r := cmp.Diff(resp.Value, map[string]int64{
 		"0": 1,
 		"1": -1,
 		"2": 3,
@@ -683,7 +683,7 @@ func TestGetStringValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.Value, &map[string]string{
+	if r := cmp.Diff(resp.Value, map[string]string{
 		"0": "foo1",
 		"1": "foo2",
 		"2": "foo3",

@@ -361,7 +361,7 @@ type ArrayPutUUIDValidOptions struct {
 // BoolArrayResponse is the response envelope for operations that return a []bool type.
 type BoolArrayResponse struct {
 	// The array value [true, false, false, true]
-	BoolArray *[]bool
+	BoolArray []bool
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -370,7 +370,7 @@ type BoolArrayResponse struct {
 // ByteArrayArrayResponse is the response envelope for operations that return a [][]byte type.
 type ByteArrayArrayResponse struct {
 	// The array value [hex(FF FF FF FA), hex(01 02 03), hex (25, 29, 43)] with each elementencoded in base 64
-	ByteArrayArray *[][]byte
+	ByteArrayArray [][]byte
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -379,7 +379,7 @@ type ByteArrayArrayResponse struct {
 // Enum0ArrayResponse is the response envelope for operations that return a []Enum0 type.
 type Enum0ArrayResponse struct {
 	// The array value ['foo1', 'foo2', 'foo3']
-	Enum0Array *[]Enum0
+	Enum0Array []Enum0
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -408,7 +408,7 @@ func (e Error) Error() string {
 // Float32ArrayResponse is the response envelope for operations that return a []float32 type.
 type Float32ArrayResponse struct {
 	// The array value [0, -0.01, 1.2e20]
-	Float32Array *[]float32
+	Float32Array []float32
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -417,7 +417,7 @@ type Float32ArrayResponse struct {
 // Float64ArrayResponse is the response envelope for operations that return a []float64 type.
 type Float64ArrayResponse struct {
 	// The array value [0, -0.01, 1.2e20]
-	Float64Array *[]float64
+	Float64Array []float64
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -426,7 +426,7 @@ type Float64ArrayResponse struct {
 // FooEnumArrayResponse is the response envelope for operations that return a []FooEnum type.
 type FooEnumArrayResponse struct {
 	// The array value ['foo1', 'foo2', 'foo3']
-	FooEnumArray *[]FooEnum
+	FooEnumArray []FooEnum
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -435,7 +435,7 @@ type FooEnumArrayResponse struct {
 // Int32ArrayResponse is the response envelope for operations that return a []int32 type.
 type Int32ArrayResponse struct {
 	// The null Array value
-	Int32Array *[]int32
+	Int32Array []int32
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -444,7 +444,7 @@ type Int32ArrayResponse struct {
 // Int64ArrayResponse is the response envelope for operations that return a []int64 type.
 type Int64ArrayResponse struct {
 	// The array value [1, -1, 3, 300]
-	Int64Array *[]int64
+	Int64Array []int64
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -453,7 +453,7 @@ type Int64ArrayResponse struct {
 // MapOfStringArrayResponse is the response envelope for operations that return a []map[string]string type.
 type MapOfStringArrayResponse struct {
 	// An array of Dictionaries with value null
-	MapOfStringArray *[]map[string]string
+	MapOfStringArray []map[string]string
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -467,7 +467,7 @@ type Product struct {
 // ProductArrayResponse is the response envelope for operations that return a []Product type.
 type ProductArrayResponse struct {
 	// array of complex type with null value
-	ProductArray *[]Product
+	ProductArray []Product
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -479,7 +479,7 @@ type StringArrayArrayResponse struct {
 	RawResponse *http.Response
 
 	// a null array
-	StringArrayArray *[][]string
+	StringArrayArray [][]string
 }
 
 // StringArrayResponse is the response envelope for operations that return a []string type.
@@ -488,7 +488,7 @@ type StringArrayResponse struct {
 	RawResponse *http.Response
 
 	// The array value ['foo1', 'foo2', 'foo3']
-	StringArray *[]string
+	StringArray []string
 }
 
 // TimeArrayResponse is the response envelope for operations that return a []time.Time type.
@@ -497,5 +497,5 @@ type TimeArrayResponse struct {
 	RawResponse *http.Response
 
 	// The array value ['2000-12-01', '1980-01-02', '1492-10-12']
-	TimeArray *[]time.Time
+	TimeArray []time.Time
 }

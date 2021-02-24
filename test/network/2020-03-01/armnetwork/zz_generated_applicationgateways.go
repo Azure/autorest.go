@@ -622,7 +622,7 @@ func (client *ApplicationGatewaysClient) listAvailableRequestHeadersCreateReques
 
 // listAvailableRequestHeadersHandleResponse handles the ListAvailableRequestHeaders response.
 func (client *ApplicationGatewaysClient) listAvailableRequestHeadersHandleResponse(resp *azcore.Response) (StringArrayResponse, error) {
-	var val *[]string
+	var val []string
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return StringArrayResponse{}, err
 	}
@@ -672,7 +672,7 @@ func (client *ApplicationGatewaysClient) listAvailableResponseHeadersCreateReque
 
 // listAvailableResponseHeadersHandleResponse handles the ListAvailableResponseHeaders response.
 func (client *ApplicationGatewaysClient) listAvailableResponseHeadersHandleResponse(resp *azcore.Response) (StringArrayResponse, error) {
-	var val *[]string
+	var val []string
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return StringArrayResponse{}, err
 	}
@@ -722,7 +722,7 @@ func (client *ApplicationGatewaysClient) listAvailableServerVariablesCreateReque
 
 // listAvailableServerVariablesHandleResponse handles the ListAvailableServerVariables response.
 func (client *ApplicationGatewaysClient) listAvailableServerVariablesHandleResponse(resp *azcore.Response) (StringArrayResponse, error) {
-	var val *[]string
+	var val []string
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return StringArrayResponse{}, err
 	}
