@@ -707,7 +707,7 @@ function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op:
       const respProp = newRespProperty(propName, response.schema.language.go!.description, response.schema);
       if (respProp.language.go!.byValue === true) {
         // promote the byValue setting to the response type as it's needed during
-        // respone unmarshalling and we don't have access to the underlying property
+        // response unmarshalling and we don't have access to the underlying property
         response.schema.language.go!.responseType.byValue = true;
       }
       (<Array<Property>>response.schema.language.go!.properties).push(respProp);
@@ -863,9 +863,10 @@ function newProperty(name: string, desc: string, schema: Schema): Property {
 
 function newRespProperty(name: string, desc: string, schema: Schema): Property {
   const prop = newProperty(name, desc, schema);
-  if (schema.type === SchemaType.Any || schema.type === SchemaType.Array || schema.type === SchemaType.Dictionary) {
-    prop.language.go!.byValue = true;
-  } else if (isObjectSchema(schema) && schema.discriminator) {
+  if (schema.type === SchemaType.Any ||
+    schema.type === SchemaType.Array ||
+    schema.type === SchemaType.Dictionary ||
+    (isObjectSchema(schema) && schema.discriminator)) {
     prop.language.go!.byValue = true;
   }
   return prop;
