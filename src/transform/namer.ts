@@ -45,7 +45,7 @@ export async function namer(session: Session<CodeModel>) {
     // this looks like it already has data for this model.
     // send back an error
     session.error('bad flavor', ['go:1000', 'already-processed'], model.language.go);
-    throw Error('Go Namer Failed');
+    throw new Error('Go Namer Failed');
   }
 
   // copy all the .language.default data into .language.go

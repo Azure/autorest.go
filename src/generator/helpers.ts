@@ -315,6 +315,8 @@ export function formatStatusCode(statusCode: string): string {
       return 'http.StatusTemporaryRedirect';
     case '400':
       return 'http.StatusBadRequest';
+    case '403':
+      return 'http.StatusForbidden';
     case '404':
       return 'http.StatusNotFound';
     case '409':
@@ -326,6 +328,6 @@ export function formatStatusCode(statusCode: string): string {
     case '501':
       return 'http.StatusNotImplemented';
     default:
-      throw console.error(`unhandled status code ${statusCode}`);
+      throw new Error(`unhandled status code ${statusCode}`);
   }
 }

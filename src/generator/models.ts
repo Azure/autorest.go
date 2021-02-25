@@ -441,7 +441,7 @@ function generateUnmarshallerForResponseEnvelope(structDef: StructDef) {
     }
   }
   if (field === '' || type === '') {
-    throw console.error(`failed to the discriminated type field for response envelope ${structDef.Language.name}`);
+    throw new Error(`failed to the discriminated type field for response envelope ${structDef.Language.name}`);
   }
   unmarshaller += `\tt, err := unmarshal${type}(data)\n`;
   unmarshaller += '\tif err != nil {\n';
