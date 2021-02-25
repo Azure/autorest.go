@@ -1141,7 +1141,7 @@ func (client *LrOSClient) post202ListCreateRequest(ctx context.Context, options 
 
 // post202ListHandleResponse handles the Post202List response.
 func (client *LrOSClient) post202ListHandleResponse(resp *azcore.Response) (ProductArrayResponse, error) {
-	var val *[]Product
+	var val []Product
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return ProductArrayResponse{}, err
 	}

@@ -115,7 +115,7 @@ func (b *Banana) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 // BananaArrayResponse is the response envelope for operations that return a []Banana type.
 type BananaArrayResponse struct {
 	// Array of Banana
-	Bananas *[]Banana `xml:"banana"`
+	Bananas []Banana `xml:"banana"`
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -526,7 +526,7 @@ type SignedIDentifierArrayResponse struct {
 	RawResponse *http.Response
 
 	// a collection of signed identifiers
-	SignedIdentifiers *[]SignedIDentifier `xml:"SignedIdentifier"`
+	SignedIdentifiers []SignedIDentifier `xml:"SignedIdentifier"`
 }
 
 // A slide in a slideshow

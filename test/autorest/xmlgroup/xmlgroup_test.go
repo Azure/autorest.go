@@ -34,7 +34,7 @@ func TestGetACLs(t *testing.T) {
 	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
-	expected := &[]SignedIDentifier{
+	expected := []SignedIDentifier{
 		{
 			ID: to.StringPtr("MTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTI="),
 			AccessPolicy: &AccessPolicy{
@@ -169,7 +169,7 @@ func TestGetRootList(t *testing.T) {
 	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
-	expected := &[]Banana{
+	expected := []Banana{
 		{
 			Name:       to.StringPtr("Cavendish"),
 			Flavor:     to.StringPtr("Sweet"),
@@ -195,7 +195,7 @@ func TestGetRootListSingleItem(t *testing.T) {
 	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
-	expected := &[]Banana{
+	expected := []Banana{
 		{
 			Name:       to.StringPtr("Cavendish"),
 			Flavor:     to.StringPtr("Sweet"),

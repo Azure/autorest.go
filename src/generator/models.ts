@@ -169,7 +169,7 @@ class StructDef {
         tag = '';
       }
       let pointer = '*';
-      if (prop.schema.language.go!.byValue) {
+      if (prop.language.go!.byValue === true) {
         pointer = '';
       }
       text += `\t${prop.language.go!.name} ${pointer}${typeName}${tag}\n`;
@@ -186,7 +186,7 @@ class StructDef {
         text += `\t${comment(param.language.go!.description, '// ', undefined, commentLength)}\n`;
       }
       let pointer = '*';
-      if (param.required || param.schema.language.go!.byValue) {
+      if (param.required || param.language.go!.byValue === true) {
         pointer = '';
       }
       text += `\t${pascalCase(param.language.go!.name)} ${pointer}${param.schema.language.go!.name}\n`;
@@ -261,8 +261,9 @@ function generateStructs(objects?: ObjectSchema[]): StructDef[] {
                 if (p.language.go!.errorType) {
                   text += `\t\tmsg += fmt.Sprintf("${prop.language.go!.name}: %v\\n", *e.${prop.language.go!.name}.Error())\n`;
                 } else {
-                  text += `\t\t\tmsg += fmt.Sprintf("\\t${p.language.go!.name}: %v\\n", *e.${prop.language.go!.name}.${p.language.go!.name})\n`;                  }
-                  text += '\t\t}\n';
+                  text += `\t\t\tmsg += fmt.Sprintf("\\t${p.language.go!.name}: %v\\n", *e.${prop.language.go!.name}.${p.language.go!.name})\n`;
+                }
+                text += '\t\t}\n';
               }
               break;
             }

@@ -24,12 +24,12 @@ func main() {
 		panic(err)
 	}
 	notRun := []string{}
-	for key, val := range *vanillaReport.Value {
+	for key, val := range vanillaReport.Value {
 		if val <= 0 {
 			notRun = append(notRun, fmt.Sprintf("GENERAL: %s", key))
 		}
 	}
-	for key, val := range *azureReport.Value {
+	for key, val := range azureReport.Value {
 		if val <= 0 {
 			notRun = append(notRun, fmt.Sprintf("AZURE: %s", key))
 		}
@@ -38,6 +38,6 @@ func main() {
 	for _, s := range notRun {
 		fmt.Printf("Not Run: %s\n", s)
 	}
-	passed := len(*vanillaReport.Value) + len(*azureReport.Value) - len(notRun)
+	passed := len(vanillaReport.Value) + len(azureReport.Value) - len(notRun)
 	fmt.Printf("\nReport:	Passed(%d)  Not Run(%d)\n", passed, len(notRun))
 }

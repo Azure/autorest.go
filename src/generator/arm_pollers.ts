@@ -89,8 +89,15 @@ export async function generateARMPollers(session: Session<CodeModel>): Promise<s
       // for operations that do return a model add a final response method that handles the final get URL scenario
       finalResponseDeclaration = `FinalResponse(ctx context.Context) (${responseType}, error)`;
       finalResponse = `FinalResponse(ctx context.Context) (${responseType}, error) {`;
-      let respType = `respType := ${responseType}{${poller.respField}: &${poller.respType.language.go!.name}{}}`;
       let reference = '';
+      let respByRef = '&';
+      if (poller.respType.type === SchemaType.Array || poller.respType.type === SchemaType.Dictionary) {
+        // arrays and maps are returned by value
+        respByRef = '';
+        // but we need to pass them by reference to the unmarshaller
+        reference = '&';
+      }
+      let respType = `respType := ${responseType}{${poller.respField}: ${respByRef}${poller.respType.language.go!.name}{}}`;
       const isScalar = isScalarType(poller.respType);
       if (isScalar) {
         respType = `respType := ${responseType}{}\n`;

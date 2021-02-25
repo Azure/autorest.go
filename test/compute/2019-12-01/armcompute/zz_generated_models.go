@@ -4940,7 +4940,7 @@ type VirtualMachineExtensionImageArrayResponse struct {
 	RawResponse *http.Response
 
 	// Array of VirtualMachineExtensionImage
-	VirtualMachineExtensionImageArray *[]VirtualMachineExtensionImage
+	VirtualMachineExtensionImageArray []VirtualMachineExtensionImage
 }
 
 // Describes the properties of a Virtual Machine Extension Image.
@@ -5203,7 +5203,7 @@ type VirtualMachineImageResourceArrayResponse struct {
 	RawResponse *http.Response
 
 	// Array of VirtualMachineImageResource
-	VirtualMachineImageResourceArray *[]VirtualMachineImageResource
+	VirtualMachineImageResourceArray []VirtualMachineImageResource
 }
 
 // VirtualMachineImageResponse is the response envelope for operations that return a VirtualMachineImage type.

@@ -45,5 +45,5 @@ type MapOfInt32Response struct {
 	RawResponse *http.Response
 
 	// Dictionary of <integer>
-	Value *map[string]int32
+	Value map[string]int32
 }

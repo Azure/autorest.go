@@ -59,7 +59,7 @@ func (client *AutoRestReportServiceClient) getOptionalReportCreateRequest(ctx co
 
 // getOptionalReportHandleResponse handles the GetOptionalReport response.
 func (client *AutoRestReportServiceClient) getOptionalReportHandleResponse(resp *azcore.Response) (MapOfInt32Response, error) {
-	var val *map[string]int32
+	var val map[string]int32
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return MapOfInt32Response{}, err
 	}
@@ -110,7 +110,7 @@ func (client *AutoRestReportServiceClient) getReportCreateRequest(ctx context.Co
 
 // getReportHandleResponse handles the GetReport response.
 func (client *AutoRestReportServiceClient) getReportHandleResponse(resp *azcore.Response) (MapOfInt32Response, error) {
-	var val *map[string]int32
+	var val map[string]int32
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return MapOfInt32Response{}, err
 	}

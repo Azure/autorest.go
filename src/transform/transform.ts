@@ -84,7 +84,9 @@ async function process(session: Session<CodeModel>) {
       }
       const details = <Language>prop.schema.language.go;
       details.name = `${schemaTypeToGoType(session.model, prop.schema, true)}`;
-      if (prop.schema.type === SchemaType.DateTime) {
+      if (prop.schema.type === SchemaType.Any || (isObjectSchema(prop.schema) && prop.schema.discriminator)) {
+        prop.language.go!.byValue = true;
+      } else if (prop.schema.type === SchemaType.DateTime) {
         obj.language.go!.needsDateTimeMarshalling = true;
       } else if (prop.schema.type === SchemaType.Date) {
         obj.language.go!.needsDateMarshalling = true;
@@ -127,7 +129,6 @@ async function process(session: Session<CodeModel>) {
 function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, inBody: boolean): string {
   switch (schema.type) {
     case SchemaType.Any:
-      schema.language.go!.byValue = true;
       return 'interface{}';
     case SchemaType.Array:
       const arraySchema = <ArraySchema>schema;
@@ -601,9 +602,10 @@ function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op:
     return newProperty('RawResponse', 'RawResponse contains the underlying HTTP response.', newObject('http.Response', 'raw HTTP response'));
   }
   const createSuccessProp = function (): Property {
-    const successProp = newObject('bool', 'bool response');
+    const successSchema = newObject('bool', 'bool response');
+    const successProp = newProperty('Success', 'Success indicates if the operation succeeded or failed.', successSchema);
     successProp.language.go!.byValue = true;
-    return newProperty('Success', 'Success indicates if the operation succeeded or failed.', successProp);
+    return successProp;
   }
   // if this is an ARM spec and this is a HEAD method then return a BooleanResponse
   // response envelope instead of http.Response.  only do this if the operation doesn't model any
@@ -647,7 +649,7 @@ function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op:
           createRawResponseProp()
         ];
         for (const item of items(headers)) {
-          const prop = newProperty(item.key, item.value.description, item.value.schema);
+          const prop = newRespProperty(item.key, item.value.description, item.value.schema);
           prop.language.go!.fromHeader = item.value.header;
           (<Array<Property>>respEnv.language.go!.properties).push(prop);
         }
@@ -702,7 +704,13 @@ function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op:
         }
       }
       // the Widget response doesn't belong in the poller response envelope
-      (<Array<Property>>response.schema.language.go!.properties).push(newProperty(propName, response.schema.language.go!.description, response.schema));
+      const respProp = newRespProperty(propName, response.schema.language.go!.description, response.schema);
+      if (respProp.language.go!.byValue === true) {
+        // promote the byValue setting to the response type as it's needed during
+        // response unmarshalling and we don't have access to the underlying property
+        response.schema.language.go!.responseType.byValue = true;
+      }
+      (<Array<Property>>response.schema.language.go!.properties).push(respProp);
       if (!responseEnvelopeExists(codeModel, response.schema.language.go!.name)) {
         // add this response schema to the global list of response
         const responseEnvelopes = <Array<Schema>>codeModel.language.go!.responseEnvelopes;
@@ -727,7 +735,7 @@ function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op:
               }
             }
             if (!exists) {
-              const prop = newProperty(header.key, header.value.description, header.value.schema);
+              const prop = newRespProperty(header.key, header.value.description, header.value.schema);
               prop.language.go!.fromHeader = header.value.header;
               respProps.push(prop);
             }
@@ -850,6 +858,17 @@ function newProperty(name: string, desc: string, schema: Schema): Property {
     prop.isDiscriminator = true;
   }
   prop.language.go = prop.language.default;
+  return prop;
+}
+
+function newRespProperty(name: string, desc: string, schema: Schema): Property {
+  const prop = newProperty(name, desc, schema);
+  if (schema.type === SchemaType.Any ||
+    schema.type === SchemaType.Array ||
+    schema.type === SchemaType.Dictionary ||
+    (isObjectSchema(schema) && schema.discriminator)) {
+    prop.language.go!.byValue = true;
+  }
   return prop;
 }
 
@@ -1012,14 +1031,13 @@ function generateLROResponseEnvelope(response: Response, op: Operation, codeMode
   }
   // create PollUntilDone
   const pollerFunc = newObject(`func(ctx context.Context, frequency time.Duration) (${pollerResponse}, error)`, 'PollUntilDone');
-  pollerFunc.language.go!.byValue = true;
   const pollUntilDone = newProperty('PollUntilDone', 'PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received',
     pollerFunc);
   pollUntilDone.language.go!.byValue = true;
   // create Poller
   const pollerType = newObject(pollerTypeName, 'poller');
-  pollerType.language.go!.byValue = true;
   const poller = newProperty('Poller', 'Poller contains an initialized poller.', pollerType);
+  poller.language.go!.byValue = true;
   respTypeObject.language.go!.properties = [
     newProperty('RawResponse', 'RawResponse contains the underlying HTTP response.', newObject('http.Response', 'HTTP response')),
     pollUntilDone,

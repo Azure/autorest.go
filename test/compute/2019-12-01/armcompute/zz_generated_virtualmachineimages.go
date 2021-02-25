@@ -137,7 +137,7 @@ func (client *VirtualMachineImagesClient) listCreateRequest(ctx context.Context,
 
 // listHandleResponse handles the List response.
 func (client *VirtualMachineImagesClient) listHandleResponse(resp *azcore.Response) (VirtualMachineImageResourceArrayResponse, error) {
-	var val *[]VirtualMachineImageResource
+	var val []VirtualMachineImageResource
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return VirtualMachineImageResourceArrayResponse{}, err
 	}
@@ -192,7 +192,7 @@ func (client *VirtualMachineImagesClient) listOffersCreateRequest(ctx context.Co
 
 // listOffersHandleResponse handles the ListOffers response.
 func (client *VirtualMachineImagesClient) listOffersHandleResponse(resp *azcore.Response) (VirtualMachineImageResourceArrayResponse, error) {
-	var val *[]VirtualMachineImageResource
+	var val []VirtualMachineImageResource
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return VirtualMachineImageResourceArrayResponse{}, err
 	}
@@ -246,7 +246,7 @@ func (client *VirtualMachineImagesClient) listPublishersCreateRequest(ctx contex
 
 // listPublishersHandleResponse handles the ListPublishers response.
 func (client *VirtualMachineImagesClient) listPublishersHandleResponse(resp *azcore.Response) (VirtualMachineImageResourceArrayResponse, error) {
-	var val *[]VirtualMachineImageResource
+	var val []VirtualMachineImageResource
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return VirtualMachineImageResourceArrayResponse{}, err
 	}
@@ -302,7 +302,7 @@ func (client *VirtualMachineImagesClient) listSkUsCreateRequest(ctx context.Cont
 
 // listSkUsHandleResponse handles the ListSKUs response.
 func (client *VirtualMachineImagesClient) listSkUsHandleResponse(resp *azcore.Response) (VirtualMachineImageResourceArrayResponse, error) {
-	var val *[]VirtualMachineImageResource
+	var val []VirtualMachineImageResource
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return VirtualMachineImageResourceArrayResponse{}, err
 	}
