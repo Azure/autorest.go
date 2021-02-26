@@ -624,30 +624,7 @@ func (client PagingClient) GetMultiplePagesLROSender(req *http.Request) (future 
 	var azf azure.Future
 	azf, err = azure.NewFutureFromResponse(resp)
 	future.FutureAPI = &azf
-	future.Result = func(client PagingClient) (prp ProductResultPage, err error) {
-		var done bool
-		done, err = future.DoneWithContext(context.Background(), client)
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "paginggroup.PagingGetMultiplePagesLROFuture", "Result", future.Response(), "Polling failure")
-			return
-		}
-		if !done {
-			err = azure.NewAsyncOpIncompleteError("paginggroup.PagingGetMultiplePagesLROFuture")
-			return
-		}
-		sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-		prp.pr.Response.Response, err = future.GetResult(sender)
-		if prp.pr.Response.Response == nil && err == nil {
-			err = autorest.NewErrorWithError(err, "paginggroup.PagingGetMultiplePagesLROFuture", "Result", nil, "received nil response and error")
-		}
-		if err == nil && prp.pr.Response.Response.StatusCode != http.StatusNoContent {
-			prp, err = client.GetMultiplePagesLROResponder(prp.pr.Response.Response)
-			if err != nil {
-				err = autorest.NewErrorWithError(err, "paginggroup.PagingGetMultiplePagesLROFuture", "Result", prp.pr.Response.Response, "Failure responding to request")
-			}
-		}
-		return
-	}
+	future.Result = future.result
 	return
 }
 

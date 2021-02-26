@@ -485,3 +485,62 @@ if (modelType is DictionaryTypeGo dictionaryType && dictionaryType.SupportsAddit
         }
     </text>
 }
+
+@if (Model is FutureTypeGo futureType)
+{
+    var resultVar = futureType.ResultTypeName.ToVariableName();
+    var resultVarTarget = resultVar;
+    var futureTypeName = $"{Model.CodeModel.Namespace}.{Model.Name}";
+    if (futureType.ResultType is PageTypeGo ptg)
+    {
+        resultVarTarget = $"{resultVarTarget}.{ptg.ResultFieldName}";
+    }
+    <text>
+        // UnmarshalJSON is the custom unmarshaller for CreateFuture.
+        func (future *@Model.Name) UnmarshalJSON(body []byte) error {
+            var azFuture azure.Future
+            if err := json.Unmarshal(body, &azFuture); err != nil {
+                return err
+            }
+            future.FutureAPI = &azFuture
+            future.Result = future.result
+            return nil
+        }
+
+        // result is the default implementation for @(Model.Name).Result.
+        func (future *@Model.Name) result(client @futureType.ClientTypeName) (@resultVar @futureType.ResultTypeName, err error) {
+            var done bool
+            done, err = future.DoneWithContext(context.Background(), client)
+            if err != nil {
+                err = autorest.NewErrorWithError(err, "@futureTypeName", "Result", future.Response(), "Polling failure")
+                return
+            }
+            if !done {
+                err = azure.NewAsyncOpIncompleteError("@futureTypeName")
+                return
+            }
+        @if (futureType.IsDefaultReturnType)
+        {
+            // for default return types (i.e. autorest.Response)
+            // assign the raw HTTP response to the *http.Response field
+            @:@(resultVarTarget).Response = future.Response()
+        }
+        else
+        {
+            // modeled return types embed autorest.Resposne as an anonymous field
+            // so in order to assign the raw HTTP response to the *http.Response field
+            // in it we need an extra ".Response" :(
+            <text>
+            sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            if @(resultVarTarget).Response.Response, err = future.GetResult(sender); err == nil && @(resultVarTarget).Response.Response.StatusCode != http.StatusNoContent {
+            @resultVar, err = client.@(futureType.ResponderMethodName)(@(resultVarTarget).Response.Response)
+            if err != nil {
+            err = autorest.NewErrorWithError(err, "@futureTypeName", "Result", @(resultVarTarget).Response.Response, "Failure responding to request")
+            }
+            }
+    </text>
+}
+        return
+        }
+        </text>
+    }
