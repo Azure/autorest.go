@@ -179,7 +179,7 @@ function formatHeaderResponseValue(propName: string, header: string, schema: Sch
       }
       break;
     default:
-      throw console.error(`unsupported header type ${schema.type}`);
+      throw new Error(`unsupported header type ${schema.type}`);
   }
   text += `\t\tif err != nil {\n`;
   text += `\t\t\treturn ${zeroResp}, err\n`;
@@ -628,7 +628,7 @@ function generateResponseUnmarshaller(op: Operation, response: Response, imports
   let unmarshallerText = '';
   const zeroValue = getZeroReturnValue(op, 'handler');
   if (!isSchemaResponse(response)) {
-    throw console.error(`generateResponseUnmarshaller() called for operation that doesn't return a schema`);
+    throw new Error(`generateResponseUnmarshaller() called for operation that doesn't return a schema`);
   } else if (response.schema.type === SchemaType.DateTime || response.schema.type === SchemaType.UnixTime || response.schema.type === SchemaType.Date) {
     // use the designated time type for unmarshalling
     unmarshallerText += `\tvar aux *${response.schema.language.go!.internalTimeType}\n`;

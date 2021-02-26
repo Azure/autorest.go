@@ -362,7 +362,7 @@ function processOperationRequests(session: Session<CodeModel>) {
               paramGroup!.required = true;
             }
           } else if (dupe.schema !== param.schema) {
-            throw console.error(`parameter group ${paramGroupName} contains overlapping parameters with different schemas`);
+            throw new Error(`parameter group ${paramGroupName} contains overlapping parameters with different schemas`);
           }
           continue;
         }
@@ -748,6 +748,9 @@ function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op:
       if (codeModel.language.go!.pageableTypes === undefined) {
         codeModel.language.go!.pageableTypes = new Array<PagerInfo>();
       }
+      if (!isSchemaResponse(response)) {
+        throw new Error(`${op.language.go!.name}: pageable operation has no schema for response ${response.protocol.http?.statusCodes}`);
+      }
       const name = `${(<SchemaResponse>response).schema.language.go!.name}Pager`;
       // check to see if the pager has already been created
       let skipAddPager = false; // skipAdd allows not adding the pager to the list of pageable types and continue on to LRO check
@@ -789,7 +792,7 @@ function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op:
       if (op.language.go!.paging && op.language.go!.paging.member) {
         // implementing support for this is very complicated, and since
         // no services at present use this pattern avoid it for now
-        throw console.error(`${op.language.go!.name}: unsupported pager-poller that uses next page operation`);
+        throw new Error(`${op.language.go!.name}: unsupported pager-poller that uses next page operation`);
       }
       // create the poller response envelope
       generateLROResponseEnvelope(response, op, codeModel);
@@ -949,7 +952,7 @@ function recursiveTypeName(schema: Schema): string {
     case SchemaType.Uuid:
       return 'String';
     default:
-      throw console.error(`unhandled response schema type ${schema.type}`);
+      throw new Error(`unhandled response schema type ${schema.type}`);
   }
 }
 
@@ -1105,7 +1108,7 @@ function getEnumForDiscriminatorValue(discValue: string, enums: Array<ChoiceValu
       return enm.language.go!.name;
     }
   }
-  throw console.error(`failed to find discriminator enum value for ${discValue}`);
+  throw new Error(`failed to find discriminator enum value for ${discValue}`);
 }
 
 // convert comments that are in Markdown to html and then to plain text
