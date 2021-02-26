@@ -396,7 +396,7 @@ func (client *blobClient) changeLeaseHandleError(resp *azcore.Response) error {
 }
 
 // CopyFromURL - The Copy From URL operation copies a blob or an internet resource to a new blob. It will not return a response until the copy is complete.
-func (client *blobClient) CopyFromURL(ctx context.Context, copySource url.URL, blobCopyFromUrlOptions *BlobCopyFromURLOptions, sourceModifiedAccessConditions *SourceModifiedAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (BlobCopyFromURLResponse, error) {
+func (client *blobClient) CopyFromURL(ctx context.Context, copySource string, blobCopyFromUrlOptions *BlobCopyFromURLOptions, sourceModifiedAccessConditions *SourceModifiedAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (BlobCopyFromURLResponse, error) {
 	req, err := client.copyFromUrlCreateRequest(ctx, copySource, blobCopyFromUrlOptions, sourceModifiedAccessConditions, modifiedAccessConditions, leaseAccessConditions)
 	if err != nil {
 		return BlobCopyFromURLResponse{}, err
@@ -412,7 +412,7 @@ func (client *blobClient) CopyFromURL(ctx context.Context, copySource url.URL, b
 }
 
 // copyFromUrlCreateRequest creates the CopyFromURL request.
-func (client *blobClient) copyFromUrlCreateRequest(ctx context.Context, copySource url.URL, blobCopyFromUrlOptions *BlobCopyFromURLOptions, sourceModifiedAccessConditions *SourceModifiedAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (*azcore.Request, error) {
+func (client *blobClient) copyFromUrlCreateRequest(ctx context.Context, copySource string, blobCopyFromUrlOptions *BlobCopyFromURLOptions, sourceModifiedAccessConditions *SourceModifiedAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (*azcore.Request, error) {
 	req, err := azcore.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
 	if err != nil {
 		return nil, err
@@ -2150,7 +2150,7 @@ func (client *blobClient) setTierHandleError(resp *azcore.Response) error {
 }
 
 // StartCopyFromURL - The Start Copy From URL operation copies a blob or an internet resource to a new blob.
-func (client *blobClient) StartCopyFromURL(ctx context.Context, copySource url.URL, blobStartCopyFromUrlOptions *BlobStartCopyFromURLOptions, sourceModifiedAccessConditions *SourceModifiedAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (BlobStartCopyFromURLResponse, error) {
+func (client *blobClient) StartCopyFromURL(ctx context.Context, copySource string, blobStartCopyFromUrlOptions *BlobStartCopyFromURLOptions, sourceModifiedAccessConditions *SourceModifiedAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (BlobStartCopyFromURLResponse, error) {
 	req, err := client.startCopyFromUrlCreateRequest(ctx, copySource, blobStartCopyFromUrlOptions, sourceModifiedAccessConditions, modifiedAccessConditions, leaseAccessConditions)
 	if err != nil {
 		return BlobStartCopyFromURLResponse{}, err
@@ -2166,7 +2166,7 @@ func (client *blobClient) StartCopyFromURL(ctx context.Context, copySource url.U
 }
 
 // startCopyFromUrlCreateRequest creates the StartCopyFromURL request.
-func (client *blobClient) startCopyFromUrlCreateRequest(ctx context.Context, copySource url.URL, blobStartCopyFromUrlOptions *BlobStartCopyFromURLOptions, sourceModifiedAccessConditions *SourceModifiedAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (*azcore.Request, error) {
+func (client *blobClient) startCopyFromUrlCreateRequest(ctx context.Context, copySource string, blobStartCopyFromUrlOptions *BlobStartCopyFromURLOptions, sourceModifiedAccessConditions *SourceModifiedAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (*azcore.Request, error) {
 	req, err := azcore.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
 	if err != nil {
 		return nil, err

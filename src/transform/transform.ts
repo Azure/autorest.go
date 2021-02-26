@@ -184,9 +184,8 @@ function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, inBody: boolea
     case SchemaType.Duration:
     case SchemaType.String:
     case SchemaType.Uuid:
-      return 'string';
     case SchemaType.Uri:
-      return 'url.URL';
+      return 'string';
     case SchemaType.Date:
       if (inBody) {
         codeModel.language.go!.hasDate = true;

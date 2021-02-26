@@ -2817,7 +2817,7 @@ type PageBlobCreateResponse struct {
 type PageBlobGetPageRangesDiffOptions struct {
 	// Optional. This header is only supported in service versions 2019-04-19 and after and specifies the URL of a previous snapshot of the target blob. The
 	// response will only contain pages that were changed between the target blob and its previous snapshot.
-	PrevSnapshotUrl *url.URL
+	PrevSnapshotUrl *string
 	// Optional in version 2015-07-08 and newer. The prevsnapshot parameter is a DateTime value that specifies that the response will contain only pages that
 	// were changed between target blob and previous snapshot. Changed pages include both updated and cleared pages. The target blob may be a snapshot, as long
 	// as the snapshot specified by prevsnapshot is the older of the two. Note that incremental snapshots are currently supported only for blobs created on

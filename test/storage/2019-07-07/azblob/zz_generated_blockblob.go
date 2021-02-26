@@ -409,7 +409,7 @@ func (client *blockBlobClient) stageBlockHandleError(resp *azcore.Response) erro
 }
 
 // StageBlockFromURL - The Stage Block operation creates a new block to be committed as part of a blob where the contents are read from a URL.
-func (client *blockBlobClient) StageBlockFromURL(ctx context.Context, blockId string, contentLength int64, sourceUrl url.URL, blockBlobStageBlockFromUrlOptions *BlockBlobStageBlockFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (BlockBlobStageBlockFromURLResponse, error) {
+func (client *blockBlobClient) StageBlockFromURL(ctx context.Context, blockId string, contentLength int64, sourceUrl string, blockBlobStageBlockFromUrlOptions *BlockBlobStageBlockFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (BlockBlobStageBlockFromURLResponse, error) {
 	req, err := client.stageBlockFromUrlCreateRequest(ctx, blockId, contentLength, sourceUrl, blockBlobStageBlockFromUrlOptions, cpkInfo, cpkScopeInfo, leaseAccessConditions, sourceModifiedAccessConditions)
 	if err != nil {
 		return BlockBlobStageBlockFromURLResponse{}, err
@@ -425,7 +425,7 @@ func (client *blockBlobClient) StageBlockFromURL(ctx context.Context, blockId st
 }
 
 // stageBlockFromUrlCreateRequest creates the StageBlockFromURL request.
-func (client *blockBlobClient) stageBlockFromUrlCreateRequest(ctx context.Context, blockId string, contentLength int64, sourceUrl url.URL, blockBlobStageBlockFromUrlOptions *BlockBlobStageBlockFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*azcore.Request, error) {
+func (client *blockBlobClient) stageBlockFromUrlCreateRequest(ctx context.Context, blockId string, contentLength int64, sourceUrl string, blockBlobStageBlockFromUrlOptions *BlockBlobStageBlockFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*azcore.Request, error) {
 	req, err := azcore.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
 	if err != nil {
 		return nil, err

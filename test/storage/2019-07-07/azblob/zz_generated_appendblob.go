@@ -182,7 +182,7 @@ func (client *appendBlobClient) appendBlockHandleError(resp *azcore.Response) er
 // AppendBlockFromURL - The Append Block operation commits a new block of data to the end of an existing append blob where the contents are read from a
 // source url. The Append Block operation is permitted only if the blob was
 // created with x-ms-blob-type set to AppendBlob. Append Block is supported only on version 2015-02-21 version or later.
-func (client *appendBlobClient) AppendBlockFromURL(ctx context.Context, sourceUrl url.URL, contentLength int64, appendBlobAppendBlockFromUrlOptions *AppendBlobAppendBlockFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, appendPositionAccessConditions *AppendPositionAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (AppendBlobAppendBlockFromURLResponse, error) {
+func (client *appendBlobClient) AppendBlockFromURL(ctx context.Context, sourceUrl string, contentLength int64, appendBlobAppendBlockFromUrlOptions *AppendBlobAppendBlockFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, appendPositionAccessConditions *AppendPositionAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (AppendBlobAppendBlockFromURLResponse, error) {
 	req, err := client.appendBlockFromUrlCreateRequest(ctx, sourceUrl, contentLength, appendBlobAppendBlockFromUrlOptions, cpkInfo, cpkScopeInfo, leaseAccessConditions, appendPositionAccessConditions, modifiedAccessConditions, sourceModifiedAccessConditions)
 	if err != nil {
 		return AppendBlobAppendBlockFromURLResponse{}, err
@@ -198,7 +198,7 @@ func (client *appendBlobClient) AppendBlockFromURL(ctx context.Context, sourceUr
 }
 
 // appendBlockFromUrlCreateRequest creates the AppendBlockFromURL request.
-func (client *appendBlobClient) appendBlockFromUrlCreateRequest(ctx context.Context, sourceUrl url.URL, contentLength int64, appendBlobAppendBlockFromUrlOptions *AppendBlobAppendBlockFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, appendPositionAccessConditions *AppendPositionAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*azcore.Request, error) {
+func (client *appendBlobClient) appendBlockFromUrlCreateRequest(ctx context.Context, sourceUrl string, contentLength int64, appendBlobAppendBlockFromUrlOptions *AppendBlobAppendBlockFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, appendPositionAccessConditions *AppendPositionAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*azcore.Request, error) {
 	req, err := azcore.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
 	if err != nil {
 		return nil, err

@@ -166,7 +166,7 @@ func (client *pageBlobClient) clearPagesHandleError(resp *azcore.Response) error
 // snapshot are transferred to the destination. The copied snapshots are complete copies of the original snapshot and can be read or copied from as usual.
 // This API is supported since REST version
 // 2016-05-31.
-func (client *pageBlobClient) CopyIncremental(ctx context.Context, copySource url.URL, pageBlobCopyIncrementalOptions *PageBlobCopyIncrementalOptions, modifiedAccessConditions *ModifiedAccessConditions) (PageBlobCopyIncrementalResponse, error) {
+func (client *pageBlobClient) CopyIncremental(ctx context.Context, copySource string, pageBlobCopyIncrementalOptions *PageBlobCopyIncrementalOptions, modifiedAccessConditions *ModifiedAccessConditions) (PageBlobCopyIncrementalResponse, error) {
 	req, err := client.copyIncrementalCreateRequest(ctx, copySource, pageBlobCopyIncrementalOptions, modifiedAccessConditions)
 	if err != nil {
 		return PageBlobCopyIncrementalResponse{}, err
@@ -182,7 +182,7 @@ func (client *pageBlobClient) CopyIncremental(ctx context.Context, copySource ur
 }
 
 // copyIncrementalCreateRequest creates the CopyIncremental request.
-func (client *pageBlobClient) copyIncrementalCreateRequest(ctx context.Context, copySource url.URL, pageBlobCopyIncrementalOptions *PageBlobCopyIncrementalOptions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
+func (client *pageBlobClient) copyIncrementalCreateRequest(ctx context.Context, copySource string, pageBlobCopyIncrementalOptions *PageBlobCopyIncrementalOptions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
 	req, err := azcore.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
 	if err != nil {
 		return nil, err
@@ -1022,7 +1022,7 @@ func (client *pageBlobClient) uploadPagesHandleError(resp *azcore.Response) erro
 }
 
 // UploadPagesFromURL - The Upload Pages operation writes a range of pages to a page blob where the contents are read from a URL
-func (client *pageBlobClient) UploadPagesFromURL(ctx context.Context, sourceUrl url.URL, sourceRange string, contentLength int64, rangeParameter string, pageBlobUploadPagesFromUrlOptions *PageBlobUploadPagesFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, sequenceNumberAccessConditions *SequenceNumberAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (PageBlobUploadPagesFromURLResponse, error) {
+func (client *pageBlobClient) UploadPagesFromURL(ctx context.Context, sourceUrl string, sourceRange string, contentLength int64, rangeParameter string, pageBlobUploadPagesFromUrlOptions *PageBlobUploadPagesFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, sequenceNumberAccessConditions *SequenceNumberAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (PageBlobUploadPagesFromURLResponse, error) {
 	req, err := client.uploadPagesFromUrlCreateRequest(ctx, sourceUrl, sourceRange, contentLength, rangeParameter, pageBlobUploadPagesFromUrlOptions, cpkInfo, cpkScopeInfo, leaseAccessConditions, sequenceNumberAccessConditions, modifiedAccessConditions, sourceModifiedAccessConditions)
 	if err != nil {
 		return PageBlobUploadPagesFromURLResponse{}, err
@@ -1038,7 +1038,7 @@ func (client *pageBlobClient) UploadPagesFromURL(ctx context.Context, sourceUrl 
 }
 
 // uploadPagesFromUrlCreateRequest creates the UploadPagesFromURL request.
-func (client *pageBlobClient) uploadPagesFromUrlCreateRequest(ctx context.Context, sourceUrl url.URL, sourceRange string, contentLength int64, rangeParameter string, pageBlobUploadPagesFromUrlOptions *PageBlobUploadPagesFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, sequenceNumberAccessConditions *SequenceNumberAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*azcore.Request, error) {
+func (client *pageBlobClient) uploadPagesFromUrlCreateRequest(ctx context.Context, sourceUrl string, sourceRange string, contentLength int64, rangeParameter string, pageBlobUploadPagesFromUrlOptions *PageBlobUploadPagesFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, sequenceNumberAccessConditions *SequenceNumberAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*azcore.Request, error) {
 	req, err := azcore.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
 	if err != nil {
 		return nil, err
