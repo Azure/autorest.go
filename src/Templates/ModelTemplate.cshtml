@@ -85,7 +85,7 @@
         if err != nil {
         return nil, err
         }
-        @(Model.Name.FixedValue.ToVariableName())Array[index] = @(Model.Name.FixedValue.ToVariableName())
+        @(EmptyLine)Array[index] = @(Model.Name.FixedValue.ToVariableName())
         }
         return @(Model.Name.FixedValue.ToVariableName())Array, nil
         }
@@ -486,12 +486,12 @@ if (modelType is DictionaryTypeGo dictionaryType && dictionaryType.SupportsAddit
     </text>
 }
 
-@if (Model is FutureTypeGo ftg)
+@if (Model is FutureTypeGo futureType)
 {
-    var resultVar = ftg.ResultTypeName.ToVariableName();
+    var resultVar = futureType.ResultTypeName.ToVariableName();
     var resultVarTarget = resultVar;
     var futureTypeName = $"{Model.CodeModel.Namespace}.{Model.Name}";
-    if (ftg.ResultType is PageTypeGo ptg)
+    if (futureType.ResultType is PageTypeGo ptg)
     {
         resultVarTarget = $"{resultVarTarget}.{ptg.ResultFieldName}";
     }
@@ -502,13 +502,13 @@ if (modelType is DictionaryTypeGo dictionaryType && dictionaryType.SupportsAddit
             if err := json.Unmarshal(body, &azFuture); err != nil {
                 return err
             }
-            cf.FutureAPI = &azFuture
-            cf.Result = cf.result
+            future.FutureAPI = &azFuture
+            future.Result = cf.result
             return nil
         }
 
         // result is the default implementation for @(Model.Name).Result.
-        func (future *@Model.Name) result(client @ftg.ClientTypeName) (@resultVar @ftg.ResultTypeName, err error) {
+        func (future *@Model.Name) result(client @futureType.ClientTypeName) (@resultVar @futureType.ResultTypeName, err error) {
             var done bool
             done, err = future.DoneWithContext(context.Background(), client)
             if err != nil {
@@ -519,7 +519,7 @@ if (modelType is DictionaryTypeGo dictionaryType && dictionaryType.SupportsAddit
                 err = azure.NewAsyncOpIncompleteError("@futureTypeName")
                 return
             }
-        @if (ftg.IsDefaultReturnType)
+        @if (futureType.IsDefaultReturnType)
         {
             // for default return types (i.e. autorest.Response)
             // assign the raw HTTP response to the *http.Response field
@@ -533,7 +533,7 @@ if (modelType is DictionaryTypeGo dictionaryType && dictionaryType.SupportsAddit
             <text>
             sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
             if @(resultVarTarget).Response.Response, err = future.GetResult(sender); err == nil && @(resultVarTarget).Response.Response.StatusCode != http.StatusNoContent {
-            @resultVar, err = client.@(ftg.ResponderMethodName)(@(resultVarTarget).Response.Response)
+            @resultVar, err = client.@(futureType.ResponderMethodName)(@(resultVarTarget).Response.Response)
             if err != nil {
             err = autorest.NewErrorWithError(err, "@futureTypeName", "Result", @(resultVarTarget).Response.Response, "Failure responding to request")
             }

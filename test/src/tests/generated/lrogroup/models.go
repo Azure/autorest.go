@@ -7,9 +7,11 @@ package lrogroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"context"
 	"encoding/json"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
+	"net/http"
 )
 
 // The package's fully qualified name.
@@ -36,8 +38,8 @@ func (future *LRORetrysDelete202Retry200Future) UnmarshalJSON(body []byte) error
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -72,8 +74,8 @@ func (future *LRORetrysDeleteAsyncRelativeRetrySucceededFuture) UnmarshalJSON(bo
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -108,8 +110,8 @@ func (future *LRORetrysDeleteProvisioning202Accepted200SucceededFuture) Unmarsha
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -150,8 +152,8 @@ func (future *LRORetrysPost202Retry200Future) UnmarshalJSON(body []byte) error {
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -186,8 +188,8 @@ func (future *LRORetrysPostAsyncRelativeRetrySucceededFuture) UnmarshalJSON(body
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -222,8 +224,8 @@ func (future *LRORetrysPut201CreatingSucceeded200Future) UnmarshalJSON(body []by
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -264,8 +266,8 @@ func (future *LRORetrysPutAsyncRelativeRetrySucceededFuture) UnmarshalJSON(body 
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -306,8 +308,8 @@ func (future *LROSADsDelete202NonRetry400Future) UnmarshalJSON(body []byte) erro
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -342,8 +344,8 @@ func (future *LROSADsDelete202RetryInvalidHeaderFuture) UnmarshalJSON(body []byt
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -378,8 +380,8 @@ func (future *LROSADsDelete204SucceededFuture) UnmarshalJSON(body []byte) error 
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -414,8 +416,8 @@ func (future *LROSADsDeleteAsyncRelativeRetry400Future) UnmarshalJSON(body []byt
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -450,8 +452,8 @@ func (future *LROSADsDeleteAsyncRelativeRetryInvalidHeaderFuture) UnmarshalJSON(
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -486,8 +488,8 @@ func (future *LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingFuture) Unmarshal
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -522,8 +524,8 @@ func (future *LROSADsDeleteAsyncRelativeRetryNoStatusFuture) UnmarshalJSON(body 
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -558,8 +560,8 @@ func (future *LROSADsDeleteNonRetry400Future) UnmarshalJSON(body []byte) error {
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -594,8 +596,8 @@ func (future *LROSADsPost202NoLocationFuture) UnmarshalJSON(body []byte) error {
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -630,8 +632,8 @@ func (future *LROSADsPost202NonRetry400Future) UnmarshalJSON(body []byte) error 
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -666,8 +668,8 @@ func (future *LROSADsPost202RetryInvalidHeaderFuture) UnmarshalJSON(body []byte)
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -702,8 +704,8 @@ func (future *LROSADsPostAsyncRelativeRetry400Future) UnmarshalJSON(body []byte)
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -738,8 +740,8 @@ func (future *LROSADsPostAsyncRelativeRetryInvalidHeaderFuture) UnmarshalJSON(bo
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -774,8 +776,8 @@ func (future *LROSADsPostAsyncRelativeRetryInvalidJSONPollingFuture) UnmarshalJS
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -810,8 +812,8 @@ func (future *LROSADsPostAsyncRelativeRetryNoPayloadFuture) UnmarshalJSON(body [
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -846,8 +848,8 @@ func (future *LROSADsPostNonRetry400Future) UnmarshalJSON(body []byte) error {
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -882,8 +884,8 @@ func (future *LROSADsPut200InvalidJSONFuture) UnmarshalJSON(body []byte) error {
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -924,8 +926,8 @@ func (future *LROSADsPutAsyncRelativeRetry400Future) UnmarshalJSON(body []byte) 
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -966,8 +968,8 @@ func (future *LROSADsPutAsyncRelativeRetryInvalidHeaderFuture) UnmarshalJSON(bod
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -1008,8 +1010,8 @@ func (future *LROSADsPutAsyncRelativeRetryInvalidJSONPollingFuture) UnmarshalJSO
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -1050,8 +1052,8 @@ func (future *LROSADsPutAsyncRelativeRetryNoStatusFuture) UnmarshalJSON(body []b
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -1092,8 +1094,8 @@ func (future *LROSADsPutAsyncRelativeRetryNoStatusPayloadFuture) UnmarshalJSON(b
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -1134,8 +1136,8 @@ func (future *LROSADsPutError201NoProvisioningStatePayloadFuture) UnmarshalJSON(
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -1176,8 +1178,8 @@ func (future *LROSADsPutNonRetry201Creating400Future) UnmarshalJSON(body []byte)
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -1218,8 +1220,8 @@ func (future *LROSADsPutNonRetry201Creating400InvalidJSONFuture) UnmarshalJSON(b
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -1260,8 +1262,8 @@ func (future *LROSADsPutNonRetry400Future) UnmarshalJSON(body []byte) error {
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -1302,8 +1304,8 @@ func (future *LROsCustomHeaderPost202Retry200Future) UnmarshalJSON(body []byte) 
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -1338,8 +1340,8 @@ func (future *LROsCustomHeaderPostAsyncRetrySucceededFuture) UnmarshalJSON(body 
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -1374,8 +1376,8 @@ func (future *LROsCustomHeaderPut201CreatingSucceeded200Future) UnmarshalJSON(bo
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -1416,8 +1418,8 @@ func (future *LROsCustomHeaderPutAsyncRetrySucceededFuture) UnmarshalJSON(body [
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -1458,8 +1460,8 @@ func (future *LROsDelete202NoRetry204Future) UnmarshalJSON(body []byte) error {
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -1500,8 +1502,8 @@ func (future *LROsDelete202Retry200Future) UnmarshalJSON(body []byte) error {
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -1542,8 +1544,8 @@ func (future *LROsDelete204SucceededFuture) UnmarshalJSON(body []byte) error {
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -1578,8 +1580,8 @@ func (future *LROsDeleteAsyncNoHeaderInRetryFuture) UnmarshalJSON(body []byte) e
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -1614,8 +1616,8 @@ func (future *LROsDeleteAsyncNoRetrySucceededFuture) UnmarshalJSON(body []byte) 
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -1650,8 +1652,8 @@ func (future *LROsDeleteAsyncRetrycanceledFuture) UnmarshalJSON(body []byte) err
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -1686,8 +1688,8 @@ func (future *LROsDeleteAsyncRetryFailedFuture) UnmarshalJSON(body []byte) error
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -1722,8 +1724,8 @@ func (future *LROsDeleteAsyncRetrySucceededFuture) UnmarshalJSON(body []byte) er
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -1758,8 +1760,8 @@ func (future *LROsDeleteNoHeaderInRetryFuture) UnmarshalJSON(body []byte) error 
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -1794,8 +1796,8 @@ func (future *LROsDeleteProvisioning202Accepted200SucceededFuture) UnmarshalJSON
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -1836,8 +1838,8 @@ func (future *LROsDeleteProvisioning202Deletingcanceled200Future) UnmarshalJSON(
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -1878,8 +1880,8 @@ func (future *LROsDeleteProvisioning202DeletingFailed200Future) UnmarshalJSON(bo
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -1920,8 +1922,8 @@ func (future *LROsPost200WithPayloadFuture) UnmarshalJSON(body []byte) error {
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -1962,8 +1964,8 @@ func (future *LROsPost202NoRetry204Future) UnmarshalJSON(body []byte) error {
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -2004,8 +2006,8 @@ func (future *LROsPost202Retry200Future) UnmarshalJSON(body []byte) error {
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -2040,8 +2042,8 @@ func (future *LROsPostAsyncNoRetrySucceededFuture) UnmarshalJSON(body []byte) er
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -2082,8 +2084,8 @@ func (future *LROsPostAsyncRetrycanceledFuture) UnmarshalJSON(body []byte) error
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -2118,8 +2120,8 @@ func (future *LROsPostAsyncRetryFailedFuture) UnmarshalJSON(body []byte) error {
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -2154,8 +2156,8 @@ func (future *LROsPostAsyncRetrySucceededFuture) UnmarshalJSON(body []byte) erro
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -2196,8 +2198,8 @@ func (future *LROsPostDoubleHeadersFinalAzureHeaderGetDefaultFuture) UnmarshalJS
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -2238,8 +2240,8 @@ func (future *LROsPostDoubleHeadersFinalAzureHeaderGetFuture) UnmarshalJSON(body
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -2280,8 +2282,8 @@ func (future *LROsPostDoubleHeadersFinalLocationGetFuture) UnmarshalJSON(body []
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -2322,8 +2324,8 @@ func (future *LROsPut200Acceptedcanceled200Future) UnmarshalJSON(body []byte) er
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -2364,8 +2366,8 @@ func (future *LROsPut200SucceededFuture) UnmarshalJSON(body []byte) error {
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -2406,8 +2408,8 @@ func (future *LROsPut200SucceededNoStateFuture) UnmarshalJSON(body []byte) error
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -2448,8 +2450,8 @@ func (future *LROsPut200UpdatingSucceeded204Future) UnmarshalJSON(body []byte) e
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -2490,8 +2492,8 @@ func (future *LROsPut201CreatingFailed200Future) UnmarshalJSON(body []byte) erro
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -2532,8 +2534,8 @@ func (future *LROsPut201CreatingSucceeded200Future) UnmarshalJSON(body []byte) e
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -2574,8 +2576,8 @@ func (future *LROsPut202Retry200Future) UnmarshalJSON(body []byte) error {
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -2616,8 +2618,8 @@ func (future *LROsPutAsyncNoHeaderInRetryFuture) UnmarshalJSON(body []byte) erro
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -2658,8 +2660,8 @@ func (future *LROsPutAsyncNonResourceFuture) UnmarshalJSON(body []byte) error {
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -2700,8 +2702,8 @@ func (future *LROsPutAsyncNoRetrycanceledFuture) UnmarshalJSON(body []byte) erro
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -2742,8 +2744,8 @@ func (future *LROsPutAsyncNoRetrySucceededFuture) UnmarshalJSON(body []byte) err
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -2784,8 +2786,8 @@ func (future *LROsPutAsyncRetryFailedFuture) UnmarshalJSON(body []byte) error {
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -2826,8 +2828,8 @@ func (future *LROsPutAsyncRetrySucceededFuture) UnmarshalJSON(body []byte) error
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -2868,8 +2870,8 @@ func (future *LROsPutAsyncSubResourceFuture) UnmarshalJSON(body []byte) error {
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -2910,8 +2912,8 @@ func (future *LROsPutNoHeaderInRetryFuture) UnmarshalJSON(body []byte) error {
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -2952,8 +2954,8 @@ func (future *LROsPutNonResourceFuture) UnmarshalJSON(body []byte) error {
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -2994,8 +2996,8 @@ func (future *LROsPutSubResourceFuture) UnmarshalJSON(body []byte) error {
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 

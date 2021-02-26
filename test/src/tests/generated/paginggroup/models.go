@@ -8,6 +8,7 @@ package paginggroup
 
 import (
 	"context"
+	"encoding/json"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/autorest/to"
@@ -196,8 +197,8 @@ func (future *PagingGetMultiplePagesLROAllFuture) UnmarshalJSON(body []byte) err
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 
@@ -238,8 +239,8 @@ func (future *PagingGetMultiplePagesLROFuture) UnmarshalJSON(body []byte) error 
 	if err := json.Unmarshal(body, &azFuture); err != nil {
 		return err
 	}
-	cf.FutureAPI = &azFuture
-	cf.Result = cf.result
+	future.FutureAPI = &azFuture
+	future.Result = cf.result
 	return nil
 }
 

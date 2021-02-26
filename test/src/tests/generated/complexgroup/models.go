@@ -296,7 +296,8 @@ func unmarshalBasicDotFishArray(body []byte) ([]BasicDotFish, error) {
 		if err != nil {
 			return nil, err
 		}
-		dfArray[index] = df
+
+		Array[index] = df
 	}
 	return dfArray, nil
 }
@@ -541,7 +542,8 @@ func unmarshalBasicFishArray(body []byte) ([]BasicFish, error) {
 		if err != nil {
 			return nil, err
 		}
-		fArray[index] = f
+
+		Array[index] = f
 	}
 	return fArray, nil
 }
@@ -936,7 +938,8 @@ func unmarshalBasicMyBaseTypeArray(body []byte) ([]BasicMyBaseType, error) {
 		if err != nil {
 			return nil, err
 		}
-		mbtArray[index] = mbt
+
+		Array[index] = mbt
 	}
 	return mbtArray, nil
 }
@@ -1198,7 +1201,8 @@ func unmarshalBasicSalmonArray(body []byte) ([]BasicSalmon, error) {
 		if err != nil {
 			return nil, err
 		}
-		sArray[index] = s
+
+		Array[index] = s
 	}
 	return sArray, nil
 }
@@ -1589,7 +1593,8 @@ func unmarshalBasicSharkArray(body []byte) ([]BasicShark, error) {
 		if err != nil {
 			return nil, err
 		}
-		sArray[index] = s
+
+		Array[index] = s
 	}
 	return sArray, nil
 }
