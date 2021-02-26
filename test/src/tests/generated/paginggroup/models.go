@@ -190,6 +190,39 @@ type PagingGetMultiplePagesLROAllFuture struct {
 	Result func(PagingClient) (ProductResultPage, error)
 }
 
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *PagingGetMultiplePagesLROAllFuture) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for PagingGetMultiplePagesLROAllFuture.Result.
+func (future *PagingGetMultiplePagesLROAllFuture) result(client PagingClient) (prp ProductResultPage, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "paginggroup.PagingGetMultiplePagesLROAllFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("paginggroup.PagingGetMultiplePagesLROAllFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if prp.pr.Response.Response, err = future.GetResult(sender); err == nil && prp.pr.Response.Response.StatusCode != http.StatusNoContent {
+		prp, err = client.GetMultiplePagesLROResponder(prp.pr.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "paginggroup.PagingGetMultiplePagesLROAllFuture", "Result", prp.pr.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
 // PagingGetMultiplePagesLROFuture an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type PagingGetMultiplePagesLROFuture struct {
@@ -197,6 +230,39 @@ type PagingGetMultiplePagesLROFuture struct {
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
 	Result func(PagingClient) (ProductResultPage, error)
+}
+
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *PagingGetMultiplePagesLROFuture) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for PagingGetMultiplePagesLROFuture.Result.
+func (future *PagingGetMultiplePagesLROFuture) result(client PagingClient) (prp ProductResultPage, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "paginggroup.PagingGetMultiplePagesLROFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("paginggroup.PagingGetMultiplePagesLROFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if prp.pr.Response.Response, err = future.GetResult(sender); err == nil && prp.pr.Response.Response.StatusCode != http.StatusNoContent {
+		prp, err = client.GetMultiplePagesLROResponder(prp.pr.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "paginggroup.PagingGetMultiplePagesLROFuture", "Result", prp.pr.Response.Response, "Failure responding to request")
+		}
+	}
+	return
 }
 
 // Product ...

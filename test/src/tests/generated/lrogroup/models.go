@@ -30,6 +30,33 @@ type LRORetrysDelete202Retry200Future struct {
 	Result func(LRORetrysClient) (autorest.Response, error)
 }
 
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LRORetrysDelete202Retry200Future) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LRORetrysDelete202Retry200Future.Result.
+func (future *LRORetrysDelete202Retry200Future) result(client LRORetrysClient) (ar autorest.Response, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysDelete202Retry200Future", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LRORetrysDelete202Retry200Future")
+		return
+	}
+	ar.Response = future.Response()
+	return
+}
+
 // LRORetrysDeleteAsyncRelativeRetrySucceededFuture an abstraction for monitoring and retrieving the
 // results of a long-running operation.
 type LRORetrysDeleteAsyncRelativeRetrySucceededFuture struct {
@@ -37,6 +64,33 @@ type LRORetrysDeleteAsyncRelativeRetrySucceededFuture struct {
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
 	Result func(LRORetrysClient) (autorest.Response, error)
+}
+
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LRORetrysDeleteAsyncRelativeRetrySucceededFuture) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LRORetrysDeleteAsyncRelativeRetrySucceededFuture.Result.
+func (future *LRORetrysDeleteAsyncRelativeRetrySucceededFuture) result(client LRORetrysClient) (ar autorest.Response, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysDeleteAsyncRelativeRetrySucceededFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LRORetrysDeleteAsyncRelativeRetrySucceededFuture")
+		return
+	}
+	ar.Response = future.Response()
+	return
 }
 
 // LRORetrysDeleteProvisioning202Accepted200SucceededFuture an abstraction for monitoring and retrieving
@@ -48,6 +102,39 @@ type LRORetrysDeleteProvisioning202Accepted200SucceededFuture struct {
 	Result func(LRORetrysClient) (Product, error)
 }
 
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LRORetrysDeleteProvisioning202Accepted200SucceededFuture) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LRORetrysDeleteProvisioning202Accepted200SucceededFuture.Result.
+func (future *LRORetrysDeleteProvisioning202Accepted200SucceededFuture) result(client LRORetrysClient) (p Product, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysDeleteProvisioning202Accepted200SucceededFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LRORetrysDeleteProvisioning202Accepted200SucceededFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.DeleteProvisioning202Accepted200SucceededResponder(p.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysDeleteProvisioning202Accepted200SucceededFuture", "Result", p.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
 // LRORetrysPost202Retry200Future an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type LRORetrysPost202Retry200Future struct {
@@ -55,6 +142,33 @@ type LRORetrysPost202Retry200Future struct {
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
 	Result func(LRORetrysClient) (autorest.Response, error)
+}
+
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LRORetrysPost202Retry200Future) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LRORetrysPost202Retry200Future.Result.
+func (future *LRORetrysPost202Retry200Future) result(client LRORetrysClient) (ar autorest.Response, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysPost202Retry200Future", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LRORetrysPost202Retry200Future")
+		return
+	}
+	ar.Response = future.Response()
+	return
 }
 
 // LRORetrysPostAsyncRelativeRetrySucceededFuture an abstraction for monitoring and retrieving the results
@@ -66,6 +180,33 @@ type LRORetrysPostAsyncRelativeRetrySucceededFuture struct {
 	Result func(LRORetrysClient) (autorest.Response, error)
 }
 
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LRORetrysPostAsyncRelativeRetrySucceededFuture) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LRORetrysPostAsyncRelativeRetrySucceededFuture.Result.
+func (future *LRORetrysPostAsyncRelativeRetrySucceededFuture) result(client LRORetrysClient) (ar autorest.Response, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysPostAsyncRelativeRetrySucceededFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LRORetrysPostAsyncRelativeRetrySucceededFuture")
+		return
+	}
+	ar.Response = future.Response()
+	return
+}
+
 // LRORetrysPut201CreatingSucceeded200Future an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type LRORetrysPut201CreatingSucceeded200Future struct {
@@ -73,6 +214,39 @@ type LRORetrysPut201CreatingSucceeded200Future struct {
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
 	Result func(LRORetrysClient) (Product, error)
+}
+
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LRORetrysPut201CreatingSucceeded200Future) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LRORetrysPut201CreatingSucceeded200Future.Result.
+func (future *LRORetrysPut201CreatingSucceeded200Future) result(client LRORetrysClient) (p Product, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysPut201CreatingSucceeded200Future", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LRORetrysPut201CreatingSucceeded200Future")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.Put201CreatingSucceeded200Responder(p.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysPut201CreatingSucceeded200Future", "Result", p.Response.Response, "Failure responding to request")
+		}
+	}
+	return
 }
 
 // LRORetrysPutAsyncRelativeRetrySucceededFuture an abstraction for monitoring and retrieving the results
@@ -84,6 +258,39 @@ type LRORetrysPutAsyncRelativeRetrySucceededFuture struct {
 	Result func(LRORetrysClient) (Product, error)
 }
 
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LRORetrysPutAsyncRelativeRetrySucceededFuture) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LRORetrysPutAsyncRelativeRetrySucceededFuture.Result.
+func (future *LRORetrysPutAsyncRelativeRetrySucceededFuture) result(client LRORetrysClient) (p Product, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysPutAsyncRelativeRetrySucceededFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LRORetrysPutAsyncRelativeRetrySucceededFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.PutAsyncRelativeRetrySucceededResponder(p.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysPutAsyncRelativeRetrySucceededFuture", "Result", p.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
 // LROSADsDelete202NonRetry400Future an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type LROSADsDelete202NonRetry400Future struct {
@@ -91,6 +298,33 @@ type LROSADsDelete202NonRetry400Future struct {
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
 	Result func(LROSADsClient) (autorest.Response, error)
+}
+
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROSADsDelete202NonRetry400Future) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROSADsDelete202NonRetry400Future.Result.
+func (future *LROSADsDelete202NonRetry400Future) result(client LROSADsClient) (ar autorest.Response, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsDelete202NonRetry400Future", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsDelete202NonRetry400Future")
+		return
+	}
+	ar.Response = future.Response()
+	return
 }
 
 // LROSADsDelete202RetryInvalidHeaderFuture an abstraction for monitoring and retrieving the results of a
@@ -102,6 +336,33 @@ type LROSADsDelete202RetryInvalidHeaderFuture struct {
 	Result func(LROSADsClient) (autorest.Response, error)
 }
 
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROSADsDelete202RetryInvalidHeaderFuture) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROSADsDelete202RetryInvalidHeaderFuture.Result.
+func (future *LROSADsDelete202RetryInvalidHeaderFuture) result(client LROSADsClient) (ar autorest.Response, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsDelete202RetryInvalidHeaderFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsDelete202RetryInvalidHeaderFuture")
+		return
+	}
+	ar.Response = future.Response()
+	return
+}
+
 // LROSADsDelete204SucceededFuture an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type LROSADsDelete204SucceededFuture struct {
@@ -109,6 +370,33 @@ type LROSADsDelete204SucceededFuture struct {
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
 	Result func(LROSADsClient) (autorest.Response, error)
+}
+
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROSADsDelete204SucceededFuture) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROSADsDelete204SucceededFuture.Result.
+func (future *LROSADsDelete204SucceededFuture) result(client LROSADsClient) (ar autorest.Response, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsDelete204SucceededFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsDelete204SucceededFuture")
+		return
+	}
+	ar.Response = future.Response()
+	return
 }
 
 // LROSADsDeleteAsyncRelativeRetry400Future an abstraction for monitoring and retrieving the results of a
@@ -120,6 +408,33 @@ type LROSADsDeleteAsyncRelativeRetry400Future struct {
 	Result func(LROSADsClient) (autorest.Response, error)
 }
 
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROSADsDeleteAsyncRelativeRetry400Future) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROSADsDeleteAsyncRelativeRetry400Future.Result.
+func (future *LROSADsDeleteAsyncRelativeRetry400Future) result(client LROSADsClient) (ar autorest.Response, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsDeleteAsyncRelativeRetry400Future", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsDeleteAsyncRelativeRetry400Future")
+		return
+	}
+	ar.Response = future.Response()
+	return
+}
+
 // LROSADsDeleteAsyncRelativeRetryInvalidHeaderFuture an abstraction for monitoring and retrieving the
 // results of a long-running operation.
 type LROSADsDeleteAsyncRelativeRetryInvalidHeaderFuture struct {
@@ -127,6 +442,33 @@ type LROSADsDeleteAsyncRelativeRetryInvalidHeaderFuture struct {
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
 	Result func(LROSADsClient) (autorest.Response, error)
+}
+
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROSADsDeleteAsyncRelativeRetryInvalidHeaderFuture) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROSADsDeleteAsyncRelativeRetryInvalidHeaderFuture.Result.
+func (future *LROSADsDeleteAsyncRelativeRetryInvalidHeaderFuture) result(client LROSADsClient) (ar autorest.Response, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsDeleteAsyncRelativeRetryInvalidHeaderFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsDeleteAsyncRelativeRetryInvalidHeaderFuture")
+		return
+	}
+	ar.Response = future.Response()
+	return
 }
 
 // LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingFuture an abstraction for monitoring and retrieving the
@@ -138,6 +480,33 @@ type LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingFuture struct {
 	Result func(LROSADsClient) (autorest.Response, error)
 }
 
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingFuture) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingFuture.Result.
+func (future *LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingFuture) result(client LROSADsClient) (ar autorest.Response, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingFuture")
+		return
+	}
+	ar.Response = future.Response()
+	return
+}
+
 // LROSADsDeleteAsyncRelativeRetryNoStatusFuture an abstraction for monitoring and retrieving the results
 // of a long-running operation.
 type LROSADsDeleteAsyncRelativeRetryNoStatusFuture struct {
@@ -145,6 +514,33 @@ type LROSADsDeleteAsyncRelativeRetryNoStatusFuture struct {
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
 	Result func(LROSADsClient) (autorest.Response, error)
+}
+
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROSADsDeleteAsyncRelativeRetryNoStatusFuture) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROSADsDeleteAsyncRelativeRetryNoStatusFuture.Result.
+func (future *LROSADsDeleteAsyncRelativeRetryNoStatusFuture) result(client LROSADsClient) (ar autorest.Response, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsDeleteAsyncRelativeRetryNoStatusFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsDeleteAsyncRelativeRetryNoStatusFuture")
+		return
+	}
+	ar.Response = future.Response()
+	return
 }
 
 // LROSADsDeleteNonRetry400Future an abstraction for monitoring and retrieving the results of a
@@ -156,6 +552,33 @@ type LROSADsDeleteNonRetry400Future struct {
 	Result func(LROSADsClient) (autorest.Response, error)
 }
 
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROSADsDeleteNonRetry400Future) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROSADsDeleteNonRetry400Future.Result.
+func (future *LROSADsDeleteNonRetry400Future) result(client LROSADsClient) (ar autorest.Response, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsDeleteNonRetry400Future", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsDeleteNonRetry400Future")
+		return
+	}
+	ar.Response = future.Response()
+	return
+}
+
 // LROSADsPost202NoLocationFuture an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type LROSADsPost202NoLocationFuture struct {
@@ -163,6 +586,33 @@ type LROSADsPost202NoLocationFuture struct {
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
 	Result func(LROSADsClient) (autorest.Response, error)
+}
+
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROSADsPost202NoLocationFuture) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROSADsPost202NoLocationFuture.Result.
+func (future *LROSADsPost202NoLocationFuture) result(client LROSADsClient) (ar autorest.Response, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPost202NoLocationFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPost202NoLocationFuture")
+		return
+	}
+	ar.Response = future.Response()
+	return
 }
 
 // LROSADsPost202NonRetry400Future an abstraction for monitoring and retrieving the results of a
@@ -174,6 +624,33 @@ type LROSADsPost202NonRetry400Future struct {
 	Result func(LROSADsClient) (autorest.Response, error)
 }
 
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROSADsPost202NonRetry400Future) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROSADsPost202NonRetry400Future.Result.
+func (future *LROSADsPost202NonRetry400Future) result(client LROSADsClient) (ar autorest.Response, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPost202NonRetry400Future", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPost202NonRetry400Future")
+		return
+	}
+	ar.Response = future.Response()
+	return
+}
+
 // LROSADsPost202RetryInvalidHeaderFuture an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type LROSADsPost202RetryInvalidHeaderFuture struct {
@@ -181,6 +658,33 @@ type LROSADsPost202RetryInvalidHeaderFuture struct {
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
 	Result func(LROSADsClient) (autorest.Response, error)
+}
+
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROSADsPost202RetryInvalidHeaderFuture) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROSADsPost202RetryInvalidHeaderFuture.Result.
+func (future *LROSADsPost202RetryInvalidHeaderFuture) result(client LROSADsClient) (ar autorest.Response, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPost202RetryInvalidHeaderFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPost202RetryInvalidHeaderFuture")
+		return
+	}
+	ar.Response = future.Response()
+	return
 }
 
 // LROSADsPostAsyncRelativeRetry400Future an abstraction for monitoring and retrieving the results of a
@@ -192,6 +696,33 @@ type LROSADsPostAsyncRelativeRetry400Future struct {
 	Result func(LROSADsClient) (autorest.Response, error)
 }
 
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROSADsPostAsyncRelativeRetry400Future) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROSADsPostAsyncRelativeRetry400Future.Result.
+func (future *LROSADsPostAsyncRelativeRetry400Future) result(client LROSADsClient) (ar autorest.Response, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPostAsyncRelativeRetry400Future", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPostAsyncRelativeRetry400Future")
+		return
+	}
+	ar.Response = future.Response()
+	return
+}
+
 // LROSADsPostAsyncRelativeRetryInvalidHeaderFuture an abstraction for monitoring and retrieving the
 // results of a long-running operation.
 type LROSADsPostAsyncRelativeRetryInvalidHeaderFuture struct {
@@ -199,6 +730,33 @@ type LROSADsPostAsyncRelativeRetryInvalidHeaderFuture struct {
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
 	Result func(LROSADsClient) (autorest.Response, error)
+}
+
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROSADsPostAsyncRelativeRetryInvalidHeaderFuture) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROSADsPostAsyncRelativeRetryInvalidHeaderFuture.Result.
+func (future *LROSADsPostAsyncRelativeRetryInvalidHeaderFuture) result(client LROSADsClient) (ar autorest.Response, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPostAsyncRelativeRetryInvalidHeaderFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPostAsyncRelativeRetryInvalidHeaderFuture")
+		return
+	}
+	ar.Response = future.Response()
+	return
 }
 
 // LROSADsPostAsyncRelativeRetryInvalidJSONPollingFuture an abstraction for monitoring and retrieving the
@@ -210,6 +768,33 @@ type LROSADsPostAsyncRelativeRetryInvalidJSONPollingFuture struct {
 	Result func(LROSADsClient) (autorest.Response, error)
 }
 
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROSADsPostAsyncRelativeRetryInvalidJSONPollingFuture) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROSADsPostAsyncRelativeRetryInvalidJSONPollingFuture.Result.
+func (future *LROSADsPostAsyncRelativeRetryInvalidJSONPollingFuture) result(client LROSADsClient) (ar autorest.Response, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPostAsyncRelativeRetryInvalidJSONPollingFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPostAsyncRelativeRetryInvalidJSONPollingFuture")
+		return
+	}
+	ar.Response = future.Response()
+	return
+}
+
 // LROSADsPostAsyncRelativeRetryNoPayloadFuture an abstraction for monitoring and retrieving the results of
 // a long-running operation.
 type LROSADsPostAsyncRelativeRetryNoPayloadFuture struct {
@@ -217,6 +802,33 @@ type LROSADsPostAsyncRelativeRetryNoPayloadFuture struct {
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
 	Result func(LROSADsClient) (autorest.Response, error)
+}
+
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROSADsPostAsyncRelativeRetryNoPayloadFuture) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROSADsPostAsyncRelativeRetryNoPayloadFuture.Result.
+func (future *LROSADsPostAsyncRelativeRetryNoPayloadFuture) result(client LROSADsClient) (ar autorest.Response, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPostAsyncRelativeRetryNoPayloadFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPostAsyncRelativeRetryNoPayloadFuture")
+		return
+	}
+	ar.Response = future.Response()
+	return
 }
 
 // LROSADsPostNonRetry400Future an abstraction for monitoring and retrieving the results of a long-running
@@ -228,6 +840,33 @@ type LROSADsPostNonRetry400Future struct {
 	Result func(LROSADsClient) (autorest.Response, error)
 }
 
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROSADsPostNonRetry400Future) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROSADsPostNonRetry400Future.Result.
+func (future *LROSADsPostNonRetry400Future) result(client LROSADsClient) (ar autorest.Response, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPostNonRetry400Future", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPostNonRetry400Future")
+		return
+	}
+	ar.Response = future.Response()
+	return
+}
+
 // LROSADsPut200InvalidJSONFuture an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type LROSADsPut200InvalidJSONFuture struct {
@@ -235,6 +874,39 @@ type LROSADsPut200InvalidJSONFuture struct {
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
 	Result func(LROSADsClient) (Product, error)
+}
+
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROSADsPut200InvalidJSONFuture) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROSADsPut200InvalidJSONFuture.Result.
+func (future *LROSADsPut200InvalidJSONFuture) result(client LROSADsClient) (p Product, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPut200InvalidJSONFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPut200InvalidJSONFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.Put200InvalidJSONResponder(p.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPut200InvalidJSONFuture", "Result", p.Response.Response, "Failure responding to request")
+		}
+	}
+	return
 }
 
 // LROSADsPutAsyncRelativeRetry400Future an abstraction for monitoring and retrieving the results of a
@@ -246,6 +918,39 @@ type LROSADsPutAsyncRelativeRetry400Future struct {
 	Result func(LROSADsClient) (Product, error)
 }
 
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROSADsPutAsyncRelativeRetry400Future) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROSADsPutAsyncRelativeRetry400Future.Result.
+func (future *LROSADsPutAsyncRelativeRetry400Future) result(client LROSADsClient) (p Product, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutAsyncRelativeRetry400Future", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPutAsyncRelativeRetry400Future")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.PutAsyncRelativeRetry400Responder(p.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutAsyncRelativeRetry400Future", "Result", p.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
 // LROSADsPutAsyncRelativeRetryInvalidHeaderFuture an abstraction for monitoring and retrieving the results
 // of a long-running operation.
 type LROSADsPutAsyncRelativeRetryInvalidHeaderFuture struct {
@@ -253,6 +958,39 @@ type LROSADsPutAsyncRelativeRetryInvalidHeaderFuture struct {
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
 	Result func(LROSADsClient) (Product, error)
+}
+
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROSADsPutAsyncRelativeRetryInvalidHeaderFuture) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROSADsPutAsyncRelativeRetryInvalidHeaderFuture.Result.
+func (future *LROSADsPutAsyncRelativeRetryInvalidHeaderFuture) result(client LROSADsClient) (p Product, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutAsyncRelativeRetryInvalidHeaderFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPutAsyncRelativeRetryInvalidHeaderFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.PutAsyncRelativeRetryInvalidHeaderResponder(p.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutAsyncRelativeRetryInvalidHeaderFuture", "Result", p.Response.Response, "Failure responding to request")
+		}
+	}
+	return
 }
 
 // LROSADsPutAsyncRelativeRetryInvalidJSONPollingFuture an abstraction for monitoring and retrieving the
@@ -264,6 +1002,39 @@ type LROSADsPutAsyncRelativeRetryInvalidJSONPollingFuture struct {
 	Result func(LROSADsClient) (Product, error)
 }
 
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROSADsPutAsyncRelativeRetryInvalidJSONPollingFuture) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROSADsPutAsyncRelativeRetryInvalidJSONPollingFuture.Result.
+func (future *LROSADsPutAsyncRelativeRetryInvalidJSONPollingFuture) result(client LROSADsClient) (p Product, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutAsyncRelativeRetryInvalidJSONPollingFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPutAsyncRelativeRetryInvalidJSONPollingFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.PutAsyncRelativeRetryInvalidJSONPollingResponder(p.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutAsyncRelativeRetryInvalidJSONPollingFuture", "Result", p.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
 // LROSADsPutAsyncRelativeRetryNoStatusFuture an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type LROSADsPutAsyncRelativeRetryNoStatusFuture struct {
@@ -271,6 +1042,39 @@ type LROSADsPutAsyncRelativeRetryNoStatusFuture struct {
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
 	Result func(LROSADsClient) (Product, error)
+}
+
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROSADsPutAsyncRelativeRetryNoStatusFuture) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROSADsPutAsyncRelativeRetryNoStatusFuture.Result.
+func (future *LROSADsPutAsyncRelativeRetryNoStatusFuture) result(client LROSADsClient) (p Product, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutAsyncRelativeRetryNoStatusFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPutAsyncRelativeRetryNoStatusFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.PutAsyncRelativeRetryNoStatusResponder(p.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutAsyncRelativeRetryNoStatusFuture", "Result", p.Response.Response, "Failure responding to request")
+		}
+	}
+	return
 }
 
 // LROSADsPutAsyncRelativeRetryNoStatusPayloadFuture an abstraction for monitoring and retrieving the
@@ -282,6 +1086,39 @@ type LROSADsPutAsyncRelativeRetryNoStatusPayloadFuture struct {
 	Result func(LROSADsClient) (Product, error)
 }
 
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROSADsPutAsyncRelativeRetryNoStatusPayloadFuture) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROSADsPutAsyncRelativeRetryNoStatusPayloadFuture.Result.
+func (future *LROSADsPutAsyncRelativeRetryNoStatusPayloadFuture) result(client LROSADsClient) (p Product, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutAsyncRelativeRetryNoStatusPayloadFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPutAsyncRelativeRetryNoStatusPayloadFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.PutAsyncRelativeRetryNoStatusPayloadResponder(p.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutAsyncRelativeRetryNoStatusPayloadFuture", "Result", p.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
 // LROSADsPutError201NoProvisioningStatePayloadFuture an abstraction for monitoring and retrieving the
 // results of a long-running operation.
 type LROSADsPutError201NoProvisioningStatePayloadFuture struct {
@@ -289,6 +1126,39 @@ type LROSADsPutError201NoProvisioningStatePayloadFuture struct {
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
 	Result func(LROSADsClient) (Product, error)
+}
+
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROSADsPutError201NoProvisioningStatePayloadFuture) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROSADsPutError201NoProvisioningStatePayloadFuture.Result.
+func (future *LROSADsPutError201NoProvisioningStatePayloadFuture) result(client LROSADsClient) (p Product, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutError201NoProvisioningStatePayloadFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPutError201NoProvisioningStatePayloadFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.PutError201NoProvisioningStatePayloadResponder(p.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutError201NoProvisioningStatePayloadFuture", "Result", p.Response.Response, "Failure responding to request")
+		}
+	}
+	return
 }
 
 // LROSADsPutNonRetry201Creating400Future an abstraction for monitoring and retrieving the results of a
@@ -300,6 +1170,39 @@ type LROSADsPutNonRetry201Creating400Future struct {
 	Result func(LROSADsClient) (Product, error)
 }
 
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROSADsPutNonRetry201Creating400Future) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROSADsPutNonRetry201Creating400Future.Result.
+func (future *LROSADsPutNonRetry201Creating400Future) result(client LROSADsClient) (p Product, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutNonRetry201Creating400Future", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPutNonRetry201Creating400Future")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.PutNonRetry201Creating400Responder(p.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutNonRetry201Creating400Future", "Result", p.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
 // LROSADsPutNonRetry201Creating400InvalidJSONFuture an abstraction for monitoring and retrieving the
 // results of a long-running operation.
 type LROSADsPutNonRetry201Creating400InvalidJSONFuture struct {
@@ -307,6 +1210,39 @@ type LROSADsPutNonRetry201Creating400InvalidJSONFuture struct {
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
 	Result func(LROSADsClient) (Product, error)
+}
+
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROSADsPutNonRetry201Creating400InvalidJSONFuture) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROSADsPutNonRetry201Creating400InvalidJSONFuture.Result.
+func (future *LROSADsPutNonRetry201Creating400InvalidJSONFuture) result(client LROSADsClient) (p Product, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutNonRetry201Creating400InvalidJSONFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPutNonRetry201Creating400InvalidJSONFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.PutNonRetry201Creating400InvalidJSONResponder(p.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutNonRetry201Creating400InvalidJSONFuture", "Result", p.Response.Response, "Failure responding to request")
+		}
+	}
+	return
 }
 
 // LROSADsPutNonRetry400Future an abstraction for monitoring and retrieving the results of a long-running
@@ -318,6 +1254,39 @@ type LROSADsPutNonRetry400Future struct {
 	Result func(LROSADsClient) (Product, error)
 }
 
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROSADsPutNonRetry400Future) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROSADsPutNonRetry400Future.Result.
+func (future *LROSADsPutNonRetry400Future) result(client LROSADsClient) (p Product, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutNonRetry400Future", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPutNonRetry400Future")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.PutNonRetry400Responder(p.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutNonRetry400Future", "Result", p.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
 // LROsCustomHeaderPost202Retry200Future an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type LROsCustomHeaderPost202Retry200Future struct {
@@ -325,6 +1294,33 @@ type LROsCustomHeaderPost202Retry200Future struct {
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
 	Result func(LROsCustomHeaderClient) (autorest.Response, error)
+}
+
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROsCustomHeaderPost202Retry200Future) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROsCustomHeaderPost202Retry200Future.Result.
+func (future *LROsCustomHeaderPost202Retry200Future) result(client LROsCustomHeaderClient) (ar autorest.Response, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsCustomHeaderPost202Retry200Future", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsCustomHeaderPost202Retry200Future")
+		return
+	}
+	ar.Response = future.Response()
+	return
 }
 
 // LROsCustomHeaderPostAsyncRetrySucceededFuture an abstraction for monitoring and retrieving the results
@@ -336,6 +1332,33 @@ type LROsCustomHeaderPostAsyncRetrySucceededFuture struct {
 	Result func(LROsCustomHeaderClient) (autorest.Response, error)
 }
 
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROsCustomHeaderPostAsyncRetrySucceededFuture) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROsCustomHeaderPostAsyncRetrySucceededFuture.Result.
+func (future *LROsCustomHeaderPostAsyncRetrySucceededFuture) result(client LROsCustomHeaderClient) (ar autorest.Response, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsCustomHeaderPostAsyncRetrySucceededFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsCustomHeaderPostAsyncRetrySucceededFuture")
+		return
+	}
+	ar.Response = future.Response()
+	return
+}
+
 // LROsCustomHeaderPut201CreatingSucceeded200Future an abstraction for monitoring and retrieving the
 // results of a long-running operation.
 type LROsCustomHeaderPut201CreatingSucceeded200Future struct {
@@ -343,6 +1366,39 @@ type LROsCustomHeaderPut201CreatingSucceeded200Future struct {
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
 	Result func(LROsCustomHeaderClient) (Product, error)
+}
+
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROsCustomHeaderPut201CreatingSucceeded200Future) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROsCustomHeaderPut201CreatingSucceeded200Future.Result.
+func (future *LROsCustomHeaderPut201CreatingSucceeded200Future) result(client LROsCustomHeaderClient) (p Product, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsCustomHeaderPut201CreatingSucceeded200Future", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsCustomHeaderPut201CreatingSucceeded200Future")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.Put201CreatingSucceeded200Responder(p.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsCustomHeaderPut201CreatingSucceeded200Future", "Result", p.Response.Response, "Failure responding to request")
+		}
+	}
+	return
 }
 
 // LROsCustomHeaderPutAsyncRetrySucceededFuture an abstraction for monitoring and retrieving the results of
@@ -354,6 +1410,39 @@ type LROsCustomHeaderPutAsyncRetrySucceededFuture struct {
 	Result func(LROsCustomHeaderClient) (Product, error)
 }
 
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROsCustomHeaderPutAsyncRetrySucceededFuture) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROsCustomHeaderPutAsyncRetrySucceededFuture.Result.
+func (future *LROsCustomHeaderPutAsyncRetrySucceededFuture) result(client LROsCustomHeaderClient) (p Product, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsCustomHeaderPutAsyncRetrySucceededFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsCustomHeaderPutAsyncRetrySucceededFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.PutAsyncRetrySucceededResponder(p.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsCustomHeaderPutAsyncRetrySucceededFuture", "Result", p.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
 // LROsDelete202NoRetry204Future an abstraction for monitoring and retrieving the results of a long-running
 // operation.
 type LROsDelete202NoRetry204Future struct {
@@ -361,6 +1450,39 @@ type LROsDelete202NoRetry204Future struct {
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
 	Result func(LROsClient) (Product, error)
+}
+
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROsDelete202NoRetry204Future) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROsDelete202NoRetry204Future.Result.
+func (future *LROsDelete202NoRetry204Future) result(client LROsClient) (p Product, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsDelete202NoRetry204Future", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsDelete202NoRetry204Future")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.Delete202NoRetry204Responder(p.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsDelete202NoRetry204Future", "Result", p.Response.Response, "Failure responding to request")
+		}
+	}
+	return
 }
 
 // LROsDelete202Retry200Future an abstraction for monitoring and retrieving the results of a long-running
@@ -372,6 +1494,39 @@ type LROsDelete202Retry200Future struct {
 	Result func(LROsClient) (Product, error)
 }
 
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROsDelete202Retry200Future) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROsDelete202Retry200Future.Result.
+func (future *LROsDelete202Retry200Future) result(client LROsClient) (p Product, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsDelete202Retry200Future", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsDelete202Retry200Future")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.Delete202Retry200Responder(p.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsDelete202Retry200Future", "Result", p.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
 // LROsDelete204SucceededFuture an abstraction for monitoring and retrieving the results of a long-running
 // operation.
 type LROsDelete204SucceededFuture struct {
@@ -379,6 +1534,33 @@ type LROsDelete204SucceededFuture struct {
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
 	Result func(LROsClient) (autorest.Response, error)
+}
+
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROsDelete204SucceededFuture) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROsDelete204SucceededFuture.Result.
+func (future *LROsDelete204SucceededFuture) result(client LROsClient) (ar autorest.Response, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsDelete204SucceededFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsDelete204SucceededFuture")
+		return
+	}
+	ar.Response = future.Response()
+	return
 }
 
 // LROsDeleteAsyncNoHeaderInRetryFuture an abstraction for monitoring and retrieving the results of a
@@ -390,6 +1572,33 @@ type LROsDeleteAsyncNoHeaderInRetryFuture struct {
 	Result func(LROsClient) (autorest.Response, error)
 }
 
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROsDeleteAsyncNoHeaderInRetryFuture) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROsDeleteAsyncNoHeaderInRetryFuture.Result.
+func (future *LROsDeleteAsyncNoHeaderInRetryFuture) result(client LROsClient) (ar autorest.Response, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsDeleteAsyncNoHeaderInRetryFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsDeleteAsyncNoHeaderInRetryFuture")
+		return
+	}
+	ar.Response = future.Response()
+	return
+}
+
 // LROsDeleteAsyncNoRetrySucceededFuture an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type LROsDeleteAsyncNoRetrySucceededFuture struct {
@@ -397,6 +1606,33 @@ type LROsDeleteAsyncNoRetrySucceededFuture struct {
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
 	Result func(LROsClient) (autorest.Response, error)
+}
+
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROsDeleteAsyncNoRetrySucceededFuture) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROsDeleteAsyncNoRetrySucceededFuture.Result.
+func (future *LROsDeleteAsyncNoRetrySucceededFuture) result(client LROsClient) (ar autorest.Response, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsDeleteAsyncNoRetrySucceededFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsDeleteAsyncNoRetrySucceededFuture")
+		return
+	}
+	ar.Response = future.Response()
+	return
 }
 
 // LROsDeleteAsyncRetrycanceledFuture an abstraction for monitoring and retrieving the results of a
@@ -408,6 +1644,33 @@ type LROsDeleteAsyncRetrycanceledFuture struct {
 	Result func(LROsClient) (autorest.Response, error)
 }
 
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROsDeleteAsyncRetrycanceledFuture) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROsDeleteAsyncRetrycanceledFuture.Result.
+func (future *LROsDeleteAsyncRetrycanceledFuture) result(client LROsClient) (ar autorest.Response, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsDeleteAsyncRetrycanceledFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsDeleteAsyncRetrycanceledFuture")
+		return
+	}
+	ar.Response = future.Response()
+	return
+}
+
 // LROsDeleteAsyncRetryFailedFuture an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type LROsDeleteAsyncRetryFailedFuture struct {
@@ -415,6 +1678,33 @@ type LROsDeleteAsyncRetryFailedFuture struct {
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
 	Result func(LROsClient) (autorest.Response, error)
+}
+
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROsDeleteAsyncRetryFailedFuture) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROsDeleteAsyncRetryFailedFuture.Result.
+func (future *LROsDeleteAsyncRetryFailedFuture) result(client LROsClient) (ar autorest.Response, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsDeleteAsyncRetryFailedFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsDeleteAsyncRetryFailedFuture")
+		return
+	}
+	ar.Response = future.Response()
+	return
 }
 
 // LROsDeleteAsyncRetrySucceededFuture an abstraction for monitoring and retrieving the results of a
@@ -426,6 +1716,33 @@ type LROsDeleteAsyncRetrySucceededFuture struct {
 	Result func(LROsClient) (autorest.Response, error)
 }
 
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROsDeleteAsyncRetrySucceededFuture) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROsDeleteAsyncRetrySucceededFuture.Result.
+func (future *LROsDeleteAsyncRetrySucceededFuture) result(client LROsClient) (ar autorest.Response, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsDeleteAsyncRetrySucceededFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsDeleteAsyncRetrySucceededFuture")
+		return
+	}
+	ar.Response = future.Response()
+	return
+}
+
 // LROsDeleteNoHeaderInRetryFuture an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type LROsDeleteNoHeaderInRetryFuture struct {
@@ -433,6 +1750,33 @@ type LROsDeleteNoHeaderInRetryFuture struct {
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
 	Result func(LROsClient) (autorest.Response, error)
+}
+
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROsDeleteNoHeaderInRetryFuture) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROsDeleteNoHeaderInRetryFuture.Result.
+func (future *LROsDeleteNoHeaderInRetryFuture) result(client LROsClient) (ar autorest.Response, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsDeleteNoHeaderInRetryFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsDeleteNoHeaderInRetryFuture")
+		return
+	}
+	ar.Response = future.Response()
+	return
 }
 
 // LROsDeleteProvisioning202Accepted200SucceededFuture an abstraction for monitoring and retrieving the
@@ -444,6 +1788,39 @@ type LROsDeleteProvisioning202Accepted200SucceededFuture struct {
 	Result func(LROsClient) (Product, error)
 }
 
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROsDeleteProvisioning202Accepted200SucceededFuture) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROsDeleteProvisioning202Accepted200SucceededFuture.Result.
+func (future *LROsDeleteProvisioning202Accepted200SucceededFuture) result(client LROsClient) (p Product, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsDeleteProvisioning202Accepted200SucceededFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsDeleteProvisioning202Accepted200SucceededFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.DeleteProvisioning202Accepted200SucceededResponder(p.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsDeleteProvisioning202Accepted200SucceededFuture", "Result", p.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
 // LROsDeleteProvisioning202Deletingcanceled200Future an abstraction for monitoring and retrieving the
 // results of a long-running operation.
 type LROsDeleteProvisioning202Deletingcanceled200Future struct {
@@ -451,6 +1828,39 @@ type LROsDeleteProvisioning202Deletingcanceled200Future struct {
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
 	Result func(LROsClient) (Product, error)
+}
+
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROsDeleteProvisioning202Deletingcanceled200Future) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROsDeleteProvisioning202Deletingcanceled200Future.Result.
+func (future *LROsDeleteProvisioning202Deletingcanceled200Future) result(client LROsClient) (p Product, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsDeleteProvisioning202Deletingcanceled200Future", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsDeleteProvisioning202Deletingcanceled200Future")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.DeleteProvisioning202Deletingcanceled200Responder(p.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsDeleteProvisioning202Deletingcanceled200Future", "Result", p.Response.Response, "Failure responding to request")
+		}
+	}
+	return
 }
 
 // LROsDeleteProvisioning202DeletingFailed200Future an abstraction for monitoring and retrieving the
@@ -462,6 +1872,39 @@ type LROsDeleteProvisioning202DeletingFailed200Future struct {
 	Result func(LROsClient) (Product, error)
 }
 
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROsDeleteProvisioning202DeletingFailed200Future) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROsDeleteProvisioning202DeletingFailed200Future.Result.
+func (future *LROsDeleteProvisioning202DeletingFailed200Future) result(client LROsClient) (p Product, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsDeleteProvisioning202DeletingFailed200Future", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsDeleteProvisioning202DeletingFailed200Future")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.DeleteProvisioning202DeletingFailed200Responder(p.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsDeleteProvisioning202DeletingFailed200Future", "Result", p.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
 // LROsPost200WithPayloadFuture an abstraction for monitoring and retrieving the results of a long-running
 // operation.
 type LROsPost200WithPayloadFuture struct {
@@ -469,6 +1912,39 @@ type LROsPost200WithPayloadFuture struct {
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
 	Result func(LROsClient) (Sku, error)
+}
+
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROsPost200WithPayloadFuture) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROsPost200WithPayloadFuture.Result.
+func (future *LROsPost200WithPayloadFuture) result(client LROsClient) (s Sku, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsPost200WithPayloadFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPost200WithPayloadFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if s.Response.Response, err = future.GetResult(sender); err == nil && s.Response.Response.StatusCode != http.StatusNoContent {
+		s, err = client.Post200WithPayloadResponder(s.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsPost200WithPayloadFuture", "Result", s.Response.Response, "Failure responding to request")
+		}
+	}
+	return
 }
 
 // LROsPost202NoRetry204Future an abstraction for monitoring and retrieving the results of a long-running
@@ -480,6 +1956,39 @@ type LROsPost202NoRetry204Future struct {
 	Result func(LROsClient) (Product, error)
 }
 
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROsPost202NoRetry204Future) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROsPost202NoRetry204Future.Result.
+func (future *LROsPost202NoRetry204Future) result(client LROsClient) (p Product, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsPost202NoRetry204Future", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPost202NoRetry204Future")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.Post202NoRetry204Responder(p.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsPost202NoRetry204Future", "Result", p.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
 // LROsPost202Retry200Future an abstraction for monitoring and retrieving the results of a long-running
 // operation.
 type LROsPost202Retry200Future struct {
@@ -487,6 +1996,33 @@ type LROsPost202Retry200Future struct {
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
 	Result func(LROsClient) (autorest.Response, error)
+}
+
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROsPost202Retry200Future) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROsPost202Retry200Future.Result.
+func (future *LROsPost202Retry200Future) result(client LROsClient) (ar autorest.Response, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsPost202Retry200Future", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPost202Retry200Future")
+		return
+	}
+	ar.Response = future.Response()
+	return
 }
 
 // LROsPostAsyncNoRetrySucceededFuture an abstraction for monitoring and retrieving the results of a
@@ -498,6 +2034,39 @@ type LROsPostAsyncNoRetrySucceededFuture struct {
 	Result func(LROsClient) (Product, error)
 }
 
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROsPostAsyncNoRetrySucceededFuture) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROsPostAsyncNoRetrySucceededFuture.Result.
+func (future *LROsPostAsyncNoRetrySucceededFuture) result(client LROsClient) (p Product, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsPostAsyncNoRetrySucceededFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPostAsyncNoRetrySucceededFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.PostAsyncNoRetrySucceededResponder(p.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsPostAsyncNoRetrySucceededFuture", "Result", p.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
 // LROsPostAsyncRetrycanceledFuture an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type LROsPostAsyncRetrycanceledFuture struct {
@@ -505,6 +2074,33 @@ type LROsPostAsyncRetrycanceledFuture struct {
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
 	Result func(LROsClient) (autorest.Response, error)
+}
+
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROsPostAsyncRetrycanceledFuture) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROsPostAsyncRetrycanceledFuture.Result.
+func (future *LROsPostAsyncRetrycanceledFuture) result(client LROsClient) (ar autorest.Response, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsPostAsyncRetrycanceledFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPostAsyncRetrycanceledFuture")
+		return
+	}
+	ar.Response = future.Response()
+	return
 }
 
 // LROsPostAsyncRetryFailedFuture an abstraction for monitoring and retrieving the results of a
@@ -516,6 +2112,33 @@ type LROsPostAsyncRetryFailedFuture struct {
 	Result func(LROsClient) (autorest.Response, error)
 }
 
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROsPostAsyncRetryFailedFuture) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROsPostAsyncRetryFailedFuture.Result.
+func (future *LROsPostAsyncRetryFailedFuture) result(client LROsClient) (ar autorest.Response, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsPostAsyncRetryFailedFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPostAsyncRetryFailedFuture")
+		return
+	}
+	ar.Response = future.Response()
+	return
+}
+
 // LROsPostAsyncRetrySucceededFuture an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type LROsPostAsyncRetrySucceededFuture struct {
@@ -523,6 +2146,39 @@ type LROsPostAsyncRetrySucceededFuture struct {
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
 	Result func(LROsClient) (Product, error)
+}
+
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROsPostAsyncRetrySucceededFuture) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROsPostAsyncRetrySucceededFuture.Result.
+func (future *LROsPostAsyncRetrySucceededFuture) result(client LROsClient) (p Product, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsPostAsyncRetrySucceededFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPostAsyncRetrySucceededFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.PostAsyncRetrySucceededResponder(p.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsPostAsyncRetrySucceededFuture", "Result", p.Response.Response, "Failure responding to request")
+		}
+	}
+	return
 }
 
 // LROsPostDoubleHeadersFinalAzureHeaderGetDefaultFuture an abstraction for monitoring and retrieving the
@@ -534,6 +2190,39 @@ type LROsPostDoubleHeadersFinalAzureHeaderGetDefaultFuture struct {
 	Result func(LROsClient) (Product, error)
 }
 
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROsPostDoubleHeadersFinalAzureHeaderGetDefaultFuture) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROsPostDoubleHeadersFinalAzureHeaderGetDefaultFuture.Result.
+func (future *LROsPostDoubleHeadersFinalAzureHeaderGetDefaultFuture) result(client LROsClient) (p Product, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsPostDoubleHeadersFinalAzureHeaderGetDefaultFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPostDoubleHeadersFinalAzureHeaderGetDefaultFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.PostDoubleHeadersFinalAzureHeaderGetDefaultResponder(p.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsPostDoubleHeadersFinalAzureHeaderGetDefaultFuture", "Result", p.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
 // LROsPostDoubleHeadersFinalAzureHeaderGetFuture an abstraction for monitoring and retrieving the results
 // of a long-running operation.
 type LROsPostDoubleHeadersFinalAzureHeaderGetFuture struct {
@@ -541,6 +2230,39 @@ type LROsPostDoubleHeadersFinalAzureHeaderGetFuture struct {
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
 	Result func(LROsClient) (Product, error)
+}
+
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROsPostDoubleHeadersFinalAzureHeaderGetFuture) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROsPostDoubleHeadersFinalAzureHeaderGetFuture.Result.
+func (future *LROsPostDoubleHeadersFinalAzureHeaderGetFuture) result(client LROsClient) (p Product, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsPostDoubleHeadersFinalAzureHeaderGetFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPostDoubleHeadersFinalAzureHeaderGetFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.PostDoubleHeadersFinalAzureHeaderGetResponder(p.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsPostDoubleHeadersFinalAzureHeaderGetFuture", "Result", p.Response.Response, "Failure responding to request")
+		}
+	}
+	return
 }
 
 // LROsPostDoubleHeadersFinalLocationGetFuture an abstraction for monitoring and retrieving the results of
@@ -552,6 +2274,39 @@ type LROsPostDoubleHeadersFinalLocationGetFuture struct {
 	Result func(LROsClient) (Product, error)
 }
 
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROsPostDoubleHeadersFinalLocationGetFuture) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROsPostDoubleHeadersFinalLocationGetFuture.Result.
+func (future *LROsPostDoubleHeadersFinalLocationGetFuture) result(client LROsClient) (p Product, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsPostDoubleHeadersFinalLocationGetFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPostDoubleHeadersFinalLocationGetFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.PostDoubleHeadersFinalLocationGetResponder(p.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsPostDoubleHeadersFinalLocationGetFuture", "Result", p.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
 // LROsPut200Acceptedcanceled200Future an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type LROsPut200Acceptedcanceled200Future struct {
@@ -559,6 +2314,39 @@ type LROsPut200Acceptedcanceled200Future struct {
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
 	Result func(LROsClient) (Product, error)
+}
+
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROsPut200Acceptedcanceled200Future) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROsPut200Acceptedcanceled200Future.Result.
+func (future *LROsPut200Acceptedcanceled200Future) result(client LROsClient) (p Product, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsPut200Acceptedcanceled200Future", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPut200Acceptedcanceled200Future")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.Put200Acceptedcanceled200Responder(p.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsPut200Acceptedcanceled200Future", "Result", p.Response.Response, "Failure responding to request")
+		}
+	}
+	return
 }
 
 // LROsPut200SucceededFuture an abstraction for monitoring and retrieving the results of a long-running
@@ -570,6 +2358,39 @@ type LROsPut200SucceededFuture struct {
 	Result func(LROsClient) (Product, error)
 }
 
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROsPut200SucceededFuture) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROsPut200SucceededFuture.Result.
+func (future *LROsPut200SucceededFuture) result(client LROsClient) (p Product, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsPut200SucceededFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPut200SucceededFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.Put200SucceededResponder(p.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsPut200SucceededFuture", "Result", p.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
 // LROsPut200SucceededNoStateFuture an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type LROsPut200SucceededNoStateFuture struct {
@@ -577,6 +2398,39 @@ type LROsPut200SucceededNoStateFuture struct {
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
 	Result func(LROsClient) (Product, error)
+}
+
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROsPut200SucceededNoStateFuture) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROsPut200SucceededNoStateFuture.Result.
+func (future *LROsPut200SucceededNoStateFuture) result(client LROsClient) (p Product, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsPut200SucceededNoStateFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPut200SucceededNoStateFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.Put200SucceededNoStateResponder(p.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsPut200SucceededNoStateFuture", "Result", p.Response.Response, "Failure responding to request")
+		}
+	}
+	return
 }
 
 // LROsPut200UpdatingSucceeded204Future an abstraction for monitoring and retrieving the results of a
@@ -588,6 +2442,39 @@ type LROsPut200UpdatingSucceeded204Future struct {
 	Result func(LROsClient) (Product, error)
 }
 
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROsPut200UpdatingSucceeded204Future) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROsPut200UpdatingSucceeded204Future.Result.
+func (future *LROsPut200UpdatingSucceeded204Future) result(client LROsClient) (p Product, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsPut200UpdatingSucceeded204Future", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPut200UpdatingSucceeded204Future")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.Put200UpdatingSucceeded204Responder(p.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsPut200UpdatingSucceeded204Future", "Result", p.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
 // LROsPut201CreatingFailed200Future an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type LROsPut201CreatingFailed200Future struct {
@@ -595,6 +2482,39 @@ type LROsPut201CreatingFailed200Future struct {
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
 	Result func(LROsClient) (Product, error)
+}
+
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROsPut201CreatingFailed200Future) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROsPut201CreatingFailed200Future.Result.
+func (future *LROsPut201CreatingFailed200Future) result(client LROsClient) (p Product, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsPut201CreatingFailed200Future", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPut201CreatingFailed200Future")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.Put201CreatingFailed200Responder(p.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsPut201CreatingFailed200Future", "Result", p.Response.Response, "Failure responding to request")
+		}
+	}
+	return
 }
 
 // LROsPut201CreatingSucceeded200Future an abstraction for monitoring and retrieving the results of a
@@ -606,6 +2526,39 @@ type LROsPut201CreatingSucceeded200Future struct {
 	Result func(LROsClient) (Product, error)
 }
 
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROsPut201CreatingSucceeded200Future) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROsPut201CreatingSucceeded200Future.Result.
+func (future *LROsPut201CreatingSucceeded200Future) result(client LROsClient) (p Product, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsPut201CreatingSucceeded200Future", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPut201CreatingSucceeded200Future")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.Put201CreatingSucceeded200Responder(p.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsPut201CreatingSucceeded200Future", "Result", p.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
 // LROsPut202Retry200Future an abstraction for monitoring and retrieving the results of a long-running
 // operation.
 type LROsPut202Retry200Future struct {
@@ -613,6 +2566,39 @@ type LROsPut202Retry200Future struct {
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
 	Result func(LROsClient) (Product, error)
+}
+
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROsPut202Retry200Future) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROsPut202Retry200Future.Result.
+func (future *LROsPut202Retry200Future) result(client LROsClient) (p Product, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsPut202Retry200Future", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPut202Retry200Future")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.Put202Retry200Responder(p.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsPut202Retry200Future", "Result", p.Response.Response, "Failure responding to request")
+		}
+	}
+	return
 }
 
 // LROsPutAsyncNoHeaderInRetryFuture an abstraction for monitoring and retrieving the results of a
@@ -624,6 +2610,39 @@ type LROsPutAsyncNoHeaderInRetryFuture struct {
 	Result func(LROsClient) (Product, error)
 }
 
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROsPutAsyncNoHeaderInRetryFuture) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROsPutAsyncNoHeaderInRetryFuture.Result.
+func (future *LROsPutAsyncNoHeaderInRetryFuture) result(client LROsClient) (p Product, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsPutAsyncNoHeaderInRetryFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPutAsyncNoHeaderInRetryFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.PutAsyncNoHeaderInRetryResponder(p.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsPutAsyncNoHeaderInRetryFuture", "Result", p.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
 // LROsPutAsyncNonResourceFuture an abstraction for monitoring and retrieving the results of a long-running
 // operation.
 type LROsPutAsyncNonResourceFuture struct {
@@ -631,6 +2650,39 @@ type LROsPutAsyncNonResourceFuture struct {
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
 	Result func(LROsClient) (Sku, error)
+}
+
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROsPutAsyncNonResourceFuture) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROsPutAsyncNonResourceFuture.Result.
+func (future *LROsPutAsyncNonResourceFuture) result(client LROsClient) (s Sku, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsPutAsyncNonResourceFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPutAsyncNonResourceFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if s.Response.Response, err = future.GetResult(sender); err == nil && s.Response.Response.StatusCode != http.StatusNoContent {
+		s, err = client.PutAsyncNonResourceResponder(s.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsPutAsyncNonResourceFuture", "Result", s.Response.Response, "Failure responding to request")
+		}
+	}
+	return
 }
 
 // LROsPutAsyncNoRetrycanceledFuture an abstraction for monitoring and retrieving the results of a
@@ -642,6 +2694,39 @@ type LROsPutAsyncNoRetrycanceledFuture struct {
 	Result func(LROsClient) (Product, error)
 }
 
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROsPutAsyncNoRetrycanceledFuture) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROsPutAsyncNoRetrycanceledFuture.Result.
+func (future *LROsPutAsyncNoRetrycanceledFuture) result(client LROsClient) (p Product, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsPutAsyncNoRetrycanceledFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPutAsyncNoRetrycanceledFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.PutAsyncNoRetrycanceledResponder(p.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsPutAsyncNoRetrycanceledFuture", "Result", p.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
 // LROsPutAsyncNoRetrySucceededFuture an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type LROsPutAsyncNoRetrySucceededFuture struct {
@@ -649,6 +2734,39 @@ type LROsPutAsyncNoRetrySucceededFuture struct {
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
 	Result func(LROsClient) (Product, error)
+}
+
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROsPutAsyncNoRetrySucceededFuture) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROsPutAsyncNoRetrySucceededFuture.Result.
+func (future *LROsPutAsyncNoRetrySucceededFuture) result(client LROsClient) (p Product, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsPutAsyncNoRetrySucceededFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPutAsyncNoRetrySucceededFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.PutAsyncNoRetrySucceededResponder(p.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsPutAsyncNoRetrySucceededFuture", "Result", p.Response.Response, "Failure responding to request")
+		}
+	}
+	return
 }
 
 // LROsPutAsyncRetryFailedFuture an abstraction for monitoring and retrieving the results of a long-running
@@ -660,6 +2778,39 @@ type LROsPutAsyncRetryFailedFuture struct {
 	Result func(LROsClient) (Product, error)
 }
 
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROsPutAsyncRetryFailedFuture) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROsPutAsyncRetryFailedFuture.Result.
+func (future *LROsPutAsyncRetryFailedFuture) result(client LROsClient) (p Product, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsPutAsyncRetryFailedFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPutAsyncRetryFailedFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.PutAsyncRetryFailedResponder(p.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsPutAsyncRetryFailedFuture", "Result", p.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
 // LROsPutAsyncRetrySucceededFuture an abstraction for monitoring and retrieving the results of a
 // long-running operation.
 type LROsPutAsyncRetrySucceededFuture struct {
@@ -667,6 +2818,39 @@ type LROsPutAsyncRetrySucceededFuture struct {
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
 	Result func(LROsClient) (Product, error)
+}
+
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROsPutAsyncRetrySucceededFuture) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROsPutAsyncRetrySucceededFuture.Result.
+func (future *LROsPutAsyncRetrySucceededFuture) result(client LROsClient) (p Product, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsPutAsyncRetrySucceededFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPutAsyncRetrySucceededFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.PutAsyncRetrySucceededResponder(p.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsPutAsyncRetrySucceededFuture", "Result", p.Response.Response, "Failure responding to request")
+		}
+	}
+	return
 }
 
 // LROsPutAsyncSubResourceFuture an abstraction for monitoring and retrieving the results of a long-running
@@ -678,6 +2862,39 @@ type LROsPutAsyncSubResourceFuture struct {
 	Result func(LROsClient) (SubProduct, error)
 }
 
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROsPutAsyncSubResourceFuture) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROsPutAsyncSubResourceFuture.Result.
+func (future *LROsPutAsyncSubResourceFuture) result(client LROsClient) (sp SubProduct, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsPutAsyncSubResourceFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPutAsyncSubResourceFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if sp.Response.Response, err = future.GetResult(sender); err == nil && sp.Response.Response.StatusCode != http.StatusNoContent {
+		sp, err = client.PutAsyncSubResourceResponder(sp.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsPutAsyncSubResourceFuture", "Result", sp.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
 // LROsPutNoHeaderInRetryFuture an abstraction for monitoring and retrieving the results of a long-running
 // operation.
 type LROsPutNoHeaderInRetryFuture struct {
@@ -685,6 +2902,39 @@ type LROsPutNoHeaderInRetryFuture struct {
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
 	Result func(LROsClient) (Product, error)
+}
+
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROsPutNoHeaderInRetryFuture) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROsPutNoHeaderInRetryFuture.Result.
+func (future *LROsPutNoHeaderInRetryFuture) result(client LROsClient) (p Product, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsPutNoHeaderInRetryFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPutNoHeaderInRetryFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.PutNoHeaderInRetryResponder(p.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsPutNoHeaderInRetryFuture", "Result", p.Response.Response, "Failure responding to request")
+		}
+	}
+	return
 }
 
 // LROsPutNonResourceFuture an abstraction for monitoring and retrieving the results of a long-running
@@ -696,6 +2946,39 @@ type LROsPutNonResourceFuture struct {
 	Result func(LROsClient) (Sku, error)
 }
 
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROsPutNonResourceFuture) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROsPutNonResourceFuture.Result.
+func (future *LROsPutNonResourceFuture) result(client LROsClient) (s Sku, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsPutNonResourceFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPutNonResourceFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if s.Response.Response, err = future.GetResult(sender); err == nil && s.Response.Response.StatusCode != http.StatusNoContent {
+		s, err = client.PutNonResourceResponder(s.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsPutNonResourceFuture", "Result", s.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
 // LROsPutSubResourceFuture an abstraction for monitoring and retrieving the results of a long-running
 // operation.
 type LROsPutSubResourceFuture struct {
@@ -703,6 +2986,39 @@ type LROsPutSubResourceFuture struct {
 	// Result returns the result of the asynchronous operation.
 	// If the operation has not completed it will return an error.
 	Result func(LROsClient) (SubProduct, error)
+}
+
+// UnmarshalJSON is the custom unmarshaller for CreateFuture.
+func (future *LROsPutSubResourceFuture) UnmarshalJSON(body []byte) error {
+	var azFuture azure.Future
+	if err := json.Unmarshal(body, &azFuture); err != nil {
+		return err
+	}
+	cf.FutureAPI = &azFuture
+	cf.Result = cf.result
+	return nil
+}
+
+// result is the default implementation for LROsPutSubResourceFuture.Result.
+func (future *LROsPutSubResourceFuture) result(client LROsClient) (sp SubProduct, err error) {
+	var done bool
+	done, err = future.DoneWithContext(context.Background(), client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsPutSubResourceFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPutSubResourceFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if sp.Response.Response, err = future.GetResult(sender); err == nil && sp.Response.Response.StatusCode != http.StatusNoContent {
+		sp, err = client.PutSubResourceResponder(sp.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsPutSubResourceFuture", "Result", sp.Response.Response, "Failure responding to request")
+		}
+	}
+	return
 }
 
 // OperationResult ...
