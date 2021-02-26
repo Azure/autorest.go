@@ -503,7 +503,7 @@ if (modelType is DictionaryTypeGo dictionaryType && dictionaryType.SupportsAddit
                 return err
             }
             future.FutureAPI = &azFuture
-            future.Result = cf.result
+            future.Result = future.result
             return nil
         }
 

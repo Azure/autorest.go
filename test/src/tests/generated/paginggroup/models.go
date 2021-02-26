@@ -198,7 +198,7 @@ func (future *PagingGetMultiplePagesLROAllFuture) UnmarshalJSON(body []byte) err
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -240,7 +240,7 @@ func (future *PagingGetMultiplePagesLROFuture) UnmarshalJSON(body []byte) error 
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 

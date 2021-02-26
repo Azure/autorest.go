@@ -39,7 +39,7 @@ func (future *LRORetrysDelete202Retry200Future) UnmarshalJSON(body []byte) error
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -75,7 +75,7 @@ func (future *LRORetrysDeleteAsyncRelativeRetrySucceededFuture) UnmarshalJSON(bo
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -111,7 +111,7 @@ func (future *LRORetrysDeleteProvisioning202Accepted200SucceededFuture) Unmarsha
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -153,7 +153,7 @@ func (future *LRORetrysPost202Retry200Future) UnmarshalJSON(body []byte) error {
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -189,7 +189,7 @@ func (future *LRORetrysPostAsyncRelativeRetrySucceededFuture) UnmarshalJSON(body
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -225,7 +225,7 @@ func (future *LRORetrysPut201CreatingSucceeded200Future) UnmarshalJSON(body []by
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -267,7 +267,7 @@ func (future *LRORetrysPutAsyncRelativeRetrySucceededFuture) UnmarshalJSON(body 
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -309,7 +309,7 @@ func (future *LROSADsDelete202NonRetry400Future) UnmarshalJSON(body []byte) erro
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -345,7 +345,7 @@ func (future *LROSADsDelete202RetryInvalidHeaderFuture) UnmarshalJSON(body []byt
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -381,7 +381,7 @@ func (future *LROSADsDelete204SucceededFuture) UnmarshalJSON(body []byte) error 
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -417,7 +417,7 @@ func (future *LROSADsDeleteAsyncRelativeRetry400Future) UnmarshalJSON(body []byt
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -453,7 +453,7 @@ func (future *LROSADsDeleteAsyncRelativeRetryInvalidHeaderFuture) UnmarshalJSON(
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -489,7 +489,7 @@ func (future *LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingFuture) Unmarshal
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -525,7 +525,7 @@ func (future *LROSADsDeleteAsyncRelativeRetryNoStatusFuture) UnmarshalJSON(body 
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -561,7 +561,7 @@ func (future *LROSADsDeleteNonRetry400Future) UnmarshalJSON(body []byte) error {
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -597,7 +597,7 @@ func (future *LROSADsPost202NoLocationFuture) UnmarshalJSON(body []byte) error {
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -633,7 +633,7 @@ func (future *LROSADsPost202NonRetry400Future) UnmarshalJSON(body []byte) error 
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -669,7 +669,7 @@ func (future *LROSADsPost202RetryInvalidHeaderFuture) UnmarshalJSON(body []byte)
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -705,7 +705,7 @@ func (future *LROSADsPostAsyncRelativeRetry400Future) UnmarshalJSON(body []byte)
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -741,7 +741,7 @@ func (future *LROSADsPostAsyncRelativeRetryInvalidHeaderFuture) UnmarshalJSON(bo
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -777,7 +777,7 @@ func (future *LROSADsPostAsyncRelativeRetryInvalidJSONPollingFuture) UnmarshalJS
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -813,7 +813,7 @@ func (future *LROSADsPostAsyncRelativeRetryNoPayloadFuture) UnmarshalJSON(body [
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -849,7 +849,7 @@ func (future *LROSADsPostNonRetry400Future) UnmarshalJSON(body []byte) error {
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -885,7 +885,7 @@ func (future *LROSADsPut200InvalidJSONFuture) UnmarshalJSON(body []byte) error {
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -927,7 +927,7 @@ func (future *LROSADsPutAsyncRelativeRetry400Future) UnmarshalJSON(body []byte) 
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -969,7 +969,7 @@ func (future *LROSADsPutAsyncRelativeRetryInvalidHeaderFuture) UnmarshalJSON(bod
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -1011,7 +1011,7 @@ func (future *LROSADsPutAsyncRelativeRetryInvalidJSONPollingFuture) UnmarshalJSO
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -1053,7 +1053,7 @@ func (future *LROSADsPutAsyncRelativeRetryNoStatusFuture) UnmarshalJSON(body []b
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -1095,7 +1095,7 @@ func (future *LROSADsPutAsyncRelativeRetryNoStatusPayloadFuture) UnmarshalJSON(b
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -1137,7 +1137,7 @@ func (future *LROSADsPutError201NoProvisioningStatePayloadFuture) UnmarshalJSON(
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -1179,7 +1179,7 @@ func (future *LROSADsPutNonRetry201Creating400Future) UnmarshalJSON(body []byte)
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -1221,7 +1221,7 @@ func (future *LROSADsPutNonRetry201Creating400InvalidJSONFuture) UnmarshalJSON(b
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -1263,7 +1263,7 @@ func (future *LROSADsPutNonRetry400Future) UnmarshalJSON(body []byte) error {
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -1305,7 +1305,7 @@ func (future *LROsCustomHeaderPost202Retry200Future) UnmarshalJSON(body []byte) 
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -1341,7 +1341,7 @@ func (future *LROsCustomHeaderPostAsyncRetrySucceededFuture) UnmarshalJSON(body 
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -1377,7 +1377,7 @@ func (future *LROsCustomHeaderPut201CreatingSucceeded200Future) UnmarshalJSON(bo
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -1419,7 +1419,7 @@ func (future *LROsCustomHeaderPutAsyncRetrySucceededFuture) UnmarshalJSON(body [
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -1461,7 +1461,7 @@ func (future *LROsDelete202NoRetry204Future) UnmarshalJSON(body []byte) error {
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -1503,7 +1503,7 @@ func (future *LROsDelete202Retry200Future) UnmarshalJSON(body []byte) error {
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -1545,7 +1545,7 @@ func (future *LROsDelete204SucceededFuture) UnmarshalJSON(body []byte) error {
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -1581,7 +1581,7 @@ func (future *LROsDeleteAsyncNoHeaderInRetryFuture) UnmarshalJSON(body []byte) e
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -1617,7 +1617,7 @@ func (future *LROsDeleteAsyncNoRetrySucceededFuture) UnmarshalJSON(body []byte) 
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -1653,7 +1653,7 @@ func (future *LROsDeleteAsyncRetrycanceledFuture) UnmarshalJSON(body []byte) err
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -1689,7 +1689,7 @@ func (future *LROsDeleteAsyncRetryFailedFuture) UnmarshalJSON(body []byte) error
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -1725,7 +1725,7 @@ func (future *LROsDeleteAsyncRetrySucceededFuture) UnmarshalJSON(body []byte) er
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -1761,7 +1761,7 @@ func (future *LROsDeleteNoHeaderInRetryFuture) UnmarshalJSON(body []byte) error 
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -1797,7 +1797,7 @@ func (future *LROsDeleteProvisioning202Accepted200SucceededFuture) UnmarshalJSON
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -1839,7 +1839,7 @@ func (future *LROsDeleteProvisioning202Deletingcanceled200Future) UnmarshalJSON(
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -1881,7 +1881,7 @@ func (future *LROsDeleteProvisioning202DeletingFailed200Future) UnmarshalJSON(bo
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -1923,7 +1923,7 @@ func (future *LROsPost200WithPayloadFuture) UnmarshalJSON(body []byte) error {
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -1965,7 +1965,7 @@ func (future *LROsPost202NoRetry204Future) UnmarshalJSON(body []byte) error {
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -2007,7 +2007,7 @@ func (future *LROsPost202Retry200Future) UnmarshalJSON(body []byte) error {
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -2043,7 +2043,7 @@ func (future *LROsPostAsyncNoRetrySucceededFuture) UnmarshalJSON(body []byte) er
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -2085,7 +2085,7 @@ func (future *LROsPostAsyncRetrycanceledFuture) UnmarshalJSON(body []byte) error
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -2121,7 +2121,7 @@ func (future *LROsPostAsyncRetryFailedFuture) UnmarshalJSON(body []byte) error {
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -2157,7 +2157,7 @@ func (future *LROsPostAsyncRetrySucceededFuture) UnmarshalJSON(body []byte) erro
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -2199,7 +2199,7 @@ func (future *LROsPostDoubleHeadersFinalAzureHeaderGetDefaultFuture) UnmarshalJS
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -2241,7 +2241,7 @@ func (future *LROsPostDoubleHeadersFinalAzureHeaderGetFuture) UnmarshalJSON(body
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -2283,7 +2283,7 @@ func (future *LROsPostDoubleHeadersFinalLocationGetFuture) UnmarshalJSON(body []
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -2325,7 +2325,7 @@ func (future *LROsPut200Acceptedcanceled200Future) UnmarshalJSON(body []byte) er
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -2367,7 +2367,7 @@ func (future *LROsPut200SucceededFuture) UnmarshalJSON(body []byte) error {
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -2409,7 +2409,7 @@ func (future *LROsPut200SucceededNoStateFuture) UnmarshalJSON(body []byte) error
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -2451,7 +2451,7 @@ func (future *LROsPut200UpdatingSucceeded204Future) UnmarshalJSON(body []byte) e
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -2493,7 +2493,7 @@ func (future *LROsPut201CreatingFailed200Future) UnmarshalJSON(body []byte) erro
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -2535,7 +2535,7 @@ func (future *LROsPut201CreatingSucceeded200Future) UnmarshalJSON(body []byte) e
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -2577,7 +2577,7 @@ func (future *LROsPut202Retry200Future) UnmarshalJSON(body []byte) error {
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -2619,7 +2619,7 @@ func (future *LROsPutAsyncNoHeaderInRetryFuture) UnmarshalJSON(body []byte) erro
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -2661,7 +2661,7 @@ func (future *LROsPutAsyncNonResourceFuture) UnmarshalJSON(body []byte) error {
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -2703,7 +2703,7 @@ func (future *LROsPutAsyncNoRetrycanceledFuture) UnmarshalJSON(body []byte) erro
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -2745,7 +2745,7 @@ func (future *LROsPutAsyncNoRetrySucceededFuture) UnmarshalJSON(body []byte) err
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -2787,7 +2787,7 @@ func (future *LROsPutAsyncRetryFailedFuture) UnmarshalJSON(body []byte) error {
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -2829,7 +2829,7 @@ func (future *LROsPutAsyncRetrySucceededFuture) UnmarshalJSON(body []byte) error
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -2871,7 +2871,7 @@ func (future *LROsPutAsyncSubResourceFuture) UnmarshalJSON(body []byte) error {
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -2913,7 +2913,7 @@ func (future *LROsPutNoHeaderInRetryFuture) UnmarshalJSON(body []byte) error {
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -2955,7 +2955,7 @@ func (future *LROsPutNonResourceFuture) UnmarshalJSON(body []byte) error {
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
@@ -2997,7 +2997,7 @@ func (future *LROsPutSubResourceFuture) UnmarshalJSON(body []byte) error {
 		return err
 	}
 	future.FutureAPI = &azFuture
-	future.Result = cf.result
+	future.Result = future.result
 	return nil
 }
 
