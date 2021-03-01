@@ -58,6 +58,8 @@ export async function namer(session: Session<CodeModel>) {
   model.language.go!.openApiType = specType;
   const azureARM = await session.getValue('azure-arm', false);
   model.language.go!.azureARM = azureARM;
+  const exportClients = await session.getValue('export-clients', false);
+  model.language.go!.exportClients = exportClients;
 
   // pascal-case and capitzalize acronym names of objects and their fields
   for (const obj of values(model.schemas.objects)) {
@@ -83,7 +85,7 @@ export async function namer(session: Session<CodeModel>) {
     }
   }
 
-  const exportClient = session.model.language.go!.openApiType === 'arm';
+  const exportClient = session.model.language.go!.openApiType === 'arm' || exportClients;
   // pascal-case and capitzalize acronym operation groups and their operations
   for (const group of values(model.operationGroups)) {
     const groupDetails = <Language>group.language.go;

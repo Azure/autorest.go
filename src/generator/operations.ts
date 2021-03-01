@@ -26,6 +26,7 @@ export class OperationGroupContent {
 // Creates the content for all <operation>.go files
 export async function generateOperations(session: Session<CodeModel>): Promise<OperationGroupContent[]> {
   const isARM = session.model.language.go!.openApiType === 'arm';
+  const forceExports = <boolean>session.model.language.go!.exportClients;
   // generate protocol operations
   const operations = new Array<OperationGroupContent>();
   for (const group of values(session.model.operationGroups)) {
@@ -57,7 +58,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     let text = await contentPreamble(session);
     let connection = 'Connection';
     let clientName = group.language.go!.clientName;
-    if (!isARM) {
+    if (!isARM && !forceExports) {
       connection = camelCase(connection);
     } else if (<boolean>session.model.language.go!.azureARM) {
       connection = 'armcore.Connection';
@@ -65,7 +66,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     const clientCtor = group.language.go!.clientCtorName;
     text += imports.text();
     // generate the operation client
-    if (isARM) {
+    if (isARM || forceExports) {
       text += `// ${clientName} contains the methods for the ${group.language.go!.name} group.\n`;
       text += `// Don't use this type directly, use ${clientCtor}() instead.\n`;
     }
@@ -78,7 +79,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       }
     }
     text += '}\n\n';
-    if (isARM) {
+    if (isARM || forceExports) {
       // operation client constructor
       const connectionLiterals = ['con: con'];
       const methodParams = [`con *${connection}`];

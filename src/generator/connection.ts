@@ -36,9 +36,10 @@ function generateContent(session: Session<CodeModel>): string {
     // use the Connection type in armcore instead of generating one
     return text;
   }
+  const forceExports = <boolean>session.model.language.go!.exportClients;
   const isARM = session.model.language.go!.openApiType === 'arm';
   let connectionOptions = 'ConnectionOptions';
-  if (!isARM) {
+  if (!isARM && !forceExports) {
     connectionOptions = camelCase(connectionOptions);
   }
   text += `// ${connectionOptions} contains configuration settings for the connection's pipeline.\n`;
@@ -75,7 +76,7 @@ function generateContent(session: Session<CodeModel>): string {
   let newDefaultConnection = 'NewDefaultConnection';
   let newConnection = 'NewConnection';
   let newConnectionWithPipeline = 'NewConnectionWithPipeline';
-  if (!isARM) {
+  if (!isARM && !forceExports) {
     connection = camelCase(connection);
     defaultEndpoint = camelCase(defaultEndpoint);
     newDefaultConnection = camelCase(newDefaultConnection);
