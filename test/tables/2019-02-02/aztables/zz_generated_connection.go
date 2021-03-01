@@ -14,6 +14,7 @@ import (
 
 const scope = "https://tables.azure.com/.default"
 const telemetryInfo = "azsdk-go-aztables/<version>"
+
 // ConnectionOptions contains configuration settings for the connection's pipeline.
 // All zero-value fields will be initialized with their default values.
 type ConnectionOptions struct {
@@ -67,7 +68,6 @@ func (c *Connection) Endpoint() string {
 }
 
 // Pipeline returns the connection's pipeline.
-func (c *Connection) Pipeline() (azcore.Pipeline) {
+func (c *Connection) Pipeline() azcore.Pipeline {
 	return c.p
 }
-
