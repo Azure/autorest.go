@@ -71,6 +71,9 @@ generateFromReadme(synapseArtifacts, 'package-artifacts-2019-06-01-preview', 'te
 const synapseSpark = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/f19f3c059c96ba8cbbf84d658b260ad61b4fa635/specification/synapse/data-plane/readme.md';
 generateFromReadme(synapseSpark, 'package-spark-2019-11-01-preview', 'test/synapse/2019-06-01/azspark', '--credential-scope="https://dev.azuresynapse.net/.default" --module="azspark" --openapi-type="data-plane"');
 
+const tables = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/f19f3c059c96ba8cbbf84d658b260ad61b4fa635/specification/cosmos-db/data-plane/readme.md';
+generateFromReadme(tables, 'package-2019-02', 'test/tables/2019-02-02/aztables', '--credential-scope="https://tables.azure.com/.default" --module=aztables --openapi-type="data-plane" --export-clients --azure-validator=false');
+
 // helper to log the package being generated before invocation
 function generate(inputFile, outputDir, additionalArgs) {
     sem.take(function() {
