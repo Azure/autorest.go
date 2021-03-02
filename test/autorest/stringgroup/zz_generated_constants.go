@@ -7,6 +7,7 @@
 
 package stringgroup
 
+// Colors - Referenced Color Enum Description.
 type Colors string
 
 const (

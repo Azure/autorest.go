@@ -126,9 +126,10 @@ func (client *VirtualMachinesClient) captureHandleError(resp *azcore.Response) e
 }
 
 // BeginConvertToManagedDisks - Converts virtual machine disks from blob-based to managed disks. Virtual machine must be stop-deallocated before invoking
-// this operation.
-// For Windows, please refer to Convert a virtual machine from unmanaged disks to managed disks. [https://docs.microsoft.com/en-us/azure/virtual-machines/windows/convert-unmanaged-to-managed-disks].
-// For Linux, please refer to Convert a virtual machine from unmanaged disks to managed disks. [https://docs.microsoft.com/en-us/azure/virtual-machines/linux/convert-unmanaged-to-managed-disks].
+// this operation. For Windows, please refer to Convert a virtual machine from
+// unmanaged disks to managed disks. [https://docs.microsoft.com/en-us/azure/virtual-machines/windows/convert-unmanaged-to-managed-disks]. For Linux, please
+// refer to Convert a virtual machine from
+// unmanaged disks to managed disks. [https://docs.microsoft.com/en-us/azure/virtual-machines/linux/convert-unmanaged-to-managed-disks].
 func (client *VirtualMachinesClient) BeginConvertToManagedDisks(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesBeginConvertToManagedDisksOptions) (HTTPPollerResponse, error) {
 	resp, err := client.convertToManagedDisks(ctx, resourceGroupName, vmName, options)
 	if err != nil {
@@ -166,9 +167,10 @@ func (client *VirtualMachinesClient) ResumeConvertToManagedDisks(token string) (
 }
 
 // ConvertToManagedDisks - Converts virtual machine disks from blob-based to managed disks. Virtual machine must be stop-deallocated before invoking this
-// operation.
-// For Windows, please refer to Convert a virtual machine from unmanaged disks to managed disks. [https://docs.microsoft.com/en-us/azure/virtual-machines/windows/convert-unmanaged-to-managed-disks].
-// For Linux, please refer to Convert a virtual machine from unmanaged disks to managed disks. [https://docs.microsoft.com/en-us/azure/virtual-machines/linux/convert-unmanaged-to-managed-disks].
+// operation. For Windows, please refer to Convert a virtual machine from
+// unmanaged disks to managed disks. [https://docs.microsoft.com/en-us/azure/virtual-machines/windows/convert-unmanaged-to-managed-disks]. For Linux, please
+// refer to Convert a virtual machine from
+// unmanaged disks to managed disks. [https://docs.microsoft.com/en-us/azure/virtual-machines/linux/convert-unmanaged-to-managed-disks].
 func (client *VirtualMachinesClient) convertToManagedDisks(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesBeginConvertToManagedDisksOptions) (*azcore.Response, error) {
 	req, err := client.convertToManagedDisksCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
@@ -472,8 +474,10 @@ func (client *VirtualMachinesClient) deleteHandleError(resp *azcore.Response) er
 }
 
 // Generalize - Sets the OS state of the virtual machine to generalized. It is recommended to sysprep the virtual machine before performing this operation.
-// For Windows, please refer to Create a managed image of a generalized VM in Azure [https://docs.microsoft.com/en-us/azure/virtual-machines/windows/capture-image-resource].
-// For Linux, please refer to How to create an image of a virtual machine or VHD [https://docs.microsoft.com/en-us/azure/virtual-machines/linux/capture-image].
+// For Windows, please refer to Create a managed image of a
+// generalized VM in Azure [https://docs.microsoft.com/en-us/azure/virtual-machines/windows/capture-image-resource]. For Linux, please refer to How to create
+// an image of a virtual machine or VHD
+// [https://docs.microsoft.com/en-us/azure/virtual-machines/linux/capture-image].
 func (client *VirtualMachinesClient) Generalize(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesGeneralizeOptions) (*http.Response, error) {
 	req, err := client.generalizeCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {

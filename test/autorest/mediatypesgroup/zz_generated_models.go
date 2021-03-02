@@ -20,6 +20,11 @@ type MediaTypesClientAnalyzeBodyWithSourcePathOptions struct {
 	Input *SourcePath
 }
 
+// MediaTypesClientContentTypeWithEncodingOptions contains the optional parameters for the MediaTypesClient.ContentTypeWithEncoding method.
+type MediaTypesClientContentTypeWithEncodingOptions struct {
+	// placeholder for future optional parameters
+}
+
 // Uri or local path to source data.
 type SourcePath struct {
 	// File source path.
