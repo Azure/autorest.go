@@ -131,8 +131,8 @@ func (client *MediaTypesClient) analyzeBodyWithSourcePathHandleError(resp *azcor
 }
 
 // ContentTypeWithEncoding - Pass in contentType 'text/plain; encoding=UTF-8' to pass test. Value for input does not matter
-func (client *MediaTypesClient) ContentTypeWithEncoding(ctx context.Context, input string) (StringResponse, error) {
-	req, err := client.contentTypeWithEncodingCreateRequest(ctx, input)
+func (client *MediaTypesClient) ContentTypeWithEncoding(ctx context.Context, input string, options *MediaTypesClientContentTypeWithEncodingOptions) (StringResponse, error) {
+	req, err := client.contentTypeWithEncodingCreateRequest(ctx, input, options)
 	if err != nil {
 		return StringResponse{}, err
 	}
@@ -147,7 +147,7 @@ func (client *MediaTypesClient) ContentTypeWithEncoding(ctx context.Context, inp
 }
 
 // contentTypeWithEncodingCreateRequest creates the ContentTypeWithEncoding request.
-func (client *MediaTypesClient) contentTypeWithEncodingCreateRequest(ctx context.Context, input string) (*azcore.Request, error) {
+func (client *MediaTypesClient) contentTypeWithEncodingCreateRequest(ctx context.Context, input string, options *MediaTypesClientContentTypeWithEncodingOptions) (*azcore.Request, error) {
 	urlPath := "/mediatypes/contentTypeWithEncoding"
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {

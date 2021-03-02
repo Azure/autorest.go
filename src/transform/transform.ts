@@ -240,10 +240,8 @@ function recursiveAddMarshallingFormat(schema: Schema, marshallingFormat: 'json'
 
 // we will transform operation request parameter schema types to Go types
 function processOperationRequests(session: Session<CodeModel>) {
-  // track any client-level parameterized host params
-  const hostParams = new Map<Parameter, Array<OperationGroup>>();
-  // track any parameter groups and/or optional parameters
-  const paramGroups = new Map<string, GroupProperty>();
+  // pre-process multi-request operations as it can add operations to the operations
+  // collection, and iterating over a modified collection yeilds incorrect results
   for (const group of values(session.model.operationGroups)) {
     for (const op of values(group.operations)) {
       if (op.language.go!.description) {
@@ -265,7 +263,17 @@ function processOperationRequests(session: Session<CodeModel>) {
           }
         }
         group.operations.splice(group.operations.indexOf(op), 1);
-        continue;
+      }
+    }
+  }
+  // track any client-level parameterized host params
+  const hostParams = new Map<Parameter, Array<OperationGroup>>();
+  // track any parameter groups and/or optional parameters
+  const paramGroups = new Map<string, GroupProperty>();
+  for (const group of values(session.model.operationGroups)) {
+    for (const op of values(group.operations)) {
+      if (op.language.go!.description) {
+        op.language.go!.description = parseComments(op.language.go!.description);
       }
       if (op.requests![0].protocol.http!.headers) {
         for (const header of values(op.requests![0].protocol.http!.headers)) {

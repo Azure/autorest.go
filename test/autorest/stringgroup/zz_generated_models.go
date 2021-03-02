@@ -23,7 +23,9 @@ type ByteArrayResponse struct {
 type ColorsResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-	Value       *Colors
+
+	// Referenced Color Enum Description.
+	Value *Colors
 }
 
 // EnumGetNotExpandableOptions contains the optional parameters for the Enum.GetNotExpandable method.
