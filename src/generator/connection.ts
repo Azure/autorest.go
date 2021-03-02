@@ -158,7 +158,7 @@ function generateContent(session: Session<CodeModel>): string {
     text += `\t\t${telemetryPolicy},\n`;
     text += '\t}\n';
     // RP registration policy must appear before the retry policy
-    text += '\tpolicies = append(policies, armcore.NewRPRegistrationPolicy(cred, &options.RegisterRPOptions))\n';
+    text += `\tpolicies = append(policies, armcore.NewRPRegistrationPolicy(${ctorParams}, cred, &options.RegisterRPOptions))\n`;
     text += '\tpolicies = append(policies,\n';
     text += `\t\t${retryPolicy},\n`;
     // ARM implies authentication is required
