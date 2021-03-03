@@ -69,20 +69,11 @@ func (client *PetClient) doSomethingHandleResponse(resp *azcore.Response) (PetAc
 
 // doSomethingHandleError handles the DoSomething error response.
 func (client *PetClient) doSomethingHandleError(resp *azcore.Response) error {
-	switch resp.StatusCode {
-	case http.StatusInternalServerError:
-		var err petActionError
-		if err := resp.UnmarshalAsJSON(&err); err != nil {
-			return err
-		}
-		return azcore.NewResponseError(err.wrapped, resp.Response)
-	default:
-		var err petActionError
-		if err := resp.UnmarshalAsJSON(&err); err != nil {
-			return err
-		}
-		return azcore.NewResponseError(err.wrapped, resp.Response)
+	var err petActionError
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
 	}
+	return azcore.NewResponseError(err.wrapped, resp.Response)
 }
 
 // GetPetByID - Gets pets by id.
