@@ -705,7 +705,7 @@ function generateResponseUnmarshaller(op: Operation, response: Response, imports
       unmarshallerText += `\tvar val ${pointer}${schemaResponse.schema.language.go!.name}\n`;
       unmarshalInto('val');
       if (headerVals.length === 0) {
-        unmarshallerText += `return ${schemaResponse.schema.language.go!.responseType.name}{RawResponse: resp.Response, ${schemaResponse.schema.language.go!.responseType.value}: val}, nil\n`;
+        unmarshallerText += `\treturn ${schemaResponse.schema.language.go!.responseType.name}{RawResponse: resp.Response, ${schemaResponse.schema.language.go!.responseType.value}: val}, nil\n`;
       } else {
         unmarshallerText += `\tresult := ${schemaResponse.schema.language.go!.responseType.name}{RawResponse: resp.Response, ${schemaResponse.schema.language.go!.responseType.value}: val}\n`;
         addHeaderVals();
@@ -791,7 +791,7 @@ function createProtocolErrHandler(op: Operation, imports: ImportManager): string
     if (schemaError.language.go!.internalErrorType) {
       typeName = schemaError.language.go!.internalErrorType;
     }
-    unmarshaller += `var err ${typeName}\n`;
+    unmarshaller += `${prefix}var err ${typeName}\n`;
     unmarshaller += `${prefix}if err := resp.UnmarshalAs${errFormat.toUpperCase()}(&err); err != nil {\n`;
     unmarshaller += `${prefix}\treturn err\n`;
     unmarshaller += `${prefix}}\n`;
