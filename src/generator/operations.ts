@@ -820,7 +820,7 @@ function createProtocolErrHandler(op: Operation, imports: ImportManager): string
       foldedMap.set(errSchema, new Array<string>());
     }
     for (const statusCode of values(<Array<string>>exception.protocol.http!.statusCodes)) {
-      foldedMap.get(errSchema)?.push(statusCode);
+      foldedMap.get(errSchema)!.push(statusCode);
     }
   }
   // only one entry in the map means all status codes return the same error schema
