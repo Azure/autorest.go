@@ -780,13 +780,12 @@ function createProtocolErrHandler(op: Operation, imports: ImportManager): string
     return text;
   }
 
-  const generateUnmarshaller = function (exception: Response, prefix: string) {
+  const generateUnmarshaller = function (schemaError: Schema, prefix: string) {
     let unmarshaller = '';
-    if (exception.language.go!.genericError) {
+    if (schemaError.language.default.name === 'generic') {
       unmarshaller += `${prefix}${generateGenericError()}`;
       return unmarshaller;
     }
-    const schemaError = (<SchemaResponse>exception).schema;
     const errFormat = <string>schemaError.language.go!.marshallingFormat;
     let typeName = schemaError.language.go!.name;
     if (schemaError.language.go!.internalErrorType) {
@@ -808,22 +807,43 @@ function createProtocolErrHandler(op: Operation, imports: ImportManager): string
     }
     return unmarshaller;
   };
-  if (op.exceptions.length === 1) {
-    text += generateUnmarshaller(op.exceptions![0], '\t');
+  // fold multiple error responses with the same schema into a single unmarshaller.
+  const foldedMap = new Map<Schema, Array<string>>();
+  // create a dummy schema for schemaless errors
+  const genericErr = new Schema('generic', 'generic', SchemaType.Object);
+  for (const exception of values(op.exceptions)) {
+    let errSchema = genericErr;
+    if (!exception.language.go!.genericError) {
+      errSchema = (<SchemaResponse>exception).schema;
+    }
+    if (!foldedMap.has(errSchema)) {
+      foldedMap.set(errSchema, new Array<string>());
+    }
+    for (const statusCode of values(<Array<string>>exception.protocol.http!.statusCodes)) {
+      foldedMap.get(errSchema)?.push(statusCode);
+    }
+  }
+  // only one entry in the map means all status codes return the same error schema
+  if (foldedMap.size === 1) {
+    text += generateUnmarshaller(values(foldedMap.keys()).first()!, '\t');
     text += '}\n\n';
     return text;
   }
   text += '\tswitch resp.StatusCode {\n';
-  for (const exception of values(op.exceptions)) {
-    for (const statusCode of values(<Array<string>>exception.protocol.http!.statusCodes)) {
-      if (statusCode === 'default') {
-        text += '\tdefault:\n';
-        text += generateUnmarshaller(exception, '\t\t');
-      } else {
-        text += `\tcase ${formatStatusCodes([statusCode])}:\n`;
-        text += generateUnmarshaller(exception, '\t\t');
-      }
+  let hasDefault = false;
+  for (const kv of foldedMap) {
+    if (kv[1].length === 1 && kv[1][0] === 'default') {
+      hasDefault = true;
+      text += '\tdefault:\n';
+    } else {
+      text += `\tcase ${formatStatusCodes(kv[1])}:\n`;
     }
+    text += generateUnmarshaller(kv[0], '\t\t');
+  }
+  if (!hasDefault) {
+    // add a generic unmarshaller for an unspecified default response
+    text += '\tdefault:\n';
+    text += generateGenericError();
   }
   text += '\t}\n';
   text += '}\n\n';
