@@ -56,22 +56,22 @@ for (namespace in goMappings) {
     generate(inputFile, 'test/autorest/' + namespace);
 }
 
-const blobStorage = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/1a7b2bbb84370bd96c0bf53f13f56f4fc2cafab9/specification/storage/data-plane/Microsoft.BlobStorage/preview/2019-07-07/blob.json';
+const blobStorage = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/8c1f9b739165035d9ced32761cebb19125bce233/specification/storage/data-plane/Microsoft.BlobStorage/preview/2019-07-07/blob.json';
 generate(blobStorage, 'test/storage/2019-07-07/azblob', '--credential-scope="https://storage.azure.com/.default" --module="azstorage" --openapi-type="data-plane"');
 
-const network = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/1c100daabed6a008c76f3e4e0cae4e7eac5a5bf4/specification/network/resource-manager/readme.md';
+const network = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/228cf296647f6e41182cee7d1a403990e6a8fe3c/specification/network/resource-manager/readme.md';
 generateFromReadme(network, 'package-2020-03', 'test/network/2020-03-01/armnetwork', '--credential-scope="https://management.azure.com//.default" --module=armnetwork --azure-arm=true');
 
-const compute = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/d680d0ed31643857b38d63668148f462437493b0/specification/compute/resource-manager/readme.md';
+const compute = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/228cf296647f6e41182cee7d1a403990e6a8fe3c/specification/compute/resource-manager/readme.md';
 generateFromReadme(compute, 'package-2019-12-01', 'test/compute/2019-12-01/armcompute', '--credential-scope="https://management.azure.com//.default" --module=armcompute --azure-arm=true');
 
-const synapseArtifacts = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/f19f3c059c96ba8cbbf84d658b260ad61b4fa635/specification/synapse/data-plane/readme.md';
+const synapseArtifacts = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/228cf296647f6e41182cee7d1a403990e6a8fe3c/specification/synapse/data-plane/readme.md';
 generateFromReadme(synapseArtifacts, 'package-artifacts-2019-06-01-preview', 'test/synapse/2019-06-01/azartifacts', '--credential-scope="https://dev.azuresynapse.net/.default" --module="azartifacts" --openapi-type="data-plane"');
 
-const synapseSpark = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/f19f3c059c96ba8cbbf84d658b260ad61b4fa635/specification/synapse/data-plane/readme.md';
+const synapseSpark = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/228cf296647f6e41182cee7d1a403990e6a8fe3c/specification/synapse/data-plane/readme.md';
 generateFromReadme(synapseSpark, 'package-spark-2019-11-01-preview', 'test/synapse/2019-06-01/azspark', '--credential-scope="https://dev.azuresynapse.net/.default" --module="azspark" --openapi-type="data-plane"');
 
-const tables = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/f19f3c059c96ba8cbbf84d658b260ad61b4fa635/specification/cosmos-db/data-plane/readme.md';
+const tables = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/228cf296647f6e41182cee7d1a403990e6a8fe3c/specification/cosmos-db/data-plane/readme.md';
 generateFromReadme(tables, 'package-2019-02', 'test/tables/2019-02-02/aztables', '--credential-scope="https://tables.azure.com/.default" --module=aztables --openapi-type="data-plane" --export-clients --azure-validator=false');
 
 // helper to log the package being generated before invocation
