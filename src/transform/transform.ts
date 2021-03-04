@@ -642,6 +642,42 @@ function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op:
     // HEAD operations will never be pagable, LROs etc so exit
     return;
   }
+  if (op.responses && isLROOperation(op)) {
+    // for LROs, there are a couple of corner-cases we need to handle WRT response types.
+    // 1. 200 Foo / 20x Bar - we take Foo and display a warning
+    // 2. 201 Foo / 202 Bar - this is a hard error
+    // 3. 200 void / 20x Bar - we take Bar
+    // since we always assume responses[0] has the return type we need to fix up
+    // the list of responses so that it points to the schema we select.
+
+    // get the list and count of distinct schema responses
+    const schemaResponses = new Array<SchemaResponse>();
+    for (const response of values(op.responses)) {
+      if (isSchemaResponse(response) && schemaResponses.indexOf(response) < 0) {
+        schemaResponses.push(response);
+      }
+    }
+    if (schemaResponses.length > 1) {
+      // multiple schemas, find the one for 200 status code
+      let with200: SchemaResponse | undefined;
+      for (const response of values(schemaResponses)) {
+        if ((<Array<string>>response.protocol.http!.statusCodes).indexOf('200') > -1) {
+          with200 = response;
+          break;
+        }
+      }
+      if (with200 === undefined) {
+        // case #2
+        throw new Error(`LRO ${group.language.go!.name}.${op.language.go!.name} contains multiple response types which is not supported`);
+      }
+      // case #1
+      // TODO: log warning
+      (<SchemaResponse>op.responses[0]).schema = with200.schema;
+    } else if (schemaResponses.length === 1) {
+      // only one schema, ensure the first response contains it
+      (<SchemaResponse>op.responses[0]).schema = schemaResponses[0].schema;
+    }
+  }
   // if the response defines a schema then add it as a field to the response type.
   // only do this if the response schema hasn't been processed yet.
   for (const response of values(op.responses)) {

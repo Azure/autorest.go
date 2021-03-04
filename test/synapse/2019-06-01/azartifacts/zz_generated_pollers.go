@@ -34,6 +34,11 @@ type HTTPPoller interface {
 	azcore.Poller
 }
 
+// LibraryResourceInfoPoller provides polling facilities until the operation completes
+type LibraryResourceInfoPoller interface {
+	azcore.Poller
+}
+
 // LinkedServiceResourcePoller provides polling facilities until the operation completes
 type LinkedServiceResourcePoller interface {
 	azcore.Poller

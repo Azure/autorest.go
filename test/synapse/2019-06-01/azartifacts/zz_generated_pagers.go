@@ -165,6 +165,82 @@ func (p *datasetListResponsePager) PageResponse() DatasetListResponseResponse {
 	return p.current
 }
 
+// LibraryListResponsePager provides iteration over LibraryListResponse pages.
+type LibraryListResponsePager interface {
+	azcore.Pager
+
+	// Page returns the current LibraryListResponseResponse.
+	PageResponse() LibraryListResponseResponse
+}
+
+type libraryListResponseCreateRequest func(context.Context) (*azcore.Request, error)
+
+type libraryListResponseHandleError func(*azcore.Response) error
+
+type libraryListResponseHandleResponse func(*azcore.Response) (LibraryListResponseResponse, error)
+
+type libraryListResponseAdvancePage func(context.Context, LibraryListResponseResponse) (*azcore.Request, error)
+
+type libraryListResponsePager struct {
+	// the pipeline for making the request
+	pipeline azcore.Pipeline
+	// creates the initial request (non-LRO case)
+	requester libraryListResponseCreateRequest
+	// callback for handling response errors
+	errorer libraryListResponseHandleError
+	// callback for handling the HTTP response
+	responder libraryListResponseHandleResponse
+	// callback for advancing to the next page
+	advancer libraryListResponseAdvancePage
+	// contains the current response
+	current LibraryListResponseResponse
+	// status codes for successful retrieval
+	statusCodes []int
+	// any error encountered
+	err error
+}
+
+func (p *libraryListResponsePager) Err() error {
+	return p.err
+}
+
+func (p *libraryListResponsePager) NextPage(ctx context.Context) bool {
+	var req *azcore.Request
+	var err error
+	if !reflect.ValueOf(p.current).IsZero() {
+		if p.current.LibraryListResponse.NextLink == nil || len(*p.current.LibraryListResponse.NextLink) == 0 {
+			return false
+		}
+		req, err = p.advancer(ctx, p.current)
+	} else {
+		req, err = p.requester(ctx)
+	}
+	if err != nil {
+		p.err = err
+		return false
+	}
+	resp, err := p.pipeline.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if !resp.HasStatusCode(p.statusCodes...) {
+		p.err = p.errorer(resp)
+		return false
+	}
+	result, err := p.responder(resp)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	p.current = result
+	return true
+}
+
+func (p *libraryListResponsePager) PageResponse() LibraryListResponseResponse {
+	return p.current
+}
+
 // LinkedServiceListResponsePager provides iteration over LinkedServiceListResponse pages.
 type LinkedServiceListResponsePager interface {
 	azcore.Pager
