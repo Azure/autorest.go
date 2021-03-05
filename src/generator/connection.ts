@@ -53,11 +53,6 @@ function generateContent(session: Session<CodeModel>): string {
   text += '\tTelemetry azcore.TelemetryOptions\n';
   text += '\t// Logging configures the built-in logging policy behavior.\n';
   text += '\tLogging azcore.LogOptions\n';
-  if (isARM && session.model.security.authenticationRequired) {
-    imports.add('github.com/Azure/azure-sdk-for-go/sdk/armcore');
-    text += '\t// RegisterRPOptions configures the built-in RP registration policy behavior.\n';
-    text += '\tRegisterRPOptions armcore.RegistrationOptions\n';
-  }
   text += '}\n\n';
 
   text += `func (c *${connectionOptions}) telemetryOptions() *azcore.TelemetryOptions {\n`;
@@ -153,28 +148,13 @@ function generateContent(session: Session<CodeModel>): string {
   const retryPolicy = 'azcore.NewRetryPolicy(&options.Retry)';
   const credPolicy = 'cred.AuthenticationPolicy(azcore.AuthenticationPolicyOptions{Options: azcore.TokenRequestOptions{Scopes: []string{scope}}})';
   const logPolicy = 'azcore.NewLogPolicy(&options.Logging))';
-  // ARM will optionally inject the RP registration policy into the pipeline
-  if (isARM && session.model.security.authenticationRequired) {
-    text += '\tpolicies := []azcore.Policy{\n';
-    text += `\t\t${telemetryPolicy},\n`;
-    text += '\t}\n';
-    // RP registration policy must appear before the retry policy
-    text += '\tpolicies = append(policies, armcore.NewRPRegistrationPolicy(cred, &options.RegisterRPOptions))\n';
-    text += '\tpolicies = append(policies,\n';
-    text += `\t\t${retryPolicy},\n`;
-    // ARM implies authentication is required
+  text += '\tp := azcore.NewPipeline(options.HTTPClient,\n';
+  text += `\t\t${telemetryPolicy},\n`;
+  text += `\t\t${retryPolicy},\n`;
+  if (session.model.security.authenticationRequired) {
     text += `\t\t${credPolicy},\n`;
-    text += `\t\t${logPolicy}\n`;
-    text += '\tp := azcore.NewPipeline(options.HTTPClient, policies...)\n';
-  } else {
-    text += '\tp := azcore.NewPipeline(options.HTTPClient,\n';
-    text += `\t\t${telemetryPolicy},\n`;
-    text += `\t\t${retryPolicy},\n`;
-    if (session.model.security.authenticationRequired) {
-      text += `\t\t${credPolicy},\n`;
-    }
-    text += `\t\t${logPolicy}\n`;
   }
+  text += `\t\t${logPolicy}\n`;
   text += `\treturn ${newConnectionWithPipeline}(${ctorParams}, p)\n`;
   text += '}\n\n';
 
