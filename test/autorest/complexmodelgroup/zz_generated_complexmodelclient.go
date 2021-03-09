@@ -27,8 +27,8 @@ func NewComplexModelClient(con *Connection) *ComplexModelClient {
 }
 
 // Create - Resets products.
-func (client *ComplexModelClient) Create(ctx context.Context, subscriptionId string, resourceGroupName string, bodyParameter CatalogDictionaryOfArray, options *ComplexModelClientCreateOptions) (CatalogDictionaryResponse, error) {
-	req, err := client.createCreateRequest(ctx, subscriptionId, resourceGroupName, bodyParameter, options)
+func (client *ComplexModelClient) Create(ctx context.Context, subscriptionID string, resourceGroupName string, bodyParameter CatalogDictionaryOfArray, options *ComplexModelClientCreateOptions) (CatalogDictionaryResponse, error) {
+	req, err := client.createCreateRequest(ctx, subscriptionID, resourceGroupName, bodyParameter, options)
 	if err != nil {
 		return CatalogDictionaryResponse{}, err
 	}
@@ -43,9 +43,9 @@ func (client *ComplexModelClient) Create(ctx context.Context, subscriptionId str
 }
 
 // createCreateRequest creates the Create request.
-func (client *ComplexModelClient) createCreateRequest(ctx context.Context, subscriptionId string, resourceGroupName string, bodyParameter CatalogDictionaryOfArray, options *ComplexModelClientCreateOptions) (*azcore.Request, error) {
+func (client *ComplexModelClient) createCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, bodyParameter CatalogDictionaryOfArray, options *ComplexModelClientCreateOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/Microsoft.Cache/Redis"
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(subscriptionId))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -131,8 +131,8 @@ func (client *ComplexModelClient) listHandleError(resp *azcore.Response) error {
 }
 
 // Update - Resets products.
-func (client *ComplexModelClient) Update(ctx context.Context, subscriptionId string, resourceGroupName string, bodyParameter CatalogArrayOfDictionary, options *ComplexModelClientUpdateOptions) (CatalogArrayResponse, error) {
-	req, err := client.updateCreateRequest(ctx, subscriptionId, resourceGroupName, bodyParameter, options)
+func (client *ComplexModelClient) Update(ctx context.Context, subscriptionID string, resourceGroupName string, bodyParameter CatalogArrayOfDictionary, options *ComplexModelClientUpdateOptions) (CatalogArrayResponse, error) {
+	req, err := client.updateCreateRequest(ctx, subscriptionID, resourceGroupName, bodyParameter, options)
 	if err != nil {
 		return CatalogArrayResponse{}, err
 	}
@@ -147,9 +147,9 @@ func (client *ComplexModelClient) Update(ctx context.Context, subscriptionId str
 }
 
 // updateCreateRequest creates the Update request.
-func (client *ComplexModelClient) updateCreateRequest(ctx context.Context, subscriptionId string, resourceGroupName string, bodyParameter CatalogArrayOfDictionary, options *ComplexModelClientUpdateOptions) (*azcore.Request, error) {
+func (client *ComplexModelClient) updateCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, bodyParameter CatalogArrayOfDictionary, options *ComplexModelClientUpdateOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/Microsoft.Cache/Redis"
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(subscriptionId))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {

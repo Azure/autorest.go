@@ -43,7 +43,7 @@ func TestCustomNamedRequestIDHead(t *testing.T) {
 func TestCustomNamedRequestIDParamGrouping(t *testing.T) {
 	client := newHeaderClient()
 	result, err := client.CustomNamedRequestIDParamGrouping(context.Background(), HeaderCustomNamedRequestIDParamGroupingParameters{
-		FooClientRequestId: "9C4D50EE-2D56-4CD3-8152-34347DC9F2B0",
+		FooClientRequestID: "9C4D50EE-2D56-4CD3-8152-34347DC9F2B0",
 	})
 	if err != nil {
 		t.Fatal(err)

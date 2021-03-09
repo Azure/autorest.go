@@ -14,11 +14,11 @@ import (
 	"github.com/google/go-cmp/cmp"
 )
 
-func newLrOSCustomHeaderClient() *LrOSCustomHeaderClient {
+func newLrOSCustomHeaderClient() *LROsCustomHeaderClient {
 	options := ConnectionOptions{}
 	options.Retry.RetryDelay = 10 * time.Millisecond
 	options.HTTPClient = httpClientWithCookieJar()
-	return NewLrOSCustomHeaderClient(NewDefaultConnection(&options))
+	return NewLROsCustomHeaderClient(NewDefaultConnection(&options))
 }
 
 func ctxWithHTTPHeader() context.Context {

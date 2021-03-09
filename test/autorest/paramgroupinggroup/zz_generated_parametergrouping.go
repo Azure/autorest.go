@@ -142,7 +142,7 @@ func (client *ParameterGroupingClient) PostRequired(ctx context.Context, paramet
 // postRequiredCreateRequest creates the PostRequired request.
 func (client *ParameterGroupingClient) postRequiredCreateRequest(ctx context.Context, parameterGroupingPostRequiredParameters ParameterGroupingPostRequiredParameters) (*azcore.Request, error) {
 	urlPath := "/parameterGrouping/postRequired/{path}"
-	urlPath = strings.ReplaceAll(urlPath, "{path}", url.PathEscape(parameterGroupingPostRequiredParameters.PathParameter))
+	urlPath = strings.ReplaceAll(urlPath, "{path}", url.PathEscape(parameterGroupingPostRequiredParameters.Path))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err

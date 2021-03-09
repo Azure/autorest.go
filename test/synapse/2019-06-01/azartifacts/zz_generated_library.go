@@ -50,8 +50,8 @@ func (client *libraryClient) appendCreateRequest(ctx context.Context, libraryNam
 	query := req.URL.Query()
 	query.Set("api-version", "2019-06-01-preview")
 	req.URL.RawQuery = query.Encode()
-	if options != nil && options.XMSBlobConditionAppendpos != nil {
-		req.Header.Set("x-ms-blob-condition-appendpos", strconv.FormatInt(*options.XMSBlobConditionAppendpos, 10))
+	if options != nil && options.BlobConditionAppendpos != nil {
+		req.Header.Set("x-ms-blob-condition-appendpos", strconv.FormatInt(*options.BlobConditionAppendpos, 10))
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, req.SetBody(content, "application/octet-stream")
@@ -256,8 +256,8 @@ func (client *libraryClient) getHandleError(resp *azcore.Response) error {
 
 // GetOperationResult - Get Operation result for Library
 // Possible return types are *LibraryResourceResponse, *OperationResultResponse
-func (client *libraryClient) GetOperationResult(ctx context.Context, operationId string, options *LibraryGetOperationResultOptions) (interface{}, error) {
-	req, err := client.getOperationResultCreateRequest(ctx, operationId, options)
+func (client *libraryClient) GetOperationResult(ctx context.Context, operationID string, options *LibraryGetOperationResultOptions) (interface{}, error) {
+	req, err := client.getOperationResultCreateRequest(ctx, operationID, options)
 	if err != nil {
 		return nil, err
 	}
@@ -272,9 +272,9 @@ func (client *libraryClient) GetOperationResult(ctx context.Context, operationId
 }
 
 // getOperationResultCreateRequest creates the GetOperationResult request.
-func (client *libraryClient) getOperationResultCreateRequest(ctx context.Context, operationId string, options *LibraryGetOperationResultOptions) (*azcore.Request, error) {
+func (client *libraryClient) getOperationResultCreateRequest(ctx context.Context, operationID string, options *LibraryGetOperationResultOptions) (*azcore.Request, error) {
 	urlPath := "/libraryOperationResults/{operationId}"
-	urlPath = strings.ReplaceAll(urlPath, "{operationId}", url.PathEscape(operationId))
+	urlPath = strings.ReplaceAll(urlPath, "{operationId}", url.PathEscape(operationID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err

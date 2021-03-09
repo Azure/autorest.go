@@ -553,25 +553,25 @@ type SQLScriptsListResponsePager interface {
 	PageResponse() SQLScriptsListResponseResponse
 }
 
-type sqlScriptsListResponseCreateRequest func(context.Context) (*azcore.Request, error)
+type sQLScriptsListResponseCreateRequest func(context.Context) (*azcore.Request, error)
 
-type sqlScriptsListResponseHandleError func(*azcore.Response) error
+type sQLScriptsListResponseHandleError func(*azcore.Response) error
 
-type sqlScriptsListResponseHandleResponse func(*azcore.Response) (SQLScriptsListResponseResponse, error)
+type sQLScriptsListResponseHandleResponse func(*azcore.Response) (SQLScriptsListResponseResponse, error)
 
-type sqlScriptsListResponseAdvancePage func(context.Context, SQLScriptsListResponseResponse) (*azcore.Request, error)
+type sQLScriptsListResponseAdvancePage func(context.Context, SQLScriptsListResponseResponse) (*azcore.Request, error)
 
-type sqlScriptsListResponsePager struct {
+type sQLScriptsListResponsePager struct {
 	// the pipeline for making the request
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
-	requester sqlScriptsListResponseCreateRequest
+	requester sQLScriptsListResponseCreateRequest
 	// callback for handling response errors
-	errorer sqlScriptsListResponseHandleError
+	errorer sQLScriptsListResponseHandleError
 	// callback for handling the HTTP response
-	responder sqlScriptsListResponseHandleResponse
+	responder sQLScriptsListResponseHandleResponse
 	// callback for advancing to the next page
-	advancer sqlScriptsListResponseAdvancePage
+	advancer sQLScriptsListResponseAdvancePage
 	// contains the current response
 	current SQLScriptsListResponseResponse
 	// status codes for successful retrieval
@@ -580,11 +580,11 @@ type sqlScriptsListResponsePager struct {
 	err error
 }
 
-func (p *sqlScriptsListResponsePager) Err() error {
+func (p *sQLScriptsListResponsePager) Err() error {
 	return p.err
 }
 
-func (p *sqlScriptsListResponsePager) NextPage(ctx context.Context) bool {
+func (p *sQLScriptsListResponsePager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -617,7 +617,7 @@ func (p *sqlScriptsListResponsePager) NextPage(ctx context.Context) bool {
 	return true
 }
 
-func (p *sqlScriptsListResponsePager) PageResponse() SQLScriptsListResponseResponse {
+func (p *sQLScriptsListResponsePager) PageResponse() SQLScriptsListResponseResponse {
 	return p.current
 }
 

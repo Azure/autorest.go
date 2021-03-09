@@ -40,7 +40,7 @@ type ApplicationGateway struct {
 	Etag *string `json:"etag,omitempty" azure:"ro"`
 
 	// The identity of the application gateway, if configured.
-	IDentity *ManagedServiceIDentity `json:"identity,omitempty"`
+	Identity *ManagedServiceIdentity `json:"identity,omitempty"`
 
 	// Properties of the application gateway.
 	Properties *ApplicationGatewayPropertiesFormat `json:"properties,omitempty"`
@@ -1793,7 +1793,7 @@ type AzureFirewallApplicationRuleCollection struct {
 // Properties of the application rule collection.
 type AzureFirewallApplicationRuleCollectionPropertiesFormat struct {
 	// The action type of a rule collection.
-	Action *AzureFirewallRcAction `json:"action,omitempty"`
+	Action *AzureFirewallRCAction `json:"action,omitempty"`
 
 	// Priority of the application rule collection resource.
 	Priority *int32 `json:"priority,omitempty"`
@@ -1915,7 +1915,7 @@ type AzureFirewallListResultResponse struct {
 }
 
 // AzureFirewall NAT Rule Collection Action.
-type AzureFirewallNatRcAction struct {
+type AzureFirewallNatRCAction struct {
 	// The type of action.
 	Type *AzureFirewallNatRCActionType `json:"type,omitempty"`
 }
@@ -1969,7 +1969,7 @@ type AzureFirewallNatRuleCollection struct {
 // Properties of the NAT rule collection.
 type AzureFirewallNatRuleCollectionProperties struct {
 	// The action type of a NAT rule collection.
-	Action *AzureFirewallNatRcAction `json:"action,omitempty"`
+	Action *AzureFirewallNatRCAction `json:"action,omitempty"`
 
 	// Priority of the NAT rule collection resource.
 	Priority *int32 `json:"priority,omitempty"`
@@ -2027,7 +2027,7 @@ type AzureFirewallNetworkRuleCollection struct {
 // Properties of the network rule collection.
 type AzureFirewallNetworkRuleCollectionPropertiesFormat struct {
 	// The action type of a rule collection.
-	Action *AzureFirewallRcAction `json:"action,omitempty"`
+	Action *AzureFirewallRCAction `json:"action,omitempty"`
 
 	// Priority of the network rule collection resource.
 	Priority *int32 `json:"priority,omitempty"`
@@ -2100,7 +2100,7 @@ type AzureFirewallPublicIPAddress struct {
 }
 
 // Properties of the AzureFirewallRCAction.
-type AzureFirewallRcAction struct {
+type AzureFirewallRCAction struct {
 	// The type of action.
 	Type *AzureFirewallRCActionType `json:"type,omitempty"`
 }
@@ -2343,6 +2343,27 @@ type AzureReachabilityReportResponse struct {
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// Contains bgp community information offered in Service Community resources.
+type BGPCommunity struct {
+	// The name of the bgp community. e.g. Skype.
+	CommunityName *string `json:"communityName,omitempty"`
+
+	// The prefixes that the bgp community contains.
+	CommunityPrefixes *[]string `json:"communityPrefixes,omitempty"`
+
+	// The value of the bgp community. For more information: https://docs.microsoft.com/en-us/azure/expressroute/expressroute-routing.
+	CommunityValue *string `json:"communityValue,omitempty"`
+
+	// Customer is authorized to use bgp community or not.
+	IsAuthorizedToUse *bool `json:"isAuthorizedToUse,omitempty"`
+
+	// The service group of the bgp community contains.
+	ServiceGroup *string `json:"serviceGroup,omitempty"`
+
+	// The region which the service support. e.g. For O365, region is Global.
+	ServiceSupportedRegion *string `json:"serviceSupportedRegion,omitempty"`
 }
 
 // Pool of backend IP addresses.
@@ -2620,7 +2641,7 @@ type BastionShareableLink struct {
 // Post request for all the Bastion Shareable Link endpoints.
 type BastionShareableLinkListRequest struct {
 	// List of VM references.
-	VMs *[]BastionShareableLink `json:"vms,omitempty"`
+	Vms *[]BastionShareableLink `json:"vms,omitempty"`
 }
 
 // Response for all the Bastion Shareable Link endpoints.
@@ -2652,27 +2673,6 @@ type BastionShareableLinkListResultResponse struct {
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// Contains bgp community information offered in Service Community resources.
-type BgpCommunity struct {
-	// The name of the bgp community. e.g. Skype.
-	CommunityName *string `json:"communityName,omitempty"`
-
-	// The prefixes that the bgp community contains.
-	CommunityPrefixes *[]string `json:"communityPrefixes,omitempty"`
-
-	// The value of the bgp community. For more information: https://docs.microsoft.com/en-us/azure/expressroute/expressroute-routing.
-	CommunityValue *string `json:"communityValue,omitempty"`
-
-	// Customer is authorized to use bgp community or not.
-	IsAuthorizedToUse *bool `json:"isAuthorizedToUse,omitempty"`
-
-	// The service group of the bgp community contains.
-	ServiceGroup *string `json:"serviceGroup,omitempty"`
-
-	// The region which the service support. e.g. For O365, region is Global.
-	ServiceSupportedRegion *string `json:"serviceSupportedRegion,omitempty"`
 }
 
 // BGP peer status details.
@@ -2762,7 +2762,7 @@ type BgpServiceCommunityListResultResponse struct {
 // Properties of Service Community.
 type BgpServiceCommunityPropertiesFormat struct {
 	// A list of bgp communities.
-	BgpCommunities *[]BgpCommunity `json:"bgpCommunities,omitempty"`
+	BgpCommunities *[]BGPCommunity `json:"bgpCommunities,omitempty"`
 
 	// The name of the bgp community. e.g. Skype.
 	ServiceName *string `json:"serviceName,omitempty"`
@@ -2911,7 +2911,7 @@ type ConnectionMonitorHTTPConfiguration struct {
 	Port *int32 `json:"port,omitempty"`
 
 	// Value indicating whether HTTPS is preferred over HTTP in cases where the choice is not explicit.
-	PreferHTTPs *bool `json:"preferHTTPS,omitempty"`
+	PreferHTTPS *bool `json:"preferHTTPS,omitempty"`
 
 	// The HTTP headers to transmit with the request.
 	RequestHeaders *[]HTTPHeader `json:"requestHeaders,omitempty"`
@@ -3232,7 +3232,7 @@ type ConnectionMonitorSuccessThreshold struct {
 	ChecksFailedPercent *int32 `json:"checksFailedPercent,omitempty"`
 
 	// The maximum round-trip time in milliseconds permitted for a test to evaluate as successful.
-	RoundTripTimeMS *int32 `json:"roundTripTimeMs,omitempty"`
+	RoundTripTimeMs *int32 `json:"roundTripTimeMs,omitempty"`
 }
 
 // Describes the TCP configuration.
@@ -3393,7 +3393,7 @@ type ConnectionSharedKeyResponse struct {
 // Connection state snapshot.
 type ConnectionStateSnapshot struct {
 	// Average latency in ms.
-	AvgLatencyInMS *int32 `json:"avgLatencyInMs,omitempty"`
+	AvgLatencyInMs *int32 `json:"avgLatencyInMs,omitempty"`
 
 	// The connection state.
 	ConnectionState *ConnectionState `json:"connectionState,omitempty"`
@@ -3408,10 +3408,10 @@ type ConnectionStateSnapshot struct {
 	Hops *[]ConnectivityHop `json:"hops,omitempty" azure:"ro"`
 
 	// Maximum latency in ms.
-	MaxLatencyInMS *int32 `json:"maxLatencyInMs,omitempty"`
+	MaxLatencyInMs *int32 `json:"maxLatencyInMs,omitempty"`
 
 	// Minimum latency in ms.
-	MinLatencyInMS *int32 `json:"minLatencyInMs,omitempty"`
+	MinLatencyInMs *int32 `json:"minLatencyInMs,omitempty"`
 
 	// The number of failed probes.
 	ProbesFailed *int32 `json:"probesFailed,omitempty"`
@@ -3426,8 +3426,8 @@ type ConnectionStateSnapshot struct {
 // MarshalJSON implements the json.Marshaller interface for type ConnectionStateSnapshot.
 func (c ConnectionStateSnapshot) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	if c.AvgLatencyInMS != nil {
-		objectMap["avgLatencyInMs"] = c.AvgLatencyInMS
+	if c.AvgLatencyInMs != nil {
+		objectMap["avgLatencyInMs"] = c.AvgLatencyInMs
 	}
 	if c.ConnectionState != nil {
 		objectMap["connectionState"] = c.ConnectionState
@@ -3441,11 +3441,11 @@ func (c ConnectionStateSnapshot) MarshalJSON() ([]byte, error) {
 	if c.Hops != nil {
 		objectMap["hops"] = c.Hops
 	}
-	if c.MaxLatencyInMS != nil {
-		objectMap["maxLatencyInMs"] = c.MaxLatencyInMS
+	if c.MaxLatencyInMs != nil {
+		objectMap["maxLatencyInMs"] = c.MaxLatencyInMs
 	}
-	if c.MinLatencyInMS != nil {
-		objectMap["minLatencyInMs"] = c.MinLatencyInMS
+	if c.MinLatencyInMs != nil {
+		objectMap["minLatencyInMs"] = c.MinLatencyInMs
 	}
 	if c.ProbesFailed != nil {
 		objectMap["probesFailed"] = c.ProbesFailed
@@ -3470,7 +3470,7 @@ func (c *ConnectionStateSnapshot) UnmarshalJSON(data []byte) error {
 		switch key {
 		case "avgLatencyInMs":
 			if val != nil {
-				err = json.Unmarshal(*val, &c.AvgLatencyInMS)
+				err = json.Unmarshal(*val, &c.AvgLatencyInMs)
 			}
 			delete(rawMsg, key)
 		case "connectionState":
@@ -3497,12 +3497,12 @@ func (c *ConnectionStateSnapshot) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		case "maxLatencyInMs":
 			if val != nil {
-				err = json.Unmarshal(*val, &c.MaxLatencyInMS)
+				err = json.Unmarshal(*val, &c.MaxLatencyInMs)
 			}
 			delete(rawMsg, key)
 		case "minLatencyInMs":
 			if val != nil {
-				err = json.Unmarshal(*val, &c.MinLatencyInMS)
+				err = json.Unmarshal(*val, &c.MinLatencyInMs)
 			}
 			delete(rawMsg, key)
 		case "probesFailed":
@@ -3554,7 +3554,7 @@ type ConnectivityHop struct {
 	Issues *[]ConnectivityIssue `json:"issues,omitempty" azure:"ro"`
 
 	// READ-ONLY; List of next hop identifiers.
-	NextHopIDs *[]string `json:"nextHopIds,omitempty" azure:"ro"`
+	NextHopIds *[]string `json:"nextHopIds,omitempty" azure:"ro"`
 
 	// READ-ONLY; The ID of the resource corresponding to this hop.
 	ResourceID *string `json:"resourceId,omitempty" azure:"ro"`
@@ -3566,7 +3566,7 @@ type ConnectivityHop struct {
 // Information on the connectivity status.
 type ConnectivityInformation struct {
 	// READ-ONLY; Average latency in milliseconds.
-	AvgLatencyInMS *int32 `json:"avgLatencyInMs,omitempty" azure:"ro"`
+	AvgLatencyInMs *int32 `json:"avgLatencyInMs,omitempty" azure:"ro"`
 
 	// READ-ONLY; The connection status.
 	ConnectionStatus *ConnectionStatus `json:"connectionStatus,omitempty" azure:"ro"`
@@ -3575,10 +3575,10 @@ type ConnectivityInformation struct {
 	Hops *[]ConnectivityHop `json:"hops,omitempty" azure:"ro"`
 
 	// READ-ONLY; Maximum latency in milliseconds.
-	MaxLatencyInMS *int32 `json:"maxLatencyInMs,omitempty" azure:"ro"`
+	MaxLatencyInMs *int32 `json:"maxLatencyInMs,omitempty" azure:"ro"`
 
 	// READ-ONLY; Minimum latency in milliseconds.
-	MinLatencyInMS *int32 `json:"minLatencyInMs,omitempty" azure:"ro"`
+	MinLatencyInMs *int32 `json:"minLatencyInMs,omitempty" azure:"ro"`
 
 	// READ-ONLY; Number of failed probes.
 	ProbesFailed *int32 `json:"probesFailed,omitempty" azure:"ro"`
@@ -4430,7 +4430,7 @@ type ExpressRouteCircuitConnectionPropertiesFormat struct {
 	ExpressRouteCircuitPeering *SubResource `json:"expressRouteCircuitPeering,omitempty"`
 
 	// IPv6 Address PrefixProperties of the express route circuit connection.
-	IPv6CircuitConnectionConfig *IPv6CircuitConnectionConfig `json:"ipv6CircuitConnectionConfig,omitempty"`
+	Ipv6CircuitConnectionConfig *Ipv6CircuitConnectionConfig `json:"ipv6CircuitConnectionConfig,omitempty"`
 
 	// Reference to Express Route Circuit Private Peering Resource of the peered circuit.
 	PeerExpressRouteCircuitPeering *SubResource `json:"peerExpressRouteCircuitPeering,omitempty"`
@@ -4515,7 +4515,7 @@ type ExpressRouteCircuitPeeringConfig struct {
 	AdvertisedPublicPrefixesState *ExpressRouteCircuitPeeringAdvertisedPublicPrefixState `json:"advertisedPublicPrefixesState,omitempty" azure:"ro"`
 
 	// The CustomerASN of the peering.
-	CustomerAsn *int32 `json:"customerASN,omitempty"`
+	CustomerASN *int32 `json:"customerASN,omitempty"`
 
 	// The legacy mode of the peering.
 	LegacyMode *int32 `json:"legacyMode,omitempty"`
@@ -4563,7 +4563,7 @@ type ExpressRouteCircuitPeeringPollerResponse struct {
 // Properties of the express route circuit peering.
 type ExpressRouteCircuitPeeringPropertiesFormat struct {
 	// The Azure ASN.
-	AzureAsn *int32 `json:"azureASN,omitempty"`
+	AzureASN *int32 `json:"azureASN,omitempty"`
 
 	// The list of circuit connections associated with Azure Private Peering for this circuit.
 	Connections *[]ExpressRouteCircuitConnection `json:"connections,omitempty"`
@@ -4575,7 +4575,7 @@ type ExpressRouteCircuitPeeringPropertiesFormat struct {
 	GatewayManagerEtag *string `json:"gatewayManagerEtag,omitempty"`
 
 	// The IPv6 peering configuration.
-	IPv6PeeringConfig *IPv6ExpressRouteCircuitPeeringConfig `json:"ipv6PeeringConfig,omitempty"`
+	Ipv6PeeringConfig *Ipv6ExpressRouteCircuitPeeringConfig `json:"ipv6PeeringConfig,omitempty"`
 
 	// READ-ONLY; Who was the last to modify the peering.
 	LastModifiedBy *string `json:"lastModifiedBy,omitempty" azure:"ro"`
@@ -4584,7 +4584,7 @@ type ExpressRouteCircuitPeeringPropertiesFormat struct {
 	MicrosoftPeeringConfig *ExpressRouteCircuitPeeringConfig `json:"microsoftPeeringConfig,omitempty"`
 
 	// The peer ASN.
-	PeerAsn *int64 `json:"peerASN,omitempty"`
+	PeerASN *int64 `json:"peerASN,omitempty"`
 
 	// READ-ONLY; The list of peered circuit connections associated with Azure Private Peering for this circuit.
 	PeeredConnections *[]PeerExpressRouteCircuitConnection `json:"peeredConnections,omitempty" azure:"ro"`
@@ -5122,13 +5122,13 @@ type ExpressRouteCrossConnectionPeeringPollerResponse struct {
 // Properties of express route cross connection peering.
 type ExpressRouteCrossConnectionPeeringProperties struct {
 	// READ-ONLY; The Azure ASN.
-	AzureAsn *int32 `json:"azureASN,omitempty" azure:"ro"`
+	AzureASN *int32 `json:"azureASN,omitempty" azure:"ro"`
 
 	// The GatewayManager Etag.
 	GatewayManagerEtag *string `json:"gatewayManagerEtag,omitempty"`
 
 	// The IPv6 peering configuration.
-	IPv6PeeringConfig *IPv6ExpressRouteCircuitPeeringConfig `json:"ipv6PeeringConfig,omitempty"`
+	Ipv6PeeringConfig *Ipv6ExpressRouteCircuitPeeringConfig `json:"ipv6PeeringConfig,omitempty"`
 
 	// READ-ONLY; Who was the last to modify the peering.
 	LastModifiedBy *string `json:"lastModifiedBy,omitempty" azure:"ro"`
@@ -5137,7 +5137,7 @@ type ExpressRouteCrossConnectionPeeringProperties struct {
 	MicrosoftPeeringConfig *ExpressRouteCircuitPeeringConfig `json:"microsoftPeeringConfig,omitempty"`
 
 	// The peer ASN.
-	PeerAsn *int64 `json:"peerASN,omitempty"`
+	PeerASN *int64 `json:"peerASN,omitempty"`
 
 	// The peering type.
 	PeeringType *ExpressRoutePeeringType `json:"peeringType,omitempty"`
@@ -5474,13 +5474,13 @@ type ExpressRouteLinkListResultResponse struct {
 // ExpressRouteLink Mac Security Configuration.
 type ExpressRouteLinkMacSecConfig struct {
 	// Keyvault Secret Identifier URL containing Mac security CAK key.
-	CakSecretIDentifier *string `json:"cakSecretIdentifier,omitempty"`
+	CakSecretIdentifier *string `json:"cakSecretIdentifier,omitempty"`
 
 	// Mac security cipher.
 	Cipher *ExpressRouteLinkMacSecCipher `json:"cipher,omitempty"`
 
 	// Keyvault Secret Identifier URL containing Mac security CKN key.
-	CknSecretIDentifier *string `json:"cknSecretIdentifier,omitempty"`
+	CknSecretIdentifier *string `json:"cknSecretIdentifier,omitempty"`
 }
 
 // Properties specific to ExpressRouteLink resources.
@@ -5536,7 +5536,7 @@ type ExpressRoutePort struct {
 	Etag *string `json:"etag,omitempty" azure:"ro"`
 
 	// The identity of ExpressRoutePort, if configured.
-	IDentity *ManagedServiceIDentity `json:"identity,omitempty"`
+	Identity *ManagedServiceIdentity `json:"identity,omitempty"`
 
 	// ExpressRoutePort properties.
 	Properties *ExpressRoutePortPropertiesFormat `json:"properties,omitempty"`
@@ -6709,7 +6709,7 @@ type IPAllocationPropertiesFormat struct {
 	AllocationTags *map[string]string `json:"allocationTags,omitempty"`
 
 	// The IPAM allocation ID.
-	IPamAllocationID *string `json:"ipamAllocationId,omitempty"`
+	IpamAllocationID *string `json:"ipamAllocationId,omitempty"`
 
 	// The address prefix for the IpAllocation.
 	Prefix *string `json:"prefix,omitempty"`
@@ -6792,7 +6792,7 @@ type IPConfigurationBgpPeeringAddress struct {
 	DefaultBgpIPAddresses *[]string `json:"defaultBgpIpAddresses,omitempty" azure:"ro"`
 
 	// The ID of IP configuration which belongs to gateway.
-	IPconfigurationID *string `json:"ipconfigurationId,omitempty"`
+	IpconfigurationID *string `json:"ipconfigurationId,omitempty"`
 
 	// READ-ONLY; The list of tunnel public IP addresses which belong to IP configuration.
 	TunnelIPAddresses *[]string `json:"tunnelIpAddresses,omitempty" azure:"ro"`
@@ -6942,60 +6942,6 @@ type IPTag struct {
 	Tag *string `json:"tag,omitempty"`
 }
 
-// An IPSec Policy configuration for a virtual network gateway connection.
-type IPsecPolicy struct {
-	// The DH Group used in IKE Phase 1 for initial SA.
-	DhGroup *DhGroup `json:"dhGroup,omitempty"`
-
-	// The IPSec encryption algorithm (IKE phase 1).
-	IPsecEncryption *IPsecEncryption `json:"ipsecEncryption,omitempty"`
-
-	// The IPSec integrity algorithm (IKE phase 1).
-	IPsecIntegrity *IPsecIntegrity `json:"ipsecIntegrity,omitempty"`
-
-	// The IKE encryption algorithm (IKE phase 2).
-	IkeEncryption *IkeEncryption `json:"ikeEncryption,omitempty"`
-
-	// The IKE integrity algorithm (IKE phase 2).
-	IkeIntegrity *IkeIntegrity `json:"ikeIntegrity,omitempty"`
-
-	// The Pfs Group used in IKE Phase 2 for new child SA.
-	PfsGroup *PfsGroup `json:"pfsGroup,omitempty"`
-
-	// The IPSec Security Association (also called Quick Mode or Phase 2 SA) payload size in KB for a site to site VPN tunnel.
-	SaDataSizeKilobytes *int32 `json:"saDataSizeKilobytes,omitempty"`
-
-	// The IPSec Security Association (also called Quick Mode or Phase 2 SA) lifetime in seconds for a site to site VPN tunnel.
-	SaLifeTimeSeconds *int32 `json:"saLifeTimeSeconds,omitempty"`
-}
-
-// IPv6 Circuit Connection properties for global reach.
-type IPv6CircuitConnectionConfig struct {
-	// /125 IP address space to carve out customer addresses for global reach.
-	AddressPrefix *string `json:"addressPrefix,omitempty"`
-
-	// READ-ONLY; Express Route Circuit connection state.
-	CircuitConnectionStatus *CircuitConnectionStatus `json:"circuitConnectionStatus,omitempty" azure:"ro"`
-}
-
-// Contains IPv6 peering config.
-type IPv6ExpressRouteCircuitPeeringConfig struct {
-	// The Microsoft peering configuration.
-	MicrosoftPeeringConfig *ExpressRouteCircuitPeeringConfig `json:"microsoftPeeringConfig,omitempty"`
-
-	// The primary address prefix.
-	PrimaryPeerAddressPrefix *string `json:"primaryPeerAddressPrefix,omitempty"`
-
-	// The reference to the RouteFilter resource.
-	RouteFilter *SubResource `json:"routeFilter,omitempty"`
-
-	// The secondary address prefix.
-	SecondaryPeerAddressPrefix *string `json:"secondaryPeerAddressPrefix,omitempty"`
-
-	// The state of peering.
-	State *ExpressRouteCircuitPeeringState `json:"state,omitempty"`
-}
-
 // Inbound NAT pool of the load balancer.
 type InboundNatPool struct {
 	SubResource
@@ -7039,7 +6985,7 @@ type InboundNatPoolPropertiesFormat struct {
 
 	// The timeout for the TCP idle connection. The value can be set between 4 and 30 minutes. The default value is 4 minutes. This element is only used when
 	// the protocol is set to TCP.
-	IDleTimeoutInMinutes *int32 `json:"idleTimeoutInMinutes,omitempty"`
+	IdleTimeoutInMinutes *int32 `json:"idleTimeoutInMinutes,omitempty"`
 
 	// The reference to the transport protocol used by the inbound NAT pool.
 	Protocol *TransportProtocol `json:"protocol,omitempty"`
@@ -7120,7 +7066,7 @@ type InboundNatRulePropertiesFormat struct {
 
 	// The timeout for the TCP idle connection. The value can be set between 4 and 30 minutes. The default value is 4 minutes. This element is only used when
 	// the protocol is set to TCP.
-	IDleTimeoutInMinutes *int32 `json:"idleTimeoutInMinutes,omitempty"`
+	IdleTimeoutInMinutes *int32 `json:"idleTimeoutInMinutes,omitempty"`
 
 	// The reference to the transport protocol used by the load balancing rule.
 	Protocol *TransportProtocol `json:"protocol,omitempty"`
@@ -7157,6 +7103,60 @@ type InboundNatRulesGetOptions struct {
 // InboundNatRulesListOptions contains the optional parameters for the InboundNatRules.List method.
 type InboundNatRulesListOptions struct {
 	// placeholder for future optional parameters
+}
+
+// An IPSec Policy configuration for a virtual network gateway connection.
+type IpsecPolicy struct {
+	// The DH Group used in IKE Phase 1 for initial SA.
+	DhGroup *DhGroup `json:"dhGroup,omitempty"`
+
+	// The IKE encryption algorithm (IKE phase 2).
+	IkeEncryption *IkeEncryption `json:"ikeEncryption,omitempty"`
+
+	// The IKE integrity algorithm (IKE phase 2).
+	IkeIntegrity *IkeIntegrity `json:"ikeIntegrity,omitempty"`
+
+	// The IPSec encryption algorithm (IKE phase 1).
+	IpsecEncryption *IpsecEncryption `json:"ipsecEncryption,omitempty"`
+
+	// The IPSec integrity algorithm (IKE phase 1).
+	IpsecIntegrity *IpsecIntegrity `json:"ipsecIntegrity,omitempty"`
+
+	// The Pfs Group used in IKE Phase 2 for new child SA.
+	PfsGroup *PfsGroup `json:"pfsGroup,omitempty"`
+
+	// The IPSec Security Association (also called Quick Mode or Phase 2 SA) payload size in KB for a site to site VPN tunnel.
+	SaDataSizeKilobytes *int32 `json:"saDataSizeKilobytes,omitempty"`
+
+	// The IPSec Security Association (also called Quick Mode or Phase 2 SA) lifetime in seconds for a site to site VPN tunnel.
+	SaLifeTimeSeconds *int32 `json:"saLifeTimeSeconds,omitempty"`
+}
+
+// IPv6 Circuit Connection properties for global reach.
+type Ipv6CircuitConnectionConfig struct {
+	// /125 IP address space to carve out customer addresses for global reach.
+	AddressPrefix *string `json:"addressPrefix,omitempty"`
+
+	// READ-ONLY; Express Route Circuit connection state.
+	CircuitConnectionStatus *CircuitConnectionStatus `json:"circuitConnectionStatus,omitempty" azure:"ro"`
+}
+
+// Contains IPv6 peering config.
+type Ipv6ExpressRouteCircuitPeeringConfig struct {
+	// The Microsoft peering configuration.
+	MicrosoftPeeringConfig *ExpressRouteCircuitPeeringConfig `json:"microsoftPeeringConfig,omitempty"`
+
+	// The primary address prefix.
+	PrimaryPeerAddressPrefix *string `json:"primaryPeerAddressPrefix,omitempty"`
+
+	// The reference to the RouteFilter resource.
+	RouteFilter *SubResource `json:"routeFilter,omitempty"`
+
+	// The secondary address prefix.
+	SecondaryPeerAddressPrefix *string `json:"secondaryPeerAddressPrefix,omitempty"`
+
+	// The state of peering.
+	State *ExpressRouteCircuitPeeringState `json:"state,omitempty"`
 }
 
 // List of HubVirtualNetworkConnections and a URL nextLink to get the next set of results.
@@ -7232,18 +7232,18 @@ type ListVirtualHubsResultResponse struct {
 }
 
 // Result of the request to list VirtualWANs. It contains a list of VirtualWANs and a URL nextLink to get the next set of results.
-type ListVirtualWaNsResult struct {
+type ListVirtualWANsResult struct {
 	// URL to get the next set of operation list results if there are any.
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// List of VirtualWANs.
-	Value *[]VirtualWan `json:"value,omitempty"`
+	Value *[]VirtualWAN `json:"value,omitempty"`
 }
 
-// ListVirtualWaNsResultResponse is the response envelope for operations that return a ListVirtualWaNsResult type.
-type ListVirtualWaNsResultResponse struct {
+// ListVirtualWANsResultResponse is the response envelope for operations that return a ListVirtualWANsResult type.
+type ListVirtualWANsResultResponse struct {
 	// Result of the request to list VirtualWANs. It contains a list of VirtualWANs and a URL nextLink to get the next set of results.
-	ListVirtualWaNsResult *ListVirtualWaNsResult
+	ListVirtualWANsResult *ListVirtualWANsResult
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -7679,7 +7679,7 @@ type LoadBalancingRulePropertiesFormat struct {
 
 	// The timeout for the TCP idle connection. The value can be set between 4 and 30 minutes. The default value is 4 minutes. This element is only used when
 	// the protocol is set to TCP.
-	IDleTimeoutInMinutes *int32 `json:"idleTimeoutInMinutes,omitempty"`
+	IdleTimeoutInMinutes *int32 `json:"idleTimeoutInMinutes,omitempty"`
 
 	// The load distribution policy for this rule.
 	LoadDistribution *LoadDistribution `json:"loadDistribution,omitempty"`
@@ -7850,7 +7850,7 @@ type ManagedRulesDefinition struct {
 }
 
 // Identity for the resource.
-type ManagedServiceIDentity struct {
+type ManagedServiceIdentity struct {
 	// READ-ONLY; The principal id of the system assigned identity. This property will only be provided for a system assigned identity.
 	PrincipalID *string `json:"principalId,omitempty" azure:"ro"`
 
@@ -7860,11 +7860,11 @@ type ManagedServiceIDentity struct {
 	// The type of identity used for the resource. The type 'SystemAssigned, UserAssigned' includes both an implicitly created identity and a set of user assigned
 	// identities. The type 'None' will remove any
 	// identities from the virtual machine.
-	Type *ResourceIDentityType `json:"type,omitempty"`
+	Type *ResourceIdentityType `json:"type,omitempty"`
 
 	// The list of user identities associated with resource. The user identity dictionary key references will be ARM resource ids in the form:
 	// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
-	UserAssignedIDentities *map[string]Components1Jq1T4ISchemasManagedserviceidentityPropertiesUserassignedidentitiesAdditionalproperties `json:"userAssignedIdentities,omitempty"`
+	UserAssignedIdentities *map[string]Components1Jq1T4ISchemasManagedserviceidentityPropertiesUserassignedidentitiesAdditionalproperties `json:"userAssignedIdentities,omitempty"`
 }
 
 // Define match conditions.
@@ -7997,7 +7997,7 @@ type NatGatewayPollerResponse struct {
 // Nat Gateway properties.
 type NatGatewayPropertiesFormat struct {
 	// The idle timeout of the nat gateway.
-	IDleTimeoutInMinutes *int32 `json:"idleTimeoutInMinutes,omitempty"`
+	IdleTimeoutInMinutes *int32 `json:"idleTimeoutInMinutes,omitempty"`
 
 	// READ-ONLY; The provisioning state of the NAT gateway resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
@@ -9000,7 +9000,7 @@ type NetworkVirtualAppliance struct {
 	Etag *string `json:"etag,omitempty" azure:"ro"`
 
 	// The service principal that has read access to cloud-init and config blob.
-	IDentity *ManagedServiceIDentity `json:"identity,omitempty"`
+	Identity *ManagedServiceIdentity `json:"identity,omitempty"`
 
 	// Properties of the Network Virtual Appliance.
 	Properties *NetworkVirtualAppliancePropertiesFormat `json:"properties,omitempty"`
@@ -9381,7 +9381,7 @@ type OutboundRulePropertiesFormat struct {
 	FrontendIPConfigurations *[]SubResource `json:"frontendIPConfigurations,omitempty"`
 
 	// The timeout for the TCP idle connection.
-	IDleTimeoutInMinutes *int32 `json:"idleTimeoutInMinutes,omitempty"`
+	IdleTimeoutInMinutes *int32 `json:"idleTimeoutInMinutes,omitempty"`
 
 	// The protocol for the outbound rule in load balancer.
 	Protocol *LoadBalancerOutboundRuleProtocol `json:"protocol,omitempty"`
@@ -9472,7 +9472,7 @@ type P2SVpnConnectionHealthResponse struct {
 // List of p2s vpn connections to be disconnected.
 type P2SVpnConnectionRequest struct {
 	// List of p2s vpn connection Ids.
-	VpnConnectionIDs *[]string `json:"vpnConnectionIds,omitempty"`
+	VpnConnectionIds *[]string `json:"vpnConnectionIds,omitempty"`
 }
 
 // P2SVpnGateway Resource.
@@ -10137,7 +10137,7 @@ type PrivateEndpointConnectionListResultResponse struct {
 // Properties of the PrivateEndpointConnectProperties.
 type PrivateEndpointConnectionProperties struct {
 	// READ-ONLY; The consumer link id.
-	LinkIDentifier *string `json:"linkIdentifier,omitempty" azure:"ro"`
+	LinkIdentifier *string `json:"linkIdentifier,omitempty" azure:"ro"`
 
 	// READ-ONLY; The resource of private end point.
 	PrivateEndpoint *PrivateEndpoint `json:"privateEndpoint,omitempty" azure:"ro"`
@@ -10274,7 +10274,7 @@ type PrivateLinkServiceConnection struct {
 // Properties of the PrivateLinkServiceConnection.
 type PrivateLinkServiceConnectionProperties struct {
 	// The ID(s) of the group(s) obtained from the remote resource that this private endpoint should connect to.
-	GroupIDs *[]string `json:"groupIds,omitempty"`
+	GroupIds *[]string `json:"groupIds,omitempty"`
 
 	// A collection of read-only information about the state of the connection to the remote resource.
 	PrivateLinkServiceConnectionState *PrivateLinkServiceConnectionState `json:"privateLinkServiceConnectionState,omitempty"`
@@ -10671,9 +10671,6 @@ type PublicIPAddressPropertiesFormat struct {
 	// The DDoS protection custom policy associated with the public IP address.
 	DdosSettings *DdosSettings `json:"ddosSettings,omitempty"`
 
-	// The idle timeout of the public IP address.
-	IDleTimeoutInMinutes *int32 `json:"idleTimeoutInMinutes,omitempty"`
-
 	// The IP address associated with the public IP address resource.
 	IPAddress *string `json:"ipAddress,omitempty"`
 
@@ -10682,6 +10679,9 @@ type PublicIPAddressPropertiesFormat struct {
 
 	// The list of tags associated with the public IP address.
 	IPTags *[]IPTag `json:"ipTags,omitempty"`
+
+	// The idle timeout of the public IP address.
+	IdleTimeoutInMinutes *int32 `json:"idleTimeoutInMinutes,omitempty"`
 
 	// READ-ONLY; The provisioning state of the public IP address resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
@@ -10753,9 +10753,9 @@ type PublicIPAddressesListVirtualMachineScaleSetPublicIPAddressesOptions struct 
 	// placeholder for future optional parameters
 }
 
-// PublicIPAddressesListVirtualMachineScaleSetVMPublicIPaddressesOptions contains the optional parameters for the PublicIPAddresses.ListVirtualMachineScaleSetVMPublicIPaddresses
+// PublicIPAddressesListVirtualMachineScaleSetVMPublicIPAddressesOptions contains the optional parameters for the PublicIPAddresses.ListVirtualMachineScaleSetVMPublicIPAddresses
 // method.
-type PublicIPAddressesListVirtualMachineScaleSetVMPublicIPaddressesOptions struct {
+type PublicIPAddressesListVirtualMachineScaleSetVMPublicIPAddressesOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -11068,7 +11068,7 @@ type RouteFilterPollerResponse struct {
 // Route Filter Resource.
 type RouteFilterPropertiesFormat struct {
 	// READ-ONLY; A collection of references to express route circuit ipv6 peerings.
-	IPv6Peerings *[]ExpressRouteCircuitPeering `json:"ipv6Peerings,omitempty" azure:"ro"`
+	Ipv6Peerings *[]ExpressRouteCircuitPeering `json:"ipv6Peerings,omitempty" azure:"ro"`
 
 	// READ-ONLY; A collection of references to express route circuit peerings.
 	Peerings *[]ExpressRouteCircuitPeering `json:"peerings,omitempty" azure:"ro"`
@@ -11988,9 +11988,9 @@ type ServiceTagsListResultResponse struct {
 }
 
 // List of session IDs.
-type SessionIDs struct {
+type SessionIds struct {
 	// List of session IDs.
-	SessionIDs *[]string `json:"sessionIds,omitempty"`
+	SessionIds *[]string `json:"sessionIds,omitempty"`
 }
 
 // StringArrayResponse is the response envelope for operations that return a []string type.
@@ -12927,11 +12927,11 @@ type VirtualNetworkGatewayConnectionListEntityPropertiesFormat struct {
 	// Bypass ExpressRoute Gateway for data forwarding.
 	ExpressRouteGatewayBypass *bool `json:"expressRouteGatewayBypass,omitempty"`
 
-	// The IPSec Policies to be considered by this connection.
-	IPsecPolicies *[]IPsecPolicy `json:"ipsecPolicies,omitempty"`
-
 	// READ-ONLY; The ingress bytes transferred in this connection.
 	IngressBytesTransferred *int64 `json:"ingressBytesTransferred,omitempty" azure:"ro"`
+
+	// The IPSec Policies to be considered by this connection.
+	IpsecPolicies *[]IpsecPolicy `json:"ipsecPolicies,omitempty"`
 
 	// The reference to local network gateway resource.
 	LocalNetworkGateway2 *VirtualNetworkConnectionGatewayReference `json:"localNetworkGateway2,omitempty"`
@@ -13023,11 +13023,11 @@ type VirtualNetworkGatewayConnectionPropertiesFormat struct {
 	// Bypass ExpressRoute Gateway for data forwarding.
 	ExpressRouteGatewayBypass *bool `json:"expressRouteGatewayBypass,omitempty"`
 
-	// The IPSec Policies to be considered by this connection.
-	IPsecPolicies *[]IPsecPolicy `json:"ipsecPolicies,omitempty"`
-
 	// READ-ONLY; The ingress bytes transferred in this connection.
 	IngressBytesTransferred *int64 `json:"ingressBytesTransferred,omitempty" azure:"ro"`
+
+	// The IPSec Policies to be considered by this connection.
+	IpsecPolicies *[]IpsecPolicy `json:"ipsecPolicies,omitempty"`
 
 	// The reference to local network gateway resource.
 	LocalNetworkGateway2 *LocalNetworkGateway `json:"localNetworkGateway2,omitempty"`
@@ -13339,9 +13339,9 @@ type VirtualNetworkGatewaysBeginGetVpnclientConnectionHealthOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualNetworkGatewaysBeginGetVpnclientIPsecParametersOptions contains the optional parameters for the VirtualNetworkGateways.BeginGetVpnclientIPsecParameters
+// VirtualNetworkGatewaysBeginGetVpnclientIpsecParametersOptions contains the optional parameters for the VirtualNetworkGateways.BeginGetVpnclientIpsecParameters
 // method.
-type VirtualNetworkGatewaysBeginGetVpnclientIPsecParametersOptions struct {
+type VirtualNetworkGatewaysBeginGetVpnclientIpsecParametersOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -13357,9 +13357,9 @@ type VirtualNetworkGatewaysBeginResetVpnClientSharedKeyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualNetworkGatewaysBeginSetVpnclientIPsecParametersOptions contains the optional parameters for the VirtualNetworkGateways.BeginSetVpnclientIPsecParameters
+// VirtualNetworkGatewaysBeginSetVpnclientIpsecParametersOptions contains the optional parameters for the VirtualNetworkGateways.BeginSetVpnclientIpsecParameters
 // method.
-type VirtualNetworkGatewaysBeginSetVpnclientIPsecParametersOptions struct {
+type VirtualNetworkGatewaysBeginSetVpnclientIpsecParametersOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -13915,7 +13915,7 @@ type VirtualRouterPropertiesFormat struct {
 	VirtualRouterAsn *int64 `json:"virtualRouterAsn,omitempty"`
 
 	// VirtualRouter IPs.
-	VirtualRouterIPs *[]string `json:"virtualRouterIps,omitempty"`
+	VirtualRouterIps *[]string `json:"virtualRouterIps,omitempty"`
 }
 
 // VirtualRouterResponse is the response envelope for operations that return a VirtualRouter type.
@@ -13954,7 +13954,7 @@ type VirtualRoutersListOptions struct {
 }
 
 // VirtualWAN Resource.
-type VirtualWan struct {
+type VirtualWAN struct {
 	Resource
 	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
 	Etag *string `json:"etag,omitempty" azure:"ro"`
@@ -13963,16 +13963,25 @@ type VirtualWan struct {
 	Properties *VirtualWanProperties `json:"properties,omitempty"`
 }
 
-// VirtualWanPollerResponse is the response envelope for operations that asynchronously return a VirtualWan type.
-type VirtualWanPollerResponse struct {
+// VirtualWANPollerResponse is the response envelope for operations that asynchronously return a VirtualWAN type.
+type VirtualWANPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualWanResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualWANResponse, error)
 
 	// Poller contains an initialized poller.
-	Poller VirtualWanPoller
+	Poller VirtualWANPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// VirtualWANResponse is the response envelope for operations that return a VirtualWAN type.
+type VirtualWANResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+
+	// VirtualWAN Resource.
+	VirtualWAN *VirtualWAN
 }
 
 // Parameters for VirtualWAN.
@@ -14000,15 +14009,6 @@ type VirtualWanProperties struct {
 
 	// READ-ONLY; List of VpnSites in the VirtualWAN.
 	VpnSites *[]SubResource `json:"vpnSites,omitempty" azure:"ro"`
-}
-
-// VirtualWanResponse is the response envelope for operations that return a VirtualWan type.
-type VirtualWanResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// VirtualWAN Resource.
-	VirtualWan *VirtualWan
 }
 
 // Collection of SecurityProviders.
@@ -14101,7 +14101,7 @@ type VpnClientConfiguration struct {
 	VpnClientAddressPool *AddressSpace `json:"vpnClientAddressPool,omitempty"`
 
 	// VpnClientIpsecPolicies for virtual network gateway P2S client.
-	VpnClientIPsecPolicies *[]IPsecPolicy `json:"vpnClientIpsecPolicies,omitempty"`
+	VpnClientIpsecPolicies *[]IpsecPolicy `json:"vpnClientIpsecPolicies,omitempty"`
 
 	// VpnClientProtocols for Virtual network gateway.
 	VpnClientProtocols *[]VpnClientProtocol `json:"vpnClientProtocols,omitempty"`
@@ -14200,17 +14200,17 @@ type VpnClientIPsecParameters struct {
 	// The DH Group used in IKE Phase 1 for initial SA.
 	DhGroup *DhGroup `json:"dhGroup,omitempty"`
 
-	// The IPSec encryption algorithm (IKE phase 1).
-	IPsecEncryption *IPsecEncryption `json:"ipsecEncryption,omitempty"`
-
-	// The IPSec integrity algorithm (IKE phase 1).
-	IPsecIntegrity *IPsecIntegrity `json:"ipsecIntegrity,omitempty"`
-
 	// The IKE encryption algorithm (IKE phase 2).
 	IkeEncryption *IkeEncryption `json:"ikeEncryption,omitempty"`
 
 	// The IKE integrity algorithm (IKE phase 2).
 	IkeIntegrity *IkeIntegrity `json:"ikeIntegrity,omitempty"`
+
+	// The IPSec encryption algorithm (IKE phase 1).
+	IpsecEncryption *IpsecEncryption `json:"ipsecEncryption,omitempty"`
+
+	// The IPSec integrity algorithm (IKE phase 1).
+	IpsecIntegrity *IpsecIntegrity `json:"ipsecIntegrity,omitempty"`
 
 	// The Pfs Group used in IKE Phase 2 for new child SA.
 	PfsGroup *PfsGroup `json:"pfsGroup,omitempty"`
@@ -14353,11 +14353,11 @@ type VpnConnectionProperties struct {
 	// EnableBgp flag.
 	EnableRateLimiting *bool `json:"enableRateLimiting,omitempty"`
 
-	// The IPSec Policies to be considered by this connection.
-	IPsecPolicies *[]IPsecPolicy `json:"ipsecPolicies,omitempty"`
-
 	// READ-ONLY; Ingress bytes transferred.
 	IngressBytesTransferred *int64 `json:"ingressBytesTransferred,omitempty" azure:"ro"`
+
+	// The IPSec Policies to be considered by this connection.
+	IpsecPolicies *[]IpsecPolicy `json:"ipsecPolicies,omitempty"`
 
 	// READ-ONLY; The provisioning state of the VPN connection resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
@@ -14665,7 +14665,7 @@ type VpnServerConfigurationProperties struct {
 	VpnAuthenticationTypes *[]VpnAuthenticationType `json:"vpnAuthenticationTypes,omitempty"`
 
 	// VpnClientIpsecPolicies for VpnServerConfiguration.
-	VpnClientIPsecPolicies *[]IPsecPolicy `json:"vpnClientIpsecPolicies,omitempty"`
+	VpnClientIpsecPolicies *[]IpsecPolicy `json:"vpnClientIpsecPolicies,omitempty"`
 
 	// VPN client revoked certificate of VpnServerConfiguration.
 	VpnClientRevokedCertificates *[]VpnServerConfigVpnClientRevokedCertificate `json:"vpnClientRevokedCertificates,omitempty"`
@@ -14720,7 +14720,7 @@ type VpnServerConfigurationsListOptions struct {
 // VpnServerConfigurations list associated with VirtualWan Response.
 type VpnServerConfigurationsResponse struct {
 	// List of VpnServerConfigurations associated with VirtualWan.
-	VpnServerConfigurationResourceIDs *[]string `json:"vpnServerConfigurationResourceIds,omitempty"`
+	VpnServerConfigurationResourceIds *[]string `json:"vpnServerConfigurationResourceIds,omitempty"`
 }
 
 // VpnServerConfigurationsResponsePollerResponse is the response envelope for operations that asynchronously return a VpnServerConfigurationsResponse type.
@@ -14814,11 +14814,11 @@ type VpnSiteLinkConnectionProperties struct {
 	// EnableBgp flag.
 	EnableRateLimiting *bool `json:"enableRateLimiting,omitempty"`
 
-	// The IPSec Policies to be considered by this connection.
-	IPsecPolicies *[]IPsecPolicy `json:"ipsecPolicies,omitempty"`
-
 	// READ-ONLY; Ingress bytes transferred.
 	IngressBytesTransferred *int64 `json:"ingressBytesTransferred,omitempty" azure:"ro"`
+
+	// The IPSec Policies to be considered by this connection.
+	IpsecPolicies *[]IpsecPolicy `json:"ipsecPolicies,omitempty"`
 
 	// READ-ONLY; The provisioning state of the VPN site link connection resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`

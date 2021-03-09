@@ -401,21 +401,21 @@ func (c RehydratePriority) ToPtr() *RehydratePriority {
 type SKUName string
 
 const (
-	SKUNameStandardLrs   SKUName = "Standard_LRS"
-	SKUNameStandardGrs   SKUName = "Standard_GRS"
+	SKUNameStandardLRS   SKUName = "Standard_LRS"
+	SKUNameStandardGRS   SKUName = "Standard_GRS"
 	SKUNameStandardRagrs SKUName = "Standard_RAGRS"
-	SKUNameStandardZrs   SKUName = "Standard_ZRS"
-	SKUNamePremiumLrs    SKUName = "Premium_LRS"
+	SKUNameStandardZRS   SKUName = "Standard_ZRS"
+	SKUNamePremiumLRS    SKUName = "Premium_LRS"
 )
 
 // PossibleSKUNameValues returns the possible values for the SKUName const type.
 func PossibleSKUNameValues() []SKUName {
 	return []SKUName{
-		SKUNameStandardLrs,
-		SKUNameStandardGrs,
+		SKUNameStandardLRS,
+		SKUNameStandardGRS,
 		SKUNameStandardRagrs,
-		SKUNameStandardZrs,
-		SKUNamePremiumLrs,
+		SKUNameStandardZRS,
+		SKUNamePremiumLRS,
 	}
 }
 
@@ -499,7 +499,7 @@ const (
 	StorageErrorCodeInvalidHTTPVerb                                   StorageErrorCode = "InvalidHttpVerb"
 	StorageErrorCodeInvalidHeaderValue                                StorageErrorCode = "InvalidHeaderValue"
 	StorageErrorCodeInvalidInput                                      StorageErrorCode = "InvalidInput"
-	StorageErrorCodeInvalidMD5                                        StorageErrorCode = "InvalidMd5"
+	StorageErrorCodeInvalidMd5                                        StorageErrorCode = "InvalidMd5"
 	StorageErrorCodeInvalidMetadata                                   StorageErrorCode = "InvalidMetadata"
 	StorageErrorCodeInvalidOperation                                  StorageErrorCode = "InvalidOperation"
 	StorageErrorCodeInvalidPageRange                                  StorageErrorCode = "InvalidPageRange"
@@ -525,8 +525,8 @@ const (
 	StorageErrorCodeLeaseNotPresentWithBlobOperation                  StorageErrorCode = "LeaseNotPresentWithBlobOperation"
 	StorageErrorCodeLeaseNotPresentWithContainerOperation             StorageErrorCode = "LeaseNotPresentWithContainerOperation"
 	StorageErrorCodeLeaseNotPresentWithLeaseOperation                 StorageErrorCode = "LeaseNotPresentWithLeaseOperation"
-	StorageErrorCodeMD5Mismatch                                       StorageErrorCode = "Md5Mismatch"
 	StorageErrorCodeMaxBlobSizeConditionNotMet                        StorageErrorCode = "MaxBlobSizeConditionNotMet"
+	StorageErrorCodeMd5Mismatch                                       StorageErrorCode = "Md5Mismatch"
 	StorageErrorCodeMetadataTooLarge                                  StorageErrorCode = "MetadataTooLarge"
 	StorageErrorCodeMissingContentLengthHeader                        StorageErrorCode = "MissingContentLengthHeader"
 	StorageErrorCodeMissingRequiredHeader                             StorageErrorCode = "MissingRequiredHeader"
@@ -616,7 +616,7 @@ func PossibleStorageErrorCodeValues() []StorageErrorCode {
 		StorageErrorCodeInvalidHTTPVerb,
 		StorageErrorCodeInvalidHeaderValue,
 		StorageErrorCodeInvalidInput,
-		StorageErrorCodeInvalidMD5,
+		StorageErrorCodeInvalidMd5,
 		StorageErrorCodeInvalidMetadata,
 		StorageErrorCodeInvalidOperation,
 		StorageErrorCodeInvalidPageRange,
@@ -642,8 +642,8 @@ func PossibleStorageErrorCodeValues() []StorageErrorCode {
 		StorageErrorCodeLeaseNotPresentWithBlobOperation,
 		StorageErrorCodeLeaseNotPresentWithContainerOperation,
 		StorageErrorCodeLeaseNotPresentWithLeaseOperation,
-		StorageErrorCodeMD5Mismatch,
 		StorageErrorCodeMaxBlobSizeConditionNotMet,
+		StorageErrorCodeMd5Mismatch,
 		StorageErrorCodeMetadataTooLarge,
 		StorageErrorCodeMissingContentLengthHeader,
 		StorageErrorCodeMissingRequiredHeader,

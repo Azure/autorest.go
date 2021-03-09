@@ -23,12 +23,12 @@ import (
 // Don't use this type directly, use NewUsageClient() instead.
 type UsageClient struct {
 	con            *armcore.Connection
-	subscriptionID string
+	subscriptionid string
 }
 
 // NewUsageClient creates a new instance of UsageClient with the specified values.
-func NewUsageClient(con *armcore.Connection, subscriptionID string) *UsageClient {
-	return &UsageClient{con: con, subscriptionID: subscriptionID}
+func NewUsageClient(con *armcore.Connection, subscriptionid string) *UsageClient {
+	return &UsageClient{con: con, subscriptionid: subscriptionid}
 }
 
 // List - Gets, for the specified location, the current compute resource usage information as well as the limits for compute resources under the subscription.
@@ -51,7 +51,7 @@ func (client *UsageClient) List(location string, options *UsageListOptions) List
 func (client *UsageClient) listCreateRequest(ctx context.Context, location string, options *UsageListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/usages"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionid))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err

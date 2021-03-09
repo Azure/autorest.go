@@ -181,7 +181,7 @@ type Metrics struct {
 	Enabled *bool `xml:"Enabled"`
 
 	// Indicates whether metrics should generate summary statistics for called API operations.
-	IncludeApIs *bool `xml:"IncludeAPIs"`
+	IncludeAPIs *bool `xml:"IncludeAPIs"`
 
 	// The retention policy.
 	RetentionPolicy *RetentionPolicy `xml:"RetentionPolicy"`
@@ -195,9 +195,9 @@ type QueryOptions struct {
 	// OData filter expression.
 	Filter *string
 	// Specifies the media type for the response.
-	FormatParameter *OdataMetadataFormat
+	Format *OdataMetadataFormat
 	// Select expression using OData notation. Limits the columns on each record to just those requested, e.g. "$select=PolicyAssignmentId, ResourceId".
-	SelectParameter *string
+	Select *string
 	// Maximum number of records to return.
 	Top *int32
 }
@@ -214,7 +214,7 @@ type RetentionPolicy struct {
 // ServiceGetPropertiesOptions contains the optional parameters for the Service.GetProperties method.
 type ServiceGetPropertiesOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics logging is enabled.
-	RequestId *string
+	RequestID *string
 	// The timeout parameter is expressed in seconds.
 	Timeout *int32
 }
@@ -222,7 +222,7 @@ type ServiceGetPropertiesOptions struct {
 // ServiceGetStatisticsOptions contains the optional parameters for the Service.GetStatistics method.
 type ServiceGetStatisticsOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics logging is enabled.
-	RequestId *string
+	RequestID *string
 	// The timeout parameter is expressed in seconds.
 	Timeout *int32
 }
@@ -230,7 +230,7 @@ type ServiceGetStatisticsOptions struct {
 // ServiceSetPropertiesOptions contains the optional parameters for the Service.SetProperties method.
 type ServiceSetPropertiesOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics logging is enabled.
-	RequestId *string
+	RequestID *string
 	// The timeout parameter is expressed in seconds.
 	Timeout *int32
 }
@@ -251,7 +251,7 @@ type ServiceSetPropertiesResponse struct {
 }
 
 // A signed identifier.
-type SignedIDentifier struct {
+type SignedIdentifier struct {
 	// The access policy.
 	AccessPolicy *AccessPolicy `xml:"AccessPolicy"`
 
@@ -259,8 +259,8 @@ type SignedIDentifier struct {
 	ID *string `xml:"Id"`
 }
 
-// SignedIDentifierArrayResponse is the response envelope for operations that return a []SignedIDentifier type.
-type SignedIDentifierArrayResponse struct {
+// SignedIdentifierArrayResponse is the response envelope for operations that return a []SignedIdentifier type.
+type SignedIdentifierArrayResponse struct {
 	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
 	ClientRequestID *string `xml:"ClientRequestID"`
 
@@ -274,7 +274,7 @@ type SignedIDentifierArrayResponse struct {
 	RequestID *string `xml:"RequestID"`
 
 	// A collection of signed identifiers.
-	SignedIdentifiers []SignedIDentifier `xml:"SignedIdentifier"`
+	SignedIdentifiers []SignedIdentifier `xml:"SignedIdentifier"`
 
 	// Version contains the information returned from the x-ms-version header response.
 	Version *string `xml:"Version"`
@@ -283,7 +283,7 @@ type SignedIDentifierArrayResponse struct {
 // TableCreateOptions contains the optional parameters for the Table.Create method.
 type TableCreateOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics logging is enabled.
-	RequestId *string
+	RequestID *string
 	// Specifies whether the response should include the inserted entity in the payload. Possible values are return-no-content and return-content.
 	ResponsePreference *ResponseFormat
 }
@@ -312,7 +312,7 @@ type TableCreateResponse struct {
 // TableDeleteEntityOptions contains the optional parameters for the Table.DeleteEntity method.
 type TableDeleteEntityOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics logging is enabled.
-	RequestId *string
+	RequestID *string
 	// The timeout parameter is expressed in seconds.
 	Timeout *int32
 }
@@ -338,7 +338,7 @@ type TableDeleteEntityResponse struct {
 // TableDeleteOptions contains the optional parameters for the Table.Delete method.
 type TableDeleteOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics logging is enabled.
-	RequestId *string
+	RequestID *string
 }
 
 // TableDeleteResponse contains the response from method Table.Delete.
@@ -398,7 +398,7 @@ type TableEntityQueryResponseResponse struct {
 // TableGetAccessPolicyOptions contains the optional parameters for the Table.GetAccessPolicy method.
 type TableGetAccessPolicyOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics logging is enabled.
-	RequestId *string
+	RequestID *string
 	// The timeout parameter is expressed in seconds.
 	Timeout *int32
 }
@@ -406,7 +406,7 @@ type TableGetAccessPolicyOptions struct {
 // TableInsertEntityOptions contains the optional parameters for the Table.InsertEntity method.
 type TableInsertEntityOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics logging is enabled.
-	RequestId *string
+	RequestID *string
 	// Specifies whether the response should include the inserted entity in the payload. Possible values are return-no-content and return-content.
 	ResponsePreference *ResponseFormat
 	// The properties for the table entity.
@@ -449,7 +449,7 @@ type TableMergeEntityOptions struct {
 	// if an existing entity is found.
 	IfMatch *string
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics logging is enabled.
-	RequestId *string
+	RequestID *string
 	// The properties for the table entity.
 	TableEntityProperties *map[string]interface{}
 	// The timeout parameter is expressed in seconds.
@@ -490,7 +490,7 @@ type TableQueryEntitiesOptions struct {
 	// An entity query continuation token from a previous call.
 	NextRowKey *string
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics logging is enabled.
-	RequestId *string
+	RequestID *string
 	// The timeout parameter is expressed in seconds.
 	Timeout *int32
 }
@@ -498,7 +498,7 @@ type TableQueryEntitiesOptions struct {
 // TableQueryEntityWithPartitionAndRowKeyOptions contains the optional parameters for the Table.QueryEntityWithPartitionAndRowKey method.
 type TableQueryEntityWithPartitionAndRowKeyOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics logging is enabled.
-	RequestId *string
+	RequestID *string
 	// The timeout parameter is expressed in seconds.
 	Timeout *int32
 }
@@ -508,7 +508,7 @@ type TableQueryOptions struct {
 	// A table query continuation token from a previous call.
 	NextTableName *string
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics logging is enabled.
-	RequestId *string
+	RequestID *string
 }
 
 // The properties for the table query response.
@@ -683,9 +683,9 @@ type TableServiceStatsResponse struct {
 // TableSetAccessPolicyOptions contains the optional parameters for the Table.SetAccessPolicy method.
 type TableSetAccessPolicyOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics logging is enabled.
-	RequestId *string
+	RequestID *string
 	// The acls for the table.
-	TableAcl *[]SignedIDentifier
+	TableACL *[]SignedIdentifier
 	// The timeout parameter is expressed in seconds.
 	Timeout *int32
 }
@@ -715,7 +715,7 @@ type TableUpdateEntityOptions struct {
 	// if an existing entity is found.
 	IfMatch *string
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics logging is enabled.
-	RequestId *string
+	RequestID *string
 	// The properties for the table entity.
 	TableEntityProperties *map[string]interface{}
 	// The timeout parameter is expressed in seconds.

@@ -57,8 +57,8 @@ func (client *ServiceClient) getPropertiesCreateRequest(ctx context.Context, opt
 	}
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("x-ms-version", "2019-02-02")
-	if options != nil && options.RequestId != nil {
-		req.Header.Set("x-ms-client-request-id", *options.RequestId)
+	if options != nil && options.RequestID != nil {
+		req.Header.Set("x-ms-client-request-id", *options.RequestID)
 	}
 	req.Header.Set("Accept", "application/xml")
 	return req, nil
@@ -124,8 +124,8 @@ func (client *ServiceClient) getStatisticsCreateRequest(ctx context.Context, opt
 	}
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("x-ms-version", "2019-02-02")
-	if options != nil && options.RequestId != nil {
-		req.Header.Set("x-ms-client-request-id", *options.RequestId)
+	if options != nil && options.RequestID != nil {
+		req.Header.Set("x-ms-client-request-id", *options.RequestID)
 	}
 	req.Header.Set("Accept", "application/xml")
 	return req, nil
@@ -198,8 +198,8 @@ func (client *ServiceClient) setPropertiesCreateRequest(ctx context.Context, tab
 	}
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("x-ms-version", "2019-02-02")
-	if options != nil && options.RequestId != nil {
-		req.Header.Set("x-ms-client-request-id", *options.RequestId)
+	if options != nil && options.RequestID != nil {
+		req.Header.Set("x-ms-client-request-id", *options.RequestID)
 	}
 	req.Header.Set("Accept", "application/xml")
 	return req, req.MarshalAsXML(tableServiceProperties)

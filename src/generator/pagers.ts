@@ -4,7 +4,6 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Session } from '@autorest/extension-base';
-import { camelCase } from '@azure-tools/codegen';
 import { CodeModel } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 import { PagerInfo } from '../common/helpers';
@@ -28,7 +27,7 @@ export async function generatePagers(session: Session<CodeModel>): Promise<strin
   const pagers = <Array<PagerInfo>>session.model.language.go!.pageableTypes;
   pagers.sort((a: PagerInfo, b: PagerInfo) => { return sortAscending(a.name, b.name) });
   for (const pager of values(pagers)) {
-    const pagerType = camelCase(pager.name);
+    const pagerType = pager.name.uncapitalize();
     let pollerRespField = '';
     let respFieldCheck = '\tresp, err := p.pipeline.Do(req)';
     let requesterCondition = '';
@@ -45,10 +44,10 @@ export async function generatePagers(session: Session<CodeModel>): Promise<strin
   }`;
       requesterCondition = ' if p.resp == nil';
     }
-    const requesterType = `${camelCase(pager.respType)}CreateRequest`;
-    const errorerType = `${camelCase(pager.respType)}HandleError`;
-    const responderType = `${camelCase(pager.respType)}HandleResponse`;
-    const advanceType = `${camelCase(pager.respType)}AdvancePage`;
+    const requesterType = `${pager.respType.uncapitalize()}CreateRequest`;
+    const errorerType = `${pager.respType.uncapitalize()}HandleError`;
+    const responderType = `${pager.respType.uncapitalize()}HandleResponse`;
+    const advanceType = `${pager.respType.uncapitalize()}AdvancePage`;
     text += `// ${pager.name} provides iteration over ${pager.respType} pages.
 type ${pager.name} interface {
 	azcore.Pager

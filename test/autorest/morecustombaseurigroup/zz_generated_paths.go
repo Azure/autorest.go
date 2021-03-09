@@ -19,12 +19,12 @@ import (
 // Don't use this type directly, use NewPathsClient() instead.
 type PathsClient struct {
 	con            *Connection
-	subscriptionID string
+	subscriptionid string
 }
 
 // NewPathsClient creates a new instance of PathsClient with the specified values.
-func NewPathsClient(con *Connection, subscriptionID string) *PathsClient {
-	return &PathsClient{con: con, subscriptionID: subscriptionID}
+func NewPathsClient(con *Connection, subscriptionid string) *PathsClient {
+	return &PathsClient{con: con, subscriptionid: subscriptionid}
 }
 
 // GetEmpty - Get a 200 to test a valid base uri
@@ -51,7 +51,7 @@ func (client *PathsClient) getEmptyCreateRequest(ctx context.Context, vault stri
 	host = strings.ReplaceAll(host, "{secret}", secret)
 	urlPath := "/customuri/{subscriptionId}/{keyName}"
 	urlPath = strings.ReplaceAll(urlPath, "{keyName}", url.PathEscape(keyName))
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionid))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err

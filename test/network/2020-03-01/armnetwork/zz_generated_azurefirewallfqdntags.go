@@ -20,12 +20,12 @@ import (
 // Don't use this type directly, use NewAzureFirewallFqdnTagsClient() instead.
 type AzureFirewallFqdnTagsClient struct {
 	con            *armcore.Connection
-	subscriptionID string
+	subscriptionid string
 }
 
 // NewAzureFirewallFqdnTagsClient creates a new instance of AzureFirewallFqdnTagsClient with the specified values.
-func NewAzureFirewallFqdnTagsClient(con *armcore.Connection, subscriptionID string) *AzureFirewallFqdnTagsClient {
-	return &AzureFirewallFqdnTagsClient{con: con, subscriptionID: subscriptionID}
+func NewAzureFirewallFqdnTagsClient(con *armcore.Connection, subscriptionid string) *AzureFirewallFqdnTagsClient {
+	return &AzureFirewallFqdnTagsClient{con: con, subscriptionid: subscriptionid}
 }
 
 // ListAll - Gets all the Azure Firewall FQDN Tags in a subscription.
@@ -47,7 +47,7 @@ func (client *AzureFirewallFqdnTagsClient) ListAll(options *AzureFirewallFqdnTag
 // listAllCreateRequest creates the ListAll request.
 func (client *AzureFirewallFqdnTagsClient) listAllCreateRequest(ctx context.Context, options *AzureFirewallFqdnTagsListAllOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/azureFirewallFqdnTags"
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionid))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err

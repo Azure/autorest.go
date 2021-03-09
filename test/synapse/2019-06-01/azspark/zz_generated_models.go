@@ -604,7 +604,7 @@ type SparkSessionState struct {
 	CurrentState       *string       `json:"currentState,omitempty"`
 	DeadAt             *time.Time    `json:"deadAt,omitempty"`
 	ErrorAt            *time.Time    `json:"errorAt,omitempty"`
-	IDleAt             *time.Time    `json:"idleAt,omitempty"`
+	IdleAt             *time.Time    `json:"idleAt,omitempty"`
 	JobCreationRequest *SparkRequest `json:"jobCreationRequest,omitempty"`
 	NotStartedAt       *time.Time    `json:"notStartedAt,omitempty"`
 	RecoveringAt       *time.Time    `json:"recoveringAt,omitempty"`
@@ -628,8 +628,8 @@ func (s SparkSessionState) MarshalJSON() ([]byte, error) {
 	if s.ErrorAt != nil {
 		objectMap["errorAt"] = (*timeRFC3339)(s.ErrorAt)
 	}
-	if s.IDleAt != nil {
-		objectMap["idleAt"] = (*timeRFC3339)(s.IDleAt)
+	if s.IdleAt != nil {
+		objectMap["idleAt"] = (*timeRFC3339)(s.IdleAt)
 	}
 	if s.JobCreationRequest != nil {
 		objectMap["jobCreationRequest"] = s.JobCreationRequest
@@ -691,7 +691,7 @@ func (s *SparkSessionState) UnmarshalJSON(data []byte) error {
 			if val != nil {
 				var aux timeRFC3339
 				err = json.Unmarshal(*val, &aux)
-				s.IDleAt = (*time.Time)(&aux)
+				s.IdleAt = (*time.Time)(&aux)
 			}
 			delete(rawMsg, key)
 		case "jobCreationRequest":

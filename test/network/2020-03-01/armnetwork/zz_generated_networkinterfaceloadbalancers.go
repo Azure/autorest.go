@@ -20,12 +20,12 @@ import (
 // Don't use this type directly, use NewNetworkInterfaceLoadBalancersClient() instead.
 type NetworkInterfaceLoadBalancersClient struct {
 	con            *armcore.Connection
-	subscriptionID string
+	subscriptionid string
 }
 
 // NewNetworkInterfaceLoadBalancersClient creates a new instance of NetworkInterfaceLoadBalancersClient with the specified values.
-func NewNetworkInterfaceLoadBalancersClient(con *armcore.Connection, subscriptionID string) *NetworkInterfaceLoadBalancersClient {
-	return &NetworkInterfaceLoadBalancersClient{con: con, subscriptionID: subscriptionID}
+func NewNetworkInterfaceLoadBalancersClient(con *armcore.Connection, subscriptionid string) *NetworkInterfaceLoadBalancersClient {
+	return &NetworkInterfaceLoadBalancersClient{con: con, subscriptionid: subscriptionid}
 }
 
 // List - List all load balancers in a network interface.
@@ -49,7 +49,7 @@ func (client *NetworkInterfaceLoadBalancersClient) listCreateRequest(ctx context
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/loadBalancers"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{networkInterfaceName}", url.PathEscape(networkInterfaceName))
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionid))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err

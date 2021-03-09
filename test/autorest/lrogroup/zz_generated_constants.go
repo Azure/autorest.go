@@ -18,7 +18,7 @@ const (
 	OperationResultStatusDeleted   OperationResultStatus = "Deleted"
 	OperationResultStatusDeleting  OperationResultStatus = "Deleting"
 	OperationResultStatusFailed    OperationResultStatus = "Failed"
-	OperationResultStatusOk        OperationResultStatus = "OK"
+	OperationResultStatusOK        OperationResultStatus = "OK"
 	OperationResultStatusSucceeded OperationResultStatus = "Succeeded"
 	OperationResultStatusUpdated   OperationResultStatus = "Updated"
 	OperationResultStatusUpdating  OperationResultStatus = "Updating"
@@ -34,7 +34,7 @@ func PossibleOperationResultStatusValues() []OperationResultStatus {
 		OperationResultStatusDeleted,
 		OperationResultStatusDeleting,
 		OperationResultStatusFailed,
-		OperationResultStatusOk,
+		OperationResultStatusOK,
 		OperationResultStatusSucceeded,
 		OperationResultStatusUpdated,
 		OperationResultStatusUpdating,
@@ -56,7 +56,7 @@ const (
 	ProductPropertiesProvisioningStateValuesDeleted   ProductPropertiesProvisioningStateValues = "Deleted"
 	ProductPropertiesProvisioningStateValuesDeleting  ProductPropertiesProvisioningStateValues = "Deleting"
 	ProductPropertiesProvisioningStateValuesFailed    ProductPropertiesProvisioningStateValues = "Failed"
-	ProductPropertiesProvisioningStateValuesOk        ProductPropertiesProvisioningStateValues = "OK"
+	ProductPropertiesProvisioningStateValuesOK        ProductPropertiesProvisioningStateValues = "OK"
 	ProductPropertiesProvisioningStateValuesSucceeded ProductPropertiesProvisioningStateValues = "Succeeded"
 	ProductPropertiesProvisioningStateValuesUpdated   ProductPropertiesProvisioningStateValues = "Updated"
 	ProductPropertiesProvisioningStateValuesUpdating  ProductPropertiesProvisioningStateValues = "Updating"
@@ -72,7 +72,7 @@ func PossibleProductPropertiesProvisioningStateValuesValues() []ProductPropertie
 		ProductPropertiesProvisioningStateValuesDeleted,
 		ProductPropertiesProvisioningStateValuesDeleting,
 		ProductPropertiesProvisioningStateValuesFailed,
-		ProductPropertiesProvisioningStateValuesOk,
+		ProductPropertiesProvisioningStateValuesOK,
 		ProductPropertiesProvisioningStateValuesSucceeded,
 		ProductPropertiesProvisioningStateValuesUpdated,
 		ProductPropertiesProvisioningStateValuesUpdating,
@@ -94,7 +94,7 @@ const (
 	SubProductPropertiesProvisioningStateValuesDeleted   SubProductPropertiesProvisioningStateValues = "Deleted"
 	SubProductPropertiesProvisioningStateValuesDeleting  SubProductPropertiesProvisioningStateValues = "Deleting"
 	SubProductPropertiesProvisioningStateValuesFailed    SubProductPropertiesProvisioningStateValues = "Failed"
-	SubProductPropertiesProvisioningStateValuesOk        SubProductPropertiesProvisioningStateValues = "OK"
+	SubProductPropertiesProvisioningStateValuesOK        SubProductPropertiesProvisioningStateValues = "OK"
 	SubProductPropertiesProvisioningStateValuesSucceeded SubProductPropertiesProvisioningStateValues = "Succeeded"
 	SubProductPropertiesProvisioningStateValuesUpdated   SubProductPropertiesProvisioningStateValues = "Updated"
 	SubProductPropertiesProvisioningStateValuesUpdating  SubProductPropertiesProvisioningStateValues = "Updating"
@@ -110,7 +110,7 @@ func PossibleSubProductPropertiesProvisioningStateValuesValues() []SubProductPro
 		SubProductPropertiesProvisioningStateValuesDeleted,
 		SubProductPropertiesProvisioningStateValuesDeleting,
 		SubProductPropertiesProvisioningStateValuesFailed,
-		SubProductPropertiesProvisioningStateValuesOk,
+		SubProductPropertiesProvisioningStateValuesOK,
 		SubProductPropertiesProvisioningStateValuesSucceeded,
 		SubProductPropertiesProvisioningStateValuesUpdated,
 		SubProductPropertiesProvisioningStateValuesUpdating,

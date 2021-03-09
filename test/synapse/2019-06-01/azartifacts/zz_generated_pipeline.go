@@ -100,8 +100,8 @@ func (client *pipelineClient) createPipelineRunCreateRequest(ctx context.Context
 	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
 	query.Set("api-version", "2019-06-01-preview")
-	if options != nil && options.ReferencePipelineRunId != nil {
-		query.Set("referencePipelineRunId", *options.ReferencePipelineRunId)
+	if options != nil && options.ReferencePipelineRunID != nil {
+		query.Set("referencePipelineRunId", *options.ReferencePipelineRunID)
 	}
 	if options != nil && options.IsRecovery != nil {
 		query.Set("isRecovery", strconv.FormatBool(*options.IsRecovery))

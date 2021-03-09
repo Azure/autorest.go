@@ -45,7 +45,7 @@ type connection struct {
 
 // newConnection creates an instance of the connection type with the specified endpoint.
 // Pass nil to accept the default options; this is the same as passing a zero-value options.
-func newConnection(endpoint string, livyAPIVersion *string, sparkPoolName string, options *connectionOptions) *connection {
+func newConnection(endpoint string, livyapiVersion *string, sparkPoolName string, options *connectionOptions) *connection {
 	if options == nil {
 		options = &connectionOptions{}
 	}
@@ -53,18 +53,18 @@ func newConnection(endpoint string, livyAPIVersion *string, sparkPoolName string
 		azcore.NewTelemetryPolicy(options.telemetryOptions()),
 		azcore.NewRetryPolicy(&options.Retry),
 		azcore.NewLogPolicy(&options.Logging))
-	return newConnectionWithPipeline(endpoint, livyAPIVersion, sparkPoolName, p)
+	return newConnectionWithPipeline(endpoint, livyapiVersion, sparkPoolName, p)
 }
 
 // newConnectionWithPipeline creates an instance of the connection type with the specified endpoint and pipeline.
-func newConnectionWithPipeline(endpoint string, livyAPIVersion *string, sparkPoolName string, p azcore.Pipeline) *connection {
+func newConnectionWithPipeline(endpoint string, livyapiVersion *string, sparkPoolName string, p azcore.Pipeline) *connection {
 	hostURL := "{endpoint}/livyApi/versions/{livyApiVersion}/sparkPools/{sparkPoolName}"
 	hostURL = strings.ReplaceAll(hostURL, "{endpoint}", endpoint)
-	if livyAPIVersion == nil {
+	if livyapiVersion == nil {
 		defaultValue := "2019-11-01-preview"
-		livyAPIVersion = &defaultValue
+		livyapiVersion = &defaultValue
 	}
-	hostURL = strings.ReplaceAll(hostURL, "{livyApiVersion}", *livyAPIVersion)
+	hostURL = strings.ReplaceAll(hostURL, "{livyApiVersion}", *livyapiVersion)
 	hostURL = strings.ReplaceAll(hostURL, "{sparkPoolName}", sparkPoolName)
 	return &connection{u: hostURL, p: p}
 }

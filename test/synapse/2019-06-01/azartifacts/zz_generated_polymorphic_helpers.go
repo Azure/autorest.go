@@ -23,11 +23,11 @@ func unmarshalActivityClassification(body []byte) (ActivityClassification, error
 	case "AzureFunctionActivity":
 		b = &AzureFunctionActivity{}
 	case "AzureMLBatchExecution":
-		b = &AzureMlBatchExecutionActivity{}
+		b = &AzureMLBatchExecutionActivity{}
 	case "AzureMLExecutePipeline":
-		b = &AzureMlExecutePipelineActivity{}
+		b = &AzureMLExecutePipelineActivity{}
 	case "AzureMLUpdateResource":
-		b = &AzureMlUpdateResourceActivity{}
+		b = &AzureMLUpdateResourceActivity{}
 	case "Container":
 		b = &ControlActivity{}
 	case "Copy":
@@ -59,15 +59,15 @@ func unmarshalActivityClassification(body []byte) (ActivityClassification, error
 	case "GetMetadata":
 		b = &GetMetadataActivity{}
 	case "HDInsightHive":
-		b = &HdInsightHiveActivity{}
+		b = &HDInsightHiveActivity{}
 	case "HDInsightMapReduce":
-		b = &HdInsightMapReduceActivity{}
+		b = &HDInsightMapReduceActivity{}
 	case "HDInsightPig":
-		b = &HdInsightPigActivity{}
+		b = &HDInsightPigActivity{}
 	case "HDInsightSpark":
-		b = &HdInsightSparkActivity{}
+		b = &HDInsightSparkActivity{}
 	case "HDInsightStreaming":
-		b = &HdInsightStreamingActivity{}
+		b = &HDInsightStreamingActivity{}
 	case "IfCondition":
 		b = &IfConditionActivity{}
 	case "Lookup":
@@ -128,11 +128,11 @@ func unmarshalExecutionActivityClassification(body []byte) (ExecutionActivityCla
 	case "AzureFunctionActivity":
 		b = &AzureFunctionActivity{}
 	case "AzureMLBatchExecution":
-		b = &AzureMlBatchExecutionActivity{}
+		b = &AzureMLBatchExecutionActivity{}
 	case "AzureMLExecutePipeline":
-		b = &AzureMlExecutePipelineActivity{}
+		b = &AzureMLExecutePipelineActivity{}
 	case "AzureMLUpdateResource":
-		b = &AzureMlUpdateResourceActivity{}
+		b = &AzureMLUpdateResourceActivity{}
 	case "Copy":
 		b = &CopyActivity{}
 	case "Custom":
@@ -154,15 +154,15 @@ func unmarshalExecutionActivityClassification(body []byte) (ExecutionActivityCla
 	case "GetMetadata":
 		b = &GetMetadataActivity{}
 	case "HDInsightHive":
-		b = &HdInsightHiveActivity{}
+		b = &HDInsightHiveActivity{}
 	case "HDInsightMapReduce":
-		b = &HdInsightMapReduceActivity{}
+		b = &HDInsightMapReduceActivity{}
 	case "HDInsightPig":
-		b = &HdInsightPigActivity{}
+		b = &HDInsightPigActivity{}
 	case "HDInsightSpark":
-		b = &HdInsightSparkActivity{}
+		b = &HDInsightSparkActivity{}
 	case "HDInsightStreaming":
-		b = &HdInsightStreamingActivity{}
+		b = &HDInsightStreamingActivity{}
 	case "Lookup":
 		b = &LookupActivity{}
 	case "SparkJob":
@@ -205,7 +205,7 @@ func unmarshalCopySinkClassification(body []byte) (CopySinkClassification, error
 	case "AvroSink":
 		b = &AvroSink{}
 	case "AzureBlobFSSink":
-		b = &AzureBlobFsSink{}
+		b = &AzureBlobFSSink{}
 	case "AzureDataExplorerSink":
 		b = &AzureDataExplorerSink{}
 	case "AzureDataLakeStoreSink":
@@ -263,9 +263,9 @@ func unmarshalCopySinkClassification(body []byte) (CopySinkClassification, error
 	case "SapCloudForCustomerSink":
 		b = &SapCloudForCustomerSink{}
 	case "SqlDWSink":
-		b = &SQLDwSink{}
+		b = &SQLDWSink{}
 	case "SqlMISink":
-		b = &SQLMiSink{}
+		b = &SQLMISink{}
 	case "SqlServerSink":
 		b = &SQLServerSink{}
 	case "SqlSink":
@@ -300,19 +300,19 @@ func unmarshalCopySourceClassification(body []byte) (CopySourceClassification, e
 	var b CopySourceClassification
 	switch m["type"] {
 	case "AmazonMWSSource":
-		b = &AmazonMwsSource{}
+		b = &AmazonMWSSource{}
 	case "AmazonRedshiftSource":
 		b = &AmazonRedshiftSource{}
 	case "AvroSource":
 		b = &AvroSource{}
 	case "AzureBlobFSSource":
-		b = &AzureBlobFsSource{}
+		b = &AzureBlobFSSource{}
 	case "AzureDataExplorerSource":
 		b = &AzureDataExplorerSource{}
 	case "AzureDataLakeStoreSource":
 		b = &AzureDataLakeStoreSource{}
 	case "AzureMariaDBSource":
-		b = &AzureMariaDbSource{}
+		b = &AzureMariaDBSource{}
 	case "AzureMySqlSource":
 		b = &AzureMySQLSource{}
 	case "AzurePostgreSqlSource":
@@ -346,7 +346,7 @@ func unmarshalCopySourceClassification(body []byte) (CopySourceClassification, e
 	case "DrillSource":
 		b = &DrillSource{}
 	case "DynamicsAXSource":
-		b = &DynamicsAxSource{}
+		b = &DynamicsAXSource{}
 	case "DynamicsCrmSource":
 		b = &DynamicsCrmSource{}
 	case "DynamicsSource":
@@ -382,7 +382,7 @@ func unmarshalCopySourceClassification(body []byte) (CopySourceClassification, e
 	case "MagentoSource":
 		b = &MagentoSource{}
 	case "MariaDBSource":
-		b = &MariaDbSource{}
+		b = &MariaDBSource{}
 	case "MarketoSource":
 		b = &MarketoSource{}
 	case "MicrosoftAccessSource":
@@ -450,9 +450,9 @@ func unmarshalCopySourceClassification(body []byte) (CopySourceClassification, e
 	case "SparkSource":
 		b = &SparkSource{}
 	case "SqlDWSource":
-		b = &SQLDwSource{}
+		b = &SQLDWSource{}
 	case "SqlMISource":
-		b = &SQLMiSource{}
+		b = &SQLMISource{}
 	case "SqlServerSource":
 		b = &SQLServerSource{}
 	case "SqlSource":
@@ -503,11 +503,11 @@ func unmarshalTabularSourceClassification(body []byte) (TabularSourceClassificat
 	var b TabularSourceClassification
 	switch m["type"] {
 	case "AmazonMWSSource":
-		b = &AmazonMwsSource{}
+		b = &AmazonMWSSource{}
 	case "AmazonRedshiftSource":
 		b = &AmazonRedshiftSource{}
 	case "AzureMariaDBSource":
-		b = &AzureMariaDbSource{}
+		b = &AzureMariaDBSource{}
 	case "AzureMySqlSource":
 		b = &AzureMySQLSource{}
 	case "AzurePostgreSqlSource":
@@ -527,7 +527,7 @@ func unmarshalTabularSourceClassification(body []byte) (TabularSourceClassificat
 	case "DrillSource":
 		b = &DrillSource{}
 	case "DynamicsAXSource":
-		b = &DynamicsAxSource{}
+		b = &DynamicsAXSource{}
 	case "EloquaSource":
 		b = &EloquaSource{}
 	case "GoogleAdWordsSource":
@@ -551,7 +551,7 @@ func unmarshalTabularSourceClassification(body []byte) (TabularSourceClassificat
 	case "MagentoSource":
 		b = &MagentoSource{}
 	case "MariaDBSource":
-		b = &MariaDbSource{}
+		b = &MariaDBSource{}
 	case "MarketoSource":
 		b = &MarketoSource{}
 	case "MySqlSource":
@@ -597,9 +597,9 @@ func unmarshalTabularSourceClassification(body []byte) (TabularSourceClassificat
 	case "SparkSource":
 		b = &SparkSource{}
 	case "SqlDWSource":
-		b = &SQLDwSource{}
+		b = &SQLDWSource{}
 	case "SqlMISource":
-		b = &SQLMiSource{}
+		b = &SQLMISource{}
 	case "SqlServerSource":
 		b = &SQLServerSource{}
 	case "SqlSource":
@@ -737,7 +737,7 @@ func unmarshalDatasetClassification(body []byte) (DatasetClassification, error) 
 	var b DatasetClassification
 	switch m["type"] {
 	case "AmazonMWSObject":
-		b = &AmazonMwsObjectDataset{}
+		b = &AmazonMWSObjectDataset{}
 	case "AmazonRedshiftTable":
 		b = &AmazonRedshiftTableDataset{}
 	case "Avro":
@@ -745,7 +745,7 @@ func unmarshalDatasetClassification(body []byte) (DatasetClassification, error) 
 	case "AzureDataExplorerTable":
 		b = &AzureDataExplorerTableDataset{}
 	case "AzureMariaDBTable":
-		b = &AzureMariaDbTableDataset{}
+		b = &AzureMariaDBTableDataset{}
 	case "AzureMySqlTable":
 		b = &AzureMySQLTableDataset{}
 	case "AzurePostgreSqlTable":
@@ -753,9 +753,9 @@ func unmarshalDatasetClassification(body []byte) (DatasetClassification, error) 
 	case "AzureSearchIndex":
 		b = &AzureSearchIndexDataset{}
 	case "AzureSqlDWTable":
-		b = &AzureSQLDwTableDataset{}
+		b = &AzureSQLDWTableDataset{}
 	case "AzureSqlMITable":
-		b = &AzureSQLMiTableDataset{}
+		b = &AzureSQLMITableDataset{}
 	case "AzureSqlTable":
 		b = &AzureSQLTableDataset{}
 	case "AzureTable":
@@ -785,7 +785,7 @@ func unmarshalDatasetClassification(body []byte) (DatasetClassification, error) 
 	case "DrillTable":
 		b = &DrillTableDataset{}
 	case "DynamicsAXResource":
-		b = &DynamicsAxResourceDataset{}
+		b = &DynamicsAXResourceDataset{}
 	case "DynamicsCrmEntity":
 		b = &DynamicsCrmEntityDataset{}
 	case "DynamicsEntity":
@@ -815,7 +815,7 @@ func unmarshalDatasetClassification(body []byte) (DatasetClassification, error) 
 	case "MagentoObject":
 		b = &MagentoObjectDataset{}
 	case "MariaDBTable":
-		b = &MariaDbTableDataset{}
+		b = &MariaDBTableDataset{}
 	case "MarketoObject":
 		b = &MarketoObjectDataset{}
 	case "MicrosoftAccessTable":
@@ -967,7 +967,7 @@ func unmarshalDatasetLocationClassification(body []byte) (DatasetLocationClassif
 	case "AmazonS3Location":
 		b = &AmazonS3Location{}
 	case "AzureBlobFSLocation":
-		b = &AzureBlobFsLocation{}
+		b = &AzureBlobFSLocation{}
 	case "AzureBlobStorageLocation":
 		b = &AzureBlobStorageLocation{}
 	case "AzureDataLakeStoreLocation":
@@ -1253,7 +1253,7 @@ func unmarshalLinkedServiceClassification(body []byte) (LinkedServiceClassificat
 	var b LinkedServiceClassification
 	switch m["type"] {
 	case "AmazonMWS":
-		b = &AmazonMwsLinkedService{}
+		b = &AmazonMWSLinkedService{}
 	case "AmazonRedshift":
 		b = &AmazonRedshiftLinkedService{}
 	case "AmazonS3":
@@ -1261,7 +1261,7 @@ func unmarshalLinkedServiceClassification(body []byte) (LinkedServiceClassificat
 	case "AzureBatch":
 		b = &AzureBatchLinkedService{}
 	case "AzureBlobFS":
-		b = &AzureBlobFsLinkedService{}
+		b = &AzureBlobFSLinkedService{}
 	case "AzureBlobStorage":
 		b = &AzureBlobStorageLinkedService{}
 	case "AzureDataExplorer":
@@ -1279,11 +1279,11 @@ func unmarshalLinkedServiceClassification(body []byte) (LinkedServiceClassificat
 	case "AzureKeyVault":
 		b = &AzureKeyVaultLinkedService{}
 	case "AzureML":
-		b = &AzureMlLinkedService{}
+		b = &AzureMLLinkedService{}
 	case "AzureMLService":
-		b = &AzureMlServiceLinkedService{}
+		b = &AzureMLServiceLinkedService{}
 	case "AzureMariaDB":
-		b = &AzureMariaDbLinkedService{}
+		b = &AzureMariaDBLinkedService{}
 	case "AzureMySql":
 		b = &AzureMySQLLinkedService{}
 	case "AzurePostgreSql":
@@ -1291,11 +1291,11 @@ func unmarshalLinkedServiceClassification(body []byte) (LinkedServiceClassificat
 	case "AzureSearch":
 		b = &AzureSearchLinkedService{}
 	case "AzureSqlDW":
-		b = &AzureSQLDwLinkedService{}
+		b = &AzureSQLDWLinkedService{}
 	case "AzureSqlDatabase":
 		b = &AzureSQLDatabaseLinkedService{}
 	case "AzureSqlMI":
-		b = &AzureSQLMiLinkedService{}
+		b = &AzureSQLMILinkedService{}
 	case "AzureStorage":
 		b = &AzureStorageLinkedService{}
 	case "AzureTableStorage":
@@ -1321,7 +1321,7 @@ func unmarshalLinkedServiceClassification(body []byte) (LinkedServiceClassificat
 	case "Dynamics":
 		b = &DynamicsLinkedService{}
 	case "DynamicsAX":
-		b = &DynamicsAxLinkedService{}
+		b = &DynamicsAXLinkedService{}
 	case "DynamicsCrm":
 		b = &DynamicsCrmLinkedService{}
 	case "Eloqua":
@@ -1341,9 +1341,9 @@ func unmarshalLinkedServiceClassification(body []byte) (LinkedServiceClassificat
 	case "HBase":
 		b = &HBaseLinkedService{}
 	case "HDInsight":
-		b = &HdInsightLinkedService{}
+		b = &HDInsightLinkedService{}
 	case "HDInsightOnDemand":
-		b = &HdInsightOnDemandLinkedService{}
+		b = &HDInsightOnDemandLinkedService{}
 	case "Hdfs":
 		b = &HdfsLinkedService{}
 	case "Hive":
@@ -1361,7 +1361,7 @@ func unmarshalLinkedServiceClassification(body []byte) (LinkedServiceClassificat
 	case "Magento":
 		b = &MagentoLinkedService{}
 	case "MariaDB":
-		b = &MariaDbLinkedService{}
+		b = &MariaDBLinkedService{}
 	case "Marketo":
 		b = &MarketoLinkedService{}
 	case "MicrosoftAccess":
@@ -1405,7 +1405,7 @@ func unmarshalLinkedServiceClassification(body []byte) (LinkedServiceClassificat
 	case "SalesforceServiceCloud":
 		b = &SalesforceServiceCloudLinkedService{}
 	case "SapBW":
-		b = &SapBwLinkedService{}
+		b = &SapBWLinkedService{}
 	case "SapCloudForCustomer":
 		b = &SapCloudForCustomerLinkedService{}
 	case "SapEcc":
@@ -1505,7 +1505,7 @@ func unmarshalStoreReadSettingsClassification(body []byte) (StoreReadSettingsCla
 	case "AmazonS3ReadSettings":
 		b = &AmazonS3ReadSettings{}
 	case "AzureBlobFSReadSettings":
-		b = &AzureBlobFsReadSettings{}
+		b = &AzureBlobFSReadSettings{}
 	case "AzureBlobStorageReadSettings":
 		b = &AzureBlobStorageReadSettings{}
 	case "AzureDataLakeStoreReadSettings":
@@ -1554,7 +1554,7 @@ func unmarshalStoreWriteSettingsClassification(body []byte) (StoreWriteSettingsC
 	var b StoreWriteSettingsClassification
 	switch m["type"] {
 	case "AzureBlobFSWriteSettings":
-		b = &AzureBlobFsWriteSettings{}
+		b = &AzureBlobFSWriteSettings{}
 	case "AzureBlobStorageWriteSettings":
 		b = &AzureBlobStorageWriteSettings{}
 	case "AzureDataLakeStoreWriteSettings":

@@ -20,12 +20,12 @@ import (
 // Don't use this type directly, use NewVpnLinkConnectionsClient() instead.
 type VpnLinkConnectionsClient struct {
 	con            *armcore.Connection
-	subscriptionID string
+	subscriptionid string
 }
 
 // NewVpnLinkConnectionsClient creates a new instance of VpnLinkConnectionsClient with the specified values.
-func NewVpnLinkConnectionsClient(con *armcore.Connection, subscriptionID string) *VpnLinkConnectionsClient {
-	return &VpnLinkConnectionsClient{con: con, subscriptionID: subscriptionID}
+func NewVpnLinkConnectionsClient(con *armcore.Connection, subscriptionid string) *VpnLinkConnectionsClient {
+	return &VpnLinkConnectionsClient{con: con, subscriptionid: subscriptionid}
 }
 
 // ListByVpnConnection - Retrieves all vpn site link connections for a particular virtual wan vpn gateway vpn connection.
@@ -47,7 +47,7 @@ func (client *VpnLinkConnectionsClient) ListByVpnConnection(resourceGroupName st
 // listByVpnConnectionCreateRequest creates the ListByVpnConnection request.
 func (client *VpnLinkConnectionsClient) listByVpnConnectionCreateRequest(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, options *VpnLinkConnectionsListByVpnConnectionOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/vpnConnections/{connectionName}/vpnLinkConnections"
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionid))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{gatewayName}", url.PathEscape(gatewayName))
 	urlPath = strings.ReplaceAll(urlPath, "{connectionName}", url.PathEscape(connectionName))

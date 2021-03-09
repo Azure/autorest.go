@@ -41,8 +41,8 @@ func TestPostOptional(t *testing.T) {
 func TestPostRequired(t *testing.T) {
 	client := newParameterGroupingClient()
 	result, err := client.PostRequired(context.Background(), ParameterGroupingPostRequiredParameters{
-		Body:          1234,
-		PathParameter: "path",
+		Body: 1234,
+		Path: "path",
 	})
 	if err != nil {
 		t.Fatal(err)

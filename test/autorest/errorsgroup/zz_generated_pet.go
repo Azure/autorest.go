@@ -77,8 +77,8 @@ func (client *PetClient) doSomethingHandleError(resp *azcore.Response) error {
 }
 
 // GetPetByID - Gets pets by id.
-func (client *PetClient) GetPetByID(ctx context.Context, petId string, options *PetGetPetByIDOptions) (PetResponse, error) {
-	req, err := client.getPetByIdCreateRequest(ctx, petId, options)
+func (client *PetClient) GetPetByID(ctx context.Context, petID string, options *PetGetPetByIDOptions) (PetResponse, error) {
+	req, err := client.getPetByIDCreateRequest(ctx, petID, options)
 	if err != nil {
 		return PetResponse{}, err
 	}
@@ -87,15 +87,15 @@ func (client *PetClient) GetPetByID(ctx context.Context, petId string, options *
 		return PetResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
-		return PetResponse{}, client.getPetByIdHandleError(resp)
+		return PetResponse{}, client.getPetByIDHandleError(resp)
 	}
-	return client.getPetByIdHandleResponse(resp)
+	return client.getPetByIDHandleResponse(resp)
 }
 
-// getPetByIdCreateRequest creates the GetPetByID request.
-func (client *PetClient) getPetByIdCreateRequest(ctx context.Context, petId string, options *PetGetPetByIDOptions) (*azcore.Request, error) {
+// getPetByIDCreateRequest creates the GetPetByID request.
+func (client *PetClient) getPetByIDCreateRequest(ctx context.Context, petID string, options *PetGetPetByIDOptions) (*azcore.Request, error) {
 	urlPath := "/errorStatusCodes/Pets/{petId}/GetPet"
-	urlPath = strings.ReplaceAll(urlPath, "{petId}", url.PathEscape(petId))
+	urlPath = strings.ReplaceAll(urlPath, "{petId}", url.PathEscape(petID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -105,8 +105,8 @@ func (client *PetClient) getPetByIdCreateRequest(ctx context.Context, petId stri
 	return req, nil
 }
 
-// getPetByIdHandleResponse handles the GetPetByID response.
-func (client *PetClient) getPetByIdHandleResponse(resp *azcore.Response) (PetResponse, error) {
+// getPetByIDHandleResponse handles the GetPetByID response.
+func (client *PetClient) getPetByIDHandleResponse(resp *azcore.Response) (PetResponse, error) {
 	var val *Pet
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return PetResponse{}, err
@@ -114,8 +114,8 @@ func (client *PetClient) getPetByIdHandleResponse(resp *azcore.Response) (PetRes
 	return PetResponse{RawResponse: resp.Response, Pet: val}, nil
 }
 
-// getPetByIdHandleError handles the GetPetByID error response.
-func (client *PetClient) getPetByIdHandleError(resp *azcore.Response) error {
+// getPetByIDHandleError handles the GetPetByID error response.
+func (client *PetClient) getPetByIDHandleError(resp *azcore.Response) error {
 	switch resp.StatusCode {
 	case http.StatusBadRequest:
 		var err string

@@ -29,7 +29,7 @@ func NewHeaderClient(con *Connection) *HeaderClient {
 
 // CustomRequestID - Send x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 in the header of the request
 func (client *HeaderClient) CustomRequestID(ctx context.Context, options *HeaderCustomRequestIDOptions) (*http.Response, error) {
-	req, err := client.customRequestIdCreateRequest(ctx, options)
+	req, err := client.customRequestIDCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -38,13 +38,13 @@ func (client *HeaderClient) CustomRequestID(ctx context.Context, options *Header
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.customRequestIdHandleError(resp)
+		return nil, client.customRequestIDHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// customRequestIdCreateRequest creates the CustomRequestID request.
-func (client *HeaderClient) customRequestIdCreateRequest(ctx context.Context, options *HeaderCustomRequestIDOptions) (*azcore.Request, error) {
+// customRequestIDCreateRequest creates the CustomRequestID request.
+func (client *HeaderClient) customRequestIDCreateRequest(ctx context.Context, options *HeaderCustomRequestIDOptions) (*azcore.Request, error) {
 	urlPath := "/header/custom/x-ms-client-request-id/9C4D50EE-2D56-4CD3-8152-34347DC9F2B0"
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -55,8 +55,8 @@ func (client *HeaderClient) customRequestIdCreateRequest(ctx context.Context, op
 	return req, nil
 }
 
-// customRequestIdHandleError handles the CustomRequestID error response.
-func (client *HeaderClient) customRequestIdHandleError(resp *azcore.Response) error {
+// customRequestIDHandleError handles the CustomRequestID error response.
+func (client *HeaderClient) customRequestIDHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -223,7 +223,7 @@ func (client *HeaderClient) paramDatetimeHandleError(resp *azcore.Response) erro
 // ParamDatetimeRFC1123 - Send a post request with header values "scenario": "valid", "value": "Wed, 01 Jan 2010 12:34:56 GMT" or "scenario": "min", "value":
 // "Mon, 01 Jan 0001 00:00:00 GMT"
 func (client *HeaderClient) ParamDatetimeRFC1123(ctx context.Context, scenario string, options *HeaderParamDatetimeRFC1123Options) (*http.Response, error) {
-	req, err := client.paramDatetimeRfc1123CreateRequest(ctx, scenario, options)
+	req, err := client.paramDatetimeRFC1123CreateRequest(ctx, scenario, options)
 	if err != nil {
 		return nil, err
 	}
@@ -232,13 +232,13 @@ func (client *HeaderClient) ParamDatetimeRFC1123(ctx context.Context, scenario s
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.paramDatetimeRfc1123HandleError(resp)
+		return nil, client.paramDatetimeRFC1123HandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// paramDatetimeRfc1123CreateRequest creates the ParamDatetimeRFC1123 request.
-func (client *HeaderClient) paramDatetimeRfc1123CreateRequest(ctx context.Context, scenario string, options *HeaderParamDatetimeRFC1123Options) (*azcore.Request, error) {
+// paramDatetimeRFC1123CreateRequest creates the ParamDatetimeRFC1123 request.
+func (client *HeaderClient) paramDatetimeRFC1123CreateRequest(ctx context.Context, scenario string, options *HeaderParamDatetimeRFC1123Options) (*azcore.Request, error) {
 	urlPath := "/header/param/prim/datetimerfc1123"
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -253,8 +253,8 @@ func (client *HeaderClient) paramDatetimeRfc1123CreateRequest(ctx context.Contex
 	return req, nil
 }
 
-// paramDatetimeRfc1123HandleError handles the ParamDatetimeRFC1123 error response.
-func (client *HeaderClient) paramDatetimeRfc1123HandleError(resp *azcore.Response) error {
+// paramDatetimeRFC1123HandleError handles the ParamDatetimeRFC1123 error response.
+func (client *HeaderClient) paramDatetimeRFC1123HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -822,7 +822,7 @@ func (client *HeaderClient) responseDatetimeHandleError(resp *azcore.Response) e
 
 // ResponseDatetimeRFC1123 - Get a response with header values "Wed, 01 Jan 2010 12:34:56 GMT" or "Mon, 01 Jan 0001 00:00:00 GMT"
 func (client *HeaderClient) ResponseDatetimeRFC1123(ctx context.Context, scenario string, options *HeaderResponseDatetimeRFC1123Options) (HeaderResponseDatetimeRFC1123Response, error) {
-	req, err := client.responseDatetimeRfc1123CreateRequest(ctx, scenario, options)
+	req, err := client.responseDatetimeRFC1123CreateRequest(ctx, scenario, options)
 	if err != nil {
 		return HeaderResponseDatetimeRFC1123Response{}, err
 	}
@@ -831,13 +831,13 @@ func (client *HeaderClient) ResponseDatetimeRFC1123(ctx context.Context, scenari
 		return HeaderResponseDatetimeRFC1123Response{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return HeaderResponseDatetimeRFC1123Response{}, client.responseDatetimeRfc1123HandleError(resp)
+		return HeaderResponseDatetimeRFC1123Response{}, client.responseDatetimeRFC1123HandleError(resp)
 	}
-	return client.responseDatetimeRfc1123HandleResponse(resp)
+	return client.responseDatetimeRFC1123HandleResponse(resp)
 }
 
-// responseDatetimeRfc1123CreateRequest creates the ResponseDatetimeRFC1123 request.
-func (client *HeaderClient) responseDatetimeRfc1123CreateRequest(ctx context.Context, scenario string, options *HeaderResponseDatetimeRFC1123Options) (*azcore.Request, error) {
+// responseDatetimeRFC1123CreateRequest creates the ResponseDatetimeRFC1123 request.
+func (client *HeaderClient) responseDatetimeRFC1123CreateRequest(ctx context.Context, scenario string, options *HeaderResponseDatetimeRFC1123Options) (*azcore.Request, error) {
 	urlPath := "/header/response/prim/datetimerfc1123"
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -849,8 +849,8 @@ func (client *HeaderClient) responseDatetimeRfc1123CreateRequest(ctx context.Con
 	return req, nil
 }
 
-// responseDatetimeRfc1123HandleResponse handles the ResponseDatetimeRFC1123 response.
-func (client *HeaderClient) responseDatetimeRfc1123HandleResponse(resp *azcore.Response) (HeaderResponseDatetimeRFC1123Response, error) {
+// responseDatetimeRFC1123HandleResponse handles the ResponseDatetimeRFC1123 response.
+func (client *HeaderClient) responseDatetimeRFC1123HandleResponse(resp *azcore.Response) (HeaderResponseDatetimeRFC1123Response, error) {
 	result := HeaderResponseDatetimeRFC1123Response{RawResponse: resp.Response}
 	if val := resp.Header.Get("value"); val != "" {
 		value, err := time.Parse(time.RFC1123, val)
@@ -862,8 +862,8 @@ func (client *HeaderClient) responseDatetimeRfc1123HandleResponse(resp *azcore.R
 	return result, nil
 }
 
-// responseDatetimeRfc1123HandleError handles the ResponseDatetimeRFC1123 error response.
-func (client *HeaderClient) responseDatetimeRfc1123HandleError(resp *azcore.Response) error {
+// responseDatetimeRFC1123HandleError handles the ResponseDatetimeRFC1123 error response.
+func (client *HeaderClient) responseDatetimeRFC1123HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

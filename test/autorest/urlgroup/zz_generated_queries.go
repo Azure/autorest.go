@@ -30,7 +30,7 @@ func NewQueriesClient(con *Connection) *QueriesClient {
 
 // ArrayStringCSVEmpty - Get an empty array [] of string using the csv-array format
 func (client *QueriesClient) ArrayStringCSVEmpty(ctx context.Context, options *QueriesArrayStringCSVEmptyOptions) (*http.Response, error) {
-	req, err := client.arrayStringCsvEmptyCreateRequest(ctx, options)
+	req, err := client.arrayStringCSVEmptyCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -39,13 +39,13 @@ func (client *QueriesClient) ArrayStringCSVEmpty(ctx context.Context, options *Q
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.arrayStringCsvEmptyHandleError(resp)
+		return nil, client.arrayStringCSVEmptyHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// arrayStringCsvEmptyCreateRequest creates the ArrayStringCSVEmpty request.
-func (client *QueriesClient) arrayStringCsvEmptyCreateRequest(ctx context.Context, options *QueriesArrayStringCSVEmptyOptions) (*azcore.Request, error) {
+// arrayStringCSVEmptyCreateRequest creates the ArrayStringCSVEmpty request.
+func (client *QueriesClient) arrayStringCSVEmptyCreateRequest(ctx context.Context, options *QueriesArrayStringCSVEmptyOptions) (*azcore.Request, error) {
 	urlPath := "/queries/array/csv/string/empty"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -61,8 +61,8 @@ func (client *QueriesClient) arrayStringCsvEmptyCreateRequest(ctx context.Contex
 	return req, nil
 }
 
-// arrayStringCsvEmptyHandleError handles the ArrayStringCSVEmpty error response.
-func (client *QueriesClient) arrayStringCsvEmptyHandleError(resp *azcore.Response) error {
+// arrayStringCSVEmptyHandleError handles the ArrayStringCSVEmpty error response.
+func (client *QueriesClient) arrayStringCSVEmptyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -72,7 +72,7 @@ func (client *QueriesClient) arrayStringCsvEmptyHandleError(resp *azcore.Respons
 
 // ArrayStringCSVNull - Get a null array of string using the csv-array format
 func (client *QueriesClient) ArrayStringCSVNull(ctx context.Context, options *QueriesArrayStringCSVNullOptions) (*http.Response, error) {
-	req, err := client.arrayStringCsvNullCreateRequest(ctx, options)
+	req, err := client.arrayStringCSVNullCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -81,13 +81,13 @@ func (client *QueriesClient) ArrayStringCSVNull(ctx context.Context, options *Qu
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.arrayStringCsvNullHandleError(resp)
+		return nil, client.arrayStringCSVNullHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// arrayStringCsvNullCreateRequest creates the ArrayStringCSVNull request.
-func (client *QueriesClient) arrayStringCsvNullCreateRequest(ctx context.Context, options *QueriesArrayStringCSVNullOptions) (*azcore.Request, error) {
+// arrayStringCSVNullCreateRequest creates the ArrayStringCSVNull request.
+func (client *QueriesClient) arrayStringCSVNullCreateRequest(ctx context.Context, options *QueriesArrayStringCSVNullOptions) (*azcore.Request, error) {
 	urlPath := "/queries/array/csv/string/null"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -103,8 +103,8 @@ func (client *QueriesClient) arrayStringCsvNullCreateRequest(ctx context.Context
 	return req, nil
 }
 
-// arrayStringCsvNullHandleError handles the ArrayStringCSVNull error response.
-func (client *QueriesClient) arrayStringCsvNullHandleError(resp *azcore.Response) error {
+// arrayStringCSVNullHandleError handles the ArrayStringCSVNull error response.
+func (client *QueriesClient) arrayStringCSVNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -114,7 +114,7 @@ func (client *QueriesClient) arrayStringCsvNullHandleError(resp *azcore.Response
 
 // ArrayStringCSVValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format
 func (client *QueriesClient) ArrayStringCSVValid(ctx context.Context, options *QueriesArrayStringCSVValidOptions) (*http.Response, error) {
-	req, err := client.arrayStringCsvValidCreateRequest(ctx, options)
+	req, err := client.arrayStringCSVValidCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -123,13 +123,13 @@ func (client *QueriesClient) ArrayStringCSVValid(ctx context.Context, options *Q
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.arrayStringCsvValidHandleError(resp)
+		return nil, client.arrayStringCSVValidHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// arrayStringCsvValidCreateRequest creates the ArrayStringCSVValid request.
-func (client *QueriesClient) arrayStringCsvValidCreateRequest(ctx context.Context, options *QueriesArrayStringCSVValidOptions) (*azcore.Request, error) {
+// arrayStringCSVValidCreateRequest creates the ArrayStringCSVValid request.
+func (client *QueriesClient) arrayStringCSVValidCreateRequest(ctx context.Context, options *QueriesArrayStringCSVValidOptions) (*azcore.Request, error) {
 	urlPath := "/queries/array/csv/string/valid"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -145,8 +145,8 @@ func (client *QueriesClient) arrayStringCsvValidCreateRequest(ctx context.Contex
 	return req, nil
 }
 
-// arrayStringCsvValidHandleError handles the ArrayStringCSVValid error response.
-func (client *QueriesClient) arrayStringCsvValidHandleError(resp *azcore.Response) error {
+// arrayStringCSVValidHandleError handles the ArrayStringCSVValid error response.
+func (client *QueriesClient) arrayStringCSVValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1389,7 +1389,7 @@ func (client *QueriesClient) stringNullHandleError(resp *azcore.Response) error 
 
 // StringURLEncoded - Get 'begin!*'();:@ &=+$,/?#[]end
 func (client *QueriesClient) StringURLEncoded(ctx context.Context, options *QueriesStringURLEncodedOptions) (*http.Response, error) {
-	req, err := client.stringUrlEncodedCreateRequest(ctx, options)
+	req, err := client.stringURLEncodedCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -1398,13 +1398,13 @@ func (client *QueriesClient) StringURLEncoded(ctx context.Context, options *Quer
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.stringUrlEncodedHandleError(resp)
+		return nil, client.stringURLEncodedHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// stringUrlEncodedCreateRequest creates the StringURLEncoded request.
-func (client *QueriesClient) stringUrlEncodedCreateRequest(ctx context.Context, options *QueriesStringURLEncodedOptions) (*azcore.Request, error) {
+// stringURLEncodedCreateRequest creates the StringURLEncoded request.
+func (client *QueriesClient) stringURLEncodedCreateRequest(ctx context.Context, options *QueriesStringURLEncodedOptions) (*azcore.Request, error) {
 	urlPath := "/queries/string/begin%21%2A%27%28%29%3B%3A%40%20%26%3D%2B%24%2C%2F%3F%23%5B%5Dend"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1418,8 +1418,8 @@ func (client *QueriesClient) stringUrlEncodedCreateRequest(ctx context.Context, 
 	return req, nil
 }
 
-// stringUrlEncodedHandleError handles the StringURLEncoded error response.
-func (client *QueriesClient) stringUrlEncodedHandleError(resp *azcore.Response) error {
+// stringURLEncodedHandleError handles the StringURLEncoded error response.
+func (client *QueriesClient) stringURLEncodedHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

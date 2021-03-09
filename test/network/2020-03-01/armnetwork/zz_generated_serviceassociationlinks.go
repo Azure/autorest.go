@@ -20,12 +20,12 @@ import (
 // Don't use this type directly, use NewServiceAssociationLinksClient() instead.
 type ServiceAssociationLinksClient struct {
 	con            *armcore.Connection
-	subscriptionID string
+	subscriptionid string
 }
 
 // NewServiceAssociationLinksClient creates a new instance of ServiceAssociationLinksClient with the specified values.
-func NewServiceAssociationLinksClient(con *armcore.Connection, subscriptionID string) *ServiceAssociationLinksClient {
-	return &ServiceAssociationLinksClient{con: con, subscriptionID: subscriptionID}
+func NewServiceAssociationLinksClient(con *armcore.Connection, subscriptionid string) *ServiceAssociationLinksClient {
+	return &ServiceAssociationLinksClient{con: con, subscriptionid: subscriptionid}
 }
 
 // List - Gets a list of service association links for a subnet.
@@ -50,7 +50,7 @@ func (client *ServiceAssociationLinksClient) listCreateRequest(ctx context.Conte
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkName}", url.PathEscape(virtualNetworkName))
 	urlPath = strings.ReplaceAll(urlPath, "{subnetName}", url.PathEscape(subnetName))
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionid))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err

@@ -154,7 +154,7 @@ func TestGetMultiplePagesFragmentWithGroupingNextLink(t *testing.T) {
 // GetMultiplePagesLro - A long-running paging operation that includes a nextLink that has 10 pages
 func TestGetMultiplePagesLro(t *testing.T) {
 	client := newPagingClient()
-	resp, err := client.BeginGetMultiplePagesLro(context.Background(), nil)
+	resp, err := client.BeginGetMultiplePagesLRO(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -163,7 +163,7 @@ func TestGetMultiplePagesLro(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	poller, err = client.ResumeGetMultiplePagesLro(rt)
+	poller, err = client.ResumeGetMultiplePagesLRO(rt)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -315,14 +315,14 @@ func TestGetOdataMultiplePages(t *testing.T) {
 	}
 }
 
-// GetPagingModelWithItemNameWithXmsClientName - A paging operation that returns a paging model whose item name is is overriden by x-ms-client-name 'indexes'.
-func TestGetPagingModelWithItemNameWithXmsClientName(t *testing.T) {
+// GetPagingModelWithItemNameWithXMSClientName - A paging operation that returns a paging model whose item name is is overriden by x-ms-client-name 'indexes'.
+func TestGetPagingModelWithItemNameWithXMSClientName(t *testing.T) {
 	client := newPagingClient()
-	page := client.GetPagingModelWithItemNameWithXmsClientName(nil)
+	page := client.GetPagingModelWithItemNameWithXMSClientName(nil)
 	count := 0
 	for page.NextPage(context.Background()) {
 		resp := page.PageResponse()
-		if len(*resp.ProductResultValueWithXmsClientName.Indexes) == 0 {
+		if len(*resp.ProductResultValueWithXMSClientName.Indexes) == 0 {
 			t.Fatal("missing payload")
 		}
 		count++

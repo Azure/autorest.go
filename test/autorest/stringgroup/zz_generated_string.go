@@ -72,7 +72,7 @@ func (client *StringClient) getBase64EncodedHandleError(resp *azcore.Response) e
 
 // GetBase64URLEncoded - Get value that is base64url encoded
 func (client *StringClient) GetBase64URLEncoded(ctx context.Context, options *StringGetBase64URLEncodedOptions) (ByteArrayResponse, error) {
-	req, err := client.getBase64UrlEncodedCreateRequest(ctx, options)
+	req, err := client.getBase64URLEncodedCreateRequest(ctx, options)
 	if err != nil {
 		return ByteArrayResponse{}, err
 	}
@@ -81,13 +81,13 @@ func (client *StringClient) GetBase64URLEncoded(ctx context.Context, options *St
 		return ByteArrayResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return ByteArrayResponse{}, client.getBase64UrlEncodedHandleError(resp)
+		return ByteArrayResponse{}, client.getBase64URLEncodedHandleError(resp)
 	}
-	return client.getBase64UrlEncodedHandleResponse(resp)
+	return client.getBase64URLEncodedHandleResponse(resp)
 }
 
-// getBase64UrlEncodedCreateRequest creates the GetBase64URLEncoded request.
-func (client *StringClient) getBase64UrlEncodedCreateRequest(ctx context.Context, options *StringGetBase64URLEncodedOptions) (*azcore.Request, error) {
+// getBase64URLEncodedCreateRequest creates the GetBase64URLEncoded request.
+func (client *StringClient) getBase64URLEncodedCreateRequest(ctx context.Context, options *StringGetBase64URLEncodedOptions) (*azcore.Request, error) {
 	urlPath := "/string/base64UrlEncoding"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -98,8 +98,8 @@ func (client *StringClient) getBase64UrlEncodedCreateRequest(ctx context.Context
 	return req, nil
 }
 
-// getBase64UrlEncodedHandleResponse handles the GetBase64URLEncoded response.
-func (client *StringClient) getBase64UrlEncodedHandleResponse(resp *azcore.Response) (ByteArrayResponse, error) {
+// getBase64URLEncodedHandleResponse handles the GetBase64URLEncoded response.
+func (client *StringClient) getBase64URLEncodedHandleResponse(resp *azcore.Response) (ByteArrayResponse, error) {
 	var val *[]byte
 	if err := resp.UnmarshalAsByteArray(&val, azcore.Base64URLFormat); err != nil {
 		return ByteArrayResponse{}, err
@@ -107,8 +107,8 @@ func (client *StringClient) getBase64UrlEncodedHandleResponse(resp *azcore.Respo
 	return ByteArrayResponse{RawResponse: resp.Response, Value: val}, nil
 }
 
-// getBase64UrlEncodedHandleError handles the GetBase64URLEncoded error response.
-func (client *StringClient) getBase64UrlEncodedHandleError(resp *azcore.Response) error {
+// getBase64URLEncodedHandleError handles the GetBase64URLEncoded error response.
+func (client *StringClient) getBase64URLEncodedHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -164,7 +164,7 @@ func (client *StringClient) getEmptyHandleError(resp *azcore.Response) error {
 
 // GetMBCS - Get mbcs string value '啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€'
 func (client *StringClient) GetMBCS(ctx context.Context, options *StringGetMBCSOptions) (StringResponse, error) {
-	req, err := client.getMbcsCreateRequest(ctx, options)
+	req, err := client.getMBCSCreateRequest(ctx, options)
 	if err != nil {
 		return StringResponse{}, err
 	}
@@ -173,13 +173,13 @@ func (client *StringClient) GetMBCS(ctx context.Context, options *StringGetMBCSO
 		return StringResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return StringResponse{}, client.getMbcsHandleError(resp)
+		return StringResponse{}, client.getMBCSHandleError(resp)
 	}
-	return client.getMbcsHandleResponse(resp)
+	return client.getMBCSHandleResponse(resp)
 }
 
-// getMbcsCreateRequest creates the GetMBCS request.
-func (client *StringClient) getMbcsCreateRequest(ctx context.Context, options *StringGetMBCSOptions) (*azcore.Request, error) {
+// getMBCSCreateRequest creates the GetMBCS request.
+func (client *StringClient) getMBCSCreateRequest(ctx context.Context, options *StringGetMBCSOptions) (*azcore.Request, error) {
 	urlPath := "/string/mbcs"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -190,8 +190,8 @@ func (client *StringClient) getMbcsCreateRequest(ctx context.Context, options *S
 	return req, nil
 }
 
-// getMbcsHandleResponse handles the GetMBCS response.
-func (client *StringClient) getMbcsHandleResponse(resp *azcore.Response) (StringResponse, error) {
+// getMBCSHandleResponse handles the GetMBCS response.
+func (client *StringClient) getMBCSHandleResponse(resp *azcore.Response) (StringResponse, error) {
 	var val *string
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return StringResponse{}, err
@@ -199,8 +199,8 @@ func (client *StringClient) getMbcsHandleResponse(resp *azcore.Response) (String
 	return StringResponse{RawResponse: resp.Response, Value: val}, nil
 }
 
-// getMbcsHandleError handles the GetMBCS error response.
-func (client *StringClient) getMbcsHandleError(resp *azcore.Response) error {
+// getMBCSHandleError handles the GetMBCS error response.
+func (client *StringClient) getMBCSHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -302,7 +302,7 @@ func (client *StringClient) getNullHandleError(resp *azcore.Response) error {
 
 // GetNullBase64URLEncoded - Get null value that is expected to be base64url encoded
 func (client *StringClient) GetNullBase64URLEncoded(ctx context.Context, options *StringGetNullBase64URLEncodedOptions) (ByteArrayResponse, error) {
-	req, err := client.getNullBase64UrlEncodedCreateRequest(ctx, options)
+	req, err := client.getNullBase64URLEncodedCreateRequest(ctx, options)
 	if err != nil {
 		return ByteArrayResponse{}, err
 	}
@@ -311,13 +311,13 @@ func (client *StringClient) GetNullBase64URLEncoded(ctx context.Context, options
 		return ByteArrayResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return ByteArrayResponse{}, client.getNullBase64UrlEncodedHandleError(resp)
+		return ByteArrayResponse{}, client.getNullBase64URLEncodedHandleError(resp)
 	}
-	return client.getNullBase64UrlEncodedHandleResponse(resp)
+	return client.getNullBase64URLEncodedHandleResponse(resp)
 }
 
-// getNullBase64UrlEncodedCreateRequest creates the GetNullBase64URLEncoded request.
-func (client *StringClient) getNullBase64UrlEncodedCreateRequest(ctx context.Context, options *StringGetNullBase64URLEncodedOptions) (*azcore.Request, error) {
+// getNullBase64URLEncodedCreateRequest creates the GetNullBase64URLEncoded request.
+func (client *StringClient) getNullBase64URLEncodedCreateRequest(ctx context.Context, options *StringGetNullBase64URLEncodedOptions) (*azcore.Request, error) {
 	urlPath := "/string/nullBase64UrlEncoding"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -328,8 +328,8 @@ func (client *StringClient) getNullBase64UrlEncodedCreateRequest(ctx context.Con
 	return req, nil
 }
 
-// getNullBase64UrlEncodedHandleResponse handles the GetNullBase64URLEncoded response.
-func (client *StringClient) getNullBase64UrlEncodedHandleResponse(resp *azcore.Response) (ByteArrayResponse, error) {
+// getNullBase64URLEncodedHandleResponse handles the GetNullBase64URLEncoded response.
+func (client *StringClient) getNullBase64URLEncodedHandleResponse(resp *azcore.Response) (ByteArrayResponse, error) {
 	var val *[]byte
 	if err := resp.UnmarshalAsByteArray(&val, azcore.Base64URLFormat); err != nil {
 		return ByteArrayResponse{}, err
@@ -337,8 +337,8 @@ func (client *StringClient) getNullBase64UrlEncodedHandleResponse(resp *azcore.R
 	return ByteArrayResponse{RawResponse: resp.Response, Value: val}, nil
 }
 
-// getNullBase64UrlEncodedHandleError handles the GetNullBase64URLEncoded error response.
-func (client *StringClient) getNullBase64UrlEncodedHandleError(resp *azcore.Response) error {
+// getNullBase64URLEncodedHandleError handles the GetNullBase64URLEncoded error response.
+func (client *StringClient) getNullBase64URLEncodedHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -394,7 +394,7 @@ func (client *StringClient) getWhitespaceHandleError(resp *azcore.Response) erro
 
 // PutBase64URLEncoded - Put value that is base64url encoded
 func (client *StringClient) PutBase64URLEncoded(ctx context.Context, stringBody []byte, options *StringPutBase64URLEncodedOptions) (*http.Response, error) {
-	req, err := client.putBase64UrlEncodedCreateRequest(ctx, stringBody, options)
+	req, err := client.putBase64URLEncodedCreateRequest(ctx, stringBody, options)
 	if err != nil {
 		return nil, err
 	}
@@ -403,13 +403,13 @@ func (client *StringClient) PutBase64URLEncoded(ctx context.Context, stringBody 
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.putBase64UrlEncodedHandleError(resp)
+		return nil, client.putBase64URLEncodedHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// putBase64UrlEncodedCreateRequest creates the PutBase64URLEncoded request.
-func (client *StringClient) putBase64UrlEncodedCreateRequest(ctx context.Context, stringBody []byte, options *StringPutBase64URLEncodedOptions) (*azcore.Request, error) {
+// putBase64URLEncodedCreateRequest creates the PutBase64URLEncoded request.
+func (client *StringClient) putBase64URLEncodedCreateRequest(ctx context.Context, stringBody []byte, options *StringPutBase64URLEncodedOptions) (*azcore.Request, error) {
 	urlPath := "/string/base64UrlEncoding"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -420,8 +420,8 @@ func (client *StringClient) putBase64UrlEncodedCreateRequest(ctx context.Context
 	return req, req.MarshalAsByteArray(stringBody, azcore.Base64URLFormat)
 }
 
-// putBase64UrlEncodedHandleError handles the PutBase64URLEncoded error response.
-func (client *StringClient) putBase64UrlEncodedHandleError(resp *azcore.Response) error {
+// putBase64URLEncodedHandleError handles the PutBase64URLEncoded error response.
+func (client *StringClient) putBase64URLEncodedHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -468,7 +468,7 @@ func (client *StringClient) putEmptyHandleError(resp *azcore.Response) error {
 
 // PutMBCS - Set string value mbcs '啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€'
 func (client *StringClient) PutMBCS(ctx context.Context, options *StringPutMBCSOptions) (*http.Response, error) {
-	req, err := client.putMbcsCreateRequest(ctx, options)
+	req, err := client.putMBCSCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -477,13 +477,13 @@ func (client *StringClient) PutMBCS(ctx context.Context, options *StringPutMBCSO
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.putMbcsHandleError(resp)
+		return nil, client.putMBCSHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// putMbcsCreateRequest creates the PutMBCS request.
-func (client *StringClient) putMbcsCreateRequest(ctx context.Context, options *StringPutMBCSOptions) (*azcore.Request, error) {
+// putMBCSCreateRequest creates the PutMBCS request.
+func (client *StringClient) putMBCSCreateRequest(ctx context.Context, options *StringPutMBCSOptions) (*azcore.Request, error) {
 	urlPath := "/string/mbcs"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -494,8 +494,8 @@ func (client *StringClient) putMbcsCreateRequest(ctx context.Context, options *S
 	return req, req.MarshalAsJSON("啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€")
 }
 
-// putMbcsHandleError handles the PutMBCS error response.
-func (client *StringClient) putMbcsHandleError(resp *azcore.Response) error {
+// putMBCSHandleError handles the PutMBCS error response.
+func (client *StringClient) putMBCSHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

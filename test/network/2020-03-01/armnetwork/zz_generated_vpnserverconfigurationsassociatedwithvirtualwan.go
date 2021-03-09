@@ -21,17 +21,17 @@ import (
 // Don't use this type directly, use NewVpnServerConfigurationsAssociatedWithVirtualWanClient() instead.
 type VpnServerConfigurationsAssociatedWithVirtualWanClient struct {
 	con            *armcore.Connection
-	subscriptionID string
+	subscriptionid string
 }
 
 // NewVpnServerConfigurationsAssociatedWithVirtualWanClient creates a new instance of VpnServerConfigurationsAssociatedWithVirtualWanClient with the specified values.
-func NewVpnServerConfigurationsAssociatedWithVirtualWanClient(con *armcore.Connection, subscriptionID string) *VpnServerConfigurationsAssociatedWithVirtualWanClient {
-	return &VpnServerConfigurationsAssociatedWithVirtualWanClient{con: con, subscriptionID: subscriptionID}
+func NewVpnServerConfigurationsAssociatedWithVirtualWanClient(con *armcore.Connection, subscriptionid string) *VpnServerConfigurationsAssociatedWithVirtualWanClient {
+	return &VpnServerConfigurationsAssociatedWithVirtualWanClient{con: con, subscriptionid: subscriptionid}
 }
 
 // BeginList - Gives the list of VpnServerConfigurations associated with Virtual Wan in a resource group.
-func (client *VpnServerConfigurationsAssociatedWithVirtualWanClient) BeginList(ctx context.Context, resourceGroupName string, virtualWanName string, options *VpnServerConfigurationsAssociatedWithVirtualWanBeginListOptions) (VpnServerConfigurationsResponsePollerResponse, error) {
-	resp, err := client.list(ctx, resourceGroupName, virtualWanName, options)
+func (client *VpnServerConfigurationsAssociatedWithVirtualWanClient) BeginList(ctx context.Context, resourceGroupName string, virtualwanName string, options *VpnServerConfigurationsAssociatedWithVirtualWanBeginListOptions) (VpnServerConfigurationsResponsePollerResponse, error) {
+	resp, err := client.list(ctx, resourceGroupName, virtualwanName, options)
 	if err != nil {
 		return VpnServerConfigurationsResponsePollerResponse{}, err
 	}
@@ -67,8 +67,8 @@ func (client *VpnServerConfigurationsAssociatedWithVirtualWanClient) ResumeList(
 }
 
 // List - Gives the list of VpnServerConfigurations associated with Virtual Wan in a resource group.
-func (client *VpnServerConfigurationsAssociatedWithVirtualWanClient) list(ctx context.Context, resourceGroupName string, virtualWanName string, options *VpnServerConfigurationsAssociatedWithVirtualWanBeginListOptions) (*azcore.Response, error) {
-	req, err := client.listCreateRequest(ctx, resourceGroupName, virtualWanName, options)
+func (client *VpnServerConfigurationsAssociatedWithVirtualWanClient) list(ctx context.Context, resourceGroupName string, virtualwanName string, options *VpnServerConfigurationsAssociatedWithVirtualWanBeginListOptions) (*azcore.Response, error) {
+	req, err := client.listCreateRequest(ctx, resourceGroupName, virtualwanName, options)
 	if err != nil {
 		return nil, err
 	}
@@ -83,11 +83,11 @@ func (client *VpnServerConfigurationsAssociatedWithVirtualWanClient) list(ctx co
 }
 
 // listCreateRequest creates the List request.
-func (client *VpnServerConfigurationsAssociatedWithVirtualWanClient) listCreateRequest(ctx context.Context, resourceGroupName string, virtualWanName string, options *VpnServerConfigurationsAssociatedWithVirtualWanBeginListOptions) (*azcore.Request, error) {
+func (client *VpnServerConfigurationsAssociatedWithVirtualWanClient) listCreateRequest(ctx context.Context, resourceGroupName string, virtualwanName string, options *VpnServerConfigurationsAssociatedWithVirtualWanBeginListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/vpnServerConfigurations"
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionid))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	urlPath = strings.ReplaceAll(urlPath, "{virtualWANName}", url.PathEscape(virtualWanName))
+	urlPath = strings.ReplaceAll(urlPath, "{virtualWANName}", url.PathEscape(virtualwanName))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err

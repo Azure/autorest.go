@@ -20,12 +20,12 @@ import (
 // Don't use this type directly, use NewUsagesClient() instead.
 type UsagesClient struct {
 	con            *armcore.Connection
-	subscriptionID string
+	subscriptionid string
 }
 
 // NewUsagesClient creates a new instance of UsagesClient with the specified values.
-func NewUsagesClient(con *armcore.Connection, subscriptionID string) *UsagesClient {
-	return &UsagesClient{con: con, subscriptionID: subscriptionID}
+func NewUsagesClient(con *armcore.Connection, subscriptionid string) *UsagesClient {
+	return &UsagesClient{con: con, subscriptionid: subscriptionid}
 }
 
 // List - List network usages for a subscription.
@@ -48,7 +48,7 @@ func (client *UsagesClient) List(location string, options *UsagesListOptions) Us
 func (client *UsagesClient) listCreateRequest(ctx context.Context, location string, options *UsagesListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/usages"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionid))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err

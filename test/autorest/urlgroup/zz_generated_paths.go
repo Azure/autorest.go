@@ -30,7 +30,7 @@ func NewPathsClient(con *Connection) *PathsClient {
 
 // ArrayCSVInPath - Get an array of string ['ArrayPath1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format
 func (client *PathsClient) ArrayCSVInPath(ctx context.Context, arrayPath []string, options *PathsArrayCSVInPathOptions) (*http.Response, error) {
-	req, err := client.arrayCsvInPathCreateRequest(ctx, arrayPath, options)
+	req, err := client.arrayCSVInPathCreateRequest(ctx, arrayPath, options)
 	if err != nil {
 		return nil, err
 	}
@@ -39,13 +39,13 @@ func (client *PathsClient) ArrayCSVInPath(ctx context.Context, arrayPath []strin
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.arrayCsvInPathHandleError(resp)
+		return nil, client.arrayCSVInPathHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// arrayCsvInPathCreateRequest creates the ArrayCSVInPath request.
-func (client *PathsClient) arrayCsvInPathCreateRequest(ctx context.Context, arrayPath []string, options *PathsArrayCSVInPathOptions) (*azcore.Request, error) {
+// arrayCSVInPathCreateRequest creates the ArrayCSVInPath request.
+func (client *PathsClient) arrayCSVInPathCreateRequest(ctx context.Context, arrayPath []string, options *PathsArrayCSVInPathOptions) (*azcore.Request, error) {
 	urlPath := "/paths/array/ArrayPath1%2cbegin%21%2A%27%28%29%3B%3A%40%20%26%3D%2B%24%2C%2F%3F%23%5B%5Dend%2c%2c/{arrayPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{arrayPath}", url.PathEscape(strings.Join(arrayPath, ",")))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -57,8 +57,8 @@ func (client *PathsClient) arrayCsvInPathCreateRequest(ctx context.Context, arra
 	return req, nil
 }
 
-// arrayCsvInPathHandleError handles the ArrayCSVInPath error response.
-func (client *PathsClient) arrayCsvInPathHandleError(resp *azcore.Response) error {
+// arrayCSVInPathHandleError handles the ArrayCSVInPath error response.
+func (client *PathsClient) arrayCSVInPathHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -67,8 +67,8 @@ func (client *PathsClient) arrayCsvInPathHandleError(resp *azcore.Response) erro
 }
 
 // Base64URL - Get 'lorem' encoded value as 'bG9yZW0' (base64url)
-func (client *PathsClient) Base64URL(ctx context.Context, base64UrlPath []byte, options *PathsBase64URLOptions) (*http.Response, error) {
-	req, err := client.base64UrlCreateRequest(ctx, base64UrlPath, options)
+func (client *PathsClient) Base64URL(ctx context.Context, base64URLPath []byte, options *PathsBase64URLOptions) (*http.Response, error) {
+	req, err := client.base64URLCreateRequest(ctx, base64URLPath, options)
 	if err != nil {
 		return nil, err
 	}
@@ -77,15 +77,15 @@ func (client *PathsClient) Base64URL(ctx context.Context, base64UrlPath []byte, 
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.base64UrlHandleError(resp)
+		return nil, client.base64URLHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// base64UrlCreateRequest creates the Base64URL request.
-func (client *PathsClient) base64UrlCreateRequest(ctx context.Context, base64UrlPath []byte, options *PathsBase64URLOptions) (*azcore.Request, error) {
+// base64URLCreateRequest creates the Base64URL request.
+func (client *PathsClient) base64URLCreateRequest(ctx context.Context, base64URLPath []byte, options *PathsBase64URLOptions) (*azcore.Request, error) {
 	urlPath := "/paths/string/bG9yZW0/{base64UrlPath}"
-	urlPath = strings.ReplaceAll(urlPath, "{base64UrlPath}", url.PathEscape(base64.RawURLEncoding.EncodeToString(base64UrlPath)))
+	urlPath = strings.ReplaceAll(urlPath, "{base64UrlPath}", url.PathEscape(base64.RawURLEncoding.EncodeToString(base64URLPath)))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -95,8 +95,8 @@ func (client *PathsClient) base64UrlCreateRequest(ctx context.Context, base64Url
 	return req, nil
 }
 
-// base64UrlHandleError handles the Base64URL error response.
-func (client *PathsClient) base64UrlHandleError(resp *azcore.Response) error {
+// base64URLHandleError handles the Base64URL error response.
+func (client *PathsClient) base64URLHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -904,7 +904,7 @@ func (client *PathsClient) stringNullHandleError(resp *azcore.Response) error {
 
 // StringURLEncoded - Get 'begin!*'();:@ &=+$,/?#[]end
 func (client *PathsClient) StringURLEncoded(ctx context.Context, options *PathsStringURLEncodedOptions) (*http.Response, error) {
-	req, err := client.stringUrlEncodedCreateRequest(ctx, options)
+	req, err := client.stringURLEncodedCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -913,13 +913,13 @@ func (client *PathsClient) StringURLEncoded(ctx context.Context, options *PathsS
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.stringUrlEncodedHandleError(resp)
+		return nil, client.stringURLEncodedHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// stringUrlEncodedCreateRequest creates the StringURLEncoded request.
-func (client *PathsClient) stringUrlEncodedCreateRequest(ctx context.Context, options *PathsStringURLEncodedOptions) (*azcore.Request, error) {
+// stringURLEncodedCreateRequest creates the StringURLEncoded request.
+func (client *PathsClient) stringURLEncodedCreateRequest(ctx context.Context, options *PathsStringURLEncodedOptions) (*azcore.Request, error) {
 	urlPath := "/paths/string/begin%21%2A%27%28%29%3B%3A%40%20%26%3D%2B%24%2C%2F%3F%23%5B%5Dend/{stringPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{stringPath}", url.PathEscape("begin!*'();:@ &=+$,/?#[]end"))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -931,8 +931,8 @@ func (client *PathsClient) stringUrlEncodedCreateRequest(ctx context.Context, op
 	return req, nil
 }
 
-// stringUrlEncodedHandleError handles the StringURLEncoded error response.
-func (client *PathsClient) stringUrlEncodedHandleError(resp *azcore.Response) error {
+// stringURLEncodedHandleError handles the StringURLEncoded error response.
+func (client *PathsClient) stringURLEncodedHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -942,7 +942,7 @@ func (client *PathsClient) stringUrlEncodedHandleError(resp *azcore.Response) er
 
 // StringURLNonEncoded - https://tools.ietf.org/html/rfc3986#appendix-A 'path' accept any 'pchar' not encoded
 func (client *PathsClient) StringURLNonEncoded(ctx context.Context, options *PathsStringURLNonEncodedOptions) (*http.Response, error) {
-	req, err := client.stringUrlNonEncodedCreateRequest(ctx, options)
+	req, err := client.stringURLNonEncodedCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
 	}
@@ -951,13 +951,13 @@ func (client *PathsClient) StringURLNonEncoded(ctx context.Context, options *Pat
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.stringUrlNonEncodedHandleError(resp)
+		return nil, client.stringURLNonEncodedHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// stringUrlNonEncodedCreateRequest creates the StringURLNonEncoded request.
-func (client *PathsClient) stringUrlNonEncodedCreateRequest(ctx context.Context, options *PathsStringURLNonEncodedOptions) (*azcore.Request, error) {
+// stringURLNonEncodedCreateRequest creates the StringURLNonEncoded request.
+func (client *PathsClient) stringURLNonEncodedCreateRequest(ctx context.Context, options *PathsStringURLNonEncodedOptions) (*azcore.Request, error) {
 	urlPath := "/paths/string/begin!*'();:@&=+$,end/{stringPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{stringPath}", "begin!*'();:@&=+$,end")
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -969,8 +969,8 @@ func (client *PathsClient) stringUrlNonEncodedCreateRequest(ctx context.Context,
 	return req, nil
 }
 
-// stringUrlNonEncodedHandleError handles the StringURLNonEncoded error response.
-func (client *PathsClient) stringUrlNonEncodedHandleError(resp *azcore.Response) error {
+// stringURLNonEncodedHandleError handles the StringURLNonEncoded error response.
+func (client *PathsClient) stringURLNonEncodedHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1017,8 +1017,8 @@ func (client *PathsClient) stringUnicodeHandleError(resp *azcore.Response) error
 }
 
 // UnixTimeURL - Get the date 2016-04-13 encoded value as '1460505600' (Unix time)
-func (client *PathsClient) UnixTimeURL(ctx context.Context, unixTimeUrlPath time.Time, options *PathsUnixTimeURLOptions) (*http.Response, error) {
-	req, err := client.unixTimeUrlCreateRequest(ctx, unixTimeUrlPath, options)
+func (client *PathsClient) UnixTimeURL(ctx context.Context, unixTimeURLPath time.Time, options *PathsUnixTimeURLOptions) (*http.Response, error) {
+	req, err := client.unixTimeURLCreateRequest(ctx, unixTimeURLPath, options)
 	if err != nil {
 		return nil, err
 	}
@@ -1027,15 +1027,15 @@ func (client *PathsClient) UnixTimeURL(ctx context.Context, unixTimeUrlPath time
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.unixTimeUrlHandleError(resp)
+		return nil, client.unixTimeURLHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// unixTimeUrlCreateRequest creates the UnixTimeURL request.
-func (client *PathsClient) unixTimeUrlCreateRequest(ctx context.Context, unixTimeUrlPath time.Time, options *PathsUnixTimeURLOptions) (*azcore.Request, error) {
+// unixTimeURLCreateRequest creates the UnixTimeURL request.
+func (client *PathsClient) unixTimeURLCreateRequest(ctx context.Context, unixTimeURLPath time.Time, options *PathsUnixTimeURLOptions) (*azcore.Request, error) {
 	urlPath := "/paths/int/1460505600/{unixTimeUrlPath}"
-	urlPath = strings.ReplaceAll(urlPath, "{unixTimeUrlPath}", url.PathEscape(timeUnix(unixTimeUrlPath).String()))
+	urlPath = strings.ReplaceAll(urlPath, "{unixTimeUrlPath}", url.PathEscape(timeUnix(unixTimeURLPath).String()))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -1045,8 +1045,8 @@ func (client *PathsClient) unixTimeUrlCreateRequest(ctx context.Context, unixTim
 	return req, nil
 }
 
-// unixTimeUrlHandleError handles the UnixTimeURL error response.
-func (client *PathsClient) unixTimeUrlHandleError(resp *azcore.Response) error {
+// unixTimeURLHandleError handles the UnixTimeURL error response.
+func (client *PathsClient) unixTimeURLHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

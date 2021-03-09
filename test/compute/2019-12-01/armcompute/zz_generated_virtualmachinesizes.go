@@ -23,12 +23,12 @@ import (
 // Don't use this type directly, use NewVirtualMachineSizesClient() instead.
 type VirtualMachineSizesClient struct {
 	con            *armcore.Connection
-	subscriptionID string
+	subscriptionid string
 }
 
 // NewVirtualMachineSizesClient creates a new instance of VirtualMachineSizesClient with the specified values.
-func NewVirtualMachineSizesClient(con *armcore.Connection, subscriptionID string) *VirtualMachineSizesClient {
-	return &VirtualMachineSizesClient{con: con, subscriptionID: subscriptionID}
+func NewVirtualMachineSizesClient(con *armcore.Connection, subscriptionid string) *VirtualMachineSizesClient {
+	return &VirtualMachineSizesClient{con: con, subscriptionid: subscriptionid}
 }
 
 // List - This API is deprecated. Use Resources Skus [https://docs.microsoft.com/en-us/rest/api/compute/resourceskus/list]
@@ -51,7 +51,7 @@ func (client *VirtualMachineSizesClient) List(ctx context.Context, location stri
 func (client *VirtualMachineSizesClient) listCreateRequest(ctx context.Context, location string, options *VirtualMachineSizesListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/vmSizes"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionid))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err

@@ -2029,33 +2029,33 @@ type HTTPPoller interface {
 	FinalResponse(ctx context.Context) (*http.Response, error)
 }
 
-type httpPoller struct {
+type hTTPPoller struct {
 	// the client for making the request
 	pipeline azcore.Pipeline
 	pt       armcore.Poller
 }
 
 // Done returns true if there was an error or polling has reached a terminal state
-func (p *httpPoller) Done() bool {
+func (p *hTTPPoller) Done() bool {
 	return p.pt.Done()
 }
 
 // Poll will send poll the service endpoint and return an http.Response or error received from the service
-func (p *httpPoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *hTTPPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx, p.pipeline)
 }
 
-func (p *httpPoller) FinalResponse(ctx context.Context) (*http.Response, error) {
+func (p *hTTPPoller) FinalResponse(ctx context.Context) (*http.Response, error) {
 	return p.pt.FinalResponse(ctx, p.pipeline, nil)
 }
 
 // ResumeToken generates the string token that can be used with the ResumeHTTPPoller method
 // on the client to create a new poller from the data held in the current poller type
-func (p *httpPoller) ResumeToken() (string, error) {
+func (p *hTTPPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-func (p *httpPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+func (p *hTTPPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*http.Response, error) {
 	return p.pt.PollUntilDone(ctx, frequency, p.pipeline, nil)
 }
 
@@ -2069,23 +2069,23 @@ type IPAllocationPoller interface {
 	FinalResponse(ctx context.Context) (IPAllocationResponse, error)
 }
 
-type ipAllocationPoller struct {
+type iPAllocationPoller struct {
 	// the client for making the request
 	pipeline azcore.Pipeline
 	pt       armcore.Poller
 }
 
 // Done returns true if there was an error or polling has reached a terminal state
-func (p *ipAllocationPoller) Done() bool {
+func (p *iPAllocationPoller) Done() bool {
 	return p.pt.Done()
 }
 
 // Poll will send poll the service endpoint and return an http.Response or error received from the service
-func (p *ipAllocationPoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *iPAllocationPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx, p.pipeline)
 }
 
-func (p *ipAllocationPoller) FinalResponse(ctx context.Context) (IPAllocationResponse, error) {
+func (p *iPAllocationPoller) FinalResponse(ctx context.Context) (IPAllocationResponse, error) {
 	respType := IPAllocationResponse{IPAllocation: &IPAllocation{}}
 	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.IPAllocation)
 	if err != nil {
@@ -2097,11 +2097,11 @@ func (p *ipAllocationPoller) FinalResponse(ctx context.Context) (IPAllocationRes
 
 // ResumeToken generates the string token that can be used with the ResumeIPAllocationPoller method
 // on the client to create a new poller from the data held in the current poller type
-func (p *ipAllocationPoller) ResumeToken() (string, error) {
+func (p *iPAllocationPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-func (p *ipAllocationPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (IPAllocationResponse, error) {
+func (p *iPAllocationPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (IPAllocationResponse, error) {
 	respType := IPAllocationResponse{IPAllocation: &IPAllocation{}}
 	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.IPAllocation)
 	if err != nil {
@@ -2121,23 +2121,23 @@ type IPGroupPoller interface {
 	FinalResponse(ctx context.Context) (IPGroupResponse, error)
 }
 
-type ipGroupPoller struct {
+type iPGroupPoller struct {
 	// the client for making the request
 	pipeline azcore.Pipeline
 	pt       armcore.Poller
 }
 
 // Done returns true if there was an error or polling has reached a terminal state
-func (p *ipGroupPoller) Done() bool {
+func (p *iPGroupPoller) Done() bool {
 	return p.pt.Done()
 }
 
 // Poll will send poll the service endpoint and return an http.Response or error received from the service
-func (p *ipGroupPoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *iPGroupPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx, p.pipeline)
 }
 
-func (p *ipGroupPoller) FinalResponse(ctx context.Context) (IPGroupResponse, error) {
+func (p *iPGroupPoller) FinalResponse(ctx context.Context) (IPGroupResponse, error) {
 	respType := IPGroupResponse{IPGroup: &IPGroup{}}
 	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.IPGroup)
 	if err != nil {
@@ -2149,11 +2149,11 @@ func (p *ipGroupPoller) FinalResponse(ctx context.Context) (IPGroupResponse, err
 
 // ResumeToken generates the string token that can be used with the ResumeIPGroupPoller method
 // on the client to create a new poller from the data held in the current poller type
-func (p *ipGroupPoller) ResumeToken() (string, error) {
+func (p *iPGroupPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-func (p *ipGroupPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (IPGroupResponse, error) {
+func (p *iPGroupPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (IPGroupResponse, error) {
 	respType := IPGroupResponse{IPGroup: &IPGroup{}}
 	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.IPGroup)
 	if err != nil {
@@ -2901,23 +2901,23 @@ type PrivateDNSZoneGroupPoller interface {
 	FinalResponse(ctx context.Context) (PrivateDNSZoneGroupResponse, error)
 }
 
-type privateDnsZoneGroupPoller struct {
+type privateDNSZoneGroupPoller struct {
 	// the client for making the request
 	pipeline azcore.Pipeline
 	pt       armcore.Poller
 }
 
 // Done returns true if there was an error or polling has reached a terminal state
-func (p *privateDnsZoneGroupPoller) Done() bool {
+func (p *privateDNSZoneGroupPoller) Done() bool {
 	return p.pt.Done()
 }
 
 // Poll will send poll the service endpoint and return an http.Response or error received from the service
-func (p *privateDnsZoneGroupPoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *privateDNSZoneGroupPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx, p.pipeline)
 }
 
-func (p *privateDnsZoneGroupPoller) FinalResponse(ctx context.Context) (PrivateDNSZoneGroupResponse, error) {
+func (p *privateDNSZoneGroupPoller) FinalResponse(ctx context.Context) (PrivateDNSZoneGroupResponse, error) {
 	respType := PrivateDNSZoneGroupResponse{PrivateDNSZoneGroup: &PrivateDNSZoneGroup{}}
 	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.PrivateDNSZoneGroup)
 	if err != nil {
@@ -2929,11 +2929,11 @@ func (p *privateDnsZoneGroupPoller) FinalResponse(ctx context.Context) (PrivateD
 
 // ResumeToken generates the string token that can be used with the ResumePrivateDNSZoneGroupPoller method
 // on the client to create a new poller from the data held in the current poller type
-func (p *privateDnsZoneGroupPoller) ResumeToken() (string, error) {
+func (p *privateDNSZoneGroupPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-func (p *privateDnsZoneGroupPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (PrivateDNSZoneGroupResponse, error) {
+func (p *privateDNSZoneGroupPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (PrivateDNSZoneGroupResponse, error) {
 	respType := PrivateDNSZoneGroupResponse{PrivateDNSZoneGroup: &PrivateDNSZoneGroup{}}
 	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.PrivateDNSZoneGroup)
 	if err != nil {
@@ -4349,53 +4349,53 @@ func (p *virtualRouterPoller) pollUntilDone(ctx context.Context, frequency time.
 	return respType, nil
 }
 
-// VirtualWanPoller provides polling facilities until the operation completes
-type VirtualWanPoller interface {
+// VirtualWANPoller provides polling facilities until the operation completes
+type VirtualWANPoller interface {
 	azcore.Poller
 
 	// FinalResponse performs a final GET to the service and returns the final response
 	// for the polling operation. If there is an error performing the final GET then an error is returned.
-	// If the final GET succeeded then the final VirtualWanResponse will be returned.
-	FinalResponse(ctx context.Context) (VirtualWanResponse, error)
+	// If the final GET succeeded then the final VirtualWANResponse will be returned.
+	FinalResponse(ctx context.Context) (VirtualWANResponse, error)
 }
 
-type virtualWanPoller struct {
+type virtualWANPoller struct {
 	// the client for making the request
 	pipeline azcore.Pipeline
 	pt       armcore.Poller
 }
 
 // Done returns true if there was an error or polling has reached a terminal state
-func (p *virtualWanPoller) Done() bool {
+func (p *virtualWANPoller) Done() bool {
 	return p.pt.Done()
 }
 
 // Poll will send poll the service endpoint and return an http.Response or error received from the service
-func (p *virtualWanPoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *virtualWANPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx, p.pipeline)
 }
 
-func (p *virtualWanPoller) FinalResponse(ctx context.Context) (VirtualWanResponse, error) {
-	respType := VirtualWanResponse{VirtualWan: &VirtualWan{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.VirtualWan)
+func (p *virtualWANPoller) FinalResponse(ctx context.Context) (VirtualWANResponse, error) {
+	respType := VirtualWANResponse{VirtualWAN: &VirtualWAN{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.VirtualWAN)
 	if err != nil {
-		return VirtualWanResponse{}, err
+		return VirtualWANResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil
 }
 
-// ResumeToken generates the string token that can be used with the ResumeVirtualWanPoller method
+// ResumeToken generates the string token that can be used with the ResumeVirtualWANPoller method
 // on the client to create a new poller from the data held in the current poller type
-func (p *virtualWanPoller) ResumeToken() (string, error) {
+func (p *virtualWANPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-func (p *virtualWanPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (VirtualWanResponse, error) {
-	respType := VirtualWanResponse{VirtualWan: &VirtualWan{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.VirtualWan)
+func (p *virtualWANPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (VirtualWANResponse, error) {
+	respType := VirtualWANResponse{VirtualWAN: &VirtualWAN{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.VirtualWAN)
 	if err != nil {
-		return VirtualWanResponse{}, err
+		return VirtualWANResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil

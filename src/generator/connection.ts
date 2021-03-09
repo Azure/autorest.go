@@ -8,7 +8,6 @@ import { CodeModel, Parameter } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 import { contentPreamble, formatParameterTypeName } from './helpers';
 import { ImportManager } from './imports';
-import { camelCase, pascalCase } from '@azure-tools/codegen';
 
 // generates content for connection.go
 export async function generateConnection(session: Session<CodeModel>): Promise<string> {
@@ -40,7 +39,7 @@ function generateContent(session: Session<CodeModel>): string {
   const isARM = session.model.language.go!.openApiType === 'arm';
   let connectionOptions = 'ConnectionOptions';
   if (!isARM && !forceExports) {
-    connectionOptions = camelCase(connectionOptions);
+    connectionOptions = connectionOptions.uncapitalize();
   }
   text += `// ${connectionOptions} contains configuration settings for the connection's pipeline.\n`;
   text += '// All zero-value fields will be initialized with their default values.\n';
@@ -72,11 +71,11 @@ function generateContent(session: Session<CodeModel>): string {
   let newConnection = 'NewConnection';
   let newConnectionWithPipeline = 'NewConnectionWithPipeline';
   if (!isARM && !forceExports) {
-    connection = camelCase(connection);
-    defaultEndpoint = camelCase(defaultEndpoint);
-    newDefaultConnection = camelCase(newDefaultConnection);
-    newConnection = camelCase(newConnection);
-    newConnectionWithPipeline = camelCase(newConnectionWithPipeline);
+    connection = connection.uncapitalize();
+    defaultEndpoint = defaultEndpoint.uncapitalize();
+    newDefaultConnection = newDefaultConnection.uncapitalize();
+    newConnection = newConnection.uncapitalize();
+    newConnectionWithPipeline = newConnectionWithPipeline.uncapitalize();
   }
   if (session.model.info.description) {
     text += `// ${connection} - ${session.model.info.description}\n`;
@@ -217,7 +216,7 @@ function generateContent(session: Session<CodeModel>): string {
     text += '\treturn client\n';
     text += '}\n\n';
     for (const hostParam of values(hostParams)) {
-      const hostParamFunc = pascalCase(hostParam.language.go!.name);
+      const hostParamFunc = (<string>hostParam.language.go!.name).capitalize();
       text += `// ${hostParamFunc} returns part of the parameterized host.\n`;
       text += `func (c *${connection}) ${hostParamFunc}() string {\n`;
       text += `\treturn c.${hostParam.language.go!.name}\n`;

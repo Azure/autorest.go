@@ -24,12 +24,12 @@ import (
 // Don't use this type directly, use NewVirtualMachineImagesClient() instead.
 type VirtualMachineImagesClient struct {
 	con            *armcore.Connection
-	subscriptionID string
+	subscriptionid string
 }
 
 // NewVirtualMachineImagesClient creates a new instance of VirtualMachineImagesClient with the specified values.
-func NewVirtualMachineImagesClient(con *armcore.Connection, subscriptionID string) *VirtualMachineImagesClient {
-	return &VirtualMachineImagesClient{con: con, subscriptionID: subscriptionID}
+func NewVirtualMachineImagesClient(con *armcore.Connection, subscriptionid string) *VirtualMachineImagesClient {
+	return &VirtualMachineImagesClient{con: con, subscriptionid: subscriptionid}
 }
 
 // Get - Gets a virtual machine image.
@@ -56,7 +56,7 @@ func (client *VirtualMachineImagesClient) getCreateRequest(ctx context.Context, 
 	urlPath = strings.ReplaceAll(urlPath, "{offer}", url.PathEscape(offer))
 	urlPath = strings.ReplaceAll(urlPath, "{skus}", url.PathEscape(skus))
 	urlPath = strings.ReplaceAll(urlPath, "{version}", url.PathEscape(version))
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionid))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -113,7 +113,7 @@ func (client *VirtualMachineImagesClient) listCreateRequest(ctx context.Context,
 	urlPath = strings.ReplaceAll(urlPath, "{publisherName}", url.PathEscape(publisherName))
 	urlPath = strings.ReplaceAll(urlPath, "{offer}", url.PathEscape(offer))
 	urlPath = strings.ReplaceAll(urlPath, "{skus}", url.PathEscape(skus))
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionid))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -177,7 +177,7 @@ func (client *VirtualMachineImagesClient) listOffersCreateRequest(ctx context.Co
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmimage/offers"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
 	urlPath = strings.ReplaceAll(urlPath, "{publisherName}", url.PathEscape(publisherName))
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionid))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -231,7 +231,7 @@ func (client *VirtualMachineImagesClient) ListPublishers(ctx context.Context, lo
 func (client *VirtualMachineImagesClient) listPublishersCreateRequest(ctx context.Context, location string, options *VirtualMachineImagesListPublishersOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionid))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -265,9 +265,9 @@ func (client *VirtualMachineImagesClient) listPublishersHandleError(resp *azcore
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
-// ListSKUs - Gets a list of virtual machine image SKUs for the specified location, publisher, and offer.
-func (client *VirtualMachineImagesClient) ListSKUs(ctx context.Context, location string, publisherName string, offer string, options *VirtualMachineImagesListSKUsOptions) (VirtualMachineImageResourceArrayResponse, error) {
-	req, err := client.listSkUsCreateRequest(ctx, location, publisherName, offer, options)
+// ListSkus - Gets a list of virtual machine image SKUs for the specified location, publisher, and offer.
+func (client *VirtualMachineImagesClient) ListSkus(ctx context.Context, location string, publisherName string, offer string, options *VirtualMachineImagesListSkusOptions) (VirtualMachineImageResourceArrayResponse, error) {
+	req, err := client.listSkusCreateRequest(ctx, location, publisherName, offer, options)
 	if err != nil {
 		return VirtualMachineImageResourceArrayResponse{}, err
 	}
@@ -276,18 +276,18 @@ func (client *VirtualMachineImagesClient) ListSKUs(ctx context.Context, location
 		return VirtualMachineImageResourceArrayResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return VirtualMachineImageResourceArrayResponse{}, client.listSkUsHandleError(resp)
+		return VirtualMachineImageResourceArrayResponse{}, client.listSkusHandleError(resp)
 	}
-	return client.listSkUsHandleResponse(resp)
+	return client.listSkusHandleResponse(resp)
 }
 
-// listSkUsCreateRequest creates the ListSKUs request.
-func (client *VirtualMachineImagesClient) listSkUsCreateRequest(ctx context.Context, location string, publisherName string, offer string, options *VirtualMachineImagesListSKUsOptions) (*azcore.Request, error) {
+// listSkusCreateRequest creates the ListSkus request.
+func (client *VirtualMachineImagesClient) listSkusCreateRequest(ctx context.Context, location string, publisherName string, offer string, options *VirtualMachineImagesListSkusOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
 	urlPath = strings.ReplaceAll(urlPath, "{publisherName}", url.PathEscape(publisherName))
 	urlPath = strings.ReplaceAll(urlPath, "{offer}", url.PathEscape(offer))
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionid))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -300,8 +300,8 @@ func (client *VirtualMachineImagesClient) listSkUsCreateRequest(ctx context.Cont
 	return req, nil
 }
 
-// listSkUsHandleResponse handles the ListSKUs response.
-func (client *VirtualMachineImagesClient) listSkUsHandleResponse(resp *azcore.Response) (VirtualMachineImageResourceArrayResponse, error) {
+// listSkusHandleResponse handles the ListSkus response.
+func (client *VirtualMachineImagesClient) listSkusHandleResponse(resp *azcore.Response) (VirtualMachineImageResourceArrayResponse, error) {
 	var val []VirtualMachineImageResource
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return VirtualMachineImageResourceArrayResponse{}, err
@@ -309,8 +309,8 @@ func (client *VirtualMachineImagesClient) listSkUsHandleResponse(resp *azcore.Re
 	return VirtualMachineImageResourceArrayResponse{RawResponse: resp.Response, VirtualMachineImageResourceArray: val}, nil
 }
 
-// listSkUsHandleError handles the ListSKUs error response.
-func (client *VirtualMachineImagesClient) listSkUsHandleError(resp *azcore.Response) error {
+// listSkusHandleError handles the ListSkus error response.
+func (client *VirtualMachineImagesClient) listSkusHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)

@@ -56,8 +56,8 @@ func (client *containerClient) acquireLeaseCreateRequest(ctx context.Context, co
 	if containerAcquireLeaseOptions != nil && containerAcquireLeaseOptions.Duration != nil {
 		req.Header.Set("x-ms-lease-duration", strconv.FormatInt(int64(*containerAcquireLeaseOptions.Duration), 10))
 	}
-	if containerAcquireLeaseOptions != nil && containerAcquireLeaseOptions.ProposedLeaseId != nil {
-		req.Header.Set("x-ms-proposed-lease-id", *containerAcquireLeaseOptions.ProposedLeaseId)
+	if containerAcquireLeaseOptions != nil && containerAcquireLeaseOptions.ProposedLeaseID != nil {
+		req.Header.Set("x-ms-proposed-lease-id", *containerAcquireLeaseOptions.ProposedLeaseID)
 	}
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfModifiedSince != nil {
 		req.Header.Set("If-Modified-Since", modifiedAccessConditions.IfModifiedSince.Format(time.RFC1123))
@@ -66,8 +66,8 @@ func (client *containerClient) acquireLeaseCreateRequest(ctx context.Context, co
 		req.Header.Set("If-Unmodified-Since", modifiedAccessConditions.IfUnmodifiedSince.Format(time.RFC1123))
 	}
 	req.Header.Set("x-ms-version", "2019-07-07")
-	if containerAcquireLeaseOptions != nil && containerAcquireLeaseOptions.RequestId != nil {
-		req.Header.Set("x-ms-client-request-id", *containerAcquireLeaseOptions.RequestId)
+	if containerAcquireLeaseOptions != nil && containerAcquireLeaseOptions.RequestID != nil {
+		req.Header.Set("x-ms-client-request-id", *containerAcquireLeaseOptions.RequestID)
 	}
 	req.Header.Set("Accept", "application/xml")
 	return req, nil
@@ -158,8 +158,8 @@ func (client *containerClient) breakLeaseCreateRequest(ctx context.Context, cont
 		req.Header.Set("If-Unmodified-Since", modifiedAccessConditions.IfUnmodifiedSince.Format(time.RFC1123))
 	}
 	req.Header.Set("x-ms-version", "2019-07-07")
-	if containerBreakLeaseOptions != nil && containerBreakLeaseOptions.RequestId != nil {
-		req.Header.Set("x-ms-client-request-id", *containerBreakLeaseOptions.RequestId)
+	if containerBreakLeaseOptions != nil && containerBreakLeaseOptions.RequestID != nil {
+		req.Header.Set("x-ms-client-request-id", *containerBreakLeaseOptions.RequestID)
 	}
 	req.Header.Set("Accept", "application/xml")
 	return req, nil
@@ -215,8 +215,8 @@ func (client *containerClient) breakLeaseHandleError(resp *azcore.Response) erro
 }
 
 // ChangeLease - [Update] establishes and manages a lock on a container for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite
-func (client *containerClient) ChangeLease(ctx context.Context, leaseId string, proposedLeaseId string, containerChangeLeaseOptions *ContainerChangeLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (ContainerChangeLeaseResponse, error) {
-	req, err := client.changeLeaseCreateRequest(ctx, leaseId, proposedLeaseId, containerChangeLeaseOptions, modifiedAccessConditions)
+func (client *containerClient) ChangeLease(ctx context.Context, leaseID string, proposedLeaseID string, containerChangeLeaseOptions *ContainerChangeLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (ContainerChangeLeaseResponse, error) {
+	req, err := client.changeLeaseCreateRequest(ctx, leaseID, proposedLeaseID, containerChangeLeaseOptions, modifiedAccessConditions)
 	if err != nil {
 		return ContainerChangeLeaseResponse{}, err
 	}
@@ -231,7 +231,7 @@ func (client *containerClient) ChangeLease(ctx context.Context, leaseId string, 
 }
 
 // changeLeaseCreateRequest creates the ChangeLease request.
-func (client *containerClient) changeLeaseCreateRequest(ctx context.Context, leaseId string, proposedLeaseId string, containerChangeLeaseOptions *ContainerChangeLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
+func (client *containerClient) changeLeaseCreateRequest(ctx context.Context, leaseID string, proposedLeaseID string, containerChangeLeaseOptions *ContainerChangeLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
 	req, err := azcore.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
 	if err != nil {
 		return nil, err
@@ -245,8 +245,8 @@ func (client *containerClient) changeLeaseCreateRequest(ctx context.Context, lea
 	}
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("x-ms-lease-action", "change")
-	req.Header.Set("x-ms-lease-id", leaseId)
-	req.Header.Set("x-ms-proposed-lease-id", proposedLeaseId)
+	req.Header.Set("x-ms-lease-id", leaseID)
+	req.Header.Set("x-ms-proposed-lease-id", proposedLeaseID)
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfModifiedSince != nil {
 		req.Header.Set("If-Modified-Since", modifiedAccessConditions.IfModifiedSince.Format(time.RFC1123))
 	}
@@ -254,8 +254,8 @@ func (client *containerClient) changeLeaseCreateRequest(ctx context.Context, lea
 		req.Header.Set("If-Unmodified-Since", modifiedAccessConditions.IfUnmodifiedSince.Format(time.RFC1123))
 	}
 	req.Header.Set("x-ms-version", "2019-07-07")
-	if containerChangeLeaseOptions != nil && containerChangeLeaseOptions.RequestId != nil {
-		req.Header.Set("x-ms-client-request-id", *containerChangeLeaseOptions.RequestId)
+	if containerChangeLeaseOptions != nil && containerChangeLeaseOptions.RequestID != nil {
+		req.Header.Set("x-ms-client-request-id", *containerChangeLeaseOptions.RequestID)
 	}
 	req.Header.Set("Accept", "application/xml")
 	return req, nil
@@ -343,8 +343,8 @@ func (client *containerClient) createCreateRequest(ctx context.Context, containe
 		req.Header.Set("x-ms-blob-public-access", string(*containerCreateOptions.Access))
 	}
 	req.Header.Set("x-ms-version", "2019-07-07")
-	if containerCreateOptions != nil && containerCreateOptions.RequestId != nil {
-		req.Header.Set("x-ms-client-request-id", *containerCreateOptions.RequestId)
+	if containerCreateOptions != nil && containerCreateOptions.RequestID != nil {
+		req.Header.Set("x-ms-client-request-id", *containerCreateOptions.RequestID)
 	}
 	if containerCpkScopeInfo != nil && containerCpkScopeInfo.DefaultEncryptionScope != nil {
 		req.Header.Set("x-ms-default-encryption-scope", *containerCpkScopeInfo.DefaultEncryptionScope)
@@ -426,8 +426,8 @@ func (client *containerClient) deleteCreateRequest(ctx context.Context, containe
 		query.Set("timeout", strconv.FormatInt(int64(*containerDeleteOptions.Timeout), 10))
 	}
 	req.URL.RawQuery = query.Encode()
-	if leaseAccessConditions != nil && leaseAccessConditions.LeaseId != nil {
-		req.Header.Set("x-ms-lease-id", *leaseAccessConditions.LeaseId)
+	if leaseAccessConditions != nil && leaseAccessConditions.LeaseID != nil {
+		req.Header.Set("x-ms-lease-id", *leaseAccessConditions.LeaseID)
 	}
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfModifiedSince != nil {
 		req.Header.Set("If-Modified-Since", modifiedAccessConditions.IfModifiedSince.Format(time.RFC1123))
@@ -436,8 +436,8 @@ func (client *containerClient) deleteCreateRequest(ctx context.Context, containe
 		req.Header.Set("If-Unmodified-Since", modifiedAccessConditions.IfUnmodifiedSince.Format(time.RFC1123))
 	}
 	req.Header.Set("x-ms-version", "2019-07-07")
-	if containerDeleteOptions != nil && containerDeleteOptions.RequestId != nil {
-		req.Header.Set("x-ms-client-request-id", *containerDeleteOptions.RequestId)
+	if containerDeleteOptions != nil && containerDeleteOptions.RequestID != nil {
+		req.Header.Set("x-ms-client-request-id", *containerDeleteOptions.RequestID)
 	}
 	req.Header.Set("Accept", "application/xml")
 	return req, nil
@@ -475,17 +475,17 @@ func (client *containerClient) deleteHandleError(resp *azcore.Response) error {
 }
 
 // GetAccessPolicy - gets the permissions for the specified container. The permissions indicate whether container data may be accessed publicly.
-func (client *containerClient) GetAccessPolicy(ctx context.Context, containerGetAccessPolicyOptions *ContainerGetAccessPolicyOptions, leaseAccessConditions *LeaseAccessConditions) (SignedIDentifierArrayResponse, error) {
+func (client *containerClient) GetAccessPolicy(ctx context.Context, containerGetAccessPolicyOptions *ContainerGetAccessPolicyOptions, leaseAccessConditions *LeaseAccessConditions) (SignedIdentifierArrayResponse, error) {
 	req, err := client.getAccessPolicyCreateRequest(ctx, containerGetAccessPolicyOptions, leaseAccessConditions)
 	if err != nil {
-		return SignedIDentifierArrayResponse{}, err
+		return SignedIdentifierArrayResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return SignedIDentifierArrayResponse{}, err
+		return SignedIdentifierArrayResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return SignedIDentifierArrayResponse{}, client.getAccessPolicyHandleError(resp)
+		return SignedIdentifierArrayResponse{}, client.getAccessPolicyHandleError(resp)
 	}
 	return client.getAccessPolicyHandleResponse(resp)
 }
@@ -504,22 +504,22 @@ func (client *containerClient) getAccessPolicyCreateRequest(ctx context.Context,
 		query.Set("timeout", strconv.FormatInt(int64(*containerGetAccessPolicyOptions.Timeout), 10))
 	}
 	req.URL.RawQuery = query.Encode()
-	if leaseAccessConditions != nil && leaseAccessConditions.LeaseId != nil {
-		req.Header.Set("x-ms-lease-id", *leaseAccessConditions.LeaseId)
+	if leaseAccessConditions != nil && leaseAccessConditions.LeaseID != nil {
+		req.Header.Set("x-ms-lease-id", *leaseAccessConditions.LeaseID)
 	}
 	req.Header.Set("x-ms-version", "2019-07-07")
-	if containerGetAccessPolicyOptions != nil && containerGetAccessPolicyOptions.RequestId != nil {
-		req.Header.Set("x-ms-client-request-id", *containerGetAccessPolicyOptions.RequestId)
+	if containerGetAccessPolicyOptions != nil && containerGetAccessPolicyOptions.RequestID != nil {
+		req.Header.Set("x-ms-client-request-id", *containerGetAccessPolicyOptions.RequestID)
 	}
 	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
 // getAccessPolicyHandleResponse handles the GetAccessPolicy response.
-func (client *containerClient) getAccessPolicyHandleResponse(resp *azcore.Response) (SignedIDentifierArrayResponse, error) {
-	result := SignedIDentifierArrayResponse{RawResponse: resp.Response}
+func (client *containerClient) getAccessPolicyHandleResponse(resp *azcore.Response) (SignedIdentifierArrayResponse, error) {
+	result := SignedIdentifierArrayResponse{RawResponse: resp.Response}
 	if err := resp.UnmarshalAsXML(&result); err != nil {
-		return SignedIDentifierArrayResponse{}, err
+		return SignedIdentifierArrayResponse{}, err
 	}
 	if val := resp.Header.Get("x-ms-blob-public-access"); val != "" {
 		result.BlobPublicAccess = (*PublicAccessType)(&val)
@@ -530,7 +530,7 @@ func (client *containerClient) getAccessPolicyHandleResponse(resp *azcore.Respon
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return SignedIDentifierArrayResponse{}, err
+			return SignedIdentifierArrayResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
@@ -546,7 +546,7 @@ func (client *containerClient) getAccessPolicyHandleResponse(resp *azcore.Respon
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return SignedIDentifierArrayResponse{}, err
+			return SignedIdentifierArrayResponse{}, err
 		}
 		result.Date = &date
 	}
@@ -661,12 +661,12 @@ func (client *containerClient) getPropertiesCreateRequest(ctx context.Context, c
 		query.Set("timeout", strconv.FormatInt(int64(*containerGetPropertiesOptions.Timeout), 10))
 	}
 	req.URL.RawQuery = query.Encode()
-	if leaseAccessConditions != nil && leaseAccessConditions.LeaseId != nil {
-		req.Header.Set("x-ms-lease-id", *leaseAccessConditions.LeaseId)
+	if leaseAccessConditions != nil && leaseAccessConditions.LeaseID != nil {
+		req.Header.Set("x-ms-lease-id", *leaseAccessConditions.LeaseID)
 	}
 	req.Header.Set("x-ms-version", "2019-07-07")
-	if containerGetPropertiesOptions != nil && containerGetPropertiesOptions.RequestId != nil {
-		req.Header.Set("x-ms-client-request-id", *containerGetPropertiesOptions.RequestId)
+	if containerGetPropertiesOptions != nil && containerGetPropertiesOptions.RequestID != nil {
+		req.Header.Set("x-ms-client-request-id", *containerGetPropertiesOptions.RequestID)
 	}
 	req.Header.Set("Accept", "application/xml")
 	return req, nil
@@ -800,8 +800,8 @@ func (client *containerClient) listBlobFlatSegmentCreateRequest(ctx context.Cont
 	}
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("x-ms-version", "2019-07-07")
-	if options != nil && options.RequestId != nil {
-		req.Header.Set("x-ms-client-request-id", *options.RequestId)
+	if options != nil && options.RequestID != nil {
+		req.Header.Set("x-ms-client-request-id", *options.RequestID)
 	}
 	req.Header.Set("Accept", "application/xml")
 	return req, nil
@@ -889,8 +889,8 @@ func (client *containerClient) listBlobHierarchySegmentCreateRequest(ctx context
 	}
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("x-ms-version", "2019-07-07")
-	if options != nil && options.RequestId != nil {
-		req.Header.Set("x-ms-client-request-id", *options.RequestId)
+	if options != nil && options.RequestID != nil {
+		req.Header.Set("x-ms-client-request-id", *options.RequestID)
 	}
 	req.Header.Set("Accept", "application/xml")
 	return req, nil
@@ -935,8 +935,8 @@ func (client *containerClient) listBlobHierarchySegmentHandleError(resp *azcore.
 }
 
 // ReleaseLease - [Update] establishes and manages a lock on a container for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite
-func (client *containerClient) ReleaseLease(ctx context.Context, leaseId string, containerReleaseLeaseOptions *ContainerReleaseLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (ContainerReleaseLeaseResponse, error) {
-	req, err := client.releaseLeaseCreateRequest(ctx, leaseId, containerReleaseLeaseOptions, modifiedAccessConditions)
+func (client *containerClient) ReleaseLease(ctx context.Context, leaseID string, containerReleaseLeaseOptions *ContainerReleaseLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (ContainerReleaseLeaseResponse, error) {
+	req, err := client.releaseLeaseCreateRequest(ctx, leaseID, containerReleaseLeaseOptions, modifiedAccessConditions)
 	if err != nil {
 		return ContainerReleaseLeaseResponse{}, err
 	}
@@ -951,7 +951,7 @@ func (client *containerClient) ReleaseLease(ctx context.Context, leaseId string,
 }
 
 // releaseLeaseCreateRequest creates the ReleaseLease request.
-func (client *containerClient) releaseLeaseCreateRequest(ctx context.Context, leaseId string, containerReleaseLeaseOptions *ContainerReleaseLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
+func (client *containerClient) releaseLeaseCreateRequest(ctx context.Context, leaseID string, containerReleaseLeaseOptions *ContainerReleaseLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
 	req, err := azcore.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
 	if err != nil {
 		return nil, err
@@ -965,7 +965,7 @@ func (client *containerClient) releaseLeaseCreateRequest(ctx context.Context, le
 	}
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("x-ms-lease-action", "release")
-	req.Header.Set("x-ms-lease-id", leaseId)
+	req.Header.Set("x-ms-lease-id", leaseID)
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfModifiedSince != nil {
 		req.Header.Set("If-Modified-Since", modifiedAccessConditions.IfModifiedSince.Format(time.RFC1123))
 	}
@@ -973,8 +973,8 @@ func (client *containerClient) releaseLeaseCreateRequest(ctx context.Context, le
 		req.Header.Set("If-Unmodified-Since", modifiedAccessConditions.IfUnmodifiedSince.Format(time.RFC1123))
 	}
 	req.Header.Set("x-ms-version", "2019-07-07")
-	if containerReleaseLeaseOptions != nil && containerReleaseLeaseOptions.RequestId != nil {
-		req.Header.Set("x-ms-client-request-id", *containerReleaseLeaseOptions.RequestId)
+	if containerReleaseLeaseOptions != nil && containerReleaseLeaseOptions.RequestID != nil {
+		req.Header.Set("x-ms-client-request-id", *containerReleaseLeaseOptions.RequestID)
 	}
 	req.Header.Set("Accept", "application/xml")
 	return req, nil
@@ -1022,8 +1022,8 @@ func (client *containerClient) releaseLeaseHandleError(resp *azcore.Response) er
 }
 
 // RenewLease - [Update] establishes and manages a lock on a container for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite
-func (client *containerClient) RenewLease(ctx context.Context, leaseId string, containerRenewLeaseOptions *ContainerRenewLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (ContainerRenewLeaseResponse, error) {
-	req, err := client.renewLeaseCreateRequest(ctx, leaseId, containerRenewLeaseOptions, modifiedAccessConditions)
+func (client *containerClient) RenewLease(ctx context.Context, leaseID string, containerRenewLeaseOptions *ContainerRenewLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (ContainerRenewLeaseResponse, error) {
+	req, err := client.renewLeaseCreateRequest(ctx, leaseID, containerRenewLeaseOptions, modifiedAccessConditions)
 	if err != nil {
 		return ContainerRenewLeaseResponse{}, err
 	}
@@ -1038,7 +1038,7 @@ func (client *containerClient) RenewLease(ctx context.Context, leaseId string, c
 }
 
 // renewLeaseCreateRequest creates the RenewLease request.
-func (client *containerClient) renewLeaseCreateRequest(ctx context.Context, leaseId string, containerRenewLeaseOptions *ContainerRenewLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
+func (client *containerClient) renewLeaseCreateRequest(ctx context.Context, leaseID string, containerRenewLeaseOptions *ContainerRenewLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*azcore.Request, error) {
 	req, err := azcore.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
 	if err != nil {
 		return nil, err
@@ -1052,7 +1052,7 @@ func (client *containerClient) renewLeaseCreateRequest(ctx context.Context, leas
 	}
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("x-ms-lease-action", "renew")
-	req.Header.Set("x-ms-lease-id", leaseId)
+	req.Header.Set("x-ms-lease-id", leaseID)
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfModifiedSince != nil {
 		req.Header.Set("If-Modified-Since", modifiedAccessConditions.IfModifiedSince.Format(time.RFC1123))
 	}
@@ -1060,8 +1060,8 @@ func (client *containerClient) renewLeaseCreateRequest(ctx context.Context, leas
 		req.Header.Set("If-Unmodified-Since", modifiedAccessConditions.IfUnmodifiedSince.Format(time.RFC1123))
 	}
 	req.Header.Set("x-ms-version", "2019-07-07")
-	if containerRenewLeaseOptions != nil && containerRenewLeaseOptions.RequestId != nil {
-		req.Header.Set("x-ms-client-request-id", *containerRenewLeaseOptions.RequestId)
+	if containerRenewLeaseOptions != nil && containerRenewLeaseOptions.RequestID != nil {
+		req.Header.Set("x-ms-client-request-id", *containerRenewLeaseOptions.RequestID)
 	}
 	req.Header.Set("Accept", "application/xml")
 	return req, nil
@@ -1141,8 +1141,8 @@ func (client *containerClient) setAccessPolicyCreateRequest(ctx context.Context,
 		query.Set("timeout", strconv.FormatInt(int64(*containerSetAccessPolicyOptions.Timeout), 10))
 	}
 	req.URL.RawQuery = query.Encode()
-	if leaseAccessConditions != nil && leaseAccessConditions.LeaseId != nil {
-		req.Header.Set("x-ms-lease-id", *leaseAccessConditions.LeaseId)
+	if leaseAccessConditions != nil && leaseAccessConditions.LeaseID != nil {
+		req.Header.Set("x-ms-lease-id", *leaseAccessConditions.LeaseID)
 	}
 	if containerSetAccessPolicyOptions != nil && containerSetAccessPolicyOptions.Access != nil {
 		req.Header.Set("x-ms-blob-public-access", string(*containerSetAccessPolicyOptions.Access))
@@ -1154,16 +1154,16 @@ func (client *containerClient) setAccessPolicyCreateRequest(ctx context.Context,
 		req.Header.Set("If-Unmodified-Since", modifiedAccessConditions.IfUnmodifiedSince.Format(time.RFC1123))
 	}
 	req.Header.Set("x-ms-version", "2019-07-07")
-	if containerSetAccessPolicyOptions != nil && containerSetAccessPolicyOptions.RequestId != nil {
-		req.Header.Set("x-ms-client-request-id", *containerSetAccessPolicyOptions.RequestId)
+	if containerSetAccessPolicyOptions != nil && containerSetAccessPolicyOptions.RequestID != nil {
+		req.Header.Set("x-ms-client-request-id", *containerSetAccessPolicyOptions.RequestID)
 	}
 	req.Header.Set("Accept", "application/xml")
 	type wrapper struct {
 		XMLName      xml.Name            `xml:"SignedIdentifiers"`
-		ContainerAcl *[]SignedIDentifier `xml:"SignedIdentifier"`
+		ContainerACL *[]SignedIdentifier `xml:"SignedIdentifier"`
 	}
 	if containerSetAccessPolicyOptions != nil {
-		return req, req.MarshalAsXML(wrapper{ContainerAcl: containerSetAccessPolicyOptions.ContainerAcl})
+		return req, req.MarshalAsXML(wrapper{ContainerACL: containerSetAccessPolicyOptions.ContainerACL})
 	}
 	return req, nil
 }
@@ -1239,8 +1239,8 @@ func (client *containerClient) setMetadataCreateRequest(ctx context.Context, con
 		query.Set("timeout", strconv.FormatInt(int64(*containerSetMetadataOptions.Timeout), 10))
 	}
 	req.URL.RawQuery = query.Encode()
-	if leaseAccessConditions != nil && leaseAccessConditions.LeaseId != nil {
-		req.Header.Set("x-ms-lease-id", *leaseAccessConditions.LeaseId)
+	if leaseAccessConditions != nil && leaseAccessConditions.LeaseID != nil {
+		req.Header.Set("x-ms-lease-id", *leaseAccessConditions.LeaseID)
 	}
 	if containerSetMetadataOptions != nil && containerSetMetadataOptions.Metadata != nil {
 		for k, v := range *containerSetMetadataOptions.Metadata {
@@ -1251,8 +1251,8 @@ func (client *containerClient) setMetadataCreateRequest(ctx context.Context, con
 		req.Header.Set("If-Modified-Since", modifiedAccessConditions.IfModifiedSince.Format(time.RFC1123))
 	}
 	req.Header.Set("x-ms-version", "2019-07-07")
-	if containerSetMetadataOptions != nil && containerSetMetadataOptions.RequestId != nil {
-		req.Header.Set("x-ms-client-request-id", *containerSetMetadataOptions.RequestId)
+	if containerSetMetadataOptions != nil && containerSetMetadataOptions.RequestID != nil {
+		req.Header.Set("x-ms-client-request-id", *containerSetMetadataOptions.RequestID)
 	}
 	req.Header.Set("Accept", "application/xml")
 	return req, nil

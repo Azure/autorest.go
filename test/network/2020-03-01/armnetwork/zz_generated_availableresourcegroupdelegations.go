@@ -20,12 +20,12 @@ import (
 // Don't use this type directly, use NewAvailableResourceGroupDelegationsClient() instead.
 type AvailableResourceGroupDelegationsClient struct {
 	con            *armcore.Connection
-	subscriptionID string
+	subscriptionid string
 }
 
 // NewAvailableResourceGroupDelegationsClient creates a new instance of AvailableResourceGroupDelegationsClient with the specified values.
-func NewAvailableResourceGroupDelegationsClient(con *armcore.Connection, subscriptionID string) *AvailableResourceGroupDelegationsClient {
-	return &AvailableResourceGroupDelegationsClient{con: con, subscriptionID: subscriptionID}
+func NewAvailableResourceGroupDelegationsClient(con *armcore.Connection, subscriptionid string) *AvailableResourceGroupDelegationsClient {
+	return &AvailableResourceGroupDelegationsClient{con: con, subscriptionid: subscriptionid}
 }
 
 // List - Gets all of the available subnet delegations for this resource group in this region.
@@ -49,7 +49,7 @@ func (client *AvailableResourceGroupDelegationsClient) listCreateRequest(ctx con
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availableDelegations"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionid))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err

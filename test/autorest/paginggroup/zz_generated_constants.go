@@ -18,7 +18,7 @@ const (
 	OperationResultStatusDeleted   OperationResultStatus = "Deleted"
 	OperationResultStatusDeleting  OperationResultStatus = "Deleting"
 	OperationResultStatusFailed    OperationResultStatus = "Failed"
-	OperationResultStatusOk        OperationResultStatus = "OK"
+	OperationResultStatusOK        OperationResultStatus = "OK"
 	OperationResultStatusSucceeded OperationResultStatus = "Succeeded"
 	OperationResultStatusUpdated   OperationResultStatus = "Updated"
 	OperationResultStatusUpdating  OperationResultStatus = "Updating"
@@ -34,7 +34,7 @@ func PossibleOperationResultStatusValues() []OperationResultStatus {
 		OperationResultStatusDeleted,
 		OperationResultStatusDeleting,
 		OperationResultStatusFailed,
-		OperationResultStatusOk,
+		OperationResultStatusOK,
 		OperationResultStatusSucceeded,
 		OperationResultStatusUpdated,
 		OperationResultStatusUpdating,

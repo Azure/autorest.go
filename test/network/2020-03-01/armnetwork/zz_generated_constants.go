@@ -148,14 +148,14 @@ type ApplicationGatewayProtocol string
 
 const (
 	ApplicationGatewayProtocolHTTP  ApplicationGatewayProtocol = "Http"
-	ApplicationGatewayProtocolHTTPs ApplicationGatewayProtocol = "Https"
+	ApplicationGatewayProtocolHTTPS ApplicationGatewayProtocol = "Https"
 )
 
 // PossibleApplicationGatewayProtocolValues returns the possible values for the ApplicationGatewayProtocol const type.
 func PossibleApplicationGatewayProtocolValues() []ApplicationGatewayProtocol {
 	return []ApplicationGatewayProtocol{
 		ApplicationGatewayProtocolHTTP,
-		ApplicationGatewayProtocolHTTPs,
+		ApplicationGatewayProtocolHTTPS,
 	}
 }
 
@@ -218,9 +218,9 @@ const (
 	ApplicationGatewaySKUNameStandardMedium ApplicationGatewaySKUName = "Standard_Medium"
 	ApplicationGatewaySKUNameStandardSmall  ApplicationGatewaySKUName = "Standard_Small"
 	ApplicationGatewaySKUNameStandardV2     ApplicationGatewaySKUName = "Standard_v2"
-	ApplicationGatewaySKUNameWafLarge       ApplicationGatewaySKUName = "WAF_Large"
-	ApplicationGatewaySKUNameWafMedium      ApplicationGatewaySKUName = "WAF_Medium"
-	ApplicationGatewaySKUNameWafv2          ApplicationGatewaySKUName = "WAF_v2"
+	ApplicationGatewaySKUNameWAFLarge       ApplicationGatewaySKUName = "WAF_Large"
+	ApplicationGatewaySKUNameWAFMedium      ApplicationGatewaySKUName = "WAF_Medium"
+	ApplicationGatewaySKUNameWAFV2          ApplicationGatewaySKUName = "WAF_v2"
 )
 
 // PossibleApplicationGatewaySKUNameValues returns the possible values for the ApplicationGatewaySKUName const type.
@@ -230,9 +230,9 @@ func PossibleApplicationGatewaySKUNameValues() []ApplicationGatewaySKUName {
 		ApplicationGatewaySKUNameStandardMedium,
 		ApplicationGatewaySKUNameStandardSmall,
 		ApplicationGatewaySKUNameStandardV2,
-		ApplicationGatewaySKUNameWafLarge,
-		ApplicationGatewaySKUNameWafMedium,
-		ApplicationGatewaySKUNameWafv2,
+		ApplicationGatewaySKUNameWAFLarge,
+		ApplicationGatewaySKUNameWAFMedium,
+		ApplicationGatewaySKUNameWAFV2,
 	}
 }
 
@@ -245,67 +245,67 @@ func (c ApplicationGatewaySKUName) ToPtr() *ApplicationGatewaySKUName {
 type ApplicationGatewaySslCipherSuite string
 
 const (
-	ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAES128Cbcsha    ApplicationGatewaySslCipherSuite = "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA"
-	ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAES128Cbcsha256 ApplicationGatewaySslCipherSuite = "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256"
-	ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAES128GCMsha256 ApplicationGatewaySslCipherSuite = "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256"
-	ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAES256Cbcsha    ApplicationGatewaySslCipherSuite = "TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA"
-	ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAES256Cbcsha384 ApplicationGatewaySslCipherSuite = "TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384"
-	ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAES256GCMsha384 ApplicationGatewaySslCipherSuite = "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384"
-	ApplicationGatewaySslCipherSuiteTLSEcdheRsawithAES128Cbcsha      ApplicationGatewaySslCipherSuite = "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA"
-	ApplicationGatewaySslCipherSuiteTLSEcdheRsawithAES128Cbcsha256   ApplicationGatewaySslCipherSuite = "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256"
-	ApplicationGatewaySslCipherSuiteTLSEcdheRsawithAES128GCMsha256   ApplicationGatewaySslCipherSuite = "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"
-	ApplicationGatewaySslCipherSuiteTLSEcdheRsawithAES256Cbcsha      ApplicationGatewaySslCipherSuite = "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA"
-	ApplicationGatewaySslCipherSuiteTLSEcdheRsawithAES256Cbcsha384   ApplicationGatewaySslCipherSuite = "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384"
-	ApplicationGatewaySslCipherSuiteTLSEcdheRsawithAES256GCMsha384   ApplicationGatewaySslCipherSuite = "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384"
-	ApplicationGatewaySslCipherSuiteTLSdhedssWith3Desedecbcsha       ApplicationGatewaySslCipherSuite = "TLS_DHE_DSS_WITH_3DES_EDE_CBC_SHA"
-	ApplicationGatewaySslCipherSuiteTLSdhedssWithAES128Cbcsha        ApplicationGatewaySslCipherSuite = "TLS_DHE_DSS_WITH_AES_128_CBC_SHA"
-	ApplicationGatewaySslCipherSuiteTLSdhedssWithAES128Cbcsha256     ApplicationGatewaySslCipherSuite = "TLS_DHE_DSS_WITH_AES_128_CBC_SHA256"
-	ApplicationGatewaySslCipherSuiteTLSdhedssWithAES256Cbcsha        ApplicationGatewaySslCipherSuite = "TLS_DHE_DSS_WITH_AES_256_CBC_SHA"
-	ApplicationGatewaySslCipherSuiteTLSdhedssWithAES256Cbcsha256     ApplicationGatewaySslCipherSuite = "TLS_DHE_DSS_WITH_AES_256_CBC_SHA256"
-	ApplicationGatewaySslCipherSuiteTLSdhersaWithAES128Cbcsha        ApplicationGatewaySslCipherSuite = "TLS_DHE_RSA_WITH_AES_128_CBC_SHA"
-	ApplicationGatewaySslCipherSuiteTLSdhersaWithAES128GCMsha256     ApplicationGatewaySslCipherSuite = "TLS_DHE_RSA_WITH_AES_128_GCM_SHA256"
-	ApplicationGatewaySslCipherSuiteTLSdhersaWithAES256Cbcsha        ApplicationGatewaySslCipherSuite = "TLS_DHE_RSA_WITH_AES_256_CBC_SHA"
-	ApplicationGatewaySslCipherSuiteTLSdhersaWithAES256GCMsha384     ApplicationGatewaySslCipherSuite = "TLS_DHE_RSA_WITH_AES_256_GCM_SHA384"
-	ApplicationGatewaySslCipherSuiteTLSrsaWith3Desedecbcsha          ApplicationGatewaySslCipherSuite = "TLS_RSA_WITH_3DES_EDE_CBC_SHA"
-	ApplicationGatewaySslCipherSuiteTLSrsaWithAES128Cbcsha           ApplicationGatewaySslCipherSuite = "TLS_RSA_WITH_AES_128_CBC_SHA"
-	ApplicationGatewaySslCipherSuiteTLSrsaWithAES128Cbcsha256        ApplicationGatewaySslCipherSuite = "TLS_RSA_WITH_AES_128_CBC_SHA256"
-	ApplicationGatewaySslCipherSuiteTLSrsaWithAES128GCMsha256        ApplicationGatewaySslCipherSuite = "TLS_RSA_WITH_AES_128_GCM_SHA256"
-	ApplicationGatewaySslCipherSuiteTLSrsaWithAES256Cbcsha           ApplicationGatewaySslCipherSuite = "TLS_RSA_WITH_AES_256_CBC_SHA"
-	ApplicationGatewaySslCipherSuiteTLSrsaWithAES256Cbcsha256        ApplicationGatewaySslCipherSuite = "TLS_RSA_WITH_AES_256_CBC_SHA256"
-	ApplicationGatewaySslCipherSuiteTLSrsaWithAES256GCMsha384        ApplicationGatewaySslCipherSuite = "TLS_RSA_WITH_AES_256_GCM_SHA384"
+	ApplicationGatewaySslCipherSuiteTLSDHEDSSWith3DESEDECBCSHA       ApplicationGatewaySslCipherSuite = "TLS_DHE_DSS_WITH_3DES_EDE_CBC_SHA"
+	ApplicationGatewaySslCipherSuiteTLSDHEDSSWithAES128CBCSHA        ApplicationGatewaySslCipherSuite = "TLS_DHE_DSS_WITH_AES_128_CBC_SHA"
+	ApplicationGatewaySslCipherSuiteTLSDHEDSSWithAES128CBCSHA256     ApplicationGatewaySslCipherSuite = "TLS_DHE_DSS_WITH_AES_128_CBC_SHA256"
+	ApplicationGatewaySslCipherSuiteTLSDHEDSSWithAES256CBCSHA        ApplicationGatewaySslCipherSuite = "TLS_DHE_DSS_WITH_AES_256_CBC_SHA"
+	ApplicationGatewaySslCipherSuiteTLSDHEDSSWithAES256CBCSHA256     ApplicationGatewaySslCipherSuite = "TLS_DHE_DSS_WITH_AES_256_CBC_SHA256"
+	ApplicationGatewaySslCipherSuiteTLSDHERSAWithAES128CBCSHA        ApplicationGatewaySslCipherSuite = "TLS_DHE_RSA_WITH_AES_128_CBC_SHA"
+	ApplicationGatewaySslCipherSuiteTLSDHERSAWithAES128GCMSHA256     ApplicationGatewaySslCipherSuite = "TLS_DHE_RSA_WITH_AES_128_GCM_SHA256"
+	ApplicationGatewaySslCipherSuiteTLSDHERSAWithAES256CBCSHA        ApplicationGatewaySslCipherSuite = "TLS_DHE_RSA_WITH_AES_256_CBC_SHA"
+	ApplicationGatewaySslCipherSuiteTLSDHERSAWithAES256GCMSHA384     ApplicationGatewaySslCipherSuite = "TLS_DHE_RSA_WITH_AES_256_GCM_SHA384"
+	ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAES128CBCSHA    ApplicationGatewaySslCipherSuite = "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA"
+	ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAES128CBCSHA256 ApplicationGatewaySslCipherSuite = "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256"
+	ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAES128GCMSHA256 ApplicationGatewaySslCipherSuite = "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256"
+	ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAES256CBCSHA    ApplicationGatewaySslCipherSuite = "TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA"
+	ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAES256CBCSHA384 ApplicationGatewaySslCipherSuite = "TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384"
+	ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAES256GCMSHA384 ApplicationGatewaySslCipherSuite = "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384"
+	ApplicationGatewaySslCipherSuiteTLSEcdheRSAWithAES128CBCSHA      ApplicationGatewaySslCipherSuite = "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA"
+	ApplicationGatewaySslCipherSuiteTLSEcdheRSAWithAES128CBCSHA256   ApplicationGatewaySslCipherSuite = "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256"
+	ApplicationGatewaySslCipherSuiteTLSEcdheRSAWithAES128GCMSHA256   ApplicationGatewaySslCipherSuite = "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"
+	ApplicationGatewaySslCipherSuiteTLSEcdheRSAWithAES256CBCSHA      ApplicationGatewaySslCipherSuite = "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA"
+	ApplicationGatewaySslCipherSuiteTLSEcdheRSAWithAES256CBCSHA384   ApplicationGatewaySslCipherSuite = "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384"
+	ApplicationGatewaySslCipherSuiteTLSEcdheRSAWithAES256GCMSHA384   ApplicationGatewaySslCipherSuite = "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384"
+	ApplicationGatewaySslCipherSuiteTLSRSAWith3DESEDECBCSHA          ApplicationGatewaySslCipherSuite = "TLS_RSA_WITH_3DES_EDE_CBC_SHA"
+	ApplicationGatewaySslCipherSuiteTLSRSAWithAES128CBCSHA           ApplicationGatewaySslCipherSuite = "TLS_RSA_WITH_AES_128_CBC_SHA"
+	ApplicationGatewaySslCipherSuiteTLSRSAWithAES128CBCSHA256        ApplicationGatewaySslCipherSuite = "TLS_RSA_WITH_AES_128_CBC_SHA256"
+	ApplicationGatewaySslCipherSuiteTLSRSAWithAES128GCMSHA256        ApplicationGatewaySslCipherSuite = "TLS_RSA_WITH_AES_128_GCM_SHA256"
+	ApplicationGatewaySslCipherSuiteTLSRSAWithAES256CBCSHA           ApplicationGatewaySslCipherSuite = "TLS_RSA_WITH_AES_256_CBC_SHA"
+	ApplicationGatewaySslCipherSuiteTLSRSAWithAES256CBCSHA256        ApplicationGatewaySslCipherSuite = "TLS_RSA_WITH_AES_256_CBC_SHA256"
+	ApplicationGatewaySslCipherSuiteTLSRSAWithAES256GCMSHA384        ApplicationGatewaySslCipherSuite = "TLS_RSA_WITH_AES_256_GCM_SHA384"
 )
 
 // PossibleApplicationGatewaySslCipherSuiteValues returns the possible values for the ApplicationGatewaySslCipherSuite const type.
 func PossibleApplicationGatewaySslCipherSuiteValues() []ApplicationGatewaySslCipherSuite {
 	return []ApplicationGatewaySslCipherSuite{
-		ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAES128Cbcsha,
-		ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAES128Cbcsha256,
-		ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAES128GCMsha256,
-		ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAES256Cbcsha,
-		ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAES256Cbcsha384,
-		ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAES256GCMsha384,
-		ApplicationGatewaySslCipherSuiteTLSEcdheRsawithAES128Cbcsha,
-		ApplicationGatewaySslCipherSuiteTLSEcdheRsawithAES128Cbcsha256,
-		ApplicationGatewaySslCipherSuiteTLSEcdheRsawithAES128GCMsha256,
-		ApplicationGatewaySslCipherSuiteTLSEcdheRsawithAES256Cbcsha,
-		ApplicationGatewaySslCipherSuiteTLSEcdheRsawithAES256Cbcsha384,
-		ApplicationGatewaySslCipherSuiteTLSEcdheRsawithAES256GCMsha384,
-		ApplicationGatewaySslCipherSuiteTLSdhedssWith3Desedecbcsha,
-		ApplicationGatewaySslCipherSuiteTLSdhedssWithAES128Cbcsha,
-		ApplicationGatewaySslCipherSuiteTLSdhedssWithAES128Cbcsha256,
-		ApplicationGatewaySslCipherSuiteTLSdhedssWithAES256Cbcsha,
-		ApplicationGatewaySslCipherSuiteTLSdhedssWithAES256Cbcsha256,
-		ApplicationGatewaySslCipherSuiteTLSdhersaWithAES128Cbcsha,
-		ApplicationGatewaySslCipherSuiteTLSdhersaWithAES128GCMsha256,
-		ApplicationGatewaySslCipherSuiteTLSdhersaWithAES256Cbcsha,
-		ApplicationGatewaySslCipherSuiteTLSdhersaWithAES256GCMsha384,
-		ApplicationGatewaySslCipherSuiteTLSrsaWith3Desedecbcsha,
-		ApplicationGatewaySslCipherSuiteTLSrsaWithAES128Cbcsha,
-		ApplicationGatewaySslCipherSuiteTLSrsaWithAES128Cbcsha256,
-		ApplicationGatewaySslCipherSuiteTLSrsaWithAES128GCMsha256,
-		ApplicationGatewaySslCipherSuiteTLSrsaWithAES256Cbcsha,
-		ApplicationGatewaySslCipherSuiteTLSrsaWithAES256Cbcsha256,
-		ApplicationGatewaySslCipherSuiteTLSrsaWithAES256GCMsha384,
+		ApplicationGatewaySslCipherSuiteTLSDHEDSSWith3DESEDECBCSHA,
+		ApplicationGatewaySslCipherSuiteTLSDHEDSSWithAES128CBCSHA,
+		ApplicationGatewaySslCipherSuiteTLSDHEDSSWithAES128CBCSHA256,
+		ApplicationGatewaySslCipherSuiteTLSDHEDSSWithAES256CBCSHA,
+		ApplicationGatewaySslCipherSuiteTLSDHEDSSWithAES256CBCSHA256,
+		ApplicationGatewaySslCipherSuiteTLSDHERSAWithAES128CBCSHA,
+		ApplicationGatewaySslCipherSuiteTLSDHERSAWithAES128GCMSHA256,
+		ApplicationGatewaySslCipherSuiteTLSDHERSAWithAES256CBCSHA,
+		ApplicationGatewaySslCipherSuiteTLSDHERSAWithAES256GCMSHA384,
+		ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAES128CBCSHA,
+		ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAES128CBCSHA256,
+		ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAES128GCMSHA256,
+		ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAES256CBCSHA,
+		ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAES256CBCSHA384,
+		ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAES256GCMSHA384,
+		ApplicationGatewaySslCipherSuiteTLSEcdheRSAWithAES128CBCSHA,
+		ApplicationGatewaySslCipherSuiteTLSEcdheRSAWithAES128CBCSHA256,
+		ApplicationGatewaySslCipherSuiteTLSEcdheRSAWithAES128GCMSHA256,
+		ApplicationGatewaySslCipherSuiteTLSEcdheRSAWithAES256CBCSHA,
+		ApplicationGatewaySslCipherSuiteTLSEcdheRSAWithAES256CBCSHA384,
+		ApplicationGatewaySslCipherSuiteTLSEcdheRSAWithAES256GCMSHA384,
+		ApplicationGatewaySslCipherSuiteTLSRSAWith3DESEDECBCSHA,
+		ApplicationGatewaySslCipherSuiteTLSRSAWithAES128CBCSHA,
+		ApplicationGatewaySslCipherSuiteTLSRSAWithAES128CBCSHA256,
+		ApplicationGatewaySslCipherSuiteTLSRSAWithAES128GCMSHA256,
+		ApplicationGatewaySslCipherSuiteTLSRSAWithAES256CBCSHA,
+		ApplicationGatewaySslCipherSuiteTLSRSAWithAES256CBCSHA256,
+		ApplicationGatewaySslCipherSuiteTLSRSAWithAES256GCMSHA384,
 	}
 }
 
@@ -362,17 +362,17 @@ func (c ApplicationGatewaySslPolicyType) ToPtr() *ApplicationGatewaySslPolicyTyp
 type ApplicationGatewaySslProtocol string
 
 const (
-	ApplicationGatewaySslProtocolTlSv10 ApplicationGatewaySslProtocol = "TLSv1_0"
-	ApplicationGatewaySslProtocolTlSv11 ApplicationGatewaySslProtocol = "TLSv1_1"
-	ApplicationGatewaySslProtocolTlSv12 ApplicationGatewaySslProtocol = "TLSv1_2"
+	ApplicationGatewaySslProtocolTLSv10 ApplicationGatewaySslProtocol = "TLSv1_0"
+	ApplicationGatewaySslProtocolTLSv11 ApplicationGatewaySslProtocol = "TLSv1_1"
+	ApplicationGatewaySslProtocolTLSv12 ApplicationGatewaySslProtocol = "TLSv1_2"
 )
 
 // PossibleApplicationGatewaySslProtocolValues returns the possible values for the ApplicationGatewaySslProtocol const type.
 func PossibleApplicationGatewaySslProtocolValues() []ApplicationGatewaySslProtocol {
 	return []ApplicationGatewaySslProtocol{
-		ApplicationGatewaySslProtocolTlSv10,
-		ApplicationGatewaySslProtocolTlSv11,
-		ApplicationGatewaySslProtocolTlSv12,
+		ApplicationGatewaySslProtocolTLSv10,
+		ApplicationGatewaySslProtocolTLSv11,
+		ApplicationGatewaySslProtocolTLSv12,
 	}
 }
 
@@ -387,8 +387,8 @@ type ApplicationGatewayTier string
 const (
 	ApplicationGatewayTierStandard   ApplicationGatewayTier = "Standard"
 	ApplicationGatewayTierStandardV2 ApplicationGatewayTier = "Standard_v2"
-	ApplicationGatewayTierWaf        ApplicationGatewayTier = "WAF"
-	ApplicationGatewayTierWafv2      ApplicationGatewayTier = "WAF_v2"
+	ApplicationGatewayTierWAF        ApplicationGatewayTier = "WAF"
+	ApplicationGatewayTierWAFV2      ApplicationGatewayTier = "WAF_v2"
 )
 
 // PossibleApplicationGatewayTierValues returns the possible values for the ApplicationGatewayTier const type.
@@ -396,8 +396,8 @@ func PossibleApplicationGatewayTierValues() []ApplicationGatewayTier {
 	return []ApplicationGatewayTier{
 		ApplicationGatewayTierStandard,
 		ApplicationGatewayTierStandardV2,
-		ApplicationGatewayTierWaf,
-		ApplicationGatewayTierWafv2,
+		ApplicationGatewayTierWAF,
+		ApplicationGatewayTierWAFV2,
 	}
 }
 
@@ -474,7 +474,7 @@ type AzureFirewallApplicationRuleProtocolType string
 
 const (
 	AzureFirewallApplicationRuleProtocolTypeHTTP  AzureFirewallApplicationRuleProtocolType = "Http"
-	AzureFirewallApplicationRuleProtocolTypeHTTPs AzureFirewallApplicationRuleProtocolType = "Https"
+	AzureFirewallApplicationRuleProtocolTypeHTTPS AzureFirewallApplicationRuleProtocolType = "Https"
 	AzureFirewallApplicationRuleProtocolTypeMssql AzureFirewallApplicationRuleProtocolType = "Mssql"
 )
 
@@ -482,7 +482,7 @@ const (
 func PossibleAzureFirewallApplicationRuleProtocolTypeValues() []AzureFirewallApplicationRuleProtocolType {
 	return []AzureFirewallApplicationRuleProtocolType{
 		AzureFirewallApplicationRuleProtocolTypeHTTP,
-		AzureFirewallApplicationRuleProtocolTypeHTTPs,
+		AzureFirewallApplicationRuleProtocolTypeHTTPS,
 		AzureFirewallApplicationRuleProtocolTypeMssql,
 	}
 }
@@ -626,14 +626,14 @@ func (c AzureFirewallThreatIntelMode) ToPtr() *AzureFirewallThreatIntelMode {
 type BastionConnectProtocol string
 
 const (
-	BastionConnectProtocolRdp BastionConnectProtocol = "RDP"
+	BastionConnectProtocolRDP BastionConnectProtocol = "RDP"
 	BastionConnectProtocolSSH BastionConnectProtocol = "SSH"
 )
 
 // PossibleBastionConnectProtocolValues returns the possible values for the BastionConnectProtocol const type.
 func PossibleBastionConnectProtocolValues() []BastionConnectProtocol {
 	return []BastionConnectProtocol{
-		BastionConnectProtocolRdp,
+		BastionConnectProtocolRDP,
 		BastionConnectProtocolSSH,
 	}
 }
@@ -649,7 +649,7 @@ type BgpPeerState string
 const (
 	BgpPeerStateConnected  BgpPeerState = "Connected"
 	BgpPeerStateConnecting BgpPeerState = "Connecting"
-	BgpPeerStateIDle       BgpPeerState = "Idle"
+	BgpPeerStateIdle       BgpPeerState = "Idle"
 	BgpPeerStateStopped    BgpPeerState = "Stopped"
 	BgpPeerStateUnknown    BgpPeerState = "Unknown"
 )
@@ -659,7 +659,7 @@ func PossibleBgpPeerStateValues() []BgpPeerState {
 	return []BgpPeerState{
 		BgpPeerStateConnected,
 		BgpPeerStateConnecting,
-		BgpPeerStateIDle,
+		BgpPeerStateIdle,
 		BgpPeerStateStopped,
 		BgpPeerStateUnknown,
 	}
@@ -921,26 +921,26 @@ func (c DdosSettingsProtectionCoverage) ToPtr() *DdosSettingsProtectionCoverage 
 type DhGroup string
 
 const (
-	DhGroupDhGroup1    DhGroup = "DHGroup1"
-	DhGroupDhGroup14   DhGroup = "DHGroup14"
-	DhGroupDhGroup2    DhGroup = "DHGroup2"
-	DhGroupDhGroup2048 DhGroup = "DHGroup2048"
-	DhGroupDhGroup24   DhGroup = "DHGroup24"
-	DhGroupEcp256      DhGroup = "ECP256"
-	DhGroupEcp384      DhGroup = "ECP384"
+	DhGroupDHGroup1    DhGroup = "DHGroup1"
+	DhGroupDHGroup14   DhGroup = "DHGroup14"
+	DhGroupDHGroup2    DhGroup = "DHGroup2"
+	DhGroupDHGroup2048 DhGroup = "DHGroup2048"
+	DhGroupDHGroup24   DhGroup = "DHGroup24"
+	DhGroupECP256      DhGroup = "ECP256"
+	DhGroupECP384      DhGroup = "ECP384"
 	DhGroupNone        DhGroup = "None"
 )
 
 // PossibleDhGroupValues returns the possible values for the DhGroup const type.
 func PossibleDhGroupValues() []DhGroup {
 	return []DhGroup{
-		DhGroupDhGroup1,
-		DhGroupDhGroup14,
-		DhGroupDhGroup2,
-		DhGroupDhGroup2048,
-		DhGroupDhGroup24,
-		DhGroupEcp256,
-		DhGroupEcp384,
+		DhGroupDHGroup1,
+		DhGroupDHGroup14,
+		DhGroupDHGroup2,
+		DhGroupDHGroup2048,
+		DhGroupDHGroup24,
+		DhGroupECP256,
+		DhGroupECP384,
 		DhGroupNone,
 	}
 }
@@ -1180,15 +1180,15 @@ func (c ExpressRouteLinkAdminState) ToPtr() *ExpressRouteLinkAdminState {
 type ExpressRouteLinkConnectorType string
 
 const (
-	ExpressRouteLinkConnectorTypeLc ExpressRouteLinkConnectorType = "LC"
-	ExpressRouteLinkConnectorTypeSc ExpressRouteLinkConnectorType = "SC"
+	ExpressRouteLinkConnectorTypeLC ExpressRouteLinkConnectorType = "LC"
+	ExpressRouteLinkConnectorTypeSC ExpressRouteLinkConnectorType = "SC"
 )
 
 // PossibleExpressRouteLinkConnectorTypeValues returns the possible values for the ExpressRouteLinkConnectorType const type.
 func PossibleExpressRouteLinkConnectorTypeValues() []ExpressRouteLinkConnectorType {
 	return []ExpressRouteLinkConnectorType{
-		ExpressRouteLinkConnectorTypeLc,
-		ExpressRouteLinkConnectorTypeSc,
+		ExpressRouteLinkConnectorTypeLC,
+		ExpressRouteLinkConnectorTypeSC,
 	}
 }
 
@@ -1328,14 +1328,14 @@ type FirewallPolicyRuleConditionApplicationProtocolType string
 
 const (
 	FirewallPolicyRuleConditionApplicationProtocolTypeHTTP  FirewallPolicyRuleConditionApplicationProtocolType = "Http"
-	FirewallPolicyRuleConditionApplicationProtocolTypeHTTPs FirewallPolicyRuleConditionApplicationProtocolType = "Https"
+	FirewallPolicyRuleConditionApplicationProtocolTypeHTTPS FirewallPolicyRuleConditionApplicationProtocolType = "Https"
 )
 
 // PossibleFirewallPolicyRuleConditionApplicationProtocolTypeValues returns the possible values for the FirewallPolicyRuleConditionApplicationProtocolType const type.
 func PossibleFirewallPolicyRuleConditionApplicationProtocolTypeValues() []FirewallPolicyRuleConditionApplicationProtocolType {
 	return []FirewallPolicyRuleConditionApplicationProtocolType{
 		FirewallPolicyRuleConditionApplicationProtocolTypeHTTP,
-		FirewallPolicyRuleConditionApplicationProtocolTypeHTTPs,
+		FirewallPolicyRuleConditionApplicationProtocolTypeHTTPS,
 	}
 }
 
@@ -1581,70 +1581,6 @@ func (c IPVersion) ToPtr() *IPVersion {
 	return &c
 }
 
-// IPsecEncryption - The IPSec encryption algorithm (IKE phase 1).
-type IPsecEncryption string
-
-const (
-	IPsecEncryptionAES128    IPsecEncryption = "AES128"
-	IPsecEncryptionAES192    IPsecEncryption = "AES192"
-	IPsecEncryptionAES256    IPsecEncryption = "AES256"
-	IPsecEncryptionDes       IPsecEncryption = "DES"
-	IPsecEncryptionDes3      IPsecEncryption = "DES3"
-	IPsecEncryptionGCMaes128 IPsecEncryption = "GCMAES128"
-	IPsecEncryptionGCMaes192 IPsecEncryption = "GCMAES192"
-	IPsecEncryptionGCMaes256 IPsecEncryption = "GCMAES256"
-	IPsecEncryptionNone      IPsecEncryption = "None"
-)
-
-// PossibleIPsecEncryptionValues returns the possible values for the IPsecEncryption const type.
-func PossibleIPsecEncryptionValues() []IPsecEncryption {
-	return []IPsecEncryption{
-		IPsecEncryptionAES128,
-		IPsecEncryptionAES192,
-		IPsecEncryptionAES256,
-		IPsecEncryptionDes,
-		IPsecEncryptionDes3,
-		IPsecEncryptionGCMaes128,
-		IPsecEncryptionGCMaes192,
-		IPsecEncryptionGCMaes256,
-		IPsecEncryptionNone,
-	}
-}
-
-// ToPtr() returns a *IPsecEncryption pointing to the current value.
-func (c IPsecEncryption) ToPtr() *IPsecEncryption {
-	return &c
-}
-
-// IPsecIntegrity - The IPSec integrity algorithm (IKE phase 1).
-type IPsecIntegrity string
-
-const (
-	IPsecIntegrityGCMaes128 IPsecIntegrity = "GCMAES128"
-	IPsecIntegrityGCMaes192 IPsecIntegrity = "GCMAES192"
-	IPsecIntegrityGCMaes256 IPsecIntegrity = "GCMAES256"
-	IPsecIntegrityMD5       IPsecIntegrity = "MD5"
-	IPsecIntegritySHA1      IPsecIntegrity = "SHA1"
-	IPsecIntegritySHA256    IPsecIntegrity = "SHA256"
-)
-
-// PossibleIPsecIntegrityValues returns the possible values for the IPsecIntegrity const type.
-func PossibleIPsecIntegrityValues() []IPsecIntegrity {
-	return []IPsecIntegrity{
-		IPsecIntegrityGCMaes128,
-		IPsecIntegrityGCMaes192,
-		IPsecIntegrityGCMaes256,
-		IPsecIntegrityMD5,
-		IPsecIntegritySHA1,
-		IPsecIntegritySHA256,
-	}
-}
-
-// ToPtr() returns a *IPsecIntegrity pointing to the current value.
-func (c IPsecIntegrity) ToPtr() *IPsecIntegrity {
-	return &c
-}
-
 // IkeEncryption - The IKE encryption algorithm (IKE phase 2).
 type IkeEncryption string
 
@@ -1652,10 +1588,10 @@ const (
 	IkeEncryptionAES128    IkeEncryption = "AES128"
 	IkeEncryptionAES192    IkeEncryption = "AES192"
 	IkeEncryptionAES256    IkeEncryption = "AES256"
-	IkeEncryptionDes       IkeEncryption = "DES"
-	IkeEncryptionDes3      IkeEncryption = "DES3"
-	IkeEncryptionGCMaes128 IkeEncryption = "GCMAES128"
-	IkeEncryptionGCMaes256 IkeEncryption = "GCMAES256"
+	IkeEncryptionDES       IkeEncryption = "DES"
+	IkeEncryptionDES3      IkeEncryption = "DES3"
+	IkeEncryptionGcmaes128 IkeEncryption = "GCMAES128"
+	IkeEncryptionGcmaes256 IkeEncryption = "GCMAES256"
 )
 
 // PossibleIkeEncryptionValues returns the possible values for the IkeEncryption const type.
@@ -1664,10 +1600,10 @@ func PossibleIkeEncryptionValues() []IkeEncryption {
 		IkeEncryptionAES128,
 		IkeEncryptionAES192,
 		IkeEncryptionAES256,
-		IkeEncryptionDes,
-		IkeEncryptionDes3,
-		IkeEncryptionGCMaes128,
-		IkeEncryptionGCMaes256,
+		IkeEncryptionDES,
+		IkeEncryptionDES3,
+		IkeEncryptionGcmaes128,
+		IkeEncryptionGcmaes256,
 	}
 }
 
@@ -1680,8 +1616,8 @@ func (c IkeEncryption) ToPtr() *IkeEncryption {
 type IkeIntegrity string
 
 const (
-	IkeIntegrityGCMaes128 IkeIntegrity = "GCMAES128"
-	IkeIntegrityGCMaes256 IkeIntegrity = "GCMAES256"
+	IkeIntegrityGcmaes128 IkeIntegrity = "GCMAES128"
+	IkeIntegrityGcmaes256 IkeIntegrity = "GCMAES256"
 	IkeIntegrityMD5       IkeIntegrity = "MD5"
 	IkeIntegritySHA1      IkeIntegrity = "SHA1"
 	IkeIntegritySHA256    IkeIntegrity = "SHA256"
@@ -1691,8 +1627,8 @@ const (
 // PossibleIkeIntegrityValues returns the possible values for the IkeIntegrity const type.
 func PossibleIkeIntegrityValues() []IkeIntegrity {
 	return []IkeIntegrity{
-		IkeIntegrityGCMaes128,
-		IkeIntegrityGCMaes256,
+		IkeIntegrityGcmaes128,
+		IkeIntegrityGcmaes256,
 		IkeIntegrityMD5,
 		IkeIntegritySHA1,
 		IkeIntegritySHA256,
@@ -1702,6 +1638,70 @@ func PossibleIkeIntegrityValues() []IkeIntegrity {
 
 // ToPtr() returns a *IkeIntegrity pointing to the current value.
 func (c IkeIntegrity) ToPtr() *IkeIntegrity {
+	return &c
+}
+
+// IpsecEncryption - The IPSec encryption algorithm (IKE phase 1).
+type IpsecEncryption string
+
+const (
+	IpsecEncryptionAES128    IpsecEncryption = "AES128"
+	IpsecEncryptionAES192    IpsecEncryption = "AES192"
+	IpsecEncryptionAES256    IpsecEncryption = "AES256"
+	IpsecEncryptionDES       IpsecEncryption = "DES"
+	IpsecEncryptionDES3      IpsecEncryption = "DES3"
+	IpsecEncryptionGcmaes128 IpsecEncryption = "GCMAES128"
+	IpsecEncryptionGcmaes192 IpsecEncryption = "GCMAES192"
+	IpsecEncryptionGcmaes256 IpsecEncryption = "GCMAES256"
+	IpsecEncryptionNone      IpsecEncryption = "None"
+)
+
+// PossibleIpsecEncryptionValues returns the possible values for the IpsecEncryption const type.
+func PossibleIpsecEncryptionValues() []IpsecEncryption {
+	return []IpsecEncryption{
+		IpsecEncryptionAES128,
+		IpsecEncryptionAES192,
+		IpsecEncryptionAES256,
+		IpsecEncryptionDES,
+		IpsecEncryptionDES3,
+		IpsecEncryptionGcmaes128,
+		IpsecEncryptionGcmaes192,
+		IpsecEncryptionGcmaes256,
+		IpsecEncryptionNone,
+	}
+}
+
+// ToPtr() returns a *IpsecEncryption pointing to the current value.
+func (c IpsecEncryption) ToPtr() *IpsecEncryption {
+	return &c
+}
+
+// IpsecIntegrity - The IPSec integrity algorithm (IKE phase 1).
+type IpsecIntegrity string
+
+const (
+	IpsecIntegrityGcmaes128 IpsecIntegrity = "GCMAES128"
+	IpsecIntegrityGcmaes192 IpsecIntegrity = "GCMAES192"
+	IpsecIntegrityGcmaes256 IpsecIntegrity = "GCMAES256"
+	IpsecIntegrityMD5       IpsecIntegrity = "MD5"
+	IpsecIntegritySHA1      IpsecIntegrity = "SHA1"
+	IpsecIntegritySHA256    IpsecIntegrity = "SHA256"
+)
+
+// PossibleIpsecIntegrityValues returns the possible values for the IpsecIntegrity const type.
+func PossibleIpsecIntegrityValues() []IpsecIntegrity {
+	return []IpsecIntegrity{
+		IpsecIntegrityGcmaes128,
+		IpsecIntegrityGcmaes192,
+		IpsecIntegrityGcmaes256,
+		IpsecIntegrityMD5,
+		IpsecIntegritySHA1,
+		IpsecIntegritySHA256,
+	}
+}
+
+// ToPtr() returns a *IpsecIntegrity pointing to the current value.
+func (c IpsecIntegrity) ToPtr() *IpsecIntegrity {
 	return &c
 }
 
@@ -2095,28 +2095,28 @@ func (c PcStatus) ToPtr() *PcStatus {
 type PfsGroup string
 
 const (
-	PfsGroupEcp256  PfsGroup = "ECP256"
-	PfsGroupEcp384  PfsGroup = "ECP384"
+	PfsGroupECP256  PfsGroup = "ECP256"
+	PfsGroupECP384  PfsGroup = "ECP384"
 	PfsGroupNone    PfsGroup = "None"
-	PfsGroupPfs1    PfsGroup = "PFS1"
-	PfsGroupPfs14   PfsGroup = "PFS14"
-	PfsGroupPfs2    PfsGroup = "PFS2"
-	PfsGroupPfs2048 PfsGroup = "PFS2048"
-	PfsGroupPfs24   PfsGroup = "PFS24"
+	PfsGroupPFS1    PfsGroup = "PFS1"
+	PfsGroupPFS14   PfsGroup = "PFS14"
+	PfsGroupPFS2    PfsGroup = "PFS2"
+	PfsGroupPFS2048 PfsGroup = "PFS2048"
+	PfsGroupPFS24   PfsGroup = "PFS24"
 	PfsGroupPfsmm   PfsGroup = "PFSMM"
 )
 
 // PossiblePfsGroupValues returns the possible values for the PfsGroup const type.
 func PossiblePfsGroupValues() []PfsGroup {
 	return []PfsGroup{
-		PfsGroupEcp256,
-		PfsGroupEcp384,
+		PfsGroupECP256,
+		PfsGroupECP384,
 		PfsGroupNone,
-		PfsGroupPfs1,
-		PfsGroupPfs14,
-		PfsGroupPfs2,
-		PfsGroupPfs2048,
-		PfsGroupPfs24,
+		PfsGroupPFS1,
+		PfsGroupPFS14,
+		PfsGroupPFS2,
+		PfsGroupPFS2048,
+		PfsGroupPFS24,
 		PfsGroupPfsmm,
 	}
 }
@@ -2155,7 +2155,7 @@ type ProbeProtocol string
 
 const (
 	ProbeProtocolHTTP  ProbeProtocol = "Http"
-	ProbeProtocolHTTPs ProbeProtocol = "Https"
+	ProbeProtocolHTTPS ProbeProtocol = "Https"
 	ProbeProtocolTCP   ProbeProtocol = "Tcp"
 )
 
@@ -2163,7 +2163,7 @@ const (
 func PossibleProbeProtocolValues() []ProbeProtocol {
 	return []ProbeProtocol{
 		ProbeProtocolHTTP,
-		ProbeProtocolHTTPs,
+		ProbeProtocolHTTPS,
 		ProbeProtocolTCP,
 	}
 }
@@ -2199,7 +2199,7 @@ type Protocol string
 
 const (
 	ProtocolHTTP  Protocol = "Http"
-	ProtocolHTTPs Protocol = "Https"
+	ProtocolHTTPS Protocol = "Https"
 	ProtocolIcmp  Protocol = "Icmp"
 	ProtocolTCP   Protocol = "Tcp"
 )
@@ -2208,7 +2208,7 @@ const (
 func PossibleProtocolValues() []Protocol {
 	return []Protocol{
 		ProtocolHTTP,
-		ProtocolHTTPs,
+		ProtocolHTTPS,
 		ProtocolIcmp,
 		ProtocolTCP,
 	}
@@ -2284,30 +2284,30 @@ func (c PublicIPPrefixSKUName) ToPtr() *PublicIPPrefixSKUName {
 	return &c
 }
 
-// ResourceIDentityType - The type of identity used for the resource. The type 'SystemAssigned, UserAssigned' includes both an implicitly created identity
+// ResourceIdentityType - The type of identity used for the resource. The type 'SystemAssigned, UserAssigned' includes both an implicitly created identity
 // and a set of user assigned identities. The type 'None' will remove any
 // identities from the virtual machine.
-type ResourceIDentityType string
+type ResourceIdentityType string
 
 const (
-	ResourceIDentityTypeSystemAssigned             ResourceIDentityType = "SystemAssigned"
-	ResourceIDentityTypeUserAssigned               ResourceIDentityType = "UserAssigned"
-	ResourceIDentityTypeSystemAssignedUserAssigned ResourceIDentityType = "SystemAssigned, UserAssigned"
-	ResourceIDentityTypeNone                       ResourceIDentityType = "None"
+	ResourceIdentityTypeSystemAssigned             ResourceIdentityType = "SystemAssigned"
+	ResourceIdentityTypeUserAssigned               ResourceIdentityType = "UserAssigned"
+	ResourceIdentityTypeSystemAssignedUserAssigned ResourceIdentityType = "SystemAssigned, UserAssigned"
+	ResourceIdentityTypeNone                       ResourceIdentityType = "None"
 )
 
-// PossibleResourceIDentityTypeValues returns the possible values for the ResourceIDentityType const type.
-func PossibleResourceIDentityTypeValues() []ResourceIDentityType {
-	return []ResourceIDentityType{
-		ResourceIDentityTypeSystemAssigned,
-		ResourceIDentityTypeUserAssigned,
-		ResourceIDentityTypeSystemAssignedUserAssigned,
-		ResourceIDentityTypeNone,
+// PossibleResourceIdentityTypeValues returns the possible values for the ResourceIdentityType const type.
+func PossibleResourceIdentityTypeValues() []ResourceIdentityType {
+	return []ResourceIdentityType{
+		ResourceIdentityTypeSystemAssigned,
+		ResourceIdentityTypeUserAssigned,
+		ResourceIdentityTypeSystemAssignedUserAssigned,
+		ResourceIdentityTypeNone,
 	}
 }
 
-// ToPtr() returns a *ResourceIDentityType pointing to the current value.
-func (c ResourceIDentityType) ToPtr() *ResourceIDentityType {
+// ToPtr() returns a *ResourceIdentityType pointing to the current value.
+func (c ResourceIdentityType) ToPtr() *ResourceIdentityType {
 	return &c
 }
 
@@ -2616,15 +2616,15 @@ func (c VerbosityLevel) ToPtr() *VerbosityLevel {
 type VirtualNetworkGatewayConnectionProtocol string
 
 const (
-	VirtualNetworkGatewayConnectionProtocolIkEv1 VirtualNetworkGatewayConnectionProtocol = "IKEv1"
-	VirtualNetworkGatewayConnectionProtocolIkEv2 VirtualNetworkGatewayConnectionProtocol = "IKEv2"
+	VirtualNetworkGatewayConnectionProtocolIKEv1 VirtualNetworkGatewayConnectionProtocol = "IKEv1"
+	VirtualNetworkGatewayConnectionProtocolIKEv2 VirtualNetworkGatewayConnectionProtocol = "IKEv2"
 )
 
 // PossibleVirtualNetworkGatewayConnectionProtocolValues returns the possible values for the VirtualNetworkGatewayConnectionProtocol const type.
 func PossibleVirtualNetworkGatewayConnectionProtocolValues() []VirtualNetworkGatewayConnectionProtocol {
 	return []VirtualNetworkGatewayConnectionProtocol{
-		VirtualNetworkGatewayConnectionProtocolIkEv1,
-		VirtualNetworkGatewayConnectionProtocolIkEv2,
+		VirtualNetworkGatewayConnectionProtocolIKEv1,
+		VirtualNetworkGatewayConnectionProtocolIKEv2,
 	}
 }
 
@@ -2664,8 +2664,8 @@ type VirtualNetworkGatewayConnectionType string
 const (
 	VirtualNetworkGatewayConnectionTypeExpressRoute VirtualNetworkGatewayConnectionType = "ExpressRoute"
 	VirtualNetworkGatewayConnectionTypeIPsec        VirtualNetworkGatewayConnectionType = "IPsec"
+	VirtualNetworkGatewayConnectionTypeVPNClient    VirtualNetworkGatewayConnectionType = "VPNClient"
 	VirtualNetworkGatewayConnectionTypeVnet2Vnet    VirtualNetworkGatewayConnectionType = "Vnet2Vnet"
-	VirtualNetworkGatewayConnectionTypeVpnClient    VirtualNetworkGatewayConnectionType = "VPNClient"
 )
 
 // PossibleVirtualNetworkGatewayConnectionTypeValues returns the possible values for the VirtualNetworkGatewayConnectionType const type.
@@ -2673,8 +2673,8 @@ func PossibleVirtualNetworkGatewayConnectionTypeValues() []VirtualNetworkGateway
 	return []VirtualNetworkGatewayConnectionType{
 		VirtualNetworkGatewayConnectionTypeExpressRoute,
 		VirtualNetworkGatewayConnectionTypeIPsec,
+		VirtualNetworkGatewayConnectionTypeVPNClient,
 		VirtualNetworkGatewayConnectionTypeVnet2Vnet,
-		VirtualNetworkGatewayConnectionTypeVpnClient,
 	}
 }
 
@@ -2688,44 +2688,44 @@ type VirtualNetworkGatewaySKUName string
 
 const (
 	VirtualNetworkGatewaySKUNameBasic            VirtualNetworkGatewaySKUName = "Basic"
-	VirtualNetworkGatewaySKUNameErGw1Az          VirtualNetworkGatewaySKUName = "ErGw1AZ"
-	VirtualNetworkGatewaySKUNameErGw2Az          VirtualNetworkGatewaySKUName = "ErGw2AZ"
-	VirtualNetworkGatewaySKUNameErGw3Az          VirtualNetworkGatewaySKUName = "ErGw3AZ"
+	VirtualNetworkGatewaySKUNameErGw1AZ          VirtualNetworkGatewaySKUName = "ErGw1AZ"
+	VirtualNetworkGatewaySKUNameErGw2AZ          VirtualNetworkGatewaySKUName = "ErGw2AZ"
+	VirtualNetworkGatewaySKUNameErGw3AZ          VirtualNetworkGatewaySKUName = "ErGw3AZ"
 	VirtualNetworkGatewaySKUNameHighPerformance  VirtualNetworkGatewaySKUName = "HighPerformance"
 	VirtualNetworkGatewaySKUNameStandard         VirtualNetworkGatewaySKUName = "Standard"
 	VirtualNetworkGatewaySKUNameUltraPerformance VirtualNetworkGatewaySKUName = "UltraPerformance"
 	VirtualNetworkGatewaySKUNameVpnGw1           VirtualNetworkGatewaySKUName = "VpnGw1"
-	VirtualNetworkGatewaySKUNameVpnGw1Az         VirtualNetworkGatewaySKUName = "VpnGw1AZ"
+	VirtualNetworkGatewaySKUNameVpnGw1AZ         VirtualNetworkGatewaySKUName = "VpnGw1AZ"
 	VirtualNetworkGatewaySKUNameVpnGw2           VirtualNetworkGatewaySKUName = "VpnGw2"
-	VirtualNetworkGatewaySKUNameVpnGw2Az         VirtualNetworkGatewaySKUName = "VpnGw2AZ"
+	VirtualNetworkGatewaySKUNameVpnGw2AZ         VirtualNetworkGatewaySKUName = "VpnGw2AZ"
 	VirtualNetworkGatewaySKUNameVpnGw3           VirtualNetworkGatewaySKUName = "VpnGw3"
-	VirtualNetworkGatewaySKUNameVpnGw3Az         VirtualNetworkGatewaySKUName = "VpnGw3AZ"
+	VirtualNetworkGatewaySKUNameVpnGw3AZ         VirtualNetworkGatewaySKUName = "VpnGw3AZ"
 	VirtualNetworkGatewaySKUNameVpnGw4           VirtualNetworkGatewaySKUName = "VpnGw4"
-	VirtualNetworkGatewaySKUNameVpnGw4Az         VirtualNetworkGatewaySKUName = "VpnGw4AZ"
+	VirtualNetworkGatewaySKUNameVpnGw4AZ         VirtualNetworkGatewaySKUName = "VpnGw4AZ"
 	VirtualNetworkGatewaySKUNameVpnGw5           VirtualNetworkGatewaySKUName = "VpnGw5"
-	VirtualNetworkGatewaySKUNameVpnGw5Az         VirtualNetworkGatewaySKUName = "VpnGw5AZ"
+	VirtualNetworkGatewaySKUNameVpnGw5AZ         VirtualNetworkGatewaySKUName = "VpnGw5AZ"
 )
 
 // PossibleVirtualNetworkGatewaySKUNameValues returns the possible values for the VirtualNetworkGatewaySKUName const type.
 func PossibleVirtualNetworkGatewaySKUNameValues() []VirtualNetworkGatewaySKUName {
 	return []VirtualNetworkGatewaySKUName{
 		VirtualNetworkGatewaySKUNameBasic,
-		VirtualNetworkGatewaySKUNameErGw1Az,
-		VirtualNetworkGatewaySKUNameErGw2Az,
-		VirtualNetworkGatewaySKUNameErGw3Az,
+		VirtualNetworkGatewaySKUNameErGw1AZ,
+		VirtualNetworkGatewaySKUNameErGw2AZ,
+		VirtualNetworkGatewaySKUNameErGw3AZ,
 		VirtualNetworkGatewaySKUNameHighPerformance,
 		VirtualNetworkGatewaySKUNameStandard,
 		VirtualNetworkGatewaySKUNameUltraPerformance,
 		VirtualNetworkGatewaySKUNameVpnGw1,
-		VirtualNetworkGatewaySKUNameVpnGw1Az,
+		VirtualNetworkGatewaySKUNameVpnGw1AZ,
 		VirtualNetworkGatewaySKUNameVpnGw2,
-		VirtualNetworkGatewaySKUNameVpnGw2Az,
+		VirtualNetworkGatewaySKUNameVpnGw2AZ,
 		VirtualNetworkGatewaySKUNameVpnGw3,
-		VirtualNetworkGatewaySKUNameVpnGw3Az,
+		VirtualNetworkGatewaySKUNameVpnGw3AZ,
 		VirtualNetworkGatewaySKUNameVpnGw4,
-		VirtualNetworkGatewaySKUNameVpnGw4Az,
+		VirtualNetworkGatewaySKUNameVpnGw4AZ,
 		VirtualNetworkGatewaySKUNameVpnGw5,
-		VirtualNetworkGatewaySKUNameVpnGw5Az,
+		VirtualNetworkGatewaySKUNameVpnGw5AZ,
 	}
 }
 
@@ -2739,44 +2739,44 @@ type VirtualNetworkGatewaySKUTier string
 
 const (
 	VirtualNetworkGatewaySKUTierBasic            VirtualNetworkGatewaySKUTier = "Basic"
-	VirtualNetworkGatewaySKUTierErGw1Az          VirtualNetworkGatewaySKUTier = "ErGw1AZ"
-	VirtualNetworkGatewaySKUTierErGw2Az          VirtualNetworkGatewaySKUTier = "ErGw2AZ"
-	VirtualNetworkGatewaySKUTierErGw3Az          VirtualNetworkGatewaySKUTier = "ErGw3AZ"
+	VirtualNetworkGatewaySKUTierErGw1AZ          VirtualNetworkGatewaySKUTier = "ErGw1AZ"
+	VirtualNetworkGatewaySKUTierErGw2AZ          VirtualNetworkGatewaySKUTier = "ErGw2AZ"
+	VirtualNetworkGatewaySKUTierErGw3AZ          VirtualNetworkGatewaySKUTier = "ErGw3AZ"
 	VirtualNetworkGatewaySKUTierHighPerformance  VirtualNetworkGatewaySKUTier = "HighPerformance"
 	VirtualNetworkGatewaySKUTierStandard         VirtualNetworkGatewaySKUTier = "Standard"
 	VirtualNetworkGatewaySKUTierUltraPerformance VirtualNetworkGatewaySKUTier = "UltraPerformance"
 	VirtualNetworkGatewaySKUTierVpnGw1           VirtualNetworkGatewaySKUTier = "VpnGw1"
-	VirtualNetworkGatewaySKUTierVpnGw1Az         VirtualNetworkGatewaySKUTier = "VpnGw1AZ"
+	VirtualNetworkGatewaySKUTierVpnGw1AZ         VirtualNetworkGatewaySKUTier = "VpnGw1AZ"
 	VirtualNetworkGatewaySKUTierVpnGw2           VirtualNetworkGatewaySKUTier = "VpnGw2"
-	VirtualNetworkGatewaySKUTierVpnGw2Az         VirtualNetworkGatewaySKUTier = "VpnGw2AZ"
+	VirtualNetworkGatewaySKUTierVpnGw2AZ         VirtualNetworkGatewaySKUTier = "VpnGw2AZ"
 	VirtualNetworkGatewaySKUTierVpnGw3           VirtualNetworkGatewaySKUTier = "VpnGw3"
-	VirtualNetworkGatewaySKUTierVpnGw3Az         VirtualNetworkGatewaySKUTier = "VpnGw3AZ"
+	VirtualNetworkGatewaySKUTierVpnGw3AZ         VirtualNetworkGatewaySKUTier = "VpnGw3AZ"
 	VirtualNetworkGatewaySKUTierVpnGw4           VirtualNetworkGatewaySKUTier = "VpnGw4"
-	VirtualNetworkGatewaySKUTierVpnGw4Az         VirtualNetworkGatewaySKUTier = "VpnGw4AZ"
+	VirtualNetworkGatewaySKUTierVpnGw4AZ         VirtualNetworkGatewaySKUTier = "VpnGw4AZ"
 	VirtualNetworkGatewaySKUTierVpnGw5           VirtualNetworkGatewaySKUTier = "VpnGw5"
-	VirtualNetworkGatewaySKUTierVpnGw5Az         VirtualNetworkGatewaySKUTier = "VpnGw5AZ"
+	VirtualNetworkGatewaySKUTierVpnGw5AZ         VirtualNetworkGatewaySKUTier = "VpnGw5AZ"
 )
 
 // PossibleVirtualNetworkGatewaySKUTierValues returns the possible values for the VirtualNetworkGatewaySKUTier const type.
 func PossibleVirtualNetworkGatewaySKUTierValues() []VirtualNetworkGatewaySKUTier {
 	return []VirtualNetworkGatewaySKUTier{
 		VirtualNetworkGatewaySKUTierBasic,
-		VirtualNetworkGatewaySKUTierErGw1Az,
-		VirtualNetworkGatewaySKUTierErGw2Az,
-		VirtualNetworkGatewaySKUTierErGw3Az,
+		VirtualNetworkGatewaySKUTierErGw1AZ,
+		VirtualNetworkGatewaySKUTierErGw2AZ,
+		VirtualNetworkGatewaySKUTierErGw3AZ,
 		VirtualNetworkGatewaySKUTierHighPerformance,
 		VirtualNetworkGatewaySKUTierStandard,
 		VirtualNetworkGatewaySKUTierUltraPerformance,
 		VirtualNetworkGatewaySKUTierVpnGw1,
-		VirtualNetworkGatewaySKUTierVpnGw1Az,
+		VirtualNetworkGatewaySKUTierVpnGw1AZ,
 		VirtualNetworkGatewaySKUTierVpnGw2,
-		VirtualNetworkGatewaySKUTierVpnGw2Az,
+		VirtualNetworkGatewaySKUTierVpnGw2AZ,
 		VirtualNetworkGatewaySKUTierVpnGw3,
-		VirtualNetworkGatewaySKUTierVpnGw3Az,
+		VirtualNetworkGatewaySKUTierVpnGw3AZ,
 		VirtualNetworkGatewaySKUTierVpnGw4,
-		VirtualNetworkGatewaySKUTierVpnGw4Az,
+		VirtualNetworkGatewaySKUTierVpnGw4AZ,
 		VirtualNetworkGatewaySKUTierVpnGw5,
-		VirtualNetworkGatewaySKUTierVpnGw5Az,
+		VirtualNetworkGatewaySKUTierVpnGw5AZ,
 	}
 }
 
@@ -2854,7 +2854,7 @@ func (c VirtualWanSecurityProviderType) ToPtr() *VirtualWanSecurityProviderType 
 type VpnAuthenticationType string
 
 const (
-	VpnAuthenticationTypeAad         VpnAuthenticationType = "AAD"
+	VpnAuthenticationTypeAAD         VpnAuthenticationType = "AAD"
 	VpnAuthenticationTypeCertificate VpnAuthenticationType = "Certificate"
 	VpnAuthenticationTypeRadius      VpnAuthenticationType = "Radius"
 )
@@ -2862,7 +2862,7 @@ const (
 // PossibleVpnAuthenticationTypeValues returns the possible values for the VpnAuthenticationType const type.
 func PossibleVpnAuthenticationTypeValues() []VpnAuthenticationType {
 	return []VpnAuthenticationType{
-		VpnAuthenticationTypeAad,
+		VpnAuthenticationTypeAAD,
 		VpnAuthenticationTypeCertificate,
 		VpnAuthenticationTypeRadius,
 	}
@@ -2878,7 +2878,7 @@ type VpnClientProtocol string
 
 const (
 	VpnClientProtocolIkeV2   VpnClientProtocol = "IkeV2"
-	VpnClientProtocolOpenVpn VpnClientProtocol = "OpenVPN"
+	VpnClientProtocolOpenVPN VpnClientProtocol = "OpenVPN"
 	VpnClientProtocolSstp    VpnClientProtocol = "SSTP"
 )
 
@@ -2886,7 +2886,7 @@ const (
 func PossibleVpnClientProtocolValues() []VpnClientProtocol {
 	return []VpnClientProtocol{
 		VpnClientProtocolIkeV2,
-		VpnClientProtocolOpenVpn,
+		VpnClientProtocolOpenVPN,
 		VpnClientProtocolSstp,
 	}
 }
@@ -2949,14 +2949,14 @@ type VpnGatewayTunnelingProtocol string
 
 const (
 	VpnGatewayTunnelingProtocolIkeV2   VpnGatewayTunnelingProtocol = "IkeV2"
-	VpnGatewayTunnelingProtocolOpenVpn VpnGatewayTunnelingProtocol = "OpenVPN"
+	VpnGatewayTunnelingProtocolOpenVPN VpnGatewayTunnelingProtocol = "OpenVPN"
 )
 
 // PossibleVpnGatewayTunnelingProtocolValues returns the possible values for the VpnGatewayTunnelingProtocol const type.
 func PossibleVpnGatewayTunnelingProtocolValues() []VpnGatewayTunnelingProtocol {
 	return []VpnGatewayTunnelingProtocol{
 		VpnGatewayTunnelingProtocolIkeV2,
-		VpnGatewayTunnelingProtocolOpenVpn,
+		VpnGatewayTunnelingProtocolOpenVPN,
 	}
 }
 

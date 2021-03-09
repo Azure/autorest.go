@@ -20,12 +20,12 @@ import (
 // Don't use this type directly, use NewBgpServiceCommunitiesClient() instead.
 type BgpServiceCommunitiesClient struct {
 	con            *armcore.Connection
-	subscriptionID string
+	subscriptionid string
 }
 
 // NewBgpServiceCommunitiesClient creates a new instance of BgpServiceCommunitiesClient with the specified values.
-func NewBgpServiceCommunitiesClient(con *armcore.Connection, subscriptionID string) *BgpServiceCommunitiesClient {
-	return &BgpServiceCommunitiesClient{con: con, subscriptionID: subscriptionID}
+func NewBgpServiceCommunitiesClient(con *armcore.Connection, subscriptionid string) *BgpServiceCommunitiesClient {
+	return &BgpServiceCommunitiesClient{con: con, subscriptionid: subscriptionid}
 }
 
 // List - Gets all the available bgp service communities.
@@ -47,7 +47,7 @@ func (client *BgpServiceCommunitiesClient) List(options *BgpServiceCommunitiesLi
 // listCreateRequest creates the List request.
 func (client *BgpServiceCommunitiesClient) listCreateRequest(ctx context.Context, options *BgpServiceCommunitiesListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/bgpServiceCommunities"
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionid))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
