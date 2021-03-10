@@ -173,7 +173,7 @@ export async function namer(session: Session<CodeModel>) {
 
   for (const globalParam of values(session.model.globalParameters)) {
     const details = <Language>globalParam.language.go;
-    const inParamGroup = globalParam.extensions?.['x-ms-parameter-grouping'] || globalParam.required !== true;
+    const inParamGroup = globalParam.extensions?.['x-ms-parameter-grouping'];
     // if this is part of a param group struct then don't apply param naming rules to it
     details.name = getEscapedReservedName(ensureNameCase(removePrefix(details.name, 'XMS'), !inParamGroup), 'Param');
   }

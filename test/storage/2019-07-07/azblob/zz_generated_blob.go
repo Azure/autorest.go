@@ -19,7 +19,7 @@ import (
 
 type blobClient struct {
 	con            *connection
-	PathRenameMode *PathRenameMode
+	pathRenameMode *PathRenameMode
 }
 
 // AbortCopyFromURL - The Abort Copy From URL operation aborts a pending Copy From URL operation, and leaves a destination blob with zero length and full
@@ -1524,8 +1524,8 @@ func (client *blobClient) renameCreateRequest(ctx context.Context, renameSource 
 	if blobRenameOptions != nil && blobRenameOptions.Timeout != nil {
 		query.Set("timeout", strconv.FormatInt(int64(*blobRenameOptions.Timeout), 10))
 	}
-	if client.PathRenameMode != nil {
-		query.Set("mode", string(*client.PathRenameMode))
+	if client.pathRenameMode != nil {
+		query.Set("mode", string(*client.pathRenameMode))
 	}
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("x-ms-rename-source", renameSource)

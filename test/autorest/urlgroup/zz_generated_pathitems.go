@@ -20,12 +20,12 @@ import (
 type PathItemsClient struct {
 	con               *Connection
 	globalStringPath  string
-	GlobalStringQuery *string
+	globalStringQuery *string
 }
 
 // NewPathItemsClient creates a new instance of PathItemsClient with the specified values.
-func NewPathItemsClient(con *Connection, globalStringPath string, GlobalStringQuery *string) *PathItemsClient {
-	return &PathItemsClient{con: con, globalStringPath: globalStringPath, GlobalStringQuery: GlobalStringQuery}
+func NewPathItemsClient(con *Connection, globalStringPath string, globalStringQuery *string) *PathItemsClient {
+	return &PathItemsClient{con: con, globalStringPath: globalStringPath, globalStringQuery: globalStringQuery}
 }
 
 // GetAllWithValues - send globalStringPath='globalStringPath', pathItemStringPath='pathItemStringPath', localStringPath='localStringPath', globalStringQuery='globalStringQuery',
@@ -61,8 +61,8 @@ func (client *PathItemsClient) getAllWithValuesCreateRequest(ctx context.Context
 	if options != nil && options.PathItemStringQuery != nil {
 		query.Set("pathItemStringQuery", *options.PathItemStringQuery)
 	}
-	if client.GlobalStringQuery != nil {
-		query.Set("globalStringQuery", *client.GlobalStringQuery)
+	if client.globalStringQuery != nil {
+		query.Set("globalStringQuery", *client.globalStringQuery)
 	}
 	if options != nil && options.LocalStringQuery != nil {
 		query.Set("localStringQuery", *options.LocalStringQuery)
@@ -114,8 +114,8 @@ func (client *PathItemsClient) getGlobalAndLocalQueryNullCreateRequest(ctx conte
 	if options != nil && options.PathItemStringQuery != nil {
 		query.Set("pathItemStringQuery", *options.PathItemStringQuery)
 	}
-	if client.GlobalStringQuery != nil {
-		query.Set("globalStringQuery", *client.GlobalStringQuery)
+	if client.globalStringQuery != nil {
+		query.Set("globalStringQuery", *client.globalStringQuery)
 	}
 	if options != nil && options.LocalStringQuery != nil {
 		query.Set("localStringQuery", *options.LocalStringQuery)
@@ -167,8 +167,8 @@ func (client *PathItemsClient) getGlobalQueryNullCreateRequest(ctx context.Conte
 	if options != nil && options.PathItemStringQuery != nil {
 		query.Set("pathItemStringQuery", *options.PathItemStringQuery)
 	}
-	if client.GlobalStringQuery != nil {
-		query.Set("globalStringQuery", *client.GlobalStringQuery)
+	if client.globalStringQuery != nil {
+		query.Set("globalStringQuery", *client.globalStringQuery)
 	}
 	if options != nil && options.LocalStringQuery != nil {
 		query.Set("localStringQuery", *options.LocalStringQuery)
@@ -220,8 +220,8 @@ func (client *PathItemsClient) getLocalPathItemQueryNullCreateRequest(ctx contex
 	if options != nil && options.PathItemStringQuery != nil {
 		query.Set("pathItemStringQuery", *options.PathItemStringQuery)
 	}
-	if client.GlobalStringQuery != nil {
-		query.Set("globalStringQuery", *client.GlobalStringQuery)
+	if client.globalStringQuery != nil {
+		query.Set("globalStringQuery", *client.globalStringQuery)
 	}
 	if options != nil && options.LocalStringQuery != nil {
 		query.Set("localStringQuery", *options.LocalStringQuery)

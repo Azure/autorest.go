@@ -17,7 +17,7 @@ import (
 
 type directoryClient struct {
 	con            *connection
-	PathRenameMode *PathRenameMode
+	pathRenameMode *PathRenameMode
 }
 
 // Create - Create a directory. By default, the destination is overwritten and if the destination already exists and has a lease the lease is broken. This
@@ -376,8 +376,8 @@ func (client *directoryClient) renameCreateRequest(ctx context.Context, renameSo
 	if directoryRenameOptions != nil && directoryRenameOptions.Marker != nil {
 		query.Set("continuation", *directoryRenameOptions.Marker)
 	}
-	if client.PathRenameMode != nil {
-		query.Set("mode", string(*client.PathRenameMode))
+	if client.pathRenameMode != nil {
+		query.Set("mode", string(*client.pathRenameMode))
 	}
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("x-ms-rename-source", renameSource)

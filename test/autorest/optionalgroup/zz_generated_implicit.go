@@ -22,12 +22,12 @@ type ImplicitClient struct {
 	con                 *Connection
 	requiredGlobalPath  string
 	requiredGlobalQuery string
-	OptionalGlobalQuery *int32
+	optionalGlobalQuery *int32
 }
 
 // NewImplicitClient creates a new instance of ImplicitClient with the specified values.
-func NewImplicitClient(con *Connection, requiredGlobalPath string, requiredGlobalQuery string, OptionalGlobalQuery *int32) *ImplicitClient {
-	return &ImplicitClient{con: con, requiredGlobalPath: requiredGlobalPath, requiredGlobalQuery: requiredGlobalQuery, OptionalGlobalQuery: OptionalGlobalQuery}
+func NewImplicitClient(con *Connection, requiredGlobalPath string, requiredGlobalQuery string, optionalGlobalQuery *int32) *ImplicitClient {
+	return &ImplicitClient{con: con, requiredGlobalPath: requiredGlobalPath, requiredGlobalQuery: requiredGlobalQuery, optionalGlobalQuery: optionalGlobalQuery}
 }
 
 // GetOptionalGlobalQuery - Test implicitly optional query parameter
@@ -55,8 +55,8 @@ func (client *ImplicitClient) getOptionalGlobalQueryCreateRequest(ctx context.Co
 	}
 	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
-	if client.OptionalGlobalQuery != nil {
-		query.Set("optional-global-query", strconv.FormatInt(int64(*client.OptionalGlobalQuery), 10))
+	if client.optionalGlobalQuery != nil {
+		query.Set("optional-global-query", strconv.FormatInt(int64(*client.optionalGlobalQuery), 10))
 	}
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
