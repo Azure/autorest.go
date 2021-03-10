@@ -15,12 +15,12 @@ import (
 	"strings"
 )
 
-type sQLScriptClient struct {
+type sqlScriptClient struct {
 	con *connection
 }
 
 // CreateOrUpdateSQLScript - Creates or updates a Sql Script.
-func (client *sQLScriptClient) createOrUpdateSQLScript(ctx context.Context, sqlScriptName string, sqlScript SQLScriptResource, options *SQLScriptBeginCreateOrUpdateSQLScriptOptions) (*azcore.Response, error) {
+func (client *sqlScriptClient) createOrUpdateSQLScript(ctx context.Context, sqlScriptName string, sqlScript SQLScriptResource, options *SQLScriptBeginCreateOrUpdateSQLScriptOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateSQLScriptCreateRequest(ctx, sqlScriptName, sqlScript, options)
 	if err != nil {
 		return nil, err
@@ -36,7 +36,7 @@ func (client *sQLScriptClient) createOrUpdateSQLScript(ctx context.Context, sqlS
 }
 
 // createOrUpdateSQLScriptCreateRequest creates the CreateOrUpdateSQLScript request.
-func (client *sQLScriptClient) createOrUpdateSQLScriptCreateRequest(ctx context.Context, sqlScriptName string, sqlScript SQLScriptResource, options *SQLScriptBeginCreateOrUpdateSQLScriptOptions) (*azcore.Request, error) {
+func (client *sqlScriptClient) createOrUpdateSQLScriptCreateRequest(ctx context.Context, sqlScriptName string, sqlScript SQLScriptResource, options *SQLScriptBeginCreateOrUpdateSQLScriptOptions) (*azcore.Request, error) {
 	urlPath := "/sqlScripts/{sqlScriptName}"
 	urlPath = strings.ReplaceAll(urlPath, "{sqlScriptName}", url.PathEscape(sqlScriptName))
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -55,7 +55,7 @@ func (client *sQLScriptClient) createOrUpdateSQLScriptCreateRequest(ctx context.
 }
 
 // createOrUpdateSQLScriptHandleResponse handles the CreateOrUpdateSQLScript response.
-func (client *sQLScriptClient) createOrUpdateSQLScriptHandleResponse(resp *azcore.Response) (SQLScriptResourceResponse, error) {
+func (client *sqlScriptClient) createOrUpdateSQLScriptHandleResponse(resp *azcore.Response) (SQLScriptResourceResponse, error) {
 	var val *SQLScriptResource
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return SQLScriptResourceResponse{}, err
@@ -64,7 +64,7 @@ func (client *sQLScriptClient) createOrUpdateSQLScriptHandleResponse(resp *azcor
 }
 
 // createOrUpdateSQLScriptHandleError handles the CreateOrUpdateSQLScript error response.
-func (client *sQLScriptClient) createOrUpdateSQLScriptHandleError(resp *azcore.Response) error {
+func (client *sqlScriptClient) createOrUpdateSQLScriptHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -73,7 +73,7 @@ func (client *sQLScriptClient) createOrUpdateSQLScriptHandleError(resp *azcore.R
 }
 
 // DeleteSQLScript - Deletes a Sql Script.
-func (client *sQLScriptClient) deleteSQLScript(ctx context.Context, sqlScriptName string, options *SQLScriptBeginDeleteSQLScriptOptions) (*azcore.Response, error) {
+func (client *sqlScriptClient) deleteSQLScript(ctx context.Context, sqlScriptName string, options *SQLScriptBeginDeleteSQLScriptOptions) (*azcore.Response, error) {
 	req, err := client.deleteSQLScriptCreateRequest(ctx, sqlScriptName, options)
 	if err != nil {
 		return nil, err
@@ -89,7 +89,7 @@ func (client *sQLScriptClient) deleteSQLScript(ctx context.Context, sqlScriptNam
 }
 
 // deleteSQLScriptCreateRequest creates the DeleteSQLScript request.
-func (client *sQLScriptClient) deleteSQLScriptCreateRequest(ctx context.Context, sqlScriptName string, options *SQLScriptBeginDeleteSQLScriptOptions) (*azcore.Request, error) {
+func (client *sqlScriptClient) deleteSQLScriptCreateRequest(ctx context.Context, sqlScriptName string, options *SQLScriptBeginDeleteSQLScriptOptions) (*azcore.Request, error) {
 	urlPath := "/sqlScripts/{sqlScriptName}"
 	urlPath = strings.ReplaceAll(urlPath, "{sqlScriptName}", url.PathEscape(sqlScriptName))
 	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -105,7 +105,7 @@ func (client *sQLScriptClient) deleteSQLScriptCreateRequest(ctx context.Context,
 }
 
 // deleteSQLScriptHandleError handles the DeleteSQLScript error response.
-func (client *sQLScriptClient) deleteSQLScriptHandleError(resp *azcore.Response) error {
+func (client *sqlScriptClient) deleteSQLScriptHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -114,7 +114,7 @@ func (client *sQLScriptClient) deleteSQLScriptHandleError(resp *azcore.Response)
 }
 
 // GetSQLScript - Gets a sql script.
-func (client *sQLScriptClient) GetSQLScript(ctx context.Context, sqlScriptName string, options *SQLScriptGetSQLScriptOptions) (SQLScriptResourceResponse, error) {
+func (client *sqlScriptClient) GetSQLScript(ctx context.Context, sqlScriptName string, options *SQLScriptGetSQLScriptOptions) (SQLScriptResourceResponse, error) {
 	req, err := client.getSQLScriptCreateRequest(ctx, sqlScriptName, options)
 	if err != nil {
 		return SQLScriptResourceResponse{}, err
@@ -130,7 +130,7 @@ func (client *sQLScriptClient) GetSQLScript(ctx context.Context, sqlScriptName s
 }
 
 // getSQLScriptCreateRequest creates the GetSQLScript request.
-func (client *sQLScriptClient) getSQLScriptCreateRequest(ctx context.Context, sqlScriptName string, options *SQLScriptGetSQLScriptOptions) (*azcore.Request, error) {
+func (client *sqlScriptClient) getSQLScriptCreateRequest(ctx context.Context, sqlScriptName string, options *SQLScriptGetSQLScriptOptions) (*azcore.Request, error) {
 	urlPath := "/sqlScripts/{sqlScriptName}"
 	urlPath = strings.ReplaceAll(urlPath, "{sqlScriptName}", url.PathEscape(sqlScriptName))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -149,7 +149,7 @@ func (client *sQLScriptClient) getSQLScriptCreateRequest(ctx context.Context, sq
 }
 
 // getSQLScriptHandleResponse handles the GetSQLScript response.
-func (client *sQLScriptClient) getSQLScriptHandleResponse(resp *azcore.Response) (SQLScriptResourceResponse, error) {
+func (client *sqlScriptClient) getSQLScriptHandleResponse(resp *azcore.Response) (SQLScriptResourceResponse, error) {
 	var val *SQLScriptResource
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return SQLScriptResourceResponse{}, err
@@ -158,7 +158,7 @@ func (client *sQLScriptClient) getSQLScriptHandleResponse(resp *azcore.Response)
 }
 
 // getSQLScriptHandleError handles the GetSQLScript error response.
-func (client *sQLScriptClient) getSQLScriptHandleError(resp *azcore.Response) error {
+func (client *sqlScriptClient) getSQLScriptHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -167,7 +167,7 @@ func (client *sQLScriptClient) getSQLScriptHandleError(resp *azcore.Response) er
 }
 
 // GetSQLScriptsByWorkspace - Lists sql scripts.
-func (client *sQLScriptClient) GetSQLScriptsByWorkspace(options *SQLScriptGetSQLScriptsByWorkspaceOptions) SQLScriptsListResponsePager {
+func (client *sqlScriptClient) GetSQLScriptsByWorkspace(options *SQLScriptGetSQLScriptsByWorkspaceOptions) SQLScriptsListResponsePager {
 	return &sqlScriptsListResponsePager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
@@ -183,7 +183,7 @@ func (client *sQLScriptClient) GetSQLScriptsByWorkspace(options *SQLScriptGetSQL
 }
 
 // getSQLScriptsByWorkspaceCreateRequest creates the GetSQLScriptsByWorkspace request.
-func (client *sQLScriptClient) getSQLScriptsByWorkspaceCreateRequest(ctx context.Context, options *SQLScriptGetSQLScriptsByWorkspaceOptions) (*azcore.Request, error) {
+func (client *sqlScriptClient) getSQLScriptsByWorkspaceCreateRequest(ctx context.Context, options *SQLScriptGetSQLScriptsByWorkspaceOptions) (*azcore.Request, error) {
 	urlPath := "/sqlScripts"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -198,7 +198,7 @@ func (client *sQLScriptClient) getSQLScriptsByWorkspaceCreateRequest(ctx context
 }
 
 // getSQLScriptsByWorkspaceHandleResponse handles the GetSQLScriptsByWorkspace response.
-func (client *sQLScriptClient) getSQLScriptsByWorkspaceHandleResponse(resp *azcore.Response) (SQLScriptsListResponseResponse, error) {
+func (client *sqlScriptClient) getSQLScriptsByWorkspaceHandleResponse(resp *azcore.Response) (SQLScriptsListResponseResponse, error) {
 	var val *SQLScriptsListResponse
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return SQLScriptsListResponseResponse{}, err
@@ -207,7 +207,7 @@ func (client *sQLScriptClient) getSQLScriptsByWorkspaceHandleResponse(resp *azco
 }
 
 // getSQLScriptsByWorkspaceHandleError handles the GetSQLScriptsByWorkspace error response.
-func (client *sQLScriptClient) getSQLScriptsByWorkspaceHandleError(resp *azcore.Response) error {
+func (client *sqlScriptClient) getSQLScriptsByWorkspaceHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -216,7 +216,7 @@ func (client *sQLScriptClient) getSQLScriptsByWorkspaceHandleError(resp *azcore.
 }
 
 // RenameSQLScript - Renames a sqlScript.
-func (client *sQLScriptClient) renameSQLScript(ctx context.Context, sqlScriptName string, request ArtifactRenameRequest, options *SQLScriptBeginRenameSQLScriptOptions) (*azcore.Response, error) {
+func (client *sqlScriptClient) renameSQLScript(ctx context.Context, sqlScriptName string, request ArtifactRenameRequest, options *SQLScriptBeginRenameSQLScriptOptions) (*azcore.Response, error) {
 	req, err := client.renameSQLScriptCreateRequest(ctx, sqlScriptName, request, options)
 	if err != nil {
 		return nil, err
@@ -232,7 +232,7 @@ func (client *sQLScriptClient) renameSQLScript(ctx context.Context, sqlScriptNam
 }
 
 // renameSQLScriptCreateRequest creates the RenameSQLScript request.
-func (client *sQLScriptClient) renameSQLScriptCreateRequest(ctx context.Context, sqlScriptName string, request ArtifactRenameRequest, options *SQLScriptBeginRenameSQLScriptOptions) (*azcore.Request, error) {
+func (client *sqlScriptClient) renameSQLScriptCreateRequest(ctx context.Context, sqlScriptName string, request ArtifactRenameRequest, options *SQLScriptBeginRenameSQLScriptOptions) (*azcore.Request, error) {
 	urlPath := "/sqlScripts/{sqlScriptName}/rename"
 	urlPath = strings.ReplaceAll(urlPath, "{sqlScriptName}", url.PathEscape(sqlScriptName))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -248,7 +248,7 @@ func (client *sQLScriptClient) renameSQLScriptCreateRequest(ctx context.Context,
 }
 
 // renameSQLScriptHandleError handles the RenameSQLScript error response.
-func (client *sQLScriptClient) renameSQLScriptHandleError(resp *azcore.Response) error {
+func (client *sqlScriptClient) renameSQLScriptHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

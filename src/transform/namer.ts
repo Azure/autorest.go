@@ -100,7 +100,7 @@ export async function namer(session: Session<CodeModel>) {
     }
     groupDetails.clientCtorName = `New${groupDetails.clientName}`;
     if (!exportClient) {
-      groupDetails.clientName = (<string>groupDetails.clientName).uncapitalize();
+      groupDetails.clientName = ensureNameCase(<string>groupDetails.clientName, true);
       groupDetails.clientCtorName = (<string>groupDetails.clientCtorName).uncapitalize();
     }
     for (const op of values(group.operations)) {
