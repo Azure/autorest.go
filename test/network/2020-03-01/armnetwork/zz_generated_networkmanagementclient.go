@@ -162,11 +162,11 @@ func (client *NetworkManagementClient) deleteBastionShareableLinkHandleError(res
 }
 
 // DisconnectActiveSessions - Returns the list of currently active sessions on the Bastion.
-func (client *NetworkManagementClient) DisconnectActiveSessions(resourceGroupName string, bastionHostName string, sessionIds SessionIds, options *NetworkManagementClientDisconnectActiveSessionsOptions) BastionSessionDeleteResultPager {
+func (client *NetworkManagementClient) DisconnectActiveSessions(resourceGroupName string, bastionHostName string, sessionIDs SessionIDs, options *NetworkManagementClientDisconnectActiveSessionsOptions) BastionSessionDeleteResultPager {
 	return &bastionSessionDeleteResultPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
-			return client.disconnectActiveSessionsCreateRequest(ctx, resourceGroupName, bastionHostName, sessionIds, options)
+			return client.disconnectActiveSessionsCreateRequest(ctx, resourceGroupName, bastionHostName, sessionIDs, options)
 		},
 		responder: client.disconnectActiveSessionsHandleResponse,
 		errorer:   client.disconnectActiveSessionsHandleError,
@@ -178,7 +178,7 @@ func (client *NetworkManagementClient) DisconnectActiveSessions(resourceGroupNam
 }
 
 // disconnectActiveSessionsCreateRequest creates the DisconnectActiveSessions request.
-func (client *NetworkManagementClient) disconnectActiveSessionsCreateRequest(ctx context.Context, resourceGroupName string, bastionHostName string, sessionIds SessionIds, options *NetworkManagementClientDisconnectActiveSessionsOptions) (*azcore.Request, error) {
+func (client *NetworkManagementClient) disconnectActiveSessionsCreateRequest(ctx context.Context, resourceGroupName string, bastionHostName string, sessionIDs SessionIDs, options *NetworkManagementClientDisconnectActiveSessionsOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/bastionHosts/{bastionHostName}/disconnectActiveSessions"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{bastionHostName}", url.PathEscape(bastionHostName))
@@ -192,7 +192,7 @@ func (client *NetworkManagementClient) disconnectActiveSessionsCreateRequest(ctx
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(sessionIds)
+	return req, req.MarshalAsJSON(sessionIDs)
 }
 
 // disconnectActiveSessionsHandleResponse handles the DisconnectActiveSessions response.
@@ -215,32 +215,32 @@ func (client *NetworkManagementClient) disconnectActiveSessionsHandleError(resp 
 
 // BeginGeneratevirtualwanvpnserverconfigurationvpnprofile - Generates a unique VPN profile for P2S clients for VirtualWan and associated VpnServerConfiguration
 // combination in the specified resource group.
-func (client *NetworkManagementClient) BeginGeneratevirtualwanvpnserverconfigurationvpnprofile(ctx context.Context, resourceGroupName string, virtualwanName string, vpnClientParams VirtualWanVpnProfileParameters, options *NetworkManagementClientBeginGeneratevirtualwanvpnserverconfigurationvpnprofileOptions) (VpnProfileResponsePollerResponse, error) {
+func (client *NetworkManagementClient) BeginGeneratevirtualwanvpnserverconfigurationvpnprofile(ctx context.Context, resourceGroupName string, virtualwanName string, vpnClientParams VirtualWanVPNProfileParameters, options *NetworkManagementClientBeginGeneratevirtualwanvpnserverconfigurationvpnprofileOptions) (VPNProfileResponsePollerResponse, error) {
 	resp, err := client.generatevirtualwanvpnserverconfigurationvpnprofile(ctx, resourceGroupName, virtualwanName, vpnClientParams, options)
 	if err != nil {
-		return VpnProfileResponsePollerResponse{}, err
+		return VPNProfileResponsePollerResponse{}, err
 	}
-	result := VpnProfileResponsePollerResponse{
+	result := VPNProfileResponsePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewPoller("NetworkManagementClient.Generatevirtualwanvpnserverconfigurationvpnprofile", "location", resp, client.generatevirtualwanvpnserverconfigurationvpnprofileHandleError)
 	if err != nil {
-		return VpnProfileResponsePollerResponse{}, err
+		return VPNProfileResponsePollerResponse{}, err
 	}
 	poller := &vpnProfileResponsePoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VpnProfileResponseResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VPNProfileResponseResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeGeneratevirtualwanvpnserverconfigurationvpnprofile creates a new VpnProfileResponsePoller from the specified resume token.
-// token - The value must come from a previous call to VpnProfileResponsePoller.ResumeToken().
-func (client *NetworkManagementClient) ResumeGeneratevirtualwanvpnserverconfigurationvpnprofile(token string) (VpnProfileResponsePoller, error) {
+// ResumeGeneratevirtualwanvpnserverconfigurationvpnprofile creates a new VPNProfileResponsePoller from the specified resume token.
+// token - The value must come from a previous call to VPNProfileResponsePoller.ResumeToken().
+func (client *NetworkManagementClient) ResumeGeneratevirtualwanvpnserverconfigurationvpnprofile(token string) (VPNProfileResponsePoller, error) {
 	pt, err := armcore.NewPollerFromResumeToken("NetworkManagementClient.Generatevirtualwanvpnserverconfigurationvpnprofile", token, client.generatevirtualwanvpnserverconfigurationvpnprofileHandleError)
 	if err != nil {
 		return nil, err
@@ -253,7 +253,7 @@ func (client *NetworkManagementClient) ResumeGeneratevirtualwanvpnserverconfigur
 
 // Generatevirtualwanvpnserverconfigurationvpnprofile - Generates a unique VPN profile for P2S clients for VirtualWan and associated VpnServerConfiguration
 // combination in the specified resource group.
-func (client *NetworkManagementClient) generatevirtualwanvpnserverconfigurationvpnprofile(ctx context.Context, resourceGroupName string, virtualwanName string, vpnClientParams VirtualWanVpnProfileParameters, options *NetworkManagementClientBeginGeneratevirtualwanvpnserverconfigurationvpnprofileOptions) (*azcore.Response, error) {
+func (client *NetworkManagementClient) generatevirtualwanvpnserverconfigurationvpnprofile(ctx context.Context, resourceGroupName string, virtualwanName string, vpnClientParams VirtualWanVPNProfileParameters, options *NetworkManagementClientBeginGeneratevirtualwanvpnserverconfigurationvpnprofileOptions) (*azcore.Response, error) {
 	req, err := client.generatevirtualwanvpnserverconfigurationvpnprofileCreateRequest(ctx, resourceGroupName, virtualwanName, vpnClientParams, options)
 	if err != nil {
 		return nil, err
@@ -269,7 +269,7 @@ func (client *NetworkManagementClient) generatevirtualwanvpnserverconfigurationv
 }
 
 // generatevirtualwanvpnserverconfigurationvpnprofileCreateRequest creates the Generatevirtualwanvpnserverconfigurationvpnprofile request.
-func (client *NetworkManagementClient) generatevirtualwanvpnserverconfigurationvpnprofileCreateRequest(ctx context.Context, resourceGroupName string, virtualwanName string, vpnClientParams VirtualWanVpnProfileParameters, options *NetworkManagementClientBeginGeneratevirtualwanvpnserverconfigurationvpnprofileOptions) (*azcore.Request, error) {
+func (client *NetworkManagementClient) generatevirtualwanvpnserverconfigurationvpnprofileCreateRequest(ctx context.Context, resourceGroupName string, virtualwanName string, vpnClientParams VirtualWanVPNProfileParameters, options *NetworkManagementClientBeginGeneratevirtualwanvpnserverconfigurationvpnprofileOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/GenerateVpnProfile"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
@@ -287,12 +287,12 @@ func (client *NetworkManagementClient) generatevirtualwanvpnserverconfigurationv
 }
 
 // generatevirtualwanvpnserverconfigurationvpnprofileHandleResponse handles the Generatevirtualwanvpnserverconfigurationvpnprofile response.
-func (client *NetworkManagementClient) generatevirtualwanvpnserverconfigurationvpnprofileHandleResponse(resp *azcore.Response) (VpnProfileResponseResponse, error) {
-	var val *VpnProfileResponse
+func (client *NetworkManagementClient) generatevirtualwanvpnserverconfigurationvpnprofileHandleResponse(resp *azcore.Response) (VPNProfileResponseResponse, error) {
+	var val *VPNProfileResponse
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return VpnProfileResponseResponse{}, err
+		return VPNProfileResponseResponse{}, err
 	}
-	return VpnProfileResponseResponse{RawResponse: resp.Response, VpnProfileResponse: val}, nil
+	return VPNProfileResponseResponse{RawResponse: resp.Response, VPNProfileResponse: val}, nil
 }
 
 // generatevirtualwanvpnserverconfigurationvpnprofileHandleError handles the Generatevirtualwanvpnserverconfigurationvpnprofile error response.

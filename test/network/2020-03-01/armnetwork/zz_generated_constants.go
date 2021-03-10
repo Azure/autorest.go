@@ -1201,15 +1201,15 @@ func (c ExpressRouteLinkConnectorType) ToPtr() *ExpressRouteLinkConnectorType {
 type ExpressRouteLinkMacSecCipher string
 
 const (
-	ExpressRouteLinkMacSecCipherGCMAes128 ExpressRouteLinkMacSecCipher = "gcm-aes-128"
-	ExpressRouteLinkMacSecCipherGCMAes256 ExpressRouteLinkMacSecCipher = "gcm-aes-256"
+	ExpressRouteLinkMacSecCipherGCMAES128 ExpressRouteLinkMacSecCipher = "gcm-aes-128"
+	ExpressRouteLinkMacSecCipherGCMAES256 ExpressRouteLinkMacSecCipher = "gcm-aes-256"
 )
 
 // PossibleExpressRouteLinkMacSecCipherValues returns the possible values for the ExpressRouteLinkMacSecCipher const type.
 func PossibleExpressRouteLinkMacSecCipherValues() []ExpressRouteLinkMacSecCipher {
 	return []ExpressRouteLinkMacSecCipher{
-		ExpressRouteLinkMacSecCipherGCMAes128,
-		ExpressRouteLinkMacSecCipherGCMAes256,
+		ExpressRouteLinkMacSecCipherGCMAES128,
+		ExpressRouteLinkMacSecCipherGCMAES256,
 	}
 }
 
@@ -2589,6 +2589,142 @@ func (c UsageUnit) ToPtr() *UsageUnit {
 	return &c
 }
 
+// VPNAuthenticationType - VPN authentication types enabled for the VpnServerConfiguration.
+type VPNAuthenticationType string
+
+const (
+	VPNAuthenticationTypeAAD         VPNAuthenticationType = "AAD"
+	VPNAuthenticationTypeCertificate VPNAuthenticationType = "Certificate"
+	VPNAuthenticationTypeRadius      VPNAuthenticationType = "Radius"
+)
+
+// PossibleVPNAuthenticationTypeValues returns the possible values for the VPNAuthenticationType const type.
+func PossibleVPNAuthenticationTypeValues() []VPNAuthenticationType {
+	return []VPNAuthenticationType{
+		VPNAuthenticationTypeAAD,
+		VPNAuthenticationTypeCertificate,
+		VPNAuthenticationTypeRadius,
+	}
+}
+
+// ToPtr() returns a *VPNAuthenticationType pointing to the current value.
+func (c VPNAuthenticationType) ToPtr() *VPNAuthenticationType {
+	return &c
+}
+
+// VPNClientProtocol - VPN client protocol enabled for the virtual network gateway.
+type VPNClientProtocol string
+
+const (
+	VPNClientProtocolIkeV2   VPNClientProtocol = "IkeV2"
+	VPNClientProtocolOpenVPN VPNClientProtocol = "OpenVPN"
+	VPNClientProtocolSstp    VPNClientProtocol = "SSTP"
+)
+
+// PossibleVPNClientProtocolValues returns the possible values for the VPNClientProtocol const type.
+func PossibleVPNClientProtocolValues() []VPNClientProtocol {
+	return []VPNClientProtocol{
+		VPNClientProtocolIkeV2,
+		VPNClientProtocolOpenVPN,
+		VPNClientProtocolSstp,
+	}
+}
+
+// ToPtr() returns a *VPNClientProtocol pointing to the current value.
+func (c VPNClientProtocol) ToPtr() *VPNClientProtocol {
+	return &c
+}
+
+// VPNConnectionStatus - The current state of the vpn connection.
+type VPNConnectionStatus string
+
+const (
+	VPNConnectionStatusConnected    VPNConnectionStatus = "Connected"
+	VPNConnectionStatusConnecting   VPNConnectionStatus = "Connecting"
+	VPNConnectionStatusNotConnected VPNConnectionStatus = "NotConnected"
+	VPNConnectionStatusUnknown      VPNConnectionStatus = "Unknown"
+)
+
+// PossibleVPNConnectionStatusValues returns the possible values for the VPNConnectionStatus const type.
+func PossibleVPNConnectionStatusValues() []VPNConnectionStatus {
+	return []VPNConnectionStatus{
+		VPNConnectionStatusConnected,
+		VPNConnectionStatusConnecting,
+		VPNConnectionStatusNotConnected,
+		VPNConnectionStatusUnknown,
+	}
+}
+
+// ToPtr() returns a *VPNConnectionStatus pointing to the current value.
+func (c VPNConnectionStatus) ToPtr() *VPNConnectionStatus {
+	return &c
+}
+
+// VPNGatewayGeneration - The generation for this VirtualNetworkGateway. Must be None if gatewayType is not VPN.
+type VPNGatewayGeneration string
+
+const (
+	VPNGatewayGenerationGeneration1 VPNGatewayGeneration = "Generation1"
+	VPNGatewayGenerationGeneration2 VPNGatewayGeneration = "Generation2"
+	VPNGatewayGenerationNone        VPNGatewayGeneration = "None"
+)
+
+// PossibleVPNGatewayGenerationValues returns the possible values for the VPNGatewayGeneration const type.
+func PossibleVPNGatewayGenerationValues() []VPNGatewayGeneration {
+	return []VPNGatewayGeneration{
+		VPNGatewayGenerationGeneration1,
+		VPNGatewayGenerationGeneration2,
+		VPNGatewayGenerationNone,
+	}
+}
+
+// ToPtr() returns a *VPNGatewayGeneration pointing to the current value.
+func (c VPNGatewayGeneration) ToPtr() *VPNGatewayGeneration {
+	return &c
+}
+
+// VPNGatewayTunnelingProtocol - VPN protocol enabled for the VpnServerConfiguration.
+type VPNGatewayTunnelingProtocol string
+
+const (
+	VPNGatewayTunnelingProtocolIkeV2   VPNGatewayTunnelingProtocol = "IkeV2"
+	VPNGatewayTunnelingProtocolOpenVPN VPNGatewayTunnelingProtocol = "OpenVPN"
+)
+
+// PossibleVPNGatewayTunnelingProtocolValues returns the possible values for the VPNGatewayTunnelingProtocol const type.
+func PossibleVPNGatewayTunnelingProtocolValues() []VPNGatewayTunnelingProtocol {
+	return []VPNGatewayTunnelingProtocol{
+		VPNGatewayTunnelingProtocolIkeV2,
+		VPNGatewayTunnelingProtocolOpenVPN,
+	}
+}
+
+// ToPtr() returns a *VPNGatewayTunnelingProtocol pointing to the current value.
+func (c VPNGatewayTunnelingProtocol) ToPtr() *VPNGatewayTunnelingProtocol {
+	return &c
+}
+
+// VPNType - The type of this virtual network gateway.
+type VPNType string
+
+const (
+	VPNTypePolicyBased VPNType = "PolicyBased"
+	VPNTypeRouteBased  VPNType = "RouteBased"
+)
+
+// PossibleVPNTypeValues returns the possible values for the VPNType const type.
+func PossibleVPNTypeValues() []VPNType {
+	return []VPNType{
+		VPNTypePolicyBased,
+		VPNTypeRouteBased,
+	}
+}
+
+// ToPtr() returns a *VPNType pointing to the current value.
+func (c VPNType) ToPtr() *VPNType {
+	return &c
+}
+
 // VerbosityLevel - Verbosity level.
 type VerbosityLevel string
 
@@ -2694,16 +2830,16 @@ const (
 	VirtualNetworkGatewaySKUNameHighPerformance  VirtualNetworkGatewaySKUName = "HighPerformance"
 	VirtualNetworkGatewaySKUNameStandard         VirtualNetworkGatewaySKUName = "Standard"
 	VirtualNetworkGatewaySKUNameUltraPerformance VirtualNetworkGatewaySKUName = "UltraPerformance"
-	VirtualNetworkGatewaySKUNameVpnGw1           VirtualNetworkGatewaySKUName = "VpnGw1"
-	VirtualNetworkGatewaySKUNameVpnGw1AZ         VirtualNetworkGatewaySKUName = "VpnGw1AZ"
-	VirtualNetworkGatewaySKUNameVpnGw2           VirtualNetworkGatewaySKUName = "VpnGw2"
-	VirtualNetworkGatewaySKUNameVpnGw2AZ         VirtualNetworkGatewaySKUName = "VpnGw2AZ"
-	VirtualNetworkGatewaySKUNameVpnGw3           VirtualNetworkGatewaySKUName = "VpnGw3"
-	VirtualNetworkGatewaySKUNameVpnGw3AZ         VirtualNetworkGatewaySKUName = "VpnGw3AZ"
-	VirtualNetworkGatewaySKUNameVpnGw4           VirtualNetworkGatewaySKUName = "VpnGw4"
-	VirtualNetworkGatewaySKUNameVpnGw4AZ         VirtualNetworkGatewaySKUName = "VpnGw4AZ"
-	VirtualNetworkGatewaySKUNameVpnGw5           VirtualNetworkGatewaySKUName = "VpnGw5"
-	VirtualNetworkGatewaySKUNameVpnGw5AZ         VirtualNetworkGatewaySKUName = "VpnGw5AZ"
+	VirtualNetworkGatewaySKUNameVPNGw1           VirtualNetworkGatewaySKUName = "VpnGw1"
+	VirtualNetworkGatewaySKUNameVPNGw1AZ         VirtualNetworkGatewaySKUName = "VpnGw1AZ"
+	VirtualNetworkGatewaySKUNameVPNGw2           VirtualNetworkGatewaySKUName = "VpnGw2"
+	VirtualNetworkGatewaySKUNameVPNGw2AZ         VirtualNetworkGatewaySKUName = "VpnGw2AZ"
+	VirtualNetworkGatewaySKUNameVPNGw3           VirtualNetworkGatewaySKUName = "VpnGw3"
+	VirtualNetworkGatewaySKUNameVPNGw3AZ         VirtualNetworkGatewaySKUName = "VpnGw3AZ"
+	VirtualNetworkGatewaySKUNameVPNGw4           VirtualNetworkGatewaySKUName = "VpnGw4"
+	VirtualNetworkGatewaySKUNameVPNGw4AZ         VirtualNetworkGatewaySKUName = "VpnGw4AZ"
+	VirtualNetworkGatewaySKUNameVPNGw5           VirtualNetworkGatewaySKUName = "VpnGw5"
+	VirtualNetworkGatewaySKUNameVPNGw5AZ         VirtualNetworkGatewaySKUName = "VpnGw5AZ"
 )
 
 // PossibleVirtualNetworkGatewaySKUNameValues returns the possible values for the VirtualNetworkGatewaySKUName const type.
@@ -2716,16 +2852,16 @@ func PossibleVirtualNetworkGatewaySKUNameValues() []VirtualNetworkGatewaySKUName
 		VirtualNetworkGatewaySKUNameHighPerformance,
 		VirtualNetworkGatewaySKUNameStandard,
 		VirtualNetworkGatewaySKUNameUltraPerformance,
-		VirtualNetworkGatewaySKUNameVpnGw1,
-		VirtualNetworkGatewaySKUNameVpnGw1AZ,
-		VirtualNetworkGatewaySKUNameVpnGw2,
-		VirtualNetworkGatewaySKUNameVpnGw2AZ,
-		VirtualNetworkGatewaySKUNameVpnGw3,
-		VirtualNetworkGatewaySKUNameVpnGw3AZ,
-		VirtualNetworkGatewaySKUNameVpnGw4,
-		VirtualNetworkGatewaySKUNameVpnGw4AZ,
-		VirtualNetworkGatewaySKUNameVpnGw5,
-		VirtualNetworkGatewaySKUNameVpnGw5AZ,
+		VirtualNetworkGatewaySKUNameVPNGw1,
+		VirtualNetworkGatewaySKUNameVPNGw1AZ,
+		VirtualNetworkGatewaySKUNameVPNGw2,
+		VirtualNetworkGatewaySKUNameVPNGw2AZ,
+		VirtualNetworkGatewaySKUNameVPNGw3,
+		VirtualNetworkGatewaySKUNameVPNGw3AZ,
+		VirtualNetworkGatewaySKUNameVPNGw4,
+		VirtualNetworkGatewaySKUNameVPNGw4AZ,
+		VirtualNetworkGatewaySKUNameVPNGw5,
+		VirtualNetworkGatewaySKUNameVPNGw5AZ,
 	}
 }
 
@@ -2745,16 +2881,16 @@ const (
 	VirtualNetworkGatewaySKUTierHighPerformance  VirtualNetworkGatewaySKUTier = "HighPerformance"
 	VirtualNetworkGatewaySKUTierStandard         VirtualNetworkGatewaySKUTier = "Standard"
 	VirtualNetworkGatewaySKUTierUltraPerformance VirtualNetworkGatewaySKUTier = "UltraPerformance"
-	VirtualNetworkGatewaySKUTierVpnGw1           VirtualNetworkGatewaySKUTier = "VpnGw1"
-	VirtualNetworkGatewaySKUTierVpnGw1AZ         VirtualNetworkGatewaySKUTier = "VpnGw1AZ"
-	VirtualNetworkGatewaySKUTierVpnGw2           VirtualNetworkGatewaySKUTier = "VpnGw2"
-	VirtualNetworkGatewaySKUTierVpnGw2AZ         VirtualNetworkGatewaySKUTier = "VpnGw2AZ"
-	VirtualNetworkGatewaySKUTierVpnGw3           VirtualNetworkGatewaySKUTier = "VpnGw3"
-	VirtualNetworkGatewaySKUTierVpnGw3AZ         VirtualNetworkGatewaySKUTier = "VpnGw3AZ"
-	VirtualNetworkGatewaySKUTierVpnGw4           VirtualNetworkGatewaySKUTier = "VpnGw4"
-	VirtualNetworkGatewaySKUTierVpnGw4AZ         VirtualNetworkGatewaySKUTier = "VpnGw4AZ"
-	VirtualNetworkGatewaySKUTierVpnGw5           VirtualNetworkGatewaySKUTier = "VpnGw5"
-	VirtualNetworkGatewaySKUTierVpnGw5AZ         VirtualNetworkGatewaySKUTier = "VpnGw5AZ"
+	VirtualNetworkGatewaySKUTierVPNGw1           VirtualNetworkGatewaySKUTier = "VpnGw1"
+	VirtualNetworkGatewaySKUTierVPNGw1AZ         VirtualNetworkGatewaySKUTier = "VpnGw1AZ"
+	VirtualNetworkGatewaySKUTierVPNGw2           VirtualNetworkGatewaySKUTier = "VpnGw2"
+	VirtualNetworkGatewaySKUTierVPNGw2AZ         VirtualNetworkGatewaySKUTier = "VpnGw2AZ"
+	VirtualNetworkGatewaySKUTierVPNGw3           VirtualNetworkGatewaySKUTier = "VpnGw3"
+	VirtualNetworkGatewaySKUTierVPNGw3AZ         VirtualNetworkGatewaySKUTier = "VpnGw3AZ"
+	VirtualNetworkGatewaySKUTierVPNGw4           VirtualNetworkGatewaySKUTier = "VpnGw4"
+	VirtualNetworkGatewaySKUTierVPNGw4AZ         VirtualNetworkGatewaySKUTier = "VpnGw4AZ"
+	VirtualNetworkGatewaySKUTierVPNGw5           VirtualNetworkGatewaySKUTier = "VpnGw5"
+	VirtualNetworkGatewaySKUTierVPNGw5AZ         VirtualNetworkGatewaySKUTier = "VpnGw5AZ"
 )
 
 // PossibleVirtualNetworkGatewaySKUTierValues returns the possible values for the VirtualNetworkGatewaySKUTier const type.
@@ -2767,16 +2903,16 @@ func PossibleVirtualNetworkGatewaySKUTierValues() []VirtualNetworkGatewaySKUTier
 		VirtualNetworkGatewaySKUTierHighPerformance,
 		VirtualNetworkGatewaySKUTierStandard,
 		VirtualNetworkGatewaySKUTierUltraPerformance,
-		VirtualNetworkGatewaySKUTierVpnGw1,
-		VirtualNetworkGatewaySKUTierVpnGw1AZ,
-		VirtualNetworkGatewaySKUTierVpnGw2,
-		VirtualNetworkGatewaySKUTierVpnGw2AZ,
-		VirtualNetworkGatewaySKUTierVpnGw3,
-		VirtualNetworkGatewaySKUTierVpnGw3AZ,
-		VirtualNetworkGatewaySKUTierVpnGw4,
-		VirtualNetworkGatewaySKUTierVpnGw4AZ,
-		VirtualNetworkGatewaySKUTierVpnGw5,
-		VirtualNetworkGatewaySKUTierVpnGw5AZ,
+		VirtualNetworkGatewaySKUTierVPNGw1,
+		VirtualNetworkGatewaySKUTierVPNGw1AZ,
+		VirtualNetworkGatewaySKUTierVPNGw2,
+		VirtualNetworkGatewaySKUTierVPNGw2AZ,
+		VirtualNetworkGatewaySKUTierVPNGw3,
+		VirtualNetworkGatewaySKUTierVPNGw3AZ,
+		VirtualNetworkGatewaySKUTierVPNGw4,
+		VirtualNetworkGatewaySKUTierVPNGw4AZ,
+		VirtualNetworkGatewaySKUTierVPNGw5,
+		VirtualNetworkGatewaySKUTierVPNGw5AZ,
 	}
 }
 
@@ -2790,14 +2926,14 @@ type VirtualNetworkGatewayType string
 
 const (
 	VirtualNetworkGatewayTypeExpressRoute VirtualNetworkGatewayType = "ExpressRoute"
-	VirtualNetworkGatewayTypeVpn          VirtualNetworkGatewayType = "Vpn"
+	VirtualNetworkGatewayTypeVPN          VirtualNetworkGatewayType = "Vpn"
 )
 
 // PossibleVirtualNetworkGatewayTypeValues returns the possible values for the VirtualNetworkGatewayType const type.
 func PossibleVirtualNetworkGatewayTypeValues() []VirtualNetworkGatewayType {
 	return []VirtualNetworkGatewayType{
 		VirtualNetworkGatewayTypeExpressRoute,
-		VirtualNetworkGatewayTypeVpn,
+		VirtualNetworkGatewayTypeVPN,
 	}
 }
 
@@ -2847,142 +2983,6 @@ func PossibleVirtualWanSecurityProviderTypeValues() []VirtualWanSecurityProvider
 
 // ToPtr() returns a *VirtualWanSecurityProviderType pointing to the current value.
 func (c VirtualWanSecurityProviderType) ToPtr() *VirtualWanSecurityProviderType {
-	return &c
-}
-
-// VpnAuthenticationType - VPN authentication types enabled for the VpnServerConfiguration.
-type VpnAuthenticationType string
-
-const (
-	VpnAuthenticationTypeAAD         VpnAuthenticationType = "AAD"
-	VpnAuthenticationTypeCertificate VpnAuthenticationType = "Certificate"
-	VpnAuthenticationTypeRadius      VpnAuthenticationType = "Radius"
-)
-
-// PossibleVpnAuthenticationTypeValues returns the possible values for the VpnAuthenticationType const type.
-func PossibleVpnAuthenticationTypeValues() []VpnAuthenticationType {
-	return []VpnAuthenticationType{
-		VpnAuthenticationTypeAAD,
-		VpnAuthenticationTypeCertificate,
-		VpnAuthenticationTypeRadius,
-	}
-}
-
-// ToPtr() returns a *VpnAuthenticationType pointing to the current value.
-func (c VpnAuthenticationType) ToPtr() *VpnAuthenticationType {
-	return &c
-}
-
-// VpnClientProtocol - VPN client protocol enabled for the virtual network gateway.
-type VpnClientProtocol string
-
-const (
-	VpnClientProtocolIkeV2   VpnClientProtocol = "IkeV2"
-	VpnClientProtocolOpenVPN VpnClientProtocol = "OpenVPN"
-	VpnClientProtocolSstp    VpnClientProtocol = "SSTP"
-)
-
-// PossibleVpnClientProtocolValues returns the possible values for the VpnClientProtocol const type.
-func PossibleVpnClientProtocolValues() []VpnClientProtocol {
-	return []VpnClientProtocol{
-		VpnClientProtocolIkeV2,
-		VpnClientProtocolOpenVPN,
-		VpnClientProtocolSstp,
-	}
-}
-
-// ToPtr() returns a *VpnClientProtocol pointing to the current value.
-func (c VpnClientProtocol) ToPtr() *VpnClientProtocol {
-	return &c
-}
-
-// VpnConnectionStatus - The current state of the vpn connection.
-type VpnConnectionStatus string
-
-const (
-	VpnConnectionStatusConnected    VpnConnectionStatus = "Connected"
-	VpnConnectionStatusConnecting   VpnConnectionStatus = "Connecting"
-	VpnConnectionStatusNotConnected VpnConnectionStatus = "NotConnected"
-	VpnConnectionStatusUnknown      VpnConnectionStatus = "Unknown"
-)
-
-// PossibleVpnConnectionStatusValues returns the possible values for the VpnConnectionStatus const type.
-func PossibleVpnConnectionStatusValues() []VpnConnectionStatus {
-	return []VpnConnectionStatus{
-		VpnConnectionStatusConnected,
-		VpnConnectionStatusConnecting,
-		VpnConnectionStatusNotConnected,
-		VpnConnectionStatusUnknown,
-	}
-}
-
-// ToPtr() returns a *VpnConnectionStatus pointing to the current value.
-func (c VpnConnectionStatus) ToPtr() *VpnConnectionStatus {
-	return &c
-}
-
-// VpnGatewayGeneration - The generation for this VirtualNetworkGateway. Must be None if gatewayType is not VPN.
-type VpnGatewayGeneration string
-
-const (
-	VpnGatewayGenerationGeneration1 VpnGatewayGeneration = "Generation1"
-	VpnGatewayGenerationGeneration2 VpnGatewayGeneration = "Generation2"
-	VpnGatewayGenerationNone        VpnGatewayGeneration = "None"
-)
-
-// PossibleVpnGatewayGenerationValues returns the possible values for the VpnGatewayGeneration const type.
-func PossibleVpnGatewayGenerationValues() []VpnGatewayGeneration {
-	return []VpnGatewayGeneration{
-		VpnGatewayGenerationGeneration1,
-		VpnGatewayGenerationGeneration2,
-		VpnGatewayGenerationNone,
-	}
-}
-
-// ToPtr() returns a *VpnGatewayGeneration pointing to the current value.
-func (c VpnGatewayGeneration) ToPtr() *VpnGatewayGeneration {
-	return &c
-}
-
-// VpnGatewayTunnelingProtocol - VPN protocol enabled for the VpnServerConfiguration.
-type VpnGatewayTunnelingProtocol string
-
-const (
-	VpnGatewayTunnelingProtocolIkeV2   VpnGatewayTunnelingProtocol = "IkeV2"
-	VpnGatewayTunnelingProtocolOpenVPN VpnGatewayTunnelingProtocol = "OpenVPN"
-)
-
-// PossibleVpnGatewayTunnelingProtocolValues returns the possible values for the VpnGatewayTunnelingProtocol const type.
-func PossibleVpnGatewayTunnelingProtocolValues() []VpnGatewayTunnelingProtocol {
-	return []VpnGatewayTunnelingProtocol{
-		VpnGatewayTunnelingProtocolIkeV2,
-		VpnGatewayTunnelingProtocolOpenVPN,
-	}
-}
-
-// ToPtr() returns a *VpnGatewayTunnelingProtocol pointing to the current value.
-func (c VpnGatewayTunnelingProtocol) ToPtr() *VpnGatewayTunnelingProtocol {
-	return &c
-}
-
-// VpnType - The type of this virtual network gateway.
-type VpnType string
-
-const (
-	VpnTypePolicyBased VpnType = "PolicyBased"
-	VpnTypeRouteBased  VpnType = "RouteBased"
-)
-
-// PossibleVpnTypeValues returns the possible values for the VpnType const type.
-func PossibleVpnTypeValues() []VpnType {
-	return []VpnType{
-		VpnTypePolicyBased,
-		VpnTypeRouteBased,
-	}
-}
-
-// ToPtr() returns a *VpnType pointing to the current value.
-func (c VpnType) ToPtr() *VpnType {
 	return &c
 }
 

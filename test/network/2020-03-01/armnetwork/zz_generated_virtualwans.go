@@ -42,7 +42,7 @@ func (client *VirtualWansClient) BeginCreateOrUpdate(ctx context.Context, resour
 	if err != nil {
 		return VirtualWANPollerResponse{}, err
 	}
-	poller := &virtualWanPoller{
+	poller := &virtualWANPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -60,7 +60,7 @@ func (client *VirtualWansClient) ResumeCreateOrUpdate(token string) (VirtualWANP
 	if err != nil {
 		return nil, err
 	}
-	return &virtualWanPoller{
+	return &virtualWANPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
@@ -252,7 +252,7 @@ func (client *VirtualWansClient) getHandleError(resp *azcore.Response) error {
 
 // List - Lists all the VirtualWANs in a subscription.
 func (client *VirtualWansClient) List(options *VirtualWansListOptions) ListVirtualWANsResultPager {
-	return &listVirtualWaNsResultPager{
+	return &listVirtualWANsResultPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, options)
@@ -302,7 +302,7 @@ func (client *VirtualWansClient) listHandleError(resp *azcore.Response) error {
 
 // ListByResourceGroup - Lists all the VirtualWANs in a resource group.
 func (client *VirtualWansClient) ListByResourceGroup(resourceGroupName string, options *VirtualWansListByResourceGroupOptions) ListVirtualWANsResultPager {
-	return &listVirtualWaNsResultPager{
+	return &listVirtualWANsResultPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)

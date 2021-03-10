@@ -754,24 +754,24 @@ func (client *VirtualMachineScaleSetsClient) listAllHandleError(resp *azcore.Res
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
-// ListSkus - Gets a list of SKUs available for your VM scale set, including the minimum and maximum VM instances allowed for each SKU.
-func (client *VirtualMachineScaleSetsClient) ListSkus(resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsListSkusOptions) VirtualMachineScaleSetListSkusResultPager {
-	return &virtualMachineScaleSetListSkusResultPager{
+// ListSKUs - Gets a list of SKUs available for your VM scale set, including the minimum and maximum VM instances allowed for each SKU.
+func (client *VirtualMachineScaleSetsClient) ListSKUs(resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsListSKUsOptions) VirtualMachineScaleSetListSKUsResultPager {
+	return &virtualMachineScaleSetListSKUsResultPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
-			return client.listSkusCreateRequest(ctx, resourceGroupName, vmScaleSetName, options)
+			return client.listSKUsCreateRequest(ctx, resourceGroupName, vmScaleSetName, options)
 		},
-		responder: client.listSkusHandleResponse,
-		errorer:   client.listSkusHandleError,
-		advancer: func(ctx context.Context, resp VirtualMachineScaleSetListSkusResultResponse) (*azcore.Request, error) {
-			return azcore.NewRequest(ctx, http.MethodGet, *resp.VirtualMachineScaleSetListSkusResult.NextLink)
+		responder: client.listSKUsHandleResponse,
+		errorer:   client.listSKUsHandleError,
+		advancer: func(ctx context.Context, resp VirtualMachineScaleSetListSKUsResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.VirtualMachineScaleSetListSKUsResult.NextLink)
 		},
 		statusCodes: []int{http.StatusOK},
 	}
 }
 
-// listSkusCreateRequest creates the ListSkus request.
-func (client *VirtualMachineScaleSetsClient) listSkusCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsListSkusOptions) (*azcore.Request, error) {
+// listSKUsCreateRequest creates the ListSKUs request.
+func (client *VirtualMachineScaleSetsClient) listSKUsCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsListSKUsOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/skus"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{vmScaleSetName}", url.PathEscape(vmScaleSetName))
@@ -788,17 +788,17 @@ func (client *VirtualMachineScaleSetsClient) listSkusCreateRequest(ctx context.C
 	return req, nil
 }
 
-// listSkusHandleResponse handles the ListSkus response.
-func (client *VirtualMachineScaleSetsClient) listSkusHandleResponse(resp *azcore.Response) (VirtualMachineScaleSetListSkusResultResponse, error) {
-	var val *VirtualMachineScaleSetListSkusResult
+// listSKUsHandleResponse handles the ListSKUs response.
+func (client *VirtualMachineScaleSetsClient) listSKUsHandleResponse(resp *azcore.Response) (VirtualMachineScaleSetListSKUsResultResponse, error) {
+	var val *VirtualMachineScaleSetListSKUsResult
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return VirtualMachineScaleSetListSkusResultResponse{}, err
+		return VirtualMachineScaleSetListSKUsResultResponse{}, err
 	}
-	return VirtualMachineScaleSetListSkusResultResponse{RawResponse: resp.Response, VirtualMachineScaleSetListSkusResult: val}, nil
+	return VirtualMachineScaleSetListSKUsResultResponse{RawResponse: resp.Response, VirtualMachineScaleSetListSKUsResult: val}, nil
 }
 
-// listSkusHandleError handles the ListSkus error response.
-func (client *VirtualMachineScaleSetsClient) listSkusHandleError(resp *azcore.Response) error {
+// listSKUsHandleError handles the ListSKUs error response.
+func (client *VirtualMachineScaleSetsClient) listSKUsHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)

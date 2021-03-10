@@ -225,7 +225,12 @@ export function ensureNameCase(name: string, lowerFirst?: boolean): string {
         const match = word.match(new RegExp(tla, 'i'));
         if (match) {
           // replace the match with its upper-case version
-          word = word.replace(match[0], match[0].toUpperCase());
+          let toReplace = match[0];
+          if (match.length === 2) {
+            // a capture group was specified, use it instead
+            toReplace = match[1];
+          }
+          word = word.replace(toReplace, toReplace.toUpperCase());
         }
       }
       word = word.capitalize();
@@ -236,7 +241,7 @@ export function ensureNameCase(name: string, lowerFirst?: boolean): string {
   return reconstructed;
 }
 
-export function removePrefix(name: string, prefix: string): string {
+function removePrefix(name: string, prefix: string): string {
   // perform case-insensitive comparison
   const nameU = name.toUpperCase();
   const prefixU = prefix.toUpperCase();
@@ -249,6 +254,6 @@ export function removePrefix(name: string, prefix: string): string {
   return name.slice(prefix.length);
 }
 
-export function createPolymorphicInterfaceName(base: string): string {
+function createPolymorphicInterfaceName(base: string): string {
   return base + 'Classification';
 }

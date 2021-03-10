@@ -1105,24 +1105,24 @@ func (c NotebookReferenceType) ToPtr() *NotebookReferenceType {
 	return &c
 }
 
-// ODataAadServicePrincipalCredentialType - Specify the credential type (key or cert) is used for service principal.
-type ODataAadServicePrincipalCredentialType string
+// ODataAADServicePrincipalCredentialType - Specify the credential type (key or cert) is used for service principal.
+type ODataAADServicePrincipalCredentialType string
 
 const (
-	ODataAadServicePrincipalCredentialTypeServicePrincipalCert ODataAadServicePrincipalCredentialType = "ServicePrincipalCert"
-	ODataAadServicePrincipalCredentialTypeServicePrincipalKey  ODataAadServicePrincipalCredentialType = "ServicePrincipalKey"
+	ODataAADServicePrincipalCredentialTypeServicePrincipalCert ODataAADServicePrincipalCredentialType = "ServicePrincipalCert"
+	ODataAADServicePrincipalCredentialTypeServicePrincipalKey  ODataAADServicePrincipalCredentialType = "ServicePrincipalKey"
 )
 
-// PossibleODataAadServicePrincipalCredentialTypeValues returns the possible values for the ODataAadServicePrincipalCredentialType const type.
-func PossibleODataAadServicePrincipalCredentialTypeValues() []ODataAadServicePrincipalCredentialType {
-	return []ODataAadServicePrincipalCredentialType{
-		ODataAadServicePrincipalCredentialTypeServicePrincipalCert,
-		ODataAadServicePrincipalCredentialTypeServicePrincipalKey,
+// PossibleODataAADServicePrincipalCredentialTypeValues returns the possible values for the ODataAADServicePrincipalCredentialType const type.
+func PossibleODataAADServicePrincipalCredentialTypeValues() []ODataAADServicePrincipalCredentialType {
+	return []ODataAADServicePrincipalCredentialType{
+		ODataAADServicePrincipalCredentialTypeServicePrincipalCert,
+		ODataAADServicePrincipalCredentialTypeServicePrincipalKey,
 	}
 }
 
-// ToPtr() returns a *ODataAadServicePrincipalCredentialType pointing to the current value.
-func (c ODataAadServicePrincipalCredentialType) ToPtr() *ODataAadServicePrincipalCredentialType {
+// ToPtr() returns a *ODataAADServicePrincipalCredentialType pointing to the current value.
+func (c ODataAADServicePrincipalCredentialType) ToPtr() *ODataAADServicePrincipalCredentialType {
 	return &c
 }
 
@@ -1130,7 +1130,7 @@ func (c ODataAadServicePrincipalCredentialType) ToPtr() *ODataAadServicePrincipa
 type ODataAuthenticationType string
 
 const (
-	ODataAuthenticationTypeAadServicePrincipal    ODataAuthenticationType = "AadServicePrincipal"
+	ODataAuthenticationTypeAADServicePrincipal    ODataAuthenticationType = "AadServicePrincipal"
 	ODataAuthenticationTypeAnonymous              ODataAuthenticationType = "Anonymous"
 	ODataAuthenticationTypeBasic                  ODataAuthenticationType = "Basic"
 	ODataAuthenticationTypeManagedServiceIdentity ODataAuthenticationType = "ManagedServiceIdentity"
@@ -1140,7 +1140,7 @@ const (
 // PossibleODataAuthenticationTypeValues returns the possible values for the ODataAuthenticationType const type.
 func PossibleODataAuthenticationTypeValues() []ODataAuthenticationType {
 	return []ODataAuthenticationType{
-		ODataAuthenticationTypeAadServicePrincipal,
+		ODataAuthenticationTypeAADServicePrincipal,
 		ODataAuthenticationTypeAnonymous,
 		ODataAuthenticationTypeBasic,
 		ODataAuthenticationTypeManagedServiceIdentity,
@@ -1423,7 +1423,7 @@ func (c ResourceIdentityType) ToPtr() *ResourceIdentityType {
 type RestServiceAuthenticationType string
 
 const (
-	RestServiceAuthenticationTypeAadServicePrincipal    RestServiceAuthenticationType = "AadServicePrincipal"
+	RestServiceAuthenticationTypeAADServicePrincipal    RestServiceAuthenticationType = "AadServicePrincipal"
 	RestServiceAuthenticationTypeAnonymous              RestServiceAuthenticationType = "Anonymous"
 	RestServiceAuthenticationTypeBasic                  RestServiceAuthenticationType = "Basic"
 	RestServiceAuthenticationTypeManagedServiceIdentity RestServiceAuthenticationType = "ManagedServiceIdentity"
@@ -1432,7 +1432,7 @@ const (
 // PossibleRestServiceAuthenticationTypeValues returns the possible values for the RestServiceAuthenticationType const type.
 func PossibleRestServiceAuthenticationTypeValues() []RestServiceAuthenticationType {
 	return []RestServiceAuthenticationType{
-		RestServiceAuthenticationTypeAadServicePrincipal,
+		RestServiceAuthenticationTypeAADServicePrincipal,
 		RestServiceAuthenticationTypeAnonymous,
 		RestServiceAuthenticationTypeBasic,
 		RestServiceAuthenticationTypeManagedServiceIdentity,

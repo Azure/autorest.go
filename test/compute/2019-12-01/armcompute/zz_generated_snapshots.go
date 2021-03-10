@@ -274,7 +274,7 @@ func (client *SnapshotsClient) BeginGrantAccess(ctx context.Context, resourceGro
 	if err != nil {
 		return AccessURIPollerResponse{}, err
 	}
-	poller := &accessUriPoller{
+	poller := &accessURIPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -292,7 +292,7 @@ func (client *SnapshotsClient) ResumeGrantAccess(token string) (AccessURIPoller,
 	if err != nil {
 		return nil, err
 	}
-	return &accessUriPoller{
+	return &accessURIPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil

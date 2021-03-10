@@ -265,9 +265,9 @@ func (client *VirtualMachineImagesClient) listPublishersHandleError(resp *azcore
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
-// ListSkus - Gets a list of virtual machine image SKUs for the specified location, publisher, and offer.
-func (client *VirtualMachineImagesClient) ListSkus(ctx context.Context, location string, publisherName string, offer string, options *VirtualMachineImagesListSkusOptions) (VirtualMachineImageResourceArrayResponse, error) {
-	req, err := client.listSkusCreateRequest(ctx, location, publisherName, offer, options)
+// ListSKUs - Gets a list of virtual machine image SKUs for the specified location, publisher, and offer.
+func (client *VirtualMachineImagesClient) ListSKUs(ctx context.Context, location string, publisherName string, offer string, options *VirtualMachineImagesListSKUsOptions) (VirtualMachineImageResourceArrayResponse, error) {
+	req, err := client.listSKUsCreateRequest(ctx, location, publisherName, offer, options)
 	if err != nil {
 		return VirtualMachineImageResourceArrayResponse{}, err
 	}
@@ -276,13 +276,13 @@ func (client *VirtualMachineImagesClient) ListSkus(ctx context.Context, location
 		return VirtualMachineImageResourceArrayResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return VirtualMachineImageResourceArrayResponse{}, client.listSkusHandleError(resp)
+		return VirtualMachineImageResourceArrayResponse{}, client.listSKUsHandleError(resp)
 	}
-	return client.listSkusHandleResponse(resp)
+	return client.listSKUsHandleResponse(resp)
 }
 
-// listSkusCreateRequest creates the ListSkus request.
-func (client *VirtualMachineImagesClient) listSkusCreateRequest(ctx context.Context, location string, publisherName string, offer string, options *VirtualMachineImagesListSkusOptions) (*azcore.Request, error) {
+// listSKUsCreateRequest creates the ListSKUs request.
+func (client *VirtualMachineImagesClient) listSKUsCreateRequest(ctx context.Context, location string, publisherName string, offer string, options *VirtualMachineImagesListSKUsOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
 	urlPath = strings.ReplaceAll(urlPath, "{publisherName}", url.PathEscape(publisherName))
@@ -300,8 +300,8 @@ func (client *VirtualMachineImagesClient) listSkusCreateRequest(ctx context.Cont
 	return req, nil
 }
 
-// listSkusHandleResponse handles the ListSkus response.
-func (client *VirtualMachineImagesClient) listSkusHandleResponse(resp *azcore.Response) (VirtualMachineImageResourceArrayResponse, error) {
+// listSKUsHandleResponse handles the ListSKUs response.
+func (client *VirtualMachineImagesClient) listSKUsHandleResponse(resp *azcore.Response) (VirtualMachineImageResourceArrayResponse, error) {
 	var val []VirtualMachineImageResource
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return VirtualMachineImageResourceArrayResponse{}, err
@@ -309,8 +309,8 @@ func (client *VirtualMachineImagesClient) listSkusHandleResponse(resp *azcore.Re
 	return VirtualMachineImageResourceArrayResponse{RawResponse: resp.Response, VirtualMachineImageResourceArray: val}, nil
 }
 
-// listSkusHandleError handles the ListSkus error response.
-func (client *VirtualMachineImagesClient) listSkusHandleError(resp *azcore.Response) error {
+// listSKUsHandleError handles the ListSKUs error response.
+func (client *VirtualMachineImagesClient) listSKUsHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)

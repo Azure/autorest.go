@@ -1077,50 +1077,50 @@ func (p *proximityPlacementGroupListResultPager) PageResponse() ProximityPlaceme
 	return p.current
 }
 
-// ResourceSkusResultPager provides iteration over ResourceSkusResult pages.
-type ResourceSkusResultPager interface {
+// ResourceSKUsResultPager provides iteration over ResourceSKUsResult pages.
+type ResourceSKUsResultPager interface {
 	azcore.Pager
 
-	// Page returns the current ResourceSkusResultResponse.
-	PageResponse() ResourceSkusResultResponse
+	// Page returns the current ResourceSKUsResultResponse.
+	PageResponse() ResourceSKUsResultResponse
 }
 
-type resourceSkusResultCreateRequest func(context.Context) (*azcore.Request, error)
+type resourceSKUsResultCreateRequest func(context.Context) (*azcore.Request, error)
 
-type resourceSkusResultHandleError func(*azcore.Response) error
+type resourceSKUsResultHandleError func(*azcore.Response) error
 
-type resourceSkusResultHandleResponse func(*azcore.Response) (ResourceSkusResultResponse, error)
+type resourceSKUsResultHandleResponse func(*azcore.Response) (ResourceSKUsResultResponse, error)
 
-type resourceSkusResultAdvancePage func(context.Context, ResourceSkusResultResponse) (*azcore.Request, error)
+type resourceSKUsResultAdvancePage func(context.Context, ResourceSKUsResultResponse) (*azcore.Request, error)
 
-type resourceSkusResultPager struct {
+type resourceSKUsResultPager struct {
 	// the pipeline for making the request
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
-	requester resourceSkusResultCreateRequest
+	requester resourceSKUsResultCreateRequest
 	// callback for handling response errors
-	errorer resourceSkusResultHandleError
+	errorer resourceSKUsResultHandleError
 	// callback for handling the HTTP response
-	responder resourceSkusResultHandleResponse
+	responder resourceSKUsResultHandleResponse
 	// callback for advancing to the next page
-	advancer resourceSkusResultAdvancePage
+	advancer resourceSKUsResultAdvancePage
 	// contains the current response
-	current ResourceSkusResultResponse
+	current ResourceSKUsResultResponse
 	// status codes for successful retrieval
 	statusCodes []int
 	// any error encountered
 	err error
 }
 
-func (p *resourceSkusResultPager) Err() error {
+func (p *resourceSKUsResultPager) Err() error {
 	return p.err
 }
 
-func (p *resourceSkusResultPager) NextPage(ctx context.Context) bool {
+func (p *resourceSKUsResultPager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
-		if p.current.ResourceSkusResult.NextLink == nil || len(*p.current.ResourceSkusResult.NextLink) == 0 {
+		if p.current.ResourceSKUsResult.NextLink == nil || len(*p.current.ResourceSKUsResult.NextLink) == 0 {
 			return false
 		}
 		req, err = p.advancer(ctx, p.current)
@@ -1149,7 +1149,7 @@ func (p *resourceSkusResultPager) NextPage(ctx context.Context) bool {
 	return true
 }
 
-func (p *resourceSkusResultPager) PageResponse() ResourceSkusResultResponse {
+func (p *resourceSKUsResultPager) PageResponse() ResourceSKUsResultResponse {
 	return p.current
 }
 
@@ -1685,50 +1685,50 @@ func (p *virtualMachineScaleSetListResultPager) PageResponse() VirtualMachineSca
 	return p.current
 }
 
-// VirtualMachineScaleSetListSkusResultPager provides iteration over VirtualMachineScaleSetListSkusResult pages.
-type VirtualMachineScaleSetListSkusResultPager interface {
+// VirtualMachineScaleSetListSKUsResultPager provides iteration over VirtualMachineScaleSetListSKUsResult pages.
+type VirtualMachineScaleSetListSKUsResultPager interface {
 	azcore.Pager
 
-	// Page returns the current VirtualMachineScaleSetListSkusResultResponse.
-	PageResponse() VirtualMachineScaleSetListSkusResultResponse
+	// Page returns the current VirtualMachineScaleSetListSKUsResultResponse.
+	PageResponse() VirtualMachineScaleSetListSKUsResultResponse
 }
 
-type virtualMachineScaleSetListSkusResultCreateRequest func(context.Context) (*azcore.Request, error)
+type virtualMachineScaleSetListSKUsResultCreateRequest func(context.Context) (*azcore.Request, error)
 
-type virtualMachineScaleSetListSkusResultHandleError func(*azcore.Response) error
+type virtualMachineScaleSetListSKUsResultHandleError func(*azcore.Response) error
 
-type virtualMachineScaleSetListSkusResultHandleResponse func(*azcore.Response) (VirtualMachineScaleSetListSkusResultResponse, error)
+type virtualMachineScaleSetListSKUsResultHandleResponse func(*azcore.Response) (VirtualMachineScaleSetListSKUsResultResponse, error)
 
-type virtualMachineScaleSetListSkusResultAdvancePage func(context.Context, VirtualMachineScaleSetListSkusResultResponse) (*azcore.Request, error)
+type virtualMachineScaleSetListSKUsResultAdvancePage func(context.Context, VirtualMachineScaleSetListSKUsResultResponse) (*azcore.Request, error)
 
-type virtualMachineScaleSetListSkusResultPager struct {
+type virtualMachineScaleSetListSKUsResultPager struct {
 	// the pipeline for making the request
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
-	requester virtualMachineScaleSetListSkusResultCreateRequest
+	requester virtualMachineScaleSetListSKUsResultCreateRequest
 	// callback for handling response errors
-	errorer virtualMachineScaleSetListSkusResultHandleError
+	errorer virtualMachineScaleSetListSKUsResultHandleError
 	// callback for handling the HTTP response
-	responder virtualMachineScaleSetListSkusResultHandleResponse
+	responder virtualMachineScaleSetListSKUsResultHandleResponse
 	// callback for advancing to the next page
-	advancer virtualMachineScaleSetListSkusResultAdvancePage
+	advancer virtualMachineScaleSetListSKUsResultAdvancePage
 	// contains the current response
-	current VirtualMachineScaleSetListSkusResultResponse
+	current VirtualMachineScaleSetListSKUsResultResponse
 	// status codes for successful retrieval
 	statusCodes []int
 	// any error encountered
 	err error
 }
 
-func (p *virtualMachineScaleSetListSkusResultPager) Err() error {
+func (p *virtualMachineScaleSetListSKUsResultPager) Err() error {
 	return p.err
 }
 
-func (p *virtualMachineScaleSetListSkusResultPager) NextPage(ctx context.Context) bool {
+func (p *virtualMachineScaleSetListSKUsResultPager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
-		if p.current.VirtualMachineScaleSetListSkusResult.NextLink == nil || len(*p.current.VirtualMachineScaleSetListSkusResult.NextLink) == 0 {
+		if p.current.VirtualMachineScaleSetListSKUsResult.NextLink == nil || len(*p.current.VirtualMachineScaleSetListSKUsResult.NextLink) == 0 {
 			return false
 		}
 		req, err = p.advancer(ctx, p.current)
@@ -1757,7 +1757,7 @@ func (p *virtualMachineScaleSetListSkusResultPager) NextPage(ctx context.Context
 	return true
 }
 
-func (p *virtualMachineScaleSetListSkusResultPager) PageResponse() VirtualMachineScaleSetListSkusResultResponse {
+func (p *virtualMachineScaleSetListSKUsResultPager) PageResponse() VirtualMachineScaleSetListSKUsResultResponse {
 	return p.current
 }
 

@@ -4,8 +4,9 @@
  *--------------------------------------------------------------------------------------------*/
 
 export const CommonAcronyms = [
+  '^aad$',
   '^acl', // to match Acls
-  '^aes$',
+  '^aes\\d*$',
   '^api$',
   '^ascii$',
   '^cpu$',
@@ -20,8 +21,8 @@ export const CommonAcronyms = [
   '^http$',
   '^https$',
   '^jpeg$',
-  '^id$',
-  '^ip$',
+  '^(id)s?$',
+  '^(ip)s?$',
   '^json$',
   '^lhs$',
   '^mbcs$',
@@ -34,7 +35,7 @@ export const CommonAcronyms = [
   '^rhs$',
   '^rpc$',
   '^sha\\d*$',
-  '^sku$',
+  '^(sku)[sS]?$',
   '^sla$',
   '^smtp$',
   '^sql$',
@@ -51,7 +52,8 @@ export const CommonAcronyms = [
   '^url$',
   '^utc$',
   '^utf\\d*$',
-  '^vm$',
+  '^(vm)s?$',
+  '^(vpn)s?$',
   '^xml$',
   '^xsrf$',
   '^xss$'

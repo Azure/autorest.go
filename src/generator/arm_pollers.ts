@@ -4,12 +4,12 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Session } from '@autorest/extension-base';
-import { camelCase } from '@azure-tools/codegen';
 import { CodeModel, SchemaType, Schema, ArraySchema } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 import { internalPagerTypeName, internalPollerTypeName, PollerInfo, PagerInfo } from '../common/helpers';
 import { contentPreamble, sortAscending } from './helpers';
 import { ImportManager } from './imports';
+import { ensureNameCase } from '../transform/namer';
 
 function generatePagerReturnInstance(pager: PagerInfo): string {
   let text = '';
@@ -58,7 +58,7 @@ export async function generateARMPollers(session: Session<CodeModel>): Promise<s
     let pagerFields = '';
     if (poller.pager) {
       function finalPagerProcessing(name: string, params: string): string {
-        return `respType := &${camelCase(responseType)}{}
+        return `respType := &${ensureNameCase(responseType, true)}{}
                 resp, err := p.pt.${name}(${params})
                 if err != nil {
                   return nil, err
@@ -70,8 +70,8 @@ export async function generateARMPollers(session: Session<CodeModel>): Promise<s
       // for operations that do return a model add a final response method that handles the final get URL scenario
       finalResponseDeclaration = `FinalResponse(ctx context.Context) (${responseType}, error)`;
       pagerFields = `
-      errHandler  ${camelCase(poller.pager.respType)}HandleError
-      respHandler ${camelCase(poller.pager.respType)}HandleResponse
+      errHandler  ${ensureNameCase(poller.pager.respType, true)}HandleError
+      respHandler ${ensureNameCase(poller.pager.respType, true)}HandleResponse
       statusCodes []int`;
       handleResponse = `
       func (p *${pollerName}) handleResponse(resp *azcore.Response) (${responseType}, error) {

@@ -16,15 +16,15 @@ import (
 )
 
 // AAD Vpn authentication type related parameters.
-type AadAuthenticationParameters struct {
+type AADAuthenticationParameters struct {
 	// AAD Vpn authentication parameter AAD audience.
-	AadAudience *string `json:"aadAudience,omitempty"`
+	AADAudience *string `json:"aadAudience,omitempty"`
 
 	// AAD Vpn authentication parameter AAD issuer.
-	AadIssuer *string `json:"aadIssuer,omitempty"`
+	AADIssuer *string `json:"aadIssuer,omitempty"`
 
 	// AAD Vpn authentication parameter AAD tenant.
-	AadTenant *string `json:"aadTenant,omitempty"`
+	AADTenant *string `json:"aadTenant,omitempty"`
 }
 
 // AddressSpace contains an array of IP address ranges that can be used by subnets of the virtual network.
@@ -2641,7 +2641,7 @@ type BastionShareableLink struct {
 // Post request for all the Bastion Shareable Link endpoints.
 type BastionShareableLinkListRequest struct {
 	// List of VM references.
-	Vms *[]BastionShareableLink `json:"vms,omitempty"`
+	VMs *[]BastionShareableLink `json:"vms,omitempty"`
 }
 
 // Response for all the Bastion Shareable Link endpoints.
@@ -3554,7 +3554,7 @@ type ConnectivityHop struct {
 	Issues *[]ConnectivityIssue `json:"issues,omitempty" azure:"ro"`
 
 	// READ-ONLY; List of next hop identifiers.
-	NextHopIds *[]string `json:"nextHopIds,omitempty" azure:"ro"`
+	NextHopIDs *[]string `json:"nextHopIds,omitempty" azure:"ro"`
 
 	// READ-ONLY; The ID of the resource corresponding to this hop.
 	ResourceID *string `json:"resourceId,omitempty" azure:"ro"`
@@ -6545,12 +6545,12 @@ type GatewayRouteListResultResponse struct {
 }
 
 // List of Vpn-Sites.
-type GetVpnSitesConfigurationRequest struct {
+type GetVPNSitesConfigurationRequest struct {
 	// The sas-url to download the configurations for vpn-sites.
 	OutputBlobSasURL *string `json:"outputBlobSasUrl,omitempty"`
 
 	// List of resource-ids of the vpn-sites for which config is to be downloaded.
-	VpnSites *[]string `json:"vpnSites,omitempty"`
+	VPNSites *[]string `json:"vpnSites,omitempty"`
 }
 
 // HTTP configuration of the connectivity check.
@@ -7178,18 +7178,130 @@ type ListHubVirtualNetworkConnectionsResultResponse struct {
 }
 
 // Result of the request to list P2SVpnGateways. It contains a list of P2SVpnGateways and a URL nextLink to get the next set of results.
-type ListP2SVpnGatewaysResult struct {
+type ListP2SVPNGatewaysResult struct {
 	// URL to get the next set of operation list results if there are any.
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// List of P2SVpnGateways.
-	Value *[]P2SVpnGateway `json:"value,omitempty"`
+	Value *[]P2SVPNGateway `json:"value,omitempty"`
 }
 
-// ListP2SVpnGatewaysResultResponse is the response envelope for operations that return a ListP2SVpnGatewaysResult type.
-type ListP2SVpnGatewaysResultResponse struct {
+// ListP2SVPNGatewaysResultResponse is the response envelope for operations that return a ListP2SVPNGatewaysResult type.
+type ListP2SVPNGatewaysResultResponse struct {
 	// Result of the request to list P2SVpnGateways. It contains a list of P2SVpnGateways and a URL nextLink to get the next set of results.
-	ListP2SVpnGatewaysResult *ListP2SVpnGatewaysResult
+	ListP2SVPNGatewaysResult *ListP2SVPNGatewaysResult
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// Result of the request to list all vpn connections to a virtual wan vpn gateway. It contains a list of Vpn Connections and a URL nextLink to get the next
+// set of results.
+type ListVPNConnectionsResult struct {
+	// URL to get the next set of operation list results if there are any.
+	NextLink *string `json:"nextLink,omitempty"`
+
+	// List of Vpn Connections.
+	Value *[]VPNConnection `json:"value,omitempty"`
+}
+
+// ListVPNConnectionsResultResponse is the response envelope for operations that return a ListVPNConnectionsResult type.
+type ListVPNConnectionsResultResponse struct {
+	// Result of the request to list all vpn connections to a virtual wan vpn gateway. It contains a list of Vpn Connections and a URL nextLink to get the next
+	// set of results.
+	ListVPNConnectionsResult *ListVPNConnectionsResult
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// Result of the request to list VpnGateways. It contains a list of VpnGateways and a URL nextLink to get the next set of results.
+type ListVPNGatewaysResult struct {
+	// URL to get the next set of operation list results if there are any.
+	NextLink *string `json:"nextLink,omitempty"`
+
+	// List of VpnGateways.
+	Value *[]VPNGateway `json:"value,omitempty"`
+}
+
+// ListVPNGatewaysResultResponse is the response envelope for operations that return a ListVPNGatewaysResult type.
+type ListVPNGatewaysResultResponse struct {
+	// Result of the request to list VpnGateways. It contains a list of VpnGateways and a URL nextLink to get the next set of results.
+	ListVPNGatewaysResult *ListVPNGatewaysResult
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// Result of the request to list all VpnServerConfigurations. It contains a list of VpnServerConfigurations and a URL nextLink to get the next set of results.
+type ListVPNServerConfigurationsResult struct {
+	// URL to get the next set of operation list results if there are any.
+	NextLink *string `json:"nextLink,omitempty"`
+
+	// List of VpnServerConfigurations.
+	Value *[]VPNServerConfiguration `json:"value,omitempty"`
+}
+
+// ListVPNServerConfigurationsResultResponse is the response envelope for operations that return a ListVPNServerConfigurationsResult type.
+type ListVPNServerConfigurationsResultResponse struct {
+	// Result of the request to list all VpnServerConfigurations. It contains a list of VpnServerConfigurations and a URL nextLink to get the next set of results.
+	ListVPNServerConfigurationsResult *ListVPNServerConfigurationsResult
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// Result of the request to list all vpn connections to a virtual wan vpn gateway. It contains a list of Vpn Connections and a URL nextLink to get the next
+// set of results.
+type ListVPNSiteLinkConnectionsResult struct {
+	// URL to get the next set of operation list results if there are any.
+	NextLink *string `json:"nextLink,omitempty"`
+
+	// List of VpnSiteLinkConnections.
+	Value *[]VPNSiteLinkConnection `json:"value,omitempty"`
+}
+
+// ListVPNSiteLinkConnectionsResultResponse is the response envelope for operations that return a ListVPNSiteLinkConnectionsResult type.
+type ListVPNSiteLinkConnectionsResultResponse struct {
+	// Result of the request to list all vpn connections to a virtual wan vpn gateway. It contains a list of Vpn Connections and a URL nextLink to get the next
+	// set of results.
+	ListVPNSiteLinkConnectionsResult *ListVPNSiteLinkConnectionsResult
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// Result of the request to list VpnSiteLinks. It contains a list of VpnSiteLinks and a URL nextLink to get the next set of results.
+type ListVPNSiteLinksResult struct {
+	// URL to get the next set of operation list results if there are any.
+	NextLink *string `json:"nextLink,omitempty"`
+
+	// List of VpnSitesLinks.
+	Value *[]VPNSiteLink `json:"value,omitempty"`
+}
+
+// ListVPNSiteLinksResultResponse is the response envelope for operations that return a ListVPNSiteLinksResult type.
+type ListVPNSiteLinksResultResponse struct {
+	// Result of the request to list VpnSiteLinks. It contains a list of VpnSiteLinks and a URL nextLink to get the next set of results.
+	ListVPNSiteLinksResult *ListVPNSiteLinksResult
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// Result of the request to list VpnSites. It contains a list of VpnSites and a URL nextLink to get the next set of results.
+type ListVPNSitesResult struct {
+	// URL to get the next set of operation list results if there are any.
+	NextLink *string `json:"nextLink,omitempty"`
+
+	// List of VpnSites.
+	Value *[]VPNSite `json:"value,omitempty"`
+}
+
+// ListVPNSitesResultResponse is the response envelope for operations that return a ListVPNSitesResult type.
+type ListVPNSitesResultResponse struct {
+	// Result of the request to list VpnSites. It contains a list of VpnSites and a URL nextLink to get the next set of results.
+	ListVPNSitesResult *ListVPNSitesResult
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -7244,118 +7356,6 @@ type ListVirtualWANsResult struct {
 type ListVirtualWANsResultResponse struct {
 	// Result of the request to list VirtualWANs. It contains a list of VirtualWANs and a URL nextLink to get the next set of results.
 	ListVirtualWANsResult *ListVirtualWANsResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// Result of the request to list all vpn connections to a virtual wan vpn gateway. It contains a list of Vpn Connections and a URL nextLink to get the next
-// set of results.
-type ListVpnConnectionsResult struct {
-	// URL to get the next set of operation list results if there are any.
-	NextLink *string `json:"nextLink,omitempty"`
-
-	// List of Vpn Connections.
-	Value *[]VpnConnection `json:"value,omitempty"`
-}
-
-// ListVpnConnectionsResultResponse is the response envelope for operations that return a ListVpnConnectionsResult type.
-type ListVpnConnectionsResultResponse struct {
-	// Result of the request to list all vpn connections to a virtual wan vpn gateway. It contains a list of Vpn Connections and a URL nextLink to get the next
-	// set of results.
-	ListVpnConnectionsResult *ListVpnConnectionsResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// Result of the request to list VpnGateways. It contains a list of VpnGateways and a URL nextLink to get the next set of results.
-type ListVpnGatewaysResult struct {
-	// URL to get the next set of operation list results if there are any.
-	NextLink *string `json:"nextLink,omitempty"`
-
-	// List of VpnGateways.
-	Value *[]VpnGateway `json:"value,omitempty"`
-}
-
-// ListVpnGatewaysResultResponse is the response envelope for operations that return a ListVpnGatewaysResult type.
-type ListVpnGatewaysResultResponse struct {
-	// Result of the request to list VpnGateways. It contains a list of VpnGateways and a URL nextLink to get the next set of results.
-	ListVpnGatewaysResult *ListVpnGatewaysResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// Result of the request to list all VpnServerConfigurations. It contains a list of VpnServerConfigurations and a URL nextLink to get the next set of results.
-type ListVpnServerConfigurationsResult struct {
-	// URL to get the next set of operation list results if there are any.
-	NextLink *string `json:"nextLink,omitempty"`
-
-	// List of VpnServerConfigurations.
-	Value *[]VpnServerConfiguration `json:"value,omitempty"`
-}
-
-// ListVpnServerConfigurationsResultResponse is the response envelope for operations that return a ListVpnServerConfigurationsResult type.
-type ListVpnServerConfigurationsResultResponse struct {
-	// Result of the request to list all VpnServerConfigurations. It contains a list of VpnServerConfigurations and a URL nextLink to get the next set of results.
-	ListVpnServerConfigurationsResult *ListVpnServerConfigurationsResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// Result of the request to list all vpn connections to a virtual wan vpn gateway. It contains a list of Vpn Connections and a URL nextLink to get the next
-// set of results.
-type ListVpnSiteLinkConnectionsResult struct {
-	// URL to get the next set of operation list results if there are any.
-	NextLink *string `json:"nextLink,omitempty"`
-
-	// List of VpnSiteLinkConnections.
-	Value *[]VpnSiteLinkConnection `json:"value,omitempty"`
-}
-
-// ListVpnSiteLinkConnectionsResultResponse is the response envelope for operations that return a ListVpnSiteLinkConnectionsResult type.
-type ListVpnSiteLinkConnectionsResultResponse struct {
-	// Result of the request to list all vpn connections to a virtual wan vpn gateway. It contains a list of Vpn Connections and a URL nextLink to get the next
-	// set of results.
-	ListVpnSiteLinkConnectionsResult *ListVpnSiteLinkConnectionsResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// Result of the request to list VpnSiteLinks. It contains a list of VpnSiteLinks and a URL nextLink to get the next set of results.
-type ListVpnSiteLinksResult struct {
-	// URL to get the next set of operation list results if there are any.
-	NextLink *string `json:"nextLink,omitempty"`
-
-	// List of VpnSitesLinks.
-	Value *[]VpnSiteLink `json:"value,omitempty"`
-}
-
-// ListVpnSiteLinksResultResponse is the response envelope for operations that return a ListVpnSiteLinksResult type.
-type ListVpnSiteLinksResultResponse struct {
-	// Result of the request to list VpnSiteLinks. It contains a list of VpnSiteLinks and a URL nextLink to get the next set of results.
-	ListVpnSiteLinksResult *ListVpnSiteLinksResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// Result of the request to list VpnSites. It contains a list of VpnSites and a URL nextLink to get the next set of results.
-type ListVpnSitesResult struct {
-	// URL to get the next set of operation list results if there are any.
-	NextLink *string `json:"nextLink,omitempty"`
-
-	// List of VpnSites.
-	Value *[]VpnSite `json:"value,omitempty"`
-}
-
-// ListVpnSitesResultResponse is the response envelope for operations that return a ListVpnSitesResult type.
-type ListVpnSitesResultResponse struct {
-	// Result of the request to list VpnSites. It contains a list of VpnSites and a URL nextLink to get the next set of results.
-	ListVpnSitesResult *ListVpnSitesResult
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -9430,156 +9430,156 @@ type P2SConnectionConfigurationProperties struct {
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 
 	// The reference to the address space resource which represents Address space for P2S VpnClient.
-	VpnClientAddressPool *AddressSpace `json:"vpnClientAddressPool,omitempty"`
+	VPNClientAddressPool *AddressSpace `json:"vpnClientAddressPool,omitempty"`
 }
 
 // P2S Vpn connection detailed health written to sas url.
-type P2SVpnConnectionHealth struct {
+type P2SVPNConnectionHealth struct {
 	// Returned sas url of the blob to which the p2s vpn connection detailed health will be written.
 	SasURL *string `json:"sasUrl,omitempty"`
 }
 
-// P2SVpnConnectionHealthPollerResponse is the response envelope for operations that asynchronously return a P2SVpnConnectionHealth type.
-type P2SVpnConnectionHealthPollerResponse struct {
+// P2SVPNConnectionHealthPollerResponse is the response envelope for operations that asynchronously return a P2SVPNConnectionHealth type.
+type P2SVPNConnectionHealthPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (P2SVpnConnectionHealthResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (P2SVPNConnectionHealthResponse, error)
 
 	// Poller contains an initialized poller.
-	Poller P2SVpnConnectionHealthPoller
+	Poller P2SVPNConnectionHealthPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
 // List of P2S Vpn connection health request.
-type P2SVpnConnectionHealthRequest struct {
+type P2SVPNConnectionHealthRequest struct {
 	// The sas-url to download the P2S Vpn connection health detail.
 	OutputBlobSasURL *string `json:"outputBlobSasUrl,omitempty"`
 
 	// The list of p2s vpn user names whose p2s vpn connection detailed health to retrieve for.
-	VpnUserNamesFilter *[]string `json:"vpnUserNamesFilter,omitempty"`
+	VPNUserNamesFilter *[]string `json:"vpnUserNamesFilter,omitempty"`
 }
 
-// P2SVpnConnectionHealthResponse is the response envelope for operations that return a P2SVpnConnectionHealth type.
-type P2SVpnConnectionHealthResponse struct {
+// P2SVPNConnectionHealthResponse is the response envelope for operations that return a P2SVPNConnectionHealth type.
+type P2SVPNConnectionHealthResponse struct {
 	// P2S Vpn connection detailed health written to sas url.
-	P2SVpnConnectionHealth *P2SVpnConnectionHealth
+	P2SVPNConnectionHealth *P2SVPNConnectionHealth
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
 // List of p2s vpn connections to be disconnected.
-type P2SVpnConnectionRequest struct {
+type P2SVPNConnectionRequest struct {
 	// List of p2s vpn connection Ids.
-	VpnConnectionIds *[]string `json:"vpnConnectionIds,omitempty"`
+	VPNConnectionIDs *[]string `json:"vpnConnectionIds,omitempty"`
 }
 
 // P2SVpnGateway Resource.
-type P2SVpnGateway struct {
+type P2SVPNGateway struct {
 	Resource
 	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
 	Etag *string `json:"etag,omitempty" azure:"ro"`
 
 	// Properties of the P2SVpnGateway.
-	Properties *P2SVpnGatewayProperties `json:"properties,omitempty"`
+	Properties *P2SVPNGatewayProperties `json:"properties,omitempty"`
 }
 
-// P2SVpnGatewayPollerResponse is the response envelope for operations that asynchronously return a P2SVpnGateway type.
-type P2SVpnGatewayPollerResponse struct {
+// P2SVPNGatewayPollerResponse is the response envelope for operations that asynchronously return a P2SVPNGateway type.
+type P2SVPNGatewayPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (P2SVpnGatewayResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (P2SVPNGatewayResponse, error)
 
 	// Poller contains an initialized poller.
-	Poller P2SVpnGatewayPoller
+	Poller P2SVPNGatewayPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
 // Parameters for P2SVpnGateway.
-type P2SVpnGatewayProperties struct {
+type P2SVPNGatewayProperties struct {
 	// List of all p2s connection configurations of the gateway.
 	P2SConnectionConfigurations *[]P2SConnectionConfiguration `json:"p2SConnectionConfigurations,omitempty"`
 
 	// READ-ONLY; The provisioning state of the P2S VPN gateway resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 
-	// The VirtualHub to which the gateway belongs.
-	VirtualHub *SubResource `json:"virtualHub,omitempty"`
-
 	// READ-ONLY; All P2S VPN clients' connection health status.
-	VpnClientConnectionHealth *VpnClientConnectionHealth `json:"vpnClientConnectionHealth,omitempty" azure:"ro"`
+	VPNClientConnectionHealth *VPNClientConnectionHealth `json:"vpnClientConnectionHealth,omitempty" azure:"ro"`
 
 	// The scale unit for this p2s vpn gateway.
-	VpnGatewayScaleUnit *int32 `json:"vpnGatewayScaleUnit,omitempty"`
+	VPNGatewayScaleUnit *int32 `json:"vpnGatewayScaleUnit,omitempty"`
 
 	// The VpnServerConfiguration to which the p2sVpnGateway is attached to.
-	VpnServerConfiguration *SubResource `json:"vpnServerConfiguration,omitempty"`
+	VPNServerConfiguration *SubResource `json:"vpnServerConfiguration,omitempty"`
+
+	// The VirtualHub to which the gateway belongs.
+	VirtualHub *SubResource `json:"virtualHub,omitempty"`
 }
 
-// P2SVpnGatewayResponse is the response envelope for operations that return a P2SVpnGateway type.
-type P2SVpnGatewayResponse struct {
+// P2SVPNGatewayResponse is the response envelope for operations that return a P2SVPNGateway type.
+type P2SVPNGatewayResponse struct {
 	// P2SVpnGateway Resource.
-	P2SVpnGateway *P2SVpnGateway
+	P2SVPNGateway *P2SVPNGateway
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// P2SVpnGatewaysBeginCreateOrUpdateOptions contains the optional parameters for the P2SVpnGateways.BeginCreateOrUpdate method.
-type P2SVpnGatewaysBeginCreateOrUpdateOptions struct {
+// P2SVPNGatewaysBeginCreateOrUpdateOptions contains the optional parameters for the P2SVPNGateways.BeginCreateOrUpdate method.
+type P2SVPNGatewaysBeginCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// P2SVpnGatewaysBeginDeleteOptions contains the optional parameters for the P2SVpnGateways.BeginDelete method.
-type P2SVpnGatewaysBeginDeleteOptions struct {
+// P2SVPNGatewaysBeginDeleteOptions contains the optional parameters for the P2SVPNGateways.BeginDelete method.
+type P2SVPNGatewaysBeginDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// P2SVpnGatewaysBeginDisconnectP2SVpnConnectionsOptions contains the optional parameters for the P2SVpnGateways.BeginDisconnectP2SVpnConnections method.
-type P2SVpnGatewaysBeginDisconnectP2SVpnConnectionsOptions struct {
+// P2SVPNGatewaysBeginDisconnectP2SVPNConnectionsOptions contains the optional parameters for the P2SVPNGateways.BeginDisconnectP2SVPNConnections method.
+type P2SVPNGatewaysBeginDisconnectP2SVPNConnectionsOptions struct {
 	// placeholder for future optional parameters
 }
 
-// P2SVpnGatewaysBeginGenerateVpnProfileOptions contains the optional parameters for the P2SVpnGateways.BeginGenerateVpnProfile method.
-type P2SVpnGatewaysBeginGenerateVpnProfileOptions struct {
+// P2SVPNGatewaysBeginGenerateVPNProfileOptions contains the optional parameters for the P2SVPNGateways.BeginGenerateVPNProfile method.
+type P2SVPNGatewaysBeginGenerateVPNProfileOptions struct {
 	// placeholder for future optional parameters
 }
 
-// P2SVpnGatewaysBeginGetP2SVpnConnectionHealthDetailedOptions contains the optional parameters for the P2SVpnGateways.BeginGetP2SVpnConnectionHealthDetailed
+// P2SVPNGatewaysBeginGetP2SVPNConnectionHealthDetailedOptions contains the optional parameters for the P2SVPNGateways.BeginGetP2SVPNConnectionHealthDetailed
 // method.
-type P2SVpnGatewaysBeginGetP2SVpnConnectionHealthDetailedOptions struct {
+type P2SVPNGatewaysBeginGetP2SVPNConnectionHealthDetailedOptions struct {
 	// placeholder for future optional parameters
 }
 
-// P2SVpnGatewaysBeginGetP2SVpnConnectionHealthOptions contains the optional parameters for the P2SVpnGateways.BeginGetP2SVpnConnectionHealth method.
-type P2SVpnGatewaysBeginGetP2SVpnConnectionHealthOptions struct {
+// P2SVPNGatewaysBeginGetP2SVPNConnectionHealthOptions contains the optional parameters for the P2SVPNGateways.BeginGetP2SVPNConnectionHealth method.
+type P2SVPNGatewaysBeginGetP2SVPNConnectionHealthOptions struct {
 	// placeholder for future optional parameters
 }
 
-// P2SVpnGatewaysGetOptions contains the optional parameters for the P2SVpnGateways.Get method.
-type P2SVpnGatewaysGetOptions struct {
+// P2SVPNGatewaysGetOptions contains the optional parameters for the P2SVPNGateways.Get method.
+type P2SVPNGatewaysGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// P2SVpnGatewaysListByResourceGroupOptions contains the optional parameters for the P2SVpnGateways.ListByResourceGroup method.
-type P2SVpnGatewaysListByResourceGroupOptions struct {
+// P2SVPNGatewaysListByResourceGroupOptions contains the optional parameters for the P2SVPNGateways.ListByResourceGroup method.
+type P2SVPNGatewaysListByResourceGroupOptions struct {
 	// placeholder for future optional parameters
 }
 
-// P2SVpnGatewaysListOptions contains the optional parameters for the P2SVpnGateways.List method.
-type P2SVpnGatewaysListOptions struct {
+// P2SVPNGatewaysListOptions contains the optional parameters for the P2SVPNGateways.List method.
+type P2SVPNGatewaysListOptions struct {
 	// placeholder for future optional parameters
 }
 
-// P2SVpnGatewaysUpdateTagsOptions contains the optional parameters for the P2SVpnGateways.UpdateTags method.
-type P2SVpnGatewaysUpdateTagsOptions struct {
+// P2SVPNGatewaysUpdateTagsOptions contains the optional parameters for the P2SVPNGateways.UpdateTags method.
+type P2SVPNGatewaysUpdateTagsOptions struct {
 	// placeholder for future optional parameters
 }
 
 // Vpn Client Parameters for package generation.
-type P2SVpnProfileParameters struct {
+type P2SVPNProfileParameters struct {
 	// VPN client authentication method.
 	AuthenticationMethod *AuthenticationMethod `json:"authenticationMethod,omitempty"`
 }
@@ -10274,7 +10274,7 @@ type PrivateLinkServiceConnection struct {
 // Properties of the PrivateLinkServiceConnection.
 type PrivateLinkServiceConnectionProperties struct {
 	// The ID(s) of the group(s) obtained from the remote resource that this private endpoint should connect to.
-	GroupIds *[]string `json:"groupIds,omitempty"`
+	GroupIDs *[]string `json:"groupIds,omitempty"`
 
 	// A collection of read-only information about the state of the connection to the remote resource.
 	PrivateLinkServiceConnectionState *PrivateLinkServiceConnectionState `json:"privateLinkServiceConnectionState,omitempty"`
@@ -11988,9 +11988,9 @@ type ServiceTagsListResultResponse struct {
 }
 
 // List of session IDs.
-type SessionIds struct {
+type SessionIDs struct {
 	// List of session IDs.
-	SessionIds *[]string `json:"sessionIds,omitempty"`
+	SessionIDs *[]string `json:"sessionIds,omitempty"`
 }
 
 // StringArrayResponse is the response envelope for operations that return a []string type.
@@ -12562,6 +12562,908 @@ type VM struct {
 	Resource
 }
 
+// VpnClientConfiguration for P2S client.
+type VPNClientConfiguration struct {
+	// The AADAudience property of the VirtualNetworkGateway resource for vpn client connection used for AAD authentication.
+	AADAudience *string `json:"aadAudience,omitempty"`
+
+	// The AADIssuer property of the VirtualNetworkGateway resource for vpn client connection used for AAD authentication.
+	AADIssuer *string `json:"aadIssuer,omitempty"`
+
+	// The AADTenant property of the VirtualNetworkGateway resource for vpn client connection used for AAD authentication.
+	AADTenant *string `json:"aadTenant,omitempty"`
+
+	// The radius server address property of the VirtualNetworkGateway resource for vpn client connection.
+	RadiusServerAddress *string `json:"radiusServerAddress,omitempty"`
+
+	// The radius secret property of the VirtualNetworkGateway resource for vpn client connection.
+	RadiusServerSecret *string `json:"radiusServerSecret,omitempty"`
+
+	// The radiusServers property for multiple radius server configuration.
+	RadiusServers *[]RadiusServer `json:"radiusServers,omitempty"`
+
+	// The reference to the address space resource which represents Address space for P2S VpnClient.
+	VPNClientAddressPool *AddressSpace `json:"vpnClientAddressPool,omitempty"`
+
+	// VpnClientIpsecPolicies for virtual network gateway P2S client.
+	VPNClientIpsecPolicies *[]IpsecPolicy `json:"vpnClientIpsecPolicies,omitempty"`
+
+	// VpnClientProtocols for Virtual network gateway.
+	VPNClientProtocols *[]VPNClientProtocol `json:"vpnClientProtocols,omitempty"`
+
+	// VpnClientRevokedCertificate for Virtual network gateway.
+	VPNClientRevokedCertificates *[]VPNClientRevokedCertificate `json:"vpnClientRevokedCertificates,omitempty"`
+
+	// VpnClientRootCertificate for virtual network gateway.
+	VPNClientRootCertificates *[]VPNClientRootCertificate `json:"vpnClientRootCertificates,omitempty"`
+}
+
+// VpnClientConnectionHealth properties.
+type VPNClientConnectionHealth struct {
+	// List of allocated ip addresses to the connected p2s vpn clients.
+	AllocatedIPAddresses *[]string `json:"allocatedIpAddresses,omitempty"`
+
+	// READ-ONLY; Total of the Egress Bytes Transferred in this connection.
+	TotalEgressBytesTransferred *int64 `json:"totalEgressBytesTransferred,omitempty" azure:"ro"`
+
+	// READ-ONLY; Total of the Ingress Bytes Transferred in this P2S Vpn connection.
+	TotalIngressBytesTransferred *int64 `json:"totalIngressBytesTransferred,omitempty" azure:"ro"`
+
+	// The total of p2s vpn clients connected at this time to this P2SVpnGateway.
+	VPNClientConnectionsCount *int32 `json:"vpnClientConnectionsCount,omitempty"`
+}
+
+// VPN client connection health detail.
+type VPNClientConnectionHealthDetail struct {
+	// READ-ONLY; The egress bytes per second.
+	EgressBytesTransferred *int64 `json:"egressBytesTransferred,omitempty" azure:"ro"`
+
+	// READ-ONLY; The egress packets per second.
+	EgressPacketsTransferred *int64 `json:"egressPacketsTransferred,omitempty" azure:"ro"`
+
+	// READ-ONLY; The ingress bytes per second.
+	IngressBytesTransferred *int64 `json:"ingressBytesTransferred,omitempty" azure:"ro"`
+
+	// READ-ONLY; The ingress packets per second.
+	IngressPacketsTransferred *int64 `json:"ingressPacketsTransferred,omitempty" azure:"ro"`
+
+	// READ-ONLY; The max band width.
+	MaxBandwidth *int64 `json:"maxBandwidth,omitempty" azure:"ro"`
+
+	// READ-ONLY; The max packets transferred per second.
+	MaxPacketsPerSecond *int64 `json:"maxPacketsPerSecond,omitempty" azure:"ro"`
+
+	// READ-ONLY; The assigned private Ip of a connected vpn client.
+	PrivateIPAddress *string `json:"privateIpAddress,omitempty" azure:"ro"`
+
+	// READ-ONLY; The public Ip of a connected vpn client.
+	PublicIPAddress *string `json:"publicIpAddress,omitempty" azure:"ro"`
+
+	// READ-ONLY; The duration time of a connected vpn client.
+	VPNConnectionDuration *int64 `json:"vpnConnectionDuration,omitempty" azure:"ro"`
+
+	// READ-ONLY; The vpn client Id.
+	VPNConnectionID *string `json:"vpnConnectionId,omitempty" azure:"ro"`
+
+	// READ-ONLY; The start time of a connected vpn client.
+	VPNConnectionTime *string `json:"vpnConnectionTime,omitempty" azure:"ro"`
+
+	// READ-ONLY; The user name of a connected vpn client.
+	VPNUserName *string `json:"vpnUserName,omitempty" azure:"ro"`
+}
+
+// List of virtual network gateway vpn client connection health.
+type VPNClientConnectionHealthDetailListResult struct {
+	// List of vpn client connection health.
+	Value *[]VPNClientConnectionHealthDetail `json:"value,omitempty"`
+}
+
+// VPNClientConnectionHealthDetailListResultPollerResponse is the response envelope for operations that asynchronously return a VPNClientConnectionHealthDetailListResult
+// type.
+type VPNClientConnectionHealthDetailListResultPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VPNClientConnectionHealthDetailListResultResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VPNClientConnectionHealthDetailListResultPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VPNClientConnectionHealthDetailListResultResponse is the response envelope for operations that return a VPNClientConnectionHealthDetailListResult type.
+type VPNClientConnectionHealthDetailListResultResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+
+	// List of virtual network gateway vpn client connection health.
+	VPNClientConnectionHealthDetailListResult *VPNClientConnectionHealthDetailListResult
+}
+
+// An IPSec parameters for a virtual network gateway P2S connection.
+type VPNClientIPsecParameters struct {
+	// The DH Group used in IKE Phase 1 for initial SA.
+	DhGroup *DhGroup `json:"dhGroup,omitempty"`
+
+	// The IKE encryption algorithm (IKE phase 2).
+	IkeEncryption *IkeEncryption `json:"ikeEncryption,omitempty"`
+
+	// The IKE integrity algorithm (IKE phase 2).
+	IkeIntegrity *IkeIntegrity `json:"ikeIntegrity,omitempty"`
+
+	// The IPSec encryption algorithm (IKE phase 1).
+	IpsecEncryption *IpsecEncryption `json:"ipsecEncryption,omitempty"`
+
+	// The IPSec integrity algorithm (IKE phase 1).
+	IpsecIntegrity *IpsecIntegrity `json:"ipsecIntegrity,omitempty"`
+
+	// The Pfs Group used in IKE Phase 2 for new child SA.
+	PfsGroup *PfsGroup `json:"pfsGroup,omitempty"`
+
+	// The IPSec Security Association (also called Quick Mode or Phase 2 SA) payload size in KB for P2S client..
+	SaDataSizeKilobytes *int32 `json:"saDataSizeKilobytes,omitempty"`
+
+	// The IPSec Security Association (also called Quick Mode or Phase 2 SA) lifetime in seconds for P2S client.
+	SaLifeTimeSeconds *int32 `json:"saLifeTimeSeconds,omitempty"`
+}
+
+// VPNClientIPsecParametersPollerResponse is the response envelope for operations that asynchronously return a VPNClientIPsecParameters type.
+type VPNClientIPsecParametersPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VPNClientIPsecParametersResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VPNClientIPsecParametersPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VPNClientIPsecParametersResponse is the response envelope for operations that return a VPNClientIPsecParameters type.
+type VPNClientIPsecParametersResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+
+	// An IPSec parameters for a virtual network gateway P2S connection.
+	VPNClientIPsecParameters *VPNClientIPsecParameters
+}
+
+// Vpn Client Parameters for package generation.
+type VPNClientParameters struct {
+	// VPN client authentication method.
+	AuthenticationMethod *AuthenticationMethod `json:"authenticationMethod,omitempty"`
+
+	// A list of client root certificates public certificate data encoded as Base-64 strings. Optional parameter for external radius based authentication with
+	// EAPTLS.
+	ClientRootCertificates *[]string `json:"clientRootCertificates,omitempty"`
+
+	// VPN client Processor Architecture.
+	ProcessorArchitecture *ProcessorArchitecture `json:"processorArchitecture,omitempty"`
+
+	// The public certificate data for the radius server authentication certificate as a Base-64 encoded string. Required only if external radius authentication
+	// has been configured with EAPTLS
+	// authentication.
+	RadiusServerAuthCertificate *string `json:"radiusServerAuthCertificate,omitempty"`
+}
+
+// VPN client revoked certificate of virtual network gateway.
+type VPNClientRevokedCertificate struct {
+	SubResource
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
+
+	// The name of the resource that is unique within a resource group. This name can be used to access the resource.
+	Name *string `json:"name,omitempty"`
+
+	// Properties of the vpn client revoked certificate.
+	Properties *VPNClientRevokedCertificatePropertiesFormat `json:"properties,omitempty"`
+}
+
+// Properties of the revoked VPN client certificate of virtual network gateway.
+type VPNClientRevokedCertificatePropertiesFormat struct {
+	// READ-ONLY; The provisioning state of the VPN client revoked certificate resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
+
+	// The revoked VPN client certificate thumbprint.
+	Thumbprint *string `json:"thumbprint,omitempty"`
+}
+
+// VPN client root certificate of virtual network gateway.
+type VPNClientRootCertificate struct {
+	SubResource
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
+
+	// The name of the resource that is unique within a resource group. This name can be used to access the resource.
+	Name *string `json:"name,omitempty"`
+
+	// Properties of the vpn client root certificate.
+	Properties *VPNClientRootCertificatePropertiesFormat `json:"properties,omitempty"`
+}
+
+// Properties of SSL certificates of application gateway.
+type VPNClientRootCertificatePropertiesFormat struct {
+	// READ-ONLY; The provisioning state of the VPN client root certificate resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
+
+	// The certificate public data.
+	PublicCertData *string `json:"publicCertData,omitempty"`
+}
+
+// VpnConnection Resource.
+type VPNConnection struct {
+	SubResource
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
+
+	// The name of the resource that is unique within a resource group. This name can be used to access the resource.
+	Name *string `json:"name,omitempty"`
+
+	// Properties of the VPN connection.
+	Properties *VPNConnectionProperties `json:"properties,omitempty"`
+}
+
+// VPNConnectionPollerResponse is the response envelope for operations that asynchronously return a VPNConnection type.
+type VPNConnectionPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VPNConnectionResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VPNConnectionPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// Parameters for VpnConnection.
+type VPNConnectionProperties struct {
+	// Expected bandwidth in MBPS.
+	ConnectionBandwidth *int32 `json:"connectionBandwidth,omitempty"`
+
+	// READ-ONLY; The connection status.
+	ConnectionStatus *VPNConnectionStatus `json:"connectionStatus,omitempty" azure:"ro"`
+
+	// The dead peer detection timeout for a vpn connection in seconds.
+	DpdTimeoutSeconds *int32 `json:"dpdTimeoutSeconds,omitempty"`
+
+	// READ-ONLY; Egress bytes transferred.
+	EgressBytesTransferred *int64 `json:"egressBytesTransferred,omitempty" azure:"ro"`
+
+	// EnableBgp flag.
+	EnableBgp *bool `json:"enableBgp,omitempty"`
+
+	// Enable internet security.
+	EnableInternetSecurity *bool `json:"enableInternetSecurity,omitempty"`
+
+	// EnableBgp flag.
+	EnableRateLimiting *bool `json:"enableRateLimiting,omitempty"`
+
+	// READ-ONLY; Ingress bytes transferred.
+	IngressBytesTransferred *int64 `json:"ingressBytesTransferred,omitempty" azure:"ro"`
+
+	// The IPSec Policies to be considered by this connection.
+	IpsecPolicies *[]IpsecPolicy `json:"ipsecPolicies,omitempty"`
+
+	// READ-ONLY; The provisioning state of the VPN connection resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
+
+	// Id of the connected vpn site.
+	RemoteVPNSite *SubResource `json:"remoteVpnSite,omitempty"`
+
+	// Routing weight for vpn connection.
+	RoutingWeight *int32 `json:"routingWeight,omitempty"`
+
+	// SharedKey for the vpn connection.
+	SharedKey *string `json:"sharedKey,omitempty"`
+
+	// Use local azure ip to initiate connection.
+	UseLocalAzureIPAddress *bool `json:"useLocalAzureIpAddress,omitempty"`
+
+	// Enable policy-based traffic selectors.
+	UsePolicyBasedTrafficSelectors *bool `json:"usePolicyBasedTrafficSelectors,omitempty"`
+
+	// Connection protocol used for this connection.
+	VPNConnectionProtocolType *VirtualNetworkGatewayConnectionProtocol `json:"vpnConnectionProtocolType,omitempty"`
+
+	// List of all vpn site link connections to the gateway.
+	VPNLinkConnections *[]VPNSiteLinkConnection `json:"vpnLinkConnections,omitempty"`
+}
+
+// VPNConnectionResponse is the response envelope for operations that return a VPNConnection type.
+type VPNConnectionResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+
+	// VpnConnection Resource.
+	VPNConnection *VPNConnection
+}
+
+// VPNConnectionsBeginCreateOrUpdateOptions contains the optional parameters for the VPNConnections.BeginCreateOrUpdate method.
+type VPNConnectionsBeginCreateOrUpdateOptions struct {
+	// placeholder for future optional parameters
+}
+
+// VPNConnectionsBeginDeleteOptions contains the optional parameters for the VPNConnections.BeginDelete method.
+type VPNConnectionsBeginDeleteOptions struct {
+	// placeholder for future optional parameters
+}
+
+// VPNConnectionsGetOptions contains the optional parameters for the VPNConnections.Get method.
+type VPNConnectionsGetOptions struct {
+	// placeholder for future optional parameters
+}
+
+// VPNConnectionsListByVPNGatewayOptions contains the optional parameters for the VPNConnections.ListByVPNGateway method.
+type VPNConnectionsListByVPNGatewayOptions struct {
+	// placeholder for future optional parameters
+}
+
+// Vpn device configuration script generation parameters.
+type VPNDeviceScriptParameters struct {
+	// The device family for the vpn device.
+	DeviceFamily *string `json:"deviceFamily,omitempty"`
+
+	// The firmware version for the vpn device.
+	FirmwareVersion *string `json:"firmwareVersion,omitempty"`
+
+	// The vendor for the vpn device.
+	Vendor *string `json:"vendor,omitempty"`
+}
+
+// VpnGateway Resource.
+type VPNGateway struct {
+	Resource
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
+
+	// Properties of the VPN gateway.
+	Properties *VPNGatewayProperties `json:"properties,omitempty"`
+}
+
+// VPNGatewayPollerResponse is the response envelope for operations that asynchronously return a VPNGateway type.
+type VPNGatewayPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VPNGatewayResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VPNGatewayPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// Parameters for VpnGateway.
+type VPNGatewayProperties struct {
+	// Local network gateway's BGP speaker settings.
+	BgpSettings *BgpSettings `json:"bgpSettings,omitempty"`
+
+	// List of all vpn connections to the gateway.
+	Connections *[]VPNConnection `json:"connections,omitempty"`
+
+	// READ-ONLY; The provisioning state of the VPN gateway resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
+
+	// The scale unit for this vpn gateway.
+	VPNGatewayScaleUnit *int32 `json:"vpnGatewayScaleUnit,omitempty"`
+
+	// The VirtualHub to which the gateway belongs.
+	VirtualHub *SubResource `json:"virtualHub,omitempty"`
+}
+
+// VPNGatewayResponse is the response envelope for operations that return a VPNGateway type.
+type VPNGatewayResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+
+	// VpnGateway Resource.
+	VPNGateway *VPNGateway
+}
+
+// VPNGatewaysBeginCreateOrUpdateOptions contains the optional parameters for the VPNGateways.BeginCreateOrUpdate method.
+type VPNGatewaysBeginCreateOrUpdateOptions struct {
+	// placeholder for future optional parameters
+}
+
+// VPNGatewaysBeginDeleteOptions contains the optional parameters for the VPNGateways.BeginDelete method.
+type VPNGatewaysBeginDeleteOptions struct {
+	// placeholder for future optional parameters
+}
+
+// VPNGatewaysBeginResetOptions contains the optional parameters for the VPNGateways.BeginReset method.
+type VPNGatewaysBeginResetOptions struct {
+	// placeholder for future optional parameters
+}
+
+// VPNGatewaysGetOptions contains the optional parameters for the VPNGateways.Get method.
+type VPNGatewaysGetOptions struct {
+	// placeholder for future optional parameters
+}
+
+// VPNGatewaysListByResourceGroupOptions contains the optional parameters for the VPNGateways.ListByResourceGroup method.
+type VPNGatewaysListByResourceGroupOptions struct {
+	// placeholder for future optional parameters
+}
+
+// VPNGatewaysListOptions contains the optional parameters for the VPNGateways.List method.
+type VPNGatewaysListOptions struct {
+	// placeholder for future optional parameters
+}
+
+// VPNGatewaysUpdateTagsOptions contains the optional parameters for the VPNGateways.UpdateTags method.
+type VPNGatewaysUpdateTagsOptions struct {
+	// placeholder for future optional parameters
+}
+
+// BGP settings details for a link.
+type VPNLinkBgpSettings struct {
+	// The BGP speaker's ASN.
+	Asn *int64 `json:"asn,omitempty"`
+
+	// The BGP peering address and BGP identifier of this BGP speaker.
+	BgpPeeringAddress *string `json:"bgpPeeringAddress,omitempty"`
+}
+
+// VPNLinkConnectionsListByVPNConnectionOptions contains the optional parameters for the VPNLinkConnections.ListByVPNConnection method.
+type VPNLinkConnectionsListByVPNConnectionOptions struct {
+	// placeholder for future optional parameters
+}
+
+// List of properties of a link provider.
+type VPNLinkProviderProperties struct {
+	// Name of the link provider.
+	LinkProviderName *string `json:"linkProviderName,omitempty"`
+
+	// Link speed.
+	LinkSpeedInMbps *int32 `json:"linkSpeedInMbps,omitempty"`
+}
+
+// Start packet capture parameters on virtual network gateway.
+type VPNPacketCaptureStartParameters struct {
+	// Start Packet capture parameters.
+	FilterData *string `json:"filterData,omitempty"`
+}
+
+// Stop packet capture parameters.
+type VPNPacketCaptureStopParameters struct {
+	// SAS url for packet capture on virtual network gateway.
+	SasURL *string `json:"sasUrl,omitempty"`
+}
+
+// Vpn Profile Response for package generation.
+type VPNProfileResponse struct {
+	// URL to the VPN profile.
+	ProfileURL *string `json:"profileUrl,omitempty"`
+}
+
+// VPNProfileResponsePollerResponse is the response envelope for operations that asynchronously return a VPNProfileResponse type.
+type VPNProfileResponsePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VPNProfileResponseResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VPNProfileResponsePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VPNProfileResponseResponse is the response envelope for operations that return a VPNProfileResponse type.
+type VPNProfileResponseResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+
+	// Vpn Profile Response for package generation.
+	VPNProfileResponse *VPNProfileResponse
+}
+
+// Properties of the Radius client root certificate of VpnServerConfiguration.
+type VPNServerConfigRadiusClientRootCertificate struct {
+	// The certificate name.
+	Name *string `json:"name,omitempty"`
+
+	// The Radius client root certificate thumbprint.
+	Thumbprint *string `json:"thumbprint,omitempty"`
+}
+
+// Properties of Radius Server root certificate of VpnServerConfiguration.
+type VPNServerConfigRadiusServerRootCertificate struct {
+	// The certificate name.
+	Name *string `json:"name,omitempty"`
+
+	// The certificate public data.
+	PublicCertData *string `json:"publicCertData,omitempty"`
+}
+
+// Properties of the revoked VPN client certificate of VpnServerConfiguration.
+type VPNServerConfigVPNClientRevokedCertificate struct {
+	// The certificate name.
+	Name *string `json:"name,omitempty"`
+
+	// The revoked VPN client certificate thumbprint.
+	Thumbprint *string `json:"thumbprint,omitempty"`
+}
+
+// Properties of VPN client root certificate of VpnServerConfiguration.
+type VPNServerConfigVPNClientRootCertificate struct {
+	// The certificate name.
+	Name *string `json:"name,omitempty"`
+
+	// The certificate public data.
+	PublicCertData *string `json:"publicCertData,omitempty"`
+}
+
+// VpnServerConfiguration Resource.
+type VPNServerConfiguration struct {
+	Resource
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
+
+	// Properties of the P2SVpnServer configuration.
+	Properties *VPNServerConfigurationProperties `json:"properties,omitempty"`
+}
+
+// VPNServerConfigurationPollerResponse is the response envelope for operations that asynchronously return a VPNServerConfiguration type.
+type VPNServerConfigurationPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VPNServerConfigurationResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VPNServerConfigurationPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// Parameters for VpnServerConfiguration.
+type VPNServerConfigurationProperties struct {
+	// The set of aad vpn authentication parameters.
+	AADAuthenticationParameters *AADAuthenticationParameters `json:"aadAuthenticationParameters,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
+
+	// The name of the VpnServerConfiguration that is unique within a resource group.
+	Name *string `json:"name,omitempty"`
+
+	// READ-ONLY; List of references to P2SVpnGateways.
+	P2SVPNGateways *[]P2SVPNGateway `json:"p2SVpnGateways,omitempty" azure:"ro"`
+
+	// READ-ONLY; The provisioning state of the VpnServerConfiguration resource. Possible values are: 'Updating', 'Deleting', and 'Failed'.
+	ProvisioningState *string `json:"provisioningState,omitempty" azure:"ro"`
+
+	// Radius client root certificate of VpnServerConfiguration.
+	RadiusClientRootCertificates *[]VPNServerConfigRadiusClientRootCertificate `json:"radiusClientRootCertificates,omitempty"`
+
+	// The radius server address property of the VpnServerConfiguration resource for point to site client connection.
+	RadiusServerAddress *string `json:"radiusServerAddress,omitempty"`
+
+	// Radius Server root certificate of VpnServerConfiguration.
+	RadiusServerRootCertificates *[]VPNServerConfigRadiusServerRootCertificate `json:"radiusServerRootCertificates,omitempty"`
+
+	// The radius secret property of the VpnServerConfiguration resource for point to site client connection.
+	RadiusServerSecret *string `json:"radiusServerSecret,omitempty"`
+
+	// Multiple Radius Server configuration for VpnServerConfiguration.
+	RadiusServers *[]RadiusServer `json:"radiusServers,omitempty"`
+
+	// VPN authentication types for the VpnServerConfiguration.
+	VPNAuthenticationTypes *[]VPNAuthenticationType `json:"vpnAuthenticationTypes,omitempty"`
+
+	// VpnClientIpsecPolicies for VpnServerConfiguration.
+	VPNClientIpsecPolicies *[]IpsecPolicy `json:"vpnClientIpsecPolicies,omitempty"`
+
+	// VPN client revoked certificate of VpnServerConfiguration.
+	VPNClientRevokedCertificates *[]VPNServerConfigVPNClientRevokedCertificate `json:"vpnClientRevokedCertificates,omitempty"`
+
+	// VPN client root certificate of VpnServerConfiguration.
+	VPNClientRootCertificates *[]VPNServerConfigVPNClientRootCertificate `json:"vpnClientRootCertificates,omitempty"`
+
+	// VPN protocols for the VpnServerConfiguration.
+	VPNProtocols *[]VPNGatewayTunnelingProtocol `json:"vpnProtocols,omitempty"`
+}
+
+// VPNServerConfigurationResponse is the response envelope for operations that return a VPNServerConfiguration type.
+type VPNServerConfigurationResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+
+	// VpnServerConfiguration Resource.
+	VPNServerConfiguration *VPNServerConfiguration
+}
+
+// VPNServerConfigurationsAssociatedWithVirtualWanBeginListOptions contains the optional parameters for the VPNServerConfigurationsAssociatedWithVirtualWan.BeginList
+// method.
+type VPNServerConfigurationsAssociatedWithVirtualWanBeginListOptions struct {
+	// placeholder for future optional parameters
+}
+
+// VPNServerConfigurationsBeginCreateOrUpdateOptions contains the optional parameters for the VPNServerConfigurations.BeginCreateOrUpdate method.
+type VPNServerConfigurationsBeginCreateOrUpdateOptions struct {
+	// placeholder for future optional parameters
+}
+
+// VPNServerConfigurationsBeginDeleteOptions contains the optional parameters for the VPNServerConfigurations.BeginDelete method.
+type VPNServerConfigurationsBeginDeleteOptions struct {
+	// placeholder for future optional parameters
+}
+
+// VPNServerConfigurationsGetOptions contains the optional parameters for the VPNServerConfigurations.Get method.
+type VPNServerConfigurationsGetOptions struct {
+	// placeholder for future optional parameters
+}
+
+// VPNServerConfigurationsListByResourceGroupOptions contains the optional parameters for the VPNServerConfigurations.ListByResourceGroup method.
+type VPNServerConfigurationsListByResourceGroupOptions struct {
+	// placeholder for future optional parameters
+}
+
+// VPNServerConfigurationsListOptions contains the optional parameters for the VPNServerConfigurations.List method.
+type VPNServerConfigurationsListOptions struct {
+	// placeholder for future optional parameters
+}
+
+// VpnServerConfigurations list associated with VirtualWan Response.
+type VPNServerConfigurationsResponse struct {
+	// List of VpnServerConfigurations associated with VirtualWan.
+	VPNServerConfigurationResourceIDs *[]string `json:"vpnServerConfigurationResourceIds,omitempty"`
+}
+
+// VPNServerConfigurationsResponsePollerResponse is the response envelope for operations that asynchronously return a VPNServerConfigurationsResponse type.
+type VPNServerConfigurationsResponsePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VPNServerConfigurationsResponseResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VPNServerConfigurationsResponsePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VPNServerConfigurationsResponseResponse is the response envelope for operations that return a VPNServerConfigurationsResponse type.
+type VPNServerConfigurationsResponseResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+
+	// VpnServerConfigurations list associated with VirtualWan Response.
+	VPNServerConfigurationsResponse *VPNServerConfigurationsResponse
+}
+
+// VPNServerConfigurationsUpdateTagsOptions contains the optional parameters for the VPNServerConfigurations.UpdateTags method.
+type VPNServerConfigurationsUpdateTagsOptions struct {
+	// placeholder for future optional parameters
+}
+
+// VpnSite Resource.
+type VPNSite struct {
+	Resource
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
+
+	// Properties of the VPN site.
+	Properties *VPNSiteProperties `json:"properties,omitempty"`
+}
+
+// VpnSite Resource.
+type VPNSiteID struct {
+	// READ-ONLY; The resource-uri of the vpn-site for which config is to be fetched.
+	VPNSite *string `json:"vpnSite,omitempty" azure:"ro"`
+}
+
+// VpnSiteLink Resource.
+type VPNSiteLink struct {
+	SubResource
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
+
+	// The name of the resource that is unique within a resource group. This name can be used to access the resource.
+	Name *string `json:"name,omitempty"`
+
+	// Properties of the VPN site link.
+	Properties *VPNSiteLinkProperties `json:"properties,omitempty"`
+
+	// READ-ONLY; Resource type.
+	Type *string `json:"type,omitempty" azure:"ro"`
+}
+
+// VpnSiteLinkConnection Resource.
+type VPNSiteLinkConnection struct {
+	SubResource
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
+
+	// The name of the resource that is unique within a resource group. This name can be used to access the resource.
+	Name *string `json:"name,omitempty"`
+
+	// Properties of the VPN site link connection.
+	Properties *VPNSiteLinkConnectionProperties `json:"properties,omitempty"`
+
+	// READ-ONLY; Resource type.
+	Type *string `json:"type,omitempty" azure:"ro"`
+}
+
+// Parameters for VpnConnection.
+type VPNSiteLinkConnectionProperties struct {
+	// Expected bandwidth in MBPS.
+	ConnectionBandwidth *int32 `json:"connectionBandwidth,omitempty"`
+
+	// READ-ONLY; The connection status.
+	ConnectionStatus *VPNConnectionStatus `json:"connectionStatus,omitempty" azure:"ro"`
+
+	// READ-ONLY; Egress bytes transferred.
+	EgressBytesTransferred *int64 `json:"egressBytesTransferred,omitempty" azure:"ro"`
+
+	// EnableBgp flag.
+	EnableBgp *bool `json:"enableBgp,omitempty"`
+
+	// EnableBgp flag.
+	EnableRateLimiting *bool `json:"enableRateLimiting,omitempty"`
+
+	// READ-ONLY; Ingress bytes transferred.
+	IngressBytesTransferred *int64 `json:"ingressBytesTransferred,omitempty" azure:"ro"`
+
+	// The IPSec Policies to be considered by this connection.
+	IpsecPolicies *[]IpsecPolicy `json:"ipsecPolicies,omitempty"`
+
+	// READ-ONLY; The provisioning state of the VPN site link connection resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
+
+	// Routing weight for vpn connection.
+	RoutingWeight *int32 `json:"routingWeight,omitempty"`
+
+	// SharedKey for the vpn connection.
+	SharedKey *string `json:"sharedKey,omitempty"`
+
+	// Use local azure ip to initiate connection.
+	UseLocalAzureIPAddress *bool `json:"useLocalAzureIpAddress,omitempty"`
+
+	// Enable policy-based traffic selectors.
+	UsePolicyBasedTrafficSelectors *bool `json:"usePolicyBasedTrafficSelectors,omitempty"`
+
+	// Connection protocol used for this connection.
+	VPNConnectionProtocolType *VirtualNetworkGatewayConnectionProtocol `json:"vpnConnectionProtocolType,omitempty"`
+
+	// Id of the connected vpn site link.
+	VPNSiteLink *SubResource `json:"vpnSiteLink,omitempty"`
+}
+
+// VPNSiteLinkConnectionResponse is the response envelope for operations that return a VPNSiteLinkConnection type.
+type VPNSiteLinkConnectionResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+
+	// VpnSiteLinkConnection Resource.
+	VPNSiteLinkConnection *VPNSiteLinkConnection
+}
+
+// VPNSiteLinkConnectionsGetOptions contains the optional parameters for the VPNSiteLinkConnections.Get method.
+type VPNSiteLinkConnectionsGetOptions struct {
+	// placeholder for future optional parameters
+}
+
+// Parameters for VpnSite.
+type VPNSiteLinkProperties struct {
+	// The set of bgp properties.
+	BgpProperties *VPNLinkBgpSettings `json:"bgpProperties,omitempty"`
+
+	// FQDN of vpn-site-link.
+	Fqdn *string `json:"fqdn,omitempty"`
+
+	// The ip-address for the vpn-site-link.
+	IPAddress *string `json:"ipAddress,omitempty"`
+
+	// The link provider properties.
+	LinkProperties *VPNLinkProviderProperties `json:"linkProperties,omitempty"`
+
+	// READ-ONLY; The provisioning state of the VPN site link resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
+}
+
+// VPNSiteLinkResponse is the response envelope for operations that return a VPNSiteLink type.
+type VPNSiteLinkResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+
+	// VpnSiteLink Resource.
+	VPNSiteLink *VPNSiteLink
+}
+
+// VPNSiteLinksGetOptions contains the optional parameters for the VPNSiteLinks.Get method.
+type VPNSiteLinksGetOptions struct {
+	// placeholder for future optional parameters
+}
+
+// VPNSiteLinksListByVPNSiteOptions contains the optional parameters for the VPNSiteLinks.ListByVPNSite method.
+type VPNSiteLinksListByVPNSiteOptions struct {
+	// placeholder for future optional parameters
+}
+
+// VPNSitePollerResponse is the response envelope for operations that asynchronously return a VPNSite type.
+type VPNSitePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VPNSiteResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VPNSitePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// Parameters for VpnSite.
+type VPNSiteProperties struct {
+	// The AddressSpace that contains an array of IP address ranges.
+	AddressSpace *AddressSpace `json:"addressSpace,omitempty"`
+
+	// The set of bgp properties.
+	BgpProperties *BgpSettings `json:"bgpProperties,omitempty"`
+
+	// The device properties.
+	DeviceProperties *DeviceProperties `json:"deviceProperties,omitempty"`
+
+	// The ip-address for the vpn-site.
+	IPAddress *string `json:"ipAddress,omitempty"`
+
+	// IsSecuritySite flag.
+	IsSecuritySite *bool `json:"isSecuritySite,omitempty"`
+
+	// READ-ONLY; The provisioning state of the VPN site resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
+
+	// The key for vpn-site that can be used for connections.
+	SiteKey *string `json:"siteKey,omitempty"`
+
+	// List of all vpn site links.
+	VPNSiteLinks *[]VPNSiteLink `json:"vpnSiteLinks,omitempty"`
+
+	// The VirtualWAN to which the vpnSite belongs.
+	VirtualWan *SubResource `json:"virtualWan,omitempty"`
+}
+
+// VPNSiteResponse is the response envelope for operations that return a VPNSite type.
+type VPNSiteResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+
+	// VpnSite Resource.
+	VPNSite *VPNSite
+}
+
+// VPNSitesBeginCreateOrUpdateOptions contains the optional parameters for the VPNSites.BeginCreateOrUpdate method.
+type VPNSitesBeginCreateOrUpdateOptions struct {
+	// placeholder for future optional parameters
+}
+
+// VPNSitesBeginDeleteOptions contains the optional parameters for the VPNSites.BeginDelete method.
+type VPNSitesBeginDeleteOptions struct {
+	// placeholder for future optional parameters
+}
+
+// VPNSitesConfigurationBeginDownloadOptions contains the optional parameters for the VPNSitesConfiguration.BeginDownload method.
+type VPNSitesConfigurationBeginDownloadOptions struct {
+	// placeholder for future optional parameters
+}
+
+// VPNSitesGetOptions contains the optional parameters for the VPNSites.Get method.
+type VPNSitesGetOptions struct {
+	// placeholder for future optional parameters
+}
+
+// VPNSitesListByResourceGroupOptions contains the optional parameters for the VPNSites.ListByResourceGroup method.
+type VPNSitesListByResourceGroupOptions struct {
+	// placeholder for future optional parameters
+}
+
+// VPNSitesListOptions contains the optional parameters for the VPNSites.List method.
+type VPNSitesListOptions struct {
+	// placeholder for future optional parameters
+}
+
+// VPNSitesUpdateTagsOptions contains the optional parameters for the VPNSites.UpdateTags method.
+type VPNSitesUpdateTagsOptions struct {
+	// placeholder for future optional parameters
+}
+
 // Parameters that define the IP flow to be verified.
 type VerificationIPFlowParameters struct {
 	// The direction of the packet represented as a 5-tuple.
@@ -12684,7 +13586,7 @@ type VirtualHubProperties struct {
 	ExpressRouteGateway *SubResource `json:"expressRouteGateway,omitempty"`
 
 	// The P2SVpnGateway associated with this VirtualHub.
-	P2SVpnGateway *SubResource `json:"p2SVpnGateway,omitempty"`
+	P2SVPNGateway *SubResource `json:"p2SVpnGateway,omitempty"`
 
 	// READ-ONLY; The provisioning state of the virtual hub resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
@@ -12701,6 +13603,9 @@ type VirtualHubProperties struct {
 	// The Security Provider name.
 	SecurityProviderName *string `json:"securityProviderName,omitempty"`
 
+	// The VpnGateway associated with this VirtualHub.
+	VPNGateway *SubResource `json:"vpnGateway,omitempty"`
+
 	// List of all virtual hub route table v2s associated with this VirtualHub.
 	VirtualHubRouteTableV2S *[]VirtualHubRouteTableV2 `json:"virtualHubRouteTableV2s,omitempty"`
 
@@ -12709,9 +13614,6 @@ type VirtualHubProperties struct {
 
 	// The VirtualWAN to which the VirtualHub belongs.
 	VirtualWan *SubResource `json:"virtualWan,omitempty"`
-
-	// The VpnGateway associated with this VirtualHub.
-	VpnGateway *SubResource `json:"vpnGateway,omitempty"`
 }
 
 // VirtualHubResponse is the response envelope for operations that return a VirtualHub type.
@@ -13102,7 +14004,7 @@ type VirtualNetworkGatewayConnectionsBeginSetSharedKeyOptions struct {
 // method.
 type VirtualNetworkGatewayConnectionsBeginStartPacketCaptureOptions struct {
 	// Virtual network gateway packet capture parameters supplied to start packet capture on gateway connection.
-	Parameters *VpnPacketCaptureStartParameters
+	Parameters *VPNPacketCaptureStartParameters
 }
 
 // VirtualNetworkGatewayConnectionsBeginStopPacketCaptureOptions contains the optional parameters for the VirtualNetworkGatewayConnections.BeginStopPacketCapture
@@ -13254,13 +14156,13 @@ type VirtualNetworkGatewayPropertiesFormat struct {
 	SKU *VirtualNetworkGatewaySKU `json:"sku,omitempty"`
 
 	// The reference to the VpnClientConfiguration resource which represents the P2S VpnClient configurations.
-	VpnClientConfiguration *VpnClientConfiguration `json:"vpnClientConfiguration,omitempty"`
+	VPNClientConfiguration *VPNClientConfiguration `json:"vpnClientConfiguration,omitempty"`
 
 	// The generation for this VirtualNetworkGateway. Must be None if gatewayType is not VPN.
-	VpnGatewayGeneration *VpnGatewayGeneration `json:"vpnGatewayGeneration,omitempty"`
+	VPNGatewayGeneration *VPNGatewayGeneration `json:"vpnGatewayGeneration,omitempty"`
 
 	// The type of this virtual network gateway.
-	VpnType *VpnType `json:"vpnType,omitempty"`
+	VPNType *VPNType `json:"vpnType,omitempty"`
 }
 
 // VirtualNetworkGatewayResponse is the response envelope for operations that return a VirtualNetworkGateway type.
@@ -13294,14 +14196,14 @@ type VirtualNetworkGatewaysBeginDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualNetworkGatewaysBeginDisconnectVirtualNetworkGatewayVpnConnectionsOptions contains the optional parameters for the VirtualNetworkGateways.BeginDisconnectVirtualNetworkGatewayVpnConnections
+// VirtualNetworkGatewaysBeginDisconnectVirtualNetworkGatewayVPNConnectionsOptions contains the optional parameters for the VirtualNetworkGateways.BeginDisconnectVirtualNetworkGatewayVPNConnections
 // method.
-type VirtualNetworkGatewaysBeginDisconnectVirtualNetworkGatewayVpnConnectionsOptions struct {
+type VirtualNetworkGatewaysBeginDisconnectVirtualNetworkGatewayVPNConnectionsOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualNetworkGatewaysBeginGenerateVpnProfileOptions contains the optional parameters for the VirtualNetworkGateways.BeginGenerateVpnProfile method.
-type VirtualNetworkGatewaysBeginGenerateVpnProfileOptions struct {
+// VirtualNetworkGatewaysBeginGenerateVPNProfileOptions contains the optional parameters for the VirtualNetworkGateways.BeginGenerateVPNProfile method.
+type VirtualNetworkGatewaysBeginGenerateVPNProfileOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -13327,9 +14229,9 @@ type VirtualNetworkGatewaysBeginGetLearnedRoutesOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualNetworkGatewaysBeginGetVpnProfilePackageURLOptions contains the optional parameters for the VirtualNetworkGateways.BeginGetVpnProfilePackageURL
+// VirtualNetworkGatewaysBeginGetVPNProfilePackageURLOptions contains the optional parameters for the VirtualNetworkGateways.BeginGetVPNProfilePackageURL
 // method.
-type VirtualNetworkGatewaysBeginGetVpnProfilePackageURLOptions struct {
+type VirtualNetworkGatewaysBeginGetVPNProfilePackageURLOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -13351,9 +14253,9 @@ type VirtualNetworkGatewaysBeginResetOptions struct {
 	GatewayVip *string
 }
 
-// VirtualNetworkGatewaysBeginResetVpnClientSharedKeyOptions contains the optional parameters for the VirtualNetworkGateways.BeginResetVpnClientSharedKey
+// VirtualNetworkGatewaysBeginResetVPNClientSharedKeyOptions contains the optional parameters for the VirtualNetworkGateways.BeginResetVPNClientSharedKey
 // method.
-type VirtualNetworkGatewaysBeginResetVpnClientSharedKeyOptions struct {
+type VirtualNetworkGatewaysBeginResetVPNClientSharedKeyOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -13366,7 +14268,7 @@ type VirtualNetworkGatewaysBeginSetVpnclientIpsecParametersOptions struct {
 // VirtualNetworkGatewaysBeginStartPacketCaptureOptions contains the optional parameters for the VirtualNetworkGateways.BeginStartPacketCapture method.
 type VirtualNetworkGatewaysBeginStartPacketCaptureOptions struct {
 	// Virtual network gateway packet capture parameters supplied to start packet capture on gateway.
-	Parameters *VpnPacketCaptureStartParameters
+	Parameters *VPNPacketCaptureStartParameters
 }
 
 // VirtualNetworkGatewaysBeginStopPacketCaptureOptions contains the optional parameters for the VirtualNetworkGateways.BeginStopPacketCapture method.
@@ -13394,14 +14296,14 @@ type VirtualNetworkGatewaysListOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualNetworkGatewaysSupportedVpnDevicesOptions contains the optional parameters for the VirtualNetworkGateways.SupportedVpnDevices method.
-type VirtualNetworkGatewaysSupportedVpnDevicesOptions struct {
+// VirtualNetworkGatewaysSupportedVPNDevicesOptions contains the optional parameters for the VirtualNetworkGateways.SupportedVPNDevices method.
+type VirtualNetworkGatewaysSupportedVPNDevicesOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualNetworkGatewaysVpnDeviceConfigurationScriptOptions contains the optional parameters for the VirtualNetworkGateways.VpnDeviceConfigurationScript
+// VirtualNetworkGatewaysVPNDeviceConfigurationScriptOptions contains the optional parameters for the VirtualNetworkGateways.VPNDeviceConfigurationScript
 // method.
-type VirtualNetworkGatewaysVpnDeviceConfigurationScriptOptions struct {
+type VirtualNetworkGatewaysVPNDeviceConfigurationScriptOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -13915,7 +14817,7 @@ type VirtualRouterPropertiesFormat struct {
 	VirtualRouterAsn *int64 `json:"virtualRouterAsn,omitempty"`
 
 	// VirtualRouter IPs.
-	VirtualRouterIps *[]string `json:"virtualRouterIps,omitempty"`
+	VirtualRouterIPs *[]string `json:"virtualRouterIps,omitempty"`
 }
 
 // VirtualRouterResponse is the response envelope for operations that return a VirtualRouter type.
@@ -13993,7 +14895,7 @@ type VirtualWanProperties struct {
 	AllowVnetToVnetTraffic *bool `json:"allowVnetToVnetTraffic,omitempty"`
 
 	// Vpn encryption to be disabled or not.
-	DisableVpnEncryption *bool `json:"disableVpnEncryption,omitempty"`
+	DisableVPNEncryption *bool `json:"disableVpnEncryption,omitempty"`
 
 	// READ-ONLY; The office local breakout category.
 	Office365LocalBreakoutCategory *OfficeTrafficCategory `json:"office365LocalBreakoutCategory,omitempty" azure:"ro"`
@@ -14004,11 +14906,11 @@ type VirtualWanProperties struct {
 	// The type of the VirtualWAN.
 	Type *string `json:"type,omitempty"`
 
+	// READ-ONLY; List of VpnSites in the VirtualWAN.
+	VPNSites *[]SubResource `json:"vpnSites,omitempty" azure:"ro"`
+
 	// READ-ONLY; List of VirtualHubs in the VirtualWAN.
 	VirtualHubs *[]SubResource `json:"virtualHubs,omitempty" azure:"ro"`
-
-	// READ-ONLY; List of VpnSites in the VirtualWAN.
-	VpnSites *[]SubResource `json:"vpnSites,omitempty" azure:"ro"`
 }
 
 // Collection of SecurityProviders.
@@ -14039,12 +14941,12 @@ type VirtualWanSecurityProvidersResponse struct {
 }
 
 // Virtual Wan Vpn profile parameters Vpn profile generation.
-type VirtualWanVpnProfileParameters struct {
+type VirtualWanVPNProfileParameters struct {
 	// VPN client authentication method.
 	AuthenticationMethod *AuthenticationMethod `json:"authenticationMethod,omitempty"`
 
 	// VpnServerConfiguration partial resource uri with which VirtualWan is associated to.
-	VpnServerConfigurationResourceID *string `json:"vpnServerConfigurationResourceId,omitempty"`
+	VPNServerConfigurationResourceID *string `json:"vpnServerConfigurationResourceId,omitempty"`
 }
 
 // VirtualWansBeginCreateOrUpdateOptions contains the optional parameters for the VirtualWans.BeginCreateOrUpdate method.
@@ -14074,908 +14976,6 @@ type VirtualWansListOptions struct {
 
 // VirtualWansUpdateTagsOptions contains the optional parameters for the VirtualWans.UpdateTags method.
 type VirtualWansUpdateTagsOptions struct {
-	// placeholder for future optional parameters
-}
-
-// VpnClientConfiguration for P2S client.
-type VpnClientConfiguration struct {
-	// The AADAudience property of the VirtualNetworkGateway resource for vpn client connection used for AAD authentication.
-	AadAudience *string `json:"aadAudience,omitempty"`
-
-	// The AADIssuer property of the VirtualNetworkGateway resource for vpn client connection used for AAD authentication.
-	AadIssuer *string `json:"aadIssuer,omitempty"`
-
-	// The AADTenant property of the VirtualNetworkGateway resource for vpn client connection used for AAD authentication.
-	AadTenant *string `json:"aadTenant,omitempty"`
-
-	// The radius server address property of the VirtualNetworkGateway resource for vpn client connection.
-	RadiusServerAddress *string `json:"radiusServerAddress,omitempty"`
-
-	// The radius secret property of the VirtualNetworkGateway resource for vpn client connection.
-	RadiusServerSecret *string `json:"radiusServerSecret,omitempty"`
-
-	// The radiusServers property for multiple radius server configuration.
-	RadiusServers *[]RadiusServer `json:"radiusServers,omitempty"`
-
-	// The reference to the address space resource which represents Address space for P2S VpnClient.
-	VpnClientAddressPool *AddressSpace `json:"vpnClientAddressPool,omitempty"`
-
-	// VpnClientIpsecPolicies for virtual network gateway P2S client.
-	VpnClientIpsecPolicies *[]IpsecPolicy `json:"vpnClientIpsecPolicies,omitempty"`
-
-	// VpnClientProtocols for Virtual network gateway.
-	VpnClientProtocols *[]VpnClientProtocol `json:"vpnClientProtocols,omitempty"`
-
-	// VpnClientRevokedCertificate for Virtual network gateway.
-	VpnClientRevokedCertificates *[]VpnClientRevokedCertificate `json:"vpnClientRevokedCertificates,omitempty"`
-
-	// VpnClientRootCertificate for virtual network gateway.
-	VpnClientRootCertificates *[]VpnClientRootCertificate `json:"vpnClientRootCertificates,omitempty"`
-}
-
-// VpnClientConnectionHealth properties.
-type VpnClientConnectionHealth struct {
-	// List of allocated ip addresses to the connected p2s vpn clients.
-	AllocatedIPAddresses *[]string `json:"allocatedIpAddresses,omitempty"`
-
-	// READ-ONLY; Total of the Egress Bytes Transferred in this connection.
-	TotalEgressBytesTransferred *int64 `json:"totalEgressBytesTransferred,omitempty" azure:"ro"`
-
-	// READ-ONLY; Total of the Ingress Bytes Transferred in this P2S Vpn connection.
-	TotalIngressBytesTransferred *int64 `json:"totalIngressBytesTransferred,omitempty" azure:"ro"`
-
-	// The total of p2s vpn clients connected at this time to this P2SVpnGateway.
-	VpnClientConnectionsCount *int32 `json:"vpnClientConnectionsCount,omitempty"`
-}
-
-// VPN client connection health detail.
-type VpnClientConnectionHealthDetail struct {
-	// READ-ONLY; The egress bytes per second.
-	EgressBytesTransferred *int64 `json:"egressBytesTransferred,omitempty" azure:"ro"`
-
-	// READ-ONLY; The egress packets per second.
-	EgressPacketsTransferred *int64 `json:"egressPacketsTransferred,omitempty" azure:"ro"`
-
-	// READ-ONLY; The ingress bytes per second.
-	IngressBytesTransferred *int64 `json:"ingressBytesTransferred,omitempty" azure:"ro"`
-
-	// READ-ONLY; The ingress packets per second.
-	IngressPacketsTransferred *int64 `json:"ingressPacketsTransferred,omitempty" azure:"ro"`
-
-	// READ-ONLY; The max band width.
-	MaxBandwidth *int64 `json:"maxBandwidth,omitempty" azure:"ro"`
-
-	// READ-ONLY; The max packets transferred per second.
-	MaxPacketsPerSecond *int64 `json:"maxPacketsPerSecond,omitempty" azure:"ro"`
-
-	// READ-ONLY; The assigned private Ip of a connected vpn client.
-	PrivateIPAddress *string `json:"privateIpAddress,omitempty" azure:"ro"`
-
-	// READ-ONLY; The public Ip of a connected vpn client.
-	PublicIPAddress *string `json:"publicIpAddress,omitempty" azure:"ro"`
-
-	// READ-ONLY; The duration time of a connected vpn client.
-	VpnConnectionDuration *int64 `json:"vpnConnectionDuration,omitempty" azure:"ro"`
-
-	// READ-ONLY; The vpn client Id.
-	VpnConnectionID *string `json:"vpnConnectionId,omitempty" azure:"ro"`
-
-	// READ-ONLY; The start time of a connected vpn client.
-	VpnConnectionTime *string `json:"vpnConnectionTime,omitempty" azure:"ro"`
-
-	// READ-ONLY; The user name of a connected vpn client.
-	VpnUserName *string `json:"vpnUserName,omitempty" azure:"ro"`
-}
-
-// List of virtual network gateway vpn client connection health.
-type VpnClientConnectionHealthDetailListResult struct {
-	// List of vpn client connection health.
-	Value *[]VpnClientConnectionHealthDetail `json:"value,omitempty"`
-}
-
-// VpnClientConnectionHealthDetailListResultPollerResponse is the response envelope for operations that asynchronously return a VpnClientConnectionHealthDetailListResult
-// type.
-type VpnClientConnectionHealthDetailListResultPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VpnClientConnectionHealthDetailListResultResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller VpnClientConnectionHealthDetailListResultPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// VpnClientConnectionHealthDetailListResultResponse is the response envelope for operations that return a VpnClientConnectionHealthDetailListResult type.
-type VpnClientConnectionHealthDetailListResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// List of virtual network gateway vpn client connection health.
-	VpnClientConnectionHealthDetailListResult *VpnClientConnectionHealthDetailListResult
-}
-
-// An IPSec parameters for a virtual network gateway P2S connection.
-type VpnClientIPsecParameters struct {
-	// The DH Group used in IKE Phase 1 for initial SA.
-	DhGroup *DhGroup `json:"dhGroup,omitempty"`
-
-	// The IKE encryption algorithm (IKE phase 2).
-	IkeEncryption *IkeEncryption `json:"ikeEncryption,omitempty"`
-
-	// The IKE integrity algorithm (IKE phase 2).
-	IkeIntegrity *IkeIntegrity `json:"ikeIntegrity,omitempty"`
-
-	// The IPSec encryption algorithm (IKE phase 1).
-	IpsecEncryption *IpsecEncryption `json:"ipsecEncryption,omitempty"`
-
-	// The IPSec integrity algorithm (IKE phase 1).
-	IpsecIntegrity *IpsecIntegrity `json:"ipsecIntegrity,omitempty"`
-
-	// The Pfs Group used in IKE Phase 2 for new child SA.
-	PfsGroup *PfsGroup `json:"pfsGroup,omitempty"`
-
-	// The IPSec Security Association (also called Quick Mode or Phase 2 SA) payload size in KB for P2S client..
-	SaDataSizeKilobytes *int32 `json:"saDataSizeKilobytes,omitempty"`
-
-	// The IPSec Security Association (also called Quick Mode or Phase 2 SA) lifetime in seconds for P2S client.
-	SaLifeTimeSeconds *int32 `json:"saLifeTimeSeconds,omitempty"`
-}
-
-// VpnClientIPsecParametersPollerResponse is the response envelope for operations that asynchronously return a VpnClientIPsecParameters type.
-type VpnClientIPsecParametersPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VpnClientIPsecParametersResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller VpnClientIPsecParametersPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// VpnClientIPsecParametersResponse is the response envelope for operations that return a VpnClientIPsecParameters type.
-type VpnClientIPsecParametersResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// An IPSec parameters for a virtual network gateway P2S connection.
-	VpnClientIPsecParameters *VpnClientIPsecParameters
-}
-
-// Vpn Client Parameters for package generation.
-type VpnClientParameters struct {
-	// VPN client authentication method.
-	AuthenticationMethod *AuthenticationMethod `json:"authenticationMethod,omitempty"`
-
-	// A list of client root certificates public certificate data encoded as Base-64 strings. Optional parameter for external radius based authentication with
-	// EAPTLS.
-	ClientRootCertificates *[]string `json:"clientRootCertificates,omitempty"`
-
-	// VPN client Processor Architecture.
-	ProcessorArchitecture *ProcessorArchitecture `json:"processorArchitecture,omitempty"`
-
-	// The public certificate data for the radius server authentication certificate as a Base-64 encoded string. Required only if external radius authentication
-	// has been configured with EAPTLS
-	// authentication.
-	RadiusServerAuthCertificate *string `json:"radiusServerAuthCertificate,omitempty"`
-}
-
-// VPN client revoked certificate of virtual network gateway.
-type VpnClientRevokedCertificate struct {
-	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
-	// The name of the resource that is unique within a resource group. This name can be used to access the resource.
-	Name *string `json:"name,omitempty"`
-
-	// Properties of the vpn client revoked certificate.
-	Properties *VpnClientRevokedCertificatePropertiesFormat `json:"properties,omitempty"`
-}
-
-// Properties of the revoked VPN client certificate of virtual network gateway.
-type VpnClientRevokedCertificatePropertiesFormat struct {
-	// READ-ONLY; The provisioning state of the VPN client revoked certificate resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
-	// The revoked VPN client certificate thumbprint.
-	Thumbprint *string `json:"thumbprint,omitempty"`
-}
-
-// VPN client root certificate of virtual network gateway.
-type VpnClientRootCertificate struct {
-	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
-	// The name of the resource that is unique within a resource group. This name can be used to access the resource.
-	Name *string `json:"name,omitempty"`
-
-	// Properties of the vpn client root certificate.
-	Properties *VpnClientRootCertificatePropertiesFormat `json:"properties,omitempty"`
-}
-
-// Properties of SSL certificates of application gateway.
-type VpnClientRootCertificatePropertiesFormat struct {
-	// READ-ONLY; The provisioning state of the VPN client root certificate resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
-	// The certificate public data.
-	PublicCertData *string `json:"publicCertData,omitempty"`
-}
-
-// VpnConnection Resource.
-type VpnConnection struct {
-	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
-	// The name of the resource that is unique within a resource group. This name can be used to access the resource.
-	Name *string `json:"name,omitempty"`
-
-	// Properties of the VPN connection.
-	Properties *VpnConnectionProperties `json:"properties,omitempty"`
-}
-
-// VpnConnectionPollerResponse is the response envelope for operations that asynchronously return a VpnConnection type.
-type VpnConnectionPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VpnConnectionResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller VpnConnectionPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// Parameters for VpnConnection.
-type VpnConnectionProperties struct {
-	// Expected bandwidth in MBPS.
-	ConnectionBandwidth *int32 `json:"connectionBandwidth,omitempty"`
-
-	// READ-ONLY; The connection status.
-	ConnectionStatus *VpnConnectionStatus `json:"connectionStatus,omitempty" azure:"ro"`
-
-	// The dead peer detection timeout for a vpn connection in seconds.
-	DpdTimeoutSeconds *int32 `json:"dpdTimeoutSeconds,omitempty"`
-
-	// READ-ONLY; Egress bytes transferred.
-	EgressBytesTransferred *int64 `json:"egressBytesTransferred,omitempty" azure:"ro"`
-
-	// EnableBgp flag.
-	EnableBgp *bool `json:"enableBgp,omitempty"`
-
-	// Enable internet security.
-	EnableInternetSecurity *bool `json:"enableInternetSecurity,omitempty"`
-
-	// EnableBgp flag.
-	EnableRateLimiting *bool `json:"enableRateLimiting,omitempty"`
-
-	// READ-ONLY; Ingress bytes transferred.
-	IngressBytesTransferred *int64 `json:"ingressBytesTransferred,omitempty" azure:"ro"`
-
-	// The IPSec Policies to be considered by this connection.
-	IpsecPolicies *[]IpsecPolicy `json:"ipsecPolicies,omitempty"`
-
-	// READ-ONLY; The provisioning state of the VPN connection resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
-	// Id of the connected vpn site.
-	RemoteVpnSite *SubResource `json:"remoteVpnSite,omitempty"`
-
-	// Routing weight for vpn connection.
-	RoutingWeight *int32 `json:"routingWeight,omitempty"`
-
-	// SharedKey for the vpn connection.
-	SharedKey *string `json:"sharedKey,omitempty"`
-
-	// Use local azure ip to initiate connection.
-	UseLocalAzureIPAddress *bool `json:"useLocalAzureIpAddress,omitempty"`
-
-	// Enable policy-based traffic selectors.
-	UsePolicyBasedTrafficSelectors *bool `json:"usePolicyBasedTrafficSelectors,omitempty"`
-
-	// Connection protocol used for this connection.
-	VpnConnectionProtocolType *VirtualNetworkGatewayConnectionProtocol `json:"vpnConnectionProtocolType,omitempty"`
-
-	// List of all vpn site link connections to the gateway.
-	VpnLinkConnections *[]VpnSiteLinkConnection `json:"vpnLinkConnections,omitempty"`
-}
-
-// VpnConnectionResponse is the response envelope for operations that return a VpnConnection type.
-type VpnConnectionResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// VpnConnection Resource.
-	VpnConnection *VpnConnection
-}
-
-// VpnConnectionsBeginCreateOrUpdateOptions contains the optional parameters for the VpnConnections.BeginCreateOrUpdate method.
-type VpnConnectionsBeginCreateOrUpdateOptions struct {
-	// placeholder for future optional parameters
-}
-
-// VpnConnectionsBeginDeleteOptions contains the optional parameters for the VpnConnections.BeginDelete method.
-type VpnConnectionsBeginDeleteOptions struct {
-	// placeholder for future optional parameters
-}
-
-// VpnConnectionsGetOptions contains the optional parameters for the VpnConnections.Get method.
-type VpnConnectionsGetOptions struct {
-	// placeholder for future optional parameters
-}
-
-// VpnConnectionsListByVpnGatewayOptions contains the optional parameters for the VpnConnections.ListByVpnGateway method.
-type VpnConnectionsListByVpnGatewayOptions struct {
-	// placeholder for future optional parameters
-}
-
-// Vpn device configuration script generation parameters.
-type VpnDeviceScriptParameters struct {
-	// The device family for the vpn device.
-	DeviceFamily *string `json:"deviceFamily,omitempty"`
-
-	// The firmware version for the vpn device.
-	FirmwareVersion *string `json:"firmwareVersion,omitempty"`
-
-	// The vendor for the vpn device.
-	Vendor *string `json:"vendor,omitempty"`
-}
-
-// VpnGateway Resource.
-type VpnGateway struct {
-	Resource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
-	// Properties of the VPN gateway.
-	Properties *VpnGatewayProperties `json:"properties,omitempty"`
-}
-
-// VpnGatewayPollerResponse is the response envelope for operations that asynchronously return a VpnGateway type.
-type VpnGatewayPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VpnGatewayResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller VpnGatewayPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// Parameters for VpnGateway.
-type VpnGatewayProperties struct {
-	// Local network gateway's BGP speaker settings.
-	BgpSettings *BgpSettings `json:"bgpSettings,omitempty"`
-
-	// List of all vpn connections to the gateway.
-	Connections *[]VpnConnection `json:"connections,omitempty"`
-
-	// READ-ONLY; The provisioning state of the VPN gateway resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
-	// The VirtualHub to which the gateway belongs.
-	VirtualHub *SubResource `json:"virtualHub,omitempty"`
-
-	// The scale unit for this vpn gateway.
-	VpnGatewayScaleUnit *int32 `json:"vpnGatewayScaleUnit,omitempty"`
-}
-
-// VpnGatewayResponse is the response envelope for operations that return a VpnGateway type.
-type VpnGatewayResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// VpnGateway Resource.
-	VpnGateway *VpnGateway
-}
-
-// VpnGatewaysBeginCreateOrUpdateOptions contains the optional parameters for the VpnGateways.BeginCreateOrUpdate method.
-type VpnGatewaysBeginCreateOrUpdateOptions struct {
-	// placeholder for future optional parameters
-}
-
-// VpnGatewaysBeginDeleteOptions contains the optional parameters for the VpnGateways.BeginDelete method.
-type VpnGatewaysBeginDeleteOptions struct {
-	// placeholder for future optional parameters
-}
-
-// VpnGatewaysBeginResetOptions contains the optional parameters for the VpnGateways.BeginReset method.
-type VpnGatewaysBeginResetOptions struct {
-	// placeholder for future optional parameters
-}
-
-// VpnGatewaysGetOptions contains the optional parameters for the VpnGateways.Get method.
-type VpnGatewaysGetOptions struct {
-	// placeholder for future optional parameters
-}
-
-// VpnGatewaysListByResourceGroupOptions contains the optional parameters for the VpnGateways.ListByResourceGroup method.
-type VpnGatewaysListByResourceGroupOptions struct {
-	// placeholder for future optional parameters
-}
-
-// VpnGatewaysListOptions contains the optional parameters for the VpnGateways.List method.
-type VpnGatewaysListOptions struct {
-	// placeholder for future optional parameters
-}
-
-// VpnGatewaysUpdateTagsOptions contains the optional parameters for the VpnGateways.UpdateTags method.
-type VpnGatewaysUpdateTagsOptions struct {
-	// placeholder for future optional parameters
-}
-
-// BGP settings details for a link.
-type VpnLinkBgpSettings struct {
-	// The BGP speaker's ASN.
-	Asn *int64 `json:"asn,omitempty"`
-
-	// The BGP peering address and BGP identifier of this BGP speaker.
-	BgpPeeringAddress *string `json:"bgpPeeringAddress,omitempty"`
-}
-
-// VpnLinkConnectionsListByVpnConnectionOptions contains the optional parameters for the VpnLinkConnections.ListByVpnConnection method.
-type VpnLinkConnectionsListByVpnConnectionOptions struct {
-	// placeholder for future optional parameters
-}
-
-// List of properties of a link provider.
-type VpnLinkProviderProperties struct {
-	// Name of the link provider.
-	LinkProviderName *string `json:"linkProviderName,omitempty"`
-
-	// Link speed.
-	LinkSpeedInMbps *int32 `json:"linkSpeedInMbps,omitempty"`
-}
-
-// Start packet capture parameters on virtual network gateway.
-type VpnPacketCaptureStartParameters struct {
-	// Start Packet capture parameters.
-	FilterData *string `json:"filterData,omitempty"`
-}
-
-// Stop packet capture parameters.
-type VpnPacketCaptureStopParameters struct {
-	// SAS url for packet capture on virtual network gateway.
-	SasURL *string `json:"sasUrl,omitempty"`
-}
-
-// Vpn Profile Response for package generation.
-type VpnProfileResponse struct {
-	// URL to the VPN profile.
-	ProfileURL *string `json:"profileUrl,omitempty"`
-}
-
-// VpnProfileResponsePollerResponse is the response envelope for operations that asynchronously return a VpnProfileResponse type.
-type VpnProfileResponsePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VpnProfileResponseResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller VpnProfileResponsePoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// VpnProfileResponseResponse is the response envelope for operations that return a VpnProfileResponse type.
-type VpnProfileResponseResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Vpn Profile Response for package generation.
-	VpnProfileResponse *VpnProfileResponse
-}
-
-// Properties of the Radius client root certificate of VpnServerConfiguration.
-type VpnServerConfigRadiusClientRootCertificate struct {
-	// The certificate name.
-	Name *string `json:"name,omitempty"`
-
-	// The Radius client root certificate thumbprint.
-	Thumbprint *string `json:"thumbprint,omitempty"`
-}
-
-// Properties of Radius Server root certificate of VpnServerConfiguration.
-type VpnServerConfigRadiusServerRootCertificate struct {
-	// The certificate name.
-	Name *string `json:"name,omitempty"`
-
-	// The certificate public data.
-	PublicCertData *string `json:"publicCertData,omitempty"`
-}
-
-// Properties of the revoked VPN client certificate of VpnServerConfiguration.
-type VpnServerConfigVpnClientRevokedCertificate struct {
-	// The certificate name.
-	Name *string `json:"name,omitempty"`
-
-	// The revoked VPN client certificate thumbprint.
-	Thumbprint *string `json:"thumbprint,omitempty"`
-}
-
-// Properties of VPN client root certificate of VpnServerConfiguration.
-type VpnServerConfigVpnClientRootCertificate struct {
-	// The certificate name.
-	Name *string `json:"name,omitempty"`
-
-	// The certificate public data.
-	PublicCertData *string `json:"publicCertData,omitempty"`
-}
-
-// VpnServerConfiguration Resource.
-type VpnServerConfiguration struct {
-	Resource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
-	// Properties of the P2SVpnServer configuration.
-	Properties *VpnServerConfigurationProperties `json:"properties,omitempty"`
-}
-
-// VpnServerConfigurationPollerResponse is the response envelope for operations that asynchronously return a VpnServerConfiguration type.
-type VpnServerConfigurationPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VpnServerConfigurationResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller VpnServerConfigurationPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// Parameters for VpnServerConfiguration.
-type VpnServerConfigurationProperties struct {
-	// The set of aad vpn authentication parameters.
-	AadAuthenticationParameters *AadAuthenticationParameters `json:"aadAuthenticationParameters,omitempty"`
-
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
-	// The name of the VpnServerConfiguration that is unique within a resource group.
-	Name *string `json:"name,omitempty"`
-
-	// READ-ONLY; List of references to P2SVpnGateways.
-	P2SVpnGateways *[]P2SVpnGateway `json:"p2SVpnGateways,omitempty" azure:"ro"`
-
-	// READ-ONLY; The provisioning state of the VpnServerConfiguration resource. Possible values are: 'Updating', 'Deleting', and 'Failed'.
-	ProvisioningState *string `json:"provisioningState,omitempty" azure:"ro"`
-
-	// Radius client root certificate of VpnServerConfiguration.
-	RadiusClientRootCertificates *[]VpnServerConfigRadiusClientRootCertificate `json:"radiusClientRootCertificates,omitempty"`
-
-	// The radius server address property of the VpnServerConfiguration resource for point to site client connection.
-	RadiusServerAddress *string `json:"radiusServerAddress,omitempty"`
-
-	// Radius Server root certificate of VpnServerConfiguration.
-	RadiusServerRootCertificates *[]VpnServerConfigRadiusServerRootCertificate `json:"radiusServerRootCertificates,omitempty"`
-
-	// The radius secret property of the VpnServerConfiguration resource for point to site client connection.
-	RadiusServerSecret *string `json:"radiusServerSecret,omitempty"`
-
-	// Multiple Radius Server configuration for VpnServerConfiguration.
-	RadiusServers *[]RadiusServer `json:"radiusServers,omitempty"`
-
-	// VPN authentication types for the VpnServerConfiguration.
-	VpnAuthenticationTypes *[]VpnAuthenticationType `json:"vpnAuthenticationTypes,omitempty"`
-
-	// VpnClientIpsecPolicies for VpnServerConfiguration.
-	VpnClientIpsecPolicies *[]IpsecPolicy `json:"vpnClientIpsecPolicies,omitempty"`
-
-	// VPN client revoked certificate of VpnServerConfiguration.
-	VpnClientRevokedCertificates *[]VpnServerConfigVpnClientRevokedCertificate `json:"vpnClientRevokedCertificates,omitempty"`
-
-	// VPN client root certificate of VpnServerConfiguration.
-	VpnClientRootCertificates *[]VpnServerConfigVpnClientRootCertificate `json:"vpnClientRootCertificates,omitempty"`
-
-	// VPN protocols for the VpnServerConfiguration.
-	VpnProtocols *[]VpnGatewayTunnelingProtocol `json:"vpnProtocols,omitempty"`
-}
-
-// VpnServerConfigurationResponse is the response envelope for operations that return a VpnServerConfiguration type.
-type VpnServerConfigurationResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// VpnServerConfiguration Resource.
-	VpnServerConfiguration *VpnServerConfiguration
-}
-
-// VpnServerConfigurationsAssociatedWithVirtualWanBeginListOptions contains the optional parameters for the VpnServerConfigurationsAssociatedWithVirtualWan.BeginList
-// method.
-type VpnServerConfigurationsAssociatedWithVirtualWanBeginListOptions struct {
-	// placeholder for future optional parameters
-}
-
-// VpnServerConfigurationsBeginCreateOrUpdateOptions contains the optional parameters for the VpnServerConfigurations.BeginCreateOrUpdate method.
-type VpnServerConfigurationsBeginCreateOrUpdateOptions struct {
-	// placeholder for future optional parameters
-}
-
-// VpnServerConfigurationsBeginDeleteOptions contains the optional parameters for the VpnServerConfigurations.BeginDelete method.
-type VpnServerConfigurationsBeginDeleteOptions struct {
-	// placeholder for future optional parameters
-}
-
-// VpnServerConfigurationsGetOptions contains the optional parameters for the VpnServerConfigurations.Get method.
-type VpnServerConfigurationsGetOptions struct {
-	// placeholder for future optional parameters
-}
-
-// VpnServerConfigurationsListByResourceGroupOptions contains the optional parameters for the VpnServerConfigurations.ListByResourceGroup method.
-type VpnServerConfigurationsListByResourceGroupOptions struct {
-	// placeholder for future optional parameters
-}
-
-// VpnServerConfigurationsListOptions contains the optional parameters for the VpnServerConfigurations.List method.
-type VpnServerConfigurationsListOptions struct {
-	// placeholder for future optional parameters
-}
-
-// VpnServerConfigurations list associated with VirtualWan Response.
-type VpnServerConfigurationsResponse struct {
-	// List of VpnServerConfigurations associated with VirtualWan.
-	VpnServerConfigurationResourceIds *[]string `json:"vpnServerConfigurationResourceIds,omitempty"`
-}
-
-// VpnServerConfigurationsResponsePollerResponse is the response envelope for operations that asynchronously return a VpnServerConfigurationsResponse type.
-type VpnServerConfigurationsResponsePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VpnServerConfigurationsResponseResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller VpnServerConfigurationsResponsePoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// VpnServerConfigurationsResponseResponse is the response envelope for operations that return a VpnServerConfigurationsResponse type.
-type VpnServerConfigurationsResponseResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// VpnServerConfigurations list associated with VirtualWan Response.
-	VpnServerConfigurationsResponse *VpnServerConfigurationsResponse
-}
-
-// VpnServerConfigurationsUpdateTagsOptions contains the optional parameters for the VpnServerConfigurations.UpdateTags method.
-type VpnServerConfigurationsUpdateTagsOptions struct {
-	// placeholder for future optional parameters
-}
-
-// VpnSite Resource.
-type VpnSite struct {
-	Resource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
-	// Properties of the VPN site.
-	Properties *VpnSiteProperties `json:"properties,omitempty"`
-}
-
-// VpnSite Resource.
-type VpnSiteID struct {
-	// READ-ONLY; The resource-uri of the vpn-site for which config is to be fetched.
-	VpnSite *string `json:"vpnSite,omitempty" azure:"ro"`
-}
-
-// VpnSiteLink Resource.
-type VpnSiteLink struct {
-	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
-	// The name of the resource that is unique within a resource group. This name can be used to access the resource.
-	Name *string `json:"name,omitempty"`
-
-	// Properties of the VPN site link.
-	Properties *VpnSiteLinkProperties `json:"properties,omitempty"`
-
-	// READ-ONLY; Resource type.
-	Type *string `json:"type,omitempty" azure:"ro"`
-}
-
-// VpnSiteLinkConnection Resource.
-type VpnSiteLinkConnection struct {
-	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
-	// The name of the resource that is unique within a resource group. This name can be used to access the resource.
-	Name *string `json:"name,omitempty"`
-
-	// Properties of the VPN site link connection.
-	Properties *VpnSiteLinkConnectionProperties `json:"properties,omitempty"`
-
-	// READ-ONLY; Resource type.
-	Type *string `json:"type,omitempty" azure:"ro"`
-}
-
-// Parameters for VpnConnection.
-type VpnSiteLinkConnectionProperties struct {
-	// Expected bandwidth in MBPS.
-	ConnectionBandwidth *int32 `json:"connectionBandwidth,omitempty"`
-
-	// READ-ONLY; The connection status.
-	ConnectionStatus *VpnConnectionStatus `json:"connectionStatus,omitempty" azure:"ro"`
-
-	// READ-ONLY; Egress bytes transferred.
-	EgressBytesTransferred *int64 `json:"egressBytesTransferred,omitempty" azure:"ro"`
-
-	// EnableBgp flag.
-	EnableBgp *bool `json:"enableBgp,omitempty"`
-
-	// EnableBgp flag.
-	EnableRateLimiting *bool `json:"enableRateLimiting,omitempty"`
-
-	// READ-ONLY; Ingress bytes transferred.
-	IngressBytesTransferred *int64 `json:"ingressBytesTransferred,omitempty" azure:"ro"`
-
-	// The IPSec Policies to be considered by this connection.
-	IpsecPolicies *[]IpsecPolicy `json:"ipsecPolicies,omitempty"`
-
-	// READ-ONLY; The provisioning state of the VPN site link connection resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
-	// Routing weight for vpn connection.
-	RoutingWeight *int32 `json:"routingWeight,omitempty"`
-
-	// SharedKey for the vpn connection.
-	SharedKey *string `json:"sharedKey,omitempty"`
-
-	// Use local azure ip to initiate connection.
-	UseLocalAzureIPAddress *bool `json:"useLocalAzureIpAddress,omitempty"`
-
-	// Enable policy-based traffic selectors.
-	UsePolicyBasedTrafficSelectors *bool `json:"usePolicyBasedTrafficSelectors,omitempty"`
-
-	// Connection protocol used for this connection.
-	VpnConnectionProtocolType *VirtualNetworkGatewayConnectionProtocol `json:"vpnConnectionProtocolType,omitempty"`
-
-	// Id of the connected vpn site link.
-	VpnSiteLink *SubResource `json:"vpnSiteLink,omitempty"`
-}
-
-// VpnSiteLinkConnectionResponse is the response envelope for operations that return a VpnSiteLinkConnection type.
-type VpnSiteLinkConnectionResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// VpnSiteLinkConnection Resource.
-	VpnSiteLinkConnection *VpnSiteLinkConnection
-}
-
-// VpnSiteLinkConnectionsGetOptions contains the optional parameters for the VpnSiteLinkConnections.Get method.
-type VpnSiteLinkConnectionsGetOptions struct {
-	// placeholder for future optional parameters
-}
-
-// Parameters for VpnSite.
-type VpnSiteLinkProperties struct {
-	// The set of bgp properties.
-	BgpProperties *VpnLinkBgpSettings `json:"bgpProperties,omitempty"`
-
-	// FQDN of vpn-site-link.
-	Fqdn *string `json:"fqdn,omitempty"`
-
-	// The ip-address for the vpn-site-link.
-	IPAddress *string `json:"ipAddress,omitempty"`
-
-	// The link provider properties.
-	LinkProperties *VpnLinkProviderProperties `json:"linkProperties,omitempty"`
-
-	// READ-ONLY; The provisioning state of the VPN site link resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-}
-
-// VpnSiteLinkResponse is the response envelope for operations that return a VpnSiteLink type.
-type VpnSiteLinkResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// VpnSiteLink Resource.
-	VpnSiteLink *VpnSiteLink
-}
-
-// VpnSiteLinksGetOptions contains the optional parameters for the VpnSiteLinks.Get method.
-type VpnSiteLinksGetOptions struct {
-	// placeholder for future optional parameters
-}
-
-// VpnSiteLinksListByVpnSiteOptions contains the optional parameters for the VpnSiteLinks.ListByVpnSite method.
-type VpnSiteLinksListByVpnSiteOptions struct {
-	// placeholder for future optional parameters
-}
-
-// VpnSitePollerResponse is the response envelope for operations that asynchronously return a VpnSite type.
-type VpnSitePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VpnSiteResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller VpnSitePoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// Parameters for VpnSite.
-type VpnSiteProperties struct {
-	// The AddressSpace that contains an array of IP address ranges.
-	AddressSpace *AddressSpace `json:"addressSpace,omitempty"`
-
-	// The set of bgp properties.
-	BgpProperties *BgpSettings `json:"bgpProperties,omitempty"`
-
-	// The device properties.
-	DeviceProperties *DeviceProperties `json:"deviceProperties,omitempty"`
-
-	// The ip-address for the vpn-site.
-	IPAddress *string `json:"ipAddress,omitempty"`
-
-	// IsSecuritySite flag.
-	IsSecuritySite *bool `json:"isSecuritySite,omitempty"`
-
-	// READ-ONLY; The provisioning state of the VPN site resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
-	// The key for vpn-site that can be used for connections.
-	SiteKey *string `json:"siteKey,omitempty"`
-
-	// The VirtualWAN to which the vpnSite belongs.
-	VirtualWan *SubResource `json:"virtualWan,omitempty"`
-
-	// List of all vpn site links.
-	VpnSiteLinks *[]VpnSiteLink `json:"vpnSiteLinks,omitempty"`
-}
-
-// VpnSiteResponse is the response envelope for operations that return a VpnSite type.
-type VpnSiteResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// VpnSite Resource.
-	VpnSite *VpnSite
-}
-
-// VpnSitesBeginCreateOrUpdateOptions contains the optional parameters for the VpnSites.BeginCreateOrUpdate method.
-type VpnSitesBeginCreateOrUpdateOptions struct {
-	// placeholder for future optional parameters
-}
-
-// VpnSitesBeginDeleteOptions contains the optional parameters for the VpnSites.BeginDelete method.
-type VpnSitesBeginDeleteOptions struct {
-	// placeholder for future optional parameters
-}
-
-// VpnSitesConfigurationBeginDownloadOptions contains the optional parameters for the VpnSitesConfiguration.BeginDownload method.
-type VpnSitesConfigurationBeginDownloadOptions struct {
-	// placeholder for future optional parameters
-}
-
-// VpnSitesGetOptions contains the optional parameters for the VpnSites.Get method.
-type VpnSitesGetOptions struct {
-	// placeholder for future optional parameters
-}
-
-// VpnSitesListByResourceGroupOptions contains the optional parameters for the VpnSites.ListByResourceGroup method.
-type VpnSitesListByResourceGroupOptions struct {
-	// placeholder for future optional parameters
-}
-
-// VpnSitesListOptions contains the optional parameters for the VpnSites.List method.
-type VpnSitesListOptions struct {
-	// placeholder for future optional parameters
-}
-
-// VpnSitesUpdateTagsOptions contains the optional parameters for the VpnSites.UpdateTags method.
-type VpnSitesUpdateTagsOptions struct {
 	// placeholder for future optional parameters
 }
 

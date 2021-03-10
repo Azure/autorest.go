@@ -19,36 +19,36 @@ import (
 	"strings"
 )
 
-// ResourceSkusClient contains the methods for the ResourceSkus group.
-// Don't use this type directly, use NewResourceSkusClient() instead.
-type ResourceSkusClient struct {
+// ResourceSKUsClient contains the methods for the ResourceSKUs group.
+// Don't use this type directly, use NewResourceSKUsClient() instead.
+type ResourceSKUsClient struct {
 	con            *armcore.Connection
 	subscriptionID string
 }
 
-// NewResourceSkusClient creates a new instance of ResourceSkusClient with the specified values.
-func NewResourceSkusClient(con *armcore.Connection, subscriptionID string) *ResourceSkusClient {
-	return &ResourceSkusClient{con: con, subscriptionID: subscriptionID}
+// NewResourceSKUsClient creates a new instance of ResourceSKUsClient with the specified values.
+func NewResourceSKUsClient(con *armcore.Connection, subscriptionID string) *ResourceSKUsClient {
+	return &ResourceSKUsClient{con: con, subscriptionID: subscriptionID}
 }
 
 // List - Gets the list of Microsoft.Compute SKUs available for your Subscription.
-func (client *ResourceSkusClient) List(options *ResourceSkusListOptions) ResourceSkusResultPager {
-	return &resourceSkusResultPager{
+func (client *ResourceSKUsClient) List(options *ResourceSKUsListOptions) ResourceSKUsResultPager {
+	return &resourceSKUsResultPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, options)
 		},
 		responder: client.listHandleResponse,
 		errorer:   client.listHandleError,
-		advancer: func(ctx context.Context, resp ResourceSkusResultResponse) (*azcore.Request, error) {
-			return azcore.NewRequest(ctx, http.MethodGet, *resp.ResourceSkusResult.NextLink)
+		advancer: func(ctx context.Context, resp ResourceSKUsResultResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.ResourceSKUsResult.NextLink)
 		},
 		statusCodes: []int{http.StatusOK},
 	}
 }
 
 // listCreateRequest creates the List request.
-func (client *ResourceSkusClient) listCreateRequest(ctx context.Context, options *ResourceSkusListOptions) (*azcore.Request, error) {
+func (client *ResourceSKUsClient) listCreateRequest(ctx context.Context, options *ResourceSKUsListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/skus"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -67,16 +67,16 @@ func (client *ResourceSkusClient) listCreateRequest(ctx context.Context, options
 }
 
 // listHandleResponse handles the List response.
-func (client *ResourceSkusClient) listHandleResponse(resp *azcore.Response) (ResourceSkusResultResponse, error) {
-	var val *ResourceSkusResult
+func (client *ResourceSKUsClient) listHandleResponse(resp *azcore.Response) (ResourceSKUsResultResponse, error) {
+	var val *ResourceSKUsResult
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ResourceSkusResultResponse{}, err
+		return ResourceSKUsResultResponse{}, err
 	}
-	return ResourceSkusResultResponse{RawResponse: resp.Response, ResourceSkusResult: val}, nil
+	return ResourceSKUsResultResponse{RawResponse: resp.Response, ResourceSKUsResult: val}, nil
 }
 
 // listHandleError handles the List error response.
-func (client *ResourceSkusClient) listHandleError(resp *azcore.Response) error {
+func (client *ResourceSKUsClient) listHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)

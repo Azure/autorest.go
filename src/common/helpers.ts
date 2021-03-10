@@ -3,9 +3,9 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { camelCase } from '@azure-tools/codegen';
 import { ArraySchema, DictionarySchema, ObjectSchema, Operation, Parameter, Response, Schema, SchemaResponse, SchemaType } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
+import { ensureNameCase } from '../transform/namer';
 
 // variable to be used to determine comment length when calling comment from @azure-tools
 export const commentLength = 150;
@@ -48,7 +48,7 @@ export interface PagerInfo {
 
 // returns the type name of the internal pager type
 export function internalPagerTypeName(pi: PagerInfo): string {
-  return camelCase(pi.name);
+  return ensureNameCase(pi.name, true);
 }
 
 // returns true if the operation is pageable
@@ -66,7 +66,7 @@ export interface PollerInfo {
 
 // returns the type name of the internal poller type
 export function internalPollerTypeName(pi: PollerInfo): string {
-  return camelCase(pi.name);
+  return ensureNameCase(pi.name, true);
 }
 
 // returns true if the operation is a long-running operation

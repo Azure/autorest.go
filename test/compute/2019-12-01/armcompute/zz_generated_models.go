@@ -3776,14 +3776,14 @@ type ResourceSKUZoneDetails struct {
 	Name *[]string `json:"name,omitempty" azure:"ro"`
 }
 
-// ResourceSkusListOptions contains the optional parameters for the ResourceSkus.List method.
-type ResourceSkusListOptions struct {
+// ResourceSKUsListOptions contains the optional parameters for the ResourceSKUs.List method.
+type ResourceSKUsListOptions struct {
 	// The filter to apply on the operation. Only **location** filter is supported currently.
 	Filter *string
 }
 
 // The List Resource Skus operation response.
-type ResourceSkusResult struct {
+type ResourceSKUsResult struct {
 	// The URI to fetch the next page of Resource Skus. Call ListNext() with this URI to fetch the next page of Resource Skus
 	NextLink *string `json:"nextLink,omitempty"`
 
@@ -3791,13 +3791,13 @@ type ResourceSkusResult struct {
 	Value *[]ResourceSKU `json:"value,omitempty"`
 }
 
-// ResourceSkusResultResponse is the response envelope for operations that return a ResourceSkusResult type.
-type ResourceSkusResultResponse struct {
+// ResourceSKUsResultResponse is the response envelope for operations that return a ResourceSKUsResult type.
+type ResourceSKUsResultResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 
 	// The List Resource Skus operation response.
-	ResourceSkusResult *ResourceSkusResult
+	ResourceSKUsResult *ResourceSKUsResult
 }
 
 // Information about rollback on failed VM instances after a OS Upgrade operation.
@@ -5238,8 +5238,8 @@ type VirtualMachineImagesListPublishersOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineImagesListSkusOptions contains the optional parameters for the VirtualMachineImages.ListSkus method.
-type VirtualMachineImagesListSkusOptions struct {
+// VirtualMachineImagesListSKUsOptions contains the optional parameters for the VirtualMachineImages.ListSKUs method.
+type VirtualMachineImagesListSKUsOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -5776,7 +5776,7 @@ type VirtualMachineScaleSetListResultResponse struct {
 }
 
 // The Virtual Machine Scale Set List Skus operation response.
-type VirtualMachineScaleSetListSkusResult struct {
+type VirtualMachineScaleSetListSKUsResult struct {
 	// The uri to fetch the next page of Virtual Machine Scale Set Skus. Call ListNext() with this to fetch the next page of VMSS Skus.
 	NextLink *string `json:"nextLink,omitempty"`
 
@@ -5784,13 +5784,13 @@ type VirtualMachineScaleSetListSkusResult struct {
 	Value *[]VirtualMachineScaleSetSKU `json:"value,omitempty"`
 }
 
-// VirtualMachineScaleSetListSkusResultResponse is the response envelope for operations that return a VirtualMachineScaleSetListSkusResult type.
-type VirtualMachineScaleSetListSkusResultResponse struct {
+// VirtualMachineScaleSetListSKUsResultResponse is the response envelope for operations that return a VirtualMachineScaleSetListSKUsResult type.
+type VirtualMachineScaleSetListSKUsResultResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 
 	// The Virtual Machine Scale Set List Skus operation response.
-	VirtualMachineScaleSetListSkusResult *VirtualMachineScaleSetListSkusResult
+	VirtualMachineScaleSetListSKUsResult *VirtualMachineScaleSetListSKUsResult
 }
 
 // The List Virtual Machine operation response.
@@ -6070,7 +6070,7 @@ type VirtualMachineScaleSetReimageParameters struct {
 	VirtualMachineReimageParameters
 	// The virtual machine scale set instance ids. Omitting the virtual machine scale set instance ids will result in the operation being performed on all virtual
 	// machines in the virtual machine scale set.
-	InstanceIds *[]string `json:"instanceIds,omitempty"`
+	InstanceIDs *[]string `json:"instanceIds,omitempty"`
 }
 
 // VirtualMachineScaleSetResponse is the response envelope for operations that return a VirtualMachineScaleSet type.
@@ -6447,13 +6447,13 @@ type VirtualMachineScaleSetVMExtensionsSummary struct {
 type VirtualMachineScaleSetVMInstanceIDs struct {
 	// The virtual machine scale set instance ids. Omitting the virtual machine scale set instance ids will result in the operation being performed on all virtual
 	// machines in the virtual machine scale set.
-	InstanceIds *[]string `json:"instanceIds,omitempty"`
+	InstanceIDs *[]string `json:"instanceIds,omitempty"`
 }
 
 // Specifies a list of virtual machine instance IDs from the VM scale set.
 type VirtualMachineScaleSetVMInstanceRequiredIDs struct {
 	// The virtual machine scale set instance ids.
-	InstanceIds *[]string `json:"instanceIds,omitempty"`
+	InstanceIDs *[]string `json:"instanceIds,omitempty"`
 }
 
 // The instance view of a virtual machine scale set VM.
@@ -6879,8 +6879,8 @@ type VirtualMachineScaleSetsListOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineScaleSetsListSkusOptions contains the optional parameters for the VirtualMachineScaleSets.ListSkus method.
-type VirtualMachineScaleSetsListSkusOptions struct {
+// VirtualMachineScaleSetsListSKUsOptions contains the optional parameters for the VirtualMachineScaleSets.ListSKUs method.
+type VirtualMachineScaleSetsListSKUsOptions struct {
 	// placeholder for future optional parameters
 }
 

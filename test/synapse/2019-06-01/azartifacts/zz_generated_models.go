@@ -11105,7 +11105,7 @@ func (d *DynamicsAXLinkedService) UnmarshalJSON(data []byte) error {
 // Dynamics AX linked service properties.
 type DynamicsAXLinkedServiceTypeProperties struct {
 	// Specify the resource you are requesting authorization. Type: string (or Expression with resultType string).
-	AadResourceID interface{} `json:"aadResourceId,omitempty"`
+	AADResourceID interface{} `json:"aadResourceId,omitempty"`
 
 	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
 	// with resultType string).
@@ -11139,7 +11139,7 @@ func (d *DynamicsAXLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error
 		switch key {
 		case "aadResourceId":
 			if val != nil {
-				err = json.Unmarshal(*val, &d.AadResourceID)
+				err = json.Unmarshal(*val, &d.AADResourceID)
 			}
 			delete(rawMsg, key)
 		case "encryptedCredential":
@@ -18671,7 +18671,7 @@ type ManagedIntegrationRuntimeTypeProperties struct {
 // Managed Virtual Network Settings
 type ManagedVirtualNetworkSettings struct {
 	// Allowed Aad Tenant Ids For Linking
-	AllowedAadTenantIdsForLinking *[]string `json:"allowedAadTenantIdsForLinking,omitempty"`
+	AllowedAADTenantIDsForLinking *[]string `json:"allowedAadTenantIdsForLinking,omitempty"`
 
 	// Linked Access Check On Target Resource
 	LinkedAccessCheckOnTargetResource *bool `json:"linkedAccessCheckOnTargetResource,omitempty"`
@@ -20716,10 +20716,10 @@ func (o *ODataLinkedService) UnmarshalJSON(data []byte) error {
 // OData linked service properties.
 type ODataLinkedServiceTypeProperties struct {
 	// Specify the resource you are requesting authorization to use Directory. Type: string (or Expression with resultType string).
-	AadResourceID interface{} `json:"aadResourceId,omitempty"`
+	AADResourceID interface{} `json:"aadResourceId,omitempty"`
 
 	// Specify the credential type (key or cert) is used for service principal.
-	AadServicePrincipalCredentialType *ODataAadServicePrincipalCredentialType `json:"aadServicePrincipalCredentialType,omitempty"`
+	AADServicePrincipalCredentialType *ODataAADServicePrincipalCredentialType `json:"aadServicePrincipalCredentialType,omitempty"`
 
 	// Type of authentication used to connect to the OData service.
 	AuthenticationType *ODataAuthenticationType `json:"authenticationType,omitempty"`
@@ -20765,12 +20765,12 @@ func (o *ODataLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 		switch key {
 		case "aadResourceId":
 			if val != nil {
-				err = json.Unmarshal(*val, &o.AadResourceID)
+				err = json.Unmarshal(*val, &o.AADResourceID)
 			}
 			delete(rawMsg, key)
 		case "aadServicePrincipalCredentialType":
 			if val != nil {
-				err = json.Unmarshal(*val, &o.AadServicePrincipalCredentialType)
+				err = json.Unmarshal(*val, &o.AADServicePrincipalCredentialType)
 			}
 			delete(rawMsg, key)
 		case "authenticationType":
@@ -24635,7 +24635,7 @@ func (r *RestServiceLinkedService) UnmarshalJSON(data []byte) error {
 // Rest Service linked service properties.
 type RestServiceLinkedServiceTypeProperties struct {
 	// The resource you are requesting authorization to use.
-	AadResourceID interface{} `json:"aadResourceId,omitempty"`
+	AADResourceID interface{} `json:"aadResourceId,omitempty"`
 
 	// Type of authentication used to connect to the REST service.
 	AuthenticationType *RestServiceAuthenticationType `json:"authenticationType,omitempty"`
@@ -24678,7 +24678,7 @@ func (r *RestServiceLinkedServiceTypeProperties) UnmarshalJSON(data []byte) erro
 		switch key {
 		case "aadResourceId":
 			if val != nil {
-				err = json.Unmarshal(*val, &r.AadResourceID)
+				err = json.Unmarshal(*val, &r.AADResourceID)
 			}
 			delete(rawMsg, key)
 		case "authenticationType":
