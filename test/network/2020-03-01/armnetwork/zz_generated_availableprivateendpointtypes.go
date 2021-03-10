@@ -20,12 +20,12 @@ import (
 // Don't use this type directly, use NewAvailablePrivateEndpointTypesClient() instead.
 type AvailablePrivateEndpointTypesClient struct {
 	con            *armcore.Connection
-	subscriptionid string
+	subscriptionID string
 }
 
 // NewAvailablePrivateEndpointTypesClient creates a new instance of AvailablePrivateEndpointTypesClient with the specified values.
-func NewAvailablePrivateEndpointTypesClient(con *armcore.Connection, subscriptionid string) *AvailablePrivateEndpointTypesClient {
-	return &AvailablePrivateEndpointTypesClient{con: con, subscriptionid: subscriptionid}
+func NewAvailablePrivateEndpointTypesClient(con *armcore.Connection, subscriptionID string) *AvailablePrivateEndpointTypesClient {
+	return &AvailablePrivateEndpointTypesClient{con: con, subscriptionID: subscriptionID}
 }
 
 // List - Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region.
@@ -48,7 +48,7 @@ func (client *AvailablePrivateEndpointTypesClient) List(location string, options
 func (client *AvailablePrivateEndpointTypesClient) listCreateRequest(ctx context.Context, location string, options *AvailablePrivateEndpointTypesListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availablePrivateEndpointTypes"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionid))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -100,7 +100,7 @@ func (client *AvailablePrivateEndpointTypesClient) listByResourceGroupCreateRequ
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availablePrivateEndpointTypes"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionid))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err

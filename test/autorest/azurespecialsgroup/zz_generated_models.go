@@ -35,7 +35,7 @@ type APIVersionDefaultGetSwaggerGlobalValidOptions struct {
 // APIVersionLocalGetMethodLocalNullOptions contains the optional parameters for the APIVersionLocal.GetMethodLocalNull method.
 type APIVersionLocalGetMethodLocalNullOptions struct {
 	// This should appear as a method parameter, use value null, this should result in no serialized parameter
-	ApiVersion *string
+	APIVersion *string
 }
 
 // APIVersionLocalGetMethodLocalValidOptions contains the optional parameters for the APIVersionLocal.GetMethodLocalValid method.

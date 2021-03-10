@@ -279,7 +279,7 @@ type LROsBeginPutAsyncNoRetrycanceledOptions struct {
 // LROsBeginPutAsyncNonResourceOptions contains the optional parameters for the LROs.BeginPutAsyncNonResource method.
 type LROsBeginPutAsyncNonResourceOptions struct {
 	// Sku to put
-	Sku *SKU
+	SKU *SKU
 }
 
 // LROsBeginPutAsyncRetryFailedOptions contains the optional parameters for the LROs.BeginPutAsyncRetryFailed method.
@@ -309,7 +309,7 @@ type LROsBeginPutNoHeaderInRetryOptions struct {
 // LROsBeginPutNonResourceOptions contains the optional parameters for the LROs.BeginPutNonResource method.
 type LROsBeginPutNonResourceOptions struct {
 	// sku to put
-	Sku *SKU
+	SKU *SKU
 }
 
 // LROsBeginPutSubResourceOptions contains the optional parameters for the LROs.BeginPutSubResource method.

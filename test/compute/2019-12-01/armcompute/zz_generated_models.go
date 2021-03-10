@@ -6710,7 +6710,7 @@ type VirtualMachineScaleSetVMsBeginReimageAllOptions struct {
 // VirtualMachineScaleSetVMsBeginReimageOptions contains the optional parameters for the VirtualMachineScaleSetVMs.BeginReimage method.
 type VirtualMachineScaleSetVMsBeginReimageOptions struct {
 	// Parameters for the Reimaging Virtual machine in ScaleSet.
-	VmScaleSetVMReimageInput *VirtualMachineReimageParameters
+	VMScaleSetVMReimageInput *VirtualMachineReimageParameters
 }
 
 // VirtualMachineScaleSetVMsBeginRestartOptions contains the optional parameters for the VirtualMachineScaleSetVMs.BeginRestart method.
@@ -6752,7 +6752,7 @@ type VirtualMachineScaleSetVMsListOptions struct {
 	// eq true', 'properties/latestModelApplied eq false'.
 	Filter *string
 	// The list parameters. Allowed values are 'instanceView', 'instanceView/statuses'.
-	SelectParam *string
+	Select *string
 }
 
 // VirtualMachineScaleSetVMsSimulateEvictionOptions contains the optional parameters for the VirtualMachineScaleSetVMs.SimulateEviction method.
@@ -6768,7 +6768,7 @@ type VirtualMachineScaleSetsBeginCreateOrUpdateOptions struct {
 // VirtualMachineScaleSetsBeginDeallocateOptions contains the optional parameters for the VirtualMachineScaleSets.BeginDeallocate method.
 type VirtualMachineScaleSetsBeginDeallocateOptions struct {
 	// A list of virtual machine instance IDs from the VM scale set.
-	VmInstanceIDs *VirtualMachineScaleSetVMInstanceIDs
+	VMInstanceIDs *VirtualMachineScaleSetVMInstanceIDs
 }
 
 // VirtualMachineScaleSetsBeginDeleteInstancesOptions contains the optional parameters for the VirtualMachineScaleSets.BeginDeleteInstances method.
@@ -6784,7 +6784,7 @@ type VirtualMachineScaleSetsBeginDeleteOptions struct {
 // VirtualMachineScaleSetsBeginPerformMaintenanceOptions contains the optional parameters for the VirtualMachineScaleSets.BeginPerformMaintenance method.
 type VirtualMachineScaleSetsBeginPerformMaintenanceOptions struct {
 	// A list of virtual machine instance IDs from the VM scale set.
-	VmInstanceIDs *VirtualMachineScaleSetVMInstanceIDs
+	VMInstanceIDs *VirtualMachineScaleSetVMInstanceIDs
 }
 
 // VirtualMachineScaleSetsBeginPowerOffOptions contains the optional parameters for the VirtualMachineScaleSets.BeginPowerOff method.
@@ -6793,31 +6793,31 @@ type VirtualMachineScaleSetsBeginPowerOffOptions struct {
 	// value for this flag is false if not specified
 	SkipShutdown *bool
 	// A list of virtual machine instance IDs from the VM scale set.
-	VmInstanceIDs *VirtualMachineScaleSetVMInstanceIDs
+	VMInstanceIDs *VirtualMachineScaleSetVMInstanceIDs
 }
 
 // VirtualMachineScaleSetsBeginRedeployOptions contains the optional parameters for the VirtualMachineScaleSets.BeginRedeploy method.
 type VirtualMachineScaleSetsBeginRedeployOptions struct {
 	// A list of virtual machine instance IDs from the VM scale set.
-	VmInstanceIDs *VirtualMachineScaleSetVMInstanceIDs
+	VMInstanceIDs *VirtualMachineScaleSetVMInstanceIDs
 }
 
 // VirtualMachineScaleSetsBeginReimageAllOptions contains the optional parameters for the VirtualMachineScaleSets.BeginReimageAll method.
 type VirtualMachineScaleSetsBeginReimageAllOptions struct {
 	// A list of virtual machine instance IDs from the VM scale set.
-	VmInstanceIDs *VirtualMachineScaleSetVMInstanceIDs
+	VMInstanceIDs *VirtualMachineScaleSetVMInstanceIDs
 }
 
 // VirtualMachineScaleSetsBeginReimageOptions contains the optional parameters for the VirtualMachineScaleSets.BeginReimage method.
 type VirtualMachineScaleSetsBeginReimageOptions struct {
 	// Parameters for Reimaging VM ScaleSet.
-	VmScaleSetReimageInput *VirtualMachineScaleSetReimageParameters
+	VMScaleSetReimageInput *VirtualMachineScaleSetReimageParameters
 }
 
 // VirtualMachineScaleSetsBeginRestartOptions contains the optional parameters for the VirtualMachineScaleSets.BeginRestart method.
 type VirtualMachineScaleSetsBeginRestartOptions struct {
 	// A list of virtual machine instance IDs from the VM scale set.
-	VmInstanceIDs *VirtualMachineScaleSetVMInstanceIDs
+	VMInstanceIDs *VirtualMachineScaleSetVMInstanceIDs
 }
 
 // VirtualMachineScaleSetsBeginSetOrchestrationServiceStateOptions contains the optional parameters for the VirtualMachineScaleSets.BeginSetOrchestrationServiceState
@@ -6829,7 +6829,7 @@ type VirtualMachineScaleSetsBeginSetOrchestrationServiceStateOptions struct {
 // VirtualMachineScaleSetsBeginStartOptions contains the optional parameters for the VirtualMachineScaleSets.BeginStart method.
 type VirtualMachineScaleSetsBeginStartOptions struct {
 	// A list of virtual machine instance IDs from the VM scale set.
-	VmInstanceIDs *VirtualMachineScaleSetVMInstanceIDs
+	VMInstanceIDs *VirtualMachineScaleSetVMInstanceIDs
 }
 
 // VirtualMachineScaleSetsBeginUpdateInstancesOptions contains the optional parameters for the VirtualMachineScaleSets.BeginUpdateInstances method.

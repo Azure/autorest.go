@@ -19,7 +19,7 @@ import (
 
 type blobClient struct {
 	con            *connection
-	pathRenameMode *PathRenameMode
+	PathRenameMode *PathRenameMode
 }
 
 // AbortCopyFromURL - The Abort Copy From URL operation aborts a pending Copy From URL operation, and leaves a destination blob with zero length and full
@@ -782,8 +782,8 @@ func (client *blobClient) downloadCreateRequest(ctx context.Context, blobDownloa
 	}
 	req.URL.RawQuery = query.Encode()
 	req.SkipBodyDownload()
-	if blobDownloadOptions != nil && blobDownloadOptions.RangeParam != nil {
-		req.Header.Set("x-ms-range", *blobDownloadOptions.RangeParam)
+	if blobDownloadOptions != nil && blobDownloadOptions.Range != nil {
+		req.Header.Set("x-ms-range", *blobDownloadOptions.Range)
 	}
 	if leaseAccessConditions != nil && leaseAccessConditions.LeaseID != nil {
 		req.Header.Set("x-ms-lease-id", *leaseAccessConditions.LeaseID)
@@ -1524,8 +1524,8 @@ func (client *blobClient) renameCreateRequest(ctx context.Context, renameSource 
 	if blobRenameOptions != nil && blobRenameOptions.Timeout != nil {
 		query.Set("timeout", strconv.FormatInt(int64(*blobRenameOptions.Timeout), 10))
 	}
-	if client.pathRenameMode != nil {
-		query.Set("mode", string(*client.pathRenameMode))
+	if client.PathRenameMode != nil {
+		query.Set("mode", string(*client.PathRenameMode))
 	}
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("x-ms-rename-source", renameSource)

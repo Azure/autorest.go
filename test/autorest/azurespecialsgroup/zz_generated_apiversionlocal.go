@@ -49,8 +49,8 @@ func (client *APIVersionLocalClient) getMethodLocalNullCreateRequest(ctx context
 	}
 	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
-	if options != nil && options.ApiVersion != nil {
-		query.Set("api-version", *options.ApiVersion)
+	if options != nil && options.APIVersion != nil {
+		query.Set("api-version", *options.APIVersion)
 	}
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")

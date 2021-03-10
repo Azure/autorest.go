@@ -20,12 +20,12 @@ import (
 // Don't use this type directly, use NewVpnSiteLinksClient() instead.
 type VpnSiteLinksClient struct {
 	con            *armcore.Connection
-	subscriptionid string
+	subscriptionID string
 }
 
 // NewVpnSiteLinksClient creates a new instance of VpnSiteLinksClient with the specified values.
-func NewVpnSiteLinksClient(con *armcore.Connection, subscriptionid string) *VpnSiteLinksClient {
-	return &VpnSiteLinksClient{con: con, subscriptionid: subscriptionid}
+func NewVpnSiteLinksClient(con *armcore.Connection, subscriptionID string) *VpnSiteLinksClient {
+	return &VpnSiteLinksClient{con: con, subscriptionID: subscriptionID}
 }
 
 // Get - Retrieves the details of a VPN site link.
@@ -47,7 +47,7 @@ func (client *VpnSiteLinksClient) Get(ctx context.Context, resourceGroupName str
 // getCreateRequest creates the Get request.
 func (client *VpnSiteLinksClient) getCreateRequest(ctx context.Context, resourceGroupName string, vpnSiteName string, vpnSiteLinkName string, options *VpnSiteLinksGetOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnSites/{vpnSiteName}/vpnSiteLinks/{vpnSiteLinkName}"
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionid))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{vpnSiteName}", url.PathEscape(vpnSiteName))
 	urlPath = strings.ReplaceAll(urlPath, "{vpnSiteLinkName}", url.PathEscape(vpnSiteLinkName))
@@ -100,7 +100,7 @@ func (client *VpnSiteLinksClient) ListByVpnSite(resourceGroupName string, vpnSit
 // listByVpnSiteCreateRequest creates the ListByVpnSite request.
 func (client *VpnSiteLinksClient) listByVpnSiteCreateRequest(ctx context.Context, resourceGroupName string, vpnSiteName string, options *VpnSiteLinksListByVpnSiteOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnSites/{vpnSiteName}/vpnSiteLinks"
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionid))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{vpnSiteName}", url.PathEscape(vpnSiteName))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))

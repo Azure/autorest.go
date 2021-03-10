@@ -518,14 +518,14 @@ type BlobDeleteResponse struct {
 
 // BlobDownloadOptions contains the optional parameters for the Blob.Download method.
 type BlobDownloadOptions struct {
+	// Return only the bytes of the blob in the specified range.
+	Range *string
 	// When set to true and specified together with the Range, the service returns the CRC64 hash for the range, as long as the range is less than or equal
 	// to 4 MB in size.
 	RangeGetContentCRC64 *bool
 	// When set to true and specified together with the Range, the service returns the MD5 hash for the range, as long as the range is less than or equal to
 	// 4 MB in size.
 	RangeGetContentMD5 *bool
-	// Return only the bytes of the blob in the specified range.
-	RangeParam *string
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
 	RequestID *string
 	// The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with
@@ -2677,7 +2677,7 @@ type ModifiedAccessConditions struct {
 // PageBlobClearPagesOptions contains the optional parameters for the PageBlob.ClearPages method.
 type PageBlobClearPagesOptions struct {
 	// Return only the bytes of the blob in the specified range.
-	RangeParam *string
+	Range *string
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
 	RequestID *string
 	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
@@ -2823,7 +2823,7 @@ type PageBlobGetPageRangesDiffOptions struct {
 	// or after January 1, 2016.
 	Prevsnapshot *string
 	// Return only the bytes of the blob in the specified range.
-	RangeParam *string
+	Range *string
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
 	RequestID *string
 	// The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with
@@ -2838,7 +2838,7 @@ type PageBlobGetPageRangesDiffOptions struct {
 // PageBlobGetPageRangesOptions contains the optional parameters for the PageBlob.GetPageRanges method.
 type PageBlobGetPageRangesOptions struct {
 	// Return only the bytes of the blob in the specified range.
-	RangeParam *string
+	Range *string
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
 	RequestID *string
 	// The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with
@@ -2980,7 +2980,7 @@ type PageBlobUploadPagesFromURLResponse struct {
 // PageBlobUploadPagesOptions contains the optional parameters for the PageBlob.UploadPages method.
 type PageBlobUploadPagesOptions struct {
 	// Return only the bytes of the blob in the specified range.
-	RangeParam *string
+	Range *string
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
 	RequestID *string
 	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting

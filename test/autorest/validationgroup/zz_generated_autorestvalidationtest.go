@@ -23,12 +23,12 @@ import (
 // Don't use this type directly, use NewAutoRestValidationTestClient() instead.
 type AutoRestValidationTestClient struct {
 	con            *Connection
-	subscriptionid string
+	subscriptionID string
 }
 
 // NewAutoRestValidationTestClient creates a new instance of AutoRestValidationTestClient with the specified values.
-func NewAutoRestValidationTestClient(con *Connection, subscriptionid string) *AutoRestValidationTestClient {
-	return &AutoRestValidationTestClient{con: con, subscriptionid: subscriptionid}
+func NewAutoRestValidationTestClient(con *Connection, subscriptionID string) *AutoRestValidationTestClient {
+	return &AutoRestValidationTestClient{con: con, subscriptionID: subscriptionID}
 }
 
 func (client *AutoRestValidationTestClient) GetWithConstantInPath(ctx context.Context, options *AutoRestValidationTestGetWithConstantInPathOptions) (*http.Response, error) {
@@ -141,7 +141,7 @@ func (client *AutoRestValidationTestClient) ValidationOfBody(ctx context.Context
 // validationOfBodyCreateRequest creates the ValidationOfBody request.
 func (client *AutoRestValidationTestClient) validationOfBodyCreateRequest(ctx context.Context, resourceGroupName string, id int32, options *AutoRestValidationTestValidationOfBodyOptions) (*azcore.Request, error) {
 	urlPath := "/fakepath/{subscriptionId}/{resourceGroupName}/{id}"
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionid))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{id}", url.PathEscape(strconv.FormatInt(int64(id), 10)))
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -196,7 +196,7 @@ func (client *AutoRestValidationTestClient) ValidationOfMethodParameters(ctx con
 // validationOfMethodParametersCreateRequest creates the ValidationOfMethodParameters request.
 func (client *AutoRestValidationTestClient) validationOfMethodParametersCreateRequest(ctx context.Context, resourceGroupName string, id int32, options *AutoRestValidationTestValidationOfMethodParametersOptions) (*azcore.Request, error) {
 	urlPath := "/fakepath/{subscriptionId}/{resourceGroupName}/{id}"
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionid))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{id}", url.PathEscape(strconv.FormatInt(int64(id), 10)))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))

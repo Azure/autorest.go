@@ -23,12 +23,12 @@ import (
 // Don't use this type directly, use NewResourceSkusClient() instead.
 type ResourceSkusClient struct {
 	con            *armcore.Connection
-	subscriptionid string
+	subscriptionID string
 }
 
 // NewResourceSkusClient creates a new instance of ResourceSkusClient with the specified values.
-func NewResourceSkusClient(con *armcore.Connection, subscriptionid string) *ResourceSkusClient {
-	return &ResourceSkusClient{con: con, subscriptionid: subscriptionid}
+func NewResourceSkusClient(con *armcore.Connection, subscriptionID string) *ResourceSkusClient {
+	return &ResourceSkusClient{con: con, subscriptionID: subscriptionID}
 }
 
 // List - Gets the list of Microsoft.Compute SKUs available for your Subscription.
@@ -50,7 +50,7 @@ func (client *ResourceSkusClient) List(options *ResourceSkusListOptions) Resourc
 // listCreateRequest creates the List request.
 func (client *ResourceSkusClient) listCreateRequest(ctx context.Context, options *ResourceSkusListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/skus"
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionid))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err

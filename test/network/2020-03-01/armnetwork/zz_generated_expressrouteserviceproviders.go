@@ -20,12 +20,12 @@ import (
 // Don't use this type directly, use NewExpressRouteServiceProvidersClient() instead.
 type ExpressRouteServiceProvidersClient struct {
 	con            *armcore.Connection
-	subscriptionid string
+	subscriptionID string
 }
 
 // NewExpressRouteServiceProvidersClient creates a new instance of ExpressRouteServiceProvidersClient with the specified values.
-func NewExpressRouteServiceProvidersClient(con *armcore.Connection, subscriptionid string) *ExpressRouteServiceProvidersClient {
-	return &ExpressRouteServiceProvidersClient{con: con, subscriptionid: subscriptionid}
+func NewExpressRouteServiceProvidersClient(con *armcore.Connection, subscriptionID string) *ExpressRouteServiceProvidersClient {
+	return &ExpressRouteServiceProvidersClient{con: con, subscriptionID: subscriptionID}
 }
 
 // List - Gets all the available express route service providers.
@@ -47,7 +47,7 @@ func (client *ExpressRouteServiceProvidersClient) List(options *ExpressRouteServ
 // listCreateRequest creates the List request.
 func (client *ExpressRouteServiceProvidersClient) listCreateRequest(ctx context.Context, options *ExpressRouteServiceProvidersListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteServiceProviders"
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionid))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err

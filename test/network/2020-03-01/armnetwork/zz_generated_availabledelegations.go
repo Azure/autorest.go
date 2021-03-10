@@ -20,12 +20,12 @@ import (
 // Don't use this type directly, use NewAvailableDelegationsClient() instead.
 type AvailableDelegationsClient struct {
 	con            *armcore.Connection
-	subscriptionid string
+	subscriptionID string
 }
 
 // NewAvailableDelegationsClient creates a new instance of AvailableDelegationsClient with the specified values.
-func NewAvailableDelegationsClient(con *armcore.Connection, subscriptionid string) *AvailableDelegationsClient {
-	return &AvailableDelegationsClient{con: con, subscriptionid: subscriptionid}
+func NewAvailableDelegationsClient(con *armcore.Connection, subscriptionID string) *AvailableDelegationsClient {
+	return &AvailableDelegationsClient{con: con, subscriptionID: subscriptionID}
 }
 
 // List - Gets all of the available subnet delegations for this subscription in this region.
@@ -48,7 +48,7 @@ func (client *AvailableDelegationsClient) List(location string, options *Availab
 func (client *AvailableDelegationsClient) listCreateRequest(ctx context.Context, location string, options *AvailableDelegationsListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availableDelegations"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionid))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err

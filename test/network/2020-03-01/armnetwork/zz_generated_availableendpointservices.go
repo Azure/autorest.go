@@ -20,12 +20,12 @@ import (
 // Don't use this type directly, use NewAvailableEndpointServicesClient() instead.
 type AvailableEndpointServicesClient struct {
 	con            *armcore.Connection
-	subscriptionid string
+	subscriptionID string
 }
 
 // NewAvailableEndpointServicesClient creates a new instance of AvailableEndpointServicesClient with the specified values.
-func NewAvailableEndpointServicesClient(con *armcore.Connection, subscriptionid string) *AvailableEndpointServicesClient {
-	return &AvailableEndpointServicesClient{con: con, subscriptionid: subscriptionid}
+func NewAvailableEndpointServicesClient(con *armcore.Connection, subscriptionID string) *AvailableEndpointServicesClient {
+	return &AvailableEndpointServicesClient{con: con, subscriptionID: subscriptionID}
 }
 
 // List - List what values of endpoint services are available for use.
@@ -48,7 +48,7 @@ func (client *AvailableEndpointServicesClient) List(location string, options *Av
 func (client *AvailableEndpointServicesClient) listCreateRequest(ctx context.Context, location string, options *AvailableEndpointServicesListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/virtualNetworkAvailableEndpointServices"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionid))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err

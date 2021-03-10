@@ -21,12 +21,12 @@ import (
 // Don't use this type directly, use NewVpnSitesConfigurationClient() instead.
 type VpnSitesConfigurationClient struct {
 	con            *armcore.Connection
-	subscriptionid string
+	subscriptionID string
 }
 
 // NewVpnSitesConfigurationClient creates a new instance of VpnSitesConfigurationClient with the specified values.
-func NewVpnSitesConfigurationClient(con *armcore.Connection, subscriptionid string) *VpnSitesConfigurationClient {
-	return &VpnSitesConfigurationClient{con: con, subscriptionid: subscriptionid}
+func NewVpnSitesConfigurationClient(con *armcore.Connection, subscriptionID string) *VpnSitesConfigurationClient {
+	return &VpnSitesConfigurationClient{con: con, subscriptionID: subscriptionID}
 }
 
 // BeginDownload - Gives the sas-url to download the configurations for vpn-sites in a resource group.
@@ -85,7 +85,7 @@ func (client *VpnSitesConfigurationClient) download(ctx context.Context, resourc
 // downloadCreateRequest creates the Download request.
 func (client *VpnSitesConfigurationClient) downloadCreateRequest(ctx context.Context, resourceGroupName string, virtualwanName string, request GetVpnSitesConfigurationRequest, options *VpnSitesConfigurationBeginDownloadOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/vpnConfiguration"
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionid))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualWANName}", url.PathEscape(virtualwanName))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))

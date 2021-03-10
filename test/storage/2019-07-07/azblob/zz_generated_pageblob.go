@@ -51,8 +51,8 @@ func (client *pageBlobClient) clearPagesCreateRequest(ctx context.Context, conte
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("x-ms-page-write", "clear")
 	req.Header.Set("Content-Length", strconv.FormatInt(contentLength, 10))
-	if pageBlobClearPagesOptions != nil && pageBlobClearPagesOptions.RangeParam != nil {
-		req.Header.Set("x-ms-range", *pageBlobClearPagesOptions.RangeParam)
+	if pageBlobClearPagesOptions != nil && pageBlobClearPagesOptions.Range != nil {
+		req.Header.Set("x-ms-range", *pageBlobClearPagesOptions.Range)
 	}
 	if leaseAccessConditions != nil && leaseAccessConditions.LeaseID != nil {
 		req.Header.Set("x-ms-lease-id", *leaseAccessConditions.LeaseID)
@@ -449,8 +449,8 @@ func (client *pageBlobClient) getPageRangesCreateRequest(ctx context.Context, pa
 		query.Set("timeout", strconv.FormatInt(int64(*pageBlobGetPageRangesOptions.Timeout), 10))
 	}
 	req.URL.RawQuery = query.Encode()
-	if pageBlobGetPageRangesOptions != nil && pageBlobGetPageRangesOptions.RangeParam != nil {
-		req.Header.Set("x-ms-range", *pageBlobGetPageRangesOptions.RangeParam)
+	if pageBlobGetPageRangesOptions != nil && pageBlobGetPageRangesOptions.Range != nil {
+		req.Header.Set("x-ms-range", *pageBlobGetPageRangesOptions.Range)
 	}
 	if leaseAccessConditions != nil && leaseAccessConditions.LeaseID != nil {
 		req.Header.Set("x-ms-lease-id", *leaseAccessConditions.LeaseID)
@@ -566,8 +566,8 @@ func (client *pageBlobClient) getPageRangesDiffCreateRequest(ctx context.Context
 	if pageBlobGetPageRangesDiffOptions != nil && pageBlobGetPageRangesDiffOptions.PrevSnapshotURL != nil {
 		req.Header.Set("x-ms-previous-snapshot-url", *pageBlobGetPageRangesDiffOptions.PrevSnapshotURL)
 	}
-	if pageBlobGetPageRangesDiffOptions != nil && pageBlobGetPageRangesDiffOptions.RangeParam != nil {
-		req.Header.Set("x-ms-range", *pageBlobGetPageRangesDiffOptions.RangeParam)
+	if pageBlobGetPageRangesDiffOptions != nil && pageBlobGetPageRangesDiffOptions.Range != nil {
+		req.Header.Set("x-ms-range", *pageBlobGetPageRangesDiffOptions.Range)
 	}
 	if leaseAccessConditions != nil && leaseAccessConditions.LeaseID != nil {
 		req.Header.Set("x-ms-lease-id", *leaseAccessConditions.LeaseID)
@@ -898,8 +898,8 @@ func (client *pageBlobClient) uploadPagesCreateRequest(ctx context.Context, cont
 	if pageBlobUploadPagesOptions != nil && pageBlobUploadPagesOptions.TransactionalContentCRC64 != nil {
 		req.Header.Set("x-ms-content-crc64", base64.StdEncoding.EncodeToString(*pageBlobUploadPagesOptions.TransactionalContentCRC64))
 	}
-	if pageBlobUploadPagesOptions != nil && pageBlobUploadPagesOptions.RangeParam != nil {
-		req.Header.Set("x-ms-range", *pageBlobUploadPagesOptions.RangeParam)
+	if pageBlobUploadPagesOptions != nil && pageBlobUploadPagesOptions.Range != nil {
+		req.Header.Set("x-ms-range", *pageBlobUploadPagesOptions.Range)
 	}
 	if leaseAccessConditions != nil && leaseAccessConditions.LeaseID != nil {
 		req.Header.Set("x-ms-lease-id", *leaseAccessConditions.LeaseID)

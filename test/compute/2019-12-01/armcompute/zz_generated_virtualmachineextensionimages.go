@@ -24,12 +24,12 @@ import (
 // Don't use this type directly, use NewVirtualMachineExtensionImagesClient() instead.
 type VirtualMachineExtensionImagesClient struct {
 	con            *armcore.Connection
-	subscriptionid string
+	subscriptionID string
 }
 
 // NewVirtualMachineExtensionImagesClient creates a new instance of VirtualMachineExtensionImagesClient with the specified values.
-func NewVirtualMachineExtensionImagesClient(con *armcore.Connection, subscriptionid string) *VirtualMachineExtensionImagesClient {
-	return &VirtualMachineExtensionImagesClient{con: con, subscriptionid: subscriptionid}
+func NewVirtualMachineExtensionImagesClient(con *armcore.Connection, subscriptionID string) *VirtualMachineExtensionImagesClient {
+	return &VirtualMachineExtensionImagesClient{con: con, subscriptionID: subscriptionID}
 }
 
 // Get - Gets a virtual machine extension image.
@@ -55,7 +55,7 @@ func (client *VirtualMachineExtensionImagesClient) getCreateRequest(ctx context.
 	urlPath = strings.ReplaceAll(urlPath, "{publisherName}", url.PathEscape(publisherName))
 	urlPath = strings.ReplaceAll(urlPath, "{type}", url.PathEscape(typeParam))
 	urlPath = strings.ReplaceAll(urlPath, "{version}", url.PathEscape(version))
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionid))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -110,7 +110,7 @@ func (client *VirtualMachineExtensionImagesClient) listTypesCreateRequest(ctx co
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
 	urlPath = strings.ReplaceAll(urlPath, "{publisherName}", url.PathEscape(publisherName))
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionid))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -166,7 +166,7 @@ func (client *VirtualMachineExtensionImagesClient) listVersionsCreateRequest(ctx
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
 	urlPath = strings.ReplaceAll(urlPath, "{publisherName}", url.PathEscape(publisherName))
 	urlPath = strings.ReplaceAll(urlPath, "{type}", url.PathEscape(typeParam))
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionid))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err

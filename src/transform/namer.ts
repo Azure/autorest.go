@@ -116,8 +116,10 @@ export async function namer(session: Session<CodeModel>) {
           param.language.go!.name = 'endpoint';
           continue;
         }
+        const inParamGroup = param.extensions?.['x-ms-parameter-grouping'] || param.required !== true;
         const paramDetails = <Language>param.language.go;
-        paramDetails.name = ensureNameCase(removePrefix(paramDetails.name, 'XMS'), true);
+        // if this is part of a param group struct then don't apply param naming rules to it
+        paramDetails.name = ensureNameCase(removePrefix(paramDetails.name, 'XMS'), !inParamGroup);
         // fix up any param group names
         if (param.extensions?.['x-ms-parameter-grouping']) {
           if (param.extensions['x-ms-parameter-grouping'].name) {
@@ -171,7 +173,9 @@ export async function namer(session: Session<CodeModel>) {
 
   for (const globalParam of values(session.model.globalParameters)) {
     const details = <Language>globalParam.language.go;
-    details.name = getEscapedReservedName(ensureNameCase(removePrefix(details.name, 'XMS'), true), 'Param');
+    const inParamGroup = globalParam.extensions?.['x-ms-parameter-grouping'] || globalParam.required !== true;
+    // if this is part of a param group struct then don't apply param naming rules to it
+    details.name = getEscapedReservedName(ensureNameCase(removePrefix(details.name, 'XMS'), !inParamGroup), 'Param');
   }
   return session;
 }
@@ -194,7 +198,16 @@ function getEscapedReservedName(name: string, appendValue: string): string {
   return name;
 }
 
+// used in ensureNameCase() to track which names have already been transformed.
+// this improves efficiency and also fixes some corner-cases where renaming the
+// same thing in succession gives the wrong result due to how the regex works.
+// e.g. SubscriptionId -> subscriptionID -> subscriptionid
+const gRenamed = new Map<string, boolean>();
+
 function ensureNameCase(name: string, isParam?: boolean): string {
+  if (gRenamed.has(name) && gRenamed.get(name) === isParam) {
+    return name;
+  }
   let reconstructed = '';
   // split the word into multiple words, either on Unicode word boundaries
   // or a defined set of separation characters, *preserving* the existing casing.
@@ -219,6 +232,7 @@ function ensureNameCase(name: string, isParam?: boolean): string {
     }
     reconstructed += word;
   }
+  gRenamed.set(reconstructed, isParam === true);
   return reconstructed;
 }
 

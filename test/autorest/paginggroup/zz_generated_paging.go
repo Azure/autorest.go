@@ -267,7 +267,7 @@ func (client *PagingClient) getMultiplePagesFragmentWithGroupingNextLinkCreateRe
 	}
 	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
-	query.Set("api_version", customParameterGroup.ApiVersion)
+	query.Set("api_version", customParameterGroup.APIVersion)
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
@@ -968,7 +968,7 @@ func (client *PagingClient) nextFragmentWithGroupingCreateRequest(ctx context.Co
 	}
 	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
-	query.Set("api_version", customParameterGroup.ApiVersion)
+	query.Set("api_version", customParameterGroup.APIVersion)
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil

@@ -20,12 +20,12 @@ import (
 // Don't use this type directly, use NewAvailableServiceAliasesClient() instead.
 type AvailableServiceAliasesClient struct {
 	con            *armcore.Connection
-	subscriptionid string
+	subscriptionID string
 }
 
 // NewAvailableServiceAliasesClient creates a new instance of AvailableServiceAliasesClient with the specified values.
-func NewAvailableServiceAliasesClient(con *armcore.Connection, subscriptionid string) *AvailableServiceAliasesClient {
-	return &AvailableServiceAliasesClient{con: con, subscriptionid: subscriptionid}
+func NewAvailableServiceAliasesClient(con *armcore.Connection, subscriptionID string) *AvailableServiceAliasesClient {
+	return &AvailableServiceAliasesClient{con: con, subscriptionID: subscriptionID}
 }
 
 // List - Gets all available service aliases for this subscription in this region.
@@ -48,7 +48,7 @@ func (client *AvailableServiceAliasesClient) List(location string, options *Avai
 func (client *AvailableServiceAliasesClient) listCreateRequest(ctx context.Context, location string, options *AvailableServiceAliasesListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availableServiceAliases"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionid))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -100,7 +100,7 @@ func (client *AvailableServiceAliasesClient) listByResourceGroupCreateRequest(ct
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availableServiceAliases"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionid))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err

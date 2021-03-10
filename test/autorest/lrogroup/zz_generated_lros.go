@@ -2959,7 +2959,7 @@ func (client *LROsClient) putAsyncNonResourceCreateRequest(ctx context.Context, 
 	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	if options != nil {
-		return req, req.MarshalAsJSON(options.Sku)
+		return req, req.MarshalAsJSON(options.SKU)
 	}
 	return req, nil
 }
@@ -3399,7 +3399,7 @@ func (client *LROsClient) putNonResourceCreateRequest(ctx context.Context, optio
 	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	if options != nil {
-		return req, req.MarshalAsJSON(options.Sku)
+		return req, req.MarshalAsJSON(options.SKU)
 	}
 	return req, nil
 }

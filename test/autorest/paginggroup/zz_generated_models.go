@@ -16,7 +16,7 @@ import (
 // CustomParameterGroup contains a group of parameters for the Paging.GetMultiplePagesFragmentWithGroupingNextLink method.
 type CustomParameterGroup struct {
 	// Sets the api version to use.
-	ApiVersion string
+	APIVersion string
 	// Sets the tenant to use.
 	Tenant string
 }

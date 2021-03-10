@@ -20,12 +20,12 @@ import (
 // Don't use this type directly, use NewServiceTagsClient() instead.
 type ServiceTagsClient struct {
 	con            *armcore.Connection
-	subscriptionid string
+	subscriptionID string
 }
 
 // NewServiceTagsClient creates a new instance of ServiceTagsClient with the specified values.
-func NewServiceTagsClient(con *armcore.Connection, subscriptionid string) *ServiceTagsClient {
-	return &ServiceTagsClient{con: con, subscriptionid: subscriptionid}
+func NewServiceTagsClient(con *armcore.Connection, subscriptionID string) *ServiceTagsClient {
+	return &ServiceTagsClient{con: con, subscriptionID: subscriptionID}
 }
 
 // List - Gets a list of service tag information resources.
@@ -48,7 +48,7 @@ func (client *ServiceTagsClient) List(ctx context.Context, location string, opti
 func (client *ServiceTagsClient) listCreateRequest(ctx context.Context, location string, options *ServiceTagsListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/serviceTags"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionid))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
