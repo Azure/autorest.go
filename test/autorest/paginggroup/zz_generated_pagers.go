@@ -264,7 +264,7 @@ type productResultValueWithXMSClientNameHandleResponse func(*azcore.Response) (P
 
 type productResultValueWithXMSClientNameAdvancePage func(context.Context, ProductResultValueWithXMSClientNameResponse) (*azcore.Request, error)
 
-type productResultValueWithXMSClientNamePager struct {
+type productResultValueWithXmsClientNamePager struct {
 	// the pipeline for making the request
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
@@ -283,11 +283,11 @@ type productResultValueWithXMSClientNamePager struct {
 	err error
 }
 
-func (p *productResultValueWithXMSClientNamePager) Err() error {
+func (p *productResultValueWithXmsClientNamePager) Err() error {
 	return p.err
 }
 
-func (p *productResultValueWithXMSClientNamePager) NextPage(ctx context.Context) bool {
+func (p *productResultValueWithXmsClientNamePager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -320,6 +320,6 @@ func (p *productResultValueWithXMSClientNamePager) NextPage(ctx context.Context)
 	return true
 }
 
-func (p *productResultValueWithXMSClientNamePager) PageResponse() ProductResultValueWithXMSClientNameResponse {
+func (p *productResultValueWithXmsClientNamePager) PageResponse() ProductResultValueWithXMSClientNameResponse {
 	return p.current
 }

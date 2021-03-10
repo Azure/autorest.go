@@ -6,7 +6,7 @@
 import { Session } from '@autorest/extension-base';
 import { CodeModel } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
-import { PagerInfo } from '../common/helpers';
+import { internalPagerTypeName, PagerInfo } from '../common/helpers';
 import { contentPreamble, sortAscending } from './helpers';
 import { ImportManager } from './imports';
 
@@ -27,7 +27,7 @@ export async function generatePagers(session: Session<CodeModel>): Promise<strin
   const pagers = <Array<PagerInfo>>session.model.language.go!.pageableTypes;
   pagers.sort((a: PagerInfo, b: PagerInfo) => { return sortAscending(a.name, b.name) });
   for (const pager of values(pagers)) {
-    const pagerType = pager.name.uncapitalize();
+    const pagerType = internalPagerTypeName(pager);
     let pollerRespField = '';
     let respFieldCheck = '\tresp, err := p.pipeline.Do(req)';
     let requesterCondition = '';

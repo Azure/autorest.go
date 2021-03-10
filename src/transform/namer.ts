@@ -213,7 +213,7 @@ function ensureNameCase(name: string, isParam?: boolean): string {
   // or a defined set of separation characters, *preserving* the existing casing.
   // we cannot use deconstruct() as it is *not* case-preserving.
   // remove any entries that are empty and return the array.
-  const words = values(name.split(new RegExp('(\\p{Lu}\\p{Ll}+)|\\.|_|@|-|\\s|\\$', 'gmu'))).where(s => s !== undefined && s.trim() !== '').toArray();
+  const words = values(name.split(new RegExp('(\\p{Lu}\\p{Ll}+\\d*)|\\.|_|@|-|\\s|\\$', 'gmu'))).where(s => s !== undefined && s.trim() !== '').toArray();
   for (let i = 0; i < words.length; ++i) {
     let word = words[i];
     // for params, lower-case the first segment

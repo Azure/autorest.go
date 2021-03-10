@@ -131,7 +131,7 @@ func (client *VirtualNetworkGatewaysClient) BeginDelete(ctx context.Context, res
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -149,7 +149,7 @@ func (client *VirtualNetworkGatewaysClient) ResumeDelete(token string) (HTTPPoll
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
@@ -211,7 +211,7 @@ func (client *VirtualNetworkGatewaysClient) BeginDisconnectVirtualNetworkGateway
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -229,7 +229,7 @@ func (client *VirtualNetworkGatewaysClient) ResumeDisconnectVirtualNetworkGatewa
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
@@ -1264,7 +1264,7 @@ func (client *VirtualNetworkGatewaysClient) BeginResetVpnClientSharedKey(ctx con
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -1282,7 +1282,7 @@ func (client *VirtualNetworkGatewaysClient) ResumeResetVpnClientSharedKey(token 
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil

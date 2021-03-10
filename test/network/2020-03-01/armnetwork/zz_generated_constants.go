@@ -1201,15 +1201,15 @@ func (c ExpressRouteLinkConnectorType) ToPtr() *ExpressRouteLinkConnectorType {
 type ExpressRouteLinkMacSecCipher string
 
 const (
-	ExpressRouteLinkMacSecCipherGCMAES128 ExpressRouteLinkMacSecCipher = "gcm-aes-128"
-	ExpressRouteLinkMacSecCipherGCMAES256 ExpressRouteLinkMacSecCipher = "gcm-aes-256"
+	ExpressRouteLinkMacSecCipherGCMAes128 ExpressRouteLinkMacSecCipher = "gcm-aes-128"
+	ExpressRouteLinkMacSecCipherGCMAes256 ExpressRouteLinkMacSecCipher = "gcm-aes-256"
 )
 
 // PossibleExpressRouteLinkMacSecCipherValues returns the possible values for the ExpressRouteLinkMacSecCipher const type.
 func PossibleExpressRouteLinkMacSecCipherValues() []ExpressRouteLinkMacSecCipher {
 	return []ExpressRouteLinkMacSecCipher{
-		ExpressRouteLinkMacSecCipherGCMAES128,
-		ExpressRouteLinkMacSecCipherGCMAES256,
+		ExpressRouteLinkMacSecCipherGCMAes128,
+		ExpressRouteLinkMacSecCipherGCMAes256,
 	}
 }
 

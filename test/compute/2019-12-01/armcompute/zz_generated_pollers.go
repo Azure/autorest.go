@@ -25,23 +25,23 @@ type AccessURIPoller interface {
 	FinalResponse(ctx context.Context) (AccessURIResponse, error)
 }
 
-type accessURIPoller struct {
+type accessUriPoller struct {
 	// the client for making the request
 	pipeline azcore.Pipeline
 	pt       armcore.Poller
 }
 
 // Done returns true if there was an error or polling has reached a terminal state
-func (p *accessURIPoller) Done() bool {
+func (p *accessUriPoller) Done() bool {
 	return p.pt.Done()
 }
 
 // Poll will send poll the service endpoint and return an http.Response or error received from the service
-func (p *accessURIPoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *accessUriPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx, p.pipeline)
 }
 
-func (p *accessURIPoller) FinalResponse(ctx context.Context) (AccessURIResponse, error) {
+func (p *accessUriPoller) FinalResponse(ctx context.Context) (AccessURIResponse, error) {
 	respType := AccessURIResponse{AccessURI: &AccessURI{}}
 	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.AccessURI)
 	if err != nil {
@@ -53,11 +53,11 @@ func (p *accessURIPoller) FinalResponse(ctx context.Context) (AccessURIResponse,
 
 // ResumeToken generates the string token that can be used with the ResumeAccessURIPoller method
 // on the client to create a new poller from the data held in the current poller type
-func (p *accessURIPoller) ResumeToken() (string, error) {
+func (p *accessUriPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-func (p *accessURIPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (AccessURIResponse, error) {
+func (p *accessUriPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (AccessURIResponse, error) {
 	respType := AccessURIResponse{AccessURI: &AccessURI{}}
 	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.AccessURI)
 	if err != nil {
@@ -545,33 +545,33 @@ type HTTPPoller interface {
 	FinalResponse(ctx context.Context) (*http.Response, error)
 }
 
-type hTTPPoller struct {
+type httpPoller struct {
 	// the client for making the request
 	pipeline azcore.Pipeline
 	pt       armcore.Poller
 }
 
 // Done returns true if there was an error or polling has reached a terminal state
-func (p *hTTPPoller) Done() bool {
+func (p *httpPoller) Done() bool {
 	return p.pt.Done()
 }
 
 // Poll will send poll the service endpoint and return an http.Response or error received from the service
-func (p *hTTPPoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *httpPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx, p.pipeline)
 }
 
-func (p *hTTPPoller) FinalResponse(ctx context.Context) (*http.Response, error) {
+func (p *httpPoller) FinalResponse(ctx context.Context) (*http.Response, error) {
 	return p.pt.FinalResponse(ctx, p.pipeline, nil)
 }
 
 // ResumeToken generates the string token that can be used with the ResumeHTTPPoller method
 // on the client to create a new poller from the data held in the current poller type
-func (p *hTTPPoller) ResumeToken() (string, error) {
+func (p *httpPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-func (p *hTTPPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+func (p *httpPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*http.Response, error) {
 	return p.pt.PollUntilDone(ctx, frequency, p.pipeline, nil)
 }
 

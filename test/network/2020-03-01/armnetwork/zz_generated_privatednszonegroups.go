@@ -42,7 +42,7 @@ func (client *PrivateDNSZoneGroupsClient) BeginCreateOrUpdate(ctx context.Contex
 	if err != nil {
 		return PrivateDNSZoneGroupPollerResponse{}, err
 	}
-	poller := &privateDNSZoneGroupPoller{
+	poller := &privateDnsZoneGroupPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -60,7 +60,7 @@ func (client *PrivateDNSZoneGroupsClient) ResumeCreateOrUpdate(token string) (Pr
 	if err != nil {
 		return nil, err
 	}
-	return &privateDNSZoneGroupPoller{
+	return &privateDnsZoneGroupPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
@@ -132,7 +132,7 @@ func (client *PrivateDNSZoneGroupsClient) BeginDelete(ctx context.Context, resou
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -150,7 +150,7 @@ func (client *PrivateDNSZoneGroupsClient) ResumeDelete(token string) (HTTPPoller
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
@@ -255,7 +255,7 @@ func (client *PrivateDNSZoneGroupsClient) getHandleError(resp *azcore.Response) 
 
 // List - Gets all private dns zone groups in a private endpoint.
 func (client *PrivateDNSZoneGroupsClient) List(privateEndpointName string, resourceGroupName string, options *PrivateDNSZoneGroupsListOptions) PrivateDNSZoneGroupListResultPager {
-	return &privateDNSZoneGroupListResultPager{
+	return &privateDnsZoneGroupListResultPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, privateEndpointName, resourceGroupName, options)

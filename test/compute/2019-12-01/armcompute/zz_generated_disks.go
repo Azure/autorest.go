@@ -137,7 +137,7 @@ func (client *DisksClient) BeginDelete(ctx context.Context, resourceGroupName st
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -155,7 +155,7 @@ func (client *DisksClient) ResumeDelete(token string) (HTTPPoller, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
@@ -274,7 +274,7 @@ func (client *DisksClient) BeginGrantAccess(ctx context.Context, resourceGroupNa
 	if err != nil {
 		return AccessURIPollerResponse{}, err
 	}
-	poller := &accessURIPoller{
+	poller := &accessUriPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -292,7 +292,7 @@ func (client *DisksClient) ResumeGrantAccess(token string) (AccessURIPoller, err
 	if err != nil {
 		return nil, err
 	}
-	return &accessURIPoller{
+	return &accessUriPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
@@ -473,7 +473,7 @@ func (client *DisksClient) BeginRevokeAccess(ctx context.Context, resourceGroupN
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -491,7 +491,7 @@ func (client *DisksClient) ResumeRevokeAccess(token string) (HTTPPoller, error) 
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil

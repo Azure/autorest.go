@@ -1245,7 +1245,7 @@ type sSHPublicKeysGroupListResultHandleResponse func(*azcore.Response) (SSHPubli
 
 type sSHPublicKeysGroupListResultAdvancePage func(context.Context, SSHPublicKeysGroupListResultResponse) (*azcore.Request, error)
 
-type sSHPublicKeysGroupListResultPager struct {
+type sshPublicKeysGroupListResultPager struct {
 	// the pipeline for making the request
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
@@ -1264,11 +1264,11 @@ type sSHPublicKeysGroupListResultPager struct {
 	err error
 }
 
-func (p *sSHPublicKeysGroupListResultPager) Err() error {
+func (p *sshPublicKeysGroupListResultPager) Err() error {
 	return p.err
 }
 
-func (p *sSHPublicKeysGroupListResultPager) NextPage(ctx context.Context) bool {
+func (p *sshPublicKeysGroupListResultPager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -1301,7 +1301,7 @@ func (p *sSHPublicKeysGroupListResultPager) NextPage(ctx context.Context) bool {
 	return true
 }
 
-func (p *sSHPublicKeysGroupListResultPager) PageResponse() SSHPublicKeysGroupListResultResponse {
+func (p *sshPublicKeysGroupListResultPager) PageResponse() SSHPublicKeysGroupListResultResponse {
 	return p.current
 }
 

@@ -133,7 +133,7 @@ func (client *GalleryImageVersionsClient) BeginDelete(ctx context.Context, resou
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -151,7 +151,7 @@ func (client *GalleryImageVersionsClient) ResumeDelete(token string) (HTTPPoller
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil

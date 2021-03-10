@@ -132,7 +132,7 @@ func (client *VirtualRouterPeeringsClient) BeginDelete(ctx context.Context, reso
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -150,7 +150,7 @@ func (client *VirtualRouterPeeringsClient) ResumeDelete(token string) (HTTPPolle
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil

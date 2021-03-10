@@ -184,7 +184,7 @@ func (client *VirtualNetworksClient) BeginDelete(ctx context.Context, resourceGr
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -202,7 +202,7 @@ func (client *VirtualNetworksClient) ResumeDelete(token string) (HTTPPoller, err
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil

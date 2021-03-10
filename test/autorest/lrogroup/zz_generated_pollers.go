@@ -25,33 +25,33 @@ type HTTPPoller interface {
 	FinalResponse(ctx context.Context) (*http.Response, error)
 }
 
-type hTTPPoller struct {
+type httpPoller struct {
 	// the client for making the request
 	pipeline azcore.Pipeline
 	pt       armcore.Poller
 }
 
 // Done returns true if there was an error or polling has reached a terminal state
-func (p *hTTPPoller) Done() bool {
+func (p *httpPoller) Done() bool {
 	return p.pt.Done()
 }
 
 // Poll will send poll the service endpoint and return an http.Response or error received from the service
-func (p *hTTPPoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *httpPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx, p.pipeline)
 }
 
-func (p *hTTPPoller) FinalResponse(ctx context.Context) (*http.Response, error) {
+func (p *httpPoller) FinalResponse(ctx context.Context) (*http.Response, error) {
 	return p.pt.FinalResponse(ctx, p.pipeline, nil)
 }
 
 // ResumeToken generates the string token that can be used with the ResumeHTTPPoller method
 // on the client to create a new poller from the data held in the current poller type
-func (p *hTTPPoller) ResumeToken() (string, error) {
+func (p *httpPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-func (p *hTTPPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+func (p *httpPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*http.Response, error) {
 	return p.pt.PollUntilDone(ctx, frequency, p.pipeline, nil)
 }
 
@@ -169,23 +169,23 @@ type SKUPoller interface {
 	FinalResponse(ctx context.Context) (SKUResponse, error)
 }
 
-type sKUPoller struct {
+type skuPoller struct {
 	// the client for making the request
 	pipeline azcore.Pipeline
 	pt       armcore.Poller
 }
 
 // Done returns true if there was an error or polling has reached a terminal state
-func (p *sKUPoller) Done() bool {
+func (p *skuPoller) Done() bool {
 	return p.pt.Done()
 }
 
 // Poll will send poll the service endpoint and return an http.Response or error received from the service
-func (p *sKUPoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *skuPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx, p.pipeline)
 }
 
-func (p *sKUPoller) FinalResponse(ctx context.Context) (SKUResponse, error) {
+func (p *skuPoller) FinalResponse(ctx context.Context) (SKUResponse, error) {
 	respType := SKUResponse{SKU: &SKU{}}
 	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.SKU)
 	if err != nil {
@@ -197,11 +197,11 @@ func (p *sKUPoller) FinalResponse(ctx context.Context) (SKUResponse, error) {
 
 // ResumeToken generates the string token that can be used with the ResumeSKUPoller method
 // on the client to create a new poller from the data held in the current poller type
-func (p *sKUPoller) ResumeToken() (string, error) {
+func (p *skuPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-func (p *sKUPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (SKUResponse, error) {
+func (p *skuPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (SKUResponse, error) {
 	respType := SKUResponse{SKU: &SKU{}}
 	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.SKU)
 	if err != nil {

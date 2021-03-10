@@ -168,7 +168,7 @@ func (client *sQLScriptClient) getSQLScriptHandleError(resp *azcore.Response) er
 
 // GetSQLScriptsByWorkspace - Lists sql scripts.
 func (client *sQLScriptClient) GetSQLScriptsByWorkspace(options *SQLScriptGetSQLScriptsByWorkspaceOptions) SQLScriptsListResponsePager {
-	return &sQLScriptsListResponsePager{
+	return &sqlScriptsListResponsePager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.getSQLScriptsByWorkspaceCreateRequest(ctx, options)

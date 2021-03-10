@@ -138,7 +138,7 @@ func (client *DedicatedHostsClient) BeginDelete(ctx context.Context, resourceGro
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -156,7 +156,7 @@ func (client *DedicatedHostsClient) ResumeDelete(token string) (HTTPPoller, erro
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil

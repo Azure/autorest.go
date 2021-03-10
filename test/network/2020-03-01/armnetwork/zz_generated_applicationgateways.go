@@ -317,7 +317,7 @@ func (client *ApplicationGatewaysClient) BeginDelete(ctx context.Context, resour
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -335,7 +335,7 @@ func (client *ApplicationGatewaysClient) ResumeDelete(token string) (HTTPPoller,
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
@@ -901,7 +901,7 @@ func (client *ApplicationGatewaysClient) BeginStart(ctx context.Context, resourc
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -919,7 +919,7 @@ func (client *ApplicationGatewaysClient) ResumeStart(token string) (HTTPPoller, 
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
@@ -981,7 +981,7 @@ func (client *ApplicationGatewaysClient) BeginStop(ctx context.Context, resource
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -999,7 +999,7 @@ func (client *ApplicationGatewaysClient) ResumeStop(token string) (HTTPPoller, e
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil

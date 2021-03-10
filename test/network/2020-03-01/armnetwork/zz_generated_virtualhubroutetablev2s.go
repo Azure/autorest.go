@@ -132,7 +132,7 @@ func (client *VirtualHubRouteTableV2SClient) BeginDelete(ctx context.Context, re
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -150,7 +150,7 @@ func (client *VirtualHubRouteTableV2SClient) ResumeDelete(token string) (HTTPPol
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil

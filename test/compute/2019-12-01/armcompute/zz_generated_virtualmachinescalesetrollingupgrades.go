@@ -45,7 +45,7 @@ func (client *VirtualMachineScaleSetRollingUpgradesClient) BeginCancel(ctx conte
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -63,7 +63,7 @@ func (client *VirtualMachineScaleSetRollingUpgradesClient) ResumeCancel(token st
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
@@ -184,7 +184,7 @@ func (client *VirtualMachineScaleSetRollingUpgradesClient) BeginStartExtensionUp
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -202,7 +202,7 @@ func (client *VirtualMachineScaleSetRollingUpgradesClient) ResumeStartExtensionU
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
@@ -270,7 +270,7 @@ func (client *VirtualMachineScaleSetRollingUpgradesClient) BeginStartOSUpgrade(c
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -288,7 +288,7 @@ func (client *VirtualMachineScaleSetRollingUpgradesClient) ResumeStartOSUpgrade(
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil

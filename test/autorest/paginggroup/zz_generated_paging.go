@@ -720,7 +720,7 @@ func (client *PagingClient) getOdataMultiplePagesHandleError(resp *azcore.Respon
 
 // GetPagingModelWithItemNameWithXMSClientName - A paging operation that returns a paging model whose item name is is overriden by x-ms-client-name 'indexes'.
 func (client *PagingClient) GetPagingModelWithItemNameWithXMSClientName(options *PagingGetPagingModelWithItemNameWithXMSClientNameOptions) ProductResultValueWithXMSClientNamePager {
-	return &productResultValueWithXMSClientNamePager{
+	return &productResultValueWithXmsClientNamePager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.getPagingModelWithItemNameWithXMSClientNameCreateRequest(ctx, options)

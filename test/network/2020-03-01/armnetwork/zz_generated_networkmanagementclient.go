@@ -94,7 +94,7 @@ func (client *NetworkManagementClient) BeginDeleteBastionShareableLink(ctx conte
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -112,7 +112,7 @@ func (client *NetworkManagementClient) ResumeDeleteBastionShareableLink(token st
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil

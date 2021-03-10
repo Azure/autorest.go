@@ -132,7 +132,7 @@ func (client *FirewallPolicyRuleGroupsClient) BeginDelete(ctx context.Context, r
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -150,7 +150,7 @@ func (client *FirewallPolicyRuleGroupsClient) ResumeDelete(token string) (HTTPPo
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil

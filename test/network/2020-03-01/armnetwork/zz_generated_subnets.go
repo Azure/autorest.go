@@ -132,7 +132,7 @@ func (client *SubnetsClient) BeginDelete(ctx context.Context, resourceGroupName 
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -150,7 +150,7 @@ func (client *SubnetsClient) ResumeDelete(token string) (HTTPPoller, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
@@ -321,7 +321,7 @@ func (client *SubnetsClient) BeginPrepareNetworkPolicies(ctx context.Context, re
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -339,7 +339,7 @@ func (client *SubnetsClient) ResumePrepareNetworkPolicies(token string) (HTTPPol
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
@@ -402,7 +402,7 @@ func (client *SubnetsClient) BeginUnprepareNetworkPolicies(ctx context.Context, 
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -420,7 +420,7 @@ func (client *SubnetsClient) ResumeUnprepareNetworkPolicies(token string) (HTTPP
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil

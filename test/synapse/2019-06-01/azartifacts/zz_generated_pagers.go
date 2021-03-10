@@ -561,7 +561,7 @@ type sQLScriptsListResponseHandleResponse func(*azcore.Response) (SQLScriptsList
 
 type sQLScriptsListResponseAdvancePage func(context.Context, SQLScriptsListResponseResponse) (*azcore.Request, error)
 
-type sQLScriptsListResponsePager struct {
+type sqlScriptsListResponsePager struct {
 	// the pipeline for making the request
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
@@ -580,11 +580,11 @@ type sQLScriptsListResponsePager struct {
 	err error
 }
 
-func (p *sQLScriptsListResponsePager) Err() error {
+func (p *sqlScriptsListResponsePager) Err() error {
 	return p.err
 }
 
-func (p *sQLScriptsListResponsePager) NextPage(ctx context.Context) bool {
+func (p *sqlScriptsListResponsePager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -617,7 +617,7 @@ func (p *sQLScriptsListResponsePager) NextPage(ctx context.Context) bool {
 	return true
 }
 
-func (p *sQLScriptsListResponsePager) PageResponse() SQLScriptsListResponseResponse {
+func (p *sqlScriptsListResponsePager) PageResponse() SQLScriptsListResponseResponse {
 	return p.current
 }
 

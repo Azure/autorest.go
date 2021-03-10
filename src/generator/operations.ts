@@ -7,7 +7,7 @@ import { Session } from '@autorest/extension-base';
 import { comment, KnownMediaType } from '@azure-tools/codegen';
 import { ArraySchema, ByteArraySchema, CodeModel, ConstantSchema, DateTimeSchema, DictionarySchema, GroupProperty, ImplementationLocation, NumberSchema, Operation, Parameter, Property, Protocols, Response, Schema, SchemaResponse, SchemaType } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
-import { aggregateParameters, isArraySchema, isPageableOperation, isSchemaResponse, PagerInfo, isLROOperation, commentLength } from '../common/helpers';
+import { aggregateParameters, internalPagerTypeName, internalPollerTypeName, isArraySchema, isPageableOperation, isSchemaResponse, PagerInfo, PollerInfo, isLROOperation, commentLength } from '../common/helpers';
 import { OperationNaming } from '../transform/namer';
 import { contentPreamble, formatParameterTypeName, formatStatusCodes, getStatusCodes, hasDescription, hasSchemaResponse, skipURLEncoding, sortAscending, getCreateRequestParameters, getCreateRequestParametersSig, getMethodParameters, getParamName, formatParamValue, dateFormat, datetimeRFC1123Format, datetimeRFC3339Format, sortParametersByRequired } from './helpers';
 import { ImportManager } from './imports';
@@ -258,7 +258,7 @@ function generateOperation(op: Operation, imports: ImportManager): string {
   const statusCodes = getStatusCodes(op);
   if (isPageableOperation(op) && !isLROOperation(op)) {
     imports.add('context');
-    text += `\treturn &${(<string>op.language.go!.pageableType.name).uncapitalize()}{\n`;
+    text += `\treturn &${internalPagerTypeName(<PagerInfo>op.language.go!.pageableType)}{\n`;
     text += `\t\tpipeline: client.con.Pipeline(),\n`;
     text += `\t\trequester: func(ctx context.Context) (*azcore.Request, error) {\n`;
     text += `\t\t\treturn client.${info.protocolNaming.requestMethod}(${reqParams})\n`;
@@ -1024,7 +1024,7 @@ function generateARMLROBeginMethod(op: Operation, imports: ImportManager): strin
   text += '\tif err != nil {\n';
   text += `\t\treturn ${zeroResp}, err\n`;
   text += '\t}\n';
-  text += `\tpoller := &${(<string>op.language.go!.pollerType.name).uncapitalize()}{\n`;
+  text += `\tpoller := &${internalPollerTypeName(<PollerInfo>op.language.go!.pollerType)}{\n`;
   text += '\t\tpt: pt,\n';
   if (isPageableOperation(op)) {
     const statusCodes = getStatusCodes(op);
@@ -1075,7 +1075,7 @@ function generateARMLROResumeMethod(op: Operation): string {
   text += '\tif err != nil {\n';
   text += '\t\treturn nil, err\n';
   text += '\t}\n';
-  text += `\treturn &${(<string>op.language.go!.pollerType.name).uncapitalize()}{\n`;
+  text += `\treturn &${internalPollerTypeName(<PollerInfo>op.language.go!.pollerType)}{\n`;
   text += '\t\tpipeline: client.con.Pipeline(),\n';
   text += '\t\tpt: pt,\n';
   text += '\t}, nil\n';

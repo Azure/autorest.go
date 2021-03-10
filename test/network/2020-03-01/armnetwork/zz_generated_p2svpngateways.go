@@ -131,7 +131,7 @@ func (client *P2SVpnGatewaysClient) BeginDelete(ctx context.Context, resourceGro
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -149,7 +149,7 @@ func (client *P2SVpnGatewaysClient) ResumeDelete(token string) (HTTPPoller, erro
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
@@ -211,7 +211,7 @@ func (client *P2SVpnGatewaysClient) BeginDisconnectP2SVpnConnections(ctx context
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -229,7 +229,7 @@ func (client *P2SVpnGatewaysClient) ResumeDisconnectP2SVpnConnections(token stri
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil

@@ -4,15 +4,16 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Session } from '@autorest/extension-base';
+import { camelCase } from '@azure-tools/codegen';
 import { CodeModel, SchemaType, Schema, ArraySchema } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
-import { PollerInfo, PagerInfo } from '../common/helpers';
+import { internalPagerTypeName, internalPollerTypeName, PollerInfo, PagerInfo } from '../common/helpers';
 import { contentPreamble, sortAscending } from './helpers';
 import { ImportManager } from './imports';
 
 function generatePagerReturnInstance(pager: PagerInfo): string {
   let text = '';
-  text += `\treturn &${pager.name.uncapitalize()}{\n`;
+  text += `\treturn &${internalPagerTypeName(pager)}{\n`;
   text += `\t\tpipeline: p.pipeline,\n`;
   text += `\t\tresp: resp,\n`;
   text += '\t\terrorer: p.errHandler,\n';
@@ -44,7 +45,7 @@ export async function generateARMPollers(session: Session<CodeModel>): Promise<s
   pollers.sort((a: PollerInfo, b: PollerInfo) => { return sortAscending(a.name, b.name) });
   for (const poller of values(pollers)) {
     const pollerInterface = poller.name;
-    const pollerName = poller.name.uncapitalize();
+    const pollerName = internalPollerTypeName(poller);
     let responseType = 'HTTPResponse';
     // HTTP Pollers do not need to perform the final get request since they do not return a model
     let finalResponseDeclaration = 'FinalResponse(ctx context.Context) (*http.Response, error)';
@@ -57,7 +58,7 @@ export async function generateARMPollers(session: Session<CodeModel>): Promise<s
     let pagerFields = '';
     if (poller.pager) {
       function finalPagerProcessing(name: string, params: string): string {
-        return `respType := &${responseType.uncapitalize()}{}
+        return `respType := &${camelCase(responseType)}{}
                 resp, err := p.pt.${name}(${params})
                 if err != nil {
                   return nil, err
@@ -69,8 +70,8 @@ export async function generateARMPollers(session: Session<CodeModel>): Promise<s
       // for operations that do return a model add a final response method that handles the final get URL scenario
       finalResponseDeclaration = `FinalResponse(ctx context.Context) (${responseType}, error)`;
       pagerFields = `
-      errHandler  ${poller.pager.respType.uncapitalize()}HandleError
-      respHandler ${poller.pager.respType.uncapitalize()}HandleResponse
+      errHandler  ${camelCase(poller.pager.respType)}HandleError
+      respHandler ${camelCase(poller.pager.respType)}HandleResponse
       statusCodes []int`;
       handleResponse = `
       func (p *${pollerName}) handleResponse(resp *azcore.Response) (${responseType}, error) {

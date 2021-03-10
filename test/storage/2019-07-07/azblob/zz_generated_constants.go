@@ -499,7 +499,7 @@ const (
 	StorageErrorCodeInvalidHTTPVerb                                   StorageErrorCode = "InvalidHttpVerb"
 	StorageErrorCodeInvalidHeaderValue                                StorageErrorCode = "InvalidHeaderValue"
 	StorageErrorCodeInvalidInput                                      StorageErrorCode = "InvalidInput"
-	StorageErrorCodeInvalidMd5                                        StorageErrorCode = "InvalidMd5"
+	StorageErrorCodeInvalidMD5                                        StorageErrorCode = "InvalidMd5"
 	StorageErrorCodeInvalidMetadata                                   StorageErrorCode = "InvalidMetadata"
 	StorageErrorCodeInvalidOperation                                  StorageErrorCode = "InvalidOperation"
 	StorageErrorCodeInvalidPageRange                                  StorageErrorCode = "InvalidPageRange"
@@ -525,8 +525,8 @@ const (
 	StorageErrorCodeLeaseNotPresentWithBlobOperation                  StorageErrorCode = "LeaseNotPresentWithBlobOperation"
 	StorageErrorCodeLeaseNotPresentWithContainerOperation             StorageErrorCode = "LeaseNotPresentWithContainerOperation"
 	StorageErrorCodeLeaseNotPresentWithLeaseOperation                 StorageErrorCode = "LeaseNotPresentWithLeaseOperation"
+	StorageErrorCodeMD5Mismatch                                       StorageErrorCode = "Md5Mismatch"
 	StorageErrorCodeMaxBlobSizeConditionNotMet                        StorageErrorCode = "MaxBlobSizeConditionNotMet"
-	StorageErrorCodeMd5Mismatch                                       StorageErrorCode = "Md5Mismatch"
 	StorageErrorCodeMetadataTooLarge                                  StorageErrorCode = "MetadataTooLarge"
 	StorageErrorCodeMissingContentLengthHeader                        StorageErrorCode = "MissingContentLengthHeader"
 	StorageErrorCodeMissingRequiredHeader                             StorageErrorCode = "MissingRequiredHeader"
@@ -616,7 +616,7 @@ func PossibleStorageErrorCodeValues() []StorageErrorCode {
 		StorageErrorCodeInvalidHTTPVerb,
 		StorageErrorCodeInvalidHeaderValue,
 		StorageErrorCodeInvalidInput,
-		StorageErrorCodeInvalidMd5,
+		StorageErrorCodeInvalidMD5,
 		StorageErrorCodeInvalidMetadata,
 		StorageErrorCodeInvalidOperation,
 		StorageErrorCodeInvalidPageRange,
@@ -642,8 +642,8 @@ func PossibleStorageErrorCodeValues() []StorageErrorCode {
 		StorageErrorCodeLeaseNotPresentWithBlobOperation,
 		StorageErrorCodeLeaseNotPresentWithContainerOperation,
 		StorageErrorCodeLeaseNotPresentWithLeaseOperation,
+		StorageErrorCodeMD5Mismatch,
 		StorageErrorCodeMaxBlobSizeConditionNotMet,
-		StorageErrorCodeMd5Mismatch,
 		StorageErrorCodeMetadataTooLarge,
 		StorageErrorCodeMissingContentLengthHeader,
 		StorageErrorCodeMissingRequiredHeader,

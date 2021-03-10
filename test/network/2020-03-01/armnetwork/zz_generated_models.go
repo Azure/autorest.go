@@ -750,7 +750,7 @@ type ApplicationGatewayPropertiesFormat struct {
 	EnableFips *bool `json:"enableFips,omitempty"`
 
 	// Whether HTTP2 is enabled on the application gateway resource.
-	EnableHTTP2 *bool `json:"enableHttp2,omitempty"`
+	EnableHttp2 *bool `json:"enableHttp2,omitempty"`
 
 	// Reference to the FirewallPolicy resource.
 	FirewallPolicy *SubResource `json:"firewallPolicy,omitempty"`

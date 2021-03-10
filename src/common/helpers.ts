@@ -3,8 +3,8 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { Session } from '@autorest/extension-base';
-import { ArraySchema, CodeModel, DictionarySchema, ObjectSchema, Operation, Parameter, Response, Schema, SchemaResponse, SchemaType } from '@azure-tools/codemodel';
+import { camelCase } from '@azure-tools/codegen';
+import { ArraySchema, DictionarySchema, ObjectSchema, Operation, Parameter, Response, Schema, SchemaResponse, SchemaType } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 
 // variable to be used to determine comment length when calling comment from @azure-tools
@@ -46,6 +46,11 @@ export interface PagerInfo {
   hasLRO: boolean;   // true if this pager is used with an LRO
 }
 
+// returns the type name of the internal pager type
+export function internalPagerTypeName(pi: PagerInfo): string {
+  return camelCase(pi.name);
+}
+
 // returns true if the operation is pageable
 export function isPageableOperation(op: Operation): boolean {
   return op.language.go!.paging && op.language.go!.paging.nextLinkName !== null;
@@ -57,6 +62,11 @@ export interface PollerInfo {
   respField?: string; // name of the response type field within the response envelope
   respType?: Schema;  // schema of the response type
   pager?: PagerInfo;
+}
+
+// returns the type name of the internal poller type
+export function internalPollerTypeName(pi: PollerInfo): string {
+  return camelCase(pi.name);
 }
 
 // returns true if the operation is a long-running operation

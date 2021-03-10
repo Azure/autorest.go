@@ -42,7 +42,7 @@ func (client *IPGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceG
 	if err != nil {
 		return IPGroupPollerResponse{}, err
 	}
-	poller := &iPGroupPoller{
+	poller := &ipGroupPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -60,7 +60,7 @@ func (client *IPGroupsClient) ResumeCreateOrUpdate(token string) (IPGroupPoller,
 	if err != nil {
 		return nil, err
 	}
-	return &iPGroupPoller{
+	return &ipGroupPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
@@ -131,7 +131,7 @@ func (client *IPGroupsClient) BeginDelete(ctx context.Context, resourceGroupName
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -149,7 +149,7 @@ func (client *IPGroupsClient) ResumeDelete(token string) (HTTPPoller, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
@@ -255,7 +255,7 @@ func (client *IPGroupsClient) getHandleError(resp *azcore.Response) error {
 
 // List - Gets all IpGroups in a subscription.
 func (client *IPGroupsClient) List(options *IPGroupsListOptions) IPGroupListResultPager {
-	return &iPGroupListResultPager{
+	return &ipGroupListResultPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, options)
@@ -305,7 +305,7 @@ func (client *IPGroupsClient) listHandleError(resp *azcore.Response) error {
 
 // ListByResourceGroup - Gets all IpGroups in a resource group.
 func (client *IPGroupsClient) ListByResourceGroup(resourceGroupName string, options *IPGroupsListByResourceGroupOptions) IPGroupListResultPager {
-	return &iPGroupListResultPager{
+	return &ipGroupListResultPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)

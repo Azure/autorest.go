@@ -42,7 +42,7 @@ func (client *IPAllocationsClient) BeginCreateOrUpdate(ctx context.Context, reso
 	if err != nil {
 		return IPAllocationPollerResponse{}, err
 	}
-	poller := &iPAllocationPoller{
+	poller := &ipAllocationPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -60,7 +60,7 @@ func (client *IPAllocationsClient) ResumeCreateOrUpdate(token string) (IPAllocat
 	if err != nil {
 		return nil, err
 	}
-	return &iPAllocationPoller{
+	return &ipAllocationPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
@@ -131,7 +131,7 @@ func (client *IPAllocationsClient) BeginDelete(ctx context.Context, resourceGrou
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -149,7 +149,7 @@ func (client *IPAllocationsClient) ResumeDelete(token string) (HTTPPoller, error
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
@@ -255,7 +255,7 @@ func (client *IPAllocationsClient) getHandleError(resp *azcore.Response) error {
 
 // List - Gets all IpAllocations in a subscription.
 func (client *IPAllocationsClient) List(options *IPAllocationsListOptions) IPAllocationListResultPager {
-	return &iPAllocationListResultPager{
+	return &ipAllocationListResultPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, options)
@@ -305,7 +305,7 @@ func (client *IPAllocationsClient) listHandleError(resp *azcore.Response) error 
 
 // ListByResourceGroup - Gets all IpAllocations in a resource group.
 func (client *IPAllocationsClient) ListByResourceGroup(resourceGroupName string, options *IPAllocationsListByResourceGroupOptions) IPAllocationListResultPager {
-	return &iPAllocationListResultPager{
+	return &ipAllocationListResultPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)

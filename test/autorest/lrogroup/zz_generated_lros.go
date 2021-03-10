@@ -209,7 +209,7 @@ func (client *LROsClient) BeginDelete204Succeeded(ctx context.Context, options *
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -227,7 +227,7 @@ func (client *LROsClient) ResumeDelete204Succeeded(token string) (HTTPPoller, er
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
@@ -284,7 +284,7 @@ func (client *LROsClient) BeginDeleteAsyncNoHeaderInRetry(ctx context.Context, o
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -302,7 +302,7 @@ func (client *LROsClient) ResumeDeleteAsyncNoHeaderInRetry(token string) (HTTPPo
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
@@ -360,7 +360,7 @@ func (client *LROsClient) BeginDeleteAsyncNoRetrySucceeded(ctx context.Context, 
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -378,7 +378,7 @@ func (client *LROsClient) ResumeDeleteAsyncNoRetrySucceeded(token string) (HTTPP
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
@@ -436,7 +436,7 @@ func (client *LROsClient) BeginDeleteAsyncRetryFailed(ctx context.Context, optio
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -454,7 +454,7 @@ func (client *LROsClient) ResumeDeleteAsyncRetryFailed(token string) (HTTPPoller
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
@@ -512,7 +512,7 @@ func (client *LROsClient) BeginDeleteAsyncRetrySucceeded(ctx context.Context, op
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -530,7 +530,7 @@ func (client *LROsClient) ResumeDeleteAsyncRetrySucceeded(token string) (HTTPPol
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
@@ -588,7 +588,7 @@ func (client *LROsClient) BeginDeleteAsyncRetrycanceled(ctx context.Context, opt
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -606,7 +606,7 @@ func (client *LROsClient) ResumeDeleteAsyncRetrycanceled(token string) (HTTPPoll
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
@@ -664,7 +664,7 @@ func (client *LROsClient) BeginDeleteNoHeaderInRetry(ctx context.Context, option
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -682,7 +682,7 @@ func (client *LROsClient) ResumeDeleteNoHeaderInRetry(token string) (HTTPPoller,
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
@@ -1001,7 +1001,7 @@ func (client *LROsClient) BeginPost200WithPayload(ctx context.Context, options *
 	if err != nil {
 		return SKUPollerResponse{}, err
 	}
-	poller := &sKUPoller{
+	poller := &skuPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -1019,7 +1019,7 @@ func (client *LROsClient) ResumePost200WithPayload(token string) (SKUPoller, err
 	if err != nil {
 		return nil, err
 	}
-	return &sKUPoller{
+	return &skuPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
@@ -1258,7 +1258,7 @@ func (client *LROsClient) BeginPost202Retry200(ctx context.Context, options *LRO
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -1276,7 +1276,7 @@ func (client *LROsClient) ResumePost202Retry200(token string) (HTTPPoller, error
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
@@ -1428,7 +1428,7 @@ func (client *LROsClient) BeginPostAsyncRetryFailed(ctx context.Context, options
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -1446,7 +1446,7 @@ func (client *LROsClient) ResumePostAsyncRetryFailed(token string) (HTTPPoller, 
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
@@ -1599,7 +1599,7 @@ func (client *LROsClient) BeginPostAsyncRetrycanceled(ctx context.Context, optio
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -1617,7 +1617,7 @@ func (client *LROsClient) ResumePostAsyncRetrycanceled(token string) (HTTPPoller
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
@@ -2909,7 +2909,7 @@ func (client *LROsClient) BeginPutAsyncNonResource(ctx context.Context, options 
 	if err != nil {
 		return SKUPollerResponse{}, err
 	}
-	poller := &sKUPoller{
+	poller := &skuPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -2927,7 +2927,7 @@ func (client *LROsClient) ResumePutAsyncNonResource(token string) (SKUPoller, er
 	if err != nil {
 		return nil, err
 	}
-	return &sKUPoller{
+	return &skuPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
@@ -3349,7 +3349,7 @@ func (client *LROsClient) BeginPutNonResource(ctx context.Context, options *LROs
 	if err != nil {
 		return SKUPollerResponse{}, err
 	}
-	poller := &sKUPoller{
+	poller := &skuPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -3367,7 +3367,7 @@ func (client *LROsClient) ResumePutNonResource(token string) (SKUPoller, error) 
 	if err != nil {
 		return nil, err
 	}
-	return &sKUPoller{
+	return &skuPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil

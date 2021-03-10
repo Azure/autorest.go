@@ -2247,7 +2247,7 @@ type iPAllocationListResultHandleResponse func(*azcore.Response) (IPAllocationLi
 
 type iPAllocationListResultAdvancePage func(context.Context, IPAllocationListResultResponse) (*azcore.Request, error)
 
-type iPAllocationListResultPager struct {
+type ipAllocationListResultPager struct {
 	// the pipeline for making the request
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
@@ -2266,11 +2266,11 @@ type iPAllocationListResultPager struct {
 	err error
 }
 
-func (p *iPAllocationListResultPager) Err() error {
+func (p *ipAllocationListResultPager) Err() error {
 	return p.err
 }
 
-func (p *iPAllocationListResultPager) NextPage(ctx context.Context) bool {
+func (p *ipAllocationListResultPager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -2303,7 +2303,7 @@ func (p *iPAllocationListResultPager) NextPage(ctx context.Context) bool {
 	return true
 }
 
-func (p *iPAllocationListResultPager) PageResponse() IPAllocationListResultResponse {
+func (p *ipAllocationListResultPager) PageResponse() IPAllocationListResultResponse {
 	return p.current
 }
 
@@ -2323,7 +2323,7 @@ type iPGroupListResultHandleResponse func(*azcore.Response) (IPGroupListResultRe
 
 type iPGroupListResultAdvancePage func(context.Context, IPGroupListResultResponse) (*azcore.Request, error)
 
-type iPGroupListResultPager struct {
+type ipGroupListResultPager struct {
 	// the pipeline for making the request
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
@@ -2342,11 +2342,11 @@ type iPGroupListResultPager struct {
 	err error
 }
 
-func (p *iPGroupListResultPager) Err() error {
+func (p *ipGroupListResultPager) Err() error {
 	return p.err
 }
 
-func (p *iPGroupListResultPager) NextPage(ctx context.Context) bool {
+func (p *ipGroupListResultPager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -2379,7 +2379,7 @@ func (p *iPGroupListResultPager) NextPage(ctx context.Context) bool {
 	return true
 }
 
-func (p *iPGroupListResultPager) PageResponse() IPGroupListResultResponse {
+func (p *ipGroupListResultPager) PageResponse() IPGroupListResultResponse {
 	return p.current
 }
 
@@ -2779,7 +2779,7 @@ type listVirtualWANsResultHandleResponse func(*azcore.Response) (ListVirtualWANs
 
 type listVirtualWANsResultAdvancePage func(context.Context, ListVirtualWANsResultResponse) (*azcore.Request, error)
 
-type listVirtualWANsResultPager struct {
+type listVirtualWaNsResultPager struct {
 	// the pipeline for making the request
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
@@ -2798,11 +2798,11 @@ type listVirtualWANsResultPager struct {
 	err error
 }
 
-func (p *listVirtualWANsResultPager) Err() error {
+func (p *listVirtualWaNsResultPager) Err() error {
 	return p.err
 }
 
-func (p *listVirtualWANsResultPager) NextPage(ctx context.Context) bool {
+func (p *listVirtualWaNsResultPager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -2835,7 +2835,7 @@ func (p *listVirtualWANsResultPager) NextPage(ctx context.Context) bool {
 	return true
 }
 
-func (p *listVirtualWANsResultPager) PageResponse() ListVirtualWANsResultResponse {
+func (p *listVirtualWaNsResultPager) PageResponse() ListVirtualWANsResultResponse {
 	return p.current
 }
 
@@ -4603,7 +4603,7 @@ type privateDNSZoneGroupListResultHandleResponse func(*azcore.Response) (Private
 
 type privateDNSZoneGroupListResultAdvancePage func(context.Context, PrivateDNSZoneGroupListResultResponse) (*azcore.Request, error)
 
-type privateDNSZoneGroupListResultPager struct {
+type privateDnsZoneGroupListResultPager struct {
 	// the pipeline for making the request
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
@@ -4622,11 +4622,11 @@ type privateDNSZoneGroupListResultPager struct {
 	err error
 }
 
-func (p *privateDNSZoneGroupListResultPager) Err() error {
+func (p *privateDnsZoneGroupListResultPager) Err() error {
 	return p.err
 }
 
-func (p *privateDNSZoneGroupListResultPager) NextPage(ctx context.Context) bool {
+func (p *privateDnsZoneGroupListResultPager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -4659,7 +4659,7 @@ func (p *privateDNSZoneGroupListResultPager) NextPage(ctx context.Context) bool 
 	return true
 }
 
-func (p *privateDNSZoneGroupListResultPager) PageResponse() PrivateDNSZoneGroupListResultResponse {
+func (p *privateDnsZoneGroupListResultPager) PageResponse() PrivateDNSZoneGroupListResultResponse {
 	return p.current
 }
 

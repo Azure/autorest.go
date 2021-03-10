@@ -132,7 +132,7 @@ func (client *ConnectionMonitorsClient) BeginDelete(ctx context.Context, resourc
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -150,7 +150,7 @@ func (client *ConnectionMonitorsClient) ResumeDelete(token string) (HTTPPoller, 
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
@@ -408,7 +408,7 @@ func (client *ConnectionMonitorsClient) BeginStart(ctx context.Context, resource
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -426,7 +426,7 @@ func (client *ConnectionMonitorsClient) ResumeStart(token string) (HTTPPoller, e
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
@@ -489,7 +489,7 @@ func (client *ConnectionMonitorsClient) BeginStop(ctx context.Context, resourceG
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -507,7 +507,7 @@ func (client *ConnectionMonitorsClient) ResumeStop(token string) (HTTPPoller, er
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil

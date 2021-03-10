@@ -39,7 +39,7 @@ func (client *LrosaDsClient) BeginDelete202NonRetry400(ctx context.Context, opti
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -57,7 +57,7 @@ func (client *LrosaDsClient) ResumeDelete202NonRetry400(token string) (HTTPPolle
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
@@ -114,7 +114,7 @@ func (client *LrosaDsClient) BeginDelete202RetryInvalidHeader(ctx context.Contex
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -132,7 +132,7 @@ func (client *LrosaDsClient) ResumeDelete202RetryInvalidHeader(token string) (HT
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
@@ -189,7 +189,7 @@ func (client *LrosaDsClient) BeginDelete204Succeeded(ctx context.Context, option
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -207,7 +207,7 @@ func (client *LrosaDsClient) ResumeDelete204Succeeded(token string) (HTTPPoller,
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
@@ -264,7 +264,7 @@ func (client *LrosaDsClient) BeginDeleteAsyncRelativeRetry400(ctx context.Contex
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -282,7 +282,7 @@ func (client *LrosaDsClient) ResumeDeleteAsyncRelativeRetry400(token string) (HT
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
@@ -340,7 +340,7 @@ func (client *LrosaDsClient) BeginDeleteAsyncRelativeRetryInvalidHeader(ctx cont
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -358,7 +358,7 @@ func (client *LrosaDsClient) ResumeDeleteAsyncRelativeRetryInvalidHeader(token s
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
@@ -416,7 +416,7 @@ func (client *LrosaDsClient) BeginDeleteAsyncRelativeRetryInvalidJSONPolling(ctx
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -434,7 +434,7 @@ func (client *LrosaDsClient) ResumeDeleteAsyncRelativeRetryInvalidJSONPolling(to
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
@@ -492,7 +492,7 @@ func (client *LrosaDsClient) BeginDeleteAsyncRelativeRetryNoStatus(ctx context.C
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -510,7 +510,7 @@ func (client *LrosaDsClient) ResumeDeleteAsyncRelativeRetryNoStatus(token string
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
@@ -567,7 +567,7 @@ func (client *LrosaDsClient) BeginDeleteNonRetry400(ctx context.Context, options
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -585,7 +585,7 @@ func (client *LrosaDsClient) ResumeDeleteNonRetry400(token string) (HTTPPoller, 
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
@@ -641,7 +641,7 @@ func (client *LrosaDsClient) BeginPost202NoLocation(ctx context.Context, options
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -659,7 +659,7 @@ func (client *LrosaDsClient) ResumePost202NoLocation(token string) (HTTPPoller, 
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
@@ -718,7 +718,7 @@ func (client *LrosaDsClient) BeginPost202NonRetry400(ctx context.Context, option
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -736,7 +736,7 @@ func (client *LrosaDsClient) ResumePost202NonRetry400(token string) (HTTPPoller,
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
@@ -795,7 +795,7 @@ func (client *LrosaDsClient) BeginPost202RetryInvalidHeader(ctx context.Context,
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -813,7 +813,7 @@ func (client *LrosaDsClient) ResumePost202RetryInvalidHeader(token string) (HTTP
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
@@ -873,7 +873,7 @@ func (client *LrosaDsClient) BeginPostAsyncRelativeRetry400(ctx context.Context,
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -891,7 +891,7 @@ func (client *LrosaDsClient) ResumePostAsyncRelativeRetry400(token string) (HTTP
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
@@ -953,7 +953,7 @@ func (client *LrosaDsClient) BeginPostAsyncRelativeRetryInvalidHeader(ctx contex
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -971,7 +971,7 @@ func (client *LrosaDsClient) ResumePostAsyncRelativeRetryInvalidHeader(token str
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
@@ -1034,7 +1034,7 @@ func (client *LrosaDsClient) BeginPostAsyncRelativeRetryInvalidJSONPolling(ctx c
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -1052,7 +1052,7 @@ func (client *LrosaDsClient) ResumePostAsyncRelativeRetryInvalidJSONPolling(toke
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
@@ -1115,7 +1115,7 @@ func (client *LrosaDsClient) BeginPostAsyncRelativeRetryNoPayload(ctx context.Co
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -1133,7 +1133,7 @@ func (client *LrosaDsClient) ResumePostAsyncRelativeRetryNoPayload(token string)
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
@@ -1194,7 +1194,7 @@ func (client *LrosaDsClient) BeginPostNonRetry400(ctx context.Context, options *
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -1212,7 +1212,7 @@ func (client *LrosaDsClient) ResumePostNonRetry400(token string) (HTTPPoller, er
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil

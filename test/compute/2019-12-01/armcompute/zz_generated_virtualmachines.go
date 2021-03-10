@@ -142,7 +142,7 @@ func (client *VirtualMachinesClient) BeginConvertToManagedDisks(ctx context.Cont
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -160,7 +160,7 @@ func (client *VirtualMachinesClient) ResumeConvertToManagedDisks(token string) (
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
@@ -321,7 +321,7 @@ func (client *VirtualMachinesClient) BeginDeallocate(ctx context.Context, resour
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -339,7 +339,7 @@ func (client *VirtualMachinesClient) ResumeDeallocate(token string) (HTTPPoller,
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
@@ -404,7 +404,7 @@ func (client *VirtualMachinesClient) BeginDelete(ctx context.Context, resourceGr
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -422,7 +422,7 @@ func (client *VirtualMachinesClient) ResumeDelete(token string) (HTTPPoller, err
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
@@ -869,7 +869,7 @@ func (client *VirtualMachinesClient) BeginPerformMaintenance(ctx context.Context
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -887,7 +887,7 @@ func (client *VirtualMachinesClient) ResumePerformMaintenance(token string) (HTT
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
@@ -953,7 +953,7 @@ func (client *VirtualMachinesClient) BeginPowerOff(ctx context.Context, resource
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -971,7 +971,7 @@ func (client *VirtualMachinesClient) ResumePowerOff(token string) (HTTPPoller, e
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
@@ -1039,7 +1039,7 @@ func (client *VirtualMachinesClient) BeginReapply(ctx context.Context, resourceG
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -1057,7 +1057,7 @@ func (client *VirtualMachinesClient) ResumeReapply(token string) (HTTPPoller, er
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
@@ -1119,7 +1119,7 @@ func (client *VirtualMachinesClient) BeginRedeploy(ctx context.Context, resource
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -1137,7 +1137,7 @@ func (client *VirtualMachinesClient) ResumeRedeploy(token string) (HTTPPoller, e
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
@@ -1201,7 +1201,7 @@ func (client *VirtualMachinesClient) BeginReimage(ctx context.Context, resourceG
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -1219,7 +1219,7 @@ func (client *VirtualMachinesClient) ResumeReimage(token string) (HTTPPoller, er
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
@@ -1286,7 +1286,7 @@ func (client *VirtualMachinesClient) BeginRestart(ctx context.Context, resourceG
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -1304,7 +1304,7 @@ func (client *VirtualMachinesClient) ResumeRestart(token string) (HTTPPoller, er
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
@@ -1505,7 +1505,7 @@ func (client *VirtualMachinesClient) BeginStart(ctx context.Context, resourceGro
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
-	poller := &hTTPPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -1523,7 +1523,7 @@ func (client *VirtualMachinesClient) ResumeStart(token string) (HTTPPoller, erro
 	if err != nil {
 		return nil, err
 	}
-	return &hTTPPoller{
+	return &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
