@@ -721,7 +721,7 @@ func (client *XMLClient) getXMsTextHandleError(resp *azcore.Response) error {
 
 // JSONInput - A Swagger with XML that has one operation that takes JSON as input. You need to send the ID number 42
 func (client *XMLClient) JSONInput(ctx context.Context, properties JSONInput, options *XMLJSONInputOptions) (*http.Response, error) {
-	req, err := client.jSONInputCreateRequest(ctx, properties, options)
+	req, err := client.jsonInputCreateRequest(ctx, properties, options)
 	if err != nil {
 		return nil, err
 	}
@@ -730,13 +730,13 @@ func (client *XMLClient) JSONInput(ctx context.Context, properties JSONInput, op
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.jSONInputHandleError(resp)
+		return nil, client.jsonInputHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// jSONInputCreateRequest creates the JSONInput request.
-func (client *XMLClient) jSONInputCreateRequest(ctx context.Context, properties JSONInput, options *XMLJSONInputOptions) (*azcore.Request, error) {
+// jsonInputCreateRequest creates the JSONInput request.
+func (client *XMLClient) jsonInputCreateRequest(ctx context.Context, properties JSONInput, options *XMLJSONInputOptions) (*azcore.Request, error) {
 	urlPath := "/xml/jsoninput"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -746,8 +746,8 @@ func (client *XMLClient) jSONInputCreateRequest(ctx context.Context, properties 
 	return req, req.MarshalAsJSON(properties)
 }
 
-// jSONInputHandleError handles the JSONInput error response.
-func (client *XMLClient) jSONInputHandleError(resp *azcore.Response) error {
+// jsonInputHandleError handles the JSONInput error response.
+func (client *XMLClient) jsonInputHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -760,7 +760,7 @@ func (client *XMLClient) jSONInputHandleError(resp *azcore.Response) error {
 
 // JSONOutput - A Swagger with XML that has one operation that returns JSON. ID number 42
 func (client *XMLClient) JSONOutput(ctx context.Context, options *XMLJSONOutputOptions) (JSONOutputResponse, error) {
-	req, err := client.jSONOutputCreateRequest(ctx, options)
+	req, err := client.jsonOutputCreateRequest(ctx, options)
 	if err != nil {
 		return JSONOutputResponse{}, err
 	}
@@ -769,13 +769,13 @@ func (client *XMLClient) JSONOutput(ctx context.Context, options *XMLJSONOutputO
 		return JSONOutputResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return JSONOutputResponse{}, client.jSONOutputHandleError(resp)
+		return JSONOutputResponse{}, client.jsonOutputHandleError(resp)
 	}
-	return client.jSONOutputHandleResponse(resp)
+	return client.jsonOutputHandleResponse(resp)
 }
 
-// jSONOutputCreateRequest creates the JSONOutput request.
-func (client *XMLClient) jSONOutputCreateRequest(ctx context.Context, options *XMLJSONOutputOptions) (*azcore.Request, error) {
+// jsonOutputCreateRequest creates the JSONOutput request.
+func (client *XMLClient) jsonOutputCreateRequest(ctx context.Context, options *XMLJSONOutputOptions) (*azcore.Request, error) {
 	urlPath := "/xml/jsonoutput"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -786,8 +786,8 @@ func (client *XMLClient) jSONOutputCreateRequest(ctx context.Context, options *X
 	return req, nil
 }
 
-// jSONOutputHandleResponse handles the JSONOutput response.
-func (client *XMLClient) jSONOutputHandleResponse(resp *azcore.Response) (JSONOutputResponse, error) {
+// jsonOutputHandleResponse handles the JSONOutput response.
+func (client *XMLClient) jsonOutputHandleResponse(resp *azcore.Response) (JSONOutputResponse, error) {
 	var val *JSONOutput
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return JSONOutputResponse{}, err
@@ -795,8 +795,8 @@ func (client *XMLClient) jSONOutputHandleResponse(resp *azcore.Response) (JSONOu
 	return JSONOutputResponse{RawResponse: resp.Response, JSONOutput: val}, nil
 }
 
-// jSONOutputHandleError handles the JSONOutput error response.
-func (client *XMLClient) jSONOutputHandleError(resp *azcore.Response) error {
+// jsonOutputHandleError handles the JSONOutput error response.
+func (client *XMLClient) jsonOutputHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)

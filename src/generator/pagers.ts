@@ -9,6 +9,7 @@ import { values } from '@azure-tools/linq';
 import { internalPagerTypeName, PagerInfo } from '../common/helpers';
 import { contentPreamble, sortAscending } from './helpers';
 import { ImportManager } from './imports';
+import { ensureNameCase } from '../transform/namer';
 
 // Creates the content in pagers.go
 export async function generatePagers(session: Session<CodeModel>): Promise<string> {
@@ -44,10 +45,10 @@ export async function generatePagers(session: Session<CodeModel>): Promise<strin
   }`;
       requesterCondition = ' if p.resp == nil';
     }
-    const requesterType = `${pager.respType.uncapitalize()}CreateRequest`;
-    const errorerType = `${pager.respType.uncapitalize()}HandleError`;
-    const responderType = `${pager.respType.uncapitalize()}HandleResponse`;
-    const advanceType = `${pager.respType.uncapitalize()}AdvancePage`;
+    const requesterType = ensureNameCase(`${pager.respType}CreateRequest`, true);
+    const errorerType = ensureNameCase(`${pager.respType}HandleError`, true);
+    const responderType = ensureNameCase(`${pager.respType}HandleResponse`, true);
+    const advanceType = ensureNameCase(`${pager.respType}AdvancePage`, true);
     text += `// ${pager.name} provides iteration over ${pager.respType} pages.
 type ${pager.name} interface {
 	azcore.Pager

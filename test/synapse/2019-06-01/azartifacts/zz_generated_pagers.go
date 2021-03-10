@@ -553,25 +553,25 @@ type SQLScriptsListResponsePager interface {
 	PageResponse() SQLScriptsListResponseResponse
 }
 
-type sQLScriptsListResponseCreateRequest func(context.Context) (*azcore.Request, error)
+type sqlScriptsListResponseCreateRequest func(context.Context) (*azcore.Request, error)
 
-type sQLScriptsListResponseHandleError func(*azcore.Response) error
+type sqlScriptsListResponseHandleError func(*azcore.Response) error
 
-type sQLScriptsListResponseHandleResponse func(*azcore.Response) (SQLScriptsListResponseResponse, error)
+type sqlScriptsListResponseHandleResponse func(*azcore.Response) (SQLScriptsListResponseResponse, error)
 
-type sQLScriptsListResponseAdvancePage func(context.Context, SQLScriptsListResponseResponse) (*azcore.Request, error)
+type sqlScriptsListResponseAdvancePage func(context.Context, SQLScriptsListResponseResponse) (*azcore.Request, error)
 
 type sqlScriptsListResponsePager struct {
 	// the pipeline for making the request
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
-	requester sQLScriptsListResponseCreateRequest
+	requester sqlScriptsListResponseCreateRequest
 	// callback for handling response errors
-	errorer sQLScriptsListResponseHandleError
+	errorer sqlScriptsListResponseHandleError
 	// callback for handling the HTTP response
-	responder sQLScriptsListResponseHandleResponse
+	responder sqlScriptsListResponseHandleResponse
 	// callback for advancing to the next page
-	advancer sQLScriptsListResponseAdvancePage
+	advancer sqlScriptsListResponseAdvancePage
 	// contains the current response
 	current SQLScriptsListResponseResponse
 	// status codes for successful retrieval

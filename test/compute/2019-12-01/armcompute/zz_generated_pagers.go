@@ -1237,25 +1237,25 @@ type SSHPublicKeysGroupListResultPager interface {
 	PageResponse() SSHPublicKeysGroupListResultResponse
 }
 
-type sSHPublicKeysGroupListResultCreateRequest func(context.Context) (*azcore.Request, error)
+type sshPublicKeysGroupListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
-type sSHPublicKeysGroupListResultHandleError func(*azcore.Response) error
+type sshPublicKeysGroupListResultHandleError func(*azcore.Response) error
 
-type sSHPublicKeysGroupListResultHandleResponse func(*azcore.Response) (SSHPublicKeysGroupListResultResponse, error)
+type sshPublicKeysGroupListResultHandleResponse func(*azcore.Response) (SSHPublicKeysGroupListResultResponse, error)
 
-type sSHPublicKeysGroupListResultAdvancePage func(context.Context, SSHPublicKeysGroupListResultResponse) (*azcore.Request, error)
+type sshPublicKeysGroupListResultAdvancePage func(context.Context, SSHPublicKeysGroupListResultResponse) (*azcore.Request, error)
 
 type sshPublicKeysGroupListResultPager struct {
 	// the pipeline for making the request
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
-	requester sSHPublicKeysGroupListResultCreateRequest
+	requester sshPublicKeysGroupListResultCreateRequest
 	// callback for handling response errors
-	errorer sSHPublicKeysGroupListResultHandleError
+	errorer sshPublicKeysGroupListResultHandleError
 	// callback for handling the HTTP response
-	responder sSHPublicKeysGroupListResultHandleResponse
+	responder sshPublicKeysGroupListResultHandleResponse
 	// callback for advancing to the next page
-	advancer sSHPublicKeysGroupListResultAdvancePage
+	advancer sshPublicKeysGroupListResultAdvancePage
 	// contains the current response
 	current SSHPublicKeysGroupListResultResponse
 	// status codes for successful retrieval

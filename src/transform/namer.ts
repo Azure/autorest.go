@@ -30,9 +30,9 @@ export class protocolMethods implements protocolNaming {
   readonly errorMethod: string;
 
   constructor(name: string) {
-    this.requestMethod = `${name.uncapitalize()}${requestMethodSuffix}`;
-    this.responseMethod = `${name.uncapitalize()}${responseMethodSuffix}`;
-    this.errorMethod = `${name.uncapitalize()}${errorMethodSuffix}`;
+    this.requestMethod = ensureNameCase(`${name}${requestMethodSuffix}`, true);
+    this.responseMethod = ensureNameCase(`${name}${responseMethodSuffix}`, true);
+    this.errorMethod = ensureNameCase(`${name}${errorMethodSuffix}`, true);
   }
 }
 
@@ -204,8 +204,8 @@ function getEscapedReservedName(name: string, appendValue: string): string {
 // e.g. SubscriptionId -> subscriptionID -> subscriptionid
 const gRenamed = new Map<string, boolean>();
 
-function ensureNameCase(name: string, isParam?: boolean): string {
-  if (gRenamed.has(name) && gRenamed.get(name) === isParam) {
+export function ensureNameCase(name: string, lowerFirst?: boolean): string {
+  if (gRenamed.has(name) && gRenamed.get(name) === lowerFirst) {
     return name;
   }
   let reconstructed = '';
@@ -217,7 +217,7 @@ function ensureNameCase(name: string, isParam?: boolean): string {
   for (let i = 0; i < words.length; ++i) {
     let word = words[i];
     // for params, lower-case the first segment
-    if (isParam && i === 0) {
+    if (lowerFirst && i === 0) {
       word = word.toLowerCase();
     } else {
       for (const tla of values(CommonAcronyms)) {
@@ -232,7 +232,7 @@ function ensureNameCase(name: string, isParam?: boolean): string {
     }
     reconstructed += word;
   }
-  gRenamed.set(reconstructed, isParam === true);
+  gRenamed.set(reconstructed, lowerFirst === true);
   return reconstructed;
 }
 

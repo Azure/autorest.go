@@ -2239,25 +2239,25 @@ type IPAllocationListResultPager interface {
 	PageResponse() IPAllocationListResultResponse
 }
 
-type iPAllocationListResultCreateRequest func(context.Context) (*azcore.Request, error)
+type ipAllocationListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
-type iPAllocationListResultHandleError func(*azcore.Response) error
+type ipAllocationListResultHandleError func(*azcore.Response) error
 
-type iPAllocationListResultHandleResponse func(*azcore.Response) (IPAllocationListResultResponse, error)
+type ipAllocationListResultHandleResponse func(*azcore.Response) (IPAllocationListResultResponse, error)
 
-type iPAllocationListResultAdvancePage func(context.Context, IPAllocationListResultResponse) (*azcore.Request, error)
+type ipAllocationListResultAdvancePage func(context.Context, IPAllocationListResultResponse) (*azcore.Request, error)
 
 type ipAllocationListResultPager struct {
 	// the pipeline for making the request
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
-	requester iPAllocationListResultCreateRequest
+	requester ipAllocationListResultCreateRequest
 	// callback for handling response errors
-	errorer iPAllocationListResultHandleError
+	errorer ipAllocationListResultHandleError
 	// callback for handling the HTTP response
-	responder iPAllocationListResultHandleResponse
+	responder ipAllocationListResultHandleResponse
 	// callback for advancing to the next page
-	advancer iPAllocationListResultAdvancePage
+	advancer ipAllocationListResultAdvancePage
 	// contains the current response
 	current IPAllocationListResultResponse
 	// status codes for successful retrieval
@@ -2315,25 +2315,25 @@ type IPGroupListResultPager interface {
 	PageResponse() IPGroupListResultResponse
 }
 
-type iPGroupListResultCreateRequest func(context.Context) (*azcore.Request, error)
+type ipGroupListResultCreateRequest func(context.Context) (*azcore.Request, error)
 
-type iPGroupListResultHandleError func(*azcore.Response) error
+type ipGroupListResultHandleError func(*azcore.Response) error
 
-type iPGroupListResultHandleResponse func(*azcore.Response) (IPGroupListResultResponse, error)
+type ipGroupListResultHandleResponse func(*azcore.Response) (IPGroupListResultResponse, error)
 
-type iPGroupListResultAdvancePage func(context.Context, IPGroupListResultResponse) (*azcore.Request, error)
+type ipGroupListResultAdvancePage func(context.Context, IPGroupListResultResponse) (*azcore.Request, error)
 
 type ipGroupListResultPager struct {
 	// the pipeline for making the request
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
-	requester iPGroupListResultCreateRequest
+	requester ipGroupListResultCreateRequest
 	// callback for handling response errors
-	errorer iPGroupListResultHandleError
+	errorer ipGroupListResultHandleError
 	// callback for handling the HTTP response
-	responder iPGroupListResultHandleResponse
+	responder ipGroupListResultHandleResponse
 	// callback for advancing to the next page
-	advancer iPGroupListResultAdvancePage
+	advancer ipGroupListResultAdvancePage
 	// contains the current response
 	current IPGroupListResultResponse
 	// status codes for successful retrieval
