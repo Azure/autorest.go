@@ -30,8 +30,8 @@ func NewVPNSitesConfigurationClient(con *armcore.Connection, subscriptionID stri
 }
 
 // BeginDownload - Gives the sas-url to download the configurations for vpn-sites in a resource group.
-func (client *VPNSitesConfigurationClient) BeginDownload(ctx context.Context, resourceGroupName string, virtualwanName string, request GetVPNSitesConfigurationRequest, options *VPNSitesConfigurationBeginDownloadOptions) (HTTPPollerResponse, error) {
-	resp, err := client.download(ctx, resourceGroupName, virtualwanName, request, options)
+func (client *VPNSitesConfigurationClient) BeginDownload(ctx context.Context, resourceGroupName string, virtualWANName string, request GetVPNSitesConfigurationRequest, options *VPNSitesConfigurationBeginDownloadOptions) (HTTPPollerResponse, error) {
+	resp, err := client.download(ctx, resourceGroupName, virtualWANName, request, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
@@ -67,8 +67,8 @@ func (client *VPNSitesConfigurationClient) ResumeDownload(token string) (HTTPPol
 }
 
 // Download - Gives the sas-url to download the configurations for vpn-sites in a resource group.
-func (client *VPNSitesConfigurationClient) download(ctx context.Context, resourceGroupName string, virtualwanName string, request GetVPNSitesConfigurationRequest, options *VPNSitesConfigurationBeginDownloadOptions) (*azcore.Response, error) {
-	req, err := client.downloadCreateRequest(ctx, resourceGroupName, virtualwanName, request, options)
+func (client *VPNSitesConfigurationClient) download(ctx context.Context, resourceGroupName string, virtualWANName string, request GetVPNSitesConfigurationRequest, options *VPNSitesConfigurationBeginDownloadOptions) (*azcore.Response, error) {
+	req, err := client.downloadCreateRequest(ctx, resourceGroupName, virtualWANName, request, options)
 	if err != nil {
 		return nil, err
 	}
@@ -83,11 +83,11 @@ func (client *VPNSitesConfigurationClient) download(ctx context.Context, resourc
 }
 
 // downloadCreateRequest creates the Download request.
-func (client *VPNSitesConfigurationClient) downloadCreateRequest(ctx context.Context, resourceGroupName string, virtualwanName string, request GetVPNSitesConfigurationRequest, options *VPNSitesConfigurationBeginDownloadOptions) (*azcore.Request, error) {
+func (client *VPNSitesConfigurationClient) downloadCreateRequest(ctx context.Context, resourceGroupName string, virtualWANName string, request GetVPNSitesConfigurationRequest, options *VPNSitesConfigurationBeginDownloadOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/vpnConfiguration"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	urlPath = strings.ReplaceAll(urlPath, "{virtualWANName}", url.PathEscape(virtualwanName))
+	urlPath = strings.ReplaceAll(urlPath, "{virtualWANName}", url.PathEscape(virtualWANName))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err

@@ -30,8 +30,8 @@ func NewP2SVPNGatewaysClient(con *armcore.Connection, subscriptionID string) *P2
 }
 
 // BeginCreateOrUpdate - Creates a virtual wan p2s vpn gateway if it doesn't exist else updates the existing gateway.
-func (client *P2SVPNGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, p2sVPNGatewayParameters P2SVPNGateway, options *P2SVPNGatewaysBeginCreateOrUpdateOptions) (P2SVPNGatewayPollerResponse, error) {
-	resp, err := client.createOrUpdate(ctx, resourceGroupName, gatewayName, p2sVPNGatewayParameters, options)
+func (client *P2SVPNGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, p2SVPNGatewayParameters P2SVPNGateway, options *P2SVPNGatewaysBeginCreateOrUpdateOptions) (P2SVPNGatewayPollerResponse, error) {
+	resp, err := client.createOrUpdate(ctx, resourceGroupName, gatewayName, p2SVPNGatewayParameters, options)
 	if err != nil {
 		return P2SVPNGatewayPollerResponse{}, err
 	}
@@ -42,7 +42,7 @@ func (client *P2SVPNGatewaysClient) BeginCreateOrUpdate(ctx context.Context, res
 	if err != nil {
 		return P2SVPNGatewayPollerResponse{}, err
 	}
-	poller := &p2svpnGatewayPoller{
+	poller := &p2SVPNGatewayPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -60,15 +60,15 @@ func (client *P2SVPNGatewaysClient) ResumeCreateOrUpdate(token string) (P2SVPNGa
 	if err != nil {
 		return nil, err
 	}
-	return &p2svpnGatewayPoller{
+	return &p2SVPNGatewayPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
 
 // CreateOrUpdate - Creates a virtual wan p2s vpn gateway if it doesn't exist else updates the existing gateway.
-func (client *P2SVPNGatewaysClient) createOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, p2sVPNGatewayParameters P2SVPNGateway, options *P2SVPNGatewaysBeginCreateOrUpdateOptions) (*azcore.Response, error) {
-	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, gatewayName, p2sVPNGatewayParameters, options)
+func (client *P2SVPNGatewaysClient) createOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, p2SVPNGatewayParameters P2SVPNGateway, options *P2SVPNGatewaysBeginCreateOrUpdateOptions) (*azcore.Response, error) {
+	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, gatewayName, p2SVPNGatewayParameters, options)
 	if err != nil {
 		return nil, err
 	}
@@ -83,7 +83,7 @@ func (client *P2SVPNGatewaysClient) createOrUpdate(ctx context.Context, resource
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *P2SVPNGatewaysClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, gatewayName string, p2sVPNGatewayParameters P2SVPNGateway, options *P2SVPNGatewaysBeginCreateOrUpdateOptions) (*azcore.Request, error) {
+func (client *P2SVPNGatewaysClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, gatewayName string, p2SVPNGatewayParameters P2SVPNGateway, options *P2SVPNGatewaysBeginCreateOrUpdateOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways/{gatewayName}"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
@@ -97,7 +97,7 @@ func (client *P2SVPNGatewaysClient) createOrUpdateCreateRequest(ctx context.Cont
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(p2sVPNGatewayParameters)
+	return req, req.MarshalAsJSON(p2SVPNGatewayParameters)
 }
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
@@ -199,8 +199,8 @@ func (client *P2SVPNGatewaysClient) deleteHandleError(resp *azcore.Response) err
 }
 
 // BeginDisconnectP2SVPNConnections - Disconnect P2S vpn connections of the virtual wan P2SVpnGateway in the specified resource group.
-func (client *P2SVPNGatewaysClient) BeginDisconnectP2SVPNConnections(ctx context.Context, resourceGroupName string, p2sVPNGatewayName string, request P2SVPNConnectionRequest, options *P2SVPNGatewaysBeginDisconnectP2SVPNConnectionsOptions) (HTTPPollerResponse, error) {
-	resp, err := client.disconnectP2SVPNConnections(ctx, resourceGroupName, p2sVPNGatewayName, request, options)
+func (client *P2SVPNGatewaysClient) BeginDisconnectP2SVPNConnections(ctx context.Context, resourceGroupName string, p2SVPNGatewayName string, request P2SVPNConnectionRequest, options *P2SVPNGatewaysBeginDisconnectP2SVPNConnectionsOptions) (HTTPPollerResponse, error) {
+	resp, err := client.disconnectP2SVPNConnections(ctx, resourceGroupName, p2SVPNGatewayName, request, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
@@ -236,8 +236,8 @@ func (client *P2SVPNGatewaysClient) ResumeDisconnectP2SVPNConnections(token stri
 }
 
 // DisconnectP2SVPNConnections - Disconnect P2S vpn connections of the virtual wan P2SVpnGateway in the specified resource group.
-func (client *P2SVPNGatewaysClient) disconnectP2SVPNConnections(ctx context.Context, resourceGroupName string, p2sVPNGatewayName string, request P2SVPNConnectionRequest, options *P2SVPNGatewaysBeginDisconnectP2SVPNConnectionsOptions) (*azcore.Response, error) {
-	req, err := client.disconnectP2SVPNConnectionsCreateRequest(ctx, resourceGroupName, p2sVPNGatewayName, request, options)
+func (client *P2SVPNGatewaysClient) disconnectP2SVPNConnections(ctx context.Context, resourceGroupName string, p2SVPNGatewayName string, request P2SVPNConnectionRequest, options *P2SVPNGatewaysBeginDisconnectP2SVPNConnectionsOptions) (*azcore.Response, error) {
+	req, err := client.disconnectP2SVPNConnectionsCreateRequest(ctx, resourceGroupName, p2SVPNGatewayName, request, options)
 	if err != nil {
 		return nil, err
 	}
@@ -252,11 +252,11 @@ func (client *P2SVPNGatewaysClient) disconnectP2SVPNConnections(ctx context.Cont
 }
 
 // disconnectP2SVPNConnectionsCreateRequest creates the DisconnectP2SVPNConnections request.
-func (client *P2SVPNGatewaysClient) disconnectP2SVPNConnectionsCreateRequest(ctx context.Context, resourceGroupName string, p2sVPNGatewayName string, request P2SVPNConnectionRequest, options *P2SVPNGatewaysBeginDisconnectP2SVPNConnectionsOptions) (*azcore.Request, error) {
+func (client *P2SVPNGatewaysClient) disconnectP2SVPNConnectionsCreateRequest(ctx context.Context, resourceGroupName string, p2SVPNGatewayName string, request P2SVPNConnectionRequest, options *P2SVPNGatewaysBeginDisconnectP2SVPNConnectionsOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways/{p2sVpnGatewayName}/disconnectP2sVpnConnections"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	urlPath = strings.ReplaceAll(urlPath, "{p2sVpnGatewayName}", url.PathEscape(p2sVPNGatewayName))
+	urlPath = strings.ReplaceAll(urlPath, "{p2sVpnGatewayName}", url.PathEscape(p2SVPNGatewayName))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -432,7 +432,7 @@ func (client *P2SVPNGatewaysClient) BeginGetP2SVPNConnectionHealth(ctx context.C
 	if err != nil {
 		return P2SVPNGatewayPollerResponse{}, err
 	}
-	poller := &p2svpnGatewayPoller{
+	poller := &p2SVPNGatewayPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -450,7 +450,7 @@ func (client *P2SVPNGatewaysClient) ResumeGetP2SVPNConnectionHealth(token string
 	if err != nil {
 		return nil, err
 	}
-	return &p2svpnGatewayPoller{
+	return &p2SVPNGatewayPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
@@ -522,7 +522,7 @@ func (client *P2SVPNGatewaysClient) BeginGetP2SVPNConnectionHealthDetailed(ctx c
 	if err != nil {
 		return P2SVPNConnectionHealthPollerResponse{}, err
 	}
-	poller := &p2svpnConnectionHealthPoller{
+	poller := &p2SVPNConnectionHealthPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -540,7 +540,7 @@ func (client *P2SVPNGatewaysClient) ResumeGetP2SVPNConnectionHealthDetailed(toke
 	if err != nil {
 		return nil, err
 	}
-	return &p2svpnConnectionHealthPoller{
+	return &p2SVPNConnectionHealthPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
@@ -701,8 +701,8 @@ func (client *P2SVPNGatewaysClient) listByResourceGroupHandleError(resp *azcore.
 }
 
 // UpdateTags - Updates virtual wan p2s vpn gateway tags.
-func (client *P2SVPNGatewaysClient) UpdateTags(ctx context.Context, resourceGroupName string, gatewayName string, p2sVPNGatewayParameters TagsObject, options *P2SVPNGatewaysUpdateTagsOptions) (P2SVPNGatewayResponse, error) {
-	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, gatewayName, p2sVPNGatewayParameters, options)
+func (client *P2SVPNGatewaysClient) UpdateTags(ctx context.Context, resourceGroupName string, gatewayName string, p2SVPNGatewayParameters TagsObject, options *P2SVPNGatewaysUpdateTagsOptions) (P2SVPNGatewayResponse, error) {
+	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, gatewayName, p2SVPNGatewayParameters, options)
 	if err != nil {
 		return P2SVPNGatewayResponse{}, err
 	}
@@ -717,7 +717,7 @@ func (client *P2SVPNGatewaysClient) UpdateTags(ctx context.Context, resourceGrou
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.
-func (client *P2SVPNGatewaysClient) updateTagsCreateRequest(ctx context.Context, resourceGroupName string, gatewayName string, p2sVPNGatewayParameters TagsObject, options *P2SVPNGatewaysUpdateTagsOptions) (*azcore.Request, error) {
+func (client *P2SVPNGatewaysClient) updateTagsCreateRequest(ctx context.Context, resourceGroupName string, gatewayName string, p2SVPNGatewayParameters TagsObject, options *P2SVPNGatewaysUpdateTagsOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways/{gatewayName}"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
@@ -731,7 +731,7 @@ func (client *P2SVPNGatewaysClient) updateTagsCreateRequest(ctx context.Context,
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(p2sVPNGatewayParameters)
+	return req, req.MarshalAsJSON(p2SVPNGatewayParameters)
 }
 
 // updateTagsHandleResponse handles the UpdateTags response.

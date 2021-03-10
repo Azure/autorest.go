@@ -2693,23 +2693,23 @@ type P2SVPNConnectionHealthPoller interface {
 	FinalResponse(ctx context.Context) (P2SVPNConnectionHealthResponse, error)
 }
 
-type p2svpnConnectionHealthPoller struct {
+type p2SVPNConnectionHealthPoller struct {
 	// the client for making the request
 	pipeline azcore.Pipeline
 	pt       armcore.Poller
 }
 
 // Done returns true if there was an error or polling has reached a terminal state
-func (p *p2svpnConnectionHealthPoller) Done() bool {
+func (p *p2SVPNConnectionHealthPoller) Done() bool {
 	return p.pt.Done()
 }
 
 // Poll will send poll the service endpoint and return an http.Response or error received from the service
-func (p *p2svpnConnectionHealthPoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *p2SVPNConnectionHealthPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx, p.pipeline)
 }
 
-func (p *p2svpnConnectionHealthPoller) FinalResponse(ctx context.Context) (P2SVPNConnectionHealthResponse, error) {
+func (p *p2SVPNConnectionHealthPoller) FinalResponse(ctx context.Context) (P2SVPNConnectionHealthResponse, error) {
 	respType := P2SVPNConnectionHealthResponse{P2SVPNConnectionHealth: &P2SVPNConnectionHealth{}}
 	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.P2SVPNConnectionHealth)
 	if err != nil {
@@ -2721,11 +2721,11 @@ func (p *p2svpnConnectionHealthPoller) FinalResponse(ctx context.Context) (P2SVP
 
 // ResumeToken generates the string token that can be used with the ResumeP2SVPNConnectionHealthPoller method
 // on the client to create a new poller from the data held in the current poller type
-func (p *p2svpnConnectionHealthPoller) ResumeToken() (string, error) {
+func (p *p2SVPNConnectionHealthPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-func (p *p2svpnConnectionHealthPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (P2SVPNConnectionHealthResponse, error) {
+func (p *p2SVPNConnectionHealthPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (P2SVPNConnectionHealthResponse, error) {
 	respType := P2SVPNConnectionHealthResponse{P2SVPNConnectionHealth: &P2SVPNConnectionHealth{}}
 	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.P2SVPNConnectionHealth)
 	if err != nil {
@@ -2745,23 +2745,23 @@ type P2SVPNGatewayPoller interface {
 	FinalResponse(ctx context.Context) (P2SVPNGatewayResponse, error)
 }
 
-type p2svpnGatewayPoller struct {
+type p2SVPNGatewayPoller struct {
 	// the client for making the request
 	pipeline azcore.Pipeline
 	pt       armcore.Poller
 }
 
 // Done returns true if there was an error or polling has reached a terminal state
-func (p *p2svpnGatewayPoller) Done() bool {
+func (p *p2SVPNGatewayPoller) Done() bool {
 	return p.pt.Done()
 }
 
 // Poll will send poll the service endpoint and return an http.Response or error received from the service
-func (p *p2svpnGatewayPoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *p2SVPNGatewayPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx, p.pipeline)
 }
 
-func (p *p2svpnGatewayPoller) FinalResponse(ctx context.Context) (P2SVPNGatewayResponse, error) {
+func (p *p2SVPNGatewayPoller) FinalResponse(ctx context.Context) (P2SVPNGatewayResponse, error) {
 	respType := P2SVPNGatewayResponse{P2SVPNGateway: &P2SVPNGateway{}}
 	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.P2SVPNGateway)
 	if err != nil {
@@ -2773,11 +2773,11 @@ func (p *p2svpnGatewayPoller) FinalResponse(ctx context.Context) (P2SVPNGatewayR
 
 // ResumeToken generates the string token that can be used with the ResumeP2SVPNGatewayPoller method
 // on the client to create a new poller from the data held in the current poller type
-func (p *p2svpnGatewayPoller) ResumeToken() (string, error) {
+func (p *p2SVPNGatewayPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-func (p *p2svpnGatewayPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (P2SVPNGatewayResponse, error) {
+func (p *p2SVPNGatewayPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (P2SVPNGatewayResponse, error) {
 	respType := P2SVPNGatewayResponse{P2SVPNGateway: &P2SVPNGateway{}}
 	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.P2SVPNGateway)
 	if err != nil {

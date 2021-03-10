@@ -215,8 +215,8 @@ func (client *NetworkManagementClient) disconnectActiveSessionsHandleError(resp 
 
 // BeginGeneratevirtualwanvpnserverconfigurationvpnprofile - Generates a unique VPN profile for P2S clients for VirtualWan and associated VpnServerConfiguration
 // combination in the specified resource group.
-func (client *NetworkManagementClient) BeginGeneratevirtualwanvpnserverconfigurationvpnprofile(ctx context.Context, resourceGroupName string, virtualwanName string, vpnClientParams VirtualWanVPNProfileParameters, options *NetworkManagementClientBeginGeneratevirtualwanvpnserverconfigurationvpnprofileOptions) (VPNProfileResponsePollerResponse, error) {
-	resp, err := client.generatevirtualwanvpnserverconfigurationvpnprofile(ctx, resourceGroupName, virtualwanName, vpnClientParams, options)
+func (client *NetworkManagementClient) BeginGeneratevirtualwanvpnserverconfigurationvpnprofile(ctx context.Context, resourceGroupName string, virtualWANName string, vpnClientParams VirtualWanVPNProfileParameters, options *NetworkManagementClientBeginGeneratevirtualwanvpnserverconfigurationvpnprofileOptions) (VPNProfileResponsePollerResponse, error) {
+	resp, err := client.generatevirtualwanvpnserverconfigurationvpnprofile(ctx, resourceGroupName, virtualWANName, vpnClientParams, options)
 	if err != nil {
 		return VPNProfileResponsePollerResponse{}, err
 	}
@@ -253,8 +253,8 @@ func (client *NetworkManagementClient) ResumeGeneratevirtualwanvpnserverconfigur
 
 // Generatevirtualwanvpnserverconfigurationvpnprofile - Generates a unique VPN profile for P2S clients for VirtualWan and associated VpnServerConfiguration
 // combination in the specified resource group.
-func (client *NetworkManagementClient) generatevirtualwanvpnserverconfigurationvpnprofile(ctx context.Context, resourceGroupName string, virtualwanName string, vpnClientParams VirtualWanVPNProfileParameters, options *NetworkManagementClientBeginGeneratevirtualwanvpnserverconfigurationvpnprofileOptions) (*azcore.Response, error) {
-	req, err := client.generatevirtualwanvpnserverconfigurationvpnprofileCreateRequest(ctx, resourceGroupName, virtualwanName, vpnClientParams, options)
+func (client *NetworkManagementClient) generatevirtualwanvpnserverconfigurationvpnprofile(ctx context.Context, resourceGroupName string, virtualWANName string, vpnClientParams VirtualWanVPNProfileParameters, options *NetworkManagementClientBeginGeneratevirtualwanvpnserverconfigurationvpnprofileOptions) (*azcore.Response, error) {
+	req, err := client.generatevirtualwanvpnserverconfigurationvpnprofileCreateRequest(ctx, resourceGroupName, virtualWANName, vpnClientParams, options)
 	if err != nil {
 		return nil, err
 	}
@@ -269,11 +269,11 @@ func (client *NetworkManagementClient) generatevirtualwanvpnserverconfigurationv
 }
 
 // generatevirtualwanvpnserverconfigurationvpnprofileCreateRequest creates the Generatevirtualwanvpnserverconfigurationvpnprofile request.
-func (client *NetworkManagementClient) generatevirtualwanvpnserverconfigurationvpnprofileCreateRequest(ctx context.Context, resourceGroupName string, virtualwanName string, vpnClientParams VirtualWanVPNProfileParameters, options *NetworkManagementClientBeginGeneratevirtualwanvpnserverconfigurationvpnprofileOptions) (*azcore.Request, error) {
+func (client *NetworkManagementClient) generatevirtualwanvpnserverconfigurationvpnprofileCreateRequest(ctx context.Context, resourceGroupName string, virtualWANName string, vpnClientParams VirtualWanVPNProfileParameters, options *NetworkManagementClientBeginGeneratevirtualwanvpnserverconfigurationvpnprofileOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/GenerateVpnProfile"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	urlPath = strings.ReplaceAll(urlPath, "{virtualWANName}", url.PathEscape(virtualwanName))
+	urlPath = strings.ReplaceAll(urlPath, "{virtualWANName}", url.PathEscape(virtualWANName))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -563,8 +563,8 @@ func (client *NetworkManagementClient) putBastionShareableLinkHandleError(resp *
 }
 
 // SupportedSecurityProviders - Gives the supported security providers for the virtual wan.
-func (client *NetworkManagementClient) SupportedSecurityProviders(ctx context.Context, resourceGroupName string, virtualwanName string, options *NetworkManagementClientSupportedSecurityProvidersOptions) (VirtualWanSecurityProvidersResponse, error) {
-	req, err := client.supportedSecurityProvidersCreateRequest(ctx, resourceGroupName, virtualwanName, options)
+func (client *NetworkManagementClient) SupportedSecurityProviders(ctx context.Context, resourceGroupName string, virtualWANName string, options *NetworkManagementClientSupportedSecurityProvidersOptions) (VirtualWanSecurityProvidersResponse, error) {
+	req, err := client.supportedSecurityProvidersCreateRequest(ctx, resourceGroupName, virtualWANName, options)
 	if err != nil {
 		return VirtualWanSecurityProvidersResponse{}, err
 	}
@@ -579,11 +579,11 @@ func (client *NetworkManagementClient) SupportedSecurityProviders(ctx context.Co
 }
 
 // supportedSecurityProvidersCreateRequest creates the SupportedSecurityProviders request.
-func (client *NetworkManagementClient) supportedSecurityProvidersCreateRequest(ctx context.Context, resourceGroupName string, virtualwanName string, options *NetworkManagementClientSupportedSecurityProvidersOptions) (*azcore.Request, error) {
+func (client *NetworkManagementClient) supportedSecurityProvidersCreateRequest(ctx context.Context, resourceGroupName string, virtualWANName string, options *NetworkManagementClientSupportedSecurityProvidersOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/supportedSecurityProviders"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	urlPath = strings.ReplaceAll(urlPath, "{virtualWANName}", url.PathEscape(virtualwanName))
+	urlPath = strings.ReplaceAll(urlPath, "{virtualWANName}", url.PathEscape(virtualWANName))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err

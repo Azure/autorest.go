@@ -204,16 +204,21 @@ function getEscapedReservedName(name: string, appendValue: string): string {
 // e.g. SubscriptionId -> subscriptionID -> subscriptionid
 const gRenamed = new Map<string, boolean>();
 
+// case-preserving version of deconstruct() that also splits on more path-separator characters
+function deconstruct(identifier: string): string[] {
+  return `${identifier}`.
+    replace(/([a-z]+)([A-Z])/g, '$1 $2').
+    replace(/(\d+)([a-z|A-Z]+)/g, '$1 $2').
+    replace(/\b([A-Z]+)([A-Z])([a-z])/, '$1 $2$3').
+    split(/[\W|_|\.|@|-|\s|\$]+/);
+}
+
 export function ensureNameCase(name: string, lowerFirst?: boolean): string {
   if (gRenamed.has(name) && gRenamed.get(name) === lowerFirst) {
     return name;
   }
   let reconstructed = '';
-  // split the word into multiple words, either on Unicode word boundaries
-  // or a defined set of separation characters, *preserving* the existing casing.
-  // we cannot use deconstruct() as it is *not* case-preserving.
-  // remove any entries that are empty and return the array.
-  const words = values(name.split(new RegExp('(\\p{Lu}\\p{Ll}+\\d*)|\\.|_|@|-|\\s|\\$', 'gmu'))).where(s => s !== undefined && s.trim() !== '').toArray();
+  const words = deconstruct(name);
   for (let i = 0; i < words.length; ++i) {
     let word = words[i];
     // for params, lower-case the first segment
@@ -233,6 +238,8 @@ export function ensureNameCase(name: string, lowerFirst?: boolean): string {
           word = word.replace(toReplace, toReplace.toUpperCase());
         }
       }
+      // note that capitalize() will convert the following acronyms to all upper-case
+      // 'ip', 'os', 'ms', 'vm'
       word = word.capitalize();
     }
     reconstructed += word;

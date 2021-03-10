@@ -29,8 +29,8 @@ func NewLoadBalancerFrontendIPConfigurationsClient(con *armcore.Connection, subs
 }
 
 // Get - Gets load balancer frontend IP configuration.
-func (client *LoadBalancerFrontendIPConfigurationsClient) Get(ctx context.Context, resourceGroupName string, loadBalancerName string, frontendipConfigurationName string, options *LoadBalancerFrontendIPConfigurationsGetOptions) (FrontendIPConfigurationResponse, error) {
-	req, err := client.getCreateRequest(ctx, resourceGroupName, loadBalancerName, frontendipConfigurationName, options)
+func (client *LoadBalancerFrontendIPConfigurationsClient) Get(ctx context.Context, resourceGroupName string, loadBalancerName string, frontendIPConfigurationName string, options *LoadBalancerFrontendIPConfigurationsGetOptions) (FrontendIPConfigurationResponse, error) {
+	req, err := client.getCreateRequest(ctx, resourceGroupName, loadBalancerName, frontendIPConfigurationName, options)
 	if err != nil {
 		return FrontendIPConfigurationResponse{}, err
 	}
@@ -45,11 +45,11 @@ func (client *LoadBalancerFrontendIPConfigurationsClient) Get(ctx context.Contex
 }
 
 // getCreateRequest creates the Get request.
-func (client *LoadBalancerFrontendIPConfigurationsClient) getCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, frontendipConfigurationName string, options *LoadBalancerFrontendIPConfigurationsGetOptions) (*azcore.Request, error) {
+func (client *LoadBalancerFrontendIPConfigurationsClient) getCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, frontendIPConfigurationName string, options *LoadBalancerFrontendIPConfigurationsGetOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/frontendIPConfigurations/{frontendIPConfigurationName}"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{loadBalancerName}", url.PathEscape(loadBalancerName))
-	urlPath = strings.ReplaceAll(urlPath, "{frontendIPConfigurationName}", url.PathEscape(frontendipConfigurationName))
+	urlPath = strings.ReplaceAll(urlPath, "{frontendIPConfigurationName}", url.PathEscape(frontendIPConfigurationName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
