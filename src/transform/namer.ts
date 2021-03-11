@@ -75,7 +75,7 @@ export async function namer(session: Session<CodeModel>) {
     }
     for (const prop of values(obj.properties)) {
       const details = <Language>prop.language.go;
-      details.name = ensureNameCase(removePrefix(details.name, 'XMS'));
+      details.name = ensureNameCase(details.name);
       if (hasAdditionalProperties(obj) && details.name === 'AdditionalProperties') {
         // this is the case where a type contains the generic additional properties
         // and also has a field named additionalProperties.  we rename the field.
@@ -92,7 +92,7 @@ export async function namer(session: Session<CodeModel>) {
     if (groupDetails.name.length === 0) {
       groupDetails.name = session.model.info.title;
     }
-    groupDetails.name = ensureNameCase(removePrefix(groupDetails.name, 'XMS'));
+    groupDetails.name = ensureNameCase(groupDetails.name);
     groupDetails.clientName = `${groupDetails.name}Client`;
     if (groupDetails.name.endsWith('Client')) {
       // don't generate a name like FooClientClient
@@ -119,7 +119,7 @@ export async function namer(session: Session<CodeModel>) {
         const inParamGroup = param.extensions?.['x-ms-parameter-grouping'] || param.required !== true;
         const paramDetails = <Language>param.language.go;
         // if this is part of a param group struct then don't apply param naming rules to it
-        paramDetails.name = ensureNameCase(removePrefix(paramDetails.name, 'XMS'), !inParamGroup);
+        paramDetails.name = ensureNameCase(paramDetails.name), !inParamGroup);
         // fix up any param group names
         if (param.extensions?.['x-ms-parameter-grouping']) {
           if (param.extensions['x-ms-parameter-grouping'].name) {
@@ -158,7 +158,7 @@ export async function namer(session: Session<CodeModel>) {
     enm.language.go!.possibleValuesFunc = `Possible${enm.language.go!.name}Values`;
     for (const choice of values(enm.choices)) {
       const details = <Language>choice.language.go;
-      details.name = `${enm.language.go?.name}${ensureNameCase(removePrefix(details.name, 'XMS'))}`;
+      details.name = `${enm.language.go?.name}${ensureNameCase(details.name)}`;
     }
   }
   for (const enm of values(session.model.schemas.sealedChoices)) {
@@ -167,7 +167,7 @@ export async function namer(session: Session<CodeModel>) {
     enm.language.go!.possibleValuesFunc = `Possible${enm.language.go!.name}Values`;
     for (const choice of values(enm.choices)) {
       const details = <Language>choice.language.go;
-      details.name = `${enm.language.go?.name}${ensureNameCase(removePrefix(details.name, 'XMS'))}`;
+      details.name = `${enm.language.go?.name}${ensureNameCase(details.name)}`;
     }
   }
 
@@ -175,7 +175,7 @@ export async function namer(session: Session<CodeModel>) {
     const details = <Language>globalParam.language.go;
     const inParamGroup = globalParam.extensions?.['x-ms-parameter-grouping'];
     // if this is part of a param group struct then don't apply param naming rules to it
-    details.name = getEscapedReservedName(ensureNameCase(removePrefix(details.name, 'XMS'), !inParamGroup), 'Param');
+    details.name = getEscapedReservedName(ensureNameCase(details.name, !inParamGroup), 'Param');
   }
   return session;
 }
