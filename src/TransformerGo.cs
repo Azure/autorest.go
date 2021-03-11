@@ -29,7 +29,9 @@ namespace AutoRest.Go
             TransformMethods(cmg);
             SwaggerExtensions.ProcessParameterizedHost(cmg);
             FixStutteringTypeNames(cmg);
-            AssureUniqueNames(cmg);
+            // Get the setting of enum prefix
+            var enumPrefix = Settings.Instance.Host.GetValue<bool>("enum-prefix").Result;
+            TransfromEnumValues(cmg, enumPrefix);
             TransformPropertyTypes(cmg);
 
             return cmg;
@@ -158,6 +160,30 @@ namespace AutoRest.Go
                     {
                         ((CompositeTypeGo)dt).DiscriminatorEnum = mtm.DiscriminatorEnum;
                     }
+                }
+            }
+        }
+
+        private static void TransfromEnumValues(CodeModelGo cmg, bool prefix = false)
+        {
+            if (prefix)
+            {
+                AddEnumTypePrefix(cmg);
+            }
+            else
+            {
+                AssureUniqueNames(cmg);
+            }
+        }
+
+        private static void AddEnumTypePrefix(CodeModelGo cmg)
+        {
+            // NOTE: we will add all enum values with the prefix of its type to keep the enum values consistent between different versions
+            foreach (var em in cmg.EnumTypes.Cast<EnumTypeGo>())
+            {
+                foreach (var v in em.Values)
+                {
+                    v.Name = em.Name + v.Name;
                 }
             }
         }
