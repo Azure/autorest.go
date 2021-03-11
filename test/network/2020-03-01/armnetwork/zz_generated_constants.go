@@ -1560,6 +1560,70 @@ func (c IPFlowProtocol) ToPtr() *IPFlowProtocol {
 	return &c
 }
 
+// IPSecEncryption - The IPSec encryption algorithm (IKE phase 1).
+type IPSecEncryption string
+
+const (
+	IPSecEncryptionAES128    IPSecEncryption = "AES128"
+	IPSecEncryptionAES192    IPSecEncryption = "AES192"
+	IPSecEncryptionAES256    IPSecEncryption = "AES256"
+	IPSecEncryptionDES       IPSecEncryption = "DES"
+	IPSecEncryptionDES3      IPSecEncryption = "DES3"
+	IPSecEncryptionGCMAES128 IPSecEncryption = "GCMAES128"
+	IPSecEncryptionGCMAES192 IPSecEncryption = "GCMAES192"
+	IPSecEncryptionGCMAES256 IPSecEncryption = "GCMAES256"
+	IPSecEncryptionNone      IPSecEncryption = "None"
+)
+
+// PossibleIPSecEncryptionValues returns the possible values for the IPSecEncryption const type.
+func PossibleIPSecEncryptionValues() []IPSecEncryption {
+	return []IPSecEncryption{
+		IPSecEncryptionAES128,
+		IPSecEncryptionAES192,
+		IPSecEncryptionAES256,
+		IPSecEncryptionDES,
+		IPSecEncryptionDES3,
+		IPSecEncryptionGCMAES128,
+		IPSecEncryptionGCMAES192,
+		IPSecEncryptionGCMAES256,
+		IPSecEncryptionNone,
+	}
+}
+
+// ToPtr() returns a *IPSecEncryption pointing to the current value.
+func (c IPSecEncryption) ToPtr() *IPSecEncryption {
+	return &c
+}
+
+// IPSecIntegrity - The IPSec integrity algorithm (IKE phase 1).
+type IPSecIntegrity string
+
+const (
+	IPSecIntegrityGCMAES128 IPSecIntegrity = "GCMAES128"
+	IPSecIntegrityGCMAES192 IPSecIntegrity = "GCMAES192"
+	IPSecIntegrityGCMAES256 IPSecIntegrity = "GCMAES256"
+	IPSecIntegrityMD5       IPSecIntegrity = "MD5"
+	IPSecIntegritySHA1      IPSecIntegrity = "SHA1"
+	IPSecIntegritySHA256    IPSecIntegrity = "SHA256"
+)
+
+// PossibleIPSecIntegrityValues returns the possible values for the IPSecIntegrity const type.
+func PossibleIPSecIntegrityValues() []IPSecIntegrity {
+	return []IPSecIntegrity{
+		IPSecIntegrityGCMAES128,
+		IPSecIntegrityGCMAES192,
+		IPSecIntegrityGCMAES256,
+		IPSecIntegrityMD5,
+		IPSecIntegritySHA1,
+		IPSecIntegritySHA256,
+	}
+}
+
+// ToPtr() returns a *IPSecIntegrity pointing to the current value.
+func (c IPSecIntegrity) ToPtr() *IPSecIntegrity {
+	return &c
+}
+
 // IPVersion - IP address version.
 type IPVersion string
 
@@ -1590,8 +1654,8 @@ const (
 	IkeEncryptionAES256    IkeEncryption = "AES256"
 	IkeEncryptionDES       IkeEncryption = "DES"
 	IkeEncryptionDES3      IkeEncryption = "DES3"
-	IkeEncryptionGcmaes128 IkeEncryption = "GCMAES128"
-	IkeEncryptionGcmaes256 IkeEncryption = "GCMAES256"
+	IkeEncryptionGCMAES128 IkeEncryption = "GCMAES128"
+	IkeEncryptionGCMAES256 IkeEncryption = "GCMAES256"
 )
 
 // PossibleIkeEncryptionValues returns the possible values for the IkeEncryption const type.
@@ -1602,8 +1666,8 @@ func PossibleIkeEncryptionValues() []IkeEncryption {
 		IkeEncryptionAES256,
 		IkeEncryptionDES,
 		IkeEncryptionDES3,
-		IkeEncryptionGcmaes128,
-		IkeEncryptionGcmaes256,
+		IkeEncryptionGCMAES128,
+		IkeEncryptionGCMAES256,
 	}
 }
 
@@ -1616,8 +1680,8 @@ func (c IkeEncryption) ToPtr() *IkeEncryption {
 type IkeIntegrity string
 
 const (
-	IkeIntegrityGcmaes128 IkeIntegrity = "GCMAES128"
-	IkeIntegrityGcmaes256 IkeIntegrity = "GCMAES256"
+	IkeIntegrityGCMAES128 IkeIntegrity = "GCMAES128"
+	IkeIntegrityGCMAES256 IkeIntegrity = "GCMAES256"
 	IkeIntegrityMD5       IkeIntegrity = "MD5"
 	IkeIntegritySHA1      IkeIntegrity = "SHA1"
 	IkeIntegritySHA256    IkeIntegrity = "SHA256"
@@ -1627,8 +1691,8 @@ const (
 // PossibleIkeIntegrityValues returns the possible values for the IkeIntegrity const type.
 func PossibleIkeIntegrityValues() []IkeIntegrity {
 	return []IkeIntegrity{
-		IkeIntegrityGcmaes128,
-		IkeIntegrityGcmaes256,
+		IkeIntegrityGCMAES128,
+		IkeIntegrityGCMAES256,
 		IkeIntegrityMD5,
 		IkeIntegritySHA1,
 		IkeIntegritySHA256,
@@ -1638,70 +1702,6 @@ func PossibleIkeIntegrityValues() []IkeIntegrity {
 
 // ToPtr() returns a *IkeIntegrity pointing to the current value.
 func (c IkeIntegrity) ToPtr() *IkeIntegrity {
-	return &c
-}
-
-// IpsecEncryption - The IPSec encryption algorithm (IKE phase 1).
-type IpsecEncryption string
-
-const (
-	IpsecEncryptionAES128    IpsecEncryption = "AES128"
-	IpsecEncryptionAES192    IpsecEncryption = "AES192"
-	IpsecEncryptionAES256    IpsecEncryption = "AES256"
-	IpsecEncryptionDES       IpsecEncryption = "DES"
-	IpsecEncryptionDES3      IpsecEncryption = "DES3"
-	IpsecEncryptionGcmaes128 IpsecEncryption = "GCMAES128"
-	IpsecEncryptionGcmaes192 IpsecEncryption = "GCMAES192"
-	IpsecEncryptionGcmaes256 IpsecEncryption = "GCMAES256"
-	IpsecEncryptionNone      IpsecEncryption = "None"
-)
-
-// PossibleIpsecEncryptionValues returns the possible values for the IpsecEncryption const type.
-func PossibleIpsecEncryptionValues() []IpsecEncryption {
-	return []IpsecEncryption{
-		IpsecEncryptionAES128,
-		IpsecEncryptionAES192,
-		IpsecEncryptionAES256,
-		IpsecEncryptionDES,
-		IpsecEncryptionDES3,
-		IpsecEncryptionGcmaes128,
-		IpsecEncryptionGcmaes192,
-		IpsecEncryptionGcmaes256,
-		IpsecEncryptionNone,
-	}
-}
-
-// ToPtr() returns a *IpsecEncryption pointing to the current value.
-func (c IpsecEncryption) ToPtr() *IpsecEncryption {
-	return &c
-}
-
-// IpsecIntegrity - The IPSec integrity algorithm (IKE phase 1).
-type IpsecIntegrity string
-
-const (
-	IpsecIntegrityGcmaes128 IpsecIntegrity = "GCMAES128"
-	IpsecIntegrityGcmaes192 IpsecIntegrity = "GCMAES192"
-	IpsecIntegrityGcmaes256 IpsecIntegrity = "GCMAES256"
-	IpsecIntegrityMD5       IpsecIntegrity = "MD5"
-	IpsecIntegritySHA1      IpsecIntegrity = "SHA1"
-	IpsecIntegritySHA256    IpsecIntegrity = "SHA256"
-)
-
-// PossibleIpsecIntegrityValues returns the possible values for the IpsecIntegrity const type.
-func PossibleIpsecIntegrityValues() []IpsecIntegrity {
-	return []IpsecIntegrity{
-		IpsecIntegrityGcmaes128,
-		IpsecIntegrityGcmaes192,
-		IpsecIntegrityGcmaes256,
-		IpsecIntegrityMD5,
-		IpsecIntegritySHA1,
-		IpsecIntegritySHA256,
-	}
-}
-
-// ToPtr() returns a *IpsecIntegrity pointing to the current value.
-func (c IpsecIntegrity) ToPtr() *IpsecIntegrity {
 	return &c
 }
 

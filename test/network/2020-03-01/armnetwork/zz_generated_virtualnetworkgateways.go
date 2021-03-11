@@ -963,22 +963,22 @@ func (client *VirtualNetworkGatewaysClient) getVpnclientConnectionHealthHandleEr
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// BeginGetVpnclientIpsecParameters - The Get VpnclientIpsecParameters operation retrieves information about the vpnclient ipsec policy for P2S client of
+// BeginGetVpnclientIPSecParameters - The Get VpnclientIpsecParameters operation retrieves information about the vpnclient ipsec policy for P2S client of
 // virtual network gateway in the specified resource group through Network resource
 // provider.
-func (client *VirtualNetworkGatewaysClient) BeginGetVpnclientIpsecParameters(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysBeginGetVpnclientIpsecParametersOptions) (VPNClientIPsecParametersPollerResponse, error) {
-	resp, err := client.getVpnclientIpsecParameters(ctx, resourceGroupName, virtualNetworkGatewayName, options)
+func (client *VirtualNetworkGatewaysClient) BeginGetVpnclientIPSecParameters(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysBeginGetVpnclientIPSecParametersOptions) (VPNClientIPsecParametersPollerResponse, error) {
+	resp, err := client.getVpnclientIPSecParameters(ctx, resourceGroupName, virtualNetworkGatewayName, options)
 	if err != nil {
 		return VPNClientIPsecParametersPollerResponse{}, err
 	}
 	result := VPNClientIPsecParametersPollerResponse{
 		RawResponse: resp.Response,
 	}
-	pt, err := armcore.NewPoller("VirtualNetworkGatewaysClient.GetVpnclientIpsecParameters", "location", resp, client.getVpnclientIpsecParametersHandleError)
+	pt, err := armcore.NewPoller("VirtualNetworkGatewaysClient.GetVpnclientIPSecParameters", "location", resp, client.getVpnclientIPSecParametersHandleError)
 	if err != nil {
 		return VPNClientIPsecParametersPollerResponse{}, err
 	}
-	poller := &vpnClientIPsecParametersPoller{
+	poller := &vpnClientIPSecParametersPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -989,24 +989,24 @@ func (client *VirtualNetworkGatewaysClient) BeginGetVpnclientIpsecParameters(ctx
 	return result, nil
 }
 
-// ResumeGetVpnclientIpsecParameters creates a new VPNClientIPsecParametersPoller from the specified resume token.
+// ResumeGetVpnclientIPSecParameters creates a new VPNClientIPsecParametersPoller from the specified resume token.
 // token - The value must come from a previous call to VPNClientIPsecParametersPoller.ResumeToken().
-func (client *VirtualNetworkGatewaysClient) ResumeGetVpnclientIpsecParameters(token string) (VPNClientIPsecParametersPoller, error) {
-	pt, err := armcore.NewPollerFromResumeToken("VirtualNetworkGatewaysClient.GetVpnclientIpsecParameters", token, client.getVpnclientIpsecParametersHandleError)
+func (client *VirtualNetworkGatewaysClient) ResumeGetVpnclientIPSecParameters(token string) (VPNClientIPsecParametersPoller, error) {
+	pt, err := armcore.NewPollerFromResumeToken("VirtualNetworkGatewaysClient.GetVpnclientIPSecParameters", token, client.getVpnclientIPSecParametersHandleError)
 	if err != nil {
 		return nil, err
 	}
-	return &vpnClientIPsecParametersPoller{
+	return &vpnClientIPSecParametersPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
 
-// GetVpnclientIpsecParameters - The Get VpnclientIpsecParameters operation retrieves information about the vpnclient ipsec policy for P2S client of virtual
+// GetVpnclientIPSecParameters - The Get VpnclientIpsecParameters operation retrieves information about the vpnclient ipsec policy for P2S client of virtual
 // network gateway in the specified resource group through Network resource
 // provider.
-func (client *VirtualNetworkGatewaysClient) getVpnclientIpsecParameters(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysBeginGetVpnclientIpsecParametersOptions) (*azcore.Response, error) {
-	req, err := client.getVpnclientIpsecParametersCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, options)
+func (client *VirtualNetworkGatewaysClient) getVpnclientIPSecParameters(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysBeginGetVpnclientIPSecParametersOptions) (*azcore.Response, error) {
+	req, err := client.getVpnclientIPSecParametersCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, options)
 	if err != nil {
 		return nil, err
 	}
@@ -1015,13 +1015,13 @@ func (client *VirtualNetworkGatewaysClient) getVpnclientIpsecParameters(ctx cont
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getVpnclientIpsecParametersHandleError(resp)
+		return nil, client.getVpnclientIPSecParametersHandleError(resp)
 	}
 	return resp, nil
 }
 
-// getVpnclientIpsecParametersCreateRequest creates the GetVpnclientIpsecParameters request.
-func (client *VirtualNetworkGatewaysClient) getVpnclientIpsecParametersCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysBeginGetVpnclientIpsecParametersOptions) (*azcore.Request, error) {
+// getVpnclientIPSecParametersCreateRequest creates the GetVpnclientIPSecParameters request.
+func (client *VirtualNetworkGatewaysClient) getVpnclientIPSecParametersCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysBeginGetVpnclientIPSecParametersOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/getvpnclientipsecparameters"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
@@ -1038,8 +1038,8 @@ func (client *VirtualNetworkGatewaysClient) getVpnclientIpsecParametersCreateReq
 	return req, nil
 }
 
-// getVpnclientIpsecParametersHandleResponse handles the GetVpnclientIpsecParameters response.
-func (client *VirtualNetworkGatewaysClient) getVpnclientIpsecParametersHandleResponse(resp *azcore.Response) (VPNClientIPsecParametersResponse, error) {
+// getVpnclientIPSecParametersHandleResponse handles the GetVpnclientIPSecParameters response.
+func (client *VirtualNetworkGatewaysClient) getVpnclientIPSecParametersHandleResponse(resp *azcore.Response) (VPNClientIPsecParametersResponse, error) {
 	var val *VPNClientIPsecParameters
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return VPNClientIPsecParametersResponse{}, err
@@ -1047,8 +1047,8 @@ func (client *VirtualNetworkGatewaysClient) getVpnclientIpsecParametersHandleRes
 	return VPNClientIPsecParametersResponse{RawResponse: resp.Response, VPNClientIPsecParameters: val}, nil
 }
 
-// getVpnclientIpsecParametersHandleError handles the GetVpnclientIpsecParameters error response.
-func (client *VirtualNetworkGatewaysClient) getVpnclientIpsecParametersHandleError(resp *azcore.Response) error {
+// getVpnclientIPSecParametersHandleError handles the GetVpnclientIPSecParameters error response.
+func (client *VirtualNetworkGatewaysClient) getVpnclientIPSecParametersHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -1331,21 +1331,21 @@ func (client *VirtualNetworkGatewaysClient) resetVPNClientSharedKeyHandleError(r
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// BeginSetVpnclientIpsecParameters - The Set VpnclientIpsecParameters operation sets the vpnclient ipsec policy for P2S client of virtual network gateway
+// BeginSetVpnclientIPSecParameters - The Set VpnclientIpsecParameters operation sets the vpnclient ipsec policy for P2S client of virtual network gateway
 // in the specified resource group through Network resource provider.
-func (client *VirtualNetworkGatewaysClient) BeginSetVpnclientIpsecParameters(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, vpnclientIpsecParams VPNClientIPsecParameters, options *VirtualNetworkGatewaysBeginSetVpnclientIpsecParametersOptions) (VPNClientIPsecParametersPollerResponse, error) {
-	resp, err := client.setVpnclientIpsecParameters(ctx, resourceGroupName, virtualNetworkGatewayName, vpnclientIpsecParams, options)
+func (client *VirtualNetworkGatewaysClient) BeginSetVpnclientIPSecParameters(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, vpnclientIPSecParams VPNClientIPsecParameters, options *VirtualNetworkGatewaysBeginSetVpnclientIPSecParametersOptions) (VPNClientIPsecParametersPollerResponse, error) {
+	resp, err := client.setVpnclientIPSecParameters(ctx, resourceGroupName, virtualNetworkGatewayName, vpnclientIPSecParams, options)
 	if err != nil {
 		return VPNClientIPsecParametersPollerResponse{}, err
 	}
 	result := VPNClientIPsecParametersPollerResponse{
 		RawResponse: resp.Response,
 	}
-	pt, err := armcore.NewPoller("VirtualNetworkGatewaysClient.SetVpnclientIpsecParameters", "location", resp, client.setVpnclientIpsecParametersHandleError)
+	pt, err := armcore.NewPoller("VirtualNetworkGatewaysClient.SetVpnclientIPSecParameters", "location", resp, client.setVpnclientIPSecParametersHandleError)
 	if err != nil {
 		return VPNClientIPsecParametersPollerResponse{}, err
 	}
-	poller := &vpnClientIPsecParametersPoller{
+	poller := &vpnClientIPSecParametersPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -1356,23 +1356,23 @@ func (client *VirtualNetworkGatewaysClient) BeginSetVpnclientIpsecParameters(ctx
 	return result, nil
 }
 
-// ResumeSetVpnclientIpsecParameters creates a new VPNClientIPsecParametersPoller from the specified resume token.
+// ResumeSetVpnclientIPSecParameters creates a new VPNClientIPsecParametersPoller from the specified resume token.
 // token - The value must come from a previous call to VPNClientIPsecParametersPoller.ResumeToken().
-func (client *VirtualNetworkGatewaysClient) ResumeSetVpnclientIpsecParameters(token string) (VPNClientIPsecParametersPoller, error) {
-	pt, err := armcore.NewPollerFromResumeToken("VirtualNetworkGatewaysClient.SetVpnclientIpsecParameters", token, client.setVpnclientIpsecParametersHandleError)
+func (client *VirtualNetworkGatewaysClient) ResumeSetVpnclientIPSecParameters(token string) (VPNClientIPsecParametersPoller, error) {
+	pt, err := armcore.NewPollerFromResumeToken("VirtualNetworkGatewaysClient.SetVpnclientIPSecParameters", token, client.setVpnclientIPSecParametersHandleError)
 	if err != nil {
 		return nil, err
 	}
-	return &vpnClientIPsecParametersPoller{
+	return &vpnClientIPSecParametersPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil
 }
 
-// SetVpnclientIpsecParameters - The Set VpnclientIpsecParameters operation sets the vpnclient ipsec policy for P2S client of virtual network gateway in
+// SetVpnclientIPSecParameters - The Set VpnclientIpsecParameters operation sets the vpnclient ipsec policy for P2S client of virtual network gateway in
 // the specified resource group through Network resource provider.
-func (client *VirtualNetworkGatewaysClient) setVpnclientIpsecParameters(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, vpnclientIpsecParams VPNClientIPsecParameters, options *VirtualNetworkGatewaysBeginSetVpnclientIpsecParametersOptions) (*azcore.Response, error) {
-	req, err := client.setVpnclientIpsecParametersCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, vpnclientIpsecParams, options)
+func (client *VirtualNetworkGatewaysClient) setVpnclientIPSecParameters(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, vpnclientIPSecParams VPNClientIPsecParameters, options *VirtualNetworkGatewaysBeginSetVpnclientIPSecParametersOptions) (*azcore.Response, error) {
+	req, err := client.setVpnclientIPSecParametersCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, vpnclientIPSecParams, options)
 	if err != nil {
 		return nil, err
 	}
@@ -1381,13 +1381,13 @@ func (client *VirtualNetworkGatewaysClient) setVpnclientIpsecParameters(ctx cont
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
-		return nil, client.setVpnclientIpsecParametersHandleError(resp)
+		return nil, client.setVpnclientIPSecParametersHandleError(resp)
 	}
 	return resp, nil
 }
 
-// setVpnclientIpsecParametersCreateRequest creates the SetVpnclientIpsecParameters request.
-func (client *VirtualNetworkGatewaysClient) setVpnclientIpsecParametersCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, vpnclientIpsecParams VPNClientIPsecParameters, options *VirtualNetworkGatewaysBeginSetVpnclientIpsecParametersOptions) (*azcore.Request, error) {
+// setVpnclientIPSecParametersCreateRequest creates the SetVpnclientIPSecParameters request.
+func (client *VirtualNetworkGatewaysClient) setVpnclientIPSecParametersCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, vpnclientIPSecParams VPNClientIPsecParameters, options *VirtualNetworkGatewaysBeginSetVpnclientIPSecParametersOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/setvpnclientipsecparameters"
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
@@ -1401,11 +1401,11 @@ func (client *VirtualNetworkGatewaysClient) setVpnclientIpsecParametersCreateReq
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(vpnclientIpsecParams)
+	return req, req.MarshalAsJSON(vpnclientIPSecParams)
 }
 
-// setVpnclientIpsecParametersHandleResponse handles the SetVpnclientIpsecParameters response.
-func (client *VirtualNetworkGatewaysClient) setVpnclientIpsecParametersHandleResponse(resp *azcore.Response) (VPNClientIPsecParametersResponse, error) {
+// setVpnclientIPSecParametersHandleResponse handles the SetVpnclientIPSecParameters response.
+func (client *VirtualNetworkGatewaysClient) setVpnclientIPSecParametersHandleResponse(resp *azcore.Response) (VPNClientIPsecParametersResponse, error) {
 	var val *VPNClientIPsecParameters
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return VPNClientIPsecParametersResponse{}, err
@@ -1413,8 +1413,8 @@ func (client *VirtualNetworkGatewaysClient) setVpnclientIpsecParametersHandleRes
 	return VPNClientIPsecParametersResponse{RawResponse: resp.Response, VPNClientIPsecParameters: val}, nil
 }
 
-// setVpnclientIpsecParametersHandleError handles the SetVpnclientIpsecParameters error response.
-func (client *VirtualNetworkGatewaysClient) setVpnclientIpsecParametersHandleError(resp *azcore.Response) error {
+// setVpnclientIPSecParametersHandleError handles the SetVpnclientIPSecParameters error response.
+func (client *VirtualNetworkGatewaysClient) setVpnclientIPSecParametersHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

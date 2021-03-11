@@ -6792,7 +6792,7 @@ type IPConfigurationBgpPeeringAddress struct {
 	DefaultBgpIPAddresses *[]string `json:"defaultBgpIpAddresses,omitempty" azure:"ro"`
 
 	// The ID of IP configuration which belongs to gateway.
-	IpconfigurationID *string `json:"ipconfigurationId,omitempty"`
+	IPConfigurationID *string `json:"ipconfigurationId,omitempty"`
 
 	// READ-ONLY; The list of tunnel public IP addresses which belong to IP configuration.
 	TunnelIPAddresses *[]string `json:"tunnelIpAddresses,omitempty" azure:"ro"`
@@ -6931,6 +6931,33 @@ type IPGroupsListOptions struct {
 // IPGroupsUpdateGroupsOptions contains the optional parameters for the IPGroups.UpdateGroups method.
 type IPGroupsUpdateGroupsOptions struct {
 	// placeholder for future optional parameters
+}
+
+// An IPSec Policy configuration for a virtual network gateway connection.
+type IPSecPolicy struct {
+	// The DH Group used in IKE Phase 1 for initial SA.
+	DhGroup *DhGroup `json:"dhGroup,omitempty"`
+
+	// The IPSec encryption algorithm (IKE phase 1).
+	IPSecEncryption *IPSecEncryption `json:"ipsecEncryption,omitempty"`
+
+	// The IPSec integrity algorithm (IKE phase 1).
+	IPSecIntegrity *IPSecIntegrity `json:"ipsecIntegrity,omitempty"`
+
+	// The IKE encryption algorithm (IKE phase 2).
+	IkeEncryption *IkeEncryption `json:"ikeEncryption,omitempty"`
+
+	// The IKE integrity algorithm (IKE phase 2).
+	IkeIntegrity *IkeIntegrity `json:"ikeIntegrity,omitempty"`
+
+	// The Pfs Group used in IKE Phase 2 for new child SA.
+	PfsGroup *PfsGroup `json:"pfsGroup,omitempty"`
+
+	// The IPSec Security Association (also called Quick Mode or Phase 2 SA) payload size in KB for a site to site VPN tunnel.
+	SaDataSizeKilobytes *int32 `json:"saDataSizeKilobytes,omitempty"`
+
+	// The IPSec Security Association (also called Quick Mode or Phase 2 SA) lifetime in seconds for a site to site VPN tunnel.
+	SaLifeTimeSeconds *int32 `json:"saLifeTimeSeconds,omitempty"`
 }
 
 // Contains the IpTag associated with the object.
@@ -7130,33 +7157,6 @@ type InboundNatRulesGetOptions struct {
 // InboundNatRulesListOptions contains the optional parameters for the InboundNatRules.List method.
 type InboundNatRulesListOptions struct {
 	// placeholder for future optional parameters
-}
-
-// An IPSec Policy configuration for a virtual network gateway connection.
-type IpsecPolicy struct {
-	// The DH Group used in IKE Phase 1 for initial SA.
-	DhGroup *DhGroup `json:"dhGroup,omitempty"`
-
-	// The IKE encryption algorithm (IKE phase 2).
-	IkeEncryption *IkeEncryption `json:"ikeEncryption,omitempty"`
-
-	// The IKE integrity algorithm (IKE phase 2).
-	IkeIntegrity *IkeIntegrity `json:"ikeIntegrity,omitempty"`
-
-	// The IPSec encryption algorithm (IKE phase 1).
-	IpsecEncryption *IpsecEncryption `json:"ipsecEncryption,omitempty"`
-
-	// The IPSec integrity algorithm (IKE phase 1).
-	IpsecIntegrity *IpsecIntegrity `json:"ipsecIntegrity,omitempty"`
-
-	// The Pfs Group used in IKE Phase 2 for new child SA.
-	PfsGroup *PfsGroup `json:"pfsGroup,omitempty"`
-
-	// The IPSec Security Association (also called Quick Mode or Phase 2 SA) payload size in KB for a site to site VPN tunnel.
-	SaDataSizeKilobytes *int32 `json:"saDataSizeKilobytes,omitempty"`
-
-	// The IPSec Security Association (also called Quick Mode or Phase 2 SA) lifetime in seconds for a site to site VPN tunnel.
-	SaLifeTimeSeconds *int32 `json:"saLifeTimeSeconds,omitempty"`
 }
 
 // List of HubVirtualNetworkConnections and a URL nextLink to get the next set of results.
@@ -12586,7 +12586,7 @@ type VPNClientConfiguration struct {
 	VPNClientAddressPool *AddressSpace `json:"vpnClientAddressPool,omitempty"`
 
 	// VpnClientIpsecPolicies for virtual network gateway P2S client.
-	VPNClientIpsecPolicies *[]IpsecPolicy `json:"vpnClientIpsecPolicies,omitempty"`
+	VPNClientIPSecPolicies *[]IPSecPolicy `json:"vpnClientIpsecPolicies,omitempty"`
 
 	// VpnClientProtocols for Virtual network gateway.
 	VPNClientProtocols *[]VPNClientProtocol `json:"vpnClientProtocols,omitempty"`
@@ -12685,17 +12685,17 @@ type VPNClientIPsecParameters struct {
 	// The DH Group used in IKE Phase 1 for initial SA.
 	DhGroup *DhGroup `json:"dhGroup,omitempty"`
 
+	// The IPSec encryption algorithm (IKE phase 1).
+	IPSecEncryption *IPSecEncryption `json:"ipsecEncryption,omitempty"`
+
+	// The IPSec integrity algorithm (IKE phase 1).
+	IPSecIntegrity *IPSecIntegrity `json:"ipsecIntegrity,omitempty"`
+
 	// The IKE encryption algorithm (IKE phase 2).
 	IkeEncryption *IkeEncryption `json:"ikeEncryption,omitempty"`
 
 	// The IKE integrity algorithm (IKE phase 2).
 	IkeIntegrity *IkeIntegrity `json:"ikeIntegrity,omitempty"`
-
-	// The IPSec encryption algorithm (IKE phase 1).
-	IpsecEncryption *IpsecEncryption `json:"ipsecEncryption,omitempty"`
-
-	// The IPSec integrity algorithm (IKE phase 1).
-	IpsecIntegrity *IpsecIntegrity `json:"ipsecIntegrity,omitempty"`
 
 	// The Pfs Group used in IKE Phase 2 for new child SA.
 	PfsGroup *PfsGroup `json:"pfsGroup,omitempty"`
@@ -12838,11 +12838,11 @@ type VPNConnectionProperties struct {
 	// EnableBgp flag.
 	EnableRateLimiting *bool `json:"enableRateLimiting,omitempty"`
 
+	// The IPSec Policies to be considered by this connection.
+	IPSecPolicies *[]IPSecPolicy `json:"ipsecPolicies,omitempty"`
+
 	// READ-ONLY; Ingress bytes transferred.
 	IngressBytesTransferred *int64 `json:"ingressBytesTransferred,omitempty" azure:"ro"`
-
-	// The IPSec Policies to be considered by this connection.
-	IpsecPolicies *[]IpsecPolicy `json:"ipsecPolicies,omitempty"`
 
 	// READ-ONLY; The provisioning state of the VPN connection resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
@@ -13150,7 +13150,7 @@ type VPNServerConfigurationProperties struct {
 	VPNAuthenticationTypes *[]VPNAuthenticationType `json:"vpnAuthenticationTypes,omitempty"`
 
 	// VpnClientIpsecPolicies for VpnServerConfiguration.
-	VPNClientIpsecPolicies *[]IpsecPolicy `json:"vpnClientIpsecPolicies,omitempty"`
+	VPNClientIPSecPolicies *[]IPSecPolicy `json:"vpnClientIpsecPolicies,omitempty"`
 
 	// VPN client revoked certificate of VpnServerConfiguration.
 	VPNClientRevokedCertificates *[]VPNServerConfigVPNClientRevokedCertificate `json:"vpnClientRevokedCertificates,omitempty"`
@@ -13299,11 +13299,11 @@ type VPNSiteLinkConnectionProperties struct {
 	// EnableBgp flag.
 	EnableRateLimiting *bool `json:"enableRateLimiting,omitempty"`
 
+	// The IPSec Policies to be considered by this connection.
+	IPSecPolicies *[]IPSecPolicy `json:"ipsecPolicies,omitempty"`
+
 	// READ-ONLY; Ingress bytes transferred.
 	IngressBytesTransferred *int64 `json:"ingressBytesTransferred,omitempty" azure:"ro"`
-
-	// The IPSec Policies to be considered by this connection.
-	IpsecPolicies *[]IpsecPolicy `json:"ipsecPolicies,omitempty"`
 
 	// READ-ONLY; The provisioning state of the VPN site link connection resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
@@ -13829,11 +13829,11 @@ type VirtualNetworkGatewayConnectionListEntityPropertiesFormat struct {
 	// Bypass ExpressRoute Gateway for data forwarding.
 	ExpressRouteGatewayBypass *bool `json:"expressRouteGatewayBypass,omitempty"`
 
+	// The IPSec Policies to be considered by this connection.
+	IPSecPolicies *[]IPSecPolicy `json:"ipsecPolicies,omitempty"`
+
 	// READ-ONLY; The ingress bytes transferred in this connection.
 	IngressBytesTransferred *int64 `json:"ingressBytesTransferred,omitempty" azure:"ro"`
-
-	// The IPSec Policies to be considered by this connection.
-	IpsecPolicies *[]IpsecPolicy `json:"ipsecPolicies,omitempty"`
 
 	// The reference to local network gateway resource.
 	LocalNetworkGateway2 *VirtualNetworkConnectionGatewayReference `json:"localNetworkGateway2,omitempty"`
@@ -13925,11 +13925,11 @@ type VirtualNetworkGatewayConnectionPropertiesFormat struct {
 	// Bypass ExpressRoute Gateway for data forwarding.
 	ExpressRouteGatewayBypass *bool `json:"expressRouteGatewayBypass,omitempty"`
 
+	// The IPSec Policies to be considered by this connection.
+	IPSecPolicies *[]IPSecPolicy `json:"ipsecPolicies,omitempty"`
+
 	// READ-ONLY; The ingress bytes transferred in this connection.
 	IngressBytesTransferred *int64 `json:"ingressBytesTransferred,omitempty" azure:"ro"`
-
-	// The IPSec Policies to be considered by this connection.
-	IpsecPolicies *[]IpsecPolicy `json:"ipsecPolicies,omitempty"`
 
 	// The reference to local network gateway resource.
 	LocalNetworkGateway2 *LocalNetworkGateway `json:"localNetworkGateway2,omitempty"`
@@ -14241,9 +14241,9 @@ type VirtualNetworkGatewaysBeginGetVpnclientConnectionHealthOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualNetworkGatewaysBeginGetVpnclientIpsecParametersOptions contains the optional parameters for the VirtualNetworkGateways.BeginGetVpnclientIpsecParameters
+// VirtualNetworkGatewaysBeginGetVpnclientIPSecParametersOptions contains the optional parameters for the VirtualNetworkGateways.BeginGetVpnclientIPSecParameters
 // method.
-type VirtualNetworkGatewaysBeginGetVpnclientIpsecParametersOptions struct {
+type VirtualNetworkGatewaysBeginGetVpnclientIPSecParametersOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -14259,9 +14259,9 @@ type VirtualNetworkGatewaysBeginResetVPNClientSharedKeyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualNetworkGatewaysBeginSetVpnclientIpsecParametersOptions contains the optional parameters for the VirtualNetworkGateways.BeginSetVpnclientIpsecParameters
+// VirtualNetworkGatewaysBeginSetVpnclientIPSecParametersOptions contains the optional parameters for the VirtualNetworkGateways.BeginSetVpnclientIPSecParameters
 // method.
-type VirtualNetworkGatewaysBeginSetVpnclientIpsecParametersOptions struct {
+type VirtualNetworkGatewaysBeginSetVpnclientIPSecParametersOptions struct {
 	// placeholder for future optional parameters
 }
 

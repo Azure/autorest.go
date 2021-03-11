@@ -3891,23 +3891,23 @@ type VPNClientIPsecParametersPoller interface {
 	FinalResponse(ctx context.Context) (VPNClientIPsecParametersResponse, error)
 }
 
-type vpnClientIPsecParametersPoller struct {
+type vpnClientIPSecParametersPoller struct {
 	// the client for making the request
 	pipeline azcore.Pipeline
 	pt       armcore.Poller
 }
 
 // Done returns true if there was an error or polling has reached a terminal state
-func (p *vpnClientIPsecParametersPoller) Done() bool {
+func (p *vpnClientIPSecParametersPoller) Done() bool {
 	return p.pt.Done()
 }
 
 // Poll will send poll the service endpoint and return an http.Response or error received from the service
-func (p *vpnClientIPsecParametersPoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *vpnClientIPSecParametersPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx, p.pipeline)
 }
 
-func (p *vpnClientIPsecParametersPoller) FinalResponse(ctx context.Context) (VPNClientIPsecParametersResponse, error) {
+func (p *vpnClientIPSecParametersPoller) FinalResponse(ctx context.Context) (VPNClientIPsecParametersResponse, error) {
 	respType := VPNClientIPsecParametersResponse{VPNClientIPsecParameters: &VPNClientIPsecParameters{}}
 	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.VPNClientIPsecParameters)
 	if err != nil {
@@ -3919,11 +3919,11 @@ func (p *vpnClientIPsecParametersPoller) FinalResponse(ctx context.Context) (VPN
 
 // ResumeToken generates the string token that can be used with the ResumeVPNClientIPsecParametersPoller method
 // on the client to create a new poller from the data held in the current poller type
-func (p *vpnClientIPsecParametersPoller) ResumeToken() (string, error) {
+func (p *vpnClientIPSecParametersPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-func (p *vpnClientIPsecParametersPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (VPNClientIPsecParametersResponse, error) {
+func (p *vpnClientIPSecParametersPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (VPNClientIPsecParametersResponse, error) {
 	respType := VPNClientIPsecParametersResponse{VPNClientIPsecParameters: &VPNClientIPsecParameters{}}
 	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.VPNClientIPsecParameters)
 	if err != nil {
