@@ -145,7 +145,7 @@ export async function namer(session: Session<CodeModel>) {
       for (const resp of values(op.responses)) {
         for (const header of values(resp.protocol.http!.headers)) {
           const head = <HttpHeader>header;
-          head.language.go!.name = ensureNameCase(removePrefix(head.language.go!.name, 'XMS'));
+          head.language.go!.name = ensureNameCase(head.language.go!.name);
         }
       }
     }
@@ -214,6 +214,8 @@ export function ensureNameCase(name: string, lowerFirst?: boolean): string {
   if (gRenamed.has(name) && gRenamed.get(name) === lowerFirst) {
     return name;
   }
+  // XMS prefix requires special handling due to too many permutations that cause weird splits in the word
+  name = name.replace(new RegExp('^(xms)', 'i'), 'XMS');
   let reconstructed = '';
   const words = deconstruct(name);
   for (let i = 0; i < words.length; ++i) {
@@ -243,19 +245,6 @@ export function ensureNameCase(name: string, lowerFirst?: boolean): string {
   }
   gRenamed.set(reconstructed, lowerFirst === true);
   return reconstructed;
-}
-
-function removePrefix(name: string, prefix: string): string {
-  // perform case-insensitive comparison
-  const nameU = name.toUpperCase();
-  const prefixU = prefix.toUpperCase();
-  for (let i = 0; i < prefixU.length; i++) {
-    if (prefixU[i] !== nameU[i]) {
-      return name
-    }
-  }
-
-  return name.slice(prefix.length);
 }
 
 function createPolymorphicInterfaceName(base: string): string {

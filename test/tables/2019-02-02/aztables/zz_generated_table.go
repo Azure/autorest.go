@@ -430,10 +430,10 @@ func (client *TableClient) insertEntityHandleResponse(resp *azcore.Response) (in
 			result.ETag = &val
 		}
 		if val := resp.Header.Get("x-ms-continuation-NextPartitionKey"); val != "" {
-			result.ContinuationNextPartitionKey = &val
+			result.XMSContinuationNextPartitionKey = &val
 		}
 		if val := resp.Header.Get("x-ms-continuation-NextRowKey"); val != "" {
-			result.ContinuationNextRowKey = &val
+			result.XMSContinuationNextRowKey = &val
 		}
 		if val := resp.Header.Get("Preference-Applied"); val != "" {
 			result.PreferenceApplied = &val
@@ -642,7 +642,7 @@ func (client *TableClient) queryHandleResponse(resp *azcore.Response) (TableQuer
 		result.Date = &date
 	}
 	if val := resp.Header.Get("x-ms-continuation-NextTableName"); val != "" {
-		result.ContinuationNextTableName = &val
+		result.XMSContinuationNextTableName = &val
 	}
 	return result, nil
 }
@@ -740,10 +740,10 @@ func (client *TableClient) queryEntitiesHandleResponse(resp *azcore.Response) (T
 		result.Date = &date
 	}
 	if val := resp.Header.Get("x-ms-continuation-NextPartitionKey"); val != "" {
-		result.ContinuationNextPartitionKey = &val
+		result.XMSContinuationNextPartitionKey = &val
 	}
 	if val := resp.Header.Get("x-ms-continuation-NextRowKey"); val != "" {
-		result.ContinuationNextRowKey = &val
+		result.XMSContinuationNextRowKey = &val
 	}
 	return result, nil
 }
@@ -834,10 +834,10 @@ func (client *TableClient) queryEntityWithPartitionAndRowKeyHandleResponse(resp 
 		result.ETag = &val
 	}
 	if val := resp.Header.Get("x-ms-continuation-NextPartitionKey"); val != "" {
-		result.ContinuationNextPartitionKey = &val
+		result.XMSContinuationNextPartitionKey = &val
 	}
 	if val := resp.Header.Get("x-ms-continuation-NextRowKey"); val != "" {
-		result.ContinuationNextRowKey = &val
+		result.XMSContinuationNextRowKey = &val
 	}
 	if val := resp.Header.Get("Preference-Applied"); val != "" {
 		result.PreferenceApplied = &val

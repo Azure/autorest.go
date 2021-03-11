@@ -225,12 +225,12 @@ type SubscriptionInMethodPostSwaggerLocalValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// XMsClientRequestIDGetOptions contains the optional parameters for the XMsClientRequestID.Get method.
-type XMsClientRequestIDGetOptions struct {
+// XMSClientRequestIDGetOptions contains the optional parameters for the XMSClientRequestID.Get method.
+type XMSClientRequestIDGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// XMsClientRequestIDParamGetOptions contains the optional parameters for the XMsClientRequestID.ParamGet method.
-type XMsClientRequestIDParamGetOptions struct {
+// XMSClientRequestIDParamGetOptions contains the optional parameters for the XMSClientRequestID.ParamGet method.
+type XMSClientRequestIDParamGetOptions struct {
 	// placeholder for future optional parameters
 }

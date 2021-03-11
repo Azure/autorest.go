@@ -148,12 +148,6 @@ type MapOfInterfaceResponse struct {
 	// ContentType contains the information returned from the Content-Type header response.
 	ContentType *string
 
-	// ContinuationNextPartitionKey contains the information returned from the x-ms-continuation-NextPartitionKey header response.
-	ContinuationNextPartitionKey *string
-
-	// ContinuationNextRowKey contains the information returned from the x-ms-continuation-NextRowKey header response.
-	ContinuationNextRowKey *string
-
 	// Date contains the information returned from the Date header response.
 	Date *time.Time
 
@@ -174,6 +168,12 @@ type MapOfInterfaceResponse struct {
 
 	// Version contains the information returned from the x-ms-version header response.
 	Version *string
+
+	// XMSContinuationNextPartitionKey contains the information returned from the x-ms-continuation-NextPartitionKey header response.
+	XMSContinuationNextPartitionKey *string
+
+	// XMSContinuationNextRowKey contains the information returned from the x-ms-continuation-NextRowKey header response.
+	XMSContinuationNextRowKey *string
 }
 
 type Metrics struct {
@@ -373,12 +373,6 @@ type TableEntityQueryResponseResponse struct {
 	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
 	ClientRequestID *string
 
-	// ContinuationNextPartitionKey contains the information returned from the x-ms-continuation-NextPartitionKey header response.
-	ContinuationNextPartitionKey *string
-
-	// ContinuationNextRowKey contains the information returned from the x-ms-continuation-NextRowKey header response.
-	ContinuationNextRowKey *string
-
 	// Date contains the information returned from the Date header response.
 	Date *time.Time
 
@@ -393,6 +387,12 @@ type TableEntityQueryResponseResponse struct {
 
 	// Version contains the information returned from the x-ms-version header response.
 	Version *string
+
+	// XMSContinuationNextPartitionKey contains the information returned from the x-ms-continuation-NextPartitionKey header response.
+	XMSContinuationNextPartitionKey *string
+
+	// XMSContinuationNextRowKey contains the information returned from the x-ms-continuation-NextRowKey header response.
+	XMSContinuationNextRowKey *string
 }
 
 // TableGetAccessPolicyOptions contains the optional parameters for the Table.GetAccessPolicy method.
@@ -525,9 +525,6 @@ type TableQueryResponseResponse struct {
 	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
 	ClientRequestID *string
 
-	// ContinuationNextTableName contains the information returned from the x-ms-continuation-NextTableName header response.
-	ContinuationNextTableName *string
-
 	// Date contains the information returned from the Date header response.
 	Date *time.Time
 
@@ -542,6 +539,9 @@ type TableQueryResponseResponse struct {
 
 	// Version contains the information returned from the x-ms-version header response.
 	Version *string
+
+	// XMSContinuationNextTableName contains the information returned from the x-ms-continuation-NextTableName header response.
+	XMSContinuationNextTableName *string
 }
 
 // The response for a single table.

@@ -17636,7 +17636,7 @@ func (j *JiraSource) UnmarshalJSON(data []byte) error {
 type LibraryAppendOptions struct {
 	// Set this header to a byte offset at which the block is expected to be appended. The request succeeds only if the current offset matches this value. Otherwise,
 	// the request fails with the AppendPositionConditionNotMet error (HTTP status code 412 – Precondition Failed)
-	XMsBlobConditionAppendpos *int64
+	XMSBlobConditionAppendpos *int64
 }
 
 // LibraryBeginCreateOptions contains the optional parameters for the Library.BeginCreate method.

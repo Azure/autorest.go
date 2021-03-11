@@ -16,19 +16,19 @@ import (
 	"net/http"
 )
 
-// XMsClientRequestIDClient contains the methods for the XMsClientRequestID group.
-// Don't use this type directly, use NewXMsClientRequestIDClient() instead.
-type XMsClientRequestIDClient struct {
+// XMSClientRequestIDClient contains the methods for the XMSClientRequestID group.
+// Don't use this type directly, use NewXMSClientRequestIDClient() instead.
+type XMSClientRequestIDClient struct {
 	con *Connection
 }
 
-// NewXMsClientRequestIDClient creates a new instance of XMsClientRequestIDClient with the specified values.
-func NewXMsClientRequestIDClient(con *Connection) *XMsClientRequestIDClient {
-	return &XMsClientRequestIDClient{con: con}
+// NewXMSClientRequestIDClient creates a new instance of XMSClientRequestIDClient with the specified values.
+func NewXMSClientRequestIDClient(con *Connection) *XMSClientRequestIDClient {
+	return &XMSClientRequestIDClient{con: con}
 }
 
 // Get - Get method that overwrites x-ms-client-request header with value 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.
-func (client *XMsClientRequestIDClient) Get(ctx context.Context, options *XMsClientRequestIDGetOptions) (*http.Response, error) {
+func (client *XMSClientRequestIDClient) Get(ctx context.Context, options *XMSClientRequestIDGetOptions) (*http.Response, error) {
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -44,7 +44,7 @@ func (client *XMsClientRequestIDClient) Get(ctx context.Context, options *XMsCli
 }
 
 // getCreateRequest creates the Get request.
-func (client *XMsClientRequestIDClient) getCreateRequest(ctx context.Context, options *XMsClientRequestIDGetOptions) (*azcore.Request, error) {
+func (client *XMSClientRequestIDClient) getCreateRequest(ctx context.Context, options *XMSClientRequestIDGetOptions) (*azcore.Request, error) {
 	urlPath := "/azurespecials/overwrite/x-ms-client-request-id/method/"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -55,7 +55,7 @@ func (client *XMsClientRequestIDClient) getCreateRequest(ctx context.Context, op
 }
 
 // getHandleError handles the Get error response.
-func (client *XMsClientRequestIDClient) getHandleError(resp *azcore.Response) error {
+func (client *XMSClientRequestIDClient) getHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -67,8 +67,8 @@ func (client *XMsClientRequestIDClient) getHandleError(resp *azcore.Response) er
 }
 
 // ParamGet - Get method that overwrites x-ms-client-request header with value 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.
-func (client *XMsClientRequestIDClient) ParamGet(ctx context.Context, xMsClientRequestID string, options *XMsClientRequestIDParamGetOptions) (*http.Response, error) {
-	req, err := client.paramGetCreateRequest(ctx, xMsClientRequestID, options)
+func (client *XMSClientRequestIDClient) ParamGet(ctx context.Context, xmsClientRequestID string, options *XMSClientRequestIDParamGetOptions) (*http.Response, error) {
+	req, err := client.paramGetCreateRequest(ctx, xmsClientRequestID, options)
 	if err != nil {
 		return nil, err
 	}
@@ -83,20 +83,20 @@ func (client *XMsClientRequestIDClient) ParamGet(ctx context.Context, xMsClientR
 }
 
 // paramGetCreateRequest creates the ParamGet request.
-func (client *XMsClientRequestIDClient) paramGetCreateRequest(ctx context.Context, xMsClientRequestID string, options *XMsClientRequestIDParamGetOptions) (*azcore.Request, error) {
+func (client *XMSClientRequestIDClient) paramGetCreateRequest(ctx context.Context, xmsClientRequestID string, options *XMSClientRequestIDParamGetOptions) (*azcore.Request, error) {
 	urlPath := "/azurespecials/overwrite/x-ms-client-request-id/via-param/method/"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	req.Header.Set("x-ms-client-request-id", xMsClientRequestID)
+	req.Header.Set("x-ms-client-request-id", xmsClientRequestID)
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // paramGetHandleError handles the ParamGet error response.
-func (client *XMsClientRequestIDClient) paramGetHandleError(resp *azcore.Response) error {
+func (client *XMSClientRequestIDClient) paramGetHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

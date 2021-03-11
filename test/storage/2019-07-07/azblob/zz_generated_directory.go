@@ -313,16 +313,16 @@ func (client *directoryClient) getAccessControlHandleResponse(resp *azcore.Respo
 		result.LastModified = &lastModified
 	}
 	if val := resp.Header.Get("x-ms-owner"); val != "" {
-		result.Owner = &val
+		result.XMSOwner = &val
 	}
 	if val := resp.Header.Get("x-ms-group"); val != "" {
-		result.Group = &val
+		result.XMSGroup = &val
 	}
 	if val := resp.Header.Get("x-ms-permissions"); val != "" {
-		result.Permissions = &val
+		result.XMSPermissions = &val
 	}
 	if val := resp.Header.Get("x-ms-acl"); val != "" {
-		result.ACL = &val
+		result.XMSACL = &val
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
 		result.RequestID = &val
