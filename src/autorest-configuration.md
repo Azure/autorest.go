@@ -12,7 +12,10 @@ AutoRest needs the below config to pick this up as a plug-in - see https://githu
 use-extension:
   "@autorest/modelerfour" : "4.15.440" 
 
-# will use highest 4.0.x 
+modelerfour:
+  resolve-schema-name-collisons: true
+  naming:
+    preserve-uppercase-max-length: 64
 ```
 
 

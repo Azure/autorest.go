@@ -19,9 +19,9 @@ import (
 // Call the interface's GetActivity() method to access the common type.
 // Use a type switch to determine the concrete type.  The possible types are:
 // - *Activity, *AppendVariableActivity, *AzureDataExplorerCommandActivity, *AzureFunctionActivity, *AzureMLBatchExecutionActivity,
-// - *AzureMLExecutePipelineActivity, *AzureMLUpdateResourceActivity, *ControlActivity, *CopyActivity, *CustomActivity, *DataLakeAnalyticsUsqlActivity,
+// - *AzureMLExecutePipelineActivity, *AzureMLUpdateResourceActivity, *ControlActivity, *CopyActivity, *CustomActivity, *DataLakeAnalyticsUSQLActivity,
 // - *DatabricksNotebookActivity, *DatabricksSparkJarActivity, *DatabricksSparkPythonActivity, *DeleteActivity, *ExecuteDataFlowActivity,
-// - *ExecutePipelineActivity, *ExecuteSsisPackageActivity, *ExecutionActivity, *FilterActivity, *ForEachActivity, *GetMetadataActivity,
+// - *ExecutePipelineActivity, *ExecuteSSISPackageActivity, *ExecutionActivity, *FilterActivity, *ForEachActivity, *GetMetadataActivity,
 // - *HDInsightHiveActivity, *HDInsightMapReduceActivity, *HDInsightPigActivity, *HDInsightSparkActivity, *HDInsightStreamingActivity,
 // - *IfConditionActivity, *LookupActivity, *SetVariableActivity, *SynapseSparkJobDefinitionActivity, *SqlPoolStoredProcedureActivity,
 // - *SqlServerStoredProcedureActivity, *SwitchActivity, *SynapseNotebookActivity, *UntilActivity, *ValidationActivity, *WaitActivity,
@@ -9163,14 +9163,14 @@ type DataFlowStagingInfo struct {
 }
 
 // Data Lake Analytics U-SQL activity.
-type DataLakeAnalyticsUsqlActivity struct {
+type DataLakeAnalyticsUSQLActivity struct {
 	ExecutionActivity
 	// Data Lake Analytics U-SQL activity properties.
-	TypeProperties *DataLakeAnalyticsUsqlActivityTypeProperties `json:"typeProperties,omitempty"`
+	TypeProperties *DataLakeAnalyticsUSQLActivityTypeProperties `json:"typeProperties,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type DataLakeAnalyticsUsqlActivity.
-func (d DataLakeAnalyticsUsqlActivity) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type DataLakeAnalyticsUSQLActivity.
+func (d DataLakeAnalyticsUSQLActivity) MarshalJSON() ([]byte, error) {
 	objectMap := d.ExecutionActivity.marshalInternal("DataLakeAnalyticsU-SQL")
 	if d.TypeProperties != nil {
 		objectMap["typeProperties"] = d.TypeProperties
@@ -9178,8 +9178,8 @@ func (d DataLakeAnalyticsUsqlActivity) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type DataLakeAnalyticsUsqlActivity.
-func (d *DataLakeAnalyticsUsqlActivity) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type DataLakeAnalyticsUSQLActivity.
+func (d *DataLakeAnalyticsUSQLActivity) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
@@ -9201,7 +9201,7 @@ func (d *DataLakeAnalyticsUsqlActivity) UnmarshalJSON(data []byte) error {
 }
 
 // DataLakeAnalyticsU-SQL activity properties.
-type DataLakeAnalyticsUsqlActivityTypeProperties struct {
+type DataLakeAnalyticsUSQLActivityTypeProperties struct {
 	// Compilation mode of U-SQL. Must be one of these values : Semantic, Full and SingleBox. Type: string (or Expression with resultType string).
 	CompilationMode interface{} `json:"compilationMode,omitempty"`
 
@@ -12279,14 +12279,14 @@ type ExecutePipelineActivityTypeProperties struct {
 }
 
 // Execute SSIS package activity.
-type ExecuteSsisPackageActivity struct {
+type ExecuteSSISPackageActivity struct {
 	ExecutionActivity
 	// Execute SSIS package activity properties.
-	TypeProperties *ExecuteSsisPackageActivityTypeProperties `json:"typeProperties,omitempty"`
+	TypeProperties *ExecuteSSISPackageActivityTypeProperties `json:"typeProperties,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type ExecuteSsisPackageActivity.
-func (e ExecuteSsisPackageActivity) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type ExecuteSSISPackageActivity.
+func (e ExecuteSSISPackageActivity) MarshalJSON() ([]byte, error) {
 	objectMap := e.ExecutionActivity.marshalInternal("ExecuteSSISPackage")
 	if e.TypeProperties != nil {
 		objectMap["typeProperties"] = e.TypeProperties
@@ -12294,8 +12294,8 @@ func (e ExecuteSsisPackageActivity) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type ExecuteSsisPackageActivity.
-func (e *ExecuteSsisPackageActivity) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type ExecuteSSISPackageActivity.
+func (e *ExecuteSSISPackageActivity) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
@@ -12317,7 +12317,7 @@ func (e *ExecuteSsisPackageActivity) UnmarshalJSON(data []byte) error {
 }
 
 // Execute SSIS package activity properties.
-type ExecuteSsisPackageActivityTypeProperties struct {
+type ExecuteSSISPackageActivityTypeProperties struct {
 	// The integration runtime reference.
 	ConnectVia *IntegrationRuntimeReference `json:"connectVia,omitempty"`
 
@@ -12325,31 +12325,31 @@ type ExecuteSsisPackageActivityTypeProperties struct {
 	EnvironmentPath interface{} `json:"environmentPath,omitempty"`
 
 	// The package execution credential.
-	ExecutionCredential *SsisExecutionCredential `json:"executionCredential,omitempty"`
+	ExecutionCredential *SSISExecutionCredential `json:"executionCredential,omitempty"`
 
 	// SSIS package execution log location.
-	LogLocation *SsisLogLocation `json:"logLocation,omitempty"`
+	LogLocation *SSISLogLocation `json:"logLocation,omitempty"`
 
 	// The logging level of SSIS package execution. Type: string (or Expression with resultType string).
 	LoggingLevel interface{} `json:"loggingLevel,omitempty"`
 
 	// The package level connection managers to execute the SSIS package.
-	PackageConnectionManagers *map[string]map[string]SsisExecutionParameter `json:"packageConnectionManagers,omitempty"`
+	PackageConnectionManagers *map[string]map[string]SSISExecutionParameter `json:"packageConnectionManagers,omitempty"`
 
 	// SSIS package location.
-	PackageLocation *SsisPackageLocation `json:"packageLocation,omitempty"`
+	PackageLocation *SSISPackageLocation `json:"packageLocation,omitempty"`
 
 	// The package level parameters to execute the SSIS package.
-	PackageParameters *map[string]SsisExecutionParameter `json:"packageParameters,omitempty"`
+	PackageParameters *map[string]SSISExecutionParameter `json:"packageParameters,omitempty"`
 
 	// The project level connection managers to execute the SSIS package.
-	ProjectConnectionManagers *map[string]map[string]SsisExecutionParameter `json:"projectConnectionManagers,omitempty"`
+	ProjectConnectionManagers *map[string]map[string]SSISExecutionParameter `json:"projectConnectionManagers,omitempty"`
 
 	// The project level parameters to execute the SSIS package.
-	ProjectParameters *map[string]SsisExecutionParameter `json:"projectParameters,omitempty"`
+	ProjectParameters *map[string]SSISExecutionParameter `json:"projectParameters,omitempty"`
 
 	// The property overrides to execute the SSIS package.
-	PropertyOverrides *map[string]SsisPropertyOverride `json:"propertyOverrides,omitempty"`
+	PropertyOverrides *map[string]SSISPropertyOverride `json:"propertyOverrides,omitempty"`
 
 	// Specifies the runtime to execute SSIS package. The value should be "x86" or "x64". Type: string (or Expression with resultType string).
 	Runtime interface{} `json:"runtime,omitempty"`
@@ -12359,8 +12359,8 @@ type ExecuteSsisPackageActivityTypeProperties struct {
 // Call the interface's GetExecutionActivity() method to access the common type.
 // Use a type switch to determine the concrete type.  The possible types are:
 // - *ExecutionActivity, *AzureDataExplorerCommandActivity, *AzureFunctionActivity, *AzureMLBatchExecutionActivity, *AzureMLExecutePipelineActivity,
-// - *AzureMLUpdateResourceActivity, *CopyActivity, *CustomActivity, *DataLakeAnalyticsUsqlActivity, *DatabricksNotebookActivity,
-// - *DatabricksSparkJarActivity, *DatabricksSparkPythonActivity, *DeleteActivity, *ExecuteDataFlowActivity, *ExecuteSsisPackageActivity,
+// - *AzureMLUpdateResourceActivity, *CopyActivity, *CustomActivity, *DataLakeAnalyticsUSQLActivity, *DatabricksNotebookActivity,
+// - *DatabricksSparkJarActivity, *DatabricksSparkPythonActivity, *DeleteActivity, *ExecuteDataFlowActivity, *ExecuteSSISPackageActivity,
 // - *GetMetadataActivity, *HDInsightHiveActivity, *HDInsightMapReduceActivity, *HDInsightPigActivity, *HDInsightSparkActivity,
 // - *HDInsightStreamingActivity, *LookupActivity, *SynapseSparkJobDefinitionActivity, *SqlServerStoredProcedureActivity,
 // - *SynapseNotebookActivity, *WebActivity
@@ -13129,12 +13129,12 @@ type FtpServerLinkedServiceTypeProperties struct {
 	// The authentication type to be used to connect to the FTP server.
 	AuthenticationType *FtpAuthenticationType `json:"authenticationType,omitempty"`
 
+	// If true, connect to the FTP server over SSL/TLS channel. Default value is true. Type: boolean (or Expression with resultType boolean).
+	EnableSSL interface{} `json:"enableSsl,omitempty"`
+
 	// If true, validate the FTP server SSL certificate when connect over SSL/TLS channel. Default value is true. Type: boolean (or Expression with resultType
 	// boolean).
 	EnableServerCertificateValidation interface{} `json:"enableServerCertificateValidation,omitempty"`
-
-	// If true, connect to the FTP server over SSL/TLS channel. Default value is true. Type: boolean (or Expression with resultType boolean).
-	EnableSsl interface{} `json:"enableSsl,omitempty"`
 
 	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
 	// with resultType string).
@@ -13168,14 +13168,14 @@ func (f *FtpServerLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error 
 				err = json.Unmarshal(*val, &f.AuthenticationType)
 			}
 			delete(rawMsg, key)
+		case "enableSsl":
+			if val != nil {
+				err = json.Unmarshal(*val, &f.EnableSSL)
+			}
+			delete(rawMsg, key)
 		case "enableServerCertificateValidation":
 			if val != nil {
 				err = json.Unmarshal(*val, &f.EnableServerCertificateValidation)
-			}
-			delete(rawMsg, key)
-		case "enableSsl":
-			if val != nil {
-				err = json.Unmarshal(*val, &f.EnableSsl)
 			}
 			delete(rawMsg, key)
 		case "encryptedCredential":
@@ -14210,7 +14210,7 @@ type HBaseLinkedServiceTypeProperties struct {
 	AuthenticationType *HBaseAuthenticationType `json:"authenticationType,omitempty"`
 
 	// Specifies whether the connections to the server are encrypted using SSL. The default value is false.
-	EnableSsl interface{} `json:"enableSsl,omitempty"`
+	EnableSSL interface{} `json:"enableSsl,omitempty"`
 
 	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
 	// with resultType string).
@@ -14263,7 +14263,7 @@ func (h *HBaseLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		case "enableSsl":
 			if val != nil {
-				err = json.Unmarshal(*val, &h.EnableSsl)
+				err = json.Unmarshal(*val, &h.EnableSSL)
 			}
 			delete(rawMsg, key)
 		case "encryptedCredential":
@@ -15541,7 +15541,7 @@ type HiveLinkedServiceTypeProperties struct {
 	AuthenticationType *HiveAuthenticationType `json:"authenticationType,omitempty"`
 
 	// Specifies whether the connections to the server are encrypted using SSL. The default value is false.
-	EnableSsl interface{} `json:"enableSsl,omitempty"`
+	EnableSSL interface{} `json:"enableSsl,omitempty"`
 
 	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
 	// with resultType string).
@@ -15612,7 +15612,7 @@ func (h *HiveLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		case "enableSsl":
 			if val != nil {
-				err = json.Unmarshal(*val, &h.EnableSsl)
+				err = json.Unmarshal(*val, &h.EnableSSL)
 			}
 			delete(rawMsg, key)
 		case "encryptedCredential":
@@ -16112,7 +16112,7 @@ type ImpalaLinkedServiceTypeProperties struct {
 	AuthenticationType *ImpalaAuthenticationType `json:"authenticationType,omitempty"`
 
 	// Specifies whether the connections to the server are encrypted using SSL. The default value is false.
-	EnableSsl interface{} `json:"enableSsl,omitempty"`
+	EnableSSL interface{} `json:"enableSsl,omitempty"`
 
 	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
 	// with resultType string).
@@ -16165,7 +16165,7 @@ func (i *ImpalaLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		case "enableSsl":
 			if val != nil {
-				err = json.Unmarshal(*val, &i.EnableSsl)
+				err = json.Unmarshal(*val, &i.EnableSSL)
 			}
 			delete(rawMsg, key)
 		case "encryptedCredential":
@@ -17636,7 +17636,7 @@ func (j *JiraSource) UnmarshalJSON(data []byte) error {
 type LibraryAppendOptions struct {
 	// Set this header to a byte offset at which the block is expected to be appended. The request succeeds only if the current offset matches this value. Otherwise,
 	// the request fails with the AppendPositionConditionNotMet error (HTTP status code 412 – Precondition Failed)
-	BlobConditionAppendpos *int64
+	XMsBlobConditionAppendpos *int64
 }
 
 // LibraryBeginCreateOptions contains the optional parameters for the Library.BeginCreate method.
@@ -19470,7 +19470,7 @@ type MongoDbLinkedServiceTypeProperties struct {
 	DatabaseName interface{} `json:"databaseName,omitempty"`
 
 	// Specifies whether the connections to the server are encrypted using SSL. The default value is false. Type: boolean (or Expression with resultType boolean).
-	EnableSsl interface{} `json:"enableSsl,omitempty"`
+	EnableSSL interface{} `json:"enableSsl,omitempty"`
 
 	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
 	// with resultType string).
@@ -19521,7 +19521,7 @@ func (m *MongoDbLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		case "enableSsl":
 			if val != nil {
-				err = json.Unmarshal(*val, &m.EnableSsl)
+				err = json.Unmarshal(*val, &m.EnableSSL)
 			}
 			delete(rawMsg, key)
 		case "encryptedCredential":
@@ -22402,7 +22402,7 @@ type PhoenixLinkedServiceTypeProperties struct {
 	AuthenticationType *PhoenixAuthenticationType `json:"authenticationType,omitempty"`
 
 	// Specifies whether the connections to the server are encrypted using SSL. The default value is false.
-	EnableSsl interface{} `json:"enableSsl,omitempty"`
+	EnableSSL interface{} `json:"enableSsl,omitempty"`
 
 	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
 	// with resultType string).
@@ -22458,7 +22458,7 @@ func (p *PhoenixLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		case "enableSsl":
 			if val != nil {
-				err = json.Unmarshal(*val, &p.EnableSsl)
+				err = json.Unmarshal(*val, &p.EnableSSL)
 			}
 			delete(rawMsg, key)
 		case "encryptedCredential":
@@ -23310,7 +23310,7 @@ type PrestoLinkedServiceTypeProperties struct {
 	Catalog interface{} `json:"catalog,omitempty"`
 
 	// Specifies whether the connections to the server are encrypted using SSL. The default value is false.
-	EnableSsl interface{} `json:"enableSsl,omitempty"`
+	EnableSSL interface{} `json:"enableSsl,omitempty"`
 
 	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
 	// with resultType string).
@@ -23375,7 +23375,7 @@ func (p *PrestoLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		case "enableSsl":
 			if val != nil {
-				err = json.Unmarshal(*val, &p.EnableSsl)
+				err = json.Unmarshal(*val, &p.EnableSSL)
 			}
 			delete(rawMsg, key)
 		case "encryptedCredential":
@@ -26386,6 +26386,149 @@ func (s *SQLSource) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return s.TabularSource.unmarshalInternal(rawMsg)
+}
+
+// SSIS access credential.
+type SSISAccessCredential struct {
+	// Domain for windows authentication.
+	Domain interface{} `json:"domain,omitempty"`
+
+	// Password for windows authentication.
+	Password SecretBaseClassification `json:"password,omitempty"`
+
+	// UseName for windows authentication.
+	UserName interface{} `json:"userName,omitempty"`
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type SSISAccessCredential.
+func (s *SSISAccessCredential) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "domain":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.Domain)
+			}
+			delete(rawMsg, key)
+		case "password":
+			if val != nil {
+				s.Password, err = unmarshalSecretBaseClassification(*val)
+			}
+			delete(rawMsg, key)
+		case "userName":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.UserName)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// SSIS embedded child package.
+type SSISChildPackage struct {
+	// Content for embedded child package. Type: string (or Expression with resultType string).
+	PackageContent interface{} `json:"packageContent,omitempty"`
+
+	// Last modified date for embedded child package.
+	PackageLastModifiedDate *string `json:"packageLastModifiedDate,omitempty"`
+
+	// Name for embedded child package.
+	PackageName *string `json:"packageName,omitempty"`
+
+	// Path for embedded child package. Type: string (or Expression with resultType string).
+	PackagePath interface{} `json:"packagePath,omitempty"`
+}
+
+// SSIS package execution credential.
+type SSISExecutionCredential struct {
+	// Domain for windows authentication.
+	Domain interface{} `json:"domain,omitempty"`
+
+	// Password for windows authentication.
+	Password *SecureString `json:"password,omitempty"`
+
+	// UseName for windows authentication.
+	UserName interface{} `json:"userName,omitempty"`
+}
+
+// SSIS execution parameter.
+type SSISExecutionParameter struct {
+	// SSIS package execution parameter value. Type: string (or Expression with resultType string).
+	Value interface{} `json:"value,omitempty"`
+}
+
+// SSIS package execution log location
+type SSISLogLocation struct {
+	// The SSIS package execution log path. Type: string (or Expression with resultType string).
+	LogPath interface{} `json:"logPath,omitempty"`
+
+	// The type of SSIS log location.
+	Type *SsisLogLocationType `json:"type,omitempty"`
+
+	// SSIS package execution log location properties.
+	TypeProperties *SSISLogLocationTypeProperties `json:"typeProperties,omitempty"`
+}
+
+// SSIS package execution log location properties.
+type SSISLogLocationTypeProperties struct {
+	// The package execution log access credential.
+	AccessCredential *SSISAccessCredential `json:"accessCredential,omitempty"`
+
+	// Specifies the interval to refresh log. The default interval is 5 minutes. Type: string (or Expression with resultType string), pattern: ((\d+).)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+	LogRefreshInterval interface{} `json:"logRefreshInterval,omitempty"`
+}
+
+// SSIS package location.
+type SSISPackageLocation struct {
+	// The SSIS package path. Type: string (or Expression with resultType string).
+	PackagePath interface{} `json:"packagePath,omitempty"`
+
+	// The type of SSIS package location.
+	Type *SsisPackageLocationType `json:"type,omitempty"`
+
+	// SSIS package location properties.
+	TypeProperties *SSISPackageLocationTypeProperties `json:"typeProperties,omitempty"`
+}
+
+// SSIS package location properties.
+type SSISPackageLocationTypeProperties struct {
+	// The package access credential.
+	AccessCredential *SSISAccessCredential `json:"accessCredential,omitempty"`
+
+	// The embedded child package list.
+	ChildPackages *[]SSISChildPackage `json:"childPackages,omitempty"`
+
+	// The configuration file of the package execution. Type: string (or Expression with resultType string).
+	ConfigurationPath interface{} `json:"configurationPath,omitempty"`
+
+	// The embedded package content. Type: string (or Expression with resultType string).
+	PackageContent interface{} `json:"packageContent,omitempty"`
+
+	// The embedded package last modified date.
+	PackageLastModifiedDate *string `json:"packageLastModifiedDate,omitempty"`
+
+	// The package name.
+	PackageName *string `json:"packageName,omitempty"`
+
+	// Password of the package.
+	PackagePassword SecretBaseClassification `json:"packagePassword,omitempty"`
+}
+
+// SSIS property override.
+type SSISPropertyOverride struct {
+	// Whether SSIS package property override value is sensitive data. Value will be encrypted in SSISDB if it is true
+	IsSensitive *bool `json:"isSensitive,omitempty"`
+
+	// SSIS package property override value. Type: string (or Expression with resultType string).
+	Value interface{} `json:"value,omitempty"`
 }
 
 // Linked service for Salesforce.
@@ -30212,7 +30355,7 @@ type SparkLinkedServiceTypeProperties struct {
 	AuthenticationType *SparkAuthenticationType `json:"authenticationType,omitempty"`
 
 	// Specifies whether the connections to the server are encrypted using SSL. The default value is false.
-	EnableSsl interface{} `json:"enableSsl,omitempty"`
+	EnableSSL interface{} `json:"enableSsl,omitempty"`
 
 	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
 	// with resultType string).
@@ -30274,7 +30417,7 @@ func (s *SparkLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		case "enableSsl":
 			if val != nil {
-				err = json.Unmarshal(*val, &s.EnableSsl)
+				err = json.Unmarshal(*val, &s.EnableSSL)
 			}
 			delete(rawMsg, key)
 		case "encryptedCredential":
@@ -30805,104 +30948,6 @@ func (s *SquareSource) UnmarshalJSON(data []byte) error {
 	return s.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// SSIS access credential.
-type SsisAccessCredential struct {
-	// Domain for windows authentication.
-	Domain interface{} `json:"domain,omitempty"`
-
-	// Password for windows authentication.
-	Password SecretBaseClassification `json:"password,omitempty"`
-
-	// UseName for windows authentication.
-	UserName interface{} `json:"userName,omitempty"`
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type SsisAccessCredential.
-func (s *SsisAccessCredential) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
-	}
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "domain":
-			if val != nil {
-				err = json.Unmarshal(*val, &s.Domain)
-			}
-			delete(rawMsg, key)
-		case "password":
-			if val != nil {
-				s.Password, err = unmarshalSecretBaseClassification(*val)
-			}
-			delete(rawMsg, key)
-		case "userName":
-			if val != nil {
-				err = json.Unmarshal(*val, &s.UserName)
-			}
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return err
-		}
-	}
-	return nil
-}
-
-// SSIS embedded child package.
-type SsisChildPackage struct {
-	// Content for embedded child package. Type: string (or Expression with resultType string).
-	PackageContent interface{} `json:"packageContent,omitempty"`
-
-	// Last modified date for embedded child package.
-	PackageLastModifiedDate *string `json:"packageLastModifiedDate,omitempty"`
-
-	// Name for embedded child package.
-	PackageName *string `json:"packageName,omitempty"`
-
-	// Path for embedded child package. Type: string (or Expression with resultType string).
-	PackagePath interface{} `json:"packagePath,omitempty"`
-}
-
-// SSIS package execution credential.
-type SsisExecutionCredential struct {
-	// Domain for windows authentication.
-	Domain interface{} `json:"domain,omitempty"`
-
-	// Password for windows authentication.
-	Password *SecureString `json:"password,omitempty"`
-
-	// UseName for windows authentication.
-	UserName interface{} `json:"userName,omitempty"`
-}
-
-// SSIS execution parameter.
-type SsisExecutionParameter struct {
-	// SSIS package execution parameter value. Type: string (or Expression with resultType string).
-	Value interface{} `json:"value,omitempty"`
-}
-
-// SSIS package execution log location
-type SsisLogLocation struct {
-	// The SSIS package execution log path. Type: string (or Expression with resultType string).
-	LogPath interface{} `json:"logPath,omitempty"`
-
-	// The type of SSIS log location.
-	Type *SsisLogLocationType `json:"type,omitempty"`
-
-	// SSIS package execution log location properties.
-	TypeProperties *SsisLogLocationTypeProperties `json:"typeProperties,omitempty"`
-}
-
-// SSIS package execution log location properties.
-type SsisLogLocationTypeProperties struct {
-	// The package execution log access credential.
-	AccessCredential *SsisAccessCredential `json:"accessCredential,omitempty"`
-
-	// Specifies the interval to refresh log. The default interval is 5 minutes. Type: string (or Expression with resultType string), pattern: ((\d+).)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
-	LogRefreshInterval interface{} `json:"logRefreshInterval,omitempty"`
-}
-
 // The status of the operation.
 type SsisObjectMetadataStatusResponse struct {
 	// The operation error message.
@@ -30916,51 +30961,6 @@ type SsisObjectMetadataStatusResponse struct {
 
 	// The status of the operation.
 	Status *string `json:"status,omitempty"`
-}
-
-// SSIS package location.
-type SsisPackageLocation struct {
-	// The SSIS package path. Type: string (or Expression with resultType string).
-	PackagePath interface{} `json:"packagePath,omitempty"`
-
-	// The type of SSIS package location.
-	Type *SsisPackageLocationType `json:"type,omitempty"`
-
-	// SSIS package location properties.
-	TypeProperties *SsisPackageLocationTypeProperties `json:"typeProperties,omitempty"`
-}
-
-// SSIS package location properties.
-type SsisPackageLocationTypeProperties struct {
-	// The package access credential.
-	AccessCredential *SsisAccessCredential `json:"accessCredential,omitempty"`
-
-	// The embedded child package list.
-	ChildPackages *[]SsisChildPackage `json:"childPackages,omitempty"`
-
-	// The configuration file of the package execution. Type: string (or Expression with resultType string).
-	ConfigurationPath interface{} `json:"configurationPath,omitempty"`
-
-	// The embedded package content. Type: string (or Expression with resultType string).
-	PackageContent interface{} `json:"packageContent,omitempty"`
-
-	// The embedded package last modified date.
-	PackageLastModifiedDate *string `json:"packageLastModifiedDate,omitempty"`
-
-	// The package name.
-	PackageName *string `json:"packageName,omitempty"`
-
-	// Password of the package.
-	PackagePassword SecretBaseClassification `json:"packagePassword,omitempty"`
-}
-
-// SSIS property override.
-type SsisPropertyOverride struct {
-	// Whether SSIS package property override value is sensitive data. Value will be encrypted in SSISDB if it is true
-	IsSensitive *bool `json:"isSensitive,omitempty"`
-
-	// SSIS package property override value. Type: string (or Expression with resultType string).
-	Value interface{} `json:"value,omitempty"`
 }
 
 // Staging settings.

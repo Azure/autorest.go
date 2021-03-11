@@ -614,7 +614,7 @@ type DataDisk struct {
 	// READ-ONLY; Specifies the Read-Write IOPS for the managed disk when StorageAccountType is UltraSSD_LRS. Returned only for VirtualMachine ScaleSet VM disks.
 	// Can be updated only via updates to the VirtualMachine
 	// Scale Set.
-	DiskIopsReadWrite *int64 `json:"diskIOPSReadWrite,omitempty" azure:"ro"`
+	DiskIOPSReadWrite *int64 `json:"diskIOPSReadWrite,omitempty" azure:"ro"`
 
 	// READ-ONLY; Specifies the bandwidth in MB per second for the managed disk when StorageAccountType is UltraSSD_LRS. Returned only for VirtualMachine ScaleSet
 	// VM disks. Can be updated only via updates to the
@@ -1207,10 +1207,10 @@ type DiskProperties struct {
 	CreationData *CreationData `json:"creationData,omitempty"`
 
 	// The total number of IOPS that will be allowed across all VMs mounting the shared disk as ReadOnly. One operation can transfer between 4k and 256k bytes.
-	DiskIopsReadOnly *int64 `json:"diskIOPSReadOnly,omitempty"`
+	DiskIOPSReadOnly *int64 `json:"diskIOPSReadOnly,omitempty"`
 
 	// The number of IOPS allowed for this disk; only settable for UltraSSD disks. One operation can transfer between 4k and 256k bytes.
-	DiskIopsReadWrite *int64 `json:"diskIOPSReadWrite,omitempty"`
+	DiskIOPSReadWrite *int64 `json:"diskIOPSReadWrite,omitempty"`
 
 	// The total throughput (MBps) that will be allowed across all VMs mounting the shared disk as ReadOnly. MBps means millions of bytes per second - MB here
 	// uses the ISO notation, of powers of 10.
@@ -1267,11 +1267,11 @@ func (d DiskProperties) MarshalJSON() ([]byte, error) {
 	if d.CreationData != nil {
 		objectMap["creationData"] = d.CreationData
 	}
-	if d.DiskIopsReadOnly != nil {
-		objectMap["diskIOPSReadOnly"] = d.DiskIopsReadOnly
+	if d.DiskIOPSReadOnly != nil {
+		objectMap["diskIOPSReadOnly"] = d.DiskIOPSReadOnly
 	}
-	if d.DiskIopsReadWrite != nil {
-		objectMap["diskIOPSReadWrite"] = d.DiskIopsReadWrite
+	if d.DiskIOPSReadWrite != nil {
+		objectMap["diskIOPSReadWrite"] = d.DiskIOPSReadWrite
 	}
 	if d.DiskMBpsReadOnly != nil {
 		objectMap["diskMBpsReadOnly"] = d.DiskMBpsReadOnly
@@ -1334,12 +1334,12 @@ func (d *DiskProperties) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		case "diskIOPSReadOnly":
 			if val != nil {
-				err = json.Unmarshal(*val, &d.DiskIopsReadOnly)
+				err = json.Unmarshal(*val, &d.DiskIOPSReadOnly)
 			}
 			delete(rawMsg, key)
 		case "diskIOPSReadWrite":
 			if val != nil {
-				err = json.Unmarshal(*val, &d.DiskIopsReadWrite)
+				err = json.Unmarshal(*val, &d.DiskIOPSReadWrite)
 			}
 			delete(rawMsg, key)
 		case "diskMBpsReadOnly":
@@ -1455,10 +1455,10 @@ type DiskUpdate struct {
 // Disk resource update properties.
 type DiskUpdateProperties struct {
 	// The total number of IOPS that will be allowed across all VMs mounting the shared disk as ReadOnly. One operation can transfer between 4k and 256k bytes.
-	DiskIopsReadOnly *int64 `json:"diskIOPSReadOnly,omitempty"`
+	DiskIOPSReadOnly *int64 `json:"diskIOPSReadOnly,omitempty"`
 
 	// The number of IOPS allowed for this disk; only settable for UltraSSD disks. One operation can transfer between 4k and 256k bytes.
-	DiskIopsReadWrite *int64 `json:"diskIOPSReadWrite,omitempty"`
+	DiskIOPSReadWrite *int64 `json:"diskIOPSReadWrite,omitempty"`
 
 	// The total throughput (MBps) that will be allowed across all VMs mounting the shared disk as ReadOnly. MBps means millions of bytes per second - MB here
 	// uses the ISO notation, of powers of 10.
@@ -5474,7 +5474,7 @@ type VirtualMachineScaleSetDataDisk struct {
 
 	// Specifies the Read-Write IOPS for the managed disk. Should be used only when StorageAccountType is UltraSSD_LRS. If not specified, a default value would
 	// be assigned based on diskSizeGB.
-	DiskIopsReadWrite *int64 `json:"diskIOPSReadWrite,omitempty"`
+	DiskIOPSReadWrite *int64 `json:"diskIOPSReadWrite,omitempty"`
 
 	// Specifies the bandwidth in MB per second for the managed disk. Should be used only when StorageAccountType is UltraSSD_LRS. If not specified, a default
 	// value would be assigned based on diskSizeGB.

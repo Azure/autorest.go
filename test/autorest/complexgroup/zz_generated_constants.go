@@ -13,7 +13,7 @@ const (
 	CMYKColorsBlacK   CMYKColors = "blacK"
 	CMYKColorsCyan    CMYKColors = "cyan"
 	CMYKColorsMagenta CMYKColors = "Magenta"
-	CMYKColorsYellow  CMYKColors = "YELLOW"
+	CMYKColorsYELLOW  CMYKColors = "YELLOW"
 )
 
 // PossibleCMYKColorsValues returns the possible values for the CMYKColors const type.
@@ -22,7 +22,7 @@ func PossibleCMYKColorsValues() []CMYKColors {
 		CMYKColorsBlacK,
 		CMYKColorsCyan,
 		CMYKColorsMagenta,
-		CMYKColorsYellow,
+		CMYKColorsYELLOW,
 	}
 }
 

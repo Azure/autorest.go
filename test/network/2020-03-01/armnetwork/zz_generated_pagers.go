@@ -13,50 +13,50 @@ import (
 	"reflect"
 )
 
-// ApplicationGatewayAvailableSslPredefinedPoliciesPager provides iteration over ApplicationGatewayAvailableSslPredefinedPolicies pages.
-type ApplicationGatewayAvailableSslPredefinedPoliciesPager interface {
+// ApplicationGatewayAvailableSSLPredefinedPoliciesPager provides iteration over ApplicationGatewayAvailableSSLPredefinedPolicies pages.
+type ApplicationGatewayAvailableSSLPredefinedPoliciesPager interface {
 	azcore.Pager
 
-	// Page returns the current ApplicationGatewayAvailableSslPredefinedPoliciesResponse.
-	PageResponse() ApplicationGatewayAvailableSslPredefinedPoliciesResponse
+	// Page returns the current ApplicationGatewayAvailableSSLPredefinedPoliciesResponse.
+	PageResponse() ApplicationGatewayAvailableSSLPredefinedPoliciesResponse
 }
 
-type applicationGatewayAvailableSslPredefinedPoliciesCreateRequest func(context.Context) (*azcore.Request, error)
+type applicationGatewayAvailableSSLPredefinedPoliciesCreateRequest func(context.Context) (*azcore.Request, error)
 
-type applicationGatewayAvailableSslPredefinedPoliciesHandleError func(*azcore.Response) error
+type applicationGatewayAvailableSSLPredefinedPoliciesHandleError func(*azcore.Response) error
 
-type applicationGatewayAvailableSslPredefinedPoliciesHandleResponse func(*azcore.Response) (ApplicationGatewayAvailableSslPredefinedPoliciesResponse, error)
+type applicationGatewayAvailableSSLPredefinedPoliciesHandleResponse func(*azcore.Response) (ApplicationGatewayAvailableSSLPredefinedPoliciesResponse, error)
 
-type applicationGatewayAvailableSslPredefinedPoliciesAdvancePage func(context.Context, ApplicationGatewayAvailableSslPredefinedPoliciesResponse) (*azcore.Request, error)
+type applicationGatewayAvailableSSLPredefinedPoliciesAdvancePage func(context.Context, ApplicationGatewayAvailableSSLPredefinedPoliciesResponse) (*azcore.Request, error)
 
-type applicationGatewayAvailableSslPredefinedPoliciesPager struct {
+type applicationGatewayAvailableSSLPredefinedPoliciesPager struct {
 	// the pipeline for making the request
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
-	requester applicationGatewayAvailableSslPredefinedPoliciesCreateRequest
+	requester applicationGatewayAvailableSSLPredefinedPoliciesCreateRequest
 	// callback for handling response errors
-	errorer applicationGatewayAvailableSslPredefinedPoliciesHandleError
+	errorer applicationGatewayAvailableSSLPredefinedPoliciesHandleError
 	// callback for handling the HTTP response
-	responder applicationGatewayAvailableSslPredefinedPoliciesHandleResponse
+	responder applicationGatewayAvailableSSLPredefinedPoliciesHandleResponse
 	// callback for advancing to the next page
-	advancer applicationGatewayAvailableSslPredefinedPoliciesAdvancePage
+	advancer applicationGatewayAvailableSSLPredefinedPoliciesAdvancePage
 	// contains the current response
-	current ApplicationGatewayAvailableSslPredefinedPoliciesResponse
+	current ApplicationGatewayAvailableSSLPredefinedPoliciesResponse
 	// status codes for successful retrieval
 	statusCodes []int
 	// any error encountered
 	err error
 }
 
-func (p *applicationGatewayAvailableSslPredefinedPoliciesPager) Err() error {
+func (p *applicationGatewayAvailableSSLPredefinedPoliciesPager) Err() error {
 	return p.err
 }
 
-func (p *applicationGatewayAvailableSslPredefinedPoliciesPager) NextPage(ctx context.Context) bool {
+func (p *applicationGatewayAvailableSSLPredefinedPoliciesPager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
-		if p.current.ApplicationGatewayAvailableSslPredefinedPolicies.NextLink == nil || len(*p.current.ApplicationGatewayAvailableSslPredefinedPolicies.NextLink) == 0 {
+		if p.current.ApplicationGatewayAvailableSSLPredefinedPolicies.NextLink == nil || len(*p.current.ApplicationGatewayAvailableSSLPredefinedPolicies.NextLink) == 0 {
 			return false
 		}
 		req, err = p.advancer(ctx, p.current)
@@ -85,7 +85,7 @@ func (p *applicationGatewayAvailableSslPredefinedPoliciesPager) NextPage(ctx con
 	return true
 }
 
-func (p *applicationGatewayAvailableSslPredefinedPoliciesPager) PageResponse() ApplicationGatewayAvailableSslPredefinedPoliciesResponse {
+func (p *applicationGatewayAvailableSSLPredefinedPoliciesPager) PageResponse() ApplicationGatewayAvailableSSLPredefinedPoliciesResponse {
 	return p.current
 }
 

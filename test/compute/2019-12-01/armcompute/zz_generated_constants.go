@@ -109,7 +109,7 @@ type ContainerServiceOrchestratorTypes string
 
 const (
 	ContainerServiceOrchestratorTypesSwarm      ContainerServiceOrchestratorTypes = "Swarm"
-	ContainerServiceOrchestratorTypesDcos       ContainerServiceOrchestratorTypes = "DCOS"
+	ContainerServiceOrchestratorTypesDCOS       ContainerServiceOrchestratorTypes = "DCOS"
 	ContainerServiceOrchestratorTypesCustom     ContainerServiceOrchestratorTypes = "Custom"
 	ContainerServiceOrchestratorTypesKubernetes ContainerServiceOrchestratorTypes = "Kubernetes"
 )
@@ -118,7 +118,7 @@ const (
 func PossibleContainerServiceOrchestratorTypesValues() []ContainerServiceOrchestratorTypes {
 	return []ContainerServiceOrchestratorTypes{
 		ContainerServiceOrchestratorTypesSwarm,
-		ContainerServiceOrchestratorTypesDcos,
+		ContainerServiceOrchestratorTypesDCOS,
 		ContainerServiceOrchestratorTypesCustom,
 		ContainerServiceOrchestratorTypesKubernetes,
 	}

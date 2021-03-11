@@ -12,11 +12,11 @@ import (
 	"github.com/google/go-cmp/cmp"
 )
 
-func newLrosaDsClient() *LrosaDsClient {
+func newLrosaDsClient() *LROSADsClient {
 	options := ConnectionOptions{}
 	options.Retry.RetryDelay = 10 * time.Millisecond
 	options.HTTPClient = httpClientWithCookieJar()
-	return NewLrosaDsClient(NewDefaultConnection(&options))
+	return NewLROSADsClient(NewDefaultConnection(&options))
 }
 
 func TestLROSADSBeginDelete202NonRetry400(t *testing.T) {

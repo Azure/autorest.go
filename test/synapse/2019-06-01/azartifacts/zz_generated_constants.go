@@ -37,25 +37,25 @@ func (c AvroCompressionCodec) ToPtr() *AvroCompressionCodec {
 type AzureFunctionActivityMethod string
 
 const (
-	AzureFunctionActivityMethodDelete  AzureFunctionActivityMethod = "DELETE"
+	AzureFunctionActivityMethodDELETE  AzureFunctionActivityMethod = "DELETE"
 	AzureFunctionActivityMethodGET     AzureFunctionActivityMethod = "GET"
-	AzureFunctionActivityMethodHead    AzureFunctionActivityMethod = "HEAD"
-	AzureFunctionActivityMethodOptions AzureFunctionActivityMethod = "OPTIONS"
+	AzureFunctionActivityMethodHEAD    AzureFunctionActivityMethod = "HEAD"
+	AzureFunctionActivityMethodOPTIONS AzureFunctionActivityMethod = "OPTIONS"
+	AzureFunctionActivityMethodPOST    AzureFunctionActivityMethod = "POST"
 	AzureFunctionActivityMethodPUT     AzureFunctionActivityMethod = "PUT"
-	AzureFunctionActivityMethodPost    AzureFunctionActivityMethod = "POST"
-	AzureFunctionActivityMethodTrace   AzureFunctionActivityMethod = "TRACE"
+	AzureFunctionActivityMethodTRACE   AzureFunctionActivityMethod = "TRACE"
 )
 
 // PossibleAzureFunctionActivityMethodValues returns the possible values for the AzureFunctionActivityMethod const type.
 func PossibleAzureFunctionActivityMethodValues() []AzureFunctionActivityMethod {
 	return []AzureFunctionActivityMethod{
-		AzureFunctionActivityMethodDelete,
+		AzureFunctionActivityMethodDELETE,
 		AzureFunctionActivityMethodGET,
-		AzureFunctionActivityMethodHead,
-		AzureFunctionActivityMethodOptions,
+		AzureFunctionActivityMethodHEAD,
+		AzureFunctionActivityMethodOPTIONS,
+		AzureFunctionActivityMethodPOST,
 		AzureFunctionActivityMethodPUT,
-		AzureFunctionActivityMethodPost,
-		AzureFunctionActivityMethodTrace,
+		AzureFunctionActivityMethodTRACE,
 	}
 }
 
@@ -131,30 +131,30 @@ type CassandraSourceReadConsistencyLevels string
 
 const (
 	CassandraSourceReadConsistencyLevelsALL         CassandraSourceReadConsistencyLevels = "ALL"
-	CassandraSourceReadConsistencyLevelsEachQuorum  CassandraSourceReadConsistencyLevels = "EACH_QUORUM"
-	CassandraSourceReadConsistencyLevelsLocalONE    CassandraSourceReadConsistencyLevels = "LOCAL_ONE"
-	CassandraSourceReadConsistencyLevelsLocalQuorum CassandraSourceReadConsistencyLevels = "LOCAL_QUORUM"
-	CassandraSourceReadConsistencyLevelsLocalSerial CassandraSourceReadConsistencyLevels = "LOCAL_SERIAL"
+	CassandraSourceReadConsistencyLevelsEACHQUORUM  CassandraSourceReadConsistencyLevels = "EACH_QUORUM"
+	CassandraSourceReadConsistencyLevelsLOCALONE    CassandraSourceReadConsistencyLevels = "LOCAL_ONE"
+	CassandraSourceReadConsistencyLevelsLOCALQUORUM CassandraSourceReadConsistencyLevels = "LOCAL_QUORUM"
+	CassandraSourceReadConsistencyLevelsLOCALSERIAL CassandraSourceReadConsistencyLevels = "LOCAL_SERIAL"
 	CassandraSourceReadConsistencyLevelsONE         CassandraSourceReadConsistencyLevels = "ONE"
-	CassandraSourceReadConsistencyLevelsQuorum      CassandraSourceReadConsistencyLevels = "QUORUM"
-	CassandraSourceReadConsistencyLevelsSerial      CassandraSourceReadConsistencyLevels = "SERIAL"
+	CassandraSourceReadConsistencyLevelsQUORUM      CassandraSourceReadConsistencyLevels = "QUORUM"
+	CassandraSourceReadConsistencyLevelsSERIAL      CassandraSourceReadConsistencyLevels = "SERIAL"
+	CassandraSourceReadConsistencyLevelsTHREE       CassandraSourceReadConsistencyLevels = "THREE"
 	CassandraSourceReadConsistencyLevelsTWO         CassandraSourceReadConsistencyLevels = "TWO"
-	CassandraSourceReadConsistencyLevelsThree       CassandraSourceReadConsistencyLevels = "THREE"
 )
 
 // PossibleCassandraSourceReadConsistencyLevelsValues returns the possible values for the CassandraSourceReadConsistencyLevels const type.
 func PossibleCassandraSourceReadConsistencyLevelsValues() []CassandraSourceReadConsistencyLevels {
 	return []CassandraSourceReadConsistencyLevels{
 		CassandraSourceReadConsistencyLevelsALL,
-		CassandraSourceReadConsistencyLevelsEachQuorum,
-		CassandraSourceReadConsistencyLevelsLocalONE,
-		CassandraSourceReadConsistencyLevelsLocalQuorum,
-		CassandraSourceReadConsistencyLevelsLocalSerial,
+		CassandraSourceReadConsistencyLevelsEACHQUORUM,
+		CassandraSourceReadConsistencyLevelsLOCALONE,
+		CassandraSourceReadConsistencyLevelsLOCALQUORUM,
+		CassandraSourceReadConsistencyLevelsLOCALSERIAL,
 		CassandraSourceReadConsistencyLevelsONE,
-		CassandraSourceReadConsistencyLevelsQuorum,
-		CassandraSourceReadConsistencyLevelsSerial,
+		CassandraSourceReadConsistencyLevelsQUORUM,
+		CassandraSourceReadConsistencyLevelsSERIAL,
+		CassandraSourceReadConsistencyLevelsTHREE,
 		CassandraSourceReadConsistencyLevelsTWO,
-		CassandraSourceReadConsistencyLevelsThree,
 	}
 }
 
@@ -742,7 +742,7 @@ type HiveThriftTransportProtocol string
 const (
 	HiveThriftTransportProtocolBinary HiveThriftTransportProtocol = "Binary"
 	HiveThriftTransportProtocolHTTP   HiveThriftTransportProtocol = "HTTP "
-	HiveThriftTransportProtocolSasl   HiveThriftTransportProtocol = "SASL"
+	HiveThriftTransportProtocolSASL   HiveThriftTransportProtocol = "SASL"
 )
 
 // PossibleHiveThriftTransportProtocolValues returns the possible values for the HiveThriftTransportProtocol const type.
@@ -750,7 +750,7 @@ func PossibleHiveThriftTransportProtocolValues() []HiveThriftTransportProtocol {
 	return []HiveThriftTransportProtocol{
 		HiveThriftTransportProtocolBinary,
 		HiveThriftTransportProtocolHTTP,
-		HiveThriftTransportProtocolSasl,
+		HiveThriftTransportProtocolSASL,
 	}
 }
 
@@ -764,7 +764,7 @@ type ImpalaAuthenticationType string
 
 const (
 	ImpalaAuthenticationTypeAnonymous           ImpalaAuthenticationType = "Anonymous"
-	ImpalaAuthenticationTypeSaslUsername        ImpalaAuthenticationType = "SASLUsername"
+	ImpalaAuthenticationTypeSASLUsername        ImpalaAuthenticationType = "SASLUsername"
 	ImpalaAuthenticationTypeUsernameAndPassword ImpalaAuthenticationType = "UsernameAndPassword"
 )
 
@@ -772,7 +772,7 @@ const (
 func PossibleImpalaAuthenticationTypeValues() []ImpalaAuthenticationType {
 	return []ImpalaAuthenticationType{
 		ImpalaAuthenticationTypeAnonymous,
-		ImpalaAuthenticationTypeSaslUsername,
+		ImpalaAuthenticationTypeSASLUsername,
 		ImpalaAuthenticationTypeUsernameAndPassword,
 	}
 }
@@ -1351,14 +1351,14 @@ type PrestoAuthenticationType string
 
 const (
 	PrestoAuthenticationTypeAnonymous PrestoAuthenticationType = "Anonymous"
-	PrestoAuthenticationTypeLdap      PrestoAuthenticationType = "LDAP"
+	PrestoAuthenticationTypeLDAP      PrestoAuthenticationType = "LDAP"
 )
 
 // PossiblePrestoAuthenticationTypeValues returns the possible values for the PrestoAuthenticationType const type.
 func PossiblePrestoAuthenticationTypeValues() []PrestoAuthenticationType {
 	return []PrestoAuthenticationType{
 		PrestoAuthenticationTypeAnonymous,
-		PrestoAuthenticationTypeLdap,
+		PrestoAuthenticationTypeLDAP,
 	}
 }
 
@@ -1517,14 +1517,14 @@ type RunQueryOrder string
 
 const (
 	RunQueryOrderASC  RunQueryOrder = "ASC"
-	RunQueryOrderDesc RunQueryOrder = "DESC"
+	RunQueryOrderDESC RunQueryOrder = "DESC"
 )
 
 // PossibleRunQueryOrderValues returns the possible values for the RunQueryOrder const type.
 func PossibleRunQueryOrderValues() []RunQueryOrder {
 	return []RunQueryOrder{
 		RunQueryOrderASC,
-		RunQueryOrderDesc,
+		RunQueryOrderDESC,
 	}
 }
 
@@ -1972,7 +1972,7 @@ type SparkThriftTransportProtocol string
 const (
 	SparkThriftTransportProtocolBinary SparkThriftTransportProtocol = "Binary"
 	SparkThriftTransportProtocolHTTP   SparkThriftTransportProtocol = "HTTP "
-	SparkThriftTransportProtocolSasl   SparkThriftTransportProtocol = "SASL"
+	SparkThriftTransportProtocolSASL   SparkThriftTransportProtocol = "SASL"
 )
 
 // PossibleSparkThriftTransportProtocolValues returns the possible values for the SparkThriftTransportProtocol const type.
@@ -1980,7 +1980,7 @@ func PossibleSparkThriftTransportProtocolValues() []SparkThriftTransportProtocol
 	return []SparkThriftTransportProtocol{
 		SparkThriftTransportProtocolBinary,
 		SparkThriftTransportProtocolHTTP,
-		SparkThriftTransportProtocolSasl,
+		SparkThriftTransportProtocolSASL,
 	}
 }
 
@@ -2014,7 +2014,7 @@ type SsisPackageLocationType string
 const (
 	SsisPackageLocationTypeFile          SsisPackageLocationType = "File"
 	SsisPackageLocationTypeInlinePackage SsisPackageLocationType = "InlinePackage"
-	SsisPackageLocationTypeSsisdb        SsisPackageLocationType = "SSISDB"
+	SsisPackageLocationTypeSSISDB        SsisPackageLocationType = "SSISDB"
 )
 
 // PossibleSsisPackageLocationTypeValues returns the possible values for the SsisPackageLocationType const type.
@@ -2022,7 +2022,7 @@ func PossibleSsisPackageLocationTypeValues() []SsisPackageLocationType {
 	return []SsisPackageLocationType{
 		SsisPackageLocationTypeFile,
 		SsisPackageLocationTypeInlinePackage,
-		SsisPackageLocationTypeSsisdb,
+		SsisPackageLocationTypeSSISDB,
 	}
 }
 
@@ -2261,19 +2261,19 @@ func (c VariableType) ToPtr() *VariableType {
 type WebActivityMethod string
 
 const (
-	WebActivityMethodDelete WebActivityMethod = "DELETE"
+	WebActivityMethodDELETE WebActivityMethod = "DELETE"
 	WebActivityMethodGET    WebActivityMethod = "GET"
+	WebActivityMethodPOST   WebActivityMethod = "POST"
 	WebActivityMethodPUT    WebActivityMethod = "PUT"
-	WebActivityMethodPost   WebActivityMethod = "POST"
 )
 
 // PossibleWebActivityMethodValues returns the possible values for the WebActivityMethod const type.
 func PossibleWebActivityMethodValues() []WebActivityMethod {
 	return []WebActivityMethod{
-		WebActivityMethodDelete,
+		WebActivityMethodDELETE,
 		WebActivityMethodGET,
+		WebActivityMethodPOST,
 		WebActivityMethodPUT,
-		WebActivityMethodPost,
 	}
 }
 
@@ -2309,13 +2309,13 @@ func (c WebAuthenticationType) ToPtr() *WebAuthenticationType {
 type WebHookActivityMethod string
 
 const (
-	WebHookActivityMethodPost WebHookActivityMethod = "POST"
+	WebHookActivityMethodPOST WebHookActivityMethod = "POST"
 )
 
 // PossibleWebHookActivityMethodValues returns the possible values for the WebHookActivityMethod const type.
 func PossibleWebHookActivityMethodValues() []WebHookActivityMethod {
 	return []WebHookActivityMethod{
-		WebHookActivityMethodPost,
+		WebHookActivityMethodPOST,
 	}
 }
 

@@ -42,6 +42,7 @@ export const CommonAcronyms = [
   '^smtp$',
   '^sql$',
   '^ssh$',
+  '^ssl$',
   '^tcp$',
   '^tiff$',
   '^tls$',

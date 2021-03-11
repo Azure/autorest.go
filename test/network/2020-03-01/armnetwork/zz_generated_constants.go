@@ -241,143 +241,143 @@ func (c ApplicationGatewaySKUName) ToPtr() *ApplicationGatewaySKUName {
 	return &c
 }
 
-// ApplicationGatewaySslCipherSuite - Ssl cipher suites enums.
-type ApplicationGatewaySslCipherSuite string
+// ApplicationGatewaySSLCipherSuite - Ssl cipher suites enums.
+type ApplicationGatewaySSLCipherSuite string
 
 const (
-	ApplicationGatewaySslCipherSuiteTLSDHEDSSWith3DESEDECBCSHA       ApplicationGatewaySslCipherSuite = "TLS_DHE_DSS_WITH_3DES_EDE_CBC_SHA"
-	ApplicationGatewaySslCipherSuiteTLSDHEDSSWithAES128CBCSHA        ApplicationGatewaySslCipherSuite = "TLS_DHE_DSS_WITH_AES_128_CBC_SHA"
-	ApplicationGatewaySslCipherSuiteTLSDHEDSSWithAES128CBCSHA256     ApplicationGatewaySslCipherSuite = "TLS_DHE_DSS_WITH_AES_128_CBC_SHA256"
-	ApplicationGatewaySslCipherSuiteTLSDHEDSSWithAES256CBCSHA        ApplicationGatewaySslCipherSuite = "TLS_DHE_DSS_WITH_AES_256_CBC_SHA"
-	ApplicationGatewaySslCipherSuiteTLSDHEDSSWithAES256CBCSHA256     ApplicationGatewaySslCipherSuite = "TLS_DHE_DSS_WITH_AES_256_CBC_SHA256"
-	ApplicationGatewaySslCipherSuiteTLSDHERSAWithAES128CBCSHA        ApplicationGatewaySslCipherSuite = "TLS_DHE_RSA_WITH_AES_128_CBC_SHA"
-	ApplicationGatewaySslCipherSuiteTLSDHERSAWithAES128GCMSHA256     ApplicationGatewaySslCipherSuite = "TLS_DHE_RSA_WITH_AES_128_GCM_SHA256"
-	ApplicationGatewaySslCipherSuiteTLSDHERSAWithAES256CBCSHA        ApplicationGatewaySslCipherSuite = "TLS_DHE_RSA_WITH_AES_256_CBC_SHA"
-	ApplicationGatewaySslCipherSuiteTLSDHERSAWithAES256GCMSHA384     ApplicationGatewaySslCipherSuite = "TLS_DHE_RSA_WITH_AES_256_GCM_SHA384"
-	ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAES128CBCSHA    ApplicationGatewaySslCipherSuite = "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA"
-	ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAES128CBCSHA256 ApplicationGatewaySslCipherSuite = "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256"
-	ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAES128GCMSHA256 ApplicationGatewaySslCipherSuite = "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256"
-	ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAES256CBCSHA    ApplicationGatewaySslCipherSuite = "TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA"
-	ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAES256CBCSHA384 ApplicationGatewaySslCipherSuite = "TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384"
-	ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAES256GCMSHA384 ApplicationGatewaySslCipherSuite = "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384"
-	ApplicationGatewaySslCipherSuiteTLSEcdheRSAWithAES128CBCSHA      ApplicationGatewaySslCipherSuite = "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA"
-	ApplicationGatewaySslCipherSuiteTLSEcdheRSAWithAES128CBCSHA256   ApplicationGatewaySslCipherSuite = "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256"
-	ApplicationGatewaySslCipherSuiteTLSEcdheRSAWithAES128GCMSHA256   ApplicationGatewaySslCipherSuite = "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"
-	ApplicationGatewaySslCipherSuiteTLSEcdheRSAWithAES256CBCSHA      ApplicationGatewaySslCipherSuite = "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA"
-	ApplicationGatewaySslCipherSuiteTLSEcdheRSAWithAES256CBCSHA384   ApplicationGatewaySslCipherSuite = "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384"
-	ApplicationGatewaySslCipherSuiteTLSEcdheRSAWithAES256GCMSHA384   ApplicationGatewaySslCipherSuite = "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384"
-	ApplicationGatewaySslCipherSuiteTLSRSAWith3DESEDECBCSHA          ApplicationGatewaySslCipherSuite = "TLS_RSA_WITH_3DES_EDE_CBC_SHA"
-	ApplicationGatewaySslCipherSuiteTLSRSAWithAES128CBCSHA           ApplicationGatewaySslCipherSuite = "TLS_RSA_WITH_AES_128_CBC_SHA"
-	ApplicationGatewaySslCipherSuiteTLSRSAWithAES128CBCSHA256        ApplicationGatewaySslCipherSuite = "TLS_RSA_WITH_AES_128_CBC_SHA256"
-	ApplicationGatewaySslCipherSuiteTLSRSAWithAES128GCMSHA256        ApplicationGatewaySslCipherSuite = "TLS_RSA_WITH_AES_128_GCM_SHA256"
-	ApplicationGatewaySslCipherSuiteTLSRSAWithAES256CBCSHA           ApplicationGatewaySslCipherSuite = "TLS_RSA_WITH_AES_256_CBC_SHA"
-	ApplicationGatewaySslCipherSuiteTLSRSAWithAES256CBCSHA256        ApplicationGatewaySslCipherSuite = "TLS_RSA_WITH_AES_256_CBC_SHA256"
-	ApplicationGatewaySslCipherSuiteTLSRSAWithAES256GCMSHA384        ApplicationGatewaySslCipherSuite = "TLS_RSA_WITH_AES_256_GCM_SHA384"
+	ApplicationGatewaySSLCipherSuiteTLSDHEDSSWITH3DESEDECBCSHA       ApplicationGatewaySSLCipherSuite = "TLS_DHE_DSS_WITH_3DES_EDE_CBC_SHA"
+	ApplicationGatewaySSLCipherSuiteTLSDHEDSSWITHAES128CBCSHA        ApplicationGatewaySSLCipherSuite = "TLS_DHE_DSS_WITH_AES_128_CBC_SHA"
+	ApplicationGatewaySSLCipherSuiteTLSDHEDSSWITHAES128CBCSHA256     ApplicationGatewaySSLCipherSuite = "TLS_DHE_DSS_WITH_AES_128_CBC_SHA256"
+	ApplicationGatewaySSLCipherSuiteTLSDHEDSSWITHAES256CBCSHA        ApplicationGatewaySSLCipherSuite = "TLS_DHE_DSS_WITH_AES_256_CBC_SHA"
+	ApplicationGatewaySSLCipherSuiteTLSDHEDSSWITHAES256CBCSHA256     ApplicationGatewaySSLCipherSuite = "TLS_DHE_DSS_WITH_AES_256_CBC_SHA256"
+	ApplicationGatewaySSLCipherSuiteTLSDHERSAWITHAES128CBCSHA        ApplicationGatewaySSLCipherSuite = "TLS_DHE_RSA_WITH_AES_128_CBC_SHA"
+	ApplicationGatewaySSLCipherSuiteTLSDHERSAWITHAES128GCMSHA256     ApplicationGatewaySSLCipherSuite = "TLS_DHE_RSA_WITH_AES_128_GCM_SHA256"
+	ApplicationGatewaySSLCipherSuiteTLSDHERSAWITHAES256CBCSHA        ApplicationGatewaySSLCipherSuite = "TLS_DHE_RSA_WITH_AES_256_CBC_SHA"
+	ApplicationGatewaySSLCipherSuiteTLSDHERSAWITHAES256GCMSHA384     ApplicationGatewaySSLCipherSuite = "TLS_DHE_RSA_WITH_AES_256_GCM_SHA384"
+	ApplicationGatewaySSLCipherSuiteTLSECDHEECDSAWITHAES128CBCSHA    ApplicationGatewaySSLCipherSuite = "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA"
+	ApplicationGatewaySSLCipherSuiteTLSECDHEECDSAWITHAES128CBCSHA256 ApplicationGatewaySSLCipherSuite = "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256"
+	ApplicationGatewaySSLCipherSuiteTLSECDHEECDSAWITHAES128GCMSHA256 ApplicationGatewaySSLCipherSuite = "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256"
+	ApplicationGatewaySSLCipherSuiteTLSECDHEECDSAWITHAES256CBCSHA    ApplicationGatewaySSLCipherSuite = "TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA"
+	ApplicationGatewaySSLCipherSuiteTLSECDHEECDSAWITHAES256CBCSHA384 ApplicationGatewaySSLCipherSuite = "TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384"
+	ApplicationGatewaySSLCipherSuiteTLSECDHEECDSAWITHAES256GCMSHA384 ApplicationGatewaySSLCipherSuite = "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384"
+	ApplicationGatewaySSLCipherSuiteTLSECDHERSAWITHAES128CBCSHA      ApplicationGatewaySSLCipherSuite = "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA"
+	ApplicationGatewaySSLCipherSuiteTLSECDHERSAWITHAES128CBCSHA256   ApplicationGatewaySSLCipherSuite = "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256"
+	ApplicationGatewaySSLCipherSuiteTLSECDHERSAWITHAES128GCMSHA256   ApplicationGatewaySSLCipherSuite = "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"
+	ApplicationGatewaySSLCipherSuiteTLSECDHERSAWITHAES256CBCSHA      ApplicationGatewaySSLCipherSuite = "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA"
+	ApplicationGatewaySSLCipherSuiteTLSECDHERSAWITHAES256CBCSHA384   ApplicationGatewaySSLCipherSuite = "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384"
+	ApplicationGatewaySSLCipherSuiteTLSECDHERSAWITHAES256GCMSHA384   ApplicationGatewaySSLCipherSuite = "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384"
+	ApplicationGatewaySSLCipherSuiteTLSRSAWITH3DESEDECBCSHA          ApplicationGatewaySSLCipherSuite = "TLS_RSA_WITH_3DES_EDE_CBC_SHA"
+	ApplicationGatewaySSLCipherSuiteTLSRSAWITHAES128CBCSHA           ApplicationGatewaySSLCipherSuite = "TLS_RSA_WITH_AES_128_CBC_SHA"
+	ApplicationGatewaySSLCipherSuiteTLSRSAWITHAES128CBCSHA256        ApplicationGatewaySSLCipherSuite = "TLS_RSA_WITH_AES_128_CBC_SHA256"
+	ApplicationGatewaySSLCipherSuiteTLSRSAWITHAES128GCMSHA256        ApplicationGatewaySSLCipherSuite = "TLS_RSA_WITH_AES_128_GCM_SHA256"
+	ApplicationGatewaySSLCipherSuiteTLSRSAWITHAES256CBCSHA           ApplicationGatewaySSLCipherSuite = "TLS_RSA_WITH_AES_256_CBC_SHA"
+	ApplicationGatewaySSLCipherSuiteTLSRSAWITHAES256CBCSHA256        ApplicationGatewaySSLCipherSuite = "TLS_RSA_WITH_AES_256_CBC_SHA256"
+	ApplicationGatewaySSLCipherSuiteTLSRSAWITHAES256GCMSHA384        ApplicationGatewaySSLCipherSuite = "TLS_RSA_WITH_AES_256_GCM_SHA384"
 )
 
-// PossibleApplicationGatewaySslCipherSuiteValues returns the possible values for the ApplicationGatewaySslCipherSuite const type.
-func PossibleApplicationGatewaySslCipherSuiteValues() []ApplicationGatewaySslCipherSuite {
-	return []ApplicationGatewaySslCipherSuite{
-		ApplicationGatewaySslCipherSuiteTLSDHEDSSWith3DESEDECBCSHA,
-		ApplicationGatewaySslCipherSuiteTLSDHEDSSWithAES128CBCSHA,
-		ApplicationGatewaySslCipherSuiteTLSDHEDSSWithAES128CBCSHA256,
-		ApplicationGatewaySslCipherSuiteTLSDHEDSSWithAES256CBCSHA,
-		ApplicationGatewaySslCipherSuiteTLSDHEDSSWithAES256CBCSHA256,
-		ApplicationGatewaySslCipherSuiteTLSDHERSAWithAES128CBCSHA,
-		ApplicationGatewaySslCipherSuiteTLSDHERSAWithAES128GCMSHA256,
-		ApplicationGatewaySslCipherSuiteTLSDHERSAWithAES256CBCSHA,
-		ApplicationGatewaySslCipherSuiteTLSDHERSAWithAES256GCMSHA384,
-		ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAES128CBCSHA,
-		ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAES128CBCSHA256,
-		ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAES128GCMSHA256,
-		ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAES256CBCSHA,
-		ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAES256CBCSHA384,
-		ApplicationGatewaySslCipherSuiteTLSEcdheEcdsaWithAES256GCMSHA384,
-		ApplicationGatewaySslCipherSuiteTLSEcdheRSAWithAES128CBCSHA,
-		ApplicationGatewaySslCipherSuiteTLSEcdheRSAWithAES128CBCSHA256,
-		ApplicationGatewaySslCipherSuiteTLSEcdheRSAWithAES128GCMSHA256,
-		ApplicationGatewaySslCipherSuiteTLSEcdheRSAWithAES256CBCSHA,
-		ApplicationGatewaySslCipherSuiteTLSEcdheRSAWithAES256CBCSHA384,
-		ApplicationGatewaySslCipherSuiteTLSEcdheRSAWithAES256GCMSHA384,
-		ApplicationGatewaySslCipherSuiteTLSRSAWith3DESEDECBCSHA,
-		ApplicationGatewaySslCipherSuiteTLSRSAWithAES128CBCSHA,
-		ApplicationGatewaySslCipherSuiteTLSRSAWithAES128CBCSHA256,
-		ApplicationGatewaySslCipherSuiteTLSRSAWithAES128GCMSHA256,
-		ApplicationGatewaySslCipherSuiteTLSRSAWithAES256CBCSHA,
-		ApplicationGatewaySslCipherSuiteTLSRSAWithAES256CBCSHA256,
-		ApplicationGatewaySslCipherSuiteTLSRSAWithAES256GCMSHA384,
+// PossibleApplicationGatewaySSLCipherSuiteValues returns the possible values for the ApplicationGatewaySSLCipherSuite const type.
+func PossibleApplicationGatewaySSLCipherSuiteValues() []ApplicationGatewaySSLCipherSuite {
+	return []ApplicationGatewaySSLCipherSuite{
+		ApplicationGatewaySSLCipherSuiteTLSDHEDSSWITH3DESEDECBCSHA,
+		ApplicationGatewaySSLCipherSuiteTLSDHEDSSWITHAES128CBCSHA,
+		ApplicationGatewaySSLCipherSuiteTLSDHEDSSWITHAES128CBCSHA256,
+		ApplicationGatewaySSLCipherSuiteTLSDHEDSSWITHAES256CBCSHA,
+		ApplicationGatewaySSLCipherSuiteTLSDHEDSSWITHAES256CBCSHA256,
+		ApplicationGatewaySSLCipherSuiteTLSDHERSAWITHAES128CBCSHA,
+		ApplicationGatewaySSLCipherSuiteTLSDHERSAWITHAES128GCMSHA256,
+		ApplicationGatewaySSLCipherSuiteTLSDHERSAWITHAES256CBCSHA,
+		ApplicationGatewaySSLCipherSuiteTLSDHERSAWITHAES256GCMSHA384,
+		ApplicationGatewaySSLCipherSuiteTLSECDHEECDSAWITHAES128CBCSHA,
+		ApplicationGatewaySSLCipherSuiteTLSECDHEECDSAWITHAES128CBCSHA256,
+		ApplicationGatewaySSLCipherSuiteTLSECDHEECDSAWITHAES128GCMSHA256,
+		ApplicationGatewaySSLCipherSuiteTLSECDHEECDSAWITHAES256CBCSHA,
+		ApplicationGatewaySSLCipherSuiteTLSECDHEECDSAWITHAES256CBCSHA384,
+		ApplicationGatewaySSLCipherSuiteTLSECDHEECDSAWITHAES256GCMSHA384,
+		ApplicationGatewaySSLCipherSuiteTLSECDHERSAWITHAES128CBCSHA,
+		ApplicationGatewaySSLCipherSuiteTLSECDHERSAWITHAES128CBCSHA256,
+		ApplicationGatewaySSLCipherSuiteTLSECDHERSAWITHAES128GCMSHA256,
+		ApplicationGatewaySSLCipherSuiteTLSECDHERSAWITHAES256CBCSHA,
+		ApplicationGatewaySSLCipherSuiteTLSECDHERSAWITHAES256CBCSHA384,
+		ApplicationGatewaySSLCipherSuiteTLSECDHERSAWITHAES256GCMSHA384,
+		ApplicationGatewaySSLCipherSuiteTLSRSAWITH3DESEDECBCSHA,
+		ApplicationGatewaySSLCipherSuiteTLSRSAWITHAES128CBCSHA,
+		ApplicationGatewaySSLCipherSuiteTLSRSAWITHAES128CBCSHA256,
+		ApplicationGatewaySSLCipherSuiteTLSRSAWITHAES128GCMSHA256,
+		ApplicationGatewaySSLCipherSuiteTLSRSAWITHAES256CBCSHA,
+		ApplicationGatewaySSLCipherSuiteTLSRSAWITHAES256CBCSHA256,
+		ApplicationGatewaySSLCipherSuiteTLSRSAWITHAES256GCMSHA384,
 	}
 }
 
-// ToPtr() returns a *ApplicationGatewaySslCipherSuite pointing to the current value.
-func (c ApplicationGatewaySslCipherSuite) ToPtr() *ApplicationGatewaySslCipherSuite {
+// ToPtr() returns a *ApplicationGatewaySSLCipherSuite pointing to the current value.
+func (c ApplicationGatewaySSLCipherSuite) ToPtr() *ApplicationGatewaySSLCipherSuite {
 	return &c
 }
 
-// ApplicationGatewaySslPolicyName - Ssl predefined policy name enums.
-type ApplicationGatewaySslPolicyName string
+// ApplicationGatewaySSLPolicyName - Ssl predefined policy name enums.
+type ApplicationGatewaySSLPolicyName string
 
 const (
-	ApplicationGatewaySslPolicyNameAppGwSslPolicy20150501  ApplicationGatewaySslPolicyName = "AppGwSslPolicy20150501"
-	ApplicationGatewaySslPolicyNameAppGwSslPolicy20170401  ApplicationGatewaySslPolicyName = "AppGwSslPolicy20170401"
-	ApplicationGatewaySslPolicyNameAppGwSslPolicy20170401S ApplicationGatewaySslPolicyName = "AppGwSslPolicy20170401S"
+	ApplicationGatewaySSLPolicyNameAppGwSSLPolicy20150501  ApplicationGatewaySSLPolicyName = "AppGwSslPolicy20150501"
+	ApplicationGatewaySSLPolicyNameAppGwSSLPolicy20170401  ApplicationGatewaySSLPolicyName = "AppGwSslPolicy20170401"
+	ApplicationGatewaySSLPolicyNameAppGwSSLPolicy20170401S ApplicationGatewaySSLPolicyName = "AppGwSslPolicy20170401S"
 )
 
-// PossibleApplicationGatewaySslPolicyNameValues returns the possible values for the ApplicationGatewaySslPolicyName const type.
-func PossibleApplicationGatewaySslPolicyNameValues() []ApplicationGatewaySslPolicyName {
-	return []ApplicationGatewaySslPolicyName{
-		ApplicationGatewaySslPolicyNameAppGwSslPolicy20150501,
-		ApplicationGatewaySslPolicyNameAppGwSslPolicy20170401,
-		ApplicationGatewaySslPolicyNameAppGwSslPolicy20170401S,
+// PossibleApplicationGatewaySSLPolicyNameValues returns the possible values for the ApplicationGatewaySSLPolicyName const type.
+func PossibleApplicationGatewaySSLPolicyNameValues() []ApplicationGatewaySSLPolicyName {
+	return []ApplicationGatewaySSLPolicyName{
+		ApplicationGatewaySSLPolicyNameAppGwSSLPolicy20150501,
+		ApplicationGatewaySSLPolicyNameAppGwSSLPolicy20170401,
+		ApplicationGatewaySSLPolicyNameAppGwSSLPolicy20170401S,
 	}
 }
 
-// ToPtr() returns a *ApplicationGatewaySslPolicyName pointing to the current value.
-func (c ApplicationGatewaySslPolicyName) ToPtr() *ApplicationGatewaySslPolicyName {
+// ToPtr() returns a *ApplicationGatewaySSLPolicyName pointing to the current value.
+func (c ApplicationGatewaySSLPolicyName) ToPtr() *ApplicationGatewaySSLPolicyName {
 	return &c
 }
 
-// ApplicationGatewaySslPolicyType - Type of Ssl Policy.
-type ApplicationGatewaySslPolicyType string
+// ApplicationGatewaySSLPolicyType - Type of Ssl Policy.
+type ApplicationGatewaySSLPolicyType string
 
 const (
-	ApplicationGatewaySslPolicyTypeCustom     ApplicationGatewaySslPolicyType = "Custom"
-	ApplicationGatewaySslPolicyTypePredefined ApplicationGatewaySslPolicyType = "Predefined"
+	ApplicationGatewaySSLPolicyTypeCustom     ApplicationGatewaySSLPolicyType = "Custom"
+	ApplicationGatewaySSLPolicyTypePredefined ApplicationGatewaySSLPolicyType = "Predefined"
 )
 
-// PossibleApplicationGatewaySslPolicyTypeValues returns the possible values for the ApplicationGatewaySslPolicyType const type.
-func PossibleApplicationGatewaySslPolicyTypeValues() []ApplicationGatewaySslPolicyType {
-	return []ApplicationGatewaySslPolicyType{
-		ApplicationGatewaySslPolicyTypeCustom,
-		ApplicationGatewaySslPolicyTypePredefined,
+// PossibleApplicationGatewaySSLPolicyTypeValues returns the possible values for the ApplicationGatewaySSLPolicyType const type.
+func PossibleApplicationGatewaySSLPolicyTypeValues() []ApplicationGatewaySSLPolicyType {
+	return []ApplicationGatewaySSLPolicyType{
+		ApplicationGatewaySSLPolicyTypeCustom,
+		ApplicationGatewaySSLPolicyTypePredefined,
 	}
 }
 
-// ToPtr() returns a *ApplicationGatewaySslPolicyType pointing to the current value.
-func (c ApplicationGatewaySslPolicyType) ToPtr() *ApplicationGatewaySslPolicyType {
+// ToPtr() returns a *ApplicationGatewaySSLPolicyType pointing to the current value.
+func (c ApplicationGatewaySSLPolicyType) ToPtr() *ApplicationGatewaySSLPolicyType {
 	return &c
 }
 
-// ApplicationGatewaySslProtocol - Ssl protocol enums.
-type ApplicationGatewaySslProtocol string
+// ApplicationGatewaySSLProtocol - Ssl protocol enums.
+type ApplicationGatewaySSLProtocol string
 
 const (
-	ApplicationGatewaySslProtocolTLSv10 ApplicationGatewaySslProtocol = "TLSv1_0"
-	ApplicationGatewaySslProtocolTLSv11 ApplicationGatewaySslProtocol = "TLSv1_1"
-	ApplicationGatewaySslProtocolTLSv12 ApplicationGatewaySslProtocol = "TLSv1_2"
+	ApplicationGatewaySSLProtocolTLSv10 ApplicationGatewaySSLProtocol = "TLSv1_0"
+	ApplicationGatewaySSLProtocolTLSv11 ApplicationGatewaySSLProtocol = "TLSv1_1"
+	ApplicationGatewaySSLProtocolTLSv12 ApplicationGatewaySSLProtocol = "TLSv1_2"
 )
 
-// PossibleApplicationGatewaySslProtocolValues returns the possible values for the ApplicationGatewaySslProtocol const type.
-func PossibleApplicationGatewaySslProtocolValues() []ApplicationGatewaySslProtocol {
-	return []ApplicationGatewaySslProtocol{
-		ApplicationGatewaySslProtocolTLSv10,
-		ApplicationGatewaySslProtocolTLSv11,
-		ApplicationGatewaySslProtocolTLSv12,
+// PossibleApplicationGatewaySSLProtocolValues returns the possible values for the ApplicationGatewaySSLProtocol const type.
+func PossibleApplicationGatewaySSLProtocolValues() []ApplicationGatewaySSLProtocol {
+	return []ApplicationGatewaySSLProtocol{
+		ApplicationGatewaySSLProtocolTLSv10,
+		ApplicationGatewaySSLProtocolTLSv11,
+		ApplicationGatewaySSLProtocolTLSv12,
 	}
 }
 
-// ToPtr() returns a *ApplicationGatewaySslProtocol pointing to the current value.
-func (c ApplicationGatewaySslProtocol) ToPtr() *ApplicationGatewaySslProtocol {
+// ToPtr() returns a *ApplicationGatewaySSLProtocol pointing to the current value.
+func (c ApplicationGatewaySSLProtocol) ToPtr() *ApplicationGatewaySSLProtocol {
 	return &c
 }
 
@@ -431,15 +431,15 @@ func (c AssociationType) ToPtr() *AssociationType {
 type AuthenticationMethod string
 
 const (
-	AuthenticationMethodEapmschaPv2 AuthenticationMethod = "EAPMSCHAPv2"
-	AuthenticationMethodEaptls      AuthenticationMethod = "EAPTLS"
+	AuthenticationMethodEAPMSCHAPv2 AuthenticationMethod = "EAPMSCHAPv2"
+	AuthenticationMethodEAPTLS      AuthenticationMethod = "EAPTLS"
 )
 
 // PossibleAuthenticationMethodValues returns the possible values for the AuthenticationMethod const type.
 func PossibleAuthenticationMethodValues() []AuthenticationMethod {
 	return []AuthenticationMethod{
-		AuthenticationMethodEapmschaPv2,
-		AuthenticationMethodEaptls,
+		AuthenticationMethodEAPMSCHAPv2,
+		AuthenticationMethodEAPTLS,
 	}
 }
 
@@ -518,7 +518,7 @@ type AzureFirewallNetworkRuleProtocol string
 
 const (
 	AzureFirewallNetworkRuleProtocolAny  AzureFirewallNetworkRuleProtocol = "Any"
-	AzureFirewallNetworkRuleProtocolIcmp AzureFirewallNetworkRuleProtocol = "ICMP"
+	AzureFirewallNetworkRuleProtocolICMP AzureFirewallNetworkRuleProtocol = "ICMP"
 	AzureFirewallNetworkRuleProtocolTCP  AzureFirewallNetworkRuleProtocol = "TCP"
 	AzureFirewallNetworkRuleProtocolUDP  AzureFirewallNetworkRuleProtocol = "UDP"
 )
@@ -527,7 +527,7 @@ const (
 func PossibleAzureFirewallNetworkRuleProtocolValues() []AzureFirewallNetworkRuleProtocol {
 	return []AzureFirewallNetworkRuleProtocol{
 		AzureFirewallNetworkRuleProtocolAny,
-		AzureFirewallNetworkRuleProtocolIcmp,
+		AzureFirewallNetworkRuleProtocolICMP,
 		AzureFirewallNetworkRuleProtocolTCP,
 		AzureFirewallNetworkRuleProtocolUDP,
 	}
@@ -563,15 +563,15 @@ func (c AzureFirewallRCActionType) ToPtr() *AzureFirewallRCActionType {
 type AzureFirewallSKUName string
 
 const (
-	AzureFirewallSKUNameAzfwHub  AzureFirewallSKUName = "AZFW_Hub"
-	AzureFirewallSKUNameAzfwVnet AzureFirewallSKUName = "AZFW_VNet"
+	AzureFirewallSKUNameAZFWHub  AzureFirewallSKUName = "AZFW_Hub"
+	AzureFirewallSKUNameAZFWVnet AzureFirewallSKUName = "AZFW_VNet"
 )
 
 // PossibleAzureFirewallSKUNameValues returns the possible values for the AzureFirewallSKUName const type.
 func PossibleAzureFirewallSKUNameValues() []AzureFirewallSKUName {
 	return []AzureFirewallSKUName{
-		AzureFirewallSKUNameAzfwHub,
-		AzureFirewallSKUNameAzfwVnet,
+		AzureFirewallSKUNameAZFWHub,
+		AzureFirewallSKUNameAZFWVnet,
 	}
 }
 
@@ -1308,13 +1308,13 @@ func (c FirewallPolicyFilterRuleActionType) ToPtr() *FirewallPolicyFilterRuleAct
 type FirewallPolicyNatRuleActionType string
 
 const (
-	FirewallPolicyNatRuleActionTypeDnat FirewallPolicyNatRuleActionType = "DNAT"
+	FirewallPolicyNatRuleActionTypeDNAT FirewallPolicyNatRuleActionType = "DNAT"
 )
 
 // PossibleFirewallPolicyNatRuleActionTypeValues returns the possible values for the FirewallPolicyNatRuleActionType const type.
 func PossibleFirewallPolicyNatRuleActionTypeValues() []FirewallPolicyNatRuleActionType {
 	return []FirewallPolicyNatRuleActionType{
-		FirewallPolicyNatRuleActionTypeDnat,
+		FirewallPolicyNatRuleActionTypeDNAT,
 	}
 }
 
@@ -1349,7 +1349,7 @@ type FirewallPolicyRuleConditionNetworkProtocol string
 
 const (
 	FirewallPolicyRuleConditionNetworkProtocolAny  FirewallPolicyRuleConditionNetworkProtocol = "Any"
-	FirewallPolicyRuleConditionNetworkProtocolIcmp FirewallPolicyRuleConditionNetworkProtocol = "ICMP"
+	FirewallPolicyRuleConditionNetworkProtocolICMP FirewallPolicyRuleConditionNetworkProtocol = "ICMP"
 	FirewallPolicyRuleConditionNetworkProtocolTCP  FirewallPolicyRuleConditionNetworkProtocol = "TCP"
 	FirewallPolicyRuleConditionNetworkProtocolUDP  FirewallPolicyRuleConditionNetworkProtocol = "UDP"
 )
@@ -1358,7 +1358,7 @@ const (
 func PossibleFirewallPolicyRuleConditionNetworkProtocolValues() []FirewallPolicyRuleConditionNetworkProtocol {
 	return []FirewallPolicyRuleConditionNetworkProtocol{
 		FirewallPolicyRuleConditionNetworkProtocolAny,
-		FirewallPolicyRuleConditionNetworkProtocolIcmp,
+		FirewallPolicyRuleConditionNetworkProtocolICMP,
 		FirewallPolicyRuleConditionNetworkProtocolTCP,
 		FirewallPolicyRuleConditionNetworkProtocolUDP,
 	}
@@ -2103,7 +2103,7 @@ const (
 	PfsGroupPFS2    PfsGroup = "PFS2"
 	PfsGroupPFS2048 PfsGroup = "PFS2048"
 	PfsGroupPFS24   PfsGroup = "PFS24"
-	PfsGroupPfsmm   PfsGroup = "PFSMM"
+	PfsGroupPFSMM   PfsGroup = "PFSMM"
 )
 
 // PossiblePfsGroupValues returns the possible values for the PfsGroup const type.
@@ -2117,7 +2117,7 @@ func PossiblePfsGroupValues() []PfsGroup {
 		PfsGroupPFS2,
 		PfsGroupPFS2048,
 		PfsGroupPFS24,
-		PfsGroupPfsmm,
+		PfsGroupPFSMM,
 	}
 }
 
@@ -2618,7 +2618,7 @@ type VPNClientProtocol string
 const (
 	VPNClientProtocolIkeV2   VPNClientProtocol = "IkeV2"
 	VPNClientProtocolOpenVPN VPNClientProtocol = "OpenVPN"
-	VPNClientProtocolSstp    VPNClientProtocol = "SSTP"
+	VPNClientProtocolSSTP    VPNClientProtocol = "SSTP"
 )
 
 // PossibleVPNClientProtocolValues returns the possible values for the VPNClientProtocol const type.
@@ -2626,7 +2626,7 @@ func PossibleVPNClientProtocolValues() []VPNClientProtocol {
 	return []VPNClientProtocol{
 		VPNClientProtocolIkeV2,
 		VPNClientProtocolOpenVPN,
-		VPNClientProtocolSstp,
+		VPNClientProtocolSSTP,
 	}
 }
 

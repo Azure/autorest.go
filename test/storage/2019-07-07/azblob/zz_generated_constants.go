@@ -403,7 +403,7 @@ type SKUName string
 const (
 	SKUNameStandardLRS   SKUName = "Standard_LRS"
 	SKUNameStandardGRS   SKUName = "Standard_GRS"
-	SKUNameStandardRagrs SKUName = "Standard_RAGRS"
+	SKUNameStandardRAGRS SKUName = "Standard_RAGRS"
 	SKUNameStandardZRS   SKUName = "Standard_ZRS"
 	SKUNamePremiumLRS    SKUName = "Premium_LRS"
 )
@@ -413,7 +413,7 @@ func PossibleSKUNameValues() []SKUName {
 	return []SKUName{
 		SKUNameStandardLRS,
 		SKUNameStandardGRS,
-		SKUNameStandardRagrs,
+		SKUNameStandardRAGRS,
 		SKUNameStandardZRS,
 		SKUNamePremiumLRS,
 	}

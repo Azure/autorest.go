@@ -50,8 +50,8 @@ func (client *libraryClient) appendCreateRequest(ctx context.Context, libraryNam
 	query := req.URL.Query()
 	query.Set("api-version", "2019-06-01-preview")
 	req.URL.RawQuery = query.Encode()
-	if options != nil && options.BlobConditionAppendpos != nil {
-		req.Header.Set("x-ms-blob-condition-appendpos", strconv.FormatInt(*options.BlobConditionAppendpos, 10))
+	if options != nil && options.XMsBlobConditionAppendpos != nil {
+		req.Header.Set("x-ms-blob-condition-appendpos", strconv.FormatInt(*options.XMsBlobConditionAppendpos, 10))
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, req.SetBody(content, "application/octet-stream")

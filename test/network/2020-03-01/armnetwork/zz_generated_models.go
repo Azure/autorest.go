@@ -84,50 +84,50 @@ type ApplicationGatewayAutoscaleConfiguration struct {
 }
 
 // Response for ApplicationGatewayAvailableSslOptions API service call.
-type ApplicationGatewayAvailableSslOptions struct {
+type ApplicationGatewayAvailableSSLOptions struct {
 	Resource
 	// Properties of the application gateway available SSL options.
-	Properties *ApplicationGatewayAvailableSslOptionsPropertiesFormat `json:"properties,omitempty"`
+	Properties *ApplicationGatewayAvailableSSLOptionsPropertiesFormat `json:"properties,omitempty"`
 }
 
 // Properties of ApplicationGatewayAvailableSslOptions.
-type ApplicationGatewayAvailableSslOptionsPropertiesFormat struct {
+type ApplicationGatewayAvailableSSLOptionsPropertiesFormat struct {
 	// List of available Ssl cipher suites.
-	AvailableCipherSuites *[]ApplicationGatewaySslCipherSuite `json:"availableCipherSuites,omitempty"`
+	AvailableCipherSuites *[]ApplicationGatewaySSLCipherSuite `json:"availableCipherSuites,omitempty"`
 
 	// List of available Ssl protocols.
-	AvailableProtocols *[]ApplicationGatewaySslProtocol `json:"availableProtocols,omitempty"`
+	AvailableProtocols *[]ApplicationGatewaySSLProtocol `json:"availableProtocols,omitempty"`
 
 	// Name of the Ssl predefined policy applied by default to application gateway.
-	DefaultPolicy *ApplicationGatewaySslPolicyName `json:"defaultPolicy,omitempty"`
+	DefaultPolicy *ApplicationGatewaySSLPolicyName `json:"defaultPolicy,omitempty"`
 
 	// List of available Ssl predefined policy.
 	PredefinedPolicies *[]SubResource `json:"predefinedPolicies,omitempty"`
 }
 
-// ApplicationGatewayAvailableSslOptionsResponse is the response envelope for operations that return a ApplicationGatewayAvailableSslOptions type.
-type ApplicationGatewayAvailableSslOptionsResponse struct {
+// ApplicationGatewayAvailableSSLOptionsResponse is the response envelope for operations that return a ApplicationGatewayAvailableSSLOptions type.
+type ApplicationGatewayAvailableSSLOptionsResponse struct {
 	// Response for ApplicationGatewayAvailableSslOptions API service call.
-	ApplicationGatewayAvailableSslOptions *ApplicationGatewayAvailableSslOptions
+	ApplicationGatewayAvailableSSLOptions *ApplicationGatewayAvailableSSLOptions
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
 // Response for ApplicationGatewayAvailableSslOptions API service call.
-type ApplicationGatewayAvailableSslPredefinedPolicies struct {
+type ApplicationGatewayAvailableSSLPredefinedPolicies struct {
 	// URL to get the next set of results.
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// List of available Ssl predefined policy.
-	Value *[]ApplicationGatewaySslPredefinedPolicy `json:"value,omitempty"`
+	Value *[]ApplicationGatewaySSLPredefinedPolicy `json:"value,omitempty"`
 }
 
-// ApplicationGatewayAvailableSslPredefinedPoliciesResponse is the response envelope for operations that return a ApplicationGatewayAvailableSslPredefinedPolicies
+// ApplicationGatewayAvailableSSLPredefinedPoliciesResponse is the response envelope for operations that return a ApplicationGatewayAvailableSSLPredefinedPolicies
 // type.
-type ApplicationGatewayAvailableSslPredefinedPoliciesResponse struct {
+type ApplicationGatewayAvailableSSLPredefinedPoliciesResponse struct {
 	// Response for ApplicationGatewayAvailableSslOptions API service call.
-	ApplicationGatewayAvailableSslPredefinedPolicies *ApplicationGatewayAvailableSslPredefinedPolicies
+	ApplicationGatewayAvailableSSLPredefinedPolicies *ApplicationGatewayAvailableSSLPredefinedPolicies
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -526,7 +526,7 @@ type ApplicationGatewayHTTPListenerPropertiesFormat struct {
 	RequireServerNameIndication *bool `json:"requireServerNameIndication,omitempty"`
 
 	// SSL certificate resource of an application gateway.
-	SslCertificate *SubResource `json:"sslCertificate,omitempty"`
+	SSLCertificate *SubResource `json:"sslCertificate,omitempty"`
 }
 
 // Header configuration of the Actions set in Application Gateway.
@@ -798,10 +798,10 @@ type ApplicationGatewayPropertiesFormat struct {
 
 	// SSL certificates of the application gateway resource. For default limits, see Application Gateway limits [https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits]
 	// .
-	SslCertificates *[]ApplicationGatewaySslCertificate `json:"sslCertificates,omitempty"`
+	SSLCertificates *[]ApplicationGatewaySSLCertificate `json:"sslCertificates,omitempty"`
 
 	// SSL policy of the application gateway resource.
-	SslPolicy *ApplicationGatewaySslPolicy `json:"sslPolicy,omitempty"`
+	SSLPolicy *ApplicationGatewaySSLPolicy `json:"sslPolicy,omitempty"`
 
 	// Trusted Root certificates of the application gateway resource. For default limits, see Application Gateway limits
 	// [https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits].
@@ -989,7 +989,7 @@ type ApplicationGatewaySKU struct {
 }
 
 // SSL certificates of an application gateway.
-type ApplicationGatewaySslCertificate struct {
+type ApplicationGatewaySSLCertificate struct {
 	SubResource
 	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
 	Etag *string `json:"etag,omitempty" azure:"ro"`
@@ -998,14 +998,14 @@ type ApplicationGatewaySslCertificate struct {
 	Name *string `json:"name,omitempty"`
 
 	// Properties of the application gateway SSL certificate.
-	Properties *ApplicationGatewaySslCertificatePropertiesFormat `json:"properties,omitempty"`
+	Properties *ApplicationGatewaySSLCertificatePropertiesFormat `json:"properties,omitempty"`
 
 	// READ-ONLY; Type of the resource.
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
 // Properties of SSL certificates of an application gateway.
-type ApplicationGatewaySslCertificatePropertiesFormat struct {
+type ApplicationGatewaySSLCertificatePropertiesFormat struct {
 	// Base-64 encoded pfx certificate. Only applicable in PUT Request.
 	Data *string `json:"data,omitempty"`
 
@@ -1023,46 +1023,46 @@ type ApplicationGatewaySslCertificatePropertiesFormat struct {
 }
 
 // Application Gateway Ssl policy.
-type ApplicationGatewaySslPolicy struct {
+type ApplicationGatewaySSLPolicy struct {
 	// Ssl cipher suites to be enabled in the specified order to application gateway.
-	CipherSuites *[]ApplicationGatewaySslCipherSuite `json:"cipherSuites,omitempty"`
+	CipherSuites *[]ApplicationGatewaySSLCipherSuite `json:"cipherSuites,omitempty"`
 
 	// Ssl protocols to be disabled on application gateway.
-	DisabledSslProtocols *[]ApplicationGatewaySslProtocol `json:"disabledSslProtocols,omitempty"`
+	DisabledSSLProtocols *[]ApplicationGatewaySSLProtocol `json:"disabledSslProtocols,omitempty"`
 
 	// Minimum version of Ssl protocol to be supported on application gateway.
-	MinProtocolVersion *ApplicationGatewaySslProtocol `json:"minProtocolVersion,omitempty"`
+	MinProtocolVersion *ApplicationGatewaySSLProtocol `json:"minProtocolVersion,omitempty"`
 
 	// Name of Ssl predefined policy.
-	PolicyName *ApplicationGatewaySslPolicyName `json:"policyName,omitempty"`
+	PolicyName *ApplicationGatewaySSLPolicyName `json:"policyName,omitempty"`
 
 	// Type of Ssl Policy.
-	PolicyType *ApplicationGatewaySslPolicyType `json:"policyType,omitempty"`
+	PolicyType *ApplicationGatewaySSLPolicyType `json:"policyType,omitempty"`
 }
 
 // An Ssl predefined policy.
-type ApplicationGatewaySslPredefinedPolicy struct {
+type ApplicationGatewaySSLPredefinedPolicy struct {
 	SubResource
 	// Name of the Ssl predefined policy.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of the application gateway SSL predefined policy.
-	Properties *ApplicationGatewaySslPredefinedPolicyPropertiesFormat `json:"properties,omitempty"`
+	Properties *ApplicationGatewaySSLPredefinedPolicyPropertiesFormat `json:"properties,omitempty"`
 }
 
 // Properties of ApplicationGatewaySslPredefinedPolicy.
-type ApplicationGatewaySslPredefinedPolicyPropertiesFormat struct {
+type ApplicationGatewaySSLPredefinedPolicyPropertiesFormat struct {
 	// Ssl cipher suites to be enabled in the specified order for application gateway.
-	CipherSuites *[]ApplicationGatewaySslCipherSuite `json:"cipherSuites,omitempty"`
+	CipherSuites *[]ApplicationGatewaySSLCipherSuite `json:"cipherSuites,omitempty"`
 
 	// Minimum version of Ssl protocol to be supported on application gateway.
-	MinProtocolVersion *ApplicationGatewaySslProtocol `json:"minProtocolVersion,omitempty"`
+	MinProtocolVersion *ApplicationGatewaySSLProtocol `json:"minProtocolVersion,omitempty"`
 }
 
-// ApplicationGatewaySslPredefinedPolicyResponse is the response envelope for operations that return a ApplicationGatewaySslPredefinedPolicy type.
-type ApplicationGatewaySslPredefinedPolicyResponse struct {
+// ApplicationGatewaySSLPredefinedPolicyResponse is the response envelope for operations that return a ApplicationGatewaySSLPredefinedPolicy type.
+type ApplicationGatewaySSLPredefinedPolicyResponse struct {
 	// An Ssl predefined policy.
-	ApplicationGatewaySslPredefinedPolicy *ApplicationGatewaySslPredefinedPolicy
+	ApplicationGatewaySSLPredefinedPolicy *ApplicationGatewaySSLPredefinedPolicy
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -1215,8 +1215,8 @@ type ApplicationGatewaysGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ApplicationGatewaysGetSslPredefinedPolicyOptions contains the optional parameters for the ApplicationGateways.GetSslPredefinedPolicy method.
-type ApplicationGatewaysGetSslPredefinedPolicyOptions struct {
+// ApplicationGatewaysGetSSLPredefinedPolicyOptions contains the optional parameters for the ApplicationGateways.GetSSLPredefinedPolicy method.
+type ApplicationGatewaysGetSSLPredefinedPolicyOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -1235,19 +1235,19 @@ type ApplicationGatewaysListAvailableResponseHeadersOptions struct {
 	// placeholder for future optional parameters
 }
 
+// ApplicationGatewaysListAvailableSSLOptionsOptions contains the optional parameters for the ApplicationGateways.ListAvailableSSLOptions method.
+type ApplicationGatewaysListAvailableSSLOptionsOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ApplicationGatewaysListAvailableSSLPredefinedPoliciesOptions contains the optional parameters for the ApplicationGateways.ListAvailableSSLPredefinedPolicies
+// method.
+type ApplicationGatewaysListAvailableSSLPredefinedPoliciesOptions struct {
+	// placeholder for future optional parameters
+}
+
 // ApplicationGatewaysListAvailableServerVariablesOptions contains the optional parameters for the ApplicationGateways.ListAvailableServerVariables method.
 type ApplicationGatewaysListAvailableServerVariablesOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ApplicationGatewaysListAvailableSslOptionsOptions contains the optional parameters for the ApplicationGateways.ListAvailableSslOptions method.
-type ApplicationGatewaysListAvailableSslOptionsOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ApplicationGatewaysListAvailableSslPredefinedPoliciesOptions contains the optional parameters for the ApplicationGateways.ListAvailableSslPredefinedPolicies
-// method.
-type ApplicationGatewaysListAvailableSslPredefinedPoliciesOptions struct {
 	// placeholder for future optional parameters
 }
 

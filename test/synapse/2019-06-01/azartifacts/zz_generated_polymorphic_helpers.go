@@ -35,7 +35,7 @@ func unmarshalActivityClassification(body []byte) (ActivityClassification, error
 	case "Custom":
 		b = &CustomActivity{}
 	case "DataLakeAnalyticsU-SQL":
-		b = &DataLakeAnalyticsUsqlActivity{}
+		b = &DataLakeAnalyticsUSQLActivity{}
 	case "DatabricksNotebook":
 		b = &DatabricksNotebookActivity{}
 	case "DatabricksSparkJar":
@@ -49,7 +49,7 @@ func unmarshalActivityClassification(body []byte) (ActivityClassification, error
 	case "ExecutePipeline":
 		b = &ExecutePipelineActivity{}
 	case "ExecuteSSISPackage":
-		b = &ExecuteSsisPackageActivity{}
+		b = &ExecuteSSISPackageActivity{}
 	case "Execution":
 		b = &ExecutionActivity{}
 	case "Filter":
@@ -138,7 +138,7 @@ func unmarshalExecutionActivityClassification(body []byte) (ExecutionActivityCla
 	case "Custom":
 		b = &CustomActivity{}
 	case "DataLakeAnalyticsU-SQL":
-		b = &DataLakeAnalyticsUsqlActivity{}
+		b = &DataLakeAnalyticsUSQLActivity{}
 	case "DatabricksNotebook":
 		b = &DatabricksNotebookActivity{}
 	case "DatabricksSparkJar":
@@ -150,7 +150,7 @@ func unmarshalExecutionActivityClassification(body []byte) (ExecutionActivityCla
 	case "ExecuteDataFlow":
 		b = &ExecuteDataFlowActivity{}
 	case "ExecuteSSISPackage":
-		b = &ExecuteSsisPackageActivity{}
+		b = &ExecuteSSISPackageActivity{}
 	case "GetMetadata":
 		b = &GetMetadataActivity{}
 	case "HDInsightHive":

@@ -53,16 +53,6 @@ type APIVersionLocalGetSwaggerLocalValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ClientRequestIDGetOptions contains the optional parameters for the ClientRequestID.Get method.
-type ClientRequestIDGetOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ClientRequestIDParamGetOptions contains the optional parameters for the ClientRequestID.ParamGet method.
-type ClientRequestIDParamGetOptions struct {
-	// placeholder for future optional parameters
-}
-
 type Error struct {
 	ConstantID *int32  `json:"constantId,omitempty"`
 	Message    *string `json:"message,omitempty"`
@@ -232,5 +222,15 @@ type SubscriptionInMethodPostPathLocalValidOptions struct {
 
 // SubscriptionInMethodPostSwaggerLocalValidOptions contains the optional parameters for the SubscriptionInMethod.PostSwaggerLocalValid method.
 type SubscriptionInMethodPostSwaggerLocalValidOptions struct {
+	// placeholder for future optional parameters
+}
+
+// XMsClientRequestIDGetOptions contains the optional parameters for the XMsClientRequestID.Get method.
+type XMsClientRequestIDGetOptions struct {
+	// placeholder for future optional parameters
+}
+
+// XMsClientRequestIDParamGetOptions contains the optional parameters for the XMsClientRequestID.ParamGet method.
+type XMsClientRequestIDParamGetOptions struct {
 	// placeholder for future optional parameters
 }

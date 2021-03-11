@@ -119,7 +119,7 @@ export async function namer(session: Session<CodeModel>) {
         const inParamGroup = param.extensions?.['x-ms-parameter-grouping'] || param.required !== true;
         const paramDetails = <Language>param.language.go;
         // if this is part of a param group struct then don't apply param naming rules to it
-        paramDetails.name = ensureNameCase(paramDetails.name), !inParamGroup);
+        paramDetails.name = ensureNameCase(paramDetails.name, !inParamGroup);
         // fix up any param group names
         if (param.extensions?.['x-ms-parameter-grouping']) {
           if (param.extensions['x-ms-parameter-grouping'].name) {
