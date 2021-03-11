@@ -2683,105 +2683,105 @@ func (p *nextHopResultPoller) pollUntilDone(ctx context.Context, frequency time.
 	return respType, nil
 }
 
-// P2SVpnConnectionHealthPoller provides polling facilities until the operation completes
-type P2SVpnConnectionHealthPoller interface {
+// P2SVPNConnectionHealthPoller provides polling facilities until the operation completes
+type P2SVPNConnectionHealthPoller interface {
 	azcore.Poller
 
 	// FinalResponse performs a final GET to the service and returns the final response
 	// for the polling operation. If there is an error performing the final GET then an error is returned.
-	// If the final GET succeeded then the final P2SVpnConnectionHealthResponse will be returned.
-	FinalResponse(ctx context.Context) (P2SVpnConnectionHealthResponse, error)
+	// If the final GET succeeded then the final P2SVPNConnectionHealthResponse will be returned.
+	FinalResponse(ctx context.Context) (P2SVPNConnectionHealthResponse, error)
 }
 
-type p2SVpnConnectionHealthPoller struct {
+type p2SVPNConnectionHealthPoller struct {
 	// the client for making the request
 	pipeline azcore.Pipeline
 	pt       armcore.Poller
 }
 
 // Done returns true if there was an error or polling has reached a terminal state
-func (p *p2SVpnConnectionHealthPoller) Done() bool {
+func (p *p2SVPNConnectionHealthPoller) Done() bool {
 	return p.pt.Done()
 }
 
 // Poll will send poll the service endpoint and return an http.Response or error received from the service
-func (p *p2SVpnConnectionHealthPoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *p2SVPNConnectionHealthPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx, p.pipeline)
 }
 
-func (p *p2SVpnConnectionHealthPoller) FinalResponse(ctx context.Context) (P2SVpnConnectionHealthResponse, error) {
-	respType := P2SVpnConnectionHealthResponse{P2SVpnConnectionHealth: &P2SVpnConnectionHealth{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.P2SVpnConnectionHealth)
+func (p *p2SVPNConnectionHealthPoller) FinalResponse(ctx context.Context) (P2SVPNConnectionHealthResponse, error) {
+	respType := P2SVPNConnectionHealthResponse{P2SVPNConnectionHealth: &P2SVPNConnectionHealth{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.P2SVPNConnectionHealth)
 	if err != nil {
-		return P2SVpnConnectionHealthResponse{}, err
+		return P2SVPNConnectionHealthResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil
 }
 
-// ResumeToken generates the string token that can be used with the ResumeP2SVpnConnectionHealthPoller method
+// ResumeToken generates the string token that can be used with the ResumeP2SVPNConnectionHealthPoller method
 // on the client to create a new poller from the data held in the current poller type
-func (p *p2SVpnConnectionHealthPoller) ResumeToken() (string, error) {
+func (p *p2SVPNConnectionHealthPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-func (p *p2SVpnConnectionHealthPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (P2SVpnConnectionHealthResponse, error) {
-	respType := P2SVpnConnectionHealthResponse{P2SVpnConnectionHealth: &P2SVpnConnectionHealth{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.P2SVpnConnectionHealth)
+func (p *p2SVPNConnectionHealthPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (P2SVPNConnectionHealthResponse, error) {
+	respType := P2SVPNConnectionHealthResponse{P2SVPNConnectionHealth: &P2SVPNConnectionHealth{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.P2SVPNConnectionHealth)
 	if err != nil {
-		return P2SVpnConnectionHealthResponse{}, err
+		return P2SVPNConnectionHealthResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil
 }
 
-// P2SVpnGatewayPoller provides polling facilities until the operation completes
-type P2SVpnGatewayPoller interface {
+// P2SVPNGatewayPoller provides polling facilities until the operation completes
+type P2SVPNGatewayPoller interface {
 	azcore.Poller
 
 	// FinalResponse performs a final GET to the service and returns the final response
 	// for the polling operation. If there is an error performing the final GET then an error is returned.
-	// If the final GET succeeded then the final P2SVpnGatewayResponse will be returned.
-	FinalResponse(ctx context.Context) (P2SVpnGatewayResponse, error)
+	// If the final GET succeeded then the final P2SVPNGatewayResponse will be returned.
+	FinalResponse(ctx context.Context) (P2SVPNGatewayResponse, error)
 }
 
-type p2SVpnGatewayPoller struct {
+type p2SVPNGatewayPoller struct {
 	// the client for making the request
 	pipeline azcore.Pipeline
 	pt       armcore.Poller
 }
 
 // Done returns true if there was an error or polling has reached a terminal state
-func (p *p2SVpnGatewayPoller) Done() bool {
+func (p *p2SVPNGatewayPoller) Done() bool {
 	return p.pt.Done()
 }
 
 // Poll will send poll the service endpoint and return an http.Response or error received from the service
-func (p *p2SVpnGatewayPoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *p2SVPNGatewayPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx, p.pipeline)
 }
 
-func (p *p2SVpnGatewayPoller) FinalResponse(ctx context.Context) (P2SVpnGatewayResponse, error) {
-	respType := P2SVpnGatewayResponse{P2SVpnGateway: &P2SVpnGateway{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.P2SVpnGateway)
+func (p *p2SVPNGatewayPoller) FinalResponse(ctx context.Context) (P2SVPNGatewayResponse, error) {
+	respType := P2SVPNGatewayResponse{P2SVPNGateway: &P2SVPNGateway{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.P2SVPNGateway)
 	if err != nil {
-		return P2SVpnGatewayResponse{}, err
+		return P2SVPNGatewayResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil
 }
 
-// ResumeToken generates the string token that can be used with the ResumeP2SVpnGatewayPoller method
+// ResumeToken generates the string token that can be used with the ResumeP2SVPNGatewayPoller method
 // on the client to create a new poller from the data held in the current poller type
-func (p *p2SVpnGatewayPoller) ResumeToken() (string, error) {
+func (p *p2SVPNGatewayPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-func (p *p2SVpnGatewayPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (P2SVpnGatewayResponse, error) {
-	respType := P2SVpnGatewayResponse{P2SVpnGateway: &P2SVpnGateway{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.P2SVpnGateway)
+func (p *p2SVPNGatewayPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (P2SVPNGatewayResponse, error) {
+	respType := P2SVPNGatewayResponse{P2SVPNGateway: &P2SVPNGateway{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.P2SVPNGateway)
 	if err != nil {
-		return P2SVpnGatewayResponse{}, err
+		return P2SVPNGatewayResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil
@@ -2901,23 +2901,23 @@ type PrivateDNSZoneGroupPoller interface {
 	FinalResponse(ctx context.Context) (PrivateDNSZoneGroupResponse, error)
 }
 
-type privateDnsZoneGroupPoller struct {
+type privateDNSZoneGroupPoller struct {
 	// the client for making the request
 	pipeline azcore.Pipeline
 	pt       armcore.Poller
 }
 
 // Done returns true if there was an error or polling has reached a terminal state
-func (p *privateDnsZoneGroupPoller) Done() bool {
+func (p *privateDNSZoneGroupPoller) Done() bool {
 	return p.pt.Done()
 }
 
 // Poll will send poll the service endpoint and return an http.Response or error received from the service
-func (p *privateDnsZoneGroupPoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *privateDNSZoneGroupPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx, p.pipeline)
 }
 
-func (p *privateDnsZoneGroupPoller) FinalResponse(ctx context.Context) (PrivateDNSZoneGroupResponse, error) {
+func (p *privateDNSZoneGroupPoller) FinalResponse(ctx context.Context) (PrivateDNSZoneGroupResponse, error) {
 	respType := PrivateDNSZoneGroupResponse{PrivateDNSZoneGroup: &PrivateDNSZoneGroup{}}
 	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.PrivateDNSZoneGroup)
 	if err != nil {
@@ -2929,11 +2929,11 @@ func (p *privateDnsZoneGroupPoller) FinalResponse(ctx context.Context) (PrivateD
 
 // ResumeToken generates the string token that can be used with the ResumePrivateDNSZoneGroupPoller method
 // on the client to create a new poller from the data held in the current poller type
-func (p *privateDnsZoneGroupPoller) ResumeToken() (string, error) {
+func (p *privateDNSZoneGroupPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-func (p *privateDnsZoneGroupPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (PrivateDNSZoneGroupResponse, error) {
+func (p *privateDNSZoneGroupPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (PrivateDNSZoneGroupResponse, error) {
 	respType := PrivateDNSZoneGroupResponse{PrivateDNSZoneGroup: &PrivateDNSZoneGroup{}}
 	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.PrivateDNSZoneGroup)
 	if err != nil {
@@ -3829,6 +3829,422 @@ func (p *troubleshootingResultPoller) pollUntilDone(ctx context.Context, frequen
 	return respType, nil
 }
 
+// VPNClientConnectionHealthDetailListResultPoller provides polling facilities until the operation completes
+type VPNClientConnectionHealthDetailListResultPoller interface {
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final VPNClientConnectionHealthDetailListResultResponse will be returned.
+	FinalResponse(ctx context.Context) (VPNClientConnectionHealthDetailListResultResponse, error)
+}
+
+type vpnClientConnectionHealthDetailListResultPoller struct {
+	// the client for making the request
+	pipeline azcore.Pipeline
+	pt       armcore.Poller
+}
+
+// Done returns true if there was an error or polling has reached a terminal state
+func (p *vpnClientConnectionHealthDetailListResultPoller) Done() bool {
+	return p.pt.Done()
+}
+
+// Poll will send poll the service endpoint and return an http.Response or error received from the service
+func (p *vpnClientConnectionHealthDetailListResultPoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx, p.pipeline)
+}
+
+func (p *vpnClientConnectionHealthDetailListResultPoller) FinalResponse(ctx context.Context) (VPNClientConnectionHealthDetailListResultResponse, error) {
+	respType := VPNClientConnectionHealthDetailListResultResponse{VPNClientConnectionHealthDetailListResult: &VPNClientConnectionHealthDetailListResult{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.VPNClientConnectionHealthDetailListResult)
+	if err != nil {
+		return VPNClientConnectionHealthDetailListResultResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// ResumeToken generates the string token that can be used with the ResumeVPNClientConnectionHealthDetailListResultPoller method
+// on the client to create a new poller from the data held in the current poller type
+func (p *vpnClientConnectionHealthDetailListResultPoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *vpnClientConnectionHealthDetailListResultPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (VPNClientConnectionHealthDetailListResultResponse, error) {
+	respType := VPNClientConnectionHealthDetailListResultResponse{VPNClientConnectionHealthDetailListResult: &VPNClientConnectionHealthDetailListResult{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.VPNClientConnectionHealthDetailListResult)
+	if err != nil {
+		return VPNClientConnectionHealthDetailListResultResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// VPNClientIPsecParametersPoller provides polling facilities until the operation completes
+type VPNClientIPsecParametersPoller interface {
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final VPNClientIPsecParametersResponse will be returned.
+	FinalResponse(ctx context.Context) (VPNClientIPsecParametersResponse, error)
+}
+
+type vpnClientIPSecParametersPoller struct {
+	// the client for making the request
+	pipeline azcore.Pipeline
+	pt       armcore.Poller
+}
+
+// Done returns true if there was an error or polling has reached a terminal state
+func (p *vpnClientIPSecParametersPoller) Done() bool {
+	return p.pt.Done()
+}
+
+// Poll will send poll the service endpoint and return an http.Response or error received from the service
+func (p *vpnClientIPSecParametersPoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx, p.pipeline)
+}
+
+func (p *vpnClientIPSecParametersPoller) FinalResponse(ctx context.Context) (VPNClientIPsecParametersResponse, error) {
+	respType := VPNClientIPsecParametersResponse{VPNClientIPsecParameters: &VPNClientIPsecParameters{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.VPNClientIPsecParameters)
+	if err != nil {
+		return VPNClientIPsecParametersResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// ResumeToken generates the string token that can be used with the ResumeVPNClientIPsecParametersPoller method
+// on the client to create a new poller from the data held in the current poller type
+func (p *vpnClientIPSecParametersPoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *vpnClientIPSecParametersPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (VPNClientIPsecParametersResponse, error) {
+	respType := VPNClientIPsecParametersResponse{VPNClientIPsecParameters: &VPNClientIPsecParameters{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.VPNClientIPsecParameters)
+	if err != nil {
+		return VPNClientIPsecParametersResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// VPNConnectionPoller provides polling facilities until the operation completes
+type VPNConnectionPoller interface {
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final VPNConnectionResponse will be returned.
+	FinalResponse(ctx context.Context) (VPNConnectionResponse, error)
+}
+
+type vpnConnectionPoller struct {
+	// the client for making the request
+	pipeline azcore.Pipeline
+	pt       armcore.Poller
+}
+
+// Done returns true if there was an error or polling has reached a terminal state
+func (p *vpnConnectionPoller) Done() bool {
+	return p.pt.Done()
+}
+
+// Poll will send poll the service endpoint and return an http.Response or error received from the service
+func (p *vpnConnectionPoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx, p.pipeline)
+}
+
+func (p *vpnConnectionPoller) FinalResponse(ctx context.Context) (VPNConnectionResponse, error) {
+	respType := VPNConnectionResponse{VPNConnection: &VPNConnection{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.VPNConnection)
+	if err != nil {
+		return VPNConnectionResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// ResumeToken generates the string token that can be used with the ResumeVPNConnectionPoller method
+// on the client to create a new poller from the data held in the current poller type
+func (p *vpnConnectionPoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *vpnConnectionPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (VPNConnectionResponse, error) {
+	respType := VPNConnectionResponse{VPNConnection: &VPNConnection{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.VPNConnection)
+	if err != nil {
+		return VPNConnectionResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// VPNGatewayPoller provides polling facilities until the operation completes
+type VPNGatewayPoller interface {
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final VPNGatewayResponse will be returned.
+	FinalResponse(ctx context.Context) (VPNGatewayResponse, error)
+}
+
+type vpnGatewayPoller struct {
+	// the client for making the request
+	pipeline azcore.Pipeline
+	pt       armcore.Poller
+}
+
+// Done returns true if there was an error or polling has reached a terminal state
+func (p *vpnGatewayPoller) Done() bool {
+	return p.pt.Done()
+}
+
+// Poll will send poll the service endpoint and return an http.Response or error received from the service
+func (p *vpnGatewayPoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx, p.pipeline)
+}
+
+func (p *vpnGatewayPoller) FinalResponse(ctx context.Context) (VPNGatewayResponse, error) {
+	respType := VPNGatewayResponse{VPNGateway: &VPNGateway{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.VPNGateway)
+	if err != nil {
+		return VPNGatewayResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// ResumeToken generates the string token that can be used with the ResumeVPNGatewayPoller method
+// on the client to create a new poller from the data held in the current poller type
+func (p *vpnGatewayPoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *vpnGatewayPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (VPNGatewayResponse, error) {
+	respType := VPNGatewayResponse{VPNGateway: &VPNGateway{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.VPNGateway)
+	if err != nil {
+		return VPNGatewayResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// VPNProfileResponsePoller provides polling facilities until the operation completes
+type VPNProfileResponsePoller interface {
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final VPNProfileResponseResponse will be returned.
+	FinalResponse(ctx context.Context) (VPNProfileResponseResponse, error)
+}
+
+type vpnProfileResponsePoller struct {
+	// the client for making the request
+	pipeline azcore.Pipeline
+	pt       armcore.Poller
+}
+
+// Done returns true if there was an error or polling has reached a terminal state
+func (p *vpnProfileResponsePoller) Done() bool {
+	return p.pt.Done()
+}
+
+// Poll will send poll the service endpoint and return an http.Response or error received from the service
+func (p *vpnProfileResponsePoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx, p.pipeline)
+}
+
+func (p *vpnProfileResponsePoller) FinalResponse(ctx context.Context) (VPNProfileResponseResponse, error) {
+	respType := VPNProfileResponseResponse{VPNProfileResponse: &VPNProfileResponse{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.VPNProfileResponse)
+	if err != nil {
+		return VPNProfileResponseResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// ResumeToken generates the string token that can be used with the ResumeVPNProfileResponsePoller method
+// on the client to create a new poller from the data held in the current poller type
+func (p *vpnProfileResponsePoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *vpnProfileResponsePoller) pollUntilDone(ctx context.Context, frequency time.Duration) (VPNProfileResponseResponse, error) {
+	respType := VPNProfileResponseResponse{VPNProfileResponse: &VPNProfileResponse{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.VPNProfileResponse)
+	if err != nil {
+		return VPNProfileResponseResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// VPNServerConfigurationPoller provides polling facilities until the operation completes
+type VPNServerConfigurationPoller interface {
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final VPNServerConfigurationResponse will be returned.
+	FinalResponse(ctx context.Context) (VPNServerConfigurationResponse, error)
+}
+
+type vpnServerConfigurationPoller struct {
+	// the client for making the request
+	pipeline azcore.Pipeline
+	pt       armcore.Poller
+}
+
+// Done returns true if there was an error or polling has reached a terminal state
+func (p *vpnServerConfigurationPoller) Done() bool {
+	return p.pt.Done()
+}
+
+// Poll will send poll the service endpoint and return an http.Response or error received from the service
+func (p *vpnServerConfigurationPoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx, p.pipeline)
+}
+
+func (p *vpnServerConfigurationPoller) FinalResponse(ctx context.Context) (VPNServerConfigurationResponse, error) {
+	respType := VPNServerConfigurationResponse{VPNServerConfiguration: &VPNServerConfiguration{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.VPNServerConfiguration)
+	if err != nil {
+		return VPNServerConfigurationResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// ResumeToken generates the string token that can be used with the ResumeVPNServerConfigurationPoller method
+// on the client to create a new poller from the data held in the current poller type
+func (p *vpnServerConfigurationPoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *vpnServerConfigurationPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (VPNServerConfigurationResponse, error) {
+	respType := VPNServerConfigurationResponse{VPNServerConfiguration: &VPNServerConfiguration{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.VPNServerConfiguration)
+	if err != nil {
+		return VPNServerConfigurationResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// VPNServerConfigurationsResponsePoller provides polling facilities until the operation completes
+type VPNServerConfigurationsResponsePoller interface {
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final VPNServerConfigurationsResponseResponse will be returned.
+	FinalResponse(ctx context.Context) (VPNServerConfigurationsResponseResponse, error)
+}
+
+type vpnServerConfigurationsResponsePoller struct {
+	// the client for making the request
+	pipeline azcore.Pipeline
+	pt       armcore.Poller
+}
+
+// Done returns true if there was an error or polling has reached a terminal state
+func (p *vpnServerConfigurationsResponsePoller) Done() bool {
+	return p.pt.Done()
+}
+
+// Poll will send poll the service endpoint and return an http.Response or error received from the service
+func (p *vpnServerConfigurationsResponsePoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx, p.pipeline)
+}
+
+func (p *vpnServerConfigurationsResponsePoller) FinalResponse(ctx context.Context) (VPNServerConfigurationsResponseResponse, error) {
+	respType := VPNServerConfigurationsResponseResponse{VPNServerConfigurationsResponse: &VPNServerConfigurationsResponse{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.VPNServerConfigurationsResponse)
+	if err != nil {
+		return VPNServerConfigurationsResponseResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// ResumeToken generates the string token that can be used with the ResumeVPNServerConfigurationsResponsePoller method
+// on the client to create a new poller from the data held in the current poller type
+func (p *vpnServerConfigurationsResponsePoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *vpnServerConfigurationsResponsePoller) pollUntilDone(ctx context.Context, frequency time.Duration) (VPNServerConfigurationsResponseResponse, error) {
+	respType := VPNServerConfigurationsResponseResponse{VPNServerConfigurationsResponse: &VPNServerConfigurationsResponse{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.VPNServerConfigurationsResponse)
+	if err != nil {
+		return VPNServerConfigurationsResponseResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// VPNSitePoller provides polling facilities until the operation completes
+type VPNSitePoller interface {
+	azcore.Poller
+
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final VPNSiteResponse will be returned.
+	FinalResponse(ctx context.Context) (VPNSiteResponse, error)
+}
+
+type vpnSitePoller struct {
+	// the client for making the request
+	pipeline azcore.Pipeline
+	pt       armcore.Poller
+}
+
+// Done returns true if there was an error or polling has reached a terminal state
+func (p *vpnSitePoller) Done() bool {
+	return p.pt.Done()
+}
+
+// Poll will send poll the service endpoint and return an http.Response or error received from the service
+func (p *vpnSitePoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx, p.pipeline)
+}
+
+func (p *vpnSitePoller) FinalResponse(ctx context.Context) (VPNSiteResponse, error) {
+	respType := VPNSiteResponse{VPNSite: &VPNSite{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.VPNSite)
+	if err != nil {
+		return VPNSiteResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// ResumeToken generates the string token that can be used with the ResumeVPNSitePoller method
+// on the client to create a new poller from the data held in the current poller type
+func (p *vpnSitePoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *vpnSitePoller) pollUntilDone(ctx context.Context, frequency time.Duration) (VPNSiteResponse, error) {
+	respType := VPNSiteResponse{VPNSite: &VPNSite{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.VPNSite)
+	if err != nil {
+		return VPNSiteResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
 // VerificationIPFlowResultPoller provides polling facilities until the operation completes
 type VerificationIPFlowResultPoller interface {
 	azcore.Poller
@@ -4349,469 +4765,53 @@ func (p *virtualRouterPoller) pollUntilDone(ctx context.Context, frequency time.
 	return respType, nil
 }
 
-// VirtualWanPoller provides polling facilities until the operation completes
-type VirtualWanPoller interface {
+// VirtualWANPoller provides polling facilities until the operation completes
+type VirtualWANPoller interface {
 	azcore.Poller
 
 	// FinalResponse performs a final GET to the service and returns the final response
 	// for the polling operation. If there is an error performing the final GET then an error is returned.
-	// If the final GET succeeded then the final VirtualWanResponse will be returned.
-	FinalResponse(ctx context.Context) (VirtualWanResponse, error)
+	// If the final GET succeeded then the final VirtualWANResponse will be returned.
+	FinalResponse(ctx context.Context) (VirtualWANResponse, error)
 }
 
-type virtualWanPoller struct {
+type virtualWANPoller struct {
 	// the client for making the request
 	pipeline azcore.Pipeline
 	pt       armcore.Poller
 }
 
 // Done returns true if there was an error or polling has reached a terminal state
-func (p *virtualWanPoller) Done() bool {
+func (p *virtualWANPoller) Done() bool {
 	return p.pt.Done()
 }
 
 // Poll will send poll the service endpoint and return an http.Response or error received from the service
-func (p *virtualWanPoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *virtualWANPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx, p.pipeline)
 }
 
-func (p *virtualWanPoller) FinalResponse(ctx context.Context) (VirtualWanResponse, error) {
-	respType := VirtualWanResponse{VirtualWan: &VirtualWan{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.VirtualWan)
+func (p *virtualWANPoller) FinalResponse(ctx context.Context) (VirtualWANResponse, error) {
+	respType := VirtualWANResponse{VirtualWAN: &VirtualWAN{}}
+	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.VirtualWAN)
 	if err != nil {
-		return VirtualWanResponse{}, err
+		return VirtualWANResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil
 }
 
-// ResumeToken generates the string token that can be used with the ResumeVirtualWanPoller method
+// ResumeToken generates the string token that can be used with the ResumeVirtualWANPoller method
 // on the client to create a new poller from the data held in the current poller type
-func (p *virtualWanPoller) ResumeToken() (string, error) {
+func (p *virtualWANPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-func (p *virtualWanPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (VirtualWanResponse, error) {
-	respType := VirtualWanResponse{VirtualWan: &VirtualWan{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.VirtualWan)
+func (p *virtualWANPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (VirtualWANResponse, error) {
+	respType := VirtualWANResponse{VirtualWAN: &VirtualWAN{}}
+	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.VirtualWAN)
 	if err != nil {
-		return VirtualWanResponse{}, err
-	}
-	respType.RawResponse = resp
-	return respType, nil
-}
-
-// VpnClientConnectionHealthDetailListResultPoller provides polling facilities until the operation completes
-type VpnClientConnectionHealthDetailListResultPoller interface {
-	azcore.Poller
-
-	// FinalResponse performs a final GET to the service and returns the final response
-	// for the polling operation. If there is an error performing the final GET then an error is returned.
-	// If the final GET succeeded then the final VpnClientConnectionHealthDetailListResultResponse will be returned.
-	FinalResponse(ctx context.Context) (VpnClientConnectionHealthDetailListResultResponse, error)
-}
-
-type vpnClientConnectionHealthDetailListResultPoller struct {
-	// the client for making the request
-	pipeline azcore.Pipeline
-	pt       armcore.Poller
-}
-
-// Done returns true if there was an error or polling has reached a terminal state
-func (p *vpnClientConnectionHealthDetailListResultPoller) Done() bool {
-	return p.pt.Done()
-}
-
-// Poll will send poll the service endpoint and return an http.Response or error received from the service
-func (p *vpnClientConnectionHealthDetailListResultPoller) Poll(ctx context.Context) (*http.Response, error) {
-	return p.pt.Poll(ctx, p.pipeline)
-}
-
-func (p *vpnClientConnectionHealthDetailListResultPoller) FinalResponse(ctx context.Context) (VpnClientConnectionHealthDetailListResultResponse, error) {
-	respType := VpnClientConnectionHealthDetailListResultResponse{VpnClientConnectionHealthDetailListResult: &VpnClientConnectionHealthDetailListResult{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.VpnClientConnectionHealthDetailListResult)
-	if err != nil {
-		return VpnClientConnectionHealthDetailListResultResponse{}, err
-	}
-	respType.RawResponse = resp
-	return respType, nil
-}
-
-// ResumeToken generates the string token that can be used with the ResumeVpnClientConnectionHealthDetailListResultPoller method
-// on the client to create a new poller from the data held in the current poller type
-func (p *vpnClientConnectionHealthDetailListResultPoller) ResumeToken() (string, error) {
-	return p.pt.ResumeToken()
-}
-
-func (p *vpnClientConnectionHealthDetailListResultPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (VpnClientConnectionHealthDetailListResultResponse, error) {
-	respType := VpnClientConnectionHealthDetailListResultResponse{VpnClientConnectionHealthDetailListResult: &VpnClientConnectionHealthDetailListResult{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.VpnClientConnectionHealthDetailListResult)
-	if err != nil {
-		return VpnClientConnectionHealthDetailListResultResponse{}, err
-	}
-	respType.RawResponse = resp
-	return respType, nil
-}
-
-// VpnClientIPsecParametersPoller provides polling facilities until the operation completes
-type VpnClientIPsecParametersPoller interface {
-	azcore.Poller
-
-	// FinalResponse performs a final GET to the service and returns the final response
-	// for the polling operation. If there is an error performing the final GET then an error is returned.
-	// If the final GET succeeded then the final VpnClientIPsecParametersResponse will be returned.
-	FinalResponse(ctx context.Context) (VpnClientIPsecParametersResponse, error)
-}
-
-type vpnClientIPsecParametersPoller struct {
-	// the client for making the request
-	pipeline azcore.Pipeline
-	pt       armcore.Poller
-}
-
-// Done returns true if there was an error or polling has reached a terminal state
-func (p *vpnClientIPsecParametersPoller) Done() bool {
-	return p.pt.Done()
-}
-
-// Poll will send poll the service endpoint and return an http.Response or error received from the service
-func (p *vpnClientIPsecParametersPoller) Poll(ctx context.Context) (*http.Response, error) {
-	return p.pt.Poll(ctx, p.pipeline)
-}
-
-func (p *vpnClientIPsecParametersPoller) FinalResponse(ctx context.Context) (VpnClientIPsecParametersResponse, error) {
-	respType := VpnClientIPsecParametersResponse{VpnClientIPsecParameters: &VpnClientIPsecParameters{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.VpnClientIPsecParameters)
-	if err != nil {
-		return VpnClientIPsecParametersResponse{}, err
-	}
-	respType.RawResponse = resp
-	return respType, nil
-}
-
-// ResumeToken generates the string token that can be used with the ResumeVpnClientIPsecParametersPoller method
-// on the client to create a new poller from the data held in the current poller type
-func (p *vpnClientIPsecParametersPoller) ResumeToken() (string, error) {
-	return p.pt.ResumeToken()
-}
-
-func (p *vpnClientIPsecParametersPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (VpnClientIPsecParametersResponse, error) {
-	respType := VpnClientIPsecParametersResponse{VpnClientIPsecParameters: &VpnClientIPsecParameters{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.VpnClientIPsecParameters)
-	if err != nil {
-		return VpnClientIPsecParametersResponse{}, err
-	}
-	respType.RawResponse = resp
-	return respType, nil
-}
-
-// VpnConnectionPoller provides polling facilities until the operation completes
-type VpnConnectionPoller interface {
-	azcore.Poller
-
-	// FinalResponse performs a final GET to the service and returns the final response
-	// for the polling operation. If there is an error performing the final GET then an error is returned.
-	// If the final GET succeeded then the final VpnConnectionResponse will be returned.
-	FinalResponse(ctx context.Context) (VpnConnectionResponse, error)
-}
-
-type vpnConnectionPoller struct {
-	// the client for making the request
-	pipeline azcore.Pipeline
-	pt       armcore.Poller
-}
-
-// Done returns true if there was an error or polling has reached a terminal state
-func (p *vpnConnectionPoller) Done() bool {
-	return p.pt.Done()
-}
-
-// Poll will send poll the service endpoint and return an http.Response or error received from the service
-func (p *vpnConnectionPoller) Poll(ctx context.Context) (*http.Response, error) {
-	return p.pt.Poll(ctx, p.pipeline)
-}
-
-func (p *vpnConnectionPoller) FinalResponse(ctx context.Context) (VpnConnectionResponse, error) {
-	respType := VpnConnectionResponse{VpnConnection: &VpnConnection{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.VpnConnection)
-	if err != nil {
-		return VpnConnectionResponse{}, err
-	}
-	respType.RawResponse = resp
-	return respType, nil
-}
-
-// ResumeToken generates the string token that can be used with the ResumeVpnConnectionPoller method
-// on the client to create a new poller from the data held in the current poller type
-func (p *vpnConnectionPoller) ResumeToken() (string, error) {
-	return p.pt.ResumeToken()
-}
-
-func (p *vpnConnectionPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (VpnConnectionResponse, error) {
-	respType := VpnConnectionResponse{VpnConnection: &VpnConnection{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.VpnConnection)
-	if err != nil {
-		return VpnConnectionResponse{}, err
-	}
-	respType.RawResponse = resp
-	return respType, nil
-}
-
-// VpnGatewayPoller provides polling facilities until the operation completes
-type VpnGatewayPoller interface {
-	azcore.Poller
-
-	// FinalResponse performs a final GET to the service and returns the final response
-	// for the polling operation. If there is an error performing the final GET then an error is returned.
-	// If the final GET succeeded then the final VpnGatewayResponse will be returned.
-	FinalResponse(ctx context.Context) (VpnGatewayResponse, error)
-}
-
-type vpnGatewayPoller struct {
-	// the client for making the request
-	pipeline azcore.Pipeline
-	pt       armcore.Poller
-}
-
-// Done returns true if there was an error or polling has reached a terminal state
-func (p *vpnGatewayPoller) Done() bool {
-	return p.pt.Done()
-}
-
-// Poll will send poll the service endpoint and return an http.Response or error received from the service
-func (p *vpnGatewayPoller) Poll(ctx context.Context) (*http.Response, error) {
-	return p.pt.Poll(ctx, p.pipeline)
-}
-
-func (p *vpnGatewayPoller) FinalResponse(ctx context.Context) (VpnGatewayResponse, error) {
-	respType := VpnGatewayResponse{VpnGateway: &VpnGateway{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.VpnGateway)
-	if err != nil {
-		return VpnGatewayResponse{}, err
-	}
-	respType.RawResponse = resp
-	return respType, nil
-}
-
-// ResumeToken generates the string token that can be used with the ResumeVpnGatewayPoller method
-// on the client to create a new poller from the data held in the current poller type
-func (p *vpnGatewayPoller) ResumeToken() (string, error) {
-	return p.pt.ResumeToken()
-}
-
-func (p *vpnGatewayPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (VpnGatewayResponse, error) {
-	respType := VpnGatewayResponse{VpnGateway: &VpnGateway{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.VpnGateway)
-	if err != nil {
-		return VpnGatewayResponse{}, err
-	}
-	respType.RawResponse = resp
-	return respType, nil
-}
-
-// VpnProfileResponsePoller provides polling facilities until the operation completes
-type VpnProfileResponsePoller interface {
-	azcore.Poller
-
-	// FinalResponse performs a final GET to the service and returns the final response
-	// for the polling operation. If there is an error performing the final GET then an error is returned.
-	// If the final GET succeeded then the final VpnProfileResponseResponse will be returned.
-	FinalResponse(ctx context.Context) (VpnProfileResponseResponse, error)
-}
-
-type vpnProfileResponsePoller struct {
-	// the client for making the request
-	pipeline azcore.Pipeline
-	pt       armcore.Poller
-}
-
-// Done returns true if there was an error or polling has reached a terminal state
-func (p *vpnProfileResponsePoller) Done() bool {
-	return p.pt.Done()
-}
-
-// Poll will send poll the service endpoint and return an http.Response or error received from the service
-func (p *vpnProfileResponsePoller) Poll(ctx context.Context) (*http.Response, error) {
-	return p.pt.Poll(ctx, p.pipeline)
-}
-
-func (p *vpnProfileResponsePoller) FinalResponse(ctx context.Context) (VpnProfileResponseResponse, error) {
-	respType := VpnProfileResponseResponse{VpnProfileResponse: &VpnProfileResponse{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.VpnProfileResponse)
-	if err != nil {
-		return VpnProfileResponseResponse{}, err
-	}
-	respType.RawResponse = resp
-	return respType, nil
-}
-
-// ResumeToken generates the string token that can be used with the ResumeVpnProfileResponsePoller method
-// on the client to create a new poller from the data held in the current poller type
-func (p *vpnProfileResponsePoller) ResumeToken() (string, error) {
-	return p.pt.ResumeToken()
-}
-
-func (p *vpnProfileResponsePoller) pollUntilDone(ctx context.Context, frequency time.Duration) (VpnProfileResponseResponse, error) {
-	respType := VpnProfileResponseResponse{VpnProfileResponse: &VpnProfileResponse{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.VpnProfileResponse)
-	if err != nil {
-		return VpnProfileResponseResponse{}, err
-	}
-	respType.RawResponse = resp
-	return respType, nil
-}
-
-// VpnServerConfigurationPoller provides polling facilities until the operation completes
-type VpnServerConfigurationPoller interface {
-	azcore.Poller
-
-	// FinalResponse performs a final GET to the service and returns the final response
-	// for the polling operation. If there is an error performing the final GET then an error is returned.
-	// If the final GET succeeded then the final VpnServerConfigurationResponse will be returned.
-	FinalResponse(ctx context.Context) (VpnServerConfigurationResponse, error)
-}
-
-type vpnServerConfigurationPoller struct {
-	// the client for making the request
-	pipeline azcore.Pipeline
-	pt       armcore.Poller
-}
-
-// Done returns true if there was an error or polling has reached a terminal state
-func (p *vpnServerConfigurationPoller) Done() bool {
-	return p.pt.Done()
-}
-
-// Poll will send poll the service endpoint and return an http.Response or error received from the service
-func (p *vpnServerConfigurationPoller) Poll(ctx context.Context) (*http.Response, error) {
-	return p.pt.Poll(ctx, p.pipeline)
-}
-
-func (p *vpnServerConfigurationPoller) FinalResponse(ctx context.Context) (VpnServerConfigurationResponse, error) {
-	respType := VpnServerConfigurationResponse{VpnServerConfiguration: &VpnServerConfiguration{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.VpnServerConfiguration)
-	if err != nil {
-		return VpnServerConfigurationResponse{}, err
-	}
-	respType.RawResponse = resp
-	return respType, nil
-}
-
-// ResumeToken generates the string token that can be used with the ResumeVpnServerConfigurationPoller method
-// on the client to create a new poller from the data held in the current poller type
-func (p *vpnServerConfigurationPoller) ResumeToken() (string, error) {
-	return p.pt.ResumeToken()
-}
-
-func (p *vpnServerConfigurationPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (VpnServerConfigurationResponse, error) {
-	respType := VpnServerConfigurationResponse{VpnServerConfiguration: &VpnServerConfiguration{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.VpnServerConfiguration)
-	if err != nil {
-		return VpnServerConfigurationResponse{}, err
-	}
-	respType.RawResponse = resp
-	return respType, nil
-}
-
-// VpnServerConfigurationsResponsePoller provides polling facilities until the operation completes
-type VpnServerConfigurationsResponsePoller interface {
-	azcore.Poller
-
-	// FinalResponse performs a final GET to the service and returns the final response
-	// for the polling operation. If there is an error performing the final GET then an error is returned.
-	// If the final GET succeeded then the final VpnServerConfigurationsResponseResponse will be returned.
-	FinalResponse(ctx context.Context) (VpnServerConfigurationsResponseResponse, error)
-}
-
-type vpnServerConfigurationsResponsePoller struct {
-	// the client for making the request
-	pipeline azcore.Pipeline
-	pt       armcore.Poller
-}
-
-// Done returns true if there was an error or polling has reached a terminal state
-func (p *vpnServerConfigurationsResponsePoller) Done() bool {
-	return p.pt.Done()
-}
-
-// Poll will send poll the service endpoint and return an http.Response or error received from the service
-func (p *vpnServerConfigurationsResponsePoller) Poll(ctx context.Context) (*http.Response, error) {
-	return p.pt.Poll(ctx, p.pipeline)
-}
-
-func (p *vpnServerConfigurationsResponsePoller) FinalResponse(ctx context.Context) (VpnServerConfigurationsResponseResponse, error) {
-	respType := VpnServerConfigurationsResponseResponse{VpnServerConfigurationsResponse: &VpnServerConfigurationsResponse{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.VpnServerConfigurationsResponse)
-	if err != nil {
-		return VpnServerConfigurationsResponseResponse{}, err
-	}
-	respType.RawResponse = resp
-	return respType, nil
-}
-
-// ResumeToken generates the string token that can be used with the ResumeVpnServerConfigurationsResponsePoller method
-// on the client to create a new poller from the data held in the current poller type
-func (p *vpnServerConfigurationsResponsePoller) ResumeToken() (string, error) {
-	return p.pt.ResumeToken()
-}
-
-func (p *vpnServerConfigurationsResponsePoller) pollUntilDone(ctx context.Context, frequency time.Duration) (VpnServerConfigurationsResponseResponse, error) {
-	respType := VpnServerConfigurationsResponseResponse{VpnServerConfigurationsResponse: &VpnServerConfigurationsResponse{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.VpnServerConfigurationsResponse)
-	if err != nil {
-		return VpnServerConfigurationsResponseResponse{}, err
-	}
-	respType.RawResponse = resp
-	return respType, nil
-}
-
-// VpnSitePoller provides polling facilities until the operation completes
-type VpnSitePoller interface {
-	azcore.Poller
-
-	// FinalResponse performs a final GET to the service and returns the final response
-	// for the polling operation. If there is an error performing the final GET then an error is returned.
-	// If the final GET succeeded then the final VpnSiteResponse will be returned.
-	FinalResponse(ctx context.Context) (VpnSiteResponse, error)
-}
-
-type vpnSitePoller struct {
-	// the client for making the request
-	pipeline azcore.Pipeline
-	pt       armcore.Poller
-}
-
-// Done returns true if there was an error or polling has reached a terminal state
-func (p *vpnSitePoller) Done() bool {
-	return p.pt.Done()
-}
-
-// Poll will send poll the service endpoint and return an http.Response or error received from the service
-func (p *vpnSitePoller) Poll(ctx context.Context) (*http.Response, error) {
-	return p.pt.Poll(ctx, p.pipeline)
-}
-
-func (p *vpnSitePoller) FinalResponse(ctx context.Context) (VpnSiteResponse, error) {
-	respType := VpnSiteResponse{VpnSite: &VpnSite{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.VpnSite)
-	if err != nil {
-		return VpnSiteResponse{}, err
-	}
-	respType.RawResponse = resp
-	return respType, nil
-}
-
-// ResumeToken generates the string token that can be used with the ResumeVpnSitePoller method
-// on the client to create a new poller from the data held in the current poller type
-func (p *vpnSitePoller) ResumeToken() (string, error) {
-	return p.pt.ResumeToken()
-}
-
-func (p *vpnSitePoller) pollUntilDone(ctx context.Context, frequency time.Duration) (VpnSiteResponse, error) {
-	respType := VpnSiteResponse{VpnSite: &VpnSite{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.VpnSite)
-	if err != nil {
-		return VpnSiteResponse{}, err
+		return VirtualWANResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil

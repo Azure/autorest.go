@@ -13,22 +13,22 @@ import (
 	"net/http"
 )
 
-type CatApTrue struct {
-	PetApTrue
+type CatAPTrue struct {
+	PetAPTrue
 	Friendly *bool `json:"friendly,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type CatApTrue.
-func (c CatApTrue) MarshalJSON() ([]byte, error) {
-	objectMap := c.PetApTrue.marshalInternal()
+// MarshalJSON implements the json.Marshaller interface for type CatAPTrue.
+func (c CatAPTrue) MarshalJSON() ([]byte, error) {
+	objectMap := c.PetAPTrue.marshalInternal()
 	if c.Friendly != nil {
 		objectMap["friendly"] = c.Friendly
 	}
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type CatApTrue.
-func (c *CatApTrue) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type CatAPTrue.
+func (c *CatAPTrue) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
@@ -46,12 +46,12 @@ func (c *CatApTrue) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return c.PetApTrue.unmarshalInternal(rawMsg)
+	return c.PetAPTrue.unmarshalInternal(rawMsg)
 }
 
-// CatApTrueResponse is the response envelope for operations that return a CatApTrue type.
-type CatApTrueResponse struct {
-	CatApTrue *CatApTrue
+// CatAPTrueResponse is the response envelope for operations that return a CatAPTrue type.
+type CatAPTrueResponse struct {
+	CatAPTrue *CatAPTrue
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -77,7 +77,7 @@ func (e Error) Error() string {
 	return msg
 }
 
-type PetApInProperties struct {
+type PetAPInProperties struct {
 	// Dictionary of
 	AdditionalProperties *map[string]float32 `json:"additionalProperties,omitempty"`
 	ID                   *int32              `json:"id,omitempty"`
@@ -87,15 +87,15 @@ type PetApInProperties struct {
 	Status *bool `json:"status,omitempty" azure:"ro"`
 }
 
-// PetApInPropertiesResponse is the response envelope for operations that return a PetApInProperties type.
-type PetApInPropertiesResponse struct {
-	PetApInProperties *PetApInProperties
+// PetAPInPropertiesResponse is the response envelope for operations that return a PetAPInProperties type.
+type PetAPInPropertiesResponse struct {
+	PetAPInProperties *PetAPInProperties
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-type PetApInPropertiesWithApstring struct {
+type PetAPInPropertiesWithAPString struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties *map[string]string
 
@@ -109,8 +109,8 @@ type PetApInPropertiesWithApstring struct {
 	Status *bool `json:"status,omitempty" azure:"ro"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type PetApInPropertiesWithApstring.
-func (p PetApInPropertiesWithApstring) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type PetAPInPropertiesWithAPString.
+func (p PetAPInPropertiesWithAPString) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	if p.AdditionalProperties1 != nil {
 		objectMap["additionalProperties"] = p.AdditionalProperties1
@@ -135,8 +135,8 @@ func (p PetApInPropertiesWithApstring) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type PetApInPropertiesWithApstring.
-func (p *PetApInPropertiesWithApstring) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type PetAPInPropertiesWithAPString.
+func (p *PetAPInPropertiesWithAPString) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
@@ -187,15 +187,15 @@ func (p *PetApInPropertiesWithApstring) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// PetApInPropertiesWithApstringResponse is the response envelope for operations that return a PetApInPropertiesWithApstring type.
-type PetApInPropertiesWithApstringResponse struct {
-	PetApInPropertiesWithApstring *PetApInPropertiesWithApstring
+// PetAPInPropertiesWithAPStringResponse is the response envelope for operations that return a PetAPInPropertiesWithAPString type.
+type PetAPInPropertiesWithAPStringResponse struct {
+	PetAPInPropertiesWithAPString *PetAPInPropertiesWithAPString
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-type PetApObject struct {
+type PetAPObject struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties *map[string]interface{}
 	ID                   *int32  `json:"id,omitempty"`
@@ -205,8 +205,8 @@ type PetApObject struct {
 	Status *bool `json:"status,omitempty" azure:"ro"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type PetApObject.
-func (p PetApObject) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type PetAPObject.
+func (p PetAPObject) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	if p.ID != nil {
 		objectMap["id"] = p.ID
@@ -225,8 +225,8 @@ func (p PetApObject) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type PetApObject.
-func (p *PetApObject) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type PetAPObject.
+func (p *PetAPObject) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
@@ -267,15 +267,15 @@ func (p *PetApObject) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// PetApObjectResponse is the response envelope for operations that return a PetApObject type.
-type PetApObjectResponse struct {
-	PetApObject *PetApObject
+// PetAPObjectResponse is the response envelope for operations that return a PetAPObject type.
+type PetAPObjectResponse struct {
+	PetAPObject *PetAPObject
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-type PetApString struct {
+type PetAPString struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties *map[string]string
 	ID                   *int32  `json:"id,omitempty"`
@@ -285,8 +285,8 @@ type PetApString struct {
 	Status *bool `json:"status,omitempty" azure:"ro"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type PetApString.
-func (p PetApString) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type PetAPString.
+func (p PetAPString) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	if p.ID != nil {
 		objectMap["id"] = p.ID
@@ -305,8 +305,8 @@ func (p PetApString) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type PetApString.
-func (p *PetApString) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type PetAPString.
+func (p *PetAPString) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
@@ -347,15 +347,15 @@ func (p *PetApString) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// PetApStringResponse is the response envelope for operations that return a PetApString type.
-type PetApStringResponse struct {
-	PetApString *PetApString
+// PetAPStringResponse is the response envelope for operations that return a PetAPString type.
+type PetAPStringResponse struct {
+	PetAPString *PetAPString
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-type PetApTrue struct {
+type PetAPTrue struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties *map[string]interface{}
 	ID                   *int32  `json:"id,omitempty"`
@@ -365,14 +365,14 @@ type PetApTrue struct {
 	Status *bool `json:"status,omitempty" azure:"ro"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type PetApTrue.
-func (p PetApTrue) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type PetAPTrue.
+func (p PetAPTrue) MarshalJSON() ([]byte, error) {
 	objectMap := p.marshalInternal()
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type PetApTrue.
-func (p *PetApTrue) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type PetAPTrue.
+func (p *PetAPTrue) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
@@ -380,7 +380,7 @@ func (p *PetApTrue) UnmarshalJSON(data []byte) error {
 	return p.unmarshalInternal(rawMsg)
 }
 
-func (p PetApTrue) marshalInternal() map[string]interface{} {
+func (p PetAPTrue) marshalInternal() map[string]interface{} {
 	objectMap := make(map[string]interface{})
 	if p.ID != nil {
 		objectMap["id"] = p.ID
@@ -399,7 +399,7 @@ func (p PetApTrue) marshalInternal() map[string]interface{} {
 	return objectMap
 }
 
-func (p *PetApTrue) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+func (p *PetAPTrue) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -436,40 +436,40 @@ func (p *PetApTrue) unmarshalInternal(rawMsg map[string]*json.RawMessage) error 
 	return nil
 }
 
-// PetApTrueResponse is the response envelope for operations that return a PetApTrue type.
-type PetApTrueResponse struct {
-	PetApTrue *PetApTrue
+// PetAPTrueResponse is the response envelope for operations that return a PetAPTrue type.
+type PetAPTrueResponse struct {
+	PetAPTrue *PetAPTrue
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PetsCreateApInPropertiesOptions contains the optional parameters for the Pets.CreateApInProperties method.
-type PetsCreateApInPropertiesOptions struct {
+// PetsCreateAPInPropertiesOptions contains the optional parameters for the Pets.CreateAPInProperties method.
+type PetsCreateAPInPropertiesOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PetsCreateApInPropertiesWithApstringOptions contains the optional parameters for the Pets.CreateApInPropertiesWithApstring method.
-type PetsCreateApInPropertiesWithApstringOptions struct {
+// PetsCreateAPInPropertiesWithAPStringOptions contains the optional parameters for the Pets.CreateAPInPropertiesWithAPString method.
+type PetsCreateAPInPropertiesWithAPStringOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PetsCreateApObjectOptions contains the optional parameters for the Pets.CreateApObject method.
-type PetsCreateApObjectOptions struct {
+// PetsCreateAPObjectOptions contains the optional parameters for the Pets.CreateAPObject method.
+type PetsCreateAPObjectOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PetsCreateApStringOptions contains the optional parameters for the Pets.CreateApString method.
-type PetsCreateApStringOptions struct {
+// PetsCreateAPStringOptions contains the optional parameters for the Pets.CreateAPString method.
+type PetsCreateAPStringOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PetsCreateApTrueOptions contains the optional parameters for the Pets.CreateApTrue method.
-type PetsCreateApTrueOptions struct {
+// PetsCreateAPTrueOptions contains the optional parameters for the Pets.CreateAPTrue method.
+type PetsCreateAPTrueOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PetsCreateCatApTrueOptions contains the optional parameters for the Pets.CreateCatApTrue method.
-type PetsCreateCatApTrueOptions struct {
+// PetsCreateCatAPTrueOptions contains the optional parameters for the Pets.CreateCatAPTrue method.
+type PetsCreateCatAPTrueOptions struct {
 	// placeholder for future optional parameters
 }

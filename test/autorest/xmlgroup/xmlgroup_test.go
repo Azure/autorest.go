@@ -34,7 +34,7 @@ func TestGetACLs(t *testing.T) {
 	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
-	expected := []SignedIDentifier{
+	expected := []SignedIdentifier{
 		{
 			ID: to.StringPtr("MTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTI="),
 			AccessPolicy: &AccessPolicy{
@@ -220,7 +220,7 @@ func TestGetServiceProperties(t *testing.T) {
 		HourMetrics: &Metrics{
 			Version:     to.StringPtr("1.0"),
 			Enabled:     to.BoolPtr(true),
-			IncludeApIs: to.BoolPtr(false),
+			IncludeAPIs: to.BoolPtr(false),
 			RetentionPolicy: &RetentionPolicy{
 				Enabled: to.BoolPtr(true),
 				Days:    to.Int32Ptr(7),
@@ -239,7 +239,7 @@ func TestGetServiceProperties(t *testing.T) {
 		MinuteMetrics: &Metrics{
 			Version:     to.StringPtr("1.0"),
 			Enabled:     to.BoolPtr(true),
-			IncludeApIs: to.BoolPtr(true),
+			IncludeAPIs: to.BoolPtr(true),
 			RetentionPolicy: &RetentionPolicy{
 				Enabled: to.BoolPtr(true),
 				Days:    to.Int32Ptr(7),
@@ -500,7 +500,7 @@ func TestListContainers(t *testing.T) {
 
 func TestPutACLs(t *testing.T) {
 	client := newXMLClient()
-	result, err := client.PutACLs(context.Background(), []SignedIDentifier{
+	result, err := client.PutACLs(context.Background(), []SignedIdentifier{
 		{
 			ID: to.StringPtr("MTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTI="),
 			AccessPolicy: &AccessPolicy{
@@ -648,7 +648,7 @@ func TestPutServiceProperties(t *testing.T) {
 		HourMetrics: &Metrics{
 			Version:     to.StringPtr("1.0"),
 			Enabled:     to.BoolPtr(true),
-			IncludeApIs: to.BoolPtr(false),
+			IncludeAPIs: to.BoolPtr(false),
 			RetentionPolicy: &RetentionPolicy{
 				Enabled: to.BoolPtr(true),
 				Days:    to.Int32Ptr(7),
@@ -667,7 +667,7 @@ func TestPutServiceProperties(t *testing.T) {
 		MinuteMetrics: &Metrics{
 			Version:     to.StringPtr("1.0"),
 			Enabled:     to.BoolPtr(true),
-			IncludeApIs: to.BoolPtr(true),
+			IncludeAPIs: to.BoolPtr(true),
 			RetentionPolicy: &RetentionPolicy{
 				Enabled: to.BoolPtr(true),
 				Days:    to.Int32Ptr(7),

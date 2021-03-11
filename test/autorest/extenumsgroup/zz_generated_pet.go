@@ -82,8 +82,8 @@ func (client *PetClient) addPetHandleError(resp *azcore.Response) error {
 }
 
 // GetByPetID - get pet by id
-func (client *PetClient) GetByPetID(ctx context.Context, petId string, options *PetGetByPetIDOptions) (PetResponse, error) {
-	req, err := client.getByPetIdCreateRequest(ctx, petId, options)
+func (client *PetClient) GetByPetID(ctx context.Context, petID string, options *PetGetByPetIDOptions) (PetResponse, error) {
+	req, err := client.getByPetIDCreateRequest(ctx, petID, options)
 	if err != nil {
 		return PetResponse{}, err
 	}
@@ -92,15 +92,15 @@ func (client *PetClient) GetByPetID(ctx context.Context, petId string, options *
 		return PetResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return PetResponse{}, client.getByPetIdHandleError(resp)
+		return PetResponse{}, client.getByPetIDHandleError(resp)
 	}
-	return client.getByPetIdHandleResponse(resp)
+	return client.getByPetIDHandleResponse(resp)
 }
 
-// getByPetIdCreateRequest creates the GetByPetID request.
-func (client *PetClient) getByPetIdCreateRequest(ctx context.Context, petId string, options *PetGetByPetIDOptions) (*azcore.Request, error) {
+// getByPetIDCreateRequest creates the GetByPetID request.
+func (client *PetClient) getByPetIDCreateRequest(ctx context.Context, petID string, options *PetGetByPetIDOptions) (*azcore.Request, error) {
 	urlPath := "/extensibleenums/pet/{petId}"
-	urlPath = strings.ReplaceAll(urlPath, "{petId}", url.PathEscape(petId))
+	urlPath = strings.ReplaceAll(urlPath, "{petId}", url.PathEscape(petID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -110,8 +110,8 @@ func (client *PetClient) getByPetIdCreateRequest(ctx context.Context, petId stri
 	return req, nil
 }
 
-// getByPetIdHandleResponse handles the GetByPetID response.
-func (client *PetClient) getByPetIdHandleResponse(resp *azcore.Response) (PetResponse, error) {
+// getByPetIDHandleResponse handles the GetByPetID response.
+func (client *PetClient) getByPetIDHandleResponse(resp *azcore.Response) (PetResponse, error) {
 	var val *Pet
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return PetResponse{}, err
@@ -119,8 +119,8 @@ func (client *PetClient) getByPetIdHandleResponse(resp *azcore.Response) (PetRes
 	return PetResponse{RawResponse: resp.Response, Pet: val}, nil
 }
 
-// getByPetIdHandleError handles the GetByPetID error response.
-func (client *PetClient) getByPetIdHandleError(resp *azcore.Response) error {
+// getByPetIDHandleError handles the GetByPetID error response.
+func (client *PetClient) getByPetIDHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)

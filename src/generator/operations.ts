@@ -4,10 +4,10 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Session } from '@autorest/extension-base';
-import { comment, KnownMediaType, pascalCase, camelCase } from '@azure-tools/codegen';
-import { ArraySchema, ByteArraySchema, CodeModel, ConstantSchema, DateTimeSchema, DictionarySchema, GroupProperty, ImplementationLocation, NumberSchema, Operation, OperationGroup, Parameter, Property, Protocols, Response, Schema, SchemaResponse, SchemaType } from '@azure-tools/codemodel';
+import { comment, KnownMediaType } from '@azure-tools/codegen';
+import { ArraySchema, ByteArraySchema, CodeModel, ConstantSchema, DateTimeSchema, DictionarySchema, GroupProperty, ImplementationLocation, NumberSchema, Operation, Parameter, Property, Protocols, Response, Schema, SchemaResponse, SchemaType } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
-import { aggregateParameters, isArraySchema, isPageableOperation, isSchemaResponse, PagerInfo, isLROOperation, commentLength } from '../common/helpers';
+import { aggregateParameters, internalPagerTypeName, internalPollerTypeName, isArraySchema, isPageableOperation, isSchemaResponse, PagerInfo, PollerInfo, isLROOperation, commentLength } from '../common/helpers';
 import { OperationNaming } from '../transform/namer';
 import { contentPreamble, formatParameterTypeName, formatStatusCodes, getStatusCodes, hasDescription, hasSchemaResponse, skipURLEncoding, sortAscending, getCreateRequestParameters, getCreateRequestParametersSig, getMethodParameters, getParamName, formatParamValue, dateFormat, datetimeRFC1123Format, datetimeRFC3339Format, sortParametersByRequired } from './helpers';
 import { ImportManager } from './imports';
@@ -59,7 +59,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     let connection = 'Connection';
     let clientName = group.language.go!.clientName;
     if (!isARM && !forceExports) {
-      connection = camelCase(connection);
+      connection = connection.uncapitalize();
     } else if (<boolean>session.model.language.go!.azureARM) {
       connection = 'armcore.Connection';
     }
@@ -120,7 +120,7 @@ function formatHeaderResponseValue(propName: string, header: string, schema: Sch
     return text;
   }
   let text = `\tif val := resp.Header.Get("${header}"); val != "" {\n`;
-  const name = camelCase(propName);
+  const name = propName.uncapitalize();
   switch (schema.type) {
     case SchemaType.Boolean:
       imports.add('strconv');
@@ -258,7 +258,7 @@ function generateOperation(op: Operation, imports: ImportManager): string {
   const statusCodes = getStatusCodes(op);
   if (isPageableOperation(op) && !isLROOperation(op)) {
     imports.add('context');
-    text += `\treturn &${camelCase(op.language.go!.pageableType.name)}{\n`;
+    text += `\treturn &${internalPagerTypeName(<PagerInfo>op.language.go!.pageableType)}{\n`;
     text += `\t\tpipeline: client.con.Pipeline(),\n`;
     text += `\t\trequester: func(ctx context.Context) (*azcore.Request, error) {\n`;
     text += `\t\t\treturn client.${info.protocolNaming.requestMethod}(${reqParams})\n`;
@@ -346,7 +346,7 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
     // get all the host params on the connection
     const hostParams = <Array<Parameter>>codeModel.language.go!.hostParams;
     for (const hostParam of values(hostParams)) {
-      text += `\thost = strings.ReplaceAll(host, "{${hostParam.language.go!.serializedName}}", client.con.${pascalCase(hostParam.language.go!.name)}())\n`;
+      text += `\thost = strings.ReplaceAll(host, "{${hostParam.language.go!.serializedName}}", client.con.${(<string>hostParam.language.go!.name).capitalize()}())\n`;
     }
     // check for any method local host params
     for (const param of values(op.parameters)) {
@@ -382,7 +382,7 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
       text += `\turlPath = strings.ReplaceAll(urlPath, "{${pp.language.go!.serializedName}}", ${paramValue})\n`;
     }
   }
-  text += `\treq, err := azcore.NewRequest(ctx, http.Method${pascalCase(op.requests![0].protocol.http!.method)}, ${hostParam})\n`;
+  text += `\treq, err := azcore.NewRequest(ctx, http.Method${(<string>op.requests![0].protocol.http!.method).capitalize()}, ${hostParam})\n`;
   text += '\tif err != nil {\n';
   text += '\t\treturn nil, err\n';
   text += '\t}\n';
@@ -390,12 +390,12 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
   const hasQueryParams = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'query'; }).any();
   // helper to build nil checks for param groups
   const emitParamGroupCheck = function (gp: GroupProperty, param: Parameter): string {
-    const paramGroupName = camelCase(gp.language.go!.name);
+    const paramGroupName = (<string>gp.language.go!.name).uncapitalize();
     let optionalParamGroupCheck = `${paramGroupName} != nil && `;
     if (gp.required) {
       optionalParamGroupCheck = '';
     }
-    return `\tif ${optionalParamGroupCheck}${paramGroupName}.${pascalCase(param.language.go!.name)} != nil {\n`;
+    return `\tif ${optionalParamGroupCheck}${paramGroupName}.${(<string>param.language.go!.name).capitalize()} != nil {\n`;
   }
   if (hasQueryParams) {
     // add query parameters
@@ -494,7 +494,7 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
     let body = bodyParam!.language.go!.name;
     if (bodyParam!.language.go!.paramGroup) {
       const paramGroup = <GroupProperty>bodyParam!.language.go!.paramGroup;
-      body = `${camelCase(paramGroup.language.go!.name)}.${pascalCase(bodyParam!.language.go!.name)}`;
+      body = `${(<string>paramGroup.language.go!.name).uncapitalize()}.${(<string>bodyParam!.language.go!.name).capitalize()}`;
     }
     if (bodyParam!.schema.type === SchemaType.Constant) {
       // if the value is constant, embed it directly
@@ -510,7 +510,7 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
       text += `\t\tXMLName xml.Name \`xml:"${tagName}"\`\n`;
       let fieldName = bodyParam!.schema.language.go!.name;
       if (isArraySchema(bodyParam!.schema)) {
-        fieldName = pascalCase(bodyParam!.language.go!.name);
+        fieldName = (<string>bodyParam!.language.go!.name).capitalize();
         let tag = bodyParam!.schema.elementType.language.go!.name;
         if (bodyParam!.schema.elementType.serialization?.xml?.name) {
           tag = bodyParam!.schema.elementType.serialization.xml.name;
@@ -549,7 +549,7 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
       text += `\treturn req, req.MarshalAs${getMediaFormat(bodyParam!.schema, mediaType, body)}\n`;
     } else {
       const paramGroup = <GroupProperty>bodyParam!.language.go!.paramGroup;
-      text += `\tif ${camelCase(paramGroup.language.go!.name)} != nil {\n`;
+      text += `\tif ${(<string>paramGroup.language.go!.name).uncapitalize()} != nil {\n`;
       text += `\t\treturn req, req.MarshalAs${getMediaFormat(bodyParam!.schema, mediaType, body)}\n`;
       text += '\t}\n';
       text += '\treturn req, nil\n';
@@ -934,7 +934,7 @@ function getAPIParametersSig(op: Operation, imports: ImportManager): string {
     params.push('ctx context.Context');
   }
   for (const methodParam of values(methodParams)) {
-    params.push(`${camelCase(methodParam.language.go!.name)} ${formatParameterTypeName(methodParam)}`);
+    params.push(`${(<string>methodParam.language.go!.name).uncapitalize()} ${formatParameterTypeName(methodParam)}`);
   }
   return params.join(', ');
 }
@@ -1024,7 +1024,7 @@ function generateARMLROBeginMethod(op: Operation, imports: ImportManager): strin
   text += '\tif err != nil {\n';
   text += `\t\treturn ${zeroResp}, err\n`;
   text += '\t}\n';
-  text += `\tpoller := &${camelCase(op.language.go!.pollerType.name)}{\n`;
+  text += `\tpoller := &${internalPollerTypeName(<PollerInfo>op.language.go!.pollerType)}{\n`;
   text += '\t\tpt: pt,\n';
   if (isPageableOperation(op)) {
     const statusCodes = getStatusCodes(op);
@@ -1075,7 +1075,7 @@ function generateARMLROResumeMethod(op: Operation): string {
   text += '\tif err != nil {\n';
   text += '\t\treturn nil, err\n';
   text += '\t}\n';
-  text += `\treturn &${camelCase(op.language.go!.pollerType.name)}{\n`;
+  text += `\treturn &${internalPollerTypeName(<PollerInfo>op.language.go!.pollerType)}{\n`;
   text += '\t\tpipeline: client.con.Pipeline(),\n';
   text += '\t\tpt: pt,\n';
   text += '\t}, nil\n';

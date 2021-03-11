@@ -13,11 +13,11 @@ import (
 	"github.com/google/go-cmp/cmp"
 )
 
-func newLRORetrysClient() *LroRetrysClient {
+func newLRORetrysClient() *LRORetrysClient {
 	options := ConnectionOptions{}
 	options.Retry.RetryDelay = 10 * time.Millisecond
 	options.HTTPClient = httpClientWithCookieJar()
-	return NewLroRetrysClient(NewDefaultConnection(&options))
+	return NewLRORetrysClient(NewDefaultConnection(&options))
 }
 
 func TestLRORetrysBeginDelete202Retry200(t *testing.T) {

@@ -138,7 +138,7 @@ func TestHeaderParamDuration(t *testing.T) {
 
 func TestHeaderParamEnum(t *testing.T) {
 	client := newHeaderClient()
-	val := GreyscaleColorsGrey
+	val := GreyscaleColorsGREY
 	result, err := client.ParamEnum(context.Background(), "valid", &HeaderParamEnumOptions{Value: &val})
 	if err != nil {
 		t.Fatalf("ParamEnum: %v", err)

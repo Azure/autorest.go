@@ -22,7 +22,7 @@ func TestBasicGetValid(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetValid: %v", err)
 	}
-	if r := cmp.Diff(result.Basic, &Basic{ID: to.Int32Ptr(2), Name: to.StringPtr("abc"), Color: CMYKColorsYellow.ToPtr()}); r != "" {
+	if r := cmp.Diff(result.Basic, &Basic{ID: to.Int32Ptr(2), Name: to.StringPtr("abc"), Color: CMYKColorsYELLOW.ToPtr()}); r != "" {
 		t.Fatal(r)
 	}
 }

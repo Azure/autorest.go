@@ -37,25 +37,25 @@ func (c AvroCompressionCodec) ToPtr() *AvroCompressionCodec {
 type AzureFunctionActivityMethod string
 
 const (
-	AzureFunctionActivityMethodDelete  AzureFunctionActivityMethod = "DELETE"
-	AzureFunctionActivityMethodGet     AzureFunctionActivityMethod = "GET"
-	AzureFunctionActivityMethodHead    AzureFunctionActivityMethod = "HEAD"
-	AzureFunctionActivityMethodOptions AzureFunctionActivityMethod = "OPTIONS"
-	AzureFunctionActivityMethodPost    AzureFunctionActivityMethod = "POST"
-	AzureFunctionActivityMethodPut     AzureFunctionActivityMethod = "PUT"
-	AzureFunctionActivityMethodTrace   AzureFunctionActivityMethod = "TRACE"
+	AzureFunctionActivityMethodDELETE  AzureFunctionActivityMethod = "DELETE"
+	AzureFunctionActivityMethodGET     AzureFunctionActivityMethod = "GET"
+	AzureFunctionActivityMethodHEAD    AzureFunctionActivityMethod = "HEAD"
+	AzureFunctionActivityMethodOPTIONS AzureFunctionActivityMethod = "OPTIONS"
+	AzureFunctionActivityMethodPOST    AzureFunctionActivityMethod = "POST"
+	AzureFunctionActivityMethodPUT     AzureFunctionActivityMethod = "PUT"
+	AzureFunctionActivityMethodTRACE   AzureFunctionActivityMethod = "TRACE"
 )
 
 // PossibleAzureFunctionActivityMethodValues returns the possible values for the AzureFunctionActivityMethod const type.
 func PossibleAzureFunctionActivityMethodValues() []AzureFunctionActivityMethod {
 	return []AzureFunctionActivityMethod{
-		AzureFunctionActivityMethodDelete,
-		AzureFunctionActivityMethodGet,
-		AzureFunctionActivityMethodHead,
-		AzureFunctionActivityMethodOptions,
-		AzureFunctionActivityMethodPost,
-		AzureFunctionActivityMethodPut,
-		AzureFunctionActivityMethodTrace,
+		AzureFunctionActivityMethodDELETE,
+		AzureFunctionActivityMethodGET,
+		AzureFunctionActivityMethodHEAD,
+		AzureFunctionActivityMethodOPTIONS,
+		AzureFunctionActivityMethodPOST,
+		AzureFunctionActivityMethodPUT,
+		AzureFunctionActivityMethodTRACE,
 	}
 }
 
@@ -130,31 +130,31 @@ func (c BlobEventType) ToPtr() *BlobEventType {
 type CassandraSourceReadConsistencyLevels string
 
 const (
-	CassandraSourceReadConsistencyLevelsAll         CassandraSourceReadConsistencyLevels = "ALL"
-	CassandraSourceReadConsistencyLevelsEachQuorum  CassandraSourceReadConsistencyLevels = "EACH_QUORUM"
-	CassandraSourceReadConsistencyLevelsLocalOne    CassandraSourceReadConsistencyLevels = "LOCAL_ONE"
-	CassandraSourceReadConsistencyLevelsLocalQuorum CassandraSourceReadConsistencyLevels = "LOCAL_QUORUM"
-	CassandraSourceReadConsistencyLevelsLocalSerial CassandraSourceReadConsistencyLevels = "LOCAL_SERIAL"
-	CassandraSourceReadConsistencyLevelsOne         CassandraSourceReadConsistencyLevels = "ONE"
-	CassandraSourceReadConsistencyLevelsQuorum      CassandraSourceReadConsistencyLevels = "QUORUM"
-	CassandraSourceReadConsistencyLevelsSerial      CassandraSourceReadConsistencyLevels = "SERIAL"
-	CassandraSourceReadConsistencyLevelsThree       CassandraSourceReadConsistencyLevels = "THREE"
-	CassandraSourceReadConsistencyLevelsTwo         CassandraSourceReadConsistencyLevels = "TWO"
+	CassandraSourceReadConsistencyLevelsALL         CassandraSourceReadConsistencyLevels = "ALL"
+	CassandraSourceReadConsistencyLevelsEACHQUORUM  CassandraSourceReadConsistencyLevels = "EACH_QUORUM"
+	CassandraSourceReadConsistencyLevelsLOCALONE    CassandraSourceReadConsistencyLevels = "LOCAL_ONE"
+	CassandraSourceReadConsistencyLevelsLOCALQUORUM CassandraSourceReadConsistencyLevels = "LOCAL_QUORUM"
+	CassandraSourceReadConsistencyLevelsLOCALSERIAL CassandraSourceReadConsistencyLevels = "LOCAL_SERIAL"
+	CassandraSourceReadConsistencyLevelsONE         CassandraSourceReadConsistencyLevels = "ONE"
+	CassandraSourceReadConsistencyLevelsQUORUM      CassandraSourceReadConsistencyLevels = "QUORUM"
+	CassandraSourceReadConsistencyLevelsSERIAL      CassandraSourceReadConsistencyLevels = "SERIAL"
+	CassandraSourceReadConsistencyLevelsTHREE       CassandraSourceReadConsistencyLevels = "THREE"
+	CassandraSourceReadConsistencyLevelsTWO         CassandraSourceReadConsistencyLevels = "TWO"
 )
 
 // PossibleCassandraSourceReadConsistencyLevelsValues returns the possible values for the CassandraSourceReadConsistencyLevels const type.
 func PossibleCassandraSourceReadConsistencyLevelsValues() []CassandraSourceReadConsistencyLevels {
 	return []CassandraSourceReadConsistencyLevels{
-		CassandraSourceReadConsistencyLevelsAll,
-		CassandraSourceReadConsistencyLevelsEachQuorum,
-		CassandraSourceReadConsistencyLevelsLocalOne,
-		CassandraSourceReadConsistencyLevelsLocalQuorum,
-		CassandraSourceReadConsistencyLevelsLocalSerial,
-		CassandraSourceReadConsistencyLevelsOne,
-		CassandraSourceReadConsistencyLevelsQuorum,
-		CassandraSourceReadConsistencyLevelsSerial,
-		CassandraSourceReadConsistencyLevelsThree,
-		CassandraSourceReadConsistencyLevelsTwo,
+		CassandraSourceReadConsistencyLevelsALL,
+		CassandraSourceReadConsistencyLevelsEACHQUORUM,
+		CassandraSourceReadConsistencyLevelsLOCALONE,
+		CassandraSourceReadConsistencyLevelsLOCALQUORUM,
+		CassandraSourceReadConsistencyLevelsLOCALSERIAL,
+		CassandraSourceReadConsistencyLevelsONE,
+		CassandraSourceReadConsistencyLevelsQUORUM,
+		CassandraSourceReadConsistencyLevelsSERIAL,
+		CassandraSourceReadConsistencyLevelsTHREE,
+		CassandraSourceReadConsistencyLevelsTWO,
 	}
 }
 
@@ -400,7 +400,7 @@ func (c DependencyCondition) ToPtr() *DependencyCondition {
 type DynamicsAuthenticationType string
 
 const (
-	DynamicsAuthenticationTypeAadServicePrincipal DynamicsAuthenticationType = "AADServicePrincipal"
+	DynamicsAuthenticationTypeAADServicePrincipal DynamicsAuthenticationType = "AADServicePrincipal"
 	DynamicsAuthenticationTypeIfd                 DynamicsAuthenticationType = "Ifd"
 	DynamicsAuthenticationTypeOffice365           DynamicsAuthenticationType = "Office365"
 )
@@ -408,7 +408,7 @@ const (
 // PossibleDynamicsAuthenticationTypeValues returns the possible values for the DynamicsAuthenticationType const type.
 func PossibleDynamicsAuthenticationTypeValues() []DynamicsAuthenticationType {
 	return []DynamicsAuthenticationType{
-		DynamicsAuthenticationTypeAadServicePrincipal,
+		DynamicsAuthenticationTypeAADServicePrincipal,
 		DynamicsAuthenticationTypeIfd,
 		DynamicsAuthenticationTypeOffice365,
 	}
@@ -695,7 +695,7 @@ const (
 	HiveAuthenticationTypeAnonymous                    HiveAuthenticationType = "Anonymous"
 	HiveAuthenticationTypeUsername                     HiveAuthenticationType = "Username"
 	HiveAuthenticationTypeUsernameAndPassword          HiveAuthenticationType = "UsernameAndPassword"
-	HiveAuthenticationTypeWindowsAzureHdInsightService HiveAuthenticationType = "WindowsAzureHDInsightService"
+	HiveAuthenticationTypeWindowsAzureHDInsightService HiveAuthenticationType = "WindowsAzureHDInsightService"
 )
 
 // PossibleHiveAuthenticationTypeValues returns the possible values for the HiveAuthenticationType const type.
@@ -704,7 +704,7 @@ func PossibleHiveAuthenticationTypeValues() []HiveAuthenticationType {
 		HiveAuthenticationTypeAnonymous,
 		HiveAuthenticationTypeUsername,
 		HiveAuthenticationTypeUsernameAndPassword,
-		HiveAuthenticationTypeWindowsAzureHdInsightService,
+		HiveAuthenticationTypeWindowsAzureHDInsightService,
 	}
 }
 
@@ -742,7 +742,7 @@ type HiveThriftTransportProtocol string
 const (
 	HiveThriftTransportProtocolBinary HiveThriftTransportProtocol = "Binary"
 	HiveThriftTransportProtocolHTTP   HiveThriftTransportProtocol = "HTTP "
-	HiveThriftTransportProtocolSasl   HiveThriftTransportProtocol = "SASL"
+	HiveThriftTransportProtocolSASL   HiveThriftTransportProtocol = "SASL"
 )
 
 // PossibleHiveThriftTransportProtocolValues returns the possible values for the HiveThriftTransportProtocol const type.
@@ -750,7 +750,7 @@ func PossibleHiveThriftTransportProtocolValues() []HiveThriftTransportProtocol {
 	return []HiveThriftTransportProtocol{
 		HiveThriftTransportProtocolBinary,
 		HiveThriftTransportProtocolHTTP,
-		HiveThriftTransportProtocolSasl,
+		HiveThriftTransportProtocolSASL,
 	}
 }
 
@@ -764,7 +764,7 @@ type ImpalaAuthenticationType string
 
 const (
 	ImpalaAuthenticationTypeAnonymous           ImpalaAuthenticationType = "Anonymous"
-	ImpalaAuthenticationTypeSaslUsername        ImpalaAuthenticationType = "SASLUsername"
+	ImpalaAuthenticationTypeSASLUsername        ImpalaAuthenticationType = "SASLUsername"
 	ImpalaAuthenticationTypeUsernameAndPassword ImpalaAuthenticationType = "UsernameAndPassword"
 )
 
@@ -772,7 +772,7 @@ const (
 func PossibleImpalaAuthenticationTypeValues() []ImpalaAuthenticationType {
 	return []ImpalaAuthenticationType{
 		ImpalaAuthenticationTypeAnonymous,
-		ImpalaAuthenticationTypeSaslUsername,
+		ImpalaAuthenticationTypeSASLUsername,
 		ImpalaAuthenticationTypeUsernameAndPassword,
 	}
 }
@@ -870,7 +870,7 @@ type IntegrationRuntimeSsisCatalogPricingTier string
 const (
 	IntegrationRuntimeSsisCatalogPricingTierBasic     IntegrationRuntimeSsisCatalogPricingTier = "Basic"
 	IntegrationRuntimeSsisCatalogPricingTierPremium   IntegrationRuntimeSsisCatalogPricingTier = "Premium"
-	IntegrationRuntimeSsisCatalogPricingTierPremiumRs IntegrationRuntimeSsisCatalogPricingTier = "PremiumRS"
+	IntegrationRuntimeSsisCatalogPricingTierPremiumRS IntegrationRuntimeSsisCatalogPricingTier = "PremiumRS"
 	IntegrationRuntimeSsisCatalogPricingTierStandard  IntegrationRuntimeSsisCatalogPricingTier = "Standard"
 )
 
@@ -879,7 +879,7 @@ func PossibleIntegrationRuntimeSsisCatalogPricingTierValues() []IntegrationRunti
 	return []IntegrationRuntimeSsisCatalogPricingTier{
 		IntegrationRuntimeSsisCatalogPricingTierBasic,
 		IntegrationRuntimeSsisCatalogPricingTierPremium,
-		IntegrationRuntimeSsisCatalogPricingTierPremiumRs,
+		IntegrationRuntimeSsisCatalogPricingTierPremiumRS,
 		IntegrationRuntimeSsisCatalogPricingTierStandard,
 	}
 }
@@ -1043,8 +1043,8 @@ const (
 	NodeSizeNone     NodeSize = "None"
 	NodeSizeSmall    NodeSize = "Small"
 	NodeSizeXLarge   NodeSize = "XLarge"
-	NodeSizeXxLarge  NodeSize = "XXLarge"
-	NodeSizeXxxLarge NodeSize = "XXXLarge"
+	NodeSizeXXLarge  NodeSize = "XXLarge"
+	NodeSizeXXXLarge NodeSize = "XXXLarge"
 )
 
 // PossibleNodeSizeValues returns the possible values for the NodeSize const type.
@@ -1055,8 +1055,8 @@ func PossibleNodeSizeValues() []NodeSize {
 		NodeSizeNone,
 		NodeSizeSmall,
 		NodeSizeXLarge,
-		NodeSizeXxLarge,
-		NodeSizeXxxLarge,
+		NodeSizeXXLarge,
+		NodeSizeXXXLarge,
 	}
 }
 
@@ -1105,24 +1105,24 @@ func (c NotebookReferenceType) ToPtr() *NotebookReferenceType {
 	return &c
 }
 
-// ODataAadServicePrincipalCredentialType - Specify the credential type (key or cert) is used for service principal.
-type ODataAadServicePrincipalCredentialType string
+// ODataAADServicePrincipalCredentialType - Specify the credential type (key or cert) is used for service principal.
+type ODataAADServicePrincipalCredentialType string
 
 const (
-	ODataAadServicePrincipalCredentialTypeServicePrincipalCert ODataAadServicePrincipalCredentialType = "ServicePrincipalCert"
-	ODataAadServicePrincipalCredentialTypeServicePrincipalKey  ODataAadServicePrincipalCredentialType = "ServicePrincipalKey"
+	ODataAADServicePrincipalCredentialTypeServicePrincipalCert ODataAADServicePrincipalCredentialType = "ServicePrincipalCert"
+	ODataAADServicePrincipalCredentialTypeServicePrincipalKey  ODataAADServicePrincipalCredentialType = "ServicePrincipalKey"
 )
 
-// PossibleODataAadServicePrincipalCredentialTypeValues returns the possible values for the ODataAadServicePrincipalCredentialType const type.
-func PossibleODataAadServicePrincipalCredentialTypeValues() []ODataAadServicePrincipalCredentialType {
-	return []ODataAadServicePrincipalCredentialType{
-		ODataAadServicePrincipalCredentialTypeServicePrincipalCert,
-		ODataAadServicePrincipalCredentialTypeServicePrincipalKey,
+// PossibleODataAADServicePrincipalCredentialTypeValues returns the possible values for the ODataAADServicePrincipalCredentialType const type.
+func PossibleODataAADServicePrincipalCredentialTypeValues() []ODataAADServicePrincipalCredentialType {
+	return []ODataAADServicePrincipalCredentialType{
+		ODataAADServicePrincipalCredentialTypeServicePrincipalCert,
+		ODataAADServicePrincipalCredentialTypeServicePrincipalKey,
 	}
 }
 
-// ToPtr() returns a *ODataAadServicePrincipalCredentialType pointing to the current value.
-func (c ODataAadServicePrincipalCredentialType) ToPtr() *ODataAadServicePrincipalCredentialType {
+// ToPtr() returns a *ODataAADServicePrincipalCredentialType pointing to the current value.
+func (c ODataAADServicePrincipalCredentialType) ToPtr() *ODataAADServicePrincipalCredentialType {
 	return &c
 }
 
@@ -1130,20 +1130,20 @@ func (c ODataAadServicePrincipalCredentialType) ToPtr() *ODataAadServicePrincipa
 type ODataAuthenticationType string
 
 const (
-	ODataAuthenticationTypeAadServicePrincipal    ODataAuthenticationType = "AadServicePrincipal"
+	ODataAuthenticationTypeAADServicePrincipal    ODataAuthenticationType = "AadServicePrincipal"
 	ODataAuthenticationTypeAnonymous              ODataAuthenticationType = "Anonymous"
 	ODataAuthenticationTypeBasic                  ODataAuthenticationType = "Basic"
-	ODataAuthenticationTypeManagedServiceIDentity ODataAuthenticationType = "ManagedServiceIdentity"
+	ODataAuthenticationTypeManagedServiceIdentity ODataAuthenticationType = "ManagedServiceIdentity"
 	ODataAuthenticationTypeWindows                ODataAuthenticationType = "Windows"
 )
 
 // PossibleODataAuthenticationTypeValues returns the possible values for the ODataAuthenticationType const type.
 func PossibleODataAuthenticationTypeValues() []ODataAuthenticationType {
 	return []ODataAuthenticationType{
-		ODataAuthenticationTypeAadServicePrincipal,
+		ODataAuthenticationTypeAADServicePrincipal,
 		ODataAuthenticationTypeAnonymous,
 		ODataAuthenticationTypeBasic,
-		ODataAuthenticationTypeManagedServiceIDentity,
+		ODataAuthenticationTypeManagedServiceIdentity,
 		ODataAuthenticationTypeWindows,
 	}
 }
@@ -1259,7 +1259,7 @@ type PhoenixAuthenticationType string
 const (
 	PhoenixAuthenticationTypeAnonymous                    PhoenixAuthenticationType = "Anonymous"
 	PhoenixAuthenticationTypeUsernameAndPassword          PhoenixAuthenticationType = "UsernameAndPassword"
-	PhoenixAuthenticationTypeWindowsAzureHdInsightService PhoenixAuthenticationType = "WindowsAzureHDInsightService"
+	PhoenixAuthenticationTypeWindowsAzureHDInsightService PhoenixAuthenticationType = "WindowsAzureHDInsightService"
 )
 
 // PossiblePhoenixAuthenticationTypeValues returns the possible values for the PhoenixAuthenticationType const type.
@@ -1267,7 +1267,7 @@ func PossiblePhoenixAuthenticationTypeValues() []PhoenixAuthenticationType {
 	return []PhoenixAuthenticationType{
 		PhoenixAuthenticationTypeAnonymous,
 		PhoenixAuthenticationTypeUsernameAndPassword,
-		PhoenixAuthenticationTypeWindowsAzureHdInsightService,
+		PhoenixAuthenticationTypeWindowsAzureHDInsightService,
 	}
 }
 
@@ -1351,14 +1351,14 @@ type PrestoAuthenticationType string
 
 const (
 	PrestoAuthenticationTypeAnonymous PrestoAuthenticationType = "Anonymous"
-	PrestoAuthenticationTypeLdap      PrestoAuthenticationType = "LDAP"
+	PrestoAuthenticationTypeLDAP      PrestoAuthenticationType = "LDAP"
 )
 
 // PossiblePrestoAuthenticationTypeValues returns the possible values for the PrestoAuthenticationType const type.
 func PossiblePrestoAuthenticationTypeValues() []PrestoAuthenticationType {
 	return []PrestoAuthenticationType{
 		PrestoAuthenticationTypeAnonymous,
-		PrestoAuthenticationTypeLdap,
+		PrestoAuthenticationTypeLDAP,
 	}
 }
 
@@ -1398,24 +1398,24 @@ func (c RecurrenceFrequency) ToPtr() *RecurrenceFrequency {
 	return &c
 }
 
-// ResourceIDentityType - The type of managed identity for the workspace
-type ResourceIDentityType string
+// ResourceIdentityType - The type of managed identity for the workspace
+type ResourceIdentityType string
 
 const (
-	ResourceIDentityTypeNone           ResourceIDentityType = "None"
-	ResourceIDentityTypeSystemAssigned ResourceIDentityType = "SystemAssigned"
+	ResourceIdentityTypeNone           ResourceIdentityType = "None"
+	ResourceIdentityTypeSystemAssigned ResourceIdentityType = "SystemAssigned"
 )
 
-// PossibleResourceIDentityTypeValues returns the possible values for the ResourceIDentityType const type.
-func PossibleResourceIDentityTypeValues() []ResourceIDentityType {
-	return []ResourceIDentityType{
-		ResourceIDentityTypeNone,
-		ResourceIDentityTypeSystemAssigned,
+// PossibleResourceIdentityTypeValues returns the possible values for the ResourceIdentityType const type.
+func PossibleResourceIdentityTypeValues() []ResourceIdentityType {
+	return []ResourceIdentityType{
+		ResourceIdentityTypeNone,
+		ResourceIdentityTypeSystemAssigned,
 	}
 }
 
-// ToPtr() returns a *ResourceIDentityType pointing to the current value.
-func (c ResourceIDentityType) ToPtr() *ResourceIDentityType {
+// ToPtr() returns a *ResourceIdentityType pointing to the current value.
+func (c ResourceIdentityType) ToPtr() *ResourceIdentityType {
 	return &c
 }
 
@@ -1423,19 +1423,19 @@ func (c ResourceIDentityType) ToPtr() *ResourceIDentityType {
 type RestServiceAuthenticationType string
 
 const (
-	RestServiceAuthenticationTypeAadServicePrincipal    RestServiceAuthenticationType = "AadServicePrincipal"
+	RestServiceAuthenticationTypeAADServicePrincipal    RestServiceAuthenticationType = "AadServicePrincipal"
 	RestServiceAuthenticationTypeAnonymous              RestServiceAuthenticationType = "Anonymous"
 	RestServiceAuthenticationTypeBasic                  RestServiceAuthenticationType = "Basic"
-	RestServiceAuthenticationTypeManagedServiceIDentity RestServiceAuthenticationType = "ManagedServiceIdentity"
+	RestServiceAuthenticationTypeManagedServiceIdentity RestServiceAuthenticationType = "ManagedServiceIdentity"
 )
 
 // PossibleRestServiceAuthenticationTypeValues returns the possible values for the RestServiceAuthenticationType const type.
 func PossibleRestServiceAuthenticationTypeValues() []RestServiceAuthenticationType {
 	return []RestServiceAuthenticationType{
-		RestServiceAuthenticationTypeAadServicePrincipal,
+		RestServiceAuthenticationTypeAADServicePrincipal,
 		RestServiceAuthenticationTypeAnonymous,
 		RestServiceAuthenticationTypeBasic,
-		RestServiceAuthenticationTypeManagedServiceIDentity,
+		RestServiceAuthenticationTypeManagedServiceIdentity,
 	}
 }
 
@@ -1516,15 +1516,15 @@ func (c RunQueryFilterOperator) ToPtr() *RunQueryFilterOperator {
 type RunQueryOrder string
 
 const (
-	RunQueryOrderAsc  RunQueryOrder = "ASC"
-	RunQueryOrderDesc RunQueryOrder = "DESC"
+	RunQueryOrderASC  RunQueryOrder = "ASC"
+	RunQueryOrderDESC RunQueryOrder = "DESC"
 )
 
 // PossibleRunQueryOrderValues returns the possible values for the RunQueryOrder const type.
 func PossibleRunQueryOrderValues() []RunQueryOrder {
 	return []RunQueryOrder{
-		RunQueryOrderAsc,
-		RunQueryOrderDesc,
+		RunQueryOrderASC,
+		RunQueryOrderDESC,
 	}
 }
 
@@ -1836,7 +1836,7 @@ const (
 	SparkAuthenticationTypeAnonymous                    SparkAuthenticationType = "Anonymous"
 	SparkAuthenticationTypeUsername                     SparkAuthenticationType = "Username"
 	SparkAuthenticationTypeUsernameAndPassword          SparkAuthenticationType = "UsernameAndPassword"
-	SparkAuthenticationTypeWindowsAzureHdInsightService SparkAuthenticationType = "WindowsAzureHDInsightService"
+	SparkAuthenticationTypeWindowsAzureHDInsightService SparkAuthenticationType = "WindowsAzureHDInsightService"
 )
 
 // PossibleSparkAuthenticationTypeValues returns the possible values for the SparkAuthenticationType const type.
@@ -1845,7 +1845,7 @@ func PossibleSparkAuthenticationTypeValues() []SparkAuthenticationType {
 		SparkAuthenticationTypeAnonymous,
 		SparkAuthenticationTypeUsername,
 		SparkAuthenticationTypeUsernameAndPassword,
-		SparkAuthenticationTypeWindowsAzureHdInsightService,
+		SparkAuthenticationTypeWindowsAzureHDInsightService,
 	}
 }
 
@@ -1972,7 +1972,7 @@ type SparkThriftTransportProtocol string
 const (
 	SparkThriftTransportProtocolBinary SparkThriftTransportProtocol = "Binary"
 	SparkThriftTransportProtocolHTTP   SparkThriftTransportProtocol = "HTTP "
-	SparkThriftTransportProtocolSasl   SparkThriftTransportProtocol = "SASL"
+	SparkThriftTransportProtocolSASL   SparkThriftTransportProtocol = "SASL"
 )
 
 // PossibleSparkThriftTransportProtocolValues returns the possible values for the SparkThriftTransportProtocol const type.
@@ -1980,7 +1980,7 @@ func PossibleSparkThriftTransportProtocolValues() []SparkThriftTransportProtocol
 	return []SparkThriftTransportProtocol{
 		SparkThriftTransportProtocolBinary,
 		SparkThriftTransportProtocolHTTP,
-		SparkThriftTransportProtocolSasl,
+		SparkThriftTransportProtocolSASL,
 	}
 }
 
@@ -2014,7 +2014,7 @@ type SsisPackageLocationType string
 const (
 	SsisPackageLocationTypeFile          SsisPackageLocationType = "File"
 	SsisPackageLocationTypeInlinePackage SsisPackageLocationType = "InlinePackage"
-	SsisPackageLocationTypeSsisdb        SsisPackageLocationType = "SSISDB"
+	SsisPackageLocationTypeSSISDB        SsisPackageLocationType = "SSISDB"
 )
 
 // PossibleSsisPackageLocationTypeValues returns the possible values for the SsisPackageLocationType const type.
@@ -2022,7 +2022,7 @@ func PossibleSsisPackageLocationTypeValues() []SsisPackageLocationType {
 	return []SsisPackageLocationType{
 		SsisPackageLocationTypeFile,
 		SsisPackageLocationTypeInlinePackage,
-		SsisPackageLocationTypeSsisdb,
+		SsisPackageLocationTypeSSISDB,
 	}
 }
 
@@ -2261,19 +2261,19 @@ func (c VariableType) ToPtr() *VariableType {
 type WebActivityMethod string
 
 const (
-	WebActivityMethodDelete WebActivityMethod = "DELETE"
-	WebActivityMethodGet    WebActivityMethod = "GET"
-	WebActivityMethodPost   WebActivityMethod = "POST"
-	WebActivityMethodPut    WebActivityMethod = "PUT"
+	WebActivityMethodDELETE WebActivityMethod = "DELETE"
+	WebActivityMethodGET    WebActivityMethod = "GET"
+	WebActivityMethodPOST   WebActivityMethod = "POST"
+	WebActivityMethodPUT    WebActivityMethod = "PUT"
 )
 
 // PossibleWebActivityMethodValues returns the possible values for the WebActivityMethod const type.
 func PossibleWebActivityMethodValues() []WebActivityMethod {
 	return []WebActivityMethod{
-		WebActivityMethodDelete,
-		WebActivityMethodGet,
-		WebActivityMethodPost,
-		WebActivityMethodPut,
+		WebActivityMethodDELETE,
+		WebActivityMethodGET,
+		WebActivityMethodPOST,
+		WebActivityMethodPUT,
 	}
 }
 
@@ -2309,13 +2309,13 @@ func (c WebAuthenticationType) ToPtr() *WebAuthenticationType {
 type WebHookActivityMethod string
 
 const (
-	WebHookActivityMethodPost WebHookActivityMethod = "POST"
+	WebHookActivityMethodPOST WebHookActivityMethod = "POST"
 )
 
 // PossibleWebHookActivityMethodValues returns the possible values for the WebHookActivityMethod const type.
 func PossibleWebHookActivityMethodValues() []WebHookActivityMethod {
 	return []WebHookActivityMethod{
-		WebHookActivityMethodPost,
+		WebHookActivityMethodPOST,
 	}
 }
 

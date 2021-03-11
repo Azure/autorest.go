@@ -3,7 +3,6 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *  --------------------------------------------------------------------------------------------  */
 
-import { pascalCase, camelCase } from '@azure-tools/codegen';
 import { Session } from '@autorest/extension-base';
 import { CodeModel, HttpHeader, Language } from '@azure-tools/codemodel';
 import { visitor, clone, values } from '@azure-tools/linq';
@@ -31,9 +30,9 @@ export class protocolMethods implements protocolNaming {
   readonly errorMethod: string;
 
   constructor(name: string) {
-    this.requestMethod = `${camelCase(name)}${requestMethodSuffix}`;
-    this.responseMethod = `${camelCase(name)}${responseMethodSuffix}`;
-    this.errorMethod = `${camelCase(name)}${errorMethodSuffix}`;
+    this.requestMethod = ensureNameCase(`${name}${requestMethodSuffix}`, true);
+    this.responseMethod = ensureNameCase(`${name}${responseMethodSuffix}`, true);
+    this.errorMethod = ensureNameCase(`${name}${errorMethodSuffix}`, true);
   }
 }
 
@@ -64,7 +63,7 @@ export async function namer(session: Session<CodeModel>) {
   // pascal-case and capitzalize acronym names of objects and their fields
   for (const obj of values(model.schemas.objects)) {
     const details = <Language>obj.language.go;
-    details.name = getEscapedReservedName(capitalizeAcronyms(pascalCase(details.name)), 'Model');
+    details.name = ensureNameCase(details.name);
     if (obj.discriminator) {
       // if this is a discriminator add the interface name
       details.discriminatorInterface = createPolymorphicInterfaceName(details.name);
@@ -76,7 +75,7 @@ export async function namer(session: Session<CodeModel>) {
     }
     for (const prop of values(obj.properties)) {
       const details = <Language>prop.language.go;
-      details.name = getEscapedReservedName(removePrefix(capitalizeAcronyms(pascalCase(details.name)), 'XMS'), 'Field');
+      details.name = ensureNameCase(details.name);
       if (hasAdditionalProperties(obj) && details.name === 'AdditionalProperties') {
         // this is the case where a type contains the generic additional properties
         // and also has a field named additionalProperties.  we rename the field.
@@ -93,7 +92,7 @@ export async function namer(session: Session<CodeModel>) {
     if (groupDetails.name.length === 0) {
       groupDetails.name = session.model.info.title;
     }
-    groupDetails.name = capitalizeAcronyms(pascalCase(groupDetails.name));
+    groupDetails.name = ensureNameCase(groupDetails.name);
     groupDetails.clientName = `${groupDetails.name}Client`;
     if (groupDetails.name.endsWith('Client')) {
       // don't generate a name like FooClientClient
@@ -101,15 +100,15 @@ export async function namer(session: Session<CodeModel>) {
     }
     groupDetails.clientCtorName = `New${groupDetails.clientName}`;
     if (!exportClient) {
-      groupDetails.clientName = camelCase(groupDetails.clientName);
-      groupDetails.clientCtorName = camelCase(groupDetails.clientCtorName);
+      groupDetails.clientName = ensureNameCase(<string>groupDetails.clientName, true);
+      groupDetails.clientCtorName = (<string>groupDetails.clientCtorName).uncapitalize();
     }
     for (const op of values(group.operations)) {
       const details = <OperationNaming>op.language.go;
       // propagate these settings to each operation for ease of access
       details.azureARM = model.language.go!.azureARM
       details.openApiType = model.language.go!.openApiType
-      details.name = getEscapedReservedName(capitalizeAcronyms(pascalCase(details.name)), 'Method');
+      details.name = ensureNameCase(details.name);
       // add the client name to the operation as it's needed all over the place
       details.clientName = groupDetails.clientName;
       for (const param of values(aggregateParameters(op))) {
@@ -117,22 +116,36 @@ export async function namer(session: Session<CodeModel>) {
           param.language.go!.name = 'endpoint';
           continue;
         }
+        const inParamGroup = param.extensions?.['x-ms-parameter-grouping'] || param.required !== true;
         const paramDetails = <Language>param.language.go;
-        paramDetails.name = getEscapedReservedName(removePrefix(camelCase(paramDetails.name), 'XMS'), 'Parameter');
+        // if this is part of a param group struct then don't apply param naming rules to it
+        paramDetails.name = ensureNameCase(paramDetails.name, !inParamGroup);
+        // fix up any param group names
+        if (param.extensions?.['x-ms-parameter-grouping']) {
+          if (param.extensions['x-ms-parameter-grouping'].name) {
+            param.extensions['x-ms-parameter-grouping'].name = ensureNameCase(<string>param.extensions['x-ms-parameter-grouping'].name);
+          } else if (param.extensions['x-ms-parameter-grouping'].postfix) {
+            param.extensions['x-ms-parameter-grouping'].postfix = ensureNameCase(<string>param.extensions['x-ms-parameter-grouping'].postfix);
+          }
+        } else {
+          // only escape the name if it's not in a parameter group struct
+          paramDetails.name = getEscapedReservedName(paramDetails.name, 'Param');
+        }
       }
       details.protocolNaming = new protocolMethods(details.name);
       if (op.language.go!.paging) {
         if (op.language.go!.paging.nextLinkName !== null) {
-          op.language.go!.paging.nextLinkName = pascalCase(op.language.go!.paging.nextLinkName);
+          // apply same naming logic as per struct fields
+          op.language.go!.paging.nextLinkName = ensureNameCase((<string>op.language.go!.paging.nextLinkName));
         }
         if (op.language.go!.paging.member) {
-          op.language.go!.paging.member = camelCase(op.language.go!.paging.member);
+          op.language.go!.paging.member = (<string>op.language.go!.paging.member).uncapitalize();
         }
       }
       for (const resp of values(op.responses)) {
         for (const header of values(resp.protocol.http!.headers)) {
           const head = <HttpHeader>header;
-          head.language.go!.name = getEscapedReservedName(capitalizeAcronyms(removePrefix(pascalCase(head.language.go!.name), 'XMS')), 'Header');
+          head.language.go!.name = ensureNameCase(head.language.go!.name);
         }
       }
     }
@@ -140,27 +153,29 @@ export async function namer(session: Session<CodeModel>) {
 
   // fix up enum type and value names and capitzalize acronyms
   for (const enm of values(session.model.schemas.choices)) {
-    enm.language.go!.name = capitalizeAcronyms(enm.language.go!.name);
+    enm.language.go!.name = ensureNameCase(enm.language.go!.name);
     // add PossibleValues func name
     enm.language.go!.possibleValuesFunc = `Possible${enm.language.go!.name}Values`;
     for (const choice of values(enm.choices)) {
       const details = <Language>choice.language.go;
-      details.name = `${enm.language.go?.name}${removePrefix(capitalizeAcronyms(pascalCase(details.name)), 'XMS')}`;
+      details.name = `${enm.language.go?.name}${ensureNameCase(details.name)}`;
     }
   }
   for (const enm of values(session.model.schemas.sealedChoices)) {
-    enm.language.go!.name = capitalizeAcronyms(enm.language.go!.name);
+    enm.language.go!.name = ensureNameCase(enm.language.go!.name);
     // add PossibleValues func name
     enm.language.go!.possibleValuesFunc = `Possible${enm.language.go!.name}Values`;
     for (const choice of values(enm.choices)) {
       const details = <Language>choice.language.go;
-      details.name = `${enm.language.go?.name}${removePrefix(capitalizeAcronyms(pascalCase(details.name)), 'XMS')}`;
+      details.name = `${enm.language.go?.name}${ensureNameCase(details.name)}`;
     }
   }
 
   for (const globalParam of values(session.model.globalParameters)) {
     const details = <Language>globalParam.language.go;
-    details.name = removePrefix(capitalizeAcronyms(details.name), 'XMS');
+    const inParamGroup = globalParam.extensions?.['x-ms-parameter-grouping'];
+    // if this is part of a param group struct then don't apply param naming rules to it
+    details.name = getEscapedReservedName(ensureNameCase(details.name, !inParamGroup), 'Param');
   }
   return session;
 }
@@ -174,25 +189,8 @@ function cloneLanguageInfo(graph: any) {
   }
 }
 
-// make sure that common acronyms are capitalized
-// NOTE: this function does not perform a case insensitive check considering scenarios where this would cause problems
-// for example 'curl' would end up as 'cURL' if we did case insensitive checks
-function capitalizeAcronyms(name: string): string {
-  for (const word of CommonAcronyms) {
-    name = name.replace(word, word.toUpperCase());
-  }
-  return name;
-}
-
 // make sure that reserved words are escaped
 function getEscapedReservedName(name: string, appendValue: string): string {
-  if (name === null) {
-    throw new Error('GetEscapedReservedName: Cannot pass in a null value for "name" parameter');
-  }
-  if (appendValue === null) {
-    throw new Error('GetEscapedReservedName: Cannot pass in a null value for "appendValue" parameter');
-  }
-
   if (ReservedWords.includes(name)) {
     name += appendValue;
   }
@@ -200,23 +198,55 @@ function getEscapedReservedName(name: string, appendValue: string): string {
   return name;
 }
 
-export function removePrefix(name: string, prefix: string): string {
-  if (name === null) {
-    throw new Error('removePrefix: Cannot pass in a null value for "name" parameter');
-  }
-  if (prefix === null) {
-    throw new Error('removePrefix: Cannot pass in a null value for "prefix" parameter');
-  }
+// used in ensureNameCase() to track which names have already been transformed.
+const gRenamed = new Map<string, boolean>();
 
-  for (var i = 0; i < prefix.length; i++) {
-    if (prefix[i] != name[i]) {
-      return name
-    }
-  }
-
-  return name.slice(prefix.length);
+// case-preserving version of deconstruct() that also splits on more path-separator characters
+function deconstruct(identifier: string): string[] {
+  return `${identifier}`.
+    replace(/([a-z]+)([A-Z])/g, '$1 $2').
+    replace(/(\d+)([a-z|A-Z]+)/g, '$1 $2').
+    replace(/\b([A-Z]+)([A-Z])([a-z])/, '$1 $2$3').
+    split(/[\W|_|\.|@|-|\s|\$]+/);
 }
 
-export function createPolymorphicInterfaceName(base: string): string {
+export function ensureNameCase(name: string, lowerFirst?: boolean): string {
+  if (gRenamed.has(name) && gRenamed.get(name) === lowerFirst) {
+    return name;
+  }
+  // XMS prefix requires special handling due to too many permutations that cause weird splits in the word
+  name = name.replace(new RegExp('^(xms)', 'i'), 'XMS');
+  let reconstructed = '';
+  const words = deconstruct(name);
+  for (let i = 0; i < words.length; ++i) {
+    let word = words[i];
+    // for params, lower-case the first segment
+    if (lowerFirst && i === 0) {
+      word = word.toLowerCase();
+    } else {
+      for (const tla of values(CommonAcronyms)) {
+        // perform a case-insensitive match against the list of TLAs
+        const match = word.match(new RegExp(tla, 'i'));
+        if (match) {
+          // replace the match with its upper-case version
+          let toReplace = match[0];
+          if (match.length === 2) {
+            // a capture group was specified, use it instead
+            toReplace = match[1];
+          }
+          word = word.replace(toReplace, toReplace.toUpperCase());
+        }
+      }
+      // note that capitalize() will convert the following acronyms to all upper-case
+      // 'ip', 'os', 'ms', 'vm'
+      word = word.capitalize();
+    }
+    reconstructed += word;
+  }
+  gRenamed.set(reconstructed, lowerFirst === true);
+  return reconstructed;
+}
+
+function createPolymorphicInterfaceName(base: string): string {
   return base + 'Classification';
 }

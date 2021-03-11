@@ -257,7 +257,7 @@ func (client *ArrayClient) getArrayValidHandleError(resp *azcore.Response) error
 
 // GetBase64URL - Get array value ['a string that gets encoded with base64url', 'test string' 'Lorem ipsum'] with the items base64url encoded
 func (client *ArrayClient) GetBase64URL(ctx context.Context, options *ArrayGetBase64URLOptions) (ByteArrayArrayResponse, error) {
-	req, err := client.getBase64UrlCreateRequest(ctx, options)
+	req, err := client.getBase64URLCreateRequest(ctx, options)
 	if err != nil {
 		return ByteArrayArrayResponse{}, err
 	}
@@ -266,13 +266,13 @@ func (client *ArrayClient) GetBase64URL(ctx context.Context, options *ArrayGetBa
 		return ByteArrayArrayResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return ByteArrayArrayResponse{}, client.getBase64UrlHandleError(resp)
+		return ByteArrayArrayResponse{}, client.getBase64URLHandleError(resp)
 	}
-	return client.getBase64UrlHandleResponse(resp)
+	return client.getBase64URLHandleResponse(resp)
 }
 
-// getBase64UrlCreateRequest creates the GetBase64URL request.
-func (client *ArrayClient) getBase64UrlCreateRequest(ctx context.Context, options *ArrayGetBase64URLOptions) (*azcore.Request, error) {
+// getBase64URLCreateRequest creates the GetBase64URL request.
+func (client *ArrayClient) getBase64URLCreateRequest(ctx context.Context, options *ArrayGetBase64URLOptions) (*azcore.Request, error) {
 	urlPath := "/array/prim/base64url/valid"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -283,8 +283,8 @@ func (client *ArrayClient) getBase64UrlCreateRequest(ctx context.Context, option
 	return req, nil
 }
 
-// getBase64UrlHandleResponse handles the GetBase64URL response.
-func (client *ArrayClient) getBase64UrlHandleResponse(resp *azcore.Response) (ByteArrayArrayResponse, error) {
+// getBase64URLHandleResponse handles the GetBase64URL response.
+func (client *ArrayClient) getBase64URLHandleResponse(resp *azcore.Response) (ByteArrayArrayResponse, error) {
 	var val [][]byte
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return ByteArrayArrayResponse{}, err
@@ -292,8 +292,8 @@ func (client *ArrayClient) getBase64UrlHandleResponse(resp *azcore.Response) (By
 	return ByteArrayArrayResponse{RawResponse: resp.Response, ByteArrayArray: val}, nil
 }
 
-// getBase64UrlHandleError handles the GetBase64URL error response.
-func (client *ArrayClient) getBase64UrlHandleError(resp *azcore.Response) error {
+// getBase64URLHandleError handles the GetBase64URL error response.
+func (client *ArrayClient) getBase64URLHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -963,7 +963,7 @@ func (client *ArrayClient) getDateTimeInvalidNullHandleError(resp *azcore.Respon
 
 // GetDateTimeRFC1123Valid - Get date-time array value ['Fri, 01 Dec 2000 00:00:01 GMT', 'Wed, 02 Jan 1980 00:11:35 GMT', 'Wed, 12 Oct 1492 10:15:01 GMT']
 func (client *ArrayClient) GetDateTimeRFC1123Valid(ctx context.Context, options *ArrayGetDateTimeRFC1123ValidOptions) (TimeArrayResponse, error) {
-	req, err := client.getDateTimeRfc1123ValidCreateRequest(ctx, options)
+	req, err := client.getDateTimeRFC1123ValidCreateRequest(ctx, options)
 	if err != nil {
 		return TimeArrayResponse{}, err
 	}
@@ -972,13 +972,13 @@ func (client *ArrayClient) GetDateTimeRFC1123Valid(ctx context.Context, options 
 		return TimeArrayResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return TimeArrayResponse{}, client.getDateTimeRfc1123ValidHandleError(resp)
+		return TimeArrayResponse{}, client.getDateTimeRFC1123ValidHandleError(resp)
 	}
-	return client.getDateTimeRfc1123ValidHandleResponse(resp)
+	return client.getDateTimeRFC1123ValidHandleResponse(resp)
 }
 
-// getDateTimeRfc1123ValidCreateRequest creates the GetDateTimeRFC1123Valid request.
-func (client *ArrayClient) getDateTimeRfc1123ValidCreateRequest(ctx context.Context, options *ArrayGetDateTimeRFC1123ValidOptions) (*azcore.Request, error) {
+// getDateTimeRFC1123ValidCreateRequest creates the GetDateTimeRFC1123Valid request.
+func (client *ArrayClient) getDateTimeRFC1123ValidCreateRequest(ctx context.Context, options *ArrayGetDateTimeRFC1123ValidOptions) (*azcore.Request, error) {
 	urlPath := "/array/prim/date-time-rfc1123/valid"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -989,8 +989,8 @@ func (client *ArrayClient) getDateTimeRfc1123ValidCreateRequest(ctx context.Cont
 	return req, nil
 }
 
-// getDateTimeRfc1123ValidHandleResponse handles the GetDateTimeRFC1123Valid response.
-func (client *ArrayClient) getDateTimeRfc1123ValidHandleResponse(resp *azcore.Response) (TimeArrayResponse, error) {
+// getDateTimeRFC1123ValidHandleResponse handles the GetDateTimeRFC1123Valid response.
+func (client *ArrayClient) getDateTimeRFC1123ValidHandleResponse(resp *azcore.Response) (TimeArrayResponse, error) {
 	var aux []timeRFC1123
 	if err := resp.UnmarshalAsJSON(&aux); err != nil {
 		return TimeArrayResponse{}, err
@@ -1002,8 +1002,8 @@ func (client *ArrayClient) getDateTimeRfc1123ValidHandleResponse(resp *azcore.Re
 	return TimeArrayResponse{RawResponse: resp.Response, TimeArray: cp}, nil
 }
 
-// getDateTimeRfc1123ValidHandleError handles the GetDateTimeRFC1123Valid error response.
-func (client *ArrayClient) getDateTimeRfc1123ValidHandleError(resp *azcore.Response) error {
+// getDateTimeRFC1123ValidHandleError handles the GetDateTimeRFC1123Valid error response.
+func (client *ArrayClient) getDateTimeRFC1123ValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -2312,7 +2312,7 @@ func (client *ArrayClient) getStringWithNullHandleError(resp *azcore.Response) e
 
 // GetUUIDInvalidChars - Get uuid array value ['6dcc7237-45fe-45c4-8a6b-3a8a3f625652', 'foo']
 func (client *ArrayClient) GetUUIDInvalidChars(ctx context.Context, options *ArrayGetUUIDInvalidCharsOptions) (StringArrayResponse, error) {
-	req, err := client.getUuidInvalidCharsCreateRequest(ctx, options)
+	req, err := client.getUUIDInvalidCharsCreateRequest(ctx, options)
 	if err != nil {
 		return StringArrayResponse{}, err
 	}
@@ -2321,13 +2321,13 @@ func (client *ArrayClient) GetUUIDInvalidChars(ctx context.Context, options *Arr
 		return StringArrayResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return StringArrayResponse{}, client.getUuidInvalidCharsHandleError(resp)
+		return StringArrayResponse{}, client.getUUIDInvalidCharsHandleError(resp)
 	}
-	return client.getUuidInvalidCharsHandleResponse(resp)
+	return client.getUUIDInvalidCharsHandleResponse(resp)
 }
 
-// getUuidInvalidCharsCreateRequest creates the GetUUIDInvalidChars request.
-func (client *ArrayClient) getUuidInvalidCharsCreateRequest(ctx context.Context, options *ArrayGetUUIDInvalidCharsOptions) (*azcore.Request, error) {
+// getUUIDInvalidCharsCreateRequest creates the GetUUIDInvalidChars request.
+func (client *ArrayClient) getUUIDInvalidCharsCreateRequest(ctx context.Context, options *ArrayGetUUIDInvalidCharsOptions) (*azcore.Request, error) {
 	urlPath := "/array/prim/uuid/invalidchars"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -2338,8 +2338,8 @@ func (client *ArrayClient) getUuidInvalidCharsCreateRequest(ctx context.Context,
 	return req, nil
 }
 
-// getUuidInvalidCharsHandleResponse handles the GetUUIDInvalidChars response.
-func (client *ArrayClient) getUuidInvalidCharsHandleResponse(resp *azcore.Response) (StringArrayResponse, error) {
+// getUUIDInvalidCharsHandleResponse handles the GetUUIDInvalidChars response.
+func (client *ArrayClient) getUUIDInvalidCharsHandleResponse(resp *azcore.Response) (StringArrayResponse, error) {
 	var val []string
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return StringArrayResponse{}, err
@@ -2347,8 +2347,8 @@ func (client *ArrayClient) getUuidInvalidCharsHandleResponse(resp *azcore.Respon
 	return StringArrayResponse{RawResponse: resp.Response, StringArray: val}, nil
 }
 
-// getUuidInvalidCharsHandleError handles the GetUUIDInvalidChars error response.
-func (client *ArrayClient) getUuidInvalidCharsHandleError(resp *azcore.Response) error {
+// getUUIDInvalidCharsHandleError handles the GetUUIDInvalidChars error response.
+func (client *ArrayClient) getUUIDInvalidCharsHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -2358,7 +2358,7 @@ func (client *ArrayClient) getUuidInvalidCharsHandleError(resp *azcore.Response)
 
 // GetUUIDValid - Get uuid array value ['6dcc7237-45fe-45c4-8a6b-3a8a3f625652', 'd1399005-30f7-40d6-8da6-dd7c89ad34db', 'f42f6aa1-a5bc-4ddf-907e-5f915de43205']
 func (client *ArrayClient) GetUUIDValid(ctx context.Context, options *ArrayGetUUIDValidOptions) (StringArrayResponse, error) {
-	req, err := client.getUuidValidCreateRequest(ctx, options)
+	req, err := client.getUUIDValidCreateRequest(ctx, options)
 	if err != nil {
 		return StringArrayResponse{}, err
 	}
@@ -2367,13 +2367,13 @@ func (client *ArrayClient) GetUUIDValid(ctx context.Context, options *ArrayGetUU
 		return StringArrayResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return StringArrayResponse{}, client.getUuidValidHandleError(resp)
+		return StringArrayResponse{}, client.getUUIDValidHandleError(resp)
 	}
-	return client.getUuidValidHandleResponse(resp)
+	return client.getUUIDValidHandleResponse(resp)
 }
 
-// getUuidValidCreateRequest creates the GetUUIDValid request.
-func (client *ArrayClient) getUuidValidCreateRequest(ctx context.Context, options *ArrayGetUUIDValidOptions) (*azcore.Request, error) {
+// getUUIDValidCreateRequest creates the GetUUIDValid request.
+func (client *ArrayClient) getUUIDValidCreateRequest(ctx context.Context, options *ArrayGetUUIDValidOptions) (*azcore.Request, error) {
 	urlPath := "/array/prim/uuid/valid"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -2384,8 +2384,8 @@ func (client *ArrayClient) getUuidValidCreateRequest(ctx context.Context, option
 	return req, nil
 }
 
-// getUuidValidHandleResponse handles the GetUUIDValid response.
-func (client *ArrayClient) getUuidValidHandleResponse(resp *azcore.Response) (StringArrayResponse, error) {
+// getUUIDValidHandleResponse handles the GetUUIDValid response.
+func (client *ArrayClient) getUUIDValidHandleResponse(resp *azcore.Response) (StringArrayResponse, error) {
 	var val []string
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return StringArrayResponse{}, err
@@ -2393,8 +2393,8 @@ func (client *ArrayClient) getUuidValidHandleResponse(resp *azcore.Response) (St
 	return StringArrayResponse{RawResponse: resp.Response, StringArray: val}, nil
 }
 
-// getUuidValidHandleError handles the GetUUIDValid error response.
-func (client *ArrayClient) getUuidValidHandleError(resp *azcore.Response) error {
+// getUUIDValidHandleError handles the GetUUIDValid error response.
+func (client *ArrayClient) getUUIDValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -2552,7 +2552,7 @@ func (client *ArrayClient) putComplexValidHandleError(resp *azcore.Response) err
 
 // PutDateTimeRFC1123Valid - Set array value ['Fri, 01 Dec 2000 00:00:01 GMT', 'Wed, 02 Jan 1980 00:11:35 GMT', 'Wed, 12 Oct 1492 10:15:01 GMT']
 func (client *ArrayClient) PutDateTimeRFC1123Valid(ctx context.Context, arrayBody []time.Time, options *ArrayPutDateTimeRFC1123ValidOptions) (*http.Response, error) {
-	req, err := client.putDateTimeRfc1123ValidCreateRequest(ctx, arrayBody, options)
+	req, err := client.putDateTimeRFC1123ValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
 		return nil, err
 	}
@@ -2561,13 +2561,13 @@ func (client *ArrayClient) PutDateTimeRFC1123Valid(ctx context.Context, arrayBod
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.putDateTimeRfc1123ValidHandleError(resp)
+		return nil, client.putDateTimeRFC1123ValidHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// putDateTimeRfc1123ValidCreateRequest creates the PutDateTimeRFC1123Valid request.
-func (client *ArrayClient) putDateTimeRfc1123ValidCreateRequest(ctx context.Context, arrayBody []time.Time, options *ArrayPutDateTimeRFC1123ValidOptions) (*azcore.Request, error) {
+// putDateTimeRFC1123ValidCreateRequest creates the PutDateTimeRFC1123Valid request.
+func (client *ArrayClient) putDateTimeRFC1123ValidCreateRequest(ctx context.Context, arrayBody []time.Time, options *ArrayPutDateTimeRFC1123ValidOptions) (*azcore.Request, error) {
 	urlPath := "/array/prim/date-time-rfc1123/valid"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -2582,8 +2582,8 @@ func (client *ArrayClient) putDateTimeRfc1123ValidCreateRequest(ctx context.Cont
 	return req, req.MarshalAsJSON(aux)
 }
 
-// putDateTimeRfc1123ValidHandleError handles the PutDateTimeRFC1123Valid error response.
-func (client *ArrayClient) putDateTimeRfc1123ValidHandleError(resp *azcore.Response) error {
+// putDateTimeRFC1123ValidHandleError handles the PutDateTimeRFC1123Valid error response.
+func (client *ArrayClient) putDateTimeRFC1123ValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -3042,7 +3042,7 @@ func (client *ArrayClient) putStringValidHandleError(resp *azcore.Response) erro
 
 // PutUUIDValid - Set array value ['6dcc7237-45fe-45c4-8a6b-3a8a3f625652', 'd1399005-30f7-40d6-8da6-dd7c89ad34db', 'f42f6aa1-a5bc-4ddf-907e-5f915de43205']
 func (client *ArrayClient) PutUUIDValid(ctx context.Context, arrayBody []string, options *ArrayPutUUIDValidOptions) (*http.Response, error) {
-	req, err := client.putUuidValidCreateRequest(ctx, arrayBody, options)
+	req, err := client.putUUIDValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
 		return nil, err
 	}
@@ -3051,13 +3051,13 @@ func (client *ArrayClient) PutUUIDValid(ctx context.Context, arrayBody []string,
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.putUuidValidHandleError(resp)
+		return nil, client.putUUIDValidHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// putUuidValidCreateRequest creates the PutUUIDValid request.
-func (client *ArrayClient) putUuidValidCreateRequest(ctx context.Context, arrayBody []string, options *ArrayPutUUIDValidOptions) (*azcore.Request, error) {
+// putUUIDValidCreateRequest creates the PutUUIDValid request.
+func (client *ArrayClient) putUUIDValidCreateRequest(ctx context.Context, arrayBody []string, options *ArrayPutUUIDValidOptions) (*azcore.Request, error) {
 	urlPath := "/array/prim/uuid/valid"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -3068,8 +3068,8 @@ func (client *ArrayClient) putUuidValidCreateRequest(ctx context.Context, arrayB
 	return req, req.MarshalAsJSON(arrayBody)
 }
 
-// putUuidValidHandleError handles the PutUUIDValid error response.
-func (client *ArrayClient) putUuidValidHandleError(resp *azcore.Response) error {
+// putUUIDValidHandleError handles the PutUUIDValid error response.
+func (client *ArrayClient) putUUIDValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

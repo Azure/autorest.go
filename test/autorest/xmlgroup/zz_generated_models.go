@@ -439,7 +439,7 @@ type Metrics struct {
 	Enabled *bool `xml:"Enabled"`
 
 	// Indicates whether metrics should generate summary statistics for called API operations.
-	IncludeApIs *bool `xml:"IncludeAPIs"`
+	IncludeAPIs *bool `xml:"IncludeAPIs"`
 
 	// the retention policy
 	RetentionPolicy *RetentionPolicy `xml:"RetentionPolicy"`
@@ -449,7 +449,7 @@ type Metrics struct {
 }
 
 // Contans property
-type ObjectWithXMSTextProperty struct {
+type ObjectWithXMsTextProperty struct {
 	// Returned value should be 'I am text'
 	Content *string `xml:"content"`
 
@@ -457,10 +457,10 @@ type ObjectWithXMSTextProperty struct {
 	Language *string `xml:"language,attr"`
 }
 
-// ObjectWithXMSTextPropertyResponse is the response envelope for operations that return a ObjectWithXMSTextProperty type.
-type ObjectWithXMSTextPropertyResponse struct {
+// ObjectWithXMsTextPropertyResponse is the response envelope for operations that return a ObjectWithXMsTextProperty type.
+type ObjectWithXMsTextPropertyResponse struct {
 	// Contans property
-	Data *ObjectWithXMSTextProperty `xml:"Data"`
+	Data *ObjectWithXMsTextProperty `xml:"Data"`
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -512,7 +512,7 @@ type RootWithRefAndNoMetaResponse struct {
 }
 
 // signed identifier
-type SignedIDentifier struct {
+type SignedIdentifier struct {
 	// The access policy
 	AccessPolicy *AccessPolicy `xml:"AccessPolicy"`
 
@@ -520,13 +520,13 @@ type SignedIDentifier struct {
 	ID *string `xml:"Id"`
 }
 
-// SignedIDentifierArrayResponse is the response envelope for operations that return a []SignedIDentifier type.
-type SignedIDentifierArrayResponse struct {
+// SignedIdentifierArrayResponse is the response envelope for operations that return a []SignedIdentifier type.
+type SignedIdentifierArrayResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 
 	// a collection of signed identifiers
-	SignedIdentifiers []SignedIDentifier `xml:"SignedIdentifier"`
+	SignedIdentifiers []SignedIdentifier `xml:"SignedIdentifier"`
 }
 
 // A slide in a slideshow
@@ -670,8 +670,8 @@ type XMLGetWrappedListsOptions struct {
 	// placeholder for future optional parameters
 }
 
-// XMLGetXMSTextOptions contains the optional parameters for the XML.GetXMSText method.
-type XMLGetXMSTextOptions struct {
+// XMLGetXMsTextOptions contains the optional parameters for the XML.GetXMsText method.
+type XMLGetXMsTextOptions struct {
 	// placeholder for future optional parameters
 }
 

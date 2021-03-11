@@ -118,7 +118,7 @@ func (client *ByteClient) getInvalidHandleError(resp *azcore.Response) error {
 
 // GetNonASCII - Get non-ascii byte string hex(FF FE FD FC FB FA F9 F8 F7 F6)
 func (client *ByteClient) GetNonASCII(ctx context.Context, options *ByteGetNonASCIIOptions) (ByteArrayResponse, error) {
-	req, err := client.getNonAsciiCreateRequest(ctx, options)
+	req, err := client.getNonASCIICreateRequest(ctx, options)
 	if err != nil {
 		return ByteArrayResponse{}, err
 	}
@@ -127,13 +127,13 @@ func (client *ByteClient) GetNonASCII(ctx context.Context, options *ByteGetNonAS
 		return ByteArrayResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return ByteArrayResponse{}, client.getNonAsciiHandleError(resp)
+		return ByteArrayResponse{}, client.getNonASCIIHandleError(resp)
 	}
-	return client.getNonAsciiHandleResponse(resp)
+	return client.getNonASCIIHandleResponse(resp)
 }
 
-// getNonAsciiCreateRequest creates the GetNonASCII request.
-func (client *ByteClient) getNonAsciiCreateRequest(ctx context.Context, options *ByteGetNonASCIIOptions) (*azcore.Request, error) {
+// getNonASCIICreateRequest creates the GetNonASCII request.
+func (client *ByteClient) getNonASCIICreateRequest(ctx context.Context, options *ByteGetNonASCIIOptions) (*azcore.Request, error) {
 	urlPath := "/byte/nonAscii"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -144,8 +144,8 @@ func (client *ByteClient) getNonAsciiCreateRequest(ctx context.Context, options 
 	return req, nil
 }
 
-// getNonAsciiHandleResponse handles the GetNonASCII response.
-func (client *ByteClient) getNonAsciiHandleResponse(resp *azcore.Response) (ByteArrayResponse, error) {
+// getNonASCIIHandleResponse handles the GetNonASCII response.
+func (client *ByteClient) getNonASCIIHandleResponse(resp *azcore.Response) (ByteArrayResponse, error) {
 	var val *[]byte
 	if err := resp.UnmarshalAsByteArray(&val, azcore.Base64StdFormat); err != nil {
 		return ByteArrayResponse{}, err
@@ -153,8 +153,8 @@ func (client *ByteClient) getNonAsciiHandleResponse(resp *azcore.Response) (Byte
 	return ByteArrayResponse{RawResponse: resp.Response, Value: val}, nil
 }
 
-// getNonAsciiHandleError handles the GetNonASCII error response.
-func (client *ByteClient) getNonAsciiHandleError(resp *azcore.Response) error {
+// getNonASCIIHandleError handles the GetNonASCII error response.
+func (client *ByteClient) getNonASCIIHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -210,7 +210,7 @@ func (client *ByteClient) getNullHandleError(resp *azcore.Response) error {
 
 // PutNonASCII - Put non-ascii byte string hex(FF FE FD FC FB FA F9 F8 F7 F6)
 func (client *ByteClient) PutNonASCII(ctx context.Context, byteBody []byte, options *BytePutNonASCIIOptions) (*http.Response, error) {
-	req, err := client.putNonAsciiCreateRequest(ctx, byteBody, options)
+	req, err := client.putNonASCIICreateRequest(ctx, byteBody, options)
 	if err != nil {
 		return nil, err
 	}
@@ -219,13 +219,13 @@ func (client *ByteClient) PutNonASCII(ctx context.Context, byteBody []byte, opti
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.putNonAsciiHandleError(resp)
+		return nil, client.putNonASCIIHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// putNonAsciiCreateRequest creates the PutNonASCII request.
-func (client *ByteClient) putNonAsciiCreateRequest(ctx context.Context, byteBody []byte, options *BytePutNonASCIIOptions) (*azcore.Request, error) {
+// putNonASCIICreateRequest creates the PutNonASCII request.
+func (client *ByteClient) putNonASCIICreateRequest(ctx context.Context, byteBody []byte, options *BytePutNonASCIIOptions) (*azcore.Request, error) {
 	urlPath := "/byte/nonAscii"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -236,8 +236,8 @@ func (client *ByteClient) putNonAsciiCreateRequest(ctx context.Context, byteBody
 	return req, req.MarshalAsByteArray(byteBody, azcore.Base64StdFormat)
 }
 
-// putNonAsciiHandleError handles the PutNonASCII error response.
-func (client *ByteClient) putNonAsciiHandleError(resp *azcore.Response) error {
+// putNonASCIIHandleError handles the PutNonASCII error response.
+func (client *ByteClient) putNonASCIIHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

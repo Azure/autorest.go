@@ -32,8 +32,8 @@ func NewVirtualMachineRunCommandsClient(con *armcore.Connection, subscriptionID 
 }
 
 // Get - Gets specific run command for a subscription in a location.
-func (client *VirtualMachineRunCommandsClient) Get(ctx context.Context, location string, commandId string, options *VirtualMachineRunCommandsGetOptions) (RunCommandDocumentResponse, error) {
-	req, err := client.getCreateRequest(ctx, location, commandId, options)
+func (client *VirtualMachineRunCommandsClient) Get(ctx context.Context, location string, commandID string, options *VirtualMachineRunCommandsGetOptions) (RunCommandDocumentResponse, error) {
+	req, err := client.getCreateRequest(ctx, location, commandID, options)
 	if err != nil {
 		return RunCommandDocumentResponse{}, err
 	}
@@ -48,10 +48,10 @@ func (client *VirtualMachineRunCommandsClient) Get(ctx context.Context, location
 }
 
 // getCreateRequest creates the Get request.
-func (client *VirtualMachineRunCommandsClient) getCreateRequest(ctx context.Context, location string, commandId string, options *VirtualMachineRunCommandsGetOptions) (*azcore.Request, error) {
+func (client *VirtualMachineRunCommandsClient) getCreateRequest(ctx context.Context, location string, commandID string, options *VirtualMachineRunCommandsGetOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/runCommands/{commandId}"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
-	urlPath = strings.ReplaceAll(urlPath, "{commandId}", url.PathEscape(commandId))
+	urlPath = strings.ReplaceAll(urlPath, "{commandId}", url.PathEscape(commandID))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {

@@ -33,7 +33,7 @@ func NewResourceSKUsClient(con *armcore.Connection, subscriptionID string) *Reso
 
 // List - Gets the list of Microsoft.Compute SKUs available for your Subscription.
 func (client *ResourceSKUsClient) List(options *ResourceSKUsListOptions) ResourceSKUsResultPager {
-	return &resourceSkUsResultPager{
+	return &resourceSKUsResultPager{
 		pipeline: client.con.Pipeline(),
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, options)

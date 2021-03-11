@@ -4,12 +4,12 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Session } from '@autorest/extension-base';
-import { camelCase } from '@azure-tools/codegen';
 import { CodeModel } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
-import { PagerInfo } from '../common/helpers';
+import { internalPagerTypeName, PagerInfo } from '../common/helpers';
 import { contentPreamble, sortAscending } from './helpers';
 import { ImportManager } from './imports';
+import { ensureNameCase } from '../transform/namer';
 
 // Creates the content in pagers.go
 export async function generatePagers(session: Session<CodeModel>): Promise<string> {
@@ -28,7 +28,7 @@ export async function generatePagers(session: Session<CodeModel>): Promise<strin
   const pagers = <Array<PagerInfo>>session.model.language.go!.pageableTypes;
   pagers.sort((a: PagerInfo, b: PagerInfo) => { return sortAscending(a.name, b.name) });
   for (const pager of values(pagers)) {
-    const pagerType = camelCase(pager.name);
+    const pagerType = internalPagerTypeName(pager);
     let pollerRespField = '';
     let respFieldCheck = '\tresp, err := p.pipeline.Do(req)';
     let requesterCondition = '';
@@ -45,10 +45,10 @@ export async function generatePagers(session: Session<CodeModel>): Promise<strin
   }`;
       requesterCondition = ' if p.resp == nil';
     }
-    const requesterType = `${camelCase(pager.respType)}CreateRequest`;
-    const errorerType = `${camelCase(pager.respType)}HandleError`;
-    const responderType = `${camelCase(pager.respType)}HandleResponse`;
-    const advanceType = `${camelCase(pager.respType)}AdvancePage`;
+    const requesterType = ensureNameCase(`${pager.respType}CreateRequest`, true);
+    const errorerType = ensureNameCase(`${pager.respType}HandleError`, true);
+    const responderType = ensureNameCase(`${pager.respType}HandleResponse`, true);
+    const advanceType = ensureNameCase(`${pager.respType}AdvancePage`, true);
     text += `// ${pager.name} provides iteration over ${pager.respType} pages.
 type ${pager.name} interface {
 	azcore.Pager

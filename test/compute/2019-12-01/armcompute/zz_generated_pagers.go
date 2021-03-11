@@ -1085,25 +1085,25 @@ type ResourceSKUsResultPager interface {
 	PageResponse() ResourceSKUsResultResponse
 }
 
-type resourceSkUsResultCreateRequest func(context.Context) (*azcore.Request, error)
+type resourceSKUsResultCreateRequest func(context.Context) (*azcore.Request, error)
 
-type resourceSkUsResultHandleError func(*azcore.Response) error
+type resourceSKUsResultHandleError func(*azcore.Response) error
 
-type resourceSkUsResultHandleResponse func(*azcore.Response) (ResourceSKUsResultResponse, error)
+type resourceSKUsResultHandleResponse func(*azcore.Response) (ResourceSKUsResultResponse, error)
 
-type resourceSkUsResultAdvancePage func(context.Context, ResourceSKUsResultResponse) (*azcore.Request, error)
+type resourceSKUsResultAdvancePage func(context.Context, ResourceSKUsResultResponse) (*azcore.Request, error)
 
-type resourceSkUsResultPager struct {
+type resourceSKUsResultPager struct {
 	// the pipeline for making the request
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
-	requester resourceSkUsResultCreateRequest
+	requester resourceSKUsResultCreateRequest
 	// callback for handling response errors
-	errorer resourceSkUsResultHandleError
+	errorer resourceSKUsResultHandleError
 	// callback for handling the HTTP response
-	responder resourceSkUsResultHandleResponse
+	responder resourceSKUsResultHandleResponse
 	// callback for advancing to the next page
-	advancer resourceSkUsResultAdvancePage
+	advancer resourceSKUsResultAdvancePage
 	// contains the current response
 	current ResourceSKUsResultResponse
 	// status codes for successful retrieval
@@ -1112,11 +1112,11 @@ type resourceSkUsResultPager struct {
 	err error
 }
 
-func (p *resourceSkUsResultPager) Err() error {
+func (p *resourceSKUsResultPager) Err() error {
 	return p.err
 }
 
-func (p *resourceSkUsResultPager) NextPage(ctx context.Context) bool {
+func (p *resourceSKUsResultPager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -1149,7 +1149,7 @@ func (p *resourceSkUsResultPager) NextPage(ctx context.Context) bool {
 	return true
 }
 
-func (p *resourceSkUsResultPager) PageResponse() ResourceSKUsResultResponse {
+func (p *resourceSKUsResultPager) PageResponse() ResourceSKUsResultResponse {
 	return p.current
 }
 
@@ -1693,25 +1693,25 @@ type VirtualMachineScaleSetListSKUsResultPager interface {
 	PageResponse() VirtualMachineScaleSetListSKUsResultResponse
 }
 
-type virtualMachineScaleSetListSkUsResultCreateRequest func(context.Context) (*azcore.Request, error)
+type virtualMachineScaleSetListSKUsResultCreateRequest func(context.Context) (*azcore.Request, error)
 
-type virtualMachineScaleSetListSkUsResultHandleError func(*azcore.Response) error
+type virtualMachineScaleSetListSKUsResultHandleError func(*azcore.Response) error
 
-type virtualMachineScaleSetListSkUsResultHandleResponse func(*azcore.Response) (VirtualMachineScaleSetListSKUsResultResponse, error)
+type virtualMachineScaleSetListSKUsResultHandleResponse func(*azcore.Response) (VirtualMachineScaleSetListSKUsResultResponse, error)
 
-type virtualMachineScaleSetListSkUsResultAdvancePage func(context.Context, VirtualMachineScaleSetListSKUsResultResponse) (*azcore.Request, error)
+type virtualMachineScaleSetListSKUsResultAdvancePage func(context.Context, VirtualMachineScaleSetListSKUsResultResponse) (*azcore.Request, error)
 
-type virtualMachineScaleSetListSkUsResultPager struct {
+type virtualMachineScaleSetListSKUsResultPager struct {
 	// the pipeline for making the request
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
-	requester virtualMachineScaleSetListSkUsResultCreateRequest
+	requester virtualMachineScaleSetListSKUsResultCreateRequest
 	// callback for handling response errors
-	errorer virtualMachineScaleSetListSkUsResultHandleError
+	errorer virtualMachineScaleSetListSKUsResultHandleError
 	// callback for handling the HTTP response
-	responder virtualMachineScaleSetListSkUsResultHandleResponse
+	responder virtualMachineScaleSetListSKUsResultHandleResponse
 	// callback for advancing to the next page
-	advancer virtualMachineScaleSetListSkUsResultAdvancePage
+	advancer virtualMachineScaleSetListSKUsResultAdvancePage
 	// contains the current response
 	current VirtualMachineScaleSetListSKUsResultResponse
 	// status codes for successful retrieval
@@ -1720,11 +1720,11 @@ type virtualMachineScaleSetListSkUsResultPager struct {
 	err error
 }
 
-func (p *virtualMachineScaleSetListSkUsResultPager) Err() error {
+func (p *virtualMachineScaleSetListSKUsResultPager) Err() error {
 	return p.err
 }
 
-func (p *virtualMachineScaleSetListSkUsResultPager) NextPage(ctx context.Context) bool {
+func (p *virtualMachineScaleSetListSKUsResultPager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -1757,7 +1757,7 @@ func (p *virtualMachineScaleSetListSkUsResultPager) NextPage(ctx context.Context
 	return true
 }
 
-func (p *virtualMachineScaleSetListSkUsResultPager) PageResponse() VirtualMachineScaleSetListSKUsResultResponse {
+func (p *virtualMachineScaleSetListSKUsResultPager) PageResponse() VirtualMachineScaleSetListSKUsResultResponse {
 	return p.current
 }
 

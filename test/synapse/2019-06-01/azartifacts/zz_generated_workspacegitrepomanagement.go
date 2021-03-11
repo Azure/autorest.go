@@ -47,8 +47,8 @@ func (client *workspaceGitRepoManagementClient) getGitHubAccessTokenCreateReques
 	query := req.URL.Query()
 	query.Set("api-version", "2019-06-01-preview")
 	req.URL.RawQuery = query.Encode()
-	if options != nil && options.ClientRequestId != nil {
-		req.Header.Set("x-ms-client-request-id", *options.ClientRequestId)
+	if options != nil && options.ClientRequestID != nil {
+		req.Header.Set("x-ms-client-request-id", *options.ClientRequestID)
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(gitHubAccessTokenRequest)

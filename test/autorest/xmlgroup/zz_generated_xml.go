@@ -29,23 +29,23 @@ func NewXMLClient(con *Connection) *XMLClient {
 }
 
 // GetACLs - Gets storage ACLs for a container.
-func (client *XMLClient) GetACLs(ctx context.Context, options *XMLGetACLsOptions) (SignedIDentifierArrayResponse, error) {
-	req, err := client.getAcLsCreateRequest(ctx, options)
+func (client *XMLClient) GetACLs(ctx context.Context, options *XMLGetACLsOptions) (SignedIdentifierArrayResponse, error) {
+	req, err := client.getACLsCreateRequest(ctx, options)
 	if err != nil {
-		return SignedIDentifierArrayResponse{}, err
+		return SignedIdentifierArrayResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return SignedIDentifierArrayResponse{}, err
+		return SignedIdentifierArrayResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return SignedIDentifierArrayResponse{}, client.getAcLsHandleError(resp)
+		return SignedIdentifierArrayResponse{}, client.getACLsHandleError(resp)
 	}
-	return client.getAcLsHandleResponse(resp)
+	return client.getACLsHandleResponse(resp)
 }
 
-// getAcLsCreateRequest creates the GetACLs request.
-func (client *XMLClient) getAcLsCreateRequest(ctx context.Context, options *XMLGetACLsOptions) (*azcore.Request, error) {
+// getACLsCreateRequest creates the GetACLs request.
+func (client *XMLClient) getACLsCreateRequest(ctx context.Context, options *XMLGetACLsOptions) (*azcore.Request, error) {
 	urlPath := "/xml/mycontainer"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -60,17 +60,17 @@ func (client *XMLClient) getAcLsCreateRequest(ctx context.Context, options *XMLG
 	return req, nil
 }
 
-// getAcLsHandleResponse handles the GetACLs response.
-func (client *XMLClient) getAcLsHandleResponse(resp *azcore.Response) (SignedIDentifierArrayResponse, error) {
-	result := SignedIDentifierArrayResponse{RawResponse: resp.Response}
+// getACLsHandleResponse handles the GetACLs response.
+func (client *XMLClient) getACLsHandleResponse(resp *azcore.Response) (SignedIdentifierArrayResponse, error) {
+	result := SignedIdentifierArrayResponse{RawResponse: resp.Response}
 	if err := resp.UnmarshalAsXML(&result); err != nil {
-		return SignedIDentifierArrayResponse{}, err
+		return SignedIdentifierArrayResponse{}, err
 	}
 	return result, nil
 }
 
-// getAcLsHandleError handles the GetACLs error response.
-func (client *XMLClient) getAcLsHandleError(resp *azcore.Response) error {
+// getACLsHandleError handles the GetACLs error response.
+func (client *XMLClient) getACLsHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -669,25 +669,25 @@ func (client *XMLClient) getWrappedListsHandleError(resp *azcore.Response) error
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
-// GetXMSText - Get back an XML object with an x-ms-text property, which should translate to the returned object's 'language' property being 'english' and
+// GetXMsText - Get back an XML object with an x-ms-text property, which should translate to the returned object's 'language' property being 'english' and
 // its 'content' property being 'I am text'
-func (client *XMLClient) GetXMSText(ctx context.Context, options *XMLGetXMSTextOptions) (ObjectWithXMSTextPropertyResponse, error) {
-	req, err := client.getXmsTextCreateRequest(ctx, options)
+func (client *XMLClient) GetXMsText(ctx context.Context, options *XMLGetXMsTextOptions) (ObjectWithXMsTextPropertyResponse, error) {
+	req, err := client.getXMsTextCreateRequest(ctx, options)
 	if err != nil {
-		return ObjectWithXMSTextPropertyResponse{}, err
+		return ObjectWithXMsTextPropertyResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return ObjectWithXMSTextPropertyResponse{}, err
+		return ObjectWithXMsTextPropertyResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return ObjectWithXMSTextPropertyResponse{}, client.getXmsTextHandleError(resp)
+		return ObjectWithXMsTextPropertyResponse{}, client.getXMsTextHandleError(resp)
 	}
-	return client.getXmsTextHandleResponse(resp)
+	return client.getXMsTextHandleResponse(resp)
 }
 
-// getXmsTextCreateRequest creates the GetXMSText request.
-func (client *XMLClient) getXmsTextCreateRequest(ctx context.Context, options *XMLGetXMSTextOptions) (*azcore.Request, error) {
+// getXMsTextCreateRequest creates the GetXMsText request.
+func (client *XMLClient) getXMsTextCreateRequest(ctx context.Context, options *XMLGetXMsTextOptions) (*azcore.Request, error) {
 	urlPath := "/xml/x-ms-text"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -698,17 +698,17 @@ func (client *XMLClient) getXmsTextCreateRequest(ctx context.Context, options *X
 	return req, nil
 }
 
-// getXmsTextHandleResponse handles the GetXMSText response.
-func (client *XMLClient) getXmsTextHandleResponse(resp *azcore.Response) (ObjectWithXMSTextPropertyResponse, error) {
-	var val *ObjectWithXMSTextProperty
+// getXMsTextHandleResponse handles the GetXMsText response.
+func (client *XMLClient) getXMsTextHandleResponse(resp *azcore.Response) (ObjectWithXMsTextPropertyResponse, error) {
+	var val *ObjectWithXMsTextProperty
 	if err := resp.UnmarshalAsXML(&val); err != nil {
-		return ObjectWithXMSTextPropertyResponse{}, err
+		return ObjectWithXMsTextPropertyResponse{}, err
 	}
-	return ObjectWithXMSTextPropertyResponse{RawResponse: resp.Response, Data: val}, nil
+	return ObjectWithXMsTextPropertyResponse{RawResponse: resp.Response, Data: val}, nil
 }
 
-// getXmsTextHandleError handles the GetXMSText error response.
-func (client *XMLClient) getXmsTextHandleError(resp *azcore.Response) error {
+// getXMsTextHandleError handles the GetXMsText error response.
+func (client *XMLClient) getXMsTextHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
@@ -913,8 +913,8 @@ func (client *XMLClient) listContainersHandleError(resp *azcore.Response) error 
 }
 
 // PutACLs - Puts storage ACLs for a container.
-func (client *XMLClient) PutACLs(ctx context.Context, properties []SignedIDentifier, options *XMLPutACLsOptions) (*http.Response, error) {
-	req, err := client.putAcLsCreateRequest(ctx, properties, options)
+func (client *XMLClient) PutACLs(ctx context.Context, properties []SignedIdentifier, options *XMLPutACLsOptions) (*http.Response, error) {
+	req, err := client.putACLsCreateRequest(ctx, properties, options)
 	if err != nil {
 		return nil, err
 	}
@@ -923,13 +923,13 @@ func (client *XMLClient) PutACLs(ctx context.Context, properties []SignedIDentif
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, client.putAcLsHandleError(resp)
+		return nil, client.putACLsHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// putAcLsCreateRequest creates the PutACLs request.
-func (client *XMLClient) putAcLsCreateRequest(ctx context.Context, properties []SignedIDentifier, options *XMLPutACLsOptions) (*azcore.Request, error) {
+// putACLsCreateRequest creates the PutACLs request.
+func (client *XMLClient) putACLsCreateRequest(ctx context.Context, properties []SignedIdentifier, options *XMLPutACLsOptions) (*azcore.Request, error) {
 	urlPath := "/xml/mycontainer"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -942,13 +942,13 @@ func (client *XMLClient) putAcLsCreateRequest(ctx context.Context, properties []
 	req.URL.RawQuery = query.Encode()
 	type wrapper struct {
 		XMLName    xml.Name            `xml:"SignedIdentifiers"`
-		Properties *[]SignedIDentifier `xml:"SignedIdentifier"`
+		Properties *[]SignedIdentifier `xml:"SignedIdentifier"`
 	}
 	return req, req.MarshalAsXML(wrapper{Properties: &properties})
 }
 
-// putAcLsHandleError handles the PutACLs error response.
-func (client *XMLClient) putAcLsHandleError(resp *azcore.Response) error {
+// putACLsHandleError handles the PutACLs error response.
+func (client *XMLClient) putACLsHandleError(resp *azcore.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)

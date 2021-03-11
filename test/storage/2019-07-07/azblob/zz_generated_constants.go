@@ -401,21 +401,21 @@ func (c RehydratePriority) ToPtr() *RehydratePriority {
 type SKUName string
 
 const (
-	SKUNameStandardLrs   SKUName = "Standard_LRS"
-	SKUNameStandardGrs   SKUName = "Standard_GRS"
-	SKUNameStandardRagrs SKUName = "Standard_RAGRS"
-	SKUNameStandardZrs   SKUName = "Standard_ZRS"
-	SKUNamePremiumLrs    SKUName = "Premium_LRS"
+	SKUNameStandardLRS   SKUName = "Standard_LRS"
+	SKUNameStandardGRS   SKUName = "Standard_GRS"
+	SKUNameStandardRAGRS SKUName = "Standard_RAGRS"
+	SKUNameStandardZRS   SKUName = "Standard_ZRS"
+	SKUNamePremiumLRS    SKUName = "Premium_LRS"
 )
 
 // PossibleSKUNameValues returns the possible values for the SKUName const type.
 func PossibleSKUNameValues() []SKUName {
 	return []SKUName{
-		SKUNameStandardLrs,
-		SKUNameStandardGrs,
-		SKUNameStandardRagrs,
-		SKUNameStandardZrs,
-		SKUNamePremiumLrs,
+		SKUNameStandardLRS,
+		SKUNameStandardGRS,
+		SKUNameStandardRAGRS,
+		SKUNameStandardZRS,
+		SKUNamePremiumLRS,
 	}
 }
 

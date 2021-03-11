@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Session } from '@autorest/extension-base';
-import { comment, pascalCase } from '@azure-tools/codegen';
+import { comment } from '@azure-tools/codegen';
 import { CodeModel, ComplexSchema, ConstantSchema, DictionarySchema, GroupProperty, ImplementationLocation, ObjectSchema, Language, Schema, SchemaType, Parameter, Property } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 import { isArraySchema, isObjectSchema, getRelationship, hasAdditionalProperties, hasPolymorphicField, commentLength } from '../common/helpers';
@@ -189,7 +189,7 @@ class StructDef {
       if (param.required || param.language.go!.byValue === true) {
         pointer = '';
       }
-      text += `\t${pascalCase(param.language.go!.name)} ${pointer}${param.schema.language.go!.name}\n`;
+      text += `\t${(<string>param.language.go!.name).capitalize()} ${pointer}${param.schema.language.go!.name}\n`;
     }
     text += '}\n\n';
     return text;

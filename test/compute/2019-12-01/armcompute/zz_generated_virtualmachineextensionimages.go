@@ -33,8 +33,8 @@ func NewVirtualMachineExtensionImagesClient(con *armcore.Connection, subscriptio
 }
 
 // Get - Gets a virtual machine extension image.
-func (client *VirtualMachineExtensionImagesClient) Get(ctx context.Context, location string, publisherName string, typeParameter string, version string, options *VirtualMachineExtensionImagesGetOptions) (VirtualMachineExtensionImageResponse, error) {
-	req, err := client.getCreateRequest(ctx, location, publisherName, typeParameter, version, options)
+func (client *VirtualMachineExtensionImagesClient) Get(ctx context.Context, location string, publisherName string, typeParam string, version string, options *VirtualMachineExtensionImagesGetOptions) (VirtualMachineExtensionImageResponse, error) {
+	req, err := client.getCreateRequest(ctx, location, publisherName, typeParam, version, options)
 	if err != nil {
 		return VirtualMachineExtensionImageResponse{}, err
 	}
@@ -49,11 +49,11 @@ func (client *VirtualMachineExtensionImagesClient) Get(ctx context.Context, loca
 }
 
 // getCreateRequest creates the Get request.
-func (client *VirtualMachineExtensionImagesClient) getCreateRequest(ctx context.Context, location string, publisherName string, typeParameter string, version string, options *VirtualMachineExtensionImagesGetOptions) (*azcore.Request, error) {
+func (client *VirtualMachineExtensionImagesClient) getCreateRequest(ctx context.Context, location string, publisherName string, typeParam string, version string, options *VirtualMachineExtensionImagesGetOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions/{version}"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
 	urlPath = strings.ReplaceAll(urlPath, "{publisherName}", url.PathEscape(publisherName))
-	urlPath = strings.ReplaceAll(urlPath, "{type}", url.PathEscape(typeParameter))
+	urlPath = strings.ReplaceAll(urlPath, "{type}", url.PathEscape(typeParam))
 	urlPath = strings.ReplaceAll(urlPath, "{version}", url.PathEscape(version))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -145,8 +145,8 @@ func (client *VirtualMachineExtensionImagesClient) listTypesHandleError(resp *az
 }
 
 // ListVersions - Gets a list of virtual machine extension image versions.
-func (client *VirtualMachineExtensionImagesClient) ListVersions(ctx context.Context, location string, publisherName string, typeParameter string, options *VirtualMachineExtensionImagesListVersionsOptions) (VirtualMachineExtensionImageArrayResponse, error) {
-	req, err := client.listVersionsCreateRequest(ctx, location, publisherName, typeParameter, options)
+func (client *VirtualMachineExtensionImagesClient) ListVersions(ctx context.Context, location string, publisherName string, typeParam string, options *VirtualMachineExtensionImagesListVersionsOptions) (VirtualMachineExtensionImageArrayResponse, error) {
+	req, err := client.listVersionsCreateRequest(ctx, location, publisherName, typeParam, options)
 	if err != nil {
 		return VirtualMachineExtensionImageArrayResponse{}, err
 	}
@@ -161,11 +161,11 @@ func (client *VirtualMachineExtensionImagesClient) ListVersions(ctx context.Cont
 }
 
 // listVersionsCreateRequest creates the ListVersions request.
-func (client *VirtualMachineExtensionImagesClient) listVersionsCreateRequest(ctx context.Context, location string, publisherName string, typeParameter string, options *VirtualMachineExtensionImagesListVersionsOptions) (*azcore.Request, error) {
+func (client *VirtualMachineExtensionImagesClient) listVersionsCreateRequest(ctx context.Context, location string, publisherName string, typeParam string, options *VirtualMachineExtensionImagesListVersionsOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions"
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
 	urlPath = strings.ReplaceAll(urlPath, "{publisherName}", url.PathEscape(publisherName))
-	urlPath = strings.ReplaceAll(urlPath, "{type}", url.PathEscape(typeParameter))
+	urlPath = strings.ReplaceAll(urlPath, "{type}", url.PathEscape(typeParam))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {

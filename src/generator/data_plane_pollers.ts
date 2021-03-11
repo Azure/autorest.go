@@ -4,10 +4,9 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Session } from '@autorest/extension-base';
-import { camelCase } from '@azure-tools/codegen';
-import { CodeModel, SchemaResponse } from '@azure-tools/codemodel';
+import { CodeModel } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
-import { PollerInfo, isSchemaResponse, isPageableOperation } from '../common/helpers';
+import { PollerInfo } from '../common/helpers';
 import { contentPreamble, sortAscending } from './helpers';
 import { ImportManager } from './imports';
 import { generateARMPollers } from './arm_pollers';

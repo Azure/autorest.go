@@ -16,11 +16,11 @@ import (
 	"github.com/google/go-cmp/cmp"
 )
 
-func newLROSClient() *LrOSClient {
+func newLROSClient() *LROsClient {
 	options := ConnectionOptions{}
 	options.Retry.RetryDelay = 10 * time.Millisecond
 	options.HTTPClient = httpClientWithCookieJar()
-	return NewLrOSClient(NewDefaultConnection(&options))
+	return NewLROsClient(NewDefaultConnection(&options))
 }
 
 func httpClientWithCookieJar() azcore.Transport {
@@ -857,7 +857,7 @@ func TestLROBeginPut201CreatingFailed200(t *testing.T) {
 
 func TestLROBeginPut201CreatingSucceeded200(t *testing.T) {
 	op := newLROSClient()
-	resp, err := op.BeginPut201CreatingSucceeded200(context.Background(), &LrOSBeginPut201CreatingSucceeded200Options{Product: &Product{}})
+	resp, err := op.BeginPut201CreatingSucceeded200(context.Background(), &LROsBeginPut201CreatingSucceeded200Options{Product: &Product{}})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -892,7 +892,7 @@ func TestLROBeginPut201CreatingSucceeded200(t *testing.T) {
 
 func TestLROBeginPut202Retry200(t *testing.T) {
 	op := newLROSClient()
-	resp, err := op.BeginPut202Retry200(context.Background(), &LrOSBeginPut202Retry200Options{Product: &Product{}})
+	resp, err := op.BeginPut202Retry200(context.Background(), &LROsBeginPut202Retry200Options{Product: &Product{}})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -924,7 +924,7 @@ func TestLROBeginPut202Retry200(t *testing.T) {
 
 func TestLROBeginPutAsyncNoHeaderInRetry(t *testing.T) {
 	op := newLROSClient()
-	resp, err := op.BeginPutAsyncNoHeaderInRetry(context.Background(), &LrOSBeginPutAsyncNoHeaderInRetryOptions{Product: &Product{}})
+	resp, err := op.BeginPutAsyncNoHeaderInRetry(context.Background(), &LROsBeginPutAsyncNoHeaderInRetryOptions{Product: &Product{}})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -959,7 +959,7 @@ func TestLROBeginPutAsyncNoHeaderInRetry(t *testing.T) {
 
 func TestLROBeginPutAsyncNoRetrySucceeded(t *testing.T) {
 	op := newLROSClient()
-	resp, err := op.BeginPutAsyncNoRetrySucceeded(context.Background(), &LrOSBeginPutAsyncNoRetrySucceededOptions{Product: &Product{}})
+	resp, err := op.BeginPutAsyncNoRetrySucceeded(context.Background(), &LROsBeginPutAsyncNoRetrySucceededOptions{Product: &Product{}})
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -210,7 +210,7 @@ func (client *PrimitiveClient) getDateTimeHandleError(resp *azcore.Response) err
 
 // GetDateTimeRFC1123 - Get complex types with datetimeRfc1123 properties
 func (client *PrimitiveClient) GetDateTimeRFC1123(ctx context.Context, options *PrimitiveGetDateTimeRFC1123Options) (Datetimerfc1123WrapperResponse, error) {
-	req, err := client.getDateTimeRfc1123CreateRequest(ctx, options)
+	req, err := client.getDateTimeRFC1123CreateRequest(ctx, options)
 	if err != nil {
 		return Datetimerfc1123WrapperResponse{}, err
 	}
@@ -219,13 +219,13 @@ func (client *PrimitiveClient) GetDateTimeRFC1123(ctx context.Context, options *
 		return Datetimerfc1123WrapperResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return Datetimerfc1123WrapperResponse{}, client.getDateTimeRfc1123HandleError(resp)
+		return Datetimerfc1123WrapperResponse{}, client.getDateTimeRFC1123HandleError(resp)
 	}
-	return client.getDateTimeRfc1123HandleResponse(resp)
+	return client.getDateTimeRFC1123HandleResponse(resp)
 }
 
-// getDateTimeRfc1123CreateRequest creates the GetDateTimeRFC1123 request.
-func (client *PrimitiveClient) getDateTimeRfc1123CreateRequest(ctx context.Context, options *PrimitiveGetDateTimeRFC1123Options) (*azcore.Request, error) {
+// getDateTimeRFC1123CreateRequest creates the GetDateTimeRFC1123 request.
+func (client *PrimitiveClient) getDateTimeRFC1123CreateRequest(ctx context.Context, options *PrimitiveGetDateTimeRFC1123Options) (*azcore.Request, error) {
 	urlPath := "/complex/primitive/datetimerfc1123"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -236,8 +236,8 @@ func (client *PrimitiveClient) getDateTimeRfc1123CreateRequest(ctx context.Conte
 	return req, nil
 }
 
-// getDateTimeRfc1123HandleResponse handles the GetDateTimeRFC1123 response.
-func (client *PrimitiveClient) getDateTimeRfc1123HandleResponse(resp *azcore.Response) (Datetimerfc1123WrapperResponse, error) {
+// getDateTimeRFC1123HandleResponse handles the GetDateTimeRFC1123 response.
+func (client *PrimitiveClient) getDateTimeRFC1123HandleResponse(resp *azcore.Response) (Datetimerfc1123WrapperResponse, error) {
 	var val *Datetimerfc1123Wrapper
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return Datetimerfc1123WrapperResponse{}, err
@@ -245,8 +245,8 @@ func (client *PrimitiveClient) getDateTimeRfc1123HandleResponse(resp *azcore.Res
 	return Datetimerfc1123WrapperResponse{RawResponse: resp.Response, Datetimerfc1123Wrapper: val}, nil
 }
 
-// getDateTimeRfc1123HandleError handles the GetDateTimeRFC1123 error response.
-func (client *PrimitiveClient) getDateTimeRfc1123HandleError(resp *azcore.Response) error {
+// getDateTimeRFC1123HandleError handles the GetDateTimeRFC1123 error response.
+func (client *PrimitiveClient) getDateTimeRFC1123HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -680,7 +680,7 @@ func (client *PrimitiveClient) putDateTimeHandleError(resp *azcore.Response) err
 
 // PutDateTimeRFC1123 - Put complex types with datetimeRfc1123 properties
 func (client *PrimitiveClient) PutDateTimeRFC1123(ctx context.Context, complexBody Datetimerfc1123Wrapper, options *PrimitivePutDateTimeRFC1123Options) (*http.Response, error) {
-	req, err := client.putDateTimeRfc1123CreateRequest(ctx, complexBody, options)
+	req, err := client.putDateTimeRFC1123CreateRequest(ctx, complexBody, options)
 	if err != nil {
 		return nil, err
 	}
@@ -689,13 +689,13 @@ func (client *PrimitiveClient) PutDateTimeRFC1123(ctx context.Context, complexBo
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.putDateTimeRfc1123HandleError(resp)
+		return nil, client.putDateTimeRFC1123HandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// putDateTimeRfc1123CreateRequest creates the PutDateTimeRFC1123 request.
-func (client *PrimitiveClient) putDateTimeRfc1123CreateRequest(ctx context.Context, complexBody Datetimerfc1123Wrapper, options *PrimitivePutDateTimeRFC1123Options) (*azcore.Request, error) {
+// putDateTimeRFC1123CreateRequest creates the PutDateTimeRFC1123 request.
+func (client *PrimitiveClient) putDateTimeRFC1123CreateRequest(ctx context.Context, complexBody Datetimerfc1123Wrapper, options *PrimitivePutDateTimeRFC1123Options) (*azcore.Request, error) {
 	urlPath := "/complex/primitive/datetimerfc1123"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -706,8 +706,8 @@ func (client *PrimitiveClient) putDateTimeRfc1123CreateRequest(ctx context.Conte
 	return req, req.MarshalAsJSON(complexBody)
 }
 
-// putDateTimeRfc1123HandleError handles the PutDateTimeRFC1123 error response.
-func (client *PrimitiveClient) putDateTimeRfc1123HandleError(resp *azcore.Response) error {
+// putDateTimeRFC1123HandleError handles the PutDateTimeRFC1123 error response.
+func (client *PrimitiveClient) putDateTimeRFC1123HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

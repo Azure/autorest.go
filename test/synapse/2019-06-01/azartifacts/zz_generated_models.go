@@ -19,9 +19,9 @@ import (
 // Call the interface's GetActivity() method to access the common type.
 // Use a type switch to determine the concrete type.  The possible types are:
 // - *Activity, *AppendVariableActivity, *AzureDataExplorerCommandActivity, *AzureFunctionActivity, *AzureMLBatchExecutionActivity,
-// - *AzureMLExecutePipelineActivity, *AzureMLUpdateResourceActivity, *ControlActivity, *CopyActivity, *CustomActivity, *DataLakeAnalyticsUsqlActivity,
+// - *AzureMLExecutePipelineActivity, *AzureMLUpdateResourceActivity, *ControlActivity, *CopyActivity, *CustomActivity, *DataLakeAnalyticsUSQLActivity,
 // - *DatabricksNotebookActivity, *DatabricksSparkJarActivity, *DatabricksSparkPythonActivity, *DeleteActivity, *ExecuteDataFlowActivity,
-// - *ExecutePipelineActivity, *ExecuteSsisPackageActivity, *ExecutionActivity, *FilterActivity, *ForEachActivity, *GetMetadataActivity,
+// - *ExecutePipelineActivity, *ExecuteSSISPackageActivity, *ExecutionActivity, *FilterActivity, *ForEachActivity, *GetMetadataActivity,
 // - *HDInsightHiveActivity, *HDInsightMapReduceActivity, *HDInsightPigActivity, *HDInsightSparkActivity, *HDInsightStreamingActivity,
 // - *IfConditionActivity, *LookupActivity, *SetVariableActivity, *SynapseSparkJobDefinitionActivity, *SqlPoolStoredProcedureActivity,
 // - *SqlServerStoredProcedureActivity, *SwitchActivity, *SynapseNotebookActivity, *UntilActivity, *ValidationActivity, *WaitActivity,
@@ -321,7 +321,7 @@ type ActivityRun struct {
 	AdditionalProperties *map[string]interface{}
 
 	// READ-ONLY; The duration of the activity run.
-	DurationInMS *int32 `json:"durationInMs,omitempty" azure:"ro"`
+	DurationInMs *int32 `json:"durationInMs,omitempty" azure:"ro"`
 
 	// READ-ONLY; The error if any from the activity run.
 	Error interface{} `json:"error,omitempty" azure:"ro"`
@@ -363,8 +363,8 @@ func (a ActivityRun) MarshalJSON() ([]byte, error) {
 	if a.ActivityType != nil {
 		objectMap["activityType"] = a.ActivityType
 	}
-	if a.DurationInMS != nil {
-		objectMap["durationInMs"] = a.DurationInMS
+	if a.DurationInMs != nil {
+		objectMap["durationInMs"] = a.DurationInMs
 	}
 	if a.Error != nil {
 		objectMap["error"] = a.Error
@@ -435,7 +435,7 @@ func (a *ActivityRun) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		case "durationInMs":
 			if val != nil {
-				err = json.Unmarshal(*val, &a.DurationInMS)
+				err = json.Unmarshal(*val, &a.DurationInMs)
 			}
 			delete(rawMsg, key)
 		case "error":
@@ -525,14 +525,14 @@ type AddDataFlowToDebugSessionResponseResponse struct {
 }
 
 // Amazon Marketplace Web Service linked service.
-type AmazonMwsLinkedService struct {
+type AmazonMWSLinkedService struct {
 	LinkedService
 	// Amazon Marketplace Web Service linked service properties.
-	TypeProperties *AmazonMwsLinkedServiceTypeProperties `json:"typeProperties,omitempty"`
+	TypeProperties *AmazonMWSLinkedServiceTypeProperties `json:"typeProperties,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type AmazonMwsLinkedService.
-func (a AmazonMwsLinkedService) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type AmazonMWSLinkedService.
+func (a AmazonMWSLinkedService) MarshalJSON() ([]byte, error) {
 	objectMap := a.LinkedService.marshalInternal("AmazonMWS")
 	if a.TypeProperties != nil {
 		objectMap["typeProperties"] = a.TypeProperties
@@ -540,8 +540,8 @@ func (a AmazonMwsLinkedService) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type AmazonMwsLinkedService.
-func (a *AmazonMwsLinkedService) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type AmazonMWSLinkedService.
+func (a *AmazonMWSLinkedService) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
@@ -563,7 +563,7 @@ func (a *AmazonMwsLinkedService) UnmarshalJSON(data []byte) error {
 }
 
 // Amazon Marketplace Web Service linked service properties.
-type AmazonMwsLinkedServiceTypeProperties struct {
+type AmazonMWSLinkedServiceTypeProperties struct {
 	// The access key id used to access data.
 	AccessKeyID interface{} `json:"accessKeyId,omitempty"`
 
@@ -597,8 +597,8 @@ type AmazonMwsLinkedServiceTypeProperties struct {
 	UsePeerVerification interface{} `json:"usePeerVerification,omitempty"`
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type AmazonMwsLinkedServiceTypeProperties.
-func (a *AmazonMwsLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type AmazonMWSLinkedServiceTypeProperties.
+func (a *AmazonMWSLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
@@ -665,14 +665,14 @@ func (a *AmazonMwsLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error 
 }
 
 // Amazon Marketplace Web Service dataset.
-type AmazonMwsObjectDataset struct {
+type AmazonMWSObjectDataset struct {
 	Dataset
 	// Properties specific to this dataset type.
 	TypeProperties *GenericDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type AmazonMwsObjectDataset.
-func (a AmazonMwsObjectDataset) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type AmazonMWSObjectDataset.
+func (a AmazonMWSObjectDataset) MarshalJSON() ([]byte, error) {
 	objectMap := a.Dataset.marshalInternal("AmazonMWSObject")
 	if a.TypeProperties != nil {
 		objectMap["typeProperties"] = a.TypeProperties
@@ -680,8 +680,8 @@ func (a AmazonMwsObjectDataset) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type AmazonMwsObjectDataset.
-func (a *AmazonMwsObjectDataset) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type AmazonMWSObjectDataset.
+func (a *AmazonMWSObjectDataset) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
@@ -703,14 +703,14 @@ func (a *AmazonMwsObjectDataset) UnmarshalJSON(data []byte) error {
 }
 
 // A copy activity Amazon Marketplace Web Service source.
-type AmazonMwsSource struct {
+type AmazonMWSSource struct {
 	TabularSource
 	// A query to retrieve data from source. Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type AmazonMwsSource.
-func (a AmazonMwsSource) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type AmazonMWSSource.
+func (a AmazonMWSSource) MarshalJSON() ([]byte, error) {
 	objectMap := a.TabularSource.marshalInternal("AmazonMWSSource")
 	if a.Query != nil {
 		objectMap["query"] = a.Query
@@ -718,8 +718,8 @@ func (a AmazonMwsSource) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type AmazonMwsSource.
-func (a *AmazonMwsSource) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type AmazonMWSSource.
+func (a *AmazonMWSSource) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
@@ -1556,14 +1556,14 @@ type AzureBatchLinkedServiceTypeProperties struct {
 }
 
 // Azure Data Lake Storage Gen2 linked service.
-type AzureBlobFsLinkedService struct {
+type AzureBlobFSLinkedService struct {
 	LinkedService
 	// Azure Data Lake Storage Gen2 linked service properties.
-	TypeProperties *AzureBlobFsLinkedServiceTypeProperties `json:"typeProperties,omitempty"`
+	TypeProperties *AzureBlobFSLinkedServiceTypeProperties `json:"typeProperties,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type AzureBlobFsLinkedService.
-func (a AzureBlobFsLinkedService) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type AzureBlobFSLinkedService.
+func (a AzureBlobFSLinkedService) MarshalJSON() ([]byte, error) {
 	objectMap := a.LinkedService.marshalInternal("AzureBlobFS")
 	if a.TypeProperties != nil {
 		objectMap["typeProperties"] = a.TypeProperties
@@ -1571,8 +1571,8 @@ func (a AzureBlobFsLinkedService) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type AzureBlobFsLinkedService.
-func (a *AzureBlobFsLinkedService) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type AzureBlobFSLinkedService.
+func (a *AzureBlobFSLinkedService) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
@@ -1594,7 +1594,7 @@ func (a *AzureBlobFsLinkedService) UnmarshalJSON(data []byte) error {
 }
 
 // Azure Data Lake Storage Gen2 linked service properties.
-type AzureBlobFsLinkedServiceTypeProperties struct {
+type AzureBlobFSLinkedServiceTypeProperties struct {
 	// Account key for the Azure Data Lake Storage Gen2 service. Type: string (or Expression with resultType string).
 	AccountKey interface{} `json:"accountKey,omitempty"`
 
@@ -1615,8 +1615,8 @@ type AzureBlobFsLinkedServiceTypeProperties struct {
 	URL interface{} `json:"url,omitempty"`
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type AzureBlobFsLinkedServiceTypeProperties.
-func (a *AzureBlobFsLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type AzureBlobFSLinkedServiceTypeProperties.
+func (a *AzureBlobFSLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
@@ -1663,14 +1663,14 @@ func (a *AzureBlobFsLinkedServiceTypeProperties) UnmarshalJSON(data []byte) erro
 }
 
 // The location of azure blobFS dataset.
-type AzureBlobFsLocation struct {
+type AzureBlobFSLocation struct {
 	DatasetLocation
 	// Specify the fileSystem of azure blobFS. Type: string (or Expression with resultType string).
 	FileSystem interface{} `json:"fileSystem,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type AzureBlobFsLocation.
-func (a AzureBlobFsLocation) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type AzureBlobFSLocation.
+func (a AzureBlobFSLocation) MarshalJSON() ([]byte, error) {
 	objectMap := a.DatasetLocation.marshalInternal("AzureBlobFSLocation")
 	if a.FileSystem != nil {
 		objectMap["fileSystem"] = a.FileSystem
@@ -1678,8 +1678,8 @@ func (a AzureBlobFsLocation) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type AzureBlobFsLocation.
-func (a *AzureBlobFsLocation) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type AzureBlobFSLocation.
+func (a *AzureBlobFSLocation) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
@@ -1701,7 +1701,7 @@ func (a *AzureBlobFsLocation) UnmarshalJSON(data []byte) error {
 }
 
 // Azure blobFS read settings.
-type AzureBlobFsReadSettings struct {
+type AzureBlobFSReadSettings struct {
 	StoreReadSettings
 	// Indicates whether to enable partition discovery.
 	EnablePartitionDiscovery *bool `json:"enablePartitionDiscovery,omitempty"`
@@ -1722,8 +1722,8 @@ type AzureBlobFsReadSettings struct {
 	WildcardFolderPath interface{} `json:"wildcardFolderPath,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type AzureBlobFsReadSettings.
-func (a AzureBlobFsReadSettings) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type AzureBlobFSReadSettings.
+func (a AzureBlobFSReadSettings) MarshalJSON() ([]byte, error) {
 	objectMap := a.StoreReadSettings.marshalInternal("AzureBlobFSReadSettings")
 	if a.EnablePartitionDiscovery != nil {
 		objectMap["enablePartitionDiscovery"] = a.EnablePartitionDiscovery
@@ -1746,8 +1746,8 @@ func (a AzureBlobFsReadSettings) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type AzureBlobFsReadSettings.
-func (a *AzureBlobFsReadSettings) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type AzureBlobFSReadSettings.
+func (a *AzureBlobFSReadSettings) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
@@ -1794,14 +1794,14 @@ func (a *AzureBlobFsReadSettings) UnmarshalJSON(data []byte) error {
 }
 
 // A copy activity Azure Data Lake Storage Gen2 sink.
-type AzureBlobFsSink struct {
+type AzureBlobFSSink struct {
 	CopySink
 	// The type of copy behavior for copy sink.
 	CopyBehavior interface{} `json:"copyBehavior,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type AzureBlobFsSink.
-func (a AzureBlobFsSink) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type AzureBlobFSSink.
+func (a AzureBlobFSSink) MarshalJSON() ([]byte, error) {
 	objectMap := a.CopySink.marshalInternal("AzureBlobFSSink")
 	if a.CopyBehavior != nil {
 		objectMap["copyBehavior"] = a.CopyBehavior
@@ -1809,8 +1809,8 @@ func (a AzureBlobFsSink) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type AzureBlobFsSink.
-func (a *AzureBlobFsSink) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type AzureBlobFSSink.
+func (a *AzureBlobFSSink) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
@@ -1832,7 +1832,7 @@ func (a *AzureBlobFsSink) UnmarshalJSON(data []byte) error {
 }
 
 // A copy activity Azure BlobFS source.
-type AzureBlobFsSource struct {
+type AzureBlobFSSource struct {
 	CopySource
 	// If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean).
 	Recursive interface{} `json:"recursive,omitempty"`
@@ -1844,8 +1844,8 @@ type AzureBlobFsSource struct {
 	TreatEmptyAsNull interface{} `json:"treatEmptyAsNull,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type AzureBlobFsSource.
-func (a AzureBlobFsSource) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type AzureBlobFSSource.
+func (a AzureBlobFSSource) MarshalJSON() ([]byte, error) {
 	objectMap := a.CopySource.marshalInternal("AzureBlobFSSource")
 	if a.Recursive != nil {
 		objectMap["recursive"] = a.Recursive
@@ -1859,8 +1859,8 @@ func (a AzureBlobFsSource) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type AzureBlobFsSource.
-func (a *AzureBlobFsSource) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type AzureBlobFSSource.
+func (a *AzureBlobFSSource) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
@@ -1892,23 +1892,23 @@ func (a *AzureBlobFsSource) UnmarshalJSON(data []byte) error {
 }
 
 // Azure blobFS write settings.
-type AzureBlobFsWriteSettings struct {
+type AzureBlobFSWriteSettings struct {
 	StoreWriteSettings
 	// Indicates the block size(MB) when writing data to blob. Type: integer (or Expression with resultType integer).
-	BlockSizeInMb interface{} `json:"blockSizeInMB,omitempty"`
+	BlockSizeInMB interface{} `json:"blockSizeInMB,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type AzureBlobFsWriteSettings.
-func (a AzureBlobFsWriteSettings) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type AzureBlobFSWriteSettings.
+func (a AzureBlobFSWriteSettings) MarshalJSON() ([]byte, error) {
 	objectMap := a.StoreWriteSettings.marshalInternal("AzureBlobFSWriteSettings")
-	if a.BlockSizeInMb != nil {
-		objectMap["blockSizeInMB"] = a.BlockSizeInMb
+	if a.BlockSizeInMB != nil {
+		objectMap["blockSizeInMB"] = a.BlockSizeInMB
 	}
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type AzureBlobFsWriteSettings.
-func (a *AzureBlobFsWriteSettings) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type AzureBlobFSWriteSettings.
+func (a *AzureBlobFSWriteSettings) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
@@ -1918,7 +1918,7 @@ func (a *AzureBlobFsWriteSettings) UnmarshalJSON(data []byte) error {
 		switch key {
 		case "blockSizeInMB":
 			if val != nil {
-				err = json.Unmarshal(*val, &a.BlockSizeInMb)
+				err = json.Unmarshal(*val, &a.BlockSizeInMB)
 			}
 			delete(rawMsg, key)
 		}
@@ -2206,14 +2206,14 @@ func (a *AzureBlobStorageReadSettings) UnmarshalJSON(data []byte) error {
 type AzureBlobStorageWriteSettings struct {
 	StoreWriteSettings
 	// Indicates the block size(MB) when writing data to blob. Type: integer (or Expression with resultType integer).
-	BlockSizeInMb interface{} `json:"blockSizeInMB,omitempty"`
+	BlockSizeInMB interface{} `json:"blockSizeInMB,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type AzureBlobStorageWriteSettings.
 func (a AzureBlobStorageWriteSettings) MarshalJSON() ([]byte, error) {
 	objectMap := a.StoreWriteSettings.marshalInternal("AzureBlobStorageWriteSettings")
-	if a.BlockSizeInMb != nil {
-		objectMap["blockSizeInMB"] = a.BlockSizeInMb
+	if a.BlockSizeInMB != nil {
+		objectMap["blockSizeInMB"] = a.BlockSizeInMB
 	}
 	return json.Marshal(objectMap)
 }
@@ -2229,7 +2229,7 @@ func (a *AzureBlobStorageWriteSettings) UnmarshalJSON(data []byte) error {
 		switch key {
 		case "blockSizeInMB":
 			if val != nil {
-				err = json.Unmarshal(*val, &a.BlockSizeInMb)
+				err = json.Unmarshal(*val, &a.BlockSizeInMB)
 			}
 			delete(rawMsg, key)
 		}
@@ -3665,142 +3665,15 @@ func (a *AzureKeyVaultSecretReference) UnmarshalJSON(data []byte) error {
 	return a.SecretBase.unmarshalInternal(rawMsg)
 }
 
-// Azure Database for MariaDB linked service.
-type AzureMariaDbLinkedService struct {
-	LinkedService
-	// Azure Database for MariaDB linked service properties.
-	TypeProperties *AzureMariaDbLinkedServiceTypeProperties `json:"typeProperties,omitempty"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type AzureMariaDbLinkedService.
-func (a AzureMariaDbLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := a.LinkedService.marshalInternal("AzureMariaDB")
-	if a.TypeProperties != nil {
-		objectMap["typeProperties"] = a.TypeProperties
-	}
-	return json.Marshal(objectMap)
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type AzureMariaDbLinkedService.
-func (a *AzureMariaDbLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
-	}
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "typeProperties":
-			if val != nil {
-				err = json.Unmarshal(*val, &a.TypeProperties)
-			}
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return err
-		}
-	}
-	return a.LinkedService.unmarshalInternal(rawMsg)
-}
-
-// Azure Database for MariaDB linked service properties.
-type AzureMariaDbLinkedServiceTypeProperties struct {
-	// An ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference.
-	ConnectionString interface{} `json:"connectionString,omitempty"`
-
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
-	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
-
-	// The Azure key vault secret reference of password in connection string.
-	Pwd *AzureKeyVaultSecretReference `json:"pwd,omitempty"`
-}
-
-// A copy activity Azure MariaDB source.
-type AzureMariaDbSource struct {
-	TabularSource
-	// A query to retrieve data from source. Type: string (or Expression with resultType string).
-	Query interface{} `json:"query,omitempty"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type AzureMariaDbSource.
-func (a AzureMariaDbSource) MarshalJSON() ([]byte, error) {
-	objectMap := a.TabularSource.marshalInternal("AzureMariaDBSource")
-	if a.Query != nil {
-		objectMap["query"] = a.Query
-	}
-	return json.Marshal(objectMap)
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type AzureMariaDbSource.
-func (a *AzureMariaDbSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
-	}
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "query":
-			if val != nil {
-				err = json.Unmarshal(*val, &a.Query)
-			}
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return err
-		}
-	}
-	return a.TabularSource.unmarshalInternal(rawMsg)
-}
-
-// Azure Database for MariaDB dataset.
-type AzureMariaDbTableDataset struct {
-	Dataset
-	// Properties specific to this dataset type.
-	TypeProperties *GenericDatasetTypeProperties `json:"typeProperties,omitempty"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type AzureMariaDbTableDataset.
-func (a AzureMariaDbTableDataset) MarshalJSON() ([]byte, error) {
-	objectMap := a.Dataset.marshalInternal("AzureMariaDBTable")
-	if a.TypeProperties != nil {
-		objectMap["typeProperties"] = a.TypeProperties
-	}
-	return json.Marshal(objectMap)
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type AzureMariaDbTableDataset.
-func (a *AzureMariaDbTableDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
-	}
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "typeProperties":
-			if val != nil {
-				err = json.Unmarshal(*val, &a.TypeProperties)
-			}
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return err
-		}
-	}
-	return a.Dataset.unmarshalInternal(rawMsg)
-}
-
 // Azure ML Batch Execution activity.
-type AzureMlBatchExecutionActivity struct {
+type AzureMLBatchExecutionActivity struct {
 	ExecutionActivity
 	// Azure ML Batch Execution activity properties.
-	TypeProperties *AzureMlBatchExecutionActivityTypeProperties `json:"typeProperties,omitempty"`
+	TypeProperties *AzureMLBatchExecutionActivityTypeProperties `json:"typeProperties,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type AzureMlBatchExecutionActivity.
-func (a AzureMlBatchExecutionActivity) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type AzureMLBatchExecutionActivity.
+func (a AzureMLBatchExecutionActivity) MarshalJSON() ([]byte, error) {
 	objectMap := a.ExecutionActivity.marshalInternal("AzureMLBatchExecution")
 	if a.TypeProperties != nil {
 		objectMap["typeProperties"] = a.TypeProperties
@@ -3808,8 +3681,8 @@ func (a AzureMlBatchExecutionActivity) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type AzureMlBatchExecutionActivity.
-func (a *AzureMlBatchExecutionActivity) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type AzureMLBatchExecutionActivity.
+func (a *AzureMLBatchExecutionActivity) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
@@ -3831,7 +3704,7 @@ func (a *AzureMlBatchExecutionActivity) UnmarshalJSON(data []byte) error {
 }
 
 // Azure ML Batch Execution activity properties.
-type AzureMlBatchExecutionActivityTypeProperties struct {
+type AzureMLBatchExecutionActivityTypeProperties struct {
 	// Key,Value pairs to be passed to the Azure ML Batch Execution Service endpoint. Keys must match the names of web service parameters defined in the published
 	// Azure ML web service. Values will be passed
 	// in the GlobalParameters property of the Azure ML batch execution request.
@@ -3840,23 +3713,23 @@ type AzureMlBatchExecutionActivityTypeProperties struct {
 	// Key,Value pairs, mapping the names of Azure ML endpoint's Web Service Inputs to AzureMLWebServiceFile objects specifying the input Blob locations.. This
 	// information will be passed in the
 	// WebServiceInputs property of the Azure ML batch execution request.
-	WebServiceInputs *map[string]AzureMlWebServiceFile `json:"webServiceInputs,omitempty"`
+	WebServiceInputs *map[string]AzureMLWebServiceFile `json:"webServiceInputs,omitempty"`
 
 	// Key,Value pairs, mapping the names of Azure ML endpoint's Web Service Outputs to AzureMLWebServiceFile objects specifying the output Blob locations.
 	// This information will be passed in the
 	// WebServiceOutputs property of the Azure ML batch execution request.
-	WebServiceOutputs *map[string]AzureMlWebServiceFile `json:"webServiceOutputs,omitempty"`
+	WebServiceOutputs *map[string]AzureMLWebServiceFile `json:"webServiceOutputs,omitempty"`
 }
 
 // Azure ML Execute Pipeline activity.
-type AzureMlExecutePipelineActivity struct {
+type AzureMLExecutePipelineActivity struct {
 	ExecutionActivity
 	// Azure ML Execute Pipeline activity properties.
-	TypeProperties *AzureMlExecutePipelineActivityTypeProperties `json:"typeProperties,omitempty"`
+	TypeProperties *AzureMLExecutePipelineActivityTypeProperties `json:"typeProperties,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type AzureMlExecutePipelineActivity.
-func (a AzureMlExecutePipelineActivity) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type AzureMLExecutePipelineActivity.
+func (a AzureMLExecutePipelineActivity) MarshalJSON() ([]byte, error) {
 	objectMap := a.ExecutionActivity.marshalInternal("AzureMLExecutePipeline")
 	if a.TypeProperties != nil {
 		objectMap["typeProperties"] = a.TypeProperties
@@ -3864,8 +3737,8 @@ func (a AzureMlExecutePipelineActivity) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type AzureMlExecutePipelineActivity.
-func (a *AzureMlExecutePipelineActivity) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type AzureMLExecutePipelineActivity.
+func (a *AzureMLExecutePipelineActivity) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
@@ -3887,7 +3760,7 @@ func (a *AzureMlExecutePipelineActivity) UnmarshalJSON(data []byte) error {
 }
 
 // Azure ML Execute Pipeline activity properties.
-type AzureMlExecutePipelineActivityTypeProperties struct {
+type AzureMLExecutePipelineActivityTypeProperties struct {
 	// Whether to continue execution of other steps in the PipelineRun if a step fails. This information will be passed in the continueOnStepFailure property
 	// of the published pipeline execution request.
 	// Type: boolean (or Expression with resultType boolean).
@@ -3913,14 +3786,14 @@ type AzureMlExecutePipelineActivityTypeProperties struct {
 }
 
 // Azure ML Studio Web Service linked service.
-type AzureMlLinkedService struct {
+type AzureMLLinkedService struct {
 	LinkedService
 	// Azure ML Studio Web Service linked service properties.
-	TypeProperties *AzureMlLinkedServiceTypeProperties `json:"typeProperties,omitempty"`
+	TypeProperties *AzureMLLinkedServiceTypeProperties `json:"typeProperties,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type AzureMlLinkedService.
-func (a AzureMlLinkedService) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type AzureMLLinkedService.
+func (a AzureMLLinkedService) MarshalJSON() ([]byte, error) {
 	objectMap := a.LinkedService.marshalInternal("AzureML")
 	if a.TypeProperties != nil {
 		objectMap["typeProperties"] = a.TypeProperties
@@ -3928,8 +3801,8 @@ func (a AzureMlLinkedService) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type AzureMlLinkedService.
-func (a *AzureMlLinkedService) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type AzureMLLinkedService.
+func (a *AzureMLLinkedService) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
@@ -3951,7 +3824,7 @@ func (a *AzureMlLinkedService) UnmarshalJSON(data []byte) error {
 }
 
 // Azure ML Studio Web Service linked service properties.
-type AzureMlLinkedServiceTypeProperties struct {
+type AzureMLLinkedServiceTypeProperties struct {
 	// The API key for accessing the Azure ML model endpoint.
 	APIKey SecretBaseClassification `json:"apiKey,omitempty"`
 
@@ -3976,8 +3849,8 @@ type AzureMlLinkedServiceTypeProperties struct {
 	UpdateResourceEndpoint interface{} `json:"updateResourceEndpoint,omitempty"`
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type AzureMlLinkedServiceTypeProperties.
-func (a *AzureMlLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type AzureMLLinkedServiceTypeProperties.
+func (a *AzureMLLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
@@ -4029,14 +3902,14 @@ func (a *AzureMlLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 }
 
 // Azure ML Service linked service.
-type AzureMlServiceLinkedService struct {
+type AzureMLServiceLinkedService struct {
 	LinkedService
 	// Azure ML Service linked service properties.
-	TypeProperties *AzureMlServiceLinkedServiceTypeProperties `json:"typeProperties,omitempty"`
+	TypeProperties *AzureMLServiceLinkedServiceTypeProperties `json:"typeProperties,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type AzureMlServiceLinkedService.
-func (a AzureMlServiceLinkedService) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type AzureMLServiceLinkedService.
+func (a AzureMLServiceLinkedService) MarshalJSON() ([]byte, error) {
 	objectMap := a.LinkedService.marshalInternal("AzureMLService")
 	if a.TypeProperties != nil {
 		objectMap["typeProperties"] = a.TypeProperties
@@ -4044,8 +3917,8 @@ func (a AzureMlServiceLinkedService) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type AzureMlServiceLinkedService.
-func (a *AzureMlServiceLinkedService) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type AzureMLServiceLinkedService.
+func (a *AzureMLServiceLinkedService) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
@@ -4067,7 +3940,7 @@ func (a *AzureMlServiceLinkedService) UnmarshalJSON(data []byte) error {
 }
 
 // Azure ML Service linked service properties.
-type AzureMlServiceLinkedServiceTypeProperties struct {
+type AzureMLServiceLinkedServiceTypeProperties struct {
 	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
 	// with resultType string).
 	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
@@ -4092,8 +3965,8 @@ type AzureMlServiceLinkedServiceTypeProperties struct {
 	Tenant interface{} `json:"tenant,omitempty"`
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type AzureMlServiceLinkedServiceTypeProperties.
-func (a *AzureMlServiceLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type AzureMLServiceLinkedServiceTypeProperties.
+func (a *AzureMLServiceLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
@@ -4145,14 +4018,14 @@ func (a *AzureMlServiceLinkedServiceTypeProperties) UnmarshalJSON(data []byte) e
 }
 
 // Azure ML Update Resource management activity.
-type AzureMlUpdateResourceActivity struct {
+type AzureMLUpdateResourceActivity struct {
 	ExecutionActivity
 	// Azure ML Update Resource management activity properties.
-	TypeProperties *AzureMlUpdateResourceActivityTypeProperties `json:"typeProperties,omitempty"`
+	TypeProperties *AzureMLUpdateResourceActivityTypeProperties `json:"typeProperties,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type AzureMlUpdateResourceActivity.
-func (a AzureMlUpdateResourceActivity) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type AzureMLUpdateResourceActivity.
+func (a AzureMLUpdateResourceActivity) MarshalJSON() ([]byte, error) {
 	objectMap := a.ExecutionActivity.marshalInternal("AzureMLUpdateResource")
 	if a.TypeProperties != nil {
 		objectMap["typeProperties"] = a.TypeProperties
@@ -4160,8 +4033,8 @@ func (a AzureMlUpdateResourceActivity) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type AzureMlUpdateResourceActivity.
-func (a *AzureMlUpdateResourceActivity) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type AzureMLUpdateResourceActivity.
+func (a *AzureMLUpdateResourceActivity) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
@@ -4183,7 +4056,7 @@ func (a *AzureMlUpdateResourceActivity) UnmarshalJSON(data []byte) error {
 }
 
 // Azure ML Update Resource activity properties.
-type AzureMlUpdateResourceActivityTypeProperties struct {
+type AzureMLUpdateResourceActivityTypeProperties struct {
 	// The relative file path in trainedModelLinkedService to represent the .ilearner file that will be uploaded by the update operation. Type: string (or Expression
 	// with resultType string).
 	TrainedModelFilePath interface{} `json:"trainedModelFilePath,omitempty"`
@@ -4196,13 +4069,140 @@ type AzureMlUpdateResourceActivityTypeProperties struct {
 }
 
 // Azure ML WebService Input/Output file
-type AzureMlWebServiceFile struct {
+type AzureMLWebServiceFile struct {
 	// The relative file path, including container name, in the Azure Blob Storage specified by the LinkedService. Type: string (or Expression with resultType
 	// string).
 	FilePath interface{} `json:"filePath,omitempty"`
 
 	// Reference to an Azure Storage LinkedService, where Azure ML WebService Input/Output file located.
 	LinkedServiceName *LinkedServiceReference `json:"linkedServiceName,omitempty"`
+}
+
+// Azure Database for MariaDB linked service.
+type AzureMariaDBLinkedService struct {
+	LinkedService
+	// Azure Database for MariaDB linked service properties.
+	TypeProperties *AzureMariaDBLinkedServiceTypeProperties `json:"typeProperties,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AzureMariaDBLinkedService.
+func (a AzureMariaDBLinkedService) MarshalJSON() ([]byte, error) {
+	objectMap := a.LinkedService.marshalInternal("AzureMariaDB")
+	if a.TypeProperties != nil {
+		objectMap["typeProperties"] = a.TypeProperties
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type AzureMariaDBLinkedService.
+func (a *AzureMariaDBLinkedService) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "typeProperties":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.TypeProperties)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return a.LinkedService.unmarshalInternal(rawMsg)
+}
+
+// Azure Database for MariaDB linked service properties.
+type AzureMariaDBLinkedServiceTypeProperties struct {
+	// An ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference.
+	ConnectionString interface{} `json:"connectionString,omitempty"`
+
+	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
+	// with resultType string).
+	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
+
+	// The Azure key vault secret reference of password in connection string.
+	Pwd *AzureKeyVaultSecretReference `json:"pwd,omitempty"`
+}
+
+// A copy activity Azure MariaDB source.
+type AzureMariaDBSource struct {
+	TabularSource
+	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	Query interface{} `json:"query,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AzureMariaDBSource.
+func (a AzureMariaDBSource) MarshalJSON() ([]byte, error) {
+	objectMap := a.TabularSource.marshalInternal("AzureMariaDBSource")
+	if a.Query != nil {
+		objectMap["query"] = a.Query
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type AzureMariaDBSource.
+func (a *AzureMariaDBSource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "query":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.Query)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return a.TabularSource.unmarshalInternal(rawMsg)
+}
+
+// Azure Database for MariaDB dataset.
+type AzureMariaDBTableDataset struct {
+	Dataset
+	// Properties specific to this dataset type.
+	TypeProperties *GenericDatasetTypeProperties `json:"typeProperties,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AzureMariaDBTableDataset.
+func (a AzureMariaDBTableDataset) MarshalJSON() ([]byte, error) {
+	objectMap := a.Dataset.marshalInternal("AzureMariaDBTable")
+	if a.TypeProperties != nil {
+		objectMap["typeProperties"] = a.TypeProperties
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type AzureMariaDBTableDataset.
+func (a *AzureMariaDBTableDataset) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "typeProperties":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.TypeProperties)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return a.Dataset.unmarshalInternal(rawMsg)
 }
 
 // Azure MySQL database linked service.
@@ -4567,6 +4567,163 @@ func (a AzureQueueSink) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
+// Azure SQL Data Warehouse linked service.
+type AzureSQLDWLinkedService struct {
+	LinkedService
+	// Azure SQL Data Warehouse linked service properties.
+	TypeProperties *AzureSQLDWLinkedServiceTypeProperties `json:"typeProperties,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AzureSQLDWLinkedService.
+func (a AzureSQLDWLinkedService) MarshalJSON() ([]byte, error) {
+	objectMap := a.LinkedService.marshalInternal("AzureSqlDW")
+	if a.TypeProperties != nil {
+		objectMap["typeProperties"] = a.TypeProperties
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type AzureSQLDWLinkedService.
+func (a *AzureSQLDWLinkedService) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "typeProperties":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.TypeProperties)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return a.LinkedService.unmarshalInternal(rawMsg)
+}
+
+// Azure SQL Data Warehouse linked service properties.
+type AzureSQLDWLinkedServiceTypeProperties struct {
+	// The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Type: string, SecureString or AzureKeyVaultSecretReference.
+	ConnectionString interface{} `json:"connectionString,omitempty"`
+
+	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
+	// with resultType string).
+	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
+
+	// The Azure key vault secret reference of password in connection string.
+	Password *AzureKeyVaultSecretReference `json:"password,omitempty"`
+
+	// The ID of the service principal used to authenticate against Azure SQL Data Warehouse. Type: string (or Expression with resultType string).
+	ServicePrincipalID interface{} `json:"servicePrincipalId,omitempty"`
+
+	// The key of the service principal used to authenticate against Azure SQL Data Warehouse.
+	ServicePrincipalKey SecretBaseClassification `json:"servicePrincipalKey,omitempty"`
+
+	// The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string).
+	Tenant interface{} `json:"tenant,omitempty"`
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type AzureSQLDWLinkedServiceTypeProperties.
+func (a *AzureSQLDWLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "connectionString":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.ConnectionString)
+			}
+			delete(rawMsg, key)
+		case "encryptedCredential":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.EncryptedCredential)
+			}
+			delete(rawMsg, key)
+		case "password":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.Password)
+			}
+			delete(rawMsg, key)
+		case "servicePrincipalId":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.ServicePrincipalID)
+			}
+			delete(rawMsg, key)
+		case "servicePrincipalKey":
+			if val != nil {
+				a.ServicePrincipalKey, err = unmarshalSecretBaseClassification(*val)
+			}
+			delete(rawMsg, key)
+		case "tenant":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.Tenant)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// The Azure SQL Data Warehouse dataset.
+type AzureSQLDWTableDataset struct {
+	Dataset
+	// Azure SQL Data Warehouse dataset properties.
+	TypeProperties *AzureSQLDWTableDatasetTypeProperties `json:"typeProperties,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AzureSQLDWTableDataset.
+func (a AzureSQLDWTableDataset) MarshalJSON() ([]byte, error) {
+	objectMap := a.Dataset.marshalInternal("AzureSqlDWTable")
+	if a.TypeProperties != nil {
+		objectMap["typeProperties"] = a.TypeProperties
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type AzureSQLDWTableDataset.
+func (a *AzureSQLDWTableDataset) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "typeProperties":
+			if val != nil {
+				err = json.Unmarshal(*val, &a.TypeProperties)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return a.Dataset.unmarshalInternal(rawMsg)
+}
+
+// Azure SQL Data Warehouse dataset properties.
+type AzureSQLDWTableDatasetTypeProperties struct {
+	// The schema name of the Azure SQL Data Warehouse. Type: string (or Expression with resultType string).
+	Schema interface{} `json:"schema,omitempty"`
+
+	// The table name of the Azure SQL Data Warehouse. Type: string (or Expression with resultType string).
+	Table interface{} `json:"table,omitempty"`
+
+	// This property will be retired. Please consider using schema + table properties instead.
+	TableName interface{} `json:"tableName,omitempty"`
+}
+
 // Microsoft Azure SQL Database linked service.
 type AzureSQLDatabaseLinkedService struct {
 	LinkedService
@@ -4674,172 +4831,15 @@ func (a *AzureSQLDatabaseLinkedServiceTypeProperties) UnmarshalJSON(data []byte)
 	return nil
 }
 
-// Azure SQL Data Warehouse linked service.
-type AzureSQLDwLinkedService struct {
-	LinkedService
-	// Azure SQL Data Warehouse linked service properties.
-	TypeProperties *AzureSQLDwLinkedServiceTypeProperties `json:"typeProperties,omitempty"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type AzureSQLDwLinkedService.
-func (a AzureSQLDwLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := a.LinkedService.marshalInternal("AzureSqlDW")
-	if a.TypeProperties != nil {
-		objectMap["typeProperties"] = a.TypeProperties
-	}
-	return json.Marshal(objectMap)
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type AzureSQLDwLinkedService.
-func (a *AzureSQLDwLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
-	}
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "typeProperties":
-			if val != nil {
-				err = json.Unmarshal(*val, &a.TypeProperties)
-			}
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return err
-		}
-	}
-	return a.LinkedService.unmarshalInternal(rawMsg)
-}
-
-// Azure SQL Data Warehouse linked service properties.
-type AzureSQLDwLinkedServiceTypeProperties struct {
-	// The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Type: string, SecureString or AzureKeyVaultSecretReference.
-	ConnectionString interface{} `json:"connectionString,omitempty"`
-
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
-	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
-
-	// The Azure key vault secret reference of password in connection string.
-	Password *AzureKeyVaultSecretReference `json:"password,omitempty"`
-
-	// The ID of the service principal used to authenticate against Azure SQL Data Warehouse. Type: string (or Expression with resultType string).
-	ServicePrincipalID interface{} `json:"servicePrincipalId,omitempty"`
-
-	// The key of the service principal used to authenticate against Azure SQL Data Warehouse.
-	ServicePrincipalKey SecretBaseClassification `json:"servicePrincipalKey,omitempty"`
-
-	// The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string).
-	Tenant interface{} `json:"tenant,omitempty"`
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type AzureSQLDwLinkedServiceTypeProperties.
-func (a *AzureSQLDwLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
-	}
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "connectionString":
-			if val != nil {
-				err = json.Unmarshal(*val, &a.ConnectionString)
-			}
-			delete(rawMsg, key)
-		case "encryptedCredential":
-			if val != nil {
-				err = json.Unmarshal(*val, &a.EncryptedCredential)
-			}
-			delete(rawMsg, key)
-		case "password":
-			if val != nil {
-				err = json.Unmarshal(*val, &a.Password)
-			}
-			delete(rawMsg, key)
-		case "servicePrincipalId":
-			if val != nil {
-				err = json.Unmarshal(*val, &a.ServicePrincipalID)
-			}
-			delete(rawMsg, key)
-		case "servicePrincipalKey":
-			if val != nil {
-				a.ServicePrincipalKey, err = unmarshalSecretBaseClassification(*val)
-			}
-			delete(rawMsg, key)
-		case "tenant":
-			if val != nil {
-				err = json.Unmarshal(*val, &a.Tenant)
-			}
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return err
-		}
-	}
-	return nil
-}
-
-// The Azure SQL Data Warehouse dataset.
-type AzureSQLDwTableDataset struct {
-	Dataset
-	// Azure SQL Data Warehouse dataset properties.
-	TypeProperties *AzureSQLDwTableDatasetTypeProperties `json:"typeProperties,omitempty"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type AzureSQLDwTableDataset.
-func (a AzureSQLDwTableDataset) MarshalJSON() ([]byte, error) {
-	objectMap := a.Dataset.marshalInternal("AzureSqlDWTable")
-	if a.TypeProperties != nil {
-		objectMap["typeProperties"] = a.TypeProperties
-	}
-	return json.Marshal(objectMap)
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type AzureSQLDwTableDataset.
-func (a *AzureSQLDwTableDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
-	}
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "typeProperties":
-			if val != nil {
-				err = json.Unmarshal(*val, &a.TypeProperties)
-			}
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return err
-		}
-	}
-	return a.Dataset.unmarshalInternal(rawMsg)
-}
-
-// Azure SQL Data Warehouse dataset properties.
-type AzureSQLDwTableDatasetTypeProperties struct {
-	// The schema name of the Azure SQL Data Warehouse. Type: string (or Expression with resultType string).
-	Schema interface{} `json:"schema,omitempty"`
-
-	// The table name of the Azure SQL Data Warehouse. Type: string (or Expression with resultType string).
-	Table interface{} `json:"table,omitempty"`
-
-	// This property will be retired. Please consider using schema + table properties instead.
-	TableName interface{} `json:"tableName,omitempty"`
-}
-
 // Azure SQL Managed Instance linked service.
-type AzureSQLMiLinkedService struct {
+type AzureSQLMILinkedService struct {
 	LinkedService
 	// Azure SQL Managed Instance linked service properties.
-	TypeProperties *AzureSQLMiLinkedServiceTypeProperties `json:"typeProperties,omitempty"`
+	TypeProperties *AzureSQLMILinkedServiceTypeProperties `json:"typeProperties,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type AzureSQLMiLinkedService.
-func (a AzureSQLMiLinkedService) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type AzureSQLMILinkedService.
+func (a AzureSQLMILinkedService) MarshalJSON() ([]byte, error) {
 	objectMap := a.LinkedService.marshalInternal("AzureSqlMI")
 	if a.TypeProperties != nil {
 		objectMap["typeProperties"] = a.TypeProperties
@@ -4847,8 +4847,8 @@ func (a AzureSQLMiLinkedService) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type AzureSQLMiLinkedService.
-func (a *AzureSQLMiLinkedService) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type AzureSQLMILinkedService.
+func (a *AzureSQLMILinkedService) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
@@ -4870,7 +4870,7 @@ func (a *AzureSQLMiLinkedService) UnmarshalJSON(data []byte) error {
 }
 
 // Azure SQL Managed Instance linked service properties.
-type AzureSQLMiLinkedServiceTypeProperties struct {
+type AzureSQLMILinkedServiceTypeProperties struct {
 	// The connection string. Type: string, SecureString or AzureKeyVaultSecretReference.
 	ConnectionString interface{} `json:"connectionString,omitempty"`
 
@@ -4891,8 +4891,8 @@ type AzureSQLMiLinkedServiceTypeProperties struct {
 	Tenant interface{} `json:"tenant,omitempty"`
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type AzureSQLMiLinkedServiceTypeProperties.
-func (a *AzureSQLMiLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type AzureSQLMILinkedServiceTypeProperties.
+func (a *AzureSQLMILinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
@@ -4939,14 +4939,14 @@ func (a *AzureSQLMiLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error
 }
 
 // The Azure SQL Managed Instance dataset.
-type AzureSQLMiTableDataset struct {
+type AzureSQLMITableDataset struct {
 	Dataset
 	// Azure SQL Managed Instance dataset properties.
-	TypeProperties *AzureSQLMiTableDatasetTypeProperties `json:"typeProperties,omitempty"`
+	TypeProperties *AzureSQLMITableDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type AzureSQLMiTableDataset.
-func (a AzureSQLMiTableDataset) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type AzureSQLMITableDataset.
+func (a AzureSQLMITableDataset) MarshalJSON() ([]byte, error) {
 	objectMap := a.Dataset.marshalInternal("AzureSqlMITable")
 	if a.TypeProperties != nil {
 		objectMap["typeProperties"] = a.TypeProperties
@@ -4954,8 +4954,8 @@ func (a AzureSQLMiTableDataset) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type AzureSQLMiTableDataset.
-func (a *AzureSQLMiTableDataset) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type AzureSQLMITableDataset.
+func (a *AzureSQLMITableDataset) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
@@ -4977,7 +4977,7 @@ func (a *AzureSQLMiTableDataset) UnmarshalJSON(data []byte) error {
 }
 
 // Azure SQL Managed Instance dataset properties.
-type AzureSQLMiTableDatasetTypeProperties struct {
+type AzureSQLMITableDatasetTypeProperties struct {
 	// The schema name of the Azure SQL Managed Instance. Type: string (or Expression with resultType string).
 	Schema interface{} `json:"schema,omitempty"`
 
@@ -8421,6 +8421,28 @@ type CustomerManagedKeyDetails struct {
 	Status *string `json:"status,omitempty" azure:"ro"`
 }
 
+// Default value.
+type DWCopyCommandDefaultValue struct {
+	// Column name. Type: object (or Expression with resultType string).
+	ColumnName interface{} `json:"columnName,omitempty"`
+
+	// The default value of the column. Type: object (or Expression with resultType string).
+	DefaultValue interface{} `json:"defaultValue,omitempty"`
+}
+
+// DW Copy Command settings.
+type DWCopyCommandSettings struct {
+	// Additional options directly passed to SQL DW in Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType object).
+	// Example: "additionalOptions": { "MAXERRORS":
+	// "1000", "DATEFORMAT": "'ymd'" }
+	AdditionalOptions *map[string]string `json:"additionalOptions,omitempty"`
+
+	// Specifies the default values for each target column in SQL DW. The default values in the property overwrite the DEFAULT constraint set in the DB, and
+	// identity column cannot have a default value. Type:
+	// array of objects (or Expression with resultType array of objects).
+	DefaultValues *[]DWCopyCommandDefaultValue `json:"defaultValues,omitempty"`
+}
+
 // DataFlowClassification provides polymorphic access to related types.
 // Call the interface's GetDataFlow() method to access the common type.
 // Use a type switch to determine the concrete type.  The possible types are:
@@ -9141,14 +9163,14 @@ type DataFlowStagingInfo struct {
 }
 
 // Data Lake Analytics U-SQL activity.
-type DataLakeAnalyticsUsqlActivity struct {
+type DataLakeAnalyticsUSQLActivity struct {
 	ExecutionActivity
 	// Data Lake Analytics U-SQL activity properties.
-	TypeProperties *DataLakeAnalyticsUsqlActivityTypeProperties `json:"typeProperties,omitempty"`
+	TypeProperties *DataLakeAnalyticsUSQLActivityTypeProperties `json:"typeProperties,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type DataLakeAnalyticsUsqlActivity.
-func (d DataLakeAnalyticsUsqlActivity) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type DataLakeAnalyticsUSQLActivity.
+func (d DataLakeAnalyticsUSQLActivity) MarshalJSON() ([]byte, error) {
 	objectMap := d.ExecutionActivity.marshalInternal("DataLakeAnalyticsU-SQL")
 	if d.TypeProperties != nil {
 		objectMap["typeProperties"] = d.TypeProperties
@@ -9156,8 +9178,8 @@ func (d DataLakeAnalyticsUsqlActivity) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type DataLakeAnalyticsUsqlActivity.
-func (d *DataLakeAnalyticsUsqlActivity) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type DataLakeAnalyticsUSQLActivity.
+func (d *DataLakeAnalyticsUSQLActivity) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
@@ -9179,7 +9201,7 @@ func (d *DataLakeAnalyticsUsqlActivity) UnmarshalJSON(data []byte) error {
 }
 
 // DataLakeAnalyticsU-SQL activity properties.
-type DataLakeAnalyticsUsqlActivityTypeProperties struct {
+type DataLakeAnalyticsUSQLActivityTypeProperties struct {
 	// Compilation mode of U-SQL. Must be one of these values : Semantic, Full and SingleBox. Type: string (or Expression with resultType string).
 	CompilationMode interface{} `json:"compilationMode,omitempty"`
 
@@ -11036,28 +11058,6 @@ func (d *DrillTableDataset) UnmarshalJSON(data []byte) error {
 	return d.Dataset.unmarshalInternal(rawMsg)
 }
 
-// Default value.
-type DwCopyCommandDefaultValue struct {
-	// Column name. Type: object (or Expression with resultType string).
-	ColumnName interface{} `json:"columnName,omitempty"`
-
-	// The default value of the column. Type: object (or Expression with resultType string).
-	DefaultValue interface{} `json:"defaultValue,omitempty"`
-}
-
-// DW Copy Command settings.
-type DwCopyCommandSettings struct {
-	// Additional options directly passed to SQL DW in Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType object).
-	// Example: "additionalOptions": { "MAXERRORS":
-	// "1000", "DATEFORMAT": "'ymd'" }
-	AdditionalOptions *map[string]string `json:"additionalOptions,omitempty"`
-
-	// Specifies the default values for each target column in SQL DW. The default values in the property overwrite the DEFAULT constraint set in the DB, and
-	// identity column cannot have a default value. Type:
-	// array of objects (or Expression with resultType array of objects).
-	DefaultValues *[]DwCopyCommandDefaultValue `json:"defaultValues,omitempty"`
-}
-
 // Dynamic Executor Allocation Properties
 type DynamicExecutorAllocation struct {
 	// Indicates whether Dynamic Executor Allocation is enabled or not.
@@ -11065,14 +11065,14 @@ type DynamicExecutorAllocation struct {
 }
 
 // Dynamics AX linked service.
-type DynamicsAxLinkedService struct {
+type DynamicsAXLinkedService struct {
 	LinkedService
 	// Dynamics AX linked service properties.
-	TypeProperties *DynamicsAxLinkedServiceTypeProperties `json:"typeProperties,omitempty"`
+	TypeProperties *DynamicsAXLinkedServiceTypeProperties `json:"typeProperties,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type DynamicsAxLinkedService.
-func (d DynamicsAxLinkedService) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type DynamicsAXLinkedService.
+func (d DynamicsAXLinkedService) MarshalJSON() ([]byte, error) {
 	objectMap := d.LinkedService.marshalInternal("DynamicsAX")
 	if d.TypeProperties != nil {
 		objectMap["typeProperties"] = d.TypeProperties
@@ -11080,8 +11080,8 @@ func (d DynamicsAxLinkedService) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type DynamicsAxLinkedService.
-func (d *DynamicsAxLinkedService) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type DynamicsAXLinkedService.
+func (d *DynamicsAXLinkedService) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
@@ -11103,9 +11103,9 @@ func (d *DynamicsAxLinkedService) UnmarshalJSON(data []byte) error {
 }
 
 // Dynamics AX linked service properties.
-type DynamicsAxLinkedServiceTypeProperties struct {
+type DynamicsAXLinkedServiceTypeProperties struct {
 	// Specify the resource you are requesting authorization. Type: string (or Expression with resultType string).
-	AadResourceID interface{} `json:"aadResourceId,omitempty"`
+	AADResourceID interface{} `json:"aadResourceId,omitempty"`
 
 	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
 	// with resultType string).
@@ -11128,8 +11128,8 @@ type DynamicsAxLinkedServiceTypeProperties struct {
 	URL interface{} `json:"url,omitempty"`
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type DynamicsAxLinkedServiceTypeProperties.
-func (d *DynamicsAxLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type DynamicsAXLinkedServiceTypeProperties.
+func (d *DynamicsAXLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
@@ -11139,7 +11139,7 @@ func (d *DynamicsAxLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error
 		switch key {
 		case "aadResourceId":
 			if val != nil {
-				err = json.Unmarshal(*val, &d.AadResourceID)
+				err = json.Unmarshal(*val, &d.AADResourceID)
 			}
 			delete(rawMsg, key)
 		case "encryptedCredential":
@@ -11176,14 +11176,14 @@ func (d *DynamicsAxLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error
 }
 
 // The path of the Dynamics AX OData entity.
-type DynamicsAxResourceDataset struct {
+type DynamicsAXResourceDataset struct {
 	Dataset
 	// Dynamics AX OData resource dataset properties.
-	TypeProperties *DynamicsAxResourceDatasetTypeProperties `json:"typeProperties,omitempty"`
+	TypeProperties *DynamicsAXResourceDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type DynamicsAxResourceDataset.
-func (d DynamicsAxResourceDataset) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type DynamicsAXResourceDataset.
+func (d DynamicsAXResourceDataset) MarshalJSON() ([]byte, error) {
 	objectMap := d.Dataset.marshalInternal("DynamicsAXResource")
 	if d.TypeProperties != nil {
 		objectMap["typeProperties"] = d.TypeProperties
@@ -11191,8 +11191,8 @@ func (d DynamicsAxResourceDataset) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type DynamicsAxResourceDataset.
-func (d *DynamicsAxResourceDataset) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type DynamicsAXResourceDataset.
+func (d *DynamicsAXResourceDataset) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
@@ -11214,20 +11214,20 @@ func (d *DynamicsAxResourceDataset) UnmarshalJSON(data []byte) error {
 }
 
 // Dynamics AX OData resource dataset properties.
-type DynamicsAxResourceDatasetTypeProperties struct {
+type DynamicsAXResourceDatasetTypeProperties struct {
 	// The path of the Dynamics AX OData entity. Type: string (or Expression with resultType string).
 	Path interface{} `json:"path,omitempty"`
 }
 
 // A copy activity Dynamics AX source.
-type DynamicsAxSource struct {
+type DynamicsAXSource struct {
 	TabularSource
 	// A query to retrieve data from source. Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type DynamicsAxSource.
-func (d DynamicsAxSource) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type DynamicsAXSource.
+func (d DynamicsAXSource) MarshalJSON() ([]byte, error) {
 	objectMap := d.TabularSource.marshalInternal("DynamicsAXSource")
 	if d.Query != nil {
 		objectMap["query"] = d.Query
@@ -11235,8 +11235,8 @@ func (d DynamicsAxSource) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type DynamicsAxSource.
-func (d *DynamicsAxSource) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type DynamicsAXSource.
+func (d *DynamicsAXSource) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
@@ -12279,14 +12279,14 @@ type ExecutePipelineActivityTypeProperties struct {
 }
 
 // Execute SSIS package activity.
-type ExecuteSsisPackageActivity struct {
+type ExecuteSSISPackageActivity struct {
 	ExecutionActivity
 	// Execute SSIS package activity properties.
-	TypeProperties *ExecuteSsisPackageActivityTypeProperties `json:"typeProperties,omitempty"`
+	TypeProperties *ExecuteSSISPackageActivityTypeProperties `json:"typeProperties,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type ExecuteSsisPackageActivity.
-func (e ExecuteSsisPackageActivity) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type ExecuteSSISPackageActivity.
+func (e ExecuteSSISPackageActivity) MarshalJSON() ([]byte, error) {
 	objectMap := e.ExecutionActivity.marshalInternal("ExecuteSSISPackage")
 	if e.TypeProperties != nil {
 		objectMap["typeProperties"] = e.TypeProperties
@@ -12294,8 +12294,8 @@ func (e ExecuteSsisPackageActivity) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type ExecuteSsisPackageActivity.
-func (e *ExecuteSsisPackageActivity) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type ExecuteSSISPackageActivity.
+func (e *ExecuteSSISPackageActivity) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
@@ -12317,7 +12317,7 @@ func (e *ExecuteSsisPackageActivity) UnmarshalJSON(data []byte) error {
 }
 
 // Execute SSIS package activity properties.
-type ExecuteSsisPackageActivityTypeProperties struct {
+type ExecuteSSISPackageActivityTypeProperties struct {
 	// The integration runtime reference.
 	ConnectVia *IntegrationRuntimeReference `json:"connectVia,omitempty"`
 
@@ -12325,31 +12325,31 @@ type ExecuteSsisPackageActivityTypeProperties struct {
 	EnvironmentPath interface{} `json:"environmentPath,omitempty"`
 
 	// The package execution credential.
-	ExecutionCredential *SsisExecutionCredential `json:"executionCredential,omitempty"`
+	ExecutionCredential *SSISExecutionCredential `json:"executionCredential,omitempty"`
 
 	// SSIS package execution log location.
-	LogLocation *SsisLogLocation `json:"logLocation,omitempty"`
+	LogLocation *SSISLogLocation `json:"logLocation,omitempty"`
 
 	// The logging level of SSIS package execution. Type: string (or Expression with resultType string).
 	LoggingLevel interface{} `json:"loggingLevel,omitempty"`
 
 	// The package level connection managers to execute the SSIS package.
-	PackageConnectionManagers *map[string]map[string]SsisExecutionParameter `json:"packageConnectionManagers,omitempty"`
+	PackageConnectionManagers *map[string]map[string]SSISExecutionParameter `json:"packageConnectionManagers,omitempty"`
 
 	// SSIS package location.
-	PackageLocation *SsisPackageLocation `json:"packageLocation,omitempty"`
+	PackageLocation *SSISPackageLocation `json:"packageLocation,omitempty"`
 
 	// The package level parameters to execute the SSIS package.
-	PackageParameters *map[string]SsisExecutionParameter `json:"packageParameters,omitempty"`
+	PackageParameters *map[string]SSISExecutionParameter `json:"packageParameters,omitempty"`
 
 	// The project level connection managers to execute the SSIS package.
-	ProjectConnectionManagers *map[string]map[string]SsisExecutionParameter `json:"projectConnectionManagers,omitempty"`
+	ProjectConnectionManagers *map[string]map[string]SSISExecutionParameter `json:"projectConnectionManagers,omitempty"`
 
 	// The project level parameters to execute the SSIS package.
-	ProjectParameters *map[string]SsisExecutionParameter `json:"projectParameters,omitempty"`
+	ProjectParameters *map[string]SSISExecutionParameter `json:"projectParameters,omitempty"`
 
 	// The property overrides to execute the SSIS package.
-	PropertyOverrides *map[string]SsisPropertyOverride `json:"propertyOverrides,omitempty"`
+	PropertyOverrides *map[string]SSISPropertyOverride `json:"propertyOverrides,omitempty"`
 
 	// Specifies the runtime to execute SSIS package. The value should be "x86" or "x64". Type: string (or Expression with resultType string).
 	Runtime interface{} `json:"runtime,omitempty"`
@@ -12359,8 +12359,8 @@ type ExecuteSsisPackageActivityTypeProperties struct {
 // Call the interface's GetExecutionActivity() method to access the common type.
 // Use a type switch to determine the concrete type.  The possible types are:
 // - *ExecutionActivity, *AzureDataExplorerCommandActivity, *AzureFunctionActivity, *AzureMLBatchExecutionActivity, *AzureMLExecutePipelineActivity,
-// - *AzureMLUpdateResourceActivity, *CopyActivity, *CustomActivity, *DataLakeAnalyticsUsqlActivity, *DatabricksNotebookActivity,
-// - *DatabricksSparkJarActivity, *DatabricksSparkPythonActivity, *DeleteActivity, *ExecuteDataFlowActivity, *ExecuteSsisPackageActivity,
+// - *AzureMLUpdateResourceActivity, *CopyActivity, *CustomActivity, *DataLakeAnalyticsUSQLActivity, *DatabricksNotebookActivity,
+// - *DatabricksSparkJarActivity, *DatabricksSparkPythonActivity, *DeleteActivity, *ExecuteDataFlowActivity, *ExecuteSSISPackageActivity,
 // - *GetMetadataActivity, *HDInsightHiveActivity, *HDInsightMapReduceActivity, *HDInsightPigActivity, *HDInsightSparkActivity,
 // - *HDInsightStreamingActivity, *LookupActivity, *SynapseSparkJobDefinitionActivity, *SqlServerStoredProcedureActivity,
 // - *SynapseNotebookActivity, *WebActivity
@@ -13129,12 +13129,12 @@ type FtpServerLinkedServiceTypeProperties struct {
 	// The authentication type to be used to connect to the FTP server.
 	AuthenticationType *FtpAuthenticationType `json:"authenticationType,omitempty"`
 
+	// If true, connect to the FTP server over SSL/TLS channel. Default value is true. Type: boolean (or Expression with resultType boolean).
+	EnableSSL interface{} `json:"enableSsl,omitempty"`
+
 	// If true, validate the FTP server SSL certificate when connect over SSL/TLS channel. Default value is true. Type: boolean (or Expression with resultType
 	// boolean).
 	EnableServerCertificateValidation interface{} `json:"enableServerCertificateValidation,omitempty"`
-
-	// If true, connect to the FTP server over SSL/TLS channel. Default value is true. Type: boolean (or Expression with resultType boolean).
-	EnableSsl interface{} `json:"enableSsl,omitempty"`
 
 	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
 	// with resultType string).
@@ -13168,14 +13168,14 @@ func (f *FtpServerLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error 
 				err = json.Unmarshal(*val, &f.AuthenticationType)
 			}
 			delete(rawMsg, key)
+		case "enableSsl":
+			if val != nil {
+				err = json.Unmarshal(*val, &f.EnableSSL)
+			}
+			delete(rawMsg, key)
 		case "enableServerCertificateValidation":
 			if val != nil {
 				err = json.Unmarshal(*val, &f.EnableServerCertificateValidation)
-			}
-			delete(rawMsg, key)
-		case "enableSsl":
-			if val != nil {
-				err = json.Unmarshal(*val, &f.EnableSsl)
 			}
 			delete(rawMsg, key)
 		case "encryptedCredential":
@@ -14201,7 +14201,7 @@ func (h *HBaseLinkedService) UnmarshalJSON(data []byte) error {
 // HBase server linked service properties.
 type HBaseLinkedServiceTypeProperties struct {
 	// Specifies whether to require a CA-issued SSL certificate name to match the host name of the server when connecting over SSL. The default value is false.
-	AllowHostNameCnMismatch interface{} `json:"allowHostNameCNMismatch,omitempty"`
+	AllowHostNameCNMismatch interface{} `json:"allowHostNameCNMismatch,omitempty"`
 
 	// Specifies whether to allow self-signed certificates from the server. The default value is false.
 	AllowSelfSignedServerCert interface{} `json:"allowSelfSignedServerCert,omitempty"`
@@ -14210,7 +14210,7 @@ type HBaseLinkedServiceTypeProperties struct {
 	AuthenticationType *HBaseAuthenticationType `json:"authenticationType,omitempty"`
 
 	// Specifies whether the connections to the server are encrypted using SSL. The default value is false.
-	EnableSsl interface{} `json:"enableSsl,omitempty"`
+	EnableSSL interface{} `json:"enableSsl,omitempty"`
 
 	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
 	// with resultType string).
@@ -14248,7 +14248,7 @@ func (h *HBaseLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 		switch key {
 		case "allowHostNameCNMismatch":
 			if val != nil {
-				err = json.Unmarshal(*val, &h.AllowHostNameCnMismatch)
+				err = json.Unmarshal(*val, &h.AllowHostNameCNMismatch)
 			}
 			delete(rawMsg, key)
 		case "allowSelfSignedServerCert":
@@ -14263,7 +14263,7 @@ func (h *HBaseLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		case "enableSsl":
 			if val != nil {
-				err = json.Unmarshal(*val, &h.EnableSsl)
+				err = json.Unmarshal(*val, &h.EnableSSL)
 			}
 			delete(rawMsg, key)
 		case "encryptedCredential":
@@ -14383,6 +14383,549 @@ func (h *HBaseSource) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return h.TabularSource.unmarshalInternal(rawMsg)
+}
+
+// HDInsight Hive activity type.
+type HDInsightHiveActivity struct {
+	ExecutionActivity
+	// HDInsight Hive activity properties.
+	TypeProperties *HDInsightHiveActivityTypeProperties `json:"typeProperties,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type HDInsightHiveActivity.
+func (h HDInsightHiveActivity) MarshalJSON() ([]byte, error) {
+	objectMap := h.ExecutionActivity.marshalInternal("HDInsightHive")
+	if h.TypeProperties != nil {
+		objectMap["typeProperties"] = h.TypeProperties
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type HDInsightHiveActivity.
+func (h *HDInsightHiveActivity) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "typeProperties":
+			if val != nil {
+				err = json.Unmarshal(*val, &h.TypeProperties)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return h.ExecutionActivity.unmarshalInternal(rawMsg)
+}
+
+// HDInsight Hive activity properties.
+type HDInsightHiveActivityTypeProperties struct {
+	// User specified arguments to HDInsightActivity.
+	Arguments *[]interface{} `json:"arguments,omitempty"`
+
+	// Allows user to specify defines for Hive job request.
+	Defines *map[string]interface{} `json:"defines,omitempty"`
+
+	// Debug info option.
+	GetDebugInfo *HDInsightActivityDebugInfoOption `json:"getDebugInfo,omitempty"`
+
+	// Query timeout value (in minutes). Effective when the HDInsight cluster is with ESP (Enterprise Security Package)
+	QueryTimeout *int32 `json:"queryTimeout,omitempty"`
+
+	// Script linked service reference.
+	ScriptLinkedService *LinkedServiceReference `json:"scriptLinkedService,omitempty"`
+
+	// Script path. Type: string (or Expression with resultType string).
+	ScriptPath interface{} `json:"scriptPath,omitempty"`
+
+	// Storage linked service references.
+	StorageLinkedServices *[]LinkedServiceReference `json:"storageLinkedServices,omitempty"`
+
+	// User specified arguments under hivevar namespace.
+	Variables *[]interface{} `json:"variables,omitempty"`
+}
+
+// HDInsight linked service.
+type HDInsightLinkedService struct {
+	LinkedService
+	// HDInsight linked service properties.
+	TypeProperties *HDInsightLinkedServiceTypeProperties `json:"typeProperties,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type HDInsightLinkedService.
+func (h HDInsightLinkedService) MarshalJSON() ([]byte, error) {
+	objectMap := h.LinkedService.marshalInternal("HDInsight")
+	if h.TypeProperties != nil {
+		objectMap["typeProperties"] = h.TypeProperties
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type HDInsightLinkedService.
+func (h *HDInsightLinkedService) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "typeProperties":
+			if val != nil {
+				err = json.Unmarshal(*val, &h.TypeProperties)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return h.LinkedService.unmarshalInternal(rawMsg)
+}
+
+// HDInsight linked service properties.
+type HDInsightLinkedServiceTypeProperties struct {
+	// HDInsight cluster URI. Type: string (or Expression with resultType string).
+	ClusterURI interface{} `json:"clusterUri,omitempty"`
+
+	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
+	// with resultType string).
+	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
+
+	// Specify the FileSystem if the main storage for the HDInsight is ADLS Gen2. Type: string (or Expression with resultType string).
+	FileSystem interface{} `json:"fileSystem,omitempty"`
+
+	// A reference to the Azure SQL linked service that points to the HCatalog database.
+	HcatalogLinkedServiceName *LinkedServiceReference `json:"hcatalogLinkedServiceName,omitempty"`
+
+	// Specify if the HDInsight is created with ESP (Enterprise Security Package). Type: Boolean.
+	IsEspEnabled interface{} `json:"isEspEnabled,omitempty"`
+
+	// The Azure Storage linked service reference.
+	LinkedServiceName *LinkedServiceReference `json:"linkedServiceName,omitempty"`
+
+	// HDInsight cluster password.
+	Password SecretBaseClassification `json:"password,omitempty"`
+
+	// HDInsight cluster user name. Type: string (or Expression with resultType string).
+	UserName interface{} `json:"userName,omitempty"`
+}
+
+// HDInsight MapReduce activity type.
+type HDInsightMapReduceActivity struct {
+	ExecutionActivity
+	// HDInsight MapReduce activity properties.
+	TypeProperties *HDInsightMapReduceActivityTypeProperties `json:"typeProperties,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type HDInsightMapReduceActivity.
+func (h HDInsightMapReduceActivity) MarshalJSON() ([]byte, error) {
+	objectMap := h.ExecutionActivity.marshalInternal("HDInsightMapReduce")
+	if h.TypeProperties != nil {
+		objectMap["typeProperties"] = h.TypeProperties
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type HDInsightMapReduceActivity.
+func (h *HDInsightMapReduceActivity) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "typeProperties":
+			if val != nil {
+				err = json.Unmarshal(*val, &h.TypeProperties)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return h.ExecutionActivity.unmarshalInternal(rawMsg)
+}
+
+// HDInsight MapReduce activity properties.
+type HDInsightMapReduceActivityTypeProperties struct {
+	// User specified arguments to HDInsightActivity.
+	Arguments *[]interface{} `json:"arguments,omitempty"`
+
+	// Class name. Type: string (or Expression with resultType string).
+	ClassName interface{} `json:"className,omitempty"`
+
+	// Allows user to specify defines for the MapReduce job request.
+	Defines *map[string]interface{} `json:"defines,omitempty"`
+
+	// Debug info option.
+	GetDebugInfo *HDInsightActivityDebugInfoOption `json:"getDebugInfo,omitempty"`
+
+	// Jar path. Type: string (or Expression with resultType string).
+	JarFilePath interface{} `json:"jarFilePath,omitempty"`
+
+	// Jar libs.
+	JarLibs *[]interface{} `json:"jarLibs,omitempty"`
+
+	// Jar linked service reference.
+	JarLinkedService *LinkedServiceReference `json:"jarLinkedService,omitempty"`
+
+	// Storage linked service references.
+	StorageLinkedServices *[]LinkedServiceReference `json:"storageLinkedServices,omitempty"`
+}
+
+// HDInsight ondemand linked service.
+type HDInsightOnDemandLinkedService struct {
+	LinkedService
+	// HDInsight ondemand linked service properties.
+	TypeProperties *HDInsightOnDemandLinkedServiceTypeProperties `json:"typeProperties,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type HDInsightOnDemandLinkedService.
+func (h HDInsightOnDemandLinkedService) MarshalJSON() ([]byte, error) {
+	objectMap := h.LinkedService.marshalInternal("HDInsightOnDemand")
+	if h.TypeProperties != nil {
+		objectMap["typeProperties"] = h.TypeProperties
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type HDInsightOnDemandLinkedService.
+func (h *HDInsightOnDemandLinkedService) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "typeProperties":
+			if val != nil {
+				err = json.Unmarshal(*val, &h.TypeProperties)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return h.LinkedService.unmarshalInternal(rawMsg)
+}
+
+// HDInsight ondemand linked service properties.
+type HDInsightOnDemandLinkedServiceTypeProperties struct {
+	// Specifies additional storage accounts for the HDInsight linked service so that the Data Factory service can register them on your behalf.
+	AdditionalLinkedServiceNames *[]LinkedServiceReference `json:"additionalLinkedServiceNames,omitempty"`
+
+	// The prefix of cluster name, postfix will be distinct with timestamp. Type: string (or Expression with resultType string).
+	ClusterNamePrefix interface{} `json:"clusterNamePrefix,omitempty"`
+
+	// The password to access the cluster.
+	ClusterPassword SecretBaseClassification `json:"clusterPassword,omitempty"`
+
+	// The resource group where the cluster belongs. Type: string (or Expression with resultType string).
+	ClusterResourceGroup interface{} `json:"clusterResourceGroup,omitempty"`
+
+	// The password to SSH remotely connect cluster’s node (for Linux).
+	ClusterSSHPassword SecretBaseClassification `json:"clusterSshPassword,omitempty"`
+
+	// The username to SSH remotely connect to cluster’s node (for Linux). Type: string (or Expression with resultType string).
+	ClusterSSHUserName interface{} `json:"clusterSshUserName,omitempty"`
+
+	// Number of worker/data nodes in the cluster. Suggestion value: 4. Type: string (or Expression with resultType string).
+	ClusterSize interface{} `json:"clusterSize,omitempty"`
+
+	// The cluster type. Type: string (or Expression with resultType string).
+	ClusterType interface{} `json:"clusterType,omitempty"`
+
+	// The username to access the cluster. Type: string (or Expression with resultType string).
+	ClusterUserName interface{} `json:"clusterUserName,omitempty"`
+
+	// Specifies the core configuration parameters (as in core-site.xml) for the HDInsight cluster to be created.
+	CoreConfiguration interface{} `json:"coreConfiguration,omitempty"`
+
+	// Specifies the size of the data node for the HDInsight cluster.
+	DataNodeSize interface{} `json:"dataNodeSize,omitempty"`
+
+	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
+	// with resultType string).
+	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
+
+	// Specifies the HBase configuration parameters (hbase-site.xml) for the HDInsight cluster.
+	HBaseConfiguration interface{} `json:"hBaseConfiguration,omitempty"`
+
+	// The name of Azure SQL linked service that point to the HCatalog database. The on-demand HDInsight cluster is created by using the Azure SQL database
+	// as the metastore.
+	HcatalogLinkedServiceName *LinkedServiceReference `json:"hcatalogLinkedServiceName,omitempty"`
+
+	// Specifies the HDFS configuration parameters (hdfs-site.xml) for the HDInsight cluster.
+	HdfsConfiguration interface{} `json:"hdfsConfiguration,omitempty"`
+
+	// Specifies the size of the head node for the HDInsight cluster.
+	HeadNodeSize interface{} `json:"headNodeSize,omitempty"`
+
+	// Specifies the hive configuration parameters (hive-site.xml) for the HDInsight cluster.
+	HiveConfiguration interface{} `json:"hiveConfiguration,omitempty"`
+
+	// The customer’s subscription to host the cluster. Type: string (or Expression with resultType string).
+	HostSubscriptionID interface{} `json:"hostSubscriptionId,omitempty"`
+
+	// Azure Storage linked service to be used by the on-demand cluster for storing and processing data.
+	LinkedServiceName *LinkedServiceReference `json:"linkedServiceName,omitempty"`
+
+	// Specifies the MapReduce configuration parameters (mapred-site.xml) for the HDInsight cluster.
+	MapReduceConfiguration interface{} `json:"mapReduceConfiguration,omitempty"`
+
+	// Specifies the Oozie configuration parameters (oozie-site.xml) for the HDInsight cluster.
+	OozieConfiguration interface{} `json:"oozieConfiguration,omitempty"`
+
+	// Custom script actions to run on HDI ondemand cluster once it's up. Please refer to
+	// https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-hadoop-customize-cluster-linux?toc=%2Fen-us%2Fazure%2Fhdinsight%2Fr-server%2FTOC.json&bc=%2Fen-us%2Fazure%2Fbread%2Ftoc.json#understanding-script-actions.
+	ScriptActions *[]ScriptAction `json:"scriptActions,omitempty"`
+
+	// The service principal id for the hostSubscriptionId. Type: string (or Expression with resultType string).
+	ServicePrincipalID interface{} `json:"servicePrincipalId,omitempty"`
+
+	// The key for the service principal id.
+	ServicePrincipalKey SecretBaseClassification `json:"servicePrincipalKey,omitempty"`
+
+	// The version of spark if the cluster type is 'spark'. Type: string (or Expression with resultType string).
+	SparkVersion interface{} `json:"sparkVersion,omitempty"`
+
+	// Specifies the Storm configuration parameters (storm-site.xml) for the HDInsight cluster.
+	StormConfiguration interface{} `json:"stormConfiguration,omitempty"`
+
+	// The ARM resource ID for the subnet in the vNet. If virtualNetworkId was specified, then this property is required. Type: string (or Expression with resultType
+	// string).
+	SubnetName interface{} `json:"subnetName,omitempty"`
+
+	// The Tenant id/name to which the service principal belongs. Type: string (or Expression with resultType string).
+	Tenant interface{} `json:"tenant,omitempty"`
+
+	// The allowed idle time for the on-demand HDInsight cluster. Specifies how long the on-demand HDInsight cluster stays alive after completion of an activity
+	// run if there are no other active jobs in the
+	// cluster. The minimum value is 5 mins. Type: string (or Expression with resultType string).
+	TimeToLive interface{} `json:"timeToLive,omitempty"`
+
+	// Version of the HDInsight cluster. Type: string (or Expression with resultType string).
+	Version interface{} `json:"version,omitempty"`
+
+	// The ARM resource ID for the vNet to which the cluster should be joined after creation. Type: string (or Expression with resultType string).
+	VirtualNetworkID interface{} `json:"virtualNetworkId,omitempty"`
+
+	// Specifies the Yarn configuration parameters (yarn-site.xml) for the HDInsight cluster.
+	YarnConfiguration interface{} `json:"yarnConfiguration,omitempty"`
+
+	// Specifies the size of the Zoo Keeper node for the HDInsight cluster.
+	ZookeeperNodeSize interface{} `json:"zookeeperNodeSize,omitempty"`
+}
+
+// HDInsight Pig activity type.
+type HDInsightPigActivity struct {
+	ExecutionActivity
+	// HDInsight Pig activity properties.
+	TypeProperties *HDInsightPigActivityTypeProperties `json:"typeProperties,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type HDInsightPigActivity.
+func (h HDInsightPigActivity) MarshalJSON() ([]byte, error) {
+	objectMap := h.ExecutionActivity.marshalInternal("HDInsightPig")
+	if h.TypeProperties != nil {
+		objectMap["typeProperties"] = h.TypeProperties
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type HDInsightPigActivity.
+func (h *HDInsightPigActivity) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "typeProperties":
+			if val != nil {
+				err = json.Unmarshal(*val, &h.TypeProperties)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return h.ExecutionActivity.unmarshalInternal(rawMsg)
+}
+
+// HDInsight Pig activity properties.
+type HDInsightPigActivityTypeProperties struct {
+	// User specified arguments to HDInsightActivity. Type: array (or Expression with resultType array).
+	Arguments interface{} `json:"arguments,omitempty"`
+
+	// Allows user to specify defines for Pig job request.
+	Defines *map[string]interface{} `json:"defines,omitempty"`
+
+	// Debug info option.
+	GetDebugInfo *HDInsightActivityDebugInfoOption `json:"getDebugInfo,omitempty"`
+
+	// Script linked service reference.
+	ScriptLinkedService *LinkedServiceReference `json:"scriptLinkedService,omitempty"`
+
+	// Script path. Type: string (or Expression with resultType string).
+	ScriptPath interface{} `json:"scriptPath,omitempty"`
+
+	// Storage linked service references.
+	StorageLinkedServices *[]LinkedServiceReference `json:"storageLinkedServices,omitempty"`
+}
+
+// HDInsight Spark activity.
+type HDInsightSparkActivity struct {
+	ExecutionActivity
+	// HDInsight spark activity properties.
+	TypeProperties *HDInsightSparkActivityTypeProperties `json:"typeProperties,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type HDInsightSparkActivity.
+func (h HDInsightSparkActivity) MarshalJSON() ([]byte, error) {
+	objectMap := h.ExecutionActivity.marshalInternal("HDInsightSpark")
+	if h.TypeProperties != nil {
+		objectMap["typeProperties"] = h.TypeProperties
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type HDInsightSparkActivity.
+func (h *HDInsightSparkActivity) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "typeProperties":
+			if val != nil {
+				err = json.Unmarshal(*val, &h.TypeProperties)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return h.ExecutionActivity.unmarshalInternal(rawMsg)
+}
+
+// HDInsight spark activity properties.
+type HDInsightSparkActivityTypeProperties struct {
+	// The user-specified arguments to HDInsightSparkActivity.
+	Arguments *[]interface{} `json:"arguments,omitempty"`
+
+	// The application's Java/Spark main class.
+	ClassName *string `json:"className,omitempty"`
+
+	// The relative path to the root folder of the code/package to be executed. Type: string (or Expression with resultType string).
+	EntryFilePath interface{} `json:"entryFilePath,omitempty"`
+
+	// Debug info option.
+	GetDebugInfo *HDInsightActivityDebugInfoOption `json:"getDebugInfo,omitempty"`
+
+	// The user to impersonate that will execute the job. Type: string (or Expression with resultType string).
+	ProxyUser interface{} `json:"proxyUser,omitempty"`
+
+	// The root path in 'sparkJobLinkedService' for all the job’s files. Type: string (or Expression with resultType string).
+	RootPath interface{} `json:"rootPath,omitempty"`
+
+	// Spark configuration property.
+	SparkConfig *map[string]interface{} `json:"sparkConfig,omitempty"`
+
+	// The storage linked service for uploading the entry file and dependencies, and for receiving logs.
+	SparkJobLinkedService *LinkedServiceReference `json:"sparkJobLinkedService,omitempty"`
+}
+
+// HDInsight streaming activity type.
+type HDInsightStreamingActivity struct {
+	ExecutionActivity
+	// HDInsight streaming activity properties.
+	TypeProperties *HDInsightStreamingActivityTypeProperties `json:"typeProperties,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type HDInsightStreamingActivity.
+func (h HDInsightStreamingActivity) MarshalJSON() ([]byte, error) {
+	objectMap := h.ExecutionActivity.marshalInternal("HDInsightStreaming")
+	if h.TypeProperties != nil {
+		objectMap["typeProperties"] = h.TypeProperties
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type HDInsightStreamingActivity.
+func (h *HDInsightStreamingActivity) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "typeProperties":
+			if val != nil {
+				err = json.Unmarshal(*val, &h.TypeProperties)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return h.ExecutionActivity.unmarshalInternal(rawMsg)
+}
+
+// HDInsight streaming activity properties.
+type HDInsightStreamingActivityTypeProperties struct {
+	// User specified arguments to HDInsightActivity.
+	Arguments *[]interface{} `json:"arguments,omitempty"`
+
+	// Combiner executable name. Type: string (or Expression with resultType string).
+	Combiner interface{} `json:"combiner,omitempty"`
+
+	// Command line environment values.
+	CommandEnvironment *[]interface{} `json:"commandEnvironment,omitempty"`
+
+	// Allows user to specify defines for streaming job request.
+	Defines *map[string]interface{} `json:"defines,omitempty"`
+
+	// Linked service reference where the files are located.
+	FileLinkedService *LinkedServiceReference `json:"fileLinkedService,omitempty"`
+
+	// Paths to streaming job files. Can be directories.
+	FilePaths *[]interface{} `json:"filePaths,omitempty"`
+
+	// Debug info option.
+	GetDebugInfo *HDInsightActivityDebugInfoOption `json:"getDebugInfo,omitempty"`
+
+	// Input blob path. Type: string (or Expression with resultType string).
+	Input interface{} `json:"input,omitempty"`
+
+	// Mapper executable name. Type: string (or Expression with resultType string).
+	Mapper interface{} `json:"mapper,omitempty"`
+
+	// Output blob path. Type: string (or Expression with resultType string).
+	Output interface{} `json:"output,omitempty"`
+
+	// Reducer executable name. Type: string (or Expression with resultType string).
+	Reducer interface{} `json:"reducer,omitempty"`
+
+	// Storage linked service references.
+	StorageLinkedServices *[]LinkedServiceReference `json:"storageLinkedServices,omitempty"`
 }
 
 // Linked service for an HTTP source.
@@ -14671,549 +15214,6 @@ func (h *HTTPSource) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return h.CopySource.unmarshalInternal(rawMsg)
-}
-
-// HDInsight Hive activity type.
-type HdInsightHiveActivity struct {
-	ExecutionActivity
-	// HDInsight Hive activity properties.
-	TypeProperties *HdInsightHiveActivityTypeProperties `json:"typeProperties,omitempty"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type HdInsightHiveActivity.
-func (h HdInsightHiveActivity) MarshalJSON() ([]byte, error) {
-	objectMap := h.ExecutionActivity.marshalInternal("HDInsightHive")
-	if h.TypeProperties != nil {
-		objectMap["typeProperties"] = h.TypeProperties
-	}
-	return json.Marshal(objectMap)
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type HdInsightHiveActivity.
-func (h *HdInsightHiveActivity) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
-	}
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "typeProperties":
-			if val != nil {
-				err = json.Unmarshal(*val, &h.TypeProperties)
-			}
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return err
-		}
-	}
-	return h.ExecutionActivity.unmarshalInternal(rawMsg)
-}
-
-// HDInsight Hive activity properties.
-type HdInsightHiveActivityTypeProperties struct {
-	// User specified arguments to HDInsightActivity.
-	Arguments *[]interface{} `json:"arguments,omitempty"`
-
-	// Allows user to specify defines for Hive job request.
-	Defines *map[string]interface{} `json:"defines,omitempty"`
-
-	// Debug info option.
-	GetDebugInfo *HDInsightActivityDebugInfoOption `json:"getDebugInfo,omitempty"`
-
-	// Query timeout value (in minutes). Effective when the HDInsight cluster is with ESP (Enterprise Security Package)
-	QueryTimeout *int32 `json:"queryTimeout,omitempty"`
-
-	// Script linked service reference.
-	ScriptLinkedService *LinkedServiceReference `json:"scriptLinkedService,omitempty"`
-
-	// Script path. Type: string (or Expression with resultType string).
-	ScriptPath interface{} `json:"scriptPath,omitempty"`
-
-	// Storage linked service references.
-	StorageLinkedServices *[]LinkedServiceReference `json:"storageLinkedServices,omitempty"`
-
-	// User specified arguments under hivevar namespace.
-	Variables *[]interface{} `json:"variables,omitempty"`
-}
-
-// HDInsight linked service.
-type HdInsightLinkedService struct {
-	LinkedService
-	// HDInsight linked service properties.
-	TypeProperties *HdInsightLinkedServiceTypeProperties `json:"typeProperties,omitempty"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type HdInsightLinkedService.
-func (h HdInsightLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := h.LinkedService.marshalInternal("HDInsight")
-	if h.TypeProperties != nil {
-		objectMap["typeProperties"] = h.TypeProperties
-	}
-	return json.Marshal(objectMap)
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type HdInsightLinkedService.
-func (h *HdInsightLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
-	}
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "typeProperties":
-			if val != nil {
-				err = json.Unmarshal(*val, &h.TypeProperties)
-			}
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return err
-		}
-	}
-	return h.LinkedService.unmarshalInternal(rawMsg)
-}
-
-// HDInsight linked service properties.
-type HdInsightLinkedServiceTypeProperties struct {
-	// HDInsight cluster URI. Type: string (or Expression with resultType string).
-	ClusterURI interface{} `json:"clusterUri,omitempty"`
-
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
-	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
-
-	// Specify the FileSystem if the main storage for the HDInsight is ADLS Gen2. Type: string (or Expression with resultType string).
-	FileSystem interface{} `json:"fileSystem,omitempty"`
-
-	// A reference to the Azure SQL linked service that points to the HCatalog database.
-	HcatalogLinkedServiceName *LinkedServiceReference `json:"hcatalogLinkedServiceName,omitempty"`
-
-	// Specify if the HDInsight is created with ESP (Enterprise Security Package). Type: Boolean.
-	IsEspEnabled interface{} `json:"isEspEnabled,omitempty"`
-
-	// The Azure Storage linked service reference.
-	LinkedServiceName *LinkedServiceReference `json:"linkedServiceName,omitempty"`
-
-	// HDInsight cluster password.
-	Password SecretBaseClassification `json:"password,omitempty"`
-
-	// HDInsight cluster user name. Type: string (or Expression with resultType string).
-	UserName interface{} `json:"userName,omitempty"`
-}
-
-// HDInsight MapReduce activity type.
-type HdInsightMapReduceActivity struct {
-	ExecutionActivity
-	// HDInsight MapReduce activity properties.
-	TypeProperties *HdInsightMapReduceActivityTypeProperties `json:"typeProperties,omitempty"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type HdInsightMapReduceActivity.
-func (h HdInsightMapReduceActivity) MarshalJSON() ([]byte, error) {
-	objectMap := h.ExecutionActivity.marshalInternal("HDInsightMapReduce")
-	if h.TypeProperties != nil {
-		objectMap["typeProperties"] = h.TypeProperties
-	}
-	return json.Marshal(objectMap)
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type HdInsightMapReduceActivity.
-func (h *HdInsightMapReduceActivity) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
-	}
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "typeProperties":
-			if val != nil {
-				err = json.Unmarshal(*val, &h.TypeProperties)
-			}
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return err
-		}
-	}
-	return h.ExecutionActivity.unmarshalInternal(rawMsg)
-}
-
-// HDInsight MapReduce activity properties.
-type HdInsightMapReduceActivityTypeProperties struct {
-	// User specified arguments to HDInsightActivity.
-	Arguments *[]interface{} `json:"arguments,omitempty"`
-
-	// Class name. Type: string (or Expression with resultType string).
-	ClassName interface{} `json:"className,omitempty"`
-
-	// Allows user to specify defines for the MapReduce job request.
-	Defines *map[string]interface{} `json:"defines,omitempty"`
-
-	// Debug info option.
-	GetDebugInfo *HDInsightActivityDebugInfoOption `json:"getDebugInfo,omitempty"`
-
-	// Jar path. Type: string (or Expression with resultType string).
-	JarFilePath interface{} `json:"jarFilePath,omitempty"`
-
-	// Jar libs.
-	JarLibs *[]interface{} `json:"jarLibs,omitempty"`
-
-	// Jar linked service reference.
-	JarLinkedService *LinkedServiceReference `json:"jarLinkedService,omitempty"`
-
-	// Storage linked service references.
-	StorageLinkedServices *[]LinkedServiceReference `json:"storageLinkedServices,omitempty"`
-}
-
-// HDInsight ondemand linked service.
-type HdInsightOnDemandLinkedService struct {
-	LinkedService
-	// HDInsight ondemand linked service properties.
-	TypeProperties *HdInsightOnDemandLinkedServiceTypeProperties `json:"typeProperties,omitempty"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type HdInsightOnDemandLinkedService.
-func (h HdInsightOnDemandLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := h.LinkedService.marshalInternal("HDInsightOnDemand")
-	if h.TypeProperties != nil {
-		objectMap["typeProperties"] = h.TypeProperties
-	}
-	return json.Marshal(objectMap)
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type HdInsightOnDemandLinkedService.
-func (h *HdInsightOnDemandLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
-	}
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "typeProperties":
-			if val != nil {
-				err = json.Unmarshal(*val, &h.TypeProperties)
-			}
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return err
-		}
-	}
-	return h.LinkedService.unmarshalInternal(rawMsg)
-}
-
-// HDInsight ondemand linked service properties.
-type HdInsightOnDemandLinkedServiceTypeProperties struct {
-	// Specifies additional storage accounts for the HDInsight linked service so that the Data Factory service can register them on your behalf.
-	AdditionalLinkedServiceNames *[]LinkedServiceReference `json:"additionalLinkedServiceNames,omitempty"`
-
-	// The prefix of cluster name, postfix will be distinct with timestamp. Type: string (or Expression with resultType string).
-	ClusterNamePrefix interface{} `json:"clusterNamePrefix,omitempty"`
-
-	// The password to access the cluster.
-	ClusterPassword SecretBaseClassification `json:"clusterPassword,omitempty"`
-
-	// The resource group where the cluster belongs. Type: string (or Expression with resultType string).
-	ClusterResourceGroup interface{} `json:"clusterResourceGroup,omitempty"`
-
-	// The password to SSH remotely connect cluster’s node (for Linux).
-	ClusterSSHPassword SecretBaseClassification `json:"clusterSshPassword,omitempty"`
-
-	// The username to SSH remotely connect to cluster’s node (for Linux). Type: string (or Expression with resultType string).
-	ClusterSSHUserName interface{} `json:"clusterSshUserName,omitempty"`
-
-	// Number of worker/data nodes in the cluster. Suggestion value: 4. Type: string (or Expression with resultType string).
-	ClusterSize interface{} `json:"clusterSize,omitempty"`
-
-	// The cluster type. Type: string (or Expression with resultType string).
-	ClusterType interface{} `json:"clusterType,omitempty"`
-
-	// The username to access the cluster. Type: string (or Expression with resultType string).
-	ClusterUserName interface{} `json:"clusterUserName,omitempty"`
-
-	// Specifies the core configuration parameters (as in core-site.xml) for the HDInsight cluster to be created.
-	CoreConfiguration interface{} `json:"coreConfiguration,omitempty"`
-
-	// Specifies the size of the data node for the HDInsight cluster.
-	DataNodeSize interface{} `json:"dataNodeSize,omitempty"`
-
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
-	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
-
-	// Specifies the HBase configuration parameters (hbase-site.xml) for the HDInsight cluster.
-	HBaseConfiguration interface{} `json:"hBaseConfiguration,omitempty"`
-
-	// The name of Azure SQL linked service that point to the HCatalog database. The on-demand HDInsight cluster is created by using the Azure SQL database
-	// as the metastore.
-	HcatalogLinkedServiceName *LinkedServiceReference `json:"hcatalogLinkedServiceName,omitempty"`
-
-	// Specifies the HDFS configuration parameters (hdfs-site.xml) for the HDInsight cluster.
-	HdfsConfiguration interface{} `json:"hdfsConfiguration,omitempty"`
-
-	// Specifies the size of the head node for the HDInsight cluster.
-	HeadNodeSize interface{} `json:"headNodeSize,omitempty"`
-
-	// Specifies the hive configuration parameters (hive-site.xml) for the HDInsight cluster.
-	HiveConfiguration interface{} `json:"hiveConfiguration,omitempty"`
-
-	// The customer’s subscription to host the cluster. Type: string (or Expression with resultType string).
-	HostSubscriptionID interface{} `json:"hostSubscriptionId,omitempty"`
-
-	// Azure Storage linked service to be used by the on-demand cluster for storing and processing data.
-	LinkedServiceName *LinkedServiceReference `json:"linkedServiceName,omitempty"`
-
-	// Specifies the MapReduce configuration parameters (mapred-site.xml) for the HDInsight cluster.
-	MapReduceConfiguration interface{} `json:"mapReduceConfiguration,omitempty"`
-
-	// Specifies the Oozie configuration parameters (oozie-site.xml) for the HDInsight cluster.
-	OozieConfiguration interface{} `json:"oozieConfiguration,omitempty"`
-
-	// Custom script actions to run on HDI ondemand cluster once it's up. Please refer to
-	// https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-hadoop-customize-cluster-linux?toc=%2Fen-us%2Fazure%2Fhdinsight%2Fr-server%2FTOC.json&bc=%2Fen-us%2Fazure%2Fbread%2Ftoc.json#understanding-script-actions.
-	ScriptActions *[]ScriptAction `json:"scriptActions,omitempty"`
-
-	// The service principal id for the hostSubscriptionId. Type: string (or Expression with resultType string).
-	ServicePrincipalID interface{} `json:"servicePrincipalId,omitempty"`
-
-	// The key for the service principal id.
-	ServicePrincipalKey SecretBaseClassification `json:"servicePrincipalKey,omitempty"`
-
-	// The version of spark if the cluster type is 'spark'. Type: string (or Expression with resultType string).
-	SparkVersion interface{} `json:"sparkVersion,omitempty"`
-
-	// Specifies the Storm configuration parameters (storm-site.xml) for the HDInsight cluster.
-	StormConfiguration interface{} `json:"stormConfiguration,omitempty"`
-
-	// The ARM resource ID for the subnet in the vNet. If virtualNetworkId was specified, then this property is required. Type: string (or Expression with resultType
-	// string).
-	SubnetName interface{} `json:"subnetName,omitempty"`
-
-	// The Tenant id/name to which the service principal belongs. Type: string (or Expression with resultType string).
-	Tenant interface{} `json:"tenant,omitempty"`
-
-	// The allowed idle time for the on-demand HDInsight cluster. Specifies how long the on-demand HDInsight cluster stays alive after completion of an activity
-	// run if there are no other active jobs in the
-	// cluster. The minimum value is 5 mins. Type: string (or Expression with resultType string).
-	TimeToLive interface{} `json:"timeToLive,omitempty"`
-
-	// Version of the HDInsight cluster. Type: string (or Expression with resultType string).
-	Version interface{} `json:"version,omitempty"`
-
-	// The ARM resource ID for the vNet to which the cluster should be joined after creation. Type: string (or Expression with resultType string).
-	VirtualNetworkID interface{} `json:"virtualNetworkId,omitempty"`
-
-	// Specifies the Yarn configuration parameters (yarn-site.xml) for the HDInsight cluster.
-	YarnConfiguration interface{} `json:"yarnConfiguration,omitempty"`
-
-	// Specifies the size of the Zoo Keeper node for the HDInsight cluster.
-	ZookeeperNodeSize interface{} `json:"zookeeperNodeSize,omitempty"`
-}
-
-// HDInsight Pig activity type.
-type HdInsightPigActivity struct {
-	ExecutionActivity
-	// HDInsight Pig activity properties.
-	TypeProperties *HdInsightPigActivityTypeProperties `json:"typeProperties,omitempty"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type HdInsightPigActivity.
-func (h HdInsightPigActivity) MarshalJSON() ([]byte, error) {
-	objectMap := h.ExecutionActivity.marshalInternal("HDInsightPig")
-	if h.TypeProperties != nil {
-		objectMap["typeProperties"] = h.TypeProperties
-	}
-	return json.Marshal(objectMap)
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type HdInsightPigActivity.
-func (h *HdInsightPigActivity) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
-	}
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "typeProperties":
-			if val != nil {
-				err = json.Unmarshal(*val, &h.TypeProperties)
-			}
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return err
-		}
-	}
-	return h.ExecutionActivity.unmarshalInternal(rawMsg)
-}
-
-// HDInsight Pig activity properties.
-type HdInsightPigActivityTypeProperties struct {
-	// User specified arguments to HDInsightActivity. Type: array (or Expression with resultType array).
-	Arguments interface{} `json:"arguments,omitempty"`
-
-	// Allows user to specify defines for Pig job request.
-	Defines *map[string]interface{} `json:"defines,omitempty"`
-
-	// Debug info option.
-	GetDebugInfo *HDInsightActivityDebugInfoOption `json:"getDebugInfo,omitempty"`
-
-	// Script linked service reference.
-	ScriptLinkedService *LinkedServiceReference `json:"scriptLinkedService,omitempty"`
-
-	// Script path. Type: string (or Expression with resultType string).
-	ScriptPath interface{} `json:"scriptPath,omitempty"`
-
-	// Storage linked service references.
-	StorageLinkedServices *[]LinkedServiceReference `json:"storageLinkedServices,omitempty"`
-}
-
-// HDInsight Spark activity.
-type HdInsightSparkActivity struct {
-	ExecutionActivity
-	// HDInsight spark activity properties.
-	TypeProperties *HdInsightSparkActivityTypeProperties `json:"typeProperties,omitempty"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type HdInsightSparkActivity.
-func (h HdInsightSparkActivity) MarshalJSON() ([]byte, error) {
-	objectMap := h.ExecutionActivity.marshalInternal("HDInsightSpark")
-	if h.TypeProperties != nil {
-		objectMap["typeProperties"] = h.TypeProperties
-	}
-	return json.Marshal(objectMap)
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type HdInsightSparkActivity.
-func (h *HdInsightSparkActivity) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
-	}
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "typeProperties":
-			if val != nil {
-				err = json.Unmarshal(*val, &h.TypeProperties)
-			}
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return err
-		}
-	}
-	return h.ExecutionActivity.unmarshalInternal(rawMsg)
-}
-
-// HDInsight spark activity properties.
-type HdInsightSparkActivityTypeProperties struct {
-	// The user-specified arguments to HDInsightSparkActivity.
-	Arguments *[]interface{} `json:"arguments,omitempty"`
-
-	// The application's Java/Spark main class.
-	ClassName *string `json:"className,omitempty"`
-
-	// The relative path to the root folder of the code/package to be executed. Type: string (or Expression with resultType string).
-	EntryFilePath interface{} `json:"entryFilePath,omitempty"`
-
-	// Debug info option.
-	GetDebugInfo *HDInsightActivityDebugInfoOption `json:"getDebugInfo,omitempty"`
-
-	// The user to impersonate that will execute the job. Type: string (or Expression with resultType string).
-	ProxyUser interface{} `json:"proxyUser,omitempty"`
-
-	// The root path in 'sparkJobLinkedService' for all the job’s files. Type: string (or Expression with resultType string).
-	RootPath interface{} `json:"rootPath,omitempty"`
-
-	// Spark configuration property.
-	SparkConfig *map[string]interface{} `json:"sparkConfig,omitempty"`
-
-	// The storage linked service for uploading the entry file and dependencies, and for receiving logs.
-	SparkJobLinkedService *LinkedServiceReference `json:"sparkJobLinkedService,omitempty"`
-}
-
-// HDInsight streaming activity type.
-type HdInsightStreamingActivity struct {
-	ExecutionActivity
-	// HDInsight streaming activity properties.
-	TypeProperties *HdInsightStreamingActivityTypeProperties `json:"typeProperties,omitempty"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type HdInsightStreamingActivity.
-func (h HdInsightStreamingActivity) MarshalJSON() ([]byte, error) {
-	objectMap := h.ExecutionActivity.marshalInternal("HDInsightStreaming")
-	if h.TypeProperties != nil {
-		objectMap["typeProperties"] = h.TypeProperties
-	}
-	return json.Marshal(objectMap)
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type HdInsightStreamingActivity.
-func (h *HdInsightStreamingActivity) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
-	}
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "typeProperties":
-			if val != nil {
-				err = json.Unmarshal(*val, &h.TypeProperties)
-			}
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return err
-		}
-	}
-	return h.ExecutionActivity.unmarshalInternal(rawMsg)
-}
-
-// HDInsight streaming activity properties.
-type HdInsightStreamingActivityTypeProperties struct {
-	// User specified arguments to HDInsightActivity.
-	Arguments *[]interface{} `json:"arguments,omitempty"`
-
-	// Combiner executable name. Type: string (or Expression with resultType string).
-	Combiner interface{} `json:"combiner,omitempty"`
-
-	// Command line environment values.
-	CommandEnvironment *[]interface{} `json:"commandEnvironment,omitempty"`
-
-	// Allows user to specify defines for streaming job request.
-	Defines *map[string]interface{} `json:"defines,omitempty"`
-
-	// Linked service reference where the files are located.
-	FileLinkedService *LinkedServiceReference `json:"fileLinkedService,omitempty"`
-
-	// Paths to streaming job files. Can be directories.
-	FilePaths *[]interface{} `json:"filePaths,omitempty"`
-
-	// Debug info option.
-	GetDebugInfo *HDInsightActivityDebugInfoOption `json:"getDebugInfo,omitempty"`
-
-	// Input blob path. Type: string (or Expression with resultType string).
-	Input interface{} `json:"input,omitempty"`
-
-	// Mapper executable name. Type: string (or Expression with resultType string).
-	Mapper interface{} `json:"mapper,omitempty"`
-
-	// Output blob path. Type: string (or Expression with resultType string).
-	Output interface{} `json:"output,omitempty"`
-
-	// Reducer executable name. Type: string (or Expression with resultType string).
-	Reducer interface{} `json:"reducer,omitempty"`
-
-	// Storage linked service references.
-	StorageLinkedServices *[]LinkedServiceReference `json:"storageLinkedServices,omitempty"`
 }
 
 // Hadoop Distributed File System (HDFS) linked service.
@@ -15532,7 +15532,7 @@ func (h *HiveLinkedService) UnmarshalJSON(data []byte) error {
 // Hive Server linked service properties.
 type HiveLinkedServiceTypeProperties struct {
 	// Specifies whether to require a CA-issued SSL certificate name to match the host name of the server when connecting over SSL. The default value is false.
-	AllowHostNameCnMismatch interface{} `json:"allowHostNameCNMismatch,omitempty"`
+	AllowHostNameCNMismatch interface{} `json:"allowHostNameCNMismatch,omitempty"`
 
 	// Specifies whether to allow self-signed certificates from the server. The default value is false.
 	AllowSelfSignedServerCert interface{} `json:"allowSelfSignedServerCert,omitempty"`
@@ -15541,7 +15541,7 @@ type HiveLinkedServiceTypeProperties struct {
 	AuthenticationType *HiveAuthenticationType `json:"authenticationType,omitempty"`
 
 	// Specifies whether the connections to the server are encrypted using SSL. The default value is false.
-	EnableSsl interface{} `json:"enableSsl,omitempty"`
+	EnableSSL interface{} `json:"enableSsl,omitempty"`
 
 	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
 	// with resultType string).
@@ -15597,7 +15597,7 @@ func (h *HiveLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 		switch key {
 		case "allowHostNameCNMismatch":
 			if val != nil {
-				err = json.Unmarshal(*val, &h.AllowHostNameCnMismatch)
+				err = json.Unmarshal(*val, &h.AllowHostNameCNMismatch)
 			}
 			delete(rawMsg, key)
 		case "allowSelfSignedServerCert":
@@ -15612,7 +15612,7 @@ func (h *HiveLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		case "enableSsl":
 			if val != nil {
-				err = json.Unmarshal(*val, &h.EnableSsl)
+				err = json.Unmarshal(*val, &h.EnableSSL)
 			}
 			delete(rawMsg, key)
 		case "encryptedCredential":
@@ -16103,7 +16103,7 @@ func (i *ImpalaLinkedService) UnmarshalJSON(data []byte) error {
 // Impala server linked service properties.
 type ImpalaLinkedServiceTypeProperties struct {
 	// Specifies whether to require a CA-issued SSL certificate name to match the host name of the server when connecting over SSL. The default value is false.
-	AllowHostNameCnMismatch interface{} `json:"allowHostNameCNMismatch,omitempty"`
+	AllowHostNameCNMismatch interface{} `json:"allowHostNameCNMismatch,omitempty"`
 
 	// Specifies whether to allow self-signed certificates from the server. The default value is false.
 	AllowSelfSignedServerCert interface{} `json:"allowSelfSignedServerCert,omitempty"`
@@ -16112,7 +16112,7 @@ type ImpalaLinkedServiceTypeProperties struct {
 	AuthenticationType *ImpalaAuthenticationType `json:"authenticationType,omitempty"`
 
 	// Specifies whether the connections to the server are encrypted using SSL. The default value is false.
-	EnableSsl interface{} `json:"enableSsl,omitempty"`
+	EnableSSL interface{} `json:"enableSsl,omitempty"`
 
 	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
 	// with resultType string).
@@ -16150,7 +16150,7 @@ func (i *ImpalaLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 		switch key {
 		case "allowHostNameCNMismatch":
 			if val != nil {
-				err = json.Unmarshal(*val, &i.AllowHostNameCnMismatch)
+				err = json.Unmarshal(*val, &i.AllowHostNameCNMismatch)
 			}
 			delete(rawMsg, key)
 		case "allowSelfSignedServerCert":
@@ -16165,7 +16165,7 @@ func (i *ImpalaLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		case "enableSsl":
 			if val != nil {
-				err = json.Unmarshal(*val, &i.EnableSsl)
+				err = json.Unmarshal(*val, &i.EnableSSL)
 			}
 			delete(rawMsg, key)
 		case "encryptedCredential":
@@ -18599,7 +18599,7 @@ func (m *MagentoSource) UnmarshalJSON(data []byte) error {
 }
 
 // The workspace managed identity
-type ManagedIDentity struct {
+type ManagedIdentity struct {
 	// READ-ONLY; The principal ID of the workspace managed identity
 	PrincipalID *string `json:"principalId,omitempty" azure:"ro"`
 
@@ -18607,7 +18607,7 @@ type ManagedIDentity struct {
 	TenantID *string `json:"tenantId,omitempty" azure:"ro"`
 
 	// The type of managed identity for the workspace
-	Type *ResourceIDentityType `json:"type,omitempty"`
+	Type *ResourceIdentityType `json:"type,omitempty"`
 }
 
 // Managed integration runtime, including managed elastic and managed dedicated integration runtimes.
@@ -18671,7 +18671,7 @@ type ManagedIntegrationRuntimeTypeProperties struct {
 // Managed Virtual Network Settings
 type ManagedVirtualNetworkSettings struct {
 	// Allowed Aad Tenant Ids For Linking
-	AllowedAadTenantIDsForLinking *[]string `json:"allowedAadTenantIdsForLinking,omitempty"`
+	AllowedAADTenantIDsForLinking *[]string `json:"allowedAadTenantIdsForLinking,omitempty"`
 
 	// Linked Access Check On Target Resource
 	LinkedAccessCheckOnTargetResource *bool `json:"linkedAccessCheckOnTargetResource,omitempty"`
@@ -18734,14 +18734,14 @@ type MappingDataFlowTypeProperties struct {
 }
 
 // MariaDB server linked service.
-type MariaDbLinkedService struct {
+type MariaDBLinkedService struct {
 	LinkedService
 	// MariaDB server linked service properties.
-	TypeProperties *MariaDbLinkedServiceTypeProperties `json:"typeProperties,omitempty"`
+	TypeProperties *MariaDBLinkedServiceTypeProperties `json:"typeProperties,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type MariaDbLinkedService.
-func (m MariaDbLinkedService) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type MariaDBLinkedService.
+func (m MariaDBLinkedService) MarshalJSON() ([]byte, error) {
 	objectMap := m.LinkedService.marshalInternal("MariaDB")
 	if m.TypeProperties != nil {
 		objectMap["typeProperties"] = m.TypeProperties
@@ -18749,8 +18749,8 @@ func (m MariaDbLinkedService) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type MariaDbLinkedService.
-func (m *MariaDbLinkedService) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type MariaDBLinkedService.
+func (m *MariaDBLinkedService) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
@@ -18772,7 +18772,7 @@ func (m *MariaDbLinkedService) UnmarshalJSON(data []byte) error {
 }
 
 // MariaDB server linked service properties.
-type MariaDbLinkedServiceTypeProperties struct {
+type MariaDBLinkedServiceTypeProperties struct {
 	// An ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference.
 	ConnectionString interface{} `json:"connectionString,omitempty"`
 
@@ -18785,14 +18785,14 @@ type MariaDbLinkedServiceTypeProperties struct {
 }
 
 // A copy activity MariaDB server source.
-type MariaDbSource struct {
+type MariaDBSource struct {
 	TabularSource
 	// A query to retrieve data from source. Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type MariaDbSource.
-func (m MariaDbSource) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type MariaDBSource.
+func (m MariaDBSource) MarshalJSON() ([]byte, error) {
 	objectMap := m.TabularSource.marshalInternal("MariaDBSource")
 	if m.Query != nil {
 		objectMap["query"] = m.Query
@@ -18800,8 +18800,8 @@ func (m MariaDbSource) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type MariaDbSource.
-func (m *MariaDbSource) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type MariaDBSource.
+func (m *MariaDBSource) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
@@ -18823,14 +18823,14 @@ func (m *MariaDbSource) UnmarshalJSON(data []byte) error {
 }
 
 // MariaDB server dataset.
-type MariaDbTableDataset struct {
+type MariaDBTableDataset struct {
 	Dataset
 	// Properties specific to this dataset type.
 	TypeProperties *GenericDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type MariaDbTableDataset.
-func (m MariaDbTableDataset) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type MariaDBTableDataset.
+func (m MariaDBTableDataset) MarshalJSON() ([]byte, error) {
 	objectMap := m.Dataset.marshalInternal("MariaDBTable")
 	if m.TypeProperties != nil {
 		objectMap["typeProperties"] = m.TypeProperties
@@ -18838,8 +18838,8 @@ func (m MariaDbTableDataset) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type MariaDbTableDataset.
-func (m *MariaDbTableDataset) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type MariaDBTableDataset.
+func (m *MariaDBTableDataset) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
@@ -19470,7 +19470,7 @@ type MongoDbLinkedServiceTypeProperties struct {
 	DatabaseName interface{} `json:"databaseName,omitempty"`
 
 	// Specifies whether the connections to the server are encrypted using SSL. The default value is false. Type: boolean (or Expression with resultType boolean).
-	EnableSsl interface{} `json:"enableSsl,omitempty"`
+	EnableSSL interface{} `json:"enableSsl,omitempty"`
 
 	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
 	// with resultType string).
@@ -19521,7 +19521,7 @@ func (m *MongoDbLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		case "enableSsl":
 			if val != nil {
-				err = json.Unmarshal(*val, &m.EnableSsl)
+				err = json.Unmarshal(*val, &m.EnableSSL)
 			}
 			delete(rawMsg, key)
 		case "encryptedCredential":
@@ -20716,10 +20716,10 @@ func (o *ODataLinkedService) UnmarshalJSON(data []byte) error {
 // OData linked service properties.
 type ODataLinkedServiceTypeProperties struct {
 	// Specify the resource you are requesting authorization to use Directory. Type: string (or Expression with resultType string).
-	AadResourceID interface{} `json:"aadResourceId,omitempty"`
+	AADResourceID interface{} `json:"aadResourceId,omitempty"`
 
 	// Specify the credential type (key or cert) is used for service principal.
-	AadServicePrincipalCredentialType *ODataAadServicePrincipalCredentialType `json:"aadServicePrincipalCredentialType,omitempty"`
+	AADServicePrincipalCredentialType *ODataAADServicePrincipalCredentialType `json:"aadServicePrincipalCredentialType,omitempty"`
 
 	// Type of authentication used to connect to the OData service.
 	AuthenticationType *ODataAuthenticationType `json:"authenticationType,omitempty"`
@@ -20765,12 +20765,12 @@ func (o *ODataLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 		switch key {
 		case "aadResourceId":
 			if val != nil {
-				err = json.Unmarshal(*val, &o.AadResourceID)
+				err = json.Unmarshal(*val, &o.AADResourceID)
 			}
 			delete(rawMsg, key)
 		case "aadServicePrincipalCredentialType":
 			if val != nil {
-				err = json.Unmarshal(*val, &o.AadServicePrincipalCredentialType)
+				err = json.Unmarshal(*val, &o.AADServicePrincipalCredentialType)
 			}
 			delete(rawMsg, key)
 		case "authenticationType":
@@ -22393,7 +22393,7 @@ func (p *PhoenixLinkedService) UnmarshalJSON(data []byte) error {
 // Phoenix server linked service properties.
 type PhoenixLinkedServiceTypeProperties struct {
 	// Specifies whether to require a CA-issued SSL certificate name to match the host name of the server when connecting over SSL. The default value is false.
-	AllowHostNameCnMismatch interface{} `json:"allowHostNameCNMismatch,omitempty"`
+	AllowHostNameCNMismatch interface{} `json:"allowHostNameCNMismatch,omitempty"`
 
 	// Specifies whether to allow self-signed certificates from the server. The default value is false.
 	AllowSelfSignedServerCert interface{} `json:"allowSelfSignedServerCert,omitempty"`
@@ -22402,7 +22402,7 @@ type PhoenixLinkedServiceTypeProperties struct {
 	AuthenticationType *PhoenixAuthenticationType `json:"authenticationType,omitempty"`
 
 	// Specifies whether the connections to the server are encrypted using SSL. The default value is false.
-	EnableSsl interface{} `json:"enableSsl,omitempty"`
+	EnableSSL interface{} `json:"enableSsl,omitempty"`
 
 	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
 	// with resultType string).
@@ -22443,7 +22443,7 @@ func (p *PhoenixLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 		switch key {
 		case "allowHostNameCNMismatch":
 			if val != nil {
-				err = json.Unmarshal(*val, &p.AllowHostNameCnMismatch)
+				err = json.Unmarshal(*val, &p.AllowHostNameCNMismatch)
 			}
 			delete(rawMsg, key)
 		case "allowSelfSignedServerCert":
@@ -22458,7 +22458,7 @@ func (p *PhoenixLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		case "enableSsl":
 			if val != nil {
-				err = json.Unmarshal(*val, &p.EnableSsl)
+				err = json.Unmarshal(*val, &p.EnableSSL)
 			}
 			delete(rawMsg, key)
 		case "encryptedCredential":
@@ -22635,7 +22635,7 @@ type PipelineCreatePipelineRunOptions struct {
 	// Parameters of the pipeline run. These parameters will be used only if the runId is not specified.
 	Parameters *map[string]interface{}
 	// The pipeline run identifier. If run ID is specified the parameters of the specified run will be used to create a new run.
-	ReferencePipelineRunId *string
+	ReferencePipelineRunID *string
 	// In recovery mode, the rerun will start from this activity. If not specified, all activities will run.
 	StartActivityName *string
 }
@@ -22779,7 +22779,7 @@ type PipelineRun struct {
 	AdditionalProperties *map[string]interface{}
 
 	// READ-ONLY; The duration of a pipeline run.
-	DurationInMS *int32 `json:"durationInMs,omitempty" azure:"ro"`
+	DurationInMs *int32 `json:"durationInMs,omitempty" azure:"ro"`
 
 	// READ-ONLY; Entity that started the pipeline run.
 	InvokedBy *PipelineRunInvokedBy `json:"invokedBy,omitempty" azure:"ro"`
@@ -22818,8 +22818,8 @@ type PipelineRun struct {
 // MarshalJSON implements the json.Marshaller interface for type PipelineRun.
 func (p PipelineRun) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	if p.DurationInMS != nil {
-		objectMap["durationInMs"] = p.DurationInMS
+	if p.DurationInMs != nil {
+		objectMap["durationInMs"] = p.DurationInMs
 	}
 	if p.InvokedBy != nil {
 		objectMap["invokedBy"] = p.InvokedBy
@@ -22873,7 +22873,7 @@ func (p *PipelineRun) UnmarshalJSON(data []byte) error {
 		switch key {
 		case "durationInMs":
 			if val != nil {
-				err = json.Unmarshal(*val, &p.DurationInMS)
+				err = json.Unmarshal(*val, &p.DurationInMs)
 			}
 			delete(rawMsg, key)
 		case "invokedBy":
@@ -23298,7 +23298,7 @@ func (p *PrestoLinkedService) UnmarshalJSON(data []byte) error {
 // Presto server linked service properties.
 type PrestoLinkedServiceTypeProperties struct {
 	// Specifies whether to require a CA-issued SSL certificate name to match the host name of the server when connecting over SSL. The default value is false.
-	AllowHostNameCnMismatch interface{} `json:"allowHostNameCNMismatch,omitempty"`
+	AllowHostNameCNMismatch interface{} `json:"allowHostNameCNMismatch,omitempty"`
 
 	// Specifies whether to allow self-signed certificates from the server. The default value is false.
 	AllowSelfSignedServerCert interface{} `json:"allowSelfSignedServerCert,omitempty"`
@@ -23310,7 +23310,7 @@ type PrestoLinkedServiceTypeProperties struct {
 	Catalog interface{} `json:"catalog,omitempty"`
 
 	// Specifies whether the connections to the server are encrypted using SSL. The default value is false.
-	EnableSsl interface{} `json:"enableSsl,omitempty"`
+	EnableSSL interface{} `json:"enableSsl,omitempty"`
 
 	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
 	// with resultType string).
@@ -23355,7 +23355,7 @@ func (p *PrestoLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 		switch key {
 		case "allowHostNameCNMismatch":
 			if val != nil {
-				err = json.Unmarshal(*val, &p.AllowHostNameCnMismatch)
+				err = json.Unmarshal(*val, &p.AllowHostNameCNMismatch)
 			}
 			delete(rawMsg, key)
 		case "allowSelfSignedServerCert":
@@ -23375,7 +23375,7 @@ func (p *PrestoLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		case "enableSsl":
 			if val != nil {
-				err = json.Unmarshal(*val, &p.EnableSsl)
+				err = json.Unmarshal(*val, &p.EnableSSL)
 			}
 			delete(rawMsg, key)
 		case "encryptedCredential":
@@ -24635,7 +24635,7 @@ func (r *RestServiceLinkedService) UnmarshalJSON(data []byte) error {
 // Rest Service linked service properties.
 type RestServiceLinkedServiceTypeProperties struct {
 	// The resource you are requesting authorization to use.
-	AadResourceID interface{} `json:"aadResourceId,omitempty"`
+	AADResourceID interface{} `json:"aadResourceId,omitempty"`
 
 	// Type of authentication used to connect to the REST service.
 	AuthenticationType *RestServiceAuthenticationType `json:"authenticationType,omitempty"`
@@ -24678,7 +24678,7 @@ func (r *RestServiceLinkedServiceTypeProperties) UnmarshalJSON(data []byte) erro
 		switch key {
 		case "aadResourceId":
 			if val != nil {
-				err = json.Unmarshal(*val, &r.AadResourceID)
+				err = json.Unmarshal(*val, &r.AADResourceID)
 			}
 			delete(rawMsg, key)
 		case "authenticationType":
@@ -25027,7 +25027,7 @@ func (s *SQLConnection) UnmarshalJSON(data []byte) error {
 }
 
 // A copy activity SQL Data Warehouse sink.
-type SQLDwSink struct {
+type SQLDWSink struct {
 	CopySink
 	// Indicates to use Copy Command to copy data into SQL Data Warehouse. Type: boolean (or Expression with resultType boolean).
 	AllowCopyCommand interface{} `json:"allowCopyCommand,omitempty"`
@@ -25036,7 +25036,7 @@ type SQLDwSink struct {
 	AllowPolyBase interface{} `json:"allowPolyBase,omitempty"`
 
 	// Specifies Copy Command related settings when allowCopyCommand is true.
-	CopyCommandSettings *DwCopyCommandSettings `json:"copyCommandSettings,omitempty"`
+	CopyCommandSettings *DWCopyCommandSettings `json:"copyCommandSettings,omitempty"`
 
 	// Specifies PolyBase-related settings when allowPolyBase is true.
 	PolyBaseSettings *PolybaseSettings `json:"polyBaseSettings,omitempty"`
@@ -25048,8 +25048,8 @@ type SQLDwSink struct {
 	TableOption interface{} `json:"tableOption,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type SQLDwSink.
-func (s SQLDwSink) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type SQLDWSink.
+func (s SQLDWSink) MarshalJSON() ([]byte, error) {
 	objectMap := s.CopySink.marshalInternal("SqlDWSink")
 	if s.AllowCopyCommand != nil {
 		objectMap["allowCopyCommand"] = s.AllowCopyCommand
@@ -25072,8 +25072,8 @@ func (s SQLDwSink) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type SQLDwSink.
-func (s *SQLDwSink) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type SQLDWSink.
+func (s *SQLDWSink) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
@@ -25120,7 +25120,7 @@ func (s *SQLDwSink) UnmarshalJSON(data []byte) error {
 }
 
 // A copy activity SQL Data Warehouse source.
-type SQLDwSource struct {
+type SQLDWSource struct {
 	TabularSource
 	// SQL Data Warehouse reader query. Type: string (or Expression with resultType string).
 	SQLReaderQuery interface{} `json:"sqlReaderQuery,omitempty"`
@@ -25134,8 +25134,8 @@ type SQLDwSource struct {
 	StoredProcedureParameters interface{} `json:"storedProcedureParameters,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type SQLDwSource.
-func (s SQLDwSource) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type SQLDWSource.
+func (s SQLDWSource) MarshalJSON() ([]byte, error) {
 	objectMap := s.TabularSource.marshalInternal("SqlDWSource")
 	if s.SQLReaderQuery != nil {
 		objectMap["sqlReaderQuery"] = s.SQLReaderQuery
@@ -25149,8 +25149,8 @@ func (s SQLDwSource) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type SQLDwSource.
-func (s *SQLDwSource) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type SQLDWSource.
+func (s *SQLDWSource) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
@@ -25182,7 +25182,7 @@ func (s *SQLDwSource) UnmarshalJSON(data []byte) error {
 }
 
 // A copy activity Azure SQL Managed Instance sink.
-type SQLMiSink struct {
+type SQLMISink struct {
 	CopySink
 	// SQL pre-copy script. Type: string (or Expression with resultType string).
 	PreCopyScript interface{} `json:"preCopyScript,omitempty"`
@@ -25203,8 +25203,8 @@ type SQLMiSink struct {
 	TableOption interface{} `json:"tableOption,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type SQLMiSink.
-func (s SQLMiSink) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type SQLMISink.
+func (s SQLMISink) MarshalJSON() ([]byte, error) {
 	objectMap := s.CopySink.marshalInternal("SqlMISink")
 	if s.PreCopyScript != nil {
 		objectMap["preCopyScript"] = s.PreCopyScript
@@ -25227,8 +25227,8 @@ func (s SQLMiSink) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type SQLMiSink.
-func (s *SQLMiSink) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type SQLMISink.
+func (s *SQLMISink) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
@@ -25275,7 +25275,7 @@ func (s *SQLMiSink) UnmarshalJSON(data []byte) error {
 }
 
 // A copy activity Azure SQL Managed Instance source.
-type SQLMiSource struct {
+type SQLMISource struct {
 	TabularSource
 	// Which additional types to produce.
 	ProduceAdditionalTypes interface{} `json:"produceAdditionalTypes,omitempty"`
@@ -25291,8 +25291,8 @@ type SQLMiSource struct {
 	StoredProcedureParameters *map[string]StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type SQLMiSource.
-func (s SQLMiSource) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type SQLMISource.
+func (s SQLMISource) MarshalJSON() ([]byte, error) {
 	objectMap := s.TabularSource.marshalInternal("SqlMISource")
 	if s.ProduceAdditionalTypes != nil {
 		objectMap["produceAdditionalTypes"] = s.ProduceAdditionalTypes
@@ -25309,8 +25309,8 @@ func (s SQLMiSource) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type SQLMiSource.
-func (s *SQLMiSource) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type SQLMISource.
+func (s *SQLMISource) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
@@ -26388,6 +26388,149 @@ func (s *SQLSource) UnmarshalJSON(data []byte) error {
 	return s.TabularSource.unmarshalInternal(rawMsg)
 }
 
+// SSIS access credential.
+type SSISAccessCredential struct {
+	// Domain for windows authentication.
+	Domain interface{} `json:"domain,omitempty"`
+
+	// Password for windows authentication.
+	Password SecretBaseClassification `json:"password,omitempty"`
+
+	// UseName for windows authentication.
+	UserName interface{} `json:"userName,omitempty"`
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type SSISAccessCredential.
+func (s *SSISAccessCredential) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "domain":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.Domain)
+			}
+			delete(rawMsg, key)
+		case "password":
+			if val != nil {
+				s.Password, err = unmarshalSecretBaseClassification(*val)
+			}
+			delete(rawMsg, key)
+		case "userName":
+			if val != nil {
+				err = json.Unmarshal(*val, &s.UserName)
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// SSIS embedded child package.
+type SSISChildPackage struct {
+	// Content for embedded child package. Type: string (or Expression with resultType string).
+	PackageContent interface{} `json:"packageContent,omitempty"`
+
+	// Last modified date for embedded child package.
+	PackageLastModifiedDate *string `json:"packageLastModifiedDate,omitempty"`
+
+	// Name for embedded child package.
+	PackageName *string `json:"packageName,omitempty"`
+
+	// Path for embedded child package. Type: string (or Expression with resultType string).
+	PackagePath interface{} `json:"packagePath,omitempty"`
+}
+
+// SSIS package execution credential.
+type SSISExecutionCredential struct {
+	// Domain for windows authentication.
+	Domain interface{} `json:"domain,omitempty"`
+
+	// Password for windows authentication.
+	Password *SecureString `json:"password,omitempty"`
+
+	// UseName for windows authentication.
+	UserName interface{} `json:"userName,omitempty"`
+}
+
+// SSIS execution parameter.
+type SSISExecutionParameter struct {
+	// SSIS package execution parameter value. Type: string (or Expression with resultType string).
+	Value interface{} `json:"value,omitempty"`
+}
+
+// SSIS package execution log location
+type SSISLogLocation struct {
+	// The SSIS package execution log path. Type: string (or Expression with resultType string).
+	LogPath interface{} `json:"logPath,omitempty"`
+
+	// The type of SSIS log location.
+	Type *SsisLogLocationType `json:"type,omitempty"`
+
+	// SSIS package execution log location properties.
+	TypeProperties *SSISLogLocationTypeProperties `json:"typeProperties,omitempty"`
+}
+
+// SSIS package execution log location properties.
+type SSISLogLocationTypeProperties struct {
+	// The package execution log access credential.
+	AccessCredential *SSISAccessCredential `json:"accessCredential,omitempty"`
+
+	// Specifies the interval to refresh log. The default interval is 5 minutes. Type: string (or Expression with resultType string), pattern: ((\d+).)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+	LogRefreshInterval interface{} `json:"logRefreshInterval,omitempty"`
+}
+
+// SSIS package location.
+type SSISPackageLocation struct {
+	// The SSIS package path. Type: string (or Expression with resultType string).
+	PackagePath interface{} `json:"packagePath,omitempty"`
+
+	// The type of SSIS package location.
+	Type *SsisPackageLocationType `json:"type,omitempty"`
+
+	// SSIS package location properties.
+	TypeProperties *SSISPackageLocationTypeProperties `json:"typeProperties,omitempty"`
+}
+
+// SSIS package location properties.
+type SSISPackageLocationTypeProperties struct {
+	// The package access credential.
+	AccessCredential *SSISAccessCredential `json:"accessCredential,omitempty"`
+
+	// The embedded child package list.
+	ChildPackages *[]SSISChildPackage `json:"childPackages,omitempty"`
+
+	// The configuration file of the package execution. Type: string (or Expression with resultType string).
+	ConfigurationPath interface{} `json:"configurationPath,omitempty"`
+
+	// The embedded package content. Type: string (or Expression with resultType string).
+	PackageContent interface{} `json:"packageContent,omitempty"`
+
+	// The embedded package last modified date.
+	PackageLastModifiedDate *string `json:"packageLastModifiedDate,omitempty"`
+
+	// The package name.
+	PackageName *string `json:"packageName,omitempty"`
+
+	// Password of the package.
+	PackagePassword SecretBaseClassification `json:"packagePassword,omitempty"`
+}
+
+// SSIS property override.
+type SSISPropertyOverride struct {
+	// Whether SSIS package property override value is sensitive data. Value will be encrypted in SSISDB if it is true
+	IsSensitive *bool `json:"isSensitive,omitempty"`
+
+	// SSIS package property override value. Type: string (or Expression with resultType string).
+	Value interface{} `json:"value,omitempty"`
+}
+
 // Linked service for Salesforce.
 type SalesforceLinkedService struct {
 	LinkedService
@@ -27098,26 +27241,15 @@ func (s *SalesforceSource) UnmarshalJSON(data []byte) error {
 	return s.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// The SAP BW cube dataset.
-type SapBwCubeDataset struct {
-	Dataset
-}
-
-// MarshalJSON implements the json.Marshaller interface for type SapBwCubeDataset.
-func (s SapBwCubeDataset) MarshalJSON() ([]byte, error) {
-	objectMap := s.Dataset.marshalInternal("SapBwCube")
-	return json.Marshal(objectMap)
-}
-
 // SAP Business Warehouse Linked Service.
-type SapBwLinkedService struct {
+type SapBWLinkedService struct {
 	LinkedService
 	// Properties specific to this linked service type.
-	TypeProperties *SapBwLinkedServiceTypeProperties `json:"typeProperties,omitempty"`
+	TypeProperties *SapBWLinkedServiceTypeProperties `json:"typeProperties,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type SapBwLinkedService.
-func (s SapBwLinkedService) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type SapBWLinkedService.
+func (s SapBWLinkedService) MarshalJSON() ([]byte, error) {
 	objectMap := s.LinkedService.marshalInternal("SapBW")
 	if s.TypeProperties != nil {
 		objectMap["typeProperties"] = s.TypeProperties
@@ -27125,8 +27257,8 @@ func (s SapBwLinkedService) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type SapBwLinkedService.
-func (s *SapBwLinkedService) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type SapBWLinkedService.
+func (s *SapBWLinkedService) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
@@ -27148,7 +27280,7 @@ func (s *SapBwLinkedService) UnmarshalJSON(data []byte) error {
 }
 
 // Properties specific to this linked service type.
-type SapBwLinkedServiceTypeProperties struct {
+type SapBWLinkedServiceTypeProperties struct {
 	// Client ID of the client on the BW system. (Usually a three-digit decimal number represented as a string) Type: string (or Expression with resultType
 	// string).
 	ClientID interface{} `json:"clientId,omitempty"`
@@ -27170,8 +27302,8 @@ type SapBwLinkedServiceTypeProperties struct {
 	UserName interface{} `json:"userName,omitempty"`
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type SapBwLinkedServiceTypeProperties.
-func (s *SapBwLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type SapBWLinkedServiceTypeProperties.
+func (s *SapBWLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]*json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
@@ -27215,6 +27347,17 @@ func (s *SapBwLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return nil
+}
+
+// The SAP BW cube dataset.
+type SapBwCubeDataset struct {
+	Dataset
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SapBwCubeDataset.
+func (s SapBwCubeDataset) MarshalJSON() ([]byte, error) {
+	objectMap := s.Dataset.marshalInternal("SapBwCube")
+	return json.Marshal(objectMap)
 }
 
 // A copy activity source for SapBW server via MDX.
@@ -30203,7 +30346,7 @@ func (s *SparkLinkedService) UnmarshalJSON(data []byte) error {
 // Spark Server linked service properties.
 type SparkLinkedServiceTypeProperties struct {
 	// Specifies whether to require a CA-issued SSL certificate name to match the host name of the server when connecting over SSL. The default value is false.
-	AllowHostNameCnMismatch interface{} `json:"allowHostNameCNMismatch,omitempty"`
+	AllowHostNameCNMismatch interface{} `json:"allowHostNameCNMismatch,omitempty"`
 
 	// Specifies whether to allow self-signed certificates from the server. The default value is false.
 	AllowSelfSignedServerCert interface{} `json:"allowSelfSignedServerCert,omitempty"`
@@ -30212,7 +30355,7 @@ type SparkLinkedServiceTypeProperties struct {
 	AuthenticationType *SparkAuthenticationType `json:"authenticationType,omitempty"`
 
 	// Specifies whether the connections to the server are encrypted using SSL. The default value is false.
-	EnableSsl interface{} `json:"enableSsl,omitempty"`
+	EnableSSL interface{} `json:"enableSsl,omitempty"`
 
 	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
 	// with resultType string).
@@ -30259,7 +30402,7 @@ func (s *SparkLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 		switch key {
 		case "allowHostNameCNMismatch":
 			if val != nil {
-				err = json.Unmarshal(*val, &s.AllowHostNameCnMismatch)
+				err = json.Unmarshal(*val, &s.AllowHostNameCNMismatch)
 			}
 			delete(rawMsg, key)
 		case "allowSelfSignedServerCert":
@@ -30274,7 +30417,7 @@ func (s *SparkLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		case "enableSsl":
 			if val != nil {
-				err = json.Unmarshal(*val, &s.EnableSsl)
+				err = json.Unmarshal(*val, &s.EnableSSL)
 			}
 			delete(rawMsg, key)
 		case "encryptedCredential":
@@ -30805,104 +30948,6 @@ func (s *SquareSource) UnmarshalJSON(data []byte) error {
 	return s.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// SSIS access credential.
-type SsisAccessCredential struct {
-	// Domain for windows authentication.
-	Domain interface{} `json:"domain,omitempty"`
-
-	// Password for windows authentication.
-	Password SecretBaseClassification `json:"password,omitempty"`
-
-	// UseName for windows authentication.
-	UserName interface{} `json:"userName,omitempty"`
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type SsisAccessCredential.
-func (s *SsisAccessCredential) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
-	}
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "domain":
-			if val != nil {
-				err = json.Unmarshal(*val, &s.Domain)
-			}
-			delete(rawMsg, key)
-		case "password":
-			if val != nil {
-				s.Password, err = unmarshalSecretBaseClassification(*val)
-			}
-			delete(rawMsg, key)
-		case "userName":
-			if val != nil {
-				err = json.Unmarshal(*val, &s.UserName)
-			}
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return err
-		}
-	}
-	return nil
-}
-
-// SSIS embedded child package.
-type SsisChildPackage struct {
-	// Content for embedded child package. Type: string (or Expression with resultType string).
-	PackageContent interface{} `json:"packageContent,omitempty"`
-
-	// Last modified date for embedded child package.
-	PackageLastModifiedDate *string `json:"packageLastModifiedDate,omitempty"`
-
-	// Name for embedded child package.
-	PackageName *string `json:"packageName,omitempty"`
-
-	// Path for embedded child package. Type: string (or Expression with resultType string).
-	PackagePath interface{} `json:"packagePath,omitempty"`
-}
-
-// SSIS package execution credential.
-type SsisExecutionCredential struct {
-	// Domain for windows authentication.
-	Domain interface{} `json:"domain,omitempty"`
-
-	// Password for windows authentication.
-	Password *SecureString `json:"password,omitempty"`
-
-	// UseName for windows authentication.
-	UserName interface{} `json:"userName,omitempty"`
-}
-
-// SSIS execution parameter.
-type SsisExecutionParameter struct {
-	// SSIS package execution parameter value. Type: string (or Expression with resultType string).
-	Value interface{} `json:"value,omitempty"`
-}
-
-// SSIS package execution log location
-type SsisLogLocation struct {
-	// The SSIS package execution log path. Type: string (or Expression with resultType string).
-	LogPath interface{} `json:"logPath,omitempty"`
-
-	// The type of SSIS log location.
-	Type *SsisLogLocationType `json:"type,omitempty"`
-
-	// SSIS package execution log location properties.
-	TypeProperties *SsisLogLocationTypeProperties `json:"typeProperties,omitempty"`
-}
-
-// SSIS package execution log location properties.
-type SsisLogLocationTypeProperties struct {
-	// The package execution log access credential.
-	AccessCredential *SsisAccessCredential `json:"accessCredential,omitempty"`
-
-	// Specifies the interval to refresh log. The default interval is 5 minutes. Type: string (or Expression with resultType string), pattern: ((\d+).)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
-	LogRefreshInterval interface{} `json:"logRefreshInterval,omitempty"`
-}
-
 // The status of the operation.
 type SsisObjectMetadataStatusResponse struct {
 	// The operation error message.
@@ -30916,51 +30961,6 @@ type SsisObjectMetadataStatusResponse struct {
 
 	// The status of the operation.
 	Status *string `json:"status,omitempty"`
-}
-
-// SSIS package location.
-type SsisPackageLocation struct {
-	// The SSIS package path. Type: string (or Expression with resultType string).
-	PackagePath interface{} `json:"packagePath,omitempty"`
-
-	// The type of SSIS package location.
-	Type *SsisPackageLocationType `json:"type,omitempty"`
-
-	// SSIS package location properties.
-	TypeProperties *SsisPackageLocationTypeProperties `json:"typeProperties,omitempty"`
-}
-
-// SSIS package location properties.
-type SsisPackageLocationTypeProperties struct {
-	// The package access credential.
-	AccessCredential *SsisAccessCredential `json:"accessCredential,omitempty"`
-
-	// The embedded child package list.
-	ChildPackages *[]SsisChildPackage `json:"childPackages,omitempty"`
-
-	// The configuration file of the package execution. Type: string (or Expression with resultType string).
-	ConfigurationPath interface{} `json:"configurationPath,omitempty"`
-
-	// The embedded package content. Type: string (or Expression with resultType string).
-	PackageContent interface{} `json:"packageContent,omitempty"`
-
-	// The embedded package last modified date.
-	PackageLastModifiedDate *string `json:"packageLastModifiedDate,omitempty"`
-
-	// The package name.
-	PackageName *string `json:"packageName,omitempty"`
-
-	// Password of the package.
-	PackagePassword SecretBaseClassification `json:"packagePassword,omitempty"`
-}
-
-// SSIS property override.
-type SsisPropertyOverride struct {
-	// Whether SSIS package property override value is sensitive data. Value will be encrypted in SSISDB if it is true
-	IsSensitive *bool `json:"isSensitive,omitempty"`
-
-	// SSIS package property override value. Type: string (or Expression with resultType string).
-	Value interface{} `json:"value,omitempty"`
 }
 
 // Staging settings.
@@ -33774,7 +33774,7 @@ type WebTableDatasetTypeProperties struct {
 type Workspace struct {
 	TrackedResource
 	// Identity of the workspace
-	IDentity *ManagedIDentity `json:"identity,omitempty"`
+	Identity *ManagedIdentity `json:"identity,omitempty"`
 
 	// Workspace resource properties
 	Properties *WorkspaceProperties `json:"properties,omitempty"`
@@ -33788,11 +33788,11 @@ type WorkspaceGetOptions struct {
 // WorkspaceGitRepoManagementGetGitHubAccessTokenOptions contains the optional parameters for the WorkspaceGitRepoManagement.GetGitHubAccessToken method.
 type WorkspaceGitRepoManagementGetGitHubAccessTokenOptions struct {
 	// Can provide a guid, which is helpful for debugging and to provide better customer support
-	ClientRequestId *string
+	ClientRequestID *string
 }
 
 // Identity properties of the workspace resource.
-type WorkspaceIDentity struct {
+type WorkspaceIdentity struct {
 	// READ-ONLY; The principal id of the identity.
 	PrincipalID *string `json:"principalId,omitempty" azure:"ro"`
 
@@ -33862,7 +33862,7 @@ type WorkspaceProperties struct {
 	WorkspaceRepositoryConfiguration *WorkspaceRepositoryConfiguration `json:"workspaceRepositoryConfiguration,omitempty"`
 
 	// READ-ONLY; The workspace unique identifier
-	WorkspaceUId *string `json:"workspaceUID,omitempty" azure:"ro"`
+	WorkspaceUID *string `json:"workspaceUID,omitempty" azure:"ro"`
 }
 
 // Git integration settings
@@ -33907,7 +33907,7 @@ type WorkspaceResponse struct {
 // Parameters for updating a workspace resource.
 type WorkspaceUpdateParameters struct {
 	// Managed service identity of the workspace.
-	IDentity *WorkspaceIDentity `json:"identity,omitempty"`
+	Identity *WorkspaceIdentity `json:"identity,omitempty"`
 
 	// The resource tags.
 	Tags *map[string]string `json:"tags,omitempty"`

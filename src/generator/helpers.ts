@@ -5,7 +5,7 @@
 
 import { Session } from '@autorest/extension-base';
 import { values } from '@azure-tools/linq';
-import { comment, camelCase, pascalCase } from '@azure-tools/codegen';
+import { comment } from '@azure-tools/codegen';
 import { aggregateParameters, isSchemaResponse } from '../common/helpers';
 import { ArraySchema, CodeModel, DictionarySchema, Language, Parameter, Schema, SchemaType, Operation, GroupProperty, ImplementationLocation, SerializationStyle, ByteArraySchema, ConstantSchema, NumberSchema, DateTimeSchema } from '@azure-tools/codemodel';
 import { ImportManager } from './imports';
@@ -89,7 +89,7 @@ export function getCreateRequestParametersSig(op: Operation): string {
   const params = new Array<string>();
   params.push('ctx context.Context');
   for (const methodParam of values(methodParams)) {
-    params.push(`${camelCase(methodParam.language.go!.name)} ${formatParameterTypeName(methodParam)}`);
+    params.push(`${(<string>methodParam.language.go!.name).uncapitalize()} ${formatParameterTypeName(methodParam)}`);
   }
   return params.join(', ');
 }
@@ -160,7 +160,7 @@ export function getParamName(param: Parameter): string {
   if (param.implementation === ImplementationLocation.Client) {
     paramName = `client.${paramName}`;
   } else if (param.language.go!.paramGroup) {
-    paramName = `${camelCase(param.language.go!.paramGroup.language.go!.name)}.${pascalCase(paramName)}`;
+    paramName = `${(<string>param.language.go!.paramGroup.language.go!.name).uncapitalize()}.${paramName.capitalize()}`;
   }
   if (param.required !== true) {
     paramName = `*${paramName}`;
@@ -232,13 +232,6 @@ export function formatParamValue(param: Parameter, imports: ImportManager): stri
       return `${paramName}.Format(${format})`;
     case SchemaType.UnixTime:
       return `timeUnix(${paramName}).String()`;
-    case SchemaType.Uri:
-      imports.add('net/url');
-      if (param.required !== true && paramName[0] === '*') {
-        // remove the dereference
-        paramName = paramName.substr(1);
-      }
-      return `${paramName}.String()`;
     case SchemaType.Integer:
       imports.add('strconv');
       const intSchema = <NumberSchema>param.schema;

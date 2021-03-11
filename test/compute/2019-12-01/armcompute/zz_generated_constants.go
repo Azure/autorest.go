@@ -109,7 +109,7 @@ type ContainerServiceOrchestratorTypes string
 
 const (
 	ContainerServiceOrchestratorTypesSwarm      ContainerServiceOrchestratorTypes = "Swarm"
-	ContainerServiceOrchestratorTypesDcos       ContainerServiceOrchestratorTypes = "DCOS"
+	ContainerServiceOrchestratorTypesDCOS       ContainerServiceOrchestratorTypes = "DCOS"
 	ContainerServiceOrchestratorTypesCustom     ContainerServiceOrchestratorTypes = "Custom"
 	ContainerServiceOrchestratorTypesKubernetes ContainerServiceOrchestratorTypes = "Kubernetes"
 )
@@ -118,7 +118,7 @@ const (
 func PossibleContainerServiceOrchestratorTypesValues() []ContainerServiceOrchestratorTypes {
 	return []ContainerServiceOrchestratorTypes{
 		ContainerServiceOrchestratorTypesSwarm,
-		ContainerServiceOrchestratorTypesDcos,
+		ContainerServiceOrchestratorTypesDCOS,
 		ContainerServiceOrchestratorTypesCustom,
 		ContainerServiceOrchestratorTypesKubernetes,
 	}
@@ -162,24 +162,24 @@ const (
 	ContainerServiceVMSizeTypesStandardD4    ContainerServiceVMSizeTypes = "Standard_D4"
 	ContainerServiceVMSizeTypesStandardD4V2  ContainerServiceVMSizeTypes = "Standard_D4_v2"
 	ContainerServiceVMSizeTypesStandardD5V2  ContainerServiceVMSizeTypes = "Standard_D5_v2"
-	ContainerServiceVMSizeTypesStandardDs1   ContainerServiceVMSizeTypes = "Standard_DS1"
-	ContainerServiceVMSizeTypesStandardDs11  ContainerServiceVMSizeTypes = "Standard_DS11"
-	ContainerServiceVMSizeTypesStandardDs12  ContainerServiceVMSizeTypes = "Standard_DS12"
-	ContainerServiceVMSizeTypesStandardDs13  ContainerServiceVMSizeTypes = "Standard_DS13"
-	ContainerServiceVMSizeTypesStandardDs14  ContainerServiceVMSizeTypes = "Standard_DS14"
-	ContainerServiceVMSizeTypesStandardDs2   ContainerServiceVMSizeTypes = "Standard_DS2"
-	ContainerServiceVMSizeTypesStandardDs3   ContainerServiceVMSizeTypes = "Standard_DS3"
-	ContainerServiceVMSizeTypesStandardDs4   ContainerServiceVMSizeTypes = "Standard_DS4"
+	ContainerServiceVMSizeTypesStandardDS1   ContainerServiceVMSizeTypes = "Standard_DS1"
+	ContainerServiceVMSizeTypesStandardDS11  ContainerServiceVMSizeTypes = "Standard_DS11"
+	ContainerServiceVMSizeTypesStandardDS12  ContainerServiceVMSizeTypes = "Standard_DS12"
+	ContainerServiceVMSizeTypesStandardDS13  ContainerServiceVMSizeTypes = "Standard_DS13"
+	ContainerServiceVMSizeTypesStandardDS14  ContainerServiceVMSizeTypes = "Standard_DS14"
+	ContainerServiceVMSizeTypesStandardDS2   ContainerServiceVMSizeTypes = "Standard_DS2"
+	ContainerServiceVMSizeTypesStandardDS3   ContainerServiceVMSizeTypes = "Standard_DS3"
+	ContainerServiceVMSizeTypesStandardDS4   ContainerServiceVMSizeTypes = "Standard_DS4"
 	ContainerServiceVMSizeTypesStandardG1    ContainerServiceVMSizeTypes = "Standard_G1"
 	ContainerServiceVMSizeTypesStandardG2    ContainerServiceVMSizeTypes = "Standard_G2"
 	ContainerServiceVMSizeTypesStandardG3    ContainerServiceVMSizeTypes = "Standard_G3"
 	ContainerServiceVMSizeTypesStandardG4    ContainerServiceVMSizeTypes = "Standard_G4"
 	ContainerServiceVMSizeTypesStandardG5    ContainerServiceVMSizeTypes = "Standard_G5"
-	ContainerServiceVMSizeTypesStandardGs1   ContainerServiceVMSizeTypes = "Standard_GS1"
-	ContainerServiceVMSizeTypesStandardGs2   ContainerServiceVMSizeTypes = "Standard_GS2"
-	ContainerServiceVMSizeTypesStandardGs3   ContainerServiceVMSizeTypes = "Standard_GS3"
-	ContainerServiceVMSizeTypesStandardGs4   ContainerServiceVMSizeTypes = "Standard_GS4"
-	ContainerServiceVMSizeTypesStandardGs5   ContainerServiceVMSizeTypes = "Standard_GS5"
+	ContainerServiceVMSizeTypesStandardGS1   ContainerServiceVMSizeTypes = "Standard_GS1"
+	ContainerServiceVMSizeTypesStandardGS2   ContainerServiceVMSizeTypes = "Standard_GS2"
+	ContainerServiceVMSizeTypesStandardGS3   ContainerServiceVMSizeTypes = "Standard_GS3"
+	ContainerServiceVMSizeTypesStandardGS4   ContainerServiceVMSizeTypes = "Standard_GS4"
+	ContainerServiceVMSizeTypesStandardGS5   ContainerServiceVMSizeTypes = "Standard_GS5"
 )
 
 // PossibleContainerServiceVMSizeTypesValues returns the possible values for the ContainerServiceVMSizeTypes const type.
@@ -214,24 +214,24 @@ func PossibleContainerServiceVMSizeTypesValues() []ContainerServiceVMSizeTypes {
 		ContainerServiceVMSizeTypesStandardD4,
 		ContainerServiceVMSizeTypesStandardD4V2,
 		ContainerServiceVMSizeTypesStandardD5V2,
-		ContainerServiceVMSizeTypesStandardDs1,
-		ContainerServiceVMSizeTypesStandardDs11,
-		ContainerServiceVMSizeTypesStandardDs12,
-		ContainerServiceVMSizeTypesStandardDs13,
-		ContainerServiceVMSizeTypesStandardDs14,
-		ContainerServiceVMSizeTypesStandardDs2,
-		ContainerServiceVMSizeTypesStandardDs3,
-		ContainerServiceVMSizeTypesStandardDs4,
+		ContainerServiceVMSizeTypesStandardDS1,
+		ContainerServiceVMSizeTypesStandardDS11,
+		ContainerServiceVMSizeTypesStandardDS12,
+		ContainerServiceVMSizeTypesStandardDS13,
+		ContainerServiceVMSizeTypesStandardDS14,
+		ContainerServiceVMSizeTypesStandardDS2,
+		ContainerServiceVMSizeTypesStandardDS3,
+		ContainerServiceVMSizeTypesStandardDS4,
 		ContainerServiceVMSizeTypesStandardG1,
 		ContainerServiceVMSizeTypesStandardG2,
 		ContainerServiceVMSizeTypesStandardG3,
 		ContainerServiceVMSizeTypesStandardG4,
 		ContainerServiceVMSizeTypesStandardG5,
-		ContainerServiceVMSizeTypesStandardGs1,
-		ContainerServiceVMSizeTypesStandardGs2,
-		ContainerServiceVMSizeTypesStandardGs3,
-		ContainerServiceVMSizeTypesStandardGs4,
-		ContainerServiceVMSizeTypesStandardGs5,
+		ContainerServiceVMSizeTypesStandardGS1,
+		ContainerServiceVMSizeTypesStandardGS2,
+		ContainerServiceVMSizeTypesStandardGS3,
+		ContainerServiceVMSizeTypesStandardGS4,
+		ContainerServiceVMSizeTypesStandardGS5,
 	}
 }
 
@@ -378,22 +378,22 @@ func (c DiskCreateOptionTypes) ToPtr() *DiskCreateOptionTypes {
 	return &c
 }
 
-// DiskEncryptionSetIDentityType - The type of Managed Identity used by the DiskEncryptionSet. Only SystemAssigned is supported.
-type DiskEncryptionSetIDentityType string
+// DiskEncryptionSetIdentityType - The type of Managed Identity used by the DiskEncryptionSet. Only SystemAssigned is supported.
+type DiskEncryptionSetIdentityType string
 
 const (
-	DiskEncryptionSetIDentityTypeSystemAssigned DiskEncryptionSetIDentityType = "SystemAssigned"
+	DiskEncryptionSetIdentityTypeSystemAssigned DiskEncryptionSetIdentityType = "SystemAssigned"
 )
 
-// PossibleDiskEncryptionSetIDentityTypeValues returns the possible values for the DiskEncryptionSetIDentityType const type.
-func PossibleDiskEncryptionSetIDentityTypeValues() []DiskEncryptionSetIDentityType {
-	return []DiskEncryptionSetIDentityType{
-		DiskEncryptionSetIDentityTypeSystemAssigned,
+// PossibleDiskEncryptionSetIdentityTypeValues returns the possible values for the DiskEncryptionSetIdentityType const type.
+func PossibleDiskEncryptionSetIdentityTypeValues() []DiskEncryptionSetIdentityType {
+	return []DiskEncryptionSetIdentityType{
+		DiskEncryptionSetIdentityTypeSystemAssigned,
 	}
 }
 
-// ToPtr() returns a *DiskEncryptionSetIDentityType pointing to the current value.
-func (c DiskEncryptionSetIDentityType) ToPtr() *DiskEncryptionSetIDentityType {
+// ToPtr() returns a *DiskEncryptionSetIdentityType pointing to the current value.
+func (c DiskEncryptionSetIdentityType) ToPtr() *DiskEncryptionSetIdentityType {
 	return &c
 }
 
@@ -401,8 +401,8 @@ func (c DiskEncryptionSetIDentityType) ToPtr() *DiskEncryptionSetIDentityType {
 type DiskState string
 
 const (
-	// DiskStateActiveSas - The disk currently has an Active SAS Uri associated with it.
-	DiskStateActiveSas DiskState = "ActiveSAS"
+	// DiskStateActiveSAS - The disk currently has an Active SAS Uri associated with it.
+	DiskStateActiveSAS DiskState = "ActiveSAS"
 	// DiskStateActiveUpload - A disk is created for upload and a write token has been issued for uploading to it.
 	DiskStateActiveUpload DiskState = "ActiveUpload"
 	// DiskStateAttached - The disk is currently mounted to a running VM.
@@ -418,7 +418,7 @@ const (
 // PossibleDiskStateValues returns the possible values for the DiskState const type.
 func PossibleDiskStateValues() []DiskState {
 	return []DiskState{
-		DiskStateActiveSas,
+		DiskStateActiveSAS,
 		DiskStateActiveUpload,
 		DiskStateAttached,
 		DiskStateReadyToUpload,
@@ -436,24 +436,24 @@ func (c DiskState) ToPtr() *DiskState {
 type DiskStorageAccountTypes string
 
 const (
-	// DiskStorageAccountTypesPremiumLrs - Premium SSD locally redundant storage. Best for production and performance sensitive workloads.
-	DiskStorageAccountTypesPremiumLrs DiskStorageAccountTypes = "Premium_LRS"
-	// DiskStorageAccountTypesStandardLrs - Standard HDD locally redundant storage. Best for backup, non-critical, and infrequent access.
-	DiskStorageAccountTypesStandardLrs DiskStorageAccountTypes = "Standard_LRS"
-	// DiskStorageAccountTypesStandardSsdlrs - Standard SSD locally redundant storage. Best for web servers, lightly used enterprise applications and dev/test.
-	DiskStorageAccountTypesStandardSsdlrs DiskStorageAccountTypes = "StandardSSD_LRS"
-	// DiskStorageAccountTypesUltraSsdlrs - Ultra SSD locally redundant storage. Best for IO-intensive workloads such as SAP HANA, top tier databases (for example,
+	// DiskStorageAccountTypesPremiumLRS - Premium SSD locally redundant storage. Best for production and performance sensitive workloads.
+	DiskStorageAccountTypesPremiumLRS DiskStorageAccountTypes = "Premium_LRS"
+	// DiskStorageAccountTypesStandardLRS - Standard HDD locally redundant storage. Best for backup, non-critical, and infrequent access.
+	DiskStorageAccountTypesStandardLRS DiskStorageAccountTypes = "Standard_LRS"
+	// DiskStorageAccountTypesStandardSSDLRS - Standard SSD locally redundant storage. Best for web servers, lightly used enterprise applications and dev/test.
+	DiskStorageAccountTypesStandardSSDLRS DiskStorageAccountTypes = "StandardSSD_LRS"
+	// DiskStorageAccountTypesUltraSSDLRS - Ultra SSD locally redundant storage. Best for IO-intensive workloads such as SAP HANA, top tier databases (for example,
 	// SQL, Oracle), and other transaction-heavy workloads.
-	DiskStorageAccountTypesUltraSsdlrs DiskStorageAccountTypes = "UltraSSD_LRS"
+	DiskStorageAccountTypesUltraSSDLRS DiskStorageAccountTypes = "UltraSSD_LRS"
 )
 
 // PossibleDiskStorageAccountTypesValues returns the possible values for the DiskStorageAccountTypes const type.
 func PossibleDiskStorageAccountTypesValues() []DiskStorageAccountTypes {
 	return []DiskStorageAccountTypes{
-		DiskStorageAccountTypesPremiumLrs,
-		DiskStorageAccountTypesStandardLrs,
-		DiskStorageAccountTypesStandardSsdlrs,
-		DiskStorageAccountTypesUltraSsdlrs,
+		DiskStorageAccountTypesPremiumLRS,
+		DiskStorageAccountTypesStandardLRS,
+		DiskStorageAccountTypesStandardSSDLRS,
+		DiskStorageAccountTypesUltraSSDLRS,
 	}
 }
 
@@ -897,14 +897,14 @@ type ProtocolTypes string
 
 const (
 	ProtocolTypesHTTP  ProtocolTypes = "Http"
-	ProtocolTypesHTTPs ProtocolTypes = "Https"
+	ProtocolTypesHTTPS ProtocolTypes = "Https"
 )
 
 // PossibleProtocolTypesValues returns the possible values for the ProtocolTypes const type.
 func PossibleProtocolTypesValues() []ProtocolTypes {
 	return []ProtocolTypes{
 		ProtocolTypesHTTP,
-		ProtocolTypesHTTPs,
+		ProtocolTypesHTTPS,
 	}
 }
 
@@ -980,30 +980,30 @@ func (c ReplicationStatusTypes) ToPtr() *ReplicationStatusTypes {
 	return &c
 }
 
-// ResourceIDentityType - The type of identity used for the virtual machine. The type 'SystemAssigned, UserAssigned' includes both an implicitly created
+// ResourceIdentityType - The type of identity used for the virtual machine. The type 'SystemAssigned, UserAssigned' includes both an implicitly created
 // identity and a set of user assigned identities. The type 'None' will
 // remove any identities from the virtual machine.
-type ResourceIDentityType string
+type ResourceIdentityType string
 
 const (
-	ResourceIDentityTypeSystemAssigned             ResourceIDentityType = "SystemAssigned"
-	ResourceIDentityTypeUserAssigned               ResourceIDentityType = "UserAssigned"
-	ResourceIDentityTypeSystemAssignedUserAssigned ResourceIDentityType = "SystemAssigned, UserAssigned"
-	ResourceIDentityTypeNone                       ResourceIDentityType = "None"
+	ResourceIdentityTypeSystemAssigned             ResourceIdentityType = "SystemAssigned"
+	ResourceIdentityTypeUserAssigned               ResourceIdentityType = "UserAssigned"
+	ResourceIdentityTypeSystemAssignedUserAssigned ResourceIdentityType = "SystemAssigned, UserAssigned"
+	ResourceIdentityTypeNone                       ResourceIdentityType = "None"
 )
 
-// PossibleResourceIDentityTypeValues returns the possible values for the ResourceIDentityType const type.
-func PossibleResourceIDentityTypeValues() []ResourceIDentityType {
-	return []ResourceIDentityType{
-		ResourceIDentityTypeSystemAssigned,
-		ResourceIDentityTypeUserAssigned,
-		ResourceIDentityTypeSystemAssignedUserAssigned,
-		ResourceIDentityTypeNone,
+// PossibleResourceIdentityTypeValues returns the possible values for the ResourceIdentityType const type.
+func PossibleResourceIdentityTypeValues() []ResourceIdentityType {
+	return []ResourceIdentityType{
+		ResourceIdentityTypeSystemAssigned,
+		ResourceIdentityTypeUserAssigned,
+		ResourceIdentityTypeSystemAssignedUserAssigned,
+		ResourceIdentityTypeNone,
 	}
 }
 
-// ToPtr() returns a *ResourceIDentityType pointing to the current value.
-func (c ResourceIDentityType) ToPtr() *ResourceIDentityType {
+// ToPtr() returns a *ResourceIdentityType pointing to the current value.
+func (c ResourceIdentityType) ToPtr() *ResourceIdentityType {
 	return &c
 }
 
@@ -1143,20 +1143,20 @@ func (c SettingNames) ToPtr() *SettingNames {
 type SnapshotStorageAccountTypes string
 
 const (
-	// SnapshotStorageAccountTypesPremiumLrs - Premium SSD locally redundant storage
-	SnapshotStorageAccountTypesPremiumLrs SnapshotStorageAccountTypes = "Premium_LRS"
-	// SnapshotStorageAccountTypesStandardLrs - Standard HDD locally redundant storage
-	SnapshotStorageAccountTypesStandardLrs SnapshotStorageAccountTypes = "Standard_LRS"
-	// SnapshotStorageAccountTypesStandardZrs - Standard zone redundant storage
-	SnapshotStorageAccountTypesStandardZrs SnapshotStorageAccountTypes = "Standard_ZRS"
+	// SnapshotStorageAccountTypesPremiumLRS - Premium SSD locally redundant storage
+	SnapshotStorageAccountTypesPremiumLRS SnapshotStorageAccountTypes = "Premium_LRS"
+	// SnapshotStorageAccountTypesStandardLRS - Standard HDD locally redundant storage
+	SnapshotStorageAccountTypesStandardLRS SnapshotStorageAccountTypes = "Standard_LRS"
+	// SnapshotStorageAccountTypesStandardZRS - Standard zone redundant storage
+	SnapshotStorageAccountTypesStandardZRS SnapshotStorageAccountTypes = "Standard_ZRS"
 )
 
 // PossibleSnapshotStorageAccountTypesValues returns the possible values for the SnapshotStorageAccountTypes const type.
 func PossibleSnapshotStorageAccountTypesValues() []SnapshotStorageAccountTypes {
 	return []SnapshotStorageAccountTypes{
-		SnapshotStorageAccountTypesPremiumLrs,
-		SnapshotStorageAccountTypesStandardLrs,
-		SnapshotStorageAccountTypesStandardZrs,
+		SnapshotStorageAccountTypesPremiumLRS,
+		SnapshotStorageAccountTypesStandardLRS,
+		SnapshotStorageAccountTypesStandardZRS,
 	}
 }
 
@@ -1192,17 +1192,17 @@ func (c StatusLevelTypes) ToPtr() *StatusLevelTypes {
 type StorageAccountType string
 
 const (
-	StorageAccountTypePremiumLrs  StorageAccountType = "Premium_LRS"
-	StorageAccountTypeStandardLrs StorageAccountType = "Standard_LRS"
-	StorageAccountTypeStandardZrs StorageAccountType = "Standard_ZRS"
+	StorageAccountTypePremiumLRS  StorageAccountType = "Premium_LRS"
+	StorageAccountTypeStandardLRS StorageAccountType = "Standard_LRS"
+	StorageAccountTypeStandardZRS StorageAccountType = "Standard_ZRS"
 )
 
 // PossibleStorageAccountTypeValues returns the possible values for the StorageAccountType const type.
 func PossibleStorageAccountTypeValues() []StorageAccountType {
 	return []StorageAccountType{
-		StorageAccountTypePremiumLrs,
-		StorageAccountTypeStandardLrs,
-		StorageAccountTypeStandardZrs,
+		StorageAccountTypePremiumLRS,
+		StorageAccountTypeStandardLRS,
+		StorageAccountTypeStandardZRS,
 	}
 }
 
@@ -1221,19 +1221,19 @@ func (c StorageAccountType) ToPtr() *StorageAccountType {
 type StorageAccountTypes string
 
 const (
-	StorageAccountTypesPremiumLrs     StorageAccountTypes = "Premium_LRS"
-	StorageAccountTypesStandardLrs    StorageAccountTypes = "Standard_LRS"
-	StorageAccountTypesStandardSsdlrs StorageAccountTypes = "StandardSSD_LRS"
-	StorageAccountTypesUltraSsdlrs    StorageAccountTypes = "UltraSSD_LRS"
+	StorageAccountTypesPremiumLRS     StorageAccountTypes = "Premium_LRS"
+	StorageAccountTypesStandardLRS    StorageAccountTypes = "Standard_LRS"
+	StorageAccountTypesStandardSSDLRS StorageAccountTypes = "StandardSSD_LRS"
+	StorageAccountTypesUltraSSDLRS    StorageAccountTypes = "UltraSSD_LRS"
 )
 
 // PossibleStorageAccountTypesValues returns the possible values for the StorageAccountTypes const type.
 func PossibleStorageAccountTypesValues() []StorageAccountTypes {
 	return []StorageAccountTypes{
-		StorageAccountTypesPremiumLrs,
-		StorageAccountTypesStandardLrs,
-		StorageAccountTypesStandardSsdlrs,
-		StorageAccountTypesUltraSsdlrs,
+		StorageAccountTypesPremiumLRS,
+		StorageAccountTypesStandardLRS,
+		StorageAccountTypesStandardSSDLRS,
+		StorageAccountTypesUltraSSDLRS,
 	}
 }
 
@@ -1424,25 +1424,25 @@ const (
 	VirtualMachineSizeTypesStandardA11      VirtualMachineSizeTypes = "Standard_A11"
 	VirtualMachineSizeTypesStandardA1V2     VirtualMachineSizeTypes = "Standard_A1_v2"
 	VirtualMachineSizeTypesStandardA2       VirtualMachineSizeTypes = "Standard_A2"
-	VirtualMachineSizeTypesStandardA2Mv2    VirtualMachineSizeTypes = "Standard_A2m_v2"
+	VirtualMachineSizeTypesStandardA2MV2    VirtualMachineSizeTypes = "Standard_A2m_v2"
 	VirtualMachineSizeTypesStandardA2V2     VirtualMachineSizeTypes = "Standard_A2_v2"
 	VirtualMachineSizeTypesStandardA3       VirtualMachineSizeTypes = "Standard_A3"
 	VirtualMachineSizeTypesStandardA4       VirtualMachineSizeTypes = "Standard_A4"
-	VirtualMachineSizeTypesStandardA4Mv2    VirtualMachineSizeTypes = "Standard_A4m_v2"
+	VirtualMachineSizeTypesStandardA4MV2    VirtualMachineSizeTypes = "Standard_A4m_v2"
 	VirtualMachineSizeTypesStandardA4V2     VirtualMachineSizeTypes = "Standard_A4_v2"
 	VirtualMachineSizeTypesStandardA5       VirtualMachineSizeTypes = "Standard_A5"
 	VirtualMachineSizeTypesStandardA6       VirtualMachineSizeTypes = "Standard_A6"
 	VirtualMachineSizeTypesStandardA7       VirtualMachineSizeTypes = "Standard_A7"
 	VirtualMachineSizeTypesStandardA8       VirtualMachineSizeTypes = "Standard_A8"
-	VirtualMachineSizeTypesStandardA8Mv2    VirtualMachineSizeTypes = "Standard_A8m_v2"
+	VirtualMachineSizeTypesStandardA8MV2    VirtualMachineSizeTypes = "Standard_A8m_v2"
 	VirtualMachineSizeTypesStandardA8V2     VirtualMachineSizeTypes = "Standard_A8_v2"
 	VirtualMachineSizeTypesStandardA9       VirtualMachineSizeTypes = "Standard_A9"
-	VirtualMachineSizeTypesStandardB1MS     VirtualMachineSizeTypes = "Standard_B1ms"
+	VirtualMachineSizeTypesStandardB1Ms     VirtualMachineSizeTypes = "Standard_B1ms"
 	VirtualMachineSizeTypesStandardB1S      VirtualMachineSizeTypes = "Standard_B1s"
-	VirtualMachineSizeTypesStandardB2MS     VirtualMachineSizeTypes = "Standard_B2ms"
+	VirtualMachineSizeTypesStandardB2Ms     VirtualMachineSizeTypes = "Standard_B2ms"
 	VirtualMachineSizeTypesStandardB2S      VirtualMachineSizeTypes = "Standard_B2s"
-	VirtualMachineSizeTypesStandardB4MS     VirtualMachineSizeTypes = "Standard_B4ms"
-	VirtualMachineSizeTypesStandardB8MS     VirtualMachineSizeTypes = "Standard_B8ms"
+	VirtualMachineSizeTypesStandardB4Ms     VirtualMachineSizeTypes = "Standard_B4ms"
+	VirtualMachineSizeTypesStandardB8Ms     VirtualMachineSizeTypes = "Standard_B8ms"
 	VirtualMachineSizeTypesStandardD1       VirtualMachineSizeTypes = "Standard_D1"
 	VirtualMachineSizeTypesStandardD11      VirtualMachineSizeTypes = "Standard_D11"
 	VirtualMachineSizeTypesStandardD11V2    VirtualMachineSizeTypes = "Standard_D11_v2"
@@ -1453,95 +1453,95 @@ const (
 	VirtualMachineSizeTypesStandardD14      VirtualMachineSizeTypes = "Standard_D14"
 	VirtualMachineSizeTypesStandardD14V2    VirtualMachineSizeTypes = "Standard_D14_v2"
 	VirtualMachineSizeTypesStandardD15V2    VirtualMachineSizeTypes = "Standard_D15_v2"
-	VirtualMachineSizeTypesStandardD16Sv3   VirtualMachineSizeTypes = "Standard_D16s_v3"
+	VirtualMachineSizeTypesStandardD16SV3   VirtualMachineSizeTypes = "Standard_D16s_v3"
 	VirtualMachineSizeTypesStandardD16V3    VirtualMachineSizeTypes = "Standard_D16_v3"
 	VirtualMachineSizeTypesStandardD1V2     VirtualMachineSizeTypes = "Standard_D1_v2"
 	VirtualMachineSizeTypesStandardD2       VirtualMachineSizeTypes = "Standard_D2"
-	VirtualMachineSizeTypesStandardD2Sv3    VirtualMachineSizeTypes = "Standard_D2s_v3"
+	VirtualMachineSizeTypesStandardD2SV3    VirtualMachineSizeTypes = "Standard_D2s_v3"
 	VirtualMachineSizeTypesStandardD2V2     VirtualMachineSizeTypes = "Standard_D2_v2"
 	VirtualMachineSizeTypesStandardD2V3     VirtualMachineSizeTypes = "Standard_D2_v3"
 	VirtualMachineSizeTypesStandardD3       VirtualMachineSizeTypes = "Standard_D3"
-	VirtualMachineSizeTypesStandardD32Sv3   VirtualMachineSizeTypes = "Standard_D32s_v3"
+	VirtualMachineSizeTypesStandardD32SV3   VirtualMachineSizeTypes = "Standard_D32s_v3"
 	VirtualMachineSizeTypesStandardD32V3    VirtualMachineSizeTypes = "Standard_D32_v3"
 	VirtualMachineSizeTypesStandardD3V2     VirtualMachineSizeTypes = "Standard_D3_v2"
 	VirtualMachineSizeTypesStandardD4       VirtualMachineSizeTypes = "Standard_D4"
-	VirtualMachineSizeTypesStandardD4Sv3    VirtualMachineSizeTypes = "Standard_D4s_v3"
+	VirtualMachineSizeTypesStandardD4SV3    VirtualMachineSizeTypes = "Standard_D4s_v3"
 	VirtualMachineSizeTypesStandardD4V2     VirtualMachineSizeTypes = "Standard_D4_v2"
 	VirtualMachineSizeTypesStandardD4V3     VirtualMachineSizeTypes = "Standard_D4_v3"
 	VirtualMachineSizeTypesStandardD5V2     VirtualMachineSizeTypes = "Standard_D5_v2"
-	VirtualMachineSizeTypesStandardD64Sv3   VirtualMachineSizeTypes = "Standard_D64s_v3"
+	VirtualMachineSizeTypesStandardD64SV3   VirtualMachineSizeTypes = "Standard_D64s_v3"
 	VirtualMachineSizeTypesStandardD64V3    VirtualMachineSizeTypes = "Standard_D64_v3"
-	VirtualMachineSizeTypesStandardD8Sv3    VirtualMachineSizeTypes = "Standard_D8s_v3"
+	VirtualMachineSizeTypesStandardD8SV3    VirtualMachineSizeTypes = "Standard_D8s_v3"
 	VirtualMachineSizeTypesStandardD8V3     VirtualMachineSizeTypes = "Standard_D8_v3"
-	VirtualMachineSizeTypesStandardDs1      VirtualMachineSizeTypes = "Standard_DS1"
-	VirtualMachineSizeTypesStandardDs11     VirtualMachineSizeTypes = "Standard_DS11"
-	VirtualMachineSizeTypesStandardDs11V2   VirtualMachineSizeTypes = "Standard_DS11_v2"
-	VirtualMachineSizeTypesStandardDs12     VirtualMachineSizeTypes = "Standard_DS12"
-	VirtualMachineSizeTypesStandardDs12V2   VirtualMachineSizeTypes = "Standard_DS12_v2"
-	VirtualMachineSizeTypesStandardDs13     VirtualMachineSizeTypes = "Standard_DS13"
-	VirtualMachineSizeTypesStandardDs132V2  VirtualMachineSizeTypes = "Standard_DS13-2_v2"
-	VirtualMachineSizeTypesStandardDs134V2  VirtualMachineSizeTypes = "Standard_DS13-4_v2"
-	VirtualMachineSizeTypesStandardDs13V2   VirtualMachineSizeTypes = "Standard_DS13_v2"
-	VirtualMachineSizeTypesStandardDs14     VirtualMachineSizeTypes = "Standard_DS14"
-	VirtualMachineSizeTypesStandardDs144V2  VirtualMachineSizeTypes = "Standard_DS14-4_v2"
-	VirtualMachineSizeTypesStandardDs148V2  VirtualMachineSizeTypes = "Standard_DS14-8_v2"
-	VirtualMachineSizeTypesStandardDs14V2   VirtualMachineSizeTypes = "Standard_DS14_v2"
-	VirtualMachineSizeTypesStandardDs15V2   VirtualMachineSizeTypes = "Standard_DS15_v2"
-	VirtualMachineSizeTypesStandardDs1V2    VirtualMachineSizeTypes = "Standard_DS1_v2"
-	VirtualMachineSizeTypesStandardDs2      VirtualMachineSizeTypes = "Standard_DS2"
-	VirtualMachineSizeTypesStandardDs2V2    VirtualMachineSizeTypes = "Standard_DS2_v2"
-	VirtualMachineSizeTypesStandardDs3      VirtualMachineSizeTypes = "Standard_DS3"
-	VirtualMachineSizeTypesStandardDs3V2    VirtualMachineSizeTypes = "Standard_DS3_v2"
-	VirtualMachineSizeTypesStandardDs4      VirtualMachineSizeTypes = "Standard_DS4"
-	VirtualMachineSizeTypesStandardDs4V2    VirtualMachineSizeTypes = "Standard_DS4_v2"
-	VirtualMachineSizeTypesStandardDs5V2    VirtualMachineSizeTypes = "Standard_DS5_v2"
-	VirtualMachineSizeTypesStandardE16Sv3   VirtualMachineSizeTypes = "Standard_E16s_v3"
+	VirtualMachineSizeTypesStandardDS1      VirtualMachineSizeTypes = "Standard_DS1"
+	VirtualMachineSizeTypesStandardDS11     VirtualMachineSizeTypes = "Standard_DS11"
+	VirtualMachineSizeTypesStandardDS11V2   VirtualMachineSizeTypes = "Standard_DS11_v2"
+	VirtualMachineSizeTypesStandardDS12     VirtualMachineSizeTypes = "Standard_DS12"
+	VirtualMachineSizeTypesStandardDS12V2   VirtualMachineSizeTypes = "Standard_DS12_v2"
+	VirtualMachineSizeTypesStandardDS13     VirtualMachineSizeTypes = "Standard_DS13"
+	VirtualMachineSizeTypesStandardDS132V2  VirtualMachineSizeTypes = "Standard_DS13-2_v2"
+	VirtualMachineSizeTypesStandardDS134V2  VirtualMachineSizeTypes = "Standard_DS13-4_v2"
+	VirtualMachineSizeTypesStandardDS13V2   VirtualMachineSizeTypes = "Standard_DS13_v2"
+	VirtualMachineSizeTypesStandardDS14     VirtualMachineSizeTypes = "Standard_DS14"
+	VirtualMachineSizeTypesStandardDS144V2  VirtualMachineSizeTypes = "Standard_DS14-4_v2"
+	VirtualMachineSizeTypesStandardDS148V2  VirtualMachineSizeTypes = "Standard_DS14-8_v2"
+	VirtualMachineSizeTypesStandardDS14V2   VirtualMachineSizeTypes = "Standard_DS14_v2"
+	VirtualMachineSizeTypesStandardDS15V2   VirtualMachineSizeTypes = "Standard_DS15_v2"
+	VirtualMachineSizeTypesStandardDS1V2    VirtualMachineSizeTypes = "Standard_DS1_v2"
+	VirtualMachineSizeTypesStandardDS2      VirtualMachineSizeTypes = "Standard_DS2"
+	VirtualMachineSizeTypesStandardDS2V2    VirtualMachineSizeTypes = "Standard_DS2_v2"
+	VirtualMachineSizeTypesStandardDS3      VirtualMachineSizeTypes = "Standard_DS3"
+	VirtualMachineSizeTypesStandardDS3V2    VirtualMachineSizeTypes = "Standard_DS3_v2"
+	VirtualMachineSizeTypesStandardDS4      VirtualMachineSizeTypes = "Standard_DS4"
+	VirtualMachineSizeTypesStandardDS4V2    VirtualMachineSizeTypes = "Standard_DS4_v2"
+	VirtualMachineSizeTypesStandardDS5V2    VirtualMachineSizeTypes = "Standard_DS5_v2"
+	VirtualMachineSizeTypesStandardE16SV3   VirtualMachineSizeTypes = "Standard_E16s_v3"
 	VirtualMachineSizeTypesStandardE16V3    VirtualMachineSizeTypes = "Standard_E16_v3"
-	VirtualMachineSizeTypesStandardE2Sv3    VirtualMachineSizeTypes = "Standard_E2s_v3"
+	VirtualMachineSizeTypesStandardE2SV3    VirtualMachineSizeTypes = "Standard_E2s_v3"
 	VirtualMachineSizeTypesStandardE2V3     VirtualMachineSizeTypes = "Standard_E2_v3"
 	VirtualMachineSizeTypesStandardE3216V3  VirtualMachineSizeTypes = "Standard_E32-16_v3"
-	VirtualMachineSizeTypesStandardE328Sv3  VirtualMachineSizeTypes = "Standard_E32-8s_v3"
-	VirtualMachineSizeTypesStandardE32Sv3   VirtualMachineSizeTypes = "Standard_E32s_v3"
+	VirtualMachineSizeTypesStandardE328SV3  VirtualMachineSizeTypes = "Standard_E32-8s_v3"
+	VirtualMachineSizeTypesStandardE32SV3   VirtualMachineSizeTypes = "Standard_E32s_v3"
 	VirtualMachineSizeTypesStandardE32V3    VirtualMachineSizeTypes = "Standard_E32_v3"
-	VirtualMachineSizeTypesStandardE4Sv3    VirtualMachineSizeTypes = "Standard_E4s_v3"
+	VirtualMachineSizeTypesStandardE4SV3    VirtualMachineSizeTypes = "Standard_E4s_v3"
 	VirtualMachineSizeTypesStandardE4V3     VirtualMachineSizeTypes = "Standard_E4_v3"
-	VirtualMachineSizeTypesStandardE6416Sv3 VirtualMachineSizeTypes = "Standard_E64-16s_v3"
-	VirtualMachineSizeTypesStandardE6432Sv3 VirtualMachineSizeTypes = "Standard_E64-32s_v3"
-	VirtualMachineSizeTypesStandardE64Sv3   VirtualMachineSizeTypes = "Standard_E64s_v3"
+	VirtualMachineSizeTypesStandardE6416SV3 VirtualMachineSizeTypes = "Standard_E64-16s_v3"
+	VirtualMachineSizeTypesStandardE6432SV3 VirtualMachineSizeTypes = "Standard_E64-32s_v3"
+	VirtualMachineSizeTypesStandardE64SV3   VirtualMachineSizeTypes = "Standard_E64s_v3"
 	VirtualMachineSizeTypesStandardE64V3    VirtualMachineSizeTypes = "Standard_E64_v3"
-	VirtualMachineSizeTypesStandardE8Sv3    VirtualMachineSizeTypes = "Standard_E8s_v3"
+	VirtualMachineSizeTypesStandardE8SV3    VirtualMachineSizeTypes = "Standard_E8s_v3"
 	VirtualMachineSizeTypesStandardE8V3     VirtualMachineSizeTypes = "Standard_E8_v3"
 	VirtualMachineSizeTypesStandardF1       VirtualMachineSizeTypes = "Standard_F1"
 	VirtualMachineSizeTypesStandardF16      VirtualMachineSizeTypes = "Standard_F16"
 	VirtualMachineSizeTypesStandardF16S     VirtualMachineSizeTypes = "Standard_F16s"
-	VirtualMachineSizeTypesStandardF16Sv2   VirtualMachineSizeTypes = "Standard_F16s_v2"
+	VirtualMachineSizeTypesStandardF16SV2   VirtualMachineSizeTypes = "Standard_F16s_v2"
 	VirtualMachineSizeTypesStandardF1S      VirtualMachineSizeTypes = "Standard_F1s"
 	VirtualMachineSizeTypesStandardF2       VirtualMachineSizeTypes = "Standard_F2"
 	VirtualMachineSizeTypesStandardF2S      VirtualMachineSizeTypes = "Standard_F2s"
-	VirtualMachineSizeTypesStandardF2Sv2    VirtualMachineSizeTypes = "Standard_F2s_v2"
-	VirtualMachineSizeTypesStandardF32Sv2   VirtualMachineSizeTypes = "Standard_F32s_v2"
+	VirtualMachineSizeTypesStandardF2SV2    VirtualMachineSizeTypes = "Standard_F2s_v2"
+	VirtualMachineSizeTypesStandardF32SV2   VirtualMachineSizeTypes = "Standard_F32s_v2"
 	VirtualMachineSizeTypesStandardF4       VirtualMachineSizeTypes = "Standard_F4"
 	VirtualMachineSizeTypesStandardF4S      VirtualMachineSizeTypes = "Standard_F4s"
-	VirtualMachineSizeTypesStandardF4Sv2    VirtualMachineSizeTypes = "Standard_F4s_v2"
-	VirtualMachineSizeTypesStandardF64Sv2   VirtualMachineSizeTypes = "Standard_F64s_v2"
-	VirtualMachineSizeTypesStandardF72Sv2   VirtualMachineSizeTypes = "Standard_F72s_v2"
+	VirtualMachineSizeTypesStandardF4SV2    VirtualMachineSizeTypes = "Standard_F4s_v2"
+	VirtualMachineSizeTypesStandardF64SV2   VirtualMachineSizeTypes = "Standard_F64s_v2"
+	VirtualMachineSizeTypesStandardF72SV2   VirtualMachineSizeTypes = "Standard_F72s_v2"
 	VirtualMachineSizeTypesStandardF8       VirtualMachineSizeTypes = "Standard_F8"
 	VirtualMachineSizeTypesStandardF8S      VirtualMachineSizeTypes = "Standard_F8s"
-	VirtualMachineSizeTypesStandardF8Sv2    VirtualMachineSizeTypes = "Standard_F8s_v2"
+	VirtualMachineSizeTypesStandardF8SV2    VirtualMachineSizeTypes = "Standard_F8s_v2"
 	VirtualMachineSizeTypesStandardG1       VirtualMachineSizeTypes = "Standard_G1"
 	VirtualMachineSizeTypesStandardG2       VirtualMachineSizeTypes = "Standard_G2"
 	VirtualMachineSizeTypesStandardG3       VirtualMachineSizeTypes = "Standard_G3"
 	VirtualMachineSizeTypesStandardG4       VirtualMachineSizeTypes = "Standard_G4"
 	VirtualMachineSizeTypesStandardG5       VirtualMachineSizeTypes = "Standard_G5"
-	VirtualMachineSizeTypesStandardGs1      VirtualMachineSizeTypes = "Standard_GS1"
-	VirtualMachineSizeTypesStandardGs2      VirtualMachineSizeTypes = "Standard_GS2"
-	VirtualMachineSizeTypesStandardGs3      VirtualMachineSizeTypes = "Standard_GS3"
-	VirtualMachineSizeTypesStandardGs4      VirtualMachineSizeTypes = "Standard_GS4"
-	VirtualMachineSizeTypesStandardGs44     VirtualMachineSizeTypes = "Standard_GS4-4"
-	VirtualMachineSizeTypesStandardGs48     VirtualMachineSizeTypes = "Standard_GS4-8"
-	VirtualMachineSizeTypesStandardGs5      VirtualMachineSizeTypes = "Standard_GS5"
-	VirtualMachineSizeTypesStandardGs516    VirtualMachineSizeTypes = "Standard_GS5-16"
-	VirtualMachineSizeTypesStandardGs58     VirtualMachineSizeTypes = "Standard_GS5-8"
+	VirtualMachineSizeTypesStandardGS1      VirtualMachineSizeTypes = "Standard_GS1"
+	VirtualMachineSizeTypesStandardGS2      VirtualMachineSizeTypes = "Standard_GS2"
+	VirtualMachineSizeTypesStandardGS3      VirtualMachineSizeTypes = "Standard_GS3"
+	VirtualMachineSizeTypesStandardGS4      VirtualMachineSizeTypes = "Standard_GS4"
+	VirtualMachineSizeTypesStandardGS44     VirtualMachineSizeTypes = "Standard_GS4-4"
+	VirtualMachineSizeTypesStandardGS48     VirtualMachineSizeTypes = "Standard_GS4-8"
+	VirtualMachineSizeTypesStandardGS5      VirtualMachineSizeTypes = "Standard_GS5"
+	VirtualMachineSizeTypesStandardGS516    VirtualMachineSizeTypes = "Standard_GS5-16"
+	VirtualMachineSizeTypesStandardGS58     VirtualMachineSizeTypes = "Standard_GS5-8"
 	VirtualMachineSizeTypesStandardH16      VirtualMachineSizeTypes = "Standard_H16"
 	VirtualMachineSizeTypesStandardH16M     VirtualMachineSizeTypes = "Standard_H16m"
 	VirtualMachineSizeTypesStandardH16Mr    VirtualMachineSizeTypes = "Standard_H16mr"
@@ -1552,33 +1552,33 @@ const (
 	VirtualMachineSizeTypesStandardL32S     VirtualMachineSizeTypes = "Standard_L32s"
 	VirtualMachineSizeTypesStandardL4S      VirtualMachineSizeTypes = "Standard_L4s"
 	VirtualMachineSizeTypesStandardL8S      VirtualMachineSizeTypes = "Standard_L8s"
-	VirtualMachineSizeTypesStandardM12832MS VirtualMachineSizeTypes = "Standard_M128-32ms"
-	VirtualMachineSizeTypesStandardM12864MS VirtualMachineSizeTypes = "Standard_M128-64ms"
-	VirtualMachineSizeTypesStandardM128MS   VirtualMachineSizeTypes = "Standard_M128ms"
+	VirtualMachineSizeTypesStandardM12832Ms VirtualMachineSizeTypes = "Standard_M128-32ms"
+	VirtualMachineSizeTypesStandardM12864Ms VirtualMachineSizeTypes = "Standard_M128-64ms"
+	VirtualMachineSizeTypesStandardM128Ms   VirtualMachineSizeTypes = "Standard_M128ms"
 	VirtualMachineSizeTypesStandardM128S    VirtualMachineSizeTypes = "Standard_M128s"
-	VirtualMachineSizeTypesStandardM6416MS  VirtualMachineSizeTypes = "Standard_M64-16ms"
-	VirtualMachineSizeTypesStandardM6432MS  VirtualMachineSizeTypes = "Standard_M64-32ms"
-	VirtualMachineSizeTypesStandardM64MS    VirtualMachineSizeTypes = "Standard_M64ms"
+	VirtualMachineSizeTypesStandardM6416Ms  VirtualMachineSizeTypes = "Standard_M64-16ms"
+	VirtualMachineSizeTypesStandardM6432Ms  VirtualMachineSizeTypes = "Standard_M64-32ms"
+	VirtualMachineSizeTypesStandardM64Ms    VirtualMachineSizeTypes = "Standard_M64ms"
 	VirtualMachineSizeTypesStandardM64S     VirtualMachineSizeTypes = "Standard_M64s"
-	VirtualMachineSizeTypesStandardNc12     VirtualMachineSizeTypes = "Standard_NC12"
-	VirtualMachineSizeTypesStandardNc12Sv2  VirtualMachineSizeTypes = "Standard_NC12s_v2"
-	VirtualMachineSizeTypesStandardNc12Sv3  VirtualMachineSizeTypes = "Standard_NC12s_v3"
-	VirtualMachineSizeTypesStandardNc24     VirtualMachineSizeTypes = "Standard_NC24"
-	VirtualMachineSizeTypesStandardNc24R    VirtualMachineSizeTypes = "Standard_NC24r"
-	VirtualMachineSizeTypesStandardNc24RsV2 VirtualMachineSizeTypes = "Standard_NC24rs_v2"
-	VirtualMachineSizeTypesStandardNc24RsV3 VirtualMachineSizeTypes = "Standard_NC24rs_v3"
-	VirtualMachineSizeTypesStandardNc24Sv2  VirtualMachineSizeTypes = "Standard_NC24s_v2"
-	VirtualMachineSizeTypesStandardNc24Sv3  VirtualMachineSizeTypes = "Standard_NC24s_v3"
-	VirtualMachineSizeTypesStandardNc6      VirtualMachineSizeTypes = "Standard_NC6"
-	VirtualMachineSizeTypesStandardNc6Sv2   VirtualMachineSizeTypes = "Standard_NC6s_v2"
-	VirtualMachineSizeTypesStandardNc6Sv3   VirtualMachineSizeTypes = "Standard_NC6s_v3"
-	VirtualMachineSizeTypesStandardNd12S    VirtualMachineSizeTypes = "Standard_ND12s"
-	VirtualMachineSizeTypesStandardNd24Rs   VirtualMachineSizeTypes = "Standard_ND24rs"
-	VirtualMachineSizeTypesStandardNd24S    VirtualMachineSizeTypes = "Standard_ND24s"
-	VirtualMachineSizeTypesStandardNd6S     VirtualMachineSizeTypes = "Standard_ND6s"
-	VirtualMachineSizeTypesStandardNv12     VirtualMachineSizeTypes = "Standard_NV12"
-	VirtualMachineSizeTypesStandardNv24     VirtualMachineSizeTypes = "Standard_NV24"
-	VirtualMachineSizeTypesStandardNv6      VirtualMachineSizeTypes = "Standard_NV6"
+	VirtualMachineSizeTypesStandardNC12     VirtualMachineSizeTypes = "Standard_NC12"
+	VirtualMachineSizeTypesStandardNC12SV2  VirtualMachineSizeTypes = "Standard_NC12s_v2"
+	VirtualMachineSizeTypesStandardNC12SV3  VirtualMachineSizeTypes = "Standard_NC12s_v3"
+	VirtualMachineSizeTypesStandardNC24     VirtualMachineSizeTypes = "Standard_NC24"
+	VirtualMachineSizeTypesStandardNC24R    VirtualMachineSizeTypes = "Standard_NC24r"
+	VirtualMachineSizeTypesStandardNC24RsV2 VirtualMachineSizeTypes = "Standard_NC24rs_v2"
+	VirtualMachineSizeTypesStandardNC24RsV3 VirtualMachineSizeTypes = "Standard_NC24rs_v3"
+	VirtualMachineSizeTypesStandardNC24SV2  VirtualMachineSizeTypes = "Standard_NC24s_v2"
+	VirtualMachineSizeTypesStandardNC24SV3  VirtualMachineSizeTypes = "Standard_NC24s_v3"
+	VirtualMachineSizeTypesStandardNC6      VirtualMachineSizeTypes = "Standard_NC6"
+	VirtualMachineSizeTypesStandardNC6SV2   VirtualMachineSizeTypes = "Standard_NC6s_v2"
+	VirtualMachineSizeTypesStandardNC6SV3   VirtualMachineSizeTypes = "Standard_NC6s_v3"
+	VirtualMachineSizeTypesStandardND12S    VirtualMachineSizeTypes = "Standard_ND12s"
+	VirtualMachineSizeTypesStandardND24Rs   VirtualMachineSizeTypes = "Standard_ND24rs"
+	VirtualMachineSizeTypesStandardND24S    VirtualMachineSizeTypes = "Standard_ND24s"
+	VirtualMachineSizeTypesStandardND6S     VirtualMachineSizeTypes = "Standard_ND6s"
+	VirtualMachineSizeTypesStandardNV12     VirtualMachineSizeTypes = "Standard_NV12"
+	VirtualMachineSizeTypesStandardNV24     VirtualMachineSizeTypes = "Standard_NV24"
+	VirtualMachineSizeTypesStandardNV6      VirtualMachineSizeTypes = "Standard_NV6"
 )
 
 // PossibleVirtualMachineSizeTypesValues returns the possible values for the VirtualMachineSizeTypes const type.
@@ -1595,25 +1595,25 @@ func PossibleVirtualMachineSizeTypesValues() []VirtualMachineSizeTypes {
 		VirtualMachineSizeTypesStandardA11,
 		VirtualMachineSizeTypesStandardA1V2,
 		VirtualMachineSizeTypesStandardA2,
-		VirtualMachineSizeTypesStandardA2Mv2,
+		VirtualMachineSizeTypesStandardA2MV2,
 		VirtualMachineSizeTypesStandardA2V2,
 		VirtualMachineSizeTypesStandardA3,
 		VirtualMachineSizeTypesStandardA4,
-		VirtualMachineSizeTypesStandardA4Mv2,
+		VirtualMachineSizeTypesStandardA4MV2,
 		VirtualMachineSizeTypesStandardA4V2,
 		VirtualMachineSizeTypesStandardA5,
 		VirtualMachineSizeTypesStandardA6,
 		VirtualMachineSizeTypesStandardA7,
 		VirtualMachineSizeTypesStandardA8,
-		VirtualMachineSizeTypesStandardA8Mv2,
+		VirtualMachineSizeTypesStandardA8MV2,
 		VirtualMachineSizeTypesStandardA8V2,
 		VirtualMachineSizeTypesStandardA9,
-		VirtualMachineSizeTypesStandardB1MS,
+		VirtualMachineSizeTypesStandardB1Ms,
 		VirtualMachineSizeTypesStandardB1S,
-		VirtualMachineSizeTypesStandardB2MS,
+		VirtualMachineSizeTypesStandardB2Ms,
 		VirtualMachineSizeTypesStandardB2S,
-		VirtualMachineSizeTypesStandardB4MS,
-		VirtualMachineSizeTypesStandardB8MS,
+		VirtualMachineSizeTypesStandardB4Ms,
+		VirtualMachineSizeTypesStandardB8Ms,
 		VirtualMachineSizeTypesStandardD1,
 		VirtualMachineSizeTypesStandardD11,
 		VirtualMachineSizeTypesStandardD11V2,
@@ -1624,95 +1624,95 @@ func PossibleVirtualMachineSizeTypesValues() []VirtualMachineSizeTypes {
 		VirtualMachineSizeTypesStandardD14,
 		VirtualMachineSizeTypesStandardD14V2,
 		VirtualMachineSizeTypesStandardD15V2,
-		VirtualMachineSizeTypesStandardD16Sv3,
+		VirtualMachineSizeTypesStandardD16SV3,
 		VirtualMachineSizeTypesStandardD16V3,
 		VirtualMachineSizeTypesStandardD1V2,
 		VirtualMachineSizeTypesStandardD2,
-		VirtualMachineSizeTypesStandardD2Sv3,
+		VirtualMachineSizeTypesStandardD2SV3,
 		VirtualMachineSizeTypesStandardD2V2,
 		VirtualMachineSizeTypesStandardD2V3,
 		VirtualMachineSizeTypesStandardD3,
-		VirtualMachineSizeTypesStandardD32Sv3,
+		VirtualMachineSizeTypesStandardD32SV3,
 		VirtualMachineSizeTypesStandardD32V3,
 		VirtualMachineSizeTypesStandardD3V2,
 		VirtualMachineSizeTypesStandardD4,
-		VirtualMachineSizeTypesStandardD4Sv3,
+		VirtualMachineSizeTypesStandardD4SV3,
 		VirtualMachineSizeTypesStandardD4V2,
 		VirtualMachineSizeTypesStandardD4V3,
 		VirtualMachineSizeTypesStandardD5V2,
-		VirtualMachineSizeTypesStandardD64Sv3,
+		VirtualMachineSizeTypesStandardD64SV3,
 		VirtualMachineSizeTypesStandardD64V3,
-		VirtualMachineSizeTypesStandardD8Sv3,
+		VirtualMachineSizeTypesStandardD8SV3,
 		VirtualMachineSizeTypesStandardD8V3,
-		VirtualMachineSizeTypesStandardDs1,
-		VirtualMachineSizeTypesStandardDs11,
-		VirtualMachineSizeTypesStandardDs11V2,
-		VirtualMachineSizeTypesStandardDs12,
-		VirtualMachineSizeTypesStandardDs12V2,
-		VirtualMachineSizeTypesStandardDs13,
-		VirtualMachineSizeTypesStandardDs132V2,
-		VirtualMachineSizeTypesStandardDs134V2,
-		VirtualMachineSizeTypesStandardDs13V2,
-		VirtualMachineSizeTypesStandardDs14,
-		VirtualMachineSizeTypesStandardDs144V2,
-		VirtualMachineSizeTypesStandardDs148V2,
-		VirtualMachineSizeTypesStandardDs14V2,
-		VirtualMachineSizeTypesStandardDs15V2,
-		VirtualMachineSizeTypesStandardDs1V2,
-		VirtualMachineSizeTypesStandardDs2,
-		VirtualMachineSizeTypesStandardDs2V2,
-		VirtualMachineSizeTypesStandardDs3,
-		VirtualMachineSizeTypesStandardDs3V2,
-		VirtualMachineSizeTypesStandardDs4,
-		VirtualMachineSizeTypesStandardDs4V2,
-		VirtualMachineSizeTypesStandardDs5V2,
-		VirtualMachineSizeTypesStandardE16Sv3,
+		VirtualMachineSizeTypesStandardDS1,
+		VirtualMachineSizeTypesStandardDS11,
+		VirtualMachineSizeTypesStandardDS11V2,
+		VirtualMachineSizeTypesStandardDS12,
+		VirtualMachineSizeTypesStandardDS12V2,
+		VirtualMachineSizeTypesStandardDS13,
+		VirtualMachineSizeTypesStandardDS132V2,
+		VirtualMachineSizeTypesStandardDS134V2,
+		VirtualMachineSizeTypesStandardDS13V2,
+		VirtualMachineSizeTypesStandardDS14,
+		VirtualMachineSizeTypesStandardDS144V2,
+		VirtualMachineSizeTypesStandardDS148V2,
+		VirtualMachineSizeTypesStandardDS14V2,
+		VirtualMachineSizeTypesStandardDS15V2,
+		VirtualMachineSizeTypesStandardDS1V2,
+		VirtualMachineSizeTypesStandardDS2,
+		VirtualMachineSizeTypesStandardDS2V2,
+		VirtualMachineSizeTypesStandardDS3,
+		VirtualMachineSizeTypesStandardDS3V2,
+		VirtualMachineSizeTypesStandardDS4,
+		VirtualMachineSizeTypesStandardDS4V2,
+		VirtualMachineSizeTypesStandardDS5V2,
+		VirtualMachineSizeTypesStandardE16SV3,
 		VirtualMachineSizeTypesStandardE16V3,
-		VirtualMachineSizeTypesStandardE2Sv3,
+		VirtualMachineSizeTypesStandardE2SV3,
 		VirtualMachineSizeTypesStandardE2V3,
 		VirtualMachineSizeTypesStandardE3216V3,
-		VirtualMachineSizeTypesStandardE328Sv3,
-		VirtualMachineSizeTypesStandardE32Sv3,
+		VirtualMachineSizeTypesStandardE328SV3,
+		VirtualMachineSizeTypesStandardE32SV3,
 		VirtualMachineSizeTypesStandardE32V3,
-		VirtualMachineSizeTypesStandardE4Sv3,
+		VirtualMachineSizeTypesStandardE4SV3,
 		VirtualMachineSizeTypesStandardE4V3,
-		VirtualMachineSizeTypesStandardE6416Sv3,
-		VirtualMachineSizeTypesStandardE6432Sv3,
-		VirtualMachineSizeTypesStandardE64Sv3,
+		VirtualMachineSizeTypesStandardE6416SV3,
+		VirtualMachineSizeTypesStandardE6432SV3,
+		VirtualMachineSizeTypesStandardE64SV3,
 		VirtualMachineSizeTypesStandardE64V3,
-		VirtualMachineSizeTypesStandardE8Sv3,
+		VirtualMachineSizeTypesStandardE8SV3,
 		VirtualMachineSizeTypesStandardE8V3,
 		VirtualMachineSizeTypesStandardF1,
 		VirtualMachineSizeTypesStandardF16,
 		VirtualMachineSizeTypesStandardF16S,
-		VirtualMachineSizeTypesStandardF16Sv2,
+		VirtualMachineSizeTypesStandardF16SV2,
 		VirtualMachineSizeTypesStandardF1S,
 		VirtualMachineSizeTypesStandardF2,
 		VirtualMachineSizeTypesStandardF2S,
-		VirtualMachineSizeTypesStandardF2Sv2,
-		VirtualMachineSizeTypesStandardF32Sv2,
+		VirtualMachineSizeTypesStandardF2SV2,
+		VirtualMachineSizeTypesStandardF32SV2,
 		VirtualMachineSizeTypesStandardF4,
 		VirtualMachineSizeTypesStandardF4S,
-		VirtualMachineSizeTypesStandardF4Sv2,
-		VirtualMachineSizeTypesStandardF64Sv2,
-		VirtualMachineSizeTypesStandardF72Sv2,
+		VirtualMachineSizeTypesStandardF4SV2,
+		VirtualMachineSizeTypesStandardF64SV2,
+		VirtualMachineSizeTypesStandardF72SV2,
 		VirtualMachineSizeTypesStandardF8,
 		VirtualMachineSizeTypesStandardF8S,
-		VirtualMachineSizeTypesStandardF8Sv2,
+		VirtualMachineSizeTypesStandardF8SV2,
 		VirtualMachineSizeTypesStandardG1,
 		VirtualMachineSizeTypesStandardG2,
 		VirtualMachineSizeTypesStandardG3,
 		VirtualMachineSizeTypesStandardG4,
 		VirtualMachineSizeTypesStandardG5,
-		VirtualMachineSizeTypesStandardGs1,
-		VirtualMachineSizeTypesStandardGs2,
-		VirtualMachineSizeTypesStandardGs3,
-		VirtualMachineSizeTypesStandardGs4,
-		VirtualMachineSizeTypesStandardGs44,
-		VirtualMachineSizeTypesStandardGs48,
-		VirtualMachineSizeTypesStandardGs5,
-		VirtualMachineSizeTypesStandardGs516,
-		VirtualMachineSizeTypesStandardGs58,
+		VirtualMachineSizeTypesStandardGS1,
+		VirtualMachineSizeTypesStandardGS2,
+		VirtualMachineSizeTypesStandardGS3,
+		VirtualMachineSizeTypesStandardGS4,
+		VirtualMachineSizeTypesStandardGS44,
+		VirtualMachineSizeTypesStandardGS48,
+		VirtualMachineSizeTypesStandardGS5,
+		VirtualMachineSizeTypesStandardGS516,
+		VirtualMachineSizeTypesStandardGS58,
 		VirtualMachineSizeTypesStandardH16,
 		VirtualMachineSizeTypesStandardH16M,
 		VirtualMachineSizeTypesStandardH16Mr,
@@ -1723,33 +1723,33 @@ func PossibleVirtualMachineSizeTypesValues() []VirtualMachineSizeTypes {
 		VirtualMachineSizeTypesStandardL32S,
 		VirtualMachineSizeTypesStandardL4S,
 		VirtualMachineSizeTypesStandardL8S,
-		VirtualMachineSizeTypesStandardM12832MS,
-		VirtualMachineSizeTypesStandardM12864MS,
-		VirtualMachineSizeTypesStandardM128MS,
+		VirtualMachineSizeTypesStandardM12832Ms,
+		VirtualMachineSizeTypesStandardM12864Ms,
+		VirtualMachineSizeTypesStandardM128Ms,
 		VirtualMachineSizeTypesStandardM128S,
-		VirtualMachineSizeTypesStandardM6416MS,
-		VirtualMachineSizeTypesStandardM6432MS,
-		VirtualMachineSizeTypesStandardM64MS,
+		VirtualMachineSizeTypesStandardM6416Ms,
+		VirtualMachineSizeTypesStandardM6432Ms,
+		VirtualMachineSizeTypesStandardM64Ms,
 		VirtualMachineSizeTypesStandardM64S,
-		VirtualMachineSizeTypesStandardNc12,
-		VirtualMachineSizeTypesStandardNc12Sv2,
-		VirtualMachineSizeTypesStandardNc12Sv3,
-		VirtualMachineSizeTypesStandardNc24,
-		VirtualMachineSizeTypesStandardNc24R,
-		VirtualMachineSizeTypesStandardNc24RsV2,
-		VirtualMachineSizeTypesStandardNc24RsV3,
-		VirtualMachineSizeTypesStandardNc24Sv2,
-		VirtualMachineSizeTypesStandardNc24Sv3,
-		VirtualMachineSizeTypesStandardNc6,
-		VirtualMachineSizeTypesStandardNc6Sv2,
-		VirtualMachineSizeTypesStandardNc6Sv3,
-		VirtualMachineSizeTypesStandardNd12S,
-		VirtualMachineSizeTypesStandardNd24Rs,
-		VirtualMachineSizeTypesStandardNd24S,
-		VirtualMachineSizeTypesStandardNd6S,
-		VirtualMachineSizeTypesStandardNv12,
-		VirtualMachineSizeTypesStandardNv24,
-		VirtualMachineSizeTypesStandardNv6,
+		VirtualMachineSizeTypesStandardNC12,
+		VirtualMachineSizeTypesStandardNC12SV2,
+		VirtualMachineSizeTypesStandardNC12SV3,
+		VirtualMachineSizeTypesStandardNC24,
+		VirtualMachineSizeTypesStandardNC24R,
+		VirtualMachineSizeTypesStandardNC24RsV2,
+		VirtualMachineSizeTypesStandardNC24RsV3,
+		VirtualMachineSizeTypesStandardNC24SV2,
+		VirtualMachineSizeTypesStandardNC24SV3,
+		VirtualMachineSizeTypesStandardNC6,
+		VirtualMachineSizeTypesStandardNC6SV2,
+		VirtualMachineSizeTypesStandardNC6SV3,
+		VirtualMachineSizeTypesStandardND12S,
+		VirtualMachineSizeTypesStandardND24Rs,
+		VirtualMachineSizeTypesStandardND24S,
+		VirtualMachineSizeTypesStandardND6S,
+		VirtualMachineSizeTypesStandardNV12,
+		VirtualMachineSizeTypesStandardNV24,
+		VirtualMachineSizeTypesStandardNV6,
 	}
 }
 

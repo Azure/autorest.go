@@ -70,7 +70,7 @@ type ParameterGroupingPostRequiredParameters struct {
 	Body         int32
 	CustomHeader *string
 	// Path parameter
-	PathParameter string
+	Path string
 	// Query parameter with default
 	Query *int32
 }

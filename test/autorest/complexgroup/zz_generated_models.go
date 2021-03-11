@@ -769,7 +769,7 @@ type LongWrapperResponse struct {
 }
 
 type MyBaseHelperType struct {
-	PropBh1 *string `json:"propBH1,omitempty"`
+	PropBH1 *string `json:"propBH1,omitempty"`
 }
 
 // MyBaseTypeClassification provides polymorphic access to related types.

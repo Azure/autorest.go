@@ -3,9 +3,9 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { camelCase, KnownMediaType, pascalCase, serialize } from '@azure-tools/codegen';
+import { KnownMediaType, serialize } from '@azure-tools/codegen';
 import { Host, startSession, Session } from '@autorest/extension-base';
-import { ObjectSchema, ArraySchema, ChoiceValue, codeModelSchema, CodeModel, DateTimeSchema, GroupProperty, HttpHeader, HttpResponse, ImplementationLocation, Language, OperationGroup, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Response, Schema, DictionarySchema, Protocol, ChoiceSchema, SealedChoiceSchema, ConstantSchema, Request, DateSchema } from '@azure-tools/codemodel';
+import { ObjectSchema, ArraySchema, ChoiceValue, codeModelSchema, CodeModel, DateTimeSchema, GroupProperty, HttpHeader, HttpResponse, ImplementationLocation, Language, OperationGroup, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Response, Schema, DictionarySchema, Protocol, ChoiceSchema, SealedChoiceSchema, ConstantSchema, Request } from '@azure-tools/codemodel';
 import { items, values } from '@azure-tools/linq';
 import { aggregateParameters, hasAdditionalProperties, isPageableOperation, isObjectSchema, isSchemaResponse, PagerInfo, isLROOperation, PollerInfo } from '../common/helpers';
 import { namer, protocolMethods } from './namer';
@@ -24,7 +24,7 @@ export async function transform(host: Host) {
     await process(session);
 
     // output the model to the pipeline
-    host.WriteFile('code-model-v4.yaml', serialize(session.model), undefined, 'code-model-v4');
+    host.WriteFile('code-model-v4-transform.yaml', serialize(session.model), undefined, 'code-model-v4');
 
   } catch (E) {
     if (debug) {
@@ -347,10 +347,10 @@ function processOperationRequests(session: Session<CodeModel>) {
           let paramGroupName = `${group.language.go!.name}${opName}Parameters`;
           if (param.extensions['x-ms-parameter-grouping'].name) {
             // use the specified name
-            paramGroupName = pascalCase(param.extensions['x-ms-parameter-grouping'].name);
+            paramGroupName = <string>param.extensions['x-ms-parameter-grouping'].name;
           } else if (param.extensions['x-ms-parameter-grouping'].postfix) {
             // use the suffix
-            paramGroupName = `${group.language.go!.name}${opName}${pascalCase(param.extensions['x-ms-parameter-grouping'].postfix)}`;
+            paramGroupName = `${group.language.go!.name}${opName}${<string>param.extensions['x-ms-parameter-grouping'].postfix}`;
           }
           // create group entry and add the param to it
           if (!paramGroups.has(paramGroupName)) {
@@ -494,7 +494,7 @@ function processOperationResponses(session: Session<CodeModel>) {
           }
           if (schemaError.discriminator) {
             // if the error is a discriminator we need to create an internal wrapper type
-            schemaError.language.go!.internalErrorType = camelCase(schemaError.language.go!.name);
+            schemaError.language.go!.internalErrorType = (<string>schemaError.language.go!.name).uncapitalize();
           }
         } else {
           schemaError.language.go!.name = schemaTypeToGoType(session.model, schemaError, true);
@@ -733,7 +733,7 @@ function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op:
       }
       if (response.schema.serialization?.xml && response.schema.serialization.xml.name) {
         // always prefer the XML name
-        propName = pascalCase(response.schema.serialization.xml.name);
+        propName = (<string>response.schema.serialization.xml.name).capitalize();
       }
       response.schema.language.go!.responseType.value = propName;
       // for LROs add a specific poller response envelope to return from Begin operations
@@ -1040,7 +1040,7 @@ function generateLROPollerName(response: Response, op: Operation): string {
   }
   if (schemaResp.schema.language.go!.responseType.value === scalarResponsePropName) {
     // for scalar responses, use the underlying type name for the poller
-    return `${pascalCase(schemaResp.schema.language.go!.name)}Poller`;
+    return `${(<string>schemaResp.schema.language.go!.name).capitalize()}Poller`;
   }
   return `${schemaResp.schema.language.go!.responseType.value}Poller`;
 }

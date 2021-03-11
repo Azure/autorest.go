@@ -58,13 +58,13 @@ func (client *TableClient) createCreateRequest(ctx context.Context, tablePropert
 	}
 	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
-	if queryOptions != nil && queryOptions.FormatParameter != nil {
-		query.Set("$format", string(*queryOptions.FormatParameter))
+	if queryOptions != nil && queryOptions.Format != nil {
+		query.Set("$format", string(*queryOptions.Format))
 	}
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("x-ms-version", "2019-02-02")
-	if tableCreateOptions != nil && tableCreateOptions.RequestId != nil {
-		req.Header.Set("x-ms-client-request-id", *tableCreateOptions.RequestId)
+	if tableCreateOptions != nil && tableCreateOptions.RequestID != nil {
+		req.Header.Set("x-ms-client-request-id", *tableCreateOptions.RequestID)
 	}
 	req.Header.Set("DataServiceVersion", "3.0")
 	if tableCreateOptions != nil && tableCreateOptions.ResponsePreference != nil {
@@ -165,8 +165,8 @@ func (client *TableClient) deleteCreateRequest(ctx context.Context, table string
 	}
 	req.Telemetry(telemetryInfo)
 	req.Header.Set("x-ms-version", "2019-02-02")
-	if options != nil && options.RequestId != nil {
-		req.Header.Set("x-ms-client-request-id", *options.RequestId)
+	if options != nil && options.RequestID != nil {
+		req.Header.Set("x-ms-client-request-id", *options.RequestID)
 	}
 	req.Header.Set("Accept", "application/json")
 	return req, nil
@@ -234,13 +234,13 @@ func (client *TableClient) deleteEntityCreateRequest(ctx context.Context, table 
 	if tableDeleteEntityOptions != nil && tableDeleteEntityOptions.Timeout != nil {
 		query.Set("timeout", strconv.FormatInt(int64(*tableDeleteEntityOptions.Timeout), 10))
 	}
-	if queryOptions != nil && queryOptions.FormatParameter != nil {
-		query.Set("$format", string(*queryOptions.FormatParameter))
+	if queryOptions != nil && queryOptions.Format != nil {
+		query.Set("$format", string(*queryOptions.Format))
 	}
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("x-ms-version", "2019-02-02")
-	if tableDeleteEntityOptions != nil && tableDeleteEntityOptions.RequestId != nil {
-		req.Header.Set("x-ms-client-request-id", *tableDeleteEntityOptions.RequestId)
+	if tableDeleteEntityOptions != nil && tableDeleteEntityOptions.RequestID != nil {
+		req.Header.Set("x-ms-client-request-id", *tableDeleteEntityOptions.RequestID)
 	}
 	req.Header.Set("DataServiceVersion", "3.0")
 	req.Header.Set("If-Match", ifMatch)
@@ -280,17 +280,17 @@ func (client *TableClient) deleteEntityHandleError(resp *azcore.Response) error 
 }
 
 // GetAccessPolicy - Retrieves details about any stored access policies specified on the table that may be used with Shared Access Signatures.
-func (client *TableClient) GetAccessPolicy(ctx context.Context, table string, options *TableGetAccessPolicyOptions) (SignedIDentifierArrayResponse, error) {
+func (client *TableClient) GetAccessPolicy(ctx context.Context, table string, options *TableGetAccessPolicyOptions) (SignedIdentifierArrayResponse, error) {
 	req, err := client.getAccessPolicyCreateRequest(ctx, table, options)
 	if err != nil {
-		return SignedIDentifierArrayResponse{}, err
+		return SignedIdentifierArrayResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return SignedIDentifierArrayResponse{}, err
+		return SignedIdentifierArrayResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return SignedIDentifierArrayResponse{}, client.getAccessPolicyHandleError(resp)
+		return SignedIdentifierArrayResponse{}, client.getAccessPolicyHandleError(resp)
 	}
 	return client.getAccessPolicyHandleResponse(resp)
 }
@@ -311,18 +311,18 @@ func (client *TableClient) getAccessPolicyCreateRequest(ctx context.Context, tab
 	query.Set("comp", "acl")
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("x-ms-version", "2019-02-02")
-	if options != nil && options.RequestId != nil {
-		req.Header.Set("x-ms-client-request-id", *options.RequestId)
+	if options != nil && options.RequestID != nil {
+		req.Header.Set("x-ms-client-request-id", *options.RequestID)
 	}
 	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
 // getAccessPolicyHandleResponse handles the GetAccessPolicy response.
-func (client *TableClient) getAccessPolicyHandleResponse(resp *azcore.Response) (SignedIDentifierArrayResponse, error) {
-	result := SignedIDentifierArrayResponse{RawResponse: resp.Response}
+func (client *TableClient) getAccessPolicyHandleResponse(resp *azcore.Response) (SignedIdentifierArrayResponse, error) {
+	result := SignedIdentifierArrayResponse{RawResponse: resp.Response}
 	if err := resp.UnmarshalAsXML(&result); err != nil {
-		return SignedIDentifierArrayResponse{}, err
+		return SignedIdentifierArrayResponse{}, err
 	}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
@@ -336,7 +336,7 @@ func (client *TableClient) getAccessPolicyHandleResponse(resp *azcore.Response) 
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return SignedIDentifierArrayResponse{}, err
+			return SignedIdentifierArrayResponse{}, err
 		}
 		result.Date = &date
 	}
@@ -382,13 +382,13 @@ func (client *TableClient) insertEntityCreateRequest(ctx context.Context, table 
 	if tableInsertEntityOptions != nil && tableInsertEntityOptions.Timeout != nil {
 		query.Set("timeout", strconv.FormatInt(int64(*tableInsertEntityOptions.Timeout), 10))
 	}
-	if queryOptions != nil && queryOptions.FormatParameter != nil {
-		query.Set("$format", string(*queryOptions.FormatParameter))
+	if queryOptions != nil && queryOptions.Format != nil {
+		query.Set("$format", string(*queryOptions.Format))
 	}
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("x-ms-version", "2019-02-02")
-	if tableInsertEntityOptions != nil && tableInsertEntityOptions.RequestId != nil {
-		req.Header.Set("x-ms-client-request-id", *tableInsertEntityOptions.RequestId)
+	if tableInsertEntityOptions != nil && tableInsertEntityOptions.RequestID != nil {
+		req.Header.Set("x-ms-client-request-id", *tableInsertEntityOptions.RequestID)
 	}
 	req.Header.Set("DataServiceVersion", "3.0")
 	if tableInsertEntityOptions != nil && tableInsertEntityOptions.ResponsePreference != nil {
@@ -430,10 +430,10 @@ func (client *TableClient) insertEntityHandleResponse(resp *azcore.Response) (in
 			result.ETag = &val
 		}
 		if val := resp.Header.Get("x-ms-continuation-NextPartitionKey"); val != "" {
-			result.ContinuationNextPartitionKey = &val
+			result.XMSContinuationNextPartitionKey = &val
 		}
 		if val := resp.Header.Get("x-ms-continuation-NextRowKey"); val != "" {
-			result.ContinuationNextRowKey = &val
+			result.XMSContinuationNextRowKey = &val
 		}
 		if val := resp.Header.Get("Preference-Applied"); val != "" {
 			result.PreferenceApplied = &val
@@ -515,13 +515,13 @@ func (client *TableClient) mergeEntityCreateRequest(ctx context.Context, table s
 	if tableMergeEntityOptions != nil && tableMergeEntityOptions.Timeout != nil {
 		query.Set("timeout", strconv.FormatInt(int64(*tableMergeEntityOptions.Timeout), 10))
 	}
-	if queryOptions != nil && queryOptions.FormatParameter != nil {
-		query.Set("$format", string(*queryOptions.FormatParameter))
+	if queryOptions != nil && queryOptions.Format != nil {
+		query.Set("$format", string(*queryOptions.Format))
 	}
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("x-ms-version", "2019-02-02")
-	if tableMergeEntityOptions != nil && tableMergeEntityOptions.RequestId != nil {
-		req.Header.Set("x-ms-client-request-id", *tableMergeEntityOptions.RequestId)
+	if tableMergeEntityOptions != nil && tableMergeEntityOptions.RequestID != nil {
+		req.Header.Set("x-ms-client-request-id", *tableMergeEntityOptions.RequestID)
 	}
 	req.Header.Set("DataServiceVersion", "3.0")
 	if tableMergeEntityOptions != nil && tableMergeEntityOptions.IfMatch != nil {
@@ -593,14 +593,14 @@ func (client *TableClient) queryCreateRequest(ctx context.Context, tableQueryOpt
 	}
 	req.Telemetry(telemetryInfo)
 	query := req.URL.Query()
-	if queryOptions != nil && queryOptions.FormatParameter != nil {
-		query.Set("$format", string(*queryOptions.FormatParameter))
+	if queryOptions != nil && queryOptions.Format != nil {
+		query.Set("$format", string(*queryOptions.Format))
 	}
 	if queryOptions != nil && queryOptions.Top != nil {
 		query.Set("$top", strconv.FormatInt(int64(*queryOptions.Top), 10))
 	}
-	if queryOptions != nil && queryOptions.SelectParameter != nil {
-		query.Set("$select", *queryOptions.SelectParameter)
+	if queryOptions != nil && queryOptions.Select != nil {
+		query.Set("$select", *queryOptions.Select)
 	}
 	if queryOptions != nil && queryOptions.Filter != nil {
 		query.Set("$filter", *queryOptions.Filter)
@@ -610,8 +610,8 @@ func (client *TableClient) queryCreateRequest(ctx context.Context, tableQueryOpt
 	}
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("x-ms-version", "2019-02-02")
-	if tableQueryOptions != nil && tableQueryOptions.RequestId != nil {
-		req.Header.Set("x-ms-client-request-id", *tableQueryOptions.RequestId)
+	if tableQueryOptions != nil && tableQueryOptions.RequestID != nil {
+		req.Header.Set("x-ms-client-request-id", *tableQueryOptions.RequestID)
 	}
 	req.Header.Set("DataServiceVersion", "3.0")
 	req.Header.Set("Accept", "application/json;odata=minimalmetadata")
@@ -642,7 +642,7 @@ func (client *TableClient) queryHandleResponse(resp *azcore.Response) (TableQuer
 		result.Date = &date
 	}
 	if val := resp.Header.Get("x-ms-continuation-NextTableName"); val != "" {
-		result.ContinuationNextTableName = &val
+		result.XMSContinuationNextTableName = &val
 	}
 	return result, nil
 }
@@ -688,14 +688,14 @@ func (client *TableClient) queryEntitiesCreateRequest(ctx context.Context, table
 	if tableQueryEntitiesOptions != nil && tableQueryEntitiesOptions.Timeout != nil {
 		query.Set("timeout", strconv.FormatInt(int64(*tableQueryEntitiesOptions.Timeout), 10))
 	}
-	if queryOptions != nil && queryOptions.FormatParameter != nil {
-		query.Set("$format", string(*queryOptions.FormatParameter))
+	if queryOptions != nil && queryOptions.Format != nil {
+		query.Set("$format", string(*queryOptions.Format))
 	}
 	if queryOptions != nil && queryOptions.Top != nil {
 		query.Set("$top", strconv.FormatInt(int64(*queryOptions.Top), 10))
 	}
-	if queryOptions != nil && queryOptions.SelectParameter != nil {
-		query.Set("$select", *queryOptions.SelectParameter)
+	if queryOptions != nil && queryOptions.Select != nil {
+		query.Set("$select", *queryOptions.Select)
 	}
 	if queryOptions != nil && queryOptions.Filter != nil {
 		query.Set("$filter", *queryOptions.Filter)
@@ -708,8 +708,8 @@ func (client *TableClient) queryEntitiesCreateRequest(ctx context.Context, table
 	}
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("x-ms-version", "2019-02-02")
-	if tableQueryEntitiesOptions != nil && tableQueryEntitiesOptions.RequestId != nil {
-		req.Header.Set("x-ms-client-request-id", *tableQueryEntitiesOptions.RequestId)
+	if tableQueryEntitiesOptions != nil && tableQueryEntitiesOptions.RequestID != nil {
+		req.Header.Set("x-ms-client-request-id", *tableQueryEntitiesOptions.RequestID)
 	}
 	req.Header.Set("DataServiceVersion", "3.0")
 	req.Header.Set("Accept", "application/json;odata=minimalmetadata")
@@ -740,10 +740,10 @@ func (client *TableClient) queryEntitiesHandleResponse(resp *azcore.Response) (T
 		result.Date = &date
 	}
 	if val := resp.Header.Get("x-ms-continuation-NextPartitionKey"); val != "" {
-		result.ContinuationNextPartitionKey = &val
+		result.XMSContinuationNextPartitionKey = &val
 	}
 	if val := resp.Header.Get("x-ms-continuation-NextRowKey"); val != "" {
-		result.ContinuationNextRowKey = &val
+		result.XMSContinuationNextRowKey = &val
 	}
 	return result, nil
 }
@@ -788,19 +788,19 @@ func (client *TableClient) queryEntityWithPartitionAndRowKeyCreateRequest(ctx co
 	if tableQueryEntityWithPartitionAndRowKeyOptions != nil && tableQueryEntityWithPartitionAndRowKeyOptions.Timeout != nil {
 		query.Set("timeout", strconv.FormatInt(int64(*tableQueryEntityWithPartitionAndRowKeyOptions.Timeout), 10))
 	}
-	if queryOptions != nil && queryOptions.FormatParameter != nil {
-		query.Set("$format", string(*queryOptions.FormatParameter))
+	if queryOptions != nil && queryOptions.Format != nil {
+		query.Set("$format", string(*queryOptions.Format))
 	}
-	if queryOptions != nil && queryOptions.SelectParameter != nil {
-		query.Set("$select", *queryOptions.SelectParameter)
+	if queryOptions != nil && queryOptions.Select != nil {
+		query.Set("$select", *queryOptions.Select)
 	}
 	if queryOptions != nil && queryOptions.Filter != nil {
 		query.Set("$filter", *queryOptions.Filter)
 	}
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("x-ms-version", "2019-02-02")
-	if tableQueryEntityWithPartitionAndRowKeyOptions != nil && tableQueryEntityWithPartitionAndRowKeyOptions.RequestId != nil {
-		req.Header.Set("x-ms-client-request-id", *tableQueryEntityWithPartitionAndRowKeyOptions.RequestId)
+	if tableQueryEntityWithPartitionAndRowKeyOptions != nil && tableQueryEntityWithPartitionAndRowKeyOptions.RequestID != nil {
+		req.Header.Set("x-ms-client-request-id", *tableQueryEntityWithPartitionAndRowKeyOptions.RequestID)
 	}
 	req.Header.Set("DataServiceVersion", "3.0")
 	req.Header.Set("Accept", "application/json;odata=minimalmetadata")
@@ -834,10 +834,10 @@ func (client *TableClient) queryEntityWithPartitionAndRowKeyHandleResponse(resp 
 		result.ETag = &val
 	}
 	if val := resp.Header.Get("x-ms-continuation-NextPartitionKey"); val != "" {
-		result.ContinuationNextPartitionKey = &val
+		result.XMSContinuationNextPartitionKey = &val
 	}
 	if val := resp.Header.Get("x-ms-continuation-NextRowKey"); val != "" {
-		result.ContinuationNextRowKey = &val
+		result.XMSContinuationNextRowKey = &val
 	}
 	if val := resp.Header.Get("Preference-Applied"); val != "" {
 		result.PreferenceApplied = &val
@@ -889,16 +889,16 @@ func (client *TableClient) setAccessPolicyCreateRequest(ctx context.Context, tab
 	query.Set("comp", "acl")
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("x-ms-version", "2019-02-02")
-	if options != nil && options.RequestId != nil {
-		req.Header.Set("x-ms-client-request-id", *options.RequestId)
+	if options != nil && options.RequestID != nil {
+		req.Header.Set("x-ms-client-request-id", *options.RequestID)
 	}
 	req.Header.Set("Accept", "application/xml")
 	type wrapper struct {
 		XMLName  xml.Name            `xml:"SignedIdentifiers"`
-		TableAcl *[]SignedIDentifier `xml:"SignedIdentifier"`
+		TableACL *[]SignedIdentifier `xml:"SignedIdentifier"`
 	}
 	if options != nil {
-		return req, req.MarshalAsXML(wrapper{TableAcl: options.TableAcl})
+		return req, req.MarshalAsXML(wrapper{TableACL: options.TableACL})
 	}
 	return req, nil
 }
@@ -965,13 +965,13 @@ func (client *TableClient) updateEntityCreateRequest(ctx context.Context, table 
 	if tableUpdateEntityOptions != nil && tableUpdateEntityOptions.Timeout != nil {
 		query.Set("timeout", strconv.FormatInt(int64(*tableUpdateEntityOptions.Timeout), 10))
 	}
-	if queryOptions != nil && queryOptions.FormatParameter != nil {
-		query.Set("$format", string(*queryOptions.FormatParameter))
+	if queryOptions != nil && queryOptions.Format != nil {
+		query.Set("$format", string(*queryOptions.Format))
 	}
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("x-ms-version", "2019-02-02")
-	if tableUpdateEntityOptions != nil && tableUpdateEntityOptions.RequestId != nil {
-		req.Header.Set("x-ms-client-request-id", *tableUpdateEntityOptions.RequestId)
+	if tableUpdateEntityOptions != nil && tableUpdateEntityOptions.RequestID != nil {
+		req.Header.Set("x-ms-client-request-id", *tableUpdateEntityOptions.RequestID)
 	}
 	req.Header.Set("DataServiceVersion", "3.0")
 	if tableUpdateEntityOptions != nil && tableUpdateEntityOptions.IfMatch != nil {

@@ -436,24 +436,24 @@ func (client *ApplicationGatewaysClient) getHandleError(resp *azcore.Response) e
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
-// GetSslPredefinedPolicy - Gets Ssl predefined policy with the specified policy name.
-func (client *ApplicationGatewaysClient) GetSslPredefinedPolicy(ctx context.Context, predefinedPolicyName string, options *ApplicationGatewaysGetSslPredefinedPolicyOptions) (ApplicationGatewaySslPredefinedPolicyResponse, error) {
-	req, err := client.getSslPredefinedPolicyCreateRequest(ctx, predefinedPolicyName, options)
+// GetSSLPredefinedPolicy - Gets Ssl predefined policy with the specified policy name.
+func (client *ApplicationGatewaysClient) GetSSLPredefinedPolicy(ctx context.Context, predefinedPolicyName string, options *ApplicationGatewaysGetSSLPredefinedPolicyOptions) (ApplicationGatewaySSLPredefinedPolicyResponse, error) {
+	req, err := client.getSSLPredefinedPolicyCreateRequest(ctx, predefinedPolicyName, options)
 	if err != nil {
-		return ApplicationGatewaySslPredefinedPolicyResponse{}, err
+		return ApplicationGatewaySSLPredefinedPolicyResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return ApplicationGatewaySslPredefinedPolicyResponse{}, err
+		return ApplicationGatewaySSLPredefinedPolicyResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return ApplicationGatewaySslPredefinedPolicyResponse{}, client.getSslPredefinedPolicyHandleError(resp)
+		return ApplicationGatewaySSLPredefinedPolicyResponse{}, client.getSSLPredefinedPolicyHandleError(resp)
 	}
-	return client.getSslPredefinedPolicyHandleResponse(resp)
+	return client.getSSLPredefinedPolicyHandleResponse(resp)
 }
 
-// getSslPredefinedPolicyCreateRequest creates the GetSslPredefinedPolicy request.
-func (client *ApplicationGatewaysClient) getSslPredefinedPolicyCreateRequest(ctx context.Context, predefinedPolicyName string, options *ApplicationGatewaysGetSslPredefinedPolicyOptions) (*azcore.Request, error) {
+// getSSLPredefinedPolicyCreateRequest creates the GetSSLPredefinedPolicy request.
+func (client *ApplicationGatewaysClient) getSSLPredefinedPolicyCreateRequest(ctx context.Context, predefinedPolicyName string, options *ApplicationGatewaysGetSSLPredefinedPolicyOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies/{predefinedPolicyName}"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{predefinedPolicyName}", url.PathEscape(predefinedPolicyName))
@@ -469,17 +469,17 @@ func (client *ApplicationGatewaysClient) getSslPredefinedPolicyCreateRequest(ctx
 	return req, nil
 }
 
-// getSslPredefinedPolicyHandleResponse handles the GetSslPredefinedPolicy response.
-func (client *ApplicationGatewaysClient) getSslPredefinedPolicyHandleResponse(resp *azcore.Response) (ApplicationGatewaySslPredefinedPolicyResponse, error) {
-	var val *ApplicationGatewaySslPredefinedPolicy
+// getSSLPredefinedPolicyHandleResponse handles the GetSSLPredefinedPolicy response.
+func (client *ApplicationGatewaysClient) getSSLPredefinedPolicyHandleResponse(resp *azcore.Response) (ApplicationGatewaySSLPredefinedPolicyResponse, error) {
+	var val *ApplicationGatewaySSLPredefinedPolicy
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ApplicationGatewaySslPredefinedPolicyResponse{}, err
+		return ApplicationGatewaySSLPredefinedPolicyResponse{}, err
 	}
-	return ApplicationGatewaySslPredefinedPolicyResponse{RawResponse: resp.Response, ApplicationGatewaySslPredefinedPolicy: val}, nil
+	return ApplicationGatewaySSLPredefinedPolicyResponse{RawResponse: resp.Response, ApplicationGatewaySSLPredefinedPolicy: val}, nil
 }
 
-// getSslPredefinedPolicyHandleError handles the GetSslPredefinedPolicy error response.
-func (client *ApplicationGatewaysClient) getSslPredefinedPolicyHandleError(resp *azcore.Response) error {
+// getSSLPredefinedPolicyHandleError handles the GetSSLPredefinedPolicy error response.
+func (client *ApplicationGatewaysClient) getSSLPredefinedPolicyHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -688,6 +688,106 @@ func (client *ApplicationGatewaysClient) listAvailableResponseHeadersHandleError
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
+// ListAvailableSSLOptions - Lists available Ssl options for configuring Ssl policy.
+func (client *ApplicationGatewaysClient) ListAvailableSSLOptions(ctx context.Context, options *ApplicationGatewaysListAvailableSSLOptionsOptions) (ApplicationGatewayAvailableSSLOptionsResponse, error) {
+	req, err := client.listAvailableSSLOptionsCreateRequest(ctx, options)
+	if err != nil {
+		return ApplicationGatewayAvailableSSLOptionsResponse{}, err
+	}
+	resp, err := client.con.Pipeline().Do(req)
+	if err != nil {
+		return ApplicationGatewayAvailableSSLOptionsResponse{}, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return ApplicationGatewayAvailableSSLOptionsResponse{}, client.listAvailableSSLOptionsHandleError(resp)
+	}
+	return client.listAvailableSSLOptionsHandleResponse(resp)
+}
+
+// listAvailableSSLOptionsCreateRequest creates the ListAvailableSSLOptions request.
+func (client *ApplicationGatewaysClient) listAvailableSSLOptionsCreateRequest(ctx context.Context, options *ApplicationGatewaysListAvailableSSLOptionsOptions) (*azcore.Request, error) {
+	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default"
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Telemetry(telemetryInfo)
+	query := req.URL.Query()
+	query.Set("api-version", "2020-03-01")
+	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
+	return req, nil
+}
+
+// listAvailableSSLOptionsHandleResponse handles the ListAvailableSSLOptions response.
+func (client *ApplicationGatewaysClient) listAvailableSSLOptionsHandleResponse(resp *azcore.Response) (ApplicationGatewayAvailableSSLOptionsResponse, error) {
+	var val *ApplicationGatewayAvailableSSLOptions
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ApplicationGatewayAvailableSSLOptionsResponse{}, err
+	}
+	return ApplicationGatewayAvailableSSLOptionsResponse{RawResponse: resp.Response, ApplicationGatewayAvailableSSLOptions: val}, nil
+}
+
+// listAvailableSSLOptionsHandleError handles the ListAvailableSSLOptions error response.
+func (client *ApplicationGatewaysClient) listAvailableSSLOptionsHandleError(resp *azcore.Response) error {
+	var err CloudError
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return azcore.NewResponseError(&err, resp.Response)
+}
+
+// ListAvailableSSLPredefinedPolicies - Lists all SSL predefined policies for configuring Ssl policy.
+func (client *ApplicationGatewaysClient) ListAvailableSSLPredefinedPolicies(options *ApplicationGatewaysListAvailableSSLPredefinedPoliciesOptions) ApplicationGatewayAvailableSSLPredefinedPoliciesPager {
+	return &applicationGatewayAvailableSSLPredefinedPoliciesPager{
+		pipeline: client.con.Pipeline(),
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.listAvailableSSLPredefinedPoliciesCreateRequest(ctx, options)
+		},
+		responder: client.listAvailableSSLPredefinedPoliciesHandleResponse,
+		errorer:   client.listAvailableSSLPredefinedPoliciesHandleError,
+		advancer: func(ctx context.Context, resp ApplicationGatewayAvailableSSLPredefinedPoliciesResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.ApplicationGatewayAvailableSSLPredefinedPolicies.NextLink)
+		},
+		statusCodes: []int{http.StatusOK},
+	}
+}
+
+// listAvailableSSLPredefinedPoliciesCreateRequest creates the ListAvailableSSLPredefinedPolicies request.
+func (client *ApplicationGatewaysClient) listAvailableSSLPredefinedPoliciesCreateRequest(ctx context.Context, options *ApplicationGatewaysListAvailableSSLPredefinedPoliciesOptions) (*azcore.Request, error) {
+	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies"
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Telemetry(telemetryInfo)
+	query := req.URL.Query()
+	query.Set("api-version", "2020-03-01")
+	req.URL.RawQuery = query.Encode()
+	req.Header.Set("Accept", "application/json")
+	return req, nil
+}
+
+// listAvailableSSLPredefinedPoliciesHandleResponse handles the ListAvailableSSLPredefinedPolicies response.
+func (client *ApplicationGatewaysClient) listAvailableSSLPredefinedPoliciesHandleResponse(resp *azcore.Response) (ApplicationGatewayAvailableSSLPredefinedPoliciesResponse, error) {
+	var val *ApplicationGatewayAvailableSSLPredefinedPolicies
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ApplicationGatewayAvailableSSLPredefinedPoliciesResponse{}, err
+	}
+	return ApplicationGatewayAvailableSSLPredefinedPoliciesResponse{RawResponse: resp.Response, ApplicationGatewayAvailableSSLPredefinedPolicies: val}, nil
+}
+
+// listAvailableSSLPredefinedPoliciesHandleError handles the ListAvailableSSLPredefinedPolicies error response.
+func (client *ApplicationGatewaysClient) listAvailableSSLPredefinedPoliciesHandleError(resp *azcore.Response) error {
+	var err CloudError
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return azcore.NewResponseError(&err, resp.Response)
+}
+
 // ListAvailableServerVariables - Lists all available server variables.
 func (client *ApplicationGatewaysClient) ListAvailableServerVariables(ctx context.Context, options *ApplicationGatewaysListAvailableServerVariablesOptions) (StringArrayResponse, error) {
 	req, err := client.listAvailableServerVariablesCreateRequest(ctx, options)
@@ -732,106 +832,6 @@ func (client *ApplicationGatewaysClient) listAvailableServerVariablesHandleRespo
 // listAvailableServerVariablesHandleError handles the ListAvailableServerVariables error response.
 func (client *ApplicationGatewaysClient) listAvailableServerVariablesHandleError(resp *azcore.Response) error {
 	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
-	}
-	return azcore.NewResponseError(&err, resp.Response)
-}
-
-// ListAvailableSslOptions - Lists available Ssl options for configuring Ssl policy.
-func (client *ApplicationGatewaysClient) ListAvailableSslOptions(ctx context.Context, options *ApplicationGatewaysListAvailableSslOptionsOptions) (ApplicationGatewayAvailableSslOptionsResponse, error) {
-	req, err := client.listAvailableSslOptionsCreateRequest(ctx, options)
-	if err != nil {
-		return ApplicationGatewayAvailableSslOptionsResponse{}, err
-	}
-	resp, err := client.con.Pipeline().Do(req)
-	if err != nil {
-		return ApplicationGatewayAvailableSslOptionsResponse{}, err
-	}
-	if !resp.HasStatusCode(http.StatusOK) {
-		return ApplicationGatewayAvailableSslOptionsResponse{}, client.listAvailableSslOptionsHandleError(resp)
-	}
-	return client.listAvailableSslOptionsHandleResponse(resp)
-}
-
-// listAvailableSslOptionsCreateRequest creates the ListAvailableSslOptions request.
-func (client *ApplicationGatewaysClient) listAvailableSslOptionsCreateRequest(ctx context.Context, options *ApplicationGatewaysListAvailableSslOptionsOptions) (*azcore.Request, error) {
-	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default"
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
-	if err != nil {
-		return nil, err
-	}
-	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2020-03-01")
-	req.URL.RawQuery = query.Encode()
-	req.Header.Set("Accept", "application/json")
-	return req, nil
-}
-
-// listAvailableSslOptionsHandleResponse handles the ListAvailableSslOptions response.
-func (client *ApplicationGatewaysClient) listAvailableSslOptionsHandleResponse(resp *azcore.Response) (ApplicationGatewayAvailableSslOptionsResponse, error) {
-	var val *ApplicationGatewayAvailableSslOptions
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ApplicationGatewayAvailableSslOptionsResponse{}, err
-	}
-	return ApplicationGatewayAvailableSslOptionsResponse{RawResponse: resp.Response, ApplicationGatewayAvailableSslOptions: val}, nil
-}
-
-// listAvailableSslOptionsHandleError handles the ListAvailableSslOptions error response.
-func (client *ApplicationGatewaysClient) listAvailableSslOptionsHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
-	}
-	return azcore.NewResponseError(&err, resp.Response)
-}
-
-// ListAvailableSslPredefinedPolicies - Lists all SSL predefined policies for configuring Ssl policy.
-func (client *ApplicationGatewaysClient) ListAvailableSslPredefinedPolicies(options *ApplicationGatewaysListAvailableSslPredefinedPoliciesOptions) ApplicationGatewayAvailableSslPredefinedPoliciesPager {
-	return &applicationGatewayAvailableSslPredefinedPoliciesPager{
-		pipeline: client.con.Pipeline(),
-		requester: func(ctx context.Context) (*azcore.Request, error) {
-			return client.listAvailableSslPredefinedPoliciesCreateRequest(ctx, options)
-		},
-		responder: client.listAvailableSslPredefinedPoliciesHandleResponse,
-		errorer:   client.listAvailableSslPredefinedPoliciesHandleError,
-		advancer: func(ctx context.Context, resp ApplicationGatewayAvailableSslPredefinedPoliciesResponse) (*azcore.Request, error) {
-			return azcore.NewRequest(ctx, http.MethodGet, *resp.ApplicationGatewayAvailableSslPredefinedPolicies.NextLink)
-		},
-		statusCodes: []int{http.StatusOK},
-	}
-}
-
-// listAvailableSslPredefinedPoliciesCreateRequest creates the ListAvailableSslPredefinedPolicies request.
-func (client *ApplicationGatewaysClient) listAvailableSslPredefinedPoliciesCreateRequest(ctx context.Context, options *ApplicationGatewaysListAvailableSslPredefinedPoliciesOptions) (*azcore.Request, error) {
-	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies"
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
-	if err != nil {
-		return nil, err
-	}
-	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2020-03-01")
-	req.URL.RawQuery = query.Encode()
-	req.Header.Set("Accept", "application/json")
-	return req, nil
-}
-
-// listAvailableSslPredefinedPoliciesHandleResponse handles the ListAvailableSslPredefinedPolicies response.
-func (client *ApplicationGatewaysClient) listAvailableSslPredefinedPoliciesHandleResponse(resp *azcore.Response) (ApplicationGatewayAvailableSslPredefinedPoliciesResponse, error) {
-	var val *ApplicationGatewayAvailableSslPredefinedPolicies
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ApplicationGatewayAvailableSslPredefinedPoliciesResponse{}, err
-	}
-	return ApplicationGatewayAvailableSslPredefinedPoliciesResponse{RawResponse: resp.Response, ApplicationGatewayAvailableSslPredefinedPolicies: val}, nil
-}
-
-// listAvailableSslPredefinedPoliciesHandleError handles the ListAvailableSslPredefinedPolicies error response.
-func (client *ApplicationGatewaysClient) listAvailableSslPredefinedPoliciesHandleError(resp *azcore.Response) error {
-	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}

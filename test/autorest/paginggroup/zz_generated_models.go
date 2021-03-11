@@ -16,7 +16,7 @@ import (
 // CustomParameterGroup contains a group of parameters for the Paging.GetMultiplePagesFragmentWithGroupingNextLink method.
 type CustomParameterGroup struct {
 	// Sets the api version to use.
-	ApiVersion string
+	APIVersion string
 	// Sets the tenant to use.
 	Tenant string
 }
@@ -39,9 +39,9 @@ type OperationResult struct {
 	Status *OperationResultStatus `json:"status,omitempty"`
 }
 
-// PagingBeginGetMultiplePagesLroOptions contains the optional parameters for the Paging.BeginGetMultiplePagesLro method.
-type PagingBeginGetMultiplePagesLroOptions struct {
-	ClientRequestId *string
+// PagingBeginGetMultiplePagesLROOptions contains the optional parameters for the Paging.BeginGetMultiplePagesLRO method.
+type PagingBeginGetMultiplePagesLROOptions struct {
+	ClientRequestID *string
 	// Sets the maximum number of items to return in the response.
 	Maxresults *int32
 	// Sets the maximum time that the server can spend processing the request, in seconds. The default is 30 seconds.
@@ -71,7 +71,7 @@ type PagingGetMultiplePagesFragmentWithGroupingNextLinkOptions struct {
 
 // PagingGetMultiplePagesOptions contains the optional parameters for the Paging.GetMultiplePages method.
 type PagingGetMultiplePagesOptions struct {
-	ClientRequestId *string
+	ClientRequestID *string
 	// Sets the maximum number of items to return in the response.
 	Maxresults *int32
 	// Sets the maximum time that the server can spend processing the request, in seconds. The default is 30 seconds.
@@ -90,7 +90,7 @@ type PagingGetMultiplePagesRetrySecondOptions struct {
 
 // PagingGetMultiplePagesWithOffsetOptions contains the optional parameters for the Paging.GetMultiplePagesWithOffset method.
 type PagingGetMultiplePagesWithOffsetOptions struct {
-	ClientRequestId *string
+	ClientRequestID *string
 	// Sets the maximum number of items to return in the response.
 	Maxresults *int32
 	// Offset of return value
@@ -111,16 +111,16 @@ type PagingGetNullNextLinkNamePagesOptions struct {
 
 // PagingGetOdataMultiplePagesOptions contains the optional parameters for the Paging.GetOdataMultiplePages method.
 type PagingGetOdataMultiplePagesOptions struct {
-	ClientRequestId *string
+	ClientRequestID *string
 	// Sets the maximum number of items to return in the response.
 	Maxresults *int32
 	// Sets the maximum time that the server can spend processing the request, in seconds. The default is 30 seconds.
 	Timeout *int32
 }
 
-// PagingGetPagingModelWithItemNameWithXmsClientNameOptions contains the optional parameters for the Paging.GetPagingModelWithItemNameWithXmsClientName
+// PagingGetPagingModelWithItemNameWithXMSClientNameOptions contains the optional parameters for the Paging.GetPagingModelWithItemNameWithXMSClientName
 // method.
-type PagingGetPagingModelWithItemNameWithXmsClientNameOptions struct {
+type PagingGetPagingModelWithItemNameWithXMSClientNameOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -186,14 +186,14 @@ type ProductResultValueResponse struct {
 	RawResponse *http.Response
 }
 
-type ProductResultValueWithXmsClientName struct {
+type ProductResultValueWithXMSClientName struct {
 	Indexes  *[]Product `json:"values,omitempty"`
 	NextLink *string    `json:"nextLink,omitempty"`
 }
 
-// ProductResultValueWithXmsClientNameResponse is the response envelope for operations that return a ProductResultValueWithXmsClientName type.
-type ProductResultValueWithXmsClientNameResponse struct {
-	ProductResultValueWithXmsClientName *ProductResultValueWithXmsClientName
+// ProductResultValueWithXMSClientNameResponse is the response envelope for operations that return a ProductResultValueWithXMSClientName type.
+type ProductResultValueWithXMSClientNameResponse struct {
+	ProductResultValueWithXMSClientName *ProductResultValueWithXMSClientName
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response

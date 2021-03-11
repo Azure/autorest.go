@@ -274,7 +274,7 @@ func (client *DisksClient) BeginGrantAccess(ctx context.Context, resourceGroupNa
 	if err != nil {
 		return AccessURIPollerResponse{}, err
 	}
-	poller := &accessUriPoller{
+	poller := &accessURIPoller{
 		pt:       pt,
 		pipeline: client.con.Pipeline(),
 	}
@@ -292,7 +292,7 @@ func (client *DisksClient) ResumeGrantAccess(token string) (AccessURIPoller, err
 	if err != nil {
 		return nil, err
 	}
-	return &accessUriPoller{
+	return &accessURIPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
 	}, nil

@@ -16,10 +16,10 @@ func newPetsClient() *PetsClient {
 	return NewPetsClient(NewDefaultConnection(nil))
 }
 
-// CreateApInProperties - Create a Pet which contains more properties than what is defined.
-func TestCreateApInProperties(t *testing.T) {
+// CreateAPInProperties - Create a Pet which contains more properties than what is defined.
+func TestCreateAPInProperties(t *testing.T) {
 	client := newPetsClient()
-	result, err := client.CreateApInProperties(context.Background(), PetApInProperties{
+	result, err := client.CreateAPInProperties(context.Background(), PetAPInProperties{
 		ID:   to.Int32Ptr(4),
 		Name: to.StringPtr("Bunny"),
 		AdditionalProperties: &map[string]float32{
@@ -31,7 +31,7 @@ func TestCreateApInProperties(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(result.PetApInProperties, &PetApInProperties{
+	if r := cmp.Diff(result.PetAPInProperties, &PetAPInProperties{
 		ID:     to.Int32Ptr(4),
 		Name:   to.StringPtr("Bunny"),
 		Status: to.BoolPtr(true),
@@ -45,10 +45,10 @@ func TestCreateApInProperties(t *testing.T) {
 	}
 }
 
-// CreateApInPropertiesWithApstring - Create a Pet which contains more properties than what is defined.
-func TestCreateApInPropertiesWithApstring(t *testing.T) {
+// CreateAPInPropertiesWithAPString - Create a Pet which contains more properties than what is defined.
+func TestCreateAPInPropertiesWithAPString(t *testing.T) {
 	client := newPetsClient()
-	result, err := client.CreateApInPropertiesWithApstring(context.Background(), PetApInPropertiesWithApstring{
+	result, err := client.CreateAPInPropertiesWithAPString(context.Background(), PetAPInPropertiesWithAPString{
 		ID:            to.Int32Ptr(5),
 		Name:          to.StringPtr("Funny"),
 		OdataLocation: to.StringPtr("westus"),
@@ -66,7 +66,7 @@ func TestCreateApInPropertiesWithApstring(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(result.PetApInPropertiesWithApstring, &PetApInPropertiesWithApstring{
+	if r := cmp.Diff(result.PetAPInPropertiesWithAPString, &PetAPInPropertiesWithAPString{
 		ID:            to.Int32Ptr(5),
 		Name:          to.StringPtr("Funny"),
 		OdataLocation: to.StringPtr("westus"),
@@ -86,10 +86,10 @@ func TestCreateApInPropertiesWithApstring(t *testing.T) {
 	}
 }
 
-// CreateApObject - Create a Pet which contains more properties than what is defined.
-func TestCreateApObject(t *testing.T) {
+// CreateAPObject - Create a Pet which contains more properties than what is defined.
+func TestCreateAPObject(t *testing.T) {
 	client := newPetsClient()
-	result, err := client.CreateApObject(context.Background(), PetApObject{
+	result, err := client.CreateAPObject(context.Background(), PetAPObject{
 		ID:   to.Int32Ptr(2),
 		Name: to.StringPtr("Hira"),
 		AdditionalProperties: &map[string]interface{}{
@@ -109,7 +109,7 @@ func TestCreateApObject(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(result.PetApObject, &PetApObject{
+	if r := cmp.Diff(result.PetAPObject, &PetAPObject{
 		ID:     to.Int32Ptr(2),
 		Name:   to.StringPtr("Hira"),
 		Status: to.BoolPtr(true),
@@ -131,10 +131,10 @@ func TestCreateApObject(t *testing.T) {
 	}
 }
 
-// CreateApString - Create a Pet which contains more properties than what is defined.
-func TestCreateApString(t *testing.T) {
+// CreateAPString - Create a Pet which contains more properties than what is defined.
+func TestCreateAPString(t *testing.T) {
 	client := newPetsClient()
-	result, err := client.CreateApString(context.Background(), PetApString{
+	result, err := client.CreateAPString(context.Background(), PetAPString{
 		ID:   to.Int32Ptr(3),
 		Name: to.StringPtr("Tommy"),
 		AdditionalProperties: &map[string]string{
@@ -146,7 +146,7 @@ func TestCreateApString(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(result.PetApString, &PetApString{
+	if r := cmp.Diff(result.PetAPString, &PetAPString{
 		ID:     to.Int32Ptr(3),
 		Name:   to.StringPtr("Tommy"),
 		Status: to.BoolPtr(true),
@@ -160,10 +160,10 @@ func TestCreateApString(t *testing.T) {
 	}
 }
 
-// CreateApTrue - Create a Pet which contains more properties than what is defined.
-func TestCreateApTrue(t *testing.T) {
+// CreateAPTrue - Create a Pet which contains more properties than what is defined.
+func TestCreateAPTrue(t *testing.T) {
 	client := newPetsClient()
-	result, err := client.CreateApTrue(context.Background(), PetApTrue{
+	result, err := client.CreateAPTrue(context.Background(), PetAPTrue{
 		ID:   to.Int32Ptr(1),
 		Name: to.StringPtr("Puppy"),
 		AdditionalProperties: &map[string]interface{}{
@@ -176,7 +176,7 @@ func TestCreateApTrue(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(result.PetApTrue, &PetApTrue{
+	if r := cmp.Diff(result.PetAPTrue, &PetAPTrue{
 		ID:     to.Int32Ptr(1),
 		Name:   to.StringPtr("Puppy"),
 		Status: to.BoolPtr(true),
@@ -191,11 +191,11 @@ func TestCreateApTrue(t *testing.T) {
 	}
 }
 
-// CreateCatApTrue - Create a CatAPTrue which contains more properties than what is defined.
-func TestCreateCatApTrue(t *testing.T) {
+// CreateCatAPTrue - Create a CatAPTrue which contains more properties than what is defined.
+func TestCreateCatAPTrue(t *testing.T) {
 	client := newPetsClient()
-	result, err := client.CreateCatApTrue(context.Background(), CatApTrue{
-		PetApTrue: PetApTrue{
+	result, err := client.CreateCatAPTrue(context.Background(), CatAPTrue{
+		PetAPTrue: PetAPTrue{
 			ID:   to.Int32Ptr(1),
 			Name: to.StringPtr("Lisa"),
 			AdditionalProperties: &map[string]interface{}{
@@ -210,8 +210,8 @@ func TestCreateCatApTrue(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(result.CatApTrue, &CatApTrue{
-		PetApTrue: PetApTrue{
+	if r := cmp.Diff(result.CatAPTrue, &CatAPTrue{
+		PetAPTrue: PetAPTrue{
 			ID:     to.Int32Ptr(1),
 			Name:   to.StringPtr("Lisa"),
 			Status: to.BoolPtr(true),

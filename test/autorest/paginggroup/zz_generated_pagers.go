@@ -248,50 +248,50 @@ func (p *productResultValuePager) PageResponse() ProductResultValueResponse {
 	return p.current
 }
 
-// ProductResultValueWithXmsClientNamePager provides iteration over ProductResultValueWithXmsClientName pages.
-type ProductResultValueWithXmsClientNamePager interface {
+// ProductResultValueWithXMSClientNamePager provides iteration over ProductResultValueWithXMSClientName pages.
+type ProductResultValueWithXMSClientNamePager interface {
 	azcore.Pager
 
-	// Page returns the current ProductResultValueWithXmsClientNameResponse.
-	PageResponse() ProductResultValueWithXmsClientNameResponse
+	// Page returns the current ProductResultValueWithXMSClientNameResponse.
+	PageResponse() ProductResultValueWithXMSClientNameResponse
 }
 
-type productResultValueWithXmsClientNameCreateRequest func(context.Context) (*azcore.Request, error)
+type productResultValueWithXMSClientNameCreateRequest func(context.Context) (*azcore.Request, error)
 
-type productResultValueWithXmsClientNameHandleError func(*azcore.Response) error
+type productResultValueWithXMSClientNameHandleError func(*azcore.Response) error
 
-type productResultValueWithXmsClientNameHandleResponse func(*azcore.Response) (ProductResultValueWithXmsClientNameResponse, error)
+type productResultValueWithXMSClientNameHandleResponse func(*azcore.Response) (ProductResultValueWithXMSClientNameResponse, error)
 
-type productResultValueWithXmsClientNameAdvancePage func(context.Context, ProductResultValueWithXmsClientNameResponse) (*azcore.Request, error)
+type productResultValueWithXMSClientNameAdvancePage func(context.Context, ProductResultValueWithXMSClientNameResponse) (*azcore.Request, error)
 
-type productResultValueWithXmsClientNamePager struct {
+type productResultValueWithXMSClientNamePager struct {
 	// the pipeline for making the request
 	pipeline azcore.Pipeline
 	// creates the initial request (non-LRO case)
-	requester productResultValueWithXmsClientNameCreateRequest
+	requester productResultValueWithXMSClientNameCreateRequest
 	// callback for handling response errors
-	errorer productResultValueWithXmsClientNameHandleError
+	errorer productResultValueWithXMSClientNameHandleError
 	// callback for handling the HTTP response
-	responder productResultValueWithXmsClientNameHandleResponse
+	responder productResultValueWithXMSClientNameHandleResponse
 	// callback for advancing to the next page
-	advancer productResultValueWithXmsClientNameAdvancePage
+	advancer productResultValueWithXMSClientNameAdvancePage
 	// contains the current response
-	current ProductResultValueWithXmsClientNameResponse
+	current ProductResultValueWithXMSClientNameResponse
 	// status codes for successful retrieval
 	statusCodes []int
 	// any error encountered
 	err error
 }
 
-func (p *productResultValueWithXmsClientNamePager) Err() error {
+func (p *productResultValueWithXMSClientNamePager) Err() error {
 	return p.err
 }
 
-func (p *productResultValueWithXmsClientNamePager) NextPage(ctx context.Context) bool {
+func (p *productResultValueWithXMSClientNamePager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
-		if p.current.ProductResultValueWithXmsClientName.NextLink == nil || len(*p.current.ProductResultValueWithXmsClientName.NextLink) == 0 {
+		if p.current.ProductResultValueWithXMSClientName.NextLink == nil || len(*p.current.ProductResultValueWithXMSClientName.NextLink) == 0 {
 			return false
 		}
 		req, err = p.advancer(ctx, p.current)
@@ -320,6 +320,6 @@ func (p *productResultValueWithXmsClientNamePager) NextPage(ctx context.Context)
 	return true
 }
 
-func (p *productResultValueWithXmsClientNamePager) PageResponse() ProductResultValueWithXmsClientNameResponse {
+func (p *productResultValueWithXMSClientNamePager) PageResponse() ProductResultValueWithXMSClientNameResponse {
 	return p.current
 }

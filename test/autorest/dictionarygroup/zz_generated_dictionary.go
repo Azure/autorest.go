@@ -257,7 +257,7 @@ func (client *DictionaryClient) getArrayValidHandleError(resp *azcore.Response) 
 
 // GetBase64URL - Get base64url dictionary value {"0": "a string that gets encoded with base64url", "1": "test string", "2": "Lorem ipsum"}
 func (client *DictionaryClient) GetBase64URL(ctx context.Context, options *DictionaryGetBase64URLOptions) (MapOfByteArrayResponse, error) {
-	req, err := client.getBase64UrlCreateRequest(ctx, options)
+	req, err := client.getBase64URLCreateRequest(ctx, options)
 	if err != nil {
 		return MapOfByteArrayResponse{}, err
 	}
@@ -266,13 +266,13 @@ func (client *DictionaryClient) GetBase64URL(ctx context.Context, options *Dicti
 		return MapOfByteArrayResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return MapOfByteArrayResponse{}, client.getBase64UrlHandleError(resp)
+		return MapOfByteArrayResponse{}, client.getBase64URLHandleError(resp)
 	}
-	return client.getBase64UrlHandleResponse(resp)
+	return client.getBase64URLHandleResponse(resp)
 }
 
-// getBase64UrlCreateRequest creates the GetBase64URL request.
-func (client *DictionaryClient) getBase64UrlCreateRequest(ctx context.Context, options *DictionaryGetBase64URLOptions) (*azcore.Request, error) {
+// getBase64URLCreateRequest creates the GetBase64URL request.
+func (client *DictionaryClient) getBase64URLCreateRequest(ctx context.Context, options *DictionaryGetBase64URLOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/prim/base64url/valid"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -283,8 +283,8 @@ func (client *DictionaryClient) getBase64UrlCreateRequest(ctx context.Context, o
 	return req, nil
 }
 
-// getBase64UrlHandleResponse handles the GetBase64URL response.
-func (client *DictionaryClient) getBase64UrlHandleResponse(resp *azcore.Response) (MapOfByteArrayResponse, error) {
+// getBase64URLHandleResponse handles the GetBase64URL response.
+func (client *DictionaryClient) getBase64URLHandleResponse(resp *azcore.Response) (MapOfByteArrayResponse, error) {
 	var val map[string][]byte
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return MapOfByteArrayResponse{}, err
@@ -292,8 +292,8 @@ func (client *DictionaryClient) getBase64UrlHandleResponse(resp *azcore.Response
 	return MapOfByteArrayResponse{RawResponse: resp.Response, Value: val}, nil
 }
 
-// getBase64UrlHandleError handles the GetBase64URL error response.
-func (client *DictionaryClient) getBase64UrlHandleError(resp *azcore.Response) error {
+// getBase64URLHandleError handles the GetBase64URL error response.
+func (client *DictionaryClient) getBase64URLHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -965,7 +965,7 @@ func (client *DictionaryClient) getDateTimeInvalidNullHandleError(resp *azcore.R
 // GetDateTimeRFC1123Valid - Get date-time-rfc1123 dictionary value {"0": "Fri, 01 Dec 2000 00:00:01 GMT", "1": "Wed, 02 Jan 1980 00:11:35 GMT", "2": "Wed,
 // 12 Oct 1492 10:15:01 GMT"}
 func (client *DictionaryClient) GetDateTimeRFC1123Valid(ctx context.Context, options *DictionaryGetDateTimeRFC1123ValidOptions) (MapOfTimeResponse, error) {
-	req, err := client.getDateTimeRfc1123ValidCreateRequest(ctx, options)
+	req, err := client.getDateTimeRFC1123ValidCreateRequest(ctx, options)
 	if err != nil {
 		return MapOfTimeResponse{}, err
 	}
@@ -974,13 +974,13 @@ func (client *DictionaryClient) GetDateTimeRFC1123Valid(ctx context.Context, opt
 		return MapOfTimeResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return MapOfTimeResponse{}, client.getDateTimeRfc1123ValidHandleError(resp)
+		return MapOfTimeResponse{}, client.getDateTimeRFC1123ValidHandleError(resp)
 	}
-	return client.getDateTimeRfc1123ValidHandleResponse(resp)
+	return client.getDateTimeRFC1123ValidHandleResponse(resp)
 }
 
-// getDateTimeRfc1123ValidCreateRequest creates the GetDateTimeRFC1123Valid request.
-func (client *DictionaryClient) getDateTimeRfc1123ValidCreateRequest(ctx context.Context, options *DictionaryGetDateTimeRFC1123ValidOptions) (*azcore.Request, error) {
+// getDateTimeRFC1123ValidCreateRequest creates the GetDateTimeRFC1123Valid request.
+func (client *DictionaryClient) getDateTimeRFC1123ValidCreateRequest(ctx context.Context, options *DictionaryGetDateTimeRFC1123ValidOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/prim/date-time-rfc1123/valid"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -991,8 +991,8 @@ func (client *DictionaryClient) getDateTimeRfc1123ValidCreateRequest(ctx context
 	return req, nil
 }
 
-// getDateTimeRfc1123ValidHandleResponse handles the GetDateTimeRFC1123Valid response.
-func (client *DictionaryClient) getDateTimeRfc1123ValidHandleResponse(resp *azcore.Response) (MapOfTimeResponse, error) {
+// getDateTimeRFC1123ValidHandleResponse handles the GetDateTimeRFC1123Valid response.
+func (client *DictionaryClient) getDateTimeRFC1123ValidHandleResponse(resp *azcore.Response) (MapOfTimeResponse, error) {
 	aux := map[string]timeRFC1123{}
 	if err := resp.UnmarshalAsJSON(&aux); err != nil {
 		return MapOfTimeResponse{}, err
@@ -1004,8 +1004,8 @@ func (client *DictionaryClient) getDateTimeRfc1123ValidHandleResponse(resp *azco
 	return MapOfTimeResponse{RawResponse: resp.Response, Value: cp}, nil
 }
 
-// getDateTimeRfc1123ValidHandleError handles the GetDateTimeRFC1123Valid error response.
-func (client *DictionaryClient) getDateTimeRfc1123ValidHandleError(resp *azcore.Response) error {
+// getDateTimeRFC1123ValidHandleError handles the GetDateTimeRFC1123Valid error response.
+func (client *DictionaryClient) getDateTimeRFC1123ValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
@@ -2510,7 +2510,7 @@ func (client *DictionaryClient) putComplexValidHandleError(resp *azcore.Response
 // PutDateTimeRFC1123Valid - Set dictionary value empty {"0": "Fri, 01 Dec 2000 00:00:01 GMT", "1": "Wed, 02 Jan 1980 00:11:35 GMT", "2": "Wed, 12 Oct 1492
 // 10:15:01 GMT"}
 func (client *DictionaryClient) PutDateTimeRFC1123Valid(ctx context.Context, arrayBody map[string]time.Time, options *DictionaryPutDateTimeRFC1123ValidOptions) (*http.Response, error) {
-	req, err := client.putDateTimeRfc1123ValidCreateRequest(ctx, arrayBody, options)
+	req, err := client.putDateTimeRFC1123ValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
 		return nil, err
 	}
@@ -2519,13 +2519,13 @@ func (client *DictionaryClient) PutDateTimeRFC1123Valid(ctx context.Context, arr
 		return nil, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.putDateTimeRfc1123ValidHandleError(resp)
+		return nil, client.putDateTimeRFC1123ValidHandleError(resp)
 	}
 	return resp.Response, nil
 }
 
-// putDateTimeRfc1123ValidCreateRequest creates the PutDateTimeRFC1123Valid request.
-func (client *DictionaryClient) putDateTimeRfc1123ValidCreateRequest(ctx context.Context, arrayBody map[string]time.Time, options *DictionaryPutDateTimeRFC1123ValidOptions) (*azcore.Request, error) {
+// putDateTimeRFC1123ValidCreateRequest creates the PutDateTimeRFC1123Valid request.
+func (client *DictionaryClient) putDateTimeRFC1123ValidCreateRequest(ctx context.Context, arrayBody map[string]time.Time, options *DictionaryPutDateTimeRFC1123ValidOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/prim/date-time-rfc1123/valid"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -2540,8 +2540,8 @@ func (client *DictionaryClient) putDateTimeRfc1123ValidCreateRequest(ctx context
 	return req, req.MarshalAsJSON(aux)
 }
 
-// putDateTimeRfc1123ValidHandleError handles the PutDateTimeRFC1123Valid error response.
-func (client *DictionaryClient) putDateTimeRfc1123ValidHandleError(resp *azcore.Response) error {
+// putDateTimeRFC1123ValidHandleError handles the PutDateTimeRFC1123Valid error response.
+func (client *DictionaryClient) putDateTimeRFC1123ValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err

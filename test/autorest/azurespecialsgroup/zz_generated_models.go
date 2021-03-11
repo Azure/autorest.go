@@ -35,7 +35,7 @@ type APIVersionDefaultGetSwaggerGlobalValidOptions struct {
 // APIVersionLocalGetMethodLocalNullOptions contains the optional parameters for the APIVersionLocal.GetMethodLocalNull method.
 type APIVersionLocalGetMethodLocalNullOptions struct {
 	// This should appear as a method parameter, use value null, this should result in no serialized parameter
-	ApiVersion *string
+	APIVersion *string
 }
 
 // APIVersionLocalGetMethodLocalValidOptions contains the optional parameters for the APIVersionLocal.GetMethodLocalValid method.
@@ -107,7 +107,7 @@ type HeaderCustomNamedRequestIDParamGroupingOptions struct {
 // HeaderCustomNamedRequestIDParamGroupingParameters contains a group of parameters for the Header.CustomNamedRequestIDParamGrouping method.
 type HeaderCustomNamedRequestIDParamGroupingParameters struct {
 	// The fooRequestId
-	FooClientRequestId string
+	FooClientRequestID string
 }
 
 // HeaderCustomNamedRequestIDParamGroupingResponse contains the response from method Header.CustomNamedRequestIDParamGrouping.
