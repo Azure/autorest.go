@@ -199,9 +199,6 @@ function getEscapedReservedName(name: string, appendValue: string): string {
 }
 
 // used in ensureNameCase() to track which names have already been transformed.
-// this improves efficiency and also fixes some corner-cases where renaming the
-// same thing in succession gives the wrong result due to how the regex works.
-// e.g. SubscriptionId -> subscriptionID -> subscriptionid
 const gRenamed = new Map<string, boolean>();
 
 // case-preserving version of deconstruct() that also splits on more path-separator characters

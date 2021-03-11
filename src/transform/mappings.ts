@@ -22,6 +22,7 @@ export const CommonAcronyms = [
   '^jpeg$',
   '^(id)s?$',
   '^(ip)s?$',
+  '^(ip)[vV]\\d',
   '^json$',
   '^lhs$',
   '^mbcs$',

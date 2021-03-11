@@ -4430,7 +4430,7 @@ type ExpressRouteCircuitConnectionPropertiesFormat struct {
 	ExpressRouteCircuitPeering *SubResource `json:"expressRouteCircuitPeering,omitempty"`
 
 	// IPv6 Address PrefixProperties of the express route circuit connection.
-	Ipv6CircuitConnectionConfig *Ipv6CircuitConnectionConfig `json:"ipv6CircuitConnectionConfig,omitempty"`
+	IPv6CircuitConnectionConfig *IPv6CircuitConnectionConfig `json:"ipv6CircuitConnectionConfig,omitempty"`
 
 	// Reference to Express Route Circuit Private Peering Resource of the peered circuit.
 	PeerExpressRouteCircuitPeering *SubResource `json:"peerExpressRouteCircuitPeering,omitempty"`
@@ -4575,7 +4575,7 @@ type ExpressRouteCircuitPeeringPropertiesFormat struct {
 	GatewayManagerEtag *string `json:"gatewayManagerEtag,omitempty"`
 
 	// The IPv6 peering configuration.
-	Ipv6PeeringConfig *Ipv6ExpressRouteCircuitPeeringConfig `json:"ipv6PeeringConfig,omitempty"`
+	IPv6PeeringConfig *IPv6ExpressRouteCircuitPeeringConfig `json:"ipv6PeeringConfig,omitempty"`
 
 	// READ-ONLY; Who was the last to modify the peering.
 	LastModifiedBy *string `json:"lastModifiedBy,omitempty" azure:"ro"`
@@ -5128,7 +5128,7 @@ type ExpressRouteCrossConnectionPeeringProperties struct {
 	GatewayManagerEtag *string `json:"gatewayManagerEtag,omitempty"`
 
 	// The IPv6 peering configuration.
-	Ipv6PeeringConfig *Ipv6ExpressRouteCircuitPeeringConfig `json:"ipv6PeeringConfig,omitempty"`
+	IPv6PeeringConfig *IPv6ExpressRouteCircuitPeeringConfig `json:"ipv6PeeringConfig,omitempty"`
 
 	// READ-ONLY; Who was the last to modify the peering.
 	LastModifiedBy *string `json:"lastModifiedBy,omitempty" azure:"ro"`
@@ -6942,6 +6942,33 @@ type IPTag struct {
 	Tag *string `json:"tag,omitempty"`
 }
 
+// IPv6 Circuit Connection properties for global reach.
+type IPv6CircuitConnectionConfig struct {
+	// /125 IP address space to carve out customer addresses for global reach.
+	AddressPrefix *string `json:"addressPrefix,omitempty"`
+
+	// READ-ONLY; Express Route Circuit connection state.
+	CircuitConnectionStatus *CircuitConnectionStatus `json:"circuitConnectionStatus,omitempty" azure:"ro"`
+}
+
+// Contains IPv6 peering config.
+type IPv6ExpressRouteCircuitPeeringConfig struct {
+	// The Microsoft peering configuration.
+	MicrosoftPeeringConfig *ExpressRouteCircuitPeeringConfig `json:"microsoftPeeringConfig,omitempty"`
+
+	// The primary address prefix.
+	PrimaryPeerAddressPrefix *string `json:"primaryPeerAddressPrefix,omitempty"`
+
+	// The reference to the RouteFilter resource.
+	RouteFilter *SubResource `json:"routeFilter,omitempty"`
+
+	// The secondary address prefix.
+	SecondaryPeerAddressPrefix *string `json:"secondaryPeerAddressPrefix,omitempty"`
+
+	// The state of peering.
+	State *ExpressRouteCircuitPeeringState `json:"state,omitempty"`
+}
+
 // Inbound NAT pool of the load balancer.
 type InboundNatPool struct {
 	SubResource
@@ -7130,33 +7157,6 @@ type IpsecPolicy struct {
 
 	// The IPSec Security Association (also called Quick Mode or Phase 2 SA) lifetime in seconds for a site to site VPN tunnel.
 	SaLifeTimeSeconds *int32 `json:"saLifeTimeSeconds,omitempty"`
-}
-
-// IPv6 Circuit Connection properties for global reach.
-type Ipv6CircuitConnectionConfig struct {
-	// /125 IP address space to carve out customer addresses for global reach.
-	AddressPrefix *string `json:"addressPrefix,omitempty"`
-
-	// READ-ONLY; Express Route Circuit connection state.
-	CircuitConnectionStatus *CircuitConnectionStatus `json:"circuitConnectionStatus,omitempty" azure:"ro"`
-}
-
-// Contains IPv6 peering config.
-type Ipv6ExpressRouteCircuitPeeringConfig struct {
-	// The Microsoft peering configuration.
-	MicrosoftPeeringConfig *ExpressRouteCircuitPeeringConfig `json:"microsoftPeeringConfig,omitempty"`
-
-	// The primary address prefix.
-	PrimaryPeerAddressPrefix *string `json:"primaryPeerAddressPrefix,omitempty"`
-
-	// The reference to the RouteFilter resource.
-	RouteFilter *SubResource `json:"routeFilter,omitempty"`
-
-	// The secondary address prefix.
-	SecondaryPeerAddressPrefix *string `json:"secondaryPeerAddressPrefix,omitempty"`
-
-	// The state of peering.
-	State *ExpressRouteCircuitPeeringState `json:"state,omitempty"`
 }
 
 // List of HubVirtualNetworkConnections and a URL nextLink to get the next set of results.
@@ -11068,7 +11068,7 @@ type RouteFilterPollerResponse struct {
 // Route Filter Resource.
 type RouteFilterPropertiesFormat struct {
 	// READ-ONLY; A collection of references to express route circuit ipv6 peerings.
-	Ipv6Peerings *[]ExpressRouteCircuitPeering `json:"ipv6Peerings,omitempty" azure:"ro"`
+	IPv6Peerings *[]ExpressRouteCircuitPeering `json:"ipv6Peerings,omitempty" azure:"ro"`
 
 	// READ-ONLY; A collection of references to express route circuit peerings.
 	Peerings *[]ExpressRouteCircuitPeering `json:"peerings,omitempty" azure:"ro"`
