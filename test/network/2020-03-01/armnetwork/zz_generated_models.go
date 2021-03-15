@@ -12,6 +12,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"reflect"
 	"time"
 )
 
@@ -1291,24 +1292,12 @@ type ApplicationRuleCondition struct {
 // MarshalJSON implements the json.Marshaller interface for type ApplicationRuleCondition.
 func (a ApplicationRuleCondition) MarshalJSON() ([]byte, error) {
 	objectMap := a.FirewallPolicyRuleCondition.marshalInternal(FirewallPolicyRuleConditionTypeApplicationRuleCondition)
-	if a.DestinationAddresses != nil {
-		objectMap["destinationAddresses"] = a.DestinationAddresses
-	}
-	if a.FqdnTags != nil {
-		objectMap["fqdnTags"] = a.FqdnTags
-	}
-	if a.Protocols != nil {
-		objectMap["protocols"] = a.Protocols
-	}
-	if a.SourceAddresses != nil {
-		objectMap["sourceAddresses"] = a.SourceAddresses
-	}
-	if a.SourceIPGroups != nil {
-		objectMap["sourceIpGroups"] = a.SourceIPGroups
-	}
-	if a.TargetFqdns != nil {
-		objectMap["targetFqdns"] = a.TargetFqdns
-	}
+	populate(objectMap, "destinationAddresses", a.DestinationAddresses)
+	populate(objectMap, "fqdnTags", a.FqdnTags)
+	populate(objectMap, "protocols", a.Protocols)
+	populate(objectMap, "sourceAddresses", a.SourceAddresses)
+	populate(objectMap, "sourceIpGroups", a.SourceIPGroups)
+	populate(objectMap, "targetFqdns", a.TargetFqdns)
 	return json.Marshal(objectMap)
 }
 
@@ -1322,34 +1311,22 @@ func (a *ApplicationRuleCondition) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "destinationAddresses":
-			if val != nil {
-				err = json.Unmarshal(*val, &a.DestinationAddresses)
-			}
+			err = unpopulate(val, &a.DestinationAddresses)
 			delete(rawMsg, key)
 		case "fqdnTags":
-			if val != nil {
-				err = json.Unmarshal(*val, &a.FqdnTags)
-			}
+			err = unpopulate(val, &a.FqdnTags)
 			delete(rawMsg, key)
 		case "protocols":
-			if val != nil {
-				err = json.Unmarshal(*val, &a.Protocols)
-			}
+			err = unpopulate(val, &a.Protocols)
 			delete(rawMsg, key)
 		case "sourceAddresses":
-			if val != nil {
-				err = json.Unmarshal(*val, &a.SourceAddresses)
-			}
+			err = unpopulate(val, &a.SourceAddresses)
 			delete(rawMsg, key)
 		case "sourceIpGroups":
-			if val != nil {
-				err = json.Unmarshal(*val, &a.SourceIPGroups)
-			}
+			err = unpopulate(val, &a.SourceIPGroups)
 			delete(rawMsg, key)
 		case "targetFqdns":
-			if val != nil {
-				err = json.Unmarshal(*val, &a.TargetFqdns)
-			}
+			err = unpopulate(val, &a.TargetFqdns)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -2189,12 +2166,8 @@ type AzureReachabilityReportLatencyInfo struct {
 // MarshalJSON implements the json.Marshaller interface for type AzureReachabilityReportLatencyInfo.
 func (a AzureReachabilityReportLatencyInfo) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	if a.Score != nil {
-		objectMap["score"] = a.Score
-	}
-	if a.TimeStamp != nil {
-		objectMap["timeStamp"] = (*timeRFC3339)(a.TimeStamp)
-	}
+	populate(objectMap, "score", a.Score)
+	populate(objectMap, "timeStamp", (*timeRFC3339)(a.TimeStamp))
 	return json.Marshal(objectMap)
 }
 
@@ -2208,16 +2181,12 @@ func (a *AzureReachabilityReportLatencyInfo) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "score":
-			if val != nil {
-				err = json.Unmarshal(*val, &a.Score)
-			}
+			err = unpopulate(val, &a.Score)
 			delete(rawMsg, key)
 		case "timeStamp":
-			if val != nil {
-				var aux timeRFC3339
-				err = json.Unmarshal(*val, &aux)
-				a.TimeStamp = (*time.Time)(&aux)
-			}
+			var aux timeRFC3339
+			err = unpopulate(val, &aux)
+			a.TimeStamp = (*time.Time)(&aux)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -2260,21 +2229,11 @@ type AzureReachabilityReportParameters struct {
 // MarshalJSON implements the json.Marshaller interface for type AzureReachabilityReportParameters.
 func (a AzureReachabilityReportParameters) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	if a.AzureLocations != nil {
-		objectMap["azureLocations"] = a.AzureLocations
-	}
-	if a.EndTime != nil {
-		objectMap["endTime"] = (*timeRFC3339)(a.EndTime)
-	}
-	if a.ProviderLocation != nil {
-		objectMap["providerLocation"] = a.ProviderLocation
-	}
-	if a.Providers != nil {
-		objectMap["providers"] = a.Providers
-	}
-	if a.StartTime != nil {
-		objectMap["startTime"] = (*timeRFC3339)(a.StartTime)
-	}
+	populate(objectMap, "azureLocations", a.AzureLocations)
+	populate(objectMap, "endTime", (*timeRFC3339)(a.EndTime))
+	populate(objectMap, "providerLocation", a.ProviderLocation)
+	populate(objectMap, "providers", a.Providers)
+	populate(objectMap, "startTime", (*timeRFC3339)(a.StartTime))
 	return json.Marshal(objectMap)
 }
 
@@ -2288,33 +2247,23 @@ func (a *AzureReachabilityReportParameters) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "azureLocations":
-			if val != nil {
-				err = json.Unmarshal(*val, &a.AzureLocations)
-			}
+			err = unpopulate(val, &a.AzureLocations)
 			delete(rawMsg, key)
 		case "endTime":
-			if val != nil {
-				var aux timeRFC3339
-				err = json.Unmarshal(*val, &aux)
-				a.EndTime = (*time.Time)(&aux)
-			}
+			var aux timeRFC3339
+			err = unpopulate(val, &aux)
+			a.EndTime = (*time.Time)(&aux)
 			delete(rawMsg, key)
 		case "providerLocation":
-			if val != nil {
-				err = json.Unmarshal(*val, &a.ProviderLocation)
-			}
+			err = unpopulate(val, &a.ProviderLocation)
 			delete(rawMsg, key)
 		case "providers":
-			if val != nil {
-				err = json.Unmarshal(*val, &a.Providers)
-			}
+			err = unpopulate(val, &a.Providers)
 			delete(rawMsg, key)
 		case "startTime":
-			if val != nil {
-				var aux timeRFC3339
-				err = json.Unmarshal(*val, &aux)
-				a.StartTime = (*time.Time)(&aux)
-			}
+			var aux timeRFC3339
+			err = unpopulate(val, &aux)
+			a.StartTime = (*time.Time)(&aux)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -3017,49 +2966,31 @@ func (c *ConnectionMonitorParameters) unmarshalInternal(rawMsg map[string]*json.
 		var err error
 		switch key {
 		case "autoStart":
-			if val != nil {
-				err = json.Unmarshal(*val, &c.AutoStart)
-			}
+			err = unpopulate(val, &c.AutoStart)
 			delete(rawMsg, key)
 		case "destination":
-			if val != nil {
-				err = json.Unmarshal(*val, &c.Destination)
-			}
+			err = unpopulate(val, &c.Destination)
 			delete(rawMsg, key)
 		case "endpoints":
-			if val != nil {
-				err = json.Unmarshal(*val, &c.Endpoints)
-			}
+			err = unpopulate(val, &c.Endpoints)
 			delete(rawMsg, key)
 		case "monitoringIntervalInSeconds":
-			if val != nil {
-				err = json.Unmarshal(*val, &c.MonitoringIntervalInSeconds)
-			}
+			err = unpopulate(val, &c.MonitoringIntervalInSeconds)
 			delete(rawMsg, key)
 		case "notes":
-			if val != nil {
-				err = json.Unmarshal(*val, &c.Notes)
-			}
+			err = unpopulate(val, &c.Notes)
 			delete(rawMsg, key)
 		case "outputs":
-			if val != nil {
-				err = json.Unmarshal(*val, &c.Outputs)
-			}
+			err = unpopulate(val, &c.Outputs)
 			delete(rawMsg, key)
 		case "source":
-			if val != nil {
-				err = json.Unmarshal(*val, &c.Source)
-			}
+			err = unpopulate(val, &c.Source)
 			delete(rawMsg, key)
 		case "testConfigurations":
-			if val != nil {
-				err = json.Unmarshal(*val, &c.TestConfigurations)
-			}
+			err = unpopulate(val, &c.TestConfigurations)
 			delete(rawMsg, key)
 		case "testGroups":
-			if val != nil {
-				err = json.Unmarshal(*val, &c.TestGroups)
-			}
+			err = unpopulate(val, &c.TestGroups)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -3154,18 +3085,10 @@ type ConnectionMonitorResultProperties struct {
 // MarshalJSON implements the json.Marshaller interface for type ConnectionMonitorResultProperties.
 func (c ConnectionMonitorResultProperties) MarshalJSON() ([]byte, error) {
 	objectMap := c.ConnectionMonitorParameters.marshalInternal()
-	if c.ConnectionMonitorType != nil {
-		objectMap["connectionMonitorType"] = c.ConnectionMonitorType
-	}
-	if c.MonitoringStatus != nil {
-		objectMap["monitoringStatus"] = c.MonitoringStatus
-	}
-	if c.ProvisioningState != nil {
-		objectMap["provisioningState"] = c.ProvisioningState
-	}
-	if c.StartTime != nil {
-		objectMap["startTime"] = (*timeRFC3339)(c.StartTime)
-	}
+	populate(objectMap, "connectionMonitorType", c.ConnectionMonitorType)
+	populate(objectMap, "monitoringStatus", c.MonitoringStatus)
+	populate(objectMap, "provisioningState", c.ProvisioningState)
+	populate(objectMap, "startTime", (*timeRFC3339)(c.StartTime))
 	return json.Marshal(objectMap)
 }
 
@@ -3179,26 +3102,18 @@ func (c *ConnectionMonitorResultProperties) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "connectionMonitorType":
-			if val != nil {
-				err = json.Unmarshal(*val, &c.ConnectionMonitorType)
-			}
+			err = unpopulate(val, &c.ConnectionMonitorType)
 			delete(rawMsg, key)
 		case "monitoringStatus":
-			if val != nil {
-				err = json.Unmarshal(*val, &c.MonitoringStatus)
-			}
+			err = unpopulate(val, &c.MonitoringStatus)
 			delete(rawMsg, key)
 		case "provisioningState":
-			if val != nil {
-				err = json.Unmarshal(*val, &c.ProvisioningState)
-			}
+			err = unpopulate(val, &c.ProvisioningState)
 			delete(rawMsg, key)
 		case "startTime":
-			if val != nil {
-				var aux timeRFC3339
-				err = json.Unmarshal(*val, &aux)
-				c.StartTime = (*time.Time)(&aux)
-			}
+			var aux timeRFC3339
+			err = unpopulate(val, &aux)
+			c.StartTime = (*time.Time)(&aux)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -3426,36 +3341,16 @@ type ConnectionStateSnapshot struct {
 // MarshalJSON implements the json.Marshaller interface for type ConnectionStateSnapshot.
 func (c ConnectionStateSnapshot) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	if c.AvgLatencyInMs != nil {
-		objectMap["avgLatencyInMs"] = c.AvgLatencyInMs
-	}
-	if c.ConnectionState != nil {
-		objectMap["connectionState"] = c.ConnectionState
-	}
-	if c.EndTime != nil {
-		objectMap["endTime"] = (*timeRFC3339)(c.EndTime)
-	}
-	if c.EvaluationState != nil {
-		objectMap["evaluationState"] = c.EvaluationState
-	}
-	if c.Hops != nil {
-		objectMap["hops"] = c.Hops
-	}
-	if c.MaxLatencyInMs != nil {
-		objectMap["maxLatencyInMs"] = c.MaxLatencyInMs
-	}
-	if c.MinLatencyInMs != nil {
-		objectMap["minLatencyInMs"] = c.MinLatencyInMs
-	}
-	if c.ProbesFailed != nil {
-		objectMap["probesFailed"] = c.ProbesFailed
-	}
-	if c.ProbesSent != nil {
-		objectMap["probesSent"] = c.ProbesSent
-	}
-	if c.StartTime != nil {
-		objectMap["startTime"] = (*timeRFC3339)(c.StartTime)
-	}
+	populate(objectMap, "avgLatencyInMs", c.AvgLatencyInMs)
+	populate(objectMap, "connectionState", c.ConnectionState)
+	populate(objectMap, "endTime", (*timeRFC3339)(c.EndTime))
+	populate(objectMap, "evaluationState", c.EvaluationState)
+	populate(objectMap, "hops", c.Hops)
+	populate(objectMap, "maxLatencyInMs", c.MaxLatencyInMs)
+	populate(objectMap, "minLatencyInMs", c.MinLatencyInMs)
+	populate(objectMap, "probesFailed", c.ProbesFailed)
+	populate(objectMap, "probesSent", c.ProbesSent)
+	populate(objectMap, "startTime", (*timeRFC3339)(c.StartTime))
 	return json.Marshal(objectMap)
 }
 
@@ -3469,58 +3364,38 @@ func (c *ConnectionStateSnapshot) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "avgLatencyInMs":
-			if val != nil {
-				err = json.Unmarshal(*val, &c.AvgLatencyInMs)
-			}
+			err = unpopulate(val, &c.AvgLatencyInMs)
 			delete(rawMsg, key)
 		case "connectionState":
-			if val != nil {
-				err = json.Unmarshal(*val, &c.ConnectionState)
-			}
+			err = unpopulate(val, &c.ConnectionState)
 			delete(rawMsg, key)
 		case "endTime":
-			if val != nil {
-				var aux timeRFC3339
-				err = json.Unmarshal(*val, &aux)
-				c.EndTime = (*time.Time)(&aux)
-			}
+			var aux timeRFC3339
+			err = unpopulate(val, &aux)
+			c.EndTime = (*time.Time)(&aux)
 			delete(rawMsg, key)
 		case "evaluationState":
-			if val != nil {
-				err = json.Unmarshal(*val, &c.EvaluationState)
-			}
+			err = unpopulate(val, &c.EvaluationState)
 			delete(rawMsg, key)
 		case "hops":
-			if val != nil {
-				err = json.Unmarshal(*val, &c.Hops)
-			}
+			err = unpopulate(val, &c.Hops)
 			delete(rawMsg, key)
 		case "maxLatencyInMs":
-			if val != nil {
-				err = json.Unmarshal(*val, &c.MaxLatencyInMs)
-			}
+			err = unpopulate(val, &c.MaxLatencyInMs)
 			delete(rawMsg, key)
 		case "minLatencyInMs":
-			if val != nil {
-				err = json.Unmarshal(*val, &c.MinLatencyInMs)
-			}
+			err = unpopulate(val, &c.MinLatencyInMs)
 			delete(rawMsg, key)
 		case "probesFailed":
-			if val != nil {
-				err = json.Unmarshal(*val, &c.ProbesFailed)
-			}
+			err = unpopulate(val, &c.ProbesFailed)
 			delete(rawMsg, key)
 		case "probesSent":
-			if val != nil {
-				err = json.Unmarshal(*val, &c.ProbesSent)
-			}
+			err = unpopulate(val, &c.ProbesSent)
 			delete(rawMsg, key)
 		case "startTime":
-			if val != nil {
-				var aux timeRFC3339
-				err = json.Unmarshal(*val, &aux)
-				c.StartTime = (*time.Time)(&aux)
-			}
+			var aux timeRFC3339
+			err = unpopulate(val, &aux)
+			c.StartTime = (*time.Time)(&aux)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -5815,12 +5690,8 @@ type FirewallPolicyFilterRule struct {
 // MarshalJSON implements the json.Marshaller interface for type FirewallPolicyFilterRule.
 func (f FirewallPolicyFilterRule) MarshalJSON() ([]byte, error) {
 	objectMap := f.FirewallPolicyRule.marshalInternal(FirewallPolicyRuleTypeFirewallPolicyFilterRule)
-	if f.Action != nil {
-		objectMap["action"] = f.Action
-	}
-	if f.RuleConditions != nil {
-		objectMap["ruleConditions"] = f.RuleConditions
-	}
+	populate(objectMap, "action", f.Action)
+	populate(objectMap, "ruleConditions", f.RuleConditions)
 	return json.Marshal(objectMap)
 }
 
@@ -5834,14 +5705,10 @@ func (f *FirewallPolicyFilterRule) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "action":
-			if val != nil {
-				err = json.Unmarshal(*val, &f.Action)
-			}
+			err = unpopulate(val, &f.Action)
 			delete(rawMsg, key)
 		case "ruleConditions":
-			if val != nil {
-				f.RuleConditions, err = unmarshalFirewallPolicyRuleConditionClassificationArray(*val)
-			}
+			f.RuleConditions, err = unmarshalFirewallPolicyRuleConditionClassificationArray(val)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -5894,18 +5761,10 @@ type FirewallPolicyNatRule struct {
 // MarshalJSON implements the json.Marshaller interface for type FirewallPolicyNatRule.
 func (f FirewallPolicyNatRule) MarshalJSON() ([]byte, error) {
 	objectMap := f.FirewallPolicyRule.marshalInternal(FirewallPolicyRuleTypeFirewallPolicyNatRule)
-	if f.Action != nil {
-		objectMap["action"] = f.Action
-	}
-	if f.RuleCondition != nil {
-		objectMap["ruleCondition"] = f.RuleCondition
-	}
-	if f.TranslatedAddress != nil {
-		objectMap["translatedAddress"] = f.TranslatedAddress
-	}
-	if f.TranslatedPort != nil {
-		objectMap["translatedPort"] = f.TranslatedPort
-	}
+	populate(objectMap, "action", f.Action)
+	populate(objectMap, "ruleCondition", f.RuleCondition)
+	populate(objectMap, "translatedAddress", f.TranslatedAddress)
+	populate(objectMap, "translatedPort", f.TranslatedPort)
 	return json.Marshal(objectMap)
 }
 
@@ -5919,24 +5778,16 @@ func (f *FirewallPolicyNatRule) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "action":
-			if val != nil {
-				err = json.Unmarshal(*val, &f.Action)
-			}
+			err = unpopulate(val, &f.Action)
 			delete(rawMsg, key)
 		case "ruleCondition":
-			if val != nil {
-				f.RuleCondition, err = unmarshalFirewallPolicyRuleConditionClassification(*val)
-			}
+			f.RuleCondition, err = unmarshalFirewallPolicyRuleConditionClassification(val)
 			delete(rawMsg, key)
 		case "translatedAddress":
-			if val != nil {
-				err = json.Unmarshal(*val, &f.TranslatedAddress)
-			}
+			err = unpopulate(val, &f.TranslatedAddress)
 			delete(rawMsg, key)
 		case "translatedPort":
-			if val != nil {
-				err = json.Unmarshal(*val, &f.TranslatedPort)
-			}
+			err = unpopulate(val, &f.TranslatedPort)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -6045,19 +5896,13 @@ func (f *FirewallPolicyRule) unmarshalInternal(rawMsg map[string]*json.RawMessag
 		var err error
 		switch key {
 		case "name":
-			if val != nil {
-				err = json.Unmarshal(*val, &f.Name)
-			}
+			err = unpopulate(val, &f.Name)
 			delete(rawMsg, key)
 		case "priority":
-			if val != nil {
-				err = json.Unmarshal(*val, &f.Priority)
-			}
+			err = unpopulate(val, &f.Priority)
 			delete(rawMsg, key)
 		case "ruleType":
-			if val != nil {
-				err = json.Unmarshal(*val, &f.RuleType)
-			}
+			err = unpopulate(val, &f.RuleType)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -6120,19 +5965,13 @@ func (f *FirewallPolicyRuleCondition) unmarshalInternal(rawMsg map[string]*json.
 		var err error
 		switch key {
 		case "description":
-			if val != nil {
-				err = json.Unmarshal(*val, &f.Description)
-			}
+			err = unpopulate(val, &f.Description)
 			delete(rawMsg, key)
 		case "name":
-			if val != nil {
-				err = json.Unmarshal(*val, &f.Name)
-			}
+			err = unpopulate(val, &f.Name)
 			delete(rawMsg, key)
 		case "ruleConditionType":
-			if val != nil {
-				err = json.Unmarshal(*val, &f.RuleConditionType)
-			}
+			err = unpopulate(val, &f.RuleConditionType)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -6219,19 +6058,13 @@ func (f *FirewallPolicyRuleGroupProperties) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "priority":
-			if val != nil {
-				err = json.Unmarshal(*val, &f.Priority)
-			}
+			err = unpopulate(val, &f.Priority)
 			delete(rawMsg, key)
 		case "provisioningState":
-			if val != nil {
-				err = json.Unmarshal(*val, &f.ProvisioningState)
-			}
+			err = unpopulate(val, &f.ProvisioningState)
 			delete(rawMsg, key)
 		case "rules":
-			if val != nil {
-				f.Rules, err = unmarshalFirewallPolicyRuleClassificationArray(*val)
-			}
+			f.Rules, err = unmarshalFirewallPolicyRuleClassificationArray(val)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -8083,21 +7916,11 @@ type NatRuleCondition struct {
 // MarshalJSON implements the json.Marshaller interface for type NatRuleCondition.
 func (n NatRuleCondition) MarshalJSON() ([]byte, error) {
 	objectMap := n.FirewallPolicyRuleCondition.marshalInternal(FirewallPolicyRuleConditionTypeNatRuleCondition)
-	if n.DestinationAddresses != nil {
-		objectMap["destinationAddresses"] = n.DestinationAddresses
-	}
-	if n.DestinationPorts != nil {
-		objectMap["destinationPorts"] = n.DestinationPorts
-	}
-	if n.IPProtocols != nil {
-		objectMap["ipProtocols"] = n.IPProtocols
-	}
-	if n.SourceAddresses != nil {
-		objectMap["sourceAddresses"] = n.SourceAddresses
-	}
-	if n.SourceIPGroups != nil {
-		objectMap["sourceIpGroups"] = n.SourceIPGroups
-	}
+	populate(objectMap, "destinationAddresses", n.DestinationAddresses)
+	populate(objectMap, "destinationPorts", n.DestinationPorts)
+	populate(objectMap, "ipProtocols", n.IPProtocols)
+	populate(objectMap, "sourceAddresses", n.SourceAddresses)
+	populate(objectMap, "sourceIpGroups", n.SourceIPGroups)
 	return json.Marshal(objectMap)
 }
 
@@ -8111,29 +7934,19 @@ func (n *NatRuleCondition) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "destinationAddresses":
-			if val != nil {
-				err = json.Unmarshal(*val, &n.DestinationAddresses)
-			}
+			err = unpopulate(val, &n.DestinationAddresses)
 			delete(rawMsg, key)
 		case "destinationPorts":
-			if val != nil {
-				err = json.Unmarshal(*val, &n.DestinationPorts)
-			}
+			err = unpopulate(val, &n.DestinationPorts)
 			delete(rawMsg, key)
 		case "ipProtocols":
-			if val != nil {
-				err = json.Unmarshal(*val, &n.IPProtocols)
-			}
+			err = unpopulate(val, &n.IPProtocols)
 			delete(rawMsg, key)
 		case "sourceAddresses":
-			if val != nil {
-				err = json.Unmarshal(*val, &n.SourceAddresses)
-			}
+			err = unpopulate(val, &n.SourceAddresses)
 			delete(rawMsg, key)
 		case "sourceIpGroups":
-			if val != nil {
-				err = json.Unmarshal(*val, &n.SourceIPGroups)
-			}
+			err = unpopulate(val, &n.SourceIPGroups)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -8791,24 +8604,12 @@ type NetworkRuleCondition struct {
 // MarshalJSON implements the json.Marshaller interface for type NetworkRuleCondition.
 func (n NetworkRuleCondition) MarshalJSON() ([]byte, error) {
 	objectMap := n.FirewallPolicyRuleCondition.marshalInternal(FirewallPolicyRuleConditionTypeNetworkRuleCondition)
-	if n.DestinationAddresses != nil {
-		objectMap["destinationAddresses"] = n.DestinationAddresses
-	}
-	if n.DestinationIPGroups != nil {
-		objectMap["destinationIpGroups"] = n.DestinationIPGroups
-	}
-	if n.DestinationPorts != nil {
-		objectMap["destinationPorts"] = n.DestinationPorts
-	}
-	if n.IPProtocols != nil {
-		objectMap["ipProtocols"] = n.IPProtocols
-	}
-	if n.SourceAddresses != nil {
-		objectMap["sourceAddresses"] = n.SourceAddresses
-	}
-	if n.SourceIPGroups != nil {
-		objectMap["sourceIpGroups"] = n.SourceIPGroups
-	}
+	populate(objectMap, "destinationAddresses", n.DestinationAddresses)
+	populate(objectMap, "destinationIpGroups", n.DestinationIPGroups)
+	populate(objectMap, "destinationPorts", n.DestinationPorts)
+	populate(objectMap, "ipProtocols", n.IPProtocols)
+	populate(objectMap, "sourceAddresses", n.SourceAddresses)
+	populate(objectMap, "sourceIpGroups", n.SourceIPGroups)
 	return json.Marshal(objectMap)
 }
 
@@ -8822,34 +8623,22 @@ func (n *NetworkRuleCondition) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "destinationAddresses":
-			if val != nil {
-				err = json.Unmarshal(*val, &n.DestinationAddresses)
-			}
+			err = unpopulate(val, &n.DestinationAddresses)
 			delete(rawMsg, key)
 		case "destinationIpGroups":
-			if val != nil {
-				err = json.Unmarshal(*val, &n.DestinationIPGroups)
-			}
+			err = unpopulate(val, &n.DestinationIPGroups)
 			delete(rawMsg, key)
 		case "destinationPorts":
-			if val != nil {
-				err = json.Unmarshal(*val, &n.DestinationPorts)
-			}
+			err = unpopulate(val, &n.DestinationPorts)
 			delete(rawMsg, key)
 		case "ipProtocols":
-			if val != nil {
-				err = json.Unmarshal(*val, &n.IPProtocols)
-			}
+			err = unpopulate(val, &n.IPProtocols)
 			delete(rawMsg, key)
 		case "sourceAddresses":
-			if val != nil {
-				err = json.Unmarshal(*val, &n.SourceAddresses)
-			}
+			err = unpopulate(val, &n.SourceAddresses)
 			delete(rawMsg, key)
 		case "sourceIpGroups":
-			if val != nil {
-				err = json.Unmarshal(*val, &n.SourceIPGroups)
-			}
+			err = unpopulate(val, &n.SourceIPGroups)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -9676,24 +9465,12 @@ type PacketCaptureQueryStatusResult struct {
 // MarshalJSON implements the json.Marshaller interface for type PacketCaptureQueryStatusResult.
 func (p PacketCaptureQueryStatusResult) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	if p.CaptureStartTime != nil {
-		objectMap["captureStartTime"] = (*timeRFC3339)(p.CaptureStartTime)
-	}
-	if p.ID != nil {
-		objectMap["id"] = p.ID
-	}
-	if p.Name != nil {
-		objectMap["name"] = p.Name
-	}
-	if p.PacketCaptureError != nil {
-		objectMap["packetCaptureError"] = p.PacketCaptureError
-	}
-	if p.PacketCaptureStatus != nil {
-		objectMap["packetCaptureStatus"] = p.PacketCaptureStatus
-	}
-	if p.StopReason != nil {
-		objectMap["stopReason"] = p.StopReason
-	}
+	populate(objectMap, "captureStartTime", (*timeRFC3339)(p.CaptureStartTime))
+	populate(objectMap, "id", p.ID)
+	populate(objectMap, "name", p.Name)
+	populate(objectMap, "packetCaptureError", p.PacketCaptureError)
+	populate(objectMap, "packetCaptureStatus", p.PacketCaptureStatus)
+	populate(objectMap, "stopReason", p.StopReason)
 	return json.Marshal(objectMap)
 }
 
@@ -9707,36 +9484,24 @@ func (p *PacketCaptureQueryStatusResult) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "captureStartTime":
-			if val != nil {
-				var aux timeRFC3339
-				err = json.Unmarshal(*val, &aux)
-				p.CaptureStartTime = (*time.Time)(&aux)
-			}
+			var aux timeRFC3339
+			err = unpopulate(val, &aux)
+			p.CaptureStartTime = (*time.Time)(&aux)
 			delete(rawMsg, key)
 		case "id":
-			if val != nil {
-				err = json.Unmarshal(*val, &p.ID)
-			}
+			err = unpopulate(val, &p.ID)
 			delete(rawMsg, key)
 		case "name":
-			if val != nil {
-				err = json.Unmarshal(*val, &p.Name)
-			}
+			err = unpopulate(val, &p.Name)
 			delete(rawMsg, key)
 		case "packetCaptureError":
-			if val != nil {
-				err = json.Unmarshal(*val, &p.PacketCaptureError)
-			}
+			err = unpopulate(val, &p.PacketCaptureError)
 			delete(rawMsg, key)
 		case "packetCaptureStatus":
-			if val != nil {
-				err = json.Unmarshal(*val, &p.PacketCaptureStatus)
-			}
+			err = unpopulate(val, &p.PacketCaptureStatus)
 			delete(rawMsg, key)
 		case "stopReason":
-			if val != nil {
-				err = json.Unmarshal(*val, &p.StopReason)
-			}
+			err = unpopulate(val, &p.StopReason)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -12200,18 +11965,10 @@ type Topology struct {
 // MarshalJSON implements the json.Marshaller interface for type Topology.
 func (t Topology) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	if t.CreatedDateTime != nil {
-		objectMap["createdDateTime"] = (*timeRFC3339)(t.CreatedDateTime)
-	}
-	if t.ID != nil {
-		objectMap["id"] = t.ID
-	}
-	if t.LastModified != nil {
-		objectMap["lastModified"] = (*timeRFC3339)(t.LastModified)
-	}
-	if t.Resources != nil {
-		objectMap["resources"] = t.Resources
-	}
+	populate(objectMap, "createdDateTime", (*timeRFC3339)(t.CreatedDateTime))
+	populate(objectMap, "id", t.ID)
+	populate(objectMap, "lastModified", (*timeRFC3339)(t.LastModified))
+	populate(objectMap, "resources", t.Resources)
 	return json.Marshal(objectMap)
 }
 
@@ -12225,28 +11982,20 @@ func (t *Topology) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "createdDateTime":
-			if val != nil {
-				var aux timeRFC3339
-				err = json.Unmarshal(*val, &aux)
-				t.CreatedDateTime = (*time.Time)(&aux)
-			}
+			var aux timeRFC3339
+			err = unpopulate(val, &aux)
+			t.CreatedDateTime = (*time.Time)(&aux)
 			delete(rawMsg, key)
 		case "id":
-			if val != nil {
-				err = json.Unmarshal(*val, &t.ID)
-			}
+			err = unpopulate(val, &t.ID)
 			delete(rawMsg, key)
 		case "lastModified":
-			if val != nil {
-				var aux timeRFC3339
-				err = json.Unmarshal(*val, &aux)
-				t.LastModified = (*time.Time)(&aux)
-			}
+			var aux timeRFC3339
+			err = unpopulate(val, &aux)
+			t.LastModified = (*time.Time)(&aux)
 			delete(rawMsg, key)
 		case "resources":
-			if val != nil {
-				err = json.Unmarshal(*val, &t.Resources)
-			}
+			err = unpopulate(val, &t.Resources)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -12406,18 +12155,10 @@ type TroubleshootingResult struct {
 // MarshalJSON implements the json.Marshaller interface for type TroubleshootingResult.
 func (t TroubleshootingResult) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	if t.Code != nil {
-		objectMap["code"] = t.Code
-	}
-	if t.EndTime != nil {
-		objectMap["endTime"] = (*timeRFC3339)(t.EndTime)
-	}
-	if t.Results != nil {
-		objectMap["results"] = t.Results
-	}
-	if t.StartTime != nil {
-		objectMap["startTime"] = (*timeRFC3339)(t.StartTime)
-	}
+	populate(objectMap, "code", t.Code)
+	populate(objectMap, "endTime", (*timeRFC3339)(t.EndTime))
+	populate(objectMap, "results", t.Results)
+	populate(objectMap, "startTime", (*timeRFC3339)(t.StartTime))
 	return json.Marshal(objectMap)
 }
 
@@ -12431,28 +12172,20 @@ func (t *TroubleshootingResult) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "code":
-			if val != nil {
-				err = json.Unmarshal(*val, &t.Code)
-			}
+			err = unpopulate(val, &t.Code)
 			delete(rawMsg, key)
 		case "endTime":
-			if val != nil {
-				var aux timeRFC3339
-				err = json.Unmarshal(*val, &aux)
-				t.EndTime = (*time.Time)(&aux)
-			}
+			var aux timeRFC3339
+			err = unpopulate(val, &aux)
+			t.EndTime = (*time.Time)(&aux)
 			delete(rawMsg, key)
 		case "results":
-			if val != nil {
-				err = json.Unmarshal(*val, &t.Results)
-			}
+			err = unpopulate(val, &t.Results)
 			delete(rawMsg, key)
 		case "startTime":
-			if val != nil {
-				var aux timeRFC3339
-				err = json.Unmarshal(*val, &aux)
-				t.StartTime = (*time.Time)(&aux)
-			}
+			var aux timeRFC3339
+			err = unpopulate(val, &aux)
+			t.StartTime = (*time.Time)(&aux)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -15089,4 +14822,18 @@ type WebApplicationFirewallPolicyResponse struct {
 
 	// Defines web application firewall policy.
 	WebApplicationFirewallPolicy *WebApplicationFirewallPolicy
+}
+
+func populate(m map[string]interface{}, k string, v interface{}) {
+	vv := reflect.ValueOf(v)
+	if !vv.IsNil() {
+		m[k] = v
+	}
+}
+
+func unpopulate(data *json.RawMessage, v interface{}) error {
+	if data == nil {
+		return nil
+	}
+	return json.Unmarshal(*data, v)
 }

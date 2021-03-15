@@ -10,6 +10,7 @@ package azspark
 import (
 	"encoding/json"
 	"net/http"
+	"reflect"
 	"time"
 )
 
@@ -176,33 +177,15 @@ type SparkBatchJobState struct {
 // MarshalJSON implements the json.Marshaller interface for type SparkBatchJobState.
 func (s SparkBatchJobState) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	if s.CurrentState != nil {
-		objectMap["currentState"] = s.CurrentState
-	}
-	if s.DeadAt != nil {
-		objectMap["deadAt"] = (*timeRFC3339)(s.DeadAt)
-	}
-	if s.JobCreationRequest != nil {
-		objectMap["jobCreationRequest"] = s.JobCreationRequest
-	}
-	if s.NotStartedAt != nil {
-		objectMap["notStartedAt"] = (*timeRFC3339)(s.NotStartedAt)
-	}
-	if s.RecoveringAt != nil {
-		objectMap["recoveringAt"] = (*timeRFC3339)(s.RecoveringAt)
-	}
-	if s.RunningAt != nil {
-		objectMap["runningAt"] = (*timeRFC3339)(s.RunningAt)
-	}
-	if s.StartingAt != nil {
-		objectMap["startingAt"] = (*timeRFC3339)(s.StartingAt)
-	}
-	if s.SuccessAt != nil {
-		objectMap["successAt"] = (*timeRFC3339)(s.SuccessAt)
-	}
-	if s.TerminatedAt != nil {
-		objectMap["killedAt"] = (*timeRFC3339)(s.TerminatedAt)
-	}
+	populate(objectMap, "currentState", s.CurrentState)
+	populate(objectMap, "deadAt", (*timeRFC3339)(s.DeadAt))
+	populate(objectMap, "jobCreationRequest", s.JobCreationRequest)
+	populate(objectMap, "notStartedAt", (*timeRFC3339)(s.NotStartedAt))
+	populate(objectMap, "recoveringAt", (*timeRFC3339)(s.RecoveringAt))
+	populate(objectMap, "runningAt", (*timeRFC3339)(s.RunningAt))
+	populate(objectMap, "startingAt", (*timeRFC3339)(s.StartingAt))
+	populate(objectMap, "successAt", (*timeRFC3339)(s.SuccessAt))
+	populate(objectMap, "killedAt", (*timeRFC3339)(s.TerminatedAt))
 	return json.Marshal(objectMap)
 }
 
@@ -216,63 +199,45 @@ func (s *SparkBatchJobState) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "currentState":
-			if val != nil {
-				err = json.Unmarshal(*val, &s.CurrentState)
-			}
+			err = unpopulate(val, &s.CurrentState)
 			delete(rawMsg, key)
 		case "deadAt":
-			if val != nil {
-				var aux timeRFC3339
-				err = json.Unmarshal(*val, &aux)
-				s.DeadAt = (*time.Time)(&aux)
-			}
+			var aux timeRFC3339
+			err = unpopulate(val, &aux)
+			s.DeadAt = (*time.Time)(&aux)
 			delete(rawMsg, key)
 		case "jobCreationRequest":
-			if val != nil {
-				err = json.Unmarshal(*val, &s.JobCreationRequest)
-			}
+			err = unpopulate(val, &s.JobCreationRequest)
 			delete(rawMsg, key)
 		case "notStartedAt":
-			if val != nil {
-				var aux timeRFC3339
-				err = json.Unmarshal(*val, &aux)
-				s.NotStartedAt = (*time.Time)(&aux)
-			}
+			var aux timeRFC3339
+			err = unpopulate(val, &aux)
+			s.NotStartedAt = (*time.Time)(&aux)
 			delete(rawMsg, key)
 		case "recoveringAt":
-			if val != nil {
-				var aux timeRFC3339
-				err = json.Unmarshal(*val, &aux)
-				s.RecoveringAt = (*time.Time)(&aux)
-			}
+			var aux timeRFC3339
+			err = unpopulate(val, &aux)
+			s.RecoveringAt = (*time.Time)(&aux)
 			delete(rawMsg, key)
 		case "runningAt":
-			if val != nil {
-				var aux timeRFC3339
-				err = json.Unmarshal(*val, &aux)
-				s.RunningAt = (*time.Time)(&aux)
-			}
+			var aux timeRFC3339
+			err = unpopulate(val, &aux)
+			s.RunningAt = (*time.Time)(&aux)
 			delete(rawMsg, key)
 		case "startingAt":
-			if val != nil {
-				var aux timeRFC3339
-				err = json.Unmarshal(*val, &aux)
-				s.StartingAt = (*time.Time)(&aux)
-			}
+			var aux timeRFC3339
+			err = unpopulate(val, &aux)
+			s.StartingAt = (*time.Time)(&aux)
 			delete(rawMsg, key)
 		case "successAt":
-			if val != nil {
-				var aux timeRFC3339
-				err = json.Unmarshal(*val, &aux)
-				s.SuccessAt = (*time.Time)(&aux)
-			}
+			var aux timeRFC3339
+			err = unpopulate(val, &aux)
+			s.SuccessAt = (*time.Time)(&aux)
 			delete(rawMsg, key)
 		case "killedAt":
-			if val != nil {
-				var aux timeRFC3339
-				err = json.Unmarshal(*val, &aux)
-				s.TerminatedAt = (*time.Time)(&aux)
-			}
+			var aux timeRFC3339
+			err = unpopulate(val, &aux)
+			s.TerminatedAt = (*time.Time)(&aux)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -312,21 +277,11 @@ type SparkScheduler struct {
 // MarshalJSON implements the json.Marshaller interface for type SparkScheduler.
 func (s SparkScheduler) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	if s.CancellationRequestedAt != nil {
-		objectMap["cancellationRequestedAt"] = (*timeRFC3339)(s.CancellationRequestedAt)
-	}
-	if s.CurrentState != nil {
-		objectMap["currentState"] = s.CurrentState
-	}
-	if s.EndedAt != nil {
-		objectMap["endedAt"] = (*timeRFC3339)(s.EndedAt)
-	}
-	if s.ScheduledAt != nil {
-		objectMap["scheduledAt"] = (*timeRFC3339)(s.ScheduledAt)
-	}
-	if s.SubmittedAt != nil {
-		objectMap["submittedAt"] = (*timeRFC3339)(s.SubmittedAt)
-	}
+	populate(objectMap, "cancellationRequestedAt", (*timeRFC3339)(s.CancellationRequestedAt))
+	populate(objectMap, "currentState", s.CurrentState)
+	populate(objectMap, "endedAt", (*timeRFC3339)(s.EndedAt))
+	populate(objectMap, "scheduledAt", (*timeRFC3339)(s.ScheduledAt))
+	populate(objectMap, "submittedAt", (*timeRFC3339)(s.SubmittedAt))
 	return json.Marshal(objectMap)
 }
 
@@ -340,37 +295,27 @@ func (s *SparkScheduler) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "cancellationRequestedAt":
-			if val != nil {
-				var aux timeRFC3339
-				err = json.Unmarshal(*val, &aux)
-				s.CancellationRequestedAt = (*time.Time)(&aux)
-			}
+			var aux timeRFC3339
+			err = unpopulate(val, &aux)
+			s.CancellationRequestedAt = (*time.Time)(&aux)
 			delete(rawMsg, key)
 		case "currentState":
-			if val != nil {
-				err = json.Unmarshal(*val, &s.CurrentState)
-			}
+			err = unpopulate(val, &s.CurrentState)
 			delete(rawMsg, key)
 		case "endedAt":
-			if val != nil {
-				var aux timeRFC3339
-				err = json.Unmarshal(*val, &aux)
-				s.EndedAt = (*time.Time)(&aux)
-			}
+			var aux timeRFC3339
+			err = unpopulate(val, &aux)
+			s.EndedAt = (*time.Time)(&aux)
 			delete(rawMsg, key)
 		case "scheduledAt":
-			if val != nil {
-				var aux timeRFC3339
-				err = json.Unmarshal(*val, &aux)
-				s.ScheduledAt = (*time.Time)(&aux)
-			}
+			var aux timeRFC3339
+			err = unpopulate(val, &aux)
+			s.ScheduledAt = (*time.Time)(&aux)
 			delete(rawMsg, key)
 		case "submittedAt":
-			if val != nil {
-				var aux timeRFC3339
-				err = json.Unmarshal(*val, &aux)
-				s.SubmittedAt = (*time.Time)(&aux)
-			}
+			var aux timeRFC3339
+			err = unpopulate(val, &aux)
+			s.SubmittedAt = (*time.Time)(&aux)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -398,24 +343,12 @@ type SparkServicePlugin struct {
 // MarshalJSON implements the json.Marshaller interface for type SparkServicePlugin.
 func (s SparkServicePlugin) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	if s.CleanupStartedAt != nil {
-		objectMap["cleanupStartedAt"] = (*timeRFC3339)(s.CleanupStartedAt)
-	}
-	if s.CurrentState != nil {
-		objectMap["currentState"] = s.CurrentState
-	}
-	if s.MonitoringStartedAt != nil {
-		objectMap["monitoringStartedAt"] = (*timeRFC3339)(s.MonitoringStartedAt)
-	}
-	if s.PreparationStartedAt != nil {
-		objectMap["preparationStartedAt"] = (*timeRFC3339)(s.PreparationStartedAt)
-	}
-	if s.ResourceAcquisitionStartedAt != nil {
-		objectMap["resourceAcquisitionStartedAt"] = (*timeRFC3339)(s.ResourceAcquisitionStartedAt)
-	}
-	if s.SubmissionStartedAt != nil {
-		objectMap["submissionStartedAt"] = (*timeRFC3339)(s.SubmissionStartedAt)
-	}
+	populate(objectMap, "cleanupStartedAt", (*timeRFC3339)(s.CleanupStartedAt))
+	populate(objectMap, "currentState", s.CurrentState)
+	populate(objectMap, "monitoringStartedAt", (*timeRFC3339)(s.MonitoringStartedAt))
+	populate(objectMap, "preparationStartedAt", (*timeRFC3339)(s.PreparationStartedAt))
+	populate(objectMap, "resourceAcquisitionStartedAt", (*timeRFC3339)(s.ResourceAcquisitionStartedAt))
+	populate(objectMap, "submissionStartedAt", (*timeRFC3339)(s.SubmissionStartedAt))
 	return json.Marshal(objectMap)
 }
 
@@ -429,44 +362,32 @@ func (s *SparkServicePlugin) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "cleanupStartedAt":
-			if val != nil {
-				var aux timeRFC3339
-				err = json.Unmarshal(*val, &aux)
-				s.CleanupStartedAt = (*time.Time)(&aux)
-			}
+			var aux timeRFC3339
+			err = unpopulate(val, &aux)
+			s.CleanupStartedAt = (*time.Time)(&aux)
 			delete(rawMsg, key)
 		case "currentState":
-			if val != nil {
-				err = json.Unmarshal(*val, &s.CurrentState)
-			}
+			err = unpopulate(val, &s.CurrentState)
 			delete(rawMsg, key)
 		case "monitoringStartedAt":
-			if val != nil {
-				var aux timeRFC3339
-				err = json.Unmarshal(*val, &aux)
-				s.MonitoringStartedAt = (*time.Time)(&aux)
-			}
+			var aux timeRFC3339
+			err = unpopulate(val, &aux)
+			s.MonitoringStartedAt = (*time.Time)(&aux)
 			delete(rawMsg, key)
 		case "preparationStartedAt":
-			if val != nil {
-				var aux timeRFC3339
-				err = json.Unmarshal(*val, &aux)
-				s.PreparationStartedAt = (*time.Time)(&aux)
-			}
+			var aux timeRFC3339
+			err = unpopulate(val, &aux)
+			s.PreparationStartedAt = (*time.Time)(&aux)
 			delete(rawMsg, key)
 		case "resourceAcquisitionStartedAt":
-			if val != nil {
-				var aux timeRFC3339
-				err = json.Unmarshal(*val, &aux)
-				s.ResourceAcquisitionStartedAt = (*time.Time)(&aux)
-			}
+			var aux timeRFC3339
+			err = unpopulate(val, &aux)
+			s.ResourceAcquisitionStartedAt = (*time.Time)(&aux)
 			delete(rawMsg, key)
 		case "submissionStartedAt":
-			if val != nil {
-				var aux timeRFC3339
-				err = json.Unmarshal(*val, &aux)
-				s.SubmissionStartedAt = (*time.Time)(&aux)
-			}
+			var aux timeRFC3339
+			err = unpopulate(val, &aux)
+			s.SubmissionStartedAt = (*time.Time)(&aux)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -616,39 +537,17 @@ type SparkSessionState struct {
 // MarshalJSON implements the json.Marshaller interface for type SparkSessionState.
 func (s SparkSessionState) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	if s.BusyAt != nil {
-		objectMap["busyAt"] = (*timeRFC3339)(s.BusyAt)
-	}
-	if s.CurrentState != nil {
-		objectMap["currentState"] = s.CurrentState
-	}
-	if s.DeadAt != nil {
-		objectMap["deadAt"] = (*timeRFC3339)(s.DeadAt)
-	}
-	if s.ErrorAt != nil {
-		objectMap["errorAt"] = (*timeRFC3339)(s.ErrorAt)
-	}
-	if s.IdleAt != nil {
-		objectMap["idleAt"] = (*timeRFC3339)(s.IdleAt)
-	}
-	if s.JobCreationRequest != nil {
-		objectMap["jobCreationRequest"] = s.JobCreationRequest
-	}
-	if s.NotStartedAt != nil {
-		objectMap["notStartedAt"] = (*timeRFC3339)(s.NotStartedAt)
-	}
-	if s.RecoveringAt != nil {
-		objectMap["recoveringAt"] = (*timeRFC3339)(s.RecoveringAt)
-	}
-	if s.ShuttingDownAt != nil {
-		objectMap["shuttingDownAt"] = (*timeRFC3339)(s.ShuttingDownAt)
-	}
-	if s.StartingAt != nil {
-		objectMap["startingAt"] = (*timeRFC3339)(s.StartingAt)
-	}
-	if s.TerminatedAt != nil {
-		objectMap["killedAt"] = (*timeRFC3339)(s.TerminatedAt)
-	}
+	populate(objectMap, "busyAt", (*timeRFC3339)(s.BusyAt))
+	populate(objectMap, "currentState", s.CurrentState)
+	populate(objectMap, "deadAt", (*timeRFC3339)(s.DeadAt))
+	populate(objectMap, "errorAt", (*timeRFC3339)(s.ErrorAt))
+	populate(objectMap, "idleAt", (*timeRFC3339)(s.IdleAt))
+	populate(objectMap, "jobCreationRequest", s.JobCreationRequest)
+	populate(objectMap, "notStartedAt", (*timeRFC3339)(s.NotStartedAt))
+	populate(objectMap, "recoveringAt", (*timeRFC3339)(s.RecoveringAt))
+	populate(objectMap, "shuttingDownAt", (*timeRFC3339)(s.ShuttingDownAt))
+	populate(objectMap, "startingAt", (*timeRFC3339)(s.StartingAt))
+	populate(objectMap, "killedAt", (*timeRFC3339)(s.TerminatedAt))
 	return json.Marshal(objectMap)
 }
 
@@ -662,77 +561,55 @@ func (s *SparkSessionState) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "busyAt":
-			if val != nil {
-				var aux timeRFC3339
-				err = json.Unmarshal(*val, &aux)
-				s.BusyAt = (*time.Time)(&aux)
-			}
+			var aux timeRFC3339
+			err = unpopulate(val, &aux)
+			s.BusyAt = (*time.Time)(&aux)
 			delete(rawMsg, key)
 		case "currentState":
-			if val != nil {
-				err = json.Unmarshal(*val, &s.CurrentState)
-			}
+			err = unpopulate(val, &s.CurrentState)
 			delete(rawMsg, key)
 		case "deadAt":
-			if val != nil {
-				var aux timeRFC3339
-				err = json.Unmarshal(*val, &aux)
-				s.DeadAt = (*time.Time)(&aux)
-			}
+			var aux timeRFC3339
+			err = unpopulate(val, &aux)
+			s.DeadAt = (*time.Time)(&aux)
 			delete(rawMsg, key)
 		case "errorAt":
-			if val != nil {
-				var aux timeRFC3339
-				err = json.Unmarshal(*val, &aux)
-				s.ErrorAt = (*time.Time)(&aux)
-			}
+			var aux timeRFC3339
+			err = unpopulate(val, &aux)
+			s.ErrorAt = (*time.Time)(&aux)
 			delete(rawMsg, key)
 		case "idleAt":
-			if val != nil {
-				var aux timeRFC3339
-				err = json.Unmarshal(*val, &aux)
-				s.IdleAt = (*time.Time)(&aux)
-			}
+			var aux timeRFC3339
+			err = unpopulate(val, &aux)
+			s.IdleAt = (*time.Time)(&aux)
 			delete(rawMsg, key)
 		case "jobCreationRequest":
-			if val != nil {
-				err = json.Unmarshal(*val, &s.JobCreationRequest)
-			}
+			err = unpopulate(val, &s.JobCreationRequest)
 			delete(rawMsg, key)
 		case "notStartedAt":
-			if val != nil {
-				var aux timeRFC3339
-				err = json.Unmarshal(*val, &aux)
-				s.NotStartedAt = (*time.Time)(&aux)
-			}
+			var aux timeRFC3339
+			err = unpopulate(val, &aux)
+			s.NotStartedAt = (*time.Time)(&aux)
 			delete(rawMsg, key)
 		case "recoveringAt":
-			if val != nil {
-				var aux timeRFC3339
-				err = json.Unmarshal(*val, &aux)
-				s.RecoveringAt = (*time.Time)(&aux)
-			}
+			var aux timeRFC3339
+			err = unpopulate(val, &aux)
+			s.RecoveringAt = (*time.Time)(&aux)
 			delete(rawMsg, key)
 		case "shuttingDownAt":
-			if val != nil {
-				var aux timeRFC3339
-				err = json.Unmarshal(*val, &aux)
-				s.ShuttingDownAt = (*time.Time)(&aux)
-			}
+			var aux timeRFC3339
+			err = unpopulate(val, &aux)
+			s.ShuttingDownAt = (*time.Time)(&aux)
 			delete(rawMsg, key)
 		case "startingAt":
-			if val != nil {
-				var aux timeRFC3339
-				err = json.Unmarshal(*val, &aux)
-				s.StartingAt = (*time.Time)(&aux)
-			}
+			var aux timeRFC3339
+			err = unpopulate(val, &aux)
+			s.StartingAt = (*time.Time)(&aux)
 			delete(rawMsg, key)
 		case "killedAt":
-			if val != nil {
-				var aux timeRFC3339
-				err = json.Unmarshal(*val, &aux)
-				s.TerminatedAt = (*time.Time)(&aux)
-			}
+			var aux timeRFC3339
+			err = unpopulate(val, &aux)
+			s.TerminatedAt = (*time.Time)(&aux)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -793,4 +670,18 @@ type SparkStatementResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse    *http.Response
 	SparkStatement *SparkStatement
+}
+
+func populate(m map[string]interface{}, k string, v interface{}) {
+	vv := reflect.ValueOf(v)
+	if !vv.IsNil() {
+		m[k] = v
+	}
+}
+
+func unpopulate(data *json.RawMessage, v interface{}) error {
+	if data == nil {
+		return nil
+	}
+	return json.Unmarshal(*data, v)
 }

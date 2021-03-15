@@ -14,13 +14,16 @@ type notFoundErrorBase struct {
 }
 
 func (n *notFoundErrorBase) UnmarshalJSON(data []byte) (err error) {
-	n.wrapped, err = unmarshalNotFoundErrorBaseClassification(data)
+	n.wrapped, err = unmarshalNotFoundErrorBaseClassification((*json.RawMessage)(&data))
 	return
 }
 
-func unmarshalNotFoundErrorBaseClassification(body []byte) (NotFoundErrorBaseClassification, error) {
+func unmarshalNotFoundErrorBaseClassification(rawMsg *json.RawMessage) (NotFoundErrorBaseClassification, error) {
+	if rawMsg == nil {
+		return nil, nil
+	}
 	var m map[string]interface{}
-	if err := json.Unmarshal(body, &m); err != nil {
+	if err := json.Unmarshal(*rawMsg, &m); err != nil {
 		return nil, err
 	}
 	var b NotFoundErrorBaseClassification
@@ -32,17 +35,20 @@ func unmarshalNotFoundErrorBaseClassification(body []byte) (NotFoundErrorBaseCla
 	default:
 		b = &NotFoundErrorBase{}
 	}
-	return b, json.Unmarshal(body, &b)
+	return b, json.Unmarshal(*rawMsg, &b)
 }
 
-func unmarshalNotFoundErrorBaseClassificationArray(body []byte) (*[]NotFoundErrorBaseClassification, error) {
+func unmarshalNotFoundErrorBaseClassificationArray(rawMsg *json.RawMessage) (*[]NotFoundErrorBaseClassification, error) {
+	if rawMsg == nil {
+		return nil, nil
+	}
 	var rawMessages []*json.RawMessage
-	if err := json.Unmarshal(body, &rawMessages); err != nil {
+	if err := json.Unmarshal(*rawMsg, &rawMessages); err != nil {
 		return nil, err
 	}
 	fArray := make([]NotFoundErrorBaseClassification, len(rawMessages))
 	for index, rawMessage := range rawMessages {
-		f, err := unmarshalNotFoundErrorBaseClassification(*rawMessage)
+		f, err := unmarshalNotFoundErrorBaseClassification(rawMessage)
 		if err != nil {
 			return nil, err
 		}
@@ -56,13 +62,16 @@ type petActionError struct {
 }
 
 func (p *petActionError) UnmarshalJSON(data []byte) (err error) {
-	p.wrapped, err = unmarshalPetActionErrorClassification(data)
+	p.wrapped, err = unmarshalPetActionErrorClassification((*json.RawMessage)(&data))
 	return
 }
 
-func unmarshalPetActionErrorClassification(body []byte) (PetActionErrorClassification, error) {
+func unmarshalPetActionErrorClassification(rawMsg *json.RawMessage) (PetActionErrorClassification, error) {
+	if rawMsg == nil {
+		return nil, nil
+	}
 	var m map[string]interface{}
-	if err := json.Unmarshal(body, &m); err != nil {
+	if err := json.Unmarshal(*rawMsg, &m); err != nil {
 		return nil, err
 	}
 	var b PetActionErrorClassification
@@ -74,17 +83,20 @@ func unmarshalPetActionErrorClassification(body []byte) (PetActionErrorClassific
 	default:
 		b = &PetActionError{}
 	}
-	return b, json.Unmarshal(body, &b)
+	return b, json.Unmarshal(*rawMsg, &b)
 }
 
-func unmarshalPetActionErrorClassificationArray(body []byte) (*[]PetActionErrorClassification, error) {
+func unmarshalPetActionErrorClassificationArray(rawMsg *json.RawMessage) (*[]PetActionErrorClassification, error) {
+	if rawMsg == nil {
+		return nil, nil
+	}
 	var rawMessages []*json.RawMessage
-	if err := json.Unmarshal(body, &rawMessages); err != nil {
+	if err := json.Unmarshal(*rawMsg, &rawMessages); err != nil {
 		return nil, err
 	}
 	fArray := make([]PetActionErrorClassification, len(rawMessages))
 	for index, rawMessage := range rawMessages {
-		f, err := unmarshalPetActionErrorClassification(*rawMessage)
+		f, err := unmarshalPetActionErrorClassification(rawMessage)
 		if err != nil {
 			return nil, err
 		}
@@ -93,9 +105,12 @@ func unmarshalPetActionErrorClassificationArray(body []byte) (*[]PetActionErrorC
 	return &fArray, nil
 }
 
-func unmarshalPetSadErrorClassification(body []byte) (PetSadErrorClassification, error) {
+func unmarshalPetSadErrorClassification(rawMsg *json.RawMessage) (PetSadErrorClassification, error) {
+	if rawMsg == nil {
+		return nil, nil
+	}
 	var m map[string]interface{}
-	if err := json.Unmarshal(body, &m); err != nil {
+	if err := json.Unmarshal(*rawMsg, &m); err != nil {
 		return nil, err
 	}
 	var b PetSadErrorClassification
@@ -105,17 +120,20 @@ func unmarshalPetSadErrorClassification(body []byte) (PetSadErrorClassification,
 	default:
 		b = &PetSadError{}
 	}
-	return b, json.Unmarshal(body, &b)
+	return b, json.Unmarshal(*rawMsg, &b)
 }
 
-func unmarshalPetSadErrorClassificationArray(body []byte) (*[]PetSadErrorClassification, error) {
+func unmarshalPetSadErrorClassificationArray(rawMsg *json.RawMessage) (*[]PetSadErrorClassification, error) {
+	if rawMsg == nil {
+		return nil, nil
+	}
 	var rawMessages []*json.RawMessage
-	if err := json.Unmarshal(body, &rawMessages); err != nil {
+	if err := json.Unmarshal(*rawMsg, &rawMessages); err != nil {
 		return nil, err
 	}
 	fArray := make([]PetSadErrorClassification, len(rawMessages))
 	for index, rawMessage := range rawMessages {
-		f, err := unmarshalPetSadErrorClassification(*rawMessage)
+		f, err := unmarshalPetSadErrorClassification(rawMessage)
 		if err != nil {
 			return nil, err
 		}

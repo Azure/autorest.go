@@ -11,6 +11,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"reflect"
 )
 
 type Animal struct {
@@ -32,9 +33,7 @@ func (a *AnimalNotFound) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "name":
-			if val != nil {
-				err = json.Unmarshal(*val, &a.Name)
-			}
+			err = unpopulate(val, &a.Name)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -53,9 +52,7 @@ func (b *BaseError) unmarshalInternal(rawMsg map[string]*json.RawMessage) error 
 		var err error
 		switch key {
 		case "someBaseProp":
-			if val != nil {
-				err = json.Unmarshal(*val, &b.SomeBaseProp)
-			}
+			err = unpopulate(val, &b.SomeBaseProp)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -80,9 +77,7 @@ func (l *LinkNotFound) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "whatSubAddress":
-			if val != nil {
-				err = json.Unmarshal(*val, &l.WhatSubAddress)
-			}
+			err = unpopulate(val, &l.WhatSubAddress)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -140,14 +135,10 @@ func (n *NotFoundErrorBase) unmarshalInternal(rawMsg map[string]*json.RawMessage
 		var err error
 		switch key {
 		case "reason":
-			if val != nil {
-				err = json.Unmarshal(*val, &n.Reason)
-			}
+			err = unpopulate(val, &n.Reason)
 			delete(rawMsg, key)
 		case "whatNotFound":
-			if val != nil {
-				err = json.Unmarshal(*val, &n.WhatNotFound)
-			}
+			err = unpopulate(val, &n.WhatNotFound)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -216,14 +207,10 @@ func (p *PetActionError) unmarshalInternal(rawMsg map[string]*json.RawMessage) e
 		var err error
 		switch key {
 		case "errorMessage":
-			if val != nil {
-				err = json.Unmarshal(*val, &p.ErrorMessage)
-			}
+			err = unpopulate(val, &p.ErrorMessage)
 			delete(rawMsg, key)
 		case "errorType":
-			if val != nil {
-				err = json.Unmarshal(*val, &p.ErrorType)
-			}
+			err = unpopulate(val, &p.ErrorType)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -267,9 +254,7 @@ func (p *PetHungryOrThirstyError) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "hungryOrThirsty":
-			if val != nil {
-				err = json.Unmarshal(*val, &p.HungryOrThirsty)
-			}
+			err = unpopulate(val, &p.HungryOrThirsty)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -320,9 +305,7 @@ func (p *PetSadError) unmarshalInternal(rawMsg map[string]*json.RawMessage) erro
 		var err error
 		switch key {
 		case "reason":
-			if val != nil {
-				err = json.Unmarshal(*val, &p.Reason)
-			}
+			err = unpopulate(val, &p.Reason)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -330,4 +313,18 @@ func (p *PetSadError) unmarshalInternal(rawMsg map[string]*json.RawMessage) erro
 		}
 	}
 	return p.PetActionError.unmarshalInternal(rawMsg)
+}
+
+func populate(m map[string]interface{}, k string, v interface{}) {
+	vv := reflect.ValueOf(v)
+	if !vv.IsNil() {
+		m[k] = v
+	}
+}
+
+func unpopulate(data *json.RawMessage, v interface{}) error {
+	if data == nil {
+		return nil
+	}
+	return json.Unmarshal(*data, v)
 }

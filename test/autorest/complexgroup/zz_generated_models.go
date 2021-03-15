@@ -11,6 +11,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"reflect"
 	"time"
 )
 
@@ -148,12 +149,8 @@ type DateWrapper struct {
 // MarshalJSON implements the json.Marshaller interface for type DateWrapper.
 func (d DateWrapper) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	if d.Field != nil {
-		objectMap["field"] = (*dateType)(d.Field)
-	}
-	if d.Leap != nil {
-		objectMap["leap"] = (*dateType)(d.Leap)
-	}
+	populate(objectMap, "field", (*dateType)(d.Field))
+	populate(objectMap, "leap", (*dateType)(d.Leap))
 	return json.Marshal(objectMap)
 }
 
@@ -167,18 +164,14 @@ func (d *DateWrapper) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "field":
-			if val != nil {
-				var aux dateType
-				err = json.Unmarshal(*val, &aux)
-				d.Field = (*time.Time)(&aux)
-			}
+			var aux dateType
+			err = unpopulate(val, &aux)
+			d.Field = (*time.Time)(&aux)
 			delete(rawMsg, key)
 		case "leap":
-			if val != nil {
-				var aux dateType
-				err = json.Unmarshal(*val, &aux)
-				d.Leap = (*time.Time)(&aux)
-			}
+			var aux dateType
+			err = unpopulate(val, &aux)
+			d.Leap = (*time.Time)(&aux)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -204,12 +197,8 @@ type DatetimeWrapper struct {
 // MarshalJSON implements the json.Marshaller interface for type DatetimeWrapper.
 func (d DatetimeWrapper) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	if d.Field != nil {
-		objectMap["field"] = (*timeRFC3339)(d.Field)
-	}
-	if d.Now != nil {
-		objectMap["now"] = (*timeRFC3339)(d.Now)
-	}
+	populate(objectMap, "field", (*timeRFC3339)(d.Field))
+	populate(objectMap, "now", (*timeRFC3339)(d.Now))
 	return json.Marshal(objectMap)
 }
 
@@ -223,18 +212,14 @@ func (d *DatetimeWrapper) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "field":
-			if val != nil {
-				var aux timeRFC3339
-				err = json.Unmarshal(*val, &aux)
-				d.Field = (*time.Time)(&aux)
-			}
+			var aux timeRFC3339
+			err = unpopulate(val, &aux)
+			d.Field = (*time.Time)(&aux)
 			delete(rawMsg, key)
 		case "now":
-			if val != nil {
-				var aux timeRFC3339
-				err = json.Unmarshal(*val, &aux)
-				d.Now = (*time.Time)(&aux)
-			}
+			var aux timeRFC3339
+			err = unpopulate(val, &aux)
+			d.Now = (*time.Time)(&aux)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -260,12 +245,8 @@ type Datetimerfc1123Wrapper struct {
 // MarshalJSON implements the json.Marshaller interface for type Datetimerfc1123Wrapper.
 func (d Datetimerfc1123Wrapper) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	if d.Field != nil {
-		objectMap["field"] = (*timeRFC1123)(d.Field)
-	}
-	if d.Now != nil {
-		objectMap["now"] = (*timeRFC1123)(d.Now)
-	}
+	populate(objectMap, "field", (*timeRFC1123)(d.Field))
+	populate(objectMap, "now", (*timeRFC1123)(d.Now))
 	return json.Marshal(objectMap)
 }
 
@@ -279,18 +260,14 @@ func (d *Datetimerfc1123Wrapper) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "field":
-			if val != nil {
-				var aux timeRFC1123
-				err = json.Unmarshal(*val, &aux)
-				d.Field = (*time.Time)(&aux)
-			}
+			var aux timeRFC1123
+			err = unpopulate(val, &aux)
+			d.Field = (*time.Time)(&aux)
 			delete(rawMsg, key)
 		case "now":
-			if val != nil {
-				var aux timeRFC1123
-				err = json.Unmarshal(*val, &aux)
-				d.Now = (*time.Time)(&aux)
-			}
+			var aux timeRFC1123
+			err = unpopulate(val, &aux)
+			d.Now = (*time.Time)(&aux)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -397,14 +374,10 @@ func (d *DotFish) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
 		var err error
 		switch key {
 		case "fish.type":
-			if val != nil {
-				err = json.Unmarshal(*val, &d.FishType)
-			}
+			err = unpopulate(val, &d.FishType)
 			delete(rawMsg, key)
 		case "species":
-			if val != nil {
-				err = json.Unmarshal(*val, &d.Species)
-			}
+			err = unpopulate(val, &d.Species)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -431,24 +404,16 @@ func (d *DotFishMarket) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "fishes":
-			if val != nil {
-				d.Fishes, err = unmarshalDotFishClassificationArray(*val)
-			}
+			d.Fishes, err = unmarshalDotFishClassificationArray(val)
 			delete(rawMsg, key)
 		case "salmons":
-			if val != nil {
-				err = json.Unmarshal(*val, &d.Salmons)
-			}
+			err = unpopulate(val, &d.Salmons)
 			delete(rawMsg, key)
 		case "sampleFish":
-			if val != nil {
-				d.SampleFish, err = unmarshalDotFishClassification(*val)
-			}
+			d.SampleFish, err = unmarshalDotFishClassification(val)
 			delete(rawMsg, key)
 		case "sampleSalmon":
-			if val != nil {
-				err = json.Unmarshal(*val, &d.SampleSalmon)
-			}
+			err = unpopulate(val, &d.SampleSalmon)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -476,7 +441,7 @@ type DotFishResponse struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DotFishResponse.
 func (d *DotFishResponse) UnmarshalJSON(data []byte) error {
-	t, err := unmarshalDotFishClassification(data)
+	t, err := unmarshalDotFishClassification((*json.RawMessage)(&data))
 	if err != nil {
 		return err
 	}
@@ -493,12 +458,8 @@ type DotSalmon struct {
 // MarshalJSON implements the json.Marshaller interface for type DotSalmon.
 func (d DotSalmon) MarshalJSON() ([]byte, error) {
 	objectMap := d.DotFish.marshalInternal("DotSalmon")
-	if d.Iswild != nil {
-		objectMap["iswild"] = d.Iswild
-	}
-	if d.Location != nil {
-		objectMap["location"] = d.Location
-	}
+	populate(objectMap, "iswild", d.Iswild)
+	populate(objectMap, "location", d.Location)
 	return json.Marshal(objectMap)
 }
 
@@ -512,14 +473,10 @@ func (d *DotSalmon) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "iswild":
-			if val != nil {
-				err = json.Unmarshal(*val, &d.Iswild)
-			}
+			err = unpopulate(val, &d.Iswild)
 			delete(rawMsg, key)
 		case "location":
-			if val != nil {
-				err = json.Unmarshal(*val, &d.Location)
-			}
+			err = unpopulate(val, &d.Location)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -623,24 +580,16 @@ func (f *Fish) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
 		var err error
 		switch key {
 		case "fishtype":
-			if val != nil {
-				err = json.Unmarshal(*val, &f.Fishtype)
-			}
+			err = unpopulate(val, &f.Fishtype)
 			delete(rawMsg, key)
 		case "length":
-			if val != nil {
-				err = json.Unmarshal(*val, &f.Length)
-			}
+			err = unpopulate(val, &f.Length)
 			delete(rawMsg, key)
 		case "siblings":
-			if val != nil {
-				f.Siblings, err = unmarshalFishClassificationArray(*val)
-			}
+			f.Siblings, err = unmarshalFishClassificationArray(val)
 			delete(rawMsg, key)
 		case "species":
-			if val != nil {
-				err = json.Unmarshal(*val, &f.Species)
-			}
+			err = unpopulate(val, &f.Species)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -660,7 +609,7 @@ type FishResponse struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type FishResponse.
 func (f *FishResponse) UnmarshalJSON(data []byte) error {
-	t, err := unmarshalFishClassification(data)
+	t, err := unmarshalFishClassification((*json.RawMessage)(&data))
 	if err != nil {
 		return err
 	}
@@ -696,12 +645,8 @@ type Goblinshark struct {
 // MarshalJSON implements the json.Marshaller interface for type Goblinshark.
 func (g Goblinshark) MarshalJSON() ([]byte, error) {
 	objectMap := g.Shark.marshalInternal("goblin")
-	if g.Color != nil {
-		objectMap["color"] = g.Color
-	}
-	if g.Jawsize != nil {
-		objectMap["jawsize"] = g.Jawsize
-	}
+	populate(objectMap, "color", g.Color)
+	populate(objectMap, "jawsize", g.Jawsize)
 	return json.Marshal(objectMap)
 }
 
@@ -715,14 +660,10 @@ func (g *Goblinshark) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "color":
-			if val != nil {
-				err = json.Unmarshal(*val, &g.Color)
-			}
+			err = unpopulate(val, &g.Color)
 			delete(rawMsg, key)
 		case "jawsize":
-			if val != nil {
-				err = json.Unmarshal(*val, &g.Jawsize)
-			}
+			err = unpopulate(val, &g.Jawsize)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -817,19 +758,13 @@ func (m *MyBaseType) unmarshalInternal(rawMsg map[string]*json.RawMessage) error
 		var err error
 		switch key {
 		case "helper":
-			if val != nil {
-				err = json.Unmarshal(*val, &m.Helper)
-			}
+			err = unpopulate(val, &m.Helper)
 			delete(rawMsg, key)
 		case "kind":
-			if val != nil {
-				err = json.Unmarshal(*val, &m.Kind)
-			}
+			err = unpopulate(val, &m.Kind)
 			delete(rawMsg, key)
 		case "propB1":
-			if val != nil {
-				err = json.Unmarshal(*val, &m.PropB1)
-			}
+			err = unpopulate(val, &m.PropB1)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -849,7 +784,7 @@ type MyBaseTypeResponse struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type MyBaseTypeResponse.
 func (m *MyBaseTypeResponse) UnmarshalJSON(data []byte) error {
-	t, err := unmarshalMyBaseTypeClassification(data)
+	t, err := unmarshalMyBaseTypeClassification((*json.RawMessage)(&data))
 	if err != nil {
 		return err
 	}
@@ -865,9 +800,7 @@ type MyDerivedType struct {
 // MarshalJSON implements the json.Marshaller interface for type MyDerivedType.
 func (m MyDerivedType) MarshalJSON() ([]byte, error) {
 	objectMap := m.MyBaseType.marshalInternal(MyKindKind1)
-	if m.PropD1 != nil {
-		objectMap["propD1"] = m.PropD1
-	}
+	populate(objectMap, "propD1", m.PropD1)
 	return json.Marshal(objectMap)
 }
 
@@ -881,9 +814,7 @@ func (m *MyDerivedType) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "propD1":
-			if val != nil {
-				err = json.Unmarshal(*val, &m.PropD1)
-			}
+			err = unpopulate(val, &m.PropD1)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -1136,14 +1067,10 @@ func (s *Salmon) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
 		var err error
 		switch key {
 		case "iswild":
-			if val != nil {
-				err = json.Unmarshal(*val, &s.Iswild)
-			}
+			err = unpopulate(val, &s.Iswild)
 			delete(rawMsg, key)
 		case "location":
-			if val != nil {
-				err = json.Unmarshal(*val, &s.Location)
-			}
+			err = unpopulate(val, &s.Location)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -1162,7 +1089,7 @@ type SalmonResponse struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SalmonResponse.
 func (s *SalmonResponse) UnmarshalJSON(data []byte) error {
-	t, err := unmarshalSalmonClassification(data)
+	t, err := unmarshalSalmonClassification((*json.RawMessage)(&data))
 	if err != nil {
 		return err
 	}
@@ -1178,9 +1105,7 @@ type Sawshark struct {
 // MarshalJSON implements the json.Marshaller interface for type Sawshark.
 func (s Sawshark) MarshalJSON() ([]byte, error) {
 	objectMap := s.Shark.marshalInternal("sawshark")
-	if s.Picture != nil {
-		objectMap["picture"] = s.Picture
-	}
+	populate(objectMap, "picture", s.Picture)
 	return json.Marshal(objectMap)
 }
 
@@ -1194,9 +1119,7 @@ func (s *Sawshark) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "picture":
-			if val != nil {
-				err = json.Unmarshal(*val, &s.Picture)
-			}
+			err = unpopulate(val, &s.Picture)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -1256,16 +1179,12 @@ func (s *Shark) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
 		var err error
 		switch key {
 		case "age":
-			if val != nil {
-				err = json.Unmarshal(*val, &s.Age)
-			}
+			err = unpopulate(val, &s.Age)
 			delete(rawMsg, key)
 		case "birthday":
-			if val != nil {
-				var aux timeRFC3339
-				err = json.Unmarshal(*val, &aux)
-				s.Birthday = (*time.Time)(&aux)
-			}
+			var aux timeRFC3339
+			err = unpopulate(val, &aux)
+			s.Birthday = (*time.Time)(&aux)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -1297,9 +1216,7 @@ type SmartSalmon struct {
 // MarshalJSON implements the json.Marshaller interface for type SmartSalmon.
 func (s SmartSalmon) MarshalJSON() ([]byte, error) {
 	objectMap := s.Salmon.marshalInternal("smart_salmon")
-	if s.CollegeDegree != nil {
-		objectMap["college_degree"] = s.CollegeDegree
-	}
+	populate(objectMap, "college_degree", s.CollegeDegree)
 	if s.AdditionalProperties != nil {
 		for key, val := range *s.AdditionalProperties {
 			objectMap[key] = val
@@ -1318,9 +1235,7 @@ func (s *SmartSalmon) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "college_degree":
-			if val != nil {
-				err = json.Unmarshal(*val, &s.CollegeDegree)
-			}
+			err = unpopulate(val, &s.CollegeDegree)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -1359,4 +1274,18 @@ type StringWrapperResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse   *http.Response
 	StringWrapper *StringWrapper
+}
+
+func populate(m map[string]interface{}, k string, v interface{}) {
+	vv := reflect.ValueOf(v)
+	if !vv.IsNil() {
+		m[k] = v
+	}
+}
+
+func unpopulate(data *json.RawMessage, v interface{}) error {
+	if data == nil {
+		return nil
+	}
+	return json.Unmarshal(*data, v)
 }
