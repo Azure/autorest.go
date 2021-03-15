@@ -14825,8 +14825,7 @@ type WebApplicationFirewallPolicyResponse struct {
 }
 
 func populate(m map[string]interface{}, k string, v interface{}) {
-	vv := reflect.ValueOf(v)
-	if !vv.IsNil() {
+	if !reflect.ValueOf(v).IsNil() {
 		m[k] = v
 	}
 }
