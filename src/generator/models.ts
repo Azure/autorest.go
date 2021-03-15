@@ -34,6 +34,8 @@ export async function generateModels(session: Session<CodeModel>): Promise<strin
   }
 
   // structs
+  let needsJSONPopulate = false;
+  let needsJSONUnpopulate = false;
   structs.sort((a: StructDef, b: StructDef) => { return sortAscending(a.Language.name, b.Language.name) });
   for (const struct of values(structs)) {
     text += struct.discriminator();
@@ -45,6 +47,27 @@ export async function generateModels(session: Session<CodeModel>): Promise<strin
       }
       text += method.text;
     }
+    if (struct.HasJSONMarshaller) {
+      needsJSONPopulate = true;
+    }
+    if (struct.HasJSONUnmarshaller) {
+      needsJSONUnpopulate = true;
+    }
+  }
+  if (needsJSONPopulate) {
+    text += 'func populate(m map[string]interface{}, k string, v interface{}) {\n';
+    text += '\tif !reflect.ValueOf(v).IsNil() {\n';
+    text += '\t\tm[k] = v\n';
+    text += '\t}\n';
+    text += '}\n\n';
+  }
+  if (needsJSONUnpopulate) {
+    text += 'func unpopulate(data *json.RawMessage, v interface{}) error {\n';
+    text += '\tif data == nil {\n';
+    text += '\t\treturn nil\n';
+    text += '\t}\n';
+    text += '\treturn json.Unmarshal(*data, v)\n';
+    text += '}\n\n';
   }
   return text;
 }
@@ -65,6 +88,8 @@ class StructDef {
   readonly Parameters?: Parameter[];
   readonly Methods: StructMethod[];
   readonly ComposedOf: ObjectSchema[];
+  HasJSONMarshaller: boolean;
+  HasJSONUnmarshaller: boolean;
 
   constructor(language: Language, props?: Property[], params?: Parameter[]) {
     this.Language = language;
@@ -78,6 +103,8 @@ class StructDef {
     }
     this.Methods = new Array<StructMethod>();
     this.ComposedOf = new Array<ObjectSchema>();
+    this.HasJSONMarshaller = false;
+    this.HasJSONUnmarshaller = false;
   }
 
   text(): string {
@@ -346,9 +373,12 @@ function generateStructs(objects?: ObjectSchema[]): StructDef[] {
       generateInternalUnmarshaller(obj, structDef, parentType);
     }
     if (needsM) {
+      imports.add('reflect');
+      structDef.HasJSONMarshaller = true;
       generateJSONMarshaller(obj, structDef, parentType);
     }
     if (needsU) {
+      structDef.HasJSONUnmarshaller = true;
       generateJSONUnmarshaller(obj, structDef, parentType);
     }
     structTypes.push(structDef);
@@ -443,7 +473,7 @@ function generateUnmarshallerForResponseEnvelope(structDef: StructDef) {
   if (field === '' || type === '') {
     throw new Error(`failed to the discriminated type field for response envelope ${structDef.Language.name}`);
   }
-  unmarshaller += `\tt, err := unmarshal${type}(data)\n`;
+  unmarshaller += `\tt, err := unmarshal${type}((*json.RawMessage)(&data))\n`;
   unmarshaller += '\tif err != nil {\n';
   unmarshaller += '\t\treturn err\n';
   unmarshaller += '\t}\n';
@@ -552,13 +582,11 @@ function generateJSONMarshaller(obj: ObjectSchema, structDef: StructDef, parentT
       if (prop.language.go!.isAdditionalProperties) {
         continue;
       }
-      marshaller += `\tif ${receiver}.${prop.language.go!.name} != nil {\n`;
+      let source = `${receiver}.${prop.language.go!.name}`;
       if (prop.schema.language.go!.internalTimeType) {
-        marshaller += `\t\tobjectMap["${prop.serializedName}"] = (*${prop.schema.language.go!.internalTimeType})(${receiver}.${prop.language.go!.name})\n`;
-      } else {
-        marshaller += `\t\tobjectMap["${prop.serializedName}"] = ${receiver}.${prop.language.go!.name}\n`;
+        source = `(*${prop.schema.language.go!.internalTimeType})(${receiver}.${prop.language.go!.name})`;
       }
-      marshaller += `\t}\n`;
+      marshaller += `\tpopulate(objectMap, "${prop.serializedName}", ${source})\n`;
     }
     if (hasAdditionalProperties(obj)) {
       marshaller += `\tif ${receiver}.AdditionalProperties != nil {\n`;
@@ -620,20 +648,18 @@ function generateJSONUnmarshallerBody(obj: ObjectSchema, structDef: StructDef, p
       continue;
     }
     unmarshalBody += `\t\tcase "${prop.serializedName}":\n`;
-    unmarshalBody += '\t\t\tif val != nil {\n';
     if (prop.schema.language.go!.discriminatorInterface) {
-      unmarshalBody += `\t\t\t\t${receiver}.${prop.language.go!.name}, err = unmarshal${prop.schema.language.go!.discriminatorInterface}(*val)\n`;
+      unmarshalBody += `\t\t\t\t${receiver}.${prop.language.go!.name}, err = unmarshal${prop.schema.language.go!.discriminatorInterface}(val)\n`;
     } else if (isArraySchema(prop.schema) && prop.schema.elementType.language.go!.discriminatorInterface) {
-      unmarshalBody += `\t\t\t\t${receiver}.${prop.language.go!.name}, err = unmarshal${prop.schema.elementType.language.go!.discriminatorInterface}Array(*val)\n`;
+      unmarshalBody += `\t\t\t\t${receiver}.${prop.language.go!.name}, err = unmarshal${prop.schema.elementType.language.go!.discriminatorInterface}Array(val)\n`;
     } else if (prop.schema.language.go!.internalTimeType) {
       unmarshalBody += `\t\t\t\tvar aux ${prop.schema.language.go!.internalTimeType}\n`;
-      unmarshalBody += '\t\t\t\terr = json.Unmarshal(*val, &aux)\n';
+      unmarshalBody += '\t\t\t\terr = unpopulate(val, &aux)\n';
       unmarshalBody += `\t\t\t\t${receiver}.${prop.language.go!.name} = (*time.Time)(&aux)\n`;
     } else {
-      unmarshalBody += `\t\t\t\terr = json.Unmarshal(*val, &${receiver}.${prop.language.go!.name})\n`;
+      unmarshalBody += `\t\t\t\terr = unpopulate(val, &${receiver}.${prop.language.go!.name})\n`;
     }
-    unmarshalBody += '\t\t\t}\n';
-    unmarshalBody += '\t\t\tdelete(rawMsg, key)\n';
+    unmarshalBody += '\t\t\t\tdelete(rawMsg, key)\n';
   }
   // if there's no parent type it's safe to unmarshal additional properties right here
   if (addlProps && !parentType) {

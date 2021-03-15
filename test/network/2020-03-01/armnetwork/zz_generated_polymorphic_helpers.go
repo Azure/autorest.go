@@ -9,9 +9,12 @@ package armnetwork
 
 import "encoding/json"
 
-func unmarshalFirewallPolicyRuleClassification(body []byte) (FirewallPolicyRuleClassification, error) {
+func unmarshalFirewallPolicyRuleClassification(rawMsg *json.RawMessage) (FirewallPolicyRuleClassification, error) {
+	if rawMsg == nil {
+		return nil, nil
+	}
 	var m map[string]interface{}
-	if err := json.Unmarshal(body, &m); err != nil {
+	if err := json.Unmarshal(*rawMsg, &m); err != nil {
 		return nil, err
 	}
 	var b FirewallPolicyRuleClassification
@@ -23,17 +26,20 @@ func unmarshalFirewallPolicyRuleClassification(body []byte) (FirewallPolicyRuleC
 	default:
 		b = &FirewallPolicyRule{}
 	}
-	return b, json.Unmarshal(body, &b)
+	return b, json.Unmarshal(*rawMsg, &b)
 }
 
-func unmarshalFirewallPolicyRuleClassificationArray(body []byte) (*[]FirewallPolicyRuleClassification, error) {
+func unmarshalFirewallPolicyRuleClassificationArray(rawMsg *json.RawMessage) (*[]FirewallPolicyRuleClassification, error) {
+	if rawMsg == nil {
+		return nil, nil
+	}
 	var rawMessages []*json.RawMessage
-	if err := json.Unmarshal(body, &rawMessages); err != nil {
+	if err := json.Unmarshal(*rawMsg, &rawMessages); err != nil {
 		return nil, err
 	}
 	fArray := make([]FirewallPolicyRuleClassification, len(rawMessages))
 	for index, rawMessage := range rawMessages {
-		f, err := unmarshalFirewallPolicyRuleClassification(*rawMessage)
+		f, err := unmarshalFirewallPolicyRuleClassification(rawMessage)
 		if err != nil {
 			return nil, err
 		}
@@ -42,9 +48,12 @@ func unmarshalFirewallPolicyRuleClassificationArray(body []byte) (*[]FirewallPol
 	return &fArray, nil
 }
 
-func unmarshalFirewallPolicyRuleConditionClassification(body []byte) (FirewallPolicyRuleConditionClassification, error) {
+func unmarshalFirewallPolicyRuleConditionClassification(rawMsg *json.RawMessage) (FirewallPolicyRuleConditionClassification, error) {
+	if rawMsg == nil {
+		return nil, nil
+	}
 	var m map[string]interface{}
-	if err := json.Unmarshal(body, &m); err != nil {
+	if err := json.Unmarshal(*rawMsg, &m); err != nil {
 		return nil, err
 	}
 	var b FirewallPolicyRuleConditionClassification
@@ -58,17 +67,20 @@ func unmarshalFirewallPolicyRuleConditionClassification(body []byte) (FirewallPo
 	default:
 		b = &FirewallPolicyRuleCondition{}
 	}
-	return b, json.Unmarshal(body, &b)
+	return b, json.Unmarshal(*rawMsg, &b)
 }
 
-func unmarshalFirewallPolicyRuleConditionClassificationArray(body []byte) (*[]FirewallPolicyRuleConditionClassification, error) {
+func unmarshalFirewallPolicyRuleConditionClassificationArray(rawMsg *json.RawMessage) (*[]FirewallPolicyRuleConditionClassification, error) {
+	if rawMsg == nil {
+		return nil, nil
+	}
 	var rawMessages []*json.RawMessage
-	if err := json.Unmarshal(body, &rawMessages); err != nil {
+	if err := json.Unmarshal(*rawMsg, &rawMessages); err != nil {
 		return nil, err
 	}
 	fArray := make([]FirewallPolicyRuleConditionClassification, len(rawMessages))
 	for index, rawMessage := range rawMessages {
-		f, err := unmarshalFirewallPolicyRuleConditionClassification(*rawMessage)
+		f, err := unmarshalFirewallPolicyRuleConditionClassification(rawMessage)
 		if err != nil {
 			return nil, err
 		}

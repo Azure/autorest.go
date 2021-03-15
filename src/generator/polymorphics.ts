@@ -43,14 +43,17 @@ export async function generatePolymorphicHelpers(session: Session<CodeModel>): P
         text += '}\n\n';
         const receiver = <string>root.language.go!.internalErrorType[0];
         text += `func (${receiver} *${root.language.go!.internalErrorType}) UnmarshalJSON(data []byte) (err error) {\n`;
-        text += `\t${receiver}.wrapped, err = unmarshal${discName}(data)\n`;
+        text += `\t${receiver}.wrapped, err = unmarshal${discName}((*json.RawMessage)(&data))\n`;
         text += '\treturn\n';
         text += '}\n\n';
       }
       // scalar unmarshaller
-      text += `func unmarshal${discName}(body []byte) (${discName}, error) {\n`;
+      text += `func unmarshal${discName}(rawMsg *json.RawMessage) (${discName}, error) {\n`;
+      text += '\tif rawMsg == nil {\n';
+      text += '\t\treturn nil, nil\n';
+      text += '\t}\n';
       text += '\tvar m map[string]interface{}\n';
-      text += '\tif err := json.Unmarshal(body, &m); err != nil {\n';
+      text += '\tif err := json.Unmarshal(*rawMsg, &m); err != nil {\n';
       text += '\t\treturn nil, err\n';
       text += '\t}\n';
       text += `\tvar b ${discName}\n`;
@@ -63,18 +66,21 @@ export async function generatePolymorphicHelpers(session: Session<CodeModel>): P
       text += '\tdefault:\n';
       text += `\t\tb = &${root.language.go!.name}{}\n`;
       text += '\t}\n';
-      text += '\treturn b, json.Unmarshal(body, &b)\n';
+      text += '\treturn b, json.Unmarshal(*rawMsg, &b)\n';
       text += '}\n\n';
 
       // array unmarshaller
-      text += `func unmarshal${discName}Array(body []byte) (*[]${discName}, error) {\n`;
+      text += `func unmarshal${discName}Array(rawMsg *json.RawMessage) (*[]${discName}, error) {\n`;
+      text += '\tif rawMsg == nil {\n';
+      text += '\t\treturn nil, nil\n';
+      text += '\t}\n';
       text += '\tvar rawMessages []*json.RawMessage\n';
-      text += '\tif err := json.Unmarshal(body, &rawMessages); err != nil {\n';
+      text += '\tif err := json.Unmarshal(*rawMsg, &rawMessages); err != nil {\n';
       text += '\t\treturn nil, err\n';
       text += '\t}\n';
       text += `\tfArray := make([]${discName}, len(rawMessages))\n`;
       text += '\tfor index, rawMessage := range rawMessages {\n';
-      text += `\t\tf, err := unmarshal${discName}(*rawMessage)\n`;
+      text += `\t\tf, err := unmarshal${discName}(rawMessage)\n`;
       text += '\t\tif err != nil {\n';
       text += '\t\t\treturn nil, err\n';
       text += '\t\t}\n';
