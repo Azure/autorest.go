@@ -9,6 +9,7 @@ package azartifacts
 
 import (
 	"context"
+	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -38,6 +39,9 @@ func (client *sqlPoolsClient) Get(ctx context.Context, sqlPoolName string, optio
 // getCreateRequest creates the Get request.
 func (client *sqlPoolsClient) getCreateRequest(ctx context.Context, sqlPoolName string, options *SQLPoolsGetOptions) (*azcore.Request, error) {
 	urlPath := "/sqlPools/{sqlPoolName}"
+	if sqlPoolName == "" {
+		errors.New("parameter sqlPoolName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{sqlPoolName}", url.PathEscape(sqlPoolName))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {

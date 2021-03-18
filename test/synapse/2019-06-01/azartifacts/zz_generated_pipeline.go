@@ -9,6 +9,7 @@ package azartifacts
 
 import (
 	"context"
+	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -39,6 +40,9 @@ func (client *pipelineClient) createOrUpdatePipeline(ctx context.Context, pipeli
 // createOrUpdatePipelineCreateRequest creates the CreateOrUpdatePipeline request.
 func (client *pipelineClient) createOrUpdatePipelineCreateRequest(ctx context.Context, pipelineName string, pipeline PipelineResource, options *PipelineBeginCreateOrUpdatePipelineOptions) (*azcore.Request, error) {
 	urlPath := "/pipelines/{pipelineName}"
+	if pipelineName == "" {
+		errors.New("parameter pipelineName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{pipelineName}", url.PathEscape(pipelineName))
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -92,6 +96,9 @@ func (client *pipelineClient) CreatePipelineRun(ctx context.Context, pipelineNam
 // createPipelineRunCreateRequest creates the CreatePipelineRun request.
 func (client *pipelineClient) createPipelineRunCreateRequest(ctx context.Context, pipelineName string, options *PipelineCreatePipelineRunOptions) (*azcore.Request, error) {
 	urlPath := "/pipelines/{pipelineName}/createRun"
+	if pipelineName == "" {
+		errors.New("parameter pipelineName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{pipelineName}", url.PathEscape(pipelineName))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -154,6 +161,9 @@ func (client *pipelineClient) deletePipeline(ctx context.Context, pipelineName s
 // deletePipelineCreateRequest creates the DeletePipeline request.
 func (client *pipelineClient) deletePipelineCreateRequest(ctx context.Context, pipelineName string, options *PipelineBeginDeletePipelineOptions) (*azcore.Request, error) {
 	urlPath := "/pipelines/{pipelineName}"
+	if pipelineName == "" {
+		errors.New("parameter pipelineName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{pipelineName}", url.PathEscape(pipelineName))
 	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -195,6 +205,9 @@ func (client *pipelineClient) GetPipeline(ctx context.Context, pipelineName stri
 // getPipelineCreateRequest creates the GetPipeline request.
 func (client *pipelineClient) getPipelineCreateRequest(ctx context.Context, pipelineName string, options *PipelineGetPipelineOptions) (*azcore.Request, error) {
 	urlPath := "/pipelines/{pipelineName}"
+	if pipelineName == "" {
+		errors.New("parameter pipelineName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{pipelineName}", url.PathEscape(pipelineName))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -297,6 +310,9 @@ func (client *pipelineClient) renamePipeline(ctx context.Context, pipelineName s
 // renamePipelineCreateRequest creates the RenamePipeline request.
 func (client *pipelineClient) renamePipelineCreateRequest(ctx context.Context, pipelineName string, request ArtifactRenameRequest, options *PipelineBeginRenamePipelineOptions) (*azcore.Request, error) {
 	urlPath := "/pipelines/{pipelineName}/rename"
+	if pipelineName == "" {
+		errors.New("parameter pipelineName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{pipelineName}", url.PathEscape(pipelineName))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {

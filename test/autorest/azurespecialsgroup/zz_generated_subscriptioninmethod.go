@@ -9,6 +9,7 @@ package azurespecialsgroup
 
 import (
 	"context"
+	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -46,6 +47,9 @@ func (client *SubscriptionInMethodClient) PostMethodLocalNull(ctx context.Contex
 // postMethodLocalNullCreateRequest creates the PostMethodLocalNull request.
 func (client *SubscriptionInMethodClient) postMethodLocalNullCreateRequest(ctx context.Context, subscriptionID string, options *SubscriptionInMethodPostMethodLocalNullOptions) (*azcore.Request, error) {
 	urlPath := "/azurespecials/subscriptionId/method/string/none/path/local/null/{subscriptionId}"
+	if subscriptionID == "" {
+		errors.New("parameter subscriptionID cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -84,6 +88,9 @@ func (client *SubscriptionInMethodClient) PostMethodLocalValid(ctx context.Conte
 // postMethodLocalValidCreateRequest creates the PostMethodLocalValid request.
 func (client *SubscriptionInMethodClient) postMethodLocalValidCreateRequest(ctx context.Context, subscriptionID string, options *SubscriptionInMethodPostMethodLocalValidOptions) (*azcore.Request, error) {
 	urlPath := "/azurespecials/subscriptionId/method/string/none/path/local/1234-5678-9012-3456/{subscriptionId}"
+	if subscriptionID == "" {
+		errors.New("parameter subscriptionID cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -122,6 +129,9 @@ func (client *SubscriptionInMethodClient) PostPathLocalValid(ctx context.Context
 // postPathLocalValidCreateRequest creates the PostPathLocalValid request.
 func (client *SubscriptionInMethodClient) postPathLocalValidCreateRequest(ctx context.Context, subscriptionID string, options *SubscriptionInMethodPostPathLocalValidOptions) (*azcore.Request, error) {
 	urlPath := "/azurespecials/subscriptionId/path/string/none/path/local/1234-5678-9012-3456/{subscriptionId}"
+	if subscriptionID == "" {
+		errors.New("parameter subscriptionID cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -160,6 +170,9 @@ func (client *SubscriptionInMethodClient) PostSwaggerLocalValid(ctx context.Cont
 // postSwaggerLocalValidCreateRequest creates the PostSwaggerLocalValid request.
 func (client *SubscriptionInMethodClient) postSwaggerLocalValidCreateRequest(ctx context.Context, subscriptionID string, options *SubscriptionInMethodPostSwaggerLocalValidOptions) (*azcore.Request, error) {
 	urlPath := "/azurespecials/subscriptionId/swagger/string/none/path/local/1234-5678-9012-3456/{subscriptionId}"
+	if subscriptionID == "" {
+		errors.New("parameter subscriptionID cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {

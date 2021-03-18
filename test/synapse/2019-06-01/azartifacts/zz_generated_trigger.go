@@ -9,6 +9,7 @@ package azartifacts
 
 import (
 	"context"
+	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -38,6 +39,9 @@ func (client *triggerClient) createOrUpdateTrigger(ctx context.Context, triggerN
 // createOrUpdateTriggerCreateRequest creates the CreateOrUpdateTrigger request.
 func (client *triggerClient) createOrUpdateTriggerCreateRequest(ctx context.Context, triggerName string, trigger TriggerResource, options *TriggerBeginCreateOrUpdateTriggerOptions) (*azcore.Request, error) {
 	urlPath := "/triggers/{triggerName}"
+	if triggerName == "" {
+		errors.New("parameter triggerName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{triggerName}", url.PathEscape(triggerName))
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -91,6 +95,9 @@ func (client *triggerClient) deleteTrigger(ctx context.Context, triggerName stri
 // deleteTriggerCreateRequest creates the DeleteTrigger request.
 func (client *triggerClient) deleteTriggerCreateRequest(ctx context.Context, triggerName string, options *TriggerBeginDeleteTriggerOptions) (*azcore.Request, error) {
 	urlPath := "/triggers/{triggerName}"
+	if triggerName == "" {
+		errors.New("parameter triggerName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{triggerName}", url.PathEscape(triggerName))
 	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -132,6 +139,9 @@ func (client *triggerClient) GetEventSubscriptionStatus(ctx context.Context, tri
 // getEventSubscriptionStatusCreateRequest creates the GetEventSubscriptionStatus request.
 func (client *triggerClient) getEventSubscriptionStatusCreateRequest(ctx context.Context, triggerName string, options *TriggerGetEventSubscriptionStatusOptions) (*azcore.Request, error) {
 	urlPath := "/triggers/{triggerName}/getEventSubscriptionStatus"
+	if triggerName == "" {
+		errors.New("parameter triggerName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{triggerName}", url.PathEscape(triggerName))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -182,6 +192,9 @@ func (client *triggerClient) GetTrigger(ctx context.Context, triggerName string,
 // getTriggerCreateRequest creates the GetTrigger request.
 func (client *triggerClient) getTriggerCreateRequest(ctx context.Context, triggerName string, options *TriggerGetTriggerOptions) (*azcore.Request, error) {
 	urlPath := "/triggers/{triggerName}"
+	if triggerName == "" {
+		errors.New("parameter triggerName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{triggerName}", url.PathEscape(triggerName))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -284,6 +297,9 @@ func (client *triggerClient) startTrigger(ctx context.Context, triggerName strin
 // startTriggerCreateRequest creates the StartTrigger request.
 func (client *triggerClient) startTriggerCreateRequest(ctx context.Context, triggerName string, options *TriggerBeginStartTriggerOptions) (*azcore.Request, error) {
 	urlPath := "/triggers/{triggerName}/start"
+	if triggerName == "" {
+		errors.New("parameter triggerName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{triggerName}", url.PathEscape(triggerName))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -325,6 +341,9 @@ func (client *triggerClient) stopTrigger(ctx context.Context, triggerName string
 // stopTriggerCreateRequest creates the StopTrigger request.
 func (client *triggerClient) stopTriggerCreateRequest(ctx context.Context, triggerName string, options *TriggerBeginStopTriggerOptions) (*azcore.Request, error) {
 	urlPath := "/triggers/{triggerName}/stop"
+	if triggerName == "" {
+		errors.New("parameter triggerName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{triggerName}", url.PathEscape(triggerName))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -366,6 +385,9 @@ func (client *triggerClient) subscribeTriggerToEvents(ctx context.Context, trigg
 // subscribeTriggerToEventsCreateRequest creates the SubscribeTriggerToEvents request.
 func (client *triggerClient) subscribeTriggerToEventsCreateRequest(ctx context.Context, triggerName string, options *TriggerBeginSubscribeTriggerToEventsOptions) (*azcore.Request, error) {
 	urlPath := "/triggers/{triggerName}/subscribeToEvents"
+	if triggerName == "" {
+		errors.New("parameter triggerName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{triggerName}", url.PathEscape(triggerName))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -416,6 +438,9 @@ func (client *triggerClient) unsubscribeTriggerFromEvents(ctx context.Context, t
 // unsubscribeTriggerFromEventsCreateRequest creates the UnsubscribeTriggerFromEvents request.
 func (client *triggerClient) unsubscribeTriggerFromEventsCreateRequest(ctx context.Context, triggerName string, options *TriggerBeginUnsubscribeTriggerFromEventsOptions) (*azcore.Request, error) {
 	urlPath := "/triggers/{triggerName}/unsubscribeFromEvents"
+	if triggerName == "" {
+		errors.New("parameter triggerName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{triggerName}", url.PathEscape(triggerName))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {

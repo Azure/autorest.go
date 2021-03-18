@@ -5,7 +5,7 @@
 
 import { Session } from '@autorest/extension-base';
 import { comment, KnownMediaType } from '@azure-tools/codegen';
-import { ArraySchema, ByteArraySchema, CodeModel, ConstantSchema, DateTimeSchema, DictionarySchema, GroupProperty, ImplementationLocation, NumberSchema, Operation, Parameter, Property, Protocols, Response, Schema, SchemaResponse, SchemaType } from '@azure-tools/codemodel';
+import { ArraySchema, ByteArraySchema, ChoiceSchema, CodeModel, ConstantSchema, DateTimeSchema, DictionarySchema, GroupProperty, ImplementationLocation, NumberSchema, Operation, Parameter, Property, Protocols, Response, Schema, SchemaResponse, SchemaType } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 import { aggregateParameters, internalPagerTypeName, internalPollerTypeName, isArraySchema, isPageableOperation, isSchemaResponse, PagerInfo, PollerInfo, isLROOperation, commentLength } from '../common/helpers';
 import { OperationNaming } from '../transform/namer';
@@ -374,6 +374,24 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
     imports.add('strings');
     // replace path parameters
     for (const pp of values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'path'; })) {
+      // emit check to ensure path param isn't an empty string.  we only need
+      // to do this for params that have an underlying type of string.
+      const choiceIsString = function (schema: Schema): boolean {
+        if (schema.type === SchemaType.Choice) {
+          return (<ChoiceSchema>schema).choiceType.type === SchemaType.String;
+        }
+        if (schema.type === SchemaType.SealedChoice) {
+          return (<ChoiceSchema>schema).choiceType.type === SchemaType.String;
+        }
+        return false;
+      }
+      if (pp.schema.type === SchemaType.String || choiceIsString(pp.schema)) {
+        const paramName = getParamName(pp);
+        imports.add('errors');
+        text += `\tif ${paramName} == "" {\n`;
+        text += `\t\terrors.New("parameter ${paramName} cannot be empty")\n`;
+        text += '\t}\n';
+      }
       let paramValue = formatParamValue(pp, imports);
       if (!skipURLEncoding(pp)) {
         imports.add('net/url');

@@ -9,6 +9,7 @@ package azartifacts
 
 import (
 	"context"
+	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -38,6 +39,9 @@ func (client *datasetClient) createOrUpdateDataset(ctx context.Context, datasetN
 // createOrUpdateDatasetCreateRequest creates the CreateOrUpdateDataset request.
 func (client *datasetClient) createOrUpdateDatasetCreateRequest(ctx context.Context, datasetName string, dataset DatasetResource, options *DatasetBeginCreateOrUpdateDatasetOptions) (*azcore.Request, error) {
 	urlPath := "/datasets/{datasetName}"
+	if datasetName == "" {
+		errors.New("parameter datasetName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{datasetName}", url.PathEscape(datasetName))
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -91,6 +95,9 @@ func (client *datasetClient) deleteDataset(ctx context.Context, datasetName stri
 // deleteDatasetCreateRequest creates the DeleteDataset request.
 func (client *datasetClient) deleteDatasetCreateRequest(ctx context.Context, datasetName string, options *DatasetBeginDeleteDatasetOptions) (*azcore.Request, error) {
 	urlPath := "/datasets/{datasetName}"
+	if datasetName == "" {
+		errors.New("parameter datasetName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{datasetName}", url.PathEscape(datasetName))
 	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -132,6 +139,9 @@ func (client *datasetClient) GetDataset(ctx context.Context, datasetName string,
 // getDatasetCreateRequest creates the GetDataset request.
 func (client *datasetClient) getDatasetCreateRequest(ctx context.Context, datasetName string, options *DatasetGetDatasetOptions) (*azcore.Request, error) {
 	urlPath := "/datasets/{datasetName}"
+	if datasetName == "" {
+		errors.New("parameter datasetName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{datasetName}", url.PathEscape(datasetName))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -234,6 +244,9 @@ func (client *datasetClient) renameDataset(ctx context.Context, datasetName stri
 // renameDatasetCreateRequest creates the RenameDataset request.
 func (client *datasetClient) renameDatasetCreateRequest(ctx context.Context, datasetName string, request ArtifactRenameRequest, options *DatasetBeginRenameDatasetOptions) (*azcore.Request, error) {
 	urlPath := "/datasets/{datasetName}/rename"
+	if datasetName == "" {
+		errors.New("parameter datasetName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{datasetName}", url.PathEscape(datasetName))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {

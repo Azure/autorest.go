@@ -9,6 +9,7 @@ package azartifacts
 
 import (
 	"context"
+	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -38,6 +39,9 @@ func (client *bigDataPoolsClient) Get(ctx context.Context, bigDataPoolName strin
 // getCreateRequest creates the Get request.
 func (client *bigDataPoolsClient) getCreateRequest(ctx context.Context, bigDataPoolName string, options *BigDataPoolsGetOptions) (*azcore.Request, error) {
 	urlPath := "/bigDataPools/{bigDataPoolName}"
+	if bigDataPoolName == "" {
+		errors.New("parameter bigDataPoolName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{bigDataPoolName}", url.PathEscape(bigDataPoolName))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {

@@ -9,6 +9,7 @@ package azartifacts
 
 import (
 	"context"
+	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -38,6 +39,9 @@ func (client *sqlScriptClient) createOrUpdateSQLScript(ctx context.Context, sqlS
 // createOrUpdateSQLScriptCreateRequest creates the CreateOrUpdateSQLScript request.
 func (client *sqlScriptClient) createOrUpdateSQLScriptCreateRequest(ctx context.Context, sqlScriptName string, sqlScript SQLScriptResource, options *SQLScriptBeginCreateOrUpdateSQLScriptOptions) (*azcore.Request, error) {
 	urlPath := "/sqlScripts/{sqlScriptName}"
+	if sqlScriptName == "" {
+		errors.New("parameter sqlScriptName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{sqlScriptName}", url.PathEscape(sqlScriptName))
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -91,6 +95,9 @@ func (client *sqlScriptClient) deleteSQLScript(ctx context.Context, sqlScriptNam
 // deleteSQLScriptCreateRequest creates the DeleteSQLScript request.
 func (client *sqlScriptClient) deleteSQLScriptCreateRequest(ctx context.Context, sqlScriptName string, options *SQLScriptBeginDeleteSQLScriptOptions) (*azcore.Request, error) {
 	urlPath := "/sqlScripts/{sqlScriptName}"
+	if sqlScriptName == "" {
+		errors.New("parameter sqlScriptName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{sqlScriptName}", url.PathEscape(sqlScriptName))
 	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -132,6 +139,9 @@ func (client *sqlScriptClient) GetSQLScript(ctx context.Context, sqlScriptName s
 // getSQLScriptCreateRequest creates the GetSQLScript request.
 func (client *sqlScriptClient) getSQLScriptCreateRequest(ctx context.Context, sqlScriptName string, options *SQLScriptGetSQLScriptOptions) (*azcore.Request, error) {
 	urlPath := "/sqlScripts/{sqlScriptName}"
+	if sqlScriptName == "" {
+		errors.New("parameter sqlScriptName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{sqlScriptName}", url.PathEscape(sqlScriptName))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -234,6 +244,9 @@ func (client *sqlScriptClient) renameSQLScript(ctx context.Context, sqlScriptNam
 // renameSQLScriptCreateRequest creates the RenameSQLScript request.
 func (client *sqlScriptClient) renameSQLScriptCreateRequest(ctx context.Context, sqlScriptName string, request ArtifactRenameRequest, options *SQLScriptBeginRenameSQLScriptOptions) (*azcore.Request, error) {
 	urlPath := "/sqlScripts/{sqlScriptName}/rename"
+	if sqlScriptName == "" {
+		errors.New("parameter sqlScriptName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{sqlScriptName}", url.PathEscape(sqlScriptName))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {

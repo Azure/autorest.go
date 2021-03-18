@@ -88,8 +88,17 @@ func (client *ImagesClient) createOrUpdate(ctx context.Context, resourceGroupNam
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
 func (client *ImagesClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, imageName string, parameters Image, options *ImagesBeginCreateOrUpdateOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/images/{imageName}"
+	if resourceGroupName == "" {
+		errors.New("parameter resourceGroupName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
+	if imageName == "" {
+		errors.New("parameter imageName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{imageName}", url.PathEscape(imageName))
+	if client.subscriptionID == "" {
+		errors.New("parameter client.subscriptionID cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -180,8 +189,17 @@ func (client *ImagesClient) delete(ctx context.Context, resourceGroupName string
 // deleteCreateRequest creates the Delete request.
 func (client *ImagesClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, imageName string, options *ImagesBeginDeleteOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/images/{imageName}"
+	if resourceGroupName == "" {
+		errors.New("parameter resourceGroupName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
+	if imageName == "" {
+		errors.New("parameter imageName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{imageName}", url.PathEscape(imageName))
+	if client.subscriptionID == "" {
+		errors.New("parameter client.subscriptionID cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -225,8 +243,17 @@ func (client *ImagesClient) Get(ctx context.Context, resourceGroupName string, i
 // getCreateRequest creates the Get request.
 func (client *ImagesClient) getCreateRequest(ctx context.Context, resourceGroupName string, imageName string, options *ImagesGetOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/images/{imageName}"
+	if resourceGroupName == "" {
+		errors.New("parameter resourceGroupName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
+	if imageName == "" {
+		errors.New("parameter imageName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{imageName}", url.PathEscape(imageName))
+	if client.subscriptionID == "" {
+		errors.New("parameter client.subscriptionID cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -284,6 +311,9 @@ func (client *ImagesClient) List(options *ImagesListOptions) ImageListResultPage
 // listCreateRequest creates the List request.
 func (client *ImagesClient) listCreateRequest(ctx context.Context, options *ImagesListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/images"
+	if client.subscriptionID == "" {
+		errors.New("parameter client.subscriptionID cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -337,7 +367,13 @@ func (client *ImagesClient) ListByResourceGroup(resourceGroupName string, option
 // listByResourceGroupCreateRequest creates the ListByResourceGroup request.
 func (client *ImagesClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, options *ImagesListByResourceGroupOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/images"
+	if resourceGroupName == "" {
+		errors.New("parameter resourceGroupName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
+	if client.subscriptionID == "" {
+		errors.New("parameter client.subscriptionID cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -428,8 +464,17 @@ func (client *ImagesClient) update(ctx context.Context, resourceGroupName string
 // updateCreateRequest creates the Update request.
 func (client *ImagesClient) updateCreateRequest(ctx context.Context, resourceGroupName string, imageName string, parameters ImageUpdate, options *ImagesBeginUpdateOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/images/{imageName}"
+	if resourceGroupName == "" {
+		errors.New("parameter resourceGroupName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
+	if imageName == "" {
+		errors.New("parameter imageName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{imageName}", url.PathEscape(imageName))
+	if client.subscriptionID == "" {
+		errors.New("parameter client.subscriptionID cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodPatch, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {

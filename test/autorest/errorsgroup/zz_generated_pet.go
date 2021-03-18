@@ -48,6 +48,9 @@ func (client *PetClient) DoSomething(ctx context.Context, whatAction string, opt
 // doSomethingCreateRequest creates the DoSomething request.
 func (client *PetClient) doSomethingCreateRequest(ctx context.Context, whatAction string, options *PetDoSomethingOptions) (*azcore.Request, error) {
 	urlPath := "/errorStatusCodes/Pets/doSomething/{whatAction}"
+	if whatAction == "" {
+		errors.New("parameter whatAction cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{whatAction}", url.PathEscape(whatAction))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -95,6 +98,9 @@ func (client *PetClient) GetPetByID(ctx context.Context, petID string, options *
 // getPetByIDCreateRequest creates the GetPetByID request.
 func (client *PetClient) getPetByIDCreateRequest(ctx context.Context, petID string, options *PetGetPetByIDOptions) (*azcore.Request, error) {
 	urlPath := "/errorStatusCodes/Pets/{petId}/GetPet"
+	if petID == "" {
+		errors.New("parameter petID cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{petId}", url.PathEscape(petID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {

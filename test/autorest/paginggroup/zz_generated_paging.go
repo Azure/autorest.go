@@ -207,6 +207,9 @@ func (client *PagingClient) GetMultiplePagesFragmentNextLink(apiVersion string, 
 // getMultiplePagesFragmentNextLinkCreateRequest creates the GetMultiplePagesFragmentNextLink request.
 func (client *PagingClient) getMultiplePagesFragmentNextLinkCreateRequest(ctx context.Context, apiVersion string, tenant string, options *PagingGetMultiplePagesFragmentNextLinkOptions) (*azcore.Request, error) {
 	urlPath := "/paging/multiple/fragment/{tenant}"
+	if tenant == "" {
+		errors.New("parameter tenant cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{tenant}", url.PathEscape(tenant))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -260,6 +263,9 @@ func (client *PagingClient) GetMultiplePagesFragmentWithGroupingNextLink(customP
 // getMultiplePagesFragmentWithGroupingNextLinkCreateRequest creates the GetMultiplePagesFragmentWithGroupingNextLink request.
 func (client *PagingClient) getMultiplePagesFragmentWithGroupingNextLinkCreateRequest(ctx context.Context, customParameterGroup CustomParameterGroup) (*azcore.Request, error) {
 	urlPath := "/paging/multiple/fragmentwithgrouping/{tenant}"
+	if customParameterGroup.Tenant == "" {
+		errors.New("parameter customParameterGroup.Tenant cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{tenant}", url.PathEscape(customParameterGroup.Tenant))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -922,7 +928,13 @@ func (client *PagingClient) getWithQueryParamsHandleError(resp *azcore.Response)
 // nextFragmentCreateRequest creates the NextFragment request.
 func (client *PagingClient) nextFragmentCreateRequest(ctx context.Context, apiVersion string, tenant string, nextLink string) (*azcore.Request, error) {
 	urlPath := "/paging/multiple/fragment/{tenant}/{nextLink}"
+	if tenant == "" {
+		errors.New("parameter tenant cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{tenant}", url.PathEscape(tenant))
+	if nextLink == "" {
+		errors.New("parameter nextLink cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{nextLink}", nextLink)
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -960,7 +972,13 @@ func (client *PagingClient) nextFragmentHandleError(resp *azcore.Response) error
 // nextFragmentWithGroupingCreateRequest creates the NextFragmentWithGrouping request.
 func (client *PagingClient) nextFragmentWithGroupingCreateRequest(ctx context.Context, nextLink string, customParameterGroup CustomParameterGroup) (*azcore.Request, error) {
 	urlPath := "/paging/multiple/fragmentwithgrouping/{tenant}/{nextLink}"
+	if customParameterGroup.Tenant == "" {
+		errors.New("parameter customParameterGroup.Tenant cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{tenant}", url.PathEscape(customParameterGroup.Tenant))
+	if nextLink == "" {
+		errors.New("parameter nextLink cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{nextLink}", nextLink)
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {

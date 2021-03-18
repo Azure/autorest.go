@@ -9,6 +9,7 @@ package azartifacts
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
@@ -41,6 +42,9 @@ func (client *libraryClient) Append(ctx context.Context, libraryName string, con
 // appendCreateRequest creates the Append request.
 func (client *libraryClient) appendCreateRequest(ctx context.Context, libraryName string, content azcore.ReadSeekCloser, options *LibraryAppendOptions) (*azcore.Request, error) {
 	urlPath := "/libraries/{libraryName}"
+	if libraryName == "" {
+		errors.New("parameter libraryName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{libraryName}", url.PathEscape(libraryName))
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -85,6 +89,9 @@ func (client *libraryClient) create(ctx context.Context, libraryName string, opt
 // createCreateRequest creates the Create request.
 func (client *libraryClient) createCreateRequest(ctx context.Context, libraryName string, options *LibraryBeginCreateOptions) (*azcore.Request, error) {
 	urlPath := "/libraries/{libraryName}"
+	if libraryName == "" {
+		errors.New("parameter libraryName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{libraryName}", url.PathEscape(libraryName))
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -131,6 +138,9 @@ func (client *libraryClient) delete(ctx context.Context, libraryName string, opt
 // deleteCreateRequest creates the Delete request.
 func (client *libraryClient) deleteCreateRequest(ctx context.Context, libraryName string, options *LibraryBeginDeleteOptions) (*azcore.Request, error) {
 	urlPath := "/libraries/{libraryName}"
+	if libraryName == "" {
+		errors.New("parameter libraryName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{libraryName}", url.PathEscape(libraryName))
 	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -177,6 +187,9 @@ func (client *libraryClient) flush(ctx context.Context, libraryName string, opti
 // flushCreateRequest creates the Flush request.
 func (client *libraryClient) flushCreateRequest(ctx context.Context, libraryName string, options *LibraryBeginFlushOptions) (*azcore.Request, error) {
 	urlPath := "/libraries/{libraryName}/flush"
+	if libraryName == "" {
+		errors.New("parameter libraryName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{libraryName}", url.PathEscape(libraryName))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -223,6 +236,9 @@ func (client *libraryClient) Get(ctx context.Context, libraryName string, option
 // getCreateRequest creates the Get request.
 func (client *libraryClient) getCreateRequest(ctx context.Context, libraryName string, options *LibraryGetOptions) (*azcore.Request, error) {
 	urlPath := "/libraries/{libraryName}"
+	if libraryName == "" {
+		errors.New("parameter libraryName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{libraryName}", url.PathEscape(libraryName))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -274,6 +290,9 @@ func (client *libraryClient) GetOperationResult(ctx context.Context, operationID
 // getOperationResultCreateRequest creates the GetOperationResult request.
 func (client *libraryClient) getOperationResultCreateRequest(ctx context.Context, operationID string, options *LibraryGetOperationResultOptions) (*azcore.Request, error) {
 	urlPath := "/libraryOperationResults/{operationId}"
+	if operationID == "" {
+		errors.New("parameter operationID cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{operationId}", url.PathEscape(operationID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {

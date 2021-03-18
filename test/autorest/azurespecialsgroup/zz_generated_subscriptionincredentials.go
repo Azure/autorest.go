@@ -9,6 +9,7 @@ package azurespecialsgroup
 
 import (
 	"context"
+	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -47,6 +48,9 @@ func (client *SubscriptionInCredentialsClient) PostMethodGlobalNotProvidedValid(
 // postMethodGlobalNotProvidedValidCreateRequest creates the PostMethodGlobalNotProvidedValid request.
 func (client *SubscriptionInCredentialsClient) postMethodGlobalNotProvidedValidCreateRequest(ctx context.Context, options *SubscriptionInCredentialsPostMethodGlobalNotProvidedValidOptions) (*azcore.Request, error) {
 	urlPath := "/azurespecials/subscriptionId/method/string/none/path/globalNotProvided/1234-5678-9012-3456/{subscriptionId}"
+	if client.subscriptionID == "" {
+		errors.New("parameter client.subscriptionID cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -89,6 +93,9 @@ func (client *SubscriptionInCredentialsClient) PostMethodGlobalNull(ctx context.
 // postMethodGlobalNullCreateRequest creates the PostMethodGlobalNull request.
 func (client *SubscriptionInCredentialsClient) postMethodGlobalNullCreateRequest(ctx context.Context, options *SubscriptionInCredentialsPostMethodGlobalNullOptions) (*azcore.Request, error) {
 	urlPath := "/azurespecials/subscriptionId/method/string/none/path/global/null/{subscriptionId}"
+	if client.subscriptionID == "" {
+		errors.New("parameter client.subscriptionID cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -127,6 +134,9 @@ func (client *SubscriptionInCredentialsClient) PostMethodGlobalValid(ctx context
 // postMethodGlobalValidCreateRequest creates the PostMethodGlobalValid request.
 func (client *SubscriptionInCredentialsClient) postMethodGlobalValidCreateRequest(ctx context.Context, options *SubscriptionInCredentialsPostMethodGlobalValidOptions) (*azcore.Request, error) {
 	urlPath := "/azurespecials/subscriptionId/method/string/none/path/global/1234-5678-9012-3456/{subscriptionId}"
+	if client.subscriptionID == "" {
+		errors.New("parameter client.subscriptionID cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -165,6 +175,9 @@ func (client *SubscriptionInCredentialsClient) PostPathGlobalValid(ctx context.C
 // postPathGlobalValidCreateRequest creates the PostPathGlobalValid request.
 func (client *SubscriptionInCredentialsClient) postPathGlobalValidCreateRequest(ctx context.Context, options *SubscriptionInCredentialsPostPathGlobalValidOptions) (*azcore.Request, error) {
 	urlPath := "/azurespecials/subscriptionId/path/string/none/path/global/1234-5678-9012-3456/{subscriptionId}"
+	if client.subscriptionID == "" {
+		errors.New("parameter client.subscriptionID cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -203,6 +216,9 @@ func (client *SubscriptionInCredentialsClient) PostSwaggerGlobalValid(ctx contex
 // postSwaggerGlobalValidCreateRequest creates the PostSwaggerGlobalValid request.
 func (client *SubscriptionInCredentialsClient) postSwaggerGlobalValidCreateRequest(ctx context.Context, options *SubscriptionInCredentialsPostSwaggerGlobalValidOptions) (*azcore.Request, error) {
 	urlPath := "/azurespecials/subscriptionId/swagger/string/none/path/global/1234-5678-9012-3456/{subscriptionId}"
+	if client.subscriptionID == "" {
+		errors.New("parameter client.subscriptionID cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {

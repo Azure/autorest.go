@@ -9,6 +9,7 @@ package armnetwork
 
 import (
 	"context"
+	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
@@ -85,8 +86,17 @@ func (client *VirtualNetworkGatewaysClient) createOrUpdate(ctx context.Context, 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
 func (client *VirtualNetworkGatewaysClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VirtualNetworkGateway, options *VirtualNetworkGatewaysBeginCreateOrUpdateOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}"
+	if resourceGroupName == "" {
+		errors.New("parameter resourceGroupName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
+	if virtualNetworkGatewayName == "" {
+		errors.New("parameter virtualNetworkGatewayName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
+	if client.subscriptionID == "" {
+		errors.New("parameter client.subscriptionID cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -174,8 +184,17 @@ func (client *VirtualNetworkGatewaysClient) delete(ctx context.Context, resource
 // deleteCreateRequest creates the Delete request.
 func (client *VirtualNetworkGatewaysClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysBeginDeleteOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}"
+	if resourceGroupName == "" {
+		errors.New("parameter resourceGroupName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
+	if virtualNetworkGatewayName == "" {
+		errors.New("parameter virtualNetworkGatewayName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
+	if client.subscriptionID == "" {
+		errors.New("parameter client.subscriptionID cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -254,8 +273,17 @@ func (client *VirtualNetworkGatewaysClient) disconnectVirtualNetworkGatewayVPNCo
 // disconnectVirtualNetworkGatewayVPNConnectionsCreateRequest creates the DisconnectVirtualNetworkGatewayVPNConnections request.
 func (client *VirtualNetworkGatewaysClient) disconnectVirtualNetworkGatewayVPNConnectionsCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, request P2SVPNConnectionRequest, options *VirtualNetworkGatewaysBeginDisconnectVirtualNetworkGatewayVPNConnectionsOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/disconnectVirtualNetworkGatewayVpnConnections"
+	if client.subscriptionID == "" {
+		errors.New("parameter client.subscriptionID cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
+	if resourceGroupName == "" {
+		errors.New("parameter resourceGroupName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
+	if virtualNetworkGatewayName == "" {
+		errors.New("parameter virtualNetworkGatewayName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -336,8 +364,17 @@ func (client *VirtualNetworkGatewaysClient) generateVPNProfile(ctx context.Conte
 // generateVPNProfileCreateRequest creates the GenerateVPNProfile request.
 func (client *VirtualNetworkGatewaysClient) generateVPNProfileCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VPNClientParameters, options *VirtualNetworkGatewaysBeginGenerateVPNProfileOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/generatevpnprofile"
+	if resourceGroupName == "" {
+		errors.New("parameter resourceGroupName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
+	if virtualNetworkGatewayName == "" {
+		errors.New("parameter virtualNetworkGatewayName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
+	if client.subscriptionID == "" {
+		errors.New("parameter client.subscriptionID cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -425,8 +462,17 @@ func (client *VirtualNetworkGatewaysClient) generatevpnclientpackage(ctx context
 // generatevpnclientpackageCreateRequest creates the Generatevpnclientpackage request.
 func (client *VirtualNetworkGatewaysClient) generatevpnclientpackageCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VPNClientParameters, options *VirtualNetworkGatewaysBeginGeneratevpnclientpackageOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/generatevpnclientpackage"
+	if resourceGroupName == "" {
+		errors.New("parameter resourceGroupName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
+	if virtualNetworkGatewayName == "" {
+		errors.New("parameter virtualNetworkGatewayName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
+	if client.subscriptionID == "" {
+		errors.New("parameter client.subscriptionID cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -477,8 +523,17 @@ func (client *VirtualNetworkGatewaysClient) Get(ctx context.Context, resourceGro
 // getCreateRequest creates the Get request.
 func (client *VirtualNetworkGatewaysClient) getCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysGetOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}"
+	if resourceGroupName == "" {
+		errors.New("parameter resourceGroupName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
+	if virtualNetworkGatewayName == "" {
+		errors.New("parameter virtualNetworkGatewayName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
+	if client.subscriptionID == "" {
+		errors.New("parameter client.subscriptionID cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -566,8 +621,17 @@ func (client *VirtualNetworkGatewaysClient) getAdvertisedRoutes(ctx context.Cont
 // getAdvertisedRoutesCreateRequest creates the GetAdvertisedRoutes request.
 func (client *VirtualNetworkGatewaysClient) getAdvertisedRoutesCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, peer string, options *VirtualNetworkGatewaysBeginGetAdvertisedRoutesOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/getAdvertisedRoutes"
+	if resourceGroupName == "" {
+		errors.New("parameter resourceGroupName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
+	if virtualNetworkGatewayName == "" {
+		errors.New("parameter virtualNetworkGatewayName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
+	if client.subscriptionID == "" {
+		errors.New("parameter client.subscriptionID cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -656,8 +720,17 @@ func (client *VirtualNetworkGatewaysClient) getBgpPeerStatus(ctx context.Context
 // getBgpPeerStatusCreateRequest creates the GetBgpPeerStatus request.
 func (client *VirtualNetworkGatewaysClient) getBgpPeerStatusCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysBeginGetBgpPeerStatusOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/getBgpPeerStatus"
+	if resourceGroupName == "" {
+		errors.New("parameter resourceGroupName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
+	if virtualNetworkGatewayName == "" {
+		errors.New("parameter virtualNetworkGatewayName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
+	if client.subscriptionID == "" {
+		errors.New("parameter client.subscriptionID cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -748,8 +821,17 @@ func (client *VirtualNetworkGatewaysClient) getLearnedRoutes(ctx context.Context
 // getLearnedRoutesCreateRequest creates the GetLearnedRoutes request.
 func (client *VirtualNetworkGatewaysClient) getLearnedRoutesCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysBeginGetLearnedRoutesOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/getLearnedRoutes"
+	if resourceGroupName == "" {
+		errors.New("parameter resourceGroupName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
+	if virtualNetworkGatewayName == "" {
+		errors.New("parameter virtualNetworkGatewayName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
+	if client.subscriptionID == "" {
+		errors.New("parameter client.subscriptionID cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -839,8 +921,17 @@ func (client *VirtualNetworkGatewaysClient) getVPNProfilePackageURL(ctx context.
 // getVPNProfilePackageURLCreateRequest creates the GetVPNProfilePackageURL request.
 func (client *VirtualNetworkGatewaysClient) getVPNProfilePackageURLCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysBeginGetVPNProfilePackageURLOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/getvpnprofilepackageurl"
+	if resourceGroupName == "" {
+		errors.New("parameter resourceGroupName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
+	if virtualNetworkGatewayName == "" {
+		errors.New("parameter virtualNetworkGatewayName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
+	if client.subscriptionID == "" {
+		errors.New("parameter client.subscriptionID cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -930,8 +1021,17 @@ func (client *VirtualNetworkGatewaysClient) getVpnclientConnectionHealth(ctx con
 // getVpnclientConnectionHealthCreateRequest creates the GetVpnclientConnectionHealth request.
 func (client *VirtualNetworkGatewaysClient) getVpnclientConnectionHealthCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysBeginGetVpnclientConnectionHealthOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/getVpnClientConnectionHealth"
+	if resourceGroupName == "" {
+		errors.New("parameter resourceGroupName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
+	if virtualNetworkGatewayName == "" {
+		errors.New("parameter virtualNetworkGatewayName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
+	if client.subscriptionID == "" {
+		errors.New("parameter client.subscriptionID cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1023,8 +1123,17 @@ func (client *VirtualNetworkGatewaysClient) getVpnclientIPSecParameters(ctx cont
 // getVpnclientIPSecParametersCreateRequest creates the GetVpnclientIPSecParameters request.
 func (client *VirtualNetworkGatewaysClient) getVpnclientIPSecParametersCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysBeginGetVpnclientIPSecParametersOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/getvpnclientipsecparameters"
+	if resourceGroupName == "" {
+		errors.New("parameter resourceGroupName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
+	if virtualNetworkGatewayName == "" {
+		errors.New("parameter virtualNetworkGatewayName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
+	if client.subscriptionID == "" {
+		errors.New("parameter client.subscriptionID cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1075,7 +1184,13 @@ func (client *VirtualNetworkGatewaysClient) List(resourceGroupName string, optio
 // listCreateRequest creates the List request.
 func (client *VirtualNetworkGatewaysClient) listCreateRequest(ctx context.Context, resourceGroupName string, options *VirtualNetworkGatewaysListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways"
+	if resourceGroupName == "" {
+		errors.New("parameter resourceGroupName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
+	if client.subscriptionID == "" {
+		errors.New("parameter client.subscriptionID cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1126,8 +1241,17 @@ func (client *VirtualNetworkGatewaysClient) ListConnections(resourceGroupName st
 // listConnectionsCreateRequest creates the ListConnections request.
 func (client *VirtualNetworkGatewaysClient) listConnectionsCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysListConnectionsOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/connections"
+	if resourceGroupName == "" {
+		errors.New("parameter resourceGroupName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
+	if virtualNetworkGatewayName == "" {
+		errors.New("parameter virtualNetworkGatewayName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
+	if client.subscriptionID == "" {
+		errors.New("parameter client.subscriptionID cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1215,8 +1339,17 @@ func (client *VirtualNetworkGatewaysClient) reset(ctx context.Context, resourceG
 // resetCreateRequest creates the Reset request.
 func (client *VirtualNetworkGatewaysClient) resetCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysBeginResetOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/reset"
+	if resourceGroupName == "" {
+		errors.New("parameter resourceGroupName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
+	if virtualNetworkGatewayName == "" {
+		errors.New("parameter virtualNetworkGatewayName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
+	if client.subscriptionID == "" {
+		errors.New("parameter client.subscriptionID cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1307,8 +1440,17 @@ func (client *VirtualNetworkGatewaysClient) resetVPNClientSharedKey(ctx context.
 // resetVPNClientSharedKeyCreateRequest creates the ResetVPNClientSharedKey request.
 func (client *VirtualNetworkGatewaysClient) resetVPNClientSharedKeyCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysBeginResetVPNClientSharedKeyOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/resetvpnclientsharedkey"
+	if resourceGroupName == "" {
+		errors.New("parameter resourceGroupName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
+	if virtualNetworkGatewayName == "" {
+		errors.New("parameter virtualNetworkGatewayName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
+	if client.subscriptionID == "" {
+		errors.New("parameter client.subscriptionID cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1389,8 +1531,17 @@ func (client *VirtualNetworkGatewaysClient) setVpnclientIPSecParameters(ctx cont
 // setVpnclientIPSecParametersCreateRequest creates the SetVpnclientIPSecParameters request.
 func (client *VirtualNetworkGatewaysClient) setVpnclientIPSecParametersCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, vpnclientIPSecParams VPNClientIPsecParameters, options *VirtualNetworkGatewaysBeginSetVpnclientIPSecParametersOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/setvpnclientipsecparameters"
+	if resourceGroupName == "" {
+		errors.New("parameter resourceGroupName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
+	if virtualNetworkGatewayName == "" {
+		errors.New("parameter virtualNetworkGatewayName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
+	if client.subscriptionID == "" {
+		errors.New("parameter client.subscriptionID cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1478,8 +1629,17 @@ func (client *VirtualNetworkGatewaysClient) startPacketCapture(ctx context.Conte
 // startPacketCaptureCreateRequest creates the StartPacketCapture request.
 func (client *VirtualNetworkGatewaysClient) startPacketCaptureCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysBeginStartPacketCaptureOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/startPacketCapture"
+	if resourceGroupName == "" {
+		errors.New("parameter resourceGroupName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
+	if virtualNetworkGatewayName == "" {
+		errors.New("parameter virtualNetworkGatewayName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
+	if client.subscriptionID == "" {
+		errors.New("parameter client.subscriptionID cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1570,8 +1730,17 @@ func (client *VirtualNetworkGatewaysClient) stopPacketCapture(ctx context.Contex
 // stopPacketCaptureCreateRequest creates the StopPacketCapture request.
 func (client *VirtualNetworkGatewaysClient) stopPacketCaptureCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VPNPacketCaptureStopParameters, options *VirtualNetworkGatewaysBeginStopPacketCaptureOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/stopPacketCapture"
+	if resourceGroupName == "" {
+		errors.New("parameter resourceGroupName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
+	if virtualNetworkGatewayName == "" {
+		errors.New("parameter virtualNetworkGatewayName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
+	if client.subscriptionID == "" {
+		errors.New("parameter client.subscriptionID cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1622,8 +1791,17 @@ func (client *VirtualNetworkGatewaysClient) SupportedVPNDevices(ctx context.Cont
 // supportedVPNDevicesCreateRequest creates the SupportedVPNDevices request.
 func (client *VirtualNetworkGatewaysClient) supportedVPNDevicesCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysSupportedVPNDevicesOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/supportedvpndevices"
+	if resourceGroupName == "" {
+		errors.New("parameter resourceGroupName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
+	if virtualNetworkGatewayName == "" {
+		errors.New("parameter virtualNetworkGatewayName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
+	if client.subscriptionID == "" {
+		errors.New("parameter client.subscriptionID cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1711,8 +1889,17 @@ func (client *VirtualNetworkGatewaysClient) updateTags(ctx context.Context, reso
 // updateTagsCreateRequest creates the UpdateTags request.
 func (client *VirtualNetworkGatewaysClient) updateTagsCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters TagsObject, options *VirtualNetworkGatewaysBeginUpdateTagsOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}"
+	if resourceGroupName == "" {
+		errors.New("parameter resourceGroupName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
+	if virtualNetworkGatewayName == "" {
+		errors.New("parameter virtualNetworkGatewayName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayName}", url.PathEscape(virtualNetworkGatewayName))
+	if client.subscriptionID == "" {
+		errors.New("parameter client.subscriptionID cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodPatch, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1763,8 +1950,17 @@ func (client *VirtualNetworkGatewaysClient) VPNDeviceConfigurationScript(ctx con
 // vpnDeviceConfigurationScriptCreateRequest creates the VPNDeviceConfigurationScript request.
 func (client *VirtualNetworkGatewaysClient) vpnDeviceConfigurationScriptCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, parameters VPNDeviceScriptParameters, options *VirtualNetworkGatewaysVPNDeviceConfigurationScriptOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}/vpndeviceconfigurationscript"
+	if resourceGroupName == "" {
+		errors.New("parameter resourceGroupName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
+	if virtualNetworkGatewayConnectionName == "" {
+		errors.New("parameter virtualNetworkGatewayConnectionName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{virtualNetworkGatewayConnectionName}", url.PathEscape(virtualNetworkGatewayConnectionName))
+	if client.subscriptionID == "" {
+		errors.New("parameter client.subscriptionID cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
