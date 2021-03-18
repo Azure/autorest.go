@@ -378,7 +378,7 @@ function generateStructs(objects?: ObjectSchema[]): StructDef[] {
       // singular type not in any hierarchy
       needsU = true;
     }
-    // we check needsPatchMarshaller separately from othe
+    // we check needsPatchMarshaller separately from other
     // states since it's not mutually exclusive with them.
     if (obj.language.go!.needsPatchMarshaller === true) {
       needsM = true;
