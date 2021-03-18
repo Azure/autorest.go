@@ -405,6 +405,9 @@ function processOperationRequests(session: Session<CodeModel>) {
           if (marshallingFormat === 'xml' && bodyParam.schema.serialization?.xml?.name) {
             // mark that this parameter type will need a custom marshaller to handle the XML name
             bodyParam.schema.language.go!.xmlWrapperName = bodyParam.schema.serialization?.xml?.name;
+          } else if (marshallingFormat === 'json' && op.requests![0].protocol.http!.method === 'patch') {
+            // mark that this type will need a custom marshaller to handle JSON nulls
+            bodyParam.schema.language.go!.needsPatchMarshaller = true;
           }
         }
       }

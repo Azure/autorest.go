@@ -56,7 +56,9 @@ export async function generateModels(session: Session<CodeModel>): Promise<strin
   }
   if (needsJSONPopulate) {
     text += 'func populate(m map[string]interface{}, k string, v interface{}) {\n';
-    text += '\tif !reflect.ValueOf(v).IsNil() {\n';
+    text += '\tif azcore.IsNullValue(v) {\n';
+    text += '\t\tm[k] = nil\n';
+    text += '\t} else if !reflect.ValueOf(v).IsNil() {\n';
     text += '\t\tm[k] = v\n';
     text += '\t}\n';
     text += '}\n\n';
@@ -347,15 +349,25 @@ function generateStructs(objects?: ObjectSchema[]): StructDef[] {
       // the only slight exception is the leaf child, it won't need the internal marshaller or unmarshaller.
       // this case is to handle inheritence for non-discriminated types.
       if (relationship === 'leaf') {
-        if (recursiveWalkObjs(obj, true) > 0) {
+        const marshallerType = recursiveWalkObjs(obj, true);
+        if (marshallerType === 1) {
+          needsM = true;
+        } else if (marshallerType === 2) {
           needsM = needsU = true;
         }
       } else if (relationship === 'parent') {
-        if (recursiveWalkObjs(obj, true) > 0 || recursiveWalkObjs(obj, false) > 0) {
+        const pMarshallerType = recursiveWalkObjs(obj, true);
+        const cMrshallerType = recursiveWalkObjs(obj, false);
+        if (pMarshallerType === 1 || cMrshallerType === 1) {
+          needsM = needsIntM = true;
+        } else if (pMarshallerType === 2 || cMrshallerType === 2) {
           needsM = needsU = needsIntM = needsIntU = true;
         }
       } else {
-        if (recursiveWalkObjs(obj, false) > 0) {
+        const marshallerType = recursiveWalkObjs(obj, false);
+        if (marshallerType === 1) {
+          needsIntM = true;
+        } else if (marshallerType === 2) {
           needsIntM = needsIntU = true;
         }
       }
@@ -366,6 +378,11 @@ function generateStructs(objects?: ObjectSchema[]): StructDef[] {
       // singular type not in any hierarchy
       needsU = true;
     }
+    // we check needsPatchMarshaller separately from othe
+    // states since it's not mutually exclusive with them.
+    if (obj.language.go!.needsPatchMarshaller === true) {
+      needsM = true;
+    }
     if (needsIntM) {
       generateInternalMarshaller(obj, structDef, parentType);
     }
@@ -374,6 +391,7 @@ function generateStructs(objects?: ObjectSchema[]): StructDef[] {
     }
     if (needsM) {
       imports.add('reflect');
+      imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
       structDef.HasJSONMarshaller = true;
       generateJSONMarshaller(obj, structDef, parentType);
     }
@@ -386,6 +404,9 @@ function generateStructs(objects?: ObjectSchema[]): StructDef[] {
   return structTypes;
 }
 
+// returns 0 if no nodes in the hierarchy require custom marshalling/unmarshalling.
+// returns 1 if only custom marshalling is required.
+// returns 2 if custom marshalling and unmarshalling is required.
 function recursiveWalkObjs(obj: ObjectSchema, parents: boolean): number {
   let result = 0;
   let cs: ComplexSchema[] | undefined;
@@ -398,8 +419,13 @@ function recursiveWalkObjs(obj: ObjectSchema, parents: boolean): number {
     if (!isObjectSchema(c)) {
       continue;
     }
-    if (c.language.go!.needsDateTimeMarshalling || hasAdditionalProperties(c) || hasPolymorphicField(c) || c.discriminator || c.discriminatorValue) {
+    if (c.language.go!.needsPatchMarshaller === true) {
       result = 1;
+    }
+    if (c.language.go!.needsDateTimeMarshalling || hasAdditionalProperties(c) || hasPolymorphicField(c) || c.discriminator || c.discriminatorValue) {
+      result = 2;
+    }
+    if (result > 0) {
       break;
     }
     result |= recursiveWalkObjs(c, parents);
@@ -520,13 +546,11 @@ function generateInternalMarshaller(obj: ObjectSchema, structDef: StructDef, par
       marshalInteral += `\t${receiver}.${prop.language.go!.name} = &${paramName}\n`;
       marshalInteral += `\tobjectMap["${prop.serializedName}"] = ${receiver}.${prop.language.go!.name}\n`;
     } else {
-      marshalInteral += `\tif ${receiver}.${prop.language.go!.name} != nil {\n`;
+      let source = `${receiver}.${prop.language.go!.name}`;
       if (prop.schema.language.go!.internalTimeType) {
-        marshalInteral += `\t\tobjectMap["${prop.serializedName}"] = (*${prop.schema.language.go!.internalTimeType})(${receiver}.${prop.language.go!.name})\n`;
-      } else {
-        marshalInteral += `\t\tobjectMap["${prop.serializedName}"] = ${receiver}.${prop.language.go!.name}\n`;
+        source = `(*${prop.schema.language.go!.internalTimeType})(${receiver}.${prop.language.go!.name})`;
       }
-      marshalInteral += `\t}\n`;
+      marshalInteral += `\tpopulate(objectMap, "${prop.serializedName}", ${source})\n`;
     }
   }
   if (hasAdditionalProperties(obj)) {

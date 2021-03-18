@@ -10,6 +10,7 @@ package errorsgroup
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"reflect"
 )
@@ -316,7 +317,9 @@ func (p *PetSadError) unmarshalInternal(rawMsg map[string]*json.RawMessage) erro
 }
 
 func populate(m map[string]interface{}, k string, v interface{}) {
-	if !reflect.ValueOf(v).IsNil() {
+	if azcore.IsNullValue(v) {
+		m[k] = nil
+	} else if !reflect.ValueOf(v).IsNil() {
 		m[k] = v
 	}
 }
