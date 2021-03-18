@@ -89,19 +89,19 @@ func (client *DedicatedHostsClient) createOrUpdate(ctx context.Context, resource
 func (client *DedicatedHostsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, parameters DedicatedHost, options *DedicatedHostsBeginCreateOrUpdateOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/hostGroups/{hostGroupName}/hosts/{hostName}"
 	if resourceGroupName == "" {
-		errors.New("parameter resourceGroupName cannot be empty")
+		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	if hostGroupName == "" {
-		errors.New("parameter hostGroupName cannot be empty")
+		return nil, errors.New("parameter hostGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{hostGroupName}", url.PathEscape(hostGroupName))
 	if hostName == "" {
-		errors.New("parameter hostName cannot be empty")
+		return nil, errors.New("parameter hostName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{hostName}", url.PathEscape(hostName))
 	if client.subscriptionID == "" {
-		errors.New("parameter client.subscriptionID cannot be empty")
+		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -194,19 +194,19 @@ func (client *DedicatedHostsClient) delete(ctx context.Context, resourceGroupNam
 func (client *DedicatedHostsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, options *DedicatedHostsBeginDeleteOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/hostGroups/{hostGroupName}/hosts/{hostName}"
 	if resourceGroupName == "" {
-		errors.New("parameter resourceGroupName cannot be empty")
+		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	if hostGroupName == "" {
-		errors.New("parameter hostGroupName cannot be empty")
+		return nil, errors.New("parameter hostGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{hostGroupName}", url.PathEscape(hostGroupName))
 	if hostName == "" {
-		errors.New("parameter hostName cannot be empty")
+		return nil, errors.New("parameter hostName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{hostName}", url.PathEscape(hostName))
 	if client.subscriptionID == "" {
-		errors.New("parameter client.subscriptionID cannot be empty")
+		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -252,19 +252,19 @@ func (client *DedicatedHostsClient) Get(ctx context.Context, resourceGroupName s
 func (client *DedicatedHostsClient) getCreateRequest(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, options *DedicatedHostsGetOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/hostGroups/{hostGroupName}/hosts/{hostName}"
 	if resourceGroupName == "" {
-		errors.New("parameter resourceGroupName cannot be empty")
+		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	if hostGroupName == "" {
-		errors.New("parameter hostGroupName cannot be empty")
+		return nil, errors.New("parameter hostGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{hostGroupName}", url.PathEscape(hostGroupName))
 	if hostName == "" {
-		errors.New("parameter hostName cannot be empty")
+		return nil, errors.New("parameter hostName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{hostName}", url.PathEscape(hostName))
 	if client.subscriptionID == "" {
-		errors.New("parameter client.subscriptionID cannot be empty")
+		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -324,15 +324,15 @@ func (client *DedicatedHostsClient) ListByHostGroup(resourceGroupName string, ho
 func (client *DedicatedHostsClient) listByHostGroupCreateRequest(ctx context.Context, resourceGroupName string, hostGroupName string, options *DedicatedHostsListByHostGroupOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/hostGroups/{hostGroupName}/hosts"
 	if resourceGroupName == "" {
-		errors.New("parameter resourceGroupName cannot be empty")
+		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	if hostGroupName == "" {
-		errors.New("parameter hostGroupName cannot be empty")
+		return nil, errors.New("parameter hostGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{hostGroupName}", url.PathEscape(hostGroupName))
 	if client.subscriptionID == "" {
-		errors.New("parameter client.subscriptionID cannot be empty")
+		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -425,19 +425,19 @@ func (client *DedicatedHostsClient) update(ctx context.Context, resourceGroupNam
 func (client *DedicatedHostsClient) updateCreateRequest(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, parameters DedicatedHostUpdate, options *DedicatedHostsBeginUpdateOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/hostGroups/{hostGroupName}/hosts/{hostName}"
 	if resourceGroupName == "" {
-		errors.New("parameter resourceGroupName cannot be empty")
+		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	if hostGroupName == "" {
-		errors.New("parameter hostGroupName cannot be empty")
+		return nil, errors.New("parameter hostGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{hostGroupName}", url.PathEscape(hostGroupName))
 	if hostName == "" {
-		errors.New("parameter hostName cannot be empty")
+		return nil, errors.New("parameter hostName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{hostName}", url.PathEscape(hostName))
 	if client.subscriptionID == "" {
-		errors.New("parameter client.subscriptionID cannot be empty")
+		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodPatch, azcore.JoinPaths(client.con.Endpoint(), urlPath))

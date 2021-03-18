@@ -41,7 +41,7 @@ func (client *pipelineRunClient) CancelPipelineRun(ctx context.Context, runID st
 func (client *pipelineRunClient) cancelPipelineRunCreateRequest(ctx context.Context, runID string, options *PipelineRunCancelPipelineRunOptions) (*azcore.Request, error) {
 	urlPath := "/pipelineruns/{runId}/cancel"
 	if runID == "" {
-		errors.New("parameter runID cannot be empty")
+		return nil, errors.New("parameter runID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{runId}", url.PathEscape(runID))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -88,7 +88,7 @@ func (client *pipelineRunClient) GetPipelineRun(ctx context.Context, runID strin
 func (client *pipelineRunClient) getPipelineRunCreateRequest(ctx context.Context, runID string, options *PipelineRunGetPipelineRunOptions) (*azcore.Request, error) {
 	urlPath := "/pipelineruns/{runId}"
 	if runID == "" {
-		errors.New("parameter runID cannot be empty")
+		return nil, errors.New("parameter runID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{runId}", url.PathEscape(runID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -141,11 +141,11 @@ func (client *pipelineRunClient) QueryActivityRuns(ctx context.Context, pipeline
 func (client *pipelineRunClient) queryActivityRunsCreateRequest(ctx context.Context, pipelineName string, runID string, filterParameters RunFilterParameters, options *PipelineRunQueryActivityRunsOptions) (*azcore.Request, error) {
 	urlPath := "/pipelines/{pipelineName}/pipelineruns/{runId}/queryActivityruns"
 	if pipelineName == "" {
-		errors.New("parameter pipelineName cannot be empty")
+		return nil, errors.New("parameter pipelineName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{pipelineName}", url.PathEscape(pipelineName))
 	if runID == "" {
-		errors.New("parameter runID cannot be empty")
+		return nil, errors.New("parameter runID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{runId}", url.PathEscape(runID))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))

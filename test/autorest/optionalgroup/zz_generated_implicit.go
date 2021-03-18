@@ -93,7 +93,7 @@ func (client *ImplicitClient) GetRequiredGlobalPath(ctx context.Context, options
 func (client *ImplicitClient) getRequiredGlobalPathCreateRequest(ctx context.Context, options *ImplicitGetRequiredGlobalPathOptions) (*azcore.Request, error) {
 	urlPath := "/reqopt/global/required/path/{required-global-path}"
 	if client.requiredGlobalPath == "" {
-		errors.New("parameter client.requiredGlobalPath cannot be empty")
+		return nil, errors.New("parameter client.requiredGlobalPath cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{required-global-path}", url.PathEscape(client.requiredGlobalPath))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -174,7 +174,7 @@ func (client *ImplicitClient) GetRequiredPath(ctx context.Context, pathParameter
 func (client *ImplicitClient) getRequiredPathCreateRequest(ctx context.Context, pathParameter string, options *ImplicitGetRequiredPathOptions) (*azcore.Request, error) {
 	urlPath := "/reqopt/implicit/required/path/{pathParameter}"
 	if pathParameter == "" {
-		errors.New("parameter pathParameter cannot be empty")
+		return nil, errors.New("parameter pathParameter cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{pathParameter}", url.PathEscape(pathParameter))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))

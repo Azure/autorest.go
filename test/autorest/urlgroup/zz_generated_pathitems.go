@@ -51,15 +51,15 @@ func (client *PathItemsClient) GetAllWithValues(ctx context.Context, pathItemStr
 func (client *PathItemsClient) getAllWithValuesCreateRequest(ctx context.Context, pathItemStringPath string, localStringPath string, options *PathItemsGetAllWithValuesOptions) (*azcore.Request, error) {
 	urlPath := "/pathitem/nullable/globalStringPath/{globalStringPath}/pathItemStringPath/{pathItemStringPath}/localStringPath/{localStringPath}/globalStringQuery/pathItemStringQuery/localStringQuery"
 	if pathItemStringPath == "" {
-		errors.New("parameter pathItemStringPath cannot be empty")
+		return nil, errors.New("parameter pathItemStringPath cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{pathItemStringPath}", url.PathEscape(pathItemStringPath))
 	if client.globalStringPath == "" {
-		errors.New("parameter client.globalStringPath cannot be empty")
+		return nil, errors.New("parameter client.globalStringPath cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{globalStringPath}", url.PathEscape(client.globalStringPath))
 	if localStringPath == "" {
-		errors.New("parameter localStringPath cannot be empty")
+		return nil, errors.New("parameter localStringPath cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{localStringPath}", url.PathEscape(localStringPath))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -113,15 +113,15 @@ func (client *PathItemsClient) GetGlobalAndLocalQueryNull(ctx context.Context, p
 func (client *PathItemsClient) getGlobalAndLocalQueryNullCreateRequest(ctx context.Context, pathItemStringPath string, localStringPath string, options *PathItemsGetGlobalAndLocalQueryNullOptions) (*azcore.Request, error) {
 	urlPath := "/pathitem/nullable/globalStringPath/{globalStringPath}/pathItemStringPath/{pathItemStringPath}/localStringPath/{localStringPath}/null/pathItemStringQuery/null"
 	if pathItemStringPath == "" {
-		errors.New("parameter pathItemStringPath cannot be empty")
+		return nil, errors.New("parameter pathItemStringPath cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{pathItemStringPath}", url.PathEscape(pathItemStringPath))
 	if client.globalStringPath == "" {
-		errors.New("parameter client.globalStringPath cannot be empty")
+		return nil, errors.New("parameter client.globalStringPath cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{globalStringPath}", url.PathEscape(client.globalStringPath))
 	if localStringPath == "" {
-		errors.New("parameter localStringPath cannot be empty")
+		return nil, errors.New("parameter localStringPath cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{localStringPath}", url.PathEscape(localStringPath))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -175,15 +175,15 @@ func (client *PathItemsClient) GetGlobalQueryNull(ctx context.Context, pathItemS
 func (client *PathItemsClient) getGlobalQueryNullCreateRequest(ctx context.Context, pathItemStringPath string, localStringPath string, options *PathItemsGetGlobalQueryNullOptions) (*azcore.Request, error) {
 	urlPath := "/pathitem/nullable/globalStringPath/{globalStringPath}/pathItemStringPath/{pathItemStringPath}/localStringPath/{localStringPath}/null/pathItemStringQuery/localStringQuery"
 	if pathItemStringPath == "" {
-		errors.New("parameter pathItemStringPath cannot be empty")
+		return nil, errors.New("parameter pathItemStringPath cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{pathItemStringPath}", url.PathEscape(pathItemStringPath))
 	if client.globalStringPath == "" {
-		errors.New("parameter client.globalStringPath cannot be empty")
+		return nil, errors.New("parameter client.globalStringPath cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{globalStringPath}", url.PathEscape(client.globalStringPath))
 	if localStringPath == "" {
-		errors.New("parameter localStringPath cannot be empty")
+		return nil, errors.New("parameter localStringPath cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{localStringPath}", url.PathEscape(localStringPath))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -237,15 +237,15 @@ func (client *PathItemsClient) GetLocalPathItemQueryNull(ctx context.Context, pa
 func (client *PathItemsClient) getLocalPathItemQueryNullCreateRequest(ctx context.Context, pathItemStringPath string, localStringPath string, options *PathItemsGetLocalPathItemQueryNullOptions) (*azcore.Request, error) {
 	urlPath := "/pathitem/nullable/globalStringPath/{globalStringPath}/pathItemStringPath/{pathItemStringPath}/localStringPath/{localStringPath}/globalStringQuery/null/null"
 	if pathItemStringPath == "" {
-		errors.New("parameter pathItemStringPath cannot be empty")
+		return nil, errors.New("parameter pathItemStringPath cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{pathItemStringPath}", url.PathEscape(pathItemStringPath))
 	if client.globalStringPath == "" {
-		errors.New("parameter client.globalStringPath cannot be empty")
+		return nil, errors.New("parameter client.globalStringPath cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{globalStringPath}", url.PathEscape(client.globalStringPath))
 	if localStringPath == "" {
-		errors.New("parameter localStringPath cannot be empty")
+		return nil, errors.New("parameter localStringPath cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{localStringPath}", url.PathEscape(localStringPath))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))

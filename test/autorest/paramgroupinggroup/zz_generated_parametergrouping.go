@@ -144,7 +144,7 @@ func (client *ParameterGroupingClient) PostRequired(ctx context.Context, paramet
 func (client *ParameterGroupingClient) postRequiredCreateRequest(ctx context.Context, parameterGroupingPostRequiredParameters ParameterGroupingPostRequiredParameters) (*azcore.Request, error) {
 	urlPath := "/parameterGrouping/postRequired/{path}"
 	if parameterGroupingPostRequiredParameters.Path == "" {
-		errors.New("parameter parameterGroupingPostRequiredParameters.Path cannot be empty")
+		return nil, errors.New("parameter parameterGroupingPostRequiredParameters.Path cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{path}", url.PathEscape(parameterGroupingPostRequiredParameters.Path))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))

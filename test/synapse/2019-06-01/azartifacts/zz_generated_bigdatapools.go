@@ -40,7 +40,7 @@ func (client *bigDataPoolsClient) Get(ctx context.Context, bigDataPoolName strin
 func (client *bigDataPoolsClient) getCreateRequest(ctx context.Context, bigDataPoolName string, options *BigDataPoolsGetOptions) (*azcore.Request, error) {
 	urlPath := "/bigDataPools/{bigDataPoolName}"
 	if bigDataPoolName == "" {
-		errors.New("parameter bigDataPoolName cannot be empty")
+		return nil, errors.New("parameter bigDataPoolName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{bigDataPoolName}", url.PathEscape(bigDataPoolName))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))

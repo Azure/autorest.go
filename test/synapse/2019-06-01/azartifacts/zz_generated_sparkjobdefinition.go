@@ -40,7 +40,7 @@ func (client *sparkJobDefinitionClient) createOrUpdateSparkJobDefinition(ctx con
 func (client *sparkJobDefinitionClient) createOrUpdateSparkJobDefinitionCreateRequest(ctx context.Context, sparkJobDefinitionName string, sparkJobDefinition SparkJobDefinitionResource, options *SparkJobDefinitionBeginCreateOrUpdateSparkJobDefinitionOptions) (*azcore.Request, error) {
 	urlPath := "/sparkJobDefinitions/{sparkJobDefinitionName}"
 	if sparkJobDefinitionName == "" {
-		errors.New("parameter sparkJobDefinitionName cannot be empty")
+		return nil, errors.New("parameter sparkJobDefinitionName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{sparkJobDefinitionName}", url.PathEscape(sparkJobDefinitionName))
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -145,7 +145,7 @@ func (client *sparkJobDefinitionClient) deleteSparkJobDefinition(ctx context.Con
 func (client *sparkJobDefinitionClient) deleteSparkJobDefinitionCreateRequest(ctx context.Context, sparkJobDefinitionName string, options *SparkJobDefinitionBeginDeleteSparkJobDefinitionOptions) (*azcore.Request, error) {
 	urlPath := "/sparkJobDefinitions/{sparkJobDefinitionName}"
 	if sparkJobDefinitionName == "" {
-		errors.New("parameter sparkJobDefinitionName cannot be empty")
+		return nil, errors.New("parameter sparkJobDefinitionName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{sparkJobDefinitionName}", url.PathEscape(sparkJobDefinitionName))
 	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -189,7 +189,7 @@ func (client *sparkJobDefinitionClient) executeSparkJobDefinition(ctx context.Co
 func (client *sparkJobDefinitionClient) executeSparkJobDefinitionCreateRequest(ctx context.Context, sparkJobDefinitionName string, options *SparkJobDefinitionBeginExecuteSparkJobDefinitionOptions) (*azcore.Request, error) {
 	urlPath := "/sparkJobDefinitions/{sparkJobDefinitionName}/execute"
 	if sparkJobDefinitionName == "" {
-		errors.New("parameter sparkJobDefinitionName cannot be empty")
+		return nil, errors.New("parameter sparkJobDefinitionName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{sparkJobDefinitionName}", url.PathEscape(sparkJobDefinitionName))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -242,7 +242,7 @@ func (client *sparkJobDefinitionClient) GetSparkJobDefinition(ctx context.Contex
 func (client *sparkJobDefinitionClient) getSparkJobDefinitionCreateRequest(ctx context.Context, sparkJobDefinitionName string, options *SparkJobDefinitionGetSparkJobDefinitionOptions) (*azcore.Request, error) {
 	urlPath := "/sparkJobDefinitions/{sparkJobDefinitionName}"
 	if sparkJobDefinitionName == "" {
-		errors.New("parameter sparkJobDefinitionName cannot be empty")
+		return nil, errors.New("parameter sparkJobDefinitionName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{sparkJobDefinitionName}", url.PathEscape(sparkJobDefinitionName))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -347,7 +347,7 @@ func (client *sparkJobDefinitionClient) renameSparkJobDefinition(ctx context.Con
 func (client *sparkJobDefinitionClient) renameSparkJobDefinitionCreateRequest(ctx context.Context, sparkJobDefinitionName string, request ArtifactRenameRequest, options *SparkJobDefinitionBeginRenameSparkJobDefinitionOptions) (*azcore.Request, error) {
 	urlPath := "/sparkJobDefinitions/{sparkJobDefinitionName}/rename"
 	if sparkJobDefinitionName == "" {
-		errors.New("parameter sparkJobDefinitionName cannot be empty")
+		return nil, errors.New("parameter sparkJobDefinitionName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{sparkJobDefinitionName}", url.PathEscape(sparkJobDefinitionName))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))

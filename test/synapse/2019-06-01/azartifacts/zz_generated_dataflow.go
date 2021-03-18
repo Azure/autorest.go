@@ -40,7 +40,7 @@ func (client *dataFlowClient) createOrUpdateDataFlow(ctx context.Context, dataFl
 func (client *dataFlowClient) createOrUpdateDataFlowCreateRequest(ctx context.Context, dataFlowName string, dataFlow DataFlowResource, options *DataFlowBeginCreateOrUpdateDataFlowOptions) (*azcore.Request, error) {
 	urlPath := "/dataflows/{dataFlowName}"
 	if dataFlowName == "" {
-		errors.New("parameter dataFlowName cannot be empty")
+		return nil, errors.New("parameter dataFlowName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{dataFlowName}", url.PathEscape(dataFlowName))
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -96,7 +96,7 @@ func (client *dataFlowClient) deleteDataFlow(ctx context.Context, dataFlowName s
 func (client *dataFlowClient) deleteDataFlowCreateRequest(ctx context.Context, dataFlowName string, options *DataFlowBeginDeleteDataFlowOptions) (*azcore.Request, error) {
 	urlPath := "/dataflows/{dataFlowName}"
 	if dataFlowName == "" {
-		errors.New("parameter dataFlowName cannot be empty")
+		return nil, errors.New("parameter dataFlowName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{dataFlowName}", url.PathEscape(dataFlowName))
 	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -140,7 +140,7 @@ func (client *dataFlowClient) GetDataFlow(ctx context.Context, dataFlowName stri
 func (client *dataFlowClient) getDataFlowCreateRequest(ctx context.Context, dataFlowName string, options *DataFlowGetDataFlowOptions) (*azcore.Request, error) {
 	urlPath := "/dataflows/{dataFlowName}"
 	if dataFlowName == "" {
-		errors.New("parameter dataFlowName cannot be empty")
+		return nil, errors.New("parameter dataFlowName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{dataFlowName}", url.PathEscape(dataFlowName))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -245,7 +245,7 @@ func (client *dataFlowClient) renameDataFlow(ctx context.Context, dataFlowName s
 func (client *dataFlowClient) renameDataFlowCreateRequest(ctx context.Context, dataFlowName string, request ArtifactRenameRequest, options *DataFlowBeginRenameDataFlowOptions) (*azcore.Request, error) {
 	urlPath := "/dataflows/{dataFlowName}/rename"
 	if dataFlowName == "" {
-		errors.New("parameter dataFlowName cannot be empty")
+		return nil, errors.New("parameter dataFlowName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{dataFlowName}", url.PathEscape(dataFlowName))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))

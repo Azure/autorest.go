@@ -52,11 +52,11 @@ func (client *PathsClient) getEmptyCreateRequest(ctx context.Context, vault stri
 	host = strings.ReplaceAll(host, "{secret}", secret)
 	urlPath := "/customuri/{subscriptionId}/{keyName}"
 	if keyName == "" {
-		errors.New("parameter keyName cannot be empty")
+		return nil, errors.New("parameter keyName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{keyName}", url.PathEscape(keyName))
 	if client.subscriptionID == "" {
-		errors.New("parameter client.subscriptionID cannot be empty")
+		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(host, urlPath))

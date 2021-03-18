@@ -40,7 +40,7 @@ func (client *notebookClient) createOrUpdateNotebook(ctx context.Context, notebo
 func (client *notebookClient) createOrUpdateNotebookCreateRequest(ctx context.Context, notebookName string, notebook NotebookResource, options *NotebookBeginCreateOrUpdateNotebookOptions) (*azcore.Request, error) {
 	urlPath := "/notebooks/{notebookName}"
 	if notebookName == "" {
-		errors.New("parameter notebookName cannot be empty")
+		return nil, errors.New("parameter notebookName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{notebookName}", url.PathEscape(notebookName))
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -96,7 +96,7 @@ func (client *notebookClient) deleteNotebook(ctx context.Context, notebookName s
 func (client *notebookClient) deleteNotebookCreateRequest(ctx context.Context, notebookName string, options *NotebookBeginDeleteNotebookOptions) (*azcore.Request, error) {
 	urlPath := "/notebooks/{notebookName}"
 	if notebookName == "" {
-		errors.New("parameter notebookName cannot be empty")
+		return nil, errors.New("parameter notebookName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{notebookName}", url.PathEscape(notebookName))
 	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -140,7 +140,7 @@ func (client *notebookClient) GetNotebook(ctx context.Context, notebookName stri
 func (client *notebookClient) getNotebookCreateRequest(ctx context.Context, notebookName string, options *NotebookGetNotebookOptions) (*azcore.Request, error) {
 	urlPath := "/notebooks/{notebookName}"
 	if notebookName == "" {
-		errors.New("parameter notebookName cannot be empty")
+		return nil, errors.New("parameter notebookName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{notebookName}", url.PathEscape(notebookName))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -294,7 +294,7 @@ func (client *notebookClient) renameNotebook(ctx context.Context, notebookName s
 func (client *notebookClient) renameNotebookCreateRequest(ctx context.Context, notebookName string, request ArtifactRenameRequest, options *NotebookBeginRenameNotebookOptions) (*azcore.Request, error) {
 	urlPath := "/notebooks/{notebookName}/rename"
 	if notebookName == "" {
-		errors.New("parameter notebookName cannot be empty")
+		return nil, errors.New("parameter notebookName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{notebookName}", url.PathEscape(notebookName))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))

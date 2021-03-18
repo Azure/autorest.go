@@ -467,7 +467,7 @@ func (client *PathsClient) EnumNull(ctx context.Context, enumPath URIColor, opti
 func (client *PathsClient) enumNullCreateRequest(ctx context.Context, enumPath URIColor, options *PathsEnumNullOptions) (*azcore.Request, error) {
 	urlPath := "/paths/string/null/{enumPath}"
 	if enumPath == "" {
-		errors.New("parameter enumPath cannot be empty")
+		return nil, errors.New("parameter enumPath cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{enumPath}", url.PathEscape(string(enumPath)))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -508,7 +508,7 @@ func (client *PathsClient) EnumValid(ctx context.Context, enumPath URIColor, opt
 func (client *PathsClient) enumValidCreateRequest(ctx context.Context, enumPath URIColor, options *PathsEnumValidOptions) (*azcore.Request, error) {
 	urlPath := "/paths/enum/green%20color/{enumPath}"
 	if enumPath == "" {
-		errors.New("parameter enumPath cannot be empty")
+		return nil, errors.New("parameter enumPath cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{enumPath}", url.PathEscape(string(enumPath)))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -891,7 +891,7 @@ func (client *PathsClient) StringNull(ctx context.Context, stringPath string, op
 func (client *PathsClient) stringNullCreateRequest(ctx context.Context, stringPath string, options *PathsStringNullOptions) (*azcore.Request, error) {
 	urlPath := "/paths/string/null/{stringPath}"
 	if stringPath == "" {
-		errors.New("parameter stringPath cannot be empty")
+		return nil, errors.New("parameter stringPath cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{stringPath}", url.PathEscape(stringPath))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))

@@ -101,7 +101,7 @@ func (client *PetClient) GetByPetID(ctx context.Context, petID string, options *
 func (client *PetClient) getByPetIDCreateRequest(ctx context.Context, petID string, options *PetGetByPetIDOptions) (*azcore.Request, error) {
 	urlPath := "/extensibleenums/pet/{petId}"
 	if petID == "" {
-		errors.New("parameter petID cannot be empty")
+		return nil, errors.New("parameter petID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{petId}", url.PathEscape(petID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))

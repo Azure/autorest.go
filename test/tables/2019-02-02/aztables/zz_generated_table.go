@@ -159,7 +159,7 @@ func (client *TableClient) Delete(ctx context.Context, table string, options *Ta
 func (client *TableClient) deleteCreateRequest(ctx context.Context, table string, options *TableDeleteOptions) (*azcore.Request, error) {
 	urlPath := "/Tables('{table}')"
 	if table == "" {
-		errors.New("parameter table cannot be empty")
+		return nil, errors.New("parameter table cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{table}", url.PathEscape(table))
 	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -226,15 +226,15 @@ func (client *TableClient) DeleteEntity(ctx context.Context, table string, parti
 func (client *TableClient) deleteEntityCreateRequest(ctx context.Context, table string, partitionKey string, rowKey string, ifMatch string, tableDeleteEntityOptions *TableDeleteEntityOptions, queryOptions *QueryOptions) (*azcore.Request, error) {
 	urlPath := "/{table}(PartitionKey='{partitionKey}',RowKey='{rowKey}')"
 	if table == "" {
-		errors.New("parameter table cannot be empty")
+		return nil, errors.New("parameter table cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{table}", url.PathEscape(table))
 	if partitionKey == "" {
-		errors.New("parameter partitionKey cannot be empty")
+		return nil, errors.New("parameter partitionKey cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{partitionKey}", url.PathEscape(partitionKey))
 	if rowKey == "" {
-		errors.New("parameter rowKey cannot be empty")
+		return nil, errors.New("parameter rowKey cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{rowKey}", url.PathEscape(rowKey))
 	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -311,7 +311,7 @@ func (client *TableClient) GetAccessPolicy(ctx context.Context, table string, op
 func (client *TableClient) getAccessPolicyCreateRequest(ctx context.Context, table string, options *TableGetAccessPolicyOptions) (*azcore.Request, error) {
 	urlPath := "/{table}"
 	if table == "" {
-		errors.New("parameter table cannot be empty")
+		return nil, errors.New("parameter table cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{table}", url.PathEscape(table))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -388,7 +388,7 @@ func (client *TableClient) InsertEntity(ctx context.Context, table string, table
 func (client *TableClient) insertEntityCreateRequest(ctx context.Context, table string, tableInsertEntityOptions *TableInsertEntityOptions, queryOptions *QueryOptions) (*azcore.Request, error) {
 	urlPath := "/{table}"
 	if table == "" {
-		errors.New("parameter table cannot be empty")
+		return nil, errors.New("parameter table cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{table}", url.PathEscape(table))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -522,15 +522,15 @@ func (client *TableClient) MergeEntity(ctx context.Context, table string, partit
 func (client *TableClient) mergeEntityCreateRequest(ctx context.Context, table string, partitionKey string, rowKey string, tableMergeEntityOptions *TableMergeEntityOptions, queryOptions *QueryOptions) (*azcore.Request, error) {
 	urlPath := "/{table}(PartitionKey='{partitionKey}',RowKey='{rowKey}')"
 	if table == "" {
-		errors.New("parameter table cannot be empty")
+		return nil, errors.New("parameter table cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{table}", url.PathEscape(table))
 	if partitionKey == "" {
-		errors.New("parameter partitionKey cannot be empty")
+		return nil, errors.New("parameter partitionKey cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{partitionKey}", url.PathEscape(partitionKey))
 	if rowKey == "" {
-		errors.New("parameter rowKey cannot be empty")
+		return nil, errors.New("parameter rowKey cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{rowKey}", url.PathEscape(rowKey))
 	req, err := azcore.NewRequest(ctx, http.MethodPatch, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -706,7 +706,7 @@ func (client *TableClient) QueryEntities(ctx context.Context, table string, tabl
 func (client *TableClient) queryEntitiesCreateRequest(ctx context.Context, table string, tableQueryEntitiesOptions *TableQueryEntitiesOptions, queryOptions *QueryOptions) (*azcore.Request, error) {
 	urlPath := "/{table}()"
 	if table == "" {
-		errors.New("parameter table cannot be empty")
+		return nil, errors.New("parameter table cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{table}", url.PathEscape(table))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -807,15 +807,15 @@ func (client *TableClient) QueryEntityWithPartitionAndRowKey(ctx context.Context
 func (client *TableClient) queryEntityWithPartitionAndRowKeyCreateRequest(ctx context.Context, table string, partitionKey string, rowKey string, tableQueryEntityWithPartitionAndRowKeyOptions *TableQueryEntityWithPartitionAndRowKeyOptions, queryOptions *QueryOptions) (*azcore.Request, error) {
 	urlPath := "/{table}(PartitionKey='{partitionKey}',RowKey='{rowKey}')"
 	if table == "" {
-		errors.New("parameter table cannot be empty")
+		return nil, errors.New("parameter table cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{table}", url.PathEscape(table))
 	if partitionKey == "" {
-		errors.New("parameter partitionKey cannot be empty")
+		return nil, errors.New("parameter partitionKey cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{partitionKey}", url.PathEscape(partitionKey))
 	if rowKey == "" {
-		errors.New("parameter rowKey cannot be empty")
+		return nil, errors.New("parameter rowKey cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{rowKey}", url.PathEscape(rowKey))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -916,7 +916,7 @@ func (client *TableClient) SetAccessPolicy(ctx context.Context, table string, op
 func (client *TableClient) setAccessPolicyCreateRequest(ctx context.Context, table string, options *TableSetAccessPolicyOptions) (*azcore.Request, error) {
 	urlPath := "/{table}"
 	if table == "" {
-		errors.New("parameter table cannot be empty")
+		return nil, errors.New("parameter table cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{table}", url.PathEscape(table))
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
@@ -996,15 +996,15 @@ func (client *TableClient) UpdateEntity(ctx context.Context, table string, parti
 func (client *TableClient) updateEntityCreateRequest(ctx context.Context, table string, partitionKey string, rowKey string, tableUpdateEntityOptions *TableUpdateEntityOptions, queryOptions *QueryOptions) (*azcore.Request, error) {
 	urlPath := "/{table}(PartitionKey='{partitionKey}',RowKey='{rowKey}')"
 	if table == "" {
-		errors.New("parameter table cannot be empty")
+		return nil, errors.New("parameter table cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{table}", url.PathEscape(table))
 	if partitionKey == "" {
-		errors.New("parameter partitionKey cannot be empty")
+		return nil, errors.New("parameter partitionKey cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{partitionKey}", url.PathEscape(partitionKey))
 	if rowKey == "" {
-		errors.New("parameter rowKey cannot be empty")
+		return nil, errors.New("parameter rowKey cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{rowKey}", url.PathEscape(rowKey))
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))

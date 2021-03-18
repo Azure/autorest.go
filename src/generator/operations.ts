@@ -389,7 +389,7 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
         const paramName = getParamName(pp);
         imports.add('errors');
         text += `\tif ${paramName} == "" {\n`;
-        text += `\t\terrors.New("parameter ${paramName} cannot be empty")\n`;
+        text += `\t\treturn nil, errors.New("parameter ${paramName} cannot be empty")\n`;
         text += '\t}\n';
       }
       let paramValue = formatParamValue(pp, imports);
