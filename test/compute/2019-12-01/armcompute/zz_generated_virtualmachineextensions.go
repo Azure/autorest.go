@@ -88,9 +88,21 @@ func (client *VirtualMachineExtensionsClient) createOrUpdate(ctx context.Context
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
 func (client *VirtualMachineExtensionsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string, extensionParameters VirtualMachineExtension, options *VirtualMachineExtensionsBeginCreateOrUpdateOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/extensions/{vmExtensionName}"
+	if resourceGroupName == "" {
+		return nil, errors.New("parameter resourceGroupName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
+	if vmName == "" {
+		return nil, errors.New("parameter vmName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{vmName}", url.PathEscape(vmName))
+	if vmExtensionName == "" {
+		return nil, errors.New("parameter vmExtensionName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{vmExtensionName}", url.PathEscape(vmExtensionName))
+	if client.subscriptionID == "" {
+		return nil, errors.New("parameter client.subscriptionID cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -181,9 +193,21 @@ func (client *VirtualMachineExtensionsClient) delete(ctx context.Context, resour
 // deleteCreateRequest creates the Delete request.
 func (client *VirtualMachineExtensionsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string, options *VirtualMachineExtensionsBeginDeleteOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/extensions/{vmExtensionName}"
+	if resourceGroupName == "" {
+		return nil, errors.New("parameter resourceGroupName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
+	if vmName == "" {
+		return nil, errors.New("parameter vmName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{vmName}", url.PathEscape(vmName))
+	if vmExtensionName == "" {
+		return nil, errors.New("parameter vmExtensionName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{vmExtensionName}", url.PathEscape(vmExtensionName))
+	if client.subscriptionID == "" {
+		return nil, errors.New("parameter client.subscriptionID cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -227,9 +251,21 @@ func (client *VirtualMachineExtensionsClient) Get(ctx context.Context, resourceG
 // getCreateRequest creates the Get request.
 func (client *VirtualMachineExtensionsClient) getCreateRequest(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string, options *VirtualMachineExtensionsGetOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/extensions/{vmExtensionName}"
+	if resourceGroupName == "" {
+		return nil, errors.New("parameter resourceGroupName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
+	if vmName == "" {
+		return nil, errors.New("parameter vmName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{vmName}", url.PathEscape(vmName))
+	if vmExtensionName == "" {
+		return nil, errors.New("parameter vmExtensionName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{vmExtensionName}", url.PathEscape(vmExtensionName))
+	if client.subscriptionID == "" {
+		return nil, errors.New("parameter client.subscriptionID cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -286,8 +322,17 @@ func (client *VirtualMachineExtensionsClient) List(ctx context.Context, resource
 // listCreateRequest creates the List request.
 func (client *VirtualMachineExtensionsClient) listCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachineExtensionsListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/extensions"
+	if resourceGroupName == "" {
+		return nil, errors.New("parameter resourceGroupName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
+	if vmName == "" {
+		return nil, errors.New("parameter vmName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{vmName}", url.PathEscape(vmName))
+	if client.subscriptionID == "" {
+		return nil, errors.New("parameter client.subscriptionID cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -381,9 +426,21 @@ func (client *VirtualMachineExtensionsClient) update(ctx context.Context, resour
 // updateCreateRequest creates the Update request.
 func (client *VirtualMachineExtensionsClient) updateCreateRequest(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string, extensionParameters VirtualMachineExtensionUpdate, options *VirtualMachineExtensionsBeginUpdateOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/extensions/{vmExtensionName}"
+	if resourceGroupName == "" {
+		return nil, errors.New("parameter resourceGroupName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
+	if vmName == "" {
+		return nil, errors.New("parameter vmName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{vmName}", url.PathEscape(vmName))
+	if vmExtensionName == "" {
+		return nil, errors.New("parameter vmExtensionName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{vmExtensionName}", url.PathEscape(vmExtensionName))
+	if client.subscriptionID == "" {
+		return nil, errors.New("parameter client.subscriptionID cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodPatch, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {

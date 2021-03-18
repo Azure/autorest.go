@@ -51,11 +51,29 @@ func (client *VirtualMachineImagesClient) Get(ctx context.Context, location stri
 // getCreateRequest creates the Get request.
 func (client *VirtualMachineImagesClient) getCreateRequest(ctx context.Context, location string, publisherName string, offer string, skus string, version string, options *VirtualMachineImagesGetOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus/{skus}/versions/{version}"
+	if location == "" {
+		return nil, errors.New("parameter location cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
+	if publisherName == "" {
+		return nil, errors.New("parameter publisherName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{publisherName}", url.PathEscape(publisherName))
+	if offer == "" {
+		return nil, errors.New("parameter offer cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{offer}", url.PathEscape(offer))
+	if skus == "" {
+		return nil, errors.New("parameter skus cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{skus}", url.PathEscape(skus))
+	if version == "" {
+		return nil, errors.New("parameter version cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{version}", url.PathEscape(version))
+	if client.subscriptionID == "" {
+		return nil, errors.New("parameter client.subscriptionID cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -109,10 +127,25 @@ func (client *VirtualMachineImagesClient) List(ctx context.Context, location str
 // listCreateRequest creates the List request.
 func (client *VirtualMachineImagesClient) listCreateRequest(ctx context.Context, location string, publisherName string, offer string, skus string, options *VirtualMachineImagesListOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus/{skus}/versions"
+	if location == "" {
+		return nil, errors.New("parameter location cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
+	if publisherName == "" {
+		return nil, errors.New("parameter publisherName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{publisherName}", url.PathEscape(publisherName))
+	if offer == "" {
+		return nil, errors.New("parameter offer cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{offer}", url.PathEscape(offer))
+	if skus == "" {
+		return nil, errors.New("parameter skus cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{skus}", url.PathEscape(skus))
+	if client.subscriptionID == "" {
+		return nil, errors.New("parameter client.subscriptionID cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -175,8 +208,17 @@ func (client *VirtualMachineImagesClient) ListOffers(ctx context.Context, locati
 // listOffersCreateRequest creates the ListOffers request.
 func (client *VirtualMachineImagesClient) listOffersCreateRequest(ctx context.Context, location string, publisherName string, options *VirtualMachineImagesListOffersOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmimage/offers"
+	if location == "" {
+		return nil, errors.New("parameter location cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
+	if publisherName == "" {
+		return nil, errors.New("parameter publisherName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{publisherName}", url.PathEscape(publisherName))
+	if client.subscriptionID == "" {
+		return nil, errors.New("parameter client.subscriptionID cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -230,7 +272,13 @@ func (client *VirtualMachineImagesClient) ListPublishers(ctx context.Context, lo
 // listPublishersCreateRequest creates the ListPublishers request.
 func (client *VirtualMachineImagesClient) listPublishersCreateRequest(ctx context.Context, location string, options *VirtualMachineImagesListPublishersOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers"
+	if location == "" {
+		return nil, errors.New("parameter location cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
+	if client.subscriptionID == "" {
+		return nil, errors.New("parameter client.subscriptionID cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -284,9 +332,21 @@ func (client *VirtualMachineImagesClient) ListSKUs(ctx context.Context, location
 // listSKUsCreateRequest creates the ListSKUs request.
 func (client *VirtualMachineImagesClient) listSKUsCreateRequest(ctx context.Context, location string, publisherName string, offer string, options *VirtualMachineImagesListSKUsOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus"
+	if location == "" {
+		return nil, errors.New("parameter location cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{location}", url.PathEscape(location))
+	if publisherName == "" {
+		return nil, errors.New("parameter publisherName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{publisherName}", url.PathEscape(publisherName))
+	if offer == "" {
+		return nil, errors.New("parameter offer cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{offer}", url.PathEscape(offer))
+	if client.subscriptionID == "" {
+		return nil, errors.New("parameter client.subscriptionID cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {

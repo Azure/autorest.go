@@ -9,6 +9,7 @@ package azartifacts
 
 import (
 	"context"
+	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -38,7 +39,13 @@ func (client *triggerRunClient) CancelTriggerInstance(ctx context.Context, trigg
 // cancelTriggerInstanceCreateRequest creates the CancelTriggerInstance request.
 func (client *triggerRunClient) cancelTriggerInstanceCreateRequest(ctx context.Context, triggerName string, runID string, options *TriggerRunCancelTriggerInstanceOptions) (*azcore.Request, error) {
 	urlPath := "/triggers/{triggerName}/triggerRuns/{runId}/cancel"
+	if triggerName == "" {
+		return nil, errors.New("parameter triggerName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{triggerName}", url.PathEscape(triggerName))
+	if runID == "" {
+		return nil, errors.New("parameter runID cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{runId}", url.PathEscape(runID))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -129,7 +136,13 @@ func (client *triggerRunClient) RerunTriggerInstance(ctx context.Context, trigge
 // rerunTriggerInstanceCreateRequest creates the RerunTriggerInstance request.
 func (client *triggerRunClient) rerunTriggerInstanceCreateRequest(ctx context.Context, triggerName string, runID string, options *TriggerRunRerunTriggerInstanceOptions) (*azcore.Request, error) {
 	urlPath := "/triggers/{triggerName}/triggerRuns/{runId}/rerun"
+	if triggerName == "" {
+		return nil, errors.New("parameter triggerName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{triggerName}", url.PathEscape(triggerName))
+	if runID == "" {
+		return nil, errors.New("parameter runID cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{runId}", url.PathEscape(runID))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {

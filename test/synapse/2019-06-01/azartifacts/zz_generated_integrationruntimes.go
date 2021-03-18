@@ -9,6 +9,7 @@ package azartifacts
 
 import (
 	"context"
+	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -38,6 +39,9 @@ func (client *integrationRuntimesClient) Get(ctx context.Context, integrationRun
 // getCreateRequest creates the Get request.
 func (client *integrationRuntimesClient) getCreateRequest(ctx context.Context, integrationRuntimeName string, options *IntegrationRuntimesGetOptions) (*azcore.Request, error) {
 	urlPath := "/integrationRuntimes/{integrationRuntimeName}"
+	if integrationRuntimeName == "" {
+		return nil, errors.New("parameter integrationRuntimeName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{integrationRuntimeName}", url.PathEscape(integrationRuntimeName))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {

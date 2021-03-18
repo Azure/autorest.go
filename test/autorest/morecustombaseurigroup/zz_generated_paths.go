@@ -9,6 +9,7 @@ package morecustombaseurigroup
 
 import (
 	"context"
+	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -50,7 +51,13 @@ func (client *PathsClient) getEmptyCreateRequest(ctx context.Context, vault stri
 	host = strings.ReplaceAll(host, "{vault}", vault)
 	host = strings.ReplaceAll(host, "{secret}", secret)
 	urlPath := "/customuri/{subscriptionId}/{keyName}"
+	if keyName == "" {
+		return nil, errors.New("parameter keyName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{keyName}", url.PathEscape(keyName))
+	if client.subscriptionID == "" {
+		return nil, errors.New("parameter client.subscriptionID cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(host, urlPath))
 	if err != nil {

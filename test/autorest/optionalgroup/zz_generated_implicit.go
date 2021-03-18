@@ -9,6 +9,7 @@ package optionalgroup
 
 import (
 	"context"
+	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -91,6 +92,9 @@ func (client *ImplicitClient) GetRequiredGlobalPath(ctx context.Context, options
 // getRequiredGlobalPathCreateRequest creates the GetRequiredGlobalPath request.
 func (client *ImplicitClient) getRequiredGlobalPathCreateRequest(ctx context.Context, options *ImplicitGetRequiredGlobalPathOptions) (*azcore.Request, error) {
 	urlPath := "/reqopt/global/required/path/{required-global-path}"
+	if client.requiredGlobalPath == "" {
+		return nil, errors.New("parameter client.requiredGlobalPath cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{required-global-path}", url.PathEscape(client.requiredGlobalPath))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -169,6 +173,9 @@ func (client *ImplicitClient) GetRequiredPath(ctx context.Context, pathParameter
 // getRequiredPathCreateRequest creates the GetRequiredPath request.
 func (client *ImplicitClient) getRequiredPathCreateRequest(ctx context.Context, pathParameter string, options *ImplicitGetRequiredPathOptions) (*azcore.Request, error) {
 	urlPath := "/reqopt/implicit/required/path/{pathParameter}"
+	if pathParameter == "" {
+		return nil, errors.New("parameter pathParameter cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{pathParameter}", url.PathEscape(pathParameter))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {

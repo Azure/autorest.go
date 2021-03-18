@@ -9,6 +9,7 @@ package azartifacts
 
 import (
 	"context"
+	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -39,6 +40,9 @@ func (client *pipelineRunClient) CancelPipelineRun(ctx context.Context, runID st
 // cancelPipelineRunCreateRequest creates the CancelPipelineRun request.
 func (client *pipelineRunClient) cancelPipelineRunCreateRequest(ctx context.Context, runID string, options *PipelineRunCancelPipelineRunOptions) (*azcore.Request, error) {
 	urlPath := "/pipelineruns/{runId}/cancel"
+	if runID == "" {
+		return nil, errors.New("parameter runID cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{runId}", url.PathEscape(runID))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -83,6 +87,9 @@ func (client *pipelineRunClient) GetPipelineRun(ctx context.Context, runID strin
 // getPipelineRunCreateRequest creates the GetPipelineRun request.
 func (client *pipelineRunClient) getPipelineRunCreateRequest(ctx context.Context, runID string, options *PipelineRunGetPipelineRunOptions) (*azcore.Request, error) {
 	urlPath := "/pipelineruns/{runId}"
+	if runID == "" {
+		return nil, errors.New("parameter runID cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{runId}", url.PathEscape(runID))
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -133,7 +140,13 @@ func (client *pipelineRunClient) QueryActivityRuns(ctx context.Context, pipeline
 // queryActivityRunsCreateRequest creates the QueryActivityRuns request.
 func (client *pipelineRunClient) queryActivityRunsCreateRequest(ctx context.Context, pipelineName string, runID string, filterParameters RunFilterParameters, options *PipelineRunQueryActivityRunsOptions) (*azcore.Request, error) {
 	urlPath := "/pipelines/{pipelineName}/pipelineruns/{runId}/queryActivityruns"
+	if pipelineName == "" {
+		return nil, errors.New("parameter pipelineName cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{pipelineName}", url.PathEscape(pipelineName))
+	if runID == "" {
+		return nil, errors.New("parameter runID cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{runId}", url.PathEscape(runID))
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
