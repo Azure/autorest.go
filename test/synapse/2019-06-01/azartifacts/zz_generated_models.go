@@ -11,6 +11,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"reflect"
 	"time"
@@ -67,20 +68,12 @@ func (a *Activity) UnmarshalJSON(data []byte) error {
 
 func (a Activity) marshalInternal(discValue string) map[string]interface{} {
 	objectMap := make(map[string]interface{})
-	if a.DependsOn != nil {
-		objectMap["dependsOn"] = a.DependsOn
-	}
-	if a.Description != nil {
-		objectMap["description"] = a.Description
-	}
-	if a.Name != nil {
-		objectMap["name"] = a.Name
-	}
+	populate(objectMap, "dependsOn", a.DependsOn)
+	populate(objectMap, "description", a.Description)
+	populate(objectMap, "name", a.Name)
 	a.Type = &discValue
 	objectMap["type"] = a.Type
-	if a.UserProperties != nil {
-		objectMap["userProperties"] = a.UserProperties
-	}
+	populate(objectMap, "userProperties", a.UserProperties)
 	if a.AdditionalProperties != nil {
 		for key, val := range *a.AdditionalProperties {
 			objectMap[key] = val
@@ -2693,9 +2686,7 @@ func (a *AzureEntityResource) UnmarshalJSON(data []byte) error {
 
 func (a AzureEntityResource) marshalInternal() map[string]interface{} {
 	objectMap := a.Resource.marshalInternal()
-	if a.Etag != nil {
-		objectMap["etag"] = a.Etag
-	}
+	populate(objectMap, "etag", a.Etag)
 	return objectMap
 }
 
@@ -6249,23 +6240,13 @@ func (c *CopySink) UnmarshalJSON(data []byte) error {
 
 func (c CopySink) marshalInternal(discValue string) map[string]interface{} {
 	objectMap := make(map[string]interface{})
-	if c.MaxConcurrentConnections != nil {
-		objectMap["maxConcurrentConnections"] = c.MaxConcurrentConnections
-	}
-	if c.SinkRetryCount != nil {
-		objectMap["sinkRetryCount"] = c.SinkRetryCount
-	}
-	if c.SinkRetryWait != nil {
-		objectMap["sinkRetryWait"] = c.SinkRetryWait
-	}
+	populate(objectMap, "maxConcurrentConnections", c.MaxConcurrentConnections)
+	populate(objectMap, "sinkRetryCount", c.SinkRetryCount)
+	populate(objectMap, "sinkRetryWait", c.SinkRetryWait)
 	c.Type = &discValue
 	objectMap["type"] = c.Type
-	if c.WriteBatchSize != nil {
-		objectMap["writeBatchSize"] = c.WriteBatchSize
-	}
-	if c.WriteBatchTimeout != nil {
-		objectMap["writeBatchTimeout"] = c.WriteBatchTimeout
-	}
+	populate(objectMap, "writeBatchSize", c.WriteBatchSize)
+	populate(objectMap, "writeBatchTimeout", c.WriteBatchTimeout)
 	if c.AdditionalProperties != nil {
 		for key, val := range *c.AdditionalProperties {
 			objectMap[key] = val
@@ -6366,15 +6347,9 @@ func (c *CopySource) UnmarshalJSON(data []byte) error {
 
 func (c CopySource) marshalInternal(discValue string) map[string]interface{} {
 	objectMap := make(map[string]interface{})
-	if c.MaxConcurrentConnections != nil {
-		objectMap["maxConcurrentConnections"] = c.MaxConcurrentConnections
-	}
-	if c.SourceRetryCount != nil {
-		objectMap["sourceRetryCount"] = c.SourceRetryCount
-	}
-	if c.SourceRetryWait != nil {
-		objectMap["sourceRetryWait"] = c.SourceRetryWait
-	}
+	populate(objectMap, "maxConcurrentConnections", c.MaxConcurrentConnections)
+	populate(objectMap, "sourceRetryCount", c.SourceRetryCount)
+	populate(objectMap, "sourceRetryWait", c.SourceRetryWait)
 	c.Type = &discValue
 	objectMap["type"] = c.Type
 	if c.AdditionalProperties != nil {
@@ -7300,15 +7275,9 @@ func (d *DataFlow) UnmarshalJSON(data []byte) error {
 
 func (d DataFlow) marshalInternal(discValue string) map[string]interface{} {
 	objectMap := make(map[string]interface{})
-	if d.Annotations != nil {
-		objectMap["annotations"] = d.Annotations
-	}
-	if d.Description != nil {
-		objectMap["description"] = d.Description
-	}
-	if d.Folder != nil {
-		objectMap["folder"] = d.Folder
-	}
+	populate(objectMap, "annotations", d.Annotations)
+	populate(objectMap, "description", d.Description)
+	populate(objectMap, "folder", d.Folder)
 	d.Type = &discValue
 	objectMap["type"] = d.Type
 	return objectMap
@@ -8171,27 +8140,13 @@ func (d *Dataset) UnmarshalJSON(data []byte) error {
 
 func (d Dataset) marshalInternal(discValue string) map[string]interface{} {
 	objectMap := make(map[string]interface{})
-	if d.Annotations != nil {
-		objectMap["annotations"] = d.Annotations
-	}
-	if d.Description != nil {
-		objectMap["description"] = d.Description
-	}
-	if d.Folder != nil {
-		objectMap["folder"] = d.Folder
-	}
-	if d.LinkedServiceName != nil {
-		objectMap["linkedServiceName"] = d.LinkedServiceName
-	}
-	if d.Parameters != nil {
-		objectMap["parameters"] = d.Parameters
-	}
-	if d.Schema != nil {
-		objectMap["schema"] = d.Schema
-	}
-	if d.Structure != nil {
-		objectMap["structure"] = d.Structure
-	}
+	populate(objectMap, "annotations", d.Annotations)
+	populate(objectMap, "description", d.Description)
+	populate(objectMap, "folder", d.Folder)
+	populate(objectMap, "linkedServiceName", d.LinkedServiceName)
+	populate(objectMap, "parameters", d.Parameters)
+	populate(objectMap, "schema", d.Schema)
+	populate(objectMap, "structure", d.Structure)
 	d.Type = &discValue
 	objectMap["type"] = d.Type
 	if d.AdditionalProperties != nil {
@@ -8501,12 +8456,8 @@ func (d *DatasetLocation) UnmarshalJSON(data []byte) error {
 
 func (d DatasetLocation) marshalInternal(discValue string) map[string]interface{} {
 	objectMap := make(map[string]interface{})
-	if d.FileName != nil {
-		objectMap["fileName"] = d.FileName
-	}
-	if d.FolderPath != nil {
-		objectMap["folderPath"] = d.FolderPath
-	}
+	populate(objectMap, "fileName", d.FileName)
+	populate(objectMap, "folderPath", d.FolderPath)
 	d.Type = &discValue
 	objectMap["type"] = d.Type
 	if d.AdditionalProperties != nil {
@@ -8684,12 +8635,8 @@ func (d *DatasetStorageFormat) UnmarshalJSON(data []byte) error {
 
 func (d DatasetStorageFormat) marshalInternal(discValue string) map[string]interface{} {
 	objectMap := make(map[string]interface{})
-	if d.Deserializer != nil {
-		objectMap["deserializer"] = d.Deserializer
-	}
-	if d.Serializer != nil {
-		objectMap["serializer"] = d.Serializer
-	}
+	populate(objectMap, "deserializer", d.Deserializer)
+	populate(objectMap, "serializer", d.Serializer)
 	d.Type = &discValue
 	objectMap["type"] = d.Type
 	if d.AdditionalProperties != nil {
@@ -10785,12 +10732,8 @@ func (e *ExecutionActivity) UnmarshalJSON(data []byte) error {
 
 func (e ExecutionActivity) marshalInternal(discValue string) map[string]interface{} {
 	objectMap := e.Activity.marshalInternal(discValue)
-	if e.LinkedServiceName != nil {
-		objectMap["linkedServiceName"] = e.LinkedServiceName
-	}
-	if e.Policy != nil {
-		objectMap["policy"] = e.Policy
-	}
+	populate(objectMap, "linkedServiceName", e.LinkedServiceName)
+	populate(objectMap, "policy", e.Policy)
 	return objectMap
 }
 
@@ -14395,9 +14338,7 @@ func (i *IntegrationRuntime) UnmarshalJSON(data []byte) error {
 
 func (i IntegrationRuntime) marshalInternal(discValue IntegrationRuntimeType) map[string]interface{} {
 	objectMap := make(map[string]interface{})
-	if i.Description != nil {
-		objectMap["description"] = i.Description
-	}
+	populate(objectMap, "description", i.Description)
 	i.Type = &discValue
 	objectMap["type"] = i.Type
 	if i.AdditionalProperties != nil {
@@ -15765,18 +15706,10 @@ func (l *LinkedService) UnmarshalJSON(data []byte) error {
 
 func (l LinkedService) marshalInternal(discValue string) map[string]interface{} {
 	objectMap := make(map[string]interface{})
-	if l.Annotations != nil {
-		objectMap["annotations"] = l.Annotations
-	}
-	if l.ConnectVia != nil {
-		objectMap["connectVia"] = l.ConnectVia
-	}
-	if l.Description != nil {
-		objectMap["description"] = l.Description
-	}
-	if l.Parameters != nil {
-		objectMap["parameters"] = l.Parameters
-	}
+	populate(objectMap, "annotations", l.Annotations)
+	populate(objectMap, "connectVia", l.ConnectVia)
+	populate(objectMap, "description", l.Description)
+	populate(objectMap, "parameters", l.Parameters)
 	l.Type = &discValue
 	objectMap["type"] = l.Type
 	if l.AdditionalProperties != nil {
@@ -17230,9 +17163,7 @@ func (m *MultiplePipelineTrigger) UnmarshalJSON(data []byte) error {
 
 func (m MultiplePipelineTrigger) marshalInternal(discValue string) map[string]interface{} {
 	objectMap := m.Trigger.marshalInternal(discValue)
-	if m.Pipelines != nil {
-		objectMap["pipelines"] = m.Pipelines
-	}
+	populate(objectMap, "pipelines", m.Pipelines)
 	return objectMap
 }
 
@@ -21154,15 +21085,9 @@ type Resource struct {
 
 func (r Resource) marshalInternal() map[string]interface{} {
 	objectMap := make(map[string]interface{})
-	if r.ID != nil {
-		objectMap["id"] = r.ID
-	}
-	if r.Name != nil {
-		objectMap["name"] = r.Name
-	}
-	if r.Type != nil {
-		objectMap["type"] = r.Type
-	}
+	populate(objectMap, "id", r.ID)
+	populate(objectMap, "name", r.Name)
+	populate(objectMap, "type", r.Type)
 	return objectMap
 }
 
@@ -26900,9 +26825,7 @@ func (s *StoreReadSettings) UnmarshalJSON(data []byte) error {
 
 func (s StoreReadSettings) marshalInternal(discValue string) map[string]interface{} {
 	objectMap := make(map[string]interface{})
-	if s.MaxConcurrentConnections != nil {
-		objectMap["maxConcurrentConnections"] = s.MaxConcurrentConnections
-	}
+	populate(objectMap, "maxConcurrentConnections", s.MaxConcurrentConnections)
 	s.Type = &discValue
 	objectMap["type"] = s.Type
 	if s.AdditionalProperties != nil {
@@ -26980,12 +26903,8 @@ func (s *StoreWriteSettings) UnmarshalJSON(data []byte) error {
 
 func (s StoreWriteSettings) marshalInternal(discValue string) map[string]interface{} {
 	objectMap := make(map[string]interface{})
-	if s.CopyBehavior != nil {
-		objectMap["copyBehavior"] = s.CopyBehavior
-	}
-	if s.MaxConcurrentConnections != nil {
-		objectMap["maxConcurrentConnections"] = s.MaxConcurrentConnections
-	}
+	populate(objectMap, "copyBehavior", s.CopyBehavior)
+	populate(objectMap, "maxConcurrentConnections", s.MaxConcurrentConnections)
 	s.Type = &discValue
 	objectMap["type"] = s.Type
 	if s.AdditionalProperties != nil {
@@ -27049,9 +26968,7 @@ type SubResourceDebugResource struct {
 
 func (s SubResourceDebugResource) marshalInternal() map[string]interface{} {
 	objectMap := make(map[string]interface{})
-	if s.Name != nil {
-		objectMap["name"] = s.Name
-	}
+	populate(objectMap, "name", s.Name)
 	return objectMap
 }
 
@@ -27493,9 +27410,7 @@ func (t *TabularSource) UnmarshalJSON(data []byte) error {
 
 func (t TabularSource) marshalInternal(discValue string) map[string]interface{} {
 	objectMap := t.CopySource.marshalInternal(discValue)
-	if t.QueryTimeout != nil {
-		objectMap["queryTimeout"] = t.QueryTimeout
-	}
+	populate(objectMap, "queryTimeout", t.QueryTimeout)
 	return objectMap
 }
 
@@ -27934,15 +27849,9 @@ func (t *Trigger) UnmarshalJSON(data []byte) error {
 
 func (t Trigger) marshalInternal(discValue string) map[string]interface{} {
 	objectMap := make(map[string]interface{})
-	if t.Annotations != nil {
-		objectMap["annotations"] = t.Annotations
-	}
-	if t.Description != nil {
-		objectMap["description"] = t.Description
-	}
-	if t.RuntimeState != nil {
-		objectMap["runtimeState"] = t.RuntimeState
-	}
+	populate(objectMap, "annotations", t.Annotations)
+	populate(objectMap, "description", t.Description)
+	populate(objectMap, "runtimeState", t.RuntimeState)
 	t.Type = &discValue
 	objectMap["type"] = t.Type
 	if t.AdditionalProperties != nil {
@@ -28066,9 +27975,7 @@ func (t *TriggerDependencyReference) UnmarshalJSON(data []byte) error {
 
 func (t TriggerDependencyReference) marshalInternal(discValue string) map[string]interface{} {
 	objectMap := t.DependencyReference.marshalInternal(discValue)
-	if t.ReferenceTrigger != nil {
-		objectMap["referenceTrigger"] = t.ReferenceTrigger
-	}
+	populate(objectMap, "referenceTrigger", t.ReferenceTrigger)
 	return objectMap
 }
 
@@ -29169,9 +29076,7 @@ func (w WebLinkedServiceTypeProperties) marshalInternal(discValue WebAuthenticat
 	objectMap := make(map[string]interface{})
 	w.AuthenticationType = &discValue
 	objectMap["authenticationType"] = w.AuthenticationType
-	if w.URL != nil {
-		objectMap["url"] = w.URL
-	}
+	populate(objectMap, "url", w.URL)
 	return objectMap
 }
 
@@ -29718,7 +29623,9 @@ func (z *ZohoSource) UnmarshalJSON(data []byte) error {
 }
 
 func populate(m map[string]interface{}, k string, v interface{}) {
-	if !reflect.ValueOf(v).IsNil() {
+	if azcore.IsNullValue(v) {
+		m[k] = nil
+	} else if !reflect.ValueOf(v).IsNil() {
 		m[k] = v
 	}
 }

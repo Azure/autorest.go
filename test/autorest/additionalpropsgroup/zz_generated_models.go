@@ -10,6 +10,7 @@ package additionalpropsgroup
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"reflect"
 )
@@ -335,15 +336,9 @@ func (p *PetAPTrue) UnmarshalJSON(data []byte) error {
 
 func (p PetAPTrue) marshalInternal() map[string]interface{} {
 	objectMap := make(map[string]interface{})
-	if p.ID != nil {
-		objectMap["id"] = p.ID
-	}
-	if p.Name != nil {
-		objectMap["name"] = p.Name
-	}
-	if p.Status != nil {
-		objectMap["status"] = p.Status
-	}
+	populate(objectMap, "id", p.ID)
+	populate(objectMap, "name", p.Name)
+	populate(objectMap, "status", p.Status)
 	if p.AdditionalProperties != nil {
 		for key, val := range *p.AdditionalProperties {
 			objectMap[key] = val
@@ -422,7 +417,9 @@ type PetsCreateCatAPTrueOptions struct {
 }
 
 func populate(m map[string]interface{}, k string, v interface{}) {
-	if !reflect.ValueOf(v).IsNil() {
+	if azcore.IsNullValue(v) {
+		m[k] = nil
+	} else if !reflect.ValueOf(v).IsNil() {
 		m[k] = v
 	}
 }

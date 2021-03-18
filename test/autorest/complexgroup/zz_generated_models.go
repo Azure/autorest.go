@@ -10,6 +10,7 @@ package complexgroup
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"reflect"
 	"time"
@@ -363,9 +364,7 @@ func (d DotFish) marshalInternal(discValue string) map[string]interface{} {
 	objectMap := make(map[string]interface{})
 	d.FishType = &discValue
 	objectMap["fish.type"] = d.FishType
-	if d.Species != nil {
-		objectMap["species"] = d.Species
-	}
+	populate(objectMap, "species", d.Species)
 	return objectMap
 }
 
@@ -563,15 +562,9 @@ func (f Fish) marshalInternal(discValue string) map[string]interface{} {
 	objectMap := make(map[string]interface{})
 	f.Fishtype = &discValue
 	objectMap["fishtype"] = f.Fishtype
-	if f.Length != nil {
-		objectMap["length"] = f.Length
-	}
-	if f.Siblings != nil {
-		objectMap["siblings"] = f.Siblings
-	}
-	if f.Species != nil {
-		objectMap["species"] = f.Species
-	}
+	populate(objectMap, "length", f.Length)
+	populate(objectMap, "siblings", f.Siblings)
+	populate(objectMap, "species", f.Species)
 	return objectMap
 }
 
@@ -742,14 +735,10 @@ func (m *MyBaseType) UnmarshalJSON(data []byte) error {
 
 func (m MyBaseType) marshalInternal(discValue MyKind) map[string]interface{} {
 	objectMap := make(map[string]interface{})
-	if m.Helper != nil {
-		objectMap["helper"] = m.Helper
-	}
+	populate(objectMap, "helper", m.Helper)
 	m.Kind = &discValue
 	objectMap["kind"] = m.Kind
-	if m.PropB1 != nil {
-		objectMap["propB1"] = m.PropB1
-	}
+	populate(objectMap, "propB1", m.PropB1)
 	return objectMap
 }
 
@@ -1053,12 +1042,8 @@ func (s *Salmon) UnmarshalJSON(data []byte) error {
 
 func (s Salmon) marshalInternal(discValue string) map[string]interface{} {
 	objectMap := s.Fish.marshalInternal(discValue)
-	if s.Iswild != nil {
-		objectMap["iswild"] = s.Iswild
-	}
-	if s.Location != nil {
-		objectMap["location"] = s.Location
-	}
+	populate(objectMap, "iswild", s.Iswild)
+	populate(objectMap, "location", s.Location)
 	return objectMap
 }
 
@@ -1165,12 +1150,8 @@ func (s *Shark) UnmarshalJSON(data []byte) error {
 
 func (s Shark) marshalInternal(discValue string) map[string]interface{} {
 	objectMap := s.Fish.marshalInternal(discValue)
-	if s.Age != nil {
-		objectMap["age"] = s.Age
-	}
-	if s.Birthday != nil {
-		objectMap["birthday"] = (*timeRFC3339)(s.Birthday)
-	}
+	populate(objectMap, "age", s.Age)
+	populate(objectMap, "birthday", (*timeRFC3339)(s.Birthday))
 	return objectMap
 }
 
@@ -1277,7 +1258,9 @@ type StringWrapperResponse struct {
 }
 
 func populate(m map[string]interface{}, k string, v interface{}) {
-	if !reflect.ValueOf(v).IsNil() {
+	if azcore.IsNullValue(v) {
+		m[k] = nil
+	} else if !reflect.ValueOf(v).IsNil() {
 		m[k] = v
 	}
 }

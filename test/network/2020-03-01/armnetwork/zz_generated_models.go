@@ -11,6 +11,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"reflect"
 	"time"
@@ -2931,33 +2932,15 @@ type ConnectionMonitorParameters struct {
 
 func (c ConnectionMonitorParameters) marshalInternal() map[string]interface{} {
 	objectMap := make(map[string]interface{})
-	if c.AutoStart != nil {
-		objectMap["autoStart"] = c.AutoStart
-	}
-	if c.Destination != nil {
-		objectMap["destination"] = c.Destination
-	}
-	if c.Endpoints != nil {
-		objectMap["endpoints"] = c.Endpoints
-	}
-	if c.MonitoringIntervalInSeconds != nil {
-		objectMap["monitoringIntervalInSeconds"] = c.MonitoringIntervalInSeconds
-	}
-	if c.Notes != nil {
-		objectMap["notes"] = c.Notes
-	}
-	if c.Outputs != nil {
-		objectMap["outputs"] = c.Outputs
-	}
-	if c.Source != nil {
-		objectMap["source"] = c.Source
-	}
-	if c.TestConfigurations != nil {
-		objectMap["testConfigurations"] = c.TestConfigurations
-	}
-	if c.TestGroups != nil {
-		objectMap["testGroups"] = c.TestGroups
-	}
+	populate(objectMap, "autoStart", c.AutoStart)
+	populate(objectMap, "destination", c.Destination)
+	populate(objectMap, "endpoints", c.Endpoints)
+	populate(objectMap, "monitoringIntervalInSeconds", c.MonitoringIntervalInSeconds)
+	populate(objectMap, "notes", c.Notes)
+	populate(objectMap, "outputs", c.Outputs)
+	populate(objectMap, "source", c.Source)
+	populate(objectMap, "testConfigurations", c.TestConfigurations)
+	populate(objectMap, "testGroups", c.TestGroups)
 	return objectMap
 }
 
@@ -5880,12 +5863,8 @@ func (f *FirewallPolicyRule) UnmarshalJSON(data []byte) error {
 
 func (f FirewallPolicyRule) marshalInternal(discValue FirewallPolicyRuleType) map[string]interface{} {
 	objectMap := make(map[string]interface{})
-	if f.Name != nil {
-		objectMap["name"] = f.Name
-	}
-	if f.Priority != nil {
-		objectMap["priority"] = f.Priority
-	}
+	populate(objectMap, "name", f.Name)
+	populate(objectMap, "priority", f.Priority)
 	f.RuleType = &discValue
 	objectMap["ruleType"] = f.RuleType
 	return objectMap
@@ -5949,12 +5928,8 @@ func (f *FirewallPolicyRuleCondition) UnmarshalJSON(data []byte) error {
 
 func (f FirewallPolicyRuleCondition) marshalInternal(discValue FirewallPolicyRuleConditionType) map[string]interface{} {
 	objectMap := make(map[string]interface{})
-	if f.Description != nil {
-		objectMap["description"] = f.Description
-	}
-	if f.Name != nil {
-		objectMap["name"] = f.Name
-	}
+	populate(objectMap, "description", f.Description)
+	populate(objectMap, "name", f.Name)
 	f.RuleConditionType = &discValue
 	objectMap["ruleConditionType"] = f.RuleConditionType
 	return objectMap
@@ -11947,6 +11922,13 @@ type TagsObject struct {
 	Tags *map[string]string `json:"tags,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type TagsObject.
+func (t TagsObject) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "tags", t.Tags)
+	return json.Marshal(objectMap)
+}
+
 // Topology of the specified resource group.
 type Topology struct {
 	// READ-ONLY; The datetime when the topology was initially created for the resource group.
@@ -14825,7 +14807,9 @@ type WebApplicationFirewallPolicyResponse struct {
 }
 
 func populate(m map[string]interface{}, k string, v interface{}) {
-	if !reflect.ValueOf(v).IsNil() {
+	if azcore.IsNullValue(v) {
+		m[k] = nil
+	} else if !reflect.ValueOf(v).IsNil() {
 		m[k] = v
 	}
 }
