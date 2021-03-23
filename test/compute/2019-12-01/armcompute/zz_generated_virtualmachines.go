@@ -1396,7 +1396,7 @@ func (client *VirtualMachinesClient) reimageCreateRequest(ctx context.Context, r
 	query := req.URL.Query()
 	query.Set("api-version", "2019-12-01")
 	req.URL.RawQuery = query.Encode()
-	if options != nil {
+	if options != nil && options.Parameters != nil {
 		return req, req.MarshalAsJSON(options.Parameters)
 	}
 	return req, nil

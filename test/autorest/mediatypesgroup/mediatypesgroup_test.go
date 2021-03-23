@@ -20,7 +20,9 @@ func newMediaTypesClient() *MediaTypesClient {
 func TestAnalyzeBody(t *testing.T) {
 	client := newMediaTypesClient()
 	body := azcore.NopCloser(bytes.NewReader([]byte("PDF")))
-	result, err := client.AnalyzeBody(context.Background(), ContentTypeApplicationPDF, body, nil)
+	result, err := client.AnalyzeBody(context.Background(), ContentTypeApplicationPDF, &MediaTypesClientAnalyzeBodyOptions{
+		Input: body,
+	})
 	if err != nil {
 		t.Fatalf("AnalyzeBody: %v", err)
 	}
@@ -45,7 +47,9 @@ func TestAnalyzeBodyWithSourcePath(t *testing.T) {
 
 func TestContentTypeWithEncoding(t *testing.T) {
 	client := newMediaTypesClient()
-	result, err := client.ContentTypeWithEncoding(context.Background(), "foo", nil)
+	result, err := client.ContentTypeWithEncoding(context.Background(), &MediaTypesClientContentTypeWithEncodingOptions{
+		Input: to.StringPtr("foo"),
+	})
 	if err != nil {
 		t.Fatalf("ContentTypeWithEncoding: %v", err)
 	}

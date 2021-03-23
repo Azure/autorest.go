@@ -1483,8 +1483,8 @@ type EncryptionImages struct {
 	// A list of encryption specifications for data disk images.
 	DataDiskImages *[]*DataDiskImageEncryption `json:"dataDiskImages,omitempty"`
 
-	// This is the disk image encryption base class.
-	OSDiskImage *DiskImageEncryption `json:"osDiskImage,omitempty"`
+	// Contains encryption settings for an OS disk image.
+	OSDiskImage *OSDiskImageEncryption `json:"osDiskImage,omitempty"`
 }
 
 // The managed identity for the disk encryption set. It should be given permission on the key vault before it can be used to encrypt disks.
@@ -2237,8 +2237,8 @@ type GalleryImageVersionProperties struct {
 	// READ-ONLY; The provisioning state, which only appears in the response.
 	ProvisioningState *GalleryImageVersionPropertiesProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 
-	// Describes the basic gallery artifact publishing profile.
-	PublishingProfile *GalleryArtifactPublishingProfileBase `json:"publishingProfile,omitempty"`
+	// The publishing profile of a gallery Image Version.
+	PublishingProfile *GalleryImageVersionPublishingProfile `json:"publishingProfile,omitempty"`
 
 	// READ-ONLY; This is the replication status of the gallery Image Version.
 	ReplicationStatus *ReplicationStatus `json:"replicationStatus,omitempty" azure:"ro"`
@@ -2266,8 +2266,8 @@ type GalleryImageVersionStorageProfile struct {
 	// A list of data disk images.
 	DataDiskImages *[]*GalleryDataDiskImage `json:"dataDiskImages,omitempty"`
 
-	// This is the disk image base class.
-	OSDiskImage *GalleryDiskImage `json:"osDiskImage,omitempty"`
+	// This is the OS disk image.
+	OSDiskImage *GalleryOSDiskImage `json:"osDiskImage,omitempty"`
 
 	// The gallery artifact version source.
 	Source *GalleryArtifactVersionSource `json:"source,omitempty"`
@@ -2470,7 +2470,7 @@ type ImageDisk struct {
 	Caching *CachingTypes `json:"caching,omitempty"`
 
 	// Specifies the customer managed disk encryption set resource id for the managed image disk.
-	DiskEncryptionSet *SubResource `json:"diskEncryptionSet,omitempty"`
+	DiskEncryptionSet *DiskEncryptionSetParameters `json:"diskEncryptionSet,omitempty"`
 
 	// Specifies the size of empty data disks in gigabytes. This element can be used to overwrite the name of the disk in a virtual machine image.
 	// This value cannot be larger than 1023 GB
@@ -3027,7 +3027,7 @@ type ManagedArtifact struct {
 type ManagedDiskParameters struct {
 	SubResource
 	// Specifies the customer managed disk encryption set resource id for the managed disk.
-	DiskEncryptionSet *SubResource `json:"diskEncryptionSet,omitempty"`
+	DiskEncryptionSet *DiskEncryptionSetParameters `json:"diskEncryptionSet,omitempty"`
 
 	// Specifies the storage account type for the managed disk. NOTE: UltraSSD_LRS can only be used with data disks, it cannot be used with OS Disk.
 	StorageAccountType *StorageAccountTypes `json:"storageAccountType,omitempty"`
@@ -4354,12 +4354,6 @@ type UpdateResource struct {
 	Tags *map[string]*string `json:"tags,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type UpdateResource.
-func (u UpdateResource) MarshalJSON() ([]byte, error) {
-	objectMap := u.marshalInternal()
-	return json.Marshal(objectMap)
-}
-
 func (u UpdateResource) marshalInternal() map[string]interface{} {
 	objectMap := make(map[string]interface{})
 	populate(objectMap, "tags", u.Tags)
@@ -5597,7 +5591,7 @@ type VirtualMachineScaleSetListWithLinkResultResponse struct {
 // Describes the parameters of a ScaleSet managed disk.
 type VirtualMachineScaleSetManagedDiskParameters struct {
 	// Specifies the customer managed disk encryption set resource id for the managed disk.
-	DiskEncryptionSet *SubResource `json:"diskEncryptionSet,omitempty"`
+	DiskEncryptionSet *DiskEncryptionSetParameters `json:"diskEncryptionSet,omitempty"`
 
 	// Specifies the storage account type for the managed disk. NOTE: UltraSSD_LRS can only be used with data disks, it cannot be used with OS Disk.
 	StorageAccountType *StorageAccountTypes `json:"storageAccountType,omitempty"`
@@ -5850,7 +5844,7 @@ type VirtualMachineScaleSetPublicIPAddressConfigurationProperties struct {
 
 // Describes a Virtual Machine Scale Set VM Reimage Parameters.
 type VirtualMachineScaleSetReimageParameters struct {
-	VirtualMachineReimageParameters
+	VirtualMachineScaleSetVMReimageParameters
 	// The virtual machine scale set instance ids. Omitting the virtual machine scale set instance ids will result in the operation being performed on all virtual
 	// machines in the virtual machine scale set.
 	InstanceIDs *[]*string `json:"instanceIds,omitempty"`
@@ -6503,7 +6497,7 @@ type VirtualMachineScaleSetVMsBeginReimageAllOptions struct {
 // VirtualMachineScaleSetVMsBeginReimageOptions contains the optional parameters for the VirtualMachineScaleSetVMs.BeginReimage method.
 type VirtualMachineScaleSetVMsBeginReimageOptions struct {
 	// Parameters for the Reimaging Virtual machine in ScaleSet.
-	VMScaleSetVMReimageInput *VirtualMachineReimageParameters
+	VMScaleSetVMReimageInput *VirtualMachineScaleSetVMReimageParameters
 }
 
 // VirtualMachineScaleSetVMsBeginRestartOptions contains the optional parameters for the VirtualMachineScaleSetVMs.BeginRestart method.

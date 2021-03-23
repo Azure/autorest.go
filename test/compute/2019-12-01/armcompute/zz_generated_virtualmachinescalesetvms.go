@@ -813,7 +813,7 @@ func (client *VirtualMachineScaleSetVMsClient) reimageCreateRequest(ctx context.
 	query := req.URL.Query()
 	query.Set("api-version", "2019-12-01")
 	req.URL.RawQuery = query.Encode()
-	if options != nil {
+	if options != nil && options.VMScaleSetVMReimageInput != nil {
 		return req, req.MarshalAsJSON(options.VMScaleSetVMReimageInput)
 	}
 	return req, nil

@@ -386,7 +386,7 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
         return false;
       }
       if (pp.schema.type === SchemaType.String || choiceIsString(pp.schema)) {
-        const paramName = getParamName(pp);
+        const paramName = getParamName(pp, true);
         imports.add('errors');
         text += `\tif ${paramName} == "" {\n`;
         text += `\t\treturn nil, errors.New("parameter ${paramName} cannot be empty")\n`;
@@ -448,7 +448,7 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
       for (const qp of values(encodedParams)) {
         let setter: string;
         if (qp.protocol.http?.explode === true) {
-          setter = `\tfor _, qv := range ${getParamName(qp)} {\n`;
+          setter = `\tfor _, qv := range ${getParamName(qp, true)} {\n`;
           setter += `\t\tquery.Add("${qp.language.go!.serializedName}", qv)\n`;
           setter += '\t}';
         } else {
@@ -469,13 +469,13 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
       for (const qp of values(unencodedParams)) {
         let setter: string;
         if (qp.protocol.http?.explode === true) {
-          setter = `\tfor _, qv := range ${getParamName(qp)} {\n`;
+          setter = `\tfor _, qv := range ${getParamName(qp, true)} {\n`;
           setter += `\t\tunencodedParams = append(unencodedParams, "${qp.language.go!.serializedName}="+qv)\n`;
           setter += '\t}';
         } else {
           setter = `unencodedParams = append(unencodedParams, "${qp.language.go!.serializedName}="+${formatParamValue(qp, imports)})`;
         }
-        text += emitQueryParam(qp, `unencodedParams = append(unencodedParams, "${qp.language.go!.serializedName}="+${formatParamValue(qp, imports)})`);
+        text += emitQueryParam(qp, setter);
       }
       text += '\treq.URL.RawQuery = strings.Join(unencodedParams, "&")\n';
     }
@@ -489,7 +489,7 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
   headerParam.forEach(header => {
     const emitHeaderSet = function (headerParam: Parameter, prefix: string): string {
       if (header.schema.language.go!.headerCollectionPrefix) {
-        let headerText = `${prefix}for k, v := range ${getParamName(headerParam)} {\n`;
+        let headerText = `${prefix}for k, v := range ${getParamName(headerParam, true)} {\n`;
         headerText += `${prefix}\treq.Header.Set("${header.schema.language.go!.headerCollectionPrefix}"+k, v)\n`;
         headerText += `${prefix}}\n`;
         return headerText;
@@ -509,11 +509,7 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
   if (mediaType === 'JSON' || mediaType === 'XML') {
     const bodyParam = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http!.in === 'body'; }).first();
     // default to the body param name
-    let body = bodyParam!.language.go!.name;
-    if (bodyParam!.language.go!.paramGroup) {
-      const paramGroup = <GroupProperty>bodyParam!.language.go!.paramGroup;
-      body = `${(<string>paramGroup.language.go!.name).uncapitalize()}.${(<string>bodyParam!.language.go!.name).capitalize()}`;
-    }
+    let body = getParamName(bodyParam!, false);
     if (bodyParam!.schema.type === SchemaType.Constant) {
       // if the value is constant, embed it directly
       body = formatConstantValue(<ConstantSchema>bodyParam!.schema);
@@ -566,8 +562,7 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
     if (bodyParam!.required || bodyParam!.schema.type === SchemaType.Constant) {
       text += `\treturn req, req.MarshalAs${getMediaFormat(bodyParam!.schema, mediaType, body)}\n`;
     } else {
-      const paramGroup = <GroupProperty>bodyParam!.language.go!.paramGroup;
-      text += `\tif ${(<string>paramGroup.language.go!.name).uncapitalize()} != nil {\n`;
+      text += emitParamGroupCheck(<GroupProperty>bodyParam!.language.go!.paramGroup, bodyParam!);
       text += `\t\treturn req, req.MarshalAs${getMediaFormat(bodyParam!.schema, mediaType, body)}\n`;
       text += '\t}\n';
       text += '\treturn req, nil\n';
@@ -584,17 +579,27 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
       }
     }
     const bodyParam = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http!.in === 'body'; }).first();
-    text += `\treturn req, req.SetBody(${bodyParam?.language.go!.name}, ${contentType})\n`;
+    if (bodyParam!.required) {
+      text += `\treturn req, req.SetBody(${bodyParam?.language.go!.name}, ${contentType})\n`;
+    } else {
+      text += emitParamGroupCheck(<GroupProperty>bodyParam!.language.go!.paramGroup, bodyParam!);
+      text += `\treturn req, req.SetBody(${getParamName(bodyParam!, false)}, ${contentType})\n`;
+      text += '\t}\n';
+      text += '\treturn req, nil\n';
+    }
   } else if (mediaType === 'text') {
     imports.add('strings');
-    let bodyParam = '';
-    for (const param of values(op.requests![0].parameters)) {
-      if (param.protocol.http!.in === 'body') {
-        bodyParam = param.language.go!.name;
-      }
+    const bodyParam = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http!.in === 'body'; }).first();
+    if (bodyParam!.required) {
+      text += `\tbody := azcore.NopCloser(strings.NewReader(${bodyParam}))\n`;
+      text += `\treturn req, req.SetBody(body, "text/plain; encoding=UTF-8")\n`;
+    } else {
+      text += emitParamGroupCheck(<GroupProperty>bodyParam!.language.go!.paramGroup, bodyParam!);
+      text += `\tbody := azcore.NopCloser(strings.NewReader(${getParamName(bodyParam!, true)}))\n`;
+      text += `\treturn req, req.SetBody(body, "text/plain; encoding=UTF-8")\n`;
+      text += '\t}\n';
+      text += '\treturn req, nil\n';
     }
-    text += `\tbody := azcore.NopCloser(strings.NewReader(${bodyParam}))\n`;
-    text += `\treturn req, req.SetBody(body, "text/plain; encoding=UTF-8")\n`;
   } else {
     text += `\treturn req, nil\n`;
   }

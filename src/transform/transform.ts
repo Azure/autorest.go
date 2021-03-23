@@ -326,13 +326,12 @@ function processOperationRequests(session: Session<CodeModel>) {
         }
         const inBody = param.protocol.http !== undefined && param.protocol.http!.in === 'body';
         param.schema.language.go!.name = schemaTypeToGoType(session.model, param.schema, inBody);
+        if (param.schema.type === SchemaType.Binary) {
+          param.language.go!.byValue = true;
+        }
         // check if this is a header collection
         if (param.extensions?.['x-ms-header-collection-prefix']) {
-          // key is always string, use the specified type for the value
-          const ds = new DictionarySchema(`map[string]${param.schema.language.go!.name}`, '', param.schema);
-          ds.language.go = ds.language.default;
-          ds.language.go!.headerCollectionPrefix = param.extensions['x-ms-header-collection-prefix'];
-          param.schema = ds;
+          param.schema.language.go!.headerCollectionPrefix = param.extensions['x-ms-header-collection-prefix'];
         }
         if (param.implementation === ImplementationLocation.Client && param.schema.type !== SchemaType.Constant && param.language.default.name !== '$host') {
           if (param.protocol.http!.in === 'uri') {
@@ -552,11 +551,7 @@ function processOperationResponses(session: Session<CodeModel>) {
           header.schema.language.go!.name = schemaTypeToGoType(session.model, header.schema, false);
           // check if this is a header collection
           if (header.extensions?.['x-ms-header-collection-prefix']) {
-            // key is always string, use the specified type for the value
-            const ds = new DictionarySchema(`map[string]${header.schema.language.go!.name}`, '', header.schema);
-            ds.language.go = ds.language.default;
-            ds.language.go!.headerCollectionPrefix = header.extensions['x-ms-header-collection-prefix'];
-            header.schema = ds;
+            header.schema.language.go!.headerCollectionPrefix = header.extensions['x-ms-header-collection-prefix'];
           }
         }
         filtered.push(resp);
@@ -719,6 +714,8 @@ function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op:
         ];
         for (const item of items(headers)) {
           const prop = newRespProperty(item.key, item.value.description, item.value.schema);
+          // propagate any extensions so we can access them through the property
+          prop.extensions = item.value.extensions;
           prop.language.go!.fromHeader = item.value.header;
           (<Array<Property>>respEnv.language.go!.properties).push(prop);
         }
@@ -937,6 +934,7 @@ function newRespProperty(name: string, desc: string, schema: Schema): Property {
   const prop = newProperty(name, desc, schema);
   if (schema.type === SchemaType.Any ||
     schema.type === SchemaType.Array ||
+    schema.type === SchemaType.Binary ||
     schema.type === SchemaType.Dictionary ||
     (isObjectSchema(schema) && schema.discriminator)) {
     prop.language.go!.byValue = true;

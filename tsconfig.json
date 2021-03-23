@@ -13,6 +13,8 @@
     "declaration": true,
     "stripInternal": true,
     "noEmitHelpers": false,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "target": "es2018",
     "types": [
       "node"

@@ -333,7 +333,7 @@ func (client *ProximityPlacementGroupsClient) listBySubscriptionHandleError(resp
 }
 
 // Update - Update a proximity placement group.
-func (client *ProximityPlacementGroupsClient) Update(ctx context.Context, resourceGroupName string, proximityPlacementGroupName string, parameters UpdateResource, options *ProximityPlacementGroupsUpdateOptions) (ProximityPlacementGroupResponse, error) {
+func (client *ProximityPlacementGroupsClient) Update(ctx context.Context, resourceGroupName string, proximityPlacementGroupName string, parameters ProximityPlacementGroupUpdate, options *ProximityPlacementGroupsUpdateOptions) (ProximityPlacementGroupResponse, error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, proximityPlacementGroupName, parameters, options)
 	if err != nil {
 		return ProximityPlacementGroupResponse{}, err
@@ -349,7 +349,7 @@ func (client *ProximityPlacementGroupsClient) Update(ctx context.Context, resour
 }
 
 // updateCreateRequest creates the Update request.
-func (client *ProximityPlacementGroupsClient) updateCreateRequest(ctx context.Context, resourceGroupName string, proximityPlacementGroupName string, parameters UpdateResource, options *ProximityPlacementGroupsUpdateOptions) (*azcore.Request, error) {
+func (client *ProximityPlacementGroupsClient) updateCreateRequest(ctx context.Context, resourceGroupName string, proximityPlacementGroupName string, parameters ProximityPlacementGroupUpdate, options *ProximityPlacementGroupsUpdateOptions) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/proximityPlacementGroups/{proximityPlacementGroupName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
