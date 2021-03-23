@@ -265,7 +265,20 @@ func TestGetDateInvalidChars(t *testing.T) {
 
 // GetDateInvalidNull - Get date array value ['2012-01-01', null, '1776-07-04']
 func TestGetDateInvalidNull(t *testing.T) {
-	t.Skip("arrays with nil elements")
+	client := newArrayClient()
+	resp, err := client.GetDateInvalidNull(context.Background(), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	v1 := time.Date(2012, 1, 1, 0, 0, 0, 0, time.UTC)
+	v3 := time.Date(1776, 7, 4, 0, 0, 0, 0, time.UTC)
+	if r := cmp.Diff(resp.TimeArray, []*time.Time{
+		&v1,
+		nil,
+		&v3,
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetDateTimeInvalidChars - Get date array value ['2000-12-01t00:00:01z', 'date-time']
@@ -452,14 +465,17 @@ func TestGetDictionaryValid(t *testing.T) {
 
 // GetDoubleInvalidNull - Get float array value [0.0, null, -1.2e20]
 func TestGetDoubleInvalidNull(t *testing.T) {
-	t.Skip("arrays with nil elements")
 	client := newArrayClient()
 	resp, err := client.GetDoubleInvalidNull(context.Background(), nil)
-	if err == nil {
-		t.Fatal("unexpected nil error")
+	if err != nil {
+		t.Fatal(err)
 	}
-	if !reflect.ValueOf(resp).IsZero() {
-		t.Fatal("expected empty response")
+	if r := cmp.Diff(resp.Float64Array, []*float64{
+		to.Float64Ptr(0),
+		nil,
+		to.Float64Ptr(-1.2e20),
+	}); r != "" {
+		t.Fatal(r)
 	}
 }
 
@@ -529,14 +545,17 @@ func TestGetEnumValid(t *testing.T) {
 
 // GetFloatInvalidNull - Get float array value [0.0, null, -1.2e20]
 func TestGetFloatInvalidNull(t *testing.T) {
-	t.Skip("arrays with nil elements")
 	client := newArrayClient()
 	resp, err := client.GetFloatInvalidNull(context.Background(), nil)
-	if err == nil {
-		t.Fatal("unexpected nil error")
+	if err != nil {
+		t.Fatal(err)
 	}
-	if !reflect.ValueOf(resp).IsZero() {
-		t.Fatal("expected empty response")
+	if r := cmp.Diff(resp.Float32Array, []*float32{
+		to.Float32Ptr(0),
+		nil,
+		to.Float32Ptr(-1.2e20),
+	}); r != "" {
+		t.Fatal(r)
 	}
 }
 
@@ -566,14 +585,17 @@ func TestGetFloatValid(t *testing.T) {
 
 // GetIntInvalidNull - Get integer array value [1, null, 0]
 func TestGetIntInvalidNull(t *testing.T) {
-	t.Skip("arrays with nil elements")
 	client := newArrayClient()
 	resp, err := client.GetIntInvalidNull(context.Background(), nil)
-	if err == nil {
-		t.Fatal("unexpected nil error")
+	if err != nil {
+		t.Fatal(err)
 	}
-	if !reflect.ValueOf(resp).IsZero() {
-		t.Fatal("expected empty response")
+	if r := cmp.Diff(resp.Int32Array, []*int32{
+		to.Int32Ptr(1),
+		nil,
+		to.Int32Ptr(0),
+	}); r != "" {
+		t.Fatal(r)
 	}
 }
 
@@ -615,14 +637,17 @@ func TestGetInvalid(t *testing.T) {
 
 // GetLongInvalidNull - Get long array value [1, null, 0]
 func TestGetLongInvalidNull(t *testing.T) {
-	t.Skip("arrays with nil elements")
 	client := newArrayClient()
 	resp, err := client.GetLongInvalidNull(context.Background(), nil)
-	if err == nil {
-		t.Fatal("unexpected nil error")
+	if err != nil {
+		t.Fatal(err)
 	}
-	if !reflect.ValueOf(resp).IsZero() {
-		t.Fatal("expected empty response")
+	if r := cmp.Diff(resp.Int64Array, []*int64{
+		to.Int64Ptr(1),
+		nil,
+		to.Int64Ptr(0),
+	}); r != "" {
+		t.Fatal(r)
 	}
 }
 

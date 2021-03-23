@@ -110,14 +110,17 @@ func TestGetBase64URL(t *testing.T) {
 
 // GetBooleanInvalidNull - Get boolean dictionary value {"0": true, "1": null, "2": false }
 func TestGetBooleanInvalidNull(t *testing.T) {
-	t.Skip("no x-nullable, should fail")
 	client := newDictionaryClient()
 	resp, err := client.GetBooleanInvalidNull(context.Background(), nil)
-	if err == nil {
-		t.Fatal("unexpected nil error")
+	if err != nil {
+		t.Fatal(err)
 	}
-	if !reflect.ValueOf(resp).IsZero() {
-		t.Fatal("expected empty response")
+	if r := cmp.Diff(resp.Value, map[string]*bool{
+		"0": to.BoolPtr(true),
+		"1": nil,
+		"2": to.BoolPtr(false),
+	}); r != "" {
+		t.Fatal(r)
 	}
 }
 
@@ -152,14 +155,16 @@ func TestGetBooleanTfft(t *testing.T) {
 
 // GetByteInvalidNull - Get byte dictionary value {"0": hex(FF FF FF FA), "1": null} with the first item base64 encoded
 func TestGetByteInvalidNull(t *testing.T) {
-	t.Skip("no x-nullable, should fail")
 	client := newDictionaryClient()
 	resp, err := client.GetByteInvalidNull(context.Background(), nil)
-	if err == nil {
-		t.Fatal("unexpected nil error")
+	if err != nil {
+		t.Fatal(err)
 	}
-	if !reflect.ValueOf(resp).IsZero() {
-		t.Fatal("expected empty response")
+	if r := cmp.Diff(resp.Value, map[string][]byte{
+		"0": {0xab, 0xac, 0xad},
+		"1": nil,
+	}); r != "" {
+		t.Fatal(r)
 	}
 }
 
@@ -265,7 +270,20 @@ func TestGetDateInvalidChars(t *testing.T) {
 
 // GetDateInvalidNull - Get date dictionary value {"0": "2012-01-01", "1": null, "2": "1776-07-04"}
 func TestGetDateInvalidNull(t *testing.T) {
-	t.Skip("x-nullable")
+	client := newDictionaryClient()
+	resp, err := client.GetDateInvalidNull(context.Background(), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	v1 := time.Date(2012, 1, 1, 0, 0, 0, 0, time.UTC)
+	v3 := time.Date(1776, 7, 4, 0, 0, 0, 0, time.UTC)
+	if r := cmp.Diff(resp.Value, map[string]*time.Time{
+		"0": &v1,
+		"1": nil,
+		"2": &v3,
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetDateTimeInvalidChars - Get date dictionary value {"0": "2000-12-01t00:00:01z", "1": "date-time"}
@@ -455,14 +473,17 @@ func TestGetDictionaryValid(t *testing.T) {
 
 // GetDoubleInvalidNull - Get float dictionary value {"0": 0.0, "1": null, "2": 1.2e20}
 func TestGetDoubleInvalidNull(t *testing.T) {
-	t.Skip("should fail as mising x-nullable")
 	client := newDictionaryClient()
 	resp, err := client.GetDoubleInvalidNull(context.Background(), nil)
-	if err == nil {
-		t.Fatal("unexpected nil error")
+	if err != nil {
+		t.Fatal(err)
 	}
-	if !reflect.ValueOf(resp).IsZero() {
-		t.Fatal("expected empty response")
+	if r := cmp.Diff(resp.Value, map[string]*float64{
+		"0": to.Float64Ptr(0),
+		"1": nil,
+		"2": to.Float64Ptr(-1.2e20),
+	}); r != "" {
+		t.Fatal(r)
 	}
 }
 
@@ -535,14 +556,17 @@ func TestGetEmptyStringKey(t *testing.T) {
 
 // GetFloatInvalidNull - Get float dictionary value {"0": 0.0, "1": null, "2": 1.2e20}
 func TestGetFloatInvalidNull(t *testing.T) {
-	t.Skip("should fail, nil but no x-nullable")
 	client := newDictionaryClient()
 	resp, err := client.GetFloatInvalidNull(context.Background(), nil)
-	if err == nil {
-		t.Fatal("unexpected nil error")
+	if err != nil {
+		t.Fatal(err)
 	}
-	if !reflect.ValueOf(resp).IsZero() {
-		t.Fatal("expected empty response")
+	if r := cmp.Diff(resp.Value, map[string]*float32{
+		"0": to.Float32Ptr(0),
+		"1": nil,
+		"2": to.Float32Ptr(-1.2e20),
+	}); r != "" {
+		t.Fatal(r)
 	}
 }
 
@@ -576,14 +600,17 @@ func TestGetFloatValid(t *testing.T) {
 
 // GetIntInvalidNull - Get integer dictionary value {"0": 1, "1": null, "2": 0}
 func TestGetIntInvalidNull(t *testing.T) {
-	t.Skip("should fail, nil but no x-nullable")
 	client := newDictionaryClient()
 	resp, err := client.GetIntInvalidNull(context.Background(), nil)
-	if err == nil {
-		t.Fatal("unexpected nil error")
+	if err != nil {
+		t.Fatal(err)
 	}
-	if !reflect.ValueOf(resp).IsZero() {
-		t.Fatal("expected empty response")
+	if r := cmp.Diff(resp.Value, map[string]*int32{
+		"0": to.Int32Ptr(1),
+		"1": nil,
+		"2": to.Int32Ptr(0),
+	}); r != "" {
+		t.Fatal(r)
 	}
 }
 
@@ -630,14 +657,17 @@ func TestGetInvalid(t *testing.T) {
 
 // GetLongInvalidNull - Get long dictionary value {"0": 1, "1": null, "2": 0}
 func TestGetLongInvalidNull(t *testing.T) {
-	t.Skip("should fail, nil but no x-nullable")
 	client := newDictionaryClient()
 	resp, err := client.GetLongInvalidNull(context.Background(), nil)
-	if err == nil {
-		t.Fatal("unexpected nil error")
+	if err != nil {
+		t.Fatal(err)
 	}
-	if !reflect.ValueOf(resp).IsZero() {
-		t.Fatal("expected empty response")
+	if r := cmp.Diff(resp.Value, map[string]*int64{
+		"0": to.Int64Ptr(1),
+		"1": nil,
+		"2": to.Int64Ptr(0),
+	}); r != "" {
+		t.Fatal(r)
 	}
 }
 
@@ -696,14 +726,15 @@ func TestGetNullKey(t *testing.T) {
 
 // GetNullValue - Get Dictionary with null value
 func TestGetNullValue(t *testing.T) {
-	t.Skip("missing x-nullable in swagger")
 	client := newDictionaryClient()
 	resp, err := client.GetNullValue(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
-	if resp.Value != nil {
-		t.Fatal("expected nil dictionary")
+	if r := cmp.Diff(resp.Value, map[string]*string{
+		"key1": nil,
+	}); r != "" {
+		t.Fatal(r)
 	}
 }
 
@@ -737,14 +768,17 @@ func TestGetStringWithInvalid(t *testing.T) {
 
 // GetStringWithNull - Get string dictionary value {"0": "foo", "1": null, "2": "foo2"}
 func TestGetStringWithNull(t *testing.T) {
-	t.Skip("missing x-nullable in swagger")
 	client := newDictionaryClient()
 	resp, err := client.GetStringWithNull(context.Background(), nil)
-	if err == nil {
-		t.Fatal("unexpected nil error")
+	if err != nil {
+		t.Fatal(err)
 	}
-	if !reflect.ValueOf(resp).IsZero() {
-		t.Fatal("expected empty response")
+	if r := cmp.Diff(resp.Value, map[string]*string{
+		"0": to.StringPtr("foo"),
+		"1": nil,
+		"2": to.StringPtr("foo2"),
+	}); r != "" {
+		t.Fatal(r)
 	}
 }
 
