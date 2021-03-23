@@ -55,6 +55,9 @@ export class ImportManager {
       case SchemaType.Array:
         this.addImportForSchemaType((<ArraySchema>schema).elementType);
         break;
+      case SchemaType.Binary:
+        this.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
+        break;
       case SchemaType.Dictionary:
         this.addImportForSchemaType((<DictionarySchema>schema).elementType);
         break;

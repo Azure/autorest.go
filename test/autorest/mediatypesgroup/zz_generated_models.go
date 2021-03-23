@@ -7,11 +7,15 @@
 
 package mediatypesgroup
 
-import "net/http"
+import (
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"net/http"
+)
 
 // MediaTypesClientAnalyzeBodyOptions contains the optional parameters for the MediaTypesClient.AnalyzeBody method.
 type MediaTypesClientAnalyzeBodyOptions struct {
-	// placeholder for future optional parameters
+	// Input parameter.
+	Input azcore.ReadSeekCloser
 }
 
 // MediaTypesClientAnalyzeBodyWithSourcePathOptions contains the optional parameters for the MediaTypesClient.AnalyzeBodyWithSourcePath method.
@@ -22,7 +26,8 @@ type MediaTypesClientAnalyzeBodyWithSourcePathOptions struct {
 
 // MediaTypesClientContentTypeWithEncodingOptions contains the optional parameters for the MediaTypesClient.ContentTypeWithEncoding method.
 type MediaTypesClientContentTypeWithEncodingOptions struct {
-	// placeholder for future optional parameters
+	// Input parameter.
+	Input *string
 }
 
 // Uri or local path to source data.

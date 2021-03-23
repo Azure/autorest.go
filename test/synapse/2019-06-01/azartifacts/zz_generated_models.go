@@ -993,14 +993,14 @@ func (a *AmazonS3ReadSettings) UnmarshalJSON(data []byte) error {
 
 // Append value for a Variable of type Array.
 type AppendVariableActivity struct {
-	Activity
+	ControlActivity
 	// Append Variable activity properties.
 	TypeProperties *AppendVariableActivityTypeProperties `json:"typeProperties,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type AppendVariableActivity.
 func (a AppendVariableActivity) MarshalJSON() ([]byte, error) {
-	objectMap := a.Activity.marshalInternal("AppendVariable")
+	objectMap := a.ControlActivity.marshalInternal("AppendVariable")
 	populate(objectMap, "typeProperties", a.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -1022,7 +1022,7 @@ func (a *AppendVariableActivity) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.Activity.unmarshalInternal(rawMsg)
+	return a.ControlActivity.unmarshalInternal(rawMsg)
 }
 
 // AppendVariable activity properties.
@@ -6092,15 +6092,38 @@ func (c *ConcurSource) UnmarshalJSON(data []byte) error {
 	return c.TabularSource.unmarshalInternal(rawMsg)
 }
 
+// ControlActivityClassification provides polymorphic access to related types.
+// Call the interface's GetControlActivity() method to access the common type.
+// Use a type switch to determine the concrete type.  The possible types are:
+// - *ControlActivity, *AppendVariableActivity, *ExecutePipelineActivity, *FilterActivity, *ForEachActivity, *IfConditionActivity,
+// - *SetVariableActivity, *SwitchActivity, *UntilActivity, *ValidationActivity, *WaitActivity, *WebHookActivity
+type ControlActivityClassification interface {
+	ActivityClassification
+	// GetControlActivity() returns the ControlActivity content of the underlying type.
+	GetControlActivity() *ControlActivity
+}
+
 // Base class for all control activities like IfCondition, ForEach , Until.
 type ControlActivity struct {
 	Activity
 }
 
+// GetControlActivity implements the ControlActivityClassification interface for type ControlActivity.
+func (c *ControlActivity) GetControlActivity() *ControlActivity { return c }
+
 // MarshalJSON implements the json.Marshaller interface for type ControlActivity.
 func (c ControlActivity) MarshalJSON() ([]byte, error) {
-	objectMap := c.Activity.marshalInternal("Container")
+	objectMap := c.marshalInternal("Container")
 	return json.Marshal(objectMap)
+}
+
+func (c ControlActivity) marshalInternal(discValue string) map[string]interface{} {
+	objectMap := c.Activity.marshalInternal(discValue)
+	return objectMap
+}
+
+func (c *ControlActivity) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+	return c.Activity.unmarshalInternal(rawMsg)
 }
 
 // Copy activity.
@@ -7755,7 +7778,7 @@ func (d *DataFlowReference) UnmarshalJSON(data []byte) error {
 
 // Data flow resource type.
 type DataFlowResource struct {
-	AzureEntityResource
+	SubResource
 	// Data flow properties.
 	Properties DataFlowClassification `json:"properties,omitempty"`
 }
@@ -8513,7 +8536,7 @@ type DatasetReference struct {
 
 // Dataset resource type.
 type DatasetResource struct {
-	AzureEntityResource
+	SubResource
 	// Dataset properties.
 	Properties DatasetClassification `json:"properties,omitempty"`
 }
@@ -10570,14 +10593,14 @@ type ExecuteDataFlowActivityTypePropertiesCompute struct {
 
 // Execute pipeline activity.
 type ExecutePipelineActivity struct {
-	Activity
+	ControlActivity
 	// Execute pipeline activity properties.
 	TypeProperties *ExecutePipelineActivityTypeProperties `json:"typeProperties,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ExecutePipelineActivity.
 func (e ExecutePipelineActivity) MarshalJSON() ([]byte, error) {
-	objectMap := e.Activity.marshalInternal("ExecutePipeline")
+	objectMap := e.ControlActivity.marshalInternal("ExecutePipeline")
 	populate(objectMap, "typeProperties", e.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -10599,7 +10622,7 @@ func (e *ExecutePipelineActivity) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return e.Activity.unmarshalInternal(rawMsg)
+	return e.ControlActivity.unmarshalInternal(rawMsg)
 }
 
 // Execute pipeline activity properties.
@@ -11022,14 +11045,14 @@ func (f *FileSystemSource) UnmarshalJSON(data []byte) error {
 
 // Filter and return results from input array based on the conditions.
 type FilterActivity struct {
-	Activity
+	ControlActivity
 	// Filter activity properties.
 	TypeProperties *FilterActivityTypeProperties `json:"typeProperties,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type FilterActivity.
 func (f FilterActivity) MarshalJSON() ([]byte, error) {
-	objectMap := f.Activity.marshalInternal("Filter")
+	objectMap := f.ControlActivity.marshalInternal("Filter")
 	populate(objectMap, "typeProperties", f.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -11051,7 +11074,7 @@ func (f *FilterActivity) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return f.Activity.unmarshalInternal(rawMsg)
+	return f.ControlActivity.unmarshalInternal(rawMsg)
 }
 
 // Filter activity properties.
@@ -11065,14 +11088,14 @@ type FilterActivityTypeProperties struct {
 
 // This activity is used for iterating over a collection and execute given activities.
 type ForEachActivity struct {
-	Activity
+	ControlActivity
 	// ForEach activity properties.
 	TypeProperties *ForEachActivityTypeProperties `json:"typeProperties,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ForEachActivity.
 func (f ForEachActivity) MarshalJSON() ([]byte, error) {
-	objectMap := f.Activity.marshalInternal("ForEach")
+	objectMap := f.ControlActivity.marshalInternal("ForEach")
 	populate(objectMap, "typeProperties", f.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -11094,7 +11117,7 @@ func (f *ForEachActivity) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return f.Activity.unmarshalInternal(rawMsg)
+	return f.ControlActivity.unmarshalInternal(rawMsg)
 }
 
 // ForEach activity properties.
@@ -13827,14 +13850,14 @@ func (h *HubspotSource) UnmarshalJSON(data []byte) error {
 // This activity evaluates a boolean expression and executes either the activities under the ifTrueActivities property or the ifFalseActivities property
 // depending on the result of the expression.
 type IfConditionActivity struct {
-	Activity
+	ControlActivity
 	// IfCondition activity properties.
 	TypeProperties *IfConditionActivityTypeProperties `json:"typeProperties,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type IfConditionActivity.
 func (i IfConditionActivity) MarshalJSON() ([]byte, error) {
-	objectMap := i.Activity.marshalInternal("IfCondition")
+	objectMap := i.ControlActivity.marshalInternal("IfCondition")
 	populate(objectMap, "typeProperties", i.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -13856,7 +13879,7 @@ func (i *IfConditionActivity) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return i.Activity.unmarshalInternal(rawMsg)
+	return i.ControlActivity.unmarshalInternal(rawMsg)
 }
 
 // IfCondition activity properties.
@@ -14581,7 +14604,7 @@ type IntegrationRuntimeReference struct {
 
 // Integration runtime resource type.
 type IntegrationRuntimeResource struct {
-	AzureEntityResource
+	SubResource
 	// Integration runtime properties.
 	Properties IntegrationRuntimeClassification `json:"properties,omitempty"`
 }
@@ -15435,7 +15458,7 @@ func (l *LibraryRequirements) UnmarshalJSON(data []byte) error {
 
 // Library response details
 type LibraryResource struct {
-	AzureEntityResource
+	SubResource
 	// Library/package properties.
 	Properties *LibraryResourceProperties `json:"properties,omitempty"`
 }
@@ -15824,7 +15847,7 @@ type LinkedServiceReference struct {
 
 // Linked service resource type.
 type LinkedServiceResource struct {
-	AzureEntityResource
+	SubResource
 	// Properties of linked service.
 	Properties LinkedServiceClassification `json:"properties,omitempty"`
 }
@@ -19694,7 +19717,7 @@ type PipelineReference struct {
 
 // Pipeline resource type.
 type PipelineResource struct {
-	AzureEntityResource
+	SubResource
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties *map[string]interface{}
 
@@ -19704,7 +19727,7 @@ type PipelineResource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type PipelineResource.
 func (p PipelineResource) MarshalJSON() ([]byte, error) {
-	objectMap := p.AzureEntityResource.marshalInternal()
+	objectMap := p.SubResource.marshalInternal()
 	populate(objectMap, "properties", p.Properties)
 	if p.AdditionalProperties != nil {
 		for key, val := range *p.AdditionalProperties {
@@ -19731,7 +19754,7 @@ func (p *PipelineResource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	if err := p.AzureEntityResource.unmarshalInternal(rawMsg); err != nil {
+	if err := p.SubResource.unmarshalInternal(rawMsg); err != nil {
 		return err
 	}
 	for key, val := range rawMsg {
@@ -20399,7 +20422,7 @@ type PrivateEndpoint struct {
 
 // A private endpoint connection
 type PrivateEndpointConnection struct {
-	Resource
+	ProxyResource
 	// Private endpoint connection properties.
 	Properties *PrivateEndpointConnectionProperties `json:"properties,omitempty"`
 }
@@ -20923,7 +20946,7 @@ type RerunTriggerListResponse struct {
 
 // RerunTrigger resource type.
 type RerunTriggerResource struct {
-	AzureEntityResource
+	SubResource
 	// Properties of the rerun trigger.
 	Properties *RerunTumblingWindowTrigger `json:"properties,omitempty"`
 }
@@ -25226,14 +25249,14 @@ func (s *ServiceNowSource) UnmarshalJSON(data []byte) error {
 
 // Set value for a Variable.
 type SetVariableActivity struct {
-	Activity
+	ControlActivity
 	// Set Variable activity properties.
 	TypeProperties *SetVariableActivityTypeProperties `json:"typeProperties,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type SetVariableActivity.
 func (s SetVariableActivity) MarshalJSON() ([]byte, error) {
-	objectMap := s.Activity.marshalInternal("SetVariable")
+	objectMap := s.ControlActivity.marshalInternal("SetVariable")
 	populate(objectMap, "typeProperties", s.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -25255,7 +25278,7 @@ func (s *SetVariableActivity) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.Activity.unmarshalInternal(rawMsg)
+	return s.ControlActivity.unmarshalInternal(rawMsg)
 }
 
 // SetVariable activity properties.
@@ -25968,7 +25991,7 @@ type SparkJobDefinitionGetSparkJobDefinitionsByWorkspaceOptions struct {
 
 // Spark job definition resource type.
 type SparkJobDefinitionResource struct {
-	AzureEntityResource
+	SubResource
 	// Properties of spark job definition.
 	Properties *SparkJobDefinition `json:"properties,omitempty"`
 }
@@ -26960,6 +26983,15 @@ type SubResource struct {
 	AzureEntityResource
 }
 
+func (s SubResource) marshalInternal() map[string]interface{} {
+	objectMap := s.AzureEntityResource.marshalInternal()
+	return objectMap
+}
+
+func (s *SubResource) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+	return s.AzureEntityResource.unmarshalInternal(rawMsg)
+}
+
 // Azure Synapse nested debug resource.
 type SubResourceDebugResource struct {
 	// The resource name.
@@ -26990,14 +27022,14 @@ func (s *SubResourceDebugResource) unmarshalInternal(rawMsg map[string]*json.Raw
 // This activity evaluates an expression and executes activities under the cases property that correspond to the expression evaluation expected in the equals
 // property.
 type SwitchActivity struct {
-	Activity
+	ControlActivity
 	// Switch activity properties.
 	TypeProperties *SwitchActivityTypeProperties `json:"typeProperties,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type SwitchActivity.
 func (s SwitchActivity) MarshalJSON() ([]byte, error) {
-	objectMap := s.Activity.marshalInternal("Switch")
+	objectMap := s.ControlActivity.marshalInternal("Switch")
 	populate(objectMap, "typeProperties", s.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -27019,7 +27051,7 @@ func (s *SwitchActivity) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.Activity.unmarshalInternal(rawMsg)
+	return s.ControlActivity.unmarshalInternal(rawMsg)
 }
 
 // Switch activity properties.
@@ -28049,7 +28081,7 @@ type TriggerReference struct {
 
 // Trigger resource type.
 type TriggerResource struct {
-	AzureEntityResource
+	SubResource
 	// Properties of the trigger.
 	Properties TriggerClassification `json:"properties,omitempty"`
 }
@@ -28414,14 +28446,14 @@ func (t *TumblingWindowTriggerTypeProperties) UnmarshalJSON(data []byte) error {
 
 // This activity executes inner activities until the specified boolean expression results to true or timeout is reached, whichever is earlier.
 type UntilActivity struct {
-	Activity
+	ControlActivity
 	// Until activity properties.
 	TypeProperties *UntilActivityTypeProperties `json:"typeProperties,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type UntilActivity.
 func (u UntilActivity) MarshalJSON() ([]byte, error) {
-	objectMap := u.Activity.marshalInternal("Until")
+	objectMap := u.ControlActivity.marshalInternal("Until")
 	populate(objectMap, "typeProperties", u.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -28443,7 +28475,7 @@ func (u *UntilActivity) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return u.Activity.unmarshalInternal(rawMsg)
+	return u.ControlActivity.unmarshalInternal(rawMsg)
 }
 
 // Until activity properties.
@@ -28497,14 +28529,14 @@ type UserProperty struct {
 
 // This activity verifies that an external resource exists.
 type ValidationActivity struct {
-	Activity
+	ControlActivity
 	// Validation activity properties.
 	TypeProperties *ValidationActivityTypeProperties `json:"typeProperties,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ValidationActivity.
 func (v ValidationActivity) MarshalJSON() ([]byte, error) {
-	objectMap := v.Activity.marshalInternal("Validation")
+	objectMap := v.ControlActivity.marshalInternal("Validation")
 	populate(objectMap, "typeProperties", v.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -28526,7 +28558,7 @@ func (v *ValidationActivity) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return v.Activity.unmarshalInternal(rawMsg)
+	return v.ControlActivity.unmarshalInternal(rawMsg)
 }
 
 // Validation activity properties.
@@ -28696,14 +28728,14 @@ type VirtualNetworkProfile struct {
 
 // This activity suspends pipeline execution for the specified interval.
 type WaitActivity struct {
-	Activity
+	ControlActivity
 	// Wait activity properties.
 	TypeProperties *WaitActivityTypeProperties `json:"typeProperties,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type WaitActivity.
 func (w WaitActivity) MarshalJSON() ([]byte, error) {
-	objectMap := w.Activity.marshalInternal("Wait")
+	objectMap := w.ControlActivity.marshalInternal("Wait")
 	populate(objectMap, "typeProperties", w.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -28725,7 +28757,7 @@ func (w *WaitActivity) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return w.Activity.unmarshalInternal(rawMsg)
+	return w.ControlActivity.unmarshalInternal(rawMsg)
 }
 
 // Wait activity properties.
@@ -28945,14 +28977,14 @@ func (w *WebClientCertificateAuthentication) UnmarshalJSON(data []byte) error {
 
 // WebHook activity.
 type WebHookActivity struct {
-	Activity
+	ControlActivity
 	// WebHook activity properties.
 	TypeProperties *WebHookActivityTypeProperties `json:"typeProperties,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type WebHookActivity.
 func (w WebHookActivity) MarshalJSON() ([]byte, error) {
-	objectMap := w.Activity.marshalInternal("WebHook")
+	objectMap := w.ControlActivity.marshalInternal("WebHook")
 	populate(objectMap, "typeProperties", w.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -28974,7 +29006,7 @@ func (w *WebHookActivity) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return w.Activity.unmarshalInternal(rawMsg)
+	return w.ControlActivity.unmarshalInternal(rawMsg)
 }
 
 // WebHook activity type properties.

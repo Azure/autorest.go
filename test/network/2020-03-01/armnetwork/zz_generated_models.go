@@ -2585,7 +2585,7 @@ type BastionShareableLink struct {
 	Message *string `json:"message,omitempty" azure:"ro"`
 
 	// Reference of the virtual machine resource.
-	VM *Resource `json:"vm,omitempty"`
+	VM *VM `json:"vm,omitempty"`
 }
 
 // Post request for all the Bastion Shareable Link endpoints.
@@ -3581,7 +3581,7 @@ type ContainerNetworkInterfaceIPConfigurationPropertiesFormat struct {
 // Properties of container network interface.
 type ContainerNetworkInterfacePropertiesFormat struct {
 	// Reference to the container to which this container network interface is attached.
-	Container *SubResource `json:"container,omitempty"`
+	Container *Container `json:"container,omitempty"`
 
 	// READ-ONLY; Container network interface configuration from which this container network interface is created.
 	ContainerNetworkInterfaceConfiguration *ContainerNetworkInterfaceConfiguration `json:"containerNetworkInterfaceConfiguration,omitempty" azure:"ro"`
@@ -10114,7 +10114,7 @@ type PrivateLinkServiceProperties struct {
 	Alias *string `json:"alias,omitempty" azure:"ro"`
 
 	// The auto-approval list of the private link service.
-	AutoApproval *ResourceSet `json:"autoApproval,omitempty"`
+	AutoApproval *PrivateLinkServicePropertiesAutoApproval `json:"autoApproval,omitempty"`
 
 	// Whether the private link service is enabled for proxy protocol or not.
 	EnableProxyProtocol *bool `json:"enableProxyProtocol,omitempty"`
@@ -10138,7 +10138,7 @@ type PrivateLinkServiceProperties struct {
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 
 	// The visibility list of the private link service.
-	Visibility *ResourceSet `json:"visibility,omitempty"`
+	Visibility *PrivateLinkServicePropertiesVisibility `json:"visibility,omitempty"`
 }
 
 // The auto-approval list of the private link service.

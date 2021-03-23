@@ -220,7 +220,7 @@ func (client *ImplicitClient) putOptionalBodyCreateRequest(ctx context.Context, 
 	}
 	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
-	if options != nil {
+	if options != nil && options.BodyParameter != nil {
 		return req, req.MarshalAsJSON(options.BodyParameter)
 	}
 	return req, nil

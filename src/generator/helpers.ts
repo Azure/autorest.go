@@ -38,6 +38,8 @@ export function elementByValueForParam(param: Parameter): boolean {
   // isn't very useful as we'd just skip nil entries.  so disable it.
   if (param.schema.type === SchemaType.Array) {
     return param.protocol.http!.in === 'header' || param.protocol.http!.in === 'path' || param.protocol.http!.in === 'query';
+  } else if (param.schema.type === SchemaType.Dictionary) {
+    return param.extensions?.['x-ms-header-collection-prefix'];
   }
   return false;
 }
@@ -86,7 +88,7 @@ export function substituteDiscriminator(schema: Schema, elemByVal: boolean): str
     case SchemaType.Dictionary:
       const dictSchema = <DictionarySchema>schema;
       const dictElem = <Schema>dictSchema.elementType;
-      if (<boolean>dictSchema.language.go!.elementIsPtr) {
+      if (<boolean>dictSchema.language.go!.elementIsPtr && !elemByVal) {
         return `map[string]*${substituteDiscriminator(dictElem, elemByVal)}`;
       }
       return `map[string]${substituteDiscriminator(dictElem, elemByVal)}`;
@@ -173,14 +175,17 @@ export function getMethodParameters(op: Operation): Parameter[] {
   return params;
 }
 
-export function getParamName(param: Parameter): string {
+// returns the fully-qualified parameter name.  this is usually just the name
+// but will include the client or optional param group name prefix as required.
+// dereference: pass true to dereference an optional param
+export function getParamName(param: Parameter, dereference: boolean): string {
   let paramName = param.language.go!.name;
   if (param.implementation === ImplementationLocation.Client) {
     paramName = `client.${paramName}`;
   } else if (param.language.go!.paramGroup) {
     paramName = `${(<string>param.language.go!.paramGroup.language.go!.name).uncapitalize()}.${paramName.capitalize()}`;
   }
-  if (param.required !== true) {
+  if (param.required !== true && dereference) {
     paramName = `*${paramName}`;
   }
   return paramName;
@@ -199,7 +204,7 @@ export function formatParamValue(param: Parameter, imports: ImportManager): stri
       separator = '\\t';
       break;
   }
-  let paramName = getParamName(param);
+  let paramName = getParamName(param, true);
   switch (param.schema.type) {
     case SchemaType.Array:
       const arraySchema = <ArraySchema>param.schema;

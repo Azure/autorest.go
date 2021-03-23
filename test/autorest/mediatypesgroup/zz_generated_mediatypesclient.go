@@ -29,8 +29,8 @@ func NewMediaTypesClient(con *Connection) *MediaTypesClient {
 }
 
 // AnalyzeBody - Analyze body, that could be different media types.
-func (client *MediaTypesClient) AnalyzeBody(ctx context.Context, contentType ContentType, input azcore.ReadSeekCloser, options *MediaTypesClientAnalyzeBodyOptions) (StringResponse, error) {
-	req, err := client.analyzeBodyCreateRequest(ctx, contentType, input, options)
+func (client *MediaTypesClient) AnalyzeBody(ctx context.Context, contentType ContentType, options *MediaTypesClientAnalyzeBodyOptions) (StringResponse, error) {
+	req, err := client.analyzeBodyCreateRequest(ctx, contentType, options)
 	if err != nil {
 		return StringResponse{}, err
 	}
@@ -45,7 +45,7 @@ func (client *MediaTypesClient) AnalyzeBody(ctx context.Context, contentType Con
 }
 
 // analyzeBodyCreateRequest creates the AnalyzeBody request.
-func (client *MediaTypesClient) analyzeBodyCreateRequest(ctx context.Context, contentType ContentType, input azcore.ReadSeekCloser, options *MediaTypesClientAnalyzeBodyOptions) (*azcore.Request, error) {
+func (client *MediaTypesClient) analyzeBodyCreateRequest(ctx context.Context, contentType ContentType, options *MediaTypesClientAnalyzeBodyOptions) (*azcore.Request, error) {
 	urlPath := "/mediatypes/analyze"
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -54,7 +54,10 @@ func (client *MediaTypesClient) analyzeBodyCreateRequest(ctx context.Context, co
 	req.Telemetry(telemetryInfo)
 	req.Header.Set("Content-Type", string(contentType))
 	req.Header.Set("Accept", "application/json")
-	return req, req.SetBody(input, string(contentType))
+	if options != nil && options.Input != nil {
+		return req, req.SetBody(options.Input, string(contentType))
+	}
+	return req, nil
 }
 
 // analyzeBodyHandleResponse handles the AnalyzeBody response.
@@ -103,7 +106,7 @@ func (client *MediaTypesClient) analyzeBodyWithSourcePathCreateRequest(ctx conte
 	}
 	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
-	if options != nil {
+	if options != nil && options.Input != nil {
 		return req, req.MarshalAsJSON(options.Input)
 	}
 	return req, nil
@@ -131,8 +134,8 @@ func (client *MediaTypesClient) analyzeBodyWithSourcePathHandleError(resp *azcor
 }
 
 // ContentTypeWithEncoding - Pass in contentType 'text/plain; encoding=UTF-8' to pass test. Value for input does not matter
-func (client *MediaTypesClient) ContentTypeWithEncoding(ctx context.Context, input string, options *MediaTypesClientContentTypeWithEncodingOptions) (StringResponse, error) {
-	req, err := client.contentTypeWithEncodingCreateRequest(ctx, input, options)
+func (client *MediaTypesClient) ContentTypeWithEncoding(ctx context.Context, options *MediaTypesClientContentTypeWithEncodingOptions) (StringResponse, error) {
+	req, err := client.contentTypeWithEncodingCreateRequest(ctx, options)
 	if err != nil {
 		return StringResponse{}, err
 	}
@@ -147,7 +150,7 @@ func (client *MediaTypesClient) ContentTypeWithEncoding(ctx context.Context, inp
 }
 
 // contentTypeWithEncodingCreateRequest creates the ContentTypeWithEncoding request.
-func (client *MediaTypesClient) contentTypeWithEncodingCreateRequest(ctx context.Context, input string, options *MediaTypesClientContentTypeWithEncodingOptions) (*azcore.Request, error) {
+func (client *MediaTypesClient) contentTypeWithEncodingCreateRequest(ctx context.Context, options *MediaTypesClientContentTypeWithEncodingOptions) (*azcore.Request, error) {
 	urlPath := "/mediatypes/contentTypeWithEncoding"
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -155,8 +158,11 @@ func (client *MediaTypesClient) contentTypeWithEncodingCreateRequest(ctx context
 	}
 	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
-	body := azcore.NopCloser(strings.NewReader(input))
-	return req, req.SetBody(body, "text/plain; encoding=UTF-8")
+	if options != nil && options.Input != nil {
+		body := azcore.NopCloser(strings.NewReader(*options.Input))
+		return req, req.SetBody(body, "text/plain; encoding=UTF-8")
+	}
+	return req, nil
 }
 
 // contentTypeWithEncodingHandleResponse handles the ContentTypeWithEncoding response.

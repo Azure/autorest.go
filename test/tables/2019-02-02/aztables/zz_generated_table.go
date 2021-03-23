@@ -413,7 +413,7 @@ func (client *TableClient) insertEntityCreateRequest(ctx context.Context, table 
 		req.Header.Set("Prefer", string(*tableInsertEntityOptions.ResponsePreference))
 	}
 	req.Header.Set("Accept", "application/json;odata=minimalmetadata")
-	if tableInsertEntityOptions != nil {
+	if tableInsertEntityOptions != nil && tableInsertEntityOptions.TableEntityProperties != nil {
 		return req, req.MarshalAsJSON(tableInsertEntityOptions.TableEntityProperties)
 	}
 	return req, nil
@@ -555,7 +555,7 @@ func (client *TableClient) mergeEntityCreateRequest(ctx context.Context, table s
 		req.Header.Set("If-Match", *tableMergeEntityOptions.IfMatch)
 	}
 	req.Header.Set("Accept", "application/json")
-	if tableMergeEntityOptions != nil {
+	if tableMergeEntityOptions != nil && tableMergeEntityOptions.TableEntityProperties != nil {
 		return req, req.MarshalAsJSON(tableMergeEntityOptions.TableEntityProperties)
 	}
 	return req, nil
@@ -939,7 +939,7 @@ func (client *TableClient) setAccessPolicyCreateRequest(ctx context.Context, tab
 		XMLName  xml.Name             `xml:"SignedIdentifiers"`
 		TableACL *[]*SignedIdentifier `xml:"SignedIdentifier"`
 	}
-	if options != nil {
+	if options != nil && options.TableACL != nil {
 		return req, req.MarshalAsXML(wrapper{TableACL: options.TableACL})
 	}
 	return req, nil
@@ -1029,7 +1029,7 @@ func (client *TableClient) updateEntityCreateRequest(ctx context.Context, table 
 		req.Header.Set("If-Match", *tableUpdateEntityOptions.IfMatch)
 	}
 	req.Header.Set("Accept", "application/json")
-	if tableUpdateEntityOptions != nil {
+	if tableUpdateEntityOptions != nil && tableUpdateEntityOptions.TableEntityProperties != nil {
 		return req, req.MarshalAsJSON(tableUpdateEntityOptions.TableEntityProperties)
 	}
 	return req, nil

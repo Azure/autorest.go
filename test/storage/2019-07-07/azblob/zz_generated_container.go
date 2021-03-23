@@ -1162,7 +1162,7 @@ func (client *containerClient) setAccessPolicyCreateRequest(ctx context.Context,
 		XMLName      xml.Name             `xml:"SignedIdentifiers"`
 		ContainerACL *[]*SignedIdentifier `xml:"SignedIdentifier"`
 	}
-	if containerSetAccessPolicyOptions != nil {
+	if containerSetAccessPolicyOptions != nil && containerSetAccessPolicyOptions.ContainerACL != nil {
 		return req, req.MarshalAsXML(wrapper{ContainerACL: containerSetAccessPolicyOptions.ContainerACL})
 	}
 	return req, nil

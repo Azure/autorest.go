@@ -122,6 +122,63 @@ func unmarshalActivityClassificationArray(rawMsg *json.RawMessage) (*[]ActivityC
 	return &fArray, nil
 }
 
+func unmarshalControlActivityClassification(rawMsg *json.RawMessage) (ControlActivityClassification, error) {
+	if rawMsg == nil {
+		return nil, nil
+	}
+	var m map[string]interface{}
+	if err := json.Unmarshal(*rawMsg, &m); err != nil {
+		return nil, err
+	}
+	var b ControlActivityClassification
+	switch m["type"] {
+	case "AppendVariable":
+		b = &AppendVariableActivity{}
+	case "ExecutePipeline":
+		b = &ExecutePipelineActivity{}
+	case "Filter":
+		b = &FilterActivity{}
+	case "ForEach":
+		b = &ForEachActivity{}
+	case "IfCondition":
+		b = &IfConditionActivity{}
+	case "SetVariable":
+		b = &SetVariableActivity{}
+	case "Switch":
+		b = &SwitchActivity{}
+	case "Until":
+		b = &UntilActivity{}
+	case "Validation":
+		b = &ValidationActivity{}
+	case "Wait":
+		b = &WaitActivity{}
+	case "WebHook":
+		b = &WebHookActivity{}
+	default:
+		b = &ControlActivity{}
+	}
+	return b, json.Unmarshal(*rawMsg, &b)
+}
+
+func unmarshalControlActivityClassificationArray(rawMsg *json.RawMessage) (*[]ControlActivityClassification, error) {
+	if rawMsg == nil {
+		return nil, nil
+	}
+	var rawMessages []*json.RawMessage
+	if err := json.Unmarshal(*rawMsg, &rawMessages); err != nil {
+		return nil, err
+	}
+	fArray := make([]ControlActivityClassification, len(rawMessages))
+	for index, rawMessage := range rawMessages {
+		f, err := unmarshalControlActivityClassification(rawMessage)
+		if err != nil {
+			return nil, err
+		}
+		fArray[index] = f
+	}
+	return &fArray, nil
+}
+
 func unmarshalExecutionActivityClassification(rawMsg *json.RawMessage) (ExecutionActivityClassification, error) {
 	if rawMsg == nil {
 		return nil, nil

@@ -690,7 +690,7 @@ func (client *LROSADsClient) post202NoLocationCreateRequest(ctx context.Context,
 	}
 	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
-	if options != nil {
+	if options != nil && options.Product != nil {
 		return req, req.MarshalAsJSON(options.Product)
 	}
 	return req, nil
@@ -767,7 +767,7 @@ func (client *LROSADsClient) post202NonRetry400CreateRequest(ctx context.Context
 	}
 	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
-	if options != nil {
+	if options != nil && options.Product != nil {
 		return req, req.MarshalAsJSON(options.Product)
 	}
 	return req, nil
@@ -844,7 +844,7 @@ func (client *LROSADsClient) post202RetryInvalidHeaderCreateRequest(ctx context.
 	}
 	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
-	if options != nil {
+	if options != nil && options.Product != nil {
 		return req, req.MarshalAsJSON(options.Product)
 	}
 	return req, nil
@@ -923,7 +923,7 @@ func (client *LROSADsClient) postAsyncRelativeRetry400CreateRequest(ctx context.
 	}
 	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
-	if options != nil {
+	if options != nil && options.Product != nil {
 		return req, req.MarshalAsJSON(options.Product)
 	}
 	return req, nil
@@ -1004,7 +1004,7 @@ func (client *LROSADsClient) postAsyncRelativeRetryInvalidHeaderCreateRequest(ct
 	}
 	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
-	if options != nil {
+	if options != nil && options.Product != nil {
 		return req, req.MarshalAsJSON(options.Product)
 	}
 	return req, nil
@@ -1085,7 +1085,7 @@ func (client *LROSADsClient) postAsyncRelativeRetryInvalidJSONPollingCreateReque
 	}
 	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
-	if options != nil {
+	if options != nil && options.Product != nil {
 		return req, req.MarshalAsJSON(options.Product)
 	}
 	return req, nil
@@ -1166,7 +1166,7 @@ func (client *LROSADsClient) postAsyncRelativeRetryNoPayloadCreateRequest(ctx co
 	}
 	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
-	if options != nil {
+	if options != nil && options.Product != nil {
 		return req, req.MarshalAsJSON(options.Product)
 	}
 	return req, nil
@@ -1243,7 +1243,7 @@ func (client *LROSADsClient) postNonRetry400CreateRequest(ctx context.Context, o
 	}
 	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
-	if options != nil {
+	if options != nil && options.Product != nil {
 		return req, req.MarshalAsJSON(options.Product)
 	}
 	return req, nil
@@ -1320,7 +1320,7 @@ func (client *LROSADsClient) put200InvalidJSONCreateRequest(ctx context.Context,
 	}
 	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
-	if options != nil {
+	if options != nil && options.Product != nil {
 		return req, req.MarshalAsJSON(options.Product)
 	}
 	return req, nil
@@ -1408,7 +1408,7 @@ func (client *LROSADsClient) putAsyncRelativeRetry400CreateRequest(ctx context.C
 	}
 	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
-	if options != nil {
+	if options != nil && options.Product != nil {
 		return req, req.MarshalAsJSON(options.Product)
 	}
 	return req, nil
@@ -1496,7 +1496,7 @@ func (client *LROSADsClient) putAsyncRelativeRetryInvalidHeaderCreateRequest(ctx
 	}
 	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
-	if options != nil {
+	if options != nil && options.Product != nil {
 		return req, req.MarshalAsJSON(options.Product)
 	}
 	return req, nil
@@ -1586,7 +1586,7 @@ func (client *LROSADsClient) putAsyncRelativeRetryInvalidJSONPollingCreateReques
 	}
 	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
-	if options != nil {
+	if options != nil && options.Product != nil {
 		return req, req.MarshalAsJSON(options.Product)
 	}
 	return req, nil
@@ -1676,7 +1676,7 @@ func (client *LROSADsClient) putAsyncRelativeRetryNoStatusCreateRequest(ctx cont
 	}
 	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
-	if options != nil {
+	if options != nil && options.Product != nil {
 		return req, req.MarshalAsJSON(options.Product)
 	}
 	return req, nil
@@ -1766,7 +1766,7 @@ func (client *LROSADsClient) putAsyncRelativeRetryNoStatusPayloadCreateRequest(c
 	}
 	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
-	if options != nil {
+	if options != nil && options.Product != nil {
 		return req, req.MarshalAsJSON(options.Product)
 	}
 	return req, nil
@@ -1852,7 +1852,7 @@ func (client *LROSADsClient) putError201NoProvisioningStatePayloadCreateRequest(
 	}
 	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
-	if options != nil {
+	if options != nil && options.Product != nil {
 		return req, req.MarshalAsJSON(options.Product)
 	}
 	return req, nil
@@ -1938,7 +1938,7 @@ func (client *LROSADsClient) putNonRetry201Creating400CreateRequest(ctx context.
 	}
 	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
-	if options != nil {
+	if options != nil && options.Product != nil {
 		return req, req.MarshalAsJSON(options.Product)
 	}
 	return req, nil
@@ -2025,7 +2025,7 @@ func (client *LROSADsClient) putNonRetry201Creating400InvalidJSONCreateRequest(c
 	}
 	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
-	if options != nil {
+	if options != nil && options.Product != nil {
 		return req, req.MarshalAsJSON(options.Product)
 	}
 	return req, nil
@@ -2111,7 +2111,7 @@ func (client *LROSADsClient) putNonRetry400CreateRequest(ctx context.Context, op
 	}
 	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
-	if options != nil {
+	if options != nil && options.Product != nil {
 		return req, req.MarshalAsJSON(options.Product)
 	}
 	return req, nil

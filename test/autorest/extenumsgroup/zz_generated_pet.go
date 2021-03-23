@@ -54,7 +54,7 @@ func (client *PetClient) addPetCreateRequest(ctx context.Context, options *PetAd
 	}
 	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
-	if options != nil {
+	if options != nil && options.PetParam != nil {
 		return req, req.MarshalAsJSON(options.PetParam)
 	}
 	return req, nil

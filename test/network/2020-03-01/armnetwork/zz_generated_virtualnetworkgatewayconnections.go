@@ -678,7 +678,7 @@ func (client *VirtualNetworkGatewayConnectionsClient) startPacketCaptureCreateRe
 	query.Set("api-version", "2020-03-01")
 	req.URL.RawQuery = query.Encode()
 	req.Header.Set("Accept", "application/json")
-	if options != nil {
+	if options != nil && options.Parameters != nil {
 		return req, req.MarshalAsJSON(options.Parameters)
 	}
 	return req, nil

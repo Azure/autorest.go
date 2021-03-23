@@ -134,7 +134,11 @@ class StructDef {
         }
         text += `\t${comment(prop.language.go!.description, '// ', undefined, commentLength)}\n`;
       }
-      let typeName = substituteDiscriminator(prop.schema, false);
+      let elemByVal = false;
+      if (prop.schema.type === SchemaType.Dictionary && prop.extensions?.['x-ms-header-collection-prefix']) {
+        elemByVal = true;
+      }
+      let typeName = substituteDiscriminator(prop.schema, elemByVal);
       if (prop.schema.type === SchemaType.Constant) {
         // for constants we use the underlying type name
         typeName = (<ConstantSchema>prop.schema).valueType.language.go!.name;
@@ -669,38 +673,43 @@ function generateJSONUnmarshallerBody(obj: ObjectSchema, structDef: StructDef, p
     addlPropsText += `${tab}\t\tdelete(rawMsg, key)\n`;
     return addlPropsText;
   }
-  let unmarshalBody = '\tfor key, val := range rawMsg {\n';
-  unmarshalBody += '\t\tvar err error\n';
-  unmarshalBody += '\t\tswitch key {\n';
-  // unmarshal content for the current type
-  for (const prop of values(structDef.Properties)) {
-    if (prop.language.go!.isAdditionalProperties) {
-      continue;
+  let unmarshalBody = '';
+  // handle the case where the type in the hierarchy doesn't contain any fields.
+  // e.g. parent->intermediate->child and intermediate has no fields
+  if (addlProps || (structDef.Properties && structDef.Properties.length > 0)) {
+    unmarshalBody = '\tfor key, val := range rawMsg {\n';
+    unmarshalBody += '\t\tvar err error\n';
+    unmarshalBody += '\t\tswitch key {\n';
+    // unmarshal content for the current type
+    for (const prop of values(structDef.Properties)) {
+      if (prop.language.go!.isAdditionalProperties) {
+        continue;
+      }
+      unmarshalBody += `\t\tcase "${prop.serializedName}":\n`;
+      if (prop.schema.language.go!.discriminatorInterface) {
+        unmarshalBody += `\t\t\t\t${receiver}.${prop.language.go!.name}, err = unmarshal${prop.schema.language.go!.discriminatorInterface}(val)\n`;
+      } else if (isArraySchema(prop.schema) && prop.schema.elementType.language.go!.discriminatorInterface) {
+        unmarshalBody += `\t\t\t\t${receiver}.${prop.language.go!.name}, err = unmarshal${prop.schema.elementType.language.go!.discriminatorInterface}Array(val)\n`;
+      } else if (prop.schema.language.go!.internalTimeType) {
+        unmarshalBody += `\t\t\t\tvar aux ${prop.schema.language.go!.internalTimeType}\n`;
+        unmarshalBody += '\t\t\t\terr = unpopulate(val, &aux)\n';
+        unmarshalBody += `\t\t\t\t${receiver}.${prop.language.go!.name} = (*time.Time)(&aux)\n`;
+      } else {
+        unmarshalBody += `\t\t\t\terr = unpopulate(val, &${receiver}.${prop.language.go!.name})\n`;
+      }
+      unmarshalBody += '\t\t\t\tdelete(rawMsg, key)\n';
     }
-    unmarshalBody += `\t\tcase "${prop.serializedName}":\n`;
-    if (prop.schema.language.go!.discriminatorInterface) {
-      unmarshalBody += `\t\t\t\t${receiver}.${prop.language.go!.name}, err = unmarshal${prop.schema.language.go!.discriminatorInterface}(val)\n`;
-    } else if (isArraySchema(prop.schema) && prop.schema.elementType.language.go!.discriminatorInterface) {
-      unmarshalBody += `\t\t\t\t${receiver}.${prop.language.go!.name}, err = unmarshal${prop.schema.elementType.language.go!.discriminatorInterface}Array(val)\n`;
-    } else if (prop.schema.language.go!.internalTimeType) {
-      unmarshalBody += `\t\t\t\tvar aux ${prop.schema.language.go!.internalTimeType}\n`;
-      unmarshalBody += '\t\t\t\terr = unpopulate(val, &aux)\n';
-      unmarshalBody += `\t\t\t\t${receiver}.${prop.language.go!.name} = (*time.Time)(&aux)\n`;
-    } else {
-      unmarshalBody += `\t\t\t\terr = unpopulate(val, &${receiver}.${prop.language.go!.name})\n`;
+    // if there's no parent type it's safe to unmarshal additional properties right here
+    if (addlProps && !parentType) {
+      unmarshalBody += '\t\tdefault:\n';
+      unmarshalBody += emitAddlProps('\t', addlProps);
     }
-    unmarshalBody += '\t\t\t\tdelete(rawMsg, key)\n';
+    unmarshalBody += '\t\t}\n';
+    unmarshalBody += '\t\tif err != nil {\n';
+    unmarshalBody += '\t\t\treturn err\n';
+    unmarshalBody += '\t\t}\n';
+    unmarshalBody += '\t}\n'; // end for key, val := range rawMsg
   }
-  // if there's no parent type it's safe to unmarshal additional properties right here
-  if (addlProps && !parentType) {
-    unmarshalBody += '\t\tdefault:\n';
-    unmarshalBody += emitAddlProps('\t', addlProps);
-  }
-  unmarshalBody += '\t\t}\n';
-  unmarshalBody += '\t\tif err != nil {\n';
-  unmarshalBody += '\t\t\treturn err\n';
-  unmarshalBody += '\t\t}\n';
-  unmarshalBody += '\t}\n'; // end for key, val := range rawMsg
   if (parentType) {
     if (!addlProps) {
       unmarshalBody += `\treturn ${receiver}.${parentType.language.go!.name}.unmarshalInternal(rawMsg)\n`;

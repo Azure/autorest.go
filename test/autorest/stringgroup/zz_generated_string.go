@@ -528,7 +528,7 @@ func (client *StringClient) putNullCreateRequest(ctx context.Context, options *S
 	}
 	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
-	if options != nil {
+	if options != nil && options.StringBody != nil {
 		return req, req.MarshalAsJSON(options.StringBody)
 	}
 	return req, nil
