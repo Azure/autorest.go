@@ -48,13 +48,13 @@ type SparkBatchJob struct {
 	AppID *string `json:"appId,omitempty"`
 
 	// The detailed application info.
-	AppInfo *map[string]string `json:"appInfo,omitempty"`
+	AppInfo *map[string]*string `json:"appInfo,omitempty"`
 
 	// The artifact identifier.
 	ArtifactID *string `json:"artifactId,omitempty"`
 
 	// The error information.
-	Errors *[]SparkServiceError `json:"errorInfo,omitempty"`
+	Errors *[]*SparkServiceError `json:"errorInfo,omitempty"`
 
 	// The session Id.
 	ID *int32 `json:"id,omitempty"`
@@ -64,7 +64,7 @@ type SparkBatchJob struct {
 	LivyInfo *SparkBatchJobState `json:"livyInfo,omitempty"`
 
 	// The log lines.
-	LogLines *[]string `json:"log,omitempty"`
+	LogLines *[]*string `json:"log,omitempty"`
 
 	// The batch name.
 	Name *string `json:"name,omitempty"`
@@ -91,7 +91,7 @@ type SparkBatchJob struct {
 	SubmitterName *string `json:"submitterName,omitempty"`
 
 	// The tags.
-	Tags *map[string]string `json:"tags,omitempty"`
+	Tags *map[string]*string `json:"tags,omitempty"`
 
 	// The workspace name.
 	WorkspaceName *string `json:"workspaceName,omitempty"`
@@ -103,7 +103,7 @@ type SparkBatchJobCollection struct {
 	From *int32 `json:"from,omitempty"`
 
 	// Batch list
-	Sessions *[]SparkBatchJob `json:"sessions,omitempty"`
+	Sessions *[]*SparkBatchJob `json:"sessions,omitempty"`
 
 	// Number of sessions fetched.
 	Total *int32 `json:"total,omitempty"`
@@ -119,26 +119,26 @@ type SparkBatchJobCollectionResponse struct {
 }
 
 type SparkBatchJobOptions struct {
-	Archives   *[]string `json:"archives,omitempty"`
-	Arguments  *[]string `json:"args,omitempty"`
-	ArtifactID *string   `json:"artifactId,omitempty"`
-	ClassName  *string   `json:"className,omitempty"`
+	Archives   *[]*string `json:"archives,omitempty"`
+	Arguments  *[]*string `json:"args,omitempty"`
+	ArtifactID *string    `json:"artifactId,omitempty"`
+	ClassName  *string    `json:"className,omitempty"`
 
 	// Dictionary of
-	Configuration  *map[string]string `json:"conf,omitempty"`
-	DriverCores    *int32             `json:"driverCores,omitempty"`
-	DriverMemory   *string            `json:"driverMemory,omitempty"`
-	ExecutorCores  *int32             `json:"executorCores,omitempty"`
-	ExecutorCount  *int32             `json:"numExecutors,omitempty"`
-	ExecutorMemory *string            `json:"executorMemory,omitempty"`
-	File           *string            `json:"file,omitempty"`
-	Files          *[]string          `json:"files,omitempty"`
-	Jars           *[]string          `json:"jars,omitempty"`
-	Name           *string            `json:"name,omitempty"`
-	PythonFiles    *[]string          `json:"pyFiles,omitempty"`
+	Configuration  *map[string]*string `json:"conf,omitempty"`
+	DriverCores    *int32              `json:"driverCores,omitempty"`
+	DriverMemory   *string             `json:"driverMemory,omitempty"`
+	ExecutorCores  *int32              `json:"executorCores,omitempty"`
+	ExecutorCount  *int32              `json:"numExecutors,omitempty"`
+	ExecutorMemory *string             `json:"executorMemory,omitempty"`
+	File           *string             `json:"file,omitempty"`
+	Files          *[]*string          `json:"files,omitempty"`
+	Jars           *[]*string          `json:"jars,omitempty"`
+	Name           *string             `json:"name,omitempty"`
+	PythonFiles    *[]*string          `json:"pyFiles,omitempty"`
 
 	// Dictionary of
-	Tags *map[string]string `json:"tags,omitempty"`
+	Tags *map[string]*string `json:"tags,omitempty"`
 }
 
 // SparkBatchJobResponse is the response envelope for operations that return a SparkBatchJob type.
@@ -249,22 +249,22 @@ func (s *SparkBatchJobState) UnmarshalJSON(data []byte) error {
 }
 
 type SparkRequest struct {
-	Archives  *[]string `json:"archives,omitempty"`
-	Arguments *[]string `json:"args,omitempty"`
-	ClassName *string   `json:"className,omitempty"`
+	Archives  *[]*string `json:"archives,omitempty"`
+	Arguments *[]*string `json:"args,omitempty"`
+	ClassName *string    `json:"className,omitempty"`
 
 	// Dictionary of
-	Configuration  *map[string]string `json:"conf,omitempty"`
-	DriverCores    *int32             `json:"driverCores,omitempty"`
-	DriverMemory   *string            `json:"driverMemory,omitempty"`
-	ExecutorCores  *int32             `json:"executorCores,omitempty"`
-	ExecutorCount  *int32             `json:"numExecutors,omitempty"`
-	ExecutorMemory *string            `json:"executorMemory,omitempty"`
-	File           *string            `json:"file,omitempty"`
-	Files          *[]string          `json:"files,omitempty"`
-	Jars           *[]string          `json:"jars,omitempty"`
-	Name           *string            `json:"name,omitempty"`
-	PythonFiles    *[]string          `json:"pyFiles,omitempty"`
+	Configuration  *map[string]*string `json:"conf,omitempty"`
+	DriverCores    *int32              `json:"driverCores,omitempty"`
+	DriverMemory   *string             `json:"driverMemory,omitempty"`
+	ExecutorCores  *int32              `json:"executorCores,omitempty"`
+	ExecutorCount  *int32              `json:"numExecutors,omitempty"`
+	ExecutorMemory *string             `json:"executorMemory,omitempty"`
+	File           *string             `json:"file,omitempty"`
+	Files          *[]*string          `json:"files,omitempty"`
+	Jars           *[]*string          `json:"jars,omitempty"`
+	Name           *string             `json:"name,omitempty"`
+	PythonFiles    *[]*string          `json:"pyFiles,omitempty"`
 }
 
 type SparkScheduler struct {
@@ -402,15 +402,15 @@ type SparkSession struct {
 	AppID *string `json:"appId,omitempty"`
 
 	// Dictionary of
-	AppInfo    *map[string]string   `json:"appInfo,omitempty"`
-	ArtifactID *string              `json:"artifactId,omitempty"`
-	Errors     *[]SparkServiceError `json:"errorInfo,omitempty"`
-	ID         *int32               `json:"id,omitempty"`
+	AppInfo    *map[string]*string   `json:"appInfo,omitempty"`
+	ArtifactID *string               `json:"artifactId,omitempty"`
+	Errors     *[]*SparkServiceError `json:"errorInfo,omitempty"`
+	ID         *int32                `json:"id,omitempty"`
 
 	// The job type.
 	JobType       *SparkJobType           `json:"jobType,omitempty"`
 	LivyInfo      *SparkSessionState      `json:"livyInfo,omitempty"`
-	LogLines      *[]string               `json:"log,omitempty"`
+	LogLines      *[]*string              `json:"log,omitempty"`
 	Name          *string                 `json:"name,omitempty"`
 	Plugin        *SparkServicePlugin     `json:"pluginInfo,omitempty"`
 	Result        *SparkSessionResultType `json:"result,omitempty"`
@@ -421,8 +421,8 @@ type SparkSession struct {
 	SubmitterName *string                 `json:"submitterName,omitempty"`
 
 	// Dictionary of
-	Tags          *map[string]string `json:"tags,omitempty"`
-	WorkspaceName *string            `json:"workspaceName,omitempty"`
+	Tags          *map[string]*string `json:"tags,omitempty"`
+	WorkspaceName *string             `json:"workspaceName,omitempty"`
 }
 
 // SparkSessionCancelSparkSessionOptions contains the optional parameters for the SparkSession.CancelSparkSession method.
@@ -436,9 +436,9 @@ type SparkSessionCancelSparkStatementOptions struct {
 }
 
 type SparkSessionCollection struct {
-	From     *int32          `json:"from,omitempty"`
-	Sessions *[]SparkSession `json:"sessions,omitempty"`
-	Total    *int32          `json:"total,omitempty"`
+	From     *int32           `json:"from,omitempty"`
+	Sessions *[]*SparkSession `json:"sessions,omitempty"`
+	Total    *int32           `json:"total,omitempty"`
 }
 
 // SparkSessionCollectionResponse is the response envelope for operations that return a SparkSessionCollection type.
@@ -487,26 +487,26 @@ type SparkSessionGetSparkStatementsOptions struct {
 }
 
 type SparkSessionOptions struct {
-	Archives   *[]string `json:"archives,omitempty"`
-	Arguments  *[]string `json:"args,omitempty"`
-	ArtifactID *string   `json:"artifactId,omitempty"`
-	ClassName  *string   `json:"className,omitempty"`
+	Archives   *[]*string `json:"archives,omitempty"`
+	Arguments  *[]*string `json:"args,omitempty"`
+	ArtifactID *string    `json:"artifactId,omitempty"`
+	ClassName  *string    `json:"className,omitempty"`
 
 	// Dictionary of
-	Configuration  *map[string]string `json:"conf,omitempty"`
-	DriverCores    *int32             `json:"driverCores,omitempty"`
-	DriverMemory   *string            `json:"driverMemory,omitempty"`
-	ExecutorCores  *int32             `json:"executorCores,omitempty"`
-	ExecutorCount  *int32             `json:"numExecutors,omitempty"`
-	ExecutorMemory *string            `json:"executorMemory,omitempty"`
-	File           *string            `json:"file,omitempty"`
-	Files          *[]string          `json:"files,omitempty"`
-	Jars           *[]string          `json:"jars,omitempty"`
-	Name           *string            `json:"name,omitempty"`
-	PythonFiles    *[]string          `json:"pyFiles,omitempty"`
+	Configuration  *map[string]*string `json:"conf,omitempty"`
+	DriverCores    *int32              `json:"driverCores,omitempty"`
+	DriverMemory   *string             `json:"driverMemory,omitempty"`
+	ExecutorCores  *int32              `json:"executorCores,omitempty"`
+	ExecutorCount  *int32              `json:"numExecutors,omitempty"`
+	ExecutorMemory *string             `json:"executorMemory,omitempty"`
+	File           *string             `json:"file,omitempty"`
+	Files          *[]*string          `json:"files,omitempty"`
+	Jars           *[]*string          `json:"jars,omitempty"`
+	Name           *string             `json:"name,omitempty"`
+	PythonFiles    *[]*string          `json:"pyFiles,omitempty"`
 
 	// Dictionary of
-	Tags *map[string]string `json:"tags,omitempty"`
+	Tags *map[string]*string `json:"tags,omitempty"`
 }
 
 // SparkSessionResetSparkSessionTimeoutOptions contains the optional parameters for the SparkSession.ResetSparkSessionTimeout method.
@@ -640,8 +640,8 @@ type SparkStatementCancellationResultResponse struct {
 }
 
 type SparkStatementCollection struct {
-	Statements *[]SparkStatement `json:"statements,omitempty"`
-	Total      *int32            `json:"total_statements,omitempty"`
+	Statements *[]*SparkStatement `json:"statements,omitempty"`
+	Total      *int32             `json:"total_statements,omitempty"`
 }
 
 // SparkStatementCollectionResponse is the response envelope for operations that return a SparkStatementCollection type.
@@ -663,7 +663,7 @@ type SparkStatementOutput struct {
 	ErrorValue     *string     `json:"evalue,omitempty"`
 	ExecutionCount *int32      `json:"execution_count,omitempty"`
 	Status         *string     `json:"status,omitempty"`
-	Traceback      *[]string   `json:"traceback,omitempty"`
+	Traceback      *[]*string  `json:"traceback,omitempty"`
 }
 
 // SparkStatementResponse is the response envelope for operations that return a SparkStatement type.

@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"testing"
 
+	"github.com/Azure/azure-sdk-for-go/sdk/to"
 	"github.com/google/go-cmp/cmp"
 )
 
@@ -22,7 +23,7 @@ func TestArrayGetEmpty(t *testing.T) {
 		t.Fatalf("GetEmpty: %v", err)
 	}
 	if r := cmp.Diff(result.ArrayWrapper, &ArrayWrapper{
-		Array: &[]string{},
+		Array: &[]*string{},
 	}); r != "" {
 		t.Fatal(r)
 	}
@@ -46,7 +47,13 @@ func TestArrayGetValid(t *testing.T) {
 		t.Fatalf("GetValid: %v", err)
 	}
 	if r := cmp.Diff(result.ArrayWrapper, &ArrayWrapper{
-		Array: &[]string{"1, 2, 3, 4", "", "", "&S#$(*Y", "The quick brown fox jumps over the lazy dog"},
+		Array: &[]*string{
+			to.StringPtr("1, 2, 3, 4"),
+			to.StringPtr(""),
+			nil,
+			to.StringPtr("&S#$(*Y"),
+			to.StringPtr("The quick brown fox jumps over the lazy dog"),
+		},
 	}); r != "" {
 		t.Fatal(r)
 	}
@@ -54,7 +61,7 @@ func TestArrayGetValid(t *testing.T) {
 
 func TestArrayPutEmpty(t *testing.T) {
 	client := newArrayClient()
-	result, err := client.PutEmpty(context.Background(), ArrayWrapper{Array: &[]string{}}, nil)
+	result, err := client.PutEmpty(context.Background(), ArrayWrapper{Array: &[]*string{}}, nil)
 	if err != nil {
 		t.Fatalf("PutEmpty: %v", err)
 	}

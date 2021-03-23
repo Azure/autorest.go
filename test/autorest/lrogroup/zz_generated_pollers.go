@@ -82,7 +82,7 @@ func (p *productArrayPoller) Poll(ctx context.Context) (*http.Response, error) {
 }
 
 func (p *productArrayPoller) FinalResponse(ctx context.Context) (ProductArrayResponse, error) {
-	respType := ProductArrayResponse{ProductArray: []Product{}}
+	respType := ProductArrayResponse{ProductArray: []*Product{}}
 	resp, err := p.pt.FinalResponse(ctx, p.pipeline, &respType.ProductArray)
 	if err != nil {
 		return ProductArrayResponse{}, err
@@ -98,7 +98,7 @@ func (p *productArrayPoller) ResumeToken() (string, error) {
 }
 
 func (p *productArrayPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (ProductArrayResponse, error) {
-	respType := ProductArrayResponse{ProductArray: []Product{}}
+	respType := ProductArrayResponse{ProductArray: []*Product{}}
 	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, &respType.ProductArray)
 	if err != nil {
 		return ProductArrayResponse{}, err

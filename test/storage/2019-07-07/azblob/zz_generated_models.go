@@ -643,7 +643,7 @@ type BlobDownloadResponse struct {
 }
 
 type BlobFlatListSegment struct {
-	BlobItems *[]BlobItem `xml:"Blob"`
+	BlobItems *[]*BlobItem `xml:"Blob"`
 }
 
 // BlobGetAccessControlOptions contains the optional parameters for the Blob.GetAccessControl method.
@@ -869,8 +869,8 @@ type BlobHTTPHeaders struct {
 }
 
 type BlobHierarchyListSegment struct {
-	BlobItems    *[]BlobItem   `xml:"Blob"`
-	BlobPrefixes *[]BlobPrefix `xml:"BlobPrefix"`
+	BlobItems    *[]*BlobItem   `xml:"Blob"`
+	BlobPrefixes *[]*BlobPrefix `xml:"BlobPrefix"`
 }
 
 // An Azure Storage blob
@@ -886,7 +886,7 @@ type BlobItem struct {
 
 type BlobMetadata struct {
 	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties *map[string]string
+	AdditionalProperties *map[string]*string
 	Encrypted            *string `xml:"Encrypted,attr"`
 }
 
@@ -1553,8 +1553,8 @@ type BlockBlobUploadResponse struct {
 }
 
 type BlockList struct {
-	CommittedBlocks   *[]Block `xml:"CommittedBlocks>Block"`
-	UncommittedBlocks *[]Block `xml:"UncommittedBlocks>Block"`
+	CommittedBlocks   *[]*Block `xml:"CommittedBlocks>Block"`
+	UncommittedBlocks *[]*Block `xml:"UncommittedBlocks>Block"`
 }
 
 // BlockListResponse is the response envelope for operations that return a BlockList type.
@@ -1589,9 +1589,9 @@ type BlockListResponse struct {
 }
 
 type BlockLookupList struct {
-	Committed   *[]string `xml:"Committed"`
-	Latest      *[]string `xml:"Latest"`
-	Uncommitted *[]string `xml:"Uncommitted"`
+	Committed   *[]*string `xml:"Committed"`
+	Latest      *[]*string `xml:"Latest"`
+	Uncommitted *[]*string `xml:"Uncommitted"`
 }
 
 // MarshalXML implements the xml.Marshaller interface for type BlockLookupList.
@@ -1906,8 +1906,8 @@ type ContainerGetPropertiesResponse struct {
 // An Azure Storage container
 type ContainerItem struct {
 	// Dictionary of
-	Metadata *map[string]string `xml:"Metadata"`
-	Name     *string            `xml:"Name"`
+	Metadata *map[string]*string `xml:"Metadata"`
+	Name     *string             `xml:"Name"`
 
 	// Properties of a container
 	Properties *ContainerProperties `xml:"Properties"`
@@ -1925,7 +1925,7 @@ func (c *ContainerItem) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 	if err := d.DecodeElement(aux, &start); err != nil {
 		return err
 	}
-	c.Metadata = (*map[string]string)(aux.Metadata)
+	c.Metadata = (*map[string]*string)(aux.Metadata)
 	return nil
 }
 
@@ -2090,7 +2090,7 @@ type ContainerSetAccessPolicyOptions struct {
 	// Specifies whether data in the container may be accessed publicly and the level of access
 	Access *PublicAccessType
 	// the acls for the container
-	ContainerACL *[]SignedIdentifier
+	ContainerACL *[]*SignedIdentifier
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
 	RequestID *string
 	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
@@ -2603,12 +2603,12 @@ type ListBlobsHierarchySegmentResponseResponse struct {
 
 // An enumeration of containers
 type ListContainersSegmentResponse struct {
-	ContainerItems  *[]ContainerItem `xml:"Containers>Container"`
-	Marker          *string          `xml:"Marker"`
-	MaxResults      *int32           `xml:"MaxResults"`
-	NextMarker      *string          `xml:"NextMarker"`
-	Prefix          *string          `xml:"Prefix"`
-	ServiceEndpoint *string          `xml:"ServiceEndpoint,attr"`
+	ContainerItems  *[]*ContainerItem `xml:"Containers>Container"`
+	Marker          *string           `xml:"Marker"`
+	MaxResults      *int32            `xml:"MaxResults"`
+	NextMarker      *string           `xml:"NextMarker"`
+	Prefix          *string           `xml:"Prefix"`
+	ServiceEndpoint *string           `xml:"ServiceEndpoint,attr"`
 }
 
 // ListContainersSegmentResponseResponse is the response envelope for operations that return a ListContainersSegmentResponse type.
@@ -3036,8 +3036,8 @@ type PageBlobUploadPagesResponse struct {
 
 // the list of pages
 type PageList struct {
-	ClearRange *[]ClearRange `xml:"ClearRange"`
-	PageRange  *[]PageRange  `xml:"PageRange"`
+	ClearRange *[]*ClearRange `xml:"ClearRange"`
+	PageRange  *[]*PageRange  `xml:"PageRange"`
 }
 
 // PageListResponse is the response envelope for operations that return a PageList type.
@@ -3232,7 +3232,7 @@ type SignedIdentifier struct {
 	ID *string `xml:"Id"`
 }
 
-// SignedIdentifierArrayResponse is the response envelope for operations that return a []SignedIdentifier type.
+// SignedIdentifierArrayResponse is the response envelope for operations that return a []*SignedIdentifier type.
 type SignedIdentifierArrayResponse struct {
 	// BlobPublicAccess contains the information returned from the x-ms-blob-public-access header response.
 	BlobPublicAccess *PublicAccessType `xml:"BlobPublicAccess"`
@@ -3256,7 +3256,7 @@ type SignedIdentifierArrayResponse struct {
 	RequestID *string `xml:"RequestID"`
 
 	// a collection of signed identifiers
-	SignedIdentifiers []SignedIdentifier `xml:"SignedIdentifier"`
+	SignedIdentifiers []*SignedIdentifier `xml:"SignedIdentifier"`
 
 	// Version contains the information returned from the x-ms-version header response.
 	Version *string `xml:"Version"`
@@ -3305,7 +3305,7 @@ func (e StorageError) Error() string {
 // Storage Service Properties.
 type StorageServiceProperties struct {
 	// The set of CORS rules.
-	Cors *[]CorsRule `xml:"Cors>CorsRule"`
+	Cors *[]*CorsRule `xml:"Cors>CorsRule"`
 
 	// The default version to use for requests to the Blob service if an incoming request's version is not specified. Possible values include version 2008-10-27
 	// and all more recent versions

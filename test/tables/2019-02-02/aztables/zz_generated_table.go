@@ -936,8 +936,8 @@ func (client *TableClient) setAccessPolicyCreateRequest(ctx context.Context, tab
 	}
 	req.Header.Set("Accept", "application/xml")
 	type wrapper struct {
-		XMLName  xml.Name            `xml:"SignedIdentifiers"`
-		TableACL *[]SignedIdentifier `xml:"SignedIdentifier"`
+		XMLName  xml.Name             `xml:"SignedIdentifiers"`
+		TableACL *[]*SignedIdentifier `xml:"SignedIdentifier"`
 	}
 	if options != nil {
 		return req, req.MarshalAsXML(wrapper{TableACL: options.TableACL})

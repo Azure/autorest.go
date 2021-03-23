@@ -506,7 +506,7 @@ func (client *ExplicitClient) postRequiredArrayHeaderHandleError(resp *azcore.Re
 }
 
 // PostRequiredArrayParameter - Test explicitly required array. Please put null and the client library should throw before the request is sent.
-func (client *ExplicitClient) PostRequiredArrayParameter(ctx context.Context, bodyParameter []string, options *ExplicitPostRequiredArrayParameterOptions) (*http.Response, error) {
+func (client *ExplicitClient) PostRequiredArrayParameter(ctx context.Context, bodyParameter []*string, options *ExplicitPostRequiredArrayParameterOptions) (*http.Response, error) {
 	req, err := client.postRequiredArrayParameterCreateRequest(ctx, bodyParameter, options)
 	if err != nil {
 		return nil, err
@@ -522,7 +522,7 @@ func (client *ExplicitClient) PostRequiredArrayParameter(ctx context.Context, bo
 }
 
 // postRequiredArrayParameterCreateRequest creates the PostRequiredArrayParameter request.
-func (client *ExplicitClient) postRequiredArrayParameterCreateRequest(ctx context.Context, bodyParameter []string, options *ExplicitPostRequiredArrayParameterOptions) (*azcore.Request, error) {
+func (client *ExplicitClient) postRequiredArrayParameterCreateRequest(ctx context.Context, bodyParameter []*string, options *ExplicitPostRequiredArrayParameterOptions) (*azcore.Request, error) {
 	urlPath := "/reqopt/requied/array/parameter"
 	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {

@@ -404,7 +404,7 @@ func TestLROBeginPost202List(t *testing.T) {
 	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
-	if r := cmp.Diff(pollResp.ProductArray, []Product{
+	if r := cmp.Diff(pollResp.ProductArray, []*Product{
 		{
 			Resource: Resource{
 				ID:   to.StringPtr("100"),

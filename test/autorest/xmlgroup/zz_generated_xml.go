@@ -913,7 +913,7 @@ func (client *XMLClient) listContainersHandleError(resp *azcore.Response) error 
 }
 
 // PutACLs - Puts storage ACLs for a container.
-func (client *XMLClient) PutACLs(ctx context.Context, properties []SignedIdentifier, options *XMLPutACLsOptions) (*http.Response, error) {
+func (client *XMLClient) PutACLs(ctx context.Context, properties []*SignedIdentifier, options *XMLPutACLsOptions) (*http.Response, error) {
 	req, err := client.putACLsCreateRequest(ctx, properties, options)
 	if err != nil {
 		return nil, err
@@ -929,7 +929,7 @@ func (client *XMLClient) PutACLs(ctx context.Context, properties []SignedIdentif
 }
 
 // putACLsCreateRequest creates the PutACLs request.
-func (client *XMLClient) putACLsCreateRequest(ctx context.Context, properties []SignedIdentifier, options *XMLPutACLsOptions) (*azcore.Request, error) {
+func (client *XMLClient) putACLsCreateRequest(ctx context.Context, properties []*SignedIdentifier, options *XMLPutACLsOptions) (*azcore.Request, error) {
 	urlPath := "/xml/mycontainer"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -941,8 +941,8 @@ func (client *XMLClient) putACLsCreateRequest(ctx context.Context, properties []
 	query.Set("restype", "container")
 	req.URL.RawQuery = query.Encode()
 	type wrapper struct {
-		XMLName    xml.Name            `xml:"SignedIdentifiers"`
-		Properties *[]SignedIdentifier `xml:"SignedIdentifier"`
+		XMLName    xml.Name             `xml:"SignedIdentifiers"`
+		Properties *[]*SignedIdentifier `xml:"SignedIdentifier"`
 	}
 	return req, req.MarshalAsXML(wrapper{Properties: &properties})
 }
@@ -1116,7 +1116,7 @@ func (client *XMLClient) putEmptyListHandleError(resp *azcore.Response) error {
 }
 
 // PutEmptyRootList - Puts an empty list as the root element.
-func (client *XMLClient) PutEmptyRootList(ctx context.Context, bananas []Banana, options *XMLPutEmptyRootListOptions) (*http.Response, error) {
+func (client *XMLClient) PutEmptyRootList(ctx context.Context, bananas []*Banana, options *XMLPutEmptyRootListOptions) (*http.Response, error) {
 	req, err := client.putEmptyRootListCreateRequest(ctx, bananas, options)
 	if err != nil {
 		return nil, err
@@ -1132,7 +1132,7 @@ func (client *XMLClient) PutEmptyRootList(ctx context.Context, bananas []Banana,
 }
 
 // putEmptyRootListCreateRequest creates the PutEmptyRootList request.
-func (client *XMLClient) putEmptyRootListCreateRequest(ctx context.Context, bananas []Banana, options *XMLPutEmptyRootListOptions) (*azcore.Request, error) {
+func (client *XMLClient) putEmptyRootListCreateRequest(ctx context.Context, bananas []*Banana, options *XMLPutEmptyRootListOptions) (*azcore.Request, error) {
 	urlPath := "/xml/empty-root-list"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1140,8 +1140,8 @@ func (client *XMLClient) putEmptyRootListCreateRequest(ctx context.Context, bana
 	}
 	req.Telemetry(telemetryInfo)
 	type wrapper struct {
-		XMLName xml.Name  `xml:"bananas"`
-		Bananas *[]Banana `xml:"banana"`
+		XMLName xml.Name   `xml:"bananas"`
+		Bananas *[]*Banana `xml:"banana"`
 	}
 	return req, req.MarshalAsXML(wrapper{Bananas: &bananas})
 }
@@ -1198,7 +1198,7 @@ func (client *XMLClient) putEmptyWrappedListsHandleError(resp *azcore.Response) 
 }
 
 // PutRootList - Puts a list as the root element.
-func (client *XMLClient) PutRootList(ctx context.Context, bananas []Banana, options *XMLPutRootListOptions) (*http.Response, error) {
+func (client *XMLClient) PutRootList(ctx context.Context, bananas []*Banana, options *XMLPutRootListOptions) (*http.Response, error) {
 	req, err := client.putRootListCreateRequest(ctx, bananas, options)
 	if err != nil {
 		return nil, err
@@ -1214,7 +1214,7 @@ func (client *XMLClient) PutRootList(ctx context.Context, bananas []Banana, opti
 }
 
 // putRootListCreateRequest creates the PutRootList request.
-func (client *XMLClient) putRootListCreateRequest(ctx context.Context, bananas []Banana, options *XMLPutRootListOptions) (*azcore.Request, error) {
+func (client *XMLClient) putRootListCreateRequest(ctx context.Context, bananas []*Banana, options *XMLPutRootListOptions) (*azcore.Request, error) {
 	urlPath := "/xml/root-list"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1222,8 +1222,8 @@ func (client *XMLClient) putRootListCreateRequest(ctx context.Context, bananas [
 	}
 	req.Telemetry(telemetryInfo)
 	type wrapper struct {
-		XMLName xml.Name  `xml:"bananas"`
-		Bananas *[]Banana `xml:"banana"`
+		XMLName xml.Name   `xml:"bananas"`
+		Bananas *[]*Banana `xml:"banana"`
 	}
 	return req, req.MarshalAsXML(wrapper{Bananas: &bananas})
 }
@@ -1241,7 +1241,7 @@ func (client *XMLClient) putRootListHandleError(resp *azcore.Response) error {
 }
 
 // PutRootListSingleItem - Puts a list with a single item.
-func (client *XMLClient) PutRootListSingleItem(ctx context.Context, bananas []Banana, options *XMLPutRootListSingleItemOptions) (*http.Response, error) {
+func (client *XMLClient) PutRootListSingleItem(ctx context.Context, bananas []*Banana, options *XMLPutRootListSingleItemOptions) (*http.Response, error) {
 	req, err := client.putRootListSingleItemCreateRequest(ctx, bananas, options)
 	if err != nil {
 		return nil, err
@@ -1257,7 +1257,7 @@ func (client *XMLClient) PutRootListSingleItem(ctx context.Context, bananas []Ba
 }
 
 // putRootListSingleItemCreateRequest creates the PutRootListSingleItem request.
-func (client *XMLClient) putRootListSingleItemCreateRequest(ctx context.Context, bananas []Banana, options *XMLPutRootListSingleItemOptions) (*azcore.Request, error) {
+func (client *XMLClient) putRootListSingleItemCreateRequest(ctx context.Context, bananas []*Banana, options *XMLPutRootListSingleItemOptions) (*azcore.Request, error) {
 	urlPath := "/xml/root-list-single-item"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -1265,8 +1265,8 @@ func (client *XMLClient) putRootListSingleItemCreateRequest(ctx context.Context,
 	}
 	req.Telemetry(telemetryInfo)
 	type wrapper struct {
-		XMLName xml.Name  `xml:"bananas"`
-		Bananas *[]Banana `xml:"banana"`
+		XMLName xml.Name   `xml:"bananas"`
+		Bananas *[]*Banana `xml:"banana"`
 	}
 	return req, req.MarshalAsXML(wrapper{Bananas: &bananas})
 }

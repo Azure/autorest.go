@@ -49,14 +49,14 @@ func TestValidationValidationOfBody(t *testing.T) {
 	client := newAutoRestValidationTestClient()
 	result, err := client.ValidationOfBody(context.Background(), "123", 150, &AutoRestValidationTestValidationOfBodyOptions{
 		Body: &Product{
-			DisplayNames: &[]string{
-				"displayname1",
-				"displayname2",
-				"displayname3",
-				"displayname4",
-				"displayname5",
-				"displayname6",
-				"displayname7"}},
+			DisplayNames: &[]*string{
+				to.StringPtr("displayname1"),
+				to.StringPtr("displayname2"),
+				to.StringPtr("displayname3"),
+				to.StringPtr("displayname4"),
+				to.StringPtr("displayname5"),
+				to.StringPtr("displayname6"),
+				to.StringPtr("displayname7")}},
 	})
 	if err != nil {
 		t.Fatalf("ValidationOfBody: %v", err)

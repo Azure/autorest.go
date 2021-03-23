@@ -39,7 +39,7 @@ type Activity struct {
 	AdditionalProperties *map[string]interface{}
 
 	// Activity depends on condition.
-	DependsOn *[]ActivityDependency `json:"dependsOn,omitempty"`
+	DependsOn *[]*ActivityDependency `json:"dependsOn,omitempty"`
 
 	// Activity description.
 	Description *string `json:"description,omitempty"`
@@ -51,7 +51,7 @@ type Activity struct {
 	Type *string `json:"type,omitempty"`
 
 	// Activity user properties.
-	UserProperties *[]UserProperty `json:"userProperties,omitempty"`
+	UserProperties *[]*UserProperty `json:"userProperties,omitempty"`
 }
 
 // GetActivity implements the ActivityClassification interface for type Activity.
@@ -128,7 +128,7 @@ type ActivityDependency struct {
 	AdditionalProperties *map[string]interface{}
 
 	// Match-Condition for the dependency.
-	DependencyConditions *[]DependencyCondition `json:"dependencyConditions,omitempty"`
+	DependencyConditions *[]*DependencyCondition `json:"dependencyConditions,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ActivityDependency.
@@ -401,7 +401,7 @@ type ActivityRunsQueryResponse struct {
 	ContinuationToken *string `json:"continuationToken,omitempty"`
 
 	// List of activity runs.
-	Value *[]ActivityRun `json:"value,omitempty"`
+	Value *[]*ActivityRun `json:"value,omitempty"`
 }
 
 // ActivityRunsQueryResponseResponse is the response envelope for operations that return a ActivityRunsQueryResponse type.
@@ -3121,12 +3121,12 @@ type AzureMLBatchExecutionActivityTypeProperties struct {
 	// Key,Value pairs, mapping the names of Azure ML endpoint's Web Service Inputs to AzureMLWebServiceFile objects specifying the input Blob locations.. This
 	// information will be passed in the
 	// WebServiceInputs property of the Azure ML batch execution request.
-	WebServiceInputs *map[string]AzureMLWebServiceFile `json:"webServiceInputs,omitempty"`
+	WebServiceInputs *map[string]*AzureMLWebServiceFile `json:"webServiceInputs,omitempty"`
 
 	// Key,Value pairs, mapping the names of Azure ML endpoint's Web Service Outputs to AzureMLWebServiceFile objects specifying the output Blob locations.
 	// This information will be passed in the
 	// WebServiceOutputs property of the Azure ML batch execution request.
-	WebServiceOutputs *map[string]AzureMLWebServiceFile `json:"webServiceOutputs,omitempty"`
+	WebServiceOutputs *map[string]*AzureMLWebServiceFile `json:"webServiceOutputs,omitempty"`
 }
 
 // Azure ML Execute Pipeline activity.
@@ -4265,7 +4265,7 @@ type AzureSQLSink struct {
 	SQLWriterTableType interface{} `json:"sqlWriterTableType,omitempty"`
 
 	// SQL stored procedure parameters.
-	StoredProcedureParameters *map[string]StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
+	StoredProcedureParameters *map[string]*StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
 
 	// The stored procedure parameter name of the table type. Type: string (or Expression with resultType string).
 	StoredProcedureTableTypeParameterName interface{} `json:"storedProcedureTableTypeParameterName,omitempty"`
@@ -4335,7 +4335,7 @@ type AzureSQLSource struct {
 	SQLReaderStoredProcedureName interface{} `json:"sqlReaderStoredProcedureName,omitempty"`
 
 	// Value and type setting for stored procedure parameters. Example: "{Parameter1: {value: "1", type: "int"}}".
-	StoredProcedureParameters *map[string]StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
+	StoredProcedureParameters *map[string]*StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type AzureSQLSource.
@@ -4815,7 +4815,7 @@ type BigDataPoolResourceInfoListResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// List of Big Data pools
-	Value *[]BigDataPoolResourceInfo `json:"value,omitempty"`
+	Value *[]*BigDataPoolResourceInfo `json:"value,omitempty"`
 }
 
 // BigDataPoolResourceInfoListResultResponse is the response envelope for operations that return a BigDataPoolResourceInfoListResult type.
@@ -4851,7 +4851,7 @@ type BigDataPoolResourceProperties struct {
 	CreationDate *time.Time `json:"creationDate,omitempty"`
 
 	// List of custom libraries/packages associated with the spark pool.
-	CustomLibraries *[]LibraryInfo `json:"customLibraries,omitempty"`
+	CustomLibraries *[]*LibraryInfo `json:"customLibraries,omitempty"`
 
 	// The default folder where Spark logs will be written.
 	DefaultSparkLogFolder *string `json:"defaultSparkLogFolder,omitempty"`
@@ -5183,7 +5183,7 @@ type BlobEventsTriggerTypeProperties struct {
 	BlobPathEndsWith *string `json:"blobPathEndsWith,omitempty"`
 
 	// The type of events that cause this trigger to fire.
-	Events *[]BlobEventType `json:"events,omitempty"`
+	Events *[]*BlobEventType `json:"events,omitempty"`
 
 	// If set to true, blobs with zero bytes will be ignored.
 	IgnoreEmptyBlobs *bool `json:"ignoreEmptyBlobs,omitempty"`
@@ -5565,7 +5565,7 @@ func (c *ChainingTrigger) UnmarshalJSON(data []byte) error {
 // Chaining Trigger properties.
 type ChainingTriggerTypeProperties struct {
 	// Upstream Pipelines.
-	DependsOn *[]PipelineReference `json:"dependsOn,omitempty"`
+	DependsOn *[]*PipelineReference `json:"dependsOn,omitempty"`
 
 	// Run Dimension property that needs to be emitted by upstream pipelines.
 	RunDimension *string `json:"runDimension,omitempty"`
@@ -5637,7 +5637,7 @@ type CloudErrorBody struct {
 	Code *string `json:"code,omitempty"`
 
 	// Array with additional error details.
-	Details *[]CloudError `json:"details,omitempty"`
+	Details *[]*CloudError `json:"details,omitempty"`
 
 	// Error message.
 	Message *string `json:"message,omitempty"`
@@ -5652,7 +5652,7 @@ type CloudErrorBodyAutoGenerated struct {
 	Code *string `json:"code,omitempty"`
 
 	// Array with additional error details.
-	Details *[]CloudErrorAutoGenerated `json:"details,omitempty"`
+	Details *[]*CloudErrorAutoGenerated `json:"details,omitempty"`
 
 	// Error message.
 	Message *string `json:"message,omitempty"`
@@ -6107,10 +6107,10 @@ func (c ControlActivity) MarshalJSON() ([]byte, error) {
 type CopyActivity struct {
 	ExecutionActivity
 	// List of inputs for the activity.
-	Inputs *[]DatasetReference `json:"inputs,omitempty"`
+	Inputs *[]*DatasetReference `json:"inputs,omitempty"`
 
 	// List of outputs for the activity.
-	Outputs *[]DatasetReference `json:"outputs,omitempty"`
+	Outputs *[]*DatasetReference `json:"outputs,omitempty"`
 
 	// Copy activity properties.
 	TypeProperties *CopyActivityTypeProperties `json:"typeProperties,omitempty"`
@@ -7061,10 +7061,10 @@ func (c *CustomActivity) UnmarshalJSON(data []byte) error {
 // Reference objects for custom activity
 type CustomActivityReferenceObject struct {
 	// Dataset references.
-	Datasets *[]DatasetReference `json:"datasets,omitempty"`
+	Datasets *[]*DatasetReference `json:"datasets,omitempty"`
 
 	// Linked service references.
-	LinkedServices *[]LinkedServiceReference `json:"linkedServices,omitempty"`
+	LinkedServices *[]*LinkedServiceReference `json:"linkedServices,omitempty"`
 }
 
 // Custom activity properties.
@@ -7229,12 +7229,12 @@ type DWCopyCommandSettings struct {
 	// Additional options directly passed to SQL DW in Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType object).
 	// Example: "additionalOptions": { "MAXERRORS":
 	// "1000", "DATEFORMAT": "'ymd'" }
-	AdditionalOptions *map[string]string `json:"additionalOptions,omitempty"`
+	AdditionalOptions *map[string]*string `json:"additionalOptions,omitempty"`
 
 	// Specifies the default values for each target column in SQL DW. The default values in the property overwrite the DEFAULT constraint set in the DB, and
 	// identity column cannot have a default value. Type:
 	// array of objects (or Expression with resultType array of objects).
-	DefaultValues *[]DWCopyCommandDefaultValue `json:"defaultValues,omitempty"`
+	DefaultValues *[]*DWCopyCommandDefaultValue `json:"defaultValues,omitempty"`
 }
 
 // DataFlowClassification provides polymorphic access to related types.
@@ -7377,13 +7377,13 @@ type DataFlowDebugPackage struct {
 	DataFlow *DataFlowDebugResource `json:"dataFlow,omitempty"`
 
 	// List of datasets.
-	Datasets *[]DatasetDebugResource `json:"datasets,omitempty"`
+	Datasets *[]*DatasetDebugResource `json:"datasets,omitempty"`
 
 	// Data flow debug settings.
 	DebugSettings *DataFlowDebugPackageDebugSettings `json:"debugSettings,omitempty"`
 
 	// List of linked services.
-	LinkedServices *[]LinkedServiceDebugResource `json:"linkedServices,omitempty"`
+	LinkedServices *[]*LinkedServiceDebugResource `json:"linkedServices,omitempty"`
 
 	// The ID of data flow debug session.
 	SessionID *string `json:"sessionId,omitempty"`
@@ -7463,7 +7463,7 @@ type DataFlowDebugPackageDebugSettings struct {
 	Parameters *map[string]interface{} `json:"parameters,omitempty"`
 
 	// Source setting for data flow debug.
-	SourceSettings *[]DataFlowSourceSetting `json:"sourceSettings,omitempty"`
+	SourceSettings *[]*DataFlowSourceSetting `json:"sourceSettings,omitempty"`
 }
 
 // Request body structure for data flow preview data.
@@ -7640,7 +7640,7 @@ type DataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspaceOptions struct {
 // Request body structure for data flow statistics.
 type DataFlowDebugStatisticsRequest struct {
 	// List of column names.
-	Columns *[]string `json:"columns,omitempty"`
+	Columns *[]*string `json:"columns,omitempty"`
 
 	// The data flow which contains the debug session.
 	DataFlowName *string `json:"dataFlowName,omitempty"`
@@ -7676,7 +7676,7 @@ type DataFlowListResponse struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// List of data flows.
-	Value *[]DataFlowResource `json:"value,omitempty"`
+	Value *[]*DataFlowResource `json:"value,omitempty"`
 }
 
 // DataFlowListResponseResponse is the response envelope for operations that return a DataFlowListResponse type.
@@ -8114,7 +8114,7 @@ type Dataset struct {
 	LinkedServiceName *LinkedServiceReference `json:"linkedServiceName,omitempty"`
 
 	// Parameters for dataset.
-	Parameters *map[string]ParameterSpecification `json:"parameters,omitempty"`
+	Parameters *map[string]*ParameterSpecification `json:"parameters,omitempty"`
 
 	// Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement.
 	Schema interface{} `json:"schema,omitempty"`
@@ -8405,7 +8405,7 @@ type DatasetListResponse struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// List of datasets.
-	Value *[]DatasetResource `json:"value,omitempty"`
+	Value *[]*DatasetResource `json:"value,omitempty"`
 }
 
 // DatasetListResponseResponse is the response envelope for operations that return a DatasetListResponse type.
@@ -10477,13 +10477,13 @@ func (e ErrorContract) Error() string {
 // format.)
 type ErrorResponse struct {
 	// READ-ONLY; The error additional info.
-	AdditionalInfo *[]ErrorAdditionalInfo `json:"additionalInfo,omitempty" azure:"ro"`
+	AdditionalInfo *[]*ErrorAdditionalInfo `json:"additionalInfo,omitempty" azure:"ro"`
 
 	// READ-ONLY; The error code.
 	Code *string `json:"code,omitempty" azure:"ro"`
 
 	// READ-ONLY; The error details.
-	Details *[]ErrorResponse `json:"details,omitempty" azure:"ro"`
+	Details *[]*ErrorResponse `json:"details,omitempty" azure:"ro"`
 
 	// READ-ONLY; The error message.
 	Message *string `json:"message,omitempty" azure:"ro"`
@@ -10666,22 +10666,22 @@ type ExecuteSSISPackageActivityTypeProperties struct {
 	LoggingLevel interface{} `json:"loggingLevel,omitempty"`
 
 	// The package level connection managers to execute the SSIS package.
-	PackageConnectionManagers *map[string]map[string]SSISExecutionParameter `json:"packageConnectionManagers,omitempty"`
+	PackageConnectionManagers *map[string]map[string]*SSISExecutionParameter `json:"packageConnectionManagers,omitempty"`
 
 	// SSIS package location.
 	PackageLocation *SSISPackageLocation `json:"packageLocation,omitempty"`
 
 	// The package level parameters to execute the SSIS package.
-	PackageParameters *map[string]SSISExecutionParameter `json:"packageParameters,omitempty"`
+	PackageParameters *map[string]*SSISExecutionParameter `json:"packageParameters,omitempty"`
 
 	// The project level connection managers to execute the SSIS package.
-	ProjectConnectionManagers *map[string]map[string]SSISExecutionParameter `json:"projectConnectionManagers,omitempty"`
+	ProjectConnectionManagers *map[string]map[string]*SSISExecutionParameter `json:"projectConnectionManagers,omitempty"`
 
 	// The project level parameters to execute the SSIS package.
-	ProjectParameters *map[string]SSISExecutionParameter `json:"projectParameters,omitempty"`
+	ProjectParameters *map[string]*SSISExecutionParameter `json:"projectParameters,omitempty"`
 
 	// The property overrides to execute the SSIS package.
-	PropertyOverrides *map[string]SSISPropertyOverride `json:"propertyOverrides,omitempty"`
+	PropertyOverrides *map[string]*SSISPropertyOverride `json:"propertyOverrides,omitempty"`
 
 	// Specifies the runtime to execute SSIS package. The value should be "x86" or "x64". Type: string (or Expression with resultType string).
 	Runtime interface{} `json:"runtime,omitempty"`
@@ -12496,7 +12496,7 @@ type HDInsightHiveActivityTypeProperties struct {
 	ScriptPath interface{} `json:"scriptPath,omitempty"`
 
 	// Storage linked service references.
-	StorageLinkedServices *[]LinkedServiceReference `json:"storageLinkedServices,omitempty"`
+	StorageLinkedServices *[]*LinkedServiceReference `json:"storageLinkedServices,omitempty"`
 
 	// User specified arguments under hivevar namespace.
 	Variables *[]interface{} `json:"variables,omitempty"`
@@ -12622,7 +12622,7 @@ type HDInsightMapReduceActivityTypeProperties struct {
 	JarLinkedService *LinkedServiceReference `json:"jarLinkedService,omitempty"`
 
 	// Storage linked service references.
-	StorageLinkedServices *[]LinkedServiceReference `json:"storageLinkedServices,omitempty"`
+	StorageLinkedServices *[]*LinkedServiceReference `json:"storageLinkedServices,omitempty"`
 }
 
 // HDInsight ondemand linked service.
@@ -12662,7 +12662,7 @@ func (h *HDInsightOnDemandLinkedService) UnmarshalJSON(data []byte) error {
 // HDInsight ondemand linked service properties.
 type HDInsightOnDemandLinkedServiceTypeProperties struct {
 	// Specifies additional storage accounts for the HDInsight linked service so that the Data Factory service can register them on your behalf.
-	AdditionalLinkedServiceNames *[]LinkedServiceReference `json:"additionalLinkedServiceNames,omitempty"`
+	AdditionalLinkedServiceNames *[]*LinkedServiceReference `json:"additionalLinkedServiceNames,omitempty"`
 
 	// The prefix of cluster name, postfix will be distinct with timestamp. Type: string (or Expression with resultType string).
 	ClusterNamePrefix interface{} `json:"clusterNamePrefix,omitempty"`
@@ -12728,7 +12728,7 @@ type HDInsightOnDemandLinkedServiceTypeProperties struct {
 
 	// Custom script actions to run on HDI ondemand cluster once it's up. Please refer to
 	// https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-hadoop-customize-cluster-linux?toc=%2Fen-us%2Fazure%2Fhdinsight%2Fr-server%2FTOC.json&bc=%2Fen-us%2Fazure%2Fbread%2Ftoc.json#understanding-script-actions.
-	ScriptActions *[]ScriptAction `json:"scriptActions,omitempty"`
+	ScriptActions *[]*ScriptAction `json:"scriptActions,omitempty"`
 
 	// The service principal id for the hostSubscriptionId. Type: string (or Expression with resultType string).
 	ServicePrincipalID interface{} `json:"servicePrincipalId,omitempty"`
@@ -12819,7 +12819,7 @@ type HDInsightPigActivityTypeProperties struct {
 	ScriptPath interface{} `json:"scriptPath,omitempty"`
 
 	// Storage linked service references.
-	StorageLinkedServices *[]LinkedServiceReference `json:"storageLinkedServices,omitempty"`
+	StorageLinkedServices *[]*LinkedServiceReference `json:"storageLinkedServices,omitempty"`
 }
 
 // HDInsight Spark activity.
@@ -12953,7 +12953,7 @@ type HDInsightStreamingActivityTypeProperties struct {
 	Reducer interface{} `json:"reducer,omitempty"`
 
 	// Storage linked service references.
-	StorageLinkedServices *[]LinkedServiceReference `json:"storageLinkedServices,omitempty"`
+	StorageLinkedServices *[]*LinkedServiceReference `json:"storageLinkedServices,omitempty"`
 }
 
 // Linked service for an HTTP source.
@@ -14555,7 +14555,7 @@ type IntegrationRuntimeListResponse struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// List of integration runtimes.
-	Value *[]IntegrationRuntimeResource `json:"value,omitempty"`
+	Value *[]*IntegrationRuntimeResource `json:"value,omitempty"`
 }
 
 // IntegrationRuntimeListResponseResponse is the response envelope for operations that return a IntegrationRuntimeListResponse type.
@@ -14759,7 +14759,7 @@ type IntegrationRuntimeVNetProperties struct {
 	AdditionalProperties *map[string]interface{}
 
 	// Resource IDs of the public IP addresses that this integration runtime will use.
-	PublicIPs *[]string `json:"publicIPs,omitempty"`
+	PublicIPs *[]*string `json:"publicIPs,omitempty"`
 
 	// The name of the subnet this integration runtime will join.
 	Subnet *string `json:"subnet,omitempty"`
@@ -15372,7 +15372,7 @@ type LibraryListResponse struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// List of Library.
-	Value *[]LibraryResource `json:"value,omitempty"`
+	Value *[]*LibraryResource `json:"value,omitempty"`
 }
 
 // LibraryListResponseResponse is the response envelope for operations that return a LibraryListResponse type.
@@ -15686,7 +15686,7 @@ type LinkedService struct {
 	Description *string `json:"description,omitempty"`
 
 	// Parameters for linked service.
-	Parameters *map[string]ParameterSpecification `json:"parameters,omitempty"`
+	Parameters *map[string]*ParameterSpecification `json:"parameters,omitempty"`
 
 	// Type of linked service.
 	Type *string `json:"type,omitempty"`
@@ -15798,7 +15798,7 @@ type LinkedServiceListResponse struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// List of linked services.
-	Value *[]LinkedServiceResource `json:"value,omitempty"`
+	Value *[]*LinkedServiceResource `json:"value,omitempty"`
 }
 
 // LinkedServiceListResponseResponse is the response envelope for operations that return a LinkedServiceListResponse type.
@@ -16179,7 +16179,7 @@ type ManagedIntegrationRuntimeTypeProperties struct {
 // Managed Virtual Network Settings
 type ManagedVirtualNetworkSettings struct {
 	// Allowed Aad Tenant Ids For Linking
-	AllowedAADTenantIDsForLinking *[]string `json:"allowedAadTenantIdsForLinking,omitempty"`
+	AllowedAADTenantIDsForLinking *[]*string `json:"allowedAadTenantIdsForLinking,omitempty"`
 
 	// Linked Access Check On Target Resource
 	LinkedAccessCheckOnTargetResource *bool `json:"linkedAccessCheckOnTargetResource,omitempty"`
@@ -16228,13 +16228,13 @@ type MappingDataFlowTypeProperties struct {
 	Script *string `json:"script,omitempty"`
 
 	// List of sinks in data flow.
-	Sinks *[]DataFlowSink `json:"sinks,omitempty"`
+	Sinks *[]*DataFlowSink `json:"sinks,omitempty"`
 
 	// List of sources in data flow.
-	Sources *[]DataFlowSource `json:"sources,omitempty"`
+	Sources *[]*DataFlowSource `json:"sources,omitempty"`
 
 	// List of transformations in data flow.
-	Transformations *[]Transformation `json:"transformations,omitempty"`
+	Transformations *[]*Transformation `json:"transformations,omitempty"`
 }
 
 // MariaDB server linked service.
@@ -17140,7 +17140,7 @@ type MultiplePipelineTriggerClassification interface {
 type MultiplePipelineTrigger struct {
 	Trigger
 	// Pipelines that need to be started.
-	Pipelines *[]TriggerPipelineReference `json:"pipelines,omitempty"`
+	Pipelines *[]*TriggerPipelineReference `json:"pipelines,omitempty"`
 }
 
 // GetMultiplePipelineTrigger implements the MultiplePipelineTriggerClassification interface for type MultiplePipelineTrigger.
@@ -17467,7 +17467,7 @@ type Notebook struct {
 	BigDataPool *BigDataPoolReference `json:"bigDataPool,omitempty"`
 
 	// Array of cells of the current notebook.
-	Cells *[]NotebookCell `json:"cells,omitempty"`
+	Cells *[]*NotebookCell `json:"cells,omitempty"`
 
 	// The description of the notebook.
 	Description *string `json:"description,omitempty"`
@@ -17582,10 +17582,10 @@ type NotebookCell struct {
 	Metadata interface{} `json:"metadata,omitempty"`
 
 	// Cell-level output items.
-	Outputs *[]NotebookCellOutputItem `json:"outputs,omitempty"`
+	Outputs *[]*NotebookCellOutputItem `json:"outputs,omitempty"`
 
 	// Contents of the cell, represented as an array of lines.
-	Source *[]string `json:"source,omitempty"`
+	Source *[]*string `json:"source,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type NotebookCell.
@@ -17806,7 +17806,7 @@ type NotebookListResponse struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// List of Notebooks.
-	Value *[]NotebookResource `json:"value,omitempty"`
+	Value *[]*NotebookResource `json:"value,omitempty"`
 }
 
 // NotebookListResponseResponse is the response envelope for operations that return a NotebookListResponse type.
@@ -19607,13 +19607,13 @@ type Pipeline struct {
 	Folder *PipelineFolder `json:"folder,omitempty"`
 
 	// List of parameters for pipeline.
-	Parameters *map[string]ParameterSpecification `json:"parameters,omitempty"`
+	Parameters *map[string]*ParameterSpecification `json:"parameters,omitempty"`
 
 	// Dimensions emitted by Pipeline.
 	RunDimensions *map[string]interface{} `json:"runDimensions,omitempty"`
 
 	// List of variables for pipeline.
-	Variables *map[string]VariableSpecification `json:"variables,omitempty"`
+	Variables *map[string]*VariableSpecification `json:"variables,omitempty"`
 }
 
 // PipelineBeginCreateOrUpdatePipelineOptions contains the optional parameters for the Pipeline.BeginCreateOrUpdatePipeline method.
@@ -19668,7 +19668,7 @@ type PipelineListResponse struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// List of pipelines.
-	Value *[]PipelineResource `json:"value,omitempty"`
+	Value *[]*PipelineResource `json:"value,omitempty"`
 }
 
 // PipelineListResponseResponse is the response envelope for operations that return a PipelineListResponse type.
@@ -19794,7 +19794,7 @@ type PipelineRun struct {
 	Message *string `json:"message,omitempty" azure:"ro"`
 
 	// READ-ONLY; The full or partial list of parameter name, value pair used in the pipeline run.
-	Parameters *map[string]string `json:"parameters,omitempty" azure:"ro"`
+	Parameters *map[string]*string `json:"parameters,omitempty" azure:"ro"`
 
 	// READ-ONLY; The pipeline name.
 	PipelineName *string `json:"pipelineName,omitempty" azure:"ro"`
@@ -19955,7 +19955,7 @@ type PipelineRunsQueryResponse struct {
 	ContinuationToken *string `json:"continuationToken,omitempty"`
 
 	// List of pipeline runs.
-	Value *[]PipelineRun `json:"value,omitempty"`
+	Value *[]*PipelineRun `json:"value,omitempty"`
 }
 
 // PipelineRunsQueryResponseResponse is the response envelope for operations that return a PipelineRunsQueryResponse type.
@@ -20445,7 +20445,7 @@ type QueryDataFlowDebugSessionsResponse struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// Array with all active debug sessions.
-	Value *[]DataFlowDebugSessionInfo `json:"value,omitempty"`
+	Value *[]*DataFlowDebugSessionInfo `json:"value,omitempty"`
 }
 
 // QueryDataFlowDebugSessionsResponseResponse is the response envelope for operations that return a QueryDataFlowDebugSessionsResponse type.
@@ -20634,19 +20634,19 @@ type RecurrenceSchedule struct {
 	AdditionalProperties *map[string]interface{}
 
 	// The hours.
-	Hours *[]int32 `json:"hours,omitempty"`
+	Hours *[]*int32 `json:"hours,omitempty"`
 
 	// The minutes.
-	Minutes *[]int32 `json:"minutes,omitempty"`
+	Minutes *[]*int32 `json:"minutes,omitempty"`
 
 	// The month days.
-	MonthDays *[]int32 `json:"monthDays,omitempty"`
+	MonthDays *[]*int32 `json:"monthDays,omitempty"`
 
 	// The monthly occurrences.
-	MonthlyOccurrences *[]RecurrenceScheduleOccurrence `json:"monthlyOccurrences,omitempty"`
+	MonthlyOccurrences *[]*RecurrenceScheduleOccurrence `json:"monthlyOccurrences,omitempty"`
 
 	// The days of the week.
-	WeekDays *[]DayOfWeek `json:"weekDays,omitempty"`
+	WeekDays *[]*DayOfWeek `json:"weekDays,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type RecurrenceSchedule.
@@ -20918,7 +20918,7 @@ type RerunTriggerListResponse struct {
 	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 
 	// List of rerun triggers.
-	Value *[]RerunTriggerResource `json:"value,omitempty"`
+	Value *[]*RerunTriggerResource `json:"value,omitempty"`
 }
 
 // RerunTrigger resource type.
@@ -21534,7 +21534,7 @@ type RunFilterParameters struct {
 	ContinuationToken *string `json:"continuationToken,omitempty"`
 
 	// List of filters.
-	Filters *[]RunQueryFilter `json:"filters,omitempty"`
+	Filters *[]*RunQueryFilter `json:"filters,omitempty"`
 
 	// The time at or after which the run event was updated in 'ISO 8601' format.
 	LastUpdatedAfter *time.Time `json:"lastUpdatedAfter,omitempty"`
@@ -21543,7 +21543,7 @@ type RunFilterParameters struct {
 	LastUpdatedBefore *time.Time `json:"lastUpdatedBefore,omitempty"`
 
 	// List of OrderBy option.
-	OrderBy *[]RunQueryOrderBy `json:"orderBy,omitempty"`
+	OrderBy *[]*RunQueryOrderBy `json:"orderBy,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type RunFilterParameters.
@@ -21604,7 +21604,7 @@ type RunQueryFilter struct {
 	Operator *RunQueryFilterOperator `json:"operator,omitempty"`
 
 	// List of filter values.
-	Values *[]string `json:"values,omitempty"`
+	Values *[]*string `json:"values,omitempty"`
 }
 
 // An object to provide order by options for listing runs.
@@ -21820,7 +21820,7 @@ type SQLMISink struct {
 	SQLWriterTableType interface{} `json:"sqlWriterTableType,omitempty"`
 
 	// SQL stored procedure parameters.
-	StoredProcedureParameters *map[string]StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
+	StoredProcedureParameters *map[string]*StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
 
 	// The stored procedure parameter name of the table type. Type: string (or Expression with resultType string).
 	StoredProcedureTableTypeParameterName interface{} `json:"storedProcedureTableTypeParameterName,omitempty"`
@@ -21890,7 +21890,7 @@ type SQLMISource struct {
 	SQLReaderStoredProcedureName interface{} `json:"sqlReaderStoredProcedureName,omitempty"`
 
 	// Value and type setting for stored procedure parameters. Example: "{Parameter1: {value: "1", type: "int"}}".
-	StoredProcedureParameters *map[string]StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
+	StoredProcedureParameters *map[string]*StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type SQLMISource.
@@ -21948,7 +21948,7 @@ type SQLPoolInfoListResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// List of SQL pools
-	Value *[]SQLPool `json:"value,omitempty"`
+	Value *[]*SQLPool `json:"value,omitempty"`
 }
 
 // SQLPoolInfoListResultResponse is the response envelope for operations that return a SQLPoolInfoListResult type.
@@ -22116,7 +22116,7 @@ type SQLPoolStoredProcedureActivityTypeProperties struct {
 	StoredProcedureName interface{} `json:"storedProcedureName,omitempty"`
 
 	// Value and type setting for stored procedure parameters. Example: "{Parameter1: {value: "1", type: "int"}}".
-	StoredProcedureParameters *map[string]StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
+	StoredProcedureParameters *map[string]*StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
 }
 
 // SQLPoolsGetOptions contains the optional parameters for the SQLPools.Get method.
@@ -22383,7 +22383,7 @@ type SQLScriptsListResponse struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// List of sql scripts.
-	Value *[]SQLScriptResource `json:"value,omitempty"`
+	Value *[]*SQLScriptResource `json:"value,omitempty"`
 }
 
 // SQLScriptsListResponseResponse is the response envelope for operations that return a SQLScriptsListResponse type.
@@ -22487,7 +22487,7 @@ type SQLServerSink struct {
 	SQLWriterTableType interface{} `json:"sqlWriterTableType,omitempty"`
 
 	// SQL stored procedure parameters.
-	StoredProcedureParameters *map[string]StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
+	StoredProcedureParameters *map[string]*StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
 
 	// The stored procedure parameter name of the table type. Type: string (or Expression with resultType string).
 	StoredProcedureTableTypeParameterName interface{} `json:"storedProcedureTableTypeParameterName,omitempty"`
@@ -22557,7 +22557,7 @@ type SQLServerSource struct {
 	SQLReaderStoredProcedureName interface{} `json:"sqlReaderStoredProcedureName,omitempty"`
 
 	// Value and type setting for stored procedure parameters. Example: "{Parameter1: {value: "1", type: "int"}}".
-	StoredProcedureParameters *map[string]StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
+	StoredProcedureParameters *map[string]*StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type SQLServerSource.
@@ -22639,7 +22639,7 @@ type SQLServerStoredProcedureActivityTypeProperties struct {
 	StoredProcedureName interface{} `json:"storedProcedureName,omitempty"`
 
 	// Value and type setting for stored procedure parameters. Example: "{Parameter1: {value: "1", type: "int"}}".
-	StoredProcedureParameters *map[string]StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
+	StoredProcedureParameters *map[string]*StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
 }
 
 // The on-premises SQL Server dataset.
@@ -22701,7 +22701,7 @@ type SQLSink struct {
 	SQLWriterTableType interface{} `json:"sqlWriterTableType,omitempty"`
 
 	// SQL stored procedure parameters.
-	StoredProcedureParameters *map[string]StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
+	StoredProcedureParameters *map[string]*StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
 
 	// The stored procedure parameter name of the table type. Type: string (or Expression with resultType string).
 	StoredProcedureTableTypeParameterName interface{} `json:"storedProcedureTableTypeParameterName,omitempty"`
@@ -22768,7 +22768,7 @@ type SQLSource struct {
 	SQLReaderStoredProcedureName interface{} `json:"sqlReaderStoredProcedureName,omitempty"`
 
 	// Value and type setting for stored procedure parameters. Example: "{Parameter1: {value: "1", type: "int"}}".
-	StoredProcedureParameters *map[string]StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
+	StoredProcedureParameters *map[string]*StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type SQLSource.
@@ -22916,7 +22916,7 @@ type SSISPackageLocationTypeProperties struct {
 	AccessCredential *SSISAccessCredential `json:"accessCredential,omitempty"`
 
 	// The embedded child package list.
-	ChildPackages *[]SSISChildPackage `json:"childPackages,omitempty"`
+	ChildPackages *[]*SSISChildPackage `json:"childPackages,omitempty"`
 
 	// The configuration file of the package execution. Type: string (or Expression with resultType string).
 	ConfigurationPath interface{} `json:"configurationPath,omitempty"`
@@ -25666,13 +25666,13 @@ type SparkBatchJob struct {
 	AppID *string `json:"appId,omitempty"`
 
 	// The detailed application info.
-	AppInfo *map[string]string `json:"appInfo,omitempty"`
+	AppInfo *map[string]*string `json:"appInfo,omitempty"`
 
 	// The artifact identifier.
 	ArtifactID *string `json:"artifactId,omitempty"`
 
 	// The error information.
-	Errors *[]SparkServiceError `json:"errorInfo,omitempty"`
+	Errors *[]*SparkServiceError `json:"errorInfo,omitempty"`
 
 	// The session Id.
 	ID *int32 `json:"id,omitempty"`
@@ -25682,7 +25682,7 @@ type SparkBatchJob struct {
 	LivyInfo *SparkBatchJobState `json:"livyInfo,omitempty"`
 
 	// The log lines.
-	LogLines *[]string `json:"log,omitempty"`
+	LogLines *[]*string `json:"log,omitempty"`
 
 	// The batch name.
 	Name *string `json:"name,omitempty"`
@@ -25709,7 +25709,7 @@ type SparkBatchJob struct {
 	SubmitterName *string `json:"submitterName,omitempty"`
 
 	// The tags.
-	Tags *map[string]string `json:"tags,omitempty"`
+	Tags *map[string]*string `json:"tags,omitempty"`
 
 	// The workspace name.
 	WorkspaceName *string `json:"workspaceName,omitempty"`
@@ -26000,7 +26000,7 @@ type SparkJobDefinitionsListResponse struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// List of spark job definitions.
-	Value *[]SparkJobDefinitionResource `json:"value,omitempty"`
+	Value *[]*SparkJobDefinitionResource `json:"value,omitempty"`
 }
 
 // SparkJobDefinitionsListResponseResponse is the response envelope for operations that return a SparkJobDefinitionsListResponse type.
@@ -26018,10 +26018,10 @@ type SparkJobProperties struct {
 	AdditionalProperties *map[string]interface{}
 
 	// Archives to be used in this job.
-	Archives *[]string `json:"archives,omitempty"`
+	Archives *[]*string `json:"archives,omitempty"`
 
 	// Command line arguments for the application.
-	Args *[]string `json:"args,omitempty"`
+	Args *[]*string `json:"args,omitempty"`
 
 	// Main class for Java/Scala application.
 	ClassName *string `json:"className,omitempty"`
@@ -26045,10 +26045,10 @@ type SparkJobProperties struct {
 	File *string `json:"file,omitempty"`
 
 	// files to be used in this job.
-	Files *[]string `json:"files,omitempty"`
+	Files *[]*string `json:"files,omitempty"`
 
 	// Jars to be used in this job.
-	Jars *[]string `json:"jars,omitempty"`
+	Jars *[]*string `json:"jars,omitempty"`
 
 	// The name of the job.
 	Name *string `json:"name,omitempty"`
@@ -26323,22 +26323,22 @@ func (s *SparkObjectDataset) UnmarshalJSON(data []byte) error {
 }
 
 type SparkRequest struct {
-	Archives  *[]string `json:"archives,omitempty"`
-	Arguments *[]string `json:"args,omitempty"`
-	ClassName *string   `json:"className,omitempty"`
+	Archives  *[]*string `json:"archives,omitempty"`
+	Arguments *[]*string `json:"args,omitempty"`
+	ClassName *string    `json:"className,omitempty"`
 
 	// Dictionary of
-	Configuration  *map[string]string `json:"conf,omitempty"`
-	DriverCores    *int32             `json:"driverCores,omitempty"`
-	DriverMemory   *string            `json:"driverMemory,omitempty"`
-	ExecutorCores  *int32             `json:"executorCores,omitempty"`
-	ExecutorCount  *int32             `json:"numExecutors,omitempty"`
-	ExecutorMemory *string            `json:"executorMemory,omitempty"`
-	File           *string            `json:"file,omitempty"`
-	Files          *[]string          `json:"files,omitempty"`
-	Jars           *[]string          `json:"jars,omitempty"`
-	Name           *string            `json:"name,omitempty"`
-	PythonFiles    *[]string          `json:"pyFiles,omitempty"`
+	Configuration  *map[string]*string `json:"conf,omitempty"`
+	DriverCores    *int32              `json:"driverCores,omitempty"`
+	DriverMemory   *string             `json:"driverMemory,omitempty"`
+	ExecutorCores  *int32              `json:"executorCores,omitempty"`
+	ExecutorCount  *int32              `json:"numExecutors,omitempty"`
+	ExecutorMemory *string             `json:"executorMemory,omitempty"`
+	File           *string             `json:"file,omitempty"`
+	Files          *[]*string          `json:"files,omitempty"`
+	Jars           *[]*string          `json:"jars,omitempty"`
+	Name           *string             `json:"name,omitempty"`
+	PythonFiles    *[]*string          `json:"pyFiles,omitempty"`
 }
 
 type SparkScheduler struct {
@@ -26764,7 +26764,7 @@ type StartDataFlowDebugSessionRequest struct {
 	DataFlow *DataFlowResource `json:"dataFlow,omitempty"`
 
 	// List of datasets.
-	Datasets *[]DatasetResource `json:"datasets,omitempty"`
+	Datasets *[]*DatasetResource `json:"datasets,omitempty"`
 
 	// Data flow debug settings.
 	DebugSettings interface{} `json:"debugSettings,omitempty"`
@@ -26773,7 +26773,7 @@ type StartDataFlowDebugSessionRequest struct {
 	IncrementalDebug *bool `json:"incrementalDebug,omitempty"`
 
 	// List of linked services.
-	LinkedServices *[]LinkedServiceResource `json:"linkedServices,omitempty"`
+	LinkedServices *[]*LinkedServiceResource `json:"linkedServices,omitempty"`
 
 	// The ID of data flow debug session.
 	SessionID *string `json:"sessionId,omitempty"`
@@ -27026,7 +27026,7 @@ func (s *SwitchActivity) UnmarshalJSON(data []byte) error {
 type SwitchActivityTypeProperties struct {
 	// List of cases that correspond to expected values of the 'on' property. This is an optional property and if not provided, the activity will execute activities
 	// provided in defaultActivities.
-	Cases *[]SwitchCase `json:"cases,omitempty"`
+	Cases *[]*SwitchCase `json:"cases,omitempty"`
 
 	// List of activities to execute if no case condition is satisfied. This is an optional property and if not provided, the activity will exit without any
 	// action.
@@ -27795,7 +27795,7 @@ type TrackedResource struct {
 	Location *string `json:"location,omitempty"`
 
 	// Resource tags.
-	Tags *map[string]string `json:"tags,omitempty"`
+	Tags *map[string]*string `json:"tags,omitempty"`
 }
 
 // A data flow transformation.
@@ -28017,7 +28017,7 @@ type TriggerListResponse struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// List of triggers.
-	Value *[]TriggerResource `json:"value,omitempty"`
+	Value *[]*TriggerResource `json:"value,omitempty"`
 }
 
 // TriggerListResponseResponse is the response envelope for operations that return a TriggerListResponse type.
@@ -28084,7 +28084,7 @@ type TriggerRun struct {
 	Message *string `json:"message,omitempty" azure:"ro"`
 
 	// READ-ONLY; List of property name and value related to trigger run. Name, value pair depends on type of trigger.
-	Properties *map[string]string `json:"properties,omitempty" azure:"ro"`
+	Properties *map[string]*string `json:"properties,omitempty" azure:"ro"`
 
 	// READ-ONLY; Trigger run status.
 	Status *TriggerRunStatus `json:"status,omitempty" azure:"ro"`
@@ -28102,7 +28102,7 @@ type TriggerRun struct {
 	TriggerType *string `json:"triggerType,omitempty" azure:"ro"`
 
 	// READ-ONLY; List of pipeline name and run Id triggered by the trigger run.
-	TriggeredPipelines *map[string]string `json:"triggeredPipelines,omitempty" azure:"ro"`
+	TriggeredPipelines *map[string]*string `json:"triggeredPipelines,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type TriggerRun.
@@ -28198,7 +28198,7 @@ type TriggerRunsQueryResponse struct {
 	ContinuationToken *string `json:"continuationToken,omitempty"`
 
 	// List of trigger runs.
-	Value *[]TriggerRun `json:"value,omitempty"`
+	Value *[]*TriggerRun `json:"value,omitempty"`
 }
 
 // TriggerRunsQueryResponseResponse is the response envelope for operations that return a TriggerRunsQueryResponse type.
@@ -28831,7 +28831,7 @@ type WebActivityTypeProperties struct {
 	ConnectVia *IntegrationRuntimeReference `json:"connectVia,omitempty"`
 
 	// List of datasets passed to web endpoint.
-	Datasets *[]DatasetReference `json:"datasets,omitempty"`
+	Datasets *[]*DatasetReference `json:"datasets,omitempty"`
 
 	// Represents the headers that will be sent to the request. For example, to set the language and type on a request: "headers" : { "Accept-Language": "en-us",
 	// "Content-Type": "application/json" }. Type:
@@ -28839,7 +28839,7 @@ type WebActivityTypeProperties struct {
 	Headers interface{} `json:"headers,omitempty"`
 
 	// List of linked services passed to web endpoint.
-	LinkedServices *[]LinkedServiceReference `json:"linkedServices,omitempty"`
+	LinkedServices *[]*LinkedServiceReference `json:"linkedServices,omitempty"`
 
 	// Rest API method for target endpoint.
 	Method *WebActivityMethod `json:"method,omitempty"`
@@ -29200,7 +29200,7 @@ type WorkspaceProperties struct {
 	AdlaResourceID *string `json:"adlaResourceId,omitempty" azure:"ro"`
 
 	// Connectivity endpoints
-	ConnectivityEndpoints *map[string]string `json:"connectivityEndpoints,omitempty"`
+	ConnectivityEndpoints *map[string]*string `json:"connectivityEndpoints,omitempty"`
 
 	// Workspace default data lake storage account details
 	DefaultDataLakeStorage *DataLakeStorageAccountDetails `json:"defaultDataLakeStorage,omitempty"`
@@ -29223,7 +29223,7 @@ type WorkspaceProperties struct {
 	ManagedVirtualNetworkSettings *ManagedVirtualNetworkSettings `json:"managedVirtualNetworkSettings,omitempty"`
 
 	// Private endpoint connections to the workspace
-	PrivateEndpointConnections *[]PrivateEndpointConnection `json:"privateEndpointConnections,omitempty"`
+	PrivateEndpointConnections *[]*PrivateEndpointConnection `json:"privateEndpointConnections,omitempty"`
 
 	// READ-ONLY; Resource provisioning state
 	ProvisioningState *string `json:"provisioningState,omitempty" azure:"ro"`
@@ -29292,7 +29292,7 @@ type WorkspaceUpdateParameters struct {
 	Identity *WorkspaceIdentity `json:"identity,omitempty"`
 
 	// The resource tags.
-	Tags *map[string]string `json:"tags,omitempty"`
+	Tags *map[string]*string `json:"tags,omitempty"`
 }
 
 // Xero Service linked service.

@@ -149,7 +149,7 @@ func (client *VirtualMachineExtensionImagesClient) listTypesCreateRequest(ctx co
 
 // listTypesHandleResponse handles the ListTypes response.
 func (client *VirtualMachineExtensionImagesClient) listTypesHandleResponse(resp *azcore.Response) (VirtualMachineExtensionImageArrayResponse, error) {
-	var val []VirtualMachineExtensionImage
+	var val []*VirtualMachineExtensionImage
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return VirtualMachineExtensionImageArrayResponse{}, err
 	}
@@ -226,7 +226,7 @@ func (client *VirtualMachineExtensionImagesClient) listVersionsCreateRequest(ctx
 
 // listVersionsHandleResponse handles the ListVersions response.
 func (client *VirtualMachineExtensionImagesClient) listVersionsHandleResponse(resp *azcore.Response) (VirtualMachineExtensionImageArrayResponse, error) {
-	var val []VirtualMachineExtensionImage
+	var val []*VirtualMachineExtensionImage
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return VirtualMachineExtensionImageArrayResponse{}, err
 	}

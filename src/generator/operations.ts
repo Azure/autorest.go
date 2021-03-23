@@ -550,16 +550,16 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
       body = 'aux';
     } else if (isArrayOfTimesForMarshalling(bodyParam!.schema) || isArrayOfDatesForMarshalling(bodyParam!.schema)) {
       const timeType = (<ArraySchema>bodyParam!.schema).elementType.language.go!.internalTimeType;
-      text += `\taux := make([]${timeType}, len(${body}), len(${body}))\n`;
+      text += `\taux := make([]*${timeType}, len(${body}), len(${body}))\n`;
       text += `\tfor i := 0; i < len(${body}); i++ {\n`;
-      text += `\t\taux[i] = ${timeType}(${body}[i])\n`;
+      text += `\t\taux[i] = (*${timeType})(${body}[i])\n`;
       text += '\t}\n';
       body = 'aux';
     } else if (isMapOfDateTime(bodyParam!.schema) || isMapOfDate(bodyParam!.schema)) {
       const timeType = (<ArraySchema>bodyParam!.schema).elementType.language.go!.internalTimeType;
-      text += `\taux := map[string]${timeType}{}\n`;
+      text += `\taux := map[string]*${timeType}{}\n`;
       text += `\tfor k, v := range ${body} {\n`;
-      text += `\t\taux[k] = ${timeType}(v)\n`;
+      text += `\t\taux[k] = (*${timeType})(v)\n`;
       text += '\t}\n';
       body = 'aux';
     }
@@ -659,25 +659,25 @@ function generateResponseUnmarshaller(op: Operation, response: Response, imports
     return unmarshallerText;
   } else if (isArrayOfDateTime(response.schema) || isArrayOfDate(response.schema)) {
     // unmarshalling arrays of date/time is a little more involved
-    unmarshallerText += `\tvar aux []${(<ArraySchema>response.schema).elementType.language.go!.internalTimeType}\n`;
+    unmarshallerText += `\tvar aux []*${(<ArraySchema>response.schema).elementType.language.go!.internalTimeType}\n`;
     unmarshallerText += `\tif err := resp.UnmarshalAs${getMediaType(response.protocol)}(&aux); err != nil {\n`;
     unmarshallerText += `\t\treturn ${zeroValue}, err\n`;
     unmarshallerText += '\t}\n';
-    unmarshallerText += '\tcp := make([]time.Time, len(aux), len(aux))\n';
+    unmarshallerText += '\tcp := make([]*time.Time, len(aux), len(aux))\n';
     unmarshallerText += '\tfor i := 0; i < len(aux); i++ {\n';
-    unmarshallerText += '\t\tcp[i] = time.Time(aux[i])\n';
+    unmarshallerText += '\t\tcp[i] = (*time.Time)(aux[i])\n';
     unmarshallerText += '\t}\n';
     const resp = `${response.schema.language.go!.responseType.name}{RawResponse: resp.Response, ${response.schema.language.go!.responseType.value}: cp}`;
     unmarshallerText += `\treturn ${resp}, nil\n`;
     return unmarshallerText;
   } else if (isMapOfDateTime(response.schema) || isMapOfDate(response.schema)) {
-    unmarshallerText += `\taux := map[string]${(<DictionarySchema>response.schema).elementType.language.go!.internalTimeType}{}\n`;
+    unmarshallerText += `\taux := map[string]*${(<DictionarySchema>response.schema).elementType.language.go!.internalTimeType}{}\n`;
     unmarshallerText += `\tif err := resp.UnmarshalAs${getMediaType(response.protocol)}(&aux); err != nil {\n`;
     unmarshallerText += `\t\treturn ${zeroValue}, err\n`;
     unmarshallerText += '\t}\n';
-    unmarshallerText += `\tcp := map[string]time.Time{}\n`;
+    unmarshallerText += `\tcp := map[string]*time.Time{}\n`;
     unmarshallerText += `\tfor k, v := range aux {\n`;
-    unmarshallerText += `\t\tcp[k] = time.Time(v)\n`;
+    unmarshallerText += `\t\tcp[k] = (*time.Time)(v)\n`;
     unmarshallerText += `\t}\n`;
     const resp = `${response.schema.language.go!.responseType.name}{RawResponse: resp.Response, ${response.schema.language.go!.responseType.value}: cp}`;
     unmarshallerText += `\treturn ${resp}, nil\n`;

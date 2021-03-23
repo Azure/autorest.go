@@ -22,10 +22,10 @@ func TestCreateAPInProperties(t *testing.T) {
 	result, err := client.CreateAPInProperties(context.Background(), PetAPInProperties{
 		ID:   to.Int32Ptr(4),
 		Name: to.StringPtr("Bunny"),
-		AdditionalProperties: &map[string]float32{
-			"height":   5.61,
-			"weight":   599,
-			"footsize": 11.5,
+		AdditionalProperties: &map[string]*float32{
+			"height":   to.Float32Ptr(5.61),
+			"weight":   to.Float32Ptr(599),
+			"footsize": to.Float32Ptr(11.5),
 		},
 	}, nil)
 	if err != nil {
@@ -35,10 +35,10 @@ func TestCreateAPInProperties(t *testing.T) {
 		ID:     to.Int32Ptr(4),
 		Name:   to.StringPtr("Bunny"),
 		Status: to.BoolPtr(true),
-		AdditionalProperties: &map[string]float32{
-			"height":   5.61,
-			"weight":   599,
-			"footsize": 11.5,
+		AdditionalProperties: &map[string]*float32{
+			"height":   to.Float32Ptr(5.61),
+			"weight":   to.Float32Ptr(599),
+			"footsize": to.Float32Ptr(11.5),
 		},
 	}); r != "" {
 		t.Fatal(r)
@@ -52,15 +52,15 @@ func TestCreateAPInPropertiesWithAPString(t *testing.T) {
 		ID:            to.Int32Ptr(5),
 		Name:          to.StringPtr("Funny"),
 		OdataLocation: to.StringPtr("westus"),
-		AdditionalProperties: &map[string]string{
-			"color": "red",
-			"city":  "Seattle",
-			"food":  "tikka masala",
+		AdditionalProperties: &map[string]*string{
+			"color": to.StringPtr("red"),
+			"city":  to.StringPtr("Seattle"),
+			"food":  to.StringPtr("tikka masala"),
 		},
-		AdditionalProperties1: &map[string]float32{
-			"height":   5.61,
-			"weight":   599,
-			"footsize": 11.5,
+		AdditionalProperties1: &map[string]*float32{
+			"height":   to.Float32Ptr(5.61),
+			"weight":   to.Float32Ptr(599),
+			"footsize": to.Float32Ptr(11.5),
 		},
 	}, nil)
 	if err != nil {
@@ -71,15 +71,15 @@ func TestCreateAPInPropertiesWithAPString(t *testing.T) {
 		Name:          to.StringPtr("Funny"),
 		OdataLocation: to.StringPtr("westus"),
 		Status:        to.BoolPtr(true),
-		AdditionalProperties: &map[string]string{
-			"color": "red",
-			"city":  "Seattle",
-			"food":  "tikka masala",
+		AdditionalProperties: &map[string]*string{
+			"color": to.StringPtr("red"),
+			"city":  to.StringPtr("Seattle"),
+			"food":  to.StringPtr("tikka masala"),
 		},
-		AdditionalProperties1: &map[string]float32{
-			"height":   5.61,
-			"weight":   599,
-			"footsize": 11.5,
+		AdditionalProperties1: &map[string]*float32{
+			"height":   to.Float32Ptr(5.61),
+			"weight":   to.Float32Ptr(599),
+			"footsize": to.Float32Ptr(11.5),
 		},
 	}); r != "" {
 		t.Fatal(r)
@@ -137,10 +137,10 @@ func TestCreateAPString(t *testing.T) {
 	result, err := client.CreateAPString(context.Background(), PetAPString{
 		ID:   to.Int32Ptr(3),
 		Name: to.StringPtr("Tommy"),
-		AdditionalProperties: &map[string]string{
-			"color":  "red",
-			"weight": "10 kg",
-			"city":   "Bombay",
+		AdditionalProperties: &map[string]*string{
+			"color":  to.StringPtr("red"),
+			"weight": to.StringPtr("10 kg"),
+			"city":   to.StringPtr("Bombay"),
 		},
 	}, nil)
 	if err != nil {
@@ -150,10 +150,10 @@ func TestCreateAPString(t *testing.T) {
 		ID:     to.Int32Ptr(3),
 		Name:   to.StringPtr("Tommy"),
 		Status: to.BoolPtr(true),
-		AdditionalProperties: &map[string]string{
-			"color":  "red",
-			"weight": "10 kg",
-			"city":   "Bombay",
+		AdditionalProperties: &map[string]*string{
+			"color":  to.StringPtr("red"),
+			"weight": to.StringPtr("10 kg"),
+			"city":   to.StringPtr("Bombay"),
 		},
 	}); r != "" {
 		t.Fatal(r)

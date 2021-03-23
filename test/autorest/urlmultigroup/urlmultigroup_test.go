@@ -44,7 +44,11 @@ func TestURLMultiArrayStringMultiValid(t *testing.T) {
 	t.Skip("Cannot set nil for string value in string slice")
 	client := newQueriesClient()
 	result, err := client.ArrayStringMultiValid(context.Background(), &QueriesArrayStringMultiValidOptions{
-		ArrayQuery: &[]string{"ArrayQuery1", url.QueryEscape("begin!*'();:@ &=+$,/?#[]end"), "", ""},
+		ArrayQuery: &[]string{
+			"ArrayQuery1",
+			url.QueryEscape("begin!*'();:@ &=+$,/?#[]end"),
+			"",
+			""},
 	})
 	if err != nil {
 		t.Fatalf("ArrayStringMultiValid: %v", err)

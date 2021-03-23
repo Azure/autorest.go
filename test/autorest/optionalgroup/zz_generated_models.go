@@ -10,11 +10,11 @@ package optionalgroup
 import "fmt"
 
 type ArrayOptionalWrapper struct {
-	Value *[]string `json:"value,omitempty"`
+	Value *[]*string `json:"value,omitempty"`
 }
 
 type ArrayWrapper struct {
-	Value *[]string `json:"value,omitempty"`
+	Value *[]*string `json:"value,omitempty"`
 }
 
 type ClassOptionalWrapper struct {
@@ -52,7 +52,7 @@ type ExplicitPostOptionalArrayHeaderOptions struct {
 
 // ExplicitPostOptionalArrayParameterOptions contains the optional parameters for the Explicit.PostOptionalArrayParameter method.
 type ExplicitPostOptionalArrayParameterOptions struct {
-	BodyParameter *[]string
+	BodyParameter *[]*string
 }
 
 // ExplicitPostOptionalArrayPropertyOptions contains the optional parameters for the Explicit.PostOptionalArrayProperty method.

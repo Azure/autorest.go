@@ -96,7 +96,7 @@ type Product struct {
 	ConstStringAsEnum *string `json:"constStringAsEnum,omitempty"`
 
 	// Non required array of unique items from 0 to 6 elements.
-	DisplayNames *[]string `json:"display_names,omitempty"`
+	DisplayNames *[]*string `json:"display_names,omitempty"`
 
 	// Image URL representing the product.
 	Image *string `json:"image,omitempty"`

@@ -127,7 +127,7 @@ func TestPolymorphismGetComposedWithDiscriminator(t *testing.T) {
 				Iswild:   to.BoolPtr(true),
 			},
 		},
-		Salmons: &[]DotSalmon{
+		Salmons: &[]*DotSalmon{
 			{
 				DotFish: DotFish{
 					FishType: to.StringPtr("DotSalmon"),
@@ -182,7 +182,7 @@ func TestPolymorphismGetComposedWithoutDiscriminator(t *testing.T) {
 				Species: to.StringPtr("king"),
 			},
 		},
-		Salmons: &[]DotSalmon{
+		Salmons: &[]*DotSalmon{
 			{
 				DotFish: DotFish{
 					Species: to.StringPtr("king"),

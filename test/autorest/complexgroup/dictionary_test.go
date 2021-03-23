@@ -21,7 +21,7 @@ func TestDictionaryGetEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetEmpty: %v", err)
 	}
-	if r := cmp.Diff(result.DictionaryWrapper, &DictionaryWrapper{DefaultProgram: &map[string]string{}}); r != "" {
+	if r := cmp.Diff(result.DictionaryWrapper, &DictionaryWrapper{DefaultProgram: &map[string]*string{}}); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -63,7 +63,7 @@ func TestDictionaryGetValid(t *testing.T) {
 
 func TestDictionaryPutEmpty(t *testing.T) {
 	client := newDictionaryClient()
-	result, err := client.PutEmpty(context.Background(), DictionaryWrapper{DefaultProgram: &map[string]string{}}, nil)
+	result, err := client.PutEmpty(context.Background(), DictionaryWrapper{DefaultProgram: &map[string]*string{}}, nil)
 	if err != nil {
 		t.Fatalf("PutEmpty: %v", err)
 	}
