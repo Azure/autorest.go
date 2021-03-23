@@ -1159,8 +1159,8 @@ func (client *containerClient) setAccessPolicyCreateRequest(ctx context.Context,
 	}
 	req.Header.Set("Accept", "application/xml")
 	type wrapper struct {
-		XMLName      xml.Name            `xml:"SignedIdentifiers"`
-		ContainerACL *[]SignedIdentifier `xml:"SignedIdentifier"`
+		XMLName      xml.Name             `xml:"SignedIdentifiers"`
+		ContainerACL *[]*SignedIdentifier `xml:"SignedIdentifier"`
 	}
 	if containerSetAccessPolicyOptions != nil {
 		return req, req.MarshalAsXML(wrapper{ContainerACL: containerSetAccessPolicyOptions.ContainerACL})

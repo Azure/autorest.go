@@ -733,7 +733,7 @@ type MyExceptionResponse struct {
 	RawResponse *http.Response
 }
 
-// StringArrayResponse is the response envelope for operations that return a []string type.
+// StringArrayResponse is the response envelope for operations that return a []*string type.
 type StringArrayResponse struct {
 	// Location contains the information returned from the Location header response.
 	Location *string
@@ -742,5 +742,5 @@ type StringArrayResponse struct {
 	RawResponse *http.Response
 
 	// A list of location options for the request ['/http/success/get/200']
-	StringArray []string
+	StringArray []*string
 }

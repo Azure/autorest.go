@@ -42,7 +42,7 @@ type ArrayPutValidOptions struct {
 }
 
 type ArrayWrapper struct {
-	Array *[]string `json:"array,omitempty"`
+	Array *[]*string `json:"array,omitempty"`
 }
 
 // ArrayWrapperResponse is the response envelope for operations that return a ArrayWrapper type.
@@ -129,7 +129,7 @@ type ByteWrapperResponse struct {
 type Cat struct {
 	Pet
 	Color *string `json:"color,omitempty"`
-	Hates *[]Dog  `json:"hates,omitempty"`
+	Hates *[]*Dog `json:"hates,omitempty"`
 }
 
 type Cookiecuttershark struct {
@@ -318,7 +318,7 @@ type DictionaryPutValidOptions struct {
 
 type DictionaryWrapper struct {
 	// Dictionary of
-	DefaultProgram *map[string]string `json:"defaultProgram,omitempty"`
+	DefaultProgram *map[string]*string `json:"defaultProgram,omitempty"`
 }
 
 // DictionaryWrapperResponse is the response envelope for operations that return a DictionaryWrapper type.
@@ -388,7 +388,7 @@ func (d *DotFish) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
 
 type DotFishMarket struct {
 	Fishes       *[]DotFishClassification `json:"fishes,omitempty"`
-	Salmons      *[]DotSalmon             `json:"salmons,omitempty"`
+	Salmons      *[]*DotSalmon            `json:"salmons,omitempty"`
 	SampleFish   DotFishClassification    `json:"sampleFish,omitempty"`
 	SampleSalmon *DotSalmon               `json:"sampleSalmon,omitempty"`
 }

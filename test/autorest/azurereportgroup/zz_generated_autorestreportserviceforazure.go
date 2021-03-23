@@ -59,7 +59,7 @@ func (client *AutoRestReportServiceForAzureClient) getReportCreateRequest(ctx co
 
 // getReportHandleResponse handles the GetReport response.
 func (client *AutoRestReportServiceForAzureClient) getReportHandleResponse(resp *azcore.Response) (MapOfInt32Response, error) {
-	var val map[string]int32
+	var val map[string]*int32
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return MapOfInt32Response{}, err
 	}

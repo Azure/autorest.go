@@ -32,6 +32,11 @@ export function isArraySchema(resp: Schema): resp is ArraySchema {
   return resp.type === SchemaType.Array;
 }
 
+// returns DictionarySchema type predicate if the schema is a DictionarySchema
+export function isDictionarySchema(resp: Schema): resp is DictionarySchema {
+  return resp.type === SchemaType.Dictionary;
+}
+
 // returns SchemaResponse type predicate if the response has a schema
 export function isSchemaResponse(resp?: Response): resp is SchemaResponse {
   return (resp as SchemaResponse).schema !== undefined;

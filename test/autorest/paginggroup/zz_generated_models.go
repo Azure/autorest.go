@@ -22,8 +22,8 @@ type CustomParameterGroup struct {
 }
 
 type OdataProductResult struct {
-	OdataNextLink *string    `json:"odata.nextLink,omitempty"`
-	Values        *[]Product `json:"values,omitempty"`
+	OdataNextLink *string     `json:"odata.nextLink,omitempty"`
+	Values        *[]*Product `json:"values,omitempty"`
 }
 
 // OdataProductResultResponse is the response envelope for operations that return a OdataProductResult type.
@@ -149,8 +149,8 @@ type ProductProperties struct {
 }
 
 type ProductResult struct {
-	NextLink *string    `json:"nextLink,omitempty"`
-	Values   *[]Product `json:"values,omitempty"`
+	NextLink *string     `json:"nextLink,omitempty"`
+	Values   *[]*Product `json:"values,omitempty"`
 }
 
 // ProductResultPagerPollerResponse is the response envelope for operations that asynchronously return a ProductResultPager type.
@@ -174,8 +174,8 @@ type ProductResultResponse struct {
 }
 
 type ProductResultValue struct {
-	NextLink *string    `json:"nextLink,omitempty"`
-	Value    *[]Product `json:"value,omitempty"`
+	NextLink *string     `json:"nextLink,omitempty"`
+	Value    *[]*Product `json:"value,omitempty"`
 }
 
 // ProductResultValueResponse is the response envelope for operations that return a ProductResultValue type.
@@ -187,8 +187,8 @@ type ProductResultValueResponse struct {
 }
 
 type ProductResultValueWithXMSClientName struct {
-	Indexes  *[]Product `json:"values,omitempty"`
-	NextLink *string    `json:"nextLink,omitempty"`
+	Indexes  *[]*Product `json:"values,omitempty"`
+	NextLink *string     `json:"nextLink,omitempty"`
 }
 
 // ProductResultValueWithXMSClientNameResponse is the response envelope for operations that return a ProductResultValueWithXMSClientName type.

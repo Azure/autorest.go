@@ -61,8 +61,8 @@ func (a *AccessPolicy) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 
 // A barrel of apples.
 type AppleBarrel struct {
-	BadApples  *[]string `xml:"BadApples>Apple"`
-	GoodApples *[]string `xml:"GoodApples>Apple"`
+	BadApples  *[]*string `xml:"BadApples>Apple"`
+	GoodApples *[]*string `xml:"GoodApples>Apple"`
 }
 
 // AppleBarrelResponse is the response envelope for operations that return a AppleBarrel type.
@@ -112,10 +112,10 @@ func (b *Banana) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	return nil
 }
 
-// BananaArrayResponse is the response envelope for operations that return a []Banana type.
+// BananaArrayResponse is the response envelope for operations that return a []*Banana type.
 type BananaArrayResponse struct {
 	// Array of Banana
-	Bananas []Banana `xml:"banana"`
+	Bananas []*Banana `xml:"banana"`
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -135,8 +135,8 @@ type Blob struct {
 	Deleted *bool `xml:"Deleted"`
 
 	// Dictionary of
-	Metadata *map[string]string `xml:"Metadata"`
-	Name     *string            `xml:"Name"`
+	Metadata *map[string]*string `xml:"Metadata"`
+	Name     *string             `xml:"Name"`
 
 	// Properties of a blob
 	Properties *BlobProperties `xml:"Properties"`
@@ -155,7 +155,7 @@ func (b *Blob) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	if err := d.DecodeElement(aux, &start); err != nil {
 		return err
 	}
-	b.Metadata = (*map[string]string)(aux.Metadata)
+	b.Metadata = (*map[string]*string)(aux.Metadata)
 	return nil
 }
 
@@ -235,8 +235,8 @@ func (b *BlobProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 }
 
 type Blobs struct {
-	Blob       *[]Blob       `xml:"Blob"`
-	BlobPrefix *[]BlobPrefix `xml:"BlobPrefix"`
+	Blob       *[]*Blob       `xml:"Blob"`
+	BlobPrefix *[]*BlobPrefix `xml:"BlobPrefix"`
 }
 
 // I am a complex type with no XML node
@@ -254,8 +254,8 @@ type ComplexTypeWithMeta struct {
 // An Azure Storage container
 type Container struct {
 	// Dictionary of
-	Metadata *map[string]string `xml:"Metadata"`
-	Name     *string            `xml:"Name"`
+	Metadata *map[string]*string `xml:"Metadata"`
+	Name     *string             `xml:"Name"`
 
 	// Properties of a container
 	Properties *ContainerProperties `xml:"Properties"`
@@ -273,7 +273,7 @@ func (c *Container) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	if err := d.DecodeElement(aux, &start); err != nil {
 		return err
 	}
-	c.Metadata = (*map[string]string)(aux.Metadata)
+	c.Metadata = (*map[string]*string)(aux.Metadata)
 	return nil
 }
 
@@ -399,12 +399,12 @@ type ListBlobsResponseResponse struct {
 
 // An enumeration of containers
 type ListContainersResponse struct {
-	Containers      *[]Container `xml:"Containers>Container"`
-	Marker          *string      `xml:"Marker"`
-	MaxResults      *int32       `xml:"MaxResults"`
-	NextMarker      *string      `xml:"NextMarker"`
-	Prefix          *string      `xml:"Prefix"`
-	ServiceEndpoint *string      `xml:"ServiceEndpoint,attr"`
+	Containers      *[]*Container `xml:"Containers>Container"`
+	Marker          *string       `xml:"Marker"`
+	MaxResults      *int32        `xml:"MaxResults"`
+	NextMarker      *string       `xml:"NextMarker"`
+	Prefix          *string       `xml:"Prefix"`
+	ServiceEndpoint *string       `xml:"ServiceEndpoint,attr"`
 }
 
 // ListContainersResponseResponse is the response envelope for operations that return a ListContainersResponse type.
@@ -520,28 +520,28 @@ type SignedIdentifier struct {
 	ID *string `xml:"Id"`
 }
 
-// SignedIdentifierArrayResponse is the response envelope for operations that return a []SignedIdentifier type.
+// SignedIdentifierArrayResponse is the response envelope for operations that return a []*SignedIdentifier type.
 type SignedIdentifierArrayResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 
 	// a collection of signed identifiers
-	SignedIdentifiers []SignedIdentifier `xml:"SignedIdentifier"`
+	SignedIdentifiers []*SignedIdentifier `xml:"SignedIdentifier"`
 }
 
 // A slide in a slideshow
 type Slide struct {
-	Items *[]string `xml:"item"`
-	Title *string   `xml:"title"`
-	Type  *string   `xml:"type,attr"`
+	Items *[]*string `xml:"item"`
+	Title *string    `xml:"title"`
+	Type  *string    `xml:"type,attr"`
 }
 
 // Data about a slideshow
 type Slideshow struct {
-	Author *string  `xml:"author,attr"`
-	Date   *string  `xml:"date,attr"`
-	Slides *[]Slide `xml:"slide"`
-	Title  *string  `xml:"title,attr"`
+	Author *string   `xml:"author,attr"`
+	Date   *string   `xml:"date,attr"`
+	Slides *[]*Slide `xml:"slide"`
+	Title  *string   `xml:"title,attr"`
 }
 
 // MarshalXML implements the xml.Marshaller interface for type Slideshow.
@@ -568,7 +568,7 @@ type SlideshowResponse struct {
 // Storage Service Properties.
 type StorageServiceProperties struct {
 	// The set of CORS rules.
-	Cors *[]CorsRule `xml:"Cors>CorsRule"`
+	Cors *[]*CorsRule `xml:"Cors>CorsRule"`
 
 	// The default version to use for requests to the Blob service if an incoming request's version is not specified. Possible values include version 2008-10-27
 	// and all more recent versions

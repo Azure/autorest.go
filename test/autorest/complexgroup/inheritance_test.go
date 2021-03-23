@@ -29,7 +29,7 @@ func TestInheritanceGetValid(t *testing.T) {
 				Name: to.StringPtr("Siameeee"),
 			},
 			Color: to.StringPtr("green"),
-			Hates: &[]Dog{
+			Hates: &[]*Dog{
 				{
 					Pet: Pet{
 						ID:   to.Int32Ptr(1),
@@ -61,7 +61,7 @@ func TestInheritancePutValid(t *testing.T) {
 				Name: to.StringPtr("Siameeee"),
 			},
 			Color: to.StringPtr("green"),
-			Hates: &[]Dog{
+			Hates: &[]*Dog{
 				{
 					Pet: Pet{
 						ID:   to.Int32Ptr(1),

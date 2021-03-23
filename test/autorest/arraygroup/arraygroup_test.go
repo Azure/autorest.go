@@ -40,10 +40,10 @@ func TestGetArrayItemEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.StringArrayArray, [][]string{
-		{"1", "2", "3"},
+	if r := cmp.Diff(resp.StringArrayArray, [][]*string{
+		to.StringPtrArray("1", "2", "3"),
 		{},
-		{"7", "8", "9"},
+		to.StringPtrArray("7", "8", "9"),
 	}); r != "" {
 		t.Fatal(r)
 	}
@@ -56,10 +56,10 @@ func TestGetArrayItemNull(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.StringArrayArray, [][]string{
-		{"1", "2", "3"},
+	if r := cmp.Diff(resp.StringArrayArray, [][]*string{
+		to.StringPtrArray("1", "2", "3"),
 		nil,
-		{"7", "8", "9"},
+		to.StringPtrArray("7", "8", "9"),
 	}); r != "" {
 		t.Fatal(r)
 	}
@@ -84,10 +84,10 @@ func TestGetArrayValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.StringArrayArray, [][]string{
-		{"1", "2", "3"},
-		{"4", "5", "6"},
-		{"7", "8", "9"},
+	if r := cmp.Diff(resp.StringArrayArray, [][]*string{
+		to.StringPtrArray("1", "2", "3"),
+		to.StringPtrArray("4", "5", "6"),
+		to.StringPtrArray("7", "8", "9"),
 	}); r != "" {
 		t.Fatal(r)
 	}
@@ -142,7 +142,7 @@ func TestGetBooleanTfft(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.BoolArray, []bool{true, false, false, true}); r != "" {
+	if r := cmp.Diff(resp.BoolArray, to.BoolPtrArray(true, false, false, true)); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -198,7 +198,7 @@ func TestGetComplexItemEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.ProductArray, []Product{
+	if r := cmp.Diff(resp.ProductArray, []*Product{
 		{Integer: to.Int32Ptr(1), String: to.StringPtr("2")},
 		{},
 		{Integer: to.Int32Ptr(5), String: to.StringPtr("6")},
@@ -209,7 +209,18 @@ func TestGetComplexItemEmpty(t *testing.T) {
 
 // GetComplexItemNull - Get array of complex type with null item [{'integer': 1 'string': '2'}, null, {'integer': 5, 'string': '6'}]
 func TestGetComplexItemNull(t *testing.T) {
-	t.Skip("arrays with nil elements")
+	client := newArrayClient()
+	resp, err := client.GetComplexItemNull(context.Background(), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if r := cmp.Diff(resp.ProductArray, []*Product{
+		{Integer: to.Int32Ptr(1), String: to.StringPtr("2")},
+		nil,
+		{Integer: to.Int32Ptr(5), String: to.StringPtr("6")},
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetComplexNull - Get array of complex type null value
@@ -231,7 +242,7 @@ func TestGetComplexValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.ProductArray, []Product{
+	if r := cmp.Diff(resp.ProductArray, []*Product{
 		{Integer: to.Int32Ptr(1), String: to.StringPtr("2")},
 		{Integer: to.Int32Ptr(3), String: to.StringPtr("4")},
 		{Integer: to.Int32Ptr(5), String: to.StringPtr("6")},
@@ -254,7 +265,20 @@ func TestGetDateInvalidChars(t *testing.T) {
 
 // GetDateInvalidNull - Get date array value ['2012-01-01', null, '1776-07-04']
 func TestGetDateInvalidNull(t *testing.T) {
-	t.Skip("arrays with nil elements")
+	client := newArrayClient()
+	resp, err := client.GetDateInvalidNull(context.Background(), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	v1 := time.Date(2012, 1, 1, 0, 0, 0, 0, time.UTC)
+	v3 := time.Date(1776, 7, 4, 0, 0, 0, 0, time.UTC)
+	if r := cmp.Diff(resp.TimeArray, []*time.Time{
+		&v1,
+		nil,
+		&v3,
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetDateTimeInvalidChars - Get date array value ['2000-12-01t00:00:01z', 'date-time']
@@ -273,11 +297,15 @@ func TestGetDateTimeInvalidChars(t *testing.T) {
 func TestGetDateTimeInvalidNull(t *testing.T) {
 	client := newArrayClient()
 	resp, err := client.GetDateTimeInvalidNull(context.Background(), nil)
-	if err == nil {
-		t.Fatal("unexpected nil error")
+	if err != nil {
+		t.Fatal(err)
 	}
-	if !reflect.ValueOf(resp).IsZero() {
-		t.Fatal("expected empty response")
+	v1, _ := time.Parse(time.RFC1123, "Fri, 01 Dec 2000 00:00:01 GMT")
+	if r := cmp.Diff(resp.TimeArray, []*time.Time{
+		&v1,
+		nil,
+	}); r != "" {
+		t.Fatal(r)
 	}
 }
 
@@ -291,10 +319,10 @@ func TestGetDateTimeRFC1123Valid(t *testing.T) {
 	v1, _ := time.Parse(time.RFC1123, "Fri, 01 Dec 2000 00:00:01 GMT")
 	v2, _ := time.Parse(time.RFC1123, "Wed, 02 Jan 1980 00:11:35 GMT")
 	v3, _ := time.Parse(time.RFC1123, "Wed, 12 Oct 1492 10:15:01 GMT")
-	if r := cmp.Diff(resp.TimeArray, []time.Time{
-		v1,
-		v2,
-		v3,
+	if r := cmp.Diff(resp.TimeArray, []*time.Time{
+		&v1,
+		&v2,
+		&v3,
 	}); r != "" {
 		t.Fatal(r)
 	}
@@ -310,10 +338,10 @@ func TestGetDateTimeValid(t *testing.T) {
 	v1, _ := time.Parse(time.RFC3339, "2000-12-01T00:00:01Z")
 	v2, _ := time.Parse(time.RFC3339, "1980-01-02T01:11:35+01:00")
 	v3, _ := time.Parse(time.RFC3339, "1492-10-12T02:15:01-08:00")
-	if r := cmp.Diff(resp.TimeArray, []time.Time{
-		v1,
-		v2,
-		v3,
+	if r := cmp.Diff(resp.TimeArray, []*time.Time{
+		&v1,
+		&v2,
+		&v3,
 	}); r != "" {
 		t.Fatal(r)
 	}
@@ -326,11 +354,11 @@ func TestGetDateValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.TimeArray, []time.Time{
+	if r := cmp.Diff(resp.TimeArray, to.TimePtrArray(
 		time.Date(2000, time.December, 01, 0, 0, 0, 0, time.UTC),
 		time.Date(1980, time.January, 02, 0, 0, 0, 0, time.UTC),
 		time.Date(1492, time.October, 12, 0, 0, 0, 0, time.UTC),
-	}); r != "" {
+	)); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -342,7 +370,7 @@ func TestGetDictionaryEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.MapOfStringArray, []map[string]string{}); r != "" {
+	if r := cmp.Diff(resp.MapOfStringArray, []map[string]*string{}); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -354,17 +382,17 @@ func TestGetDictionaryItemEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.MapOfStringArray, []map[string]string{
+	if r := cmp.Diff(resp.MapOfStringArray, []map[string]*string{
 		{
-			"1": "one",
-			"2": "two",
-			"3": "three",
+			"1": to.StringPtr("one"),
+			"2": to.StringPtr("two"),
+			"3": to.StringPtr("three"),
 		},
 		{},
 		{
-			"7": "seven",
-			"8": "eight",
-			"9": "nine",
+			"7": to.StringPtr("seven"),
+			"8": to.StringPtr("eight"),
+			"9": to.StringPtr("nine"),
 		},
 	}); r != "" {
 		t.Fatal(r)
@@ -378,17 +406,17 @@ func TestGetDictionaryItemNull(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.MapOfStringArray, []map[string]string{
+	if r := cmp.Diff(resp.MapOfStringArray, []map[string]*string{
 		{
-			"1": "one",
-			"2": "two",
-			"3": "three",
+			"1": to.StringPtr("one"),
+			"2": to.StringPtr("two"),
+			"3": to.StringPtr("three"),
 		},
 		nil,
 		{
-			"7": "seven",
-			"8": "eight",
-			"9": "nine",
+			"7": to.StringPtr("seven"),
+			"8": to.StringPtr("eight"),
+			"9": to.StringPtr("nine"),
 		},
 	}); r != "" {
 		t.Fatal(r)
@@ -414,21 +442,21 @@ func TestGetDictionaryValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.MapOfStringArray, []map[string]string{
+	if r := cmp.Diff(resp.MapOfStringArray, []map[string]*string{
 		{
-			"1": "one",
-			"2": "two",
-			"3": "three",
+			"1": to.StringPtr("one"),
+			"2": to.StringPtr("two"),
+			"3": to.StringPtr("three"),
 		},
 		{
-			"4": "four",
-			"5": "five",
-			"6": "six",
+			"4": to.StringPtr("four"),
+			"5": to.StringPtr("five"),
+			"6": to.StringPtr("six"),
 		},
 		{
-			"7": "seven",
-			"8": "eight",
-			"9": "nine",
+			"7": to.StringPtr("seven"),
+			"8": to.StringPtr("eight"),
+			"9": to.StringPtr("nine"),
 		},
 	}); r != "" {
 		t.Fatal(r)
@@ -437,14 +465,17 @@ func TestGetDictionaryValid(t *testing.T) {
 
 // GetDoubleInvalidNull - Get float array value [0.0, null, -1.2e20]
 func TestGetDoubleInvalidNull(t *testing.T) {
-	t.Skip("arrays with nil elements")
 	client := newArrayClient()
 	resp, err := client.GetDoubleInvalidNull(context.Background(), nil)
-	if err == nil {
-		t.Fatal("unexpected nil error")
+	if err != nil {
+		t.Fatal(err)
 	}
-	if !reflect.ValueOf(resp).IsZero() {
-		t.Fatal("expected empty response")
+	if r := cmp.Diff(resp.Float64Array, []*float64{
+		to.Float64Ptr(0),
+		nil,
+		to.Float64Ptr(-1.2e20),
+	}); r != "" {
+		t.Fatal(r)
 	}
 }
 
@@ -467,7 +498,7 @@ func TestGetDoubleValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.Float64Array, []float64{0, -0.01, -1.2e20}); r != "" {
+	if r := cmp.Diff(resp.Float64Array, to.Float64PtrArray(0, -0.01, -1.2e20)); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -479,7 +510,7 @@ func TestGetDurationValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.StringArray, []string{"P123DT22H14M12.011S", "P5DT1H0M0S"}); r != "" {
+	if r := cmp.Diff(resp.StringArray, to.StringPtrArray("P123DT22H14M12.011S", "P5DT1H0M0S")); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -506,21 +537,25 @@ func TestGetEnumValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.FooEnumArray, []FooEnum{FooEnumFoo1, FooEnumFoo2, FooEnumFoo3}); r != "" {
+	if r := cmp.Diff(resp.FooEnumArray, []*FooEnum{
+		FooEnumFoo1.ToPtr(), FooEnumFoo2.ToPtr(), FooEnumFoo3.ToPtr()}); r != "" {
 		t.Fatal(r)
 	}
 }
 
 // GetFloatInvalidNull - Get float array value [0.0, null, -1.2e20]
 func TestGetFloatInvalidNull(t *testing.T) {
-	t.Skip("arrays with nil elements")
 	client := newArrayClient()
 	resp, err := client.GetFloatInvalidNull(context.Background(), nil)
-	if err == nil {
-		t.Fatal("unexpected nil error")
+	if err != nil {
+		t.Fatal(err)
 	}
-	if !reflect.ValueOf(resp).IsZero() {
-		t.Fatal("expected empty response")
+	if r := cmp.Diff(resp.Float32Array, []*float32{
+		to.Float32Ptr(0),
+		nil,
+		to.Float32Ptr(-1.2e20),
+	}); r != "" {
+		t.Fatal(r)
 	}
 }
 
@@ -543,21 +578,24 @@ func TestGetFloatValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.Float32Array, []float32{0, -0.01, -1.2e20}); r != "" {
+	if r := cmp.Diff(resp.Float32Array, to.Float32PtrArray(0, -0.01, -1.2e20)); r != "" {
 		t.Fatal(r)
 	}
 }
 
 // GetIntInvalidNull - Get integer array value [1, null, 0]
 func TestGetIntInvalidNull(t *testing.T) {
-	t.Skip("arrays with nil elements")
 	client := newArrayClient()
 	resp, err := client.GetIntInvalidNull(context.Background(), nil)
-	if err == nil {
-		t.Fatal("unexpected nil error")
+	if err != nil {
+		t.Fatal(err)
 	}
-	if !reflect.ValueOf(resp).IsZero() {
-		t.Fatal("expected empty response")
+	if r := cmp.Diff(resp.Int32Array, []*int32{
+		to.Int32Ptr(1),
+		nil,
+		to.Int32Ptr(0),
+	}); r != "" {
+		t.Fatal(r)
 	}
 }
 
@@ -580,7 +618,7 @@ func TestGetIntegerValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.Int32Array, []int32{1, -1, 3, 300}); r != "" {
+	if r := cmp.Diff(resp.Int32Array, to.Int32PtrArray(1, -1, 3, 300)); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -599,14 +637,17 @@ func TestGetInvalid(t *testing.T) {
 
 // GetLongInvalidNull - Get long array value [1, null, 0]
 func TestGetLongInvalidNull(t *testing.T) {
-	t.Skip("arrays with nil elements")
 	client := newArrayClient()
 	resp, err := client.GetLongInvalidNull(context.Background(), nil)
-	if err == nil {
-		t.Fatal("unexpected nil error")
+	if err != nil {
+		t.Fatal(err)
 	}
-	if !reflect.ValueOf(resp).IsZero() {
-		t.Fatal("expected empty response")
+	if r := cmp.Diff(resp.Int64Array, []*int64{
+		to.Int64Ptr(1),
+		nil,
+		to.Int64Ptr(0),
+	}); r != "" {
+		t.Fatal(r)
 	}
 }
 
@@ -629,7 +670,7 @@ func TestGetLongValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.Int64Array, []int64{1, -1, 3, 300}); r != "" {
+	if r := cmp.Diff(resp.Int64Array, to.Int64PtrArray(1, -1, 3, 300)); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -653,7 +694,8 @@ func TestGetStringEnumValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.Enum0Array, []Enum0{Enum0Foo1, Enum0Foo2, Enum0Foo3}); r != "" {
+	if r := cmp.Diff(resp.Enum0Array, []*Enum0{
+		Enum0Foo1.ToPtr(), Enum0Foo2.ToPtr(), Enum0Foo3.ToPtr()}); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -665,7 +707,7 @@ func TestGetStringValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.StringArray, []string{"foo1", "foo2", "foo3"}); r != "" {
+	if r := cmp.Diff(resp.StringArray, to.StringPtrArray("foo1", "foo2", "foo3")); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -684,14 +726,13 @@ func TestGetStringWithInvalid(t *testing.T) {
 
 // GetStringWithNull - Get string array value ['foo', null, 'foo2']
 func TestGetStringWithNull(t *testing.T) {
-	t.Skip("arrays with nil elements")
 	client := newArrayClient()
 	resp, err := client.GetStringWithNull(context.Background(), nil)
-	if err == nil {
-		t.Fatal("unexpected nil error")
+	if err != nil {
+		t.Fatal(err)
 	}
-	if !reflect.ValueOf(resp).IsZero() {
-		t.Fatal("expected empty response")
+	if r := cmp.Diff(resp.StringArray, []*string{to.StringPtr("foo"), nil, to.StringPtr("foo2")}); r != "" {
+		t.Fatal(r)
 	}
 }
 
@@ -707,7 +748,7 @@ func TestGetUUIDValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.StringArray, []string{"6dcc7237-45fe-45c4-8a6b-3a8a3f625652", "d1399005-30f7-40d6-8da6-dd7c89ad34db", "f42f6aa1-a5bc-4ddf-907e-5f915de43205"}); r != "" {
+	if r := cmp.Diff(resp.StringArray, to.StringPtrArray("6dcc7237-45fe-45c4-8a6b-3a8a3f625652", "d1399005-30f7-40d6-8da6-dd7c89ad34db", "f42f6aa1-a5bc-4ddf-907e-5f915de43205")); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -715,10 +756,10 @@ func TestGetUUIDValid(t *testing.T) {
 // PutArrayValid - Put An array of array of strings [['1', '2', '3'], ['4', '5', '6'], ['7', '8', '9']]
 func TestPutArrayValid(t *testing.T) {
 	client := newArrayClient()
-	resp, err := client.PutArrayValid(context.Background(), [][]string{
-		{"1", "2", "3"},
-		{"4", "5", "6"},
-		{"7", "8", "9"},
+	resp, err := client.PutArrayValid(context.Background(), [][]*string{
+		to.StringPtrArray("1", "2", "3"),
+		to.StringPtrArray("4", "5", "6"),
+		to.StringPtrArray("7", "8", "9"),
 	}, nil)
 	if err != nil {
 		t.Fatal(err)
@@ -731,7 +772,7 @@ func TestPutArrayValid(t *testing.T) {
 // PutBooleanTfft - Set array value empty [true, false, false, true]
 func TestPutBooleanTfft(t *testing.T) {
 	client := newArrayClient()
-	resp, err := client.PutBooleanTfft(context.Background(), []bool{true, false, false, true}, nil)
+	resp, err := client.PutBooleanTfft(context.Background(), to.BoolPtrArray(true, false, false, true), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -759,7 +800,7 @@ func TestPutByteValid(t *testing.T) {
 // PutComplexValid - Put an array of complex type with values [{'integer': 1 'string': '2'}, {'integer': 3, 'string': '4'}, {'integer': 5, 'string': '6'}]
 func TestPutComplexValid(t *testing.T) {
 	client := newArrayClient()
-	resp, err := client.PutComplexValid(context.Background(), []Product{
+	resp, err := client.PutComplexValid(context.Background(), []*Product{
 		{Integer: to.Int32Ptr(1), String: to.StringPtr("2")},
 		{Integer: to.Int32Ptr(3), String: to.StringPtr("4")},
 		{Integer: to.Int32Ptr(5), String: to.StringPtr("6")},
@@ -778,7 +819,7 @@ func TestPutDateTimeRFC1123Valid(t *testing.T) {
 	v1, _ := time.Parse(time.RFC1123, "Fri, 01 Dec 2000 00:00:01 GMT")
 	v2, _ := time.Parse(time.RFC1123, "Wed, 02 Jan 1980 00:11:35 GMT")
 	v3, _ := time.Parse(time.RFC1123, "Wed, 12 Oct 1492 10:15:01 GMT")
-	resp, err := client.PutDateTimeRFC1123Valid(context.Background(), []time.Time{v1, v2, v3}, nil)
+	resp, err := client.PutDateTimeRFC1123Valid(context.Background(), []*time.Time{&v1, &v2, &v3}, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -793,7 +834,7 @@ func TestPutDateTimeValid(t *testing.T) {
 	v1, _ := time.Parse(time.RFC3339, "2000-12-01T00:00:01Z")
 	v2, _ := time.Parse(time.RFC3339, "1980-01-02T00:11:35Z")
 	v3, _ := time.Parse(time.RFC3339, "1492-10-12T10:15:01Z")
-	resp, err := client.PutDateTimeValid(context.Background(), []time.Time{v1, v2, v3}, nil)
+	resp, err := client.PutDateTimeValid(context.Background(), []*time.Time{&v1, &v2, &v3}, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -805,11 +846,9 @@ func TestPutDateTimeValid(t *testing.T) {
 // PutDateValid - Set array value  ['2000-12-01', '1980-01-02', '1492-10-12']
 func TestPutDateValid(t *testing.T) {
 	client := newArrayClient()
-	resp, err := client.PutDateValid(context.Background(), []time.Time{
-		time.Date(2000, 12, 01, 0, 0, 0, 0, time.UTC),
+	resp, err := client.PutDateValid(context.Background(), to.TimePtrArray(time.Date(2000, 12, 01, 0, 0, 0, 0, time.UTC),
 		time.Date(1980, 01, 02, 0, 0, 0, 0, time.UTC),
-		time.Date(1492, 10, 12, 0, 0, 0, 0, time.UTC),
-	}, nil)
+		time.Date(1492, 10, 12, 0, 0, 0, 0, time.UTC)), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -821,21 +860,21 @@ func TestPutDateValid(t *testing.T) {
 // PutDictionaryValid - Get an array of Dictionaries of type <string, string> with value [{'1': 'one', '2': 'two', '3': 'three'}, {'4': 'four', '5': 'five', '6': 'six'}, {'7': 'seven', '8': 'eight', '9': 'nine'}]
 func TestPutDictionaryValid(t *testing.T) {
 	client := newArrayClient()
-	resp, err := client.PutDictionaryValid(context.Background(), []map[string]string{
+	resp, err := client.PutDictionaryValid(context.Background(), []map[string]*string{
 		{
-			"1": "one",
-			"2": "two",
-			"3": "three",
+			"1": to.StringPtr("one"),
+			"2": to.StringPtr("two"),
+			"3": to.StringPtr("three"),
 		},
 		{
-			"4": "four",
-			"5": "five",
-			"6": "six",
+			"4": to.StringPtr("four"),
+			"5": to.StringPtr("five"),
+			"6": to.StringPtr("six"),
 		},
 		{
-			"7": "seven",
-			"8": "eight",
-			"9": "nine",
+			"7": to.StringPtr("seven"),
+			"8": to.StringPtr("eight"),
+			"9": to.StringPtr("nine"),
 		},
 	}, nil)
 	if err != nil {
@@ -849,7 +888,7 @@ func TestPutDictionaryValid(t *testing.T) {
 // PutDoubleValid - Set array value [0, -0.01, 1.2e20]
 func TestPutDoubleValid(t *testing.T) {
 	client := newArrayClient()
-	resp, err := client.PutDoubleValid(context.Background(), []float64{0, -0.01, -1.2e20}, nil)
+	resp, err := client.PutDoubleValid(context.Background(), to.Float64PtrArray(0, -0.01, -1.2e20), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -861,7 +900,7 @@ func TestPutDoubleValid(t *testing.T) {
 // PutDurationValid - Set array value  ['P123DT22H14M12.011S', 'P5DT1H0M0S']
 func TestPutDurationValid(t *testing.T) {
 	client := newArrayClient()
-	resp, err := client.PutDurationValid(context.Background(), []string{"P123DT22H14M12.011S", "P5DT1H"}, nil)
+	resp, err := client.PutDurationValid(context.Background(), to.StringPtrArray("P123DT22H14M12.011S", "P5DT1H"), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -873,7 +912,7 @@ func TestPutDurationValid(t *testing.T) {
 // PutEmpty - Set array value empty []
 func TestPutEmpty(t *testing.T) {
 	client := newArrayClient()
-	resp, err := client.PutEmpty(context.Background(), []string{}, nil)
+	resp, err := client.PutEmpty(context.Background(), []*string{}, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -885,7 +924,8 @@ func TestPutEmpty(t *testing.T) {
 // PutEnumValid - Set array value ['foo1', 'foo2', 'foo3']
 func TestPutEnumValid(t *testing.T) {
 	client := newArrayClient()
-	resp, err := client.PutEnumValid(context.Background(), []FooEnum{FooEnumFoo1, FooEnumFoo2, FooEnumFoo3}, nil)
+	resp, err := client.PutEnumValid(context.Background(), []*FooEnum{
+		FooEnumFoo1.ToPtr(), FooEnumFoo2.ToPtr(), FooEnumFoo3.ToPtr()}, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -897,7 +937,7 @@ func TestPutEnumValid(t *testing.T) {
 // PutFloatValid - Set array value [0, -0.01, 1.2e20]
 func TestPutFloatValid(t *testing.T) {
 	client := newArrayClient()
-	resp, err := client.PutFloatValid(context.Background(), []float32{0, -0.01, -1.2e20}, nil)
+	resp, err := client.PutFloatValid(context.Background(), to.Float32PtrArray(0, -0.01, -1.2e20), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -909,7 +949,7 @@ func TestPutFloatValid(t *testing.T) {
 // PutIntegerValid - Set array value empty [1, -1, 3, 300]
 func TestPutIntegerValid(t *testing.T) {
 	client := newArrayClient()
-	resp, err := client.PutIntegerValid(context.Background(), []int32{1, -1, 3, 300}, nil)
+	resp, err := client.PutIntegerValid(context.Background(), to.Int32PtrArray(1, -1, 3, 300), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -921,7 +961,7 @@ func TestPutIntegerValid(t *testing.T) {
 // PutLongValid - Set array value empty [1, -1, 3, 300]
 func TestPutLongValid(t *testing.T) {
 	client := newArrayClient()
-	resp, err := client.PutLongValid(context.Background(), []int64{1, -1, 3, 300}, nil)
+	resp, err := client.PutLongValid(context.Background(), to.Int64PtrArray(1, -1, 3, 300), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -933,7 +973,8 @@ func TestPutLongValid(t *testing.T) {
 // PutStringEnumValid - Set array value ['foo1', 'foo2', 'foo3']
 func TestPutStringEnumValid(t *testing.T) {
 	client := newArrayClient()
-	resp, err := client.PutStringEnumValid(context.Background(), []Enum1{Enum1Foo1, Enum1Foo2, Enum1Foo3}, nil)
+	resp, err := client.PutStringEnumValid(context.Background(), []*Enum1{
+		Enum1Foo1.ToPtr(), Enum1Foo2.ToPtr(), Enum1Foo3.ToPtr()}, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -945,7 +986,7 @@ func TestPutStringEnumValid(t *testing.T) {
 // PutStringValid - Set array value ['foo1', 'foo2', 'foo3']
 func TestPutStringValid(t *testing.T) {
 	client := newArrayClient()
-	resp, err := client.PutStringValid(context.Background(), []string{"foo1", "foo2", "foo3"}, nil)
+	resp, err := client.PutStringValid(context.Background(), to.StringPtrArray("foo1", "foo2", "foo3"), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -957,7 +998,7 @@ func TestPutStringValid(t *testing.T) {
 // PutUUIDValid - Set array value  ['6dcc7237-45fe-45c4-8a6b-3a8a3f625652', 'd1399005-30f7-40d6-8da6-dd7c89ad34db', 'f42f6aa1-a5bc-4ddf-907e-5f915de43205']
 func TestPutUUIDValid(t *testing.T) {
 	client := newArrayClient()
-	resp, err := client.PutUUIDValid(context.Background(), []string{"6dcc7237-45fe-45c4-8a6b-3a8a3f625652", "d1399005-30f7-40d6-8da6-dd7c89ad34db", "f42f6aa1-a5bc-4ddf-907e-5f915de43205"}, nil)
+	resp, err := client.PutUUIDValid(context.Background(), to.StringPtrArray("6dcc7237-45fe-45c4-8a6b-3a8a3f625652", "d1399005-30f7-40d6-8da6-dd7c89ad34db", "f42f6aa1-a5bc-4ddf-907e-5f915de43205"), nil)
 	if err != nil {
 		t.Fatal(err)
 	}

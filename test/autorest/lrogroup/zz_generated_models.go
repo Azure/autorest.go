@@ -515,7 +515,7 @@ type Product struct {
 	Properties *ProductProperties `json:"properties,omitempty"`
 }
 
-// ProductArrayPollerResponse is the response envelope for operations that asynchronously return a []Product type.
+// ProductArrayPollerResponse is the response envelope for operations that asynchronously return a []*Product type.
 type ProductArrayPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (ProductArrayResponse, error)
@@ -527,10 +527,10 @@ type ProductArrayPollerResponse struct {
 	RawResponse *http.Response
 }
 
-// ProductArrayResponse is the response envelope for operations that return a []Product type.
+// ProductArrayResponse is the response envelope for operations that return a []*Product type.
 type ProductArrayResponse struct {
 	// Array of Product
-	ProductArray []Product
+	ProductArray []*Product
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -574,7 +574,7 @@ type Resource struct {
 	Name *string `json:"name,omitempty" azure:"ro"`
 
 	// Dictionary of
-	Tags *map[string]string `json:"tags,omitempty"`
+	Tags *map[string]*string `json:"tags,omitempty"`
 
 	// READ-ONLY; Resource Type
 	Type *string `json:"type,omitempty" azure:"ro"`

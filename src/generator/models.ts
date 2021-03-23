@@ -8,7 +8,7 @@ import { comment } from '@azure-tools/codegen';
 import { CodeModel, ComplexSchema, ConstantSchema, DictionarySchema, GroupProperty, ImplementationLocation, ObjectSchema, Language, Schema, SchemaType, Parameter, Property } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 import { isArraySchema, isObjectSchema, getRelationship, hasAdditionalProperties, hasPolymorphicField, commentLength } from '../common/helpers';
-import { contentPreamble, hasDescription, sortAscending, substituteDiscriminator } from './helpers';
+import { contentPreamble, elementByValueForParam, hasDescription, sortAscending, substituteDiscriminator } from './helpers';
 import { ImportManager } from './imports';
 
 // Creates the content in models.go
@@ -134,7 +134,7 @@ class StructDef {
         }
         text += `\t${comment(prop.language.go!.description, '// ', undefined, commentLength)}\n`;
       }
-      let typeName = substituteDiscriminator(prop.schema);
+      let typeName = substituteDiscriminator(prop.schema, false);
       if (prop.schema.type === SchemaType.Constant) {
         // for constants we use the underlying type name
         typeName = (<ConstantSchema>prop.schema).valueType.language.go!.name;
@@ -218,7 +218,8 @@ class StructDef {
       if (param.required || param.language.go!.byValue === true) {
         pointer = '';
       }
-      text += `\t${(<string>param.language.go!.name).capitalize()} ${pointer}${param.schema.language.go!.name}\n`;
+      const typeName = substituteDiscriminator(param.schema, elementByValueForParam(param));
+      text += `\t${(<string>param.language.go!.name).capitalize()} ${pointer}${typeName}\n`;
     }
     text += '}\n\n';
     return text;
@@ -653,12 +654,17 @@ function generateJSONUnmarshallerBody(obj: ObjectSchema, structDef: StructDef, p
   const addlProps = hasAdditionalProperties(obj);
   const emitAddlProps = function (tab: string, addlProps: DictionarySchema): string {
     let addlPropsText = `${tab}\t\tif ${receiver}.AdditionalProperties == nil {\n`;
-    addlPropsText += `${tab}\t\t\t${receiver}.AdditionalProperties = &map[string]${addlProps.elementType.language.go!.name}{}\n`;
+    let ptr = '', ref = '';
+    if (<boolean>addlProps.language.go!.elementIsPtr) {
+      ptr = '*';
+      ref = '&';
+    }
+    addlPropsText += `${tab}\t\t\t${receiver}.AdditionalProperties = &map[string]${ptr}${addlProps.elementType.language.go!.name}{}\n`;
     addlPropsText += `${tab}\t\t}\n`;
     addlPropsText += `${tab}\t\tif val != nil {\n`;
     addlPropsText += `${tab}\t\t\tvar aux ${addlProps.elementType.language.go!.name}\n`;
     addlPropsText += `${tab}\t\t\terr = json.Unmarshal(*val, &aux)\n`;
-    addlPropsText += `${tab}\t\t\t(*${receiver}.AdditionalProperties)[key] = aux\n`;
+    addlPropsText += `${tab}\t\t\t(*${receiver}.AdditionalProperties)[key] = ${ref}aux\n`;
     addlPropsText += `${tab}\t\t}\n`;
     addlPropsText += `${tab}\t\tdelete(rawMsg, key)\n`;
     return addlPropsText;
@@ -747,7 +753,7 @@ function generateXMLUnmarshaller(structDef: StructDef) {
     if (prop.schema.type === SchemaType.DateTime) {
       text += `\t${receiver}.${prop.language.go!.name} = (*time.Time)(aux.${prop.language.go!.name})\n`;
     } else if (prop.language.go!.isAdditionalProperties || prop.language.go!.needsXMLDictionaryUnmarshalling) {
-      text += `\t${receiver}.${prop.language.go!.name} = (*map[string]string)(aux.${prop.language.go!.name})\n`;
+      text += `\t${receiver}.${prop.language.go!.name} = (*map[string]*string)(aux.${prop.language.go!.name})\n`;
     }
   }
   text += '\treturn nil\n';

@@ -29,7 +29,7 @@ type APIError struct {
 	Code *string `json:"code,omitempty"`
 
 	// The Api error details
-	Details *[]APIErrorBase `json:"details,omitempty"`
+	Details *[]*APIErrorBase `json:"details,omitempty"`
 
 	// The Api inner error
 	Innererror *InnerError `json:"innererror,omitempty"`
@@ -163,7 +163,7 @@ type AvailabilitySetListResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// The list of availability sets
-	Value *[]AvailabilitySet `json:"value,omitempty"`
+	Value *[]*AvailabilitySet `json:"value,omitempty"`
 }
 
 // AvailabilitySetListResultResponse is the response envelope for operations that return a AvailabilitySetListResult type.
@@ -188,10 +188,10 @@ type AvailabilitySetProperties struct {
 	ProximityPlacementGroup *SubResource `json:"proximityPlacementGroup,omitempty"`
 
 	// READ-ONLY; The resource status information.
-	Statuses *[]InstanceViewStatus `json:"statuses,omitempty" azure:"ro"`
+	Statuses *[]*InstanceViewStatus `json:"statuses,omitempty" azure:"ro"`
 
 	// A list of references to all virtual machines in the availability set.
-	VirtualMachines *[]SubResource `json:"virtualMachines,omitempty"`
+	VirtualMachines *[]*SubResource `json:"virtualMachines,omitempty"`
 }
 
 // AvailabilitySetResponse is the response envelope for operations that return a AvailabilitySet type.
@@ -338,7 +338,7 @@ func (e CloudError) Error() string {
 // The List Compute Operation operation response.
 type ComputeOperationListResult struct {
 	// READ-ONLY; The list of compute operations
-	Value *[]ComputeOperationValue `json:"value,omitempty" azure:"ro"`
+	Value *[]*ComputeOperationValue `json:"value,omitempty" azure:"ro"`
 }
 
 // ComputeOperationListResultResponse is the response envelope for operations that return a ComputeOperationListResult type.
@@ -428,7 +428,7 @@ type ContainerServiceListResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// the list of container services.
-	Value *[]ContainerService `json:"value,omitempty"`
+	Value *[]*ContainerService `json:"value,omitempty"`
 }
 
 // ContainerServiceListResultResponse is the response envelope for operations that return a ContainerServiceListResult type.
@@ -482,7 +482,7 @@ type ContainerServicePrincipalProfile struct {
 // Properties of the container service.
 type ContainerServiceProperties struct {
 	// Properties of the agent pool.
-	AgentPoolProfiles *[]ContainerServiceAgentPoolProfile `json:"agentPoolProfiles,omitempty"`
+	AgentPoolProfiles *[]*ContainerServiceAgentPoolProfile `json:"agentPoolProfiles,omitempty"`
 
 	// Properties for custom clusters.
 	CustomProfile *ContainerServiceCustomProfile `json:"customProfile,omitempty"`
@@ -521,7 +521,7 @@ type ContainerServiceResponse struct {
 // SSH configuration for Linux-based VMs running on Azure.
 type ContainerServiceSSHConfiguration struct {
 	// the list of SSH public keys used to authenticate with Linux-based VMs.
-	PublicKeys *[]ContainerServiceSSHPublicKey `json:"publicKeys,omitempty"`
+	PublicKeys *[]*ContainerServiceSSHPublicKey `json:"publicKeys,omitempty"`
 }
 
 // Contains information about SSH certificate public key data.
@@ -699,7 +699,7 @@ type DedicatedHostAllocatableVM struct {
 // Dedicated host unutilized capacity.
 type DedicatedHostAvailableCapacity struct {
 	// The unutilized capacity of the dedicated host represented in terms of each VM size that is allowed to be deployed to the dedicated host.
-	AllocatableVMs *[]DedicatedHostAllocatableVM `json:"allocatableVMs,omitempty"`
+	AllocatableVMs *[]*DedicatedHostAllocatableVM `json:"allocatableVMs,omitempty"`
 }
 
 // Specifies information about the dedicated host group that the dedicated hosts should be assigned to.
@@ -713,7 +713,7 @@ type DedicatedHostGroup struct {
 	// Availability Zone to use for this host group. Only single zone is supported. The zone can be assigned only during creation. If not provided, the group
 	// supports all zones in the region. If provided,
 	// enforces each host in the group to be in the same zone.
-	Zones *[]string `json:"zones,omitempty"`
+	Zones *[]*string `json:"zones,omitempty"`
 }
 
 // The List Dedicated Host Group with resource group response.
@@ -722,7 +722,7 @@ type DedicatedHostGroupListResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// The list of dedicated host groups
-	Value *[]DedicatedHostGroup `json:"value,omitempty"`
+	Value *[]*DedicatedHostGroup `json:"value,omitempty"`
 }
 
 // DedicatedHostGroupListResultResponse is the response envelope for operations that return a DedicatedHostGroupListResult type.
@@ -737,7 +737,7 @@ type DedicatedHostGroupListResultResponse struct {
 // Dedicated Host Group Properties.
 type DedicatedHostGroupProperties struct {
 	// READ-ONLY; A list of references to all dedicated hosts in the dedicated host group.
-	Hosts *[]SubResourceReadOnly `json:"hosts,omitempty" azure:"ro"`
+	Hosts *[]*SubResourceReadOnly `json:"hosts,omitempty" azure:"ro"`
 
 	// Number of fault domains that the host group can span.
 	PlatformFaultDomainCount *int32 `json:"platformFaultDomainCount,omitempty"`
@@ -762,7 +762,7 @@ type DedicatedHostGroupUpdate struct {
 	// Availability Zone to use for this host group. Only single zone is supported. The zone can be assigned only during creation. If not provided, the group
 	// supports all zones in the region. If provided,
 	// enforces each host in the group to be in the same zone.
-	Zones *[]string `json:"zones,omitempty"`
+	Zones *[]*string `json:"zones,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type DedicatedHostGroupUpdate.
@@ -812,7 +812,7 @@ type DedicatedHostInstanceView struct {
 	AvailableCapacity *DedicatedHostAvailableCapacity `json:"availableCapacity,omitempty"`
 
 	// The resource status information.
-	Statuses *[]InstanceViewStatus `json:"statuses,omitempty"`
+	Statuses *[]*InstanceViewStatus `json:"statuses,omitempty"`
 }
 
 // The list dedicated host operation response.
@@ -821,7 +821,7 @@ type DedicatedHostListResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// The list of dedicated hosts
-	Value *[]DedicatedHost `json:"value,omitempty"`
+	Value *[]*DedicatedHost `json:"value,omitempty"`
 }
 
 // DedicatedHostListResultResponse is the response envelope for operations that return a DedicatedHostListResult type.
@@ -875,7 +875,7 @@ type DedicatedHostProperties struct {
 	ProvisioningTime *time.Time `json:"provisioningTime,omitempty" azure:"ro"`
 
 	// READ-ONLY; A list of references to all virtual machines in the Dedicated Host.
-	VirtualMachines *[]SubResourceReadOnly `json:"virtualMachines,omitempty" azure:"ro"`
+	VirtualMachines *[]*SubResourceReadOnly `json:"virtualMachines,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type DedicatedHostProperties.
@@ -1012,7 +1012,7 @@ type DiffDiskSettings struct {
 // Describes the disallowed disk types.
 type Disallowed struct {
 	// A list of disk types.
-	DiskTypes *[]string `json:"diskTypes,omitempty"`
+	DiskTypes *[]*string `json:"diskTypes,omitempty"`
 }
 
 // Disk resource.
@@ -1023,7 +1023,7 @@ type Disk struct {
 
 	// READ-ONLY; List of relative URIs containing the IDs of the VMs that have the disk attached. maxShares should be set to a value greater than one for disks
 	// to allow attaching them to multiple VMs.
-	ManagedByExtended *[]string `json:"managedByExtended,omitempty" azure:"ro"`
+	ManagedByExtended *[]*string `json:"managedByExtended,omitempty" azure:"ro"`
 
 	// Disk resource properties.
 	Properties *DiskProperties `json:"properties,omitempty"`
@@ -1032,7 +1032,7 @@ type Disk struct {
 	SKU *DiskSKU `json:"sku,omitempty"`
 
 	// The Logical zone list for Disk.
-	Zones *[]string `json:"zones,omitempty"`
+	Zones *[]*string `json:"zones,omitempty"`
 }
 
 // disk encryption set resource.
@@ -1049,7 +1049,7 @@ type DiskEncryptionSetList struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// A list of disk encryption sets.
-	Value *[]DiskEncryptionSet `json:"value,omitempty"`
+	Value *[]*DiskEncryptionSet `json:"value,omitempty"`
 }
 
 // DiskEncryptionSetListResponse is the response envelope for operations that return a DiskEncryptionSetList type.
@@ -1094,7 +1094,7 @@ type DiskEncryptionSetUpdate struct {
 	Properties *DiskEncryptionSetUpdateProperties `json:"properties,omitempty"`
 
 	// Resource tags
-	Tags *map[string]string `json:"tags,omitempty"`
+	Tags *map[string]*string `json:"tags,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type DiskEncryptionSetUpdate.
@@ -1163,13 +1163,13 @@ type DiskImageEncryption struct {
 type DiskInstanceView struct {
 	// Specifies the encryption settings for the OS Disk.
 	// Minimum api-version: 2015-06-15
-	EncryptionSettings *[]DiskEncryptionSettings `json:"encryptionSettings,omitempty"`
+	EncryptionSettings *[]*DiskEncryptionSettings `json:"encryptionSettings,omitempty"`
 
 	// The disk name.
 	Name *string `json:"name,omitempty"`
 
 	// The resource status information.
-	Statuses *[]InstanceViewStatus `json:"statuses,omitempty"`
+	Statuses *[]*InstanceViewStatus `json:"statuses,omitempty"`
 }
 
 // The List Disks operation response.
@@ -1178,7 +1178,7 @@ type DiskList struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// A list of disks.
-	Value *[]Disk `json:"value,omitempty"`
+	Value *[]*Disk `json:"value,omitempty"`
 }
 
 // DiskListResponse is the response envelope for operations that return a DiskList type.
@@ -1253,7 +1253,7 @@ type DiskProperties struct {
 
 	// READ-ONLY; Details of the list of all VMs that have the disk attached. maxShares should be set to a value greater than one for disks to allow attaching
 	// them to multiple VMs.
-	ShareInfo *[]ShareInfoElement `json:"shareInfo,omitempty" azure:"ro"`
+	ShareInfo *[]*ShareInfoElement `json:"shareInfo,omitempty" azure:"ro"`
 
 	// READ-ONLY; The time when the disk was created.
 	TimeCreated *time.Time `json:"timeCreated,omitempty" azure:"ro"`
@@ -1382,7 +1382,7 @@ type DiskUpdate struct {
 	SKU *DiskSKU `json:"sku,omitempty"`
 
 	// Resource tags
-	Tags *map[string]string `json:"tags,omitempty"`
+	Tags *map[string]*string `json:"tags,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type DiskUpdate.
@@ -1481,7 +1481,7 @@ type Encryption struct {
 // Optional. Allows users to provide customer managed keys for encrypting the OS and data disks in the gallery artifact.
 type EncryptionImages struct {
 	// A list of encryption specifications for data disk images.
-	DataDiskImages *[]DataDiskImageEncryption `json:"dataDiskImages,omitempty"`
+	DataDiskImages *[]*DataDiskImageEncryption `json:"dataDiskImages,omitempty"`
 
 	// This is the disk image encryption base class.
 	OSDiskImage *DiskImageEncryption `json:"osDiskImage,omitempty"`
@@ -1508,7 +1508,7 @@ type EncryptionSetProperties struct {
 
 	// READ-ONLY; A readonly collection of key vault keys previously used by this disk encryption set while a key rotation is in progress. It will be empty
 	// if there is no ongoing key rotation.
-	PreviousKeys *[]KeyVaultAndKeyReference `json:"previousKeys,omitempty" azure:"ro"`
+	PreviousKeys *[]*KeyVaultAndKeyReference `json:"previousKeys,omitempty" azure:"ro"`
 
 	// READ-ONLY; The disk encryption set provisioning state.
 	ProvisioningState *string `json:"provisioningState,omitempty" azure:"ro"`
@@ -1522,7 +1522,7 @@ type EncryptionSettingsCollection struct {
 	Enabled *bool `json:"enabled,omitempty"`
 
 	// A collection of encryption settings, one for each disk volume.
-	EncryptionSettings *[]EncryptionSettingsElement `json:"encryptionSettings,omitempty"`
+	EncryptionSettings *[]*EncryptionSettingsElement `json:"encryptionSettings,omitempty"`
 
 	// Describes what type of encryption is used for the disks. Once this field is set, it cannot be overwritten. '1.0' corresponds to Azure Disk Encryption
 	// with AAD app.'1.1' corresponds to Azure Disk
@@ -1590,7 +1590,7 @@ type GalleryApplicationList struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// A list of Gallery Applications.
-	Value *[]GalleryApplication `json:"value,omitempty"`
+	Value *[]*GalleryApplication `json:"value,omitempty"`
 }
 
 // GalleryApplicationListResponse is the response envelope for operations that return a GalleryApplicationList type.
@@ -1723,7 +1723,7 @@ type GalleryApplicationVersionList struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// A list of gallery Application Versions.
-	Value *[]GalleryApplicationVersion `json:"value,omitempty"`
+	Value *[]*GalleryApplicationVersion `json:"value,omitempty"`
 }
 
 // GalleryApplicationVersionListResponse is the response envelope for operations that return a GalleryApplicationVersionList type.
@@ -1899,7 +1899,7 @@ type GalleryArtifactPublishingProfileBase struct {
 	StorageAccountType *StorageAccountType `json:"storageAccountType,omitempty"`
 
 	// The target regions where the Image Version is going to be replicated to. This property is updatable.
-	TargetRegions *[]TargetRegion `json:"targetRegions,omitempty"`
+	TargetRegions *[]*TargetRegion `json:"targetRegions,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type GalleryArtifactPublishingProfileBase.
@@ -2026,7 +2026,7 @@ type GalleryImageList struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// A list of Shared Image Gallery images.
-	Value *[]GalleryImage `json:"value,omitempty"`
+	Value *[]*GalleryImage `json:"value,omitempty"`
 }
 
 // GalleryImageListResponse is the response envelope for operations that return a GalleryImageList type.
@@ -2208,7 +2208,7 @@ type GalleryImageVersionList struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// A list of gallery Image Versions.
-	Value *[]GalleryImageVersion `json:"value,omitempty"`
+	Value *[]*GalleryImageVersion `json:"value,omitempty"`
 }
 
 // GalleryImageVersionListResponse is the response envelope for operations that return a GalleryImageVersionList type.
@@ -2264,7 +2264,7 @@ type GalleryImageVersionResponse struct {
 // This is the storage profile of a Gallery Image Version.
 type GalleryImageVersionStorageProfile struct {
 	// A list of data disk images.
-	DataDiskImages *[]GalleryDataDiskImage `json:"dataDiskImages,omitempty"`
+	DataDiskImages *[]*GalleryDataDiskImage `json:"dataDiskImages,omitempty"`
 
 	// This is the disk image base class.
 	OSDiskImage *GalleryDiskImage `json:"osDiskImage,omitempty"`
@@ -2344,7 +2344,7 @@ type GalleryList struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// A list of galleries.
-	Value *[]Gallery `json:"value,omitempty"`
+	Value *[]*Gallery `json:"value,omitempty"`
 }
 
 // GalleryListResponse is the response envelope for operations that return a GalleryList type.
@@ -2502,7 +2502,7 @@ type ImageListResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// The list of Images.
-	Value *[]Image `json:"value,omitempty"`
+	Value *[]*Image `json:"value,omitempty"`
 }
 
 // ImageListResultResponse is the response envelope for operations that return a ImageListResult type.
@@ -2609,7 +2609,7 @@ type ImageStorageProfile struct {
 	// Specifies the parameters that are used to add a data disk to a virtual machine.
 	// For more information about disks, see About disks and VHDs for Azure virtual machines
 	// [https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-about-disks-vhds?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json].
-	DataDisks *[]ImageDataDisk `json:"dataDisks,omitempty"`
+	DataDisks *[]*ImageDataDisk `json:"dataDisks,omitempty"`
 
 	// Specifies information about the operating system disk used by the virtual machine.
 	// For more information about disks, see About disks and VHDs for Azure virtual machines
@@ -2798,7 +2798,7 @@ type ListUsagesResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// The list of compute resource usages.
-	Value *[]Usage `json:"value,omitempty"`
+	Value *[]*Usage `json:"value,omitempty"`
 }
 
 // ListUsagesResultResponse is the response envelope for operations that return a ListUsagesResult type.
@@ -3049,7 +3049,7 @@ type NetworkInterfaceReferenceProperties struct {
 // Specifies the network interfaces of the virtual machine.
 type NetworkProfile struct {
 	// Specifies the list of resource Ids for the network interfaces associated with the virtual machine.
-	NetworkInterfaces *[]NetworkInterfaceReference `json:"networkInterfaces,omitempty"`
+	NetworkInterfaces *[]*NetworkInterfaceReference `json:"networkInterfaces,omitempty"`
 }
 
 // Specifies information about the operating system disk used by the virtual machine.
@@ -3185,7 +3185,7 @@ type OSProfile struct {
 	RequireGuestProvisionSignal *bool `json:"requireGuestProvisionSignal,omitempty"`
 
 	// Specifies set of certificates that should be installed onto the virtual machine.
-	Secrets *[]VaultSecretGroup `json:"secrets,omitempty"`
+	Secrets *[]*VaultSecretGroup `json:"secrets,omitempty"`
 
 	// Specifies Windows operating system settings on the virtual machine.
 	WindowsConfiguration *WindowsConfiguration `json:"windowsConfiguration,omitempty"`
@@ -3246,7 +3246,7 @@ type ProximityPlacementGroupListResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// The list of proximity placement groups
-	Value *[]ProximityPlacementGroup `json:"value,omitempty"`
+	Value *[]*ProximityPlacementGroup `json:"value,omitempty"`
 }
 
 // ProximityPlacementGroupListResultResponse is the response envelope for operations that return a ProximityPlacementGroupListResult type.
@@ -3261,7 +3261,7 @@ type ProximityPlacementGroupListResultResponse struct {
 // Describes the properties of a Proximity Placement Group.
 type ProximityPlacementGroupProperties struct {
 	// READ-ONLY; A list of references to all availability sets in the proximity placement group.
-	AvailabilitySets *[]SubResourceWithColocationStatus `json:"availabilitySets,omitempty" azure:"ro"`
+	AvailabilitySets *[]*SubResourceWithColocationStatus `json:"availabilitySets,omitempty" azure:"ro"`
 
 	// Describes colocation status of the Proximity Placement Group.
 	ColocationStatus *InstanceViewStatus `json:"colocationStatus,omitempty"`
@@ -3273,10 +3273,10 @@ type ProximityPlacementGroupProperties struct {
 	ProximityPlacementGroupType *ProximityPlacementGroupType `json:"proximityPlacementGroupType,omitempty"`
 
 	// READ-ONLY; A list of references to all virtual machine scale sets in the proximity placement group.
-	VirtualMachineScaleSets *[]SubResourceWithColocationStatus `json:"virtualMachineScaleSets,omitempty" azure:"ro"`
+	VirtualMachineScaleSets *[]*SubResourceWithColocationStatus `json:"virtualMachineScaleSets,omitempty" azure:"ro"`
 
 	// READ-ONLY; A list of references to all virtual machines in the proximity placement group.
-	VirtualMachines *[]SubResourceWithColocationStatus `json:"virtualMachines,omitempty" azure:"ro"`
+	VirtualMachines *[]*SubResourceWithColocationStatus `json:"virtualMachines,omitempty" azure:"ro"`
 }
 
 // ProximityPlacementGroupResponse is the response envelope for operations that return a ProximityPlacementGroup type.
@@ -3384,7 +3384,7 @@ type ReplicationStatus struct {
 	AggregatedState *AggregatedReplicationState `json:"aggregatedState,omitempty" azure:"ro"`
 
 	// READ-ONLY; This is a summary of replication status for each region.
-	Summary *[]RegionalReplicationStatus `json:"summary,omitempty" azure:"ro"`
+	Summary *[]*RegionalReplicationStatus `json:"summary,omitempty" azure:"ro"`
 }
 
 // Api request input for LogAnalytics getRequestRateByInterval Api.
@@ -3433,7 +3433,7 @@ type Resource struct {
 	Name *string `json:"name,omitempty" azure:"ro"`
 
 	// Resource tags
-	Tags *map[string]string `json:"tags,omitempty"`
+	Tags *map[string]*string `json:"tags,omitempty"`
 
 	// READ-ONLY; Resource type
 	Type *string `json:"type,omitempty" azure:"ro"`
@@ -3451,16 +3451,16 @@ type ResourceRange struct {
 // Describes an available Compute SKU.
 type ResourceSKU struct {
 	// READ-ONLY; The api versions that support this SKU.
-	APIVersions *[]string `json:"apiVersions,omitempty" azure:"ro"`
+	APIVersions *[]*string `json:"apiVersions,omitempty" azure:"ro"`
 
 	// READ-ONLY; A name value pair to describe the capability.
-	Capabilities *[]ResourceSKUCapabilities `json:"capabilities,omitempty" azure:"ro"`
+	Capabilities *[]*ResourceSKUCapabilities `json:"capabilities,omitempty" azure:"ro"`
 
 	// READ-ONLY; Specifies the number of virtual machines in the scale set.
 	Capacity *ResourceSKUCapacity `json:"capacity,omitempty" azure:"ro"`
 
 	// READ-ONLY; Metadata for retrieving price info.
-	Costs *[]ResourceSKUCosts `json:"costs,omitempty" azure:"ro"`
+	Costs *[]*ResourceSKUCosts `json:"costs,omitempty" azure:"ro"`
 
 	// READ-ONLY; The Family of this particular SKU.
 	Family *string `json:"family,omitempty" azure:"ro"`
@@ -3469,10 +3469,10 @@ type ResourceSKU struct {
 	Kind *string `json:"kind,omitempty" azure:"ro"`
 
 	// READ-ONLY; A list of locations and availability zones in those locations where the SKU is available.
-	LocationInfo *[]ResourceSKULocationInfo `json:"locationInfo,omitempty" azure:"ro"`
+	LocationInfo *[]*ResourceSKULocationInfo `json:"locationInfo,omitempty" azure:"ro"`
 
 	// READ-ONLY; The set of locations that the SKU is available.
-	Locations *[]string `json:"locations,omitempty" azure:"ro"`
+	Locations *[]*string `json:"locations,omitempty" azure:"ro"`
 
 	// READ-ONLY; The name of SKU.
 	Name *string `json:"name,omitempty" azure:"ro"`
@@ -3481,7 +3481,7 @@ type ResourceSKU struct {
 	ResourceType *string `json:"resourceType,omitempty" azure:"ro"`
 
 	// READ-ONLY; The restrictions because of which SKU cannot be used. This is empty if there are no restrictions.
-	Restrictions *[]ResourceSKURestrictions `json:"restrictions,omitempty" azure:"ro"`
+	Restrictions *[]*ResourceSKURestrictions `json:"restrictions,omitempty" azure:"ro"`
 
 	// READ-ONLY; The Size of the SKU.
 	Size *string `json:"size,omitempty" azure:"ro"`
@@ -3534,18 +3534,18 @@ type ResourceSKULocationInfo struct {
 	Location *string `json:"location,omitempty" azure:"ro"`
 
 	// READ-ONLY; Details of capabilities available to a SKU in specific zones.
-	ZoneDetails *[]ResourceSKUZoneDetails `json:"zoneDetails,omitempty" azure:"ro"`
+	ZoneDetails *[]*ResourceSKUZoneDetails `json:"zoneDetails,omitempty" azure:"ro"`
 
 	// READ-ONLY; List of availability zones where the SKU is supported.
-	Zones *[]string `json:"zones,omitempty" azure:"ro"`
+	Zones *[]*string `json:"zones,omitempty" azure:"ro"`
 }
 
 type ResourceSKURestrictionInfo struct {
 	// READ-ONLY; Locations where the SKU is restricted
-	Locations *[]string `json:"locations,omitempty" azure:"ro"`
+	Locations *[]*string `json:"locations,omitempty" azure:"ro"`
 
 	// READ-ONLY; List of availability zones where the SKU is restricted.
-	Zones *[]string `json:"zones,omitempty" azure:"ro"`
+	Zones *[]*string `json:"zones,omitempty" azure:"ro"`
 }
 
 // Describes scaling information of a SKU.
@@ -3560,16 +3560,16 @@ type ResourceSKURestrictions struct {
 	Type *ResourceSKURestrictionsType `json:"type,omitempty" azure:"ro"`
 
 	// READ-ONLY; The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted.
-	Values *[]string `json:"values,omitempty" azure:"ro"`
+	Values *[]*string `json:"values,omitempty" azure:"ro"`
 }
 
 // Describes The zonal capabilities of a SKU.
 type ResourceSKUZoneDetails struct {
 	// READ-ONLY; A list of capabilities that are available for the SKU in the specified list of zones.
-	Capabilities *[]ResourceSKUCapabilities `json:"capabilities,omitempty" azure:"ro"`
+	Capabilities *[]*ResourceSKUCapabilities `json:"capabilities,omitempty" azure:"ro"`
 
 	// READ-ONLY; The set of zones that the SKU is available in with the specified capabilities.
-	Name *[]string `json:"name,omitempty" azure:"ro"`
+	Name *[]*string `json:"name,omitempty" azure:"ro"`
 }
 
 // ResourceSKUsListOptions contains the optional parameters for the ResourceSKUs.List method.
@@ -3584,7 +3584,7 @@ type ResourceSKUsResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// The list of skus available for the subscription.
-	Value *[]ResourceSKU `json:"value,omitempty"`
+	Value *[]*ResourceSKU `json:"value,omitempty"`
 }
 
 // ResourceSKUsResultResponse is the response envelope for operations that return a ResourceSKUsResult type.
@@ -3740,10 +3740,10 @@ type RollingUpgradeStatusInfoResponse struct {
 type RunCommandDocument struct {
 	RunCommandDocumentBase
 	// The parameters used by the script.
-	Parameters *[]RunCommandParameterDefinition `json:"parameters,omitempty"`
+	Parameters *[]*RunCommandParameterDefinition `json:"parameters,omitempty"`
 
 	// The script to be executed.
-	Script *[]string `json:"script,omitempty"`
+	Script *[]*string `json:"script,omitempty"`
 }
 
 // Describes the properties of a Run Command metadata.
@@ -3779,10 +3779,10 @@ type RunCommandInput struct {
 	CommandID *string `json:"commandId,omitempty"`
 
 	// The run command parameters.
-	Parameters *[]RunCommandInputParameter `json:"parameters,omitempty"`
+	Parameters *[]*RunCommandInputParameter `json:"parameters,omitempty"`
 
 	// Optional. The script to be executed. When this value is given, the given script will override the default script of the command.
-	Script *[]string `json:"script,omitempty"`
+	Script *[]*string `json:"script,omitempty"`
 }
 
 // Describes the properties of a run command parameter.
@@ -3800,7 +3800,7 @@ type RunCommandListResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// The list of virtual machine run commands.
-	Value *[]RunCommandDocumentBase `json:"value,omitempty"`
+	Value *[]*RunCommandDocumentBase `json:"value,omitempty"`
 }
 
 // RunCommandListResultResponse is the response envelope for operations that return a RunCommandListResult type.
@@ -3829,7 +3829,7 @@ type RunCommandParameterDefinition struct {
 
 type RunCommandResult struct {
 	// Run command operation response.
-	Value *[]InstanceViewStatus `json:"value,omitempty"`
+	Value *[]*InstanceViewStatus `json:"value,omitempty"`
 }
 
 // RunCommandResultPollerResponse is the response envelope for operations that asynchronously return a RunCommandResult type.
@@ -3871,7 +3871,7 @@ type SKU struct {
 // SSH configuration for Linux based VMs running on Azure
 type SSHConfiguration struct {
 	// The list of SSH public keys used to authenticate with linux based VMs.
-	PublicKeys *[]SSHPublicKey `json:"publicKeys,omitempty"`
+	PublicKeys *[]*SSHPublicKey `json:"publicKeys,omitempty"`
 }
 
 // Contains information about SSH certificate public key and the path on the Linux VM where the public key is placed.
@@ -3973,7 +3973,7 @@ type SSHPublicKeysGroupListResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// The list of SSH public keys
-	Value *[]SSHPublicKeyResource `json:"value,omitempty"`
+	Value *[]*SSHPublicKeyResource `json:"value,omitempty"`
 }
 
 // SSHPublicKeysGroupListResultResponse is the response envelope for operations that return a SSHPublicKeysGroupListResult type.
@@ -4013,7 +4013,7 @@ type ScaleInPolicy struct {
 	// NewestVM When a virtual machine scale set is being scaled-in, the newest virtual machines that are not protected from scale-in will be chosen for removal.
 	// For zonal virtual machine scale sets, the
 	// scale set will first be balanced across zones. Within each zone, the newest virtual machines that are not protected will be chosen for removal.
-	Rules *[]VirtualMachineScaleSetScaleInRules `json:"rules,omitempty"`
+	Rules *[]*VirtualMachineScaleSetScaleInRules `json:"rules,omitempty"`
 }
 
 type ScheduledEventsProfile struct {
@@ -4045,7 +4045,7 @@ type SnapshotList struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// A list of snapshots.
-	Value *[]Snapshot `json:"value,omitempty"`
+	Value *[]*Snapshot `json:"value,omitempty"`
 }
 
 // SnapshotListResponse is the response envelope for operations that return a SnapshotList type.
@@ -4203,7 +4203,7 @@ type SnapshotUpdate struct {
 	SKU *SnapshotSKU `json:"sku,omitempty"`
 
 	// Resource tags
-	Tags *map[string]string `json:"tags,omitempty"`
+	Tags *map[string]*string `json:"tags,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type SnapshotUpdate.
@@ -4283,7 +4283,7 @@ type StorageProfile struct {
 	// Specifies the parameters that are used to add a data disk to a virtual machine.
 	// For more information about disks, see About disks and VHDs for Azure virtual machines
 	// [https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-about-disks-vhds?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json].
-	DataDisks *[]DataDisk `json:"dataDisks,omitempty"`
+	DataDisks *[]*DataDisk `json:"dataDisks,omitempty"`
 
 	// Specifies information about the image to use. You can specify information about platform images, marketplace images, or virtual machine images. This
 	// element is required when you want to use a platform
@@ -4351,7 +4351,7 @@ type ThrottledRequestsInput struct {
 // The Update Resource model definition.
 type UpdateResource struct {
 	// Resource tags
-	Tags *map[string]string `json:"tags,omitempty"`
+	Tags *map[string]*string `json:"tags,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type UpdateResource.
@@ -4375,7 +4375,7 @@ type UpdateResourceDefinition struct {
 	Name *string `json:"name,omitempty" azure:"ro"`
 
 	// Resource tags
-	Tags *map[string]string `json:"tags,omitempty"`
+	Tags *map[string]*string `json:"tags,omitempty"`
 
 	// READ-ONLY; Resource type
 	Type *string `json:"type,omitempty" azure:"ro"`
@@ -4582,7 +4582,7 @@ type VaultSecretGroup struct {
 	SourceVault *SubResource `json:"sourceVault,omitempty"`
 
 	// The list of key vault references in SourceVault which contain certificates.
-	VaultCertificates *[]VaultCertificate `json:"vaultCertificates,omitempty"`
+	VaultCertificates *[]*VaultCertificate `json:"vaultCertificates,omitempty"`
 }
 
 // Describes the uri of a disk.
@@ -4608,19 +4608,19 @@ type VirtualMachine struct {
 	Properties *VirtualMachineProperties `json:"properties,omitempty"`
 
 	// READ-ONLY; The virtual machine child extension resources.
-	Resources *[]VirtualMachineExtension `json:"resources,omitempty" azure:"ro"`
+	Resources *[]*VirtualMachineExtension `json:"resources,omitempty" azure:"ro"`
 
 	// The virtual machine zones.
-	Zones *[]string `json:"zones,omitempty"`
+	Zones *[]*string `json:"zones,omitempty"`
 }
 
 // The instance view of the VM Agent running on the virtual machine.
 type VirtualMachineAgentInstanceView struct {
 	// The virtual machine extension handler instance view.
-	ExtensionHandlers *[]VirtualMachineExtensionHandlerInstanceView `json:"extensionHandlers,omitempty"`
+	ExtensionHandlers *[]*VirtualMachineExtensionHandlerInstanceView `json:"extensionHandlers,omitempty"`
 
 	// The resource status information.
-	Statuses *[]InstanceViewStatus `json:"statuses,omitempty"`
+	Statuses *[]*InstanceViewStatus `json:"statuses,omitempty"`
 
 	// The VM Agent full version.
 	VMAgentVersion *string `json:"vmAgentVersion,omitempty"`
@@ -4701,13 +4701,13 @@ type VirtualMachineExtensionImage struct {
 	Properties *VirtualMachineExtensionImageProperties `json:"properties,omitempty"`
 }
 
-// VirtualMachineExtensionImageArrayResponse is the response envelope for operations that return a []VirtualMachineExtensionImage type.
+// VirtualMachineExtensionImageArrayResponse is the response envelope for operations that return a []*VirtualMachineExtensionImage type.
 type VirtualMachineExtensionImageArrayResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 
 	// Array of VirtualMachineExtensionImage
-	VirtualMachineExtensionImageArray []VirtualMachineExtensionImage
+	VirtualMachineExtensionImageArray []*VirtualMachineExtensionImage
 }
 
 // Describes the properties of a Virtual Machine Extension Image.
@@ -4763,10 +4763,10 @@ type VirtualMachineExtensionInstanceView struct {
 	Name *string `json:"name,omitempty"`
 
 	// The resource status information.
-	Statuses *[]InstanceViewStatus `json:"statuses,omitempty"`
+	Statuses *[]*InstanceViewStatus `json:"statuses,omitempty"`
 
 	// The resource status information.
-	Substatuses *[]InstanceViewStatus `json:"substatuses,omitempty"`
+	Substatuses *[]*InstanceViewStatus `json:"substatuses,omitempty"`
 
 	// Specifies the type of the extension; an example is "CustomScriptExtension".
 	Type *string `json:"type,omitempty"`
@@ -4898,7 +4898,7 @@ type VirtualMachineExtensionsListOptions struct {
 // The List Extension operation response
 type VirtualMachineExtensionsListResult struct {
 	// The list of extensions
-	Value *[]VirtualMachineExtension `json:"value,omitempty"`
+	Value *[]*VirtualMachineExtension `json:"value,omitempty"`
 }
 
 // VirtualMachineExtensionsListResultResponse is the response envelope for operations that return a VirtualMachineExtensionsListResult type.
@@ -4931,7 +4931,7 @@ type VirtualMachineIdentity struct {
 
 	// The list of user identities associated with the Virtual Machine. The user identity dictionary key references will be ARM resource ids in the form:
 	// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
-	UserAssignedIdentities *map[string]UserAssignedIdentitiesValue `json:"userAssignedIdentities,omitempty"`
+	UserAssignedIdentities *map[string]*UserAssignedIdentitiesValue `json:"userAssignedIdentities,omitempty"`
 }
 
 // Describes a Virtual Machine Image.
@@ -4945,7 +4945,7 @@ type VirtualMachineImage struct {
 type VirtualMachineImageProperties struct {
 	// Describes automatic OS upgrade properties on the image.
 	AutomaticOSUpgradeProperties *AutomaticOSUpgradeProperties `json:"automaticOSUpgradeProperties,omitempty"`
-	DataDiskImages               *[]DataDiskImage              `json:"dataDiskImages,omitempty"`
+	DataDiskImages               *[]*DataDiskImage             `json:"dataDiskImages,omitempty"`
 
 	// Specifies the HyperVGeneration Type
 	HyperVGeneration *HyperVGenerationTypes `json:"hyperVGeneration,omitempty"`
@@ -4968,16 +4968,16 @@ type VirtualMachineImageResource struct {
 
 	// Specifies the tags that are assigned to the virtual machine. For more information about using tags, see Using tags to organize your Azure resources
 	// [https://docs.microsoft.com/azure/azure-resource-manager/resource-group-using-tags.md].
-	Tags *map[string]string `json:"tags,omitempty"`
+	Tags *map[string]*string `json:"tags,omitempty"`
 }
 
-// VirtualMachineImageResourceArrayResponse is the response envelope for operations that return a []VirtualMachineImageResource type.
+// VirtualMachineImageResourceArrayResponse is the response envelope for operations that return a []*VirtualMachineImageResource type.
 type VirtualMachineImageResourceArrayResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 
 	// Array of VirtualMachineImageResource
-	VirtualMachineImageResourceArray []VirtualMachineImageResource
+	VirtualMachineImageResourceArray []*VirtualMachineImageResource
 }
 
 // VirtualMachineImageResponse is the response envelope for operations that return a VirtualMachineImage type.
@@ -5028,10 +5028,10 @@ type VirtualMachineInstanceView struct {
 	ComputerName *string `json:"computerName,omitempty"`
 
 	// The virtual machine disk information.
-	Disks *[]DiskInstanceView `json:"disks,omitempty"`
+	Disks *[]*DiskInstanceView `json:"disks,omitempty"`
 
 	// The extensions information.
-	Extensions *[]VirtualMachineExtensionInstanceView `json:"extensions,omitempty"`
+	Extensions *[]*VirtualMachineExtensionInstanceView `json:"extensions,omitempty"`
 
 	// Specifies the HyperVGeneration Type associated with a resource
 	HyperVGeneration *HyperVGenerationType `json:"hyperVGeneration,omitempty"`
@@ -5055,7 +5055,7 @@ type VirtualMachineInstanceView struct {
 	RdpThumbPrint *string `json:"rdpThumbPrint,omitempty"`
 
 	// The resource status information.
-	Statuses *[]InstanceViewStatus `json:"statuses,omitempty"`
+	Statuses *[]*InstanceViewStatus `json:"statuses,omitempty"`
 
 	// The VM Agent running on the virtual machine.
 	VMAgent *VirtualMachineAgentInstanceView `json:"vmAgent,omitempty"`
@@ -5076,7 +5076,7 @@ type VirtualMachineListResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// The list of virtual machines.
-	Value *[]VirtualMachine `json:"value,omitempty"`
+	Value *[]*VirtualMachine `json:"value,omitempty"`
 }
 
 // VirtualMachineListResultResponse is the response envelope for operations that return a VirtualMachineListResult type.
@@ -5230,7 +5230,7 @@ type VirtualMachineScaleSet struct {
 	SKU *SKU `json:"sku,omitempty"`
 
 	// The virtual machine scale set zones. NOTE: Availability zones can only be set when you create the scale set
-	Zones *[]string `json:"zones,omitempty"`
+	Zones *[]*string `json:"zones,omitempty"`
 }
 
 // Describes a virtual machine scale set data disk.
@@ -5291,7 +5291,7 @@ type VirtualMachineScaleSetExtensionListResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// The list of VM scale set extensions.
-	Value *[]VirtualMachineScaleSetExtension `json:"value,omitempty"`
+	Value *[]*VirtualMachineScaleSetExtension `json:"value,omitempty"`
 }
 
 // VirtualMachineScaleSetExtensionListResultResponse is the response envelope for operations that return a VirtualMachineScaleSetExtensionListResult type.
@@ -5318,7 +5318,7 @@ type VirtualMachineScaleSetExtensionPollerResponse struct {
 // Describes a virtual machine scale set extension profile.
 type VirtualMachineScaleSetExtensionProfile struct {
 	// The virtual machine scale set child extension resources.
-	Extensions *[]VirtualMachineScaleSetExtension `json:"extensions,omitempty"`
+	Extensions *[]*VirtualMachineScaleSetExtension `json:"extensions,omitempty"`
 }
 
 // Describes the properties of a Virtual Machine Scale Set Extension.
@@ -5336,7 +5336,7 @@ type VirtualMachineScaleSetExtensionProperties struct {
 	ProtectedSettings interface{} `json:"protectedSettings,omitempty"`
 
 	// Collection of extension names after which this extension needs to be provisioned.
-	ProvisionAfterExtensions *[]string `json:"provisionAfterExtensions,omitempty"`
+	ProvisionAfterExtensions *[]*string `json:"provisionAfterExtensions,omitempty"`
 
 	// READ-ONLY; The provisioning state, which only appears in the response.
 	ProvisioningState *string `json:"provisioningState,omitempty" azure:"ro"`
@@ -5427,20 +5427,20 @@ type VirtualMachineScaleSetIPConfigurationProperties struct {
 	// Specifies an array of references to backend address pools of application gateways. A scale set can reference backend address pools of multiple application
 	// gateways. Multiple scale sets cannot use the
 	// same application gateway.
-	ApplicationGatewayBackendAddressPools *[]SubResource `json:"applicationGatewayBackendAddressPools,omitempty"`
+	ApplicationGatewayBackendAddressPools *[]*SubResource `json:"applicationGatewayBackendAddressPools,omitempty"`
 
 	// Specifies an array of references to application security group.
-	ApplicationSecurityGroups *[]SubResource `json:"applicationSecurityGroups,omitempty"`
+	ApplicationSecurityGroups *[]*SubResource `json:"applicationSecurityGroups,omitempty"`
 
 	// Specifies an array of references to backend address pools of load balancers. A scale set can reference backend address pools of one public and one internal
 	// load balancer. Multiple scale sets cannot
 	// use the same basic sku load balancer.
-	LoadBalancerBackendAddressPools *[]SubResource `json:"loadBalancerBackendAddressPools,omitempty"`
+	LoadBalancerBackendAddressPools *[]*SubResource `json:"loadBalancerBackendAddressPools,omitempty"`
 
 	// Specifies an array of references to inbound Nat pools of the load balancers. A scale set can reference inbound nat pools of one public and one internal
 	// load balancer. Multiple scale sets cannot use
 	// the same basic sku load balancer.
-	LoadBalancerInboundNatPools *[]SubResource `json:"loadBalancerInboundNatPools,omitempty"`
+	LoadBalancerInboundNatPools *[]*SubResource `json:"loadBalancerInboundNatPools,omitempty"`
 
 	// Specifies the primary network interface in case the virtual machine has more than 1 network interface.
 	Primary *bool `json:"primary,omitempty"`
@@ -5481,7 +5481,7 @@ type VirtualMachineScaleSetIdentity struct {
 	// The list of user identities associated with the virtual machine scale set. The user identity dictionary key references will be ARM resource ids in the
 	// form:
 	// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
-	UserAssignedIdentities *map[string]VirtualMachineScaleSetIdentityUserAssignedIdentitiesValue `json:"userAssignedIdentities,omitempty"`
+	UserAssignedIdentities *map[string]*VirtualMachineScaleSetIdentityUserAssignedIdentitiesValue `json:"userAssignedIdentities,omitempty"`
 }
 
 type VirtualMachineScaleSetIdentityUserAssignedIdentitiesValue struct {
@@ -5495,13 +5495,13 @@ type VirtualMachineScaleSetIdentityUserAssignedIdentitiesValue struct {
 // The instance view of a virtual machine scale set.
 type VirtualMachineScaleSetInstanceView struct {
 	// READ-ONLY; The extensions information.
-	Extensions *[]VirtualMachineScaleSetVMExtensionsSummary `json:"extensions,omitempty" azure:"ro"`
+	Extensions *[]*VirtualMachineScaleSetVMExtensionsSummary `json:"extensions,omitempty" azure:"ro"`
 
 	// READ-ONLY; The orchestration services information.
-	OrchestrationServices *[]OrchestrationServiceSummary `json:"orchestrationServices,omitempty" azure:"ro"`
+	OrchestrationServices *[]*OrchestrationServiceSummary `json:"orchestrationServices,omitempty" azure:"ro"`
 
 	// The resource status information.
-	Statuses *[]InstanceViewStatus `json:"statuses,omitempty"`
+	Statuses *[]*InstanceViewStatus `json:"statuses,omitempty"`
 
 	// READ-ONLY; The instance view status summary for the virtual machine scale set.
 	VirtualMachine *VirtualMachineScaleSetInstanceViewStatusesSummary `json:"virtualMachine,omitempty" azure:"ro"`
@@ -5519,7 +5519,7 @@ type VirtualMachineScaleSetInstanceViewResponse struct {
 // Instance view statuses summary for virtual machines of a virtual machine scale set.
 type VirtualMachineScaleSetInstanceViewStatusesSummary struct {
 	// READ-ONLY; The extensions information.
-	StatusesSummary *[]VirtualMachineStatusCodeCount `json:"statusesSummary,omitempty" azure:"ro"`
+	StatusesSummary *[]*VirtualMachineStatusCodeCount `json:"statusesSummary,omitempty" azure:"ro"`
 }
 
 // List of Virtual Machine Scale Set OS Upgrade History operation response.
@@ -5528,7 +5528,7 @@ type VirtualMachineScaleSetListOSUpgradeHistory struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// The list of OS upgrades performed on the virtual machine scale set.
-	Value *[]UpgradeOperationHistoricalStatusInfo `json:"value,omitempty"`
+	Value *[]*UpgradeOperationHistoricalStatusInfo `json:"value,omitempty"`
 }
 
 // VirtualMachineScaleSetListOSUpgradeHistoryResponse is the response envelope for operations that return a VirtualMachineScaleSetListOSUpgradeHistory type.
@@ -5546,7 +5546,7 @@ type VirtualMachineScaleSetListResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// The list of virtual machine scale sets.
-	Value *[]VirtualMachineScaleSet `json:"value,omitempty"`
+	Value *[]*VirtualMachineScaleSet `json:"value,omitempty"`
 }
 
 // VirtualMachineScaleSetListResultResponse is the response envelope for operations that return a VirtualMachineScaleSetListResult type.
@@ -5564,7 +5564,7 @@ type VirtualMachineScaleSetListSKUsResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// The list of skus available for the virtual machine scale set.
-	Value *[]VirtualMachineScaleSetSKU `json:"value,omitempty"`
+	Value *[]*VirtualMachineScaleSetSKU `json:"value,omitempty"`
 }
 
 // VirtualMachineScaleSetListSKUsResultResponse is the response envelope for operations that return a VirtualMachineScaleSetListSKUsResult type.
@@ -5582,7 +5582,7 @@ type VirtualMachineScaleSetListWithLinkResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// The list of virtual machine scale sets.
-	Value *[]VirtualMachineScaleSet `json:"value,omitempty"`
+	Value *[]*VirtualMachineScaleSet `json:"value,omitempty"`
 }
 
 // VirtualMachineScaleSetListWithLinkResultResponse is the response envelope for operations that return a VirtualMachineScaleSetListWithLinkResult type.
@@ -5616,7 +5616,7 @@ type VirtualMachineScaleSetNetworkConfiguration struct {
 // Describes a virtual machines scale sets network configuration's DNS settings.
 type VirtualMachineScaleSetNetworkConfigurationDNSSettings struct {
 	// List of DNS servers IP addresses
-	DNSServers *[]string `json:"dnsServers,omitempty"`
+	DNSServers *[]*string `json:"dnsServers,omitempty"`
 }
 
 // Describes a virtual machine scale set network profile's IP configuration.
@@ -5631,7 +5631,7 @@ type VirtualMachineScaleSetNetworkConfigurationProperties struct {
 	EnableIPForwarding *bool `json:"enableIPForwarding,omitempty"`
 
 	// Specifies the IP configurations of the network interface.
-	IPConfigurations *[]VirtualMachineScaleSetIPConfiguration `json:"ipConfigurations,omitempty"`
+	IPConfigurations *[]*VirtualMachineScaleSetIPConfiguration `json:"ipConfigurations,omitempty"`
 
 	// The network security group.
 	NetworkSecurityGroup *SubResource `json:"networkSecurityGroup,omitempty"`
@@ -5647,7 +5647,7 @@ type VirtualMachineScaleSetNetworkProfile struct {
 	HealthProbe *APIEntityReference `json:"healthProbe,omitempty"`
 
 	// The list of network configurations.
-	NetworkInterfaceConfigurations *[]VirtualMachineScaleSetNetworkConfiguration `json:"networkInterfaceConfigurations,omitempty"`
+	NetworkInterfaceConfigurations *[]*VirtualMachineScaleSetNetworkConfiguration `json:"networkInterfaceConfigurations,omitempty"`
 }
 
 // Describes a virtual machine scale set operating system disk.
@@ -5689,7 +5689,7 @@ type VirtualMachineScaleSetOSDisk struct {
 	OSType *OperatingSystemTypes `json:"osType,omitempty"`
 
 	// Specifies the container urls that are used to store operating system disks for the scale set.
-	VhdContainers *[]string `json:"vhdContainers,omitempty"`
+	VhdContainers *[]*string `json:"vhdContainers,omitempty"`
 
 	// Specifies whether writeAccelerator should be enabled or disabled on the disk.
 	WriteAcceleratorEnabled *bool `json:"writeAcceleratorEnabled,omitempty"`
@@ -5746,7 +5746,7 @@ type VirtualMachineScaleSetOSProfile struct {
 	LinuxConfiguration *LinuxConfiguration `json:"linuxConfiguration,omitempty"`
 
 	// Specifies set of certificates that should be installed onto the virtual machines in the scale set.
-	Secrets *[]VaultSecretGroup `json:"secrets,omitempty"`
+	Secrets *[]*VaultSecretGroup `json:"secrets,omitempty"`
 
 	// Specifies Windows operating system settings on the virtual machine.
 	WindowsConfiguration *WindowsConfiguration `json:"windowsConfiguration,omitempty"`
@@ -5835,7 +5835,7 @@ type VirtualMachineScaleSetPublicIPAddressConfigurationProperties struct {
 	DNSSettings *VirtualMachineScaleSetPublicIPAddressConfigurationDNSSettings `json:"dnsSettings,omitempty"`
 
 	// The list of IP tags associated with the public IP address.
-	IPTags *[]VirtualMachineScaleSetIPTag `json:"ipTags,omitempty"`
+	IPTags *[]*VirtualMachineScaleSetIPTag `json:"ipTags,omitempty"`
 
 	// The idle timeout of the public IP address.
 	IdleTimeoutInMinutes *int32 `json:"idleTimeoutInMinutes,omitempty"`
@@ -5853,7 +5853,7 @@ type VirtualMachineScaleSetReimageParameters struct {
 	VirtualMachineReimageParameters
 	// The virtual machine scale set instance ids. Omitting the virtual machine scale set instance ids will result in the operation being performed on all virtual
 	// machines in the virtual machine scale set.
-	InstanceIDs *[]string `json:"instanceIds,omitempty"`
+	InstanceIDs *[]*string `json:"instanceIds,omitempty"`
 }
 
 // VirtualMachineScaleSetResponse is the response envelope for operations that return a VirtualMachineScaleSet type.
@@ -5919,7 +5919,7 @@ type VirtualMachineScaleSetStorageProfile struct {
 	// Specifies the parameters that are used to add data disks to the virtual machines in the scale set.
 	// For more information about disks, see About disks and VHDs for Azure virtual machines
 	// [https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-about-disks-vhds?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json].
-	DataDisks *[]VirtualMachineScaleSetDataDisk `json:"dataDisks,omitempty"`
+	DataDisks *[]*VirtualMachineScaleSetDataDisk `json:"dataDisks,omitempty"`
 
 	// Specifies information about the image to use. You can specify information about platform images, marketplace images, or virtual machine images. This
 	// element is required when you want to use a platform
@@ -5973,16 +5973,16 @@ type VirtualMachineScaleSetUpdateIPConfiguration struct {
 // Describes a virtual machine scale set network profile's IP configuration properties.
 type VirtualMachineScaleSetUpdateIPConfigurationProperties struct {
 	// The application gateway backend address pools.
-	ApplicationGatewayBackendAddressPools *[]SubResource `json:"applicationGatewayBackendAddressPools,omitempty"`
+	ApplicationGatewayBackendAddressPools *[]*SubResource `json:"applicationGatewayBackendAddressPools,omitempty"`
 
 	// Specifies an array of references to application security group.
-	ApplicationSecurityGroups *[]SubResource `json:"applicationSecurityGroups,omitempty"`
+	ApplicationSecurityGroups *[]*SubResource `json:"applicationSecurityGroups,omitempty"`
 
 	// The load balancer backend address pools.
-	LoadBalancerBackendAddressPools *[]SubResource `json:"loadBalancerBackendAddressPools,omitempty"`
+	LoadBalancerBackendAddressPools *[]*SubResource `json:"loadBalancerBackendAddressPools,omitempty"`
 
 	// The load balancer inbound nat pools.
-	LoadBalancerInboundNatPools *[]SubResource `json:"loadBalancerInboundNatPools,omitempty"`
+	LoadBalancerInboundNatPools *[]*SubResource `json:"loadBalancerInboundNatPools,omitempty"`
 
 	// Specifies the primary IP Configuration in case the network interface has more than one IP Configuration.
 	Primary *bool `json:"primary,omitempty"`
@@ -6020,7 +6020,7 @@ type VirtualMachineScaleSetUpdateNetworkConfigurationProperties struct {
 	EnableIPForwarding *bool `json:"enableIPForwarding,omitempty"`
 
 	// The virtual machine scale set IP Configuration.
-	IPConfigurations *[]VirtualMachineScaleSetUpdateIPConfiguration `json:"ipConfigurations,omitempty"`
+	IPConfigurations *[]*VirtualMachineScaleSetUpdateIPConfiguration `json:"ipConfigurations,omitempty"`
 
 	// The network security group.
 	NetworkSecurityGroup *SubResource `json:"networkSecurityGroup,omitempty"`
@@ -6036,7 +6036,7 @@ type VirtualMachineScaleSetUpdateNetworkProfile struct {
 	HealthProbe *APIEntityReference `json:"healthProbe,omitempty"`
 
 	// The list of network configurations.
-	NetworkInterfaceConfigurations *[]VirtualMachineScaleSetUpdateNetworkConfiguration `json:"networkInterfaceConfigurations,omitempty"`
+	NetworkInterfaceConfigurations *[]*VirtualMachineScaleSetUpdateNetworkConfiguration `json:"networkInterfaceConfigurations,omitempty"`
 }
 
 // Describes virtual machine scale set operating system disk Update Object. This should be used for Updating VMSS OS Disk.
@@ -6057,7 +6057,7 @@ type VirtualMachineScaleSetUpdateOSDisk struct {
 	ManagedDisk *VirtualMachineScaleSetManagedDiskParameters `json:"managedDisk,omitempty"`
 
 	// The list of virtual hard disk container uris.
-	VhdContainers *[]string `json:"vhdContainers,omitempty"`
+	VhdContainers *[]*string `json:"vhdContainers,omitempty"`
 
 	// Specifies whether writeAccelerator should be enabled or disabled on the disk.
 	WriteAcceleratorEnabled *bool `json:"writeAcceleratorEnabled,omitempty"`
@@ -6072,7 +6072,7 @@ type VirtualMachineScaleSetUpdateOSProfile struct {
 	LinuxConfiguration *LinuxConfiguration `json:"linuxConfiguration,omitempty"`
 
 	// The List of certificates for addition to the VM.
-	Secrets *[]VaultSecretGroup `json:"secrets,omitempty"`
+	Secrets *[]*VaultSecretGroup `json:"secrets,omitempty"`
 
 	// The Windows Configuration of the OS profile.
 	WindowsConfiguration *WindowsConfiguration `json:"windowsConfiguration,omitempty"`
@@ -6136,7 +6136,7 @@ type VirtualMachineScaleSetUpdatePublicIPAddressConfigurationProperties struct {
 // Describes a virtual machine scale set storage profile.
 type VirtualMachineScaleSetUpdateStorageProfile struct {
 	// The data disks.
-	DataDisks *[]VirtualMachineScaleSetDataDisk `json:"dataDisks,omitempty"`
+	DataDisks *[]*VirtualMachineScaleSetDataDisk `json:"dataDisks,omitempty"`
 
 	// The image reference.
 	ImageReference *ImageReference `json:"imageReference,omitempty"`
@@ -6190,13 +6190,13 @@ type VirtualMachineScaleSetVM struct {
 	Properties *VirtualMachineScaleSetVMProperties `json:"properties,omitempty"`
 
 	// READ-ONLY; The virtual machine child extension resources.
-	Resources *[]VirtualMachineExtension `json:"resources,omitempty" azure:"ro"`
+	Resources *[]*VirtualMachineExtension `json:"resources,omitempty" azure:"ro"`
 
 	// READ-ONLY; The virtual machine SKU.
 	SKU *SKU `json:"sku,omitempty" azure:"ro"`
 
 	// READ-ONLY; The virtual machine zones.
-	Zones *[]string `json:"zones,omitempty" azure:"ro"`
+	Zones *[]*string `json:"zones,omitempty" azure:"ro"`
 }
 
 // VirtualMachineScaleSetVMExtensionsBeginCreateOrUpdateOptions contains the optional parameters for the VirtualMachineScaleSetVMExtensions.BeginCreateOrUpdate
@@ -6233,20 +6233,20 @@ type VirtualMachineScaleSetVMExtensionsSummary struct {
 	Name *string `json:"name,omitempty" azure:"ro"`
 
 	// READ-ONLY; The extensions information.
-	StatusesSummary *[]VirtualMachineStatusCodeCount `json:"statusesSummary,omitempty" azure:"ro"`
+	StatusesSummary *[]*VirtualMachineStatusCodeCount `json:"statusesSummary,omitempty" azure:"ro"`
 }
 
 // Specifies a list of virtual machine instance IDs from the VM scale set.
 type VirtualMachineScaleSetVMInstanceIDs struct {
 	// The virtual machine scale set instance ids. Omitting the virtual machine scale set instance ids will result in the operation being performed on all virtual
 	// machines in the virtual machine scale set.
-	InstanceIDs *[]string `json:"instanceIds,omitempty"`
+	InstanceIDs *[]*string `json:"instanceIds,omitempty"`
 }
 
 // Specifies a list of virtual machine instance IDs from the VM scale set.
 type VirtualMachineScaleSetVMInstanceRequiredIDs struct {
 	// The virtual machine scale set instance ids.
-	InstanceIDs *[]string `json:"instanceIds,omitempty"`
+	InstanceIDs *[]*string `json:"instanceIds,omitempty"`
 }
 
 // The instance view of a virtual machine scale set VM.
@@ -6257,10 +6257,10 @@ type VirtualMachineScaleSetVMInstanceView struct {
 	BootDiagnostics *BootDiagnosticsInstanceView `json:"bootDiagnostics,omitempty"`
 
 	// The disks information.
-	Disks *[]DiskInstanceView `json:"disks,omitempty"`
+	Disks *[]*DiskInstanceView `json:"disks,omitempty"`
 
 	// The extensions information.
-	Extensions *[]VirtualMachineExtensionInstanceView `json:"extensions,omitempty"`
+	Extensions *[]*VirtualMachineExtensionInstanceView `json:"extensions,omitempty"`
 
 	// The Maintenance Operation status on the virtual machine.
 	MaintenanceRedeployStatus *MaintenanceRedeployStatus `json:"maintenanceRedeployStatus,omitempty"`
@@ -6278,7 +6278,7 @@ type VirtualMachineScaleSetVMInstanceView struct {
 	RdpThumbPrint *string `json:"rdpThumbPrint,omitempty"`
 
 	// The resource status information.
-	Statuses *[]InstanceViewStatus `json:"statuses,omitempty"`
+	Statuses *[]*InstanceViewStatus `json:"statuses,omitempty"`
 
 	// The VM Agent running on the virtual machine.
 	VMAgent *VirtualMachineAgentInstanceView `json:"vmAgent,omitempty"`
@@ -6302,7 +6302,7 @@ type VirtualMachineScaleSetVMListResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// The list of virtual machine scale sets VMs.
-	Value *[]VirtualMachineScaleSetVM `json:"value,omitempty"`
+	Value *[]*VirtualMachineScaleSetVM `json:"value,omitempty"`
 }
 
 // VirtualMachineScaleSetVMListResultResponse is the response envelope for operations that return a VirtualMachineScaleSetVMListResult type.
@@ -6317,7 +6317,7 @@ type VirtualMachineScaleSetVMListResultResponse struct {
 // Describes a virtual machine scale set VM network profile.
 type VirtualMachineScaleSetVMNetworkProfileConfiguration struct {
 	// The list of network configurations.
-	NetworkInterfaceConfigurations *[]VirtualMachineScaleSetNetworkConfiguration `json:"networkInterfaceConfigurations,omitempty"`
+	NetworkInterfaceConfigurations *[]*VirtualMachineScaleSetNetworkConfiguration `json:"networkInterfaceConfigurations,omitempty"`
 }
 
 // VirtualMachineScaleSetVMPollerResponse is the response envelope for operations that asynchronously return a VirtualMachineScaleSetVM type.
@@ -6701,7 +6701,7 @@ type VirtualMachineSize struct {
 // The List Virtual Machine operation response.
 type VirtualMachineSizeListResult struct {
 	// The list of virtual machine sizes.
-	Value *[]VirtualMachineSize `json:"value,omitempty"`
+	Value *[]*VirtualMachineSize `json:"value,omitempty"`
 }
 
 // VirtualMachineSizeListResultResponse is the response envelope for operations that return a VirtualMachineSizeListResult type.
@@ -6744,7 +6744,7 @@ type VirtualMachineUpdate struct {
 	Properties *VirtualMachineProperties `json:"properties,omitempty"`
 
 	// The virtual machine zones.
-	Zones *[]string `json:"zones,omitempty"`
+	Zones *[]*string `json:"zones,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type VirtualMachineUpdate.
@@ -6875,7 +6875,7 @@ type VirtualMachinesSimulateEvictionOptions struct {
 // Describes Windows Remote Management configuration of the VM
 type WinRMConfiguration struct {
 	// The list of Windows Remote Management listeners
-	Listeners *[]WinRMListener `json:"listeners,omitempty"`
+	Listeners *[]*WinRMListener `json:"listeners,omitempty"`
 }
 
 // Describes Protocol and thumbprint of Windows Remote Management listener
@@ -6901,7 +6901,7 @@ type WinRMListener struct {
 // Specifies Windows operating system settings on the virtual machine.
 type WindowsConfiguration struct {
 	// Specifies additional base-64 encoded XML formatted information that can be included in the Unattend.xml file, which is used by Windows Setup.
-	AdditionalUnattendContent *[]AdditionalUnattendContent `json:"additionalUnattendContent,omitempty"`
+	AdditionalUnattendContent *[]*AdditionalUnattendContent `json:"additionalUnattendContent,omitempty"`
 
 	// Indicates whether Automatic Updates is enabled for the Windows virtual machine. Default value is true.
 	// For virtual machine scale sets, this property can be updated and updates will take effect on OS reprovisioning.

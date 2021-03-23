@@ -14,12 +14,12 @@ import (
 
 type CatalogArray struct {
 	// Array of products
-	ProductArray *[]Product `json:"productArray,omitempty"`
+	ProductArray *[]*Product `json:"productArray,omitempty"`
 }
 
 type CatalogArrayOfDictionary struct {
 	// Array of dictionary of products
-	ProductArrayOfDictionary *[]map[string]Product `json:"productArrayOfDictionary,omitempty"`
+	ProductArrayOfDictionary *[]map[string]*Product `json:"productArrayOfDictionary,omitempty"`
 }
 
 // CatalogArrayResponse is the response envelope for operations that return a CatalogArray type.
@@ -32,12 +32,12 @@ type CatalogArrayResponse struct {
 
 type CatalogDictionary struct {
 	// Dictionary of products
-	ProductDictionary *map[string]Product `json:"productDictionary,omitempty"`
+	ProductDictionary *map[string]*Product `json:"productDictionary,omitempty"`
 }
 
 type CatalogDictionaryOfArray struct {
 	// Dictionary of Array of product
-	ProductDictionaryOfArray *map[string][]Product `json:"productDictionaryOfArray,omitempty"`
+	ProductDictionaryOfArray *map[string][]*Product `json:"productDictionaryOfArray,omitempty"`
 }
 
 // CatalogDictionaryResponse is the response envelope for operations that return a CatalogDictionary type.

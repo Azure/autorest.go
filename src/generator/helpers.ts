@@ -6,7 +6,7 @@
 import { Session } from '@autorest/extension-base';
 import { values } from '@azure-tools/linq';
 import { comment } from '@azure-tools/codegen';
-import { aggregateParameters, isSchemaResponse } from '../common/helpers';
+import { aggregateParameters, isArraySchema, isDictionarySchema, isSchemaResponse } from '../common/helpers';
 import { ArraySchema, CodeModel, DictionarySchema, Language, Parameter, Schema, SchemaType, Operation, GroupProperty, ImplementationLocation, SerializationStyle, ByteArraySchema, ConstantSchema, NumberSchema, DateTimeSchema } from '@azure-tools/codemodel';
 import { ImportManager } from './imports';
 
@@ -32,9 +32,19 @@ export function sortAscending(a: string, b: string): number {
   return a < b ? -1 : a > b ? 1 : 0;
 }
 
+// returns true if the element type for a parameter should be passed by value
+export function elementByValueForParam(param: Parameter): boolean {
+  // passing nil for array elements in headers, paths, and query params
+  // isn't very useful as we'd just skip nil entries.  so disable it.
+  if (param.schema.type === SchemaType.Array) {
+    return param.protocol.http!.in === 'header' || param.protocol.http!.in === 'path' || param.protocol.http!.in === 'query';
+  }
+  return false;
+}
+
 // returns the type name with possible * prefix
 export function formatParameterTypeName(param: Parameter): string {
-  const typeName = substituteDiscriminator(param.schema);
+  const typeName = substituteDiscriminator(param.schema, elementByValueForParam(param));
   // client params with default values are treated as optional
   if (param.required && !(param.implementation === ImplementationLocation.Client && param.clientDefaultValue)) {
     return typeName;
@@ -61,17 +71,25 @@ export function sortParametersByRequired(a: Parameter, b: Parameter): number {
   return 1;
 }
 
-// if a field is a discriminator use the interface type instead
-export function substituteDiscriminator(schema: Schema): string {
+// if a field is a discriminator use the interface type instead.
+// elemByValue is to support corner-cases where we explicitly want
+// the element type to be passed by value.
+export function substituteDiscriminator(schema: Schema, elemByVal: boolean): string {
   switch (schema.type) {
     case SchemaType.Array:
       const arraySchema = <ArraySchema>schema;
       const arrayElem = <Schema>arraySchema.elementType;
-      return `[]${substituteDiscriminator(arrayElem)}`;
+      if (<boolean>arraySchema.language.go!.elementIsPtr && !elemByVal) {
+        return `[]*${substituteDiscriminator(arrayElem, elemByVal)}`;
+      }
+      return `[]${substituteDiscriminator(arrayElem, elemByVal)}`;
     case SchemaType.Dictionary:
       const dictSchema = <DictionarySchema>schema;
       const dictElem = <Schema>dictSchema.elementType;
-      return `map[string]${substituteDiscriminator(dictElem)}`;
+      if (<boolean>dictSchema.language.go!.elementIsPtr) {
+        return `map[string]*${substituteDiscriminator(dictElem, elemByVal)}`;
+      }
+      return `map[string]${substituteDiscriminator(dictElem, elemByVal)}`;
     case SchemaType.Object:
       if (schema.language.go!.discriminatorInterface) {
         return schema.language.go!.discriminatorInterface;

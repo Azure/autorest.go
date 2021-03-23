@@ -259,7 +259,7 @@ type SignedIdentifier struct {
 	ID *string `xml:"Id"`
 }
 
-// SignedIdentifierArrayResponse is the response envelope for operations that return a []SignedIdentifier type.
+// SignedIdentifierArrayResponse is the response envelope for operations that return a []*SignedIdentifier type.
 type SignedIdentifierArrayResponse struct {
 	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
 	ClientRequestID *string `xml:"ClientRequestID"`
@@ -274,7 +274,7 @@ type SignedIdentifierArrayResponse struct {
 	RequestID *string `xml:"RequestID"`
 
 	// A collection of signed identifiers.
-	SignedIdentifiers []SignedIdentifier `xml:"SignedIdentifier"`
+	SignedIdentifiers []*SignedIdentifier `xml:"SignedIdentifier"`
 
 	// Version contains the information returned from the x-ms-version header response.
 	Version *string `xml:"Version"`
@@ -517,7 +517,7 @@ type TableQueryResponse struct {
 	OdataMetadata *string `json:"odata.metadata,omitempty"`
 
 	// List of tables.
-	Value *[]TableResponseProperties `json:"value,omitempty"`
+	Value *[]*TableResponseProperties `json:"value,omitempty"`
 }
 
 // TableQueryResponseResponse is the response envelope for operations that return a TableQueryResponse type.
@@ -611,7 +611,7 @@ func (e TableServiceError) Error() string {
 // Table Service Properties.
 type TableServiceProperties struct {
 	// The set of CORS rules.
-	Cors *[]CorsRule `xml:"Cors>CorsRule"`
+	Cors *[]*CorsRule `xml:"Cors>CorsRule"`
 
 	// A summary of request statistics grouped by API in hourly aggregates for tables.
 	HourMetrics *Metrics `xml:"HourMetrics"`
@@ -685,7 +685,7 @@ type TableSetAccessPolicyOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics logging is enabled.
 	RequestID *string
 	// The acls for the table.
-	TableACL *[]SignedIdentifier
+	TableACL *[]*SignedIdentifier
 	// The timeout parameter is expressed in seconds.
 	Timeout *int32
 }

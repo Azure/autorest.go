@@ -37,10 +37,10 @@ func TestGetArrayItemEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.Value, map[string][]string{
-		"0": {"1", "2", "3"},
+	if r := cmp.Diff(resp.Value, map[string][]*string{
+		"0": to.StringPtrArray("1", "2", "3"),
 		"1": {},
-		"2": {"7", "8", "9"},
+		"2": to.StringPtrArray("7", "8", "9"),
 	}); r != "" {
 		t.Fatal(r)
 	}
@@ -54,10 +54,10 @@ func TestGetArrayItemNull(t *testing.T) {
 		t.Fatal(err)
 	}
 	// TODO: this should technically fail since there's no x-nullable
-	if r := cmp.Diff(resp.Value, map[string][]string{
-		"0": {"1", "2", "3"},
+	if r := cmp.Diff(resp.Value, map[string][]*string{
+		"0": to.StringPtrArray("1", "2", "3"),
 		"1": nil,
-		"2": {"7", "8", "9"},
+		"2": to.StringPtrArray("7", "8", "9"),
 	}); r != "" {
 		t.Fatal(r)
 	}
@@ -82,10 +82,10 @@ func TestGetArrayValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.Value, map[string][]string{
-		"0": {"1", "2", "3"},
-		"1": {"4", "5", "6"},
-		"2": {"7", "8", "9"},
+	if r := cmp.Diff(resp.Value, map[string][]*string{
+		"0": to.StringPtrArray("1", "2", "3"),
+		"1": to.StringPtrArray("4", "5", "6"),
+		"2": to.StringPtrArray("7", "8", "9"),
 	}); r != "" {
 		t.Fatal(r)
 	}
@@ -110,14 +110,17 @@ func TestGetBase64URL(t *testing.T) {
 
 // GetBooleanInvalidNull - Get boolean dictionary value {"0": true, "1": null, "2": false }
 func TestGetBooleanInvalidNull(t *testing.T) {
-	t.Skip("no x-nullable, should fail")
 	client := newDictionaryClient()
 	resp, err := client.GetBooleanInvalidNull(context.Background(), nil)
-	if err == nil {
-		t.Fatal("unexpected nil error")
+	if err != nil {
+		t.Fatal(err)
 	}
-	if !reflect.ValueOf(resp).IsZero() {
-		t.Fatal("expected empty response")
+	if r := cmp.Diff(resp.Value, map[string]*bool{
+		"0": to.BoolPtr(true),
+		"1": nil,
+		"2": to.BoolPtr(false),
+	}); r != "" {
+		t.Fatal(r)
 	}
 }
 
@@ -140,11 +143,11 @@ func TestGetBooleanTfft(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.Value, map[string]bool{
-		"0": true,
-		"1": false,
-		"2": false,
-		"3": true,
+	if r := cmp.Diff(resp.Value, map[string]*bool{
+		"0": to.BoolPtr(true),
+		"1": to.BoolPtr(false),
+		"2": to.BoolPtr(false),
+		"3": to.BoolPtr(true),
 	}); r != "" {
 		t.Fatal(r)
 	}
@@ -152,14 +155,16 @@ func TestGetBooleanTfft(t *testing.T) {
 
 // GetByteInvalidNull - Get byte dictionary value {"0": hex(FF FF FF FA), "1": null} with the first item base64 encoded
 func TestGetByteInvalidNull(t *testing.T) {
-	t.Skip("no x-nullable, should fail")
 	client := newDictionaryClient()
 	resp, err := client.GetByteInvalidNull(context.Background(), nil)
-	if err == nil {
-		t.Fatal("unexpected nil error")
+	if err != nil {
+		t.Fatal(err)
 	}
-	if !reflect.ValueOf(resp).IsZero() {
-		t.Fatal("expected empty response")
+	if r := cmp.Diff(resp.Value, map[string][]byte{
+		"0": {0xab, 0xac, 0xad},
+		"1": nil,
+	}); r != "" {
+		t.Fatal(r)
 	}
 }
 
@@ -186,7 +191,7 @@ func TestGetComplexEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.Value, map[string]Widget{}); r != "" {
+	if r := cmp.Diff(resp.Value, map[string]*Widget{}); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -198,7 +203,7 @@ func TestGetComplexItemEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.Value, map[string]Widget{
+	if r := cmp.Diff(resp.Value, map[string]*Widget{
 		"0": {Integer: to.Int32Ptr(1), String: to.StringPtr("2")},
 		"1": {},
 		"2": {Integer: to.Int32Ptr(5), String: to.StringPtr("6")},
@@ -209,17 +214,18 @@ func TestGetComplexItemEmpty(t *testing.T) {
 
 // GetComplexItemNull - Get dictionary of complex type with null item {"0": {"integer": 1, "string": "2"}, "1": null, "2": {"integer": 5, "string": "6"}}
 func TestGetComplexItemNull(t *testing.T) {
-	t.Skip("test is invalid, expects nil value but missing x-nullable")
-	/*client := newDictionaryClient()
+	client := newDictionaryClient()
 	resp, err := client.GetComplexItemNull(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.Value, map[string]Widget{
-		"0": Widget{Integer: to.Int32Ptr(1), String: to.StringPtr("2")},
+	if r := cmp.Diff(resp.Value, map[string]*Widget{
+		"0": {Integer: to.Int32Ptr(1), String: to.StringPtr("2")},
 		"1": nil,
-		"2": Widget{Integer: to.Int32Ptr(5), String: to.StringPtr("6")},
-	})*/
+		"2": {Integer: to.Int32Ptr(5), String: to.StringPtr("6")},
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetComplexNull - Get dictionary of complex type null value
@@ -241,7 +247,7 @@ func TestGetComplexValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.Value, map[string]Widget{
+	if r := cmp.Diff(resp.Value, map[string]*Widget{
 		"0": {Integer: to.Int32Ptr(1), String: to.StringPtr("2")},
 		"1": {Integer: to.Int32Ptr(3), String: to.StringPtr("4")},
 		"2": {Integer: to.Int32Ptr(5), String: to.StringPtr("6")},
@@ -264,7 +270,20 @@ func TestGetDateInvalidChars(t *testing.T) {
 
 // GetDateInvalidNull - Get date dictionary value {"0": "2012-01-01", "1": null, "2": "1776-07-04"}
 func TestGetDateInvalidNull(t *testing.T) {
-	t.Skip("x-nullable")
+	client := newDictionaryClient()
+	resp, err := client.GetDateInvalidNull(context.Background(), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	v1 := time.Date(2012, 1, 1, 0, 0, 0, 0, time.UTC)
+	v3 := time.Date(1776, 7, 4, 0, 0, 0, 0, time.UTC)
+	if r := cmp.Diff(resp.Value, map[string]*time.Time{
+		"0": &v1,
+		"1": nil,
+		"2": &v3,
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetDateTimeInvalidChars - Get date dictionary value {"0": "2000-12-01t00:00:01z", "1": "date-time"}
@@ -283,11 +302,15 @@ func TestGetDateTimeInvalidChars(t *testing.T) {
 func TestGetDateTimeInvalidNull(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetDateTimeInvalidNull(context.Background(), nil)
-	if err == nil {
-		t.Fatal("unexpected nil error")
+	if err != nil {
+		t.Fatal(err)
 	}
-	if !reflect.ValueOf(resp).IsZero() {
-		t.Fatal("expected empty response")
+	dt1, _ := time.Parse(time.RFC1123, "Fri, 01 Dec 2000 00:00:01 GMT")
+	if r := cmp.Diff(resp.Value, map[string]*time.Time{
+		"0": &dt1,
+		"1": nil,
+	}); r != "" {
+		t.Fatal(r)
 	}
 }
 
@@ -301,10 +324,10 @@ func TestGetDateTimeRFC1123Valid(t *testing.T) {
 	dt1, _ := time.Parse(time.RFC1123, "Fri, 01 Dec 2000 00:00:01 GMT")
 	dt2, _ := time.Parse(time.RFC1123, "Wed, 02 Jan 1980 00:11:35 GMT")
 	dt3, _ := time.Parse(time.RFC1123, "Wed, 12 Oct 1492 10:15:01 GMT")
-	if r := cmp.Diff(resp.Value, map[string]time.Time{
-		"0": dt1,
-		"1": dt2,
-		"2": dt3,
+	if r := cmp.Diff(resp.Value, map[string]*time.Time{
+		"0": &dt1,
+		"1": &dt2,
+		"2": &dt3,
 	}); r != "" {
 		t.Fatal(r)
 	}
@@ -320,10 +343,10 @@ func TestGetDateTimeValid(t *testing.T) {
 	dt1, _ := time.Parse(time.RFC3339, "2000-12-01T00:00:01Z")
 	dt2, _ := time.Parse(time.RFC3339, "1980-01-02T00:11:35+01:00")
 	dt3, _ := time.Parse(time.RFC3339, "1492-10-12T10:15:01-08:00")
-	if r := cmp.Diff(resp.Value, map[string]time.Time{
-		"0": dt1,
-		"1": dt2,
-		"2": dt3,
+	if r := cmp.Diff(resp.Value, map[string]*time.Time{
+		"0": &dt1,
+		"1": &dt2,
+		"2": &dt3,
 	}); r != "" {
 		t.Fatal(r)
 	}
@@ -339,10 +362,10 @@ func TestGetDateValid(t *testing.T) {
 	dt1 := time.Date(2000, 12, 01, 0, 0, 0, 0, time.UTC)
 	dt2 := time.Date(1980, 01, 02, 0, 0, 0, 0, time.UTC)
 	dt3 := time.Date(1492, 10, 12, 0, 0, 0, 0, time.UTC)
-	if r := cmp.Diff(resp.Value, map[string]time.Time{
-		"0": dt1,
-		"1": dt2,
-		"2": dt3,
+	if r := cmp.Diff(resp.Value, map[string]*time.Time{
+		"0": &dt1,
+		"1": &dt2,
+		"2": &dt3,
 	}); r != "" {
 		t.Fatal(r)
 	}
@@ -355,7 +378,7 @@ func TestGetDictionaryEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.Value, map[string]map[string]string{}); r != "" {
+	if r := cmp.Diff(resp.Value, map[string]map[string]*string{}); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -367,17 +390,17 @@ func TestGetDictionaryItemEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.Value, map[string]map[string]string{
+	if r := cmp.Diff(resp.Value, map[string]map[string]*string{
 		"0": {
-			"1": "one",
-			"2": "two",
-			"3": "three",
+			"1": to.StringPtr("one"),
+			"2": to.StringPtr("two"),
+			"3": to.StringPtr("three"),
 		},
 		"1": {},
 		"2": {
-			"7": "seven",
-			"8": "eight",
-			"9": "nine",
+			"7": to.StringPtr("seven"),
+			"8": to.StringPtr("eight"),
+			"9": to.StringPtr("nine"),
 		},
 	}); r != "" {
 		t.Fatal(r)
@@ -386,12 +409,38 @@ func TestGetDictionaryItemEmpty(t *testing.T) {
 
 // GetDictionaryItemNull - Get an dictionaries of dictionaries of type <string, string> with value {"0": {"1": "one", "2": "two", "3": "three"}, "1": null, "2": {"7": "seven", "8": "eight", "9": "nine"}}
 func TestGetDictionaryItemNull(t *testing.T) {
-	t.Skip("x-nullable")
+	client := newDictionaryClient()
+	resp, err := client.GetDictionaryItemNull(context.Background(), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if r := cmp.Diff(resp.Value, map[string]map[string]*string{
+		"0": {
+			"1": to.StringPtr("one"),
+			"2": to.StringPtr("two"),
+			"3": to.StringPtr("three"),
+		},
+		"1": nil,
+		"2": {
+			"7": to.StringPtr("seven"),
+			"8": to.StringPtr("eight"),
+			"9": to.StringPtr("nine"),
+		},
+	}); r != "" {
+		t.Fatal(r)
+	}
 }
 
 // GetDictionaryNull - Get an dictionaries of dictionaries with value null
 func TestGetDictionaryNull(t *testing.T) {
-	t.Skip("x-nullable")
+	client := newDictionaryClient()
+	resp, err := client.GetDictionaryNull(context.Background(), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if resp.Value != nil {
+		t.Fatal("expected nil value")
+	}
 }
 
 // GetDictionaryValid - Get an dictionaries of dictionaries of type <string, string> with value {"0": {"1": "one", "2": "two", "3": "three"}, "1": {"4": "four", "5": "five", "6": "six"}, "2": {"7": "seven", "8": "eight", "9": "nine"}}
@@ -401,21 +450,21 @@ func TestGetDictionaryValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.Value, map[string]map[string]string{
+	if r := cmp.Diff(resp.Value, map[string]map[string]*string{
 		"0": {
-			"1": "one",
-			"2": "two",
-			"3": "three",
+			"1": to.StringPtr("one"),
+			"2": to.StringPtr("two"),
+			"3": to.StringPtr("three"),
 		},
 		"1": {
-			"4": "four",
-			"5": "five",
-			"6": "six",
+			"4": to.StringPtr("four"),
+			"5": to.StringPtr("five"),
+			"6": to.StringPtr("six"),
 		},
 		"2": {
-			"7": "seven",
-			"8": "eight",
-			"9": "nine",
+			"7": to.StringPtr("seven"),
+			"8": to.StringPtr("eight"),
+			"9": to.StringPtr("nine"),
 		},
 	}); r != "" {
 		t.Fatal(r)
@@ -424,14 +473,17 @@ func TestGetDictionaryValid(t *testing.T) {
 
 // GetDoubleInvalidNull - Get float dictionary value {"0": 0.0, "1": null, "2": 1.2e20}
 func TestGetDoubleInvalidNull(t *testing.T) {
-	t.Skip("should fail as mising x-nullable")
 	client := newDictionaryClient()
 	resp, err := client.GetDoubleInvalidNull(context.Background(), nil)
-	if err == nil {
-		t.Fatal("unexpected nil error")
+	if err != nil {
+		t.Fatal(err)
 	}
-	if !reflect.ValueOf(resp).IsZero() {
-		t.Fatal("expected empty response")
+	if r := cmp.Diff(resp.Value, map[string]*float64{
+		"0": to.Float64Ptr(0),
+		"1": nil,
+		"2": to.Float64Ptr(-1.2e20),
+	}); r != "" {
+		t.Fatal(r)
 	}
 }
 
@@ -454,10 +506,10 @@ func TestGetDoubleValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.Value, map[string]float64{
-		"0": 0,
-		"1": -0.01,
-		"2": -1.2e20,
+	if r := cmp.Diff(resp.Value, map[string]*float64{
+		"0": to.Float64Ptr(0),
+		"1": to.Float64Ptr(-0.01),
+		"2": to.Float64Ptr(-1.2e20),
 	}); r != "" {
 		t.Fatal(r)
 	}
@@ -470,9 +522,9 @@ func TestGetDurationValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.Value, map[string]string{
-		"0": "P123DT22H14M12.011S",
-		"1": "P5DT1H",
+	if r := cmp.Diff(resp.Value, map[string]*string{
+		"0": to.StringPtr("P123DT22H14M12.011S"),
+		"1": to.StringPtr("P5DT1H"),
 	}); r != "" {
 		t.Fatal(r)
 	}
@@ -497,21 +549,24 @@ func TestGetEmptyStringKey(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.Value, map[string]string{"": "val1"}); r != "" {
+	if r := cmp.Diff(resp.Value, map[string]*string{"": to.StringPtr("val1")}); r != "" {
 		t.Fatal(r)
 	}
 }
 
 // GetFloatInvalidNull - Get float dictionary value {"0": 0.0, "1": null, "2": 1.2e20}
 func TestGetFloatInvalidNull(t *testing.T) {
-	t.Skip("should fail, nil but no x-nullable")
 	client := newDictionaryClient()
 	resp, err := client.GetFloatInvalidNull(context.Background(), nil)
-	if err == nil {
-		t.Fatal("unexpected nil error")
+	if err != nil {
+		t.Fatal(err)
 	}
-	if !reflect.ValueOf(resp).IsZero() {
-		t.Fatal("expected empty response")
+	if r := cmp.Diff(resp.Value, map[string]*float32{
+		"0": to.Float32Ptr(0),
+		"1": nil,
+		"2": to.Float32Ptr(-1.2e20),
+	}); r != "" {
+		t.Fatal(r)
 	}
 }
 
@@ -534,10 +589,10 @@ func TestGetFloatValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.Value, map[string]float32{
-		"0": 0,
-		"1": -0.01,
-		"2": -1.2e20,
+	if r := cmp.Diff(resp.Value, map[string]*float32{
+		"0": to.Float32Ptr(0),
+		"1": to.Float32Ptr(-0.01),
+		"2": to.Float32Ptr(-1.2e20),
 	}); r != "" {
 		t.Fatal(r)
 	}
@@ -545,14 +600,17 @@ func TestGetFloatValid(t *testing.T) {
 
 // GetIntInvalidNull - Get integer dictionary value {"0": 1, "1": null, "2": 0}
 func TestGetIntInvalidNull(t *testing.T) {
-	t.Skip("should fail, nil but no x-nullable")
 	client := newDictionaryClient()
 	resp, err := client.GetIntInvalidNull(context.Background(), nil)
-	if err == nil {
-		t.Fatal("unexpected nil error")
+	if err != nil {
+		t.Fatal(err)
 	}
-	if !reflect.ValueOf(resp).IsZero() {
-		t.Fatal("expected empty response")
+	if r := cmp.Diff(resp.Value, map[string]*int32{
+		"0": to.Int32Ptr(1),
+		"1": nil,
+		"2": to.Int32Ptr(0),
+	}); r != "" {
+		t.Fatal(r)
 	}
 }
 
@@ -575,11 +633,11 @@ func TestGetIntegerValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.Value, map[string]int32{
-		"0": 1,
-		"1": -1,
-		"2": 3,
-		"3": 300,
+	if r := cmp.Diff(resp.Value, map[string]*int32{
+		"0": to.Int32Ptr(1),
+		"1": to.Int32Ptr(-1),
+		"2": to.Int32Ptr(3),
+		"3": to.Int32Ptr(300),
 	}); r != "" {
 		t.Fatal(r)
 	}
@@ -599,14 +657,17 @@ func TestGetInvalid(t *testing.T) {
 
 // GetLongInvalidNull - Get long dictionary value {"0": 1, "1": null, "2": 0}
 func TestGetLongInvalidNull(t *testing.T) {
-	t.Skip("should fail, nil but no x-nullable")
 	client := newDictionaryClient()
 	resp, err := client.GetLongInvalidNull(context.Background(), nil)
-	if err == nil {
-		t.Fatal("unexpected nil error")
+	if err != nil {
+		t.Fatal(err)
 	}
-	if !reflect.ValueOf(resp).IsZero() {
-		t.Fatal("expected empty response")
+	if r := cmp.Diff(resp.Value, map[string]*int64{
+		"0": to.Int64Ptr(1),
+		"1": nil,
+		"2": to.Int64Ptr(0),
+	}); r != "" {
+		t.Fatal(r)
 	}
 }
 
@@ -629,11 +690,11 @@ func TestGetLongValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.Value, map[string]int64{
-		"0": 1,
-		"1": -1,
-		"2": 3,
-		"3": 300,
+	if r := cmp.Diff(resp.Value, map[string]*int64{
+		"0": to.Int64Ptr(1),
+		"1": to.Int64Ptr(-1),
+		"2": to.Int64Ptr(3),
+		"3": to.Int64Ptr(300),
 	}); r != "" {
 		t.Fatal(r)
 	}
@@ -665,14 +726,15 @@ func TestGetNullKey(t *testing.T) {
 
 // GetNullValue - Get Dictionary with null value
 func TestGetNullValue(t *testing.T) {
-	t.Skip("should fail, nil but no x-nullable")
 	client := newDictionaryClient()
 	resp, err := client.GetNullValue(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
-	if resp.Value != nil {
-		t.Fatal("expected nil dictionary")
+	if r := cmp.Diff(resp.Value, map[string]*string{
+		"key1": nil,
+	}); r != "" {
+		t.Fatal(r)
 	}
 }
 
@@ -683,10 +745,10 @@ func TestGetStringValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.Value, map[string]string{
-		"0": "foo1",
-		"1": "foo2",
-		"2": "foo3",
+	if r := cmp.Diff(resp.Value, map[string]*string{
+		"0": to.StringPtr("foo1"),
+		"1": to.StringPtr("foo2"),
+		"2": to.StringPtr("foo3"),
 	}); r != "" {
 		t.Fatal(r)
 	}
@@ -706,24 +768,27 @@ func TestGetStringWithInvalid(t *testing.T) {
 
 // GetStringWithNull - Get string dictionary value {"0": "foo", "1": null, "2": "foo2"}
 func TestGetStringWithNull(t *testing.T) {
-	t.Skip("should fail, nil but no x-nullable")
 	client := newDictionaryClient()
 	resp, err := client.GetStringWithNull(context.Background(), nil)
-	if err == nil {
-		t.Fatal("unexpected nil error")
+	if err != nil {
+		t.Fatal(err)
 	}
-	if !reflect.ValueOf(resp).IsZero() {
-		t.Fatal("expected empty response")
+	if r := cmp.Diff(resp.Value, map[string]*string{
+		"0": to.StringPtr("foo"),
+		"1": nil,
+		"2": to.StringPtr("foo2"),
+	}); r != "" {
+		t.Fatal(r)
 	}
 }
 
 // PutArrayValid - Put An array of array of strings {"0": ["1", "2", "3"], "1": ["4", "5", "6"], "2": ["7", "8", "9"]}
 func TestPutArrayValid(t *testing.T) {
 	client := newDictionaryClient()
-	resp, err := client.PutArrayValid(context.Background(), map[string][]string{
-		"0": {"1", "2", "3"},
-		"1": {"4", "5", "6"},
-		"2": {"7", "8", "9"},
+	resp, err := client.PutArrayValid(context.Background(), map[string][]*string{
+		"0": to.StringPtrArray("1", "2", "3"),
+		"1": to.StringPtrArray("4", "5", "6"),
+		"2": to.StringPtrArray("7", "8", "9"),
 	}, nil)
 	if err != nil {
 		t.Fatal(err)
@@ -736,11 +801,11 @@ func TestPutArrayValid(t *testing.T) {
 // PutBooleanTfft - Set dictionary value empty {"0": true, "1": false, "2": false, "3": true }
 func TestPutBooleanTfft(t *testing.T) {
 	client := newDictionaryClient()
-	resp, err := client.PutBooleanTfft(context.Background(), map[string]bool{
-		"0": true,
-		"1": false,
-		"2": false,
-		"3": true,
+	resp, err := client.PutBooleanTfft(context.Background(), map[string]*bool{
+		"0": to.BoolPtr(true),
+		"1": to.BoolPtr(false),
+		"2": to.BoolPtr(false),
+		"3": to.BoolPtr(true),
 	}, nil)
 	if err != nil {
 		t.Fatal(err)
@@ -769,7 +834,7 @@ func TestPutByteValid(t *testing.T) {
 // PutComplexValid - Put an dictionary of complex type with values {"0": {"integer": 1, "string": "2"}, "1": {"integer": 3, "string": "4"}, "2": {"integer": 5, "string": "6"}}
 func TestPutComplexValid(t *testing.T) {
 	client := newDictionaryClient()
-	resp, err := client.PutComplexValid(context.Background(), map[string]Widget{
+	resp, err := client.PutComplexValid(context.Background(), map[string]*Widget{
 		"0": {Integer: to.Int32Ptr(1), String: to.StringPtr("2")},
 		"1": {Integer: to.Int32Ptr(3), String: to.StringPtr("4")},
 		"2": {Integer: to.Int32Ptr(5), String: to.StringPtr("6")},
@@ -788,10 +853,10 @@ func TestPutDateTimeRFC1123Valid(t *testing.T) {
 	dt1, _ := time.Parse(time.RFC1123, "Fri, 01 Dec 2000 00:00:01 GMT")
 	dt2, _ := time.Parse(time.RFC1123, "Wed, 02 Jan 1980 00:11:35 GMT")
 	dt3, _ := time.Parse(time.RFC1123, "Wed, 12 Oct 1492 10:15:01 GMT")
-	resp, err := client.PutDateTimeRFC1123Valid(context.Background(), map[string]time.Time{
-		"0": dt1,
-		"1": dt2,
-		"2": dt3,
+	resp, err := client.PutDateTimeRFC1123Valid(context.Background(), map[string]*time.Time{
+		"0": &dt1,
+		"1": &dt2,
+		"2": &dt3,
 	}, nil)
 	if err != nil {
 		t.Fatal(err)
@@ -807,10 +872,10 @@ func TestPutDateTimeValid(t *testing.T) {
 	dt1, _ := time.Parse(time.RFC3339, "2000-12-01T00:00:01Z")
 	dt2, _ := time.Parse(time.RFC3339, "1980-01-01T23:11:35Z")
 	dt3, _ := time.Parse(time.RFC3339, "1492-10-12T18:15:01Z")
-	resp, err := client.PutDateTimeValid(context.Background(), map[string]time.Time{
-		"0": dt1,
-		"1": dt2,
-		"2": dt3,
+	resp, err := client.PutDateTimeValid(context.Background(), map[string]*time.Time{
+		"0": &dt1,
+		"1": &dt2,
+		"2": &dt3,
 	}, nil)
 	if err != nil {
 		t.Fatal(err)
@@ -826,10 +891,10 @@ func TestPutDateValid(t *testing.T) {
 	d1 := time.Date(2000, 12, 01, 0, 0, 0, 0, time.UTC)
 	d2 := time.Date(1980, 01, 02, 0, 0, 0, 0, time.UTC)
 	d3 := time.Date(1492, 10, 12, 0, 0, 0, 0, time.UTC)
-	resp, err := client.PutDateValid(context.Background(), map[string]time.Time{
-		"0": d1,
-		"1": d2,
-		"2": d3,
+	resp, err := client.PutDateValid(context.Background(), map[string]*time.Time{
+		"0": &d1,
+		"1": &d2,
+		"2": &d3,
 	}, nil)
 	if err != nil {
 		t.Fatal(err)
@@ -842,21 +907,21 @@ func TestPutDateValid(t *testing.T) {
 // PutDictionaryValid - Get an dictionaries of dictionaries of type <string, string> with value {"0": {"1": "one", "2": "two", "3": "three"}, "1": {"4": "four", "5": "five", "6": "six"}, "2": {"7": "seven", "8": "eight", "9": "nine"}}
 func TestPutDictionaryValid(t *testing.T) {
 	client := newDictionaryClient()
-	resp, err := client.PutDictionaryValid(context.Background(), map[string]map[string]string{
+	resp, err := client.PutDictionaryValid(context.Background(), map[string]map[string]*string{
 		"0": {
-			"1": "one",
-			"2": "two",
-			"3": "three",
+			"1": to.StringPtr("one"),
+			"2": to.StringPtr("two"),
+			"3": to.StringPtr("three"),
 		},
 		"1": {
-			"4": "four",
-			"5": "five",
-			"6": "six",
+			"4": to.StringPtr("four"),
+			"5": to.StringPtr("five"),
+			"6": to.StringPtr("six"),
 		},
 		"2": {
-			"7": "seven",
-			"8": "eight",
-			"9": "nine",
+			"7": to.StringPtr("seven"),
+			"8": to.StringPtr("eight"),
+			"9": to.StringPtr("nine"),
 		},
 	}, nil)
 	if err != nil {
@@ -870,10 +935,10 @@ func TestPutDictionaryValid(t *testing.T) {
 // PutDoubleValid - Set dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
 func TestPutDoubleValid(t *testing.T) {
 	client := newDictionaryClient()
-	resp, err := client.PutDoubleValid(context.Background(), map[string]float64{
-		"0": 0,
-		"1": -0.01,
-		"2": -1.2e20,
+	resp, err := client.PutDoubleValid(context.Background(), map[string]*float64{
+		"0": to.Float64Ptr(0),
+		"1": to.Float64Ptr(-0.01),
+		"2": to.Float64Ptr(-1.2e20),
 	}, nil)
 	if err != nil {
 		t.Fatal(err)
@@ -886,9 +951,9 @@ func TestPutDoubleValid(t *testing.T) {
 // PutDurationValid - Set dictionary value  {"0": "P123DT22H14M12.011S", "1": "P5DT1H0M0S"}
 func TestPutDurationValid(t *testing.T) {
 	client := newDictionaryClient()
-	resp, err := client.PutDurationValid(context.Background(), map[string]string{
-		"0": "P123DT22H14M12.011S",
-		"1": "P5DT1H",
+	resp, err := client.PutDurationValid(context.Background(), map[string]*string{
+		"0": to.StringPtr("P123DT22H14M12.011S"),
+		"1": to.StringPtr("P5DT1H"),
 	}, nil)
 	if err != nil {
 		t.Fatal(err)
@@ -901,7 +966,7 @@ func TestPutDurationValid(t *testing.T) {
 // PutEmpty - Set dictionary value empty {}
 func TestPutEmpty(t *testing.T) {
 	client := newDictionaryClient()
-	resp, err := client.PutEmpty(context.Background(), map[string]string{}, nil)
+	resp, err := client.PutEmpty(context.Background(), map[string]*string{}, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -913,10 +978,10 @@ func TestPutEmpty(t *testing.T) {
 // PutFloatValid - Set dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
 func TestPutFloatValid(t *testing.T) {
 	client := newDictionaryClient()
-	resp, err := client.PutFloatValid(context.Background(), map[string]float32{
-		"0": 0,
-		"1": -0.01,
-		"2": -1.2e20,
+	resp, err := client.PutFloatValid(context.Background(), map[string]*float32{
+		"0": to.Float32Ptr(0),
+		"1": to.Float32Ptr(-0.01),
+		"2": to.Float32Ptr(-1.2e20),
 	}, nil)
 	if err != nil {
 		t.Fatal(err)
@@ -929,11 +994,11 @@ func TestPutFloatValid(t *testing.T) {
 // PutIntegerValid - Set dictionary value empty {"0": 1, "1": -1, "2": 3, "3": 300}
 func TestPutIntegerValid(t *testing.T) {
 	client := newDictionaryClient()
-	resp, err := client.PutIntegerValid(context.Background(), map[string]int32{
-		"0": 1,
-		"1": -1,
-		"2": 3,
-		"3": 300,
+	resp, err := client.PutIntegerValid(context.Background(), map[string]*int32{
+		"0": to.Int32Ptr(1),
+		"1": to.Int32Ptr(-1),
+		"2": to.Int32Ptr(3),
+		"3": to.Int32Ptr(300),
 	}, nil)
 	if err != nil {
 		t.Fatal(err)
@@ -946,11 +1011,11 @@ func TestPutIntegerValid(t *testing.T) {
 // PutLongValid - Set dictionary value empty {"0": 1, "1": -1, "2": 3, "3": 300}
 func TestPutLongValid(t *testing.T) {
 	client := newDictionaryClient()
-	resp, err := client.PutLongValid(context.Background(), map[string]int64{
-		"0": 1,
-		"1": -1,
-		"2": 3,
-		"3": 300,
+	resp, err := client.PutLongValid(context.Background(), map[string]*int64{
+		"0": to.Int64Ptr(1),
+		"1": to.Int64Ptr(-1),
+		"2": to.Int64Ptr(3),
+		"3": to.Int64Ptr(300),
 	}, nil)
 	if err != nil {
 		t.Fatal(err)
@@ -963,10 +1028,10 @@ func TestPutLongValid(t *testing.T) {
 // PutStringValid - Set dictionary value {"0": "foo1", "1": "foo2", "2": "foo3"}
 func TestPutStringValid(t *testing.T) {
 	client := newDictionaryClient()
-	resp, err := client.PutStringValid(context.Background(), map[string]string{
-		"0": "foo1",
-		"1": "foo2",
-		"2": "foo3",
+	resp, err := client.PutStringValid(context.Background(), map[string]*string{
+		"0": to.StringPtr("foo1"),
+		"1": to.StringPtr("foo2"),
+		"2": to.StringPtr("foo3"),
 	}, nil)
 	if err != nil {
 		t.Fatal(err)

@@ -55,7 +55,7 @@ func (client *DictionaryClient) getArrayEmptyCreateRequest(ctx context.Context, 
 
 // getArrayEmptyHandleResponse handles the GetArrayEmpty response.
 func (client *DictionaryClient) getArrayEmptyHandleResponse(resp *azcore.Response) (MapOfStringArrayResponse, error) {
-	var val map[string][]string
+	var val map[string][]*string
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return MapOfStringArrayResponse{}, err
 	}
@@ -101,7 +101,7 @@ func (client *DictionaryClient) getArrayItemEmptyCreateRequest(ctx context.Conte
 
 // getArrayItemEmptyHandleResponse handles the GetArrayItemEmpty response.
 func (client *DictionaryClient) getArrayItemEmptyHandleResponse(resp *azcore.Response) (MapOfStringArrayResponse, error) {
-	var val map[string][]string
+	var val map[string][]*string
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return MapOfStringArrayResponse{}, err
 	}
@@ -147,7 +147,7 @@ func (client *DictionaryClient) getArrayItemNullCreateRequest(ctx context.Contex
 
 // getArrayItemNullHandleResponse handles the GetArrayItemNull response.
 func (client *DictionaryClient) getArrayItemNullHandleResponse(resp *azcore.Response) (MapOfStringArrayResponse, error) {
-	var val map[string][]string
+	var val map[string][]*string
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return MapOfStringArrayResponse{}, err
 	}
@@ -193,7 +193,7 @@ func (client *DictionaryClient) getArrayNullCreateRequest(ctx context.Context, o
 
 // getArrayNullHandleResponse handles the GetArrayNull response.
 func (client *DictionaryClient) getArrayNullHandleResponse(resp *azcore.Response) (MapOfStringArrayResponse, error) {
-	var val map[string][]string
+	var val map[string][]*string
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return MapOfStringArrayResponse{}, err
 	}
@@ -239,7 +239,7 @@ func (client *DictionaryClient) getArrayValidCreateRequest(ctx context.Context, 
 
 // getArrayValidHandleResponse handles the GetArrayValid response.
 func (client *DictionaryClient) getArrayValidHandleResponse(resp *azcore.Response) (MapOfStringArrayResponse, error) {
-	var val map[string][]string
+	var val map[string][]*string
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return MapOfStringArrayResponse{}, err
 	}
@@ -331,7 +331,7 @@ func (client *DictionaryClient) getBooleanInvalidNullCreateRequest(ctx context.C
 
 // getBooleanInvalidNullHandleResponse handles the GetBooleanInvalidNull response.
 func (client *DictionaryClient) getBooleanInvalidNullHandleResponse(resp *azcore.Response) (MapOfBoolResponse, error) {
-	var val map[string]bool
+	var val map[string]*bool
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return MapOfBoolResponse{}, err
 	}
@@ -377,7 +377,7 @@ func (client *DictionaryClient) getBooleanInvalidStringCreateRequest(ctx context
 
 // getBooleanInvalidStringHandleResponse handles the GetBooleanInvalidString response.
 func (client *DictionaryClient) getBooleanInvalidStringHandleResponse(resp *azcore.Response) (MapOfBoolResponse, error) {
-	var val map[string]bool
+	var val map[string]*bool
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return MapOfBoolResponse{}, err
 	}
@@ -423,7 +423,7 @@ func (client *DictionaryClient) getBooleanTfftCreateRequest(ctx context.Context,
 
 // getBooleanTfftHandleResponse handles the GetBooleanTfft response.
 func (client *DictionaryClient) getBooleanTfftHandleResponse(resp *azcore.Response) (MapOfBoolResponse, error) {
-	var val map[string]bool
+	var val map[string]*bool
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return MapOfBoolResponse{}, err
 	}
@@ -561,7 +561,7 @@ func (client *DictionaryClient) getComplexEmptyCreateRequest(ctx context.Context
 
 // getComplexEmptyHandleResponse handles the GetComplexEmpty response.
 func (client *DictionaryClient) getComplexEmptyHandleResponse(resp *azcore.Response) (MapOfWidgetResponse, error) {
-	var val map[string]Widget
+	var val map[string]*Widget
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return MapOfWidgetResponse{}, err
 	}
@@ -607,7 +607,7 @@ func (client *DictionaryClient) getComplexItemEmptyCreateRequest(ctx context.Con
 
 // getComplexItemEmptyHandleResponse handles the GetComplexItemEmpty response.
 func (client *DictionaryClient) getComplexItemEmptyHandleResponse(resp *azcore.Response) (MapOfWidgetResponse, error) {
-	var val map[string]Widget
+	var val map[string]*Widget
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return MapOfWidgetResponse{}, err
 	}
@@ -653,7 +653,7 @@ func (client *DictionaryClient) getComplexItemNullCreateRequest(ctx context.Cont
 
 // getComplexItemNullHandleResponse handles the GetComplexItemNull response.
 func (client *DictionaryClient) getComplexItemNullHandleResponse(resp *azcore.Response) (MapOfWidgetResponse, error) {
-	var val map[string]Widget
+	var val map[string]*Widget
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return MapOfWidgetResponse{}, err
 	}
@@ -699,7 +699,7 @@ func (client *DictionaryClient) getComplexNullCreateRequest(ctx context.Context,
 
 // getComplexNullHandleResponse handles the GetComplexNull response.
 func (client *DictionaryClient) getComplexNullHandleResponse(resp *azcore.Response) (MapOfWidgetResponse, error) {
-	var val map[string]Widget
+	var val map[string]*Widget
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return MapOfWidgetResponse{}, err
 	}
@@ -746,7 +746,7 @@ func (client *DictionaryClient) getComplexValidCreateRequest(ctx context.Context
 
 // getComplexValidHandleResponse handles the GetComplexValid response.
 func (client *DictionaryClient) getComplexValidHandleResponse(resp *azcore.Response) (MapOfWidgetResponse, error) {
-	var val map[string]Widget
+	var val map[string]*Widget
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return MapOfWidgetResponse{}, err
 	}
@@ -792,13 +792,13 @@ func (client *DictionaryClient) getDateInvalidCharsCreateRequest(ctx context.Con
 
 // getDateInvalidCharsHandleResponse handles the GetDateInvalidChars response.
 func (client *DictionaryClient) getDateInvalidCharsHandleResponse(resp *azcore.Response) (MapOfTimeResponse, error) {
-	aux := map[string]dateType{}
+	aux := map[string]*dateType{}
 	if err := resp.UnmarshalAsJSON(&aux); err != nil {
 		return MapOfTimeResponse{}, err
 	}
-	cp := map[string]time.Time{}
+	cp := map[string]*time.Time{}
 	for k, v := range aux {
-		cp[k] = time.Time(v)
+		cp[k] = (*time.Time)(v)
 	}
 	return MapOfTimeResponse{RawResponse: resp.Response, Value: cp}, nil
 }
@@ -842,13 +842,13 @@ func (client *DictionaryClient) getDateInvalidNullCreateRequest(ctx context.Cont
 
 // getDateInvalidNullHandleResponse handles the GetDateInvalidNull response.
 func (client *DictionaryClient) getDateInvalidNullHandleResponse(resp *azcore.Response) (MapOfTimeResponse, error) {
-	aux := map[string]dateType{}
+	aux := map[string]*dateType{}
 	if err := resp.UnmarshalAsJSON(&aux); err != nil {
 		return MapOfTimeResponse{}, err
 	}
-	cp := map[string]time.Time{}
+	cp := map[string]*time.Time{}
 	for k, v := range aux {
-		cp[k] = time.Time(v)
+		cp[k] = (*time.Time)(v)
 	}
 	return MapOfTimeResponse{RawResponse: resp.Response, Value: cp}, nil
 }
@@ -892,13 +892,13 @@ func (client *DictionaryClient) getDateTimeInvalidCharsCreateRequest(ctx context
 
 // getDateTimeInvalidCharsHandleResponse handles the GetDateTimeInvalidChars response.
 func (client *DictionaryClient) getDateTimeInvalidCharsHandleResponse(resp *azcore.Response) (MapOfTimeResponse, error) {
-	aux := map[string]timeRFC3339{}
+	aux := map[string]*timeRFC3339{}
 	if err := resp.UnmarshalAsJSON(&aux); err != nil {
 		return MapOfTimeResponse{}, err
 	}
-	cp := map[string]time.Time{}
+	cp := map[string]*time.Time{}
 	for k, v := range aux {
-		cp[k] = time.Time(v)
+		cp[k] = (*time.Time)(v)
 	}
 	return MapOfTimeResponse{RawResponse: resp.Response, Value: cp}, nil
 }
@@ -942,13 +942,13 @@ func (client *DictionaryClient) getDateTimeInvalidNullCreateRequest(ctx context.
 
 // getDateTimeInvalidNullHandleResponse handles the GetDateTimeInvalidNull response.
 func (client *DictionaryClient) getDateTimeInvalidNullHandleResponse(resp *azcore.Response) (MapOfTimeResponse, error) {
-	aux := map[string]timeRFC3339{}
+	aux := map[string]*timeRFC3339{}
 	if err := resp.UnmarshalAsJSON(&aux); err != nil {
 		return MapOfTimeResponse{}, err
 	}
-	cp := map[string]time.Time{}
+	cp := map[string]*time.Time{}
 	for k, v := range aux {
-		cp[k] = time.Time(v)
+		cp[k] = (*time.Time)(v)
 	}
 	return MapOfTimeResponse{RawResponse: resp.Response, Value: cp}, nil
 }
@@ -993,13 +993,13 @@ func (client *DictionaryClient) getDateTimeRFC1123ValidCreateRequest(ctx context
 
 // getDateTimeRFC1123ValidHandleResponse handles the GetDateTimeRFC1123Valid response.
 func (client *DictionaryClient) getDateTimeRFC1123ValidHandleResponse(resp *azcore.Response) (MapOfTimeResponse, error) {
-	aux := map[string]timeRFC1123{}
+	aux := map[string]*timeRFC1123{}
 	if err := resp.UnmarshalAsJSON(&aux); err != nil {
 		return MapOfTimeResponse{}, err
 	}
-	cp := map[string]time.Time{}
+	cp := map[string]*time.Time{}
 	for k, v := range aux {
-		cp[k] = time.Time(v)
+		cp[k] = (*time.Time)(v)
 	}
 	return MapOfTimeResponse{RawResponse: resp.Response, Value: cp}, nil
 }
@@ -1043,13 +1043,13 @@ func (client *DictionaryClient) getDateTimeValidCreateRequest(ctx context.Contex
 
 // getDateTimeValidHandleResponse handles the GetDateTimeValid response.
 func (client *DictionaryClient) getDateTimeValidHandleResponse(resp *azcore.Response) (MapOfTimeResponse, error) {
-	aux := map[string]timeRFC3339{}
+	aux := map[string]*timeRFC3339{}
 	if err := resp.UnmarshalAsJSON(&aux); err != nil {
 		return MapOfTimeResponse{}, err
 	}
-	cp := map[string]time.Time{}
+	cp := map[string]*time.Time{}
 	for k, v := range aux {
-		cp[k] = time.Time(v)
+		cp[k] = (*time.Time)(v)
 	}
 	return MapOfTimeResponse{RawResponse: resp.Response, Value: cp}, nil
 }
@@ -1093,13 +1093,13 @@ func (client *DictionaryClient) getDateValidCreateRequest(ctx context.Context, o
 
 // getDateValidHandleResponse handles the GetDateValid response.
 func (client *DictionaryClient) getDateValidHandleResponse(resp *azcore.Response) (MapOfTimeResponse, error) {
-	aux := map[string]dateType{}
+	aux := map[string]*dateType{}
 	if err := resp.UnmarshalAsJSON(&aux); err != nil {
 		return MapOfTimeResponse{}, err
 	}
-	cp := map[string]time.Time{}
+	cp := map[string]*time.Time{}
 	for k, v := range aux {
-		cp[k] = time.Time(v)
+		cp[k] = (*time.Time)(v)
 	}
 	return MapOfTimeResponse{RawResponse: resp.Response, Value: cp}, nil
 }
@@ -1143,7 +1143,7 @@ func (client *DictionaryClient) getDictionaryEmptyCreateRequest(ctx context.Cont
 
 // getDictionaryEmptyHandleResponse handles the GetDictionaryEmpty response.
 func (client *DictionaryClient) getDictionaryEmptyHandleResponse(resp *azcore.Response) (MapOfMapOfStringResponse, error) {
-	var val map[string]map[string]string
+	var val map[string]map[string]*string
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return MapOfMapOfStringResponse{}, err
 	}
@@ -1190,7 +1190,7 @@ func (client *DictionaryClient) getDictionaryItemEmptyCreateRequest(ctx context.
 
 // getDictionaryItemEmptyHandleResponse handles the GetDictionaryItemEmpty response.
 func (client *DictionaryClient) getDictionaryItemEmptyHandleResponse(resp *azcore.Response) (MapOfMapOfStringResponse, error) {
-	var val map[string]map[string]string
+	var val map[string]map[string]*string
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return MapOfMapOfStringResponse{}, err
 	}
@@ -1237,7 +1237,7 @@ func (client *DictionaryClient) getDictionaryItemNullCreateRequest(ctx context.C
 
 // getDictionaryItemNullHandleResponse handles the GetDictionaryItemNull response.
 func (client *DictionaryClient) getDictionaryItemNullHandleResponse(resp *azcore.Response) (MapOfMapOfStringResponse, error) {
-	var val map[string]map[string]string
+	var val map[string]map[string]*string
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return MapOfMapOfStringResponse{}, err
 	}
@@ -1283,7 +1283,7 @@ func (client *DictionaryClient) getDictionaryNullCreateRequest(ctx context.Conte
 
 // getDictionaryNullHandleResponse handles the GetDictionaryNull response.
 func (client *DictionaryClient) getDictionaryNullHandleResponse(resp *azcore.Response) (MapOfMapOfStringResponse, error) {
-	var val map[string]map[string]string
+	var val map[string]map[string]*string
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return MapOfMapOfStringResponse{}, err
 	}
@@ -1330,7 +1330,7 @@ func (client *DictionaryClient) getDictionaryValidCreateRequest(ctx context.Cont
 
 // getDictionaryValidHandleResponse handles the GetDictionaryValid response.
 func (client *DictionaryClient) getDictionaryValidHandleResponse(resp *azcore.Response) (MapOfMapOfStringResponse, error) {
-	var val map[string]map[string]string
+	var val map[string]map[string]*string
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return MapOfMapOfStringResponse{}, err
 	}
@@ -1376,7 +1376,7 @@ func (client *DictionaryClient) getDoubleInvalidNullCreateRequest(ctx context.Co
 
 // getDoubleInvalidNullHandleResponse handles the GetDoubleInvalidNull response.
 func (client *DictionaryClient) getDoubleInvalidNullHandleResponse(resp *azcore.Response) (MapOfFloat64Response, error) {
-	var val map[string]float64
+	var val map[string]*float64
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return MapOfFloat64Response{}, err
 	}
@@ -1422,7 +1422,7 @@ func (client *DictionaryClient) getDoubleInvalidStringCreateRequest(ctx context.
 
 // getDoubleInvalidStringHandleResponse handles the GetDoubleInvalidString response.
 func (client *DictionaryClient) getDoubleInvalidStringHandleResponse(resp *azcore.Response) (MapOfFloat64Response, error) {
-	var val map[string]float64
+	var val map[string]*float64
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return MapOfFloat64Response{}, err
 	}
@@ -1468,7 +1468,7 @@ func (client *DictionaryClient) getDoubleValidCreateRequest(ctx context.Context,
 
 // getDoubleValidHandleResponse handles the GetDoubleValid response.
 func (client *DictionaryClient) getDoubleValidHandleResponse(resp *azcore.Response) (MapOfFloat64Response, error) {
-	var val map[string]float64
+	var val map[string]*float64
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return MapOfFloat64Response{}, err
 	}
@@ -1514,7 +1514,7 @@ func (client *DictionaryClient) getDurationValidCreateRequest(ctx context.Contex
 
 // getDurationValidHandleResponse handles the GetDurationValid response.
 func (client *DictionaryClient) getDurationValidHandleResponse(resp *azcore.Response) (MapOfStringResponse, error) {
-	var val map[string]string
+	var val map[string]*string
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return MapOfStringResponse{}, err
 	}
@@ -1560,7 +1560,7 @@ func (client *DictionaryClient) getEmptyCreateRequest(ctx context.Context, optio
 
 // getEmptyHandleResponse handles the GetEmpty response.
 func (client *DictionaryClient) getEmptyHandleResponse(resp *azcore.Response) (MapOfInt32Response, error) {
-	var val map[string]int32
+	var val map[string]*int32
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return MapOfInt32Response{}, err
 	}
@@ -1606,7 +1606,7 @@ func (client *DictionaryClient) getEmptyStringKeyCreateRequest(ctx context.Conte
 
 // getEmptyStringKeyHandleResponse handles the GetEmptyStringKey response.
 func (client *DictionaryClient) getEmptyStringKeyHandleResponse(resp *azcore.Response) (MapOfStringResponse, error) {
-	var val map[string]string
+	var val map[string]*string
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return MapOfStringResponse{}, err
 	}
@@ -1652,7 +1652,7 @@ func (client *DictionaryClient) getFloatInvalidNullCreateRequest(ctx context.Con
 
 // getFloatInvalidNullHandleResponse handles the GetFloatInvalidNull response.
 func (client *DictionaryClient) getFloatInvalidNullHandleResponse(resp *azcore.Response) (MapOfFloat32Response, error) {
-	var val map[string]float32
+	var val map[string]*float32
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return MapOfFloat32Response{}, err
 	}
@@ -1698,7 +1698,7 @@ func (client *DictionaryClient) getFloatInvalidStringCreateRequest(ctx context.C
 
 // getFloatInvalidStringHandleResponse handles the GetFloatInvalidString response.
 func (client *DictionaryClient) getFloatInvalidStringHandleResponse(resp *azcore.Response) (MapOfFloat32Response, error) {
-	var val map[string]float32
+	var val map[string]*float32
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return MapOfFloat32Response{}, err
 	}
@@ -1744,7 +1744,7 @@ func (client *DictionaryClient) getFloatValidCreateRequest(ctx context.Context, 
 
 // getFloatValidHandleResponse handles the GetFloatValid response.
 func (client *DictionaryClient) getFloatValidHandleResponse(resp *azcore.Response) (MapOfFloat32Response, error) {
-	var val map[string]float32
+	var val map[string]*float32
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return MapOfFloat32Response{}, err
 	}
@@ -1790,7 +1790,7 @@ func (client *DictionaryClient) getIntInvalidNullCreateRequest(ctx context.Conte
 
 // getIntInvalidNullHandleResponse handles the GetIntInvalidNull response.
 func (client *DictionaryClient) getIntInvalidNullHandleResponse(resp *azcore.Response) (MapOfInt32Response, error) {
-	var val map[string]int32
+	var val map[string]*int32
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return MapOfInt32Response{}, err
 	}
@@ -1836,7 +1836,7 @@ func (client *DictionaryClient) getIntInvalidStringCreateRequest(ctx context.Con
 
 // getIntInvalidStringHandleResponse handles the GetIntInvalidString response.
 func (client *DictionaryClient) getIntInvalidStringHandleResponse(resp *azcore.Response) (MapOfInt32Response, error) {
-	var val map[string]int32
+	var val map[string]*int32
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return MapOfInt32Response{}, err
 	}
@@ -1882,7 +1882,7 @@ func (client *DictionaryClient) getIntegerValidCreateRequest(ctx context.Context
 
 // getIntegerValidHandleResponse handles the GetIntegerValid response.
 func (client *DictionaryClient) getIntegerValidHandleResponse(resp *azcore.Response) (MapOfInt32Response, error) {
-	var val map[string]int32
+	var val map[string]*int32
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return MapOfInt32Response{}, err
 	}
@@ -1928,7 +1928,7 @@ func (client *DictionaryClient) getInvalidCreateRequest(ctx context.Context, opt
 
 // getInvalidHandleResponse handles the GetInvalid response.
 func (client *DictionaryClient) getInvalidHandleResponse(resp *azcore.Response) (MapOfStringResponse, error) {
-	var val map[string]string
+	var val map[string]*string
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return MapOfStringResponse{}, err
 	}
@@ -1974,7 +1974,7 @@ func (client *DictionaryClient) getLongInvalidNullCreateRequest(ctx context.Cont
 
 // getLongInvalidNullHandleResponse handles the GetLongInvalidNull response.
 func (client *DictionaryClient) getLongInvalidNullHandleResponse(resp *azcore.Response) (MapOfInt64Response, error) {
-	var val map[string]int64
+	var val map[string]*int64
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return MapOfInt64Response{}, err
 	}
@@ -2020,7 +2020,7 @@ func (client *DictionaryClient) getLongInvalidStringCreateRequest(ctx context.Co
 
 // getLongInvalidStringHandleResponse handles the GetLongInvalidString response.
 func (client *DictionaryClient) getLongInvalidStringHandleResponse(resp *azcore.Response) (MapOfInt64Response, error) {
-	var val map[string]int64
+	var val map[string]*int64
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return MapOfInt64Response{}, err
 	}
@@ -2066,7 +2066,7 @@ func (client *DictionaryClient) getLongValidCreateRequest(ctx context.Context, o
 
 // getLongValidHandleResponse handles the GetLongValid response.
 func (client *DictionaryClient) getLongValidHandleResponse(resp *azcore.Response) (MapOfInt64Response, error) {
-	var val map[string]int64
+	var val map[string]*int64
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return MapOfInt64Response{}, err
 	}
@@ -2112,7 +2112,7 @@ func (client *DictionaryClient) getNullCreateRequest(ctx context.Context, option
 
 // getNullHandleResponse handles the GetNull response.
 func (client *DictionaryClient) getNullHandleResponse(resp *azcore.Response) (MapOfInt32Response, error) {
-	var val map[string]int32
+	var val map[string]*int32
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return MapOfInt32Response{}, err
 	}
@@ -2158,7 +2158,7 @@ func (client *DictionaryClient) getNullKeyCreateRequest(ctx context.Context, opt
 
 // getNullKeyHandleResponse handles the GetNullKey response.
 func (client *DictionaryClient) getNullKeyHandleResponse(resp *azcore.Response) (MapOfStringResponse, error) {
-	var val map[string]string
+	var val map[string]*string
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return MapOfStringResponse{}, err
 	}
@@ -2204,7 +2204,7 @@ func (client *DictionaryClient) getNullValueCreateRequest(ctx context.Context, o
 
 // getNullValueHandleResponse handles the GetNullValue response.
 func (client *DictionaryClient) getNullValueHandleResponse(resp *azcore.Response) (MapOfStringResponse, error) {
-	var val map[string]string
+	var val map[string]*string
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return MapOfStringResponse{}, err
 	}
@@ -2250,7 +2250,7 @@ func (client *DictionaryClient) getStringValidCreateRequest(ctx context.Context,
 
 // getStringValidHandleResponse handles the GetStringValid response.
 func (client *DictionaryClient) getStringValidHandleResponse(resp *azcore.Response) (MapOfStringResponse, error) {
-	var val map[string]string
+	var val map[string]*string
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return MapOfStringResponse{}, err
 	}
@@ -2296,7 +2296,7 @@ func (client *DictionaryClient) getStringWithInvalidCreateRequest(ctx context.Co
 
 // getStringWithInvalidHandleResponse handles the GetStringWithInvalid response.
 func (client *DictionaryClient) getStringWithInvalidHandleResponse(resp *azcore.Response) (MapOfStringResponse, error) {
-	var val map[string]string
+	var val map[string]*string
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return MapOfStringResponse{}, err
 	}
@@ -2342,7 +2342,7 @@ func (client *DictionaryClient) getStringWithNullCreateRequest(ctx context.Conte
 
 // getStringWithNullHandleResponse handles the GetStringWithNull response.
 func (client *DictionaryClient) getStringWithNullHandleResponse(resp *azcore.Response) (MapOfStringResponse, error) {
-	var val map[string]string
+	var val map[string]*string
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
 		return MapOfStringResponse{}, err
 	}
@@ -2359,7 +2359,7 @@ func (client *DictionaryClient) getStringWithNullHandleError(resp *azcore.Respon
 }
 
 // PutArrayValid - Put An array of array of strings {"0": ["1", "2", "3"], "1": ["4", "5", "6"], "2": ["7", "8", "9"]}
-func (client *DictionaryClient) PutArrayValid(ctx context.Context, arrayBody map[string][]string, options *DictionaryPutArrayValidOptions) (*http.Response, error) {
+func (client *DictionaryClient) PutArrayValid(ctx context.Context, arrayBody map[string][]*string, options *DictionaryPutArrayValidOptions) (*http.Response, error) {
 	req, err := client.putArrayValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
 		return nil, err
@@ -2375,7 +2375,7 @@ func (client *DictionaryClient) PutArrayValid(ctx context.Context, arrayBody map
 }
 
 // putArrayValidCreateRequest creates the PutArrayValid request.
-func (client *DictionaryClient) putArrayValidCreateRequest(ctx context.Context, arrayBody map[string][]string, options *DictionaryPutArrayValidOptions) (*azcore.Request, error) {
+func (client *DictionaryClient) putArrayValidCreateRequest(ctx context.Context, arrayBody map[string][]*string, options *DictionaryPutArrayValidOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/array/valid"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -2396,7 +2396,7 @@ func (client *DictionaryClient) putArrayValidHandleError(resp *azcore.Response) 
 }
 
 // PutBooleanTfft - Set dictionary value empty {"0": true, "1": false, "2": false, "3": true }
-func (client *DictionaryClient) PutBooleanTfft(ctx context.Context, arrayBody map[string]bool, options *DictionaryPutBooleanTfftOptions) (*http.Response, error) {
+func (client *DictionaryClient) PutBooleanTfft(ctx context.Context, arrayBody map[string]*bool, options *DictionaryPutBooleanTfftOptions) (*http.Response, error) {
 	req, err := client.putBooleanTfftCreateRequest(ctx, arrayBody, options)
 	if err != nil {
 		return nil, err
@@ -2412,7 +2412,7 @@ func (client *DictionaryClient) PutBooleanTfft(ctx context.Context, arrayBody ma
 }
 
 // putBooleanTfftCreateRequest creates the PutBooleanTfft request.
-func (client *DictionaryClient) putBooleanTfftCreateRequest(ctx context.Context, arrayBody map[string]bool, options *DictionaryPutBooleanTfftOptions) (*azcore.Request, error) {
+func (client *DictionaryClient) putBooleanTfftCreateRequest(ctx context.Context, arrayBody map[string]*bool, options *DictionaryPutBooleanTfftOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/prim/boolean/tfft"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -2471,7 +2471,7 @@ func (client *DictionaryClient) putByteValidHandleError(resp *azcore.Response) e
 
 // PutComplexValid - Put an dictionary of complex type with values {"0": {"integer": 1, "string": "2"}, "1": {"integer": 3, "string": "4"}, "2": {"integer":
 // 5, "string": "6"}}
-func (client *DictionaryClient) PutComplexValid(ctx context.Context, arrayBody map[string]Widget, options *DictionaryPutComplexValidOptions) (*http.Response, error) {
+func (client *DictionaryClient) PutComplexValid(ctx context.Context, arrayBody map[string]*Widget, options *DictionaryPutComplexValidOptions) (*http.Response, error) {
 	req, err := client.putComplexValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
 		return nil, err
@@ -2487,7 +2487,7 @@ func (client *DictionaryClient) PutComplexValid(ctx context.Context, arrayBody m
 }
 
 // putComplexValidCreateRequest creates the PutComplexValid request.
-func (client *DictionaryClient) putComplexValidCreateRequest(ctx context.Context, arrayBody map[string]Widget, options *DictionaryPutComplexValidOptions) (*azcore.Request, error) {
+func (client *DictionaryClient) putComplexValidCreateRequest(ctx context.Context, arrayBody map[string]*Widget, options *DictionaryPutComplexValidOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/complex/valid"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -2509,7 +2509,7 @@ func (client *DictionaryClient) putComplexValidHandleError(resp *azcore.Response
 
 // PutDateTimeRFC1123Valid - Set dictionary value empty {"0": "Fri, 01 Dec 2000 00:00:01 GMT", "1": "Wed, 02 Jan 1980 00:11:35 GMT", "2": "Wed, 12 Oct 1492
 // 10:15:01 GMT"}
-func (client *DictionaryClient) PutDateTimeRFC1123Valid(ctx context.Context, arrayBody map[string]time.Time, options *DictionaryPutDateTimeRFC1123ValidOptions) (*http.Response, error) {
+func (client *DictionaryClient) PutDateTimeRFC1123Valid(ctx context.Context, arrayBody map[string]*time.Time, options *DictionaryPutDateTimeRFC1123ValidOptions) (*http.Response, error) {
 	req, err := client.putDateTimeRFC1123ValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
 		return nil, err
@@ -2525,7 +2525,7 @@ func (client *DictionaryClient) PutDateTimeRFC1123Valid(ctx context.Context, arr
 }
 
 // putDateTimeRFC1123ValidCreateRequest creates the PutDateTimeRFC1123Valid request.
-func (client *DictionaryClient) putDateTimeRFC1123ValidCreateRequest(ctx context.Context, arrayBody map[string]time.Time, options *DictionaryPutDateTimeRFC1123ValidOptions) (*azcore.Request, error) {
+func (client *DictionaryClient) putDateTimeRFC1123ValidCreateRequest(ctx context.Context, arrayBody map[string]*time.Time, options *DictionaryPutDateTimeRFC1123ValidOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/prim/date-time-rfc1123/valid"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -2533,9 +2533,9 @@ func (client *DictionaryClient) putDateTimeRFC1123ValidCreateRequest(ctx context
 	}
 	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
-	aux := map[string]timeRFC1123{}
+	aux := map[string]*timeRFC1123{}
 	for k, v := range arrayBody {
-		aux[k] = timeRFC1123(v)
+		aux[k] = (*timeRFC1123)(v)
 	}
 	return req, req.MarshalAsJSON(aux)
 }
@@ -2550,7 +2550,7 @@ func (client *DictionaryClient) putDateTimeRFC1123ValidHandleError(resp *azcore.
 }
 
 // PutDateTimeValid - Set dictionary value {"0": "2000-12-01t00:00:01z", "1": "1980-01-02T00:11:35+01:00", "2": "1492-10-12T10:15:01-08:00"}
-func (client *DictionaryClient) PutDateTimeValid(ctx context.Context, arrayBody map[string]time.Time, options *DictionaryPutDateTimeValidOptions) (*http.Response, error) {
+func (client *DictionaryClient) PutDateTimeValid(ctx context.Context, arrayBody map[string]*time.Time, options *DictionaryPutDateTimeValidOptions) (*http.Response, error) {
 	req, err := client.putDateTimeValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
 		return nil, err
@@ -2566,7 +2566,7 @@ func (client *DictionaryClient) PutDateTimeValid(ctx context.Context, arrayBody 
 }
 
 // putDateTimeValidCreateRequest creates the PutDateTimeValid request.
-func (client *DictionaryClient) putDateTimeValidCreateRequest(ctx context.Context, arrayBody map[string]time.Time, options *DictionaryPutDateTimeValidOptions) (*azcore.Request, error) {
+func (client *DictionaryClient) putDateTimeValidCreateRequest(ctx context.Context, arrayBody map[string]*time.Time, options *DictionaryPutDateTimeValidOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/prim/date-time/valid"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -2574,9 +2574,9 @@ func (client *DictionaryClient) putDateTimeValidCreateRequest(ctx context.Contex
 	}
 	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
-	aux := map[string]timeRFC3339{}
+	aux := map[string]*timeRFC3339{}
 	for k, v := range arrayBody {
-		aux[k] = timeRFC3339(v)
+		aux[k] = (*timeRFC3339)(v)
 	}
 	return req, req.MarshalAsJSON(aux)
 }
@@ -2591,7 +2591,7 @@ func (client *DictionaryClient) putDateTimeValidHandleError(resp *azcore.Respons
 }
 
 // PutDateValid - Set dictionary value {"0": "2000-12-01", "1": "1980-01-02", "2": "1492-10-12"}
-func (client *DictionaryClient) PutDateValid(ctx context.Context, arrayBody map[string]time.Time, options *DictionaryPutDateValidOptions) (*http.Response, error) {
+func (client *DictionaryClient) PutDateValid(ctx context.Context, arrayBody map[string]*time.Time, options *DictionaryPutDateValidOptions) (*http.Response, error) {
 	req, err := client.putDateValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
 		return nil, err
@@ -2607,7 +2607,7 @@ func (client *DictionaryClient) PutDateValid(ctx context.Context, arrayBody map[
 }
 
 // putDateValidCreateRequest creates the PutDateValid request.
-func (client *DictionaryClient) putDateValidCreateRequest(ctx context.Context, arrayBody map[string]time.Time, options *DictionaryPutDateValidOptions) (*azcore.Request, error) {
+func (client *DictionaryClient) putDateValidCreateRequest(ctx context.Context, arrayBody map[string]*time.Time, options *DictionaryPutDateValidOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/prim/date/valid"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -2615,9 +2615,9 @@ func (client *DictionaryClient) putDateValidCreateRequest(ctx context.Context, a
 	}
 	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
-	aux := map[string]dateType{}
+	aux := map[string]*dateType{}
 	for k, v := range arrayBody {
-		aux[k] = dateType(v)
+		aux[k] = (*dateType)(v)
 	}
 	return req, req.MarshalAsJSON(aux)
 }
@@ -2633,7 +2633,7 @@ func (client *DictionaryClient) putDateValidHandleError(resp *azcore.Response) e
 
 // PutDictionaryValid - Get an dictionaries of dictionaries of type with value {"0": {"1": "one", "2": "two", "3": "three"}, "1": {"4": "four", "5": "five",
 // "6": "six"}, "2": {"7": "seven", "8": "eight", "9": "nine"}}
-func (client *DictionaryClient) PutDictionaryValid(ctx context.Context, arrayBody map[string]map[string]string, options *DictionaryPutDictionaryValidOptions) (*http.Response, error) {
+func (client *DictionaryClient) PutDictionaryValid(ctx context.Context, arrayBody map[string]map[string]*string, options *DictionaryPutDictionaryValidOptions) (*http.Response, error) {
 	req, err := client.putDictionaryValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
 		return nil, err
@@ -2649,7 +2649,7 @@ func (client *DictionaryClient) PutDictionaryValid(ctx context.Context, arrayBod
 }
 
 // putDictionaryValidCreateRequest creates the PutDictionaryValid request.
-func (client *DictionaryClient) putDictionaryValidCreateRequest(ctx context.Context, arrayBody map[string]map[string]string, options *DictionaryPutDictionaryValidOptions) (*azcore.Request, error) {
+func (client *DictionaryClient) putDictionaryValidCreateRequest(ctx context.Context, arrayBody map[string]map[string]*string, options *DictionaryPutDictionaryValidOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/dictionary/valid"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -2670,7 +2670,7 @@ func (client *DictionaryClient) putDictionaryValidHandleError(resp *azcore.Respo
 }
 
 // PutDoubleValid - Set dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
-func (client *DictionaryClient) PutDoubleValid(ctx context.Context, arrayBody map[string]float64, options *DictionaryPutDoubleValidOptions) (*http.Response, error) {
+func (client *DictionaryClient) PutDoubleValid(ctx context.Context, arrayBody map[string]*float64, options *DictionaryPutDoubleValidOptions) (*http.Response, error) {
 	req, err := client.putDoubleValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
 		return nil, err
@@ -2686,7 +2686,7 @@ func (client *DictionaryClient) PutDoubleValid(ctx context.Context, arrayBody ma
 }
 
 // putDoubleValidCreateRequest creates the PutDoubleValid request.
-func (client *DictionaryClient) putDoubleValidCreateRequest(ctx context.Context, arrayBody map[string]float64, options *DictionaryPutDoubleValidOptions) (*azcore.Request, error) {
+func (client *DictionaryClient) putDoubleValidCreateRequest(ctx context.Context, arrayBody map[string]*float64, options *DictionaryPutDoubleValidOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/prim/double/0--0.01-1.2e20"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -2707,7 +2707,7 @@ func (client *DictionaryClient) putDoubleValidHandleError(resp *azcore.Response)
 }
 
 // PutDurationValid - Set dictionary value {"0": "P123DT22H14M12.011S", "1": "P5DT1H0M0S"}
-func (client *DictionaryClient) PutDurationValid(ctx context.Context, arrayBody map[string]string, options *DictionaryPutDurationValidOptions) (*http.Response, error) {
+func (client *DictionaryClient) PutDurationValid(ctx context.Context, arrayBody map[string]*string, options *DictionaryPutDurationValidOptions) (*http.Response, error) {
 	req, err := client.putDurationValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
 		return nil, err
@@ -2723,7 +2723,7 @@ func (client *DictionaryClient) PutDurationValid(ctx context.Context, arrayBody 
 }
 
 // putDurationValidCreateRequest creates the PutDurationValid request.
-func (client *DictionaryClient) putDurationValidCreateRequest(ctx context.Context, arrayBody map[string]string, options *DictionaryPutDurationValidOptions) (*azcore.Request, error) {
+func (client *DictionaryClient) putDurationValidCreateRequest(ctx context.Context, arrayBody map[string]*string, options *DictionaryPutDurationValidOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/prim/duration/valid"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -2744,7 +2744,7 @@ func (client *DictionaryClient) putDurationValidHandleError(resp *azcore.Respons
 }
 
 // PutEmpty - Set dictionary value empty {}
-func (client *DictionaryClient) PutEmpty(ctx context.Context, arrayBody map[string]string, options *DictionaryPutEmptyOptions) (*http.Response, error) {
+func (client *DictionaryClient) PutEmpty(ctx context.Context, arrayBody map[string]*string, options *DictionaryPutEmptyOptions) (*http.Response, error) {
 	req, err := client.putEmptyCreateRequest(ctx, arrayBody, options)
 	if err != nil {
 		return nil, err
@@ -2760,7 +2760,7 @@ func (client *DictionaryClient) PutEmpty(ctx context.Context, arrayBody map[stri
 }
 
 // putEmptyCreateRequest creates the PutEmpty request.
-func (client *DictionaryClient) putEmptyCreateRequest(ctx context.Context, arrayBody map[string]string, options *DictionaryPutEmptyOptions) (*azcore.Request, error) {
+func (client *DictionaryClient) putEmptyCreateRequest(ctx context.Context, arrayBody map[string]*string, options *DictionaryPutEmptyOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/empty"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -2781,7 +2781,7 @@ func (client *DictionaryClient) putEmptyHandleError(resp *azcore.Response) error
 }
 
 // PutFloatValid - Set dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
-func (client *DictionaryClient) PutFloatValid(ctx context.Context, arrayBody map[string]float32, options *DictionaryPutFloatValidOptions) (*http.Response, error) {
+func (client *DictionaryClient) PutFloatValid(ctx context.Context, arrayBody map[string]*float32, options *DictionaryPutFloatValidOptions) (*http.Response, error) {
 	req, err := client.putFloatValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
 		return nil, err
@@ -2797,7 +2797,7 @@ func (client *DictionaryClient) PutFloatValid(ctx context.Context, arrayBody map
 }
 
 // putFloatValidCreateRequest creates the PutFloatValid request.
-func (client *DictionaryClient) putFloatValidCreateRequest(ctx context.Context, arrayBody map[string]float32, options *DictionaryPutFloatValidOptions) (*azcore.Request, error) {
+func (client *DictionaryClient) putFloatValidCreateRequest(ctx context.Context, arrayBody map[string]*float32, options *DictionaryPutFloatValidOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/prim/float/0--0.01-1.2e20"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -2818,7 +2818,7 @@ func (client *DictionaryClient) putFloatValidHandleError(resp *azcore.Response) 
 }
 
 // PutIntegerValid - Set dictionary value empty {"0": 1, "1": -1, "2": 3, "3": 300}
-func (client *DictionaryClient) PutIntegerValid(ctx context.Context, arrayBody map[string]int32, options *DictionaryPutIntegerValidOptions) (*http.Response, error) {
+func (client *DictionaryClient) PutIntegerValid(ctx context.Context, arrayBody map[string]*int32, options *DictionaryPutIntegerValidOptions) (*http.Response, error) {
 	req, err := client.putIntegerValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
 		return nil, err
@@ -2834,7 +2834,7 @@ func (client *DictionaryClient) PutIntegerValid(ctx context.Context, arrayBody m
 }
 
 // putIntegerValidCreateRequest creates the PutIntegerValid request.
-func (client *DictionaryClient) putIntegerValidCreateRequest(ctx context.Context, arrayBody map[string]int32, options *DictionaryPutIntegerValidOptions) (*azcore.Request, error) {
+func (client *DictionaryClient) putIntegerValidCreateRequest(ctx context.Context, arrayBody map[string]*int32, options *DictionaryPutIntegerValidOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/prim/integer/1.-1.3.300"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -2855,7 +2855,7 @@ func (client *DictionaryClient) putIntegerValidHandleError(resp *azcore.Response
 }
 
 // PutLongValid - Set dictionary value empty {"0": 1, "1": -1, "2": 3, "3": 300}
-func (client *DictionaryClient) PutLongValid(ctx context.Context, arrayBody map[string]int64, options *DictionaryPutLongValidOptions) (*http.Response, error) {
+func (client *DictionaryClient) PutLongValid(ctx context.Context, arrayBody map[string]*int64, options *DictionaryPutLongValidOptions) (*http.Response, error) {
 	req, err := client.putLongValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
 		return nil, err
@@ -2871,7 +2871,7 @@ func (client *DictionaryClient) PutLongValid(ctx context.Context, arrayBody map[
 }
 
 // putLongValidCreateRequest creates the PutLongValid request.
-func (client *DictionaryClient) putLongValidCreateRequest(ctx context.Context, arrayBody map[string]int64, options *DictionaryPutLongValidOptions) (*azcore.Request, error) {
+func (client *DictionaryClient) putLongValidCreateRequest(ctx context.Context, arrayBody map[string]*int64, options *DictionaryPutLongValidOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/prim/long/1.-1.3.300"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -2892,7 +2892,7 @@ func (client *DictionaryClient) putLongValidHandleError(resp *azcore.Response) e
 }
 
 // PutStringValid - Set dictionary value {"0": "foo1", "1": "foo2", "2": "foo3"}
-func (client *DictionaryClient) PutStringValid(ctx context.Context, arrayBody map[string]string, options *DictionaryPutStringValidOptions) (*http.Response, error) {
+func (client *DictionaryClient) PutStringValid(ctx context.Context, arrayBody map[string]*string, options *DictionaryPutStringValidOptions) (*http.Response, error) {
 	req, err := client.putStringValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
 		return nil, err
@@ -2908,7 +2908,7 @@ func (client *DictionaryClient) PutStringValid(ctx context.Context, arrayBody ma
 }
 
 // putStringValidCreateRequest creates the PutStringValid request.
-func (client *DictionaryClient) putStringValidCreateRequest(ctx context.Context, arrayBody map[string]string, options *DictionaryPutStringValidOptions) (*azcore.Request, error) {
+func (client *DictionaryClient) putStringValidCreateRequest(ctx context.Context, arrayBody map[string]*string, options *DictionaryPutStringValidOptions) (*azcore.Request, error) {
 	urlPath := "/dictionary/prim/string/foo1.foo2.foo3"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {

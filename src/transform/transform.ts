@@ -7,7 +7,7 @@ import { KnownMediaType, serialize } from '@azure-tools/codegen';
 import { Host, startSession, Session } from '@autorest/extension-base';
 import { ObjectSchema, ArraySchema, ChoiceValue, codeModelSchema, CodeModel, DateTimeSchema, GroupProperty, HttpHeader, HttpResponse, ImplementationLocation, Language, OperationGroup, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Response, Schema, DictionarySchema, Protocol, ChoiceSchema, SealedChoiceSchema, ConstantSchema, Request } from '@azure-tools/codemodel';
 import { items, values } from '@azure-tools/linq';
-import { aggregateParameters, hasAdditionalProperties, isPageableOperation, isObjectSchema, isSchemaResponse, PagerInfo, isLROOperation, PollerInfo } from '../common/helpers';
+import { aggregateParameters, hasAdditionalProperties, isArraySchema, isDictionarySchema, isPageableOperation, isObjectSchema, isSchemaResponse, PagerInfo, isLROOperation, PollerInfo } from '../common/helpers';
 import { namer, protocolMethods } from './namer';
 import { fromString } from 'html-to-text';
 import { Converter } from 'showdown';
@@ -42,6 +42,7 @@ async function process(session: Session<CodeModel>) {
   // schema type being an actual Go type.
   for (const dictionary of values(session.model.schemas.dictionaries)) {
     dictionary.elementType.language.go!.name = schemaTypeToGoType(session.model, dictionary.elementType, false);
+    dictionary.language.go!.elementIsPtr = isElementPointerToType(dictionary);
     if (dictionary.language.go!.description) {
       dictionary.language.go!.description = parseComments(dictionary.language.go!.description);
     }
@@ -126,14 +127,32 @@ async function process(session: Session<CodeModel>) {
   }
 }
 
+// returns true if the element type should be pointer-to-type
+function isElementPointerToType(schema: ArraySchema | DictionarySchema): boolean {
+  // types that are implicitly nil should not be pointer-to-type
+  const elementType = schema.elementType;
+  if (isArraySchema(elementType) || isDictionarySchema(elementType) ||
+    elementType.type === SchemaType.Any || elementType.type === SchemaType.ByteArray) {
+    return false;
+  }
+  if (isObjectSchema(elementType) && elementType.discriminator) {
+    return false;
+  }
+  return true;
+}
+
 function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, inBody: boolean): string {
   switch (schema.type) {
     case SchemaType.Any:
       return 'interface{}';
     case SchemaType.Array:
       const arraySchema = <ArraySchema>schema;
+      arraySchema.language.go!.elementIsPtr = isElementPointerToType(arraySchema);
       const arrayElem = <Schema>arraySchema.elementType;
       arrayElem.language.go!.name = schemaTypeToGoType(codeModel, arrayElem, inBody);
+      if (<boolean>arraySchema.language.go!.elementIsPtr) {
+        return `[]*${arrayElem.language.go!.name}`;
+      }
       return `[]${arrayElem.language.go!.name}`;
     case SchemaType.Binary:
       return 'azcore.ReadSeekCloser';
@@ -168,8 +187,12 @@ function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, inBody: boolea
       return 'time.Time';
     case SchemaType.Dictionary:
       const dictSchema = <DictionarySchema>schema;
+      dictSchema.language.go!.elementIsPtr = isElementPointerToType(dictSchema);
       const dictElem = <Schema>dictSchema.elementType;
       dictElem.language.go!.name = schemaTypeToGoType(codeModel, dictElem, inBody);
+      if (<boolean>dictSchema.language.go!.elementIsPtr) {
+        return `map[string]*${dictElem.language.go!.name}`;
+      }
       return `map[string]${dictElem.language.go!.name}`;
     case SchemaType.Integer:
       if ((<NumberSchema>schema).precision === 32) {
