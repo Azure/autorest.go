@@ -129,6 +129,7 @@ async function process(session: Session<CodeModel>) {
 
 // returns true if the element type should be pointer-to-type
 function isElementPointerToType(schema: ArraySchema | DictionarySchema): boolean {
+  // types that are implicitly nil should not be pointer-to-type
   const elementType = schema.elementType;
   if (isArraySchema(elementType) || isDictionarySchema(elementType) ||
     elementType.type === SchemaType.Any || elementType.type === SchemaType.ByteArray) {
