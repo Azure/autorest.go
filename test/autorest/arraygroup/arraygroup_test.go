@@ -284,11 +284,15 @@ func TestGetDateTimeInvalidChars(t *testing.T) {
 func TestGetDateTimeInvalidNull(t *testing.T) {
 	client := newArrayClient()
 	resp, err := client.GetDateTimeInvalidNull(context.Background(), nil)
-	if err == nil {
-		t.Fatal("unexpected nil error")
+	if err != nil {
+		t.Fatal(err)
 	}
-	if !reflect.ValueOf(resp).IsZero() {
-		t.Fatal("expected empty response")
+	v1, _ := time.Parse(time.RFC1123, "Fri, 01 Dec 2000 00:00:01 GMT")
+	if r := cmp.Diff(resp.TimeArray, []*time.Time{
+		&v1,
+		nil,
+	}); r != "" {
+		t.Fatal(r)
 	}
 }
 

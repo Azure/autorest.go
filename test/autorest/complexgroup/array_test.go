@@ -70,13 +70,19 @@ func TestArrayPutEmpty(t *testing.T) {
 	}
 }
 
-/*
-test is currently invalid, missing x-nullable but expects null
 func TestArrayPutValid(t *testing.T) {
 	client := newArrayClient()
-	result, err := client.PutValid(context.Background(), ArrayWrapper{Array: &[]string{"1, 2, 3, 4", "", nil, "&S#$(*Y", "The quick brown fox jumps over the lazy dog"}})
+	result, err := client.PutValid(context.Background(), ArrayWrapper{Array: &[]*string{
+		to.StringPtr("1, 2, 3, 4"),
+		to.StringPtr(""),
+		nil,
+		to.StringPtr("&S#$(*Y"),
+		to.StringPtr("The quick brown fox jumps over the lazy dog"),
+	}}, nil)
 	if err != nil {
 		t.Fatalf("PutValid: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
-}*/
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
+}

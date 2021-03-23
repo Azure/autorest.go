@@ -48,8 +48,6 @@ func TestDictionaryGetNull(t *testing.T) {
 	}
 }
 
-/*
-test is invalid, expects null values but missing x-nullable
 func TestDictionaryGetValid(t *testing.T) {
 	client := newDictionaryClient()
 	result, err := client.GetValid(context.Background(), nil)
@@ -57,9 +55,11 @@ func TestDictionaryGetValid(t *testing.T) {
 		t.Fatalf("GetValid: %v", err)
 	}
 	s1, s2, s3, s4 := "notepad", "mspaint", "excel", ""
-	val := DictionaryWrapper{DefaultProgram: &map[string]string{"txt": s1, "bmp": s2, "xls": s3, "exe": s4, "": nil}}
-	if r := cmp.Diff(result.DictionaryWrapper, &val)
-}*/
+	val := DictionaryWrapper{DefaultProgram: &map[string]*string{"txt": &s1, "bmp": &s2, "xls": &s3, "exe": &s4, "": nil}}
+	if r := cmp.Diff(result.DictionaryWrapper, &val); r != "" {
+		t.Fatal(r)
+	}
+}
 
 func TestDictionaryPutEmpty(t *testing.T) {
 	client := newDictionaryClient()
@@ -72,14 +72,14 @@ func TestDictionaryPutEmpty(t *testing.T) {
 	}
 }
 
-/*
-test is invalid, expects null values but missing x-nullable
 func TestDictionaryPutValid(t *testing.T) {
 	client := newDictionaryClient()
 	s1, s2, s3, s4 := "notepad", "mspaint", "excel", ""
-	result, err := client.PutValid(context.Background(), DictionaryWrapper{DefaultProgram: &map[string]string{"txt": s1, "bmp": s2, "xls": s3, "exe": s4, "": nil}})
+	result, err := client.PutValid(context.Background(), DictionaryWrapper{DefaultProgram: &map[string]*string{"txt": &s1, "bmp": &s2, "xls": &s3, "exe": &s4, "": nil}}, nil)
 	if err != nil {
 		t.Fatalf("PutValid: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result, http.StatusOK)
-}*/
+	if s := result.StatusCode; s != http.StatusOK {
+		t.Fatalf("unexpected status code %d", s)
+	}
+}
