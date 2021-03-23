@@ -467,7 +467,6 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
         text += '\tunencodedParams := []string{}\n';
       }
       for (const qp of values(unencodedParams)) {
-        // TODO: unused?
         let setter: string;
         if (qp.protocol.http?.explode === true) {
           setter = `\tfor _, qv := range ${getParamName(qp, true)} {\n`;
@@ -476,7 +475,7 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
         } else {
           setter = `unencodedParams = append(unencodedParams, "${qp.language.go!.serializedName}="+${formatParamValue(qp, imports)})`;
         }
-        text += emitQueryParam(qp, `unencodedParams = append(unencodedParams, "${qp.language.go!.serializedName}="+${formatParamValue(qp, imports)})`);
+        text += emitQueryParam(qp, setter);
       }
       text += '\treq.URL.RawQuery = strings.Join(unencodedParams, "&")\n';
     }
