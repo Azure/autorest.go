@@ -107,7 +107,11 @@ func (client *libraryClient) createCreateRequest(ctx context.Context, libraryNam
 
 // createHandleResponse handles the Create response.
 func (client *libraryClient) createHandleResponse(resp *azcore.Response) (LibraryResourceInfoResponse, error) {
-	return LibraryResourceInfoResponse{RawResponse: resp.Response}, nil
+	var val *LibraryResourceInfo
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return LibraryResourceInfoResponse{}, err
+	}
+	return LibraryResourceInfoResponse{RawResponse: resp.Response, LibraryResourceInfo: val}, nil
 }
 
 // createHandleError handles the Create error response.
@@ -156,7 +160,11 @@ func (client *libraryClient) deleteCreateRequest(ctx context.Context, libraryNam
 
 // deleteHandleResponse handles the Delete response.
 func (client *libraryClient) deleteHandleResponse(resp *azcore.Response) (LibraryResourceInfoResponse, error) {
-	return LibraryResourceInfoResponse{RawResponse: resp.Response}, nil
+	var val *LibraryResourceInfo
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return LibraryResourceInfoResponse{}, err
+	}
+	return LibraryResourceInfoResponse{RawResponse: resp.Response, LibraryResourceInfo: val}, nil
 }
 
 // deleteHandleError handles the Delete error response.
@@ -205,7 +213,11 @@ func (client *libraryClient) flushCreateRequest(ctx context.Context, libraryName
 
 // flushHandleResponse handles the Flush response.
 func (client *libraryClient) flushHandleResponse(resp *azcore.Response) (LibraryResourceInfoResponse, error) {
-	return LibraryResourceInfoResponse{RawResponse: resp.Response}, nil
+	var val *LibraryResourceInfo
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return LibraryResourceInfoResponse{}, err
+	}
+	return LibraryResourceInfoResponse{RawResponse: resp.Response, LibraryResourceInfo: val}, nil
 }
 
 // flushHandleError handles the Flush error response.

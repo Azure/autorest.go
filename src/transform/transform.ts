@@ -7,7 +7,7 @@ import { KnownMediaType, serialize } from '@azure-tools/codegen';
 import { Host, startSession, Session } from '@autorest/extension-base';
 import { ObjectSchema, ArraySchema, ChoiceValue, codeModelSchema, CodeModel, DateTimeSchema, GroupProperty, HttpHeader, HttpResponse, ImplementationLocation, Language, OperationGroup, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Response, Schema, DictionarySchema, Protocol, ChoiceSchema, SealedChoiceSchema, ConstantSchema, Request } from '@azure-tools/codemodel';
 import { items, values } from '@azure-tools/linq';
-import { aggregateParameters, hasAdditionalProperties, isArraySchema, isDictionarySchema, isPageableOperation, isObjectSchema, isSchemaResponse, PagerInfo, isLROOperation, PollerInfo } from '../common/helpers';
+import { aggregateParameters, getResponse, hasAdditionalProperties, isArraySchema, isDictionarySchema, isPageableOperation, isObjectSchema, isSchemaResponse, PagerInfo, isLROOperation, PollerInfo } from '../common/helpers';
 import { namer, protocolMethods } from './namer';
 import { fromString } from 'html-to-text';
 import { Converter } from 'showdown';
@@ -663,42 +663,6 @@ function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op:
     // HEAD operations will never be pagable, LROs etc so exit
     return;
   }
-  if (op.responses && isLROOperation(op)) {
-    // for LROs, there are a couple of corner-cases we need to handle WRT response types.
-    // 1. 200 Foo / 20x Bar - we take Foo and display a warning
-    // 2. 201 Foo / 202 Bar - this is a hard error
-    // 3. 200 void / 20x Bar - we take Bar
-    // since we always assume responses[0] has the return type we need to fix up
-    // the list of responses so that it points to the schema we select.
-
-    // get the list and count of distinct schema responses
-    const schemaResponses = new Array<SchemaResponse>();
-    for (const response of values(op.responses)) {
-      if (isSchemaResponse(response) && schemaResponses.indexOf(response) < 0) {
-        schemaResponses.push(response);
-      }
-    }
-    if (schemaResponses.length > 1) {
-      // multiple schemas, find the one for 200 status code
-      let with200: SchemaResponse | undefined;
-      for (const response of values(schemaResponses)) {
-        if ((<Array<string>>response.protocol.http!.statusCodes).indexOf('200') > -1) {
-          with200 = response;
-          break;
-        }
-      }
-      if (with200 === undefined) {
-        // case #2
-        throw new Error(`LRO ${group.language.go!.name}.${op.language.go!.name} contains multiple response types which is not supported`);
-      }
-      // case #1
-      // TODO: log warning
-      (<SchemaResponse>op.responses[0]).schema = with200.schema;
-    } else if (schemaResponses.length === 1) {
-      // only one schema, ensure the first response contains it
-      (<SchemaResponse>op.responses[0]).schema = schemaResponses[0].schema;
-    }
-  }
   // if the response defines a schema then add it as a field to the response type.
   // only do this if the response schema hasn't been processed yet.
   for (const response of values(op.responses)) {
@@ -809,98 +773,97 @@ function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op:
         }
       }
     }
-    // create pageable type info
-    if (isPageableOperation(op)) {
-      if (codeModel.language.go!.pageableTypes === undefined) {
-        codeModel.language.go!.pageableTypes = new Array<PagerInfo>();
-      }
-      if (!isSchemaResponse(response)) {
-        throw new Error(`${op.language.go!.name}: pageable operation has no schema for response ${response.protocol.http?.statusCodes}`);
-      }
-      const name = `${(<SchemaResponse>response).schema.language.go!.name}Pager`;
-      // check to see if the pager has already been created
-      let skipAddPager = false; // skipAdd allows not adding the pager to the list of pageable types and continue on to LRO check
-      const pagers = <Array<PagerInfo>>codeModel.language.go!.pageableTypes;
-      for (const pager of values(pagers)) {
-        if (pager.name === name) {
-          // set when a pager is used in an LRO, or is shared between LRO and no-LRO operations
-          if (isLROOperation(op)) {
-            pager.hasLRO = true;
-          }
-          // found a match, hook it up to the method
-          op.language.go!.pageableType = pager;
-          skipAddPager = true;
-          break;
+  }
+  // create pageable type info
+  if (isPageableOperation(op)) {
+    if (codeModel.language.go!.pageableTypes === undefined) {
+      codeModel.language.go!.pageableTypes = new Array<PagerInfo>();
+    }
+    const schemaResponse = getResponse(op);
+    if (schemaResponse === undefined) {
+      throw new Error(`${op.language.go!.name}: pageable operation has no schema for response`);
+    }
+    const name = `${schemaResponse.schema.language.go!.name}Pager`;
+    // check to see if the pager has already been created
+    let skipAddPager = false; // skipAdd allows not adding the pager to the list of pageable types and continue on to LRO check
+    const pagers = <Array<PagerInfo>>codeModel.language.go!.pageableTypes;
+    for (const pager of values(pagers)) {
+      if (pager.name === name) {
+        // set when a pager is used in an LRO, or is shared between LRO and no-LRO operations
+        if (isLROOperation(op)) {
+          pager.hasLRO = true;
         }
-      }
-      if (!skipAddPager) {
-        const schemaResp = <SchemaResponse>response;
-        // create a new one, add to global list and assign to method
-        let respField = schemaResp.schema.language.go!.name;
-        if (schemaResp.schema.serialization?.xml?.name) {
-          // xml can specifiy its own name, prefer that if available
-          respField = schemaResp.schema.serialization.xml.name;
-        }
-        const pager = {
-          name: name,
-          respEnv: schemaResp.schema.language.go!.responseType.name,
-          respType: schemaResp.schema.language.go!.name,
-          respField: respField,
-          nextLink: op.language.go!.paging.nextLinkName,
-          hasLRO: isLROOperation(op),
-        };
-        pagers.push(pager);
+        // found a match, hook it up to the method
         op.language.go!.pageableType = pager;
+        skipAddPager = true;
+        break;
       }
     }
-    // create poller type info
-    if (isLROOperation(op)) {
-      if (op.language.go!.paging && op.language.go!.paging.member) {
-        // implementing support for this is very complicated, and since
-        // no services at present use this pattern avoid it for now
-        throw new Error(`${op.language.go!.name}: unsupported pager-poller that uses next page operation`);
+    if (!skipAddPager) {
+      // create a new one, add to global list and assign to method
+      let respField = schemaResponse.schema.language.go!.name;
+      if (schemaResponse.schema.serialization?.xml?.name) {
+        // xml can specifiy its own name, prefer that if available
+        respField = schemaResponse.schema.serialization.xml.name;
       }
-      // create the poller response envelope
-      generateLROResponseEnvelope(response, op, codeModel);
-      if (codeModel.language.go!.pollerTypes === undefined) {
-        codeModel.language.go!.pollerTypes = new Array<PollerInfo>();
-      }
-      // Determine the type of poller that needs to be added based on whether a schema is specified in the response
-      // if there is no schema specified for the operation response then a simple HTTP poller will be instantiated
-      const name = generateLROPollerName(response, op);
-      const pollers = <Array<PollerInfo>>codeModel.language.go!.pollerTypes;
-      let skipAddLRO = false;
-      for (const poller of values(pollers)) {
-        if (poller.name === name) {
-          // found a match, hook it up to the method
-          op.language.go!.pollerType = poller;
-          skipAddLRO = true;
-          break;
-        }
-      }
-      if (!skipAddLRO) {
-        // Adding the operation group name to the poller name for polling operations that need to be unique to that operation group
-        // create a new one, add to global list and assign to method
-        let respEnv = "HTTPPollerResponse";
-        let respField: string | undefined;
-        let respType: Schema | undefined;
-        if (isSchemaResponse(response)) {
-          respEnv = response.schema.language.go!.responseType.name;
-          respField = response.schema.language.go!.responseType.value;
-          respType = (<SchemaResponse>op.responses![0]).schema;
-        }
-        const poller = {
-          name: name,
-          respEnv: respEnv,
-          respField: respField,
-          respType: respType,
-          pager: op.language.go!.pageableType,
-        };
-        pollers.push(poller);
+      const pager = {
+        name: name,
+        respEnv: schemaResponse.schema.language.go!.responseType.name,
+        respType: schemaResponse.schema.language.go!.name,
+        respField: respField,
+        nextLink: op.language.go!.paging.nextLinkName,
+        hasLRO: isLROOperation(op),
+      };
+      pagers.push(pager);
+      op.language.go!.pageableType = pager;
+    }
+  }
+  // create poller type info
+  if (isLROOperation(op)) {
+    const schemaResponse = getResponse(op);
+    if (op.language.go!.paging && op.language.go!.paging.member) {
+      // implementing support for this is very complicated, and since
+      // no services at present use this pattern avoid it for now
+      throw new Error(`${op.language.go!.name}: unsupported pager-poller that uses next page operation`);
+    }
+    // create the poller response envelope
+    generateLROResponseEnvelope(schemaResponse, op, codeModel);
+    if (codeModel.language.go!.pollerTypes === undefined) {
+      codeModel.language.go!.pollerTypes = new Array<PollerInfo>();
+    }
+    // Determine the type of poller that needs to be added based on whether a schema is specified in the response
+    // if there is no schema specified for the operation response then a simple HTTP poller will be instantiated
+    const name = generateLROPollerName(schemaResponse, op);
+    const pollers = <Array<PollerInfo>>codeModel.language.go!.pollerTypes;
+    let skipAddLRO = false;
+    for (const poller of values(pollers)) {
+      if (poller.name === name) {
+        // found a match, hook it up to the method
         op.language.go!.pollerType = poller;
+        skipAddLRO = true;
+        break;
       }
-      // treat LROs as single-response ops
-      break;
+    }
+    if (!skipAddLRO) {
+      // Adding the operation group name to the poller name for polling operations that need to be unique to that operation group
+      // create a new one, add to global list and assign to method
+      let respEnv = "HTTPPollerResponse";
+      let respField: string | undefined;
+      let respType: Schema | undefined;
+      if (schemaResponse !== undefined) {
+        respEnv = schemaResponse.schema.language.go!.responseType.name;
+        respField = schemaResponse.schema.language.go!.responseType.value;
+        respType = schemaResponse.schema;
+      }
+      const poller = {
+        name: name,
+        respEnv: respEnv,
+        respField: respField,
+        respType: respType,
+        pager: op.language.go!.pageableType,
+      };
+      pollers.push(poller);
+      op.language.go!.pollerType = poller;
     }
   }
 }
@@ -1034,14 +997,14 @@ function generateResponseEnvelopeName(schema: Schema): Language {
 
 // generate LRO response type name is separate from the general response type name
 // generation, since it requires returning the poller response envelope
-function generateLROResponseEnvelopeName(response: Response, op: Operation): Language {
+function generateLROResponseEnvelopeName(response: SchemaResponse | undefined, op: Operation): Language {
   // default to generic response envelope
   let name = 'HTTPPollerResponse';
   let desc = `${name} contains the asynchronous HTTP response from the call to the service endpoint.`;
   if (isPageableOperation(op)) {
     name = `${op.language.go!.pageableType.name}PollerResponse`;
     desc = `${name} is the response envelope for operations that asynchronously return a ${op.language.go!.pageableType.name} type.`;
-  } else if (isSchemaResponse(response)) {
+  } else if (response !== undefined) {
     // create a type-specific response envelope
     const typeName = recursiveTypeName(response.schema) + 'Poller';
     name = `${typeName}Response`;
@@ -1054,23 +1017,22 @@ function generateLROResponseEnvelopeName(response: Response, op: Operation): Lan
   };
 }
 
-function generateLROPollerName(response: Response, op: Operation): string {
-  if (!isSchemaResponse(response)) {
+function generateLROPollerName(response: SchemaResponse | undefined, op: Operation): string {
+  if (response === undefined) {
     return 'HTTPPoller';
   }
-  const schemaResp = <SchemaResponse>response;
   if (isPageableOperation(op)) {
     return `${op.language.go!.pageableType.name}Poller`;
   }
-  if (schemaResp.schema.language.go!.responseType.value === scalarResponsePropName) {
+  if (response.schema.language.go!.responseType.value === scalarResponsePropName) {
     // for scalar responses, use the underlying type name for the poller
-    return `${(<string>schemaResp.schema.language.go!.name).capitalize()}Poller`;
+    return `${(<string>response.schema.language.go!.name).capitalize()}Poller`;
   }
-  return `${schemaResp.schema.language.go!.responseType.value}Poller`;
+  return `${response.schema.language.go!.responseType.value}Poller`;
 }
 
 // creates the LRO response envelope for the specified operation/response
-function generateLROResponseEnvelope(response: Response, op: Operation, codeModel: CodeModel) {
+function generateLROResponseEnvelope(response: SchemaResponse | undefined, op: Operation, codeModel: CodeModel) {
   const respTypeName = generateLROResponseEnvelopeName(response, op);
   if (responseEnvelopeExists(codeModel, respTypeName.name)) {
     return;
@@ -1079,7 +1041,7 @@ function generateLROResponseEnvelope(response: Response, op: Operation, codeMode
   respTypeObject.language.go!.responseType = respTypeName;
   let pollerResponse: string;
   let pollerTypeName: string;
-  if (!isSchemaResponse(response)) {
+  if (response === undefined) {
     pollerResponse = '*http.Response';
     pollerTypeName = 'HTTPPoller';
     // mark as a response type
