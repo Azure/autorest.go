@@ -133,3 +133,51 @@ export function getRelationship(obj: ObjectSchema): 'none' | 'root' | 'parent' |
     return 'parent';
   }
 }
+
+// returns the schema response for this operation.
+// calling this on multi-response operations will result in an error.
+export function getResponse(op: Operation): SchemaResponse | undefined {
+  if (!op.responses) {
+    return undefined;
+  }
+  // get the list and count of distinct schema responses
+  const schemaResponses = new Array<SchemaResponse>();
+  for (const response of values(op.responses)) {
+    // perform the comparison by name as some responses have different objects for the same underlying response type
+    if (isSchemaResponse(response) && !values(schemaResponses).where(sr => sr.schema.language.go!.name === response.schema.language.go!.name).any()) {
+      schemaResponses.push(response);
+    }
+  }
+  if (schemaResponses.length === 0) {
+    return undefined;
+  } else if (schemaResponses.length === 1) {
+    return schemaResponses[0];
+  }
+  // multiple schema responses, for LROs find the best fit.
+  if (!isLROOperation(op)) {
+    throw new Error('getResponse() called for multi-response operation');
+  }
+  // for LROs, there are a couple of corner-cases we need to handle WRT response types.
+  // 1. 200 Foo / 20x Bar - we take Foo and display a warning
+  // 2. 201 Foo / 202 Bar - this is a hard error
+  // 3. 200 void / 20x Bar - we take Bar
+  // since we always assume responses[0] has the return type we need to fix up
+  // the list of responses so that it points to the schema we select.
+
+  // multiple schemas, find the one for 200 status code
+  // note that case #3 was handled earlier
+  let with200: SchemaResponse | undefined;
+  for (const response of values(schemaResponses)) {
+    if ((<Array<string>>response.protocol.http!.statusCodes).indexOf('200') > -1) {
+      with200 = response;
+      break;
+    }
+  }
+  if (with200 === undefined) {
+    // case #2
+    throw new Error(`LRO ${op.language.go!.clientName}.${op.language.go!.name} contains multiple response types which is not supported`);
+  }
+  // case #1
+  // TODO: log warning
+  return with200;
+}

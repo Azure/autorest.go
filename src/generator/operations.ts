@@ -7,7 +7,7 @@ import { Session } from '@autorest/extension-base';
 import { comment, KnownMediaType } from '@azure-tools/codegen';
 import { ArraySchema, ByteArraySchema, ChoiceSchema, CodeModel, ConstantSchema, DateTimeSchema, DictionarySchema, GroupProperty, ImplementationLocation, NumberSchema, Operation, Parameter, Property, Protocols, Response, Schema, SchemaResponse, SchemaType } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
-import { aggregateParameters, internalPagerTypeName, internalPollerTypeName, isArraySchema, isPageableOperation, isSchemaResponse, PagerInfo, PollerInfo, isLROOperation, commentLength } from '../common/helpers';
+import { aggregateParameters, getResponse, internalPagerTypeName, internalPollerTypeName, isArraySchema, isPageableOperation, isSchemaResponse, PagerInfo, PollerInfo, isLROOperation, commentLength } from '../common/helpers';
 import { OperationNaming } from '../transform/namer';
 import { contentPreamble, formatParameterTypeName, formatStatusCodes, getStatusCodes, hasDescription, hasSchemaResponse, skipURLEncoding, sortAscending, getCreateRequestParameters, getCreateRequestParametersSig, getMethodParameters, getParamName, formatParamValue, dateFormat, datetimeRFC1123Format, datetimeRFC3339Format, sortParametersByRequired } from './helpers';
 import { ImportManager } from './imports';
@@ -203,6 +203,11 @@ function getZeroReturnValue(op: Operation, apiType: 'api' | 'op' | 'handler'): s
     // no responses return *http.Response
     return 'nil';
   }
+  if (isMultiRespOperation(op)) {
+    // multi-response APIs return interface{}
+    return 'nil';
+  }
+  const schemaResponse = getResponse(op);
   let returnType = 'nil';
   if (isLROOperation(op)) {
     if (apiType === 'op') {
@@ -210,21 +215,18 @@ function getZeroReturnValue(op: Operation, apiType: 'api' | 'op' | 'handler'): s
       returnType = 'nil';
     } else if (apiType === 'api') {
       returnType = 'HTTPPollerResponse{}';
-      if (hasSchemaResponse(op)) {
-        returnType = `${(<SchemaResponse>op.responses![0]).schema.language.go!.lroResponseType.language.go!.name}{}`;
+      if (schemaResponse !== undefined) {
+        returnType = `${schemaResponse.schema.language.go!.lroResponseType.language.go!.name}{}`;
       }
     } else {
       returnType = 'nil';
-      if (hasSchemaResponse(op)) {
-        returnType = `${(<SchemaResponse>op.responses![0]).schema.language.go!.responseType.name}{}`;
+      if (schemaResponse !== undefined) {
+        returnType = `${schemaResponse.schema.language.go!.responseType.name}{}`;
       }
     }
-  } else if (isMultiRespOperation(op)) {
-    // multi-response APIs return interface{}
-    returnType = 'nil';
-  } else if (hasSchemaResponse(op)) {
+  } else if (schemaResponse !== undefined) {
     // simple schema response
-    returnType = `${(<SchemaResponse>op.responses![0]).schema.language.go!.responseType.name}{}`;
+    returnType = `${schemaResponse.schema.language.go!.responseType.name}{}`;
   } else if (op.language.go!.headAsBoolean === true) {
     // NOTE: this case must come after the hasSchemaResponse() check to properly handle
     //       the intersection of head-as-boolean with modeled response headers
@@ -299,7 +301,7 @@ function generateOperation(op: Operation, imports: ImportManager): string {
   text += `\t\treturn ${zeroResp}, err\n`;
   text += `\t}\n`;
   // HAB with schema response is handled in protocol responder
-  if (op.language.go!.headAsBoolean === true && op.responses && !isSchemaResponse(op.responses[0])) {
+  if (op.language.go!.headAsBoolean === true && op.responses && getResponse(op) === undefined) {
     let respEnv = 'BooleanResponse';
     text += '\tif resp.StatusCode >= 200 && resp.StatusCode < 300 {\n';
     text += `\t\treturn ${respEnv}{RawResponse: resp.Response, Success: true}, nil\n`;
@@ -759,7 +761,8 @@ function createProtocolResponse(op: Operation, imports: ImportManager): string {
   let text = `${comment(name, '// ')} handles the ${info.name} response.\n`;
   text += `func (client *${clientName}) ${name}(resp *azcore.Response) (${generateReturnsInfo(op, 'handler').join(', ')}) {\n`;
   if (!isMultiRespOperation(op)) {
-    text += generateResponseUnmarshaller(op, op.responses![0], imports);
+    const schemaResponse = getResponse(op);
+    text += generateResponseUnmarshaller(op, schemaResponse!, imports);
   } else {
     imports.add('fmt');
     text += '\tswitch resp.StatusCode {\n';
@@ -972,16 +975,21 @@ function generateReturnsInfo(op: Operation, apiType: 'api' | 'op' | 'handler'): 
   if (!op.responses) {
     return ['*http.Response', 'error'];
   }
+  if (isMultiRespOperation(op)) {
+    return ['interface{}', 'error'];
+  }
+  const schemaResponse = getResponse(op);
   let returnType = '*http.Response';
   if (isLROOperation(op)) {
     switch (apiType) {
       case 'handler':
-        returnType = (<SchemaResponse>op.responses![0]).schema.language.go!.responseType.name;
+        // we only have a handler for operations that return a schema
+        returnType = schemaResponse!.schema.language.go!.responseType.name;
         break;
       case 'api':
         returnType = 'HTTPPollerResponse';
-        if (hasSchemaResponse(op)) {
-          returnType = (<SchemaResponse>op.responses![0]).schema.language.go!.lroResponseType.language.go!.name;
+        if (schemaResponse !== undefined) {
+          returnType = schemaResponse.schema.language.go!.lroResponseType.language.go!.name;
         }
         break;
       case 'op':
@@ -991,18 +999,17 @@ function generateReturnsInfo(op: Operation, apiType: 'api' | 'op' | 'handler'): 
   } else if (isPageableOperation(op)) {
     switch (apiType) {
       case 'handler':
-        returnType = (<SchemaResponse>op.responses![0]).schema.language.go!.responseType.name;
+        // pageable operations always return a schema
+        returnType = schemaResponse!.schema.language.go!.responseType.name;
         break;
       case 'api':
       case 'op':
         // pager operations don't return an error
         return [op.language.go!.pageableType.name];
     }
-  } else if (isMultiRespOperation(op)) {
-    returnType = 'interface{}';
-  } else if (hasSchemaResponse(op)) {
+  } else if (schemaResponse !== undefined) {
     // simple schema response
-    returnType = (<SchemaResponse>op.responses![0]).schema.language.go!.responseType.name;
+    returnType = schemaResponse.schema.language.go!.responseType.name;
   } else if (op.language.go!.headAsBoolean === true) {
     // NOTE: this case must come after the hasSchemaResponse() check to properly handle
     //       the intersection of head-as-boolean with modeled response headers
@@ -1030,10 +1037,11 @@ function generateARMLROBeginMethod(op: Operation, imports: ImportManager): strin
   text += `\tif err != nil {\n`;
   text += `\t\treturn ${zeroResp}, err\n`;
   text += `\t}\n`;
-  if (!op.responses || !isSchemaResponse(op.responses![0])) {
+  const schemaResponse = getResponse(op);
+  if (schemaResponse === undefined) {
     text += '\tresult := HTTPPollerResponse{\n';
   } else {
-    text += `\tresult := ${(<SchemaResponse>op.responses![0]).schema.language.go!.lroResponseType.language.go!.name}{\n`;
+    text += `\tresult := ${schemaResponse.schema.language.go!.lroResponseType.language.go!.name}{\n`;
   }
   text += '\t\tRawResponse: resp.Response,\n';
   text += '\t}\n';
@@ -1064,8 +1072,8 @@ function generateARMLROBeginMethod(op: Operation, imports: ImportManager): strin
     text += '\t\t\t}\n';
     text += `\t\t\treturn client.${info.protocolNaming.errorMethod}(resp)\n`;
     text += '\t\t},\n';
-    text += `\t\trespHandler: func(resp *azcore.Response) (${(<SchemaResponse>op.responses![0]).schema.language.go!.responseType.name}, error) {\n`;
-    text += generateResponseUnmarshaller(op, op.responses![0], imports);
+    text += `\t\trespHandler: func(resp *azcore.Response) (${schemaResponse!.schema.language.go!.responseType.name}, error) {\n`;
+    text += generateResponseUnmarshaller(op, schemaResponse!, imports);
     text += '\t\t},\n';
     text += `\t\tstatusCodes: []int{${formatStatusCodes(statusCodes)}},\n`;
   }
@@ -1076,8 +1084,8 @@ function generateARMLROBeginMethod(op: Operation, imports: ImportManager): strin
   let pollerResponse = '*http.Response';
   if (isPageableOperation(op)) {
     pollerResponse = op.language.go!.pageableType.name;
-  } else if (isSchemaResponse(op.responses![0])) {
-    pollerResponse = (<SchemaResponse>op.responses![0]).schema.language.go!.responseType.name;
+  } else if (schemaResponse !== undefined) {
+    pollerResponse = schemaResponse.schema.language.go!.responseType.name;
   }
   text += `\tresult.PollUntilDone = func(ctx context.Context, frequency time.Duration) (${pollerResponse}, error) {\n`;
   text += `\t\treturn poller.pollUntilDone(ctx, frequency)\n`;
@@ -1109,28 +1117,16 @@ function generateARMLROResumeMethod(op: Operation): string {
 // returns true if the operation returns multiple response types
 function isMultiRespOperation(op: Operation): boolean {
   // treat LROs as single-response ops
-  if (!op.responses || op.responses?.length === 1 || isLROOperation(op)) {
+  if (!op.responses || op.responses.length === 1 || isLROOperation(op)) {
     return false;
   }
-  // count the number of schemas returned by this operation
-  let schemaCount = 0;
-  let currentResp = op.responses![0];
-  if (isSchemaResponse(currentResp)) {
-    ++schemaCount;
-  }
-  // check that all response types are identical
-  for (let i = 1; i < op.responses!.length; ++i) {
-    const response = op.responses![i];
-    if (isSchemaResponse(response) && isSchemaResponse(currentResp)) {
-      // both are schema responses, ensure they match
-      if ((<SchemaResponse>response).schema !== (<SchemaResponse>currentResp).schema) {
-        ++schemaCount;
-      }
-    } else if (isSchemaResponse(response) && !isSchemaResponse(currentResp)) {
-      ++schemaCount;
-      // update currentResp to this response so we can compare it against the remaining responses
-      currentResp = response;
+  // count the number of distinct schemas returned by this operation
+  const schemaResponses = new Array<SchemaResponse>();
+  for (const response of values(op.responses)) {
+    // perform the comparison by name as some responses have different objects for the same underlying response type
+    if (isSchemaResponse(response) && !values(schemaResponses).where(sr => sr.schema.language.go!.name === response.schema.language.go!.name).any()) {
+      schemaResponses.push(response);
     }
   }
-  return schemaCount > 1;
+  return schemaResponses.length > 1;
 }
