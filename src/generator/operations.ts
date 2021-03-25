@@ -193,7 +193,10 @@ function formatHeaderResponseValue(propName: string, header: string, schema: Sch
 function generateMultiRespComment(op: Operation): string {
   const returnTypes = new Array<string>();
   for (const response of values(op.responses)) {
-    returnTypes.push(`*${(<SchemaResponse>response).schema.language.go!.responseType.name}`);
+    // the operation might contain a mix of schemas and non-schema responses
+    if (isSchemaResponse(response)) {
+      returnTypes.push(`*${response.schema.language.go!.responseType.name}`);
+    }
   }
   return `// Possible return types are ${returnTypes.join(', ')}\n`;
 }
@@ -767,6 +770,10 @@ function createProtocolResponse(op: Operation, imports: ImportManager): string {
     imports.add('fmt');
     text += '\tswitch resp.StatusCode {\n';
     for (const response of values(op.responses)) {
+      if (!isSchemaResponse(response)) {
+        // the operation contains a mix of schemas and non-schema responses
+        continue;
+      }
       text += `\tcase ${formatStatusCodes(response.protocol.http!.statusCodes)}:\n`
       text += generateResponseUnmarshaller(op, response, imports);
     }

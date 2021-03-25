@@ -179,91 +179,6 @@ func unmarshalControlActivityClassificationArray(rawMsg *json.RawMessage) (*[]Co
 	return &fArray, nil
 }
 
-func unmarshalExecutionActivityClassification(rawMsg *json.RawMessage) (ExecutionActivityClassification, error) {
-	if rawMsg == nil {
-		return nil, nil
-	}
-	var m map[string]interface{}
-	if err := json.Unmarshal(*rawMsg, &m); err != nil {
-		return nil, err
-	}
-	var b ExecutionActivityClassification
-	switch m["type"] {
-	case "AzureDataExplorerCommand":
-		b = &AzureDataExplorerCommandActivity{}
-	case "AzureFunctionActivity":
-		b = &AzureFunctionActivity{}
-	case "AzureMLBatchExecution":
-		b = &AzureMLBatchExecutionActivity{}
-	case "AzureMLExecutePipeline":
-		b = &AzureMLExecutePipelineActivity{}
-	case "AzureMLUpdateResource":
-		b = &AzureMLUpdateResourceActivity{}
-	case "Copy":
-		b = &CopyActivity{}
-	case "Custom":
-		b = &CustomActivity{}
-	case "DataLakeAnalyticsU-SQL":
-		b = &DataLakeAnalyticsUSQLActivity{}
-	case "DatabricksNotebook":
-		b = &DatabricksNotebookActivity{}
-	case "DatabricksSparkJar":
-		b = &DatabricksSparkJarActivity{}
-	case "DatabricksSparkPython":
-		b = &DatabricksSparkPythonActivity{}
-	case "Delete":
-		b = &DeleteActivity{}
-	case "ExecuteDataFlow":
-		b = &ExecuteDataFlowActivity{}
-	case "ExecuteSSISPackage":
-		b = &ExecuteSSISPackageActivity{}
-	case "GetMetadata":
-		b = &GetMetadataActivity{}
-	case "HDInsightHive":
-		b = &HDInsightHiveActivity{}
-	case "HDInsightMapReduce":
-		b = &HDInsightMapReduceActivity{}
-	case "HDInsightPig":
-		b = &HDInsightPigActivity{}
-	case "HDInsightSpark":
-		b = &HDInsightSparkActivity{}
-	case "HDInsightStreaming":
-		b = &HDInsightStreamingActivity{}
-	case "Lookup":
-		b = &LookupActivity{}
-	case "SparkJob":
-		b = &SynapseSparkJobDefinitionActivity{}
-	case "SqlServerStoredProcedure":
-		b = &SQLServerStoredProcedureActivity{}
-	case "SynapseNotebook":
-		b = &SynapseNotebookActivity{}
-	case "WebActivity":
-		b = &WebActivity{}
-	default:
-		b = &ExecutionActivity{}
-	}
-	return b, json.Unmarshal(*rawMsg, &b)
-}
-
-func unmarshalExecutionActivityClassificationArray(rawMsg *json.RawMessage) (*[]ExecutionActivityClassification, error) {
-	if rawMsg == nil {
-		return nil, nil
-	}
-	var rawMessages []*json.RawMessage
-	if err := json.Unmarshal(*rawMsg, &rawMessages); err != nil {
-		return nil, err
-	}
-	fArray := make([]ExecutionActivityClassification, len(rawMessages))
-	for index, rawMessage := range rawMessages {
-		f, err := unmarshalExecutionActivityClassification(rawMessage)
-		if err != nil {
-			return nil, err
-		}
-		fArray[index] = f
-	}
-	return &fArray, nil
-}
-
 func unmarshalCopySinkClassification(rawMsg *json.RawMessage) (CopySinkClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
@@ -568,155 +483,6 @@ func unmarshalCopySourceClassificationArray(rawMsg *json.RawMessage) (*[]CopySou
 	fArray := make([]CopySourceClassification, len(rawMessages))
 	for index, rawMessage := range rawMessages {
 		f, err := unmarshalCopySourceClassification(rawMessage)
-		if err != nil {
-			return nil, err
-		}
-		fArray[index] = f
-	}
-	return &fArray, nil
-}
-
-func unmarshalTabularSourceClassification(rawMsg *json.RawMessage) (TabularSourceClassification, error) {
-	if rawMsg == nil {
-		return nil, nil
-	}
-	var m map[string]interface{}
-	if err := json.Unmarshal(*rawMsg, &m); err != nil {
-		return nil, err
-	}
-	var b TabularSourceClassification
-	switch m["type"] {
-	case "AmazonMWSSource":
-		b = &AmazonMWSSource{}
-	case "AmazonRedshiftSource":
-		b = &AmazonRedshiftSource{}
-	case "AzureMariaDBSource":
-		b = &AzureMariaDBSource{}
-	case "AzureMySqlSource":
-		b = &AzureMySQLSource{}
-	case "AzurePostgreSqlSource":
-		b = &AzurePostgreSQLSource{}
-	case "AzureSqlSource":
-		b = &AzureSQLSource{}
-	case "AzureTableSource":
-		b = &AzureTableSource{}
-	case "CassandraSource":
-		b = &CassandraSource{}
-	case "ConcurSource":
-		b = &ConcurSource{}
-	case "CouchbaseSource":
-		b = &CouchbaseSource{}
-	case "Db2Source":
-		b = &Db2Source{}
-	case "DrillSource":
-		b = &DrillSource{}
-	case "DynamicsAXSource":
-		b = &DynamicsAXSource{}
-	case "EloquaSource":
-		b = &EloquaSource{}
-	case "GoogleAdWordsSource":
-		b = &GoogleAdWordsSource{}
-	case "GoogleBigQuerySource":
-		b = &GoogleBigQuerySource{}
-	case "GreenplumSource":
-		b = &GreenplumSource{}
-	case "HBaseSource":
-		b = &HBaseSource{}
-	case "HiveSource":
-		b = &HiveSource{}
-	case "HubspotSource":
-		b = &HubspotSource{}
-	case "ImpalaSource":
-		b = &ImpalaSource{}
-	case "InformixSource":
-		b = &InformixSource{}
-	case "JiraSource":
-		b = &JiraSource{}
-	case "MagentoSource":
-		b = &MagentoSource{}
-	case "MariaDBSource":
-		b = &MariaDBSource{}
-	case "MarketoSource":
-		b = &MarketoSource{}
-	case "MySqlSource":
-		b = &MySQLSource{}
-	case "NetezzaSource":
-		b = &NetezzaSource{}
-	case "OdbcSource":
-		b = &OdbcSource{}
-	case "OracleServiceCloudSource":
-		b = &OracleServiceCloudSource{}
-	case "PaypalSource":
-		b = &PaypalSource{}
-	case "PhoenixSource":
-		b = &PhoenixSource{}
-	case "PostgreSqlSource":
-		b = &PostgreSQLSource{}
-	case "PrestoSource":
-		b = &PrestoSource{}
-	case "QuickBooksSource":
-		b = &QuickBooksSource{}
-	case "ResponsysSource":
-		b = &ResponsysSource{}
-	case "SalesforceMarketingCloudSource":
-		b = &SalesforceMarketingCloudSource{}
-	case "SalesforceSource":
-		b = &SalesforceSource{}
-	case "SapBwSource":
-		b = &SapBwSource{}
-	case "SapCloudForCustomerSource":
-		b = &SapCloudForCustomerSource{}
-	case "SapEccSource":
-		b = &SapEccSource{}
-	case "SapHanaSource":
-		b = &SapHanaSource{}
-	case "SapOpenHubSource":
-		b = &SapOpenHubSource{}
-	case "SapTableSource":
-		b = &SapTableSource{}
-	case "ServiceNowSource":
-		b = &ServiceNowSource{}
-	case "ShopifySource":
-		b = &ShopifySource{}
-	case "SparkSource":
-		b = &SparkSource{}
-	case "SqlDWSource":
-		b = &SQLDWSource{}
-	case "SqlMISource":
-		b = &SQLMISource{}
-	case "SqlServerSource":
-		b = &SQLServerSource{}
-	case "SqlSource":
-		b = &SQLSource{}
-	case "SquareSource":
-		b = &SquareSource{}
-	case "SybaseSource":
-		b = &SybaseSource{}
-	case "TeradataSource":
-		b = &TeradataSource{}
-	case "VerticaSource":
-		b = &VerticaSource{}
-	case "XeroSource":
-		b = &XeroSource{}
-	case "ZohoSource":
-		b = &ZohoSource{}
-	default:
-		b = &TabularSource{}
-	}
-	return b, json.Unmarshal(*rawMsg, &b)
-}
-
-func unmarshalTabularSourceClassificationArray(rawMsg *json.RawMessage) (*[]TabularSourceClassification, error) {
-	if rawMsg == nil {
-		return nil, nil
-	}
-	var rawMessages []*json.RawMessage
-	if err := json.Unmarshal(*rawMsg, &rawMessages); err != nil {
-		return nil, err
-	}
-	fArray := make([]TabularSourceClassification, len(rawMessages))
-	for index, rawMessage := range rawMessages {
-		f, err := unmarshalTabularSourceClassification(rawMessage)
 		if err != nil {
 			return nil, err
 		}
@@ -1217,7 +983,7 @@ func unmarshalDependencyReferenceClassificationArray(rawMsg *json.RawMessage) (*
 	return &fArray, nil
 }
 
-func unmarshalTriggerDependencyReferenceClassification(rawMsg *json.RawMessage) (TriggerDependencyReferenceClassification, error) {
+func unmarshalExecutionActivityClassification(rawMsg *json.RawMessage) (ExecutionActivityClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
@@ -1225,17 +991,65 @@ func unmarshalTriggerDependencyReferenceClassification(rawMsg *json.RawMessage) 
 	if err := json.Unmarshal(*rawMsg, &m); err != nil {
 		return nil, err
 	}
-	var b TriggerDependencyReferenceClassification
+	var b ExecutionActivityClassification
 	switch m["type"] {
-	case "TumblingWindowTriggerDependencyReference":
-		b = &TumblingWindowTriggerDependencyReference{}
+	case "AzureDataExplorerCommand":
+		b = &AzureDataExplorerCommandActivity{}
+	case "AzureFunctionActivity":
+		b = &AzureFunctionActivity{}
+	case "AzureMLBatchExecution":
+		b = &AzureMLBatchExecutionActivity{}
+	case "AzureMLExecutePipeline":
+		b = &AzureMLExecutePipelineActivity{}
+	case "AzureMLUpdateResource":
+		b = &AzureMLUpdateResourceActivity{}
+	case "Copy":
+		b = &CopyActivity{}
+	case "Custom":
+		b = &CustomActivity{}
+	case "DataLakeAnalyticsU-SQL":
+		b = &DataLakeAnalyticsUSQLActivity{}
+	case "DatabricksNotebook":
+		b = &DatabricksNotebookActivity{}
+	case "DatabricksSparkJar":
+		b = &DatabricksSparkJarActivity{}
+	case "DatabricksSparkPython":
+		b = &DatabricksSparkPythonActivity{}
+	case "Delete":
+		b = &DeleteActivity{}
+	case "ExecuteDataFlow":
+		b = &ExecuteDataFlowActivity{}
+	case "ExecuteSSISPackage":
+		b = &ExecuteSSISPackageActivity{}
+	case "GetMetadata":
+		b = &GetMetadataActivity{}
+	case "HDInsightHive":
+		b = &HDInsightHiveActivity{}
+	case "HDInsightMapReduce":
+		b = &HDInsightMapReduceActivity{}
+	case "HDInsightPig":
+		b = &HDInsightPigActivity{}
+	case "HDInsightSpark":
+		b = &HDInsightSparkActivity{}
+	case "HDInsightStreaming":
+		b = &HDInsightStreamingActivity{}
+	case "Lookup":
+		b = &LookupActivity{}
+	case "SparkJob":
+		b = &SynapseSparkJobDefinitionActivity{}
+	case "SqlServerStoredProcedure":
+		b = &SQLServerStoredProcedureActivity{}
+	case "SynapseNotebook":
+		b = &SynapseNotebookActivity{}
+	case "WebActivity":
+		b = &WebActivity{}
 	default:
-		b = &TriggerDependencyReference{}
+		b = &ExecutionActivity{}
 	}
 	return b, json.Unmarshal(*rawMsg, &b)
 }
 
-func unmarshalTriggerDependencyReferenceClassificationArray(rawMsg *json.RawMessage) (*[]TriggerDependencyReferenceClassification, error) {
+func unmarshalExecutionActivityClassificationArray(rawMsg *json.RawMessage) (*[]ExecutionActivityClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
@@ -1243,9 +1057,9 @@ func unmarshalTriggerDependencyReferenceClassificationArray(rawMsg *json.RawMess
 	if err := json.Unmarshal(*rawMsg, &rawMessages); err != nil {
 		return nil, err
 	}
-	fArray := make([]TriggerDependencyReferenceClassification, len(rawMessages))
+	fArray := make([]ExecutionActivityClassification, len(rawMessages))
 	for index, rawMessage := range rawMessages {
-		f, err := unmarshalTriggerDependencyReferenceClassification(rawMessage)
+		f, err := unmarshalExecutionActivityClassification(rawMessage)
 		if err != nil {
 			return nil, err
 		}
@@ -1633,6 +1447,47 @@ func unmarshalLinkedServiceClassificationArray(rawMsg *json.RawMessage) (*[]Link
 	return &fArray, nil
 }
 
+func unmarshalMultiplePipelineTriggerClassification(rawMsg *json.RawMessage) (MultiplePipelineTriggerClassification, error) {
+	if rawMsg == nil {
+		return nil, nil
+	}
+	var m map[string]interface{}
+	if err := json.Unmarshal(*rawMsg, &m); err != nil {
+		return nil, err
+	}
+	var b MultiplePipelineTriggerClassification
+	switch m["type"] {
+	case "BlobEventsTrigger":
+		b = &BlobEventsTrigger{}
+	case "BlobTrigger":
+		b = &BlobTrigger{}
+	case "ScheduleTrigger":
+		b = &ScheduleTrigger{}
+	default:
+		b = &MultiplePipelineTrigger{}
+	}
+	return b, json.Unmarshal(*rawMsg, &b)
+}
+
+func unmarshalMultiplePipelineTriggerClassificationArray(rawMsg *json.RawMessage) (*[]MultiplePipelineTriggerClassification, error) {
+	if rawMsg == nil {
+		return nil, nil
+	}
+	var rawMessages []*json.RawMessage
+	if err := json.Unmarshal(*rawMsg, &rawMessages); err != nil {
+		return nil, err
+	}
+	fArray := make([]MultiplePipelineTriggerClassification, len(rawMessages))
+	for index, rawMessage := range rawMessages {
+		f, err := unmarshalMultiplePipelineTriggerClassification(rawMessage)
+		if err != nil {
+			return nil, err
+		}
+		fArray[index] = f
+	}
+	return &fArray, nil
+}
+
 func unmarshalSecretBaseClassification(rawMsg *json.RawMessage) (SecretBaseClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
@@ -1774,6 +1629,155 @@ func unmarshalStoreWriteSettingsClassificationArray(rawMsg *json.RawMessage) (*[
 	return &fArray, nil
 }
 
+func unmarshalTabularSourceClassification(rawMsg *json.RawMessage) (TabularSourceClassification, error) {
+	if rawMsg == nil {
+		return nil, nil
+	}
+	var m map[string]interface{}
+	if err := json.Unmarshal(*rawMsg, &m); err != nil {
+		return nil, err
+	}
+	var b TabularSourceClassification
+	switch m["type"] {
+	case "AmazonMWSSource":
+		b = &AmazonMWSSource{}
+	case "AmazonRedshiftSource":
+		b = &AmazonRedshiftSource{}
+	case "AzureMariaDBSource":
+		b = &AzureMariaDBSource{}
+	case "AzureMySqlSource":
+		b = &AzureMySQLSource{}
+	case "AzurePostgreSqlSource":
+		b = &AzurePostgreSQLSource{}
+	case "AzureSqlSource":
+		b = &AzureSQLSource{}
+	case "AzureTableSource":
+		b = &AzureTableSource{}
+	case "CassandraSource":
+		b = &CassandraSource{}
+	case "ConcurSource":
+		b = &ConcurSource{}
+	case "CouchbaseSource":
+		b = &CouchbaseSource{}
+	case "Db2Source":
+		b = &Db2Source{}
+	case "DrillSource":
+		b = &DrillSource{}
+	case "DynamicsAXSource":
+		b = &DynamicsAXSource{}
+	case "EloquaSource":
+		b = &EloquaSource{}
+	case "GoogleAdWordsSource":
+		b = &GoogleAdWordsSource{}
+	case "GoogleBigQuerySource":
+		b = &GoogleBigQuerySource{}
+	case "GreenplumSource":
+		b = &GreenplumSource{}
+	case "HBaseSource":
+		b = &HBaseSource{}
+	case "HiveSource":
+		b = &HiveSource{}
+	case "HubspotSource":
+		b = &HubspotSource{}
+	case "ImpalaSource":
+		b = &ImpalaSource{}
+	case "InformixSource":
+		b = &InformixSource{}
+	case "JiraSource":
+		b = &JiraSource{}
+	case "MagentoSource":
+		b = &MagentoSource{}
+	case "MariaDBSource":
+		b = &MariaDBSource{}
+	case "MarketoSource":
+		b = &MarketoSource{}
+	case "MySqlSource":
+		b = &MySQLSource{}
+	case "NetezzaSource":
+		b = &NetezzaSource{}
+	case "OdbcSource":
+		b = &OdbcSource{}
+	case "OracleServiceCloudSource":
+		b = &OracleServiceCloudSource{}
+	case "PaypalSource":
+		b = &PaypalSource{}
+	case "PhoenixSource":
+		b = &PhoenixSource{}
+	case "PostgreSqlSource":
+		b = &PostgreSQLSource{}
+	case "PrestoSource":
+		b = &PrestoSource{}
+	case "QuickBooksSource":
+		b = &QuickBooksSource{}
+	case "ResponsysSource":
+		b = &ResponsysSource{}
+	case "SalesforceMarketingCloudSource":
+		b = &SalesforceMarketingCloudSource{}
+	case "SalesforceSource":
+		b = &SalesforceSource{}
+	case "SapBwSource":
+		b = &SapBwSource{}
+	case "SapCloudForCustomerSource":
+		b = &SapCloudForCustomerSource{}
+	case "SapEccSource":
+		b = &SapEccSource{}
+	case "SapHanaSource":
+		b = &SapHanaSource{}
+	case "SapOpenHubSource":
+		b = &SapOpenHubSource{}
+	case "SapTableSource":
+		b = &SapTableSource{}
+	case "ServiceNowSource":
+		b = &ServiceNowSource{}
+	case "ShopifySource":
+		b = &ShopifySource{}
+	case "SparkSource":
+		b = &SparkSource{}
+	case "SqlDWSource":
+		b = &SQLDWSource{}
+	case "SqlMISource":
+		b = &SQLMISource{}
+	case "SqlServerSource":
+		b = &SQLServerSource{}
+	case "SqlSource":
+		b = &SQLSource{}
+	case "SquareSource":
+		b = &SquareSource{}
+	case "SybaseSource":
+		b = &SybaseSource{}
+	case "TeradataSource":
+		b = &TeradataSource{}
+	case "VerticaSource":
+		b = &VerticaSource{}
+	case "XeroSource":
+		b = &XeroSource{}
+	case "ZohoSource":
+		b = &ZohoSource{}
+	default:
+		b = &TabularSource{}
+	}
+	return b, json.Unmarshal(*rawMsg, &b)
+}
+
+func unmarshalTabularSourceClassificationArray(rawMsg *json.RawMessage) (*[]TabularSourceClassification, error) {
+	if rawMsg == nil {
+		return nil, nil
+	}
+	var rawMessages []*json.RawMessage
+	if err := json.Unmarshal(*rawMsg, &rawMessages); err != nil {
+		return nil, err
+	}
+	fArray := make([]TabularSourceClassification, len(rawMessages))
+	for index, rawMessage := range rawMessages {
+		f, err := unmarshalTabularSourceClassification(rawMessage)
+		if err != nil {
+			return nil, err
+		}
+		fArray[index] = f
+	}
+	return &fArray, nil
+}
+
 func unmarshalTriggerClassification(rawMsg *json.RawMessage) (TriggerClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
@@ -1823,7 +1827,7 @@ func unmarshalTriggerClassificationArray(rawMsg *json.RawMessage) (*[]TriggerCla
 	return &fArray, nil
 }
 
-func unmarshalMultiplePipelineTriggerClassification(rawMsg *json.RawMessage) (MultiplePipelineTriggerClassification, error) {
+func unmarshalTriggerDependencyReferenceClassification(rawMsg *json.RawMessage) (TriggerDependencyReferenceClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
@@ -1831,21 +1835,17 @@ func unmarshalMultiplePipelineTriggerClassification(rawMsg *json.RawMessage) (Mu
 	if err := json.Unmarshal(*rawMsg, &m); err != nil {
 		return nil, err
 	}
-	var b MultiplePipelineTriggerClassification
+	var b TriggerDependencyReferenceClassification
 	switch m["type"] {
-	case "BlobEventsTrigger":
-		b = &BlobEventsTrigger{}
-	case "BlobTrigger":
-		b = &BlobTrigger{}
-	case "ScheduleTrigger":
-		b = &ScheduleTrigger{}
+	case "TumblingWindowTriggerDependencyReference":
+		b = &TumblingWindowTriggerDependencyReference{}
 	default:
-		b = &MultiplePipelineTrigger{}
+		b = &TriggerDependencyReference{}
 	}
 	return b, json.Unmarshal(*rawMsg, &b)
 }
 
-func unmarshalMultiplePipelineTriggerClassificationArray(rawMsg *json.RawMessage) (*[]MultiplePipelineTriggerClassification, error) {
+func unmarshalTriggerDependencyReferenceClassificationArray(rawMsg *json.RawMessage) (*[]TriggerDependencyReferenceClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
@@ -1853,9 +1853,9 @@ func unmarshalMultiplePipelineTriggerClassificationArray(rawMsg *json.RawMessage
 	if err := json.Unmarshal(*rawMsg, &rawMessages); err != nil {
 		return nil, err
 	}
-	fArray := make([]MultiplePipelineTriggerClassification, len(rawMessages))
+	fArray := make([]TriggerDependencyReferenceClassification, len(rawMessages))
 	for index, rawMessage := range rawMessages {
-		f, err := unmarshalMultiplePipelineTriggerClassification(rawMessage)
+		f, err := unmarshalTriggerDependencyReferenceClassification(rawMessage)
 		if err != nil {
 			return nil, err
 		}

@@ -385,7 +385,8 @@ function generateStructs(objects?: ObjectSchema[]): StructDef[] {
     }
     // we check needsPatchMarshaller separately from other
     // states since it's not mutually exclusive with them.
-    if (obj.language.go!.needsPatchMarshaller === true) {
+    // be sure to skip this for root discriminators.
+    if (obj.language.go!.needsPatchMarshaller === true && !obj.language.go!.rootDiscriminator) {
       needsM = true;
     }
     if (needsIntM) {
@@ -539,7 +540,12 @@ function generateInternalMarshaller(obj: ObjectSchema, structDef: StructDef, par
   }
   let marshalInteral = `func (${receiver} ${typeName}) marshalInternal(${paramName}${paramType}) map[string]interface{} {\n`;
   if (parentType) {
-    marshalInteral += `\tobjectMap := ${receiver}.${parentType.language.go!.name}.marshalInternal(${paramName})\n`;
+    // if the parent isn't a discriminator it won't have a param
+    let parentParam = '';
+    if (parentType.discriminator) {
+      parentParam = paramName;
+    }
+    marshalInteral += `\tobjectMap := ${receiver}.${parentType.language.go!.name}.marshalInternal(${parentParam})\n`;
   } else {
     marshalInteral += '\tobjectMap := make(map[string]interface{})\n';
   }

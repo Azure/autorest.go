@@ -66,7 +66,17 @@ async function process(session: Session<CodeModel>) {
         const discriminatorEnums = getDiscriminatorEnums(rootDiscriminator);
         // for each child type in the hierarchy, fix up the discriminator value
         for (const child of values(rootDiscriminator.children?.all)) {
-          (<ObjectSchema>child).discriminatorValue = getEnumForDiscriminatorValue((<ObjectSchema>child).discriminatorValue!, discriminatorEnums);
+          const asObj = <ObjectSchema>child;
+          let discValue = getEnumForDiscriminatorValue(asObj.discriminatorValue!, discriminatorEnums);
+          if (!discValue) {
+            // this happens when there are intermediate types in the hierarchy that aren't discriminators.
+            // e.g. BaseType -> GenericProps -> DerivedType
+            // here, GenericProps is just a collection of standard properties common to various objects.
+            // M4 gives it a discriminatorValue of "GenericProps" that won't exist in the enum defined
+            // in BaseType.  unclear if this is desirable, but for now we just embed that value directly.
+            discValue = quoteString(asObj.discriminatorValue!);
+          }
+          asObj.discriminatorValue = discValue;
         }
         // add the error interface as the parent interface for discriminated types that are also errors
         if (rootDiscriminator.language.go!.errorType) {
@@ -703,7 +713,7 @@ function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op:
         }
       }
     } else if (!responseEnvelopeCreated(codeModel, response.schema)) {
-      response.schema.language.go!.responseType = generateResponseEnvelopeName(response.schema);
+      response.schema.language.go!.responseType = generateResponseEnvelopeName(codeModel, response.schema);
       response.schema.language.go!.properties = [
         createRawResponseProp()
       ];
@@ -717,6 +727,8 @@ function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op:
       } else if (response.schema.type === SchemaType.Array) {
         // for array types use the element type's name
         propName = recursiveTypeName(response.schema);
+      } else if (response.schema.type === SchemaType.Any) {
+        propName = 'Interface';
       }
       if (response.schema.serialization?.xml && response.schema.serialization.xml.name) {
         // always prefer the XML name
@@ -750,7 +762,7 @@ function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op:
       // the response envelope has already been created.  it's shared across operations
       // however we fold all header responses into the same envelope.
       // find the matching response type entry.
-      const rt = generateResponseEnvelopeName(response.schema);
+      const rt = generateResponseEnvelopeName(codeModel, response.schema);
       const responseEnvelopes = <Array<Schema>>codeModel.language.go!.responseEnvelopes;
       for (const respEnv of values(responseEnvelopes)) {
         if (respEnv.language.go!.responseType.name === rt.name) {
@@ -869,13 +881,13 @@ function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op:
 }
 
 // returns true if the named response envelope has already been created
-function responseEnvelopeExists(codeModel: CodeModel, name: string): boolean {
+function responseEnvelopeExists(codeModel: CodeModel, name: string): ObjectSchema | undefined {
   for (const resp of codeModel.language.go!.responseEnvelopes) {
     if (resp.language.go!.name === name) {
-      return true;
+      return resp;
     }
   }
-  return false;
+  return undefined;
 }
 
 function newObject(name: string, desc: string): ObjectSchema {
@@ -921,7 +933,7 @@ function getMarshallingFormat(protocol: Protocols): 'json' | 'xml' | 'na' {
 // returns true if a response envelope has been created for the specified response.
 // also associates the response envelope with the specified response as required.
 function responseEnvelopeCreated(codeModel: CodeModel, schema: Schema): boolean {
-  const responseType = generateResponseEnvelopeName(schema);
+  const responseType = generateResponseEnvelopeName(codeModel, schema);
   const responseEnvelopes = <Array<Schema>>codeModel.language.go!.responseEnvelopes;
   for (const respEnv of values(responseEnvelopes)) {
     if (respEnv.language.go!.responseType.name === responseType.name) {
@@ -986,8 +998,16 @@ function recursiveTypeName(schema: Schema): string {
   }
 }
 
-function generateResponseEnvelopeName(schema: Schema): Language {
-  const name = `${recursiveTypeName(schema)}Response`;
+function generateResponseEnvelopeName(codeModel: CodeModel, schema: Schema): Language {
+  let name = `${recursiveTypeName(schema)}Response`;
+  // ensure the response envelope name doesn't collide with an existing type name
+  for (const obj of values(codeModel.schemas.objects)) {
+    if (obj.language.go!.name === name) {
+      // found a collision, append a suffix
+      name += 'Type';
+      break;
+    }
+  }
   return {
     name: name,
     description: `${name} is the response envelope for operations that return a ${schema.language.go!.name} type.`,
@@ -1034,7 +1054,14 @@ function generateLROPollerName(response: SchemaResponse | undefined, op: Operati
 // creates the LRO response envelope for the specified operation/response
 function generateLROResponseEnvelope(response: SchemaResponse | undefined, op: Operation, codeModel: CodeModel) {
   const respTypeName = generateLROResponseEnvelopeName(response, op);
-  if (responseEnvelopeExists(codeModel, respTypeName.name)) {
+  const respEnv = responseEnvelopeExists(codeModel, respTypeName.name);
+  if (respEnv) {
+    if (response) {
+      // ensure the response has the LRO response type hooked up.
+      // this can happen for cases where operations return the same
+      // response type but M4 creates different response objects.
+      response.schema.language.go!.lroResponseType = respEnv;
+    }
     return;
   }
   const respTypeObject = newObject(respTypeName.name, respTypeName.description);
@@ -1126,10 +1153,19 @@ function getDiscriminatorEnums(obj: ObjectSchema): Array<ChoiceValue> | undefine
   return undefined;
 }
 
-// returns the enum name for the specified discriminator value
-function getEnumForDiscriminatorValue(discValue: string, enums: Array<ChoiceValue> | undefined): string {
+// returns s in quotes if not already quoted
+function quoteString(s: string): string {
+  if (s[0] === '"') {
+    return s;
+  }
+  return `"${s}"`;
+}
+
+// returns the enum name for the specified discriminator value, or undefined if missing.
+function getEnumForDiscriminatorValue(discValue: string, enums: Array<ChoiceValue> | undefined): string | undefined {
   if (!enums) {
-    return `"${discValue}"`;
+    // some discriminator values are already quoted
+    return quoteString(discValue);
   }
   // find the choice value that matches the current type's discriminator
   for (const enm of values(enums)) {
@@ -1137,7 +1173,7 @@ function getEnumForDiscriminatorValue(discValue: string, enums: Array<ChoiceValu
       return enm.language.go!.name;
     }
   }
-  throw new Error(`failed to find discriminator enum value for ${discValue}`);
+  return undefined;
 }
 
 // convert comments that are in Markdown to html and then to plain text
