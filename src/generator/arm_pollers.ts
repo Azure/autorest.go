@@ -102,6 +102,8 @@ export async function generateARMPollers(session: Session<CodeModel>): Promise<s
       if (isScalar) {
         respType = `respType := ${responseType}{}\n`;
         reference = '&';
+      } else if (poller.respType.type === SchemaType.Any) {
+        respType = `respType := ${responseType}{}\n`;
       }
       pollUntilDone = `${respType}
 		resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, ${reference}respType.${poller.respField})
