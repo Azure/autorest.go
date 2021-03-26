@@ -38,6 +38,7 @@ const goMappings = {
     'morecustombaseurigroup': 'custom-baseUrl-more-options.json',
     'nonstringenumgroup': 'non-string-enum.json',
     'numbergroup': 'body-number.json',
+    'objectgroup': 'object-type.json',
     'optionalgroup': 'required-optional.json',
     'paginggroup': 'paging.json',
     'paramgroupinggroup': 'azure-parameter-grouping.json',
