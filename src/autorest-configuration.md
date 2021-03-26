@@ -27,9 +27,13 @@ pipeline-model: v3
 # Pipeline Configuration
 ``` yaml
 pipeline:
+  go:
+    pass-thru: true
+    input: modelerfour/identity
+
   # fix up names add Go-specific data to the code model
   go-transform:
-    input: modelerfour/identity
+    input: go
 
   # generates code for the protocol layer
   go-protocol:
