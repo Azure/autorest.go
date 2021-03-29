@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Session } from '@autorest/extension-base';
-import { CodeModel, Parameter } from '@azure-tools/codemodel';
+import { CodeModel, Parameter } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
 import { contentPreamble, formatParameterTypeName } from './helpers';
 import { ImportManager } from './imports';

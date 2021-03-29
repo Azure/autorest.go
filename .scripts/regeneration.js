@@ -26,7 +26,7 @@ const goMappings = {
     'errorsgroup': 'xms-error-responses.json',
     'extenumsgroup': 'extensible-enums-swagger.json',
     'filegroup': 'body-file.json',
-    //'formdatagroup': 'body-formdata.json',
+    'formdatagroup': 'body-formdata.json',
     'headergroup': 'header.json',
     'headgroup': 'head.json',
     'httpinfrastructuregroup': 'httpInfrastructure.json',

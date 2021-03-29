@@ -4,7 +4,7 @@
  *  --------------------------------------------------------------------------------------------  */
 
 import { Session } from '@autorest/extension-base';
-import { CodeModel, HttpHeader, Language } from '@azure-tools/codemodel';
+import { CodeModel, HttpHeader, Language } from '@autorest/codemodel';
 import { visitor, clone, values } from '@azure-tools/linq';
 import { CommonAcronyms, ReservedWords } from './mappings';
 import { aggregateParameters, hasAdditionalProperties } from '../common/helpers';

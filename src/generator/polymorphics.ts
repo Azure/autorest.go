@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Session } from '@autorest/extension-base';
-import { CodeModel, ObjectSchema } from '@azure-tools/codemodel';
+import { CodeModel, ObjectSchema } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
 import { contentPreamble, sortAscending } from './helpers';
 import { ImportManager } from './imports';

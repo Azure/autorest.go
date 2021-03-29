@@ -5,7 +5,7 @@
 
 import { KnownMediaType, serialize } from '@azure-tools/codegen';
 import { Host, startSession, Session } from '@autorest/extension-base';
-import { ObjectSchema, ArraySchema, ChoiceValue, codeModelSchema, CodeModel, DateTimeSchema, GroupProperty, HttpHeader, HttpResponse, ImplementationLocation, Language, OperationGroup, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Response, Schema, DictionarySchema, Protocol, ChoiceSchema, SealedChoiceSchema, ConstantSchema, Request } from '@azure-tools/codemodel';
+import { ObjectSchema, ArraySchema, ChoiceValue, codeModelSchema, CodeModel, DateTimeSchema, GroupProperty, HttpHeader, HttpResponse, ImplementationLocation, Language, OperationGroup, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Response, Schema, DictionarySchema, Protocol, ChoiceSchema, SealedChoiceSchema, ConstantSchema, Request } from '@autorest/codemodel';
 import { items, values } from '@azure-tools/linq';
 import { aggregateParameters, getResponse, hasAdditionalProperties, isArraySchema, isDictionarySchema, isPageableOperation, isObjectSchema, isSchemaResponse, PagerInfo, isLROOperation, PollerInfo } from '../common/helpers';
 import { namer, protocolMethods } from './namer';
@@ -142,7 +142,7 @@ function isElementPointerToType(schema: ArraySchema | DictionarySchema): boolean
   // types that are implicitly nil should not be pointer-to-type
   const elementType = schema.elementType;
   if (isArraySchema(elementType) || isDictionarySchema(elementType) ||
-    elementType.type === SchemaType.Any || elementType.type === SchemaType.ByteArray) {
+    elementType.type === SchemaType.Any || elementType.type === SchemaType.Binary || elementType.type === SchemaType.ByteArray) {
     return false;
   }
   if (isObjectSchema(elementType) && elementType.discriminator) {
