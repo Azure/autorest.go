@@ -37,7 +37,7 @@ export async function protocolGen(host: Host) {
     host.WriteFile('code-model-v4.yaml', serialize(session.model), undefined, 'code-model-v4');
 
     for (const op of values(operations)) {
-      host.WriteFile(`${filePrefix}${op.name.toLowerCase()}.go`, op.content, undefined, 'source-file-go');
+      host.WriteFile(`${filePrefix}${op.name.toLowerCase()}_client.go`, op.content, undefined, 'source-file-go');
     }
 
     const enums = await generateConstants(session);
