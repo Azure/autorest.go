@@ -5,7 +5,7 @@
 
 import { Session } from '@autorest/extension-base';
 import { comment, KnownMediaType } from '@azure-tools/codegen';
-import { ArraySchema, ByteArraySchema, ChoiceSchema, CodeModel, ConstantSchema, DateTimeSchema, DictionarySchema, GroupProperty, ImplementationLocation, NumberSchema, Operation, Parameter, Property, Protocols, Response, Schema, SchemaResponse, SchemaType } from '@azure-tools/codemodel';
+import { ArraySchema, ByteArraySchema, ChoiceSchema, CodeModel, ConstantSchema, DateTimeSchema, DictionarySchema, GroupProperty, ImplementationLocation, NumberSchema, Operation, Parameter, Property, Protocols, Response, Schema, SchemaResponse, SchemaType } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
 import { aggregateParameters, getResponse, internalPagerTypeName, internalPollerTypeName, isArraySchema, isPageableOperation, isSchemaResponse, PagerInfo, PollerInfo, isLROOperation, commentLength } from '../common/helpers';
 import { OperationNaming } from '../transform/namer';
@@ -605,6 +605,17 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
       text += '\t}\n';
       text += '\treturn req, nil\n';
     }
+  } else if (mediaType === 'multipart') {
+    text += '\tif err := req.SetMultipartFormData(map[string]interface{}{\n';
+    for (const param of values(aggregateParameters(op))) {
+      if (param.isPartialBody) {
+        text += `\t\t\t"${param.language.go!.name}": ${param.language.go!.name},\n`;
+      }
+    }
+    text += '}); err != nil {'
+    text += '\t\treturn nil, err\n';
+    text += '\t}\n';
+    text += '\treturn req, nil\n';
   } else {
     text += `\treturn req, nil\n`;
   }
@@ -920,7 +931,7 @@ function isMapOfDate(schema: Schema): boolean {
 }
 
 // returns the media type used by the protocol
-function getMediaType(protocol: Protocols): 'JSON' | 'XML' | 'binary' | 'text' | 'none' {
+function getMediaType(protocol: Protocols): 'JSON' | 'XML' | 'binary' | 'text' | 'form' | 'multipart' | 'none' {
   // TODO: binary, forms etc
   switch (protocol.http!.knownMediaType) {
     case KnownMediaType.Json:
@@ -931,6 +942,10 @@ function getMediaType(protocol: Protocols): 'JSON' | 'XML' | 'binary' | 'text' |
       return 'binary';
     case KnownMediaType.Text:
       return 'text';
+    case KnownMediaType.Form:
+      return 'form';
+    case KnownMediaType.Multipart:
+      return 'multipart';
     default:
       return 'none';
   }

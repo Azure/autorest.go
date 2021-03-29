@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { ArraySchema, DictionarySchema, Schema, SchemaType } from '@azure-tools/codemodel';
+import { ArraySchema, DictionarySchema, Schema, SchemaType } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
 import { sortAscending } from './helpers';
 

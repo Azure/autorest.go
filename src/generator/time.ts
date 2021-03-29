@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Session } from '@autorest/extension-base';
-import { CodeModel } from '@azure-tools/codemodel';
+import { CodeModel } from '@autorest/codemodel';
 import { contentPreamble } from './helpers'
 
 // represents the generated content for an operation group

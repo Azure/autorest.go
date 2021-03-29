@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Session } from '@autorest/extension-base';
-import { CodeModel, SchemaType, Schema, ArraySchema } from '@azure-tools/codemodel';
+import { CodeModel, SchemaType, Schema, ArraySchema } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
 import { internalPagerTypeName, internalPollerTypeName, PollerInfo, PagerInfo } from '../common/helpers';
 import { contentPreamble, sortAscending } from './helpers';

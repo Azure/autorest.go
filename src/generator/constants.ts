@@ -5,7 +5,7 @@
 
 import { Session } from '@autorest/extension-base';
 import { comment } from '@azure-tools/codegen';
-import { CodeModel, ChoiceValue, Schemas } from '@azure-tools/codemodel';
+import { CodeModel, ChoiceValue, Schemas } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
 import { contentPreamble, hasDescription, sortAscending } from './helpers';
 import { commentLength } from '../common/helpers';

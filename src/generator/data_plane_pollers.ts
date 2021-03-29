@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Session } from '@autorest/extension-base';
-import { CodeModel } from '@azure-tools/codemodel';
+import { CodeModel } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
 import { PollerInfo } from '../common/helpers';
 import { contentPreamble, sortAscending } from './helpers';

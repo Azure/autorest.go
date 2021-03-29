@@ -5,7 +5,7 @@
 
 import { serialize } from '@azure-tools/codegen';
 import { Host, startSession } from '@autorest/extension-base';
-import { codeModelSchema, CodeModel } from '@azure-tools/codemodel';
+import { codeModelSchema, CodeModel } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
 import { generateOperations } from './operations';
 import { generateModels } from './models';

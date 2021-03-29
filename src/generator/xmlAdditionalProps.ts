@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Session } from '@autorest/extension-base';
-import { CodeModel } from '@azure-tools/codemodel';
+import { CodeModel } from '@autorest/codemodel';
 import { contentPreamble } from './helpers'
 import { ImportManager } from './imports';
 

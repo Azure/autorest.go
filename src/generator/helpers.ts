@@ -7,7 +7,7 @@ import { Session } from '@autorest/extension-base';
 import { values } from '@azure-tools/linq';
 import { comment } from '@azure-tools/codegen';
 import { aggregateParameters, isSchemaResponse } from '../common/helpers';
-import { ArraySchema, CodeModel, DictionarySchema, Language, Parameter, Schema, SchemaType, Operation, GroupProperty, ImplementationLocation, SerializationStyle, ByteArraySchema, ConstantSchema, NumberSchema, DateTimeSchema } from '@azure-tools/codemodel';
+import { ArraySchema, CodeModel, DictionarySchema, Language, Parameter, Schema, SchemaType, Operation, GroupProperty, ImplementationLocation, SerializationStyle, ByteArraySchema, ConstantSchema, NumberSchema, DateTimeSchema } from '@autorest/codemodel';
 import { ImportManager } from './imports';
 
 export const dateFormat = '2006-01-02';
