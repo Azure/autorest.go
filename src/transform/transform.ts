@@ -549,6 +549,11 @@ function processOperationResponses(session: Session<CodeModel>) {
           continue;
         }
         if (isSchemaResponse(resp)) {
+          if (resp.schema.type === SchemaType.Binary) {
+            // don't create response envelopes for binary responses.
+            // callers read directly from the *http.Response.Body
+            continue;
+          }
           resp.schema.language.go!.name = schemaTypeToGoType(session.model, resp.schema, true);
         }
         const marshallingFormat = getMarshallingFormat(resp.protocol);
