@@ -596,7 +596,7 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
     imports.add('strings');
     const bodyParam = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http!.in === 'body'; }).first();
     if (bodyParam!.required) {
-      text += `\tbody := azcore.NopCloser(strings.NewReader(${bodyParam}))\n`;
+      text += `\tbody := azcore.NopCloser(strings.NewReader(${bodyParam!.language.go!.name}))\n`;
       text += `\treturn req, req.SetBody(body, "text/plain; encoding=UTF-8")\n`;
     } else {
       text += emitParamGroupCheck(<GroupProperty>bodyParam!.language.go!.paramGroup, bodyParam!);

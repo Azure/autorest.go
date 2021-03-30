@@ -6,7 +6,7 @@
 import { KnownMediaType, serialize } from '@azure-tools/codegen';
 import { Host, startSession, Session } from '@autorest/extension-base';
 import { ObjectSchema, ArraySchema, ChoiceValue, codeModelSchema, CodeModel, DateTimeSchema, GroupProperty, HttpHeader, HttpResponse, ImplementationLocation, Language, OperationGroup, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Response, Schema, DictionarySchema, Protocol, ChoiceSchema, SealedChoiceSchema, ConstantSchema, Request } from '@autorest/codemodel';
-import { items, values } from '@azure-tools/linq';
+import { clone, items, values } from '@azure-tools/linq';
 import { aggregateParameters, getResponse, hasAdditionalProperties, isArraySchema, isDictionarySchema, isPageableOperation, isObjectSchema, isSchemaResponse, PagerInfo, isLROOperation, PollerInfo } from '../common/helpers';
 import { namer, protocolMethods } from './namer';
 import { fromString } from 'html-to-text';
@@ -282,7 +282,7 @@ function processOperationRequests(session: Session<CodeModel>) {
       }
       if (op.requests!.length > 1) {
         for (const req of values(op.requests)) {
-          const newOp = JSON.parse(JSON.stringify(op));
+          const newOp = clone(op);
           newOp.requests = (<Array<Request>>op.requests).filter(r => r === req);
           let name = op.language.go!.name;
           if (req.protocol.http!.knownMediaType === 'json') {
@@ -361,7 +361,7 @@ function processOperationRequests(session: Session<CodeModel>) {
           }
           const clientParams = <Array<Parameter>>group.language.go!.clientParams;
           // check if this global param has already been added
-          if (clientParams.includes(param)) {
+          if (values(clientParams).where(cp => cp.language.go!.name === param.language.go!.name).any()) {
             continue;
           }
           clientParams.push(param);
@@ -549,6 +549,11 @@ function processOperationResponses(session: Session<CodeModel>) {
           continue;
         }
         if (isSchemaResponse(resp)) {
+          if (resp.schema.type === SchemaType.Binary) {
+            // don't create response envelopes for binary responses.
+            // callers read directly from the *http.Response.Body
+            continue;
+          }
           resp.schema.language.go!.name = schemaTypeToGoType(session.model, resp.schema, true);
         }
         const marshallingFormat = getMarshallingFormat(resp.protocol);
