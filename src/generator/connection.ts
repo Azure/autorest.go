@@ -52,6 +52,12 @@ function generateContent(session: Session<CodeModel>): string {
   text += '\tTelemetry azcore.TelemetryOptions\n';
   text += '\t// Logging configures the built-in logging policy behavior.\n';
   text += '\tLogging azcore.LogOptions\n';
+  text += '\t// PerCallPolicies contains custom policies to inject into the pipeline.\n';
+  text += '\t// Each policy is executed once per request.\n';
+  text += '\tPerCallPolicies []azcore.Policy\n';
+  text += '\t// PerRetryPolicies contains custom policies to inject into the pipeline.\n';
+  text += '\t// Each policy is executed once per request, and for each retry request.\n';
+  text += '\tPerRetryPolicies []azcore.Policy\n';
   text += '}\n\n';
 
   text += `func (c *${connectionOptions}) telemetryOptions() *azcore.TelemetryOptions {\n`;
@@ -69,13 +75,11 @@ function generateContent(session: Session<CodeModel>): string {
   let defaultEndpoint = 'DefaultEndpoint';
   let newDefaultConnection = 'NewDefaultConnection';
   let newConnection = 'NewConnection';
-  let newConnectionWithPipeline = 'NewConnectionWithPipeline';
   if (!isARM && !forceExports) {
     connection = connection.uncapitalize();
     defaultEndpoint = defaultEndpoint.uncapitalize();
     newDefaultConnection = newDefaultConnection.uncapitalize();
     newConnection = newConnection.uncapitalize();
-    newConnectionWithPipeline = newConnectionWithPipeline.uncapitalize();
   }
   if (session.model.info.description) {
     text += `// ${connection} - ${session.model.info.description}\n`;
@@ -143,22 +147,17 @@ function generateContent(session: Session<CodeModel>): string {
   text += '\tif options == nil {\n';
   text += `\t\toptions = &${connectionOptions}{}\n`;
   text += '\t}\n';
-  const telemetryPolicy = 'azcore.NewTelemetryPolicy(options.telemetryOptions())';
-  const retryPolicy = 'azcore.NewRetryPolicy(&options.Retry)';
-  const credPolicy = 'cred.AuthenticationPolicy(azcore.AuthenticationPolicyOptions{Options: azcore.TokenRequestOptions{Scopes: []string{scope}}})';
-  const logPolicy = 'azcore.NewLogPolicy(&options.Logging))';
-  text += '\tp := azcore.NewPipeline(options.HTTPClient,\n';
-  text += `\t\t${telemetryPolicy},\n`;
-  text += `\t\t${retryPolicy},\n`;
+  text += '\tpolicies := []azcore.Policy{\n';
+  text += '\t\tazcore.NewTelemetryPolicy(options.telemetryOptions()),\n';
+  text += '\t}\n';
+  text += '\tpolicies = append(policies, options.PerCallPolicies...)\n';
+  text += '\tpolicies = append(policies, azcore.NewRetryPolicy(&options.Retry))\n';
+  text += '\tpolicies = append(policies, options.PerRetryPolicies...)\n';
   if (session.model.security.authenticationRequired) {
-    text += `\t\t${credPolicy},\n`;
+    text += `\t\tpolicies = append(policies, cred.AuthenticationPolicy(azcore.AuthenticationPolicyOptions{Options: azcore.TokenRequestOptions{Scopes: []string{scope}}}))\n`;
   }
-  text += `\t\t${logPolicy}\n`;
-  text += `\treturn ${newConnectionWithPipeline}(${ctorParams}, p)\n`;
-  text += '}\n\n';
-
-  text += `// ${newConnectionWithPipeline} creates an instance of the ${connection} type with the specified endpoint and pipeline.\n`;
-  text += `func ${newConnectionWithPipeline}(${ctorParamsSig}, p azcore.Pipeline) *${connection} {\n`;
+  text += '\tpolicies = append(policies, azcore.NewLogPolicy(&options.Logging))\n';
+  const pipeline = 'azcore.NewPipeline(options.HTTPClient, policies...)';
   if (!session.model.language.go!.complexHostParams) {
     // simple case, construct the full host here
     var hostURL: string;
@@ -186,7 +185,7 @@ function generateContent(session: Session<CodeModel>): string {
       // swagger host, the host URL is the only ctor param
       hostURL = ctorParams;
     }
-    text += `\treturn &${connection}{u: ${hostURL}, p: p}\n`;
+    text += `\treturn &${connection}{u: ${hostURL}, p: ${pipeline}}\n`;
     text += '}\n\n';
     text += '// Endpoint returns the connection\'s endpoint.\n';
     text += `func (c *${connection}) Endpoint() string {\n`;
@@ -195,7 +194,7 @@ function generateContent(session: Session<CodeModel>): string {
   } else {
     // complex case, full URL will be constructed and parsed in operations
     text += `\tclient := &${connection}{\n`;
-    text += '\t\tp: p,\n';
+    text += `\t\tp: ${pipeline},\n`;
     const hostParams = <Array<Parameter>>session.model.language.go!.hostParams;
     for (const hostParam of values(hostParams)) {
       let val = hostParam.language.go!.name;

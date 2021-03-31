@@ -26,6 +26,12 @@ type connectionOptions struct {
 	Telemetry azcore.TelemetryOptions
 	// Logging configures the built-in logging policy behavior.
 	Logging azcore.LogOptions
+	// PerCallPolicies contains custom policies to inject into the pipeline.
+	// Each policy is executed once per request.
+	PerCallPolicies []azcore.Policy
+	// PerRetryPolicies contains custom policies to inject into the pipeline.
+	// Each policy is executed once per request, and for each retry request.
+	PerRetryPolicies []azcore.Policy
 }
 
 func (c *connectionOptions) telemetryOptions() *azcore.TelemetryOptions {
@@ -49,15 +55,13 @@ func newConnection(endpoint string, livyAPIVersion *string, sparkPoolName string
 	if options == nil {
 		options = &connectionOptions{}
 	}
-	p := azcore.NewPipeline(options.HTTPClient,
+	policies := []azcore.Policy{
 		azcore.NewTelemetryPolicy(options.telemetryOptions()),
-		azcore.NewRetryPolicy(&options.Retry),
-		azcore.NewLogPolicy(&options.Logging))
-	return newConnectionWithPipeline(endpoint, livyAPIVersion, sparkPoolName, p)
-}
-
-// newConnectionWithPipeline creates an instance of the connection type with the specified endpoint and pipeline.
-func newConnectionWithPipeline(endpoint string, livyAPIVersion *string, sparkPoolName string, p azcore.Pipeline) *connection {
+	}
+	policies = append(policies, options.PerCallPolicies...)
+	policies = append(policies, azcore.NewRetryPolicy(&options.Retry))
+	policies = append(policies, options.PerRetryPolicies...)
+	policies = append(policies, azcore.NewLogPolicy(&options.Logging))
 	hostURL := "{endpoint}/livyApi/versions/{livyApiVersion}/sparkPools/{sparkPoolName}"
 	hostURL = strings.ReplaceAll(hostURL, "{endpoint}", endpoint)
 	if livyAPIVersion == nil {
@@ -66,7 +70,7 @@ func newConnectionWithPipeline(endpoint string, livyAPIVersion *string, sparkPoo
 	}
 	hostURL = strings.ReplaceAll(hostURL, "{livyApiVersion}", *livyAPIVersion)
 	hostURL = strings.ReplaceAll(hostURL, "{sparkPoolName}", sparkPoolName)
-	return &connection{u: hostURL, p: p}
+	return &connection{u: hostURL, p: azcore.NewPipeline(options.HTTPClient, policies...)}
 }
 
 // Endpoint returns the connection's endpoint.

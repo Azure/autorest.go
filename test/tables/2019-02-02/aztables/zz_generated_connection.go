@@ -26,6 +26,12 @@ type ConnectionOptions struct {
 	Telemetry azcore.TelemetryOptions
 	// Logging configures the built-in logging policy behavior.
 	Logging azcore.LogOptions
+	// PerCallPolicies contains custom policies to inject into the pipeline.
+	// Each policy is executed once per request.
+	PerCallPolicies []azcore.Policy
+	// PerRetryPolicies contains custom policies to inject into the pipeline.
+	// Each policy is executed once per request, and for each retry request.
+	PerRetryPolicies []azcore.Policy
 }
 
 func (c *ConnectionOptions) telemetryOptions() *azcore.TelemetryOptions {
@@ -49,17 +55,15 @@ func NewConnection(endpoint string, cred azcore.Credential, options *ConnectionO
 	if options == nil {
 		options = &ConnectionOptions{}
 	}
-	p := azcore.NewPipeline(options.HTTPClient,
+	policies := []azcore.Policy{
 		azcore.NewTelemetryPolicy(options.telemetryOptions()),
-		azcore.NewRetryPolicy(&options.Retry),
-		cred.AuthenticationPolicy(azcore.AuthenticationPolicyOptions{Options: azcore.TokenRequestOptions{Scopes: []string{scope}}}),
-		azcore.NewLogPolicy(&options.Logging))
-	return NewConnectionWithPipeline(endpoint, p)
-}
-
-// NewConnectionWithPipeline creates an instance of the Connection type with the specified endpoint and pipeline.
-func NewConnectionWithPipeline(endpoint string, p azcore.Pipeline) *Connection {
-	return &Connection{u: endpoint, p: p}
+	}
+	policies = append(policies, options.PerCallPolicies...)
+	policies = append(policies, azcore.NewRetryPolicy(&options.Retry))
+	policies = append(policies, options.PerRetryPolicies...)
+	policies = append(policies, cred.AuthenticationPolicy(azcore.AuthenticationPolicyOptions{Options: azcore.TokenRequestOptions{Scopes: []string{scope}}}))
+	policies = append(policies, azcore.NewLogPolicy(&options.Logging))
+	return &Connection{u: endpoint, p: azcore.NewPipeline(options.HTTPClient, policies...)}
 }
 
 // Endpoint returns the connection's endpoint.
