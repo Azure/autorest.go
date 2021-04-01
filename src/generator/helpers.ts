@@ -166,8 +166,9 @@ export function getMethodParameters(op: Operation): Parameter[] {
     return 1;
   })
   for (const paramGroup of values(paramGroups)) {
-    // if there's only one optional param group, name the param "options" instead of its (long) type name
-    if (!paramGroup.required && paramGroups.length === 1) {
+    // if there's only one optional param group, and there's no existing param
+    // named options, name the param "options" instead of its (long) type name
+    if (!paramGroup.required && paramGroups.length === 1 && !values(params).where(p => p.language.go!.name === 'options').any()) {
       paramGroup.language.go!.name = 'options';
     }
     params.push(paramGroup);

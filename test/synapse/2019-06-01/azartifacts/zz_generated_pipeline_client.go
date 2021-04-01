@@ -49,9 +49,9 @@ func (client *pipelineClient) createOrUpdatePipelineCreateRequest(ctx context.Co
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2019-06-01-preview")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2019-06-01-preview")
+	req.URL.RawQuery = reqQP.Encode()
 	if options != nil && options.IfMatch != nil {
 		req.Header.Set("If-Match", *options.IfMatch)
 	}
@@ -105,18 +105,18 @@ func (client *pipelineClient) createPipelineRunCreateRequest(ctx context.Context
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2019-06-01-preview")
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2019-06-01-preview")
 	if options != nil && options.ReferencePipelineRunID != nil {
-		query.Set("referencePipelineRunId", *options.ReferencePipelineRunID)
+		reqQP.Set("referencePipelineRunId", *options.ReferencePipelineRunID)
 	}
 	if options != nil && options.IsRecovery != nil {
-		query.Set("isRecovery", strconv.FormatBool(*options.IsRecovery))
+		reqQP.Set("isRecovery", strconv.FormatBool(*options.IsRecovery))
 	}
 	if options != nil && options.StartActivityName != nil {
-		query.Set("startActivityName", *options.StartActivityName)
+		reqQP.Set("startActivityName", *options.StartActivityName)
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	if options != nil && options.Parameters != nil {
 		return req, req.MarshalAsJSON(options.Parameters)
@@ -170,9 +170,9 @@ func (client *pipelineClient) deletePipelineCreateRequest(ctx context.Context, p
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2019-06-01-preview")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2019-06-01-preview")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -214,9 +214,9 @@ func (client *pipelineClient) getPipelineCreateRequest(ctx context.Context, pipe
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2019-06-01-preview")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2019-06-01-preview")
+	req.URL.RawQuery = reqQP.Encode()
 	if options != nil && options.IfNoneMatch != nil {
 		req.Header.Set("If-None-Match", *options.IfNoneMatch)
 	}
@@ -266,9 +266,9 @@ func (client *pipelineClient) getPipelinesByWorkspaceCreateRequest(ctx context.C
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2019-06-01-preview")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2019-06-01-preview")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -319,9 +319,9 @@ func (client *pipelineClient) renamePipelineCreateRequest(ctx context.Context, p
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2019-06-01-preview")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2019-06-01-preview")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(request)
 }

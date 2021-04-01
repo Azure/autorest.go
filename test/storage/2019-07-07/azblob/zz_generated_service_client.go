@@ -42,10 +42,10 @@ func (client *serviceClient) getAccountInfoCreateRequest(ctx context.Context, op
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("restype", "account")
-	query.Set("comp", "properties")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("restype", "account")
+	reqQP.Set("comp", "properties")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("x-ms-version", "2019-07-07")
 	req.Header.Set("Accept", "application/xml")
 	return req, nil
@@ -119,13 +119,13 @@ func (client *serviceClient) getPropertiesCreateRequest(ctx context.Context, opt
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("restype", "service")
-	query.Set("comp", "properties")
+	reqQP := req.URL.Query()
+	reqQP.Set("restype", "service")
+	reqQP.Set("comp", "properties")
 	if options != nil && options.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("x-ms-version", "2019-07-07")
 	if options != nil && options.RequestID != nil {
 		req.Header.Set("x-ms-client-request-id", *options.RequestID)
@@ -186,13 +186,13 @@ func (client *serviceClient) getStatisticsCreateRequest(ctx context.Context, opt
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("restype", "service")
-	query.Set("comp", "stats")
+	reqQP := req.URL.Query()
+	reqQP.Set("restype", "service")
+	reqQP.Set("comp", "stats")
 	if options != nil && options.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("x-ms-version", "2019-07-07")
 	if options != nil && options.RequestID != nil {
 		req.Header.Set("x-ms-client-request-id", *options.RequestID)
@@ -259,13 +259,13 @@ func (client *serviceClient) getUserDelegationKeyCreateRequest(ctx context.Conte
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("restype", "service")
-	query.Set("comp", "userdelegationkey")
+	reqQP := req.URL.Query()
+	reqQP.Set("restype", "service")
+	reqQP.Set("comp", "userdelegationkey")
 	if options != nil && options.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("x-ms-version", "2019-07-07")
 	if options != nil && options.RequestID != nil {
 		req.Header.Set("x-ms-client-request-id", *options.RequestID)
@@ -332,24 +332,24 @@ func (client *serviceClient) listContainersSegmentCreateRequest(ctx context.Cont
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("comp", "list")
+	reqQP := req.URL.Query()
+	reqQP.Set("comp", "list")
 	if options != nil && options.Prefix != nil {
-		query.Set("prefix", *options.Prefix)
+		reqQP.Set("prefix", *options.Prefix)
 	}
 	if options != nil && options.Marker != nil {
-		query.Set("marker", *options.Marker)
+		reqQP.Set("marker", *options.Marker)
 	}
 	if options != nil && options.Maxresults != nil {
-		query.Set("maxresults", strconv.FormatInt(int64(*options.Maxresults), 10))
+		reqQP.Set("maxresults", strconv.FormatInt(int64(*options.Maxresults), 10))
 	}
 	if options != nil && options.Include != nil {
-		query.Set("include", "metadata")
+		reqQP.Set("include", "metadata")
 	}
 	if options != nil && options.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("x-ms-version", "2019-07-07")
 	if options != nil && options.RequestID != nil {
 		req.Header.Set("x-ms-client-request-id", *options.RequestID)
@@ -410,13 +410,13 @@ func (client *serviceClient) setPropertiesCreateRequest(ctx context.Context, sto
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("restype", "service")
-	query.Set("comp", "properties")
+	reqQP := req.URL.Query()
+	reqQP.Set("restype", "service")
+	reqQP.Set("comp", "properties")
 	if options != nil && options.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("x-ms-version", "2019-07-07")
 	if options != nil && options.RequestID != nil {
 		req.Header.Set("x-ms-client-request-id", *options.RequestID)
@@ -472,12 +472,12 @@ func (client *serviceClient) submitBatchCreateRequest(ctx context.Context, conte
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("comp", "batch")
+	reqQP := req.URL.Query()
+	reqQP.Set("comp", "batch")
 	if options != nil && options.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.SkipBodyDownload()
 	req.Header.Set("Content-Length", strconv.FormatInt(contentLength, 10))
 	req.Header.Set("Content-Type", multipartContentType)

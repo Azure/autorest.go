@@ -46,13 +46,13 @@ func (client *blobClient) abortCopyFromURLCreateRequest(ctx context.Context, cop
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("comp", "copy")
-	query.Set("copyid", copyID)
+	reqQP := req.URL.Query()
+	reqQP.Set("comp", "copy")
+	reqQP.Set("copyid", copyID)
 	if blobAbortCopyFromURLOptions != nil && blobAbortCopyFromURLOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*blobAbortCopyFromURLOptions.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*blobAbortCopyFromURLOptions.Timeout), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("x-ms-copy-action", "abort")
 	if leaseAccessConditions != nil && leaseAccessConditions.LeaseID != nil {
 		req.Header.Set("x-ms-lease-id", *leaseAccessConditions.LeaseID)
@@ -119,12 +119,12 @@ func (client *blobClient) acquireLeaseCreateRequest(ctx context.Context, blobAcq
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("comp", "lease")
+	reqQP := req.URL.Query()
+	reqQP.Set("comp", "lease")
 	if blobAcquireLeaseOptions != nil && blobAcquireLeaseOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*blobAcquireLeaseOptions.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*blobAcquireLeaseOptions.Timeout), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("x-ms-lease-action", "acquire")
 	if blobAcquireLeaseOptions != nil && blobAcquireLeaseOptions.Duration != nil {
 		req.Header.Set("x-ms-lease-duration", strconv.FormatInt(int64(*blobAcquireLeaseOptions.Duration), 10))
@@ -219,12 +219,12 @@ func (client *blobClient) breakLeaseCreateRequest(ctx context.Context, blobBreak
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("comp", "lease")
+	reqQP := req.URL.Query()
+	reqQP.Set("comp", "lease")
 	if blobBreakLeaseOptions != nil && blobBreakLeaseOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*blobBreakLeaseOptions.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*blobBreakLeaseOptions.Timeout), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("x-ms-lease-action", "break")
 	if blobBreakLeaseOptions != nil && blobBreakLeaseOptions.BreakPeriod != nil {
 		req.Header.Set("x-ms-lease-break-period", strconv.FormatInt(int64(*blobBreakLeaseOptions.BreakPeriod), 10))
@@ -321,12 +321,12 @@ func (client *blobClient) changeLeaseCreateRequest(ctx context.Context, leaseID 
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("comp", "lease")
+	reqQP := req.URL.Query()
+	reqQP.Set("comp", "lease")
 	if blobChangeLeaseOptions != nil && blobChangeLeaseOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*blobChangeLeaseOptions.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*blobChangeLeaseOptions.Timeout), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("x-ms-lease-action", "change")
 	req.Header.Set("x-ms-lease-id", leaseID)
 	req.Header.Set("x-ms-proposed-lease-id", proposedLeaseID)
@@ -417,11 +417,11 @@ func (client *blobClient) copyFromURLCreateRequest(ctx context.Context, copySour
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
+	reqQP := req.URL.Query()
 	if blobCopyFromURLOptions != nil && blobCopyFromURLOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*blobCopyFromURLOptions.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*blobCopyFromURLOptions.Timeout), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("x-ms-requires-sync", "true")
 	if blobCopyFromURLOptions != nil && blobCopyFromURLOptions.Metadata != nil {
 		for k, v := range *blobCopyFromURLOptions.Metadata {
@@ -554,12 +554,12 @@ func (client *blobClient) createSnapshotCreateRequest(ctx context.Context, blobC
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("comp", "snapshot")
+	reqQP := req.URL.Query()
+	reqQP.Set("comp", "snapshot")
 	if blobCreateSnapshotOptions != nil && blobCreateSnapshotOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*blobCreateSnapshotOptions.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*blobCreateSnapshotOptions.Timeout), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	if blobCreateSnapshotOptions != nil && blobCreateSnapshotOptions.Metadata != nil {
 		for k, v := range *blobCreateSnapshotOptions.Metadata {
 			req.Header.Set("x-ms-meta-"+k, v)
@@ -684,14 +684,14 @@ func (client *blobClient) deleteCreateRequest(ctx context.Context, blobDeleteOpt
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
+	reqQP := req.URL.Query()
 	if blobDeleteOptions != nil && blobDeleteOptions.Snapshot != nil {
-		query.Set("snapshot", *blobDeleteOptions.Snapshot)
+		reqQP.Set("snapshot", *blobDeleteOptions.Snapshot)
 	}
 	if blobDeleteOptions != nil && blobDeleteOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*blobDeleteOptions.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*blobDeleteOptions.Timeout), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	if leaseAccessConditions != nil && leaseAccessConditions.LeaseID != nil {
 		req.Header.Set("x-ms-lease-id", *leaseAccessConditions.LeaseID)
 	}
@@ -773,14 +773,14 @@ func (client *blobClient) downloadCreateRequest(ctx context.Context, blobDownloa
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
+	reqQP := req.URL.Query()
 	if blobDownloadOptions != nil && blobDownloadOptions.Snapshot != nil {
-		query.Set("snapshot", *blobDownloadOptions.Snapshot)
+		reqQP.Set("snapshot", *blobDownloadOptions.Snapshot)
 	}
 	if blobDownloadOptions != nil && blobDownloadOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*blobDownloadOptions.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*blobDownloadOptions.Timeout), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.SkipBodyDownload()
 	if blobDownloadOptions != nil && blobDownloadOptions.Range != nil {
 		req.Header.Set("x-ms-range", *blobDownloadOptions.Range)
@@ -1006,15 +1006,15 @@ func (client *blobClient) getAccessControlCreateRequest(ctx context.Context, blo
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("action", "getAccessControl")
+	reqQP := req.URL.Query()
+	reqQP.Set("action", "getAccessControl")
 	if blobGetAccessControlOptions != nil && blobGetAccessControlOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*blobGetAccessControlOptions.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*blobGetAccessControlOptions.Timeout), 10))
 	}
 	if blobGetAccessControlOptions != nil && blobGetAccessControlOptions.Upn != nil {
-		query.Set("upn", strconv.FormatBool(*blobGetAccessControlOptions.Upn))
+		reqQP.Set("upn", strconv.FormatBool(*blobGetAccessControlOptions.Upn))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	if leaseAccessConditions != nil && leaseAccessConditions.LeaseID != nil {
 		req.Header.Set("x-ms-lease-id", *leaseAccessConditions.LeaseID)
 	}
@@ -1111,10 +1111,10 @@ func (client *blobClient) getAccountInfoCreateRequest(ctx context.Context, optio
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("restype", "account")
-	query.Set("comp", "properties")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("restype", "account")
+	reqQP.Set("comp", "properties")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("x-ms-version", "2019-07-07")
 	req.Header.Set("Accept", "application/xml")
 	return req, nil
@@ -1181,14 +1181,14 @@ func (client *blobClient) getPropertiesCreateRequest(ctx context.Context, blobGe
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
+	reqQP := req.URL.Query()
 	if blobGetPropertiesOptions != nil && blobGetPropertiesOptions.Snapshot != nil {
-		query.Set("snapshot", *blobGetPropertiesOptions.Snapshot)
+		reqQP.Set("snapshot", *blobGetPropertiesOptions.Snapshot)
 	}
 	if blobGetPropertiesOptions != nil && blobGetPropertiesOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*blobGetPropertiesOptions.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*blobGetPropertiesOptions.Timeout), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	if leaseAccessConditions != nil && leaseAccessConditions.LeaseID != nil {
 		req.Header.Set("x-ms-lease-id", *leaseAccessConditions.LeaseID)
 	}
@@ -1424,12 +1424,12 @@ func (client *blobClient) releaseLeaseCreateRequest(ctx context.Context, leaseID
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("comp", "lease")
+	reqQP := req.URL.Query()
+	reqQP.Set("comp", "lease")
 	if blobReleaseLeaseOptions != nil && blobReleaseLeaseOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*blobReleaseLeaseOptions.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*blobReleaseLeaseOptions.Timeout), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("x-ms-lease-action", "release")
 	req.Header.Set("x-ms-lease-id", leaseID)
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfModifiedSince != nil {
@@ -1520,14 +1520,14 @@ func (client *blobClient) renameCreateRequest(ctx context.Context, renameSource 
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
+	reqQP := req.URL.Query()
 	if blobRenameOptions != nil && blobRenameOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*blobRenameOptions.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*blobRenameOptions.Timeout), 10))
 	}
 	if client.pathRenameMode != nil {
-		query.Set("mode", string(*client.pathRenameMode))
+		reqQP.Set("mode", string(*client.pathRenameMode))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("x-ms-rename-source", renameSource)
 	if blobRenameOptions != nil && blobRenameOptions.DirectoryProperties != nil {
 		req.Header.Set("x-ms-properties", *blobRenameOptions.DirectoryProperties)
@@ -1662,12 +1662,12 @@ func (client *blobClient) renewLeaseCreateRequest(ctx context.Context, leaseID s
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("comp", "lease")
+	reqQP := req.URL.Query()
+	reqQP.Set("comp", "lease")
 	if blobRenewLeaseOptions != nil && blobRenewLeaseOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*blobRenewLeaseOptions.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*blobRenewLeaseOptions.Timeout), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("x-ms-lease-action", "renew")
 	req.Header.Set("x-ms-lease-id", leaseID)
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfModifiedSince != nil {
@@ -1757,12 +1757,12 @@ func (client *blobClient) setAccessControlCreateRequest(ctx context.Context, blo
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("action", "setAccessControl")
+	reqQP := req.URL.Query()
+	reqQP.Set("action", "setAccessControl")
 	if blobSetAccessControlOptions != nil && blobSetAccessControlOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*blobSetAccessControlOptions.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*blobSetAccessControlOptions.Timeout), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	if leaseAccessConditions != nil && leaseAccessConditions.LeaseID != nil {
 		req.Header.Set("x-ms-lease-id", *leaseAccessConditions.LeaseID)
 	}
@@ -1859,12 +1859,12 @@ func (client *blobClient) setHTTPHeadersCreateRequest(ctx context.Context, blobS
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("comp", "properties")
+	reqQP := req.URL.Query()
+	reqQP.Set("comp", "properties")
 	if blobSetHTTPHeadersOptions != nil && blobSetHTTPHeadersOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*blobSetHTTPHeadersOptions.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*blobSetHTTPHeadersOptions.Timeout), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	if blobHTTPHeaders != nil && blobHTTPHeaders.BlobCacheControl != nil {
 		req.Header.Set("x-ms-blob-cache-control", *blobHTTPHeaders.BlobCacheControl)
 	}
@@ -1977,12 +1977,12 @@ func (client *blobClient) setMetadataCreateRequest(ctx context.Context, blobSetM
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("comp", "metadata")
+	reqQP := req.URL.Query()
+	reqQP.Set("comp", "metadata")
 	if blobSetMetadataOptions != nil && blobSetMetadataOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*blobSetMetadataOptions.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*blobSetMetadataOptions.Timeout), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	if blobSetMetadataOptions != nil && blobSetMetadataOptions.Metadata != nil {
 		for k, v := range *blobSetMetadataOptions.Metadata {
 			req.Header.Set("x-ms-meta-"+k, v)
@@ -2103,12 +2103,12 @@ func (client *blobClient) setTierCreateRequest(ctx context.Context, tier AccessT
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("comp", "tier")
+	reqQP := req.URL.Query()
+	reqQP.Set("comp", "tier")
 	if blobSetTierOptions != nil && blobSetTierOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*blobSetTierOptions.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*blobSetTierOptions.Timeout), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("x-ms-access-tier", string(tier))
 	if blobSetTierOptions != nil && blobSetTierOptions.RehydratePriority != nil {
 		req.Header.Set("x-ms-rehydrate-priority", string(*blobSetTierOptions.RehydratePriority))
@@ -2171,11 +2171,11 @@ func (client *blobClient) startCopyFromURLCreateRequest(ctx context.Context, cop
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
+	reqQP := req.URL.Query()
 	if blobStartCopyFromURLOptions != nil && blobStartCopyFromURLOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*blobStartCopyFromURLOptions.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*blobStartCopyFromURLOptions.Timeout), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	if blobStartCopyFromURLOptions != nil && blobStartCopyFromURLOptions.Metadata != nil {
 		for k, v := range *blobStartCopyFromURLOptions.Metadata {
 			req.Header.Set("x-ms-meta-"+k, v)
@@ -2293,12 +2293,12 @@ func (client *blobClient) undeleteCreateRequest(ctx context.Context, options *Bl
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("comp", "undelete")
+	reqQP := req.URL.Query()
+	reqQP.Set("comp", "undelete")
 	if options != nil && options.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("x-ms-version", "2019-07-07")
 	if options != nil && options.RequestID != nil {
 		req.Header.Set("x-ms-client-request-id", *options.RequestID)

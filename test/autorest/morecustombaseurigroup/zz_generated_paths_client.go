@@ -64,11 +64,11 @@ func (client *PathsClient) getEmptyCreateRequest(ctx context.Context, vault stri
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
+	reqQP := req.URL.Query()
 	if options != nil && options.KeyVersion != nil {
-		query.Set("keyVersion", *options.KeyVersion)
+		reqQP.Set("keyVersion", *options.KeyVersion)
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }

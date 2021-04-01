@@ -47,12 +47,12 @@ func (client *directoryClient) createCreateRequest(ctx context.Context, director
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("resource", "directory")
+	reqQP := req.URL.Query()
+	reqQP.Set("resource", "directory")
 	if directoryCreateOptions != nil && directoryCreateOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*directoryCreateOptions.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*directoryCreateOptions.Timeout), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	if directoryCreateOptions != nil && directoryCreateOptions.DirectoryProperties != nil {
 		req.Header.Set("x-ms-properties", *directoryCreateOptions.DirectoryProperties)
 	}
@@ -171,15 +171,15 @@ func (client *directoryClient) deleteCreateRequest(ctx context.Context, recursiv
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
+	reqQP := req.URL.Query()
 	if directoryDeleteOptions != nil && directoryDeleteOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*directoryDeleteOptions.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*directoryDeleteOptions.Timeout), 10))
 	}
-	query.Set("recursive", strconv.FormatBool(recursiveDirectoryDelete))
+	reqQP.Set("recursive", strconv.FormatBool(recursiveDirectoryDelete))
 	if directoryDeleteOptions != nil && directoryDeleteOptions.Marker != nil {
-		query.Set("continuation", *directoryDeleteOptions.Marker)
+		reqQP.Set("continuation", *directoryDeleteOptions.Marker)
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	if leaseAccessConditions != nil && leaseAccessConditions.LeaseID != nil {
 		req.Header.Set("x-ms-lease-id", *leaseAccessConditions.LeaseID)
 	}
@@ -260,15 +260,15 @@ func (client *directoryClient) getAccessControlCreateRequest(ctx context.Context
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("action", "getAccessControl")
+	reqQP := req.URL.Query()
+	reqQP.Set("action", "getAccessControl")
 	if directoryGetAccessControlOptions != nil && directoryGetAccessControlOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*directoryGetAccessControlOptions.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*directoryGetAccessControlOptions.Timeout), 10))
 	}
 	if directoryGetAccessControlOptions != nil && directoryGetAccessControlOptions.Upn != nil {
-		query.Set("upn", strconv.FormatBool(*directoryGetAccessControlOptions.Upn))
+		reqQP.Set("upn", strconv.FormatBool(*directoryGetAccessControlOptions.Upn))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	if leaseAccessConditions != nil && leaseAccessConditions.LeaseID != nil {
 		req.Header.Set("x-ms-lease-id", *leaseAccessConditions.LeaseID)
 	}
@@ -369,17 +369,17 @@ func (client *directoryClient) renameCreateRequest(ctx context.Context, renameSo
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
+	reqQP := req.URL.Query()
 	if directoryRenameOptions != nil && directoryRenameOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*directoryRenameOptions.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*directoryRenameOptions.Timeout), 10))
 	}
 	if directoryRenameOptions != nil && directoryRenameOptions.Marker != nil {
-		query.Set("continuation", *directoryRenameOptions.Marker)
+		reqQP.Set("continuation", *directoryRenameOptions.Marker)
 	}
 	if client.pathRenameMode != nil {
-		query.Set("mode", string(*client.pathRenameMode))
+		reqQP.Set("mode", string(*client.pathRenameMode))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("x-ms-rename-source", renameSource)
 	if directoryRenameOptions != nil && directoryRenameOptions.DirectoryProperties != nil {
 		req.Header.Set("x-ms-properties", *directoryRenameOptions.DirectoryProperties)
@@ -517,12 +517,12 @@ func (client *directoryClient) setAccessControlCreateRequest(ctx context.Context
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("action", "setAccessControl")
+	reqQP := req.URL.Query()
+	reqQP.Set("action", "setAccessControl")
 	if directorySetAccessControlOptions != nil && directorySetAccessControlOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*directorySetAccessControlOptions.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*directorySetAccessControlOptions.Timeout), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	if leaseAccessConditions != nil && leaseAccessConditions.LeaseID != nil {
 		req.Header.Set("x-ms-lease-id", *leaseAccessConditions.LeaseID)
 	}

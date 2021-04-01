@@ -216,9 +216,9 @@ func (client *PagingClient) getMultiplePagesFragmentNextLinkCreateRequest(ctx co
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api_version", apiVersion)
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api_version", apiVersion)
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -272,9 +272,9 @@ func (client *PagingClient) getMultiplePagesFragmentWithGroupingNextLinkCreateRe
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api_version", customParameterGroup.APIVersion)
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api_version", customParameterGroup.APIVersion)
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -896,10 +896,10 @@ func (client *PagingClient) getWithQueryParamsCreateRequest(ctx context.Context,
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("requiredQueryParameter", strconv.FormatInt(int64(requiredQueryParameter), 10))
-	query.Set("queryConstant", "true")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("requiredQueryParameter", strconv.FormatInt(int64(requiredQueryParameter), 10))
+	reqQP.Set("queryConstant", "true")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -941,9 +941,9 @@ func (client *PagingClient) nextFragmentCreateRequest(ctx context.Context, apiVe
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api_version", apiVersion)
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api_version", apiVersion)
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -985,9 +985,9 @@ func (client *PagingClient) nextFragmentWithGroupingCreateRequest(ctx context.Co
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api_version", customParameterGroup.APIVersion)
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api_version", customParameterGroup.APIVersion)
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -1021,9 +1021,9 @@ func (client *PagingClient) nextOperationWithQueryParamsCreateRequest(ctx contex
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("queryConstant", "true")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("queryConstant", "true")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }

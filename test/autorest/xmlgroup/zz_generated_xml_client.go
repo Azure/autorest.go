@@ -52,10 +52,10 @@ func (client *XMLClient) getACLsCreateRequest(ctx context.Context, options *XMLG
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("comp", "acl")
-	query.Set("restype", "container")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("comp", "acl")
+	reqQP.Set("restype", "container")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
@@ -545,10 +545,10 @@ func (client *XMLClient) getServicePropertiesCreateRequest(ctx context.Context, 
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("comp", "properties")
-	query.Set("restype", "service")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("comp", "properties")
+	reqQP.Set("restype", "service")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
@@ -831,10 +831,10 @@ func (client *XMLClient) listBlobsCreateRequest(ctx context.Context, options *XM
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("comp", "list")
-	query.Set("restype", "container")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("comp", "list")
+	reqQP.Set("restype", "container")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
@@ -884,9 +884,9 @@ func (client *XMLClient) listContainersCreateRequest(ctx context.Context, option
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("comp", "list")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("comp", "list")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
@@ -936,10 +936,10 @@ func (client *XMLClient) putACLsCreateRequest(ctx context.Context, properties []
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("comp", "acl")
-	query.Set("restype", "container")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("comp", "acl")
+	reqQP.Set("restype", "container")
+	req.URL.RawQuery = reqQP.Encode()
 	type wrapper struct {
 		XMLName    xml.Name             `xml:"SignedIdentifiers"`
 		Properties *[]*SignedIdentifier `xml:"SignedIdentifier"`
@@ -1307,10 +1307,10 @@ func (client *XMLClient) putServicePropertiesCreateRequest(ctx context.Context, 
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("comp", "properties")
-	query.Set("restype", "service")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("comp", "properties")
+	reqQP.Set("restype", "service")
+	req.URL.RawQuery = reqQP.Encode()
 	return req, req.MarshalAsXML(properties)
 }
 

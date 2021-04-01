@@ -52,14 +52,14 @@ func (client *ParameterGroupingClient) postMultiParamGroupsCreateRequest(ctx con
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
+	reqQP := req.URL.Query()
 	if firstParameterGroup != nil && firstParameterGroup.QueryOne != nil {
-		query.Set("query-one", strconv.FormatInt(int64(*firstParameterGroup.QueryOne), 10))
+		reqQP.Set("query-one", strconv.FormatInt(int64(*firstParameterGroup.QueryOne), 10))
 	}
 	if parameterGroupingPostMultiParamGroupsSecondParamGroup != nil && parameterGroupingPostMultiParamGroupsSecondParamGroup.QueryTwo != nil {
-		query.Set("query-two", strconv.FormatInt(int64(*parameterGroupingPostMultiParamGroupsSecondParamGroup.QueryTwo), 10))
+		reqQP.Set("query-two", strconv.FormatInt(int64(*parameterGroupingPostMultiParamGroupsSecondParamGroup.QueryTwo), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	if firstParameterGroup != nil && firstParameterGroup.HeaderOne != nil {
 		req.Header.Set("header-one", *firstParameterGroup.HeaderOne)
 	}
@@ -103,11 +103,11 @@ func (client *ParameterGroupingClient) postOptionalCreateRequest(ctx context.Con
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
+	reqQP := req.URL.Query()
 	if options != nil && options.Query != nil {
-		query.Set("query", strconv.FormatInt(int64(*options.Query), 10))
+		reqQP.Set("query", strconv.FormatInt(int64(*options.Query), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	if options != nil && options.CustomHeader != nil {
 		req.Header.Set("customHeader", *options.CustomHeader)
 	}
@@ -152,11 +152,11 @@ func (client *ParameterGroupingClient) postRequiredCreateRequest(ctx context.Con
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
+	reqQP := req.URL.Query()
 	if parameterGroupingPostRequiredParameters.Query != nil {
-		query.Set("query", strconv.FormatInt(int64(*parameterGroupingPostRequiredParameters.Query), 10))
+		reqQP.Set("query", strconv.FormatInt(int64(*parameterGroupingPostRequiredParameters.Query), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	if parameterGroupingPostRequiredParameters.CustomHeader != nil {
 		req.Header.Set("customHeader", *parameterGroupingPostRequiredParameters.CustomHeader)
 	}
@@ -197,11 +197,11 @@ func (client *ParameterGroupingClient) postSharedParameterGroupObjectCreateReque
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
+	reqQP := req.URL.Query()
 	if options != nil && options.QueryOne != nil {
-		query.Set("query-one", strconv.FormatInt(int64(*options.QueryOne), 10))
+		reqQP.Set("query-one", strconv.FormatInt(int64(*options.QueryOne), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	if options != nil && options.HeaderOne != nil {
 		req.Header.Set("header-one", *options.HeaderOne)
 	}

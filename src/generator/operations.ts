@@ -8,7 +8,7 @@ import { comment, KnownMediaType } from '@azure-tools/codegen';
 import { ArraySchema, ByteArraySchema, ChoiceSchema, CodeModel, ConstantSchema, DateTimeSchema, DictionarySchema, GroupProperty, ImplementationLocation, NumberSchema, Operation, Parameter, Property, Protocols, Response, Schema, SchemaResponse, SchemaType } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
 import { aggregateParameters, getResponse, internalPagerTypeName, internalPollerTypeName, isArraySchema, isPageableOperation, isSchemaResponse, PagerInfo, PollerInfo, isLROOperation, commentLength } from '../common/helpers';
-import { OperationNaming } from '../transform/namer';
+import { getEscapedReservedName, OperationNaming } from '../transform/namer';
 import { contentPreamble, formatParameterTypeName, formatStatusCodes, getStatusCodes, hasDescription, hasSchemaResponse, skipURLEncoding, sortAscending, getCreateRequestParameters, getCreateRequestParametersSig, getMethodParameters, getParamName, formatParamValue, dateFormat, datetimeRFC1123Format, datetimeRFC3339Format, sortParametersByRequired } from './helpers';
 import { ImportManager } from './imports';
 
@@ -256,7 +256,8 @@ function generateOperation(op: Operation, imports: ImportManager): string {
   }
   let opName = op.language.go!.name;
   if (isLROOperation(op)) {
-    opName = opName[0].toLocaleLowerCase() + opName.substr(1);
+    // uncapitalizing runs the risk of reserved name collision, e.g. Import -> import
+    opName = getEscapedReservedName(opName.uncapitalize(), 'Operation');
   }
   text += `func (client *${clientName}) ${opName}(${params}) (${returns.join(', ')}) {\n`;
   const reqParams = getCreateRequestParameters(op);
@@ -413,6 +414,9 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
   const hasQueryParams = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'query'; }).any();
   // helper to build nil checks for param groups
   const emitParamGroupCheck = function (gp: GroupProperty, param: Parameter): string {
+    if (param.implementation === ImplementationLocation.Client) {
+      return `\tif client.${param.language.go!.name} != nil {\n`;
+    }
     const paramGroupName = (<string>gp.language.go!.name).uncapitalize();
     let optionalParamGroupCheck = `${paramGroupName} != nil && `;
     if (gp.required) {
@@ -449,20 +453,20 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
     }
     // emit encoded params first
     if (encodedParams.length > 0) {
-      text += '\tquery := req.URL.Query()\n';
+      text += '\treqQP := req.URL.Query()\n';
       for (const qp of values(encodedParams)) {
         let setter: string;
         if (qp.protocol.http?.explode === true) {
           setter = `\tfor _, qv := range ${getParamName(qp, true)} {\n`;
-          setter += `\t\tquery.Add("${qp.language.go!.serializedName}", qv)\n`;
+          setter += `\t\treqQP.Add("${qp.language.go!.serializedName}", qv)\n`;
           setter += '\t}';
         } else {
           // cannot initialize setter to this value as formatParamValue() can change imports
-          setter = `query.Set("${qp.language.go!.serializedName}", ${formatParamValue(qp, imports)})`;
+          setter = `reqQP.Set("${qp.language.go!.serializedName}", ${formatParamValue(qp, imports)})`;
         }
         text += emitQueryParam(qp, setter);
       }
-      text += '\treq.URL.RawQuery = query.Encode()\n';
+      text += '\treq.URL.RawQuery = reqQP.Encode()\n';
     }
     // tack on any unencoded params to the end
     if (unencodedParams.length > 0) {

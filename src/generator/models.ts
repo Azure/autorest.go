@@ -13,6 +13,7 @@ import { ImportManager } from './imports';
 
 // Creates the content in models.go
 export async function generateModels(session: Session<CodeModel>): Promise<string> {
+  imports.clear();
   let text = await contentPreamble(session);
 
   // we do model generation first as it can add imports to the imports list

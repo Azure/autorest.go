@@ -57,11 +57,11 @@ func (client *TableClient) createCreateRequest(ctx context.Context, tablePropert
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
+	reqQP := req.URL.Query()
 	if queryOptions != nil && queryOptions.Format != nil {
-		query.Set("$format", string(*queryOptions.Format))
+		reqQP.Set("$format", string(*queryOptions.Format))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("x-ms-version", "2019-02-02")
 	if tableCreateOptions != nil && tableCreateOptions.RequestID != nil {
 		req.Header.Set("x-ms-client-request-id", *tableCreateOptions.RequestID)
@@ -242,14 +242,14 @@ func (client *TableClient) deleteEntityCreateRequest(ctx context.Context, table 
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
+	reqQP := req.URL.Query()
 	if tableDeleteEntityOptions != nil && tableDeleteEntityOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*tableDeleteEntityOptions.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*tableDeleteEntityOptions.Timeout), 10))
 	}
 	if queryOptions != nil && queryOptions.Format != nil {
-		query.Set("$format", string(*queryOptions.Format))
+		reqQP.Set("$format", string(*queryOptions.Format))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("x-ms-version", "2019-02-02")
 	if tableDeleteEntityOptions != nil && tableDeleteEntityOptions.RequestID != nil {
 		req.Header.Set("x-ms-client-request-id", *tableDeleteEntityOptions.RequestID)
@@ -319,12 +319,12 @@ func (client *TableClient) getAccessPolicyCreateRequest(ctx context.Context, tab
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
+	reqQP := req.URL.Query()
 	if options != nil && options.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
-	query.Set("comp", "acl")
-	req.URL.RawQuery = query.Encode()
+	reqQP.Set("comp", "acl")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("x-ms-version", "2019-02-02")
 	if options != nil && options.RequestID != nil {
 		req.Header.Set("x-ms-client-request-id", *options.RequestID)
@@ -396,14 +396,14 @@ func (client *TableClient) insertEntityCreateRequest(ctx context.Context, table 
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
+	reqQP := req.URL.Query()
 	if tableInsertEntityOptions != nil && tableInsertEntityOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*tableInsertEntityOptions.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*tableInsertEntityOptions.Timeout), 10))
 	}
 	if queryOptions != nil && queryOptions.Format != nil {
-		query.Set("$format", string(*queryOptions.Format))
+		reqQP.Set("$format", string(*queryOptions.Format))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("x-ms-version", "2019-02-02")
 	if tableInsertEntityOptions != nil && tableInsertEntityOptions.RequestID != nil {
 		req.Header.Set("x-ms-client-request-id", *tableInsertEntityOptions.RequestID)
@@ -538,14 +538,14 @@ func (client *TableClient) mergeEntityCreateRequest(ctx context.Context, table s
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
+	reqQP := req.URL.Query()
 	if tableMergeEntityOptions != nil && tableMergeEntityOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*tableMergeEntityOptions.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*tableMergeEntityOptions.Timeout), 10))
 	}
 	if queryOptions != nil && queryOptions.Format != nil {
-		query.Set("$format", string(*queryOptions.Format))
+		reqQP.Set("$format", string(*queryOptions.Format))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("x-ms-version", "2019-02-02")
 	if tableMergeEntityOptions != nil && tableMergeEntityOptions.RequestID != nil {
 		req.Header.Set("x-ms-client-request-id", *tableMergeEntityOptions.RequestID)
@@ -619,23 +619,23 @@ func (client *TableClient) queryCreateRequest(ctx context.Context, tableQueryOpt
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
+	reqQP := req.URL.Query()
 	if queryOptions != nil && queryOptions.Format != nil {
-		query.Set("$format", string(*queryOptions.Format))
+		reqQP.Set("$format", string(*queryOptions.Format))
 	}
 	if queryOptions != nil && queryOptions.Top != nil {
-		query.Set("$top", strconv.FormatInt(int64(*queryOptions.Top), 10))
+		reqQP.Set("$top", strconv.FormatInt(int64(*queryOptions.Top), 10))
 	}
 	if queryOptions != nil && queryOptions.Select != nil {
-		query.Set("$select", *queryOptions.Select)
+		reqQP.Set("$select", *queryOptions.Select)
 	}
 	if queryOptions != nil && queryOptions.Filter != nil {
-		query.Set("$filter", *queryOptions.Filter)
+		reqQP.Set("$filter", *queryOptions.Filter)
 	}
 	if tableQueryOptions != nil && tableQueryOptions.NextTableName != nil {
-		query.Set("NextTableName", *tableQueryOptions.NextTableName)
+		reqQP.Set("NextTableName", *tableQueryOptions.NextTableName)
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("x-ms-version", "2019-02-02")
 	if tableQueryOptions != nil && tableQueryOptions.RequestID != nil {
 		req.Header.Set("x-ms-client-request-id", *tableQueryOptions.RequestID)
@@ -714,29 +714,29 @@ func (client *TableClient) queryEntitiesCreateRequest(ctx context.Context, table
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
+	reqQP := req.URL.Query()
 	if tableQueryEntitiesOptions != nil && tableQueryEntitiesOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*tableQueryEntitiesOptions.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*tableQueryEntitiesOptions.Timeout), 10))
 	}
 	if queryOptions != nil && queryOptions.Format != nil {
-		query.Set("$format", string(*queryOptions.Format))
+		reqQP.Set("$format", string(*queryOptions.Format))
 	}
 	if queryOptions != nil && queryOptions.Top != nil {
-		query.Set("$top", strconv.FormatInt(int64(*queryOptions.Top), 10))
+		reqQP.Set("$top", strconv.FormatInt(int64(*queryOptions.Top), 10))
 	}
 	if queryOptions != nil && queryOptions.Select != nil {
-		query.Set("$select", *queryOptions.Select)
+		reqQP.Set("$select", *queryOptions.Select)
 	}
 	if queryOptions != nil && queryOptions.Filter != nil {
-		query.Set("$filter", *queryOptions.Filter)
+		reqQP.Set("$filter", *queryOptions.Filter)
 	}
 	if tableQueryEntitiesOptions != nil && tableQueryEntitiesOptions.NextPartitionKey != nil {
-		query.Set("NextPartitionKey", *tableQueryEntitiesOptions.NextPartitionKey)
+		reqQP.Set("NextPartitionKey", *tableQueryEntitiesOptions.NextPartitionKey)
 	}
 	if tableQueryEntitiesOptions != nil && tableQueryEntitiesOptions.NextRowKey != nil {
-		query.Set("NextRowKey", *tableQueryEntitiesOptions.NextRowKey)
+		reqQP.Set("NextRowKey", *tableQueryEntitiesOptions.NextRowKey)
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("x-ms-version", "2019-02-02")
 	if tableQueryEntitiesOptions != nil && tableQueryEntitiesOptions.RequestID != nil {
 		req.Header.Set("x-ms-client-request-id", *tableQueryEntitiesOptions.RequestID)
@@ -823,20 +823,20 @@ func (client *TableClient) queryEntityWithPartitionAndRowKeyCreateRequest(ctx co
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
+	reqQP := req.URL.Query()
 	if tableQueryEntityWithPartitionAndRowKeyOptions != nil && tableQueryEntityWithPartitionAndRowKeyOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*tableQueryEntityWithPartitionAndRowKeyOptions.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*tableQueryEntityWithPartitionAndRowKeyOptions.Timeout), 10))
 	}
 	if queryOptions != nil && queryOptions.Format != nil {
-		query.Set("$format", string(*queryOptions.Format))
+		reqQP.Set("$format", string(*queryOptions.Format))
 	}
 	if queryOptions != nil && queryOptions.Select != nil {
-		query.Set("$select", *queryOptions.Select)
+		reqQP.Set("$select", *queryOptions.Select)
 	}
 	if queryOptions != nil && queryOptions.Filter != nil {
-		query.Set("$filter", *queryOptions.Filter)
+		reqQP.Set("$filter", *queryOptions.Filter)
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("x-ms-version", "2019-02-02")
 	if tableQueryEntityWithPartitionAndRowKeyOptions != nil && tableQueryEntityWithPartitionAndRowKeyOptions.RequestID != nil {
 		req.Header.Set("x-ms-client-request-id", *tableQueryEntityWithPartitionAndRowKeyOptions.RequestID)
@@ -924,12 +924,12 @@ func (client *TableClient) setAccessPolicyCreateRequest(ctx context.Context, tab
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
+	reqQP := req.URL.Query()
 	if options != nil && options.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
-	query.Set("comp", "acl")
-	req.URL.RawQuery = query.Encode()
+	reqQP.Set("comp", "acl")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("x-ms-version", "2019-02-02")
 	if options != nil && options.RequestID != nil {
 		req.Header.Set("x-ms-client-request-id", *options.RequestID)
@@ -1012,14 +1012,14 @@ func (client *TableClient) updateEntityCreateRequest(ctx context.Context, table 
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
+	reqQP := req.URL.Query()
 	if tableUpdateEntityOptions != nil && tableUpdateEntityOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*tableUpdateEntityOptions.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*tableUpdateEntityOptions.Timeout), 10))
 	}
 	if queryOptions != nil && queryOptions.Format != nil {
-		query.Set("$format", string(*queryOptions.Format))
+		reqQP.Set("$format", string(*queryOptions.Format))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("x-ms-version", "2019-02-02")
 	if tableUpdateEntityOptions != nil && tableUpdateEntityOptions.RequestID != nil {
 		req.Header.Set("x-ms-client-request-id", *tableUpdateEntityOptions.RequestID)

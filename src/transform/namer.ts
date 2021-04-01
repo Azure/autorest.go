@@ -134,6 +134,10 @@ export async function namer(session: Session<CodeModel>) {
       }
       details.protocolNaming = new protocolMethods(details.name);
       if (op.language.go!.paging) {
+        if (op.language.go!.paging.nextLinkName === '') {
+          // fix up broken swaggers that incorrectly specify no next link name
+          op.language.go!.paging.nextLinkName = null;
+        }
         if (op.language.go!.paging.nextLinkName !== null) {
           // apply same naming logic as per struct fields
           op.language.go!.paging.nextLinkName = ensureNameCase((<string>op.language.go!.paging.nextLinkName));
@@ -190,7 +194,7 @@ function cloneLanguageInfo(graph: any) {
 }
 
 // make sure that reserved words are escaped
-function getEscapedReservedName(name: string, appendValue: string): string {
+export function getEscapedReservedName(name: string, appendValue: string): string {
   if (ReservedWords.includes(name)) {
     name += appendValue;
   }

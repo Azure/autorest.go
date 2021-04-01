@@ -11,6 +11,7 @@ import { ImportManager } from './imports';
 
 // generates content for connection.go
 export async function generateConnection(session: Session<CodeModel>): Promise<string> {
+  imports.clear();
   if (!<boolean>session.model.language.go!.azureARM) {
     // add standard imports
     imports.add('fmt');
