@@ -67,20 +67,30 @@ jobs:
 
       - pwsh: |
           $modDirs = (./eng/scripts/get_module_dirs.ps1 -serviceDir $(goTestPath))
+          $exit = 0
           foreach ($md in $modDirs) {
             pushd $md
             Write-Host "##[command]Executing go build -v ./... in $md"
             go build -v ./...
+            if (!$?) {
+              $exit = 1
+            }
           }
+          exit $exit
         displayName: 'Build'
 
       - pwsh: |
           $modDirs = (./eng/scripts/get_module_dirs.ps1 -serviceDir $(goTestPath))
+          $exit = 0
           foreach ($md in $modDirs) {
             pushd $md
             Write-Host "##[command]Executing go vet ./... in $md"
             go vet ./...
+            if (!$?) {
+              $exit = 1
+            }
           }
+          exit $exit
         displayName: 'Vet'
 
       - pwsh: |
