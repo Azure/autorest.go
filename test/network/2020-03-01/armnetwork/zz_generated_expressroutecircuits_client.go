@@ -130,7 +130,7 @@ func (client *ExpressRouteCircuitsClient) createOrUpdateHandleError(resp *azcore
 
 // BeginDelete - Deletes the specified express route circuit.
 func (client *ExpressRouteCircuitsClient) BeginDelete(ctx context.Context, resourceGroupName string, circuitName string, options *ExpressRouteCircuitsBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, circuitName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, circuitName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

@@ -130,7 +130,7 @@ func (client *ServiceEndpointPoliciesClient) createOrUpdateHandleError(resp *azc
 
 // BeginDelete - Deletes the specified service endpoint policy.
 func (client *ServiceEndpointPoliciesClient) BeginDelete(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, options *ServiceEndpointPoliciesBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, serviceEndpointPolicyName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, serviceEndpointPolicyName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

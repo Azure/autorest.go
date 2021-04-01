@@ -130,7 +130,7 @@ func (client *NetworkInterfacesClient) createOrUpdateHandleError(resp *azcore.Re
 
 // BeginDelete - Deletes the specified network interface.
 func (client *NetworkInterfacesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *NetworkInterfacesBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, networkInterfaceName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, networkInterfaceName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

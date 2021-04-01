@@ -130,7 +130,7 @@ func (client *RouteTablesClient) createOrUpdateHandleError(resp *azcore.Response
 
 // BeginDelete - Deletes the specified route table.
 func (client *RouteTablesClient) BeginDelete(ctx context.Context, resourceGroupName string, routeTableName string, options *RouteTablesBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, routeTableName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, routeTableName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

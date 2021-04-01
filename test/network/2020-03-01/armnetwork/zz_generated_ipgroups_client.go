@@ -130,7 +130,7 @@ func (client *IPGroupsClient) createOrUpdateHandleError(resp *azcore.Response) e
 
 // BeginDelete - Deletes the specified ipGroups.
 func (client *IPGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, ipGroupsName string, options *IPGroupsBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, ipGroupsName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, ipGroupsName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

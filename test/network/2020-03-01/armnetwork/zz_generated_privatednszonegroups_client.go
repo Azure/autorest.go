@@ -134,7 +134,7 @@ func (client *PrivateDNSZoneGroupsClient) createOrUpdateHandleError(resp *azcore
 
 // BeginDelete - Deletes the specified private dns zone group.
 func (client *PrivateDNSZoneGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, privateEndpointName string, privateDNSZoneGroupName string, options *PrivateDNSZoneGroupsBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, privateEndpointName, privateDNSZoneGroupName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, privateEndpointName, privateDNSZoneGroupName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

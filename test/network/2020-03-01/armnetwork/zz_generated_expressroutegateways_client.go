@@ -131,7 +131,7 @@ func (client *ExpressRouteGatewaysClient) createOrUpdateHandleError(resp *azcore
 // BeginDelete - Deletes the specified ExpressRoute gateway in a resource group. An ExpressRoute gateway resource can only be deleted when there are no
 // connection subresources.
 func (client *ExpressRouteGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, expressRouteGatewayName string, options *ExpressRouteGatewaysBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, expressRouteGatewayName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, expressRouteGatewayName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

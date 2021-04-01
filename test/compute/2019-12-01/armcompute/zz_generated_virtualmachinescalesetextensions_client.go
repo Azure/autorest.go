@@ -139,7 +139,7 @@ func (client *VirtualMachineScaleSetExtensionsClient) createOrUpdateHandleError(
 
 // BeginDelete - The operation to delete the extension.
 func (client *VirtualMachineScaleSetExtensionsClient) BeginDelete(ctx context.Context, resourceGroupName string, vmScaleSetName string, vmssExtensionName string, options *VirtualMachineScaleSetExtensionsBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, vmScaleSetName, vmssExtensionName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, vmScaleSetName, vmssExtensionName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

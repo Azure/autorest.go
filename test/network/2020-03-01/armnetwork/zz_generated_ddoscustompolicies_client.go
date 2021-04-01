@@ -130,7 +130,7 @@ func (client *DdosCustomPoliciesClient) createOrUpdateHandleError(resp *azcore.R
 
 // BeginDelete - Deletes the specified DDoS custom policy.
 func (client *DdosCustomPoliciesClient) BeginDelete(ctx context.Context, resourceGroupName string, ddosCustomPolicyName string, options *DdosCustomPoliciesBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, ddosCustomPolicyName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, ddosCustomPolicyName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

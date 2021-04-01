@@ -130,7 +130,7 @@ func (client *VirtualRoutersClient) createOrUpdateHandleError(resp *azcore.Respo
 
 // BeginDelete - Deletes the specified Virtual Router.
 func (client *VirtualRoutersClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualRouterName string, options *VirtualRoutersBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, virtualRouterName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, virtualRouterName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

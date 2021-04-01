@@ -130,7 +130,7 @@ func (client *ExpressRoutePortsClient) createOrUpdateHandleError(resp *azcore.Re
 
 // BeginDelete - Deletes the specified ExpressRoutePort resource.
 func (client *ExpressRoutePortsClient) BeginDelete(ctx context.Context, resourceGroupName string, expressRoutePortName string, options *ExpressRoutePortsBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, expressRoutePortName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, expressRoutePortName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

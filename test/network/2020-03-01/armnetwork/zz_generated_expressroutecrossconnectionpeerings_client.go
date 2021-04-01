@@ -134,7 +134,7 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) createOrUpdateHandleErr
 
 // BeginDelete - Deletes the specified peering from the ExpressRouteCrossConnection.
 func (client *ExpressRouteCrossConnectionPeeringsClient) BeginDelete(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, options *ExpressRouteCrossConnectionPeeringsBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, crossConnectionName, peeringName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, crossConnectionName, peeringName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

@@ -334,7 +334,7 @@ func (client *ApplicationGatewaysClient) createOrUpdateHandleError(resp *azcore.
 
 // BeginDelete - Deletes the specified application gateway.
 func (client *ApplicationGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, applicationGatewayName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, applicationGatewayName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

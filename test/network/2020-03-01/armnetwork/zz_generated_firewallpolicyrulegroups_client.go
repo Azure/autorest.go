@@ -134,7 +134,7 @@ func (client *FirewallPolicyRuleGroupsClient) createOrUpdateHandleError(resp *az
 
 // BeginDelete - Deletes the specified FirewallPolicyRuleGroup.
 func (client *FirewallPolicyRuleGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, firewallPolicyName string, ruleGroupName string, options *FirewallPolicyRuleGroupsBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, firewallPolicyName, ruleGroupName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, firewallPolicyName, ruleGroupName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

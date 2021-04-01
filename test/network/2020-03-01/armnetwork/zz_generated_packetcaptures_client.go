@@ -134,7 +134,7 @@ func (client *PacketCapturesClient) createHandleError(resp *azcore.Response) err
 
 // BeginDelete - Deletes the specified packet capture session.
 func (client *PacketCapturesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, options *PacketCapturesBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, networkWatcherName, packetCaptureName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, networkWatcherName, packetCaptureName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

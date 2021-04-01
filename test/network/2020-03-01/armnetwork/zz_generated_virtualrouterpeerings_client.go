@@ -134,7 +134,7 @@ func (client *VirtualRouterPeeringsClient) createOrUpdateHandleError(resp *azcor
 
 // BeginDelete - Deletes the specified peering from a Virtual Router.
 func (client *VirtualRouterPeeringsClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualRouterName string, peeringName string, options *VirtualRouterPeeringsBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, virtualRouterName, peeringName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, virtualRouterName, peeringName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

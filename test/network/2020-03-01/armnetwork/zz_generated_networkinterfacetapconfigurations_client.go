@@ -134,7 +134,7 @@ func (client *NetworkInterfaceTapConfigurationsClient) createOrUpdateHandleError
 
 // BeginDelete - Deletes the specified tap configuration from the NetworkInterface.
 func (client *NetworkInterfaceTapConfigurationsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, options *NetworkInterfaceTapConfigurationsBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, networkInterfaceName, tapConfigurationName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, networkInterfaceName, tapConfigurationName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

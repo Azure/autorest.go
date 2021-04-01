@@ -134,7 +134,7 @@ func (client *GalleryImagesClient) createOrUpdateHandleError(resp *azcore.Respon
 
 // BeginDelete - Delete a gallery image.
 func (client *GalleryImagesClient) BeginDelete(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, options *GalleryImagesBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, galleryName, galleryImageName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, galleryName, galleryImageName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

@@ -134,7 +134,7 @@ func (client *VirtualNetworkPeeringsClient) createOrUpdateHandleError(resp *azco
 
 // BeginDelete - Deletes the specified virtual network peering.
 func (client *VirtualNetworkPeeringsClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualNetworkName string, virtualNetworkPeeringName string, options *VirtualNetworkPeeringsBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, virtualNetworkName, virtualNetworkPeeringName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, virtualNetworkName, virtualNetworkPeeringName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

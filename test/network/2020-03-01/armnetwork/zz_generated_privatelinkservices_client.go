@@ -323,7 +323,7 @@ func (client *PrivateLinkServicesClient) createOrUpdateHandleError(resp *azcore.
 
 // BeginDelete - Deletes the specified private link service.
 func (client *PrivateLinkServicesClient) BeginDelete(ctx context.Context, resourceGroupName string, serviceName string, options *PrivateLinkServicesBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, serviceName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, serviceName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

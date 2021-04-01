@@ -134,7 +134,7 @@ func (client *ExpressRouteCircuitPeeringsClient) createOrUpdateHandleError(resp 
 
 // BeginDelete - Deletes the specified peering from the specified express route circuit.
 func (client *ExpressRouteCircuitPeeringsClient) BeginDelete(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, options *ExpressRouteCircuitPeeringsBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, circuitName, peeringName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, circuitName, peeringName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

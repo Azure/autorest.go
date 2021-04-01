@@ -130,7 +130,7 @@ func (client *GalleriesClient) createOrUpdateHandleError(resp *azcore.Response) 
 
 // BeginDelete - Delete a Shared Image Gallery.
 func (client *GalleriesClient) BeginDelete(ctx context.Context, resourceGroupName string, galleryName string, options *GalleriesBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, galleryName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, galleryName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

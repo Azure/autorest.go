@@ -134,7 +134,7 @@ func (client *ConnectionMonitorsClient) createOrUpdateHandleError(resp *azcore.R
 
 // BeginDelete - Deletes the specified connection monitor.
 func (client *ConnectionMonitorsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, networkWatcherName, connectionMonitorName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, networkWatcherName, connectionMonitorName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

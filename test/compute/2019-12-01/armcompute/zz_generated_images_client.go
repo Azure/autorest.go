@@ -135,7 +135,7 @@ func (client *ImagesClient) createOrUpdateHandleError(resp *azcore.Response) err
 
 // BeginDelete - Deletes an Image.
 func (client *ImagesClient) BeginDelete(ctx context.Context, resourceGroupName string, imageName string, options *ImagesBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, imageName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, imageName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

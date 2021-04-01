@@ -130,7 +130,7 @@ func (client *VPNServerConfigurationsClient) createOrUpdateHandleError(resp *azc
 
 // BeginDelete - Deletes a VpnServerConfiguration.
 func (client *VPNServerConfigurationsClient) BeginDelete(ctx context.Context, resourceGroupName string, vpnServerConfigurationName string, options *VPNServerConfigurationsBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, vpnServerConfigurationName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, vpnServerConfigurationName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

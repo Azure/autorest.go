@@ -130,7 +130,7 @@ func (client *BastionHostsClient) createOrUpdateHandleError(resp *azcore.Respons
 
 // BeginDelete - Deletes the specified Bastion Host.
 func (client *BastionHostsClient) BeginDelete(ctx context.Context, resourceGroupName string, bastionHostName string, options *BastionHostsBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, bastionHostName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, bastionHostName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

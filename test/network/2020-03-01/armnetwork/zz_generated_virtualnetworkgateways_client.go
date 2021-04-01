@@ -130,7 +130,7 @@ func (client *VirtualNetworkGatewaysClient) createOrUpdateHandleError(resp *azco
 
 // BeginDelete - Deletes the specified virtual network gateway.
 func (client *VirtualNetworkGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, virtualNetworkGatewayName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, virtualNetworkGatewayName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

@@ -138,7 +138,7 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) createOrUpdateHandleErro
 
 // BeginDelete - The operation to delete the VMSS VM extension.
 func (client *VirtualMachineScaleSetVMExtensionsClient) BeginDelete(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, vmExtensionName string, options *VirtualMachineScaleSetVMExtensionsBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, vmScaleSetName, instanceID, vmExtensionName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, vmScaleSetName, instanceID, vmExtensionName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

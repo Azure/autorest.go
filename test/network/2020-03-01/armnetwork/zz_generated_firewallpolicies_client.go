@@ -130,7 +130,7 @@ func (client *FirewallPoliciesClient) createOrUpdateHandleError(resp *azcore.Res
 
 // BeginDelete - Deletes the specified Firewall Policy.
 func (client *FirewallPoliciesClient) BeginDelete(ctx context.Context, resourceGroupName string, firewallPolicyName string, options *FirewallPoliciesBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, firewallPolicyName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, firewallPolicyName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

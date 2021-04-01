@@ -138,7 +138,7 @@ func (client *ContainerServicesClient) createOrUpdateHandleError(resp *azcore.Re
 // storage accounts, VMs, and availability sets. All the other resources created with the container service are part of the same resource group and can
 // be deleted individually.
 func (client *ContainerServicesClient) BeginDelete(ctx context.Context, resourceGroupName string, containerServiceName string, options *ContainerServicesBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, containerServiceName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, containerServiceName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

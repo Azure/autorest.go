@@ -134,7 +134,7 @@ func (client *SubnetsClient) createOrUpdateHandleError(resp *azcore.Response) er
 
 // BeginDelete - Deletes the specified subnet.
 func (client *SubnetsClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, options *SubnetsBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, virtualNetworkName, subnetName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, virtualNetworkName, subnetName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

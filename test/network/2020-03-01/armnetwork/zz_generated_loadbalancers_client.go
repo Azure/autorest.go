@@ -130,7 +130,7 @@ func (client *LoadBalancersClient) createOrUpdateHandleError(resp *azcore.Respon
 
 // BeginDelete - Deletes the specified load balancer.
 func (client *LoadBalancersClient) BeginDelete(ctx context.Context, resourceGroupName string, loadBalancerName string, options *LoadBalancersBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, loadBalancerName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, loadBalancerName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

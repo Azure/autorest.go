@@ -130,7 +130,7 @@ func (client *VirtualHubsClient) createOrUpdateHandleError(resp *azcore.Response
 
 // BeginDelete - Deletes a VirtualHub.
 func (client *VirtualHubsClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualHubName string, options *VirtualHubsBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, virtualHubName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, virtualHubName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

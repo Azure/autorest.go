@@ -130,7 +130,7 @@ func (client *NatGatewaysClient) createOrUpdateHandleError(resp *azcore.Response
 
 // BeginDelete - Deletes the specified nat gateway.
 func (client *NatGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, natGatewayName string, options *NatGatewaysBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, natGatewayName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, natGatewayName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

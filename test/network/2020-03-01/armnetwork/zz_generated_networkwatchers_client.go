@@ -193,7 +193,7 @@ func (client *NetworkWatchersClient) createOrUpdateHandleError(resp *azcore.Resp
 
 // BeginDelete - Deletes the specified network watcher resource.
 func (client *NetworkWatchersClient) BeginDelete(ctx context.Context, resourceGroupName string, networkWatcherName string, options *NetworkWatchersBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, networkWatcherName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, networkWatcherName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

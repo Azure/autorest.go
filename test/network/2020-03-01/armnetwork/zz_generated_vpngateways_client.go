@@ -130,7 +130,7 @@ func (client *VPNGatewaysClient) createOrUpdateHandleError(resp *azcore.Response
 
 // BeginDelete - Deletes a virtual wan vpn gateway.
 func (client *VPNGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, gatewayName string, options *VPNGatewaysBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, gatewayName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, gatewayName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

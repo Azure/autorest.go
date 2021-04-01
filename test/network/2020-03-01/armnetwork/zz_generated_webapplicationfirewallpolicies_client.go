@@ -93,7 +93,7 @@ func (client *WebApplicationFirewallPoliciesClient) createOrUpdateHandleError(re
 
 // BeginDelete - Deletes Policy.
 func (client *WebApplicationFirewallPoliciesClient) BeginDelete(ctx context.Context, resourceGroupName string, policyName string, options *WebApplicationFirewallPoliciesBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, policyName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, policyName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

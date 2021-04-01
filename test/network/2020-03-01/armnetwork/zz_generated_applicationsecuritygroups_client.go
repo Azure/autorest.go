@@ -130,7 +130,7 @@ func (client *ApplicationSecurityGroupsClient) createOrUpdateHandleError(resp *a
 
 // BeginDelete - Deletes the specified application security group.
 func (client *ApplicationSecurityGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, applicationSecurityGroupName string, options *ApplicationSecurityGroupsBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, applicationSecurityGroupName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, applicationSecurityGroupName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

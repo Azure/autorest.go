@@ -134,7 +134,7 @@ func (client *ExpressRouteCircuitAuthorizationsClient) createOrUpdateHandleError
 
 // BeginDelete - Deletes the specified authorization from the specified express route circuit.
 func (client *ExpressRouteCircuitAuthorizationsClient) BeginDelete(ctx context.Context, resourceGroupName string, circuitName string, authorizationName string, options *ExpressRouteCircuitAuthorizationsBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, circuitName, authorizationName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, circuitName, authorizationName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

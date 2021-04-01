@@ -135,7 +135,7 @@ func (client *DisksClient) createOrUpdateHandleError(resp *azcore.Response) erro
 
 // BeginDelete - Deletes a disk.
 func (client *DisksClient) BeginDelete(ctx context.Context, resourceGroupName string, diskName string, options *DisksBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, diskName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, diskName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

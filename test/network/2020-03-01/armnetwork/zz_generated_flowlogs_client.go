@@ -134,7 +134,7 @@ func (client *FlowLogsClient) createOrUpdateHandleError(resp *azcore.Response) e
 
 // BeginDelete - Deletes the specified flow log resource.
 func (client *FlowLogsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, options *FlowLogsBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, networkWatcherName, flowLogName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, networkWatcherName, flowLogName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

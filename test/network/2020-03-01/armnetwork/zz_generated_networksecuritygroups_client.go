@@ -130,7 +130,7 @@ func (client *NetworkSecurityGroupsClient) createOrUpdateHandleError(resp *azcor
 
 // BeginDelete - Deletes the specified network security group.
 func (client *NetworkSecurityGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, options *NetworkSecurityGroupsBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, networkSecurityGroupName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, networkSecurityGroupName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

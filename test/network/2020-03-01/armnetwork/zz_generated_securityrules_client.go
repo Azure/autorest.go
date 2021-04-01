@@ -134,7 +134,7 @@ func (client *SecurityRulesClient) createOrUpdateHandleError(resp *azcore.Respon
 
 // BeginDelete - Deletes the specified network security rule.
 func (client *SecurityRulesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, options *SecurityRulesBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, networkSecurityGroupName, securityRuleName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, networkSecurityGroupName, securityRuleName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

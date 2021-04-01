@@ -192,7 +192,7 @@ func (client *VirtualNetworksClient) createOrUpdateHandleError(resp *azcore.Resp
 
 // BeginDelete - Deletes the specified virtual network.
 func (client *VirtualNetworksClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualNetworkName string, options *VirtualNetworksBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, virtualNetworkName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, virtualNetworkName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

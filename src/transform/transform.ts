@@ -214,6 +214,7 @@ function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, inBody: boolea
         return 'float32';
       }
       return 'float64';
+    case SchemaType.Credential:
     case SchemaType.Duration:
     case SchemaType.String:
     case SchemaType.Uuid:

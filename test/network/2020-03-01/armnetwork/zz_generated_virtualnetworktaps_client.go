@@ -130,7 +130,7 @@ func (client *VirtualNetworkTapsClient) createOrUpdateHandleError(resp *azcore.R
 
 // BeginDelete - Deletes the specified virtual network tap.
 func (client *VirtualNetworkTapsClient) BeginDelete(ctx context.Context, resourceGroupName string, tapName string, options *VirtualNetworkTapsBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, tapName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, tapName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

@@ -130,7 +130,7 @@ func (client *PublicIPPrefixesClient) createOrUpdateHandleError(resp *azcore.Res
 
 // BeginDelete - Deletes the specified public IP prefix.
 func (client *PublicIPPrefixesClient) BeginDelete(ctx context.Context, resourceGroupName string, publicIPPrefixName string, options *PublicIPPrefixesBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, publicIPPrefixName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, publicIPPrefixName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

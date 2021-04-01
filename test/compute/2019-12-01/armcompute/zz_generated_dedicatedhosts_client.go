@@ -139,7 +139,7 @@ func (client *DedicatedHostsClient) createOrUpdateHandleError(resp *azcore.Respo
 
 // BeginDelete - Delete a dedicated host.
 func (client *DedicatedHostsClient) BeginDelete(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, options *DedicatedHostsBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, hostGroupName, hostName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, hostGroupName, hostName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

@@ -130,7 +130,7 @@ func (client *SecurityPartnerProvidersClient) createOrUpdateHandleError(resp *az
 
 // BeginDelete - Deletes the specified Security Partner Provider.
 func (client *SecurityPartnerProvidersClient) BeginDelete(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, options *SecurityPartnerProvidersBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, securityPartnerProviderName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, securityPartnerProviderName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

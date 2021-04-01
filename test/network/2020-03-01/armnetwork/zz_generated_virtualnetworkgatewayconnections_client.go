@@ -130,7 +130,7 @@ func (client *VirtualNetworkGatewayConnectionsClient) createOrUpdateHandleError(
 
 // BeginDelete - Deletes the specified virtual network Gateway connection.
 func (client *VirtualNetworkGatewayConnectionsClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, options *VirtualNetworkGatewayConnectionsBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, virtualNetworkGatewayConnectionName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, virtualNetworkGatewayConnectionName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

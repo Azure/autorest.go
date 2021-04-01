@@ -134,7 +134,7 @@ func (client *VPNConnectionsClient) createOrUpdateHandleError(resp *azcore.Respo
 
 // BeginDelete - Deletes a vpn connection.
 func (client *VPNConnectionsClient) BeginDelete(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, options *VPNConnectionsBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, gatewayName, connectionName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, gatewayName, connectionName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

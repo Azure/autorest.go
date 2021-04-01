@@ -138,7 +138,7 @@ func (client *GalleryApplicationVersionsClient) createOrUpdateHandleError(resp *
 
 // BeginDelete - Delete a gallery Application Version.
 func (client *GalleryApplicationVersionsClient) BeginDelete(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplicationVersionName string, options *GalleryApplicationVersionsBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

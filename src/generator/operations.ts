@@ -1058,7 +1058,8 @@ function generateARMLROBeginMethod(op: Operation, imports: ImportManager): strin
   const zeroResp = getZeroReturnValue(op, 'api');
   text += `func (client *${clientName}) Begin${op.language.go!.name}(${params}) (${returns.join(', ')}) {\n`;
   let opName = op.language.go!.name;
-  opName = opName[0].toLocaleLowerCase() + opName.substr(1);
+  // uncapitalizing runs the risk of reserved name collision, e.g. Import -> import
+  opName = getEscapedReservedName(opName.uncapitalize(), 'Operation');
   text += `\tresp, err := client.${opName}(${getCreateRequestParameters(op)})\n`;
   text += `\tif err != nil {\n`;
   text += `\t\treturn ${zeroResp}, err\n`;

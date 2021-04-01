@@ -32,7 +32,7 @@ func NewVPNServerConfigurationsAssociatedWithVirtualWanClient(con *armcore.Conne
 
 // BeginList - Gives the list of VpnServerConfigurations associated with Virtual Wan in a resource group.
 func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) BeginList(ctx context.Context, resourceGroupName string, virtualWANName string, options *VPNServerConfigurationsAssociatedWithVirtualWanBeginListOptions) (VPNServerConfigurationsResponsePollerResponse, error) {
-	resp, err := client.list(ctx, resourceGroupName, virtualWANName, options)
+	resp, err := client.listOperation(ctx, resourceGroupName, virtualWANName, options)
 	if err != nil {
 		return VPNServerConfigurationsResponsePollerResponse{}, err
 	}

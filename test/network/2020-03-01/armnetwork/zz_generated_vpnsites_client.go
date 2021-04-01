@@ -130,7 +130,7 @@ func (client *VPNSitesClient) createOrUpdateHandleError(resp *azcore.Response) e
 
 // BeginDelete - Deletes a VpnSite.
 func (client *VPNSitesClient) BeginDelete(ctx context.Context, resourceGroupName string, vpnSiteName string, options *VPNSitesBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, vpnSiteName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, vpnSiteName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

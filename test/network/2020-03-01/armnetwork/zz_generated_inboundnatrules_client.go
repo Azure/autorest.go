@@ -134,7 +134,7 @@ func (client *InboundNatRulesClient) createOrUpdateHandleError(resp *azcore.Resp
 
 // BeginDelete - Deletes the specified load balancer inbound nat rule.
 func (client *InboundNatRulesClient) BeginDelete(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, options *InboundNatRulesBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, loadBalancerName, inboundNatRuleName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, loadBalancerName, inboundNatRuleName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

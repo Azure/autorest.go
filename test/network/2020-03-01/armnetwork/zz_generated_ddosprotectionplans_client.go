@@ -130,7 +130,7 @@ func (client *DdosProtectionPlansClient) createOrUpdateHandleError(resp *azcore.
 
 // BeginDelete - Deletes the specified DDoS protection plan.
 func (client *DdosProtectionPlansClient) BeginDelete(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, options *DdosProtectionPlansBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, ddosProtectionPlanName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, ddosProtectionPlanName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

@@ -134,7 +134,7 @@ func (client *RouteFilterRulesClient) createOrUpdateHandleError(resp *azcore.Res
 
 // BeginDelete - Deletes the specified rule from a route filter.
 func (client *RouteFilterRulesClient) BeginDelete(ctx context.Context, resourceGroupName string, routeFilterName string, ruleName string, options *RouteFilterRulesBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, routeFilterName, ruleName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, routeFilterName, ruleName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

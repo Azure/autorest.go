@@ -130,7 +130,7 @@ func (client *VirtualWansClient) createOrUpdateHandleError(resp *azcore.Response
 
 // BeginDelete - Deletes a VirtualWAN.
 func (client *VirtualWansClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualWANName string, options *VirtualWansBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, virtualWANName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, virtualWANName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

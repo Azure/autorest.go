@@ -429,7 +429,7 @@ func (client *VirtualMachinesClient) deallocateHandleError(resp *azcore.Response
 
 // BeginDelete - The operation to delete a virtual machine.
 func (client *VirtualMachinesClient) BeginDelete(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, vmName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, vmName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

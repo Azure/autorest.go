@@ -130,7 +130,7 @@ func (client *LocalNetworkGatewaysClient) createOrUpdateHandleError(resp *azcore
 
 // BeginDelete - Deletes the specified local network gateway.
 func (client *LocalNetworkGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, options *LocalNetworkGatewaysBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, localNetworkGatewayName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, localNetworkGatewayName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

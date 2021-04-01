@@ -138,7 +138,7 @@ func (client *ExpressRouteCircuitConnectionsClient) createOrUpdateHandleError(re
 
 // BeginDelete - Deletes the specified Express Route Circuit Connection from the specified express route circuit.
 func (client *ExpressRouteCircuitConnectionsClient) BeginDelete(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, connectionName string, options *ExpressRouteCircuitConnectionsBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, circuitName, peeringName, connectionName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, circuitName, peeringName, connectionName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

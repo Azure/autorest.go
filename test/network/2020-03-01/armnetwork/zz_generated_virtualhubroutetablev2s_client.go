@@ -134,7 +134,7 @@ func (client *VirtualHubRouteTableV2SClient) createOrUpdateHandleError(resp *azc
 
 // BeginDelete - Deletes a VirtualHubRouteTableV2.
 func (client *VirtualHubRouteTableV2SClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualHubName string, routeTableName string, options *VirtualHubRouteTableV2SBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, virtualHubName, routeTableName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, virtualHubName, routeTableName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

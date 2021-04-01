@@ -130,7 +130,7 @@ func (client *DiskEncryptionSetsClient) createOrUpdateHandleError(resp *azcore.R
 
 // BeginDelete - Deletes a disk encryption set.
 func (client *DiskEncryptionSetsClient) BeginDelete(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, options *DiskEncryptionSetsBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, diskEncryptionSetName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, diskEncryptionSetName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

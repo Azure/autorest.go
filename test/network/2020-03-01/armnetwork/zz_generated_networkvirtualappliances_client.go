@@ -130,7 +130,7 @@ func (client *NetworkVirtualAppliancesClient) createOrUpdateHandleError(resp *az
 
 // BeginDelete - Deletes the specified Network Virtual Appliance.
 func (client *NetworkVirtualAppliancesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, options *NetworkVirtualAppliancesBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, networkVirtualApplianceName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, networkVirtualApplianceName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

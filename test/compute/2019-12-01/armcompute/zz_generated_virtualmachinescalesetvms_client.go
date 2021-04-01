@@ -134,7 +134,7 @@ func (client *VirtualMachineScaleSetVMsClient) deallocateHandleError(resp *azcor
 
 // BeginDelete - Deletes a virtual machine from a VM scale set.
 func (client *VirtualMachineScaleSetVMsClient) BeginDelete(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, vmScaleSetName, instanceID, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, vmScaleSetName, instanceID, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

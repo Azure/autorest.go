@@ -130,7 +130,7 @@ func (client *PublicIPAddressesClient) createOrUpdateHandleError(resp *azcore.Re
 
 // BeginDelete - Deletes the specified public IP address.
 func (client *PublicIPAddressesClient) BeginDelete(ctx context.Context, resourceGroupName string, publicIPAddressName string, options *PublicIPAddressesBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, publicIPAddressName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, publicIPAddressName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

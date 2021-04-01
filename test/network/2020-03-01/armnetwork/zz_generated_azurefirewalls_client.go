@@ -130,7 +130,7 @@ func (client *AzureFirewallsClient) createOrUpdateHandleError(resp *azcore.Respo
 
 // BeginDelete - Deletes the specified Azure Firewall.
 func (client *AzureFirewallsClient) BeginDelete(ctx context.Context, resourceGroupName string, azureFirewallName string, options *AzureFirewallsBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, azureFirewallName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, azureFirewallName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

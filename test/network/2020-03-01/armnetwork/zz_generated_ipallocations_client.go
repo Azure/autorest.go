@@ -130,7 +130,7 @@ func (client *IPAllocationsClient) createOrUpdateHandleError(resp *azcore.Respon
 
 // BeginDelete - Deletes the specified IpAllocation.
 func (client *IPAllocationsClient) BeginDelete(ctx context.Context, resourceGroupName string, ipAllocationName string, options *IPAllocationsBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, ipAllocationName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, ipAllocationName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}

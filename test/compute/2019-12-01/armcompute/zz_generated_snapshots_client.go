@@ -135,7 +135,7 @@ func (client *SnapshotsClient) createOrUpdateHandleError(resp *azcore.Response) 
 
 // BeginDelete - Deletes a snapshot.
 func (client *SnapshotsClient) BeginDelete(ctx context.Context, resourceGroupName string, snapshotName string, options *SnapshotsBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, snapshotName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, snapshotName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
