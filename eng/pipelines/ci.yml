@@ -76,7 +76,7 @@ jobs:
               $exit = 1
             }
           }
-          return $exit
+          exit $exit
         displayName: 'Build'
 
       - pwsh: |
@@ -90,7 +90,7 @@ jobs:
               $exit = 1
             }
           }
-          return $exit
+          exit $exit
         displayName: 'Vet'
 
       - pwsh: |
