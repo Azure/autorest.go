@@ -11,7 +11,8 @@ import { ImportManager } from './imports';
 
 // generates content for connection.go
 export async function generateConnection(session: Session<CodeModel>): Promise<string> {
-  imports.clear();
+  // the list of packages to import
+  const imports = new ImportManager();
   if (!<boolean>session.model.language.go!.azureARM) {
     // add standard imports
     imports.add('fmt');
@@ -20,7 +21,7 @@ export async function generateConnection(session: Session<CodeModel>): Promise<s
 
   let text = await contentPreamble(session);
   // content generation can add to the imports list, so execute it before emitting any text
-  const content = generateContent(session);
+  const content = generateContent(session, imports);
   text += imports.text();
   if (session.model.security.authenticationRequired && !<boolean>session.model.language.go!.azureARM) {
     const scope = await session.getValue('credential-scope');
@@ -30,7 +31,7 @@ export async function generateConnection(session: Session<CodeModel>): Promise<s
   return text;
 }
 
-function generateContent(session: Session<CodeModel>): string {
+function generateContent(session: Session<CodeModel>, imports: ImportManager): string {
   let text = `const telemetryInfo = "azsdk-go-${session.model.language.go!.packageName}/<version>"\n`;
   if (<boolean>session.model.language.go!.azureARM) {
     // use the Connection type in armcore instead of generating one
@@ -246,6 +247,3 @@ function getHostParam(params?: Parameter[]): Parameter | undefined {
   }
   return undefined;
 }
-
-// the list of packages to import
-const imports = new ImportManager();

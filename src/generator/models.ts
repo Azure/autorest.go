@@ -13,20 +13,21 @@ import { ImportManager } from './imports';
 
 // Creates the content in models.go
 export async function generateModels(session: Session<CodeModel>): Promise<string> {
-  imports.clear();
+  // this list of packages to import
+  const imports = new ImportManager();
   let text = await contentPreamble(session);
 
   // we do model generation first as it can add imports to the imports list
-  const structs = generateStructs(session.model.schemas.objects);
+  const structs = generateStructs(imports, session.model.schemas.objects);
   const responseEnvelopes = <Array<Schema>>session.model.language.go!.responseEnvelopes;
   for (const respEnv of values(responseEnvelopes)) {
-    const respType = generateStruct(respEnv.language.go!.responseType, respEnv.language.go!.properties);
+    const respType = generateStruct(imports, respEnv.language.go!.responseType, respEnv.language.go!.properties);
     generateUnmarshallerForResponseEnvelope(respType);
     structs.push(respType);
   }
   const paramGroups = <Array<GroupProperty>>session.model.language.go!.parameterGroups;
   for (const paramGroup of values(paramGroups)) {
-    structs.push(generateParamGroupStruct(paramGroup.schema.language.go!, paramGroup.originalParameter));
+    structs.push(generateParamGroupStruct(imports, paramGroup.schema.language.go!, paramGroup.originalParameter));
   }
 
   // imports
@@ -74,9 +75,6 @@ export async function generateModels(session: Session<CodeModel>): Promise<strin
   }
   return text;
 }
-
-// this list of packages to import
-const imports = new ImportManager();
 
 interface StructMethod {
   name: string;
@@ -255,7 +253,7 @@ class StructDef {
   }
 }
 
-function generateStructs(objects?: ObjectSchema[]): StructDef[] {
+function generateStructs(imports: ImportManager, objects?: ObjectSchema[]): StructDef[] {
   const structTypes = new Array<StructDef>();
   for (const obj of values(objects)) {
     const props = new Array<Property>();
@@ -263,7 +261,7 @@ function generateStructs(objects?: ObjectSchema[]): StructDef[] {
     for (const prop of values(obj.properties)) {
       props.push(prop);
     }
-    const structDef = generateStruct(obj.language.go!, props);
+    const structDef = generateStruct(imports, obj.language.go!, props);
     // now add the parent type
     let parentType: ObjectSchema | undefined;
     for (const parent of values(obj.parents?.immediate)) {
@@ -400,11 +398,11 @@ function generateStructs(objects?: ObjectSchema[]): StructDef[] {
       imports.add('reflect');
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
       structDef.HasJSONMarshaller = true;
-      generateJSONMarshaller(obj, structDef, parentType);
+      generateJSONMarshaller(imports, obj, structDef, parentType);
     }
     if (needsU) {
       structDef.HasJSONUnmarshaller = true;
-      generateJSONUnmarshaller(obj, structDef, parentType);
+      generateJSONUnmarshaller(imports, obj, structDef, parentType);
     }
     structTypes.push(structDef);
   }
@@ -449,7 +447,7 @@ function needsXMLDictionaryUnmarshalling(obj: ObjectSchema): boolean {
   return false;
 }
 
-function generateStruct(lang: Language, props?: Property[]): StructDef {
+function generateStruct(imports: ImportManager, lang: Language, props?: Property[]): StructDef {
   if (lang.errorType) {
     imports.add('fmt');
   }
@@ -470,7 +468,7 @@ function generateStruct(lang: Language, props?: Property[]): StructDef {
   return st;
 }
 
-function generateParamGroupStruct(lang: Language, params: Parameter[]): StructDef {
+function generateParamGroupStruct(imports: ImportManager, lang: Language, params: Parameter[]): StructDef {
   const st = new StructDef(lang, undefined, params);
   for (const param of values(params)) {
     imports.addImportForSchemaType(param.schema);
@@ -586,7 +584,7 @@ function generateInternalUnmarshaller(obj: ObjectSchema, structDef: StructDef, p
   structDef.Methods.push({ name: 'unmarshalInternal', desc: '', text: unmarshalInternall });
 }
 
-function generateJSONMarshaller(obj: ObjectSchema, structDef: StructDef, parentType?: ObjectSchema) {
+function generateJSONMarshaller(imports: ImportManager, obj: ObjectSchema, structDef: StructDef, parentType?: ObjectSchema) {
   if (obj.language.go!.errorType || obj.language.go!.inheritedErrorType) {
     // errors don't need custom marshallers
     return;
@@ -637,7 +635,7 @@ function generateJSONMarshaller(obj: ObjectSchema, structDef: StructDef, parentT
   structDef.Methods.push({ name: 'MarshalJSON', desc: `MarshalJSON implements the json.Marshaller interface for type ${typeName}.`, text: marshaller });
 }
 
-function generateJSONUnmarshaller(obj: ObjectSchema, structDef: StructDef, parentType?: ObjectSchema) {
+function generateJSONUnmarshaller(imports: ImportManager, obj: ObjectSchema, structDef: StructDef, parentType?: ObjectSchema) {
   // there's a corner-case where a derived type might not add any new fields (Cookiecuttershark).
   // in this case skip adding the unmarshaller as it's not necessary and doesn't compile.
   if (!structDef.Properties || structDef.Properties.length === 0) {

@@ -69,10 +69,6 @@ export class ImportManager {
     }
   }
 
-  clear() {
-    this.imports = new Array<importEntry>();
-  }
-
   private alias(entry: importEntry): string {
     if (entry.alias) {
       return `${entry.alias} `;
