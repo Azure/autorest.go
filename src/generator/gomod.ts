@@ -19,7 +19,7 @@ export async function generateGoModFile(session: Session<CodeModel>): Promise<st
   const azcore = 'github.com/Azure/azure-sdk-for-go/sdk/azcore v0.14.3';
   if (<boolean>session.model.language.go!.azureARM) {
     text += 'require (\n';
-    text += '\tgithub.com/Azure/azure-sdk-for-go/sdk/armcore v0.6.0\n';
+    text += '\tgithub.com/Azure/azure-sdk-for-go/sdk/armcore v0.7.0\n';
     text += `\t${azcore}\n`;
     text += ')\n'
   } else {
