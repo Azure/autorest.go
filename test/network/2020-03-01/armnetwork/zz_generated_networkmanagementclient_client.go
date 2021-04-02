@@ -62,10 +62,10 @@ func (client *NetworkManagementClient) checkDNSNameAvailabilityCreateRequest(ctx
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("domainNameLabel", domainNameLabel)
-	query.Set("api-version", "2020-03-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("domainNameLabel", domainNameLabel)
+	reqQP.Set("api-version", "2020-03-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -161,9 +161,9 @@ func (client *NetworkManagementClient) deleteBastionShareableLinkCreateRequest(c
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2020-03-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2020-03-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(bslRequest)
 }
@@ -213,9 +213,9 @@ func (client *NetworkManagementClient) disconnectActiveSessionsCreateRequest(ctx
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2020-03-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2020-03-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(sessionIDs)
 }
@@ -313,9 +313,9 @@ func (client *NetworkManagementClient) generatevirtualwanvpnserverconfigurationv
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2020-03-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2020-03-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(vpnClientParams)
 }
@@ -425,9 +425,9 @@ func (client *NetworkManagementClient) getActiveSessionsCreateRequest(ctx contex
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2020-03-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2020-03-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -486,9 +486,9 @@ func (client *NetworkManagementClient) getBastionShareableLinkCreateRequest(ctx 
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2020-03-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2020-03-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(bslRequest)
 }
@@ -598,9 +598,9 @@ func (client *NetworkManagementClient) putBastionShareableLinkCreateRequest(ctx 
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2020-03-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2020-03-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(bslRequest)
 }
@@ -659,9 +659,9 @@ func (client *NetworkManagementClient) supportedSecurityProvidersCreateRequest(c
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2020-03-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2020-03-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }

@@ -43,12 +43,12 @@ func (client *pageBlobClient) clearPagesCreateRequest(ctx context.Context, conte
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("comp", "page")
+	reqQP := req.URL.Query()
+	reqQP.Set("comp", "page")
 	if pageBlobClearPagesOptions != nil && pageBlobClearPagesOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*pageBlobClearPagesOptions.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*pageBlobClearPagesOptions.Timeout), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("x-ms-page-write", "clear")
 	req.Header.Set("Content-Length", strconv.FormatInt(contentLength, 10))
 	if pageBlobClearPagesOptions != nil && pageBlobClearPagesOptions.Range != nil {
@@ -187,12 +187,12 @@ func (client *pageBlobClient) copyIncrementalCreateRequest(ctx context.Context, 
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("comp", "incrementalcopy")
+	reqQP := req.URL.Query()
+	reqQP.Set("comp", "incrementalcopy")
 	if pageBlobCopyIncrementalOptions != nil && pageBlobCopyIncrementalOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*pageBlobCopyIncrementalOptions.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*pageBlobCopyIncrementalOptions.Timeout), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfModifiedSince != nil {
 		req.Header.Set("If-Modified-Since", modifiedAccessConditions.IfModifiedSince.Format(time.RFC1123))
 	}
@@ -284,11 +284,11 @@ func (client *pageBlobClient) createCreateRequest(ctx context.Context, contentLe
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
+	reqQP := req.URL.Query()
 	if pageBlobCreateOptions != nil && pageBlobCreateOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*pageBlobCreateOptions.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*pageBlobCreateOptions.Timeout), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("x-ms-blob-type", "PageBlob")
 	req.Header.Set("Content-Length", strconv.FormatInt(contentLength, 10))
 	if pageBlobCreateOptions != nil && pageBlobCreateOptions.Tier != nil {
@@ -440,15 +440,15 @@ func (client *pageBlobClient) getPageRangesCreateRequest(ctx context.Context, pa
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("comp", "pagelist")
+	reqQP := req.URL.Query()
+	reqQP.Set("comp", "pagelist")
 	if pageBlobGetPageRangesOptions != nil && pageBlobGetPageRangesOptions.Snapshot != nil {
-		query.Set("snapshot", *pageBlobGetPageRangesOptions.Snapshot)
+		reqQP.Set("snapshot", *pageBlobGetPageRangesOptions.Snapshot)
 	}
 	if pageBlobGetPageRangesOptions != nil && pageBlobGetPageRangesOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*pageBlobGetPageRangesOptions.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*pageBlobGetPageRangesOptions.Timeout), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	if pageBlobGetPageRangesOptions != nil && pageBlobGetPageRangesOptions.Range != nil {
 		req.Header.Set("x-ms-range", *pageBlobGetPageRangesOptions.Range)
 	}
@@ -551,18 +551,18 @@ func (client *pageBlobClient) getPageRangesDiffCreateRequest(ctx context.Context
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("comp", "pagelist")
+	reqQP := req.URL.Query()
+	reqQP.Set("comp", "pagelist")
 	if pageBlobGetPageRangesDiffOptions != nil && pageBlobGetPageRangesDiffOptions.Snapshot != nil {
-		query.Set("snapshot", *pageBlobGetPageRangesDiffOptions.Snapshot)
+		reqQP.Set("snapshot", *pageBlobGetPageRangesDiffOptions.Snapshot)
 	}
 	if pageBlobGetPageRangesDiffOptions != nil && pageBlobGetPageRangesDiffOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*pageBlobGetPageRangesDiffOptions.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*pageBlobGetPageRangesDiffOptions.Timeout), 10))
 	}
 	if pageBlobGetPageRangesDiffOptions != nil && pageBlobGetPageRangesDiffOptions.Prevsnapshot != nil {
-		query.Set("prevsnapshot", *pageBlobGetPageRangesDiffOptions.Prevsnapshot)
+		reqQP.Set("prevsnapshot", *pageBlobGetPageRangesDiffOptions.Prevsnapshot)
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	if pageBlobGetPageRangesDiffOptions != nil && pageBlobGetPageRangesDiffOptions.PrevSnapshotURL != nil {
 		req.Header.Set("x-ms-previous-snapshot-url", *pageBlobGetPageRangesDiffOptions.PrevSnapshotURL)
 	}
@@ -667,12 +667,12 @@ func (client *pageBlobClient) resizeCreateRequest(ctx context.Context, blobConte
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("comp", "properties")
+	reqQP := req.URL.Query()
+	reqQP.Set("comp", "properties")
 	if pageBlobResizeOptions != nil && pageBlobResizeOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*pageBlobResizeOptions.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*pageBlobResizeOptions.Timeout), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	if leaseAccessConditions != nil && leaseAccessConditions.LeaseID != nil {
 		req.Header.Set("x-ms-lease-id", *leaseAccessConditions.LeaseID)
 	}
@@ -780,12 +780,12 @@ func (client *pageBlobClient) updateSequenceNumberCreateRequest(ctx context.Cont
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("comp", "properties")
+	reqQP := req.URL.Query()
+	reqQP.Set("comp", "properties")
 	if pageBlobUpdateSequenceNumberOptions != nil && pageBlobUpdateSequenceNumberOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*pageBlobUpdateSequenceNumberOptions.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*pageBlobUpdateSequenceNumberOptions.Timeout), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	if leaseAccessConditions != nil && leaseAccessConditions.LeaseID != nil {
 		req.Header.Set("x-ms-lease-id", *leaseAccessConditions.LeaseID)
 	}
@@ -884,12 +884,12 @@ func (client *pageBlobClient) uploadPagesCreateRequest(ctx context.Context, cont
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("comp", "page")
+	reqQP := req.URL.Query()
+	reqQP.Set("comp", "page")
 	if pageBlobUploadPagesOptions != nil && pageBlobUploadPagesOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*pageBlobUploadPagesOptions.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*pageBlobUploadPagesOptions.Timeout), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("x-ms-page-write", "update")
 	req.Header.Set("Content-Length", strconv.FormatInt(contentLength, 10))
 	if pageBlobUploadPagesOptions != nil && pageBlobUploadPagesOptions.TransactionalContentMD5 != nil {
@@ -1043,12 +1043,12 @@ func (client *pageBlobClient) uploadPagesFromURLCreateRequest(ctx context.Contex
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("comp", "page")
+	reqQP := req.URL.Query()
+	reqQP.Set("comp", "page")
 	if pageBlobUploadPagesFromURLOptions != nil && pageBlobUploadPagesFromURLOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*pageBlobUploadPagesFromURLOptions.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*pageBlobUploadPagesFromURLOptions.Timeout), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("x-ms-page-write", "update")
 	req.Header.Set("x-ms-copy-source", sourceURL)
 	req.Header.Set("x-ms-source-range", sourceRange)

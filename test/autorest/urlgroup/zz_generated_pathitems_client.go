@@ -67,17 +67,17 @@ func (client *PathItemsClient) getAllWithValuesCreateRequest(ctx context.Context
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
+	reqQP := req.URL.Query()
 	if options != nil && options.PathItemStringQuery != nil {
-		query.Set("pathItemStringQuery", *options.PathItemStringQuery)
+		reqQP.Set("pathItemStringQuery", *options.PathItemStringQuery)
 	}
 	if client.globalStringQuery != nil {
-		query.Set("globalStringQuery", *client.globalStringQuery)
+		reqQP.Set("globalStringQuery", *client.globalStringQuery)
 	}
 	if options != nil && options.LocalStringQuery != nil {
-		query.Set("localStringQuery", *options.LocalStringQuery)
+		reqQP.Set("localStringQuery", *options.LocalStringQuery)
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -129,17 +129,17 @@ func (client *PathItemsClient) getGlobalAndLocalQueryNullCreateRequest(ctx conte
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
+	reqQP := req.URL.Query()
 	if options != nil && options.PathItemStringQuery != nil {
-		query.Set("pathItemStringQuery", *options.PathItemStringQuery)
+		reqQP.Set("pathItemStringQuery", *options.PathItemStringQuery)
 	}
 	if client.globalStringQuery != nil {
-		query.Set("globalStringQuery", *client.globalStringQuery)
+		reqQP.Set("globalStringQuery", *client.globalStringQuery)
 	}
 	if options != nil && options.LocalStringQuery != nil {
-		query.Set("localStringQuery", *options.LocalStringQuery)
+		reqQP.Set("localStringQuery", *options.LocalStringQuery)
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -191,17 +191,17 @@ func (client *PathItemsClient) getGlobalQueryNullCreateRequest(ctx context.Conte
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
+	reqQP := req.URL.Query()
 	if options != nil && options.PathItemStringQuery != nil {
-		query.Set("pathItemStringQuery", *options.PathItemStringQuery)
+		reqQP.Set("pathItemStringQuery", *options.PathItemStringQuery)
 	}
 	if client.globalStringQuery != nil {
-		query.Set("globalStringQuery", *client.globalStringQuery)
+		reqQP.Set("globalStringQuery", *client.globalStringQuery)
 	}
 	if options != nil && options.LocalStringQuery != nil {
-		query.Set("localStringQuery", *options.LocalStringQuery)
+		reqQP.Set("localStringQuery", *options.LocalStringQuery)
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -253,17 +253,17 @@ func (client *PathItemsClient) getLocalPathItemQueryNullCreateRequest(ctx contex
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
+	reqQP := req.URL.Query()
 	if options != nil && options.PathItemStringQuery != nil {
-		query.Set("pathItemStringQuery", *options.PathItemStringQuery)
+		reqQP.Set("pathItemStringQuery", *options.PathItemStringQuery)
 	}
 	if client.globalStringQuery != nil {
-		query.Set("globalStringQuery", *client.globalStringQuery)
+		reqQP.Set("globalStringQuery", *client.globalStringQuery)
 	}
 	if options != nil && options.LocalStringQuery != nil {
-		query.Set("localStringQuery", *options.LocalStringQuery)
+		reqQP.Set("localStringQuery", *options.LocalStringQuery)
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }

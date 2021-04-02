@@ -67,9 +67,9 @@ func (client *ProximityPlacementGroupsClient) createOrUpdateCreateRequest(ctx co
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2019-12-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2019-12-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
 }
@@ -131,9 +131,9 @@ func (client *ProximityPlacementGroupsClient) deleteCreateRequest(ctx context.Co
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2019-12-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2019-12-01")
+	req.URL.RawQuery = reqQP.Encode()
 	return req, nil
 }
 
@@ -185,12 +185,12 @@ func (client *ProximityPlacementGroupsClient) getCreateRequest(ctx context.Conte
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
+	reqQP := req.URL.Query()
 	if options != nil && options.IncludeColocationStatus != nil {
-		query.Set("includeColocationStatus", *options.IncludeColocationStatus)
+		reqQP.Set("includeColocationStatus", *options.IncludeColocationStatus)
 	}
-	query.Set("api-version", "2019-12-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP.Set("api-version", "2019-12-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -248,9 +248,9 @@ func (client *ProximityPlacementGroupsClient) listByResourceGroupCreateRequest(c
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2019-12-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2019-12-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -304,9 +304,9 @@ func (client *ProximityPlacementGroupsClient) listBySubscriptionCreateRequest(ct
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2019-12-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2019-12-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -368,9 +368,9 @@ func (client *ProximityPlacementGroupsClient) updateCreateRequest(ctx context.Co
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2019-12-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2019-12-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
 }

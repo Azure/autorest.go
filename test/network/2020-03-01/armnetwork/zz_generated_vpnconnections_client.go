@@ -107,9 +107,9 @@ func (client *VPNConnectionsClient) createOrUpdateCreateRequest(ctx context.Cont
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2020-03-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2020-03-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(vpnConnectionParameters)
 }
@@ -134,7 +134,7 @@ func (client *VPNConnectionsClient) createOrUpdateHandleError(resp *azcore.Respo
 
 // BeginDelete - Deletes a vpn connection.
 func (client *VPNConnectionsClient) BeginDelete(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, options *VPNConnectionsBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, gatewayName, connectionName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, gatewayName, connectionName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
@@ -170,7 +170,7 @@ func (client *VPNConnectionsClient) ResumeDelete(token string) (HTTPPoller, erro
 }
 
 // Delete - Deletes a vpn connection.
-func (client *VPNConnectionsClient) delete(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, options *VPNConnectionsBeginDeleteOptions) (*azcore.Response, error) {
+func (client *VPNConnectionsClient) deleteOperation(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, options *VPNConnectionsBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, gatewayName, connectionName, options)
 	if err != nil {
 		return nil, err
@@ -209,9 +209,9 @@ func (client *VPNConnectionsClient) deleteCreateRequest(ctx context.Context, res
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2020-03-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2020-03-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -265,9 +265,9 @@ func (client *VPNConnectionsClient) getCreateRequest(ctx context.Context, resour
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2020-03-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2020-03-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -326,9 +326,9 @@ func (client *VPNConnectionsClient) listByVPNGatewayCreateRequest(ctx context.Co
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2020-03-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2020-03-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }

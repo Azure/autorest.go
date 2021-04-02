@@ -107,9 +107,9 @@ func (client *ExpressRouteConnectionsClient) createOrUpdateCreateRequest(ctx con
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2020-03-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2020-03-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(putExpressRouteConnectionParameters)
 }
@@ -134,7 +134,7 @@ func (client *ExpressRouteConnectionsClient) createOrUpdateHandleError(resp *azc
 
 // BeginDelete - Deletes a connection to a ExpressRoute circuit.
 func (client *ExpressRouteConnectionsClient) BeginDelete(ctx context.Context, resourceGroupName string, expressRouteGatewayName string, connectionName string, options *ExpressRouteConnectionsBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, expressRouteGatewayName, connectionName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, expressRouteGatewayName, connectionName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
@@ -170,7 +170,7 @@ func (client *ExpressRouteConnectionsClient) ResumeDelete(token string) (HTTPPol
 }
 
 // Delete - Deletes a connection to a ExpressRoute circuit.
-func (client *ExpressRouteConnectionsClient) delete(ctx context.Context, resourceGroupName string, expressRouteGatewayName string, connectionName string, options *ExpressRouteConnectionsBeginDeleteOptions) (*azcore.Response, error) {
+func (client *ExpressRouteConnectionsClient) deleteOperation(ctx context.Context, resourceGroupName string, expressRouteGatewayName string, connectionName string, options *ExpressRouteConnectionsBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, expressRouteGatewayName, connectionName, options)
 	if err != nil {
 		return nil, err
@@ -209,9 +209,9 @@ func (client *ExpressRouteConnectionsClient) deleteCreateRequest(ctx context.Con
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2020-03-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2020-03-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -265,9 +265,9 @@ func (client *ExpressRouteConnectionsClient) getCreateRequest(ctx context.Contex
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2020-03-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2020-03-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -326,9 +326,9 @@ func (client *ExpressRouteConnectionsClient) listCreateRequest(ctx context.Conte
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2020-03-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2020-03-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }

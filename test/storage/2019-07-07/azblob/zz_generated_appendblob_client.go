@@ -45,12 +45,12 @@ func (client *appendBlobClient) appendBlockCreateRequest(ctx context.Context, co
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("comp", "appendblock")
+	reqQP := req.URL.Query()
+	reqQP.Set("comp", "appendblock")
 	if appendBlobAppendBlockOptions != nil && appendBlobAppendBlockOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*appendBlobAppendBlockOptions.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*appendBlobAppendBlockOptions.Timeout), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Content-Length", strconv.FormatInt(contentLength, 10))
 	if appendBlobAppendBlockOptions != nil && appendBlobAppendBlockOptions.TransactionalContentMD5 != nil {
 		req.Header.Set("Content-MD5", base64.StdEncoding.EncodeToString(*appendBlobAppendBlockOptions.TransactionalContentMD5))
@@ -203,12 +203,12 @@ func (client *appendBlobClient) appendBlockFromURLCreateRequest(ctx context.Cont
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("comp", "appendblock")
+	reqQP := req.URL.Query()
+	reqQP.Set("comp", "appendblock")
 	if appendBlobAppendBlockFromURLOptions != nil && appendBlobAppendBlockFromURLOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*appendBlobAppendBlockFromURLOptions.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*appendBlobAppendBlockFromURLOptions.Timeout), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("x-ms-copy-source", sourceURL)
 	if appendBlobAppendBlockFromURLOptions != nil && appendBlobAppendBlockFromURLOptions.SourceRange != nil {
 		req.Header.Set("x-ms-source-range", *appendBlobAppendBlockFromURLOptions.SourceRange)
@@ -375,11 +375,11 @@ func (client *appendBlobClient) createCreateRequest(ctx context.Context, content
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
+	reqQP := req.URL.Query()
 	if appendBlobCreateOptions != nil && appendBlobCreateOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*appendBlobCreateOptions.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*appendBlobCreateOptions.Timeout), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("x-ms-blob-type", "AppendBlob")
 	req.Header.Set("Content-Length", strconv.FormatInt(contentLength, 10))
 	if blobHTTPHeaders != nil && blobHTTPHeaders.BlobContentType != nil {

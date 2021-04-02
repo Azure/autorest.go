@@ -103,9 +103,9 @@ func (client *FirewallPoliciesClient) createOrUpdateCreateRequest(ctx context.Co
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2020-03-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2020-03-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
 }
@@ -130,7 +130,7 @@ func (client *FirewallPoliciesClient) createOrUpdateHandleError(resp *azcore.Res
 
 // BeginDelete - Deletes the specified Firewall Policy.
 func (client *FirewallPoliciesClient) BeginDelete(ctx context.Context, resourceGroupName string, firewallPolicyName string, options *FirewallPoliciesBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, firewallPolicyName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, firewallPolicyName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
@@ -166,7 +166,7 @@ func (client *FirewallPoliciesClient) ResumeDelete(token string) (HTTPPoller, er
 }
 
 // Delete - Deletes the specified Firewall Policy.
-func (client *FirewallPoliciesClient) delete(ctx context.Context, resourceGroupName string, firewallPolicyName string, options *FirewallPoliciesBeginDeleteOptions) (*azcore.Response, error) {
+func (client *FirewallPoliciesClient) deleteOperation(ctx context.Context, resourceGroupName string, firewallPolicyName string, options *FirewallPoliciesBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, firewallPolicyName, options)
 	if err != nil {
 		return nil, err
@@ -201,9 +201,9 @@ func (client *FirewallPoliciesClient) deleteCreateRequest(ctx context.Context, r
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2020-03-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2020-03-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -253,12 +253,12 @@ func (client *FirewallPoliciesClient) getCreateRequest(ctx context.Context, reso
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2020-03-01")
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2020-03-01")
 	if options != nil && options.Expand != nil {
-		query.Set("$expand", *options.Expand)
+		reqQP.Set("$expand", *options.Expand)
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -313,9 +313,9 @@ func (client *FirewallPoliciesClient) listCreateRequest(ctx context.Context, res
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2020-03-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2020-03-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -366,9 +366,9 @@ func (client *FirewallPoliciesClient) listAllCreateRequest(ctx context.Context, 
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2020-03-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2020-03-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }

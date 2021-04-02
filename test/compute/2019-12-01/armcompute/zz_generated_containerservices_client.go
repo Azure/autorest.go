@@ -105,9 +105,9 @@ func (client *ContainerServicesClient) createOrUpdateCreateRequest(ctx context.C
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2017-01-31")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2017-01-31")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
 }
@@ -138,7 +138,7 @@ func (client *ContainerServicesClient) createOrUpdateHandleError(resp *azcore.Re
 // storage accounts, VMs, and availability sets. All the other resources created with the container service are part of the same resource group and can
 // be deleted individually.
 func (client *ContainerServicesClient) BeginDelete(ctx context.Context, resourceGroupName string, containerServiceName string, options *ContainerServicesBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, containerServiceName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, containerServiceName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
@@ -177,7 +177,7 @@ func (client *ContainerServicesClient) ResumeDelete(token string) (HTTPPoller, e
 // as part of creating a container service, including
 // storage accounts, VMs, and availability sets. All the other resources created with the container service are part of the same resource group and can
 // be deleted individually.
-func (client *ContainerServicesClient) delete(ctx context.Context, resourceGroupName string, containerServiceName string, options *ContainerServicesBeginDeleteOptions) (*azcore.Response, error) {
+func (client *ContainerServicesClient) deleteOperation(ctx context.Context, resourceGroupName string, containerServiceName string, options *ContainerServicesBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, containerServiceName, options)
 	if err != nil {
 		return nil, err
@@ -212,9 +212,9 @@ func (client *ContainerServicesClient) deleteCreateRequest(ctx context.Context, 
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2017-01-31")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2017-01-31")
+	req.URL.RawQuery = reqQP.Encode()
 	return req, nil
 }
 
@@ -268,9 +268,9 @@ func (client *ContainerServicesClient) getCreateRequest(ctx context.Context, res
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2017-01-31")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2017-01-31")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -326,9 +326,9 @@ func (client *ContainerServicesClient) listCreateRequest(ctx context.Context, op
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2017-01-31")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2017-01-31")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -388,9 +388,9 @@ func (client *ContainerServicesClient) listByResourceGroupCreateRequest(ctx cont
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2017-01-31")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2017-01-31")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }

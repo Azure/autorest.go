@@ -55,11 +55,11 @@ func (client *ImplicitClient) getOptionalGlobalQueryCreateRequest(ctx context.Co
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
+	reqQP := req.URL.Query()
 	if client.optionalGlobalQuery != nil {
-		query.Set("optional-global-query", strconv.FormatInt(int64(*client.optionalGlobalQuery), 10))
+		reqQP.Set("optional-global-query", strconv.FormatInt(int64(*client.optionalGlobalQuery), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -138,9 +138,9 @@ func (client *ImplicitClient) getRequiredGlobalQueryCreateRequest(ctx context.Co
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("required-global-query", client.requiredGlobalQuery)
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("required-global-query", client.requiredGlobalQuery)
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -299,11 +299,11 @@ func (client *ImplicitClient) putOptionalQueryCreateRequest(ctx context.Context,
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
+	reqQP := req.URL.Query()
 	if options != nil && options.QueryParameter != nil {
-		query.Set("queryParameter", *options.QueryParameter)
+		reqQP.Set("queryParameter", *options.QueryParameter)
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }

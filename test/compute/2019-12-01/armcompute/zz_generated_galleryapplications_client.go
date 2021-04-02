@@ -107,9 +107,9 @@ func (client *GalleryApplicationsClient) createOrUpdateCreateRequest(ctx context
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2019-12-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2019-12-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(galleryApplication)
 }
@@ -134,7 +134,7 @@ func (client *GalleryApplicationsClient) createOrUpdateHandleError(resp *azcore.
 
 // BeginDelete - Delete a gallery Application.
 func (client *GalleryApplicationsClient) BeginDelete(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, options *GalleryApplicationsBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, galleryName, galleryApplicationName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, galleryName, galleryApplicationName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
@@ -170,7 +170,7 @@ func (client *GalleryApplicationsClient) ResumeDelete(token string) (HTTPPoller,
 }
 
 // Delete - Delete a gallery Application.
-func (client *GalleryApplicationsClient) delete(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, options *GalleryApplicationsBeginDeleteOptions) (*azcore.Response, error) {
+func (client *GalleryApplicationsClient) deleteOperation(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, options *GalleryApplicationsBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, galleryName, galleryApplicationName, options)
 	if err != nil {
 		return nil, err
@@ -209,9 +209,9 @@ func (client *GalleryApplicationsClient) deleteCreateRequest(ctx context.Context
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2019-12-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2019-12-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -265,9 +265,9 @@ func (client *GalleryApplicationsClient) getCreateRequest(ctx context.Context, r
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2019-12-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2019-12-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -326,9 +326,9 @@ func (client *GalleryApplicationsClient) listByGalleryCreateRequest(ctx context.
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2019-12-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2019-12-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -428,9 +428,9 @@ func (client *GalleryApplicationsClient) updateCreateRequest(ctx context.Context
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2019-12-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2019-12-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(galleryApplication)
 }

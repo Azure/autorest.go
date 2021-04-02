@@ -107,9 +107,9 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) createOrUpdateCreateReq
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2020-03-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2020-03-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(peeringParameters)
 }
@@ -134,7 +134,7 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) createOrUpdateHandleErr
 
 // BeginDelete - Deletes the specified peering from the ExpressRouteCrossConnection.
 func (client *ExpressRouteCrossConnectionPeeringsClient) BeginDelete(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, options *ExpressRouteCrossConnectionPeeringsBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, crossConnectionName, peeringName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, crossConnectionName, peeringName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
@@ -170,7 +170,7 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) ResumeDelete(token stri
 }
 
 // Delete - Deletes the specified peering from the ExpressRouteCrossConnection.
-func (client *ExpressRouteCrossConnectionPeeringsClient) delete(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, options *ExpressRouteCrossConnectionPeeringsBeginDeleteOptions) (*azcore.Response, error) {
+func (client *ExpressRouteCrossConnectionPeeringsClient) deleteOperation(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, options *ExpressRouteCrossConnectionPeeringsBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, crossConnectionName, peeringName, options)
 	if err != nil {
 		return nil, err
@@ -209,9 +209,9 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) deleteCreateRequest(ctx
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2020-03-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2020-03-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -265,9 +265,9 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) getCreateRequest(ctx co
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2020-03-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2020-03-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -326,9 +326,9 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) listCreateRequest(ctx c
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2020-03-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2020-03-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }

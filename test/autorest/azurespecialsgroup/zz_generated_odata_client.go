@@ -49,17 +49,17 @@ func (client *OdataClient) getWithFilterCreateRequest(ctx context.Context, optio
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
+	reqQP := req.URL.Query()
 	if options != nil && options.Filter != nil {
-		query.Set("$filter", *options.Filter)
+		reqQP.Set("$filter", *options.Filter)
 	}
 	if options != nil && options.Top != nil {
-		query.Set("$top", strconv.FormatInt(int64(*options.Top), 10))
+		reqQP.Set("$top", strconv.FormatInt(int64(*options.Top), 10))
 	}
 	if options != nil && options.Orderby != nil {
-		query.Set("$orderby", *options.Orderby)
+		reqQP.Set("$orderby", *options.Orderby)
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }

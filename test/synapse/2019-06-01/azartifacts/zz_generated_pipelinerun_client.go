@@ -49,12 +49,12 @@ func (client *pipelineRunClient) cancelPipelineRunCreateRequest(ctx context.Cont
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
+	reqQP := req.URL.Query()
 	if options != nil && options.IsRecursive != nil {
-		query.Set("isRecursive", strconv.FormatBool(*options.IsRecursive))
+		reqQP.Set("isRecursive", strconv.FormatBool(*options.IsRecursive))
 	}
-	query.Set("api-version", "2019-06-01-preview")
-	req.URL.RawQuery = query.Encode()
+	reqQP.Set("api-version", "2019-06-01-preview")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -96,9 +96,9 @@ func (client *pipelineRunClient) getPipelineRunCreateRequest(ctx context.Context
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2019-06-01-preview")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2019-06-01-preview")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -153,9 +153,9 @@ func (client *pipelineRunClient) queryActivityRunsCreateRequest(ctx context.Cont
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2019-06-01-preview")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2019-06-01-preview")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(filterParameters)
 }
@@ -202,9 +202,9 @@ func (client *pipelineRunClient) queryPipelineRunsByWorkspaceCreateRequest(ctx c
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2019-06-01-preview")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2019-06-01-preview")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(filterParameters)
 }

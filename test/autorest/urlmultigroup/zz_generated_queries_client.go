@@ -48,13 +48,13 @@ func (client *QueriesClient) arrayStringMultiEmptyCreateRequest(ctx context.Cont
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
+	reqQP := req.URL.Query()
 	if options != nil && options.ArrayQuery != nil {
 		for _, qv := range *options.ArrayQuery {
-			query.Add("arrayQuery", qv)
+			reqQP.Add("arrayQuery", qv)
 		}
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -92,13 +92,13 @@ func (client *QueriesClient) arrayStringMultiNullCreateRequest(ctx context.Conte
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
+	reqQP := req.URL.Query()
 	if options != nil && options.ArrayQuery != nil {
 		for _, qv := range *options.ArrayQuery {
-			query.Add("arrayQuery", qv)
+			reqQP.Add("arrayQuery", qv)
 		}
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -136,13 +136,13 @@ func (client *QueriesClient) arrayStringMultiValidCreateRequest(ctx context.Cont
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
+	reqQP := req.URL.Query()
 	if options != nil && options.ArrayQuery != nil {
 		for _, qv := range *options.ArrayQuery {
-			query.Add("arrayQuery", qv)
+			reqQP.Add("arrayQuery", qv)
 		}
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }

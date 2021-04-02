@@ -107,9 +107,9 @@ func (client *NetworkInterfaceTapConfigurationsClient) createOrUpdateCreateReque
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2020-03-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2020-03-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(tapConfigurationParameters)
 }
@@ -134,7 +134,7 @@ func (client *NetworkInterfaceTapConfigurationsClient) createOrUpdateHandleError
 
 // BeginDelete - Deletes the specified tap configuration from the NetworkInterface.
 func (client *NetworkInterfaceTapConfigurationsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, options *NetworkInterfaceTapConfigurationsBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, networkInterfaceName, tapConfigurationName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, networkInterfaceName, tapConfigurationName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
@@ -170,7 +170,7 @@ func (client *NetworkInterfaceTapConfigurationsClient) ResumeDelete(token string
 }
 
 // Delete - Deletes the specified tap configuration from the NetworkInterface.
-func (client *NetworkInterfaceTapConfigurationsClient) delete(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, options *NetworkInterfaceTapConfigurationsBeginDeleteOptions) (*azcore.Response, error) {
+func (client *NetworkInterfaceTapConfigurationsClient) deleteOperation(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, options *NetworkInterfaceTapConfigurationsBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, networkInterfaceName, tapConfigurationName, options)
 	if err != nil {
 		return nil, err
@@ -209,9 +209,9 @@ func (client *NetworkInterfaceTapConfigurationsClient) deleteCreateRequest(ctx c
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2020-03-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2020-03-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -265,9 +265,9 @@ func (client *NetworkInterfaceTapConfigurationsClient) getCreateRequest(ctx cont
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2020-03-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2020-03-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -326,9 +326,9 @@ func (client *NetworkInterfaceTapConfigurationsClient) listCreateRequest(ctx con
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2020-03-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2020-03-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }

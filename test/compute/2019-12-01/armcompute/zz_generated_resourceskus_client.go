@@ -59,12 +59,12 @@ func (client *ResourceSKUsClient) listCreateRequest(ctx context.Context, options
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2019-04-01")
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2019-04-01")
 	if options != nil && options.Filter != nil {
-		query.Set("$filter", *options.Filter)
+		reqQP.Set("$filter", *options.Filter)
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }

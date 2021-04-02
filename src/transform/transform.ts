@@ -214,6 +214,7 @@ function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, inBody: boolea
         return 'float32';
       }
       return 'float64';
+    case SchemaType.Credential:
     case SchemaType.Duration:
     case SchemaType.String:
     case SchemaType.Uuid:
@@ -276,7 +277,7 @@ function processOperationRequests(session: Session<CodeModel>) {
   // pre-process multi-request operations as it can add operations to the operations
   // collection, and iterating over a modified collection yeilds incorrect results
   for (const group of values(session.model.operationGroups)) {
-    for (const op of values(group.operations)) {
+    for (const op of values(group.operations).toArray()) {
       if (op.language.go!.description) {
         op.language.go!.description = parseComments(op.language.go!.description);
       }
@@ -1085,14 +1086,13 @@ function generateLROResponseEnvelope(response: SchemaResponse | undefined, op: O
   } else if (isPageableOperation(op)) {
     pollerResponse = `${(<SchemaResponse>response).schema.language.go!.name}Pager`;
     pollerTypeName = `${(<SchemaResponse>response).schema.language.go!.name}PagerPoller`;
-    response.schema.language.go!.isLRO = true;
     response.schema.language.go!.lroResponseType = respTypeObject;
   } else {
     pollerResponse = response.schema.language.go!.responseType.name;
     pollerTypeName = generateLROPollerName(response, op);
-    response.schema.language.go!.isLRO = true;
     response.schema.language.go!.lroResponseType = respTypeObject;
   }
+  respTypeObject.language.go!.responseType.isLRO = true;
   // create PollUntilDone
   const pollerFunc = newObject(`func(ctx context.Context, frequency time.Duration) (${pollerResponse}, error)`, 'PollUntilDone');
   const pollUntilDone = newProperty('PollUntilDone', 'PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received',

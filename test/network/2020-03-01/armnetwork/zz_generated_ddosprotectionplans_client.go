@@ -103,9 +103,9 @@ func (client *DdosProtectionPlansClient) createOrUpdateCreateRequest(ctx context
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2020-03-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2020-03-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
 }
@@ -130,7 +130,7 @@ func (client *DdosProtectionPlansClient) createOrUpdateHandleError(resp *azcore.
 
 // BeginDelete - Deletes the specified DDoS protection plan.
 func (client *DdosProtectionPlansClient) BeginDelete(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, options *DdosProtectionPlansBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, ddosProtectionPlanName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, ddosProtectionPlanName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
@@ -166,7 +166,7 @@ func (client *DdosProtectionPlansClient) ResumeDelete(token string) (HTTPPoller,
 }
 
 // Delete - Deletes the specified DDoS protection plan.
-func (client *DdosProtectionPlansClient) delete(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, options *DdosProtectionPlansBeginDeleteOptions) (*azcore.Response, error) {
+func (client *DdosProtectionPlansClient) deleteOperation(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, options *DdosProtectionPlansBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, ddosProtectionPlanName, options)
 	if err != nil {
 		return nil, err
@@ -201,9 +201,9 @@ func (client *DdosProtectionPlansClient) deleteCreateRequest(ctx context.Context
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2020-03-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2020-03-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -253,9 +253,9 @@ func (client *DdosProtectionPlansClient) getCreateRequest(ctx context.Context, r
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2020-03-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2020-03-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -306,9 +306,9 @@ func (client *DdosProtectionPlansClient) listCreateRequest(ctx context.Context, 
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2020-03-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2020-03-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -363,9 +363,9 @@ func (client *DdosProtectionPlansClient) listByResourceGroupCreateRequest(ctx co
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2020-03-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2020-03-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -424,9 +424,9 @@ func (client *DdosProtectionPlansClient) updateTagsCreateRequest(ctx context.Con
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2020-03-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2020-03-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
 }

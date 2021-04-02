@@ -87,11 +87,11 @@ func (client *sparkBatchClient) createSparkBatchJobCreateRequest(ctx context.Con
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
+	reqQP := req.URL.Query()
 	if options != nil && options.Detailed != nil {
-		query.Set("detailed", strconv.FormatBool(*options.Detailed))
+		reqQP.Set("detailed", strconv.FormatBool(*options.Detailed))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(sparkBatchJobOptions)
 }
@@ -142,11 +142,11 @@ func (client *sparkBatchClient) getSparkBatchJobCreateRequest(ctx context.Contex
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
+	reqQP := req.URL.Query()
 	if options != nil && options.Detailed != nil {
-		query.Set("detailed", strconv.FormatBool(*options.Detailed))
+		reqQP.Set("detailed", strconv.FormatBool(*options.Detailed))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -196,17 +196,17 @@ func (client *sparkBatchClient) getSparkBatchJobsCreateRequest(ctx context.Conte
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
+	reqQP := req.URL.Query()
 	if options != nil && options.From != nil {
-		query.Set("from", strconv.FormatInt(int64(*options.From), 10))
+		reqQP.Set("from", strconv.FormatInt(int64(*options.From), 10))
 	}
 	if options != nil && options.Size != nil {
-		query.Set("size", strconv.FormatInt(int64(*options.Size), 10))
+		reqQP.Set("size", strconv.FormatInt(int64(*options.Size), 10))
 	}
 	if options != nil && options.Detailed != nil {
-		query.Set("detailed", strconv.FormatBool(*options.Detailed))
+		reqQP.Set("detailed", strconv.FormatBool(*options.Detailed))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }

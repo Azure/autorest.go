@@ -44,9 +44,9 @@ func (client *workspaceGitRepoManagementClient) getGitHubAccessTokenCreateReques
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2019-06-01-preview")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2019-06-01-preview")
+	req.URL.RawQuery = reqQP.Encode()
 	if options != nil && options.ClientRequestID != nil {
 		req.Header.Set("x-ms-client-request-id", *options.ClientRequestID)
 	}

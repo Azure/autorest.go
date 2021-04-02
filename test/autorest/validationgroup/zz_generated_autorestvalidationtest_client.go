@@ -155,9 +155,9 @@ func (client *AutoRestValidationTestClient) validationOfBodyCreateRequest(ctx co
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("apiVersion", "1.0.0")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("apiVersion", "1.0.0")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	if options != nil && options.Body != nil {
 		return req, req.MarshalAsJSON(options.Body)
@@ -216,9 +216,9 @@ func (client *AutoRestValidationTestClient) validationOfMethodParametersCreateRe
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("apiVersion", "1.0.0")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("apiVersion", "1.0.0")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }

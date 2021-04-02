@@ -48,11 +48,11 @@ func (client *AutoRestReportServiceForAzureClient) getReportCreateRequest(ctx co
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
+	reqQP := req.URL.Query()
 	if options != nil && options.Qualifier != nil {
-		query.Set("qualifier", *options.Qualifier)
+		reqQP.Set("qualifier", *options.Qualifier)
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }

@@ -49,12 +49,12 @@ func (client *blockBlobClient) commitBlockListCreateRequest(ctx context.Context,
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("comp", "blocklist")
+	reqQP := req.URL.Query()
+	reqQP.Set("comp", "blocklist")
 	if blockBlobCommitBlockListOptions != nil && blockBlobCommitBlockListOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*blockBlobCommitBlockListOptions.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*blockBlobCommitBlockListOptions.Timeout), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	if blobHTTPHeaders != nil && blobHTTPHeaders.BlobCacheControl != nil {
 		req.Header.Set("x-ms-blob-cache-control", *blobHTTPHeaders.BlobCacheControl)
 	}
@@ -213,16 +213,16 @@ func (client *blockBlobClient) getBlockListCreateRequest(ctx context.Context, li
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("comp", "blocklist")
+	reqQP := req.URL.Query()
+	reqQP.Set("comp", "blocklist")
 	if blockBlobGetBlockListOptions != nil && blockBlobGetBlockListOptions.Snapshot != nil {
-		query.Set("snapshot", *blockBlobGetBlockListOptions.Snapshot)
+		reqQP.Set("snapshot", *blockBlobGetBlockListOptions.Snapshot)
 	}
-	query.Set("blocklisttype", string(listType))
+	reqQP.Set("blocklisttype", string(listType))
 	if blockBlobGetBlockListOptions != nil && blockBlobGetBlockListOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*blockBlobGetBlockListOptions.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*blockBlobGetBlockListOptions.Timeout), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	if leaseAccessConditions != nil && leaseAccessConditions.LeaseID != nil {
 		req.Header.Set("x-ms-lease-id", *leaseAccessConditions.LeaseID)
 	}
@@ -312,13 +312,13 @@ func (client *blockBlobClient) stageBlockCreateRequest(ctx context.Context, bloc
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("comp", "block")
-	query.Set("blockid", blockID)
+	reqQP := req.URL.Query()
+	reqQP.Set("comp", "block")
+	reqQP.Set("blockid", blockID)
 	if blockBlobStageBlockOptions != nil && blockBlobStageBlockOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*blockBlobStageBlockOptions.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*blockBlobStageBlockOptions.Timeout), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Content-Length", strconv.FormatInt(contentLength, 10))
 	if blockBlobStageBlockOptions != nil && blockBlobStageBlockOptions.TransactionalContentMD5 != nil {
 		req.Header.Set("Content-MD5", base64.StdEncoding.EncodeToString(*blockBlobStageBlockOptions.TransactionalContentMD5))
@@ -430,13 +430,13 @@ func (client *blockBlobClient) stageBlockFromURLCreateRequest(ctx context.Contex
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("comp", "block")
-	query.Set("blockid", blockID)
+	reqQP := req.URL.Query()
+	reqQP.Set("comp", "block")
+	reqQP.Set("blockid", blockID)
 	if blockBlobStageBlockFromURLOptions != nil && blockBlobStageBlockFromURLOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*blockBlobStageBlockFromURLOptions.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*blockBlobStageBlockFromURLOptions.Timeout), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Content-Length", strconv.FormatInt(contentLength, 10))
 	req.Header.Set("x-ms-copy-source", sourceURL)
 	if blockBlobStageBlockFromURLOptions != nil && blockBlobStageBlockFromURLOptions.SourceRange != nil {
@@ -567,11 +567,11 @@ func (client *blockBlobClient) uploadCreateRequest(ctx context.Context, contentL
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
+	reqQP := req.URL.Query()
 	if blockBlobUploadOptions != nil && blockBlobUploadOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*blockBlobUploadOptions.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*blockBlobUploadOptions.Timeout), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("x-ms-blob-type", "BlockBlob")
 	if blockBlobUploadOptions != nil && blockBlobUploadOptions.TransactionalContentMD5 != nil {
 		req.Header.Set("Content-MD5", base64.StdEncoding.EncodeToString(*blockBlobUploadOptions.TransactionalContentMD5))

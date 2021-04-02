@@ -114,9 +114,9 @@ func (client *VirtualMachineScaleSetVMsClient) deallocateCreateRequest(ctx conte
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2019-12-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2019-12-01")
+	req.URL.RawQuery = reqQP.Encode()
 	return req, nil
 }
 
@@ -134,7 +134,7 @@ func (client *VirtualMachineScaleSetVMsClient) deallocateHandleError(resp *azcor
 
 // BeginDelete - Deletes a virtual machine from a VM scale set.
 func (client *VirtualMachineScaleSetVMsClient) BeginDelete(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, vmScaleSetName, instanceID, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, vmScaleSetName, instanceID, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
@@ -170,7 +170,7 @@ func (client *VirtualMachineScaleSetVMsClient) ResumeDelete(token string) (HTTPP
 }
 
 // Delete - Deletes a virtual machine from a VM scale set.
-func (client *VirtualMachineScaleSetVMsClient) delete(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsBeginDeleteOptions) (*azcore.Response, error) {
+func (client *VirtualMachineScaleSetVMsClient) deleteOperation(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceID, options)
 	if err != nil {
 		return nil, err
@@ -209,9 +209,9 @@ func (client *VirtualMachineScaleSetVMsClient) deleteCreateRequest(ctx context.C
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2019-12-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2019-12-01")
+	req.URL.RawQuery = reqQP.Encode()
 	return req, nil
 }
 
@@ -267,12 +267,12 @@ func (client *VirtualMachineScaleSetVMsClient) getCreateRequest(ctx context.Cont
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
+	reqQP := req.URL.Query()
 	if options != nil && options.Expand != nil {
-		query.Set("$expand", "instanceView")
+		reqQP.Set("$expand", "instanceView")
 	}
-	query.Set("api-version", "2019-12-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP.Set("api-version", "2019-12-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -338,9 +338,9 @@ func (client *VirtualMachineScaleSetVMsClient) getInstanceViewCreateRequest(ctx 
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2019-12-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2019-12-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -402,18 +402,18 @@ func (client *VirtualMachineScaleSetVMsClient) listCreateRequest(ctx context.Con
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
+	reqQP := req.URL.Query()
 	if options != nil && options.Filter != nil {
-		query.Set("$filter", *options.Filter)
+		reqQP.Set("$filter", *options.Filter)
 	}
 	if options != nil && options.Select != nil {
-		query.Set("$select", *options.Select)
+		reqQP.Set("$select", *options.Select)
 	}
 	if options != nil && options.Expand != nil {
-		query.Set("$expand", *options.Expand)
+		reqQP.Set("$expand", *options.Expand)
 	}
-	query.Set("api-version", "2019-12-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP.Set("api-version", "2019-12-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -518,9 +518,9 @@ func (client *VirtualMachineScaleSetVMsClient) performMaintenanceCreateRequest(c
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2019-12-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2019-12-01")
+	req.URL.RawQuery = reqQP.Encode()
 	return req, nil
 }
 
@@ -617,12 +617,12 @@ func (client *VirtualMachineScaleSetVMsClient) powerOffCreateRequest(ctx context
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
+	reqQP := req.URL.Query()
 	if options != nil && options.SkipShutdown != nil {
-		query.Set("skipShutdown", strconv.FormatBool(*options.SkipShutdown))
+		reqQP.Set("skipShutdown", strconv.FormatBool(*options.SkipShutdown))
 	}
-	query.Set("api-version", "2019-12-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP.Set("api-version", "2019-12-01")
+	req.URL.RawQuery = reqQP.Encode()
 	return req, nil
 }
 
@@ -715,9 +715,9 @@ func (client *VirtualMachineScaleSetVMsClient) redeployCreateRequest(ctx context
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2019-12-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2019-12-01")
+	req.URL.RawQuery = reqQP.Encode()
 	return req, nil
 }
 
@@ -810,9 +810,9 @@ func (client *VirtualMachineScaleSetVMsClient) reimageCreateRequest(ctx context.
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2019-12-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2019-12-01")
+	req.URL.RawQuery = reqQP.Encode()
 	if options != nil && options.VMScaleSetVMReimageInput != nil {
 		return req, req.MarshalAsJSON(options.VMScaleSetVMReimageInput)
 	}
@@ -910,9 +910,9 @@ func (client *VirtualMachineScaleSetVMsClient) reimageAllCreateRequest(ctx conte
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2019-12-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2019-12-01")
+	req.URL.RawQuery = reqQP.Encode()
 	return req, nil
 }
 
@@ -1005,9 +1005,9 @@ func (client *VirtualMachineScaleSetVMsClient) restartCreateRequest(ctx context.
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2019-12-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2019-12-01")
+	req.URL.RawQuery = reqQP.Encode()
 	return req, nil
 }
 
@@ -1100,9 +1100,9 @@ func (client *VirtualMachineScaleSetVMsClient) runCommandCreateRequest(ctx conte
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2019-12-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2019-12-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json, text/json")
 	return req, req.MarshalAsJSON(parameters)
 }
@@ -1169,9 +1169,9 @@ func (client *VirtualMachineScaleSetVMsClient) simulateEvictionCreateRequest(ctx
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2019-12-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2019-12-01")
+	req.URL.RawQuery = reqQP.Encode()
 	return req, nil
 }
 
@@ -1264,9 +1264,9 @@ func (client *VirtualMachineScaleSetVMsClient) startCreateRequest(ctx context.Co
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2019-12-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2019-12-01")
+	req.URL.RawQuery = reqQP.Encode()
 	return req, nil
 }
 
@@ -1359,9 +1359,9 @@ func (client *VirtualMachineScaleSetVMsClient) updateCreateRequest(ctx context.C
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2019-12-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2019-12-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
 }

@@ -32,7 +32,7 @@ func NewVPNServerConfigurationsAssociatedWithVirtualWanClient(con *armcore.Conne
 
 // BeginList - Gives the list of VpnServerConfigurations associated with Virtual Wan in a resource group.
 func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) BeginList(ctx context.Context, resourceGroupName string, virtualWANName string, options *VPNServerConfigurationsAssociatedWithVirtualWanBeginListOptions) (VPNServerConfigurationsResponsePollerResponse, error) {
-	resp, err := client.list(ctx, resourceGroupName, virtualWANName, options)
+	resp, err := client.listOperation(ctx, resourceGroupName, virtualWANName, options)
 	if err != nil {
 		return VPNServerConfigurationsResponsePollerResponse{}, err
 	}
@@ -68,7 +68,7 @@ func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) ResumeList(
 }
 
 // List - Gives the list of VpnServerConfigurations associated with Virtual Wan in a resource group.
-func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) list(ctx context.Context, resourceGroupName string, virtualWANName string, options *VPNServerConfigurationsAssociatedWithVirtualWanBeginListOptions) (*azcore.Response, error) {
+func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) listOperation(ctx context.Context, resourceGroupName string, virtualWANName string, options *VPNServerConfigurationsAssociatedWithVirtualWanBeginListOptions) (*azcore.Response, error) {
 	req, err := client.listCreateRequest(ctx, resourceGroupName, virtualWANName, options)
 	if err != nil {
 		return nil, err
@@ -103,9 +103,9 @@ func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) listCreateR
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2020-03-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2020-03-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }

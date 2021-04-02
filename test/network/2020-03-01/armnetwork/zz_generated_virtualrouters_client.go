@@ -103,9 +103,9 @@ func (client *VirtualRoutersClient) createOrUpdateCreateRequest(ctx context.Cont
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2020-03-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2020-03-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
 }
@@ -130,7 +130,7 @@ func (client *VirtualRoutersClient) createOrUpdateHandleError(resp *azcore.Respo
 
 // BeginDelete - Deletes the specified Virtual Router.
 func (client *VirtualRoutersClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualRouterName string, options *VirtualRoutersBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, virtualRouterName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, virtualRouterName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
@@ -166,7 +166,7 @@ func (client *VirtualRoutersClient) ResumeDelete(token string) (HTTPPoller, erro
 }
 
 // Delete - Deletes the specified Virtual Router.
-func (client *VirtualRoutersClient) delete(ctx context.Context, resourceGroupName string, virtualRouterName string, options *VirtualRoutersBeginDeleteOptions) (*azcore.Response, error) {
+func (client *VirtualRoutersClient) deleteOperation(ctx context.Context, resourceGroupName string, virtualRouterName string, options *VirtualRoutersBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, virtualRouterName, options)
 	if err != nil {
 		return nil, err
@@ -201,9 +201,9 @@ func (client *VirtualRoutersClient) deleteCreateRequest(ctx context.Context, res
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2020-03-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2020-03-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -253,12 +253,12 @@ func (client *VirtualRoutersClient) getCreateRequest(ctx context.Context, resour
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2020-03-01")
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2020-03-01")
 	if options != nil && options.Expand != nil {
-		query.Set("$expand", *options.Expand)
+		reqQP.Set("$expand", *options.Expand)
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -309,9 +309,9 @@ func (client *VirtualRoutersClient) listCreateRequest(ctx context.Context, optio
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2020-03-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2020-03-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -366,9 +366,9 @@ func (client *VirtualRoutersClient) listByResourceGroupCreateRequest(ctx context
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2020-03-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2020-03-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }

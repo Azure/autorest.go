@@ -103,9 +103,9 @@ func (client *RouteTablesClient) createOrUpdateCreateRequest(ctx context.Context
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2020-03-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2020-03-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
 }
@@ -130,7 +130,7 @@ func (client *RouteTablesClient) createOrUpdateHandleError(resp *azcore.Response
 
 // BeginDelete - Deletes the specified route table.
 func (client *RouteTablesClient) BeginDelete(ctx context.Context, resourceGroupName string, routeTableName string, options *RouteTablesBeginDeleteOptions) (HTTPPollerResponse, error) {
-	resp, err := client.delete(ctx, resourceGroupName, routeTableName, options)
+	resp, err := client.deleteOperation(ctx, resourceGroupName, routeTableName, options)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
@@ -166,7 +166,7 @@ func (client *RouteTablesClient) ResumeDelete(token string) (HTTPPoller, error) 
 }
 
 // Delete - Deletes the specified route table.
-func (client *RouteTablesClient) delete(ctx context.Context, resourceGroupName string, routeTableName string, options *RouteTablesBeginDeleteOptions) (*azcore.Response, error) {
+func (client *RouteTablesClient) deleteOperation(ctx context.Context, resourceGroupName string, routeTableName string, options *RouteTablesBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, routeTableName, options)
 	if err != nil {
 		return nil, err
@@ -201,9 +201,9 @@ func (client *RouteTablesClient) deleteCreateRequest(ctx context.Context, resour
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2020-03-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2020-03-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -253,12 +253,12 @@ func (client *RouteTablesClient) getCreateRequest(ctx context.Context, resourceG
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2020-03-01")
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2020-03-01")
 	if options != nil && options.Expand != nil {
-		query.Set("$expand", *options.Expand)
+		reqQP.Set("$expand", *options.Expand)
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -313,9 +313,9 @@ func (client *RouteTablesClient) listCreateRequest(ctx context.Context, resource
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2020-03-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2020-03-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -366,9 +366,9 @@ func (client *RouteTablesClient) listAllCreateRequest(ctx context.Context, optio
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2020-03-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2020-03-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -427,9 +427,9 @@ func (client *RouteTablesClient) updateTagsCreateRequest(ctx context.Context, re
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("api-version", "2020-03-01")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("api-version", "2020-03-01")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
 }

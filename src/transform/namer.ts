@@ -19,17 +19,21 @@ export interface OperationNaming extends Language {
 }
 
 interface protocolNaming {
+  internalMethod: string;
   requestMethod: string;
   responseMethod: string;
   errorMethod: string;
 }
 
 export class protocolMethods implements protocolNaming {
+  readonly internalMethod: string;
   readonly requestMethod: string;
   readonly responseMethod: string;
   readonly errorMethod: string;
 
   constructor(name: string) {
+    // uncapitalizing runs the risk of reserved name collision, e.g. Import -> import
+    this.internalMethod = getEscapedReservedName(name.uncapitalize(), 'Operation');
     this.requestMethod = ensureNameCase(`${name}${requestMethodSuffix}`, true);
     this.responseMethod = ensureNameCase(`${name}${responseMethodSuffix}`, true);
     this.errorMethod = ensureNameCase(`${name}${errorMethodSuffix}`, true);
@@ -134,6 +138,10 @@ export async function namer(session: Session<CodeModel>) {
       }
       details.protocolNaming = new protocolMethods(details.name);
       if (op.language.go!.paging) {
+        if (op.language.go!.paging.nextLinkName === '') {
+          // fix up broken swaggers that incorrectly specify no next link name
+          op.language.go!.paging.nextLinkName = null;
+        }
         if (op.language.go!.paging.nextLinkName !== null) {
           // apply same naming logic as per struct fields
           op.language.go!.paging.nextLinkName = ensureNameCase((<string>op.language.go!.paging.nextLinkName));

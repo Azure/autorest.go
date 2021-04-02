@@ -45,13 +45,13 @@ func (client *containerClient) acquireLeaseCreateRequest(ctx context.Context, co
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("comp", "lease")
-	query.Set("restype", "container")
+	reqQP := req.URL.Query()
+	reqQP.Set("comp", "lease")
+	reqQP.Set("restype", "container")
 	if containerAcquireLeaseOptions != nil && containerAcquireLeaseOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*containerAcquireLeaseOptions.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*containerAcquireLeaseOptions.Timeout), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("x-ms-lease-action", "acquire")
 	if containerAcquireLeaseOptions != nil && containerAcquireLeaseOptions.Duration != nil {
 		req.Header.Set("x-ms-lease-duration", strconv.FormatInt(int64(*containerAcquireLeaseOptions.Duration), 10))
@@ -140,13 +140,13 @@ func (client *containerClient) breakLeaseCreateRequest(ctx context.Context, cont
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("comp", "lease")
-	query.Set("restype", "container")
+	reqQP := req.URL.Query()
+	reqQP.Set("comp", "lease")
+	reqQP.Set("restype", "container")
 	if containerBreakLeaseOptions != nil && containerBreakLeaseOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*containerBreakLeaseOptions.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*containerBreakLeaseOptions.Timeout), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("x-ms-lease-action", "break")
 	if containerBreakLeaseOptions != nil && containerBreakLeaseOptions.BreakPeriod != nil {
 		req.Header.Set("x-ms-lease-break-period", strconv.FormatInt(int64(*containerBreakLeaseOptions.BreakPeriod), 10))
@@ -237,13 +237,13 @@ func (client *containerClient) changeLeaseCreateRequest(ctx context.Context, lea
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("comp", "lease")
-	query.Set("restype", "container")
+	reqQP := req.URL.Query()
+	reqQP.Set("comp", "lease")
+	reqQP.Set("restype", "container")
 	if containerChangeLeaseOptions != nil && containerChangeLeaseOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*containerChangeLeaseOptions.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*containerChangeLeaseOptions.Timeout), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("x-ms-lease-action", "change")
 	req.Header.Set("x-ms-lease-id", leaseID)
 	req.Header.Set("x-ms-proposed-lease-id", proposedLeaseID)
@@ -328,12 +328,12 @@ func (client *containerClient) createCreateRequest(ctx context.Context, containe
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("restype", "container")
+	reqQP := req.URL.Query()
+	reqQP.Set("restype", "container")
 	if containerCreateOptions != nil && containerCreateOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*containerCreateOptions.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*containerCreateOptions.Timeout), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	if containerCreateOptions != nil && containerCreateOptions.Metadata != nil {
 		for k, v := range *containerCreateOptions.Metadata {
 			req.Header.Set("x-ms-meta-"+k, v)
@@ -420,12 +420,12 @@ func (client *containerClient) deleteCreateRequest(ctx context.Context, containe
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("restype", "container")
+	reqQP := req.URL.Query()
+	reqQP.Set("restype", "container")
 	if containerDeleteOptions != nil && containerDeleteOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*containerDeleteOptions.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*containerDeleteOptions.Timeout), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	if leaseAccessConditions != nil && leaseAccessConditions.LeaseID != nil {
 		req.Header.Set("x-ms-lease-id", *leaseAccessConditions.LeaseID)
 	}
@@ -497,13 +497,13 @@ func (client *containerClient) getAccessPolicyCreateRequest(ctx context.Context,
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("restype", "container")
-	query.Set("comp", "acl")
+	reqQP := req.URL.Query()
+	reqQP.Set("restype", "container")
+	reqQP.Set("comp", "acl")
 	if containerGetAccessPolicyOptions != nil && containerGetAccessPolicyOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*containerGetAccessPolicyOptions.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*containerGetAccessPolicyOptions.Timeout), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	if leaseAccessConditions != nil && leaseAccessConditions.LeaseID != nil {
 		req.Header.Set("x-ms-lease-id", *leaseAccessConditions.LeaseID)
 	}
@@ -585,10 +585,10 @@ func (client *containerClient) getAccountInfoCreateRequest(ctx context.Context, 
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("restype", "account")
-	query.Set("comp", "properties")
-	req.URL.RawQuery = query.Encode()
+	reqQP := req.URL.Query()
+	reqQP.Set("restype", "account")
+	reqQP.Set("comp", "properties")
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("x-ms-version", "2019-07-07")
 	req.Header.Set("Accept", "application/xml")
 	return req, nil
@@ -655,12 +655,12 @@ func (client *containerClient) getPropertiesCreateRequest(ctx context.Context, c
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("restype", "container")
+	reqQP := req.URL.Query()
+	reqQP.Set("restype", "container")
 	if containerGetPropertiesOptions != nil && containerGetPropertiesOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*containerGetPropertiesOptions.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*containerGetPropertiesOptions.Timeout), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	if leaseAccessConditions != nil && leaseAccessConditions.LeaseID != nil {
 		req.Header.Set("x-ms-lease-id", *leaseAccessConditions.LeaseID)
 	}
@@ -780,25 +780,25 @@ func (client *containerClient) listBlobFlatSegmentCreateRequest(ctx context.Cont
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("restype", "container")
-	query.Set("comp", "list")
+	reqQP := req.URL.Query()
+	reqQP.Set("restype", "container")
+	reqQP.Set("comp", "list")
 	if options != nil && options.Prefix != nil {
-		query.Set("prefix", *options.Prefix)
+		reqQP.Set("prefix", *options.Prefix)
 	}
 	if options != nil && options.Marker != nil {
-		query.Set("marker", *options.Marker)
+		reqQP.Set("marker", *options.Marker)
 	}
 	if options != nil && options.Maxresults != nil {
-		query.Set("maxresults", strconv.FormatInt(int64(*options.Maxresults), 10))
+		reqQP.Set("maxresults", strconv.FormatInt(int64(*options.Maxresults), 10))
 	}
 	if options != nil && options.Include != nil {
-		query.Set("include", strings.Join(strings.Fields(strings.Trim(fmt.Sprint(*options.Include), "[]")), ","))
+		reqQP.Set("include", strings.Join(strings.Fields(strings.Trim(fmt.Sprint(*options.Include), "[]")), ","))
 	}
 	if options != nil && options.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("x-ms-version", "2019-07-07")
 	if options != nil && options.RequestID != nil {
 		req.Header.Set("x-ms-client-request-id", *options.RequestID)
@@ -868,26 +868,26 @@ func (client *containerClient) listBlobHierarchySegmentCreateRequest(ctx context
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("restype", "container")
-	query.Set("comp", "list")
+	reqQP := req.URL.Query()
+	reqQP.Set("restype", "container")
+	reqQP.Set("comp", "list")
 	if options != nil && options.Prefix != nil {
-		query.Set("prefix", *options.Prefix)
+		reqQP.Set("prefix", *options.Prefix)
 	}
-	query.Set("delimiter", delimiter)
+	reqQP.Set("delimiter", delimiter)
 	if options != nil && options.Marker != nil {
-		query.Set("marker", *options.Marker)
+		reqQP.Set("marker", *options.Marker)
 	}
 	if options != nil && options.Maxresults != nil {
-		query.Set("maxresults", strconv.FormatInt(int64(*options.Maxresults), 10))
+		reqQP.Set("maxresults", strconv.FormatInt(int64(*options.Maxresults), 10))
 	}
 	if options != nil && options.Include != nil {
-		query.Set("include", strings.Join(strings.Fields(strings.Trim(fmt.Sprint(*options.Include), "[]")), ","))
+		reqQP.Set("include", strings.Join(strings.Fields(strings.Trim(fmt.Sprint(*options.Include), "[]")), ","))
 	}
 	if options != nil && options.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("x-ms-version", "2019-07-07")
 	if options != nil && options.RequestID != nil {
 		req.Header.Set("x-ms-client-request-id", *options.RequestID)
@@ -957,13 +957,13 @@ func (client *containerClient) releaseLeaseCreateRequest(ctx context.Context, le
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("comp", "lease")
-	query.Set("restype", "container")
+	reqQP := req.URL.Query()
+	reqQP.Set("comp", "lease")
+	reqQP.Set("restype", "container")
 	if containerReleaseLeaseOptions != nil && containerReleaseLeaseOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*containerReleaseLeaseOptions.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*containerReleaseLeaseOptions.Timeout), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("x-ms-lease-action", "release")
 	req.Header.Set("x-ms-lease-id", leaseID)
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfModifiedSince != nil {
@@ -1044,13 +1044,13 @@ func (client *containerClient) renewLeaseCreateRequest(ctx context.Context, leas
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("comp", "lease")
-	query.Set("restype", "container")
+	reqQP := req.URL.Query()
+	reqQP.Set("comp", "lease")
+	reqQP.Set("restype", "container")
 	if containerRenewLeaseOptions != nil && containerRenewLeaseOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*containerRenewLeaseOptions.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*containerRenewLeaseOptions.Timeout), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("x-ms-lease-action", "renew")
 	req.Header.Set("x-ms-lease-id", leaseID)
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfModifiedSince != nil {
@@ -1134,13 +1134,13 @@ func (client *containerClient) setAccessPolicyCreateRequest(ctx context.Context,
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("restype", "container")
-	query.Set("comp", "acl")
+	reqQP := req.URL.Query()
+	reqQP.Set("restype", "container")
+	reqQP.Set("comp", "acl")
 	if containerSetAccessPolicyOptions != nil && containerSetAccessPolicyOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*containerSetAccessPolicyOptions.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*containerSetAccessPolicyOptions.Timeout), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	if leaseAccessConditions != nil && leaseAccessConditions.LeaseID != nil {
 		req.Header.Set("x-ms-lease-id", *leaseAccessConditions.LeaseID)
 	}
@@ -1232,13 +1232,13 @@ func (client *containerClient) setMetadataCreateRequest(ctx context.Context, con
 		return nil, err
 	}
 	req.Telemetry(telemetryInfo)
-	query := req.URL.Query()
-	query.Set("restype", "container")
-	query.Set("comp", "metadata")
+	reqQP := req.URL.Query()
+	reqQP.Set("restype", "container")
+	reqQP.Set("comp", "metadata")
 	if containerSetMetadataOptions != nil && containerSetMetadataOptions.Timeout != nil {
-		query.Set("timeout", strconv.FormatInt(int64(*containerSetMetadataOptions.Timeout), 10))
+		reqQP.Set("timeout", strconv.FormatInt(int64(*containerSetMetadataOptions.Timeout), 10))
 	}
-	req.URL.RawQuery = query.Encode()
+	req.URL.RawQuery = reqQP.Encode()
 	if leaseAccessConditions != nil && leaseAccessConditions.LeaseID != nil {
 		req.Header.Set("x-ms-lease-id", *leaseAccessConditions.LeaseID)
 	}
