@@ -19,17 +19,21 @@ export interface OperationNaming extends Language {
 }
 
 interface protocolNaming {
+  internalMethod: string;
   requestMethod: string;
   responseMethod: string;
   errorMethod: string;
 }
 
 export class protocolMethods implements protocolNaming {
+  readonly internalMethod: string;
   readonly requestMethod: string;
   readonly responseMethod: string;
   readonly errorMethod: string;
 
   constructor(name: string) {
+    // uncapitalizing runs the risk of reserved name collision, e.g. Import -> import
+    this.internalMethod = getEscapedReservedName(name.uncapitalize(), 'Operation');
     this.requestMethod = ensureNameCase(`${name}${requestMethodSuffix}`, true);
     this.responseMethod = ensureNameCase(`${name}${responseMethodSuffix}`, true);
     this.errorMethod = ensureNameCase(`${name}${errorMethodSuffix}`, true);
@@ -194,7 +198,7 @@ function cloneLanguageInfo(graph: any) {
 }
 
 // make sure that reserved words are escaped
-export function getEscapedReservedName(name: string, appendValue: string): string {
+function getEscapedReservedName(name: string, appendValue: string): string {
   if (ReservedWords.includes(name)) {
     name += appendValue;
   }

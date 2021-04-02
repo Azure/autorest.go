@@ -8,7 +8,7 @@ import { comment, KnownMediaType } from '@azure-tools/codegen';
 import { ArraySchema, ByteArraySchema, ChoiceSchema, CodeModel, ConstantSchema, DateTimeSchema, DictionarySchema, GroupProperty, ImplementationLocation, NumberSchema, Operation, Parameter, Property, Protocols, Response, Schema, SchemaResponse, SchemaType } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
 import { aggregateParameters, getResponse, internalPagerTypeName, internalPollerTypeName, isArraySchema, isPageableOperation, isSchemaResponse, PagerInfo, PollerInfo, isLROOperation, commentLength } from '../common/helpers';
-import { getEscapedReservedName, OperationNaming } from '../transform/namer';
+import { OperationNaming } from '../transform/namer';
 import { contentPreamble, formatParameterTypeName, formatStatusCodes, getStatusCodes, hasDescription, hasSchemaResponse, skipURLEncoding, sortAscending, getCreateRequestParameters, getCreateRequestParametersSig, getMethodParameters, getParamName, formatParamValue, dateFormat, datetimeRFC1123Format, datetimeRFC3339Format, sortParametersByRequired } from './helpers';
 import { ImportManager } from './imports';
 
@@ -256,8 +256,7 @@ function generateOperation(op: Operation, imports: ImportManager): string {
   }
   let opName = op.language.go!.name;
   if (isLROOperation(op)) {
-    // uncapitalizing runs the risk of reserved name collision, e.g. Import -> import
-    opName = getEscapedReservedName(opName.uncapitalize(), 'Operation');
+    opName = info.protocolNaming.internalMethod;
   }
   text += `func (client *${clientName}) ${opName}(${params}) (${returns.join(', ')}) {\n`;
   const reqParams = getCreateRequestParameters(op);
@@ -1058,8 +1057,7 @@ function generateARMLROBeginMethod(op: Operation, imports: ImportManager): strin
   const zeroResp = getZeroReturnValue(op, 'api');
   text += `func (client *${clientName}) Begin${op.language.go!.name}(${params}) (${returns.join(', ')}) {\n`;
   let opName = op.language.go!.name;
-  // uncapitalizing runs the risk of reserved name collision, e.g. Import -> import
-  opName = getEscapedReservedName(opName.uncapitalize(), 'Operation');
+  opName = info.protocolNaming.internalMethod;
   text += `\tresp, err := client.${opName}(${getCreateRequestParameters(op)})\n`;
   text += `\tif err != nil {\n`;
   text += `\t\treturn ${zeroResp}, err\n`;
