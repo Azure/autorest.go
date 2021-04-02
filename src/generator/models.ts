@@ -327,7 +327,7 @@ function generateStructs(imports: ImportManager, objects?: ObjectSchema[]): Stru
     // track which marshallers and unmarshallers we need to generate
     let needsIntM, needsIntU = false;
     let needsM, needsU = false;
-    let relationship: 'none' | 'root' | 'parent' | 'leaf';
+    const relationship = getRelationship(obj);
     if (obj.discriminator) {
       // only need to generate interface method and internal marshaller for discriminators (Fish, Salmon, Shark)
       generateDiscriminatorMarkerMethod(obj, structDef);
@@ -340,7 +340,7 @@ function generateStructs(imports: ImportManager, objects?: ObjectSchema[]): Stru
       // this is a leaf node in a discriminated type hierarchy
       // this check must come before hasRelationship() which is for non-discriminated type inheritence cases
       needsM = needsU = true;
-    } else if ((relationship = getRelationship(obj)) !== 'none') {
+    } else if (relationship !== 'none') {
       // always need M and U for time/additional properties
       if (obj.language.go!.needsDateTimeMarshalling || hasAdditionalProperties(obj)) {
         needsM = needsU = true;
@@ -387,6 +387,10 @@ function generateStructs(imports: ImportManager, objects?: ObjectSchema[]): Stru
     // be sure to skip this for root discriminators.
     if (obj.language.go!.needsPatchMarshaller === true && !obj.language.go!.rootDiscriminator) {
       needsM = true;
+      if (relationship === 'root' || relationship === 'parent') {
+        // the type has child types so generate the internal marshaller
+        needsIntM = true;
+      }
     }
     if (needsIntM) {
       generateInternalMarshaller(obj, structDef, parentType);
@@ -504,11 +508,11 @@ function generateUnmarshallerForResponseEnvelope(structDef: StructDef) {
   if (field === '' || type === '') {
     throw new Error(`failed to the discriminated type field for response envelope ${structDef.Language.name}`);
   }
-  unmarshaller += `\tt, err := unmarshal${type}((*json.RawMessage)(&data))\n`;
+  unmarshaller += `\tres, err := unmarshal${type}((*json.RawMessage)(&data))\n`;
   unmarshaller += '\tif err != nil {\n';
   unmarshaller += '\t\treturn err\n';
   unmarshaller += '\t}\n';
-  unmarshaller += `\t${receiver}.${field} = t\n`;
+  unmarshaller += `\t${receiver}.${field} = res\n`;
   unmarshaller += '\treturn nil\n';
   unmarshaller += '}\n\n';
   structDef.Methods.push({ name: 'UnmarshalJSON', desc: `UnmarshalJSON implements the json.Unmarshaller interface for type ${structDef.Language.name}.`, text: unmarshaller });

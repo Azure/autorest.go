@@ -440,11 +440,11 @@ type DotFishResponse struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DotFishResponse.
 func (d *DotFishResponse) UnmarshalJSON(data []byte) error {
-	t, err := unmarshalDotFishClassification((*json.RawMessage)(&data))
+	res, err := unmarshalDotFishClassification((*json.RawMessage)(&data))
 	if err != nil {
 		return err
 	}
-	d.DotFish = t
+	d.DotFish = res
 	return nil
 }
 
@@ -602,11 +602,11 @@ type FishResponse struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type FishResponse.
 func (f *FishResponse) UnmarshalJSON(data []byte) error {
-	t, err := unmarshalFishClassification((*json.RawMessage)(&data))
+	res, err := unmarshalFishClassification((*json.RawMessage)(&data))
 	if err != nil {
 		return err
 	}
-	f.Fish = t
+	f.Fish = res
 	return nil
 }
 
@@ -773,11 +773,11 @@ type MyBaseTypeResponse struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type MyBaseTypeResponse.
 func (m *MyBaseTypeResponse) UnmarshalJSON(data []byte) error {
-	t, err := unmarshalMyBaseTypeClassification((*json.RawMessage)(&data))
+	res, err := unmarshalMyBaseTypeClassification((*json.RawMessage)(&data))
 	if err != nil {
 		return err
 	}
-	m.MyBaseType = t
+	m.MyBaseType = res
 	return nil
 }
 
@@ -1074,11 +1074,11 @@ type SalmonResponse struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SalmonResponse.
 func (s *SalmonResponse) UnmarshalJSON(data []byte) error {
-	t, err := unmarshalSalmonClassification((*json.RawMessage)(&data))
+	res, err := unmarshalSalmonClassification((*json.RawMessage)(&data))
 	if err != nil {
 		return err
 	}
-	s.Salmon = t
+	s.Salmon = res
 	return nil
 }
 
