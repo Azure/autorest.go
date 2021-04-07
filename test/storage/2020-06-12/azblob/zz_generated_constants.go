@@ -97,6 +97,52 @@ func (c ArchiveStatus) ToPtr() *ArchiveStatus {
 	return &c
 }
 
+type BlobExpiryOptions string
+
+const (
+	BlobExpiryOptionsAbsolute           BlobExpiryOptions = "Absolute"
+	BlobExpiryOptionsNeverExpire        BlobExpiryOptions = "NeverExpire"
+	BlobExpiryOptionsRelativeToCreation BlobExpiryOptions = "RelativeToCreation"
+	BlobExpiryOptionsRelativeToNow      BlobExpiryOptions = "RelativeToNow"
+)
+
+// PossibleBlobExpiryOptionsValues returns the possible values for the BlobExpiryOptions const type.
+func PossibleBlobExpiryOptionsValues() []BlobExpiryOptions {
+	return []BlobExpiryOptions{
+		BlobExpiryOptionsAbsolute,
+		BlobExpiryOptionsNeverExpire,
+		BlobExpiryOptionsRelativeToCreation,
+		BlobExpiryOptionsRelativeToNow,
+	}
+}
+
+// ToPtr() returns a *BlobExpiryOptions pointing to the current value.
+func (c BlobExpiryOptions) ToPtr() *BlobExpiryOptions {
+	return &c
+}
+
+type BlobImmutabilityPolicyMode string
+
+const (
+	BlobImmutabilityPolicyModeUnlocked BlobImmutabilityPolicyMode = "Unlocked"
+	BlobImmutabilityPolicyModeLocked   BlobImmutabilityPolicyMode = "Locked"
+	BlobImmutabilityPolicyModeMutable  BlobImmutabilityPolicyMode = "Mutable"
+)
+
+// PossibleBlobImmutabilityPolicyModeValues returns the possible values for the BlobImmutabilityPolicyMode const type.
+func PossibleBlobImmutabilityPolicyModeValues() []BlobImmutabilityPolicyMode {
+	return []BlobImmutabilityPolicyMode{
+		BlobImmutabilityPolicyModeUnlocked,
+		BlobImmutabilityPolicyModeLocked,
+		BlobImmutabilityPolicyModeMutable,
+	}
+}
+
+// ToPtr() returns a *BlobImmutabilityPolicyMode pointing to the current value.
+func (c BlobImmutabilityPolicyMode) ToPtr() *BlobImmutabilityPolicyMode {
+	return &c
+}
+
 type BlobType string
 
 const (
@@ -277,11 +323,15 @@ func (c LeaseStatusType) ToPtr() *LeaseStatusType {
 type ListBlobsIncludeItem string
 
 const (
-	ListBlobsIncludeItemCopy             ListBlobsIncludeItem = "copy"
-	ListBlobsIncludeItemDeleted          ListBlobsIncludeItem = "deleted"
-	ListBlobsIncludeItemMetadata         ListBlobsIncludeItem = "metadata"
-	ListBlobsIncludeItemSnapshots        ListBlobsIncludeItem = "snapshots"
-	ListBlobsIncludeItemUncommittedblobs ListBlobsIncludeItem = "uncommittedblobs"
+	ListBlobsIncludeItemCopy               ListBlobsIncludeItem = "copy"
+	ListBlobsIncludeItemDeleted            ListBlobsIncludeItem = "deleted"
+	ListBlobsIncludeItemMetadata           ListBlobsIncludeItem = "metadata"
+	ListBlobsIncludeItemSnapshots          ListBlobsIncludeItem = "snapshots"
+	ListBlobsIncludeItemUncommittedblobs   ListBlobsIncludeItem = "uncommittedblobs"
+	ListBlobsIncludeItemVersions           ListBlobsIncludeItem = "versions"
+	ListBlobsIncludeItemTags               ListBlobsIncludeItem = "tags"
+	ListBlobsIncludeItemImmutabilitypolicy ListBlobsIncludeItem = "immutabilitypolicy"
+	ListBlobsIncludeItemLegalhold          ListBlobsIncludeItem = "legalhold"
 )
 
 // PossibleListBlobsIncludeItemValues returns the possible values for the ListBlobsIncludeItem const type.
@@ -292,11 +342,35 @@ func PossibleListBlobsIncludeItemValues() []ListBlobsIncludeItem {
 		ListBlobsIncludeItemMetadata,
 		ListBlobsIncludeItemSnapshots,
 		ListBlobsIncludeItemUncommittedblobs,
+		ListBlobsIncludeItemVersions,
+		ListBlobsIncludeItemTags,
+		ListBlobsIncludeItemImmutabilitypolicy,
+		ListBlobsIncludeItemLegalhold,
 	}
 }
 
 // ToPtr() returns a *ListBlobsIncludeItem pointing to the current value.
 func (c ListBlobsIncludeItem) ToPtr() *ListBlobsIncludeItem {
+	return &c
+}
+
+type ListContainersIncludeType string
+
+const (
+	ListContainersIncludeTypeMetadata ListContainersIncludeType = "metadata"
+	ListContainersIncludeTypeDeleted  ListContainersIncludeType = "deleted"
+)
+
+// PossibleListContainersIncludeTypeValues returns the possible values for the ListContainersIncludeType const type.
+func PossibleListContainersIncludeTypeValues() []ListContainersIncludeType {
+	return []ListContainersIncludeType{
+		ListContainersIncludeTypeMetadata,
+		ListContainersIncludeTypeDeleted,
+	}
+}
+
+// ToPtr() returns a *ListContainersIncludeType pointing to the current value.
+func (c ListContainersIncludeType) ToPtr() *ListContainersIncludeType {
 	return &c
 }
 
@@ -378,6 +452,30 @@ func (c PublicAccessType) ToPtr() *PublicAccessType {
 	return &c
 }
 
+// QueryFormatType - The quick query format type.
+type QueryFormatType string
+
+const (
+	QueryFormatTypeDelimited QueryFormatType = "delimited"
+	QueryFormatTypeJSON      QueryFormatType = "json"
+	QueryFormatTypeArrow     QueryFormatType = "arrow"
+)
+
+// PossibleQueryFormatTypeValues returns the possible values for the QueryFormatType const type.
+func PossibleQueryFormatTypeValues() []QueryFormatType {
+	return []QueryFormatType{
+		QueryFormatTypeDelimited,
+		QueryFormatTypeJSON,
+		QueryFormatTypeArrow,
+	}
+}
+
+// ToPtr() returns a *QueryFormatType pointing to the current value.
+func (c QueryFormatType) ToPtr() *QueryFormatType {
+	return &c
+}
+
+// RehydratePriority - If an object is in rehydrate pending state then this header is returned with priority of rehydrate. Valid values are High and Standard.
 type RehydratePriority string
 
 const (

@@ -91,7 +91,10 @@ func (client *appendBlobClient) appendBlockCreateRequest(ctx context.Context, co
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfNoneMatch != nil {
 		req.Header.Set("If-None-Match", *modifiedAccessConditions.IfNoneMatch)
 	}
-	req.Header.Set("x-ms-version", "2019-07-07")
+	if modifiedAccessConditions != nil && modifiedAccessConditions.IfTags != nil {
+		req.Header.Set("x-ms-if-tags", *modifiedAccessConditions.IfTags)
+	}
+	req.Header.Set("x-ms-version", "2020-06-12")
 	if appendBlobAppendBlockOptions != nil && appendBlobAppendBlockOptions.RequestID != nil {
 		req.Header.Set("x-ms-client-request-id", *appendBlobAppendBlockOptions.RequestID)
 	}
@@ -256,6 +259,9 @@ func (client *appendBlobClient) appendBlockFromURLCreateRequest(ctx context.Cont
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfNoneMatch != nil {
 		req.Header.Set("If-None-Match", *modifiedAccessConditions.IfNoneMatch)
 	}
+	if modifiedAccessConditions != nil && modifiedAccessConditions.IfTags != nil {
+		req.Header.Set("x-ms-if-tags", *modifiedAccessConditions.IfTags)
+	}
 	if sourceModifiedAccessConditions != nil && sourceModifiedAccessConditions.SourceIfModifiedSince != nil {
 		req.Header.Set("x-ms-source-if-modified-since", sourceModifiedAccessConditions.SourceIfModifiedSince.Format(time.RFC1123))
 	}
@@ -268,7 +274,7 @@ func (client *appendBlobClient) appendBlockFromURLCreateRequest(ctx context.Cont
 	if sourceModifiedAccessConditions != nil && sourceModifiedAccessConditions.SourceIfNoneMatch != nil {
 		req.Header.Set("x-ms-source-if-none-match", *sourceModifiedAccessConditions.SourceIfNoneMatch)
 	}
-	req.Header.Set("x-ms-version", "2019-07-07")
+	req.Header.Set("x-ms-version", "2020-06-12")
 	if appendBlobAppendBlockFromURLOptions != nil && appendBlobAppendBlockFromURLOptions.RequestID != nil {
 		req.Header.Set("x-ms-client-request-id", *appendBlobAppendBlockFromURLOptions.RequestID)
 	}
@@ -432,9 +438,24 @@ func (client *appendBlobClient) createCreateRequest(ctx context.Context, content
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfNoneMatch != nil {
 		req.Header.Set("If-None-Match", *modifiedAccessConditions.IfNoneMatch)
 	}
-	req.Header.Set("x-ms-version", "2019-07-07")
+	if modifiedAccessConditions != nil && modifiedAccessConditions.IfTags != nil {
+		req.Header.Set("x-ms-if-tags", *modifiedAccessConditions.IfTags)
+	}
+	req.Header.Set("x-ms-version", "2020-06-12")
 	if appendBlobCreateOptions != nil && appendBlobCreateOptions.RequestID != nil {
 		req.Header.Set("x-ms-client-request-id", *appendBlobCreateOptions.RequestID)
+	}
+	if appendBlobCreateOptions != nil && appendBlobCreateOptions.BlobTagsString != nil {
+		req.Header.Set("x-ms-tags", *appendBlobCreateOptions.BlobTagsString)
+	}
+	if appendBlobCreateOptions != nil && appendBlobCreateOptions.ImmutabilityPolicyExpiry != nil {
+		req.Header.Set("x-ms-immutability-policy-until-date", appendBlobCreateOptions.ImmutabilityPolicyExpiry.Format(time.RFC1123))
+	}
+	if appendBlobCreateOptions != nil && appendBlobCreateOptions.ImmutabilityPolicyMode != nil {
+		req.Header.Set("x-ms-immutability-policy-mode", string(*appendBlobCreateOptions.ImmutabilityPolicyMode))
+	}
+	if appendBlobCreateOptions != nil && appendBlobCreateOptions.LegalHold != nil {
+		req.Header.Set("x-ms-legal-hold", strconv.FormatBool(*appendBlobCreateOptions.LegalHold))
 	}
 	req.Header.Set("Accept", "application/xml")
 	return req, nil
@@ -469,6 +490,9 @@ func (client *appendBlobClient) createHandleResponse(resp *azcore.Response) (App
 	if val := resp.Header.Get("x-ms-version"); val != "" {
 		result.Version = &val
 	}
+	if val := resp.Header.Get("x-ms-version-id"); val != "" {
+		result.VersionID = &val
+	}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
@@ -494,6 +518,109 @@ func (client *appendBlobClient) createHandleResponse(resp *azcore.Response) (App
 
 // createHandleError handles the Create error response.
 func (client *appendBlobClient) createHandleError(resp *azcore.Response) error {
+	var err StorageError
+	if err := resp.UnmarshalAsXML(&err); err != nil {
+		return err
+	}
+	return azcore.NewResponseError(&err, resp.Response)
+}
+
+// Seal - The Seal operation seals the Append Blob to make it read-only. Seal is supported only on version 2019-12-12 version or later.
+func (client *appendBlobClient) Seal(ctx context.Context, appendBlobSealOptions *AppendBlobSealOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, appendPositionAccessConditions *AppendPositionAccessConditions) (AppendBlobSealResponse, error) {
+	req, err := client.sealCreateRequest(ctx, appendBlobSealOptions, leaseAccessConditions, modifiedAccessConditions, appendPositionAccessConditions)
+	if err != nil {
+		return AppendBlobSealResponse{}, err
+	}
+	resp, err := client.con.Pipeline().Do(req)
+	if err != nil {
+		return AppendBlobSealResponse{}, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return AppendBlobSealResponse{}, client.sealHandleError(resp)
+	}
+	return client.sealHandleResponse(resp)
+}
+
+// sealCreateRequest creates the Seal request.
+func (client *appendBlobClient) sealCreateRequest(ctx context.Context, appendBlobSealOptions *AppendBlobSealOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, appendPositionAccessConditions *AppendPositionAccessConditions) (*azcore.Request, error) {
+	req, err := azcore.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
+	if err != nil {
+		return nil, err
+	}
+	req.Telemetry(telemetryInfo)
+	reqQP := req.URL.Query()
+	reqQP.Set("comp", "seal")
+	if appendBlobSealOptions != nil && appendBlobSealOptions.Timeout != nil {
+		reqQP.Set("timeout", strconv.FormatInt(int64(*appendBlobSealOptions.Timeout), 10))
+	}
+	req.URL.RawQuery = reqQP.Encode()
+	req.Header.Set("x-ms-version", "2020-06-12")
+	if appendBlobSealOptions != nil && appendBlobSealOptions.RequestID != nil {
+		req.Header.Set("x-ms-client-request-id", *appendBlobSealOptions.RequestID)
+	}
+	if leaseAccessConditions != nil && leaseAccessConditions.LeaseID != nil {
+		req.Header.Set("x-ms-lease-id", *leaseAccessConditions.LeaseID)
+	}
+	if modifiedAccessConditions != nil && modifiedAccessConditions.IfModifiedSince != nil {
+		req.Header.Set("If-Modified-Since", modifiedAccessConditions.IfModifiedSince.Format(time.RFC1123))
+	}
+	if modifiedAccessConditions != nil && modifiedAccessConditions.IfUnmodifiedSince != nil {
+		req.Header.Set("If-Unmodified-Since", modifiedAccessConditions.IfUnmodifiedSince.Format(time.RFC1123))
+	}
+	if modifiedAccessConditions != nil && modifiedAccessConditions.IfMatch != nil {
+		req.Header.Set("If-Match", *modifiedAccessConditions.IfMatch)
+	}
+	if modifiedAccessConditions != nil && modifiedAccessConditions.IfNoneMatch != nil {
+		req.Header.Set("If-None-Match", *modifiedAccessConditions.IfNoneMatch)
+	}
+	if appendPositionAccessConditions != nil && appendPositionAccessConditions.AppendPosition != nil {
+		req.Header.Set("x-ms-blob-condition-appendpos", strconv.FormatInt(*appendPositionAccessConditions.AppendPosition, 10))
+	}
+	req.Header.Set("Accept", "application/xml")
+	return req, nil
+}
+
+// sealHandleResponse handles the Seal response.
+func (client *appendBlobClient) sealHandleResponse(resp *azcore.Response) (AppendBlobSealResponse, error) {
+	result := AppendBlobSealResponse{RawResponse: resp.Response}
+	if val := resp.Header.Get("ETag"); val != "" {
+		result.ETag = &val
+	}
+	if val := resp.Header.Get("Last-Modified"); val != "" {
+		lastModified, err := time.Parse(time.RFC1123, val)
+		if err != nil {
+			return AppendBlobSealResponse{}, err
+		}
+		result.LastModified = &lastModified
+	}
+	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
+		result.ClientRequestID = &val
+	}
+	if val := resp.Header.Get("x-ms-request-id"); val != "" {
+		result.RequestID = &val
+	}
+	if val := resp.Header.Get("x-ms-version"); val != "" {
+		result.Version = &val
+	}
+	if val := resp.Header.Get("Date"); val != "" {
+		date, err := time.Parse(time.RFC1123, val)
+		if err != nil {
+			return AppendBlobSealResponse{}, err
+		}
+		result.Date = &date
+	}
+	if val := resp.Header.Get("x-ms-blob-sealed"); val != "" {
+		isSealed, err := strconv.ParseBool(val)
+		if err != nil {
+			return AppendBlobSealResponse{}, err
+		}
+		result.IsSealed = &isSealed
+	}
+	return result, nil
+}
+
+// sealHandleError handles the Seal error response.
+func (client *appendBlobClient) sealHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err

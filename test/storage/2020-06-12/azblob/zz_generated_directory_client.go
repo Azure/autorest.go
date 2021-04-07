@@ -92,7 +92,7 @@ func (client *directoryClient) createCreateRequest(ctx context.Context, director
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfNoneMatch != nil {
 		req.Header.Set("If-None-Match", *modifiedAccessConditions.IfNoneMatch)
 	}
-	req.Header.Set("x-ms-version", "2019-07-07")
+	req.Header.Set("x-ms-version", "2020-06-12")
 	if directoryCreateOptions != nil && directoryCreateOptions.RequestID != nil {
 		req.Header.Set("x-ms-client-request-id", *directoryCreateOptions.RequestID)
 	}
@@ -195,7 +195,7 @@ func (client *directoryClient) deleteCreateRequest(ctx context.Context, recursiv
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfNoneMatch != nil {
 		req.Header.Set("If-None-Match", *modifiedAccessConditions.IfNoneMatch)
 	}
-	req.Header.Set("x-ms-version", "2019-07-07")
+	req.Header.Set("x-ms-version", "2020-06-12")
 	if directoryDeleteOptions != nil && directoryDeleteOptions.RequestID != nil {
 		req.Header.Set("x-ms-client-request-id", *directoryDeleteOptions.RequestID)
 	}
@@ -287,7 +287,7 @@ func (client *directoryClient) getAccessControlCreateRequest(ctx context.Context
 	if directoryGetAccessControlOptions != nil && directoryGetAccessControlOptions.RequestID != nil {
 		req.Header.Set("x-ms-client-request-id", *directoryGetAccessControlOptions.RequestID)
 	}
-	req.Header.Set("x-ms-version", "2019-07-07")
+	req.Header.Set("x-ms-version", "2020-06-12")
 	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
@@ -435,7 +435,7 @@ func (client *directoryClient) renameCreateRequest(ctx context.Context, renameSo
 	if sourceModifiedAccessConditions != nil && sourceModifiedAccessConditions.SourceIfNoneMatch != nil {
 		req.Header.Set("x-ms-source-if-none-match", *sourceModifiedAccessConditions.SourceIfNoneMatch)
 	}
-	req.Header.Set("x-ms-version", "2019-07-07")
+	req.Header.Set("x-ms-version", "2020-06-12")
 	if directoryRenameOptions != nil && directoryRenameOptions.RequestID != nil {
 		req.Header.Set("x-ms-client-request-id", *directoryRenameOptions.RequestID)
 	}
@@ -553,7 +553,7 @@ func (client *directoryClient) setAccessControlCreateRequest(ctx context.Context
 	if directorySetAccessControlOptions != nil && directorySetAccessControlOptions.RequestID != nil {
 		req.Header.Set("x-ms-client-request-id", *directorySetAccessControlOptions.RequestID)
 	}
-	req.Header.Set("x-ms-version", "2019-07-07")
+	req.Header.Set("x-ms-version", "2020-06-12")
 	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
