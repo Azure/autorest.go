@@ -17,22 +17,31 @@ type additionalProperties map[string]*string
 // UnmarshalXML implements the xml.Unmarshaler interface for additionalProperties.
 func (ap *additionalProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	tokName := ""
+	tokVal := ""
+	inserted := false
 	for t, err := d.Token(); err == nil; t, err = d.Token() {
 		switch tt := t.(type) {
 		case xml.StartElement:
 			tokName = strings.ToLower(tt.Name.Local)
-			break
 		case xml.CharData:
-			if tokName == "" {
-				continue
+			temp := string(tt)
+			if tokName != "" {
+				if *ap == nil {
+					*ap = additionalProperties{}
+				}
+				(*ap)[tokName] = &temp
+				tokName = ""
+				inserted = true
 			}
-			if *ap == nil {
-				*ap = additionalProperties{}
+			tokVal = temp
+		case xml.EndElement:
+			if !inserted && tokName == "" && tt.Name.Local != "" {
+				if *ap == nil {
+					*ap = additionalProperties{}
+				}
+				(*ap)[tt.Name.Local] = &tokVal
+				inserted = false
 			}
-			s := string(tt)
-			(*ap)[tokName] = &s
-			tokName = ""
-			break
 		}
 	}
 	return nil

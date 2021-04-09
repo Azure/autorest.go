@@ -890,6 +890,22 @@ type BlobMetadata struct {
 	Encrypted            *string `xml:"Encrypted,attr"`
 }
 
+// UnmarshalXML implements the xml.Unmarshaller interface for type BlobMetadata.
+func (b *BlobMetadata) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type alias BlobMetadata
+	aux := &struct {
+		*alias
+		AdditionalProperties *additionalProperties `xml:",any"`
+	}{
+		alias: (*alias)(b),
+	}
+	if err := d.DecodeElement(aux, &start); err != nil {
+		return err
+	}
+	b.AdditionalProperties = (*map[string]*string)(aux.AdditionalProperties)
+	return nil
+}
+
 type BlobPrefix struct {
 	Name *string `xml:"Name"`
 }

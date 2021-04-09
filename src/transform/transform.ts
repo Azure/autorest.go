@@ -119,6 +119,10 @@ async function process(session: Session<CodeModel>) {
       // add an 'AdditionalProperties' field to the type
       const addProps = newProperty('AdditionalProperties', 'Contains additional key/value pairs not defined in the schema.', addPropsSchema);
       addProps.language.go!.isAdditionalProperties = true;
+      if (obj.language.go!.marshallingFormat === 'xml') {
+        addProps.language.go!.needsXMLDictionaryUnmarshalling = true;
+        session.model.language.go!.needsXMLDictionaryUnmarshalling = true;
+      }
       obj.properties?.push(addProps);
     }
   }
