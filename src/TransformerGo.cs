@@ -179,11 +179,12 @@ namespace AutoRest.Go
         private static void AddEnumTypePrefix(CodeModelGo cmg)
         {
             // NOTE: we will add all enum values with the prefix of its type to keep the enum values consistent between different versions
-            foreach (var em in cmg.EnumTypes.Cast<EnumTypeGo>())
+            foreach (var em in cmg.EnumTypes)
             {
                 foreach (var v in em.Values)
                 {
-                    v.Name = em.Name + v.Name;
+                    // we need to invoke the CodeNamerGo here to ensure the names are properly transformed
+                    v.Name = CodeNamerGo.Instance.GetTypeName(em.Name.FixedValue) + CodeNamerGo.Instance.GetEnumMemberName(v.Name);
                 }
             }
         }
