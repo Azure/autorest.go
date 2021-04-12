@@ -65,7 +65,7 @@ func (client *containerClient) acquireLeaseCreateRequest(ctx context.Context, co
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfUnmodifiedSince != nil {
 		req.Header.Set("If-Unmodified-Since", modifiedAccessConditions.IfUnmodifiedSince.Format(time.RFC1123))
 	}
-	req.Header.Set("x-ms-version", "2019-07-07")
+	req.Header.Set("x-ms-version", "2020-06-12")
 	if containerAcquireLeaseOptions != nil && containerAcquireLeaseOptions.RequestID != nil {
 		req.Header.Set("x-ms-client-request-id", *containerAcquireLeaseOptions.RequestID)
 	}
@@ -157,7 +157,7 @@ func (client *containerClient) breakLeaseCreateRequest(ctx context.Context, cont
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfUnmodifiedSince != nil {
 		req.Header.Set("If-Unmodified-Since", modifiedAccessConditions.IfUnmodifiedSince.Format(time.RFC1123))
 	}
-	req.Header.Set("x-ms-version", "2019-07-07")
+	req.Header.Set("x-ms-version", "2020-06-12")
 	if containerBreakLeaseOptions != nil && containerBreakLeaseOptions.RequestID != nil {
 		req.Header.Set("x-ms-client-request-id", *containerBreakLeaseOptions.RequestID)
 	}
@@ -253,7 +253,7 @@ func (client *containerClient) changeLeaseCreateRequest(ctx context.Context, lea
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfUnmodifiedSince != nil {
 		req.Header.Set("If-Unmodified-Since", modifiedAccessConditions.IfUnmodifiedSince.Format(time.RFC1123))
 	}
-	req.Header.Set("x-ms-version", "2019-07-07")
+	req.Header.Set("x-ms-version", "2020-06-12")
 	if containerChangeLeaseOptions != nil && containerChangeLeaseOptions.RequestID != nil {
 		req.Header.Set("x-ms-client-request-id", *containerChangeLeaseOptions.RequestID)
 	}
@@ -342,7 +342,7 @@ func (client *containerClient) createCreateRequest(ctx context.Context, containe
 	if containerCreateOptions != nil && containerCreateOptions.Access != nil {
 		req.Header.Set("x-ms-blob-public-access", string(*containerCreateOptions.Access))
 	}
-	req.Header.Set("x-ms-version", "2019-07-07")
+	req.Header.Set("x-ms-version", "2020-06-12")
 	if containerCreateOptions != nil && containerCreateOptions.RequestID != nil {
 		req.Header.Set("x-ms-client-request-id", *containerCreateOptions.RequestID)
 	}
@@ -435,7 +435,7 @@ func (client *containerClient) deleteCreateRequest(ctx context.Context, containe
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfUnmodifiedSince != nil {
 		req.Header.Set("If-Unmodified-Since", modifiedAccessConditions.IfUnmodifiedSince.Format(time.RFC1123))
 	}
-	req.Header.Set("x-ms-version", "2019-07-07")
+	req.Header.Set("x-ms-version", "2020-06-12")
 	if containerDeleteOptions != nil && containerDeleteOptions.RequestID != nil {
 		req.Header.Set("x-ms-client-request-id", *containerDeleteOptions.RequestID)
 	}
@@ -507,7 +507,7 @@ func (client *containerClient) getAccessPolicyCreateRequest(ctx context.Context,
 	if leaseAccessConditions != nil && leaseAccessConditions.LeaseID != nil {
 		req.Header.Set("x-ms-lease-id", *leaseAccessConditions.LeaseID)
 	}
-	req.Header.Set("x-ms-version", "2019-07-07")
+	req.Header.Set("x-ms-version", "2020-06-12")
 	if containerGetAccessPolicyOptions != nil && containerGetAccessPolicyOptions.RequestID != nil {
 		req.Header.Set("x-ms-client-request-id", *containerGetAccessPolicyOptions.RequestID)
 	}
@@ -589,7 +589,7 @@ func (client *containerClient) getAccountInfoCreateRequest(ctx context.Context, 
 	reqQP.Set("restype", "account")
 	reqQP.Set("comp", "properties")
 	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("x-ms-version", "2019-07-07")
+	req.Header.Set("x-ms-version", "2020-06-12")
 	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
@@ -664,7 +664,7 @@ func (client *containerClient) getPropertiesCreateRequest(ctx context.Context, c
 	if leaseAccessConditions != nil && leaseAccessConditions.LeaseID != nil {
 		req.Header.Set("x-ms-lease-id", *leaseAccessConditions.LeaseID)
 	}
-	req.Header.Set("x-ms-version", "2019-07-07")
+	req.Header.Set("x-ms-version", "2020-06-12")
 	if containerGetPropertiesOptions != nil && containerGetPropertiesOptions.RequestID != nil {
 		req.Header.Set("x-ms-client-request-id", *containerGetPropertiesOptions.RequestID)
 	}
@@ -675,13 +675,12 @@ func (client *containerClient) getPropertiesCreateRequest(ctx context.Context, c
 // getPropertiesHandleResponse handles the GetProperties response.
 func (client *containerClient) getPropertiesHandleResponse(resp *azcore.Response) (ContainerGetPropertiesResponse, error) {
 	result := ContainerGetPropertiesResponse{RawResponse: resp.Response}
-	prefix := strings.ToUpper("x-ms-meta-")
 	for hh := range resp.Header {
-		if strings.HasPrefix(strings.ToUpper(hh), prefix) {
+		if len(hh) > len("x-ms-meta-") && strings.EqualFold(hh[:len("x-ms-meta-")], "x-ms-meta-") {
 			if result.Metadata == nil {
 				result.Metadata = map[string]string{}
 			}
-			result.Metadata[hh[len(prefix):]] = resp.Header.Get(hh)
+			result.Metadata[hh[len("x-ms-meta-"):]] = resp.Header.Get(hh)
 		}
 	}
 	if val := resp.Header.Get("ETag"); val != "" {
@@ -746,6 +745,13 @@ func (client *containerClient) getPropertiesHandleResponse(resp *azcore.Response
 		}
 		result.DenyEncryptionScopeOverride = &denyEncryptionScopeOverride
 	}
+	if val := resp.Header.Get("x-ms-version-level-worm-enabled"); val != "" {
+		isVersionLevelWormEnabled, err := strconv.ParseBool(val)
+		if err != nil {
+			return ContainerGetPropertiesResponse{}, err
+		}
+		result.IsVersionLevelWormEnabled = &isVersionLevelWormEnabled
+	}
 	return result, nil
 }
 
@@ -800,7 +806,7 @@ func (client *containerClient) listBlobFlatSegmentCreateRequest(ctx context.Cont
 		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
 	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("x-ms-version", "2019-07-07")
+	req.Header.Set("x-ms-version", "2020-06-12")
 	if options != nil && options.RequestID != nil {
 		req.Header.Set("x-ms-client-request-id", *options.RequestID)
 	}
@@ -889,7 +895,7 @@ func (client *containerClient) listBlobHierarchySegmentCreateRequest(ctx context
 		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
 	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("x-ms-version", "2019-07-07")
+	req.Header.Set("x-ms-version", "2020-06-12")
 	if options != nil && options.RequestID != nil {
 		req.Header.Set("x-ms-client-request-id", *options.RequestID)
 	}
@@ -973,7 +979,7 @@ func (client *containerClient) releaseLeaseCreateRequest(ctx context.Context, le
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfUnmodifiedSince != nil {
 		req.Header.Set("If-Unmodified-Since", modifiedAccessConditions.IfUnmodifiedSince.Format(time.RFC1123))
 	}
-	req.Header.Set("x-ms-version", "2019-07-07")
+	req.Header.Set("x-ms-version", "2020-06-12")
 	if containerReleaseLeaseOptions != nil && containerReleaseLeaseOptions.RequestID != nil {
 		req.Header.Set("x-ms-client-request-id", *containerReleaseLeaseOptions.RequestID)
 	}
@@ -1022,6 +1028,79 @@ func (client *containerClient) releaseLeaseHandleError(resp *azcore.Response) er
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
+// Rename - Renames an existing container.
+func (client *containerClient) Rename(ctx context.Context, sourceContainerName string, options *ContainerRenameOptions) (ContainerRenameResponse, error) {
+	req, err := client.renameCreateRequest(ctx, sourceContainerName, options)
+	if err != nil {
+		return ContainerRenameResponse{}, err
+	}
+	resp, err := client.con.Pipeline().Do(req)
+	if err != nil {
+		return ContainerRenameResponse{}, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return ContainerRenameResponse{}, client.renameHandleError(resp)
+	}
+	return client.renameHandleResponse(resp)
+}
+
+// renameCreateRequest creates the Rename request.
+func (client *containerClient) renameCreateRequest(ctx context.Context, sourceContainerName string, options *ContainerRenameOptions) (*azcore.Request, error) {
+	req, err := azcore.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
+	if err != nil {
+		return nil, err
+	}
+	req.Telemetry(telemetryInfo)
+	reqQP := req.URL.Query()
+	reqQP.Set("restype", "container")
+	reqQP.Set("comp", "rename")
+	if options != nil && options.Timeout != nil {
+		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
+	}
+	req.URL.RawQuery = reqQP.Encode()
+	req.Header.Set("x-ms-version", "2020-06-12")
+	if options != nil && options.RequestID != nil {
+		req.Header.Set("x-ms-client-request-id", *options.RequestID)
+	}
+	req.Header.Set("x-ms-source-container-name", sourceContainerName)
+	if options != nil && options.SourceLeaseID != nil {
+		req.Header.Set("x-ms-source-lease-id", *options.SourceLeaseID)
+	}
+	req.Header.Set("Accept", "application/xml")
+	return req, nil
+}
+
+// renameHandleResponse handles the Rename response.
+func (client *containerClient) renameHandleResponse(resp *azcore.Response) (ContainerRenameResponse, error) {
+	result := ContainerRenameResponse{RawResponse: resp.Response}
+	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
+		result.ClientRequestID = &val
+	}
+	if val := resp.Header.Get("x-ms-request-id"); val != "" {
+		result.RequestID = &val
+	}
+	if val := resp.Header.Get("x-ms-version"); val != "" {
+		result.Version = &val
+	}
+	if val := resp.Header.Get("Date"); val != "" {
+		date, err := time.Parse(time.RFC1123, val)
+		if err != nil {
+			return ContainerRenameResponse{}, err
+		}
+		result.Date = &date
+	}
+	return result, nil
+}
+
+// renameHandleError handles the Rename error response.
+func (client *containerClient) renameHandleError(resp *azcore.Response) error {
+	var err StorageError
+	if err := resp.UnmarshalAsXML(&err); err != nil {
+		return err
+	}
+	return azcore.NewResponseError(&err, resp.Response)
+}
+
 // RenewLease - [Update] establishes and manages a lock on a container for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite
 func (client *containerClient) RenewLease(ctx context.Context, leaseID string, containerRenewLeaseOptions *ContainerRenewLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (ContainerRenewLeaseResponse, error) {
 	req, err := client.renewLeaseCreateRequest(ctx, leaseID, containerRenewLeaseOptions, modifiedAccessConditions)
@@ -1060,7 +1139,7 @@ func (client *containerClient) renewLeaseCreateRequest(ctx context.Context, leas
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfUnmodifiedSince != nil {
 		req.Header.Set("If-Unmodified-Since", modifiedAccessConditions.IfUnmodifiedSince.Format(time.RFC1123))
 	}
-	req.Header.Set("x-ms-version", "2019-07-07")
+	req.Header.Set("x-ms-version", "2020-06-12")
 	if containerRenewLeaseOptions != nil && containerRenewLeaseOptions.RequestID != nil {
 		req.Header.Set("x-ms-client-request-id", *containerRenewLeaseOptions.RequestID)
 	}
@@ -1112,6 +1191,81 @@ func (client *containerClient) renewLeaseHandleError(resp *azcore.Response) erro
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
+// Restore - Restores a previously-deleted container.
+func (client *containerClient) Restore(ctx context.Context, options *ContainerRestoreOptions) (ContainerRestoreResponse, error) {
+	req, err := client.restoreCreateRequest(ctx, options)
+	if err != nil {
+		return ContainerRestoreResponse{}, err
+	}
+	resp, err := client.con.Pipeline().Do(req)
+	if err != nil {
+		return ContainerRestoreResponse{}, err
+	}
+	if !resp.HasStatusCode(http.StatusCreated) {
+		return ContainerRestoreResponse{}, client.restoreHandleError(resp)
+	}
+	return client.restoreHandleResponse(resp)
+}
+
+// restoreCreateRequest creates the Restore request.
+func (client *containerClient) restoreCreateRequest(ctx context.Context, options *ContainerRestoreOptions) (*azcore.Request, error) {
+	req, err := azcore.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
+	if err != nil {
+		return nil, err
+	}
+	req.Telemetry(telemetryInfo)
+	reqQP := req.URL.Query()
+	reqQP.Set("restype", "container")
+	reqQP.Set("comp", "undelete")
+	if options != nil && options.Timeout != nil {
+		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
+	}
+	req.URL.RawQuery = reqQP.Encode()
+	req.Header.Set("x-ms-version", "2020-06-12")
+	if options != nil && options.RequestID != nil {
+		req.Header.Set("x-ms-client-request-id", *options.RequestID)
+	}
+	if options != nil && options.DeletedContainerName != nil {
+		req.Header.Set("x-ms-deleted-container-name", *options.DeletedContainerName)
+	}
+	if options != nil && options.DeletedContainerVersion != nil {
+		req.Header.Set("x-ms-deleted-container-version", *options.DeletedContainerVersion)
+	}
+	req.Header.Set("Accept", "application/xml")
+	return req, nil
+}
+
+// restoreHandleResponse handles the Restore response.
+func (client *containerClient) restoreHandleResponse(resp *azcore.Response) (ContainerRestoreResponse, error) {
+	result := ContainerRestoreResponse{RawResponse: resp.Response}
+	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
+		result.ClientRequestID = &val
+	}
+	if val := resp.Header.Get("x-ms-request-id"); val != "" {
+		result.RequestID = &val
+	}
+	if val := resp.Header.Get("x-ms-version"); val != "" {
+		result.Version = &val
+	}
+	if val := resp.Header.Get("Date"); val != "" {
+		date, err := time.Parse(time.RFC1123, val)
+		if err != nil {
+			return ContainerRestoreResponse{}, err
+		}
+		result.Date = &date
+	}
+	return result, nil
+}
+
+// restoreHandleError handles the Restore error response.
+func (client *containerClient) restoreHandleError(resp *azcore.Response) error {
+	var err StorageError
+	if err := resp.UnmarshalAsXML(&err); err != nil {
+		return err
+	}
+	return azcore.NewResponseError(&err, resp.Response)
+}
+
 // SetAccessPolicy - sets the permissions for the specified container. The permissions indicate whether blobs in a container may be accessed publicly.
 func (client *containerClient) SetAccessPolicy(ctx context.Context, containerSetAccessPolicyOptions *ContainerSetAccessPolicyOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (ContainerSetAccessPolicyResponse, error) {
 	req, err := client.setAccessPolicyCreateRequest(ctx, containerSetAccessPolicyOptions, leaseAccessConditions, modifiedAccessConditions)
@@ -1154,7 +1308,7 @@ func (client *containerClient) setAccessPolicyCreateRequest(ctx context.Context,
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfUnmodifiedSince != nil {
 		req.Header.Set("If-Unmodified-Since", modifiedAccessConditions.IfUnmodifiedSince.Format(time.RFC1123))
 	}
-	req.Header.Set("x-ms-version", "2019-07-07")
+	req.Header.Set("x-ms-version", "2020-06-12")
 	if containerSetAccessPolicyOptions != nil && containerSetAccessPolicyOptions.RequestID != nil {
 		req.Header.Set("x-ms-client-request-id", *containerSetAccessPolicyOptions.RequestID)
 	}
@@ -1251,7 +1405,7 @@ func (client *containerClient) setMetadataCreateRequest(ctx context.Context, con
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfModifiedSince != nil {
 		req.Header.Set("If-Modified-Since", modifiedAccessConditions.IfModifiedSince.Format(time.RFC1123))
 	}
-	req.Header.Set("x-ms-version", "2019-07-07")
+	req.Header.Set("x-ms-version", "2020-06-12")
 	if containerSetMetadataOptions != nil && containerSetMetadataOptions.RequestID != nil {
 		req.Header.Set("x-ms-client-request-id", *containerSetMetadataOptions.RequestID)
 	}
@@ -1293,6 +1447,71 @@ func (client *containerClient) setMetadataHandleResponse(resp *azcore.Response) 
 
 // setMetadataHandleError handles the SetMetadata error response.
 func (client *containerClient) setMetadataHandleError(resp *azcore.Response) error {
+	var err StorageError
+	if err := resp.UnmarshalAsXML(&err); err != nil {
+		return err
+	}
+	return azcore.NewResponseError(&err, resp.Response)
+}
+
+// SubmitBatch - The Batch operation allows multiple API calls to be embedded into a single HTTP request.
+func (client *containerClient) SubmitBatch(ctx context.Context, contentLength int64, multipartContentType string, body azcore.ReadSeekCloser, options *ContainerSubmitBatchOptions) (ContainerSubmitBatchResponse, error) {
+	req, err := client.submitBatchCreateRequest(ctx, contentLength, multipartContentType, body, options)
+	if err != nil {
+		return ContainerSubmitBatchResponse{}, err
+	}
+	resp, err := client.con.Pipeline().Do(req)
+	if err != nil {
+		return ContainerSubmitBatchResponse{}, err
+	}
+	if !resp.HasStatusCode(http.StatusAccepted) {
+		return ContainerSubmitBatchResponse{}, client.submitBatchHandleError(resp)
+	}
+	return client.submitBatchHandleResponse(resp)
+}
+
+// submitBatchCreateRequest creates the SubmitBatch request.
+func (client *containerClient) submitBatchCreateRequest(ctx context.Context, contentLength int64, multipartContentType string, body azcore.ReadSeekCloser, options *ContainerSubmitBatchOptions) (*azcore.Request, error) {
+	req, err := azcore.NewRequest(ctx, http.MethodPost, client.con.Endpoint())
+	if err != nil {
+		return nil, err
+	}
+	req.Telemetry(telemetryInfo)
+	reqQP := req.URL.Query()
+	reqQP.Set("restype", "container")
+	reqQP.Set("comp", "batch")
+	if options != nil && options.Timeout != nil {
+		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
+	}
+	req.URL.RawQuery = reqQP.Encode()
+	req.SkipBodyDownload()
+	req.Header.Set("Content-Length", strconv.FormatInt(contentLength, 10))
+	req.Header.Set("Content-Type", multipartContentType)
+	req.Header.Set("x-ms-version", "2020-06-12")
+	if options != nil && options.RequestID != nil {
+		req.Header.Set("x-ms-client-request-id", *options.RequestID)
+	}
+	req.Header.Set("Accept", "application/xml")
+	return req, req.MarshalAsXML(body)
+}
+
+// submitBatchHandleResponse handles the SubmitBatch response.
+func (client *containerClient) submitBatchHandleResponse(resp *azcore.Response) (ContainerSubmitBatchResponse, error) {
+	result := ContainerSubmitBatchResponse{RawResponse: resp.Response}
+	if val := resp.Header.Get("Content-Type"); val != "" {
+		result.ContentType = &val
+	}
+	if val := resp.Header.Get("x-ms-request-id"); val != "" {
+		result.RequestID = &val
+	}
+	if val := resp.Header.Get("x-ms-version"); val != "" {
+		result.Version = &val
+	}
+	return result, nil
+}
+
+// submitBatchHandleError handles the SubmitBatch error response.
+func (client *containerClient) submitBatchHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err

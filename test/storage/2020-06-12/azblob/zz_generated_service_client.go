@@ -9,14 +9,99 @@ package azblob
 
 import (
 	"context"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"strconv"
+	"strings"
 	"time"
 )
 
 type serviceClient struct {
 	con *connection
+}
+
+// FilterBlobs - The Filter Blobs operation enables callers to list blobs across all containers whose tags match a given search expression. Filter blobs
+// searches across all containers within a storage account but can
+// be scoped within the expression to a single container.
+func (client *serviceClient) FilterBlobs(ctx context.Context, options *ServiceFilterBlobsOptions) (FilterBlobSegmentResponse, error) {
+	req, err := client.filterBlobsCreateRequest(ctx, options)
+	if err != nil {
+		return FilterBlobSegmentResponse{}, err
+	}
+	resp, err := client.con.Pipeline().Do(req)
+	if err != nil {
+		return FilterBlobSegmentResponse{}, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return FilterBlobSegmentResponse{}, client.filterBlobsHandleError(resp)
+	}
+	return client.filterBlobsHandleResponse(resp)
+}
+
+// filterBlobsCreateRequest creates the FilterBlobs request.
+func (client *serviceClient) filterBlobsCreateRequest(ctx context.Context, options *ServiceFilterBlobsOptions) (*azcore.Request, error) {
+	req, err := azcore.NewRequest(ctx, http.MethodGet, client.con.Endpoint())
+	if err != nil {
+		return nil, err
+	}
+	req.Telemetry(telemetryInfo)
+	reqQP := req.URL.Query()
+	reqQP.Set("comp", "blobs")
+	if options != nil && options.Timeout != nil {
+		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
+	}
+	if options != nil && options.Where != nil {
+		reqQP.Set("where", *options.Where)
+	}
+	if options != nil && options.Marker != nil {
+		reqQP.Set("marker", *options.Marker)
+	}
+	if options != nil && options.Maxresults != nil {
+		reqQP.Set("maxresults", strconv.FormatInt(int64(*options.Maxresults), 10))
+	}
+	req.URL.RawQuery = reqQP.Encode()
+	req.Header.Set("x-ms-version", "2020-06-12")
+	if options != nil && options.RequestID != nil {
+		req.Header.Set("x-ms-client-request-id", *options.RequestID)
+	}
+	req.Header.Set("Accept", "application/xml")
+	return req, nil
+}
+
+// filterBlobsHandleResponse handles the FilterBlobs response.
+func (client *serviceClient) filterBlobsHandleResponse(resp *azcore.Response) (FilterBlobSegmentResponse, error) {
+	var val *FilterBlobSegment
+	if err := resp.UnmarshalAsXML(&val); err != nil {
+		return FilterBlobSegmentResponse{}, err
+	}
+	result := FilterBlobSegmentResponse{RawResponse: resp.Response, EnumerationResults: val}
+	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
+		result.ClientRequestID = &val
+	}
+	if val := resp.Header.Get("x-ms-request-id"); val != "" {
+		result.RequestID = &val
+	}
+	if val := resp.Header.Get("x-ms-version"); val != "" {
+		result.Version = &val
+	}
+	if val := resp.Header.Get("Date"); val != "" {
+		date, err := time.Parse(time.RFC1123, val)
+		if err != nil {
+			return FilterBlobSegmentResponse{}, err
+		}
+		result.Date = &date
+	}
+	return result, nil
+}
+
+// filterBlobsHandleError handles the FilterBlobs error response.
+func (client *serviceClient) filterBlobsHandleError(resp *azcore.Response) error {
+	var err StorageError
+	if err := resp.UnmarshalAsXML(&err); err != nil {
+		return err
+	}
+	return azcore.NewResponseError(&err, resp.Response)
 }
 
 // GetAccountInfo - Returns the sku name and account kind
@@ -46,7 +131,7 @@ func (client *serviceClient) getAccountInfoCreateRequest(ctx context.Context, op
 	reqQP.Set("restype", "account")
 	reqQP.Set("comp", "properties")
 	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("x-ms-version", "2019-07-07")
+	req.Header.Set("x-ms-version", "2020-06-12")
 	req.Header.Set("Accept", "application/xml")
 	return req, nil
 }
@@ -126,7 +211,7 @@ func (client *serviceClient) getPropertiesCreateRequest(ctx context.Context, opt
 		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
 	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("x-ms-version", "2019-07-07")
+	req.Header.Set("x-ms-version", "2020-06-12")
 	if options != nil && options.RequestID != nil {
 		req.Header.Set("x-ms-client-request-id", *options.RequestID)
 	}
@@ -193,7 +278,7 @@ func (client *serviceClient) getStatisticsCreateRequest(ctx context.Context, opt
 		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
 	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("x-ms-version", "2019-07-07")
+	req.Header.Set("x-ms-version", "2020-06-12")
 	if options != nil && options.RequestID != nil {
 		req.Header.Set("x-ms-client-request-id", *options.RequestID)
 	}
@@ -266,7 +351,7 @@ func (client *serviceClient) getUserDelegationKeyCreateRequest(ctx context.Conte
 		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
 	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("x-ms-version", "2019-07-07")
+	req.Header.Set("x-ms-version", "2020-06-12")
 	if options != nil && options.RequestID != nil {
 		req.Header.Set("x-ms-client-request-id", *options.RequestID)
 	}
@@ -344,13 +429,13 @@ func (client *serviceClient) listContainersSegmentCreateRequest(ctx context.Cont
 		reqQP.Set("maxresults", strconv.FormatInt(int64(*options.Maxresults), 10))
 	}
 	if options != nil && options.Include != nil {
-		reqQP.Set("include", "metadata")
+		reqQP.Set("include", strings.Join(strings.Fields(strings.Trim(fmt.Sprint(*options.Include), "[]")), ","))
 	}
 	if options != nil && options.Timeout != nil {
 		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
 	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("x-ms-version", "2019-07-07")
+	req.Header.Set("x-ms-version", "2020-06-12")
 	if options != nil && options.RequestID != nil {
 		req.Header.Set("x-ms-client-request-id", *options.RequestID)
 	}
@@ -417,7 +502,7 @@ func (client *serviceClient) setPropertiesCreateRequest(ctx context.Context, sto
 		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
 	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("x-ms-version", "2019-07-07")
+	req.Header.Set("x-ms-version", "2020-06-12")
 	if options != nil && options.RequestID != nil {
 		req.Header.Set("x-ms-client-request-id", *options.RequestID)
 	}
@@ -481,7 +566,7 @@ func (client *serviceClient) submitBatchCreateRequest(ctx context.Context, conte
 	req.SkipBodyDownload()
 	req.Header.Set("Content-Length", strconv.FormatInt(contentLength, 10))
 	req.Header.Set("Content-Type", multipartContentType)
-	req.Header.Set("x-ms-version", "2019-07-07")
+	req.Header.Set("x-ms-version", "2020-06-12")
 	if options != nil && options.RequestID != nil {
 		req.Header.Set("x-ms-client-request-id", *options.RequestID)
 	}

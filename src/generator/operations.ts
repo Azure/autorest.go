@@ -109,13 +109,13 @@ function formatHeaderResponseValue(propName: string, header: string, schema: Sch
   // dictionaries are handled slightly different so we do that first
   if (schema.type === SchemaType.Dictionary) {
     imports.add('strings');
-    let text = `\tprefix := strings.ToUpper("${schema.language.go!.headerCollectionPrefix}")\n`;
-    text += '\tfor hh := range resp.Header {\n';
-    text += `\t\tif strings.HasPrefix(strings.ToUpper(hh), prefix) {\n`;
+    const headerPrefix = schema.language.go!.headerCollectionPrefix;
+    let text = '\tfor hh := range resp.Header {\n';
+    text += `\t\tif len(hh) > len("${headerPrefix}") && strings.EqualFold(hh[:len("${headerPrefix}")], "${headerPrefix}") {\n`;
     text += `\t\t\tif ${respObj}.Metadata == nil {\n`;
     text += `\t\t\t\t${respObj}.Metadata = map[string]string{}\n`;
     text += '\t\t\t}\n';
-    text += `\t\t\t${respObj}.Metadata[hh[len(prefix):]] = resp.Header.Get(hh)\n`;
+    text += `\t\t\t${respObj}.Metadata[hh[len("${headerPrefix}"):]] = resp.Header.Get(hh)\n`;
     text += '\t\t}\n';
     text += '\t}\n';
     return text;

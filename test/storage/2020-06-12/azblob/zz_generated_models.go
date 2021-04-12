@@ -178,6 +178,14 @@ type AppendBlobAppendBlockResponse struct {
 
 // AppendBlobCreateOptions contains the optional parameters for the AppendBlob.Create method.
 type AppendBlobCreateOptions struct {
+	// Optional. Used to set blob tags in various blob operations.
+	BlobTagsString *string
+	// Specifies the date time when the blobs immutability policy is set to expire.
+	ImmutabilityPolicyExpiry *time.Time
+	// Specifies the immutability policy mode to set on the blob.
+	ImmutabilityPolicyMode *BlobImmutabilityPolicyMode
+	// Specified if a legal hold should be set on the blob.
+	LegalHold *bool
 	// Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata
 	// from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified
 	// metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming
@@ -224,6 +232,45 @@ type AppendBlobCreateResponse struct {
 
 	// Version contains the information returned from the x-ms-version header response.
 	Version *string
+
+	// VersionID contains the information returned from the x-ms-version-id header response.
+	VersionID *string
+}
+
+// AppendBlobSealOptions contains the optional parameters for the AppendBlob.Seal method.
+type AppendBlobSealOptions struct {
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	RequestID *string
+	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
+	// Timeouts for Blob Service Operations.</a>
+	Timeout *int32
+}
+
+// AppendBlobSealResponse contains the response from method AppendBlob.Seal.
+type AppendBlobSealResponse struct {
+	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
+	ClientRequestID *string
+
+	// Date contains the information returned from the Date header response.
+	Date *time.Time
+
+	// ETag contains the information returned from the ETag header response.
+	ETag *string
+
+	// IsSealed contains the information returned from the x-ms-blob-sealed header response.
+	IsSealed *bool
+
+	// LastModified contains the information returned from the Last-Modified header response.
+	LastModified *time.Time
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+
+	// RequestID contains the information returned from the x-ms-request-id header response.
+	RequestID *string
+
+	// Version contains the information returned from the x-ms-version header response.
+	Version *string
 }
 
 // AppendPositionAccessConditions contains a group of parameters for the AppendBlob.AppendBlock method.
@@ -236,6 +283,19 @@ type AppendPositionAccessConditions struct {
 	// limit or if the blob size is already greater than the value specified in this header, the request will fail with MaxBlobSizeConditionNotMet error (HTTP
 	// status code 412 - Precondition Failed).
 	MaxSize *int64
+}
+
+// arrow configuration
+type ArrowConfiguration struct {
+	Schema *[]*ArrowField `xml:"Schema>Field"`
+}
+
+// field of an arrow schema
+type ArrowField struct {
+	Name      *string `xml:"Name"`
+	Precision *int32  `xml:"Precision"`
+	Scale     *int32  `xml:"Scale"`
+	Type      *string `xml:"Type"`
 }
 
 // BlobAbortCopyFromURLOptions contains the optional parameters for the Blob.AbortCopyFromURL method.
@@ -386,6 +446,14 @@ type BlobChangeLeaseResponse struct {
 
 // BlobCopyFromURLOptions contains the optional parameters for the Blob.CopyFromURL method.
 type BlobCopyFromURLOptions struct {
+	// Optional. Used to set blob tags in various blob operations.
+	BlobTagsString *string
+	// Specifies the date time when the blobs immutability policy is set to expire.
+	ImmutabilityPolicyExpiry *time.Time
+	// Specifies the immutability policy mode to set on the blob.
+	ImmutabilityPolicyMode *BlobImmutabilityPolicyMode
+	// Specified if a legal hold should be set on the blob.
+	LegalHold *bool
 	// Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata
 	// from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified
 	// metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming
@@ -434,6 +502,9 @@ type BlobCopyFromURLResponse struct {
 	// Version contains the information returned from the x-ms-version header response.
 	Version *string
 
+	// VersionID contains the information returned from the x-ms-version-id header response.
+	VersionID *string
+
 	// XMSContentCRC64 contains the information returned from the x-ms-content-crc64 header response.
 	XMSContentCRC64 *[]byte
 }
@@ -480,10 +551,42 @@ type BlobCreateSnapshotResponse struct {
 
 	// Version contains the information returned from the x-ms-version header response.
 	Version *string
+
+	// VersionID contains the information returned from the x-ms-version-id header response.
+	VersionID *string
+}
+
+// BlobDeleteImmutabilityPolicyOptions contains the optional parameters for the Blob.DeleteImmutabilityPolicy method.
+type BlobDeleteImmutabilityPolicyOptions struct {
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	RequestID *string
+	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
+	// Timeouts for Blob Service Operations.</a>
+	Timeout *int32
+}
+
+// BlobDeleteImmutabilityPolicyResponse contains the response from method Blob.DeleteImmutabilityPolicy.
+type BlobDeleteImmutabilityPolicyResponse struct {
+	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
+	ClientRequestID *string
+
+	// Date contains the information returned from the Date header response.
+	Date *time.Time
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+
+	// RequestID contains the information returned from the x-ms-request-id header response.
+	RequestID *string
+
+	// Version contains the information returned from the x-ms-version header response.
+	Version *string
 }
 
 // BlobDeleteOptions contains the optional parameters for the Blob.Delete method.
 type BlobDeleteOptions struct {
+	// Optional. Only possible value is 'permanent', which specifies to permanently delete a blob if blob soft delete is enabled.
+	BlobDeleteType *string
 	// Required if the blob has associated snapshots. Specify one of the following two options: include: Delete the base blob and all of its snapshots. only:
 	// Delete only the blob's snapshots and not the blob itself
 	DeleteSnapshots *DeleteSnapshotsOptionType
@@ -496,6 +599,9 @@ type BlobDeleteOptions struct {
 	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
 	// Timeouts for Blob Service Operations.</a>
 	Timeout *int32
+	// The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It's for service version 2019-10-10
+	// and newer.
+	VersionID *string
 }
 
 // BlobDeleteResponse contains the response from method Blob.Delete.
@@ -535,10 +641,600 @@ type BlobDownloadOptions struct {
 	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
 	// Timeouts for Blob Service Operations.</a>
 	Timeout *int32
+	// The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It's for service version 2019-10-10
+	// and newer.
+	VersionID *string
 }
 
 // BlobDownloadResponse contains the response from method Blob.Download.
 type BlobDownloadResponse struct {
+	// AcceptRanges contains the information returned from the Accept-Ranges header response.
+	AcceptRanges *string
+
+	// BlobCommittedBlockCount contains the information returned from the x-ms-blob-committed-block-count header response.
+	BlobCommittedBlockCount *int32
+
+	// BlobContentMD5 contains the information returned from the x-ms-blob-content-md5 header response.
+	BlobContentMD5 *[]byte
+
+	// BlobSequenceNumber contains the information returned from the x-ms-blob-sequence-number header response.
+	BlobSequenceNumber *int64
+
+	// BlobType contains the information returned from the x-ms-blob-type header response.
+	BlobType *BlobType
+
+	// CacheControl contains the information returned from the Cache-Control header response.
+	CacheControl *string
+
+	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
+	ClientRequestID *string
+
+	// ContentCRC64 contains the information returned from the x-ms-content-crc64 header response.
+	ContentCRC64 *[]byte
+
+	// ContentDisposition contains the information returned from the Content-Disposition header response.
+	ContentDisposition *string
+
+	// ContentEncoding contains the information returned from the Content-Encoding header response.
+	ContentEncoding *string
+
+	// ContentLanguage contains the information returned from the Content-Language header response.
+	ContentLanguage *string
+
+	// ContentLength contains the information returned from the Content-Length header response.
+	ContentLength *int64
+
+	// ContentMD5 contains the information returned from the Content-MD5 header response.
+	ContentMD5 *[]byte
+
+	// ContentRange contains the information returned from the Content-Range header response.
+	ContentRange *string
+
+	// ContentType contains the information returned from the Content-Type header response.
+	ContentType *string
+
+	// CopyCompletionTime contains the information returned from the x-ms-copy-completion-time header response.
+	CopyCompletionTime *time.Time
+
+	// CopyID contains the information returned from the x-ms-copy-id header response.
+	CopyID *string
+
+	// CopyProgress contains the information returned from the x-ms-copy-progress header response.
+	CopyProgress *string
+
+	// CopySource contains the information returned from the x-ms-copy-source header response.
+	CopySource *string
+
+	// CopyStatus contains the information returned from the x-ms-copy-status header response.
+	CopyStatus *CopyStatusType
+
+	// CopyStatusDescription contains the information returned from the x-ms-copy-status-description header response.
+	CopyStatusDescription *string
+
+	// Date contains the information returned from the Date header response.
+	Date *time.Time
+
+	// ETag contains the information returned from the ETag header response.
+	ETag *string
+
+	// EncryptionKeySHA256 contains the information returned from the x-ms-encryption-key-sha256 header response.
+	EncryptionKeySHA256 *string
+
+	// EncryptionScope contains the information returned from the x-ms-encryption-scope header response.
+	EncryptionScope *string
+
+	// ImmutabilityPolicyExpiresOn contains the information returned from the x-ms-immutability-policy-until-date header response.
+	ImmutabilityPolicyExpiresOn *time.Time
+
+	// ImmutabilityPolicyMode contains the information returned from the x-ms-immutability-policy-mode header response.
+	ImmutabilityPolicyMode *BlobImmutabilityPolicyMode
+
+	// IsCurrentVersion contains the information returned from the x-ms-is-current-version header response.
+	IsCurrentVersion *bool
+
+	// IsSealed contains the information returned from the x-ms-blob-sealed header response.
+	IsSealed *bool
+
+	// IsServerEncrypted contains the information returned from the x-ms-server-encrypted header response.
+	IsServerEncrypted *bool
+
+	// LastAccessed contains the information returned from the x-ms-last-access-time header response.
+	LastAccessed *time.Time
+
+	// LastModified contains the information returned from the Last-Modified header response.
+	LastModified *time.Time
+
+	// LeaseDuration contains the information returned from the x-ms-lease-duration header response.
+	LeaseDuration *LeaseDurationType
+
+	// LeaseState contains the information returned from the x-ms-lease-state header response.
+	LeaseState *LeaseStateType
+
+	// LeaseStatus contains the information returned from the x-ms-lease-status header response.
+	LeaseStatus *LeaseStatusType
+
+	// LegalHold contains the information returned from the x-ms-legal-hold header response.
+	LegalHold *bool
+
+	// Metadata contains the information returned from the x-ms-meta header response.
+	Metadata map[string]string
+
+	// ObjectReplicationPolicyID contains the information returned from the x-ms-or-policy-id header response.
+	ObjectReplicationPolicyID *string
+
+	// ObjectReplicationRules contains the information returned from the x-ms-or header response.
+	ObjectReplicationRules map[string]string
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+
+	// RequestID contains the information returned from the x-ms-request-id header response.
+	RequestID *string
+
+	// TagCount contains the information returned from the x-ms-tag-count header response.
+	TagCount *int64
+
+	// Version contains the information returned from the x-ms-version header response.
+	Version *string
+
+	// VersionID contains the information returned from the x-ms-version-id header response.
+	VersionID *string
+}
+
+type BlobFlatListSegment struct {
+	BlobItems *[]*BlobItemInternal `xml:"Blob"`
+}
+
+// BlobGetAccessControlOptions contains the optional parameters for the Blob.GetAccessControl method.
+type BlobGetAccessControlOptions struct {
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	RequestID *string
+	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
+	// Timeouts for Blob Service Operations.</a>
+	Timeout *int32
+	// Optional. Valid only when Hierarchical Namespace is enabled for the account. If "true", the identity values returned in the x-ms-owner, x-ms-group, and
+	// x-ms-acl response headers will be transformed from Azure Active Directory Object IDs to User Principal Names. If "false", the values will be returned
+	// as Azure Active Directory Object IDs. The default value is false.
+	Upn *bool
+}
+
+// BlobGetAccessControlResponse contains the response from method Blob.GetAccessControl.
+type BlobGetAccessControlResponse struct {
+	// Date contains the information returned from the Date header response.
+	Date *time.Time
+
+	// ETag contains the information returned from the ETag header response.
+	ETag *string
+
+	// LastModified contains the information returned from the Last-Modified header response.
+	LastModified *time.Time
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+
+	// RequestID contains the information returned from the x-ms-request-id header response.
+	RequestID *string
+
+	// Version contains the information returned from the x-ms-version header response.
+	Version *string
+
+	// XMSACL contains the information returned from the x-ms-acl header response.
+	XMSACL *string
+
+	// XMSGroup contains the information returned from the x-ms-group header response.
+	XMSGroup *string
+
+	// XMSOwner contains the information returned from the x-ms-owner header response.
+	XMSOwner *string
+
+	// XMSPermissions contains the information returned from the x-ms-permissions header response.
+	XMSPermissions *string
+}
+
+// BlobGetAccountInfoOptions contains the optional parameters for the Blob.GetAccountInfo method.
+type BlobGetAccountInfoOptions struct {
+	// placeholder for future optional parameters
+}
+
+// BlobGetAccountInfoResponse contains the response from method Blob.GetAccountInfo.
+type BlobGetAccountInfoResponse struct {
+	// AccountKind contains the information returned from the x-ms-account-kind header response.
+	AccountKind *AccountKind
+
+	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
+	ClientRequestID *string
+
+	// Date contains the information returned from the Date header response.
+	Date *time.Time
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+
+	// RequestID contains the information returned from the x-ms-request-id header response.
+	RequestID *string
+
+	// SKUName contains the information returned from the x-ms-sku-name header response.
+	SKUName *SKUName
+
+	// Version contains the information returned from the x-ms-version header response.
+	Version *string
+}
+
+// BlobGetPropertiesOptions contains the optional parameters for the Blob.GetProperties method.
+type BlobGetPropertiesOptions struct {
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	RequestID *string
+	// The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with
+	// blob snapshots, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob">Creating a Snapshot
+	// of a Blob.</a>
+	Snapshot *string
+	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
+	// Timeouts for Blob Service Operations.</a>
+	Timeout *int32
+	// The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It's for service version 2019-10-10
+	// and newer.
+	VersionID *string
+}
+
+// BlobGetPropertiesResponse contains the response from method Blob.GetProperties.
+type BlobGetPropertiesResponse struct {
+	// AcceptRanges contains the information returned from the Accept-Ranges header response.
+	AcceptRanges *string
+
+	// AccessTier contains the information returned from the x-ms-access-tier header response.
+	AccessTier *string
+
+	// AccessTierChangeTime contains the information returned from the x-ms-access-tier-change-time header response.
+	AccessTierChangeTime *time.Time
+
+	// AccessTierInferred contains the information returned from the x-ms-access-tier-inferred header response.
+	AccessTierInferred *bool
+
+	// ArchiveStatus contains the information returned from the x-ms-archive-status header response.
+	ArchiveStatus *string
+
+	// BlobCommittedBlockCount contains the information returned from the x-ms-blob-committed-block-count header response.
+	BlobCommittedBlockCount *int32
+
+	// BlobSequenceNumber contains the information returned from the x-ms-blob-sequence-number header response.
+	BlobSequenceNumber *int64
+
+	// BlobType contains the information returned from the x-ms-blob-type header response.
+	BlobType *BlobType
+
+	// CacheControl contains the information returned from the Cache-Control header response.
+	CacheControl *string
+
+	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
+	ClientRequestID *string
+
+	// ContentDisposition contains the information returned from the Content-Disposition header response.
+	ContentDisposition *string
+
+	// ContentEncoding contains the information returned from the Content-Encoding header response.
+	ContentEncoding *string
+
+	// ContentLanguage contains the information returned from the Content-Language header response.
+	ContentLanguage *string
+
+	// ContentLength contains the information returned from the Content-Length header response.
+	ContentLength *int64
+
+	// ContentMD5 contains the information returned from the Content-MD5 header response.
+	ContentMD5 *[]byte
+
+	// ContentType contains the information returned from the Content-Type header response.
+	ContentType *string
+
+	// CopyCompletionTime contains the information returned from the x-ms-copy-completion-time header response.
+	CopyCompletionTime *time.Time
+
+	// CopyID contains the information returned from the x-ms-copy-id header response.
+	CopyID *string
+
+	// CopyProgress contains the information returned from the x-ms-copy-progress header response.
+	CopyProgress *string
+
+	// CopySource contains the information returned from the x-ms-copy-source header response.
+	CopySource *string
+
+	// CopyStatus contains the information returned from the x-ms-copy-status header response.
+	CopyStatus *CopyStatusType
+
+	// CopyStatusDescription contains the information returned from the x-ms-copy-status-description header response.
+	CopyStatusDescription *string
+
+	// CreationTime contains the information returned from the x-ms-creation-time header response.
+	CreationTime *time.Time
+
+	// Date contains the information returned from the Date header response.
+	Date *time.Time
+
+	// DestinationSnapshot contains the information returned from the x-ms-copy-destination-snapshot header response.
+	DestinationSnapshot *string
+
+	// ETag contains the information returned from the ETag header response.
+	ETag *string
+
+	// EncryptionKeySHA256 contains the information returned from the x-ms-encryption-key-sha256 header response.
+	EncryptionKeySHA256 *string
+
+	// EncryptionScope contains the information returned from the x-ms-encryption-scope header response.
+	EncryptionScope *string
+
+	// ExpiresOn contains the information returned from the x-ms-expiry-time header response.
+	ExpiresOn *time.Time
+
+	// ImmutabilityPolicyExpiresOn contains the information returned from the x-ms-immutability-policy-until-date header response.
+	ImmutabilityPolicyExpiresOn *time.Time
+
+	// ImmutabilityPolicyMode contains the information returned from the x-ms-immutability-policy-mode header response.
+	ImmutabilityPolicyMode *BlobImmutabilityPolicyMode
+
+	// IsCurrentVersion contains the information returned from the x-ms-is-current-version header response.
+	IsCurrentVersion *bool
+
+	// IsIncrementalCopy contains the information returned from the x-ms-incremental-copy header response.
+	IsIncrementalCopy *bool
+
+	// IsSealed contains the information returned from the x-ms-blob-sealed header response.
+	IsSealed *bool
+
+	// IsServerEncrypted contains the information returned from the x-ms-server-encrypted header response.
+	IsServerEncrypted *bool
+
+	// LastAccessed contains the information returned from the x-ms-last-access-time header response.
+	LastAccessed *time.Time
+
+	// LastModified contains the information returned from the Last-Modified header response.
+	LastModified *time.Time
+
+	// LeaseDuration contains the information returned from the x-ms-lease-duration header response.
+	LeaseDuration *LeaseDurationType
+
+	// LeaseState contains the information returned from the x-ms-lease-state header response.
+	LeaseState *LeaseStateType
+
+	// LeaseStatus contains the information returned from the x-ms-lease-status header response.
+	LeaseStatus *LeaseStatusType
+
+	// LegalHold contains the information returned from the x-ms-legal-hold header response.
+	LegalHold *bool
+
+	// Metadata contains the information returned from the x-ms-meta header response.
+	Metadata map[string]string
+
+	// ObjectReplicationPolicyID contains the information returned from the x-ms-or-policy-id header response.
+	ObjectReplicationPolicyID *string
+
+	// ObjectReplicationRules contains the information returned from the x-ms-or header response.
+	ObjectReplicationRules map[string]string
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+
+	// RehydratePriority contains the information returned from the x-ms-rehydrate-priority header response.
+	RehydratePriority *string
+
+	// RequestID contains the information returned from the x-ms-request-id header response.
+	RequestID *string
+
+	// TagCount contains the information returned from the x-ms-tag-count header response.
+	TagCount *int64
+
+	// Version contains the information returned from the x-ms-version header response.
+	Version *string
+
+	// VersionID contains the information returned from the x-ms-version-id header response.
+	VersionID *string
+}
+
+// BlobGetTagsOptions contains the optional parameters for the Blob.GetTags method.
+type BlobGetTagsOptions struct {
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	RequestID *string
+	// The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with
+	// blob snapshots, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob">Creating a Snapshot
+	// of a Blob.</a>
+	Snapshot *string
+	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
+	// Timeouts for Blob Service Operations.</a>
+	Timeout *int32
+	// The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It's for service version 2019-10-10
+	// and newer.
+	VersionID *string
+}
+
+// BlobHTTPHeaders contains a group of parameters for the Blob.SetHTTPHeaders method.
+type BlobHTTPHeaders struct {
+	// Optional. Sets the blob's cache control. If specified, this property is stored with the blob and returned with a read request.
+	BlobCacheControl *string
+	// Optional. Sets the blob's Content-Disposition header.
+	BlobContentDisposition *string
+	// Optional. Sets the blob's content encoding. If specified, this property is stored with the blob and returned with a read request.
+	BlobContentEncoding *string
+	// Optional. Set the blob's content language. If specified, this property is stored with the blob and returned with a read request.
+	BlobContentLanguage *string
+	// Optional. An MD5 hash of the blob content. Note that this hash is not validated, as the hashes for the individual blocks were validated when each was
+	// uploaded.
+	BlobContentMD5 *[]byte
+	// Optional. Sets the blob's content type. If specified, this property is stored with the blob and returned with a read request.
+	BlobContentType *string
+}
+
+type BlobHierarchyListSegment struct {
+	BlobItems    *[]*BlobItemInternal `xml:"Blob"`
+	BlobPrefixes *[]*BlobPrefix       `xml:"BlobPrefix"`
+}
+
+// An Azure Storage blob
+type BlobItemInternal struct {
+	// Blob tags
+	BlobTags         *BlobTags     `xml:"Tags"`
+	Deleted          *bool         `xml:"Deleted"`
+	IsCurrentVersion *bool         `xml:"IsCurrentVersion"`
+	Metadata         *BlobMetadata `xml:"Metadata"`
+	Name             *string       `xml:"Name"`
+
+	// Dictionary of
+	ObjectReplicationMetadata *map[string]*string `xml:"ObjectReplicationMetadata"`
+
+	// Properties of a blob
+	Properties *BlobPropertiesInternal `xml:"Properties"`
+	Snapshot   *string                 `xml:"Snapshot"`
+	VersionID  *string                 `xml:"VersionId"`
+}
+
+// UnmarshalXML implements the xml.Unmarshaller interface for type BlobItemInternal.
+func (b *BlobItemInternal) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type alias BlobItemInternal
+	aux := &struct {
+		*alias
+		ObjectReplicationMetadata *additionalProperties `xml:"ObjectReplicationMetadata"`
+	}{
+		alias: (*alias)(b),
+	}
+	if err := d.DecodeElement(aux, &start); err != nil {
+		return err
+	}
+	b.ObjectReplicationMetadata = (*map[string]*string)(aux.ObjectReplicationMetadata)
+	return nil
+}
+
+type BlobMetadata struct {
+	// Contains additional key/value pairs not defined in the schema.
+	AdditionalProperties *map[string]*string
+	Encrypted            *string `xml:"Encrypted,attr"`
+}
+
+type BlobPrefix struct {
+	Name *string `xml:"Name"`
+}
+
+// Properties of a blob
+type BlobPropertiesInternal struct {
+	AccessTier           *AccessTier    `xml:"AccessTier"`
+	AccessTierChangeTime *time.Time     `xml:"AccessTierChangeTime"`
+	AccessTierInferred   *bool          `xml:"AccessTierInferred"`
+	ArchiveStatus        *ArchiveStatus `xml:"ArchiveStatus"`
+	BlobSequenceNumber   *int64         `xml:"x-ms-blob-sequence-number"`
+	BlobType             *BlobType      `xml:"BlobType"`
+	CacheControl         *string        `xml:"Cache-Control"`
+	ContentDisposition   *string        `xml:"Content-Disposition"`
+	ContentEncoding      *string        `xml:"Content-Encoding"`
+	ContentLanguage      *string        `xml:"Content-Language"`
+
+	// Size in bytes
+	ContentLength             *int64          `xml:"Content-Length"`
+	ContentMD5                *[]byte         `xml:"Content-MD5"`
+	ContentType               *string         `xml:"Content-Type"`
+	CopyCompletionTime        *time.Time      `xml:"CopyCompletionTime"`
+	CopyID                    *string         `xml:"CopyId"`
+	CopyProgress              *string         `xml:"CopyProgress"`
+	CopySource                *string         `xml:"CopySource"`
+	CopyStatus                *CopyStatusType `xml:"CopyStatus"`
+	CopyStatusDescription     *string         `xml:"CopyStatusDescription"`
+	CreationTime              *time.Time      `xml:"Creation-Time"`
+	CustomerProvidedKeySHA256 *string         `xml:"CustomerProvidedKeySha256"`
+	DeletedTime               *time.Time      `xml:"DeletedTime"`
+	DestinationSnapshot       *string         `xml:"DestinationSnapshot"`
+
+	// The name of the encryption scope under which the blob is encrypted.
+	EncryptionScope             *string                     `xml:"EncryptionScope"`
+	Etag                        *string                     `xml:"Etag"`
+	ExpiresOn                   *time.Time                  `xml:"Expiry-Time"`
+	ImmutabilityPolicyExpiresOn *time.Time                  `xml:"ImmutabilityPolicyUntilDate"`
+	ImmutabilityPolicyMode      *BlobImmutabilityPolicyMode `xml:"ImmutabilityPolicyMode"`
+	IncrementalCopy             *bool                       `xml:"IncrementalCopy"`
+	IsSealed                    *bool                       `xml:"Sealed"`
+	LastAccessedOn              *time.Time                  `xml:"LastAccessTime"`
+	LastModified                *time.Time                  `xml:"Last-Modified"`
+	LeaseDuration               *LeaseDurationType          `xml:"LeaseDuration"`
+	LeaseState                  *LeaseStateType             `xml:"LeaseState"`
+	LeaseStatus                 *LeaseStatusType            `xml:"LeaseStatus"`
+	LegalHold                   *bool                       `xml:"LegalHold"`
+
+	// If an object is in rehydrate pending state then this header is returned with priority of rehydrate. Valid values are High and Standard.
+	RehydratePriority      *RehydratePriority `xml:"RehydratePriority"`
+	RemainingRetentionDays *int32             `xml:"RemainingRetentionDays"`
+	ServerEncrypted        *bool              `xml:"ServerEncrypted"`
+	TagCount               *int32             `xml:"TagCount"`
+}
+
+// MarshalXML implements the xml.Marshaller interface for type BlobPropertiesInternal.
+func (b BlobPropertiesInternal) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	type alias BlobPropertiesInternal
+	aux := &struct {
+		*alias
+		AccessTierChangeTime        *timeRFC1123 `xml:"AccessTierChangeTime"`
+		CopyCompletionTime          *timeRFC1123 `xml:"CopyCompletionTime"`
+		CreationTime                *timeRFC1123 `xml:"Creation-Time"`
+		DeletedTime                 *timeRFC1123 `xml:"DeletedTime"`
+		ExpiresOn                   *timeRFC1123 `xml:"Expiry-Time"`
+		ImmutabilityPolicyExpiresOn *timeRFC1123 `xml:"ImmutabilityPolicyUntilDate"`
+		LastAccessedOn              *timeRFC1123 `xml:"LastAccessTime"`
+		LastModified                *timeRFC1123 `xml:"Last-Modified"`
+	}{
+		alias:                       (*alias)(&b),
+		AccessTierChangeTime:        (*timeRFC1123)(b.AccessTierChangeTime),
+		CopyCompletionTime:          (*timeRFC1123)(b.CopyCompletionTime),
+		CreationTime:                (*timeRFC1123)(b.CreationTime),
+		DeletedTime:                 (*timeRFC1123)(b.DeletedTime),
+		ExpiresOn:                   (*timeRFC1123)(b.ExpiresOn),
+		ImmutabilityPolicyExpiresOn: (*timeRFC1123)(b.ImmutabilityPolicyExpiresOn),
+		LastAccessedOn:              (*timeRFC1123)(b.LastAccessedOn),
+		LastModified:                (*timeRFC1123)(b.LastModified),
+	}
+	return e.EncodeElement(aux, start)
+}
+
+// UnmarshalXML implements the xml.Unmarshaller interface for type BlobPropertiesInternal.
+func (b *BlobPropertiesInternal) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type alias BlobPropertiesInternal
+	aux := &struct {
+		*alias
+		AccessTierChangeTime        *timeRFC1123 `xml:"AccessTierChangeTime"`
+		CopyCompletionTime          *timeRFC1123 `xml:"CopyCompletionTime"`
+		CreationTime                *timeRFC1123 `xml:"Creation-Time"`
+		DeletedTime                 *timeRFC1123 `xml:"DeletedTime"`
+		ExpiresOn                   *timeRFC1123 `xml:"Expiry-Time"`
+		ImmutabilityPolicyExpiresOn *timeRFC1123 `xml:"ImmutabilityPolicyUntilDate"`
+		LastAccessedOn              *timeRFC1123 `xml:"LastAccessTime"`
+		LastModified                *timeRFC1123 `xml:"Last-Modified"`
+	}{
+		alias: (*alias)(b),
+	}
+	if err := d.DecodeElement(aux, &start); err != nil {
+		return err
+	}
+	b.AccessTierChangeTime = (*time.Time)(aux.AccessTierChangeTime)
+	b.CopyCompletionTime = (*time.Time)(aux.CopyCompletionTime)
+	b.CreationTime = (*time.Time)(aux.CreationTime)
+	b.DeletedTime = (*time.Time)(aux.DeletedTime)
+	b.ExpiresOn = (*time.Time)(aux.ExpiresOn)
+	b.ImmutabilityPolicyExpiresOn = (*time.Time)(aux.ImmutabilityPolicyExpiresOn)
+	b.LastAccessedOn = (*time.Time)(aux.LastAccessedOn)
+	b.LastModified = (*time.Time)(aux.LastModified)
+	return nil
+}
+
+// BlobQueryOptions contains the optional parameters for the Blob.Query method.
+type BlobQueryOptions struct {
+	// the query request
+	QueryRequest *QueryRequest
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	RequestID *string
+	// The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with
+	// blob snapshots, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob">Creating a Snapshot
+	// of a Blob.</a>
+	Snapshot *string
+	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
+	// Timeouts for Blob Service Operations.</a>
+	Timeout *int32
+}
+
+// BlobQueryResponse contains the response from method Blob.Query.
+type BlobQueryResponse struct {
 	// AcceptRanges contains the information returned from the Accept-Ranges header response.
 	AcceptRanges *string
 
@@ -640,343 +1336,6 @@ type BlobDownloadResponse struct {
 
 	// Version contains the information returned from the x-ms-version header response.
 	Version *string
-}
-
-type BlobFlatListSegment struct {
-	BlobItems *[]*BlobItem `xml:"Blob"`
-}
-
-// BlobGetAccessControlOptions contains the optional parameters for the Blob.GetAccessControl method.
-type BlobGetAccessControlOptions struct {
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
-	RequestID *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
-	Timeout *int32
-	// Optional. Valid only when Hierarchical Namespace is enabled for the account. If "true", the identity values returned in the x-ms-owner, x-ms-group, and
-	// x-ms-acl response headers will be transformed from Azure Active Directory Object IDs to User Principal Names. If "false", the values will be returned
-	// as Azure Active Directory Object IDs. The default value is false.
-	Upn *bool
-}
-
-// BlobGetAccessControlResponse contains the response from method Blob.GetAccessControl.
-type BlobGetAccessControlResponse struct {
-	// Date contains the information returned from the Date header response.
-	Date *time.Time
-
-	// ETag contains the information returned from the ETag header response.
-	ETag *string
-
-	// LastModified contains the information returned from the Last-Modified header response.
-	LastModified *time.Time
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// RequestID contains the information returned from the x-ms-request-id header response.
-	RequestID *string
-
-	// Version contains the information returned from the x-ms-version header response.
-	Version *string
-
-	// XMSACL contains the information returned from the x-ms-acl header response.
-	XMSACL *string
-
-	// XMSGroup contains the information returned from the x-ms-group header response.
-	XMSGroup *string
-
-	// XMSOwner contains the information returned from the x-ms-owner header response.
-	XMSOwner *string
-
-	// XMSPermissions contains the information returned from the x-ms-permissions header response.
-	XMSPermissions *string
-}
-
-// BlobGetAccountInfoOptions contains the optional parameters for the Blob.GetAccountInfo method.
-type BlobGetAccountInfoOptions struct {
-	// placeholder for future optional parameters
-}
-
-// BlobGetAccountInfoResponse contains the response from method Blob.GetAccountInfo.
-type BlobGetAccountInfoResponse struct {
-	// AccountKind contains the information returned from the x-ms-account-kind header response.
-	AccountKind *AccountKind
-
-	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
-	ClientRequestID *string
-
-	// Date contains the information returned from the Date header response.
-	Date *time.Time
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// RequestID contains the information returned from the x-ms-request-id header response.
-	RequestID *string
-
-	// SKUName contains the information returned from the x-ms-sku-name header response.
-	SKUName *SKUName
-
-	// Version contains the information returned from the x-ms-version header response.
-	Version *string
-}
-
-// BlobGetPropertiesOptions contains the optional parameters for the Blob.GetProperties method.
-type BlobGetPropertiesOptions struct {
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
-	RequestID *string
-	// The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with
-	// blob snapshots, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob">Creating a Snapshot
-	// of a Blob.</a>
-	Snapshot *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
-	Timeout *int32
-}
-
-// BlobGetPropertiesResponse contains the response from method Blob.GetProperties.
-type BlobGetPropertiesResponse struct {
-	// AcceptRanges contains the information returned from the Accept-Ranges header response.
-	AcceptRanges *string
-
-	// AccessTier contains the information returned from the x-ms-access-tier header response.
-	AccessTier *string
-
-	// AccessTierChangeTime contains the information returned from the x-ms-access-tier-change-time header response.
-	AccessTierChangeTime *time.Time
-
-	// AccessTierInferred contains the information returned from the x-ms-access-tier-inferred header response.
-	AccessTierInferred *bool
-
-	// ArchiveStatus contains the information returned from the x-ms-archive-status header response.
-	ArchiveStatus *string
-
-	// BlobCommittedBlockCount contains the information returned from the x-ms-blob-committed-block-count header response.
-	BlobCommittedBlockCount *int32
-
-	// BlobSequenceNumber contains the information returned from the x-ms-blob-sequence-number header response.
-	BlobSequenceNumber *int64
-
-	// BlobType contains the information returned from the x-ms-blob-type header response.
-	BlobType *BlobType
-
-	// CacheControl contains the information returned from the Cache-Control header response.
-	CacheControl *string
-
-	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
-	ClientRequestID *string
-
-	// ContentDisposition contains the information returned from the Content-Disposition header response.
-	ContentDisposition *string
-
-	// ContentEncoding contains the information returned from the Content-Encoding header response.
-	ContentEncoding *string
-
-	// ContentLanguage contains the information returned from the Content-Language header response.
-	ContentLanguage *string
-
-	// ContentLength contains the information returned from the Content-Length header response.
-	ContentLength *int64
-
-	// ContentMD5 contains the information returned from the Content-MD5 header response.
-	ContentMD5 *[]byte
-
-	// ContentType contains the information returned from the Content-Type header response.
-	ContentType *string
-
-	// CopyCompletionTime contains the information returned from the x-ms-copy-completion-time header response.
-	CopyCompletionTime *time.Time
-
-	// CopyID contains the information returned from the x-ms-copy-id header response.
-	CopyID *string
-
-	// CopyProgress contains the information returned from the x-ms-copy-progress header response.
-	CopyProgress *string
-
-	// CopySource contains the information returned from the x-ms-copy-source header response.
-	CopySource *string
-
-	// CopyStatus contains the information returned from the x-ms-copy-status header response.
-	CopyStatus *CopyStatusType
-
-	// CopyStatusDescription contains the information returned from the x-ms-copy-status-description header response.
-	CopyStatusDescription *string
-
-	// CreationTime contains the information returned from the x-ms-creation-time header response.
-	CreationTime *time.Time
-
-	// Date contains the information returned from the Date header response.
-	Date *time.Time
-
-	// DestinationSnapshot contains the information returned from the x-ms-copy-destination-snapshot header response.
-	DestinationSnapshot *string
-
-	// ETag contains the information returned from the ETag header response.
-	ETag *string
-
-	// EncryptionKeySHA256 contains the information returned from the x-ms-encryption-key-sha256 header response.
-	EncryptionKeySHA256 *string
-
-	// EncryptionScope contains the information returned from the x-ms-encryption-scope header response.
-	EncryptionScope *string
-
-	// IsIncrementalCopy contains the information returned from the x-ms-incremental-copy header response.
-	IsIncrementalCopy *bool
-
-	// IsServerEncrypted contains the information returned from the x-ms-server-encrypted header response.
-	IsServerEncrypted *bool
-
-	// LastModified contains the information returned from the Last-Modified header response.
-	LastModified *time.Time
-
-	// LeaseDuration contains the information returned from the x-ms-lease-duration header response.
-	LeaseDuration *LeaseDurationType
-
-	// LeaseState contains the information returned from the x-ms-lease-state header response.
-	LeaseState *LeaseStateType
-
-	// LeaseStatus contains the information returned from the x-ms-lease-status header response.
-	LeaseStatus *LeaseStatusType
-
-	// Metadata contains the information returned from the x-ms-meta header response.
-	Metadata map[string]string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// RequestID contains the information returned from the x-ms-request-id header response.
-	RequestID *string
-
-	// Version contains the information returned from the x-ms-version header response.
-	Version *string
-}
-
-// BlobHTTPHeaders contains a group of parameters for the Blob.SetHTTPHeaders method.
-type BlobHTTPHeaders struct {
-	// Optional. Sets the blob's cache control. If specified, this property is stored with the blob and returned with a read request.
-	BlobCacheControl *string
-	// Optional. Sets the blob's Content-Disposition header.
-	BlobContentDisposition *string
-	// Optional. Sets the blob's content encoding. If specified, this property is stored with the blob and returned with a read request.
-	BlobContentEncoding *string
-	// Optional. Set the blob's content language. If specified, this property is stored with the blob and returned with a read request.
-	BlobContentLanguage *string
-	// Optional. An MD5 hash of the blob content. Note that this hash is not validated, as the hashes for the individual blocks were validated when each was
-	// uploaded.
-	BlobContentMD5 *[]byte
-	// Optional. Sets the blob's content type. If specified, this property is stored with the blob and returned with a read request.
-	BlobContentType *string
-}
-
-type BlobHierarchyListSegment struct {
-	BlobItems    *[]*BlobItem   `xml:"Blob"`
-	BlobPrefixes *[]*BlobPrefix `xml:"BlobPrefix"`
-}
-
-// An Azure Storage blob
-type BlobItem struct {
-	Deleted  *bool         `xml:"Deleted"`
-	Metadata *BlobMetadata `xml:"Metadata"`
-	Name     *string       `xml:"Name"`
-
-	// Properties of a blob
-	Properties *BlobProperties `xml:"Properties"`
-	Snapshot   *string         `xml:"Snapshot"`
-}
-
-type BlobMetadata struct {
-	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties *map[string]*string
-	Encrypted            *string `xml:"Encrypted,attr"`
-}
-
-type BlobPrefix struct {
-	Name *string `xml:"Name"`
-}
-
-// Properties of a blob
-type BlobProperties struct {
-	AccessTier           *AccessTier    `xml:"AccessTier"`
-	AccessTierChangeTime *time.Time     `xml:"AccessTierChangeTime"`
-	AccessTierInferred   *bool          `xml:"AccessTierInferred"`
-	ArchiveStatus        *ArchiveStatus `xml:"ArchiveStatus"`
-	BlobSequenceNumber   *int64         `xml:"x-ms-blob-sequence-number"`
-	BlobType             *BlobType      `xml:"BlobType"`
-	CacheControl         *string        `xml:"Cache-Control"`
-	ContentDisposition   *string        `xml:"Content-Disposition"`
-	ContentEncoding      *string        `xml:"Content-Encoding"`
-	ContentLanguage      *string        `xml:"Content-Language"`
-
-	// Size in bytes
-	ContentLength             *int64          `xml:"Content-Length"`
-	ContentMD5                *[]byte         `xml:"Content-MD5"`
-	ContentType               *string         `xml:"Content-Type"`
-	CopyCompletionTime        *time.Time      `xml:"CopyCompletionTime"`
-	CopyID                    *string         `xml:"CopyId"`
-	CopyProgress              *string         `xml:"CopyProgress"`
-	CopySource                *string         `xml:"CopySource"`
-	CopyStatus                *CopyStatusType `xml:"CopyStatus"`
-	CopyStatusDescription     *string         `xml:"CopyStatusDescription"`
-	CreationTime              *time.Time      `xml:"Creation-Time"`
-	CustomerProvidedKeySHA256 *string         `xml:"CustomerProvidedKeySha256"`
-	DeletedTime               *time.Time      `xml:"DeletedTime"`
-	DestinationSnapshot       *string         `xml:"DestinationSnapshot"`
-
-	// The name of the encryption scope under which the blob is encrypted.
-	EncryptionScope        *string            `xml:"EncryptionScope"`
-	Etag                   *string            `xml:"Etag"`
-	IncrementalCopy        *bool              `xml:"IncrementalCopy"`
-	LastModified           *time.Time         `xml:"Last-Modified"`
-	LeaseDuration          *LeaseDurationType `xml:"LeaseDuration"`
-	LeaseState             *LeaseStateType    `xml:"LeaseState"`
-	LeaseStatus            *LeaseStatusType   `xml:"LeaseStatus"`
-	RemainingRetentionDays *int32             `xml:"RemainingRetentionDays"`
-	ServerEncrypted        *bool              `xml:"ServerEncrypted"`
-}
-
-// MarshalXML implements the xml.Marshaller interface for type BlobProperties.
-func (b BlobProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type alias BlobProperties
-	aux := &struct {
-		*alias
-		AccessTierChangeTime *timeRFC1123 `xml:"AccessTierChangeTime"`
-		CopyCompletionTime   *timeRFC1123 `xml:"CopyCompletionTime"`
-		CreationTime         *timeRFC1123 `xml:"Creation-Time"`
-		DeletedTime          *timeRFC1123 `xml:"DeletedTime"`
-		LastModified         *timeRFC1123 `xml:"Last-Modified"`
-	}{
-		alias:                (*alias)(&b),
-		AccessTierChangeTime: (*timeRFC1123)(b.AccessTierChangeTime),
-		CopyCompletionTime:   (*timeRFC1123)(b.CopyCompletionTime),
-		CreationTime:         (*timeRFC1123)(b.CreationTime),
-		DeletedTime:          (*timeRFC1123)(b.DeletedTime),
-		LastModified:         (*timeRFC1123)(b.LastModified),
-	}
-	return e.EncodeElement(aux, start)
-}
-
-// UnmarshalXML implements the xml.Unmarshaller interface for type BlobProperties.
-func (b *BlobProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type alias BlobProperties
-	aux := &struct {
-		*alias
-		AccessTierChangeTime *timeRFC1123 `xml:"AccessTierChangeTime"`
-		CopyCompletionTime   *timeRFC1123 `xml:"CopyCompletionTime"`
-		CreationTime         *timeRFC1123 `xml:"Creation-Time"`
-		DeletedTime          *timeRFC1123 `xml:"DeletedTime"`
-		LastModified         *timeRFC1123 `xml:"Last-Modified"`
-	}{
-		alias: (*alias)(b),
-	}
-	if err := d.DecodeElement(aux, &start); err != nil {
-		return err
-	}
-	b.AccessTierChangeTime = (*time.Time)(aux.AccessTierChangeTime)
-	b.CopyCompletionTime = (*time.Time)(aux.CopyCompletionTime)
-	b.CreationTime = (*time.Time)(aux.CreationTime)
-	b.DeletedTime = (*time.Time)(aux.DeletedTime)
-	b.LastModified = (*time.Time)(aux.LastModified)
-	return nil
 }
 
 // BlobReleaseLeaseOptions contains the optional parameters for the Blob.ReleaseLease method.
@@ -1139,6 +1498,41 @@ type BlobSetAccessControlResponse struct {
 	Version *string
 }
 
+// BlobSetExpiryOptions contains the optional parameters for the Blob.SetExpiry method.
+type BlobSetExpiryOptions struct {
+	// The time to set the blob to expiry
+	ExpiresOn *string
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	RequestID *string
+	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
+	// Timeouts for Blob Service Operations.</a>
+	Timeout *int32
+}
+
+// BlobSetExpiryResponse contains the response from method Blob.SetExpiry.
+type BlobSetExpiryResponse struct {
+	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
+	ClientRequestID *string
+
+	// Date contains the information returned from the Date header response.
+	Date *time.Time
+
+	// ETag contains the information returned from the ETag header response.
+	ETag *string
+
+	// LastModified contains the information returned from the Last-Modified header response.
+	LastModified *time.Time
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+
+	// RequestID contains the information returned from the x-ms-request-id header response.
+	RequestID *string
+
+	// Version contains the information returned from the x-ms-version header response.
+	Version *string
+}
+
 // BlobSetHTTPHeadersOptions contains the optional parameters for the Blob.SetHTTPHeaders method.
 type BlobSetHTTPHeadersOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
@@ -1164,6 +1558,73 @@ type BlobSetHTTPHeadersResponse struct {
 
 	// LastModified contains the information returned from the Last-Modified header response.
 	LastModified *time.Time
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+
+	// RequestID contains the information returned from the x-ms-request-id header response.
+	RequestID *string
+
+	// Version contains the information returned from the x-ms-version header response.
+	Version *string
+}
+
+// BlobSetImmutabilityPolicyOptions contains the optional parameters for the Blob.SetImmutabilityPolicy method.
+type BlobSetImmutabilityPolicyOptions struct {
+	// Specifies the date time when the blobs immutability policy is set to expire.
+	ImmutabilityPolicyExpiry *time.Time
+	// Specifies the immutability policy mode to set on the blob.
+	ImmutabilityPolicyMode *BlobImmutabilityPolicyMode
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	RequestID *string
+	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
+	// Timeouts for Blob Service Operations.</a>
+	Timeout *int32
+}
+
+// BlobSetImmutabilityPolicyResponse contains the response from method Blob.SetImmutabilityPolicy.
+type BlobSetImmutabilityPolicyResponse struct {
+	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
+	ClientRequestID *string
+
+	// Date contains the information returned from the Date header response.
+	Date *time.Time
+
+	// ImmutabilityPolicyExpiry contains the information returned from the x-ms-immutability-policy-until-date header response.
+	ImmutabilityPolicyExpiry *time.Time
+
+	// ImmutabilityPolicyMode contains the information returned from the x-ms-immutability-policy-mode header response.
+	ImmutabilityPolicyMode *BlobImmutabilityPolicyMode
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+
+	// RequestID contains the information returned from the x-ms-request-id header response.
+	RequestID *string
+
+	// Version contains the information returned from the x-ms-version header response.
+	Version *string
+}
+
+// BlobSetLegalHoldOptions contains the optional parameters for the Blob.SetLegalHold method.
+type BlobSetLegalHoldOptions struct {
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	RequestID *string
+	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
+	// Timeouts for Blob Service Operations.</a>
+	Timeout *int32
+}
+
+// BlobSetLegalHoldResponse contains the response from method Blob.SetLegalHold.
+type BlobSetLegalHoldResponse struct {
+	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
+	ClientRequestID *string
+
+	// Date contains the information returned from the Date header response.
+	Date *time.Time
+
+	// LegalHold contains the information returned from the x-ms-legal-hold header response.
+	LegalHold *bool
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -1220,6 +1681,45 @@ type BlobSetMetadataResponse struct {
 
 	// Version contains the information returned from the x-ms-version header response.
 	Version *string
+
+	// VersionID contains the information returned from the x-ms-version-id header response.
+	VersionID *string
+}
+
+// BlobSetTagsOptions contains the optional parameters for the Blob.SetTags method.
+type BlobSetTagsOptions struct {
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	RequestID *string
+	// Blob tags
+	Tags *BlobTags
+	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
+	// Timeouts for Blob Service Operations.</a>
+	Timeout *int32
+	// Specify the transactional crc64 for the body, to be validated by the service.
+	TransactionalContentCRC64 *[]byte
+	// Specify the transactional md5 for the body, to be validated by the service.
+	TransactionalContentMD5 *[]byte
+	// The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It's for service version 2019-10-10
+	// and newer.
+	VersionID *string
+}
+
+// BlobSetTagsResponse contains the response from method Blob.SetTags.
+type BlobSetTagsResponse struct {
+	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
+	ClientRequestID *string
+
+	// Date contains the information returned from the Date header response.
+	Date *time.Time
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+
+	// RequestID contains the information returned from the x-ms-request-id header response.
+	RequestID *string
+
+	// Version contains the information returned from the x-ms-version header response.
+	Version *string
 }
 
 // BlobSetTierOptions contains the optional parameters for the Blob.SetTier method.
@@ -1228,9 +1728,16 @@ type BlobSetTierOptions struct {
 	RehydratePriority *RehydratePriority
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
 	RequestID *string
+	// The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with
+	// blob snapshots, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob">Creating a Snapshot
+	// of a Blob.</a>
+	Snapshot *string
 	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
 	// Timeouts for Blob Service Operations.</a>
 	Timeout *int32
+	// The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It's for service version 2019-10-10
+	// and newer.
+	VersionID *string
 }
 
 // BlobSetTierResponse contains the response from method Blob.SetTier.
@@ -1250,6 +1757,14 @@ type BlobSetTierResponse struct {
 
 // BlobStartCopyFromURLOptions contains the optional parameters for the Blob.StartCopyFromURL method.
 type BlobStartCopyFromURLOptions struct {
+	// Optional. Used to set blob tags in various blob operations.
+	BlobTagsString *string
+	// Specifies the date time when the blobs immutability policy is set to expire.
+	ImmutabilityPolicyExpiry *time.Time
+	// Specifies the immutability policy mode to set on the blob.
+	ImmutabilityPolicyMode *BlobImmutabilityPolicyMode
+	// Specified if a legal hold should be set on the blob.
+	LegalHold *bool
 	// Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata
 	// from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified
 	// metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming
@@ -1259,6 +1774,8 @@ type BlobStartCopyFromURLOptions struct {
 	RehydratePriority *RehydratePriority
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
 	RequestID *string
+	// Overrides the sealed state of the destination blob. Service version 2019-12-12 and newer.
+	SealBlob *bool
 	// Optional. Indicates the tier to be set on the blob.
 	Tier *AccessTier
 	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
@@ -1294,6 +1811,52 @@ type BlobStartCopyFromURLResponse struct {
 
 	// Version contains the information returned from the x-ms-version header response.
 	Version *string
+
+	// VersionID contains the information returned from the x-ms-version-id header response.
+	VersionID *string
+}
+
+type BlobTag struct {
+	Key   *string `xml:"Key"`
+	Value *string `xml:"Value"`
+}
+
+// Blob tags
+type BlobTags struct {
+	BlobTagSet *[]*BlobTag `xml:"TagSet>Tag"`
+}
+
+// MarshalXML implements the xml.Marshaller interface for type BlobTags.
+func (b BlobTags) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	start.Name.Local = "Tags"
+	type alias BlobTags
+	aux := &struct {
+		*alias
+	}{
+		alias: (*alias)(&b),
+	}
+	return e.EncodeElement(aux, start)
+}
+
+// BlobTagsResponse is the response envelope for operations that return a BlobTags type.
+type BlobTagsResponse struct {
+	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
+	ClientRequestID *string `xml:"ClientRequestID"`
+
+	// Date contains the information returned from the Date header response.
+	Date *time.Time `xml:"Date"`
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+
+	// RequestID contains the information returned from the x-ms-request-id header response.
+	RequestID *string `xml:"RequestID"`
+
+	// Blob tags
+	Tags *BlobTags `xml:"Tags"`
+
+	// Version contains the information returned from the x-ms-version header response.
+	Version *string `xml:"Version"`
 }
 
 // BlobUndeleteOptions contains the optional parameters for the Blob.Undelete method.
@@ -1329,11 +1892,19 @@ type Block struct {
 	Name *string `xml:"Name"`
 
 	// The block size in bytes.
-	Size *int32 `xml:"Size"`
+	Size *int64 `xml:"Size"`
 }
 
 // BlockBlobCommitBlockListOptions contains the optional parameters for the BlockBlob.CommitBlockList method.
 type BlockBlobCommitBlockListOptions struct {
+	// Optional. Used to set blob tags in various blob operations.
+	BlobTagsString *string
+	// Specifies the date time when the blobs immutability policy is set to expire.
+	ImmutabilityPolicyExpiry *time.Time
+	// Specifies the immutability policy mode to set on the blob.
+	ImmutabilityPolicyMode *BlobImmutabilityPolicyMode
+	// Specified if a legal hold should be set on the blob.
+	LegalHold *bool
 	// Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata
 	// from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified
 	// metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming
@@ -1387,6 +1958,9 @@ type BlockBlobCommitBlockListResponse struct {
 	// Version contains the information returned from the x-ms-version header response.
 	Version *string
 
+	// VersionID contains the information returned from the x-ms-version-id header response.
+	VersionID *string
+
 	// XMSContentCRC64 contains the information returned from the x-ms-content-crc64 header response.
 	XMSContentCRC64 *[]byte
 }
@@ -1402,6 +1976,69 @@ type BlockBlobGetBlockListOptions struct {
 	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
 	// Timeouts for Blob Service Operations.</a>
 	Timeout *int32
+}
+
+// BlockBlobPutBlobFromURLOptions contains the optional parameters for the BlockBlob.PutBlobFromURL method.
+type BlockBlobPutBlobFromURLOptions struct {
+	// Optional. Used to set blob tags in various blob operations.
+	BlobTagsString *string
+	// Optional, default is true. Indicates if properties from the source blob should be copied.
+	CopySourceBlobProperties *bool
+	// Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata
+	// from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified
+	// metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming
+	// rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information.
+	Metadata *map[string]string
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	RequestID *string
+	// Specify the md5 calculated for the range of bytes that must be read from the copy source.
+	SourceContentMD5 *[]byte
+	// Optional. Indicates the tier to be set on the blob.
+	Tier *AccessTier
+	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
+	// Timeouts for Blob Service Operations.</a>
+	Timeout *int32
+	// Specify the transactional md5 for the body, to be validated by the service.
+	TransactionalContentMD5 *[]byte
+}
+
+// BlockBlobPutBlobFromURLResponse contains the response from method BlockBlob.PutBlobFromURL.
+type BlockBlobPutBlobFromURLResponse struct {
+	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
+	ClientRequestID *string
+
+	// ContentMD5 contains the information returned from the Content-MD5 header response.
+	ContentMD5 *[]byte
+
+	// Date contains the information returned from the Date header response.
+	Date *time.Time
+
+	// ETag contains the information returned from the ETag header response.
+	ETag *string
+
+	// EncryptionKeySHA256 contains the information returned from the x-ms-encryption-key-sha256 header response.
+	EncryptionKeySHA256 *string
+
+	// EncryptionScope contains the information returned from the x-ms-encryption-scope header response.
+	EncryptionScope *string
+
+	// IsServerEncrypted contains the information returned from the x-ms-request-server-encrypted header response.
+	IsServerEncrypted *bool
+
+	// LastModified contains the information returned from the Last-Modified header response.
+	LastModified *time.Time
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+
+	// RequestID contains the information returned from the x-ms-request-id header response.
+	RequestID *string
+
+	// Version contains the information returned from the x-ms-version header response.
+	Version *string
+
+	// VersionID contains the information returned from the x-ms-version-id header response.
+	VersionID *string
 }
 
 // BlockBlobStageBlockFromURLOptions contains the optional parameters for the BlockBlob.StageBlockFromURL method.
@@ -1500,6 +2137,14 @@ type BlockBlobStageBlockResponse struct {
 
 // BlockBlobUploadOptions contains the optional parameters for the BlockBlob.Upload method.
 type BlockBlobUploadOptions struct {
+	// Optional. Used to set blob tags in various blob operations.
+	BlobTagsString *string
+	// Specifies the date time when the blobs immutability policy is set to expire.
+	ImmutabilityPolicyExpiry *time.Time
+	// Specifies the immutability policy mode to set on the blob.
+	ImmutabilityPolicyMode *BlobImmutabilityPolicyMode
+	// Specified if a legal hold should be set on the blob.
+	LegalHold *bool
 	// Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata
 	// from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified
 	// metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming
@@ -1550,6 +2195,9 @@ type BlockBlobUploadResponse struct {
 
 	// Version contains the information returned from the x-ms-version header response.
 	Version *string
+
+	// VersionID contains the information returned from the x-ms-version-id header response.
+	VersionID *string
 }
 
 type BlockList struct {
@@ -1878,6 +2526,9 @@ type ContainerGetPropertiesResponse struct {
 	// HasLegalHold contains the information returned from the x-ms-has-legal-hold header response.
 	HasLegalHold *bool
 
+	// IsVersionLevelWormEnabled contains the information returned from the x-ms-version-level-worm-enabled header response.
+	IsVersionLevelWormEnabled *bool
+
 	// LastModified contains the information returned from the Last-Modified header response.
 	LastModified *time.Time
 
@@ -1905,12 +2556,15 @@ type ContainerGetPropertiesResponse struct {
 
 // An Azure Storage container
 type ContainerItem struct {
+	Deleted *bool `xml:"Deleted"`
+
 	// Dictionary of
 	Metadata *map[string]*string `xml:"Metadata"`
 	Name     *string             `xml:"Name"`
 
 	// Properties of a container
 	Properties *ContainerProperties `xml:"Properties"`
+	Version    *string              `xml:"Version"`
 }
 
 // UnmarshalXML implements the xml.Unmarshaller interface for type ContainerItem.
@@ -1975,16 +2629,21 @@ type ContainerListBlobHierarchySegmentOptions struct {
 
 // Properties of a container
 type ContainerProperties struct {
-	DefaultEncryptionScope         *string            `xml:"DefaultEncryptionScope"`
-	Etag                           *string            `xml:"Etag"`
-	HasImmutabilityPolicy          *bool              `xml:"HasImmutabilityPolicy"`
-	HasLegalHold                   *bool              `xml:"HasLegalHold"`
+	DefaultEncryptionScope *string    `xml:"DefaultEncryptionScope"`
+	DeletedTime            *time.Time `xml:"DeletedTime"`
+	Etag                   *string    `xml:"Etag"`
+	HasImmutabilityPolicy  *bool      `xml:"HasImmutabilityPolicy"`
+	HasLegalHold           *bool      `xml:"HasLegalHold"`
+
+	// Indicates if version level worm is enabled on this container.
+	IsVersionLevelWormEnabled      *bool              `xml:"VersionLevelWormEnabled"`
 	LastModified                   *time.Time         `xml:"Last-Modified"`
 	LeaseDuration                  *LeaseDurationType `xml:"LeaseDuration"`
 	LeaseState                     *LeaseStateType    `xml:"LeaseState"`
 	LeaseStatus                    *LeaseStatusType   `xml:"LeaseStatus"`
 	PreventEncryptionScopeOverride *bool              `xml:"DenyEncryptionScopeOverride"`
 	PublicAccess                   *PublicAccessType  `xml:"PublicAccess"`
+	RemainingRetentionDays         *int32             `xml:"RemainingRetentionDays"`
 }
 
 // MarshalXML implements the xml.Marshaller interface for type ContainerProperties.
@@ -1992,9 +2651,11 @@ func (c ContainerProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	type alias ContainerProperties
 	aux := &struct {
 		*alias
+		DeletedTime  *timeRFC1123 `xml:"DeletedTime"`
 		LastModified *timeRFC1123 `xml:"Last-Modified"`
 	}{
 		alias:        (*alias)(&c),
+		DeletedTime:  (*timeRFC1123)(c.DeletedTime),
 		LastModified: (*timeRFC1123)(c.LastModified),
 	}
 	return e.EncodeElement(aux, start)
@@ -2005,6 +2666,7 @@ func (c *ContainerProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 	type alias ContainerProperties
 	aux := &struct {
 		*alias
+		DeletedTime  *timeRFC1123 `xml:"DeletedTime"`
 		LastModified *timeRFC1123 `xml:"Last-Modified"`
 	}{
 		alias: (*alias)(c),
@@ -2012,6 +2674,7 @@ func (c *ContainerProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 	if err := d.DecodeElement(aux, &start); err != nil {
 		return err
 	}
+	c.DeletedTime = (*time.Time)(aux.DeletedTime)
 	c.LastModified = (*time.Time)(aux.LastModified)
 	return nil
 }
@@ -2049,6 +2712,35 @@ type ContainerReleaseLeaseResponse struct {
 	Version *string
 }
 
+// ContainerRenameOptions contains the optional parameters for the Container.Rename method.
+type ContainerRenameOptions struct {
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	RequestID *string
+	// A lease ID for the source path. If specified, the source path must have an active lease and the lease ID must match.
+	SourceLeaseID *string
+	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
+	// Timeouts for Blob Service Operations.</a>
+	Timeout *int32
+}
+
+// ContainerRenameResponse contains the response from method Container.Rename.
+type ContainerRenameResponse struct {
+	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
+	ClientRequestID *string
+
+	// Date contains the information returned from the Date header response.
+	Date *time.Time
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+
+	// RequestID contains the information returned from the x-ms-request-id header response.
+	RequestID *string
+
+	// Version contains the information returned from the x-ms-version header response.
+	Version *string
+}
+
 // ContainerRenewLeaseOptions contains the optional parameters for the Container.RenewLease method.
 type ContainerRenewLeaseOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
@@ -2074,6 +2766,37 @@ type ContainerRenewLeaseResponse struct {
 
 	// LeaseID contains the information returned from the x-ms-lease-id header response.
 	LeaseID *string
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+
+	// RequestID contains the information returned from the x-ms-request-id header response.
+	RequestID *string
+
+	// Version contains the information returned from the x-ms-version header response.
+	Version *string
+}
+
+// ContainerRestoreOptions contains the optional parameters for the Container.Restore method.
+type ContainerRestoreOptions struct {
+	// Optional. Version 2019-12-12 and later. Specifies the name of the deleted container to restore.
+	DeletedContainerName *string
+	// Optional. Version 2019-12-12 and later. Specifies the version of the deleted container to restore.
+	DeletedContainerVersion *string
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	RequestID *string
+	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
+	// Timeouts for Blob Service Operations.</a>
+	Timeout *int32
+}
+
+// ContainerRestoreResponse contains the response from method Container.Restore.
+type ContainerRestoreResponse struct {
+	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
+	ClientRequestID *string
+
+	// Date contains the information returned from the Date header response.
+	Date *time.Time
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -2160,6 +2883,30 @@ type ContainerSetMetadataResponse struct {
 	Version *string
 }
 
+// ContainerSubmitBatchOptions contains the optional parameters for the Container.SubmitBatch method.
+type ContainerSubmitBatchOptions struct {
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	RequestID *string
+	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
+	// Timeouts for Blob Service Operations.</a>
+	Timeout *int32
+}
+
+// ContainerSubmitBatchResponse contains the response from method Container.SubmitBatch.
+type ContainerSubmitBatchResponse struct {
+	// ContentType contains the information returned from the Content-Type header response.
+	ContentType *string
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+
+	// RequestID contains the information returned from the x-ms-request-id header response.
+	RequestID *string
+
+	// Version contains the information returned from the x-ms-version header response.
+	Version *string
+}
+
 // CORS is an HTTP feature that enables a web application running under one domain to access resources in another domain. Web browsers implement a security
 // restriction known as same-origin policy that
 // prevents a web page from calling APIs in a different domain; CORS provides a secure way to allow one domain (the origin domain) to call APIs in another
@@ -2233,6 +2980,24 @@ type DataLakeStorageErrorAutoGenerated struct {
 
 	// The service error message.
 	Message *string `xml:"Message"`
+}
+
+// delimited text configuration
+type DelimitedTextConfiguration struct {
+	// column separator
+	ColumnSeparator *string `xml:"ColumnSeparator"`
+
+	// escape char
+	EscapeChar *string `xml:"EscapeChar"`
+
+	// field quote
+	FieldQuote *string `xml:"FieldQuote"`
+
+	// has headers
+	HeadersPresent *bool `xml:"HasHeaders"`
+
+	// record separator
+	RecordSeparator *string `xml:"RecordSeparator"`
 }
 
 // DirectoryCreateOptions contains the optional parameters for the Directory.Create method.
@@ -2475,6 +3240,44 @@ type DirectorySetAccessControlResponse struct {
 	Version *string
 }
 
+// Blob info from a Filter Blobs API call
+type FilterBlobItem struct {
+	ContainerName *string `xml:"ContainerName"`
+	Name          *string `xml:"Name"`
+
+	// Blob tags
+	Tags *BlobTags `xml:"Tags"`
+}
+
+// The result of a Filter Blobs API call
+type FilterBlobSegment struct {
+	Blobs           *[]*FilterBlobItem `xml:"Blobs>Blob"`
+	NextMarker      *string            `xml:"NextMarker"`
+	ServiceEndpoint *string            `xml:"ServiceEndpoint,attr"`
+	Where           *string            `xml:"Where"`
+}
+
+// FilterBlobSegmentResponse is the response envelope for operations that return a FilterBlobSegment type.
+type FilterBlobSegmentResponse struct {
+	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
+	ClientRequestID *string `xml:"ClientRequestID"`
+
+	// Date contains the information returned from the Date header response.
+	Date *time.Time `xml:"Date"`
+
+	// The result of a Filter Blobs API call
+	EnumerationResults *FilterBlobSegment `xml:"EnumerationResults"`
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+
+	// RequestID contains the information returned from the x-ms-request-id header response.
+	RequestID *string `xml:"RequestID"`
+
+	// Version contains the information returned from the x-ms-version header response.
+	Version *string `xml:"Version"`
+}
+
 // Geo-Replication information for the Secondary Storage Service
 type GeoReplication struct {
 	// A GMT date/time value, to the second. All primary writes preceding this value are guaranteed to be available for read operations at the secondary. Primary
@@ -2513,6 +3316,12 @@ func (g *GeoReplication) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 	}
 	g.LastSyncTime = (*time.Time)(aux.LastSyncTime)
 	return nil
+}
+
+// json text configuration
+type JSONTextConfiguration struct {
+	// record separator
+	RecordSeparator *string `xml:"RecordSeparator"`
 }
 
 // Key information
@@ -2670,6 +3479,8 @@ type ModifiedAccessConditions struct {
 	IfModifiedSince *time.Time
 	// Specify an ETag value to operate only on blobs without a matching value.
 	IfNoneMatch *string
+	// Specify a SQL where clause on blob tags to operate only on blobs with a matching value.
+	IfTags *string
 	// Specify this header value to operate only on a blob if it has not been modified since the specified date/time.
 	IfUnmodifiedSince *time.Time
 }
@@ -2762,6 +3573,14 @@ type PageBlobCreateOptions struct {
 	// Set for page blobs only. The sequence number is a user-controlled value that you can use to track requests. The value of the sequence number must be
 	// between 0 and 2^63 - 1.
 	BlobSequenceNumber *int64
+	// Optional. Used to set blob tags in various blob operations.
+	BlobTagsString *string
+	// Specifies the date time when the blobs immutability policy is set to expire.
+	ImmutabilityPolicyExpiry *time.Time
+	// Specifies the immutability policy mode to set on the blob.
+	ImmutabilityPolicyMode *BlobImmutabilityPolicyMode
+	// Specified if a legal hold should be set on the blob.
+	LegalHold *bool
 	// Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata
 	// from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified
 	// metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming
@@ -2810,6 +3629,9 @@ type PageBlobCreateResponse struct {
 
 	// Version contains the information returned from the x-ms-version header response.
 	Version *string
+
+	// VersionID contains the information returned from the x-ms-version-id header response.
+	VersionID *string
 }
 
 // PageBlobGetPageRangesDiffOptions contains the optional parameters for the PageBlob.GetPageRangesDiff method.
@@ -3075,8 +3897,52 @@ type PageRange struct {
 	Start *int64 `xml:"Start"`
 }
 
+type QueryFormat struct {
+	// arrow configuration
+	ArrowConfiguration *ArrowConfiguration `xml:"ArrowConfiguration"`
+
+	// delimited text configuration
+	DelimitedTextConfiguration *DelimitedTextConfiguration `xml:"DelimitedTextConfiguration"`
+
+	// json text configuration
+	JSONTextConfiguration *JSONTextConfiguration `xml:"JsonTextConfiguration"`
+
+	// The quick query format type.
+	Type *QueryFormatType `xml:"Type"`
+}
+
+// the quick query body
+type QueryRequest struct {
+	// a query statement
+	Expression          *string             `xml:"Expression"`
+	InputSerialization  *QuerySerialization `xml:"InputSerialization"`
+	OutputSerialization *QuerySerialization `xml:"OutputSerialization"`
+
+	// the query type
+	QueryType *string `xml:"QueryType"`
+}
+
+// MarshalXML implements the xml.Marshaller interface for type QueryRequest.
+func (q QueryRequest) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	start.Name.Local = "QueryRequest"
+	type alias QueryRequest
+	aux := &struct {
+		*alias
+	}{
+		alias: (*alias)(&q),
+	}
+	return e.EncodeElement(aux, start)
+}
+
+type QuerySerialization struct {
+	Format *QueryFormat `xml:"Format"`
+}
+
 // the retention policy which determines how long the associated data should persist
 type RetentionPolicy struct {
+	// Indicates whether permanent delete is allowed on this storage account.
+	AllowPermanentDelete *bool `xml:"AllowPermanentDelete"`
+
 	// Indicates the number of days that metrics or logging or soft-deleted data should be retained. All data older than this value will be deleted
 	Days *int32 `xml:"Days"`
 
@@ -3092,6 +3958,26 @@ type SequenceNumberAccessConditions struct {
 	IfSequenceNumberLessThan *int64
 	// Specify this header value to operate only on a blob if it has a sequence number less than or equal to the specified.
 	IfSequenceNumberLessThanOrEqualTo *int64
+}
+
+// ServiceFilterBlobsOptions contains the optional parameters for the Service.FilterBlobs method.
+type ServiceFilterBlobsOptions struct {
+	// A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker
+	// value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value
+	// can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client.
+	Marker *string
+	// Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server
+	// will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for
+	// retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or
+	// than the default of 5000.
+	Maxresults *int32
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	RequestID *string
+	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
+	// Timeouts for Blob Service Operations.</a>
+	Timeout *int32
+	// Filters the results to return only to return only blobs whose tags match the specified expression.
+	Where *string
 }
 
 // ServiceGetAccountInfoOptions contains the optional parameters for the Service.GetAccountInfo method.
@@ -3156,7 +4042,7 @@ type ServiceGetUserDelegationKeyOptions struct {
 // ServiceListContainersSegmentOptions contains the optional parameters for the Service.ListContainersSegment method.
 type ServiceListContainersSegmentOptions struct {
 	// Include this parameter to specify that the container's metadata be returned as part of the response body.
-	Include *string
+	Include *[]ListContainersIncludeType
 	// A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker
 	// value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value
 	// can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client.
@@ -3270,12 +4156,17 @@ type SourceModifiedAccessConditions struct {
 	SourceIfModifiedSince *time.Time
 	// Specify an ETag value to operate only on blobs without a matching value.
 	SourceIfNoneMatch *string
+	// Specify a SQL where clause on blob tags to operate only on blobs with a matching value.
+	SourceIfTags *string
 	// Specify this header value to operate only on a blob if it has not been modified since the specified date/time.
 	SourceIfUnmodifiedSince *time.Time
 }
 
 // The properties that enable an account to host a static website
 type StaticWebsite struct {
+	// Absolute path of the default index page
+	DefaultIndexDocumentPath *string `xml:"DefaultIndexDocumentPath"`
+
 	// Indicates whether this account is hosting a static website
 	Enabled *bool `xml:"Enabled"`
 

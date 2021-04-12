@@ -90,7 +90,10 @@ func (client *pageBlobClient) clearPagesCreateRequest(ctx context.Context, conte
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfNoneMatch != nil {
 		req.Header.Set("If-None-Match", *modifiedAccessConditions.IfNoneMatch)
 	}
-	req.Header.Set("x-ms-version", "2019-07-07")
+	if modifiedAccessConditions != nil && modifiedAccessConditions.IfTags != nil {
+		req.Header.Set("x-ms-if-tags", *modifiedAccessConditions.IfTags)
+	}
+	req.Header.Set("x-ms-version", "2020-06-12")
 	if pageBlobClearPagesOptions != nil && pageBlobClearPagesOptions.RequestID != nil {
 		req.Header.Set("x-ms-client-request-id", *pageBlobClearPagesOptions.RequestID)
 	}
@@ -205,8 +208,11 @@ func (client *pageBlobClient) copyIncrementalCreateRequest(ctx context.Context, 
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfNoneMatch != nil {
 		req.Header.Set("If-None-Match", *modifiedAccessConditions.IfNoneMatch)
 	}
+	if modifiedAccessConditions != nil && modifiedAccessConditions.IfTags != nil {
+		req.Header.Set("x-ms-if-tags", *modifiedAccessConditions.IfTags)
+	}
 	req.Header.Set("x-ms-copy-source", copySource)
-	req.Header.Set("x-ms-version", "2019-07-07")
+	req.Header.Set("x-ms-version", "2020-06-12")
 	if pageBlobCopyIncrementalOptions != nil && pageBlobCopyIncrementalOptions.RequestID != nil {
 		req.Header.Set("x-ms-client-request-id", *pageBlobCopyIncrementalOptions.RequestID)
 	}
@@ -344,13 +350,28 @@ func (client *pageBlobClient) createCreateRequest(ctx context.Context, contentLe
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfNoneMatch != nil {
 		req.Header.Set("If-None-Match", *modifiedAccessConditions.IfNoneMatch)
 	}
+	if modifiedAccessConditions != nil && modifiedAccessConditions.IfTags != nil {
+		req.Header.Set("x-ms-if-tags", *modifiedAccessConditions.IfTags)
+	}
 	req.Header.Set("x-ms-blob-content-length", strconv.FormatInt(blobContentLength, 10))
 	if pageBlobCreateOptions != nil && pageBlobCreateOptions.BlobSequenceNumber != nil {
 		req.Header.Set("x-ms-blob-sequence-number", strconv.FormatInt(*pageBlobCreateOptions.BlobSequenceNumber, 10))
 	}
-	req.Header.Set("x-ms-version", "2019-07-07")
+	req.Header.Set("x-ms-version", "2020-06-12")
 	if pageBlobCreateOptions != nil && pageBlobCreateOptions.RequestID != nil {
 		req.Header.Set("x-ms-client-request-id", *pageBlobCreateOptions.RequestID)
+	}
+	if pageBlobCreateOptions != nil && pageBlobCreateOptions.BlobTagsString != nil {
+		req.Header.Set("x-ms-tags", *pageBlobCreateOptions.BlobTagsString)
+	}
+	if pageBlobCreateOptions != nil && pageBlobCreateOptions.ImmutabilityPolicyExpiry != nil {
+		req.Header.Set("x-ms-immutability-policy-until-date", pageBlobCreateOptions.ImmutabilityPolicyExpiry.Format(time.RFC1123))
+	}
+	if pageBlobCreateOptions != nil && pageBlobCreateOptions.ImmutabilityPolicyMode != nil {
+		req.Header.Set("x-ms-immutability-policy-mode", string(*pageBlobCreateOptions.ImmutabilityPolicyMode))
+	}
+	if pageBlobCreateOptions != nil && pageBlobCreateOptions.LegalHold != nil {
+		req.Header.Set("x-ms-legal-hold", strconv.FormatBool(*pageBlobCreateOptions.LegalHold))
 	}
 	req.Header.Set("Accept", "application/xml")
 	return req, nil
@@ -384,6 +405,9 @@ func (client *pageBlobClient) createHandleResponse(resp *azcore.Response) (PageB
 	}
 	if val := resp.Header.Get("x-ms-version"); val != "" {
 		result.Version = &val
+	}
+	if val := resp.Header.Get("x-ms-version-id"); val != "" {
+		result.VersionID = &val
 	}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
@@ -467,7 +491,10 @@ func (client *pageBlobClient) getPageRangesCreateRequest(ctx context.Context, pa
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfNoneMatch != nil {
 		req.Header.Set("If-None-Match", *modifiedAccessConditions.IfNoneMatch)
 	}
-	req.Header.Set("x-ms-version", "2019-07-07")
+	if modifiedAccessConditions != nil && modifiedAccessConditions.IfTags != nil {
+		req.Header.Set("x-ms-if-tags", *modifiedAccessConditions.IfTags)
+	}
+	req.Header.Set("x-ms-version", "2020-06-12")
 	if pageBlobGetPageRangesOptions != nil && pageBlobGetPageRangesOptions.RequestID != nil {
 		req.Header.Set("x-ms-client-request-id", *pageBlobGetPageRangesOptions.RequestID)
 	}
@@ -584,7 +611,10 @@ func (client *pageBlobClient) getPageRangesDiffCreateRequest(ctx context.Context
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfNoneMatch != nil {
 		req.Header.Set("If-None-Match", *modifiedAccessConditions.IfNoneMatch)
 	}
-	req.Header.Set("x-ms-version", "2019-07-07")
+	if modifiedAccessConditions != nil && modifiedAccessConditions.IfTags != nil {
+		req.Header.Set("x-ms-if-tags", *modifiedAccessConditions.IfTags)
+	}
+	req.Header.Set("x-ms-version", "2020-06-12")
 	if pageBlobGetPageRangesDiffOptions != nil && pageBlobGetPageRangesDiffOptions.RequestID != nil {
 		req.Header.Set("x-ms-client-request-id", *pageBlobGetPageRangesDiffOptions.RequestID)
 	}
@@ -700,8 +730,11 @@ func (client *pageBlobClient) resizeCreateRequest(ctx context.Context, blobConte
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfNoneMatch != nil {
 		req.Header.Set("If-None-Match", *modifiedAccessConditions.IfNoneMatch)
 	}
+	if modifiedAccessConditions != nil && modifiedAccessConditions.IfTags != nil {
+		req.Header.Set("x-ms-if-tags", *modifiedAccessConditions.IfTags)
+	}
 	req.Header.Set("x-ms-blob-content-length", strconv.FormatInt(blobContentLength, 10))
-	req.Header.Set("x-ms-version", "2019-07-07")
+	req.Header.Set("x-ms-version", "2020-06-12")
 	if pageBlobResizeOptions != nil && pageBlobResizeOptions.RequestID != nil {
 		req.Header.Set("x-ms-client-request-id", *pageBlobResizeOptions.RequestID)
 	}
@@ -801,11 +834,14 @@ func (client *pageBlobClient) updateSequenceNumberCreateRequest(ctx context.Cont
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfNoneMatch != nil {
 		req.Header.Set("If-None-Match", *modifiedAccessConditions.IfNoneMatch)
 	}
+	if modifiedAccessConditions != nil && modifiedAccessConditions.IfTags != nil {
+		req.Header.Set("x-ms-if-tags", *modifiedAccessConditions.IfTags)
+	}
 	req.Header.Set("x-ms-sequence-number-action", string(sequenceNumberAction))
 	if pageBlobUpdateSequenceNumberOptions != nil && pageBlobUpdateSequenceNumberOptions.BlobSequenceNumber != nil {
 		req.Header.Set("x-ms-blob-sequence-number", strconv.FormatInt(*pageBlobUpdateSequenceNumberOptions.BlobSequenceNumber, 10))
 	}
-	req.Header.Set("x-ms-version", "2019-07-07")
+	req.Header.Set("x-ms-version", "2020-06-12")
 	if pageBlobUpdateSequenceNumberOptions != nil && pageBlobUpdateSequenceNumberOptions.RequestID != nil {
 		req.Header.Set("x-ms-client-request-id", *pageBlobUpdateSequenceNumberOptions.RequestID)
 	}
@@ -937,7 +973,10 @@ func (client *pageBlobClient) uploadPagesCreateRequest(ctx context.Context, cont
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfNoneMatch != nil {
 		req.Header.Set("If-None-Match", *modifiedAccessConditions.IfNoneMatch)
 	}
-	req.Header.Set("x-ms-version", "2019-07-07")
+	if modifiedAccessConditions != nil && modifiedAccessConditions.IfTags != nil {
+		req.Header.Set("x-ms-if-tags", *modifiedAccessConditions.IfTags)
+	}
+	req.Header.Set("x-ms-version", "2020-06-12")
 	if pageBlobUploadPagesOptions != nil && pageBlobUploadPagesOptions.RequestID != nil {
 		req.Header.Set("x-ms-client-request-id", *pageBlobUploadPagesOptions.RequestID)
 	}
@@ -1096,6 +1135,9 @@ func (client *pageBlobClient) uploadPagesFromURLCreateRequest(ctx context.Contex
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfNoneMatch != nil {
 		req.Header.Set("If-None-Match", *modifiedAccessConditions.IfNoneMatch)
 	}
+	if modifiedAccessConditions != nil && modifiedAccessConditions.IfTags != nil {
+		req.Header.Set("x-ms-if-tags", *modifiedAccessConditions.IfTags)
+	}
 	if sourceModifiedAccessConditions != nil && sourceModifiedAccessConditions.SourceIfModifiedSince != nil {
 		req.Header.Set("x-ms-source-if-modified-since", sourceModifiedAccessConditions.SourceIfModifiedSince.Format(time.RFC1123))
 	}
@@ -1108,7 +1150,7 @@ func (client *pageBlobClient) uploadPagesFromURLCreateRequest(ctx context.Contex
 	if sourceModifiedAccessConditions != nil && sourceModifiedAccessConditions.SourceIfNoneMatch != nil {
 		req.Header.Set("x-ms-source-if-none-match", *sourceModifiedAccessConditions.SourceIfNoneMatch)
 	}
-	req.Header.Set("x-ms-version", "2019-07-07")
+	req.Header.Set("x-ms-version", "2020-06-12")
 	if pageBlobUploadPagesFromURLOptions != nil && pageBlobUploadPagesFromURLOptions.RequestID != nil {
 		req.Header.Set("x-ms-client-request-id", *pageBlobUploadPagesFromURLOptions.RequestID)
 	}
