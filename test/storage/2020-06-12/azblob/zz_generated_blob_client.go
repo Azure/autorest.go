@@ -949,25 +949,23 @@ func (client *blobClient) downloadHandleResponse(resp *azcore.Response) (BlobDow
 		}
 		result.LastModified = &lastModified
 	}
-	prefix := strings.ToUpper("x-ms-meta-")
 	for hh := range resp.Header {
-		if strings.HasPrefix(strings.ToUpper(hh), prefix) {
+		if len(hh) > len("x-ms-meta-") && strings.EqualFold(hh[:len("x-ms-meta-")], "x-ms-meta-") {
 			if result.Metadata == nil {
 				result.Metadata = map[string]string{}
 			}
-			result.Metadata[hh[len(prefix):]] = resp.Header.Get(hh)
+			result.Metadata[hh[len("x-ms-meta-"):]] = resp.Header.Get(hh)
 		}
 	}
 	if val := resp.Header.Get("x-ms-or-policy-id"); val != "" {
 		result.ObjectReplicationPolicyID = &val
 	}
-	prefix = strings.ToUpper("x-ms-or-")
 	for hh := range resp.Header {
-		if strings.HasPrefix(strings.ToUpper(hh), prefix) {
+		if len(hh) > len("x-ms-or-") && strings.EqualFold(hh[:len("x-ms-or-")], "x-ms-or-") {
 			if result.Metadata == nil {
 				result.Metadata = map[string]string{}
 			}
-			result.Metadata[hh[len(prefix):]] = resp.Header.Get(hh)
+			result.Metadata[hh[len("x-ms-or-"):]] = resp.Header.Get(hh)
 		}
 	}
 	if val := resp.Header.Get("Content-Length"); val != "" {
@@ -1421,25 +1419,23 @@ func (client *blobClient) getPropertiesHandleResponse(resp *azcore.Response) (Bl
 		}
 		result.CreationTime = &creationTime
 	}
-	prefix := strings.ToUpper("x-ms-meta-")
 	for hh := range resp.Header {
-		if strings.HasPrefix(strings.ToUpper(hh), prefix) {
+		if len(hh) > len("x-ms-meta-") && strings.EqualFold(hh[:len("x-ms-meta-")], "x-ms-meta-") {
 			if result.Metadata == nil {
 				result.Metadata = map[string]string{}
 			}
-			result.Metadata[hh[len(prefix):]] = resp.Header.Get(hh)
+			result.Metadata[hh[len("x-ms-meta-"):]] = resp.Header.Get(hh)
 		}
 	}
 	if val := resp.Header.Get("x-ms-or-policy-id"); val != "" {
 		result.ObjectReplicationPolicyID = &val
 	}
-	prefix = strings.ToUpper("x-ms-or-")
 	for hh := range resp.Header {
-		if strings.HasPrefix(strings.ToUpper(hh), prefix) {
+		if len(hh) > len("x-ms-or-") && strings.EqualFold(hh[:len("x-ms-or-")], "x-ms-or-") {
 			if result.Metadata == nil {
 				result.Metadata = map[string]string{}
 			}
-			result.Metadata[hh[len(prefix):]] = resp.Header.Get(hh)
+			result.Metadata[hh[len("x-ms-or-"):]] = resp.Header.Get(hh)
 		}
 	}
 	if val := resp.Header.Get("x-ms-blob-type"); val != "" {
@@ -1820,13 +1816,12 @@ func (client *blobClient) queryHandleResponse(resp *azcore.Response) (BlobQueryR
 		}
 		result.LastModified = &lastModified
 	}
-	prefix := strings.ToUpper("x-ms-meta-")
 	for hh := range resp.Header {
-		if strings.HasPrefix(strings.ToUpper(hh), prefix) {
+		if len(hh) > len("x-ms-meta-") && strings.EqualFold(hh[:len("x-ms-meta-")], "x-ms-meta-") {
 			if result.Metadata == nil {
 				result.Metadata = map[string]string{}
 			}
-			result.Metadata[hh[len(prefix):]] = resp.Header.Get(hh)
+			result.Metadata[hh[len("x-ms-meta-"):]] = resp.Header.Get(hh)
 		}
 	}
 	if val := resp.Header.Get("Content-Length"); val != "" {

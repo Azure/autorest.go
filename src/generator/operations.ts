@@ -105,21 +105,20 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
 }
 
 // use this to generate the code that will help process values returned in response headers
-function formatHeaderResponseValue(propName: string, header: string, schema: Schema, imports: ImportManager, respObj: string, zeroResp: string, multiPrefix: boolean): [string, boolean] {
+function formatHeaderResponseValue(propName: string, header: string, schema: Schema, imports: ImportManager, respObj: string, zeroResp: string): string {
   // dictionaries are handled slightly different so we do that first
   if (schema.type === SchemaType.Dictionary) {
     imports.add('strings');
-    const operator = multiPrefix? '=' : ":=";
-    let text = `\tprefix ${operator} strings.ToUpper("${schema.language.go!.headerCollectionPrefix}")\n`;
-    text += '\tfor hh := range resp.Header {\n';
-    text += `\t\tif strings.HasPrefix(strings.ToUpper(hh), prefix) {\n`;
+    const headerPrefix = schema.language.go!.headerCollectionPrefix;
+    let text = '\tfor hh := range resp.Header {\n';
+    text += `\t\tif len(hh) > len("${headerPrefix}") && strings.EqualFold(hh[:len("${headerPrefix}")], "${headerPrefix}") {\n`;
     text += `\t\t\tif ${respObj}.Metadata == nil {\n`;
     text += `\t\t\t\t${respObj}.Metadata = map[string]string{}\n`;
     text += '\t\t\t}\n';
-    text += `\t\t\t${respObj}.Metadata[hh[len(prefix):]] = resp.Header.Get(hh)\n`;
+    text += `\t\t\t${respObj}.Metadata[hh[len("${headerPrefix}"):]] = resp.Header.Get(hh)\n`;
     text += '\t\t}\n';
     text += '\t}\n';
-    return [text, true];
+    return text;
   }
   let text = `\tif val := resp.Header.Get("${header}"); val != "" {\n`;
   const name = propName.uncapitalize();
@@ -141,13 +140,13 @@ function formatHeaderResponseValue(propName: string, header: string, schema: Sch
     case SchemaType.SealedChoice:
       text += `\t\t${respObj}.${propName} = (*${schema.language.go!.name})(&val)\n`;
       text += '\t}\n';
-      return [text, multiPrefix];
+      return text;
     case SchemaType.Constant:
     case SchemaType.Duration:
     case SchemaType.String:
       text += `\t\t${respObj}.${propName} = &val\n`;
       text += '\t}\n';
-      return [text, multiPrefix];
+      return text;
     case SchemaType.Date:
       imports.add('time');
       text += `\t\t${name}, err := time.Parse("${dateFormat}", val)\n`;
@@ -189,7 +188,7 @@ function formatHeaderResponseValue(propName: string, header: string, schema: Sch
   text += `\t\t}\n`;
   text += `\t\t${respObj}.${propName} = &${name}\n`;
   text += '\t}\n';
-  return [text, multiPrefix];
+  return text;
 }
 
 function generateMultiRespComment(op: Operation): string {
@@ -718,11 +717,8 @@ function generateResponseUnmarshaller(op: Operation, response: Response, imports
     }
   }
   const addHeaderVals = function () {
-    let multiplePrefix = false;
     for (const headerVal of values(headerVals)) {
-      let result = formatHeaderResponseValue(headerVal.language.go!.name, headerVal.language.go!.fromHeader, headerVal.schema, imports, 'result', `${response.schema.language.go!.responseType.name}{}`, multiplePrefix);
-      unmarshallerText += result[0]
-      multiplePrefix = result[1]
+      unmarshallerText += formatHeaderResponseValue(headerVal.language.go!.name, headerVal.language.go!.fromHeader, headerVal.schema, imports, 'result', `${response.schema.language.go!.responseType.name}{}`);
     }
   };
   if (op.language.go!.headAsBoolean === true) {
