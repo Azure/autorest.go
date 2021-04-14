@@ -19,9 +19,9 @@ func unmarshalFirewallPolicyRuleClassification(rawMsg *json.RawMessage) (Firewal
 	}
 	var b FirewallPolicyRuleClassification
 	switch m["ruleType"] {
-	case FirewallPolicyRuleTypeFirewallPolicyFilterRule:
+	case string(FirewallPolicyRuleTypeFirewallPolicyFilterRule):
 		b = &FirewallPolicyFilterRule{}
-	case FirewallPolicyRuleTypeFirewallPolicyNatRule:
+	case string(FirewallPolicyRuleTypeFirewallPolicyNatRule):
 		b = &FirewallPolicyNatRule{}
 	default:
 		b = &FirewallPolicyRule{}
@@ -58,11 +58,11 @@ func unmarshalFirewallPolicyRuleConditionClassification(rawMsg *json.RawMessage)
 	}
 	var b FirewallPolicyRuleConditionClassification
 	switch m["ruleConditionType"] {
-	case FirewallPolicyRuleConditionTypeApplicationRuleCondition:
+	case string(FirewallPolicyRuleConditionTypeApplicationRuleCondition):
 		b = &ApplicationRuleCondition{}
-	case FirewallPolicyRuleConditionTypeNatRuleCondition:
+	case string(FirewallPolicyRuleConditionTypeNatRuleCondition):
 		b = &NatRuleCondition{}
-	case FirewallPolicyRuleConditionTypeNetworkRuleCondition:
+	case string(FirewallPolicyRuleConditionTypeNetworkRuleCondition):
 		b = &NetworkRuleCondition{}
 	default:
 		b = &FirewallPolicyRuleCondition{}
