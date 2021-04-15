@@ -52,6 +52,7 @@ func (future *LRORetrysDelete202Retry200Future) result(client LRORetrysClient) (
 		return
 	}
 	if !done {
+		ar.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LRORetrysDelete202Retry200Future")
 		return
 	}
@@ -88,6 +89,7 @@ func (future *LRORetrysDeleteAsyncRelativeRetrySucceededFuture) result(client LR
 		return
 	}
 	if !done {
+		ar.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LRORetrysDeleteAsyncRelativeRetrySucceededFuture")
 		return
 	}
@@ -124,6 +126,7 @@ func (future *LRORetrysDeleteProvisioning202Accepted200SucceededFuture) result(c
 		return
 	}
 	if !done {
+		p.Response.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LRORetrysDeleteProvisioning202Accepted200SucceededFuture")
 		return
 	}
@@ -166,6 +169,7 @@ func (future *LRORetrysPost202Retry200Future) result(client LRORetrysClient) (ar
 		return
 	}
 	if !done {
+		ar.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LRORetrysPost202Retry200Future")
 		return
 	}
@@ -202,6 +206,7 @@ func (future *LRORetrysPostAsyncRelativeRetrySucceededFuture) result(client LROR
 		return
 	}
 	if !done {
+		ar.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LRORetrysPostAsyncRelativeRetrySucceededFuture")
 		return
 	}
@@ -238,6 +243,7 @@ func (future *LRORetrysPut201CreatingSucceeded200Future) result(client LRORetrys
 		return
 	}
 	if !done {
+		p.Response.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LRORetrysPut201CreatingSucceeded200Future")
 		return
 	}
@@ -280,6 +286,7 @@ func (future *LRORetrysPutAsyncRelativeRetrySucceededFuture) result(client LRORe
 		return
 	}
 	if !done {
+		p.Response.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LRORetrysPutAsyncRelativeRetrySucceededFuture")
 		return
 	}
@@ -322,6 +329,7 @@ func (future *LROSADsDelete202NonRetry400Future) result(client LROSADsClient) (a
 		return
 	}
 	if !done {
+		ar.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsDelete202NonRetry400Future")
 		return
 	}
@@ -358,6 +366,7 @@ func (future *LROSADsDelete202RetryInvalidHeaderFuture) result(client LROSADsCli
 		return
 	}
 	if !done {
+		ar.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsDelete202RetryInvalidHeaderFuture")
 		return
 	}
@@ -394,6 +403,7 @@ func (future *LROSADsDelete204SucceededFuture) result(client LROSADsClient) (ar 
 		return
 	}
 	if !done {
+		ar.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsDelete204SucceededFuture")
 		return
 	}
@@ -430,6 +440,7 @@ func (future *LROSADsDeleteAsyncRelativeRetry400Future) result(client LROSADsCli
 		return
 	}
 	if !done {
+		ar.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsDeleteAsyncRelativeRetry400Future")
 		return
 	}
@@ -466,6 +477,7 @@ func (future *LROSADsDeleteAsyncRelativeRetryInvalidHeaderFuture) result(client 
 		return
 	}
 	if !done {
+		ar.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsDeleteAsyncRelativeRetryInvalidHeaderFuture")
 		return
 	}
@@ -502,6 +514,7 @@ func (future *LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingFuture) result(cl
 		return
 	}
 	if !done {
+		ar.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingFuture")
 		return
 	}
@@ -538,6 +551,7 @@ func (future *LROSADsDeleteAsyncRelativeRetryNoStatusFuture) result(client LROSA
 		return
 	}
 	if !done {
+		ar.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsDeleteAsyncRelativeRetryNoStatusFuture")
 		return
 	}
@@ -574,6 +588,7 @@ func (future *LROSADsDeleteNonRetry400Future) result(client LROSADsClient) (ar a
 		return
 	}
 	if !done {
+		ar.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsDeleteNonRetry400Future")
 		return
 	}
@@ -610,6 +625,7 @@ func (future *LROSADsPost202NoLocationFuture) result(client LROSADsClient) (ar a
 		return
 	}
 	if !done {
+		ar.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPost202NoLocationFuture")
 		return
 	}
@@ -646,6 +662,7 @@ func (future *LROSADsPost202NonRetry400Future) result(client LROSADsClient) (ar 
 		return
 	}
 	if !done {
+		ar.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPost202NonRetry400Future")
 		return
 	}
@@ -682,6 +699,7 @@ func (future *LROSADsPost202RetryInvalidHeaderFuture) result(client LROSADsClien
 		return
 	}
 	if !done {
+		ar.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPost202RetryInvalidHeaderFuture")
 		return
 	}
@@ -718,6 +736,7 @@ func (future *LROSADsPostAsyncRelativeRetry400Future) result(client LROSADsClien
 		return
 	}
 	if !done {
+		ar.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPostAsyncRelativeRetry400Future")
 		return
 	}
@@ -754,6 +773,7 @@ func (future *LROSADsPostAsyncRelativeRetryInvalidHeaderFuture) result(client LR
 		return
 	}
 	if !done {
+		ar.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPostAsyncRelativeRetryInvalidHeaderFuture")
 		return
 	}
@@ -790,6 +810,7 @@ func (future *LROSADsPostAsyncRelativeRetryInvalidJSONPollingFuture) result(clie
 		return
 	}
 	if !done {
+		ar.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPostAsyncRelativeRetryInvalidJSONPollingFuture")
 		return
 	}
@@ -826,6 +847,7 @@ func (future *LROSADsPostAsyncRelativeRetryNoPayloadFuture) result(client LROSAD
 		return
 	}
 	if !done {
+		ar.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPostAsyncRelativeRetryNoPayloadFuture")
 		return
 	}
@@ -862,6 +884,7 @@ func (future *LROSADsPostNonRetry400Future) result(client LROSADsClient) (ar aut
 		return
 	}
 	if !done {
+		ar.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPostNonRetry400Future")
 		return
 	}
@@ -898,6 +921,7 @@ func (future *LROSADsPut200InvalidJSONFuture) result(client LROSADsClient) (p Pr
 		return
 	}
 	if !done {
+		p.Response.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPut200InvalidJSONFuture")
 		return
 	}
@@ -940,6 +964,7 @@ func (future *LROSADsPutAsyncRelativeRetry400Future) result(client LROSADsClient
 		return
 	}
 	if !done {
+		p.Response.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPutAsyncRelativeRetry400Future")
 		return
 	}
@@ -982,6 +1007,7 @@ func (future *LROSADsPutAsyncRelativeRetryInvalidHeaderFuture) result(client LRO
 		return
 	}
 	if !done {
+		p.Response.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPutAsyncRelativeRetryInvalidHeaderFuture")
 		return
 	}
@@ -1024,6 +1050,7 @@ func (future *LROSADsPutAsyncRelativeRetryInvalidJSONPollingFuture) result(clien
 		return
 	}
 	if !done {
+		p.Response.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPutAsyncRelativeRetryInvalidJSONPollingFuture")
 		return
 	}
@@ -1066,6 +1093,7 @@ func (future *LROSADsPutAsyncRelativeRetryNoStatusFuture) result(client LROSADsC
 		return
 	}
 	if !done {
+		p.Response.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPutAsyncRelativeRetryNoStatusFuture")
 		return
 	}
@@ -1108,6 +1136,7 @@ func (future *LROSADsPutAsyncRelativeRetryNoStatusPayloadFuture) result(client L
 		return
 	}
 	if !done {
+		p.Response.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPutAsyncRelativeRetryNoStatusPayloadFuture")
 		return
 	}
@@ -1150,6 +1179,7 @@ func (future *LROSADsPutError201NoProvisioningStatePayloadFuture) result(client 
 		return
 	}
 	if !done {
+		p.Response.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPutError201NoProvisioningStatePayloadFuture")
 		return
 	}
@@ -1192,6 +1222,7 @@ func (future *LROSADsPutNonRetry201Creating400Future) result(client LROSADsClien
 		return
 	}
 	if !done {
+		p.Response.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPutNonRetry201Creating400Future")
 		return
 	}
@@ -1234,6 +1265,7 @@ func (future *LROSADsPutNonRetry201Creating400InvalidJSONFuture) result(client L
 		return
 	}
 	if !done {
+		p.Response.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPutNonRetry201Creating400InvalidJSONFuture")
 		return
 	}
@@ -1276,6 +1308,7 @@ func (future *LROSADsPutNonRetry400Future) result(client LROSADsClient) (p Produ
 		return
 	}
 	if !done {
+		p.Response.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPutNonRetry400Future")
 		return
 	}
@@ -1318,6 +1351,7 @@ func (future *LROsCustomHeaderPost202Retry200Future) result(client LROsCustomHea
 		return
 	}
 	if !done {
+		ar.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsCustomHeaderPost202Retry200Future")
 		return
 	}
@@ -1354,6 +1388,7 @@ func (future *LROsCustomHeaderPostAsyncRetrySucceededFuture) result(client LROsC
 		return
 	}
 	if !done {
+		ar.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsCustomHeaderPostAsyncRetrySucceededFuture")
 		return
 	}
@@ -1390,6 +1425,7 @@ func (future *LROsCustomHeaderPut201CreatingSucceeded200Future) result(client LR
 		return
 	}
 	if !done {
+		p.Response.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsCustomHeaderPut201CreatingSucceeded200Future")
 		return
 	}
@@ -1432,6 +1468,7 @@ func (future *LROsCustomHeaderPutAsyncRetrySucceededFuture) result(client LROsCu
 		return
 	}
 	if !done {
+		p.Response.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsCustomHeaderPutAsyncRetrySucceededFuture")
 		return
 	}
@@ -1474,6 +1511,7 @@ func (future *LROsDelete202NoRetry204Future) result(client LROsClient) (p Produc
 		return
 	}
 	if !done {
+		p.Response.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsDelete202NoRetry204Future")
 		return
 	}
@@ -1516,6 +1554,7 @@ func (future *LROsDelete202Retry200Future) result(client LROsClient) (p Product,
 		return
 	}
 	if !done {
+		p.Response.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsDelete202Retry200Future")
 		return
 	}
@@ -1558,6 +1597,7 @@ func (future *LROsDelete204SucceededFuture) result(client LROsClient) (ar autore
 		return
 	}
 	if !done {
+		ar.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsDelete204SucceededFuture")
 		return
 	}
@@ -1594,6 +1634,7 @@ func (future *LROsDeleteAsyncNoHeaderInRetryFuture) result(client LROsClient) (a
 		return
 	}
 	if !done {
+		ar.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsDeleteAsyncNoHeaderInRetryFuture")
 		return
 	}
@@ -1630,6 +1671,7 @@ func (future *LROsDeleteAsyncNoRetrySucceededFuture) result(client LROsClient) (
 		return
 	}
 	if !done {
+		ar.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsDeleteAsyncNoRetrySucceededFuture")
 		return
 	}
@@ -1666,6 +1708,7 @@ func (future *LROsDeleteAsyncRetrycanceledFuture) result(client LROsClient) (ar 
 		return
 	}
 	if !done {
+		ar.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsDeleteAsyncRetrycanceledFuture")
 		return
 	}
@@ -1702,6 +1745,7 @@ func (future *LROsDeleteAsyncRetryFailedFuture) result(client LROsClient) (ar au
 		return
 	}
 	if !done {
+		ar.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsDeleteAsyncRetryFailedFuture")
 		return
 	}
@@ -1738,6 +1782,7 @@ func (future *LROsDeleteAsyncRetrySucceededFuture) result(client LROsClient) (ar
 		return
 	}
 	if !done {
+		ar.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsDeleteAsyncRetrySucceededFuture")
 		return
 	}
@@ -1774,6 +1819,7 @@ func (future *LROsDeleteNoHeaderInRetryFuture) result(client LROsClient) (ar aut
 		return
 	}
 	if !done {
+		ar.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsDeleteNoHeaderInRetryFuture")
 		return
 	}
@@ -1810,6 +1856,7 @@ func (future *LROsDeleteProvisioning202Accepted200SucceededFuture) result(client
 		return
 	}
 	if !done {
+		p.Response.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsDeleteProvisioning202Accepted200SucceededFuture")
 		return
 	}
@@ -1852,6 +1899,7 @@ func (future *LROsDeleteProvisioning202Deletingcanceled200Future) result(client 
 		return
 	}
 	if !done {
+		p.Response.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsDeleteProvisioning202Deletingcanceled200Future")
 		return
 	}
@@ -1894,6 +1942,7 @@ func (future *LROsDeleteProvisioning202DeletingFailed200Future) result(client LR
 		return
 	}
 	if !done {
+		p.Response.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsDeleteProvisioning202DeletingFailed200Future")
 		return
 	}
@@ -1936,6 +1985,7 @@ func (future *LROsPost200WithPayloadFuture) result(client LROsClient) (s Sku, er
 		return
 	}
 	if !done {
+		s.Response.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPost200WithPayloadFuture")
 		return
 	}
@@ -1978,6 +2028,7 @@ func (future *LROsPost202NoRetry204Future) result(client LROsClient) (p Product,
 		return
 	}
 	if !done {
+		p.Response.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPost202NoRetry204Future")
 		return
 	}
@@ -2020,6 +2071,7 @@ func (future *LROsPost202Retry200Future) result(client LROsClient) (ar autorest.
 		return
 	}
 	if !done {
+		ar.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPost202Retry200Future")
 		return
 	}
@@ -2056,6 +2108,7 @@ func (future *LROsPostAsyncNoRetrySucceededFuture) result(client LROsClient) (p 
 		return
 	}
 	if !done {
+		p.Response.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPostAsyncNoRetrySucceededFuture")
 		return
 	}
@@ -2098,6 +2151,7 @@ func (future *LROsPostAsyncRetrycanceledFuture) result(client LROsClient) (ar au
 		return
 	}
 	if !done {
+		ar.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPostAsyncRetrycanceledFuture")
 		return
 	}
@@ -2134,6 +2188,7 @@ func (future *LROsPostAsyncRetryFailedFuture) result(client LROsClient) (ar auto
 		return
 	}
 	if !done {
+		ar.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPostAsyncRetryFailedFuture")
 		return
 	}
@@ -2170,6 +2225,7 @@ func (future *LROsPostAsyncRetrySucceededFuture) result(client LROsClient) (p Pr
 		return
 	}
 	if !done {
+		p.Response.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPostAsyncRetrySucceededFuture")
 		return
 	}
@@ -2212,6 +2268,7 @@ func (future *LROsPostDoubleHeadersFinalAzureHeaderGetDefaultFuture) result(clie
 		return
 	}
 	if !done {
+		p.Response.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPostDoubleHeadersFinalAzureHeaderGetDefaultFuture")
 		return
 	}
@@ -2254,6 +2311,7 @@ func (future *LROsPostDoubleHeadersFinalAzureHeaderGetFuture) result(client LROs
 		return
 	}
 	if !done {
+		p.Response.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPostDoubleHeadersFinalAzureHeaderGetFuture")
 		return
 	}
@@ -2296,6 +2354,7 @@ func (future *LROsPostDoubleHeadersFinalLocationGetFuture) result(client LROsCli
 		return
 	}
 	if !done {
+		p.Response.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPostDoubleHeadersFinalLocationGetFuture")
 		return
 	}
@@ -2338,6 +2397,7 @@ func (future *LROsPut200Acceptedcanceled200Future) result(client LROsClient) (p 
 		return
 	}
 	if !done {
+		p.Response.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPut200Acceptedcanceled200Future")
 		return
 	}
@@ -2380,6 +2440,7 @@ func (future *LROsPut200SucceededFuture) result(client LROsClient) (p Product, e
 		return
 	}
 	if !done {
+		p.Response.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPut200SucceededFuture")
 		return
 	}
@@ -2422,6 +2483,7 @@ func (future *LROsPut200SucceededNoStateFuture) result(client LROsClient) (p Pro
 		return
 	}
 	if !done {
+		p.Response.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPut200SucceededNoStateFuture")
 		return
 	}
@@ -2464,6 +2526,7 @@ func (future *LROsPut200UpdatingSucceeded204Future) result(client LROsClient) (p
 		return
 	}
 	if !done {
+		p.Response.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPut200UpdatingSucceeded204Future")
 		return
 	}
@@ -2506,6 +2569,7 @@ func (future *LROsPut201CreatingFailed200Future) result(client LROsClient) (p Pr
 		return
 	}
 	if !done {
+		p.Response.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPut201CreatingFailed200Future")
 		return
 	}
@@ -2548,6 +2612,7 @@ func (future *LROsPut201CreatingSucceeded200Future) result(client LROsClient) (p
 		return
 	}
 	if !done {
+		p.Response.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPut201CreatingSucceeded200Future")
 		return
 	}
@@ -2590,6 +2655,7 @@ func (future *LROsPut202Retry200Future) result(client LROsClient) (p Product, er
 		return
 	}
 	if !done {
+		p.Response.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPut202Retry200Future")
 		return
 	}
@@ -2632,6 +2698,7 @@ func (future *LROsPutAsyncNoHeaderInRetryFuture) result(client LROsClient) (p Pr
 		return
 	}
 	if !done {
+		p.Response.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPutAsyncNoHeaderInRetryFuture")
 		return
 	}
@@ -2674,6 +2741,7 @@ func (future *LROsPutAsyncNonResourceFuture) result(client LROsClient) (s Sku, e
 		return
 	}
 	if !done {
+		s.Response.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPutAsyncNonResourceFuture")
 		return
 	}
@@ -2716,6 +2784,7 @@ func (future *LROsPutAsyncNoRetrycanceledFuture) result(client LROsClient) (p Pr
 		return
 	}
 	if !done {
+		p.Response.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPutAsyncNoRetrycanceledFuture")
 		return
 	}
@@ -2758,6 +2827,7 @@ func (future *LROsPutAsyncNoRetrySucceededFuture) result(client LROsClient) (p P
 		return
 	}
 	if !done {
+		p.Response.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPutAsyncNoRetrySucceededFuture")
 		return
 	}
@@ -2800,6 +2870,7 @@ func (future *LROsPutAsyncRetryFailedFuture) result(client LROsClient) (p Produc
 		return
 	}
 	if !done {
+		p.Response.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPutAsyncRetryFailedFuture")
 		return
 	}
@@ -2842,6 +2913,7 @@ func (future *LROsPutAsyncRetrySucceededFuture) result(client LROsClient) (p Pro
 		return
 	}
 	if !done {
+		p.Response.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPutAsyncRetrySucceededFuture")
 		return
 	}
@@ -2884,6 +2956,7 @@ func (future *LROsPutAsyncSubResourceFuture) result(client LROsClient) (sp SubPr
 		return
 	}
 	if !done {
+		sp.Response.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPutAsyncSubResourceFuture")
 		return
 	}
@@ -2926,6 +2999,7 @@ func (future *LROsPutNoHeaderInRetryFuture) result(client LROsClient) (p Product
 		return
 	}
 	if !done {
+		p.Response.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPutNoHeaderInRetryFuture")
 		return
 	}
@@ -2968,6 +3042,7 @@ func (future *LROsPutNonResourceFuture) result(client LROsClient) (s Sku, err er
 		return
 	}
 	if !done {
+		s.Response.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPutNonResourceFuture")
 		return
 	}
@@ -3010,6 +3085,7 @@ func (future *LROsPutSubResourceFuture) result(client LROsClient) (sp SubProduct
 		return
 	}
 	if !done {
+		sp.Response.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPutSubResourceFuture")
 		return
 	}

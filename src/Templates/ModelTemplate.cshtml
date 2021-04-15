@@ -516,6 +516,19 @@ if (modelType is DictionaryTypeGo dictionaryType && dictionaryType.SupportsAddit
                 return
             }
             if !done {
+                @if (futureType.IsDefaultReturnType)
+                {
+                    // for default return types (i.e. autorest.Response)
+                    // assign the raw HTTP response to the *http.Response field
+                    @:@(resultVarTarget).Response = future.Response()
+                }
+                else
+                {
+                    // modeled return types embed autorest.Resposne as an anonymous field
+                    // so in order to assign the raw HTTP response to the *http.Response field
+                    // in it we need an extra ".Response" :(
+                    @:@(resultVarTarget).Response.Response = future.Response()
+                }
                 err = azure.NewAsyncOpIncompleteError("@futureTypeName")
                 return
             }
