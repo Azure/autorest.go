@@ -211,6 +211,7 @@ func (future *PagingGetMultiplePagesLROAllFuture) result(client PagingClient) (p
 		return
 	}
 	if !done {
+		prp.pr.Response.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("paginggroup.PagingGetMultiplePagesLROAllFuture")
 		return
 	}
@@ -253,6 +254,7 @@ func (future *PagingGetMultiplePagesLROFuture) result(client PagingClient) (prp 
 		return
 	}
 	if !done {
+		prp.pr.Response.Response = future.Response()
 		err = azure.NewAsyncOpIncompleteError("paginggroup.PagingGetMultiplePagesLROFuture")
 		return
 	}
