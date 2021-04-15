@@ -15,10 +15,9 @@ import (
 	"time"
 )
 
-// ProductResultPagerPoller provides polling facilities until the operation completes
+// ProductResultPagerPoller provides polling facilities until the operation reaches a terminal state.
 type ProductResultPagerPoller interface {
 	azcore.Poller
-
 	// FinalResponse performs a final GET to the service and returns the final response
 	// for the polling operation. If there is an error performing the final GET then an error is returned.
 	// If the final GET succeeded then the final ProductResultPager will be returned.
@@ -26,7 +25,6 @@ type ProductResultPagerPoller interface {
 }
 
 type productResultPagerPoller struct {
-	// the client for making the request
 	pipeline    azcore.Pipeline
 	errHandler  productResultHandleError
 	respHandler productResultHandleResponse
@@ -34,12 +32,10 @@ type productResultPagerPoller struct {
 	pt          armcore.Poller
 }
 
-// Done returns true if there was an error or polling has reached a terminal state
 func (p *productResultPagerPoller) Done() bool {
 	return p.pt.Done()
 }
 
-// Poll will send poll the service endpoint and return an http.Response or error received from the service
 func (p *productResultPagerPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx, p.pipeline)
 }
@@ -53,8 +49,6 @@ func (p *productResultPagerPoller) FinalResponse(ctx context.Context) (ProductRe
 	return p.handleResponse(&azcore.Response{Response: resp})
 }
 
-// ResumeToken generates the string token that can be used with the ResumeProductResultPagerPoller method
-// on the client to create a new poller from the data held in the current poller type
 func (p *productResultPagerPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }

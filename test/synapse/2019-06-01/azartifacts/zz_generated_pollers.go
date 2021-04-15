@@ -7,74 +7,134 @@
 
 package azartifacts
 
-import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
+import (
+	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"net/http"
+)
 
-// CreateDataFlowDebugSessionResponsePoller provides polling facilities until the operation completes
+// CreateDataFlowDebugSessionResponsePoller provides polling facilities until the operation reaches a terminal state.
 type CreateDataFlowDebugSessionResponsePoller interface {
 	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final CreateDataFlowDebugSessionResponseResponse will be returned.
+	FinalResponse(ctx context.Context) (CreateDataFlowDebugSessionResponseResponse, error)
 }
 
-// DataFlowDebugCommandResponsePoller provides polling facilities until the operation completes
+// DataFlowDebugCommandResponsePoller provides polling facilities until the operation reaches a terminal state.
 type DataFlowDebugCommandResponsePoller interface {
 	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final DataFlowDebugCommandResponseResponse will be returned.
+	FinalResponse(ctx context.Context) (DataFlowDebugCommandResponseResponse, error)
 }
 
-// DataFlowResourcePoller provides polling facilities until the operation completes
+// DataFlowResourcePoller provides polling facilities until the operation reaches a terminal state.
 type DataFlowResourcePoller interface {
 	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final DataFlowResourceResponse will be returned.
+	FinalResponse(ctx context.Context) (DataFlowResourceResponse, error)
 }
 
-// DatasetResourcePoller provides polling facilities until the operation completes
+// DatasetResourcePoller provides polling facilities until the operation reaches a terminal state.
 type DatasetResourcePoller interface {
 	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final DatasetResourceResponse will be returned.
+	FinalResponse(ctx context.Context) (DatasetResourceResponse, error)
 }
 
-// HTTPPoller provides polling facilities until the operation completes
+// HTTPPoller provides polling facilities until the operation reaches a terminal state.
 type HTTPPoller interface {
 	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final *http.Response will be returned.
+	FinalResponse(ctx context.Context) (*http.Response, error)
 }
 
-// LibraryResourceInfoPoller provides polling facilities until the operation completes
+// LibraryResourceInfoPoller provides polling facilities until the operation reaches a terminal state.
 type LibraryResourceInfoPoller interface {
 	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LibraryResourceInfoResponse will be returned.
+	FinalResponse(ctx context.Context) (LibraryResourceInfoResponse, error)
 }
 
-// LinkedServiceResourcePoller provides polling facilities until the operation completes
+// LinkedServiceResourcePoller provides polling facilities until the operation reaches a terminal state.
 type LinkedServiceResourcePoller interface {
 	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LinkedServiceResourceResponse will be returned.
+	FinalResponse(ctx context.Context) (LinkedServiceResourceResponse, error)
 }
 
-// NotebookResourcePoller provides polling facilities until the operation completes
+// NotebookResourcePoller provides polling facilities until the operation reaches a terminal state.
 type NotebookResourcePoller interface {
 	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final NotebookResourceResponse will be returned.
+	FinalResponse(ctx context.Context) (NotebookResourceResponse, error)
 }
 
-// PipelineResourcePoller provides polling facilities until the operation completes
+// PipelineResourcePoller provides polling facilities until the operation reaches a terminal state.
 type PipelineResourcePoller interface {
 	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final PipelineResourceResponse will be returned.
+	FinalResponse(ctx context.Context) (PipelineResourceResponse, error)
 }
 
-// SQLScriptResourcePoller provides polling facilities until the operation completes
+// SQLScriptResourcePoller provides polling facilities until the operation reaches a terminal state.
 type SQLScriptResourcePoller interface {
 	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final SQLScriptResourceResponse will be returned.
+	FinalResponse(ctx context.Context) (SQLScriptResourceResponse, error)
 }
 
-// SparkBatchJobPoller provides polling facilities until the operation completes
+// SparkBatchJobPoller provides polling facilities until the operation reaches a terminal state.
 type SparkBatchJobPoller interface {
 	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final SparkBatchJobResponse will be returned.
+	FinalResponse(ctx context.Context) (SparkBatchJobResponse, error)
 }
 
-// SparkJobDefinitionResourcePoller provides polling facilities until the operation completes
+// SparkJobDefinitionResourcePoller provides polling facilities until the operation reaches a terminal state.
 type SparkJobDefinitionResourcePoller interface {
 	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final SparkJobDefinitionResourceResponse will be returned.
+	FinalResponse(ctx context.Context) (SparkJobDefinitionResourceResponse, error)
 }
 
-// TriggerResourcePoller provides polling facilities until the operation completes
+// TriggerResourcePoller provides polling facilities until the operation reaches a terminal state.
 type TriggerResourcePoller interface {
 	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final TriggerResourceResponse will be returned.
+	FinalResponse(ctx context.Context) (TriggerResourceResponse, error)
 }
 
-// TriggerSubscriptionOperationStatusPoller provides polling facilities until the operation completes
+// TriggerSubscriptionOperationStatusPoller provides polling facilities until the operation reaches a terminal state.
 type TriggerSubscriptionOperationStatusPoller interface {
 	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final TriggerSubscriptionOperationStatusResponse will be returned.
+	FinalResponse(ctx context.Context) (TriggerSubscriptionOperationStatusResponse, error)
 }

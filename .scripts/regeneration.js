@@ -57,7 +57,7 @@ for (namespace in goMappings) {
     generate(inputFile, 'test/autorest/' + namespace);
 }
 
-const blobStorage = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/storage-dataplane-preview/specification/storage/data-plane/Microsoft.BlobStorage/preview/2020-06-12/blob.json';
+const blobStorage = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/ee9bd6fe35eb7850ff0d1496c59259eb74f0d446/specification/storage/data-plane/Microsoft.BlobStorage/preview/2020-06-12/blob.json';
 generate(blobStorage, 'test/storage/2020-06-12/azblob', '--credential-scope="https://storage.azure.com/.default" --module="azstorage" --openapi-type="data-plane"');
 
 const network = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/228cf296647f6e41182cee7d1a403990e6a8fe3c/specification/network/resource-manager/readme.md';
