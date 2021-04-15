@@ -11,7 +11,6 @@ import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
-	"time"
 )
 
 // CreateDataFlowDebugSessionResponsePoller provides polling facilities until the operation reaches a terminal state.

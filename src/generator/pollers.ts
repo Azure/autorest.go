@@ -26,7 +26,6 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
   }
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
   imports.add('net/http');
-  imports.add('time');
   const pollers = <Array<PollerInfo>>session.model.language.go!.pollerTypes;
   pollers.sort((a: PollerInfo, b: PollerInfo) => { return sortAscending(a.name, b.name) });
   let bodyText = '';
@@ -53,9 +52,9 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
       // internal poller methods
       bodyText += `func (p *${pollerName}) Done() bool {\n\treturn p.pt.Done()\n}\n\n`;
       bodyText += `func (p *${pollerName}) Poll(ctx context.Context) (*http.Response, error) {\n\treturn p.pt.Poll(ctx, p.pipeline)\n}\n\n`;
-      bodyText += pudFinalResp('FinalResponse', poller);
+      bodyText += pudFinalResp('FinalResponse', poller, imports);
       bodyText += `func (p *${pollerName}) ResumeToken() (string, error) {\n\treturn p.pt.ResumeToken()\n}\n\n`;
-      bodyText += pudFinalResp('pollUntilDone', poller);
+      bodyText += pudFinalResp('pollUntilDone', poller, imports);
       if (poller.pager) {
         bodyText += pagerHandleResponse(poller);
       }
@@ -88,10 +87,11 @@ function finalResponseDecl(poller: PollerInfo): string {
 
 // generates the pollUntilDone and FinalResponse methods.
 // the implementations are almost identical, just a few different params.
-function pudFinalResp(op: 'pollUntilDone' | 'FinalResponse', poller: PollerInfo): string {
+function pudFinalResp(op: 'pollUntilDone' | 'FinalResponse', poller: PollerInfo, imports: ImportManager): string {
   let durParam = '';
   let freqParam = '';
   if (op === 'pollUntilDone') {
+    imports.add('time');
     durParam = ', frequency time.Duration';
     freqParam = ', frequency';
   }
