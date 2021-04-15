@@ -516,6 +516,7 @@ if (modelType is DictionaryTypeGo dictionaryType && dictionaryType.SupportsAddit
                 return
             }
             if !done {
+                @:@(resultVarTarget).Response = future.Response()
                 err = azure.NewAsyncOpIncompleteError("@futureTypeName")
                 return
             }
