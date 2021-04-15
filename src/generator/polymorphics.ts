@@ -68,7 +68,7 @@ export async function generatePolymorphicHelpers(session: Session<CodeModel>): P
     text += '\tdefault:\n';
     text += `\t\tb = &${disc.language.go!.name}{}\n`;
     text += '\t}\n';
-    text += '\treturn b, json.Unmarshal(*rawMsg, &b)\n';
+    text += '\treturn b, json.Unmarshal(*rawMsg, b)\n';
     text += '}\n\n';
 
     // array unmarshaller

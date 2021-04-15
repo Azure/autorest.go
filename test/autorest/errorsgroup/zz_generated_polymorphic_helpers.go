@@ -35,7 +35,7 @@ func unmarshalNotFoundErrorBaseClassification(rawMsg *json.RawMessage) (NotFound
 	default:
 		b = &NotFoundErrorBase{}
 	}
-	return b, json.Unmarshal(*rawMsg, &b)
+	return b, json.Unmarshal(*rawMsg, b)
 }
 
 func unmarshalNotFoundErrorBaseClassificationArray(rawMsg *json.RawMessage) (*[]NotFoundErrorBaseClassification, error) {
@@ -83,7 +83,7 @@ func unmarshalPetActionErrorClassification(rawMsg *json.RawMessage) (PetActionEr
 	default:
 		b = &PetActionError{}
 	}
-	return b, json.Unmarshal(*rawMsg, &b)
+	return b, json.Unmarshal(*rawMsg, b)
 }
 
 func unmarshalPetActionErrorClassificationArray(rawMsg *json.RawMessage) (*[]PetActionErrorClassification, error) {
@@ -120,7 +120,7 @@ func unmarshalPetSadErrorClassification(rawMsg *json.RawMessage) (PetSadErrorCla
 	default:
 		b = &PetSadError{}
 	}
-	return b, json.Unmarshal(*rawMsg, &b)
+	return b, json.Unmarshal(*rawMsg, b)
 }
 
 func unmarshalPetSadErrorClassificationArray(rawMsg *json.RawMessage) (*[]PetSadErrorClassification, error) {

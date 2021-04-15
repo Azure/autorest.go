@@ -100,7 +100,7 @@ func unmarshalActivityClassification(rawMsg *json.RawMessage) (ActivityClassific
 	default:
 		b = &Activity{}
 	}
-	return b, json.Unmarshal(*rawMsg, &b)
+	return b, json.Unmarshal(*rawMsg, b)
 }
 
 func unmarshalActivityClassificationArray(rawMsg *json.RawMessage) (*[]ActivityClassification, error) {
@@ -157,7 +157,7 @@ func unmarshalControlActivityClassification(rawMsg *json.RawMessage) (ControlAct
 	default:
 		b = &ControlActivity{}
 	}
-	return b, json.Unmarshal(*rawMsg, &b)
+	return b, json.Unmarshal(*rawMsg, b)
 }
 
 func unmarshalControlActivityClassificationArray(rawMsg *json.RawMessage) (*[]ControlActivityClassification, error) {
@@ -260,7 +260,7 @@ func unmarshalCopySinkClassification(rawMsg *json.RawMessage) (CopySinkClassific
 	default:
 		b = &CopySink{}
 	}
-	return b, json.Unmarshal(*rawMsg, &b)
+	return b, json.Unmarshal(*rawMsg, b)
 }
 
 func unmarshalCopySinkClassificationArray(rawMsg *json.RawMessage) (*[]CopySinkClassification, error) {
@@ -469,7 +469,7 @@ func unmarshalCopySourceClassification(rawMsg *json.RawMessage) (CopySourceClass
 	default:
 		b = &CopySource{}
 	}
-	return b, json.Unmarshal(*rawMsg, &b)
+	return b, json.Unmarshal(*rawMsg, b)
 }
 
 func unmarshalCopySourceClassificationArray(rawMsg *json.RawMessage) (*[]CopySourceClassification, error) {
@@ -506,7 +506,7 @@ func unmarshalCopyTranslatorClassification(rawMsg *json.RawMessage) (CopyTransla
 	default:
 		b = &CopyTranslator{}
 	}
-	return b, json.Unmarshal(*rawMsg, &b)
+	return b, json.Unmarshal(*rawMsg, b)
 }
 
 func unmarshalCopyTranslatorClassificationArray(rawMsg *json.RawMessage) (*[]CopyTranslatorClassification, error) {
@@ -541,7 +541,7 @@ func unmarshalCustomSetupBaseClassification(rawMsg *json.RawMessage) (CustomSetu
 	default:
 		b = &CustomSetupBase{}
 	}
-	return b, json.Unmarshal(*rawMsg, &b)
+	return b, json.Unmarshal(*rawMsg, b)
 }
 
 func unmarshalCustomSetupBaseClassificationArray(rawMsg *json.RawMessage) (*[]CustomSetupBaseClassification, error) {
@@ -578,7 +578,7 @@ func unmarshalDataFlowClassification(rawMsg *json.RawMessage) (DataFlowClassific
 	default:
 		b = &DataFlow{}
 	}
-	return b, json.Unmarshal(*rawMsg, &b)
+	return b, json.Unmarshal(*rawMsg, b)
 }
 
 func unmarshalDataFlowClassificationArray(rawMsg *json.RawMessage) (*[]DataFlowClassification, error) {
@@ -775,7 +775,7 @@ func unmarshalDatasetClassification(rawMsg *json.RawMessage) (DatasetClassificat
 	default:
 		b = &Dataset{}
 	}
-	return b, json.Unmarshal(*rawMsg, &b)
+	return b, json.Unmarshal(*rawMsg, b)
 }
 
 func unmarshalDatasetClassificationArray(rawMsg *json.RawMessage) (*[]DatasetClassification, error) {
@@ -818,7 +818,7 @@ func unmarshalDatasetCompressionClassification(rawMsg *json.RawMessage) (Dataset
 	default:
 		b = &DatasetCompression{}
 	}
-	return b, json.Unmarshal(*rawMsg, &b)
+	return b, json.Unmarshal(*rawMsg, b)
 }
 
 func unmarshalDatasetCompressionClassificationArray(rawMsg *json.RawMessage) (*[]DatasetCompressionClassification, error) {
@@ -875,7 +875,7 @@ func unmarshalDatasetLocationClassification(rawMsg *json.RawMessage) (DatasetLoc
 	default:
 		b = &DatasetLocation{}
 	}
-	return b, json.Unmarshal(*rawMsg, &b)
+	return b, json.Unmarshal(*rawMsg, b)
 }
 
 func unmarshalDatasetLocationClassificationArray(rawMsg *json.RawMessage) (*[]DatasetLocationClassification, error) {
@@ -920,7 +920,7 @@ func unmarshalDatasetStorageFormatClassification(rawMsg *json.RawMessage) (Datas
 	default:
 		b = &DatasetStorageFormat{}
 	}
-	return b, json.Unmarshal(*rawMsg, &b)
+	return b, json.Unmarshal(*rawMsg, b)
 }
 
 func unmarshalDatasetStorageFormatClassificationArray(rawMsg *json.RawMessage) (*[]DatasetStorageFormatClassification, error) {
@@ -961,7 +961,7 @@ func unmarshalDependencyReferenceClassification(rawMsg *json.RawMessage) (Depend
 	default:
 		b = &DependencyReference{}
 	}
-	return b, json.Unmarshal(*rawMsg, &b)
+	return b, json.Unmarshal(*rawMsg, b)
 }
 
 func unmarshalDependencyReferenceClassificationArray(rawMsg *json.RawMessage) (*[]DependencyReferenceClassification, error) {
@@ -1046,7 +1046,7 @@ func unmarshalExecutionActivityClassification(rawMsg *json.RawMessage) (Executio
 	default:
 		b = &ExecutionActivity{}
 	}
-	return b, json.Unmarshal(*rawMsg, &b)
+	return b, json.Unmarshal(*rawMsg, b)
 }
 
 func unmarshalExecutionActivityClassificationArray(rawMsg *json.RawMessage) (*[]ExecutionActivityClassification, error) {
@@ -1083,7 +1083,7 @@ func unmarshalFormatReadSettingsClassification(rawMsg *json.RawMessage) (FormatR
 	default:
 		b = &FormatReadSettings{}
 	}
-	return b, json.Unmarshal(*rawMsg, &b)
+	return b, json.Unmarshal(*rawMsg, b)
 }
 
 func unmarshalFormatReadSettingsClassificationArray(rawMsg *json.RawMessage) (*[]FormatReadSettingsClassification, error) {
@@ -1124,7 +1124,7 @@ func unmarshalFormatWriteSettingsClassification(rawMsg *json.RawMessage) (Format
 	default:
 		b = &FormatWriteSettings{}
 	}
-	return b, json.Unmarshal(*rawMsg, &b)
+	return b, json.Unmarshal(*rawMsg, b)
 }
 
 func unmarshalFormatWriteSettingsClassificationArray(rawMsg *json.RawMessage) (*[]FormatWriteSettingsClassification, error) {
@@ -1163,7 +1163,7 @@ func unmarshalIntegrationRuntimeClassification(rawMsg *json.RawMessage) (Integra
 	default:
 		b = &IntegrationRuntime{}
 	}
-	return b, json.Unmarshal(*rawMsg, &b)
+	return b, json.Unmarshal(*rawMsg, b)
 }
 
 func unmarshalIntegrationRuntimeClassificationArray(rawMsg *json.RawMessage) (*[]IntegrationRuntimeClassification, error) {
@@ -1202,7 +1202,7 @@ func unmarshalLinkedIntegrationRuntimeTypeClassification(rawMsg *json.RawMessage
 	default:
 		b = &LinkedIntegrationRuntimeType{}
 	}
-	return b, json.Unmarshal(*rawMsg, &b)
+	return b, json.Unmarshal(*rawMsg, b)
 }
 
 func unmarshalLinkedIntegrationRuntimeTypeClassificationArray(rawMsg *json.RawMessage) (*[]LinkedIntegrationRuntimeTypeClassification, error) {
@@ -1425,7 +1425,7 @@ func unmarshalLinkedServiceClassification(rawMsg *json.RawMessage) (LinkedServic
 	default:
 		b = &LinkedService{}
 	}
-	return b, json.Unmarshal(*rawMsg, &b)
+	return b, json.Unmarshal(*rawMsg, b)
 }
 
 func unmarshalLinkedServiceClassificationArray(rawMsg *json.RawMessage) (*[]LinkedServiceClassification, error) {
@@ -1466,7 +1466,7 @@ func unmarshalMultiplePipelineTriggerClassification(rawMsg *json.RawMessage) (Mu
 	default:
 		b = &MultiplePipelineTrigger{}
 	}
-	return b, json.Unmarshal(*rawMsg, &b)
+	return b, json.Unmarshal(*rawMsg, b)
 }
 
 func unmarshalMultiplePipelineTriggerClassificationArray(rawMsg *json.RawMessage) (*[]MultiplePipelineTriggerClassification, error) {
@@ -1505,7 +1505,7 @@ func unmarshalSecretBaseClassification(rawMsg *json.RawMessage) (SecretBaseClass
 	default:
 		b = &SecretBase{}
 	}
-	return b, json.Unmarshal(*rawMsg, &b)
+	return b, json.Unmarshal(*rawMsg, b)
 }
 
 func unmarshalSecretBaseClassificationArray(rawMsg *json.RawMessage) (*[]SecretBaseClassification, error) {
@@ -1562,7 +1562,7 @@ func unmarshalStoreReadSettingsClassification(rawMsg *json.RawMessage) (StoreRea
 	default:
 		b = &StoreReadSettings{}
 	}
-	return b, json.Unmarshal(*rawMsg, &b)
+	return b, json.Unmarshal(*rawMsg, b)
 }
 
 func unmarshalStoreReadSettingsClassificationArray(rawMsg *json.RawMessage) (*[]StoreReadSettingsClassification, error) {
@@ -1607,7 +1607,7 @@ func unmarshalStoreWriteSettingsClassification(rawMsg *json.RawMessage) (StoreWr
 	default:
 		b = &StoreWriteSettings{}
 	}
-	return b, json.Unmarshal(*rawMsg, &b)
+	return b, json.Unmarshal(*rawMsg, b)
 }
 
 func unmarshalStoreWriteSettingsClassificationArray(rawMsg *json.RawMessage) (*[]StoreWriteSettingsClassification, error) {
@@ -1756,7 +1756,7 @@ func unmarshalTabularSourceClassification(rawMsg *json.RawMessage) (TabularSourc
 	default:
 		b = &TabularSource{}
 	}
-	return b, json.Unmarshal(*rawMsg, &b)
+	return b, json.Unmarshal(*rawMsg, b)
 }
 
 func unmarshalTabularSourceClassificationArray(rawMsg *json.RawMessage) (*[]TabularSourceClassification, error) {
@@ -1805,7 +1805,7 @@ func unmarshalTriggerClassification(rawMsg *json.RawMessage) (TriggerClassificat
 	default:
 		b = &Trigger{}
 	}
-	return b, json.Unmarshal(*rawMsg, &b)
+	return b, json.Unmarshal(*rawMsg, b)
 }
 
 func unmarshalTriggerClassificationArray(rawMsg *json.RawMessage) (*[]TriggerClassification, error) {
@@ -1842,7 +1842,7 @@ func unmarshalTriggerDependencyReferenceClassification(rawMsg *json.RawMessage) 
 	default:
 		b = &TriggerDependencyReference{}
 	}
-	return b, json.Unmarshal(*rawMsg, &b)
+	return b, json.Unmarshal(*rawMsg, b)
 }
 
 func unmarshalTriggerDependencyReferenceClassificationArray(rawMsg *json.RawMessage) (*[]TriggerDependencyReferenceClassification, error) {
@@ -1883,7 +1883,7 @@ func unmarshalWebLinkedServiceTypePropertiesClassification(rawMsg *json.RawMessa
 	default:
 		b = &WebLinkedServiceTypeProperties{}
 	}
-	return b, json.Unmarshal(*rawMsg, &b)
+	return b, json.Unmarshal(*rawMsg, b)
 }
 
 func unmarshalWebLinkedServiceTypePropertiesClassificationArray(rawMsg *json.RawMessage) (*[]WebLinkedServiceTypePropertiesClassification, error) {
