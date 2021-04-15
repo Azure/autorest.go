@@ -14,7 +14,7 @@ import (
 	"time"
 )
 
-// An Access policy
+// AccessPolicy - An Access policy
 type AccessPolicy struct {
 	// the date-time the policy expires
 	Expiry *time.Time `xml:"Expiry"`
@@ -59,7 +59,7 @@ func (a *AccessPolicy) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 	return nil
 }
 
-// A barrel of apples.
+// AppleBarrel - A barrel of apples.
 type AppleBarrel struct {
 	BadApples  *[]*string `xml:"BadApples>Apple"`
 	GoodApples *[]*string `xml:"GoodApples>Apple"`
@@ -74,7 +74,7 @@ type AppleBarrelResponse struct {
 	RawResponse *http.Response
 }
 
-// A banana.
+// Banana - A banana.
 type Banana struct {
 	// The time at which you should reconsider eating this banana
 	Expiration *time.Time `xml:"expiration"`
@@ -130,7 +130,7 @@ type BananaResponse struct {
 	RawResponse *http.Response
 }
 
-// An Azure Storage blob
+// Blob - An Azure Storage blob
 type Blob struct {
 	Deleted *bool `xml:"Deleted"`
 
@@ -163,7 +163,7 @@ type BlobPrefix struct {
 	Name *string `xml:"Name"`
 }
 
-// Properties of a blob
+// BlobProperties - Properties of a blob
 type BlobProperties struct {
 	AccessTier         *AccessTier    `xml:"AccessTier"`
 	AccessTierInferred *bool          `xml:"AccessTierInferred"`
@@ -239,19 +239,19 @@ type Blobs struct {
 	BlobPrefix *[]*BlobPrefix `xml:"BlobPrefix"`
 }
 
-// I am a complex type with no XML node
+// ComplexTypeNoMeta - I am a complex type with no XML node
 type ComplexTypeNoMeta struct {
 	// The id of the res
 	ID *string `xml:"ID"`
 }
 
-// I am a complex type with XML node
+// ComplexTypeWithMeta - I am a complex type with XML node
 type ComplexTypeWithMeta struct {
 	// The id of the res
 	ID *string `xml:"ID"`
 }
 
-// An Azure Storage container
+// Container - An Azure Storage container
 type Container struct {
 	// Dictionary of
 	Metadata *map[string]*string `xml:"Metadata"`
@@ -277,7 +277,7 @@ func (c *Container) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	return nil
 }
 
-// Properties of a container
+// ContainerProperties - Properties of a container
 type ContainerProperties struct {
 	Etag          *string            `xml:"Etag"`
 	LastModified  *time.Time         `xml:"Last-Modified"`
@@ -316,8 +316,8 @@ func (c *ContainerProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 	return nil
 }
 
-// CORS is an HTTP feature that enables a web application running under one domain to access resources in another domain. Web browsers implement a security
-// restriction known as same-origin policy that
+// CorsRule - CORS is an HTTP feature that enables a web application running under one domain to access resources in another domain. Web browsers implement
+// a security restriction known as same-origin policy that
 // prevents a web page from calling APIs in a different domain; CORS provides a secure way to allow one domain (the origin domain) to call APIs in another
 // domain
 type CorsRule struct {
@@ -376,7 +376,7 @@ type JSONOutputResponse struct {
 	RawResponse *http.Response
 }
 
-// An enumeration of blobs
+// ListBlobsResponse - An enumeration of blobs
 type ListBlobsResponse struct {
 	Blobs           *Blobs  `xml:"Blobs"`
 	ContainerName   *string `xml:"ContainerName,attr"`
@@ -397,7 +397,7 @@ type ListBlobsResponseResponse struct {
 	RawResponse *http.Response
 }
 
-// An enumeration of containers
+// ListContainersResponse - An enumeration of containers
 type ListContainersResponse struct {
 	Containers      *[]*Container `xml:"Containers>Container"`
 	Marker          *string       `xml:"Marker"`
@@ -416,7 +416,7 @@ type ListContainersResponseResponse struct {
 	RawResponse *http.Response
 }
 
-// Azure Analytics Logging settings.
+// Logging - Azure Analytics Logging settings.
 type Logging struct {
 	// Indicates whether all delete requests should be logged.
 	Delete *bool `xml:"Delete"`
@@ -448,7 +448,7 @@ type Metrics struct {
 	Version *string `xml:"Version"`
 }
 
-// Contans property
+// ObjectWithXMsTextProperty - Contans property
 type ObjectWithXMsTextProperty struct {
 	// Returned value should be 'I am text'
 	Content *string `xml:"content"`
@@ -466,7 +466,7 @@ type ObjectWithXMsTextPropertyResponse struct {
 	RawResponse *http.Response
 }
 
-// the retention policy
+// RetentionPolicy - the retention policy
 type RetentionPolicy struct {
 	// Indicates the number of days that metrics or logging or soft-deleted data should be retained. All data older than this value will be deleted
 	Days *int32 `xml:"Days"`
@@ -475,7 +475,7 @@ type RetentionPolicy struct {
 	Enabled *bool `xml:"Enabled"`
 }
 
-// I am root, and I ref a model WITH meta
+// RootWithRefAndMeta - I am root, and I ref a model WITH meta
 type RootWithRefAndMeta struct {
 	// XML will use XMLComplexTypeWithMeta
 	RefToModel *ComplexTypeWithMeta `xml:"XMLComplexTypeWithMeta"`
@@ -493,7 +493,7 @@ type RootWithRefAndMetaResponse struct {
 	RootWithRefAndMeta *RootWithRefAndMeta `xml:"RootWithRefAndMeta"`
 }
 
-// I am root, and I ref a model with no meta
+// RootWithRefAndNoMeta - I am root, and I ref a model with no meta
 type RootWithRefAndNoMeta struct {
 	// XML will use RefToModel
 	RefToModel *ComplexTypeNoMeta `xml:"RefToModel"`
@@ -511,7 +511,7 @@ type RootWithRefAndNoMetaResponse struct {
 	RootWithRefAndNoMeta *RootWithRefAndNoMeta `xml:"RootWithRefAndNoMeta"`
 }
 
-// signed identifier
+// SignedIdentifier - signed identifier
 type SignedIdentifier struct {
 	// The access policy
 	AccessPolicy *AccessPolicy `xml:"AccessPolicy"`
@@ -529,14 +529,14 @@ type SignedIdentifierArrayResponse struct {
 	SignedIdentifiers []*SignedIdentifier `xml:"SignedIdentifier"`
 }
 
-// A slide in a slideshow
+// Slide - A slide in a slideshow
 type Slide struct {
 	Items *[]*string `xml:"item"`
 	Title *string    `xml:"title"`
 	Type  *string    `xml:"type,attr"`
 }
 
-// Data about a slideshow
+// Slideshow - Data about a slideshow
 type Slideshow struct {
 	Author *string   `xml:"author,attr"`
 	Date   *string   `xml:"date,attr"`
@@ -565,7 +565,7 @@ type SlideshowResponse struct {
 	Slideshow *Slideshow `xml:"slideshow"`
 }
 
-// Storage Service Properties.
+// StorageServiceProperties - Storage Service Properties.
 type StorageServiceProperties struct {
 	// The set of CORS rules.
 	Cors *[]*CorsRule `xml:"Cors>CorsRule"`

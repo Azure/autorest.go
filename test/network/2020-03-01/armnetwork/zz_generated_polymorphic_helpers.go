@@ -26,7 +26,7 @@ func unmarshalFirewallPolicyRuleClassification(rawMsg *json.RawMessage) (Firewal
 	default:
 		b = &FirewallPolicyRule{}
 	}
-	return b, json.Unmarshal(*rawMsg, &b)
+	return b, json.Unmarshal(*rawMsg, b)
 }
 
 func unmarshalFirewallPolicyRuleClassificationArray(rawMsg *json.RawMessage) (*[]FirewallPolicyRuleClassification, error) {
@@ -67,7 +67,7 @@ func unmarshalFirewallPolicyRuleConditionClassification(rawMsg *json.RawMessage)
 	default:
 		b = &FirewallPolicyRuleCondition{}
 	}
-	return b, json.Unmarshal(*rawMsg, &b)
+	return b, json.Unmarshal(*rawMsg, b)
 }
 
 func unmarshalFirewallPolicyRuleConditionClassificationArray(rawMsg *json.RawMessage) (*[]FirewallPolicyRuleConditionClassification, error) {

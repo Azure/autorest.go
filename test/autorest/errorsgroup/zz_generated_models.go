@@ -94,7 +94,7 @@ func (l *LinkNotFound) UnmarshalJSON(data []byte) error {
 // - *NotFoundErrorBase, *AnimalNotFound, *LinkNotFound
 type NotFoundErrorBaseClassification interface {
 	error
-	// GetNotFoundErrorBase() returns the NotFoundErrorBase content of the underlying type.
+	// GetNotFoundErrorBase returns the NotFoundErrorBase content of the underlying type.
 	GetNotFoundErrorBase() *NotFoundErrorBase
 }
 
@@ -166,7 +166,7 @@ type PetAction struct {
 // - *PetActionError, *PetHungryOrThirstyError, *PetSadError
 type PetActionErrorClassification interface {
 	error
-	// GetPetActionError() returns the PetActionError content of the underlying type.
+	// GetPetActionError returns the PetActionError content of the underlying type.
 	GetPetActionError() *PetActionError
 }
 
@@ -279,7 +279,7 @@ type PetResponse struct {
 // - *PetSadError, *PetHungryOrThirstyError
 type PetSadErrorClassification interface {
 	PetActionErrorClassification
-	// GetPetSadError() returns the PetSadError content of the underlying type.
+	// GetPetSadError returns the PetSadError content of the underlying type.
 	GetPetSadError() *PetSadError
 }
 

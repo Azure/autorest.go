@@ -97,7 +97,7 @@ type SparkBatchJob struct {
 	WorkspaceName *string `json:"workspaceName,omitempty"`
 }
 
-// Response for batch list operation.
+// SparkBatchJobCollection - Response for batch list operation.
 type SparkBatchJobCollection struct {
 	// The start index of fetched sessions.
 	From *int32 `json:"from,omitempty"`

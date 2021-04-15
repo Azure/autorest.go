@@ -83,7 +83,7 @@ func (e Error) Error() string {
 	return msg
 }
 
-// The product documentation.
+// Product - The product documentation.
 type Product struct {
 	// Capacity of product. For example, 4 people.
 	Capacity *string `json:"capacity,omitempty"`
