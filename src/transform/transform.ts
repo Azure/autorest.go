@@ -51,6 +51,9 @@ async function process(session: Session<CodeModel>) {
   for (const obj of values(session.model.schemas.objects)) {
     if (obj.language.go!.description) {
       obj.language.go!.description = parseComments(obj.language.go!.description);
+      if (!obj.language.go!.description.startsWith(obj.language.go!.name)) {
+        obj.language.go!.description = `${obj.language.go!.name} - ${obj.language.go!.description}`;
+      }
     }
     if (obj.discriminator) {
       // discriminators will contain the root type of each discriminated type hierarchy

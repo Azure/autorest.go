@@ -30,7 +30,7 @@ type MediaTypesClientContentTypeWithEncodingOptions struct {
 	Input *string
 }
 
-// Uri or local path to source data.
+// SourcePath - Uri or local path to source data.
 type SourcePath struct {
 	// File source path.
 	Source *string `json:"source,omitempty"`

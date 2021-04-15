@@ -29,11 +29,11 @@ import (
 // - *SqlServerStoredProcedureActivity, *SwitchActivity, *SynapseNotebookActivity, *UntilActivity, *ValidationActivity, *WaitActivity,
 // - *WebActivity, *WebHookActivity
 type ActivityClassification interface {
-	// GetActivity() returns the Activity content of the underlying type.
+	// GetActivity returns the Activity content of the underlying type.
 	GetActivity() *Activity
 }
 
-// A pipeline activity.
+// Activity - A pipeline activity.
 type Activity struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties *map[string]interface{}
@@ -119,7 +119,7 @@ func (a *Activity) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
 	return nil
 }
 
-// Activity dependency information.
+// ActivityDependency - Activity dependency information.
 type ActivityDependency struct {
 	// Activity name.
 	Activity *string `json:"activity,omitempty"`
@@ -177,7 +177,7 @@ func (a *ActivityDependency) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Execution policy for an activity.
+// ActivityPolicy - Execution policy for an activity.
 type ActivityPolicy struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties *map[string]interface{}
@@ -256,7 +256,7 @@ func (a *ActivityPolicy) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Information about an activity run in a pipeline.
+// ActivityRun - Information about an activity run in a pipeline.
 type ActivityRun struct {
 	// READ-ONLY; The name of the activity.
 	ActivityName *string `json:"activityName,omitempty" azure:"ro"`
@@ -395,7 +395,7 @@ func (a *ActivityRun) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// A list activity runs.
+// ActivityRunsQueryResponse - A list activity runs.
 type ActivityRunsQueryResponse struct {
 	// The continuation token for getting the next page of results, if any remaining results exist, null otherwise.
 	ContinuationToken *string `json:"continuationToken,omitempty"`
@@ -413,7 +413,7 @@ type ActivityRunsQueryResponseResponse struct {
 	RawResponse *http.Response
 }
 
-// Response body structure for starting data flow debug session.
+// AddDataFlowToDebugSessionResponse - Response body structure for starting data flow debug session.
 type AddDataFlowToDebugSessionResponse struct {
 	// The ID of data flow debug job version.
 	JobVersion *string `json:"jobVersion,omitempty"`
@@ -428,7 +428,7 @@ type AddDataFlowToDebugSessionResponseResponse struct {
 	RawResponse *http.Response
 }
 
-// Amazon Marketplace Web Service linked service.
+// AmazonMWSLinkedService - Amazon Marketplace Web Service linked service.
 type AmazonMWSLinkedService struct {
 	LinkedService
 	// Amazon Marketplace Web Service linked service properties.
@@ -462,7 +462,7 @@ func (a *AmazonMWSLinkedService) UnmarshalJSON(data []byte) error {
 	return a.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Amazon Marketplace Web Service linked service properties.
+// AmazonMWSLinkedServiceTypeProperties - Amazon Marketplace Web Service linked service properties.
 type AmazonMWSLinkedServiceTypeProperties struct {
 	// The access key id used to access data.
 	AccessKeyID interface{} `json:"accessKeyId,omitempty"`
@@ -544,7 +544,7 @@ func (a *AmazonMWSLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error 
 	return nil
 }
 
-// Amazon Marketplace Web Service dataset.
+// AmazonMWSObjectDataset - Amazon Marketplace Web Service dataset.
 type AmazonMWSObjectDataset struct {
 	Dataset
 	// Properties specific to this dataset type.
@@ -578,7 +578,7 @@ func (a *AmazonMWSObjectDataset) UnmarshalJSON(data []byte) error {
 	return a.Dataset.unmarshalInternal(rawMsg)
 }
 
-// A copy activity Amazon Marketplace Web Service source.
+// AmazonMWSSource - A copy activity Amazon Marketplace Web Service source.
 type AmazonMWSSource struct {
 	TabularSource
 	// A query to retrieve data from source. Type: string (or Expression with resultType string).
@@ -612,7 +612,7 @@ func (a *AmazonMWSSource) UnmarshalJSON(data []byte) error {
 	return a.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// Linked service for Amazon Redshift.
+// AmazonRedshiftLinkedService - Linked service for Amazon Redshift.
 type AmazonRedshiftLinkedService struct {
 	LinkedService
 	// Amazon Redshift linked service properties.
@@ -646,7 +646,7 @@ func (a *AmazonRedshiftLinkedService) UnmarshalJSON(data []byte) error {
 	return a.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Amazon Redshift linked service properties.
+// AmazonRedshiftLinkedServiceTypeProperties - Amazon Redshift linked service properties.
 type AmazonRedshiftLinkedServiceTypeProperties struct {
 	// The database name of the Amazon Redshift source. Type: string (or Expression with resultType string).
 	Database interface{} `json:"database,omitempty"`
@@ -704,7 +704,7 @@ func (a *AmazonRedshiftLinkedServiceTypeProperties) UnmarshalJSON(data []byte) e
 	return nil
 }
 
-// A copy activity source for Amazon Redshift Source.
+// AmazonRedshiftSource - A copy activity source for Amazon Redshift Source.
 type AmazonRedshiftSource struct {
 	TabularSource
 	// Database query. Type: string (or Expression with resultType string).
@@ -747,7 +747,7 @@ func (a *AmazonRedshiftSource) UnmarshalJSON(data []byte) error {
 	return a.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// The Amazon Redshift table dataset.
+// AmazonRedshiftTableDataset - The Amazon Redshift table dataset.
 type AmazonRedshiftTableDataset struct {
 	Dataset
 	// Amazon Redshift table dataset properties.
@@ -781,7 +781,7 @@ func (a *AmazonRedshiftTableDataset) UnmarshalJSON(data []byte) error {
 	return a.Dataset.unmarshalInternal(rawMsg)
 }
 
-// Amazon Redshift table dataset properties.
+// AmazonRedshiftTableDatasetTypeProperties - Amazon Redshift table dataset properties.
 type AmazonRedshiftTableDatasetTypeProperties struct {
 	// The Amazon Redshift schema name. Type: string (or Expression with resultType string).
 	Schema interface{} `json:"schema,omitempty"`
@@ -793,7 +793,7 @@ type AmazonRedshiftTableDatasetTypeProperties struct {
 	TableName interface{} `json:"tableName,omitempty"`
 }
 
-// Linked service for Amazon S3.
+// AmazonS3LinkedService - Linked service for Amazon S3.
 type AmazonS3LinkedService struct {
 	LinkedService
 	// Amazon S3 linked service properties.
@@ -827,7 +827,7 @@ func (a *AmazonS3LinkedService) UnmarshalJSON(data []byte) error {
 	return a.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Amazon S3 linked service properties.
+// AmazonS3LinkedServiceTypeProperties - Amazon S3 linked service properties.
 type AmazonS3LinkedServiceTypeProperties struct {
 	// The access key identifier of the Amazon S3 Identity and Access Management (IAM) user. Type: string (or Expression with resultType string).
 	AccessKeyID interface{} `json:"accessKeyId,omitempty"`
@@ -874,7 +874,7 @@ func (a *AmazonS3LinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// The location of amazon S3 dataset.
+// AmazonS3Location - The location of amazon S3 dataset.
 type AmazonS3Location struct {
 	DatasetLocation
 	// Specify the bucketName of amazon S3. Type: string (or Expression with resultType string)
@@ -915,7 +915,7 @@ func (a *AmazonS3Location) UnmarshalJSON(data []byte) error {
 	return a.DatasetLocation.unmarshalInternal(rawMsg)
 }
 
-// Azure data lake store read settings.
+// AmazonS3ReadSettings - Azure data lake store read settings.
 type AmazonS3ReadSettings struct {
 	StoreReadSettings
 	// Indicates whether to enable partition discovery.
@@ -991,7 +991,7 @@ func (a *AmazonS3ReadSettings) UnmarshalJSON(data []byte) error {
 	return a.StoreReadSettings.unmarshalInternal(rawMsg)
 }
 
-// Append value for a Variable of type Array.
+// AppendVariableActivity - Append value for a Variable of type Array.
 type AppendVariableActivity struct {
 	ControlActivity
 	// Append Variable activity properties.
@@ -1025,7 +1025,7 @@ func (a *AppendVariableActivity) UnmarshalJSON(data []byte) error {
 	return a.ControlActivity.unmarshalInternal(rawMsg)
 }
 
-// AppendVariable activity properties.
+// AppendVariableActivityTypeProperties - AppendVariable activity properties.
 type AppendVariableActivityTypeProperties struct {
 	// Value to be appended. Could be a static value or Expression
 	Value interface{} `json:"value,omitempty"`
@@ -1034,13 +1034,13 @@ type AppendVariableActivityTypeProperties struct {
 	VariableName *string `json:"variableName,omitempty"`
 }
 
-// Request body structure for rename artifact.
+// ArtifactRenameRequest - Request body structure for rename artifact.
 type ArtifactRenameRequest struct {
 	// New name of the artifact.
 	NewName *string `json:"newName,omitempty"`
 }
 
-// Auto-pausing properties of a Big Data pool powered by Apache Spark
+// AutoPauseProperties - Auto-pausing properties of a Big Data pool powered by Apache Spark
 type AutoPauseProperties struct {
 	// Number of minutes of idle time before the Big Data pool is automatically paused.
 	DelayInMinutes *int32 `json:"delayInMinutes,omitempty"`
@@ -1049,7 +1049,7 @@ type AutoPauseProperties struct {
 	Enabled *bool `json:"enabled,omitempty"`
 }
 
-// Auto-scaling properties of a Big Data pool powered by Apache Spark
+// AutoScaleProperties - Auto-scaling properties of a Big Data pool powered by Apache Spark
 type AutoScaleProperties struct {
 	// Whether automatic scaling is enabled for the Big Data pool.
 	Enabled *bool `json:"enabled,omitempty"`
@@ -1061,7 +1061,7 @@ type AutoScaleProperties struct {
 	MinNodeCount *int32 `json:"minNodeCount,omitempty"`
 }
 
-// Avro dataset.
+// AvroDataset - Avro dataset.
 type AvroDataset struct {
 	Dataset
 	// Avro dataset properties.
@@ -1095,7 +1095,7 @@ func (a *AvroDataset) UnmarshalJSON(data []byte) error {
 	return a.Dataset.unmarshalInternal(rawMsg)
 }
 
-// Avro dataset properties.
+// AvroDatasetTypeProperties - Avro dataset properties.
 type AvroDatasetTypeProperties struct {
 	AvroCompressionCodec *AvroCompressionCodec `json:"avroCompressionCodec,omitempty"`
 	AvroCompressionLevel *int32                `json:"avroCompressionLevel,omitempty"`
@@ -1130,7 +1130,7 @@ func (a *AvroDatasetTypeProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// The data stored in Avro format.
+// AvroFormat - The data stored in Avro format.
 type AvroFormat struct {
 	DatasetStorageFormat
 }
@@ -1141,7 +1141,7 @@ func (a AvroFormat) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// A copy activity Avro sink.
+// AvroSink - A copy activity Avro sink.
 type AvroSink struct {
 	CopySink
 	// Avro format settings.
@@ -1182,7 +1182,7 @@ func (a *AvroSink) UnmarshalJSON(data []byte) error {
 	return a.CopySink.unmarshalInternal(rawMsg)
 }
 
-// A copy activity Avro source.
+// AvroSource - A copy activity Avro source.
 type AvroSource struct {
 	CopySource
 	// Avro store settings.
@@ -1216,7 +1216,7 @@ func (a *AvroSource) UnmarshalJSON(data []byte) error {
 	return a.CopySource.unmarshalInternal(rawMsg)
 }
 
-// Avro write settings.
+// AvroWriteSettings - Avro write settings.
 type AvroWriteSettings struct {
 	FormatWriteSettings
 	// Top level record name in write result, which is required in AVRO spec.
@@ -1257,7 +1257,7 @@ func (a *AvroWriteSettings) UnmarshalJSON(data []byte) error {
 	return a.FormatWriteSettings.unmarshalInternal(rawMsg)
 }
 
-// Azure Batch linked service.
+// AzureBatchLinkedService - Azure Batch linked service.
 type AzureBatchLinkedService struct {
 	LinkedService
 	// Azure Batch linked service properties.
@@ -1291,7 +1291,7 @@ func (a *AzureBatchLinkedService) UnmarshalJSON(data []byte) error {
 	return a.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Azure Batch linked service properties.
+// AzureBatchLinkedServiceTypeProperties - Azure Batch linked service properties.
 type AzureBatchLinkedServiceTypeProperties struct {
 	// The Azure Batch account access key.
 	AccessKey SecretBaseClassification `json:"accessKey,omitempty"`
@@ -1313,7 +1313,7 @@ type AzureBatchLinkedServiceTypeProperties struct {
 	PoolName interface{} `json:"poolName,omitempty"`
 }
 
-// Azure Data Lake Storage Gen2 linked service.
+// AzureBlobFSLinkedService - Azure Data Lake Storage Gen2 linked service.
 type AzureBlobFSLinkedService struct {
 	LinkedService
 	// Azure Data Lake Storage Gen2 linked service properties.
@@ -1347,7 +1347,7 @@ func (a *AzureBlobFSLinkedService) UnmarshalJSON(data []byte) error {
 	return a.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Azure Data Lake Storage Gen2 linked service properties.
+// AzureBlobFSLinkedServiceTypeProperties - Azure Data Lake Storage Gen2 linked service properties.
 type AzureBlobFSLinkedServiceTypeProperties struct {
 	// Account key for the Azure Data Lake Storage Gen2 service. Type: string (or Expression with resultType string).
 	AccountKey interface{} `json:"accountKey,omitempty"`
@@ -1404,7 +1404,7 @@ func (a *AzureBlobFSLinkedServiceTypeProperties) UnmarshalJSON(data []byte) erro
 	return nil
 }
 
-// The location of azure blobFS dataset.
+// AzureBlobFSLocation - The location of azure blobFS dataset.
 type AzureBlobFSLocation struct {
 	DatasetLocation
 	// Specify the fileSystem of azure blobFS. Type: string (or Expression with resultType string).
@@ -1438,7 +1438,7 @@ func (a *AzureBlobFSLocation) UnmarshalJSON(data []byte) error {
 	return a.DatasetLocation.unmarshalInternal(rawMsg)
 }
 
-// Azure blobFS read settings.
+// AzureBlobFSReadSettings - Azure blobFS read settings.
 type AzureBlobFSReadSettings struct {
 	StoreReadSettings
 	// Indicates whether to enable partition discovery.
@@ -1507,7 +1507,7 @@ func (a *AzureBlobFSReadSettings) UnmarshalJSON(data []byte) error {
 	return a.StoreReadSettings.unmarshalInternal(rawMsg)
 }
 
-// A copy activity Azure Data Lake Storage Gen2 sink.
+// AzureBlobFSSink - A copy activity Azure Data Lake Storage Gen2 sink.
 type AzureBlobFSSink struct {
 	CopySink
 	// The type of copy behavior for copy sink.
@@ -1541,7 +1541,7 @@ func (a *AzureBlobFSSink) UnmarshalJSON(data []byte) error {
 	return a.CopySink.unmarshalInternal(rawMsg)
 }
 
-// A copy activity Azure BlobFS source.
+// AzureBlobFSSource - A copy activity Azure BlobFS source.
 type AzureBlobFSSource struct {
 	CopySource
 	// If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean).
@@ -1589,7 +1589,7 @@ func (a *AzureBlobFSSource) UnmarshalJSON(data []byte) error {
 	return a.CopySource.unmarshalInternal(rawMsg)
 }
 
-// Azure blobFS write settings.
+// AzureBlobFSWriteSettings - Azure blobFS write settings.
 type AzureBlobFSWriteSettings struct {
 	StoreWriteSettings
 	// Indicates the block size(MB) when writing data to blob. Type: integer (or Expression with resultType integer).
@@ -1623,7 +1623,7 @@ func (a *AzureBlobFSWriteSettings) UnmarshalJSON(data []byte) error {
 	return a.StoreWriteSettings.unmarshalInternal(rawMsg)
 }
 
-// The azure blob storage linked service.
+// AzureBlobStorageLinkedService - The azure blob storage linked service.
 type AzureBlobStorageLinkedService struct {
 	LinkedService
 	// Azure Blob Storage linked service properties.
@@ -1657,7 +1657,7 @@ func (a *AzureBlobStorageLinkedService) UnmarshalJSON(data []byte) error {
 	return a.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Azure Blob Storage linked service properties.
+// AzureBlobStorageLinkedServiceTypeProperties - Azure Blob Storage linked service properties.
 type AzureBlobStorageLinkedServiceTypeProperties struct {
 	// The Azure key vault secret reference of accountKey in connection string.
 	AccountKey *AzureKeyVaultSecretReference `json:"accountKey,omitempty"`
@@ -1732,7 +1732,7 @@ func (a *AzureBlobStorageLinkedServiceTypeProperties) UnmarshalJSON(data []byte)
 	return nil
 }
 
-// The location of azure blob dataset.
+// AzureBlobStorageLocation - The location of azure blob dataset.
 type AzureBlobStorageLocation struct {
 	DatasetLocation
 	// Specify the container of azure blob. Type: string (or Expression with resultType string).
@@ -1766,7 +1766,7 @@ func (a *AzureBlobStorageLocation) UnmarshalJSON(data []byte) error {
 	return a.DatasetLocation.unmarshalInternal(rawMsg)
 }
 
-// Azure blob read settings.
+// AzureBlobStorageReadSettings - Azure blob read settings.
 type AzureBlobStorageReadSettings struct {
 	StoreReadSettings
 	// Indicates whether to enable partition discovery.
@@ -1842,7 +1842,7 @@ func (a *AzureBlobStorageReadSettings) UnmarshalJSON(data []byte) error {
 	return a.StoreReadSettings.unmarshalInternal(rawMsg)
 }
 
-// Azure blob write settings.
+// AzureBlobStorageWriteSettings - Azure blob write settings.
 type AzureBlobStorageWriteSettings struct {
 	StoreWriteSettings
 	// Indicates the block size(MB) when writing data to blob. Type: integer (or Expression with resultType integer).
@@ -1876,7 +1876,7 @@ func (a *AzureBlobStorageWriteSettings) UnmarshalJSON(data []byte) error {
 	return a.StoreWriteSettings.unmarshalInternal(rawMsg)
 }
 
-// Azure Data Explorer command activity.
+// AzureDataExplorerCommandActivity - Azure Data Explorer command activity.
 type AzureDataExplorerCommandActivity struct {
 	ExecutionActivity
 	// Azure Data Explorer command activity properties.
@@ -1910,7 +1910,7 @@ func (a *AzureDataExplorerCommandActivity) UnmarshalJSON(data []byte) error {
 	return a.ExecutionActivity.unmarshalInternal(rawMsg)
 }
 
-// Azure Data Explorer command activity properties.
+// AzureDataExplorerCommandActivityTypeProperties - Azure Data Explorer command activity properties.
 type AzureDataExplorerCommandActivityTypeProperties struct {
 	// A control command, according to the Azure Data Explorer command syntax. Type: string (or Expression with resultType string).
 	Command interface{} `json:"command,omitempty"`
@@ -1919,13 +1919,13 @@ type AzureDataExplorerCommandActivityTypeProperties struct {
 	CommandTimeout interface{} `json:"commandTimeout,omitempty"`
 }
 
-// Azure Data Explorer (Kusto) dataset properties.
+// AzureDataExplorerDatasetTypeProperties - Azure Data Explorer (Kusto) dataset properties.
 type AzureDataExplorerDatasetTypeProperties struct {
 	// The table name of the Azure Data Explorer database. Type: string (or Expression with resultType string).
 	Table interface{} `json:"table,omitempty"`
 }
 
-// Azure Data Explorer (Kusto) linked service.
+// AzureDataExplorerLinkedService - Azure Data Explorer (Kusto) linked service.
 type AzureDataExplorerLinkedService struct {
 	LinkedService
 	// Azure Data Explorer (Kusto) linked service properties.
@@ -1959,7 +1959,7 @@ func (a *AzureDataExplorerLinkedService) UnmarshalJSON(data []byte) error {
 	return a.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Azure Data Explorer (Kusto) linked service properties.
+// AzureDataExplorerLinkedServiceTypeProperties - Azure Data Explorer (Kusto) linked service properties.
 type AzureDataExplorerLinkedServiceTypeProperties struct {
 	// Database name for connection. Type: string (or Expression with resultType string).
 	Database interface{} `json:"database,omitempty"`
@@ -2010,7 +2010,7 @@ func (a *AzureDataExplorerLinkedServiceTypeProperties) UnmarshalJSON(data []byte
 	return nil
 }
 
-// A copy activity Azure Data Explorer sink.
+// AzureDataExplorerSink - A copy activity Azure Data Explorer sink.
 type AzureDataExplorerSink struct {
 	CopySink
 	// If set to true, any aggregation will be skipped. Default is false. Type: boolean.
@@ -2058,7 +2058,7 @@ func (a *AzureDataExplorerSink) UnmarshalJSON(data []byte) error {
 	return a.CopySink.unmarshalInternal(rawMsg)
 }
 
-// A copy activity Azure Data Explorer (Kusto) source.
+// AzureDataExplorerSource - A copy activity Azure Data Explorer (Kusto) source.
 type AzureDataExplorerSource struct {
 	CopySource
 	// The name of the Boolean option that controls whether truncation is applied to result-sets that go beyond a certain row-count limit.
@@ -2106,7 +2106,7 @@ func (a *AzureDataExplorerSource) UnmarshalJSON(data []byte) error {
 	return a.CopySource.unmarshalInternal(rawMsg)
 }
 
-// The Azure Data Explorer (Kusto) dataset.
+// AzureDataExplorerTableDataset - The Azure Data Explorer (Kusto) dataset.
 type AzureDataExplorerTableDataset struct {
 	Dataset
 	// Azure Data Explorer (Kusto) dataset properties.
@@ -2140,7 +2140,7 @@ func (a *AzureDataExplorerTableDataset) UnmarshalJSON(data []byte) error {
 	return a.Dataset.unmarshalInternal(rawMsg)
 }
 
-// Azure Data Lake Analytics linked service.
+// AzureDataLakeAnalyticsLinkedService - Azure Data Lake Analytics linked service.
 type AzureDataLakeAnalyticsLinkedService struct {
 	LinkedService
 	// Azure Data Lake Analytics linked service properties.
@@ -2174,7 +2174,7 @@ func (a *AzureDataLakeAnalyticsLinkedService) UnmarshalJSON(data []byte) error {
 	return a.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Azure Data Lake Analytics linked service properties.
+// AzureDataLakeAnalyticsLinkedServiceTypeProperties - Azure Data Lake Analytics linked service properties.
 type AzureDataLakeAnalyticsLinkedServiceTypeProperties struct {
 	// The Azure Data Lake Analytics account name. Type: string (or Expression with resultType string).
 	AccountName interface{} `json:"accountName,omitempty"`
@@ -2243,7 +2243,7 @@ func (a *AzureDataLakeAnalyticsLinkedServiceTypeProperties) UnmarshalJSON(data [
 	return nil
 }
 
-// Azure Data Lake Store linked service.
+// AzureDataLakeStoreLinkedService - Azure Data Lake Store linked service.
 type AzureDataLakeStoreLinkedService struct {
 	LinkedService
 	// Azure Data Lake Store linked service properties.
@@ -2277,7 +2277,7 @@ func (a *AzureDataLakeStoreLinkedService) UnmarshalJSON(data []byte) error {
 	return a.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Azure Data Lake Store linked service properties.
+// AzureDataLakeStoreLinkedServiceTypeProperties - Azure Data Lake Store linked service properties.
 type AzureDataLakeStoreLinkedServiceTypeProperties struct {
 	// Data Lake Store account name. Type: string (or Expression with resultType string).
 	AccountName interface{} `json:"accountName,omitempty"`
@@ -2346,7 +2346,7 @@ func (a *AzureDataLakeStoreLinkedServiceTypeProperties) UnmarshalJSON(data []byt
 	return nil
 }
 
-// The location of azure data lake store dataset.
+// AzureDataLakeStoreLocation - The location of azure data lake store dataset.
 type AzureDataLakeStoreLocation struct {
 	DatasetLocation
 }
@@ -2357,7 +2357,7 @@ func (a AzureDataLakeStoreLocation) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// Azure data lake store read settings.
+// AzureDataLakeStoreReadSettings - Azure data lake store read settings.
 type AzureDataLakeStoreReadSettings struct {
 	StoreReadSettings
 	// Indicates whether to enable partition discovery.
@@ -2426,7 +2426,7 @@ func (a *AzureDataLakeStoreReadSettings) UnmarshalJSON(data []byte) error {
 	return a.StoreReadSettings.unmarshalInternal(rawMsg)
 }
 
-// A copy activity Azure Data Lake Store sink.
+// AzureDataLakeStoreSink - A copy activity Azure Data Lake Store sink.
 type AzureDataLakeStoreSink struct {
 	CopySink
 	// The type of copy behavior for copy sink.
@@ -2467,7 +2467,7 @@ func (a *AzureDataLakeStoreSink) UnmarshalJSON(data []byte) error {
 	return a.CopySink.unmarshalInternal(rawMsg)
 }
 
-// A copy activity Azure Data Lake source.
+// AzureDataLakeStoreSource - A copy activity Azure Data Lake source.
 type AzureDataLakeStoreSource struct {
 	CopySource
 	// If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean).
@@ -2501,7 +2501,7 @@ func (a *AzureDataLakeStoreSource) UnmarshalJSON(data []byte) error {
 	return a.CopySource.unmarshalInternal(rawMsg)
 }
 
-// Azure data lake store write settings.
+// AzureDataLakeStoreWriteSettings - Azure data lake store write settings.
 type AzureDataLakeStoreWriteSettings struct {
 	StoreWriteSettings
 }
@@ -2512,7 +2512,7 @@ func (a AzureDataLakeStoreWriteSettings) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// Azure Databricks linked service.
+// AzureDatabricksLinkedService - Azure Databricks linked service.
 type AzureDatabricksLinkedService struct {
 	LinkedService
 	// Azure Databricks linked service properties.
@@ -2546,7 +2546,7 @@ func (a *AzureDatabricksLinkedService) UnmarshalJSON(data []byte) error {
 	return a.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Azure Databricks linked service properties.
+// AzureDatabricksLinkedServiceTypeProperties - Azure Databricks linked service properties.
 type AzureDatabricksLinkedServiceTypeProperties struct {
 	// Access token for databricks REST API. Refer to https://docs.azuredatabricks.net/api/latest/authentication.html. Type: string (or Expression with resultType
 	// string).
@@ -2662,7 +2662,7 @@ func (a *AzureDatabricksLinkedServiceTypeProperties) UnmarshalJSON(data []byte) 
 	return nil
 }
 
-// The resource model definition for an Azure Resource Manager resource with an etag.
+// AzureEntityResource - The resource model definition for an Azure Resource Manager resource with an etag.
 type AzureEntityResource struct {
 	Resource
 	// READ-ONLY; Resource Etag.
@@ -2705,7 +2705,7 @@ func (a *AzureEntityResource) unmarshalInternal(rawMsg map[string]*json.RawMessa
 	return a.Resource.unmarshalInternal(rawMsg)
 }
 
-// Azure File Storage linked service.
+// AzureFileStorageLinkedService - Azure File Storage linked service.
 type AzureFileStorageLinkedService struct {
 	LinkedService
 	// Azure File Storage linked service properties.
@@ -2739,7 +2739,7 @@ func (a *AzureFileStorageLinkedService) UnmarshalJSON(data []byte) error {
 	return a.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Azure File Storage linked service properties.
+// AzureFileStorageLinkedServiceTypeProperties - Azure File Storage linked service properties.
 type AzureFileStorageLinkedServiceTypeProperties struct {
 	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
 	// with resultType string).
@@ -2784,7 +2784,7 @@ func (a *AzureFileStorageLinkedServiceTypeProperties) UnmarshalJSON(data []byte)
 	return nil
 }
 
-// The location of file server dataset.
+// AzureFileStorageLocation - The location of file server dataset.
 type AzureFileStorageLocation struct {
 	DatasetLocation
 }
@@ -2795,7 +2795,7 @@ func (a AzureFileStorageLocation) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// Azure File Storage read settings.
+// AzureFileStorageReadSettings - Azure File Storage read settings.
 type AzureFileStorageReadSettings struct {
 	StoreReadSettings
 	// Indicates whether to enable partition discovery.
@@ -2864,7 +2864,7 @@ func (a *AzureFileStorageReadSettings) UnmarshalJSON(data []byte) error {
 	return a.StoreReadSettings.unmarshalInternal(rawMsg)
 }
 
-// Azure Function activity.
+// AzureFunctionActivity - Azure Function activity.
 type AzureFunctionActivity struct {
 	ExecutionActivity
 	// Azure Function activity properties.
@@ -2898,7 +2898,7 @@ func (a *AzureFunctionActivity) UnmarshalJSON(data []byte) error {
 	return a.ExecutionActivity.unmarshalInternal(rawMsg)
 }
 
-// Azure Function activity type properties.
+// AzureFunctionActivityTypeProperties - Azure Function activity type properties.
 type AzureFunctionActivityTypeProperties struct {
 	// Represents the payload that will be sent to the endpoint. Required for POST/PUT method, not allowed for GET method Type: string (or Expression with resultType
 	// string).
@@ -2916,7 +2916,7 @@ type AzureFunctionActivityTypeProperties struct {
 	Method *AzureFunctionActivityMethod `json:"method,omitempty"`
 }
 
-// Azure Function linked service.
+// AzureFunctionLinkedService - Azure Function linked service.
 type AzureFunctionLinkedService struct {
 	LinkedService
 	// Azure Function linked service properties.
@@ -2950,7 +2950,7 @@ func (a *AzureFunctionLinkedService) UnmarshalJSON(data []byte) error {
 	return a.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Azure Function linked service properties.
+// AzureFunctionLinkedServiceTypeProperties - Azure Function linked service properties.
 type AzureFunctionLinkedServiceTypeProperties struct {
 	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
 	// with resultType string).
@@ -2989,7 +2989,7 @@ func (a *AzureFunctionLinkedServiceTypeProperties) UnmarshalJSON(data []byte) er
 	return nil
 }
 
-// Azure Key Vault linked service.
+// AzureKeyVaultLinkedService - Azure Key Vault linked service.
 type AzureKeyVaultLinkedService struct {
 	LinkedService
 	// Azure Key Vault linked service properties.
@@ -3023,13 +3023,13 @@ func (a *AzureKeyVaultLinkedService) UnmarshalJSON(data []byte) error {
 	return a.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Azure Key Vault linked service properties.
+// AzureKeyVaultLinkedServiceTypeProperties - Azure Key Vault linked service properties.
 type AzureKeyVaultLinkedServiceTypeProperties struct {
 	// The base URL of the Azure Key Vault. e.g. https://myakv.vault.azure.net Type: string (or Expression with resultType string).
 	BaseURL interface{} `json:"baseUrl,omitempty"`
 }
 
-// Azure Key Vault secret reference.
+// AzureKeyVaultSecretReference - Azure Key Vault secret reference.
 type AzureKeyVaultSecretReference struct {
 	SecretBase
 	// The name of the secret in Azure Key Vault. Type: string (or Expression with resultType string).
@@ -3077,7 +3077,7 @@ func (a *AzureKeyVaultSecretReference) UnmarshalJSON(data []byte) error {
 	return a.SecretBase.unmarshalInternal(rawMsg)
 }
 
-// Azure ML Batch Execution activity.
+// AzureMLBatchExecutionActivity - Azure ML Batch Execution activity.
 type AzureMLBatchExecutionActivity struct {
 	ExecutionActivity
 	// Azure ML Batch Execution activity properties.
@@ -3111,7 +3111,7 @@ func (a *AzureMLBatchExecutionActivity) UnmarshalJSON(data []byte) error {
 	return a.ExecutionActivity.unmarshalInternal(rawMsg)
 }
 
-// Azure ML Batch Execution activity properties.
+// AzureMLBatchExecutionActivityTypeProperties - Azure ML Batch Execution activity properties.
 type AzureMLBatchExecutionActivityTypeProperties struct {
 	// Key,Value pairs to be passed to the Azure ML Batch Execution Service endpoint. Keys must match the names of web service parameters defined in the published
 	// Azure ML web service. Values will be passed
@@ -3129,7 +3129,7 @@ type AzureMLBatchExecutionActivityTypeProperties struct {
 	WebServiceOutputs *map[string]*AzureMLWebServiceFile `json:"webServiceOutputs,omitempty"`
 }
 
-// Azure ML Execute Pipeline activity.
+// AzureMLExecutePipelineActivity - Azure ML Execute Pipeline activity.
 type AzureMLExecutePipelineActivity struct {
 	ExecutionActivity
 	// Azure ML Execute Pipeline activity properties.
@@ -3163,7 +3163,7 @@ func (a *AzureMLExecutePipelineActivity) UnmarshalJSON(data []byte) error {
 	return a.ExecutionActivity.unmarshalInternal(rawMsg)
 }
 
-// Azure ML Execute Pipeline activity properties.
+// AzureMLExecutePipelineActivityTypeProperties - Azure ML Execute Pipeline activity properties.
 type AzureMLExecutePipelineActivityTypeProperties struct {
 	// Whether to continue execution of other steps in the PipelineRun if a step fails. This information will be passed in the continueOnStepFailure property
 	// of the published pipeline execution request.
@@ -3189,7 +3189,7 @@ type AzureMLExecutePipelineActivityTypeProperties struct {
 	MlPipelineParameters interface{} `json:"mlPipelineParameters,omitempty"`
 }
 
-// Azure ML Studio Web Service linked service.
+// AzureMLLinkedService - Azure ML Studio Web Service linked service.
 type AzureMLLinkedService struct {
 	LinkedService
 	// Azure ML Studio Web Service linked service properties.
@@ -3223,7 +3223,7 @@ func (a *AzureMLLinkedService) UnmarshalJSON(data []byte) error {
 	return a.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Azure ML Studio Web Service linked service properties.
+// AzureMLLinkedServiceTypeProperties - Azure ML Studio Web Service linked service properties.
 type AzureMLLinkedServiceTypeProperties struct {
 	// The API key for accessing the Azure ML model endpoint.
 	APIKey SecretBaseClassification `json:"apiKey,omitempty"`
@@ -3287,7 +3287,7 @@ func (a *AzureMLLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Azure ML Service linked service.
+// AzureMLServiceLinkedService - Azure ML Service linked service.
 type AzureMLServiceLinkedService struct {
 	LinkedService
 	// Azure ML Service linked service properties.
@@ -3321,7 +3321,7 @@ func (a *AzureMLServiceLinkedService) UnmarshalJSON(data []byte) error {
 	return a.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Azure ML Service linked service properties.
+// AzureMLServiceLinkedServiceTypeProperties - Azure ML Service linked service properties.
 type AzureMLServiceLinkedServiceTypeProperties struct {
 	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
 	// with resultType string).
@@ -3385,7 +3385,7 @@ func (a *AzureMLServiceLinkedServiceTypeProperties) UnmarshalJSON(data []byte) e
 	return nil
 }
 
-// Azure ML Update Resource management activity.
+// AzureMLUpdateResourceActivity - Azure ML Update Resource management activity.
 type AzureMLUpdateResourceActivity struct {
 	ExecutionActivity
 	// Azure ML Update Resource management activity properties.
@@ -3419,7 +3419,7 @@ func (a *AzureMLUpdateResourceActivity) UnmarshalJSON(data []byte) error {
 	return a.ExecutionActivity.unmarshalInternal(rawMsg)
 }
 
-// Azure ML Update Resource activity properties.
+// AzureMLUpdateResourceActivityTypeProperties - Azure ML Update Resource activity properties.
 type AzureMLUpdateResourceActivityTypeProperties struct {
 	// The relative file path in trainedModelLinkedService to represent the .ilearner file that will be uploaded by the update operation. Type: string (or Expression
 	// with resultType string).
@@ -3432,7 +3432,7 @@ type AzureMLUpdateResourceActivityTypeProperties struct {
 	TrainedModelName interface{} `json:"trainedModelName,omitempty"`
 }
 
-// Azure ML WebService Input/Output file
+// AzureMLWebServiceFile - Azure ML WebService Input/Output file
 type AzureMLWebServiceFile struct {
 	// The relative file path, including container name, in the Azure Blob Storage specified by the LinkedService. Type: string (or Expression with resultType
 	// string).
@@ -3442,7 +3442,7 @@ type AzureMLWebServiceFile struct {
 	LinkedServiceName *LinkedServiceReference `json:"linkedServiceName,omitempty"`
 }
 
-// Azure Database for MariaDB linked service.
+// AzureMariaDBLinkedService - Azure Database for MariaDB linked service.
 type AzureMariaDBLinkedService struct {
 	LinkedService
 	// Azure Database for MariaDB linked service properties.
@@ -3476,7 +3476,7 @@ func (a *AzureMariaDBLinkedService) UnmarshalJSON(data []byte) error {
 	return a.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Azure Database for MariaDB linked service properties.
+// AzureMariaDBLinkedServiceTypeProperties - Azure Database for MariaDB linked service properties.
 type AzureMariaDBLinkedServiceTypeProperties struct {
 	// An ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference.
 	ConnectionString interface{} `json:"connectionString,omitempty"`
@@ -3489,7 +3489,7 @@ type AzureMariaDBLinkedServiceTypeProperties struct {
 	Pwd *AzureKeyVaultSecretReference `json:"pwd,omitempty"`
 }
 
-// A copy activity Azure MariaDB source.
+// AzureMariaDBSource - A copy activity Azure MariaDB source.
 type AzureMariaDBSource struct {
 	TabularSource
 	// A query to retrieve data from source. Type: string (or Expression with resultType string).
@@ -3523,7 +3523,7 @@ func (a *AzureMariaDBSource) UnmarshalJSON(data []byte) error {
 	return a.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// Azure Database for MariaDB dataset.
+// AzureMariaDBTableDataset - Azure Database for MariaDB dataset.
 type AzureMariaDBTableDataset struct {
 	Dataset
 	// Properties specific to this dataset type.
@@ -3557,7 +3557,7 @@ func (a *AzureMariaDBTableDataset) UnmarshalJSON(data []byte) error {
 	return a.Dataset.unmarshalInternal(rawMsg)
 }
 
-// Azure MySQL database linked service.
+// AzureMySQLLinkedService - Azure MySQL database linked service.
 type AzureMySQLLinkedService struct {
 	LinkedService
 	// Azure MySQL database linked service properties.
@@ -3591,7 +3591,7 @@ func (a *AzureMySQLLinkedService) UnmarshalJSON(data []byte) error {
 	return a.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Azure MySQL database linked service properties.
+// AzureMySQLLinkedServiceTypeProperties - Azure MySQL database linked service properties.
 type AzureMySQLLinkedServiceTypeProperties struct {
 	// The connection string. Type: string, SecureString or AzureKeyVaultSecretReference.
 	ConnectionString interface{} `json:"connectionString,omitempty"`
@@ -3604,7 +3604,7 @@ type AzureMySQLLinkedServiceTypeProperties struct {
 	Password *AzureKeyVaultSecretReference `json:"password,omitempty"`
 }
 
-// A copy activity Azure MySql sink.
+// AzureMySQLSink - A copy activity Azure MySql sink.
 type AzureMySQLSink struct {
 	CopySink
 	// A query to execute before starting the copy. Type: string (or Expression with resultType string).
@@ -3638,7 +3638,7 @@ func (a *AzureMySQLSink) UnmarshalJSON(data []byte) error {
 	return a.CopySink.unmarshalInternal(rawMsg)
 }
 
-// A copy activity Azure MySQL source.
+// AzureMySQLSource - A copy activity Azure MySQL source.
 type AzureMySQLSource struct {
 	TabularSource
 	// Database query. Type: string (or Expression with resultType string).
@@ -3672,7 +3672,7 @@ func (a *AzureMySQLSource) UnmarshalJSON(data []byte) error {
 	return a.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// The Azure MySQL database dataset.
+// AzureMySQLTableDataset - The Azure MySQL database dataset.
 type AzureMySQLTableDataset struct {
 	Dataset
 	// Azure MySQL database dataset properties.
@@ -3706,7 +3706,7 @@ func (a *AzureMySQLTableDataset) UnmarshalJSON(data []byte) error {
 	return a.Dataset.unmarshalInternal(rawMsg)
 }
 
-// Azure MySQL database dataset properties.
+// AzureMySQLTableDatasetTypeProperties - Azure MySQL database dataset properties.
 type AzureMySQLTableDatasetTypeProperties struct {
 	// The name of Azure MySQL database table. Type: string (or Expression with resultType string).
 	Table interface{} `json:"table,omitempty"`
@@ -3715,7 +3715,7 @@ type AzureMySQLTableDatasetTypeProperties struct {
 	TableName interface{} `json:"tableName,omitempty"`
 }
 
-// Azure PostgreSQL linked service.
+// AzurePostgreSQLLinkedService - Azure PostgreSQL linked service.
 type AzurePostgreSQLLinkedService struct {
 	LinkedService
 	// Azure PostgreSQL linked service properties.
@@ -3749,7 +3749,7 @@ func (a *AzurePostgreSQLLinkedService) UnmarshalJSON(data []byte) error {
 	return a.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Azure PostgreSQL linked service properties.
+// AzurePostgreSQLLinkedServiceTypeProperties - Azure PostgreSQL linked service properties.
 type AzurePostgreSQLLinkedServiceTypeProperties struct {
 	// An ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference.
 	ConnectionString interface{} `json:"connectionString,omitempty"`
@@ -3762,7 +3762,7 @@ type AzurePostgreSQLLinkedServiceTypeProperties struct {
 	Password *AzureKeyVaultSecretReference `json:"password,omitempty"`
 }
 
-// A copy activity Azure PostgreSQL sink.
+// AzurePostgreSQLSink - A copy activity Azure PostgreSQL sink.
 type AzurePostgreSQLSink struct {
 	CopySink
 	// A query to execute before starting the copy. Type: string (or Expression with resultType string).
@@ -3796,7 +3796,7 @@ func (a *AzurePostgreSQLSink) UnmarshalJSON(data []byte) error {
 	return a.CopySink.unmarshalInternal(rawMsg)
 }
 
-// A copy activity Azure PostgreSQL source.
+// AzurePostgreSQLSource - A copy activity Azure PostgreSQL source.
 type AzurePostgreSQLSource struct {
 	TabularSource
 	// A query to retrieve data from source. Type: string (or Expression with resultType string).
@@ -3830,7 +3830,7 @@ func (a *AzurePostgreSQLSource) UnmarshalJSON(data []byte) error {
 	return a.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// Azure PostgreSQL dataset.
+// AzurePostgreSQLTableDataset - Azure PostgreSQL dataset.
 type AzurePostgreSQLTableDataset struct {
 	Dataset
 	// Properties specific to this dataset type.
@@ -3864,7 +3864,7 @@ func (a *AzurePostgreSQLTableDataset) UnmarshalJSON(data []byte) error {
 	return a.Dataset.unmarshalInternal(rawMsg)
 }
 
-// Azure PostgreSQL dataset properties.
+// AzurePostgreSQLTableDatasetTypeProperties - Azure PostgreSQL dataset properties.
 type AzurePostgreSQLTableDatasetTypeProperties struct {
 	// The schema name of the Azure PostgreSQL database. Type: string (or Expression with resultType string).
 	Schema interface{} `json:"schema,omitempty"`
@@ -3876,7 +3876,7 @@ type AzurePostgreSQLTableDatasetTypeProperties struct {
 	TableName interface{} `json:"tableName,omitempty"`
 }
 
-// A copy activity Azure Queue sink.
+// AzureQueueSink - A copy activity Azure Queue sink.
 type AzureQueueSink struct {
 	CopySink
 }
@@ -3887,7 +3887,7 @@ func (a AzureQueueSink) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// Azure SQL Data Warehouse linked service.
+// AzureSQLDWLinkedService - Azure SQL Data Warehouse linked service.
 type AzureSQLDWLinkedService struct {
 	LinkedService
 	// Azure SQL Data Warehouse linked service properties.
@@ -3921,7 +3921,7 @@ func (a *AzureSQLDWLinkedService) UnmarshalJSON(data []byte) error {
 	return a.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Azure SQL Data Warehouse linked service properties.
+// AzureSQLDWLinkedServiceTypeProperties - Azure SQL Data Warehouse linked service properties.
 type AzureSQLDWLinkedServiceTypeProperties struct {
 	// The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Type: string, SecureString or AzureKeyVaultSecretReference.
 	ConnectionString interface{} `json:"connectionString,omitempty"`
@@ -3978,7 +3978,7 @@ func (a *AzureSQLDWLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error
 	return nil
 }
 
-// The Azure SQL Data Warehouse dataset.
+// AzureSQLDWTableDataset - The Azure SQL Data Warehouse dataset.
 type AzureSQLDWTableDataset struct {
 	Dataset
 	// Azure SQL Data Warehouse dataset properties.
@@ -4012,7 +4012,7 @@ func (a *AzureSQLDWTableDataset) UnmarshalJSON(data []byte) error {
 	return a.Dataset.unmarshalInternal(rawMsg)
 }
 
-// Azure SQL Data Warehouse dataset properties.
+// AzureSQLDWTableDatasetTypeProperties - Azure SQL Data Warehouse dataset properties.
 type AzureSQLDWTableDatasetTypeProperties struct {
 	// The schema name of the Azure SQL Data Warehouse. Type: string (or Expression with resultType string).
 	Schema interface{} `json:"schema,omitempty"`
@@ -4024,7 +4024,7 @@ type AzureSQLDWTableDatasetTypeProperties struct {
 	TableName interface{} `json:"tableName,omitempty"`
 }
 
-// Microsoft Azure SQL Database linked service.
+// AzureSQLDatabaseLinkedService - Microsoft Azure SQL Database linked service.
 type AzureSQLDatabaseLinkedService struct {
 	LinkedService
 	// Azure SQL Database linked service properties.
@@ -4058,7 +4058,7 @@ func (a *AzureSQLDatabaseLinkedService) UnmarshalJSON(data []byte) error {
 	return a.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Azure SQL Database linked service properties.
+// AzureSQLDatabaseLinkedServiceTypeProperties - Azure SQL Database linked service properties.
 type AzureSQLDatabaseLinkedServiceTypeProperties struct {
 	// The connection string. Type: string, SecureString or AzureKeyVaultSecretReference.
 	ConnectionString interface{} `json:"connectionString,omitempty"`
@@ -4115,7 +4115,7 @@ func (a *AzureSQLDatabaseLinkedServiceTypeProperties) UnmarshalJSON(data []byte)
 	return nil
 }
 
-// Azure SQL Managed Instance linked service.
+// AzureSQLMILinkedService - Azure SQL Managed Instance linked service.
 type AzureSQLMILinkedService struct {
 	LinkedService
 	// Azure SQL Managed Instance linked service properties.
@@ -4149,7 +4149,7 @@ func (a *AzureSQLMILinkedService) UnmarshalJSON(data []byte) error {
 	return a.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Azure SQL Managed Instance linked service properties.
+// AzureSQLMILinkedServiceTypeProperties - Azure SQL Managed Instance linked service properties.
 type AzureSQLMILinkedServiceTypeProperties struct {
 	// The connection string. Type: string, SecureString or AzureKeyVaultSecretReference.
 	ConnectionString interface{} `json:"connectionString,omitempty"`
@@ -4206,7 +4206,7 @@ func (a *AzureSQLMILinkedServiceTypeProperties) UnmarshalJSON(data []byte) error
 	return nil
 }
 
-// The Azure SQL Managed Instance dataset.
+// AzureSQLMITableDataset - The Azure SQL Managed Instance dataset.
 type AzureSQLMITableDataset struct {
 	Dataset
 	// Azure SQL Managed Instance dataset properties.
@@ -4240,7 +4240,7 @@ func (a *AzureSQLMITableDataset) UnmarshalJSON(data []byte) error {
 	return a.Dataset.unmarshalInternal(rawMsg)
 }
 
-// Azure SQL Managed Instance dataset properties.
+// AzureSQLMITableDatasetTypeProperties - Azure SQL Managed Instance dataset properties.
 type AzureSQLMITableDatasetTypeProperties struct {
 	// The schema name of the Azure SQL Managed Instance. Type: string (or Expression with resultType string).
 	Schema interface{} `json:"schema,omitempty"`
@@ -4252,7 +4252,7 @@ type AzureSQLMITableDatasetTypeProperties struct {
 	TableName interface{} `json:"tableName,omitempty"`
 }
 
-// A copy activity Azure SQL sink.
+// AzureSQLSink - A copy activity Azure SQL sink.
 type AzureSQLSink struct {
 	CopySink
 	// SQL pre-copy script. Type: string (or Expression with resultType string).
@@ -4321,7 +4321,7 @@ func (a *AzureSQLSink) UnmarshalJSON(data []byte) error {
 	return a.CopySink.unmarshalInternal(rawMsg)
 }
 
-// A copy activity Azure SQL source.
+// AzureSQLSource - A copy activity Azure SQL source.
 type AzureSQLSource struct {
 	TabularSource
 	// Which additional types to produce.
@@ -4377,7 +4377,7 @@ func (a *AzureSQLSource) UnmarshalJSON(data []byte) error {
 	return a.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// The Azure SQL Server database dataset.
+// AzureSQLTableDataset - The Azure SQL Server database dataset.
 type AzureSQLTableDataset struct {
 	Dataset
 	// Azure SQL dataset properties.
@@ -4411,7 +4411,7 @@ func (a *AzureSQLTableDataset) UnmarshalJSON(data []byte) error {
 	return a.Dataset.unmarshalInternal(rawMsg)
 }
 
-// Azure SQL dataset properties.
+// AzureSQLTableDatasetTypeProperties - Azure SQL dataset properties.
 type AzureSQLTableDatasetTypeProperties struct {
 	// The schema name of the Azure SQL database. Type: string (or Expression with resultType string).
 	Schema interface{} `json:"schema,omitempty"`
@@ -4423,7 +4423,7 @@ type AzureSQLTableDatasetTypeProperties struct {
 	TableName interface{} `json:"tableName,omitempty"`
 }
 
-// The Azure Search Index.
+// AzureSearchIndexDataset - The Azure Search Index.
 type AzureSearchIndexDataset struct {
 	Dataset
 	// Properties specific to this dataset type.
@@ -4457,13 +4457,13 @@ func (a *AzureSearchIndexDataset) UnmarshalJSON(data []byte) error {
 	return a.Dataset.unmarshalInternal(rawMsg)
 }
 
-// Properties specific to this dataset type.
+// AzureSearchIndexDatasetTypeProperties - Properties specific to this dataset type.
 type AzureSearchIndexDatasetTypeProperties struct {
 	// The name of the Azure Search Index. Type: string (or Expression with resultType string).
 	IndexName interface{} `json:"indexName,omitempty"`
 }
 
-// A copy activity Azure Search Index sink.
+// AzureSearchIndexSink - A copy activity Azure Search Index sink.
 type AzureSearchIndexSink struct {
 	CopySink
 	// Specify the write behavior when upserting documents into Azure Search Index.
@@ -4497,7 +4497,7 @@ func (a *AzureSearchIndexSink) UnmarshalJSON(data []byte) error {
 	return a.CopySink.unmarshalInternal(rawMsg)
 }
 
-// Linked service for Windows Azure Search Service.
+// AzureSearchLinkedService - Linked service for Windows Azure Search Service.
 type AzureSearchLinkedService struct {
 	LinkedService
 	// Windows Azure Search Service linked service properties.
@@ -4531,7 +4531,7 @@ func (a *AzureSearchLinkedService) UnmarshalJSON(data []byte) error {
 	return a.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Windows Azure Search Service linked service properties.
+// AzureSearchLinkedServiceTypeProperties - Windows Azure Search Service linked service properties.
 type AzureSearchLinkedServiceTypeProperties struct {
 	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
 	// with resultType string).
@@ -4570,7 +4570,7 @@ func (a *AzureSearchLinkedServiceTypeProperties) UnmarshalJSON(data []byte) erro
 	return nil
 }
 
-// The storage account linked service.
+// AzureStorageLinkedService - The storage account linked service.
 type AzureStorageLinkedService struct {
 	LinkedService
 	// Azure Storage linked service properties.
@@ -4604,7 +4604,7 @@ func (a *AzureStorageLinkedService) UnmarshalJSON(data []byte) error {
 	return a.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Azure Storage linked service properties.
+// AzureStorageLinkedServiceTypeProperties - Azure Storage linked service properties.
 type AzureStorageLinkedServiceTypeProperties struct {
 	// The Azure key vault secret reference of accountKey in connection string.
 	AccountKey *AzureKeyVaultSecretReference `json:"accountKey,omitempty"`
@@ -4623,7 +4623,7 @@ type AzureStorageLinkedServiceTypeProperties struct {
 	SasURI interface{} `json:"sasUri,omitempty"`
 }
 
-// The Azure Table storage dataset.
+// AzureTableDataset - The Azure Table storage dataset.
 type AzureTableDataset struct {
 	Dataset
 	// Azure Table dataset properties.
@@ -4657,13 +4657,13 @@ func (a *AzureTableDataset) UnmarshalJSON(data []byte) error {
 	return a.Dataset.unmarshalInternal(rawMsg)
 }
 
-// Azure Table dataset properties.
+// AzureTableDatasetTypeProperties - Azure Table dataset properties.
 type AzureTableDatasetTypeProperties struct {
 	// The table name of the Azure Table storage. Type: string (or Expression with resultType string).
 	TableName interface{} `json:"tableName,omitempty"`
 }
 
-// A copy activity Azure Table sink.
+// AzureTableSink - A copy activity Azure Table sink.
 type AzureTableSink struct {
 	CopySink
 	// Azure Table default partition key value. Type: string (or Expression with resultType string).
@@ -4718,7 +4718,7 @@ func (a *AzureTableSink) UnmarshalJSON(data []byte) error {
 	return a.CopySink.unmarshalInternal(rawMsg)
 }
 
-// A copy activity Azure Table source.
+// AzureTableSource - A copy activity Azure Table source.
 type AzureTableSource struct {
 	TabularSource
 	// Azure Table source ignore table not found. Type: boolean (or Expression with resultType boolean).
@@ -4759,7 +4759,7 @@ func (a *AzureTableSource) UnmarshalJSON(data []byte) error {
 	return a.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// The azure table storage linked service.
+// AzureTableStorageLinkedService - The azure table storage linked service.
 type AzureTableStorageLinkedService struct {
 	LinkedService
 	// Azure Table Storage linked service properties.
@@ -4793,7 +4793,7 @@ func (a *AzureTableStorageLinkedService) UnmarshalJSON(data []byte) error {
 	return a.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Big data pool reference.
+// BigDataPoolReference - Big data pool reference.
 type BigDataPoolReference struct {
 	// Reference big data pool name.
 	ReferenceName *string `json:"referenceName,omitempty"`
@@ -4802,14 +4802,14 @@ type BigDataPoolReference struct {
 	Type *BigDataPoolReferenceType `json:"type,omitempty"`
 }
 
-// A Big Data pool
+// BigDataPoolResourceInfo - A Big Data pool
 type BigDataPoolResourceInfo struct {
 	TrackedResource
 	// Big Data pool properties
 	Properties *BigDataPoolResourceProperties `json:"properties,omitempty"`
 }
 
-// Collection of Big Data pool information
+// BigDataPoolResourceInfoListResult - Collection of Big Data pool information
 type BigDataPoolResourceInfoListResult struct {
 	// Link to the next page of results
 	NextLink *string `json:"nextLink,omitempty"`
@@ -4836,7 +4836,7 @@ type BigDataPoolResourceInfoResponse struct {
 	RawResponse *http.Response
 }
 
-// Properties of a Big Data pool powered by Apache Spark
+// BigDataPoolResourceProperties - Properties of a Big Data pool powered by Apache Spark
 type BigDataPoolResourceProperties struct {
 	// Auto-pausing properties
 	AutoPause *AutoPauseProperties `json:"autoPause,omitempty"`
@@ -5002,7 +5002,7 @@ type BigDataPoolsListOptions struct {
 	// placeholder for future optional parameters
 }
 
-// Binary dataset.
+// BinaryDataset - Binary dataset.
 type BinaryDataset struct {
 	Dataset
 	// Binary dataset properties.
@@ -5036,7 +5036,7 @@ func (b *BinaryDataset) UnmarshalJSON(data []byte) error {
 	return b.Dataset.unmarshalInternal(rawMsg)
 }
 
-// Binary dataset properties.
+// BinaryDatasetTypeProperties - Binary dataset properties.
 type BinaryDatasetTypeProperties struct {
 	// The data compression method used for the binary dataset.
 	Compression DatasetCompressionClassification `json:"compression,omitempty"`
@@ -5068,7 +5068,7 @@ func (b *BinaryDatasetTypeProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// A copy activity Binary sink.
+// BinarySink - A copy activity Binary sink.
 type BinarySink struct {
 	CopySink
 	// Binary store settings.
@@ -5102,7 +5102,7 @@ func (b *BinarySink) UnmarshalJSON(data []byte) error {
 	return b.CopySink.unmarshalInternal(rawMsg)
 }
 
-// A copy activity Binary source.
+// BinarySource - A copy activity Binary source.
 type BinarySource struct {
 	CopySource
 	// Binary store settings.
@@ -5136,7 +5136,7 @@ func (b *BinarySource) UnmarshalJSON(data []byte) error {
 	return b.CopySource.unmarshalInternal(rawMsg)
 }
 
-// Trigger that runs every time a Blob event occurs.
+// BlobEventsTrigger - Trigger that runs every time a Blob event occurs.
 type BlobEventsTrigger struct {
 	MultiplePipelineTrigger
 	// Blob Events Trigger properties.
@@ -5170,7 +5170,7 @@ func (b *BlobEventsTrigger) UnmarshalJSON(data []byte) error {
 	return b.MultiplePipelineTrigger.unmarshalInternal(rawMsg)
 }
 
-// Blob Events Trigger properties.
+// BlobEventsTriggerTypeProperties - Blob Events Trigger properties.
 type BlobEventsTriggerTypeProperties struct {
 	// The blob path must begin with the pattern provided for trigger to fire. For example, '/records/blobs/december/' will only fire the trigger for blobs
 	// in the december folder under the records container.
@@ -5192,7 +5192,7 @@ type BlobEventsTriggerTypeProperties struct {
 	Scope *string `json:"scope,omitempty"`
 }
 
-// A copy activity Azure Blob sink.
+// BlobSink - A copy activity Azure Blob sink.
 type BlobSink struct {
 	CopySink
 	// Blob writer add header. Type: boolean (or Expression with resultType boolean).
@@ -5247,7 +5247,7 @@ func (b *BlobSink) UnmarshalJSON(data []byte) error {
 	return b.CopySink.unmarshalInternal(rawMsg)
 }
 
-// A copy activity Azure Blob source.
+// BlobSource - A copy activity Azure Blob source.
 type BlobSource struct {
 	CopySource
 	// If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean).
@@ -5295,7 +5295,7 @@ func (b *BlobSource) UnmarshalJSON(data []byte) error {
 	return b.CopySource.unmarshalInternal(rawMsg)
 }
 
-// Trigger that runs every time the selected Blob container changes.
+// BlobTrigger - Trigger that runs every time the selected Blob container changes.
 type BlobTrigger struct {
 	MultiplePipelineTrigger
 	// Blob Trigger properties.
@@ -5329,7 +5329,7 @@ func (b *BlobTrigger) UnmarshalJSON(data []byte) error {
 	return b.MultiplePipelineTrigger.unmarshalInternal(rawMsg)
 }
 
-// Blob Trigger properties.
+// BlobTriggerTypeProperties - Blob Trigger properties.
 type BlobTriggerTypeProperties struct {
 	// The path of the container/folder that will trigger the pipeline.
 	FolderPath *string `json:"folderPath,omitempty"`
@@ -5341,7 +5341,7 @@ type BlobTriggerTypeProperties struct {
 	MaxConcurrency *int32 `json:"maxConcurrency,omitempty"`
 }
 
-// Linked service for Cassandra data source.
+// CassandraLinkedService - Linked service for Cassandra data source.
 type CassandraLinkedService struct {
 	LinkedService
 	// Cassandra linked service properties.
@@ -5375,7 +5375,7 @@ func (c *CassandraLinkedService) UnmarshalJSON(data []byte) error {
 	return c.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Cassandra linked service properties.
+// CassandraLinkedServiceTypeProperties - Cassandra linked service properties.
 type CassandraLinkedServiceTypeProperties struct {
 	// AuthenticationType to be used for connection. Type: string (or Expression with resultType string).
 	AuthenticationType interface{} `json:"authenticationType,omitempty"`
@@ -5432,7 +5432,7 @@ func (c *CassandraLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error 
 	return nil
 }
 
-// A copy activity source for a Cassandra database.
+// CassandraSource - A copy activity source for a Cassandra database.
 type CassandraSource struct {
 	TabularSource
 	// The consistency level specifies how many Cassandra servers must respond to a read request before returning data to the client application. Cassandra
@@ -5475,7 +5475,7 @@ func (c *CassandraSource) UnmarshalJSON(data []byte) error {
 	return c.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// The Cassandra database dataset.
+// CassandraTableDataset - The Cassandra database dataset.
 type CassandraTableDataset struct {
 	Dataset
 	// Cassandra dataset properties.
@@ -5509,7 +5509,7 @@ func (c *CassandraTableDataset) UnmarshalJSON(data []byte) error {
 	return c.Dataset.unmarshalInternal(rawMsg)
 }
 
-// Cassandra dataset properties.
+// CassandraTableDatasetTypeProperties - Cassandra dataset properties.
 type CassandraTableDatasetTypeProperties struct {
 	// The keyspace of the Cassandra database. Type: string (or Expression with resultType string).
 	Keyspace interface{} `json:"keyspace,omitempty"`
@@ -5518,8 +5518,8 @@ type CassandraTableDatasetTypeProperties struct {
 	TableName interface{} `json:"tableName,omitempty"`
 }
 
-// Trigger that allows the referenced pipeline to depend on other pipeline runs based on runDimension Name/Value pairs. Upstream pipelines should declare
-// the same runDimension Name and their runs should
+// ChainingTrigger - Trigger that allows the referenced pipeline to depend on other pipeline runs based on runDimension Name/Value pairs. Upstream pipelines
+// should declare the same runDimension Name and their runs should
 // have the values for those runDimensions. The referenced pipeline run would be triggered if the values for the runDimension match for all upstream pipeline
 // runs.
 type ChainingTrigger struct {
@@ -5562,7 +5562,7 @@ func (c *ChainingTrigger) UnmarshalJSON(data []byte) error {
 	return c.Trigger.unmarshalInternal(rawMsg)
 }
 
-// Chaining Trigger properties.
+// ChainingTriggerTypeProperties - Chaining Trigger properties.
 type ChainingTriggerTypeProperties struct {
 	// Upstream Pipelines.
 	DependsOn *[]*PipelineReference `json:"dependsOn,omitempty"`
@@ -5571,7 +5571,7 @@ type ChainingTriggerTypeProperties struct {
 	RunDimension *string `json:"runDimension,omitempty"`
 }
 
-// The object that defines the structure of an Azure Synapse error response.
+// CloudError - The object that defines the structure of an Azure Synapse error response.
 type CloudError struct {
 	// Error data
 	InnerError *CloudErrorBody `json:"error,omitempty"`
@@ -5601,7 +5601,7 @@ func (e CloudError) Error() string {
 	return msg
 }
 
-// The object that defines the structure of an Azure Synapse error response.
+// CloudErrorAutoGenerated - The object that defines the structure of an Azure Synapse error response.
 type CloudErrorAutoGenerated struct {
 	// Error data
 	InnerError *CloudErrorBodyAutoGenerated `json:"error,omitempty"`
@@ -5631,7 +5631,7 @@ func (e CloudErrorAutoGenerated) Error() string {
 	return msg
 }
 
-// The object that defines the structure of an Azure Synapse error.
+// CloudErrorBody - The object that defines the structure of an Azure Synapse error.
 type CloudErrorBody struct {
 	// Error code.
 	Code *string `json:"code,omitempty"`
@@ -5646,7 +5646,7 @@ type CloudErrorBody struct {
 	Target *string `json:"target,omitempty"`
 }
 
-// The object that defines the structure of an Azure Synapse error.
+// CloudErrorBodyAutoGenerated - The object that defines the structure of an Azure Synapse error.
 type CloudErrorBodyAutoGenerated struct {
 	// Error code.
 	Code *string `json:"code,omitempty"`
@@ -5661,7 +5661,7 @@ type CloudErrorBodyAutoGenerated struct {
 	Target *string `json:"target,omitempty"`
 }
 
-// The Common Data Service for Apps entity dataset.
+// CommonDataServiceForAppsEntityDataset - The Common Data Service for Apps entity dataset.
 type CommonDataServiceForAppsEntityDataset struct {
 	Dataset
 	// Common Data Service for Apps entity dataset properties.
@@ -5695,13 +5695,13 @@ func (c *CommonDataServiceForAppsEntityDataset) UnmarshalJSON(data []byte) error
 	return c.Dataset.unmarshalInternal(rawMsg)
 }
 
-// Common Data Service for Apps entity dataset properties.
+// CommonDataServiceForAppsEntityDatasetTypeProperties - Common Data Service for Apps entity dataset properties.
 type CommonDataServiceForAppsEntityDatasetTypeProperties struct {
 	// The logical name of the entity. Type: string (or Expression with resultType string).
 	EntityName interface{} `json:"entityName,omitempty"`
 }
 
-// Common Data Service for Apps linked service.
+// CommonDataServiceForAppsLinkedService - Common Data Service for Apps linked service.
 type CommonDataServiceForAppsLinkedService struct {
 	LinkedService
 	// Common Data Service for Apps linked service properties.
@@ -5735,7 +5735,7 @@ func (c *CommonDataServiceForAppsLinkedService) UnmarshalJSON(data []byte) error
 	return c.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Common Data Service for Apps linked service properties.
+// CommonDataServiceForAppsLinkedServiceTypeProperties - Common Data Service for Apps linked service properties.
 type CommonDataServiceForAppsLinkedServiceTypeProperties struct {
 	// The authentication type to connect to Common Data Service for Apps server. 'Office365' for online scenario, 'Ifd' for on-premises with Ifd scenario.
 	// 'AADServicePrincipal' for Server-To-Server
@@ -5842,7 +5842,7 @@ func (c *CommonDataServiceForAppsLinkedServiceTypeProperties) UnmarshalJSON(data
 	return nil
 }
 
-// A copy activity Common Data Service for Apps sink.
+// CommonDataServiceForAppsSink - A copy activity Common Data Service for Apps sink.
 type CommonDataServiceForAppsSink struct {
 	CopySink
 	// The logical name of the alternate key which will be used when upserting records. Type: string (or Expression with resultType string).
@@ -5891,7 +5891,7 @@ func (c *CommonDataServiceForAppsSink) UnmarshalJSON(data []byte) error {
 	return c.CopySink.unmarshalInternal(rawMsg)
 }
 
-// A copy activity Common Data Service for Apps source.
+// CommonDataServiceForAppsSource - A copy activity Common Data Service for Apps source.
 type CommonDataServiceForAppsSource struct {
 	CopySource
 	// FetchXML is a proprietary query language that is used in Microsoft Common Data Service for Apps (online & on-premises). Type: string (or Expression with
@@ -5926,7 +5926,7 @@ func (c *CommonDataServiceForAppsSource) UnmarshalJSON(data []byte) error {
 	return c.CopySource.unmarshalInternal(rawMsg)
 }
 
-// Concur Service linked service.
+// ConcurLinkedService - Concur Service linked service.
 type ConcurLinkedService struct {
 	LinkedService
 	// Concur Service linked service properties.
@@ -5960,7 +5960,7 @@ func (c *ConcurLinkedService) UnmarshalJSON(data []byte) error {
 	return c.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Concur Service linked service properties.
+// ConcurLinkedServiceTypeProperties - Concur Service linked service properties.
 type ConcurLinkedServiceTypeProperties struct {
 	// Application client_id supplied by Concur App Management.
 	ClientID interface{} `json:"clientId,omitempty"`
@@ -6024,7 +6024,7 @@ func (c *ConcurLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Concur Service dataset.
+// ConcurObjectDataset - Concur Service dataset.
 type ConcurObjectDataset struct {
 	Dataset
 	// Properties specific to this dataset type.
@@ -6058,7 +6058,7 @@ func (c *ConcurObjectDataset) UnmarshalJSON(data []byte) error {
 	return c.Dataset.unmarshalInternal(rawMsg)
 }
 
-// A copy activity Concur Service source.
+// ConcurSource - A copy activity Concur Service source.
 type ConcurSource struct {
 	TabularSource
 	// A query to retrieve data from source. Type: string (or Expression with resultType string).
@@ -6099,11 +6099,11 @@ func (c *ConcurSource) UnmarshalJSON(data []byte) error {
 // - *SetVariableActivity, *SwitchActivity, *UntilActivity, *ValidationActivity, *WaitActivity, *WebHookActivity
 type ControlActivityClassification interface {
 	ActivityClassification
-	// GetControlActivity() returns the ControlActivity content of the underlying type.
+	// GetControlActivity returns the ControlActivity content of the underlying type.
 	GetControlActivity() *ControlActivity
 }
 
-// Base class for all control activities like IfCondition, ForEach , Until.
+// ControlActivity - Base class for all control activities like IfCondition, ForEach , Until.
 type ControlActivity struct {
 	Activity
 }
@@ -6126,7 +6126,7 @@ func (c *ControlActivity) unmarshalInternal(rawMsg map[string]*json.RawMessage) 
 	return c.Activity.unmarshalInternal(rawMsg)
 }
 
-// Copy activity.
+// CopyActivity - Copy activity.
 type CopyActivity struct {
 	ExecutionActivity
 	// List of inputs for the activity.
@@ -6174,7 +6174,7 @@ func (c *CopyActivity) UnmarshalJSON(data []byte) error {
 	return c.ExecutionActivity.unmarshalInternal(rawMsg)
 }
 
-// Copy activity properties.
+// CopyActivityTypeProperties - Copy activity properties.
 type CopyActivityTypeProperties struct {
 	// Maximum number of data integration units that can be used to perform this data movement. Type: integer (or Expression with resultType integer), minimum:
 	// 0.
@@ -6221,11 +6221,11 @@ type CopyActivityTypeProperties struct {
 // - *FileSystemSink, *InformixSink, *JsonSink, *MicrosoftAccessSink, *OdbcSink, *OracleSink, *OrcSink, *ParquetSink, *SalesforceServiceCloudSink,
 // - *SalesforceSink, *SapCloudForCustomerSink, *SqlDWSink, *SqlMISink, *SqlServerSink, *SqlSink
 type CopySinkClassification interface {
-	// GetCopySink() returns the CopySink content of the underlying type.
+	// GetCopySink returns the CopySink content of the underlying type.
 	GetCopySink() *CopySink
 }
 
-// A copy activity sink.
+// CopySink - A copy activity sink.
 type CopySink struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties *map[string]interface{}
@@ -6334,11 +6334,11 @@ func (c *CopySink) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
 // - *SapOpenHubSource, *SapTableSource, *ServiceNowSource, *ShopifySource, *SparkSource, *SqlDWSource, *SqlMISource, *SqlServerSource,
 // - *SqlSource, *SquareSource, *SybaseSource, *TabularSource, *TeradataSource, *VerticaSource, *WebSource, *XeroSource, *ZohoSource
 type CopySourceClassification interface {
-	// GetCopySource() returns the CopySource content of the underlying type.
+	// GetCopySource returns the CopySource content of the underlying type.
 	GetCopySource() *CopySource
 }
 
-// A copy activity source.
+// CopySource - A copy activity source.
 type CopySource struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties *map[string]interface{}
@@ -6422,11 +6422,11 @@ func (c *CopySource) unmarshalInternal(rawMsg map[string]*json.RawMessage) error
 // Use a type switch to determine the concrete type.  The possible types are:
 // - *CopyTranslator, *TabularTranslator
 type CopyTranslatorClassification interface {
-	// GetCopyTranslator() returns the CopyTranslator content of the underlying type.
+	// GetCopyTranslator returns the CopyTranslator content of the underlying type.
 	GetCopyTranslator() *CopyTranslator
 }
 
-// A copy activity translator.
+// CopyTranslator - A copy activity translator.
 type CopyTranslator struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties *map[string]interface{}
@@ -6484,7 +6484,7 @@ func (c *CopyTranslator) unmarshalInternal(rawMsg map[string]*json.RawMessage) e
 	return nil
 }
 
-// Microsoft Azure Cosmos Database (CosmosDB) linked service.
+// CosmosDbLinkedService - Microsoft Azure Cosmos Database (CosmosDB) linked service.
 type CosmosDbLinkedService struct {
 	LinkedService
 	// CosmosDB linked service properties.
@@ -6518,7 +6518,7 @@ func (c *CosmosDbLinkedService) UnmarshalJSON(data []byte) error {
 	return c.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// CosmosDB linked service properties.
+// CosmosDbLinkedServiceTypeProperties - CosmosDB linked service properties.
 type CosmosDbLinkedServiceTypeProperties struct {
 	// The endpoint of the Azure CosmosDB account. Type: string (or Expression with resultType string)
 	AccountEndpoint interface{} `json:"accountEndpoint,omitempty"`
@@ -6569,7 +6569,7 @@ func (c *CosmosDbLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// The CosmosDB (MongoDB API) database dataset.
+// CosmosDbMongoDbAPICollectionDataset - The CosmosDB (MongoDB API) database dataset.
 type CosmosDbMongoDbAPICollectionDataset struct {
 	Dataset
 	// CosmosDB (MongoDB API) database dataset properties.
@@ -6603,13 +6603,13 @@ func (c *CosmosDbMongoDbAPICollectionDataset) UnmarshalJSON(data []byte) error {
 	return c.Dataset.unmarshalInternal(rawMsg)
 }
 
-// CosmosDB (MongoDB API) database dataset properties.
+// CosmosDbMongoDbAPICollectionDatasetTypeProperties - CosmosDB (MongoDB API) database dataset properties.
 type CosmosDbMongoDbAPICollectionDatasetTypeProperties struct {
 	// The collection name of the CosmosDB (MongoDB API) database. Type: string (or Expression with resultType string).
 	Collection interface{} `json:"collection,omitempty"`
 }
 
-// Linked service for CosmosDB (MongoDB API) data source.
+// CosmosDbMongoDbAPILinkedService - Linked service for CosmosDB (MongoDB API) data source.
 type CosmosDbMongoDbAPILinkedService struct {
 	LinkedService
 	// CosmosDB (MongoDB API) linked service properties.
@@ -6643,7 +6643,7 @@ func (c *CosmosDbMongoDbAPILinkedService) UnmarshalJSON(data []byte) error {
 	return c.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// CosmosDB (MongoDB API) linked service properties.
+// CosmosDbMongoDbAPILinkedServiceTypeProperties - CosmosDB (MongoDB API) linked service properties.
 type CosmosDbMongoDbAPILinkedServiceTypeProperties struct {
 	// The CosmosDB (MongoDB API) connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Type: string, SecureString or AzureKeyVaultSecretReference.
 	ConnectionString interface{} `json:"connectionString,omitempty"`
@@ -6652,7 +6652,7 @@ type CosmosDbMongoDbAPILinkedServiceTypeProperties struct {
 	Database interface{} `json:"database,omitempty"`
 }
 
-// A copy activity sink for a CosmosDB (MongoDB API) database.
+// CosmosDbMongoDbAPISink - A copy activity sink for a CosmosDB (MongoDB API) database.
 type CosmosDbMongoDbAPISink struct {
 	CopySink
 	// Specifies whether the document with same key to be overwritten (upsert) rather than throw exception (insert). The default value is "insert". Type: string
@@ -6688,7 +6688,7 @@ func (c *CosmosDbMongoDbAPISink) UnmarshalJSON(data []byte) error {
 	return c.CopySink.unmarshalInternal(rawMsg)
 }
 
-// A copy activity source for a CosmosDB (MongoDB API) database.
+// CosmosDbMongoDbAPISource - A copy activity source for a CosmosDB (MongoDB API) database.
 type CosmosDbMongoDbAPISource struct {
 	CopySource
 	// Specifies the number of documents to return in each batch of the response from MongoDB instance. In most cases, modifying the batch size will not affect
@@ -6746,7 +6746,7 @@ func (c *CosmosDbMongoDbAPISource) UnmarshalJSON(data []byte) error {
 	return c.CopySource.unmarshalInternal(rawMsg)
 }
 
-// Microsoft Azure CosmosDB (SQL API) Collection dataset.
+// CosmosDbSQLAPICollectionDataset - Microsoft Azure CosmosDB (SQL API) Collection dataset.
 type CosmosDbSQLAPICollectionDataset struct {
 	Dataset
 	// CosmosDB (SQL API) Collection dataset properties.
@@ -6780,13 +6780,13 @@ func (c *CosmosDbSQLAPICollectionDataset) UnmarshalJSON(data []byte) error {
 	return c.Dataset.unmarshalInternal(rawMsg)
 }
 
-// CosmosDB (SQL API) Collection dataset properties.
+// CosmosDbSQLAPICollectionDatasetTypeProperties - CosmosDB (SQL API) Collection dataset properties.
 type CosmosDbSQLAPICollectionDatasetTypeProperties struct {
 	// CosmosDB (SQL API) collection name. Type: string (or Expression with resultType string).
 	CollectionName interface{} `json:"collectionName,omitempty"`
 }
 
-// A copy activity Azure CosmosDB (SQL API) Collection sink.
+// CosmosDbSQLAPISink - A copy activity Azure CosmosDB (SQL API) Collection sink.
 type CosmosDbSQLAPISink struct {
 	CopySink
 	// Describes how to write data to Azure Cosmos DB. Type: string (or Expression with resultType string). Allowed values: insert and upsert.
@@ -6820,7 +6820,7 @@ func (c *CosmosDbSQLAPISink) UnmarshalJSON(data []byte) error {
 	return c.CopySink.unmarshalInternal(rawMsg)
 }
 
-// A copy activity Azure CosmosDB (SQL API) Collection source.
+// CosmosDbSQLAPISource - A copy activity Azure CosmosDB (SQL API) Collection source.
 type CosmosDbSQLAPISource struct {
 	CopySource
 	// Page size of the result. Type: integer (or Expression with resultType integer).
@@ -6868,7 +6868,7 @@ func (c *CosmosDbSQLAPISource) UnmarshalJSON(data []byte) error {
 	return c.CopySource.unmarshalInternal(rawMsg)
 }
 
-// Couchbase server linked service.
+// CouchbaseLinkedService - Couchbase server linked service.
 type CouchbaseLinkedService struct {
 	LinkedService
 	// Couchbase server linked service properties.
@@ -6902,7 +6902,7 @@ func (c *CouchbaseLinkedService) UnmarshalJSON(data []byte) error {
 	return c.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Couchbase server linked service properties.
+// CouchbaseLinkedServiceTypeProperties - Couchbase server linked service properties.
 type CouchbaseLinkedServiceTypeProperties struct {
 	// An ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference.
 	ConnectionString interface{} `json:"connectionString,omitempty"`
@@ -6915,7 +6915,7 @@ type CouchbaseLinkedServiceTypeProperties struct {
 	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
 }
 
-// A copy activity Couchbase server source.
+// CouchbaseSource - A copy activity Couchbase server source.
 type CouchbaseSource struct {
 	TabularSource
 	// A query to retrieve data from source. Type: string (or Expression with resultType string).
@@ -6949,7 +6949,7 @@ func (c *CouchbaseSource) UnmarshalJSON(data []byte) error {
 	return c.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// Couchbase server dataset.
+// CouchbaseTableDataset - Couchbase server dataset.
 type CouchbaseTableDataset struct {
 	Dataset
 	// Properties specific to this dataset type.
@@ -6983,7 +6983,7 @@ func (c *CouchbaseTableDataset) UnmarshalJSON(data []byte) error {
 	return c.Dataset.unmarshalInternal(rawMsg)
 }
 
-// Request body structure for creating data flow debug session.
+// CreateDataFlowDebugSessionRequest - Request body structure for creating data flow debug session.
 type CreateDataFlowDebugSessionRequest struct {
 	// Timeout setting for Databricks cluster.
 	ClusterTimeout *int32 `json:"clusterTimeout,omitempty"`
@@ -7004,7 +7004,7 @@ type CreateDataFlowDebugSessionRequest struct {
 	NewClusterNodeType *string `json:"newClusterNodeType,omitempty"`
 }
 
-// Response body structure for creating data flow debug session.
+// CreateDataFlowDebugSessionResponse - Response body structure for creating data flow debug session.
 type CreateDataFlowDebugSessionResponse struct {
 	// The ID of data flow debug session.
 	SessionID *string `json:"sessionId,omitempty"`
@@ -7032,7 +7032,7 @@ type CreateDataFlowDebugSessionResponseResponse struct {
 	RawResponse *http.Response
 }
 
-// Response body with a run identifier.
+// CreateRunResponse - Response body with a run identifier.
 type CreateRunResponse struct {
 	// Identifier of a run.
 	RunID *string `json:"runId,omitempty"`
@@ -7047,7 +7047,7 @@ type CreateRunResponseResponse struct {
 	RawResponse *http.Response
 }
 
-// Custom activity type.
+// CustomActivity - Custom activity type.
 type CustomActivity struct {
 	ExecutionActivity
 	// Custom activity properties.
@@ -7081,7 +7081,7 @@ func (c *CustomActivity) UnmarshalJSON(data []byte) error {
 	return c.ExecutionActivity.unmarshalInternal(rawMsg)
 }
 
-// Reference objects for custom activity
+// CustomActivityReferenceObject - Reference objects for custom activity
 type CustomActivityReferenceObject struct {
 	// Dataset references.
 	Datasets *[]*DatasetReference `json:"datasets,omitempty"`
@@ -7090,7 +7090,7 @@ type CustomActivityReferenceObject struct {
 	LinkedServices *[]*LinkedServiceReference `json:"linkedServices,omitempty"`
 }
 
-// Custom activity properties.
+// CustomActivityTypeProperties - Custom activity properties.
 type CustomActivityTypeProperties struct {
 	// Command for custom activity Type: string (or Expression with resultType string).
 	Command interface{} `json:"command,omitempty"`
@@ -7112,7 +7112,7 @@ type CustomActivityTypeProperties struct {
 	RetentionTimeInDays interface{} `json:"retentionTimeInDays,omitempty"`
 }
 
-// Custom linked service.
+// CustomDataSourceLinkedService - Custom linked service.
 type CustomDataSourceLinkedService struct {
 	LinkedService
 	// Custom linked service properties.
@@ -7146,7 +7146,7 @@ func (c *CustomDataSourceLinkedService) UnmarshalJSON(data []byte) error {
 	return c.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// The custom dataset.
+// CustomDataset - The custom dataset.
 type CustomDataset struct {
 	Dataset
 	// Custom dataset properties.
@@ -7185,11 +7185,11 @@ func (c *CustomDataset) UnmarshalJSON(data []byte) error {
 // Use a type switch to determine the concrete type.  The possible types are:
 // - *CustomSetupBase
 type CustomSetupBaseClassification interface {
-	// GetCustomSetupBase() returns the CustomSetupBase content of the underlying type.
+	// GetCustomSetupBase returns the CustomSetupBase content of the underlying type.
 	GetCustomSetupBase() *CustomSetupBase
 }
 
-// The base definition of the custom setup.
+// CustomSetupBase - The base definition of the custom setup.
 type CustomSetupBase struct {
 	// The type of custom setup.
 	Type *string `json:"type,omitempty"`
@@ -7229,7 +7229,7 @@ func (c *CustomSetupBase) unmarshalInternal(rawMsg map[string]*json.RawMessage) 
 	return nil
 }
 
-// Details of the customer managed key associated with the workspace
+// CustomerManagedKeyDetails - Details of the customer managed key associated with the workspace
 type CustomerManagedKeyDetails struct {
 	// The key object of the workspace
 	Key *WorkspaceKeyDetails `json:"key,omitempty"`
@@ -7238,7 +7238,7 @@ type CustomerManagedKeyDetails struct {
 	Status *string `json:"status,omitempty" azure:"ro"`
 }
 
-// Default value.
+// DWCopyCommandDefaultValue - Default value.
 type DWCopyCommandDefaultValue struct {
 	// Column name. Type: object (or Expression with resultType string).
 	ColumnName interface{} `json:"columnName,omitempty"`
@@ -7247,7 +7247,7 @@ type DWCopyCommandDefaultValue struct {
 	DefaultValue interface{} `json:"defaultValue,omitempty"`
 }
 
-// DW Copy Command settings.
+// DWCopyCommandSettings - DW Copy Command settings.
 type DWCopyCommandSettings struct {
 	// Additional options directly passed to SQL DW in Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType object).
 	// Example: "additionalOptions": { "MAXERRORS":
@@ -7265,11 +7265,11 @@ type DWCopyCommandSettings struct {
 // Use a type switch to determine the concrete type.  The possible types are:
 // - *DataFlow, *MappingDataFlow
 type DataFlowClassification interface {
-	// GetDataFlow() returns the DataFlow content of the underlying type.
+	// GetDataFlow returns the DataFlow content of the underlying type.
 	GetDataFlow() *DataFlow
 }
 
-// Azure Synapse nested object which contains a flow with data movements and transformations.
+// DataFlow - Azure Synapse nested object which contains a flow with data movements and transformations.
 type DataFlow struct {
 	// List of tags that can be used for describing the data flow.
 	Annotations *[]interface{} `json:"annotations,omitempty"`
@@ -7346,7 +7346,7 @@ type DataFlowBeginRenameDataFlowOptions struct {
 	// placeholder for future optional parameters
 }
 
-// Request body structure for data flow expression preview.
+// DataFlowDebugCommandRequest - Request body structure for data flow expression preview.
 type DataFlowDebugCommandRequest struct {
 	// The command name.
 	CommandName *string `json:"commandName,omitempty"`
@@ -7361,7 +7361,7 @@ type DataFlowDebugCommandRequest struct {
 	SessionID *string `json:"sessionId,omitempty"`
 }
 
-// Response body structure of data flow result for data preview, statistics or expression preview.
+// DataFlowDebugCommandResponse - Response body structure of data flow result for data preview, statistics or expression preview.
 type DataFlowDebugCommandResponse struct {
 	// The result data of data preview, statistics or expression preview.
 	Data *string `json:"data,omitempty"`
@@ -7391,7 +7391,7 @@ type DataFlowDebugCommandResponseResponse struct {
 	RawResponse *http.Response
 }
 
-// Request body structure for starting data flow debug session.
+// DataFlowDebugPackage - Request body structure for starting data flow debug session.
 type DataFlowDebugPackage struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties *map[string]interface{}
@@ -7477,7 +7477,7 @@ func (d *DataFlowDebugPackage) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Data flow debug settings.
+// DataFlowDebugPackageDebugSettings - Data flow debug settings.
 type DataFlowDebugPackageDebugSettings struct {
 	// Parameters for dataset.
 	DatasetParameters interface{} `json:"datasetParameters,omitempty"`
@@ -7489,7 +7489,7 @@ type DataFlowDebugPackageDebugSettings struct {
 	SourceSettings *[]*DataFlowSourceSetting `json:"sourceSettings,omitempty"`
 }
 
-// Request body structure for data flow preview data.
+// DataFlowDebugPreviewDataRequest - Request body structure for data flow preview data.
 type DataFlowDebugPreviewDataRequest struct {
 	// The data flow which contains the debug session.
 	DataFlowName *string `json:"dataFlowName,omitempty"`
@@ -7504,20 +7504,20 @@ type DataFlowDebugPreviewDataRequest struct {
 	StreamName *string `json:"streamName,omitempty"`
 }
 
-// Response body structure of data flow query for data preview, statistics or expression preview.
+// DataFlowDebugQueryResponse - Response body structure of data flow query for data preview, statistics or expression preview.
 type DataFlowDebugQueryResponse struct {
 	// The run ID of data flow debug session.
 	RunID *string `json:"runId,omitempty"`
 }
 
-// Data flow debug resource.
+// DataFlowDebugResource - Data flow debug resource.
 type DataFlowDebugResource struct {
 	SubResourceDebugResource
 	// Data flow properties.
 	Properties DataFlowClassification `json:"properties,omitempty"`
 }
 
-// Response body structure of data flow result for data preview, statistics or expression preview.
+// DataFlowDebugResultResponse - Response body structure of data flow result for data preview, statistics or expression preview.
 type DataFlowDebugResultResponse struct {
 	// The result data of data preview, statistics or expression preview.
 	Data *string `json:"data,omitempty"`
@@ -7547,7 +7547,7 @@ type DataFlowDebugSessionDeleteDataFlowDebugSessionOptions struct {
 	// placeholder for future optional parameters
 }
 
-// Data flow debug session info.
+// DataFlowDebugSessionInfo - Data flow debug session info.
 type DataFlowDebugSessionInfo struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties *map[string]interface{}
@@ -7660,7 +7660,7 @@ type DataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspaceOptions struct {
 	// placeholder for future optional parameters
 }
 
-// Request body structure for data flow statistics.
+// DataFlowDebugStatisticsRequest - Request body structure for data flow statistics.
 type DataFlowDebugStatisticsRequest struct {
 	// List of column names.
 	Columns *[]*string `json:"columns,omitempty"`
@@ -7675,7 +7675,7 @@ type DataFlowDebugStatisticsRequest struct {
 	StreamName *string `json:"streamName,omitempty"`
 }
 
-// The folder that this data flow is in. If not specified, Data flow will appear at the root level.
+// DataFlowFolder - The folder that this data flow is in. If not specified, Data flow will appear at the root level.
 type DataFlowFolder struct {
 	// The name of the folder that this data flow is in.
 	Name *string `json:"name,omitempty"`
@@ -7693,7 +7693,7 @@ type DataFlowGetDataFlowsByWorkspaceOptions struct {
 	// placeholder for future optional parameters
 }
 
-// A list of data flow resources.
+// DataFlowListResponse - A list of data flow resources.
 type DataFlowListResponse struct {
 	// The link to the next page of results, if any remaining results exist.
 	NextLink *string `json:"nextLink,omitempty"`
@@ -7711,7 +7711,7 @@ type DataFlowListResponseResponse struct {
 	RawResponse *http.Response
 }
 
-// Data flow reference type.
+// DataFlowReference - Data flow reference type.
 type DataFlowReference struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties *map[string]interface{}
@@ -7776,7 +7776,7 @@ func (d *DataFlowReference) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Data flow resource type.
+// DataFlowResource - Data flow resource type.
 type DataFlowResource struct {
 	SubResource
 	// Data flow properties.
@@ -7804,21 +7804,21 @@ type DataFlowResourceResponse struct {
 	RawResponse *http.Response
 }
 
-// Transformation for data flow sink.
+// DataFlowSink - Transformation for data flow sink.
 type DataFlowSink struct {
 	Transformation
 	// Dataset reference.
 	Dataset *DatasetReference `json:"dataset,omitempty"`
 }
 
-// Transformation for data flow source.
+// DataFlowSource - Transformation for data flow source.
 type DataFlowSource struct {
 	Transformation
 	// Dataset reference.
 	Dataset *DatasetReference `json:"dataset,omitempty"`
 }
 
-// Definition of data flow source setting for debug.
+// DataFlowSourceSetting - Definition of data flow source setting for debug.
 type DataFlowSourceSetting struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties *map[string]interface{}
@@ -7876,7 +7876,7 @@ func (d *DataFlowSourceSetting) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Staging info for execute data flow activity.
+// DataFlowStagingInfo - Staging info for execute data flow activity.
 type DataFlowStagingInfo struct {
 	// Folder path for staging blob.
 	FolderPath *string `json:"folderPath,omitempty"`
@@ -7885,7 +7885,7 @@ type DataFlowStagingInfo struct {
 	LinkedService *LinkedServiceReference `json:"linkedService,omitempty"`
 }
 
-// Data Lake Analytics U-SQL activity.
+// DataLakeAnalyticsUSQLActivity - Data Lake Analytics U-SQL activity.
 type DataLakeAnalyticsUSQLActivity struct {
 	ExecutionActivity
 	// Data Lake Analytics U-SQL activity properties.
@@ -7919,7 +7919,7 @@ func (d *DataLakeAnalyticsUSQLActivity) UnmarshalJSON(data []byte) error {
 	return d.ExecutionActivity.unmarshalInternal(rawMsg)
 }
 
-// DataLakeAnalyticsU-SQL activity properties.
+// DataLakeAnalyticsUSQLActivityTypeProperties - DataLakeAnalyticsU-SQL activity properties.
 type DataLakeAnalyticsUSQLActivityTypeProperties struct {
 	// Compilation mode of U-SQL. Must be one of these values : Semantic, Full and SingleBox. Type: string (or Expression with resultType string).
 	CompilationMode interface{} `json:"compilationMode,omitempty"`
@@ -7945,7 +7945,7 @@ type DataLakeAnalyticsUSQLActivityTypeProperties struct {
 	ScriptPath interface{} `json:"scriptPath,omitempty"`
 }
 
-// Details of the data lake storage account associated with the workspace
+// DataLakeStorageAccountDetails - Details of the data lake storage account associated with the workspace
 type DataLakeStorageAccountDetails struct {
 	// Account URL
 	AccountURL *string `json:"accountUrl,omitempty"`
@@ -7954,7 +7954,7 @@ type DataLakeStorageAccountDetails struct {
 	Filesystem *string `json:"filesystem,omitempty"`
 }
 
-// DatabricksNotebook activity.
+// DatabricksNotebookActivity - DatabricksNotebook activity.
 type DatabricksNotebookActivity struct {
 	ExecutionActivity
 	// Databricks Notebook activity properties.
@@ -7988,7 +7988,7 @@ func (d *DatabricksNotebookActivity) UnmarshalJSON(data []byte) error {
 	return d.ExecutionActivity.unmarshalInternal(rawMsg)
 }
 
-// Databricks notebook activity properties.
+// DatabricksNotebookActivityTypeProperties - Databricks notebook activity properties.
 type DatabricksNotebookActivityTypeProperties struct {
 	// Base parameters to be used for each run of this job.If the notebook takes a parameter that is not specified, the default value from the notebook will
 	// be used.
@@ -8002,7 +8002,7 @@ type DatabricksNotebookActivityTypeProperties struct {
 	NotebookPath interface{} `json:"notebookPath,omitempty"`
 }
 
-// DatabricksSparkJar activity.
+// DatabricksSparkJarActivity - DatabricksSparkJar activity.
 type DatabricksSparkJarActivity struct {
 	ExecutionActivity
 	// Databricks SparkJar activity properties.
@@ -8036,7 +8036,7 @@ func (d *DatabricksSparkJarActivity) UnmarshalJSON(data []byte) error {
 	return d.ExecutionActivity.unmarshalInternal(rawMsg)
 }
 
-// Databricks SparkJar activity properties.
+// DatabricksSparkJarActivityTypeProperties - Databricks SparkJar activity properties.
 type DatabricksSparkJarActivityTypeProperties struct {
 	// A list of libraries to be installed on the cluster that will execute the job.
 	Libraries *[]map[string]interface{} `json:"libraries,omitempty"`
@@ -8049,7 +8049,7 @@ type DatabricksSparkJarActivityTypeProperties struct {
 	Parameters *[]interface{} `json:"parameters,omitempty"`
 }
 
-// DatabricksSparkPython activity.
+// DatabricksSparkPythonActivity - DatabricksSparkPython activity.
 type DatabricksSparkPythonActivity struct {
 	ExecutionActivity
 	// Databricks SparkPython activity properties.
@@ -8083,7 +8083,7 @@ func (d *DatabricksSparkPythonActivity) UnmarshalJSON(data []byte) error {
 	return d.ExecutionActivity.unmarshalInternal(rawMsg)
 }
 
-// Databricks SparkPython activity properties.
+// DatabricksSparkPythonActivityTypeProperties - Databricks SparkPython activity properties.
 type DatabricksSparkPythonActivityTypeProperties struct {
 	// A list of libraries to be installed on the cluster that will execute the job.
 	Libraries *[]map[string]interface{} `json:"libraries,omitempty"`
@@ -8115,11 +8115,11 @@ type DatabricksSparkPythonActivityTypeProperties struct {
 // - *SparkObjectDataset, *SqlServerTableDataset, *SquareObjectDataset, *SybaseTableDataset, *TeradataTableDataset, *VerticaTableDataset,
 // - *WebTableDataset, *XeroObjectDataset, *ZohoObjectDataset
 type DatasetClassification interface {
-	// GetDataset() returns the Dataset content of the underlying type.
+	// GetDataset returns the Dataset content of the underlying type.
 	GetDataset() *Dataset
 }
 
-// The Azure Data Factory nested object which identifies data within different data stores, such as tables, files, folders, and documents.
+// Dataset - The Azure Data Factory nested object which identifies data within different data stores, such as tables, files, folders, and documents.
 type Dataset struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties *map[string]interface{}
@@ -8226,7 +8226,7 @@ func (d *Dataset) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
 	return nil
 }
 
-// The BZip2 compression method used on a dataset.
+// DatasetBZip2Compression - The BZip2 compression method used on a dataset.
 type DatasetBZip2Compression struct {
 	DatasetCompression
 }
@@ -8258,11 +8258,11 @@ type DatasetBeginRenameDatasetOptions struct {
 // Use a type switch to determine the concrete type.  The possible types are:
 // - *DatasetCompression, *DatasetBZip2Compression, *DatasetDeflateCompression, *DatasetGZipCompression, *DatasetZipDeflateCompression
 type DatasetCompressionClassification interface {
-	// GetDatasetCompression() returns the DatasetCompression content of the underlying type.
+	// GetDatasetCompression returns the DatasetCompression content of the underlying type.
 	GetDatasetCompression() *DatasetCompression
 }
 
-// The compression method used on a dataset.
+// DatasetCompression - The compression method used on a dataset.
 type DatasetCompression struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties *map[string]interface{}
@@ -8320,7 +8320,7 @@ func (d *DatasetCompression) unmarshalInternal(rawMsg map[string]*json.RawMessag
 	return nil
 }
 
-// Columns that define the structure of the dataset.
+// DatasetDataElement - Columns that define the structure of the dataset.
 type DatasetDataElement struct {
 	// Name of the column. Type: string (or Expression with resultType string).
 	Name interface{} `json:"name,omitempty"`
@@ -8329,14 +8329,14 @@ type DatasetDataElement struct {
 	Type interface{} `json:"type,omitempty"`
 }
 
-// Dataset debug resource.
+// DatasetDebugResource - Dataset debug resource.
 type DatasetDebugResource struct {
 	SubResourceDebugResource
 	// Dataset properties.
 	Properties DatasetClassification `json:"properties,omitempty"`
 }
 
-// The Deflate compression method used on a dataset.
+// DatasetDeflateCompression - The Deflate compression method used on a dataset.
 type DatasetDeflateCompression struct {
 	DatasetCompression
 	// The Deflate compression level.
@@ -8370,13 +8370,13 @@ func (d *DatasetDeflateCompression) UnmarshalJSON(data []byte) error {
 	return d.DatasetCompression.unmarshalInternal(rawMsg)
 }
 
-// The folder that this Dataset is in. If not specified, Dataset will appear at the root level.
+// DatasetFolder - The folder that this Dataset is in. If not specified, Dataset will appear at the root level.
 type DatasetFolder struct {
 	// The name of the folder that this Dataset is in.
 	Name *string `json:"name,omitempty"`
 }
 
-// The GZip compression method used on a dataset.
+// DatasetGZipCompression - The GZip compression method used on a dataset.
 type DatasetGZipCompression struct {
 	DatasetCompression
 	// The GZip compression level.
@@ -8422,7 +8422,7 @@ type DatasetGetDatasetsByWorkspaceOptions struct {
 	// placeholder for future optional parameters
 }
 
-// A list of dataset resources.
+// DatasetListResponse - A list of dataset resources.
 type DatasetListResponse struct {
 	// The link to the next page of results, if any remaining results exist.
 	NextLink *string `json:"nextLink,omitempty"`
@@ -8446,11 +8446,11 @@ type DatasetListResponseResponse struct {
 // - *DatasetLocation, *AmazonS3Location, *AzureBlobFSLocation, *AzureBlobStorageLocation, *AzureDataLakeStoreLocation, *AzureFileStorageLocation,
 // - *FileServerLocation, *FtpServerLocation, *GoogleCloudStorageLocation, *HdfsLocation, *HttpServerLocation, *SftpLocation
 type DatasetLocationClassification interface {
-	// GetDatasetLocation() returns the DatasetLocation content of the underlying type.
+	// GetDatasetLocation returns the DatasetLocation content of the underlying type.
 	GetDatasetLocation() *DatasetLocation
 }
 
-// Dataset location.
+// DatasetLocation - Dataset location.
 type DatasetLocation struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties *map[string]interface{}
@@ -8522,7 +8522,7 @@ func (d *DatasetLocation) unmarshalInternal(rawMsg map[string]*json.RawMessage) 
 	return nil
 }
 
-// Dataset reference type.
+// DatasetReference - Dataset reference type.
 type DatasetReference struct {
 	// Arguments for dataset.
 	Parameters *map[string]interface{} `json:"parameters,omitempty"`
@@ -8534,7 +8534,7 @@ type DatasetReference struct {
 	Type *DatasetReferenceType `json:"type,omitempty"`
 }
 
-// Dataset resource type.
+// DatasetResource - Dataset resource type.
 type DatasetResource struct {
 	SubResource
 	// Dataset properties.
@@ -8562,7 +8562,7 @@ type DatasetResourceResponse struct {
 	RawResponse *http.Response
 }
 
-// Columns that define the physical type schema of the dataset.
+// DatasetSchemaDataElement - Columns that define the physical type schema of the dataset.
 type DatasetSchemaDataElement struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties *map[string]interface{}
@@ -8625,11 +8625,11 @@ func (d *DatasetSchemaDataElement) UnmarshalJSON(data []byte) error {
 // Use a type switch to determine the concrete type.  The possible types are:
 // - *DatasetStorageFormat, *AvroFormat, *JsonFormat, *OrcFormat, *ParquetFormat, *TextFormat
 type DatasetStorageFormatClassification interface {
-	// GetDatasetStorageFormat() returns the DatasetStorageFormat content of the underlying type.
+	// GetDatasetStorageFormat returns the DatasetStorageFormat content of the underlying type.
 	GetDatasetStorageFormat() *DatasetStorageFormat
 }
 
-// The format definition of a storage.
+// DatasetStorageFormat - The format definition of a storage.
 type DatasetStorageFormat struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties *map[string]interface{}
@@ -8701,7 +8701,7 @@ func (d *DatasetStorageFormat) unmarshalInternal(rawMsg map[string]*json.RawMess
 	return nil
 }
 
-// The ZipDeflate compression method used on a dataset.
+// DatasetZipDeflateCompression - The ZipDeflate compression method used on a dataset.
 type DatasetZipDeflateCompression struct {
 	DatasetCompression
 	// The ZipDeflate compression level.
@@ -8735,7 +8735,7 @@ func (d *DatasetZipDeflateCompression) UnmarshalJSON(data []byte) error {
 	return d.DatasetCompression.unmarshalInternal(rawMsg)
 }
 
-// Linked service for DB2 data source.
+// Db2LinkedService - Linked service for DB2 data source.
 type Db2LinkedService struct {
 	LinkedService
 	// DB2 linked service properties.
@@ -8769,7 +8769,7 @@ func (d *Db2LinkedService) UnmarshalJSON(data []byte) error {
 	return d.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// DB2 linked service properties.
+// Db2LinkedServiceTypeProperties - DB2 linked service properties.
 type Db2LinkedServiceTypeProperties struct {
 	// AuthenticationType to be used for connection.
 	AuthenticationType *Db2AuthenticationType `json:"authenticationType,omitempty"`
@@ -8838,7 +8838,7 @@ func (d *Db2LinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// A copy activity source for Db2 databases.
+// Db2Source - A copy activity source for Db2 databases.
 type Db2Source struct {
 	TabularSource
 	// Database query. Type: string (or Expression with resultType string).
@@ -8872,7 +8872,7 @@ func (d *Db2Source) UnmarshalJSON(data []byte) error {
 	return d.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// The Db2 table dataset.
+// Db2TableDataset - The Db2 table dataset.
 type Db2TableDataset struct {
 	Dataset
 	// Db2 table dataset properties.
@@ -8906,7 +8906,7 @@ func (d *Db2TableDataset) UnmarshalJSON(data []byte) error {
 	return d.Dataset.unmarshalInternal(rawMsg)
 }
 
-// Db2 table dataset properties.
+// Db2TableDatasetTypeProperties - Db2 table dataset properties.
 type Db2TableDatasetTypeProperties struct {
 	// The Db2 schema name. Type: string (or Expression with resultType string).
 	Schema interface{} `json:"schema,omitempty"`
@@ -8918,7 +8918,7 @@ type Db2TableDatasetTypeProperties struct {
 	TableName interface{} `json:"tableName,omitempty"`
 }
 
-// Delete activity.
+// DeleteActivity - Delete activity.
 type DeleteActivity struct {
 	ExecutionActivity
 	// Delete activity properties.
@@ -8952,7 +8952,7 @@ func (d *DeleteActivity) UnmarshalJSON(data []byte) error {
 	return d.ExecutionActivity.unmarshalInternal(rawMsg)
 }
 
-// Delete activity properties.
+// DeleteActivityTypeProperties - Delete activity properties.
 type DeleteActivityTypeProperties struct {
 	// Delete activity dataset reference.
 	Dataset *DatasetReference `json:"dataset,omitempty"`
@@ -8970,7 +8970,7 @@ type DeleteActivityTypeProperties struct {
 	Recursive interface{} `json:"recursive,omitempty"`
 }
 
-// Request body structure for deleting data flow debug session.
+// DeleteDataFlowDebugSessionRequest - Request body structure for deleting data flow debug session.
 type DeleteDataFlowDebugSessionRequest struct {
 	// The data flow which contains the debug session.
 	DataFlowName *string `json:"dataFlowName,omitempty"`
@@ -8979,7 +8979,7 @@ type DeleteDataFlowDebugSessionRequest struct {
 	SessionID *string `json:"sessionId,omitempty"`
 }
 
-// Delimited text dataset.
+// DelimitedTextDataset - Delimited text dataset.
 type DelimitedTextDataset struct {
 	Dataset
 	// Delimited text dataset properties.
@@ -9013,7 +9013,7 @@ func (d *DelimitedTextDataset) UnmarshalJSON(data []byte) error {
 	return d.Dataset.unmarshalInternal(rawMsg)
 }
 
-// DelimitedText dataset properties.
+// DelimitedTextDatasetTypeProperties - DelimitedText dataset properties.
 type DelimitedTextDatasetTypeProperties struct {
 	// The column delimiter. Type: string (or Expression with resultType string).
 	ColumnDelimiter  interface{}                    `json:"columnDelimiter,omitempty"`
@@ -9095,7 +9095,7 @@ func (d *DelimitedTextDatasetTypeProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Delimited text read settings.
+// DelimitedTextReadSettings - Delimited text read settings.
 type DelimitedTextReadSettings struct {
 	FormatReadSettings
 	// Indicates the number of non-empty rows to skip when reading data from input files. Type: integer (or Expression with resultType integer).
@@ -9129,7 +9129,7 @@ func (d *DelimitedTextReadSettings) UnmarshalJSON(data []byte) error {
 	return d.FormatReadSettings.unmarshalInternal(rawMsg)
 }
 
-// A copy activity DelimitedText sink.
+// DelimitedTextSink - A copy activity DelimitedText sink.
 type DelimitedTextSink struct {
 	CopySink
 	// DelimitedText format settings.
@@ -9170,7 +9170,7 @@ func (d *DelimitedTextSink) UnmarshalJSON(data []byte) error {
 	return d.CopySink.unmarshalInternal(rawMsg)
 }
 
-// A copy activity DelimitedText source.
+// DelimitedTextSource - A copy activity DelimitedText source.
 type DelimitedTextSource struct {
 	CopySource
 	// DelimitedText format settings.
@@ -9211,7 +9211,7 @@ func (d *DelimitedTextSource) UnmarshalJSON(data []byte) error {
 	return d.CopySource.unmarshalInternal(rawMsg)
 }
 
-// Delimited text write settings.
+// DelimitedTextWriteSettings - Delimited text write settings.
 type DelimitedTextWriteSettings struct {
 	FormatWriteSettings
 	// The file extension used to create the files. Type: string (or Expression with resultType string).
@@ -9257,11 +9257,11 @@ func (d *DelimitedTextWriteSettings) UnmarshalJSON(data []byte) error {
 // Use a type switch to determine the concrete type.  The possible types are:
 // - *DependencyReference, *SelfDependencyTumblingWindowTriggerReference, *TriggerDependencyReference, *TumblingWindowTriggerDependencyReference
 type DependencyReferenceClassification interface {
-	// GetDependencyReference() returns the DependencyReference content of the underlying type.
+	// GetDependencyReference returns the DependencyReference content of the underlying type.
 	GetDependencyReference() *DependencyReference
 }
 
-// Referenced dependency.
+// DependencyReference - Referenced dependency.
 type DependencyReference struct {
 	// The type of dependency reference.
 	Type *string `json:"type,omitempty"`
@@ -9301,7 +9301,7 @@ func (d *DependencyReference) unmarshalInternal(rawMsg map[string]*json.RawMessa
 	return nil
 }
 
-// Distcp settings.
+// DistcpSettings - Distcp settings.
 type DistcpSettings struct {
 	// Specifies the Distcp options. Type: string (or Expression with resultType string).
 	DistcpOptions interface{} `json:"distcpOptions,omitempty"`
@@ -9315,7 +9315,7 @@ type DistcpSettings struct {
 	TempScriptPath interface{} `json:"tempScriptPath,omitempty"`
 }
 
-// Microsoft Azure Document Database Collection dataset.
+// DocumentDbCollectionDataset - Microsoft Azure Document Database Collection dataset.
 type DocumentDbCollectionDataset struct {
 	Dataset
 	// DocumentDB Collection dataset properties.
@@ -9349,13 +9349,13 @@ func (d *DocumentDbCollectionDataset) UnmarshalJSON(data []byte) error {
 	return d.Dataset.unmarshalInternal(rawMsg)
 }
 
-// DocumentDB Collection dataset properties.
+// DocumentDbCollectionDatasetTypeProperties - DocumentDB Collection dataset properties.
 type DocumentDbCollectionDatasetTypeProperties struct {
 	// Document Database collection name. Type: string (or Expression with resultType string).
 	CollectionName interface{} `json:"collectionName,omitempty"`
 }
 
-// A copy activity Document Database Collection sink.
+// DocumentDbCollectionSink - A copy activity Document Database Collection sink.
 type DocumentDbCollectionSink struct {
 	CopySink
 	// Nested properties separator. Default is . (dot). Type: string (or Expression with resultType string).
@@ -9396,7 +9396,7 @@ func (d *DocumentDbCollectionSink) UnmarshalJSON(data []byte) error {
 	return d.CopySink.unmarshalInternal(rawMsg)
 }
 
-// A copy activity Document Database Collection source.
+// DocumentDbCollectionSource - A copy activity Document Database Collection source.
 type DocumentDbCollectionSource struct {
 	CopySource
 	// Nested properties separator. Type: string (or Expression with resultType string).
@@ -9444,7 +9444,7 @@ func (d *DocumentDbCollectionSource) UnmarshalJSON(data []byte) error {
 	return d.CopySource.unmarshalInternal(rawMsg)
 }
 
-// Drill Dataset Properties
+// DrillDatasetTypeProperties - Drill Dataset Properties
 type DrillDatasetTypeProperties struct {
 	// The schema name of the Drill. Type: string (or Expression with resultType string).
 	Schema interface{} `json:"schema,omitempty"`
@@ -9456,7 +9456,7 @@ type DrillDatasetTypeProperties struct {
 	TableName interface{} `json:"tableName,omitempty"`
 }
 
-// Drill server linked service.
+// DrillLinkedService - Drill server linked service.
 type DrillLinkedService struct {
 	LinkedService
 	// Drill server linked service properties.
@@ -9490,7 +9490,7 @@ func (d *DrillLinkedService) UnmarshalJSON(data []byte) error {
 	return d.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Drill server linked service properties.
+// DrillLinkedServiceTypeProperties - Drill server linked service properties.
 type DrillLinkedServiceTypeProperties struct {
 	// An ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference.
 	ConnectionString interface{} `json:"connectionString,omitempty"`
@@ -9503,7 +9503,7 @@ type DrillLinkedServiceTypeProperties struct {
 	Pwd *AzureKeyVaultSecretReference `json:"pwd,omitempty"`
 }
 
-// A copy activity Drill server source.
+// DrillSource - A copy activity Drill server source.
 type DrillSource struct {
 	TabularSource
 	// A query to retrieve data from source. Type: string (or Expression with resultType string).
@@ -9537,7 +9537,7 @@ func (d *DrillSource) UnmarshalJSON(data []byte) error {
 	return d.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// Drill server dataset.
+// DrillTableDataset - Drill server dataset.
 type DrillTableDataset struct {
 	Dataset
 	// Properties specific to this dataset type.
@@ -9571,13 +9571,13 @@ func (d *DrillTableDataset) UnmarshalJSON(data []byte) error {
 	return d.Dataset.unmarshalInternal(rawMsg)
 }
 
-// Dynamic Executor Allocation Properties
+// DynamicExecutorAllocation - Dynamic Executor Allocation Properties
 type DynamicExecutorAllocation struct {
 	// Indicates whether Dynamic Executor Allocation is enabled or not.
 	Enabled *bool `json:"enabled,omitempty"`
 }
 
-// Dynamics AX linked service.
+// DynamicsAXLinkedService - Dynamics AX linked service.
 type DynamicsAXLinkedService struct {
 	LinkedService
 	// Dynamics AX linked service properties.
@@ -9611,7 +9611,7 @@ func (d *DynamicsAXLinkedService) UnmarshalJSON(data []byte) error {
 	return d.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Dynamics AX linked service properties.
+// DynamicsAXLinkedServiceTypeProperties - Dynamics AX linked service properties.
 type DynamicsAXLinkedServiceTypeProperties struct {
 	// Specify the resource you are requesting authorization. Type: string (or Expression with resultType string).
 	AADResourceID interface{} `json:"aadResourceId,omitempty"`
@@ -9672,7 +9672,7 @@ func (d *DynamicsAXLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error
 	return nil
 }
 
-// The path of the Dynamics AX OData entity.
+// DynamicsAXResourceDataset - The path of the Dynamics AX OData entity.
 type DynamicsAXResourceDataset struct {
 	Dataset
 	// Dynamics AX OData resource dataset properties.
@@ -9706,13 +9706,13 @@ func (d *DynamicsAXResourceDataset) UnmarshalJSON(data []byte) error {
 	return d.Dataset.unmarshalInternal(rawMsg)
 }
 
-// Dynamics AX OData resource dataset properties.
+// DynamicsAXResourceDatasetTypeProperties - Dynamics AX OData resource dataset properties.
 type DynamicsAXResourceDatasetTypeProperties struct {
 	// The path of the Dynamics AX OData entity. Type: string (or Expression with resultType string).
 	Path interface{} `json:"path,omitempty"`
 }
 
-// A copy activity Dynamics AX source.
+// DynamicsAXSource - A copy activity Dynamics AX source.
 type DynamicsAXSource struct {
 	TabularSource
 	// A query to retrieve data from source. Type: string (or Expression with resultType string).
@@ -9746,7 +9746,7 @@ func (d *DynamicsAXSource) UnmarshalJSON(data []byte) error {
 	return d.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// The Dynamics CRM entity dataset.
+// DynamicsCrmEntityDataset - The Dynamics CRM entity dataset.
 type DynamicsCrmEntityDataset struct {
 	Dataset
 	// Dynamics CRM entity dataset properties.
@@ -9780,13 +9780,13 @@ func (d *DynamicsCrmEntityDataset) UnmarshalJSON(data []byte) error {
 	return d.Dataset.unmarshalInternal(rawMsg)
 }
 
-// Dynamics CRM entity dataset properties.
+// DynamicsCrmEntityDatasetTypeProperties - Dynamics CRM entity dataset properties.
 type DynamicsCrmEntityDatasetTypeProperties struct {
 	// The logical name of the entity. Type: string (or Expression with resultType string).
 	EntityName interface{} `json:"entityName,omitempty"`
 }
 
-// Dynamics CRM linked service.
+// DynamicsCrmLinkedService - Dynamics CRM linked service.
 type DynamicsCrmLinkedService struct {
 	LinkedService
 	// Dynamics CRM linked service properties.
@@ -9820,7 +9820,7 @@ func (d *DynamicsCrmLinkedService) UnmarshalJSON(data []byte) error {
 	return d.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Dynamics CRM linked service properties.
+// DynamicsCrmLinkedServiceTypeProperties - Dynamics CRM linked service properties.
 type DynamicsCrmLinkedServiceTypeProperties struct {
 	// The authentication type to connect to Dynamics CRM server. 'Office365' for online scenario, 'Ifd' for on-premises with Ifd scenario, 'AADServicePrincipal'
 	// for Server-To-Server authentication in online
@@ -9925,7 +9925,7 @@ func (d *DynamicsCrmLinkedServiceTypeProperties) UnmarshalJSON(data []byte) erro
 	return nil
 }
 
-// A copy activity Dynamics CRM sink.
+// DynamicsCrmSink - A copy activity Dynamics CRM sink.
 type DynamicsCrmSink struct {
 	CopySink
 	// The logical name of the alternate key which will be used when upserting records. Type: string (or Expression with resultType string).
@@ -9974,7 +9974,7 @@ func (d *DynamicsCrmSink) UnmarshalJSON(data []byte) error {
 	return d.CopySink.unmarshalInternal(rawMsg)
 }
 
-// A copy activity Dynamics CRM source.
+// DynamicsCrmSource - A copy activity Dynamics CRM source.
 type DynamicsCrmSource struct {
 	CopySource
 	// FetchXML is a proprietary query language that is used in Microsoft Dynamics CRM (online & on-premises). Type: string (or Expression with resultType string).
@@ -10008,7 +10008,7 @@ func (d *DynamicsCrmSource) UnmarshalJSON(data []byte) error {
 	return d.CopySource.unmarshalInternal(rawMsg)
 }
 
-// The Dynamics entity dataset.
+// DynamicsEntityDataset - The Dynamics entity dataset.
 type DynamicsEntityDataset struct {
 	Dataset
 	// Dynamics entity dataset properties.
@@ -10042,13 +10042,13 @@ func (d *DynamicsEntityDataset) UnmarshalJSON(data []byte) error {
 	return d.Dataset.unmarshalInternal(rawMsg)
 }
 
-// Dynamics entity dataset properties.
+// DynamicsEntityDatasetTypeProperties - Dynamics entity dataset properties.
 type DynamicsEntityDatasetTypeProperties struct {
 	// The logical name of the entity. Type: string (or Expression with resultType string).
 	EntityName interface{} `json:"entityName,omitempty"`
 }
 
-// Dynamics linked service.
+// DynamicsLinkedService - Dynamics linked service.
 type DynamicsLinkedService struct {
 	LinkedService
 	// Dynamics linked service properties.
@@ -10082,7 +10082,7 @@ func (d *DynamicsLinkedService) UnmarshalJSON(data []byte) error {
 	return d.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Dynamics linked service properties.
+// DynamicsLinkedServiceTypeProperties - Dynamics linked service properties.
 type DynamicsLinkedServiceTypeProperties struct {
 	// The authentication type to connect to Dynamics server. 'Office365' for online scenario, 'Ifd' for on-premises with Ifd scenario, 'AADServicePrincipal'
 	// for Server-To-Server authentication in online
@@ -10187,7 +10187,7 @@ func (d *DynamicsLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// A copy activity Dynamics sink.
+// DynamicsSink - A copy activity Dynamics sink.
 type DynamicsSink struct {
 	CopySink
 	// The logical name of the alternate key which will be used when upserting records. Type: string (or Expression with resultType string).
@@ -10236,7 +10236,7 @@ func (d *DynamicsSink) UnmarshalJSON(data []byte) error {
 	return d.CopySink.unmarshalInternal(rawMsg)
 }
 
-// A copy activity Dynamics source.
+// DynamicsSource - A copy activity Dynamics source.
 type DynamicsSource struct {
 	CopySource
 	// FetchXML is a proprietary query language that is used in Microsoft Dynamics (online & on-premises). Type: string (or Expression with resultType string).
@@ -10270,7 +10270,7 @@ func (d *DynamicsSource) UnmarshalJSON(data []byte) error {
 	return d.CopySource.unmarshalInternal(rawMsg)
 }
 
-// Eloqua server linked service.
+// EloquaLinkedService - Eloqua server linked service.
 type EloquaLinkedService struct {
 	LinkedService
 	// Eloqua server linked service properties.
@@ -10304,7 +10304,7 @@ func (e *EloquaLinkedService) UnmarshalJSON(data []byte) error {
 	return e.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Eloqua server linked service properties.
+// EloquaLinkedServiceTypeProperties - Eloqua server linked service properties.
 type EloquaLinkedServiceTypeProperties struct {
 	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
 	// with resultType string).
@@ -10368,7 +10368,7 @@ func (e *EloquaLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Eloqua server dataset.
+// EloquaObjectDataset - Eloqua server dataset.
 type EloquaObjectDataset struct {
 	Dataset
 	// Properties specific to this dataset type.
@@ -10402,7 +10402,7 @@ func (e *EloquaObjectDataset) UnmarshalJSON(data []byte) error {
 	return e.Dataset.unmarshalInternal(rawMsg)
 }
 
-// A copy activity Eloqua server source.
+// EloquaSource - A copy activity Eloqua server source.
 type EloquaSource struct {
 	TabularSource
 	// A query to retrieve data from source. Type: string (or Expression with resultType string).
@@ -10436,7 +10436,7 @@ func (e *EloquaSource) UnmarshalJSON(data []byte) error {
 	return e.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// Details of the encryption associated with the workspace
+// EncryptionDetails - Details of the encryption associated with the workspace
 type EncryptionDetails struct {
 	// Customer Managed Key Details
 	Cmk *CustomerManagedKeyDetails `json:"cmk,omitempty"`
@@ -10445,7 +10445,7 @@ type EncryptionDetails struct {
 	DoubleEncryptionEnabled *bool `json:"doubleEncryptionEnabled,omitempty" azure:"ro"`
 }
 
-// The entity reference.
+// EntityReference - The entity reference.
 type EntityReference struct {
 	// The name of this referenced entity.
 	ReferenceName *string `json:"referenceName,omitempty"`
@@ -10454,7 +10454,7 @@ type EntityReference struct {
 	Type *IntegrationRuntimeEntityReferenceType `json:"type,omitempty"`
 }
 
-// The resource management error additional info.
+// ErrorAdditionalInfo - The resource management error additional info.
 type ErrorAdditionalInfo struct {
 	// READ-ONLY; The additional info.
 	Info interface{} `json:"info,omitempty" azure:"ro"`
@@ -10463,7 +10463,7 @@ type ErrorAdditionalInfo struct {
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
-// Contains details when the response code indicates an error.
+// ErrorContract - Contains details when the response code indicates an error.
 type ErrorContract struct {
 	// The error details.
 	InnerError *ErrorResponse `json:"error,omitempty"`
@@ -10496,8 +10496,8 @@ func (e ErrorContract) Error() string {
 	return msg
 }
 
-// Common error response for all Azure Resource Manager APIs to return error details for failed operations. (This also follows the OData error response
-// format.)
+// ErrorResponse - Common error response for all Azure Resource Manager APIs to return error details for failed operations. (This also follows the OData
+// error response format.)
 type ErrorResponse struct {
 	// READ-ONLY; The error additional info.
 	AdditionalInfo *[]*ErrorAdditionalInfo `json:"additionalInfo,omitempty" azure:"ro"`
@@ -10515,7 +10515,7 @@ type ErrorResponse struct {
 	Target *string `json:"target,omitempty" azure:"ro"`
 }
 
-// Request body structure for data flow expression preview.
+// EvaluateDataFlowExpressionRequest - Request body structure for data flow expression preview.
 type EvaluateDataFlowExpressionRequest struct {
 	// The data flow which contains the debug session.
 	DataFlowName *string `json:"dataFlowName,omitempty"`
@@ -10533,7 +10533,7 @@ type EvaluateDataFlowExpressionRequest struct {
 	StreamName *string `json:"streamName,omitempty"`
 }
 
-// Execute data flow activity.
+// ExecuteDataFlowActivity - Execute data flow activity.
 type ExecuteDataFlowActivity struct {
 	ExecutionActivity
 	// Execute data flow activity properties.
@@ -10567,7 +10567,7 @@ func (e *ExecuteDataFlowActivity) UnmarshalJSON(data []byte) error {
 	return e.ExecutionActivity.unmarshalInternal(rawMsg)
 }
 
-// Execute data flow activity properties.
+// ExecuteDataFlowActivityTypeProperties - Execute data flow activity properties.
 type ExecuteDataFlowActivityTypeProperties struct {
 	// Compute properties for data flow activity.
 	Compute *ExecuteDataFlowActivityTypePropertiesCompute `json:"compute,omitempty"`
@@ -10582,7 +10582,7 @@ type ExecuteDataFlowActivityTypeProperties struct {
 	Staging *DataFlowStagingInfo `json:"staging,omitempty"`
 }
 
-// Compute properties for data flow activity.
+// ExecuteDataFlowActivityTypePropertiesCompute - Compute properties for data flow activity.
 type ExecuteDataFlowActivityTypePropertiesCompute struct {
 	// Compute type of the cluster which will execute data flow job.
 	ComputeType *DataFlowComputeType `json:"computeType,omitempty"`
@@ -10591,7 +10591,7 @@ type ExecuteDataFlowActivityTypePropertiesCompute struct {
 	CoreCount *int32 `json:"coreCount,omitempty"`
 }
 
-// Execute pipeline activity.
+// ExecutePipelineActivity - Execute pipeline activity.
 type ExecutePipelineActivity struct {
 	ControlActivity
 	// Execute pipeline activity properties.
@@ -10625,7 +10625,7 @@ func (e *ExecutePipelineActivity) UnmarshalJSON(data []byte) error {
 	return e.ControlActivity.unmarshalInternal(rawMsg)
 }
 
-// Execute pipeline activity properties.
+// ExecutePipelineActivityTypeProperties - Execute pipeline activity properties.
 type ExecutePipelineActivityTypeProperties struct {
 	// Pipeline parameters.
 	Parameters *map[string]interface{} `json:"parameters,omitempty"`
@@ -10637,7 +10637,7 @@ type ExecutePipelineActivityTypeProperties struct {
 	WaitOnCompletion *bool `json:"waitOnCompletion,omitempty"`
 }
 
-// Execute SSIS package activity.
+// ExecuteSSISPackageActivity - Execute SSIS package activity.
 type ExecuteSSISPackageActivity struct {
 	ExecutionActivity
 	// Execute SSIS package activity properties.
@@ -10671,7 +10671,7 @@ func (e *ExecuteSSISPackageActivity) UnmarshalJSON(data []byte) error {
 	return e.ExecutionActivity.unmarshalInternal(rawMsg)
 }
 
-// Execute SSIS package activity properties.
+// ExecuteSSISPackageActivityTypeProperties - Execute SSIS package activity properties.
 type ExecuteSSISPackageActivityTypeProperties struct {
 	// The integration runtime reference.
 	ConnectVia *IntegrationRuntimeReference `json:"connectVia,omitempty"`
@@ -10721,11 +10721,11 @@ type ExecuteSSISPackageActivityTypeProperties struct {
 // - *SynapseNotebookActivity, *WebActivity
 type ExecutionActivityClassification interface {
 	ActivityClassification
-	// GetExecutionActivity() returns the ExecutionActivity content of the underlying type.
+	// GetExecutionActivity returns the ExecutionActivity content of the underlying type.
 	GetExecutionActivity() *ExecutionActivity
 }
 
-// Base class for all execution activities.
+// ExecutionActivity - Base class for all execution activities.
 type ExecutionActivity struct {
 	Activity
 	// Linked service reference.
@@ -10778,7 +10778,7 @@ func (e *ExecutionActivity) unmarshalInternal(rawMsg map[string]*json.RawMessage
 	return e.Activity.unmarshalInternal(rawMsg)
 }
 
-// The exposure control request.
+// ExposureControlRequest - The exposure control request.
 type ExposureControlRequest struct {
 	// The feature name.
 	FeatureName *string `json:"featureName,omitempty"`
@@ -10787,7 +10787,7 @@ type ExposureControlRequest struct {
 	FeatureType *string `json:"featureType,omitempty"`
 }
 
-// The exposure control response.
+// ExposureControlResponse - The exposure control response.
 type ExposureControlResponse struct {
 	// READ-ONLY; The feature name.
 	FeatureName *string `json:"featureName,omitempty" azure:"ro"`
@@ -10796,7 +10796,7 @@ type ExposureControlResponse struct {
 	Value *string `json:"value,omitempty" azure:"ro"`
 }
 
-// Azure Synapse expression definition.
+// Expression - Azure Synapse expression definition.
 type Expression struct {
 	// Expression type.
 	Type *ExpressionType `json:"type,omitempty"`
@@ -10805,7 +10805,7 @@ type Expression struct {
 	Value *string `json:"value,omitempty"`
 }
 
-// File system linked service.
+// FileServerLinkedService - File system linked service.
 type FileServerLinkedService struct {
 	LinkedService
 	// File system linked service properties.
@@ -10839,7 +10839,7 @@ func (f *FileServerLinkedService) UnmarshalJSON(data []byte) error {
 	return f.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// File system linked service properties.
+// FileServerLinkedServiceTypeProperties - File system linked service properties.
 type FileServerLinkedServiceTypeProperties struct {
 	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
 	// with resultType string).
@@ -10884,7 +10884,7 @@ func (f *FileServerLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error
 	return nil
 }
 
-// The location of file server dataset.
+// FileServerLocation - The location of file server dataset.
 type FileServerLocation struct {
 	DatasetLocation
 }
@@ -10895,7 +10895,7 @@ func (f FileServerLocation) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// File server read settings.
+// FileServerReadSettings - File server read settings.
 type FileServerReadSettings struct {
 	StoreReadSettings
 	// Indicates whether to enable partition discovery.
@@ -10964,7 +10964,7 @@ func (f *FileServerReadSettings) UnmarshalJSON(data []byte) error {
 	return f.StoreReadSettings.unmarshalInternal(rawMsg)
 }
 
-// File server write settings.
+// FileServerWriteSettings - File server write settings.
 type FileServerWriteSettings struct {
 	StoreWriteSettings
 }
@@ -10975,7 +10975,7 @@ func (f FileServerWriteSettings) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// A copy activity file system sink.
+// FileSystemSink - A copy activity file system sink.
 type FileSystemSink struct {
 	CopySink
 	// The type of copy behavior for copy sink.
@@ -11009,7 +11009,7 @@ func (f *FileSystemSink) UnmarshalJSON(data []byte) error {
 	return f.CopySink.unmarshalInternal(rawMsg)
 }
 
-// A copy activity file system source.
+// FileSystemSource - A copy activity file system source.
 type FileSystemSource struct {
 	CopySource
 	// If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean).
@@ -11043,7 +11043,7 @@ func (f *FileSystemSource) UnmarshalJSON(data []byte) error {
 	return f.CopySource.unmarshalInternal(rawMsg)
 }
 
-// Filter and return results from input array based on the conditions.
+// FilterActivity - Filter and return results from input array based on the conditions.
 type FilterActivity struct {
 	ControlActivity
 	// Filter activity properties.
@@ -11077,7 +11077,7 @@ func (f *FilterActivity) UnmarshalJSON(data []byte) error {
 	return f.ControlActivity.unmarshalInternal(rawMsg)
 }
 
-// Filter activity properties.
+// FilterActivityTypeProperties - Filter activity properties.
 type FilterActivityTypeProperties struct {
 	// Condition to be used for filtering the input.
 	Condition *Expression `json:"condition,omitempty"`
@@ -11086,7 +11086,7 @@ type FilterActivityTypeProperties struct {
 	Items *Expression `json:"items,omitempty"`
 }
 
-// This activity is used for iterating over a collection and execute given activities.
+// ForEachActivity - This activity is used for iterating over a collection and execute given activities.
 type ForEachActivity struct {
 	ControlActivity
 	// ForEach activity properties.
@@ -11120,7 +11120,7 @@ func (f *ForEachActivity) UnmarshalJSON(data []byte) error {
 	return f.ControlActivity.unmarshalInternal(rawMsg)
 }
 
-// ForEach activity properties.
+// ForEachActivityTypeProperties - ForEach activity properties.
 type ForEachActivityTypeProperties struct {
 	// List of activities to execute .
 	Activities *[]ActivityClassification `json:"activities,omitempty"`
@@ -11169,11 +11169,11 @@ func (f *ForEachActivityTypeProperties) UnmarshalJSON(data []byte) error {
 // Use a type switch to determine the concrete type.  The possible types are:
 // - *FormatReadSettings, *DelimitedTextReadSettings
 type FormatReadSettingsClassification interface {
-	// GetFormatReadSettings() returns the FormatReadSettings content of the underlying type.
+	// GetFormatReadSettings returns the FormatReadSettings content of the underlying type.
 	GetFormatReadSettings() *FormatReadSettings
 }
 
-// Format read settings.
+// FormatReadSettings - Format read settings.
 type FormatReadSettings struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties *map[string]interface{}
@@ -11236,11 +11236,11 @@ func (f *FormatReadSettings) unmarshalInternal(rawMsg map[string]*json.RawMessag
 // Use a type switch to determine the concrete type.  The possible types are:
 // - *FormatWriteSettings, *AvroWriteSettings, *DelimitedTextWriteSettings, *JsonWriteSettings
 type FormatWriteSettingsClassification interface {
-	// GetFormatWriteSettings() returns the FormatWriteSettings content of the underlying type.
+	// GetFormatWriteSettings returns the FormatWriteSettings content of the underlying type.
 	GetFormatWriteSettings() *FormatWriteSettings
 }
 
-// Format write settings.
+// FormatWriteSettings - Format write settings.
 type FormatWriteSettings struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties *map[string]interface{}
@@ -11298,7 +11298,7 @@ func (f *FormatWriteSettings) unmarshalInternal(rawMsg map[string]*json.RawMessa
 	return nil
 }
 
-// Ftp read settings.
+// FtpReadSettings - Ftp read settings.
 type FtpReadSettings struct {
 	StoreReadSettings
 	// If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean).
@@ -11353,7 +11353,7 @@ func (f *FtpReadSettings) UnmarshalJSON(data []byte) error {
 	return f.StoreReadSettings.unmarshalInternal(rawMsg)
 }
 
-// A FTP server Linked Service.
+// FtpServerLinkedService - A FTP server Linked Service.
 type FtpServerLinkedService struct {
 	LinkedService
 	// Properties specific to this linked service type.
@@ -11387,7 +11387,7 @@ func (f *FtpServerLinkedService) UnmarshalJSON(data []byte) error {
 	return f.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Properties specific to this linked service type.
+// FtpServerLinkedServiceTypeProperties - Properties specific to this linked service type.
 type FtpServerLinkedServiceTypeProperties struct {
 	// The authentication type to be used to connect to the FTP server.
 	AuthenticationType *FtpAuthenticationType `json:"authenticationType,omitempty"`
@@ -11458,7 +11458,7 @@ func (f *FtpServerLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error 
 	return nil
 }
 
-// The location of ftp server dataset.
+// FtpServerLocation - The location of ftp server dataset.
 type FtpServerLocation struct {
 	DatasetLocation
 }
@@ -11469,13 +11469,13 @@ func (f FtpServerLocation) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// Properties specific to this dataset type.
+// GenericDatasetTypeProperties - Properties specific to this dataset type.
 type GenericDatasetTypeProperties struct {
 	// The table name. Type: string (or Expression with resultType string).
 	TableName interface{} `json:"tableName,omitempty"`
 }
 
-// Activity to get metadata of dataset
+// GetMetadataActivity - Activity to get metadata of dataset
 type GetMetadataActivity struct {
 	ExecutionActivity
 	// GetMetadata activity properties.
@@ -11509,7 +11509,7 @@ func (g *GetMetadataActivity) UnmarshalJSON(data []byte) error {
 	return g.ExecutionActivity.unmarshalInternal(rawMsg)
 }
 
-// GetMetadata activity properties.
+// GetMetadataActivityTypeProperties - GetMetadata activity properties.
 type GetMetadataActivityTypeProperties struct {
 	// GetMetadata activity dataset reference.
 	Dataset *DatasetReference `json:"dataset,omitempty"`
@@ -11518,7 +11518,7 @@ type GetMetadataActivityTypeProperties struct {
 	FieldList *[]interface{} `json:"fieldList,omitempty"`
 }
 
-// The request payload of get SSIS object metadata.
+// GetSsisObjectMetadataRequest - The request payload of get SSIS object metadata.
 type GetSsisObjectMetadataRequest struct {
 	// Metadata path.
 	MetadataPath *string `json:"metadataPath,omitempty"`
@@ -11547,7 +11547,7 @@ type GitHubAccessTokenResponseResponse struct {
 	RawResponse *http.Response
 }
 
-// Google AdWords service linked service.
+// GoogleAdWordsLinkedService - Google AdWords service linked service.
 type GoogleAdWordsLinkedService struct {
 	LinkedService
 	// Google AdWords service linked service properties.
@@ -11581,7 +11581,7 @@ func (g *GoogleAdWordsLinkedService) UnmarshalJSON(data []byte) error {
 	return g.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Google AdWords service linked service properties.
+// GoogleAdWordsLinkedServiceTypeProperties - Google AdWords service linked service properties.
 type GoogleAdWordsLinkedServiceTypeProperties struct {
 	// The OAuth 2.0 authentication mechanism used for authentication. ServiceAuthentication can only be used on self-hosted IR.
 	AuthenticationType *GoogleAdWordsAuthenticationType `json:"authenticationType,omitempty"`
@@ -11670,7 +11670,7 @@ func (g *GoogleAdWordsLinkedServiceTypeProperties) UnmarshalJSON(data []byte) er
 	return nil
 }
 
-// Google AdWords service dataset.
+// GoogleAdWordsObjectDataset - Google AdWords service dataset.
 type GoogleAdWordsObjectDataset struct {
 	Dataset
 	// Properties specific to this dataset type.
@@ -11704,7 +11704,7 @@ func (g *GoogleAdWordsObjectDataset) UnmarshalJSON(data []byte) error {
 	return g.Dataset.unmarshalInternal(rawMsg)
 }
 
-// A copy activity Google AdWords service source.
+// GoogleAdWordsSource - A copy activity Google AdWords service source.
 type GoogleAdWordsSource struct {
 	TabularSource
 	// A query to retrieve data from source. Type: string (or Expression with resultType string).
@@ -11738,7 +11738,7 @@ func (g *GoogleAdWordsSource) UnmarshalJSON(data []byte) error {
 	return g.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// Google BigQuery Dataset Properties
+// GoogleBigQueryDatasetTypeProperties - Google BigQuery Dataset Properties
 type GoogleBigQueryDatasetTypeProperties struct {
 	// The database name of the Google BigQuery. Type: string (or Expression with resultType string).
 	Dataset interface{} `json:"dataset,omitempty"`
@@ -11750,7 +11750,7 @@ type GoogleBigQueryDatasetTypeProperties struct {
 	TableName interface{} `json:"tableName,omitempty"`
 }
 
-// Google BigQuery service linked service.
+// GoogleBigQueryLinkedService - Google BigQuery service linked service.
 type GoogleBigQueryLinkedService struct {
 	LinkedService
 	// Google BigQuery service linked service properties.
@@ -11784,7 +11784,7 @@ func (g *GoogleBigQueryLinkedService) UnmarshalJSON(data []byte) error {
 	return g.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Google BigQuery service linked service properties.
+// GoogleBigQueryLinkedServiceTypeProperties - Google BigQuery service linked service properties.
 type GoogleBigQueryLinkedServiceTypeProperties struct {
 	// A comma-separated list of public BigQuery projects to access.
 	AdditionalProjects interface{} `json:"additionalProjects,omitempty"`
@@ -11880,7 +11880,7 @@ func (g *GoogleBigQueryLinkedServiceTypeProperties) UnmarshalJSON(data []byte) e
 	return nil
 }
 
-// Google BigQuery service dataset.
+// GoogleBigQueryObjectDataset - Google BigQuery service dataset.
 type GoogleBigQueryObjectDataset struct {
 	Dataset
 	// Properties specific to this dataset type.
@@ -11914,7 +11914,7 @@ func (g *GoogleBigQueryObjectDataset) UnmarshalJSON(data []byte) error {
 	return g.Dataset.unmarshalInternal(rawMsg)
 }
 
-// A copy activity Google BigQuery service source.
+// GoogleBigQuerySource - A copy activity Google BigQuery service source.
 type GoogleBigQuerySource struct {
 	TabularSource
 	// A query to retrieve data from source. Type: string (or Expression with resultType string).
@@ -11948,7 +11948,7 @@ func (g *GoogleBigQuerySource) UnmarshalJSON(data []byte) error {
 	return g.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// Linked service for Google Cloud Storage.
+// GoogleCloudStorageLinkedService - Linked service for Google Cloud Storage.
 type GoogleCloudStorageLinkedService struct {
 	LinkedService
 	// Google Cloud Storage linked service properties.
@@ -11982,7 +11982,7 @@ func (g *GoogleCloudStorageLinkedService) UnmarshalJSON(data []byte) error {
 	return g.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Google Cloud Storage linked service properties.
+// GoogleCloudStorageLinkedServiceTypeProperties - Google Cloud Storage linked service properties.
 type GoogleCloudStorageLinkedServiceTypeProperties struct {
 	// The access key identifier of the Google Cloud Storage Identity and Access Management (IAM) user. Type: string (or Expression with resultType string).
 	AccessKeyID interface{} `json:"accessKeyId,omitempty"`
@@ -12029,7 +12029,7 @@ func (g *GoogleCloudStorageLinkedServiceTypeProperties) UnmarshalJSON(data []byt
 	return nil
 }
 
-// The location of Google Cloud Storage dataset.
+// GoogleCloudStorageLocation - The location of Google Cloud Storage dataset.
 type GoogleCloudStorageLocation struct {
 	DatasetLocation
 	// Specify the bucketName of Google Cloud Storage. Type: string (or Expression with resultType string)
@@ -12070,7 +12070,7 @@ func (g *GoogleCloudStorageLocation) UnmarshalJSON(data []byte) error {
 	return g.DatasetLocation.unmarshalInternal(rawMsg)
 }
 
-// Google Cloud Storage read settings.
+// GoogleCloudStorageReadSettings - Google Cloud Storage read settings.
 type GoogleCloudStorageReadSettings struct {
 	StoreReadSettings
 	// Indicates whether to enable partition discovery.
@@ -12146,7 +12146,7 @@ func (g *GoogleCloudStorageReadSettings) UnmarshalJSON(data []byte) error {
 	return g.StoreReadSettings.unmarshalInternal(rawMsg)
 }
 
-// Greenplum Dataset Properties
+// GreenplumDatasetTypeProperties - Greenplum Dataset Properties
 type GreenplumDatasetTypeProperties struct {
 	// The schema name of Greenplum. Type: string (or Expression with resultType string).
 	Schema interface{} `json:"schema,omitempty"`
@@ -12158,7 +12158,7 @@ type GreenplumDatasetTypeProperties struct {
 	TableName interface{} `json:"tableName,omitempty"`
 }
 
-// Greenplum Database linked service.
+// GreenplumLinkedService - Greenplum Database linked service.
 type GreenplumLinkedService struct {
 	LinkedService
 	// Greenplum Database linked service properties.
@@ -12192,7 +12192,7 @@ func (g *GreenplumLinkedService) UnmarshalJSON(data []byte) error {
 	return g.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Greenplum Database linked service properties.
+// GreenplumLinkedServiceTypeProperties - Greenplum Database linked service properties.
 type GreenplumLinkedServiceTypeProperties struct {
 	// An ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference.
 	ConnectionString interface{} `json:"connectionString,omitempty"`
@@ -12205,7 +12205,7 @@ type GreenplumLinkedServiceTypeProperties struct {
 	Pwd *AzureKeyVaultSecretReference `json:"pwd,omitempty"`
 }
 
-// A copy activity Greenplum Database source.
+// GreenplumSource - A copy activity Greenplum Database source.
 type GreenplumSource struct {
 	TabularSource
 	// A query to retrieve data from source. Type: string (or Expression with resultType string).
@@ -12239,7 +12239,7 @@ func (g *GreenplumSource) UnmarshalJSON(data []byte) error {
 	return g.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// Greenplum Database dataset.
+// GreenplumTableDataset - Greenplum Database dataset.
 type GreenplumTableDataset struct {
 	Dataset
 	// Properties specific to this dataset type.
@@ -12273,7 +12273,7 @@ func (g *GreenplumTableDataset) UnmarshalJSON(data []byte) error {
 	return g.Dataset.unmarshalInternal(rawMsg)
 }
 
-// HBase server linked service.
+// HBaseLinkedService - HBase server linked service.
 type HBaseLinkedService struct {
 	LinkedService
 	// HBase server linked service properties.
@@ -12307,7 +12307,7 @@ func (h *HBaseLinkedService) UnmarshalJSON(data []byte) error {
 	return h.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// HBase server linked service properties.
+// HBaseLinkedServiceTypeProperties - HBase server linked service properties.
 type HBaseLinkedServiceTypeProperties struct {
 	// Specifies whether to require a CA-issued SSL certificate name to match the host name of the server when connecting over SSL. The default value is false.
 	AllowHostNameCNMismatch interface{} `json:"allowHostNameCNMismatch,omitempty"`
@@ -12396,7 +12396,7 @@ func (h *HBaseLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// HBase server dataset.
+// HBaseObjectDataset - HBase server dataset.
 type HBaseObjectDataset struct {
 	Dataset
 	// Properties specific to this dataset type.
@@ -12430,7 +12430,7 @@ func (h *HBaseObjectDataset) UnmarshalJSON(data []byte) error {
 	return h.Dataset.unmarshalInternal(rawMsg)
 }
 
-// A copy activity HBase server source.
+// HBaseSource - A copy activity HBase server source.
 type HBaseSource struct {
 	TabularSource
 	// A query to retrieve data from source. Type: string (or Expression with resultType string).
@@ -12464,7 +12464,7 @@ func (h *HBaseSource) UnmarshalJSON(data []byte) error {
 	return h.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// HDInsight Hive activity type.
+// HDInsightHiveActivity - HDInsight Hive activity type.
 type HDInsightHiveActivity struct {
 	ExecutionActivity
 	// HDInsight Hive activity properties.
@@ -12498,7 +12498,7 @@ func (h *HDInsightHiveActivity) UnmarshalJSON(data []byte) error {
 	return h.ExecutionActivity.unmarshalInternal(rawMsg)
 }
 
-// HDInsight Hive activity properties.
+// HDInsightHiveActivityTypeProperties - HDInsight Hive activity properties.
 type HDInsightHiveActivityTypeProperties struct {
 	// User specified arguments to HDInsightActivity.
 	Arguments *[]interface{} `json:"arguments,omitempty"`
@@ -12525,7 +12525,7 @@ type HDInsightHiveActivityTypeProperties struct {
 	Variables *[]interface{} `json:"variables,omitempty"`
 }
 
-// HDInsight linked service.
+// HDInsightLinkedService - HDInsight linked service.
 type HDInsightLinkedService struct {
 	LinkedService
 	// HDInsight linked service properties.
@@ -12559,7 +12559,7 @@ func (h *HDInsightLinkedService) UnmarshalJSON(data []byte) error {
 	return h.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// HDInsight linked service properties.
+// HDInsightLinkedServiceTypeProperties - HDInsight linked service properties.
 type HDInsightLinkedServiceTypeProperties struct {
 	// HDInsight cluster URI. Type: string (or Expression with resultType string).
 	ClusterURI interface{} `json:"clusterUri,omitempty"`
@@ -12587,7 +12587,7 @@ type HDInsightLinkedServiceTypeProperties struct {
 	UserName interface{} `json:"userName,omitempty"`
 }
 
-// HDInsight MapReduce activity type.
+// HDInsightMapReduceActivity - HDInsight MapReduce activity type.
 type HDInsightMapReduceActivity struct {
 	ExecutionActivity
 	// HDInsight MapReduce activity properties.
@@ -12621,7 +12621,7 @@ func (h *HDInsightMapReduceActivity) UnmarshalJSON(data []byte) error {
 	return h.ExecutionActivity.unmarshalInternal(rawMsg)
 }
 
-// HDInsight MapReduce activity properties.
+// HDInsightMapReduceActivityTypeProperties - HDInsight MapReduce activity properties.
 type HDInsightMapReduceActivityTypeProperties struct {
 	// User specified arguments to HDInsightActivity.
 	Arguments *[]interface{} `json:"arguments,omitempty"`
@@ -12648,7 +12648,7 @@ type HDInsightMapReduceActivityTypeProperties struct {
 	StorageLinkedServices *[]*LinkedServiceReference `json:"storageLinkedServices,omitempty"`
 }
 
-// HDInsight ondemand linked service.
+// HDInsightOnDemandLinkedService - HDInsight ondemand linked service.
 type HDInsightOnDemandLinkedService struct {
 	LinkedService
 	// HDInsight ondemand linked service properties.
@@ -12682,7 +12682,7 @@ func (h *HDInsightOnDemandLinkedService) UnmarshalJSON(data []byte) error {
 	return h.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// HDInsight ondemand linked service properties.
+// HDInsightOnDemandLinkedServiceTypeProperties - HDInsight ondemand linked service properties.
 type HDInsightOnDemandLinkedServiceTypeProperties struct {
 	// Specifies additional storage accounts for the HDInsight linked service so that the Data Factory service can register them on your behalf.
 	AdditionalLinkedServiceNames *[]*LinkedServiceReference `json:"additionalLinkedServiceNames,omitempty"`
@@ -12790,7 +12790,7 @@ type HDInsightOnDemandLinkedServiceTypeProperties struct {
 	ZookeeperNodeSize interface{} `json:"zookeeperNodeSize,omitempty"`
 }
 
-// HDInsight Pig activity type.
+// HDInsightPigActivity - HDInsight Pig activity type.
 type HDInsightPigActivity struct {
 	ExecutionActivity
 	// HDInsight Pig activity properties.
@@ -12824,7 +12824,7 @@ func (h *HDInsightPigActivity) UnmarshalJSON(data []byte) error {
 	return h.ExecutionActivity.unmarshalInternal(rawMsg)
 }
 
-// HDInsight Pig activity properties.
+// HDInsightPigActivityTypeProperties - HDInsight Pig activity properties.
 type HDInsightPigActivityTypeProperties struct {
 	// User specified arguments to HDInsightActivity. Type: array (or Expression with resultType array).
 	Arguments interface{} `json:"arguments,omitempty"`
@@ -12845,7 +12845,7 @@ type HDInsightPigActivityTypeProperties struct {
 	StorageLinkedServices *[]*LinkedServiceReference `json:"storageLinkedServices,omitempty"`
 }
 
-// HDInsight Spark activity.
+// HDInsightSparkActivity - HDInsight Spark activity.
 type HDInsightSparkActivity struct {
 	ExecutionActivity
 	// HDInsight spark activity properties.
@@ -12879,7 +12879,7 @@ func (h *HDInsightSparkActivity) UnmarshalJSON(data []byte) error {
 	return h.ExecutionActivity.unmarshalInternal(rawMsg)
 }
 
-// HDInsight spark activity properties.
+// HDInsightSparkActivityTypeProperties - HDInsight spark activity properties.
 type HDInsightSparkActivityTypeProperties struct {
 	// The user-specified arguments to HDInsightSparkActivity.
 	Arguments *[]interface{} `json:"arguments,omitempty"`
@@ -12906,7 +12906,7 @@ type HDInsightSparkActivityTypeProperties struct {
 	SparkJobLinkedService *LinkedServiceReference `json:"sparkJobLinkedService,omitempty"`
 }
 
-// HDInsight streaming activity type.
+// HDInsightStreamingActivity - HDInsight streaming activity type.
 type HDInsightStreamingActivity struct {
 	ExecutionActivity
 	// HDInsight streaming activity properties.
@@ -12940,7 +12940,7 @@ func (h *HDInsightStreamingActivity) UnmarshalJSON(data []byte) error {
 	return h.ExecutionActivity.unmarshalInternal(rawMsg)
 }
 
-// HDInsight streaming activity properties.
+// HDInsightStreamingActivityTypeProperties - HDInsight streaming activity properties.
 type HDInsightStreamingActivityTypeProperties struct {
 	// User specified arguments to HDInsightActivity.
 	Arguments *[]interface{} `json:"arguments,omitempty"`
@@ -12979,7 +12979,7 @@ type HDInsightStreamingActivityTypeProperties struct {
 	StorageLinkedServices *[]*LinkedServiceReference `json:"storageLinkedServices,omitempty"`
 }
 
-// Linked service for an HTTP source.
+// HTTPLinkedService - Linked service for an HTTP source.
 type HTTPLinkedService struct {
 	LinkedService
 	// Properties specific to this linked service type.
@@ -13013,7 +13013,7 @@ func (h *HTTPLinkedService) UnmarshalJSON(data []byte) error {
 	return h.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Properties specific to this linked service type.
+// HTTPLinkedServiceTypeProperties - Properties specific to this linked service type.
 type HTTPLinkedServiceTypeProperties struct {
 	// The authentication type to be used to connect to the HTTP server.
 	AuthenticationType *HTTPAuthenticationType `json:"authenticationType,omitempty"`
@@ -13098,7 +13098,7 @@ type HTTPPollerResponse struct {
 	RawResponse *http.Response
 }
 
-// Sftp read settings.
+// HTTPReadSettings - Sftp read settings.
 type HTTPReadSettings struct {
 	StoreReadSettings
 	// The additional HTTP headers in the request to the RESTful API. Type: string (or Expression with resultType string).
@@ -13153,7 +13153,7 @@ func (h *HTTPReadSettings) UnmarshalJSON(data []byte) error {
 	return h.StoreReadSettings.unmarshalInternal(rawMsg)
 }
 
-// The location of http server.
+// HTTPServerLocation - The location of http server.
 type HTTPServerLocation struct {
 	DatasetLocation
 	// Specify the relativeUrl of http server. Type: string (or Expression with resultType string)
@@ -13187,7 +13187,7 @@ func (h *HTTPServerLocation) UnmarshalJSON(data []byte) error {
 	return h.DatasetLocation.unmarshalInternal(rawMsg)
 }
 
-// A copy activity source for an HTTP file.
+// HTTPSource - A copy activity source for an HTTP file.
 type HTTPSource struct {
 	CopySource
 	// Specifies the timeout for a HTTP client to get HTTP response from HTTP server. The default value is equivalent to System.Net.HttpWebRequest.Timeout.
@@ -13223,7 +13223,7 @@ func (h *HTTPSource) UnmarshalJSON(data []byte) error {
 	return h.CopySource.unmarshalInternal(rawMsg)
 }
 
-// Hadoop Distributed File System (HDFS) linked service.
+// HdfsLinkedService - Hadoop Distributed File System (HDFS) linked service.
 type HdfsLinkedService struct {
 	LinkedService
 	// HDFS linked service properties.
@@ -13257,7 +13257,7 @@ func (h *HdfsLinkedService) UnmarshalJSON(data []byte) error {
 	return h.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// HDFS linked service properties.
+// HdfsLinkedServiceTypeProperties - HDFS linked service properties.
 type HdfsLinkedServiceTypeProperties struct {
 	// Type of authentication used to connect to the HDFS. Possible values are: Anonymous and Windows. Type: string (or Expression with resultType string).
 	AuthenticationType interface{} `json:"authenticationType,omitempty"`
@@ -13308,7 +13308,7 @@ func (h *HdfsLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// The location of HDFS.
+// HdfsLocation - The location of HDFS.
 type HdfsLocation struct {
 	DatasetLocation
 }
@@ -13319,7 +13319,7 @@ func (h HdfsLocation) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// HDFS read settings.
+// HdfsReadSettings - HDFS read settings.
 type HdfsReadSettings struct {
 	StoreReadSettings
 	// Specifies Distcp-related settings.
@@ -13395,7 +13395,7 @@ func (h *HdfsReadSettings) UnmarshalJSON(data []byte) error {
 	return h.StoreReadSettings.unmarshalInternal(rawMsg)
 }
 
-// A copy activity HDFS source.
+// HdfsSource - A copy activity HDFS source.
 type HdfsSource struct {
 	CopySource
 	// Specifies Distcp-related settings.
@@ -13436,7 +13436,7 @@ func (h *HdfsSource) UnmarshalJSON(data []byte) error {
 	return h.CopySource.unmarshalInternal(rawMsg)
 }
 
-// Hive Properties
+// HiveDatasetTypeProperties - Hive Properties
 type HiveDatasetTypeProperties struct {
 	// The schema name of the Hive. Type: string (or Expression with resultType string).
 	Schema interface{} `json:"schema,omitempty"`
@@ -13448,7 +13448,7 @@ type HiveDatasetTypeProperties struct {
 	TableName interface{} `json:"tableName,omitempty"`
 }
 
-// Hive Server linked service.
+// HiveLinkedService - Hive Server linked service.
 type HiveLinkedService struct {
 	LinkedService
 	// Hive Server linked service properties.
@@ -13482,7 +13482,7 @@ func (h *HiveLinkedService) UnmarshalJSON(data []byte) error {
 	return h.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Hive Server linked service properties.
+// HiveLinkedServiceTypeProperties - Hive Server linked service properties.
 type HiveLinkedServiceTypeProperties struct {
 	// Specifies whether to require a CA-issued SSL certificate name to match the host name of the server when connecting over SSL. The default value is false.
 	AllowHostNameCNMismatch interface{} `json:"allowHostNameCNMismatch,omitempty"`
@@ -13607,7 +13607,7 @@ func (h *HiveLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Hive Server dataset.
+// HiveObjectDataset - Hive Server dataset.
 type HiveObjectDataset struct {
 	Dataset
 	// Properties specific to this dataset type.
@@ -13641,7 +13641,7 @@ func (h *HiveObjectDataset) UnmarshalJSON(data []byte) error {
 	return h.Dataset.unmarshalInternal(rawMsg)
 }
 
-// A copy activity Hive Server source.
+// HiveSource - A copy activity Hive Server source.
 type HiveSource struct {
 	TabularSource
 	// A query to retrieve data from source. Type: string (or Expression with resultType string).
@@ -13675,7 +13675,7 @@ func (h *HiveSource) UnmarshalJSON(data []byte) error {
 	return h.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// Hubspot Service linked service.
+// HubspotLinkedService - Hubspot Service linked service.
 type HubspotLinkedService struct {
 	LinkedService
 	// Hubspot Service linked service properties.
@@ -13709,7 +13709,7 @@ func (h *HubspotLinkedService) UnmarshalJSON(data []byte) error {
 	return h.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Hubspot Service linked service properties.
+// HubspotLinkedServiceTypeProperties - Hubspot Service linked service properties.
 type HubspotLinkedServiceTypeProperties struct {
 	// The access token obtained when initially authenticating your OAuth integration.
 	AccessToken SecretBaseClassification `json:"accessToken,omitempty"`
@@ -13779,7 +13779,7 @@ func (h *HubspotLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Hubspot Service dataset.
+// HubspotObjectDataset - Hubspot Service dataset.
 type HubspotObjectDataset struct {
 	Dataset
 	// Properties specific to this dataset type.
@@ -13813,7 +13813,7 @@ func (h *HubspotObjectDataset) UnmarshalJSON(data []byte) error {
 	return h.Dataset.unmarshalInternal(rawMsg)
 }
 
-// A copy activity Hubspot Service source.
+// HubspotSource - A copy activity Hubspot Service source.
 type HubspotSource struct {
 	TabularSource
 	// A query to retrieve data from source. Type: string (or Expression with resultType string).
@@ -13847,8 +13847,8 @@ func (h *HubspotSource) UnmarshalJSON(data []byte) error {
 	return h.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// This activity evaluates a boolean expression and executes either the activities under the ifTrueActivities property or the ifFalseActivities property
-// depending on the result of the expression.
+// IfConditionActivity - This activity evaluates a boolean expression and executes either the activities under the ifTrueActivities property or the ifFalseActivities
+// property depending on the result of the expression.
 type IfConditionActivity struct {
 	ControlActivity
 	// IfCondition activity properties.
@@ -13882,7 +13882,7 @@ func (i *IfConditionActivity) UnmarshalJSON(data []byte) error {
 	return i.ControlActivity.unmarshalInternal(rawMsg)
 }
 
-// IfCondition activity properties.
+// IfConditionActivityTypeProperties - IfCondition activity properties.
 type IfConditionActivityTypeProperties struct {
 	// An expression that would evaluate to Boolean. This is used to determine the block of activities (ifTrueActivities or ifFalseActivities) that will be
 	// executed.
@@ -13923,7 +13923,7 @@ func (i *IfConditionActivityTypeProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Impala Dataset Properties
+// ImpalaDatasetTypeProperties - Impala Dataset Properties
 type ImpalaDatasetTypeProperties struct {
 	// The schema name of the Impala. Type: string (or Expression with resultType string).
 	Schema interface{} `json:"schema,omitempty"`
@@ -13935,7 +13935,7 @@ type ImpalaDatasetTypeProperties struct {
 	TableName interface{} `json:"tableName,omitempty"`
 }
 
-// Impala server linked service.
+// ImpalaLinkedService - Impala server linked service.
 type ImpalaLinkedService struct {
 	LinkedService
 	// Impala server linked service properties.
@@ -13969,7 +13969,7 @@ func (i *ImpalaLinkedService) UnmarshalJSON(data []byte) error {
 	return i.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Impala server linked service properties.
+// ImpalaLinkedServiceTypeProperties - Impala server linked service properties.
 type ImpalaLinkedServiceTypeProperties struct {
 	// Specifies whether to require a CA-issued SSL certificate name to match the host name of the server when connecting over SSL. The default value is false.
 	AllowHostNameCNMismatch interface{} `json:"allowHostNameCNMismatch,omitempty"`
@@ -14058,7 +14058,7 @@ func (i *ImpalaLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Impala server dataset.
+// ImpalaObjectDataset - Impala server dataset.
 type ImpalaObjectDataset struct {
 	Dataset
 	// Properties specific to this dataset type.
@@ -14092,7 +14092,7 @@ func (i *ImpalaObjectDataset) UnmarshalJSON(data []byte) error {
 	return i.Dataset.unmarshalInternal(rawMsg)
 }
 
-// A copy activity Impala server source.
+// ImpalaSource - A copy activity Impala server source.
 type ImpalaSource struct {
 	TabularSource
 	// A query to retrieve data from source. Type: string (or Expression with resultType string).
@@ -14126,7 +14126,7 @@ func (i *ImpalaSource) UnmarshalJSON(data []byte) error {
 	return i.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// Informix linked service.
+// InformixLinkedService - Informix linked service.
 type InformixLinkedService struct {
 	LinkedService
 	// Informix linked service properties.
@@ -14160,7 +14160,7 @@ func (i *InformixLinkedService) UnmarshalJSON(data []byte) error {
 	return i.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Informix linked service properties.
+// InformixLinkedServiceTypeProperties - Informix linked service properties.
 type InformixLinkedServiceTypeProperties struct {
 	// Type of authentication used to connect to the Informix as ODBC data store. Possible values are: Anonymous and Basic. Type: string (or Expression with
 	// resultType string).
@@ -14218,7 +14218,7 @@ func (i *InformixLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// A copy activity Informix sink.
+// InformixSink - A copy activity Informix sink.
 type InformixSink struct {
 	CopySink
 	// A query to execute before starting the copy. Type: string (or Expression with resultType string).
@@ -14252,7 +14252,7 @@ func (i *InformixSink) UnmarshalJSON(data []byte) error {
 	return i.CopySink.unmarshalInternal(rawMsg)
 }
 
-// A copy activity source for Informix.
+// InformixSource - A copy activity source for Informix.
 type InformixSource struct {
 	TabularSource
 	// Database query. Type: string (or Expression with resultType string).
@@ -14286,7 +14286,7 @@ func (i *InformixSource) UnmarshalJSON(data []byte) error {
 	return i.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// The Informix table dataset.
+// InformixTableDataset - The Informix table dataset.
 type InformixTableDataset struct {
 	Dataset
 	// Informix table dataset properties.
@@ -14320,7 +14320,7 @@ func (i *InformixTableDataset) UnmarshalJSON(data []byte) error {
 	return i.Dataset.unmarshalInternal(rawMsg)
 }
 
-// Informix table dataset properties.
+// InformixTableDatasetTypeProperties - Informix table dataset properties.
 type InformixTableDatasetTypeProperties struct {
 	// The Informix table name. Type: string (or Expression with resultType string).
 	TableName interface{} `json:"tableName,omitempty"`
@@ -14331,11 +14331,11 @@ type InformixTableDatasetTypeProperties struct {
 // Use a type switch to determine the concrete type.  The possible types are:
 // - *IntegrationRuntime, *ManagedIntegrationRuntime, *SelfHostedIntegrationRuntime
 type IntegrationRuntimeClassification interface {
-	// GetIntegrationRuntime() returns the IntegrationRuntime content of the underlying type.
+	// GetIntegrationRuntime returns the IntegrationRuntime content of the underlying type.
 	GetIntegrationRuntime() *IntegrationRuntime
 }
 
-// Azure Synapse nested object which serves as a compute resource for activities.
+// IntegrationRuntime - Azure Synapse nested object which serves as a compute resource for activities.
 type IntegrationRuntime struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties *map[string]interface{}
@@ -14400,7 +14400,7 @@ func (i *IntegrationRuntime) unmarshalInternal(rawMsg map[string]*json.RawMessag
 	return nil
 }
 
-// The compute resource properties for managed integration runtime.
+// IntegrationRuntimeComputeProperties - The compute resource properties for managed integration runtime.
 type IntegrationRuntimeComputeProperties struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties *map[string]interface{}
@@ -14486,7 +14486,7 @@ func (i *IntegrationRuntimeComputeProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Custom setup script properties for a managed dedicated integration runtime.
+// IntegrationRuntimeCustomSetupScriptProperties - Custom setup script properties for a managed dedicated integration runtime.
 type IntegrationRuntimeCustomSetupScriptProperties struct {
 	// The URI of the Azure blob container that contains the custom setup script.
 	BlobContainerURI *string `json:"blobContainerUri,omitempty"`
@@ -14495,7 +14495,7 @@ type IntegrationRuntimeCustomSetupScriptProperties struct {
 	SasToken *SecureString `json:"sasToken,omitempty"`
 }
 
-// Data flow properties for managed integration runtime.
+// IntegrationRuntimeDataFlowProperties - Data flow properties for managed integration runtime.
 type IntegrationRuntimeDataFlowProperties struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties *map[string]interface{}
@@ -14560,7 +14560,7 @@ func (i *IntegrationRuntimeDataFlowProperties) UnmarshalJSON(data []byte) error 
 	return nil
 }
 
-// Data proxy properties for a managed dedicated integration runtime.
+// IntegrationRuntimeDataProxyProperties - Data proxy properties for a managed dedicated integration runtime.
 type IntegrationRuntimeDataProxyProperties struct {
 	// The self-hosted integration runtime reference.
 	ConnectVia *EntityReference `json:"connectVia,omitempty"`
@@ -14572,7 +14572,7 @@ type IntegrationRuntimeDataProxyProperties struct {
 	StagingLinkedService *EntityReference `json:"stagingLinkedService,omitempty"`
 }
 
-// A list of integration runtime resources.
+// IntegrationRuntimeListResponse - A list of integration runtime resources.
 type IntegrationRuntimeListResponse struct {
 	// The link to the next page of results, if any remaining results exist.
 	NextLink *string `json:"nextLink,omitempty"`
@@ -14590,7 +14590,7 @@ type IntegrationRuntimeListResponseResponse struct {
 	RawResponse *http.Response
 }
 
-// Integration runtime reference type.
+// IntegrationRuntimeReference - Integration runtime reference type.
 type IntegrationRuntimeReference struct {
 	// Arguments for integration runtime.
 	Parameters *map[string]interface{} `json:"parameters,omitempty"`
@@ -14602,7 +14602,7 @@ type IntegrationRuntimeReference struct {
 	Type *IntegrationRuntimeReferenceType `json:"type,omitempty"`
 }
 
-// Integration runtime resource type.
+// IntegrationRuntimeResource - Integration runtime resource type.
 type IntegrationRuntimeResource struct {
 	SubResource
 	// Integration runtime properties.
@@ -14618,7 +14618,7 @@ type IntegrationRuntimeResourceResponse struct {
 	RawResponse *http.Response
 }
 
-// Catalog information for managed dedicated integration runtime.
+// IntegrationRuntimeSsisCatalogInfo - Catalog information for managed dedicated integration runtime.
 type IntegrationRuntimeSsisCatalogInfo struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties *map[string]interface{}
@@ -14690,7 +14690,7 @@ func (i *IntegrationRuntimeSsisCatalogInfo) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// SSIS properties for managed integration runtime.
+// IntegrationRuntimeSsisProperties - SSIS properties for managed integration runtime.
 type IntegrationRuntimeSsisProperties struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties *map[string]interface{}
@@ -14776,7 +14776,7 @@ func (i *IntegrationRuntimeSsisProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// VNet properties for managed integration runtime.
+// IntegrationRuntimeVNetProperties - VNet properties for managed integration runtime.
 type IntegrationRuntimeVNetProperties struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties *map[string]interface{}
@@ -14851,7 +14851,7 @@ type IntegrationRuntimesListOptions struct {
 	// placeholder for future optional parameters
 }
 
-// Json dataset.
+// JSONDataset - Json dataset.
 type JSONDataset struct {
 	Dataset
 	// Json dataset properties.
@@ -14885,7 +14885,7 @@ func (j *JSONDataset) UnmarshalJSON(data []byte) error {
 	return j.Dataset.unmarshalInternal(rawMsg)
 }
 
-// Json dataset properties.
+// JSONDatasetTypeProperties - Json dataset properties.
 type JSONDatasetTypeProperties struct {
 	// The data compression method used for the json dataset.
 	Compression DatasetCompressionClassification `json:"compression,omitempty"`
@@ -14925,7 +14925,7 @@ func (j *JSONDatasetTypeProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// The data stored in JSON format.
+// JSONFormat - The data stored in JSON format.
 type JSONFormat struct {
 	DatasetStorageFormat
 	// The code page name of the preferred encoding. If not provided, the default value is 'utf-8', unless the byte order mark (BOM) denotes another Unicode
@@ -14993,7 +14993,7 @@ func (j *JSONFormat) UnmarshalJSON(data []byte) error {
 	return j.DatasetStorageFormat.unmarshalInternal(rawMsg)
 }
 
-// A copy activity Json sink.
+// JSONSink - A copy activity Json sink.
 type JSONSink struct {
 	CopySink
 	// Json format settings.
@@ -15034,7 +15034,7 @@ func (j *JSONSink) UnmarshalJSON(data []byte) error {
 	return j.CopySink.unmarshalInternal(rawMsg)
 }
 
-// A copy activity Json source.
+// JSONSource - A copy activity Json source.
 type JSONSource struct {
 	CopySource
 	// Json store settings.
@@ -15068,7 +15068,7 @@ func (j *JSONSource) UnmarshalJSON(data []byte) error {
 	return j.CopySource.unmarshalInternal(rawMsg)
 }
 
-// Json write settings.
+// JSONWriteSettings - Json write settings.
 type JSONWriteSettings struct {
 	FormatWriteSettings
 	// File pattern of JSON. This setting controls the way a collection of JSON objects will be treated. The default value is 'setOfObjects'. It is case-sensitive.
@@ -15102,7 +15102,7 @@ func (j *JSONWriteSettings) UnmarshalJSON(data []byte) error {
 	return j.FormatWriteSettings.unmarshalInternal(rawMsg)
 }
 
-// Jira Service linked service.
+// JiraLinkedService - Jira Service linked service.
 type JiraLinkedService struct {
 	LinkedService
 	// Jira Service linked service properties.
@@ -15136,7 +15136,7 @@ func (j *JiraLinkedService) UnmarshalJSON(data []byte) error {
 	return j.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Jira Service linked service properties.
+// JiraLinkedServiceTypeProperties - Jira Service linked service properties.
 type JiraLinkedServiceTypeProperties struct {
 	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
 	// with resultType string).
@@ -15207,7 +15207,7 @@ func (j *JiraLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Jira Service dataset.
+// JiraObjectDataset - Jira Service dataset.
 type JiraObjectDataset struct {
 	Dataset
 	// Properties specific to this dataset type.
@@ -15241,7 +15241,7 @@ func (j *JiraObjectDataset) UnmarshalJSON(data []byte) error {
 	return j.Dataset.unmarshalInternal(rawMsg)
 }
 
-// A copy activity Jira Service source.
+// JiraSource - A copy activity Jira Service source.
 type JiraSource struct {
 	TabularSource
 	// A query to retrieve data from source. Type: string (or Expression with resultType string).
@@ -15307,7 +15307,7 @@ type LibraryGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// Library/package information of a Big Data pool powered by Apache Spark
+// LibraryInfo - Library/package information of a Big Data pool powered by Apache Spark
 type LibraryInfo struct {
 	// Storage blob container name.
 	ContainerName *string `json:"containerName,omitempty"`
@@ -15389,7 +15389,7 @@ type LibraryListOptions struct {
 	// placeholder for future optional parameters
 }
 
-// A list of Library resources.
+// LibraryListResponse - A list of Library resources.
 type LibraryListResponse struct {
 	// The link to the next page of results, if any remaining results exist.
 	NextLink *string `json:"nextLink,omitempty"`
@@ -15407,7 +15407,7 @@ type LibraryListResponseResponse struct {
 	RawResponse *http.Response
 }
 
-// Library requirements for a Big Data pool powered by Apache Spark
+// LibraryRequirements - Library requirements for a Big Data pool powered by Apache Spark
 type LibraryRequirements struct {
 	// The library requirements.
 	Content *string `json:"content,omitempty"`
@@ -15456,14 +15456,14 @@ func (l *LibraryRequirements) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Library response details
+// LibraryResource - Library response details
 type LibraryResource struct {
 	SubResource
 	// Library/package properties.
 	Properties *LibraryResourceProperties `json:"properties,omitempty"`
 }
 
-// Library resource info
+// LibraryResourceInfo - Library resource info
 type LibraryResourceInfo struct {
 	// READ-ONLY; artifact Id of the library/package.
 	ArtifactID *string `json:"artifactId,omitempty" azure:"ro"`
@@ -15514,7 +15514,7 @@ type LibraryResourceInfoResponse struct {
 	RawResponse *http.Response
 }
 
-// Library/package properties
+// LibraryResourceProperties - Library/package properties
 type LibraryResourceProperties struct {
 	// READ-ONLY; Container name of the library/package.
 	ContainerName *string `json:"containerName,omitempty" azure:"ro"`
@@ -15547,7 +15547,7 @@ type LibraryResourceResponse struct {
 	RawResponse *http.Response
 }
 
-// The key authorization type integration runtime.
+// LinkedIntegrationRuntimeKeyAuthorization - The key authorization type integration runtime.
 type LinkedIntegrationRuntimeKeyAuthorization struct {
 	LinkedIntegrationRuntimeType
 	// The key used for authorization.
@@ -15581,7 +15581,7 @@ func (l *LinkedIntegrationRuntimeKeyAuthorization) UnmarshalJSON(data []byte) er
 	return l.LinkedIntegrationRuntimeType.unmarshalInternal(rawMsg)
 }
 
-// The role based access control (RBAC) authorization type integration runtime.
+// LinkedIntegrationRuntimeRbacAuthorization - The role based access control (RBAC) authorization type integration runtime.
 type LinkedIntegrationRuntimeRbacAuthorization struct {
 	LinkedIntegrationRuntimeType
 	// The resource identifier of the integration runtime to be shared.
@@ -15620,11 +15620,11 @@ func (l *LinkedIntegrationRuntimeRbacAuthorization) UnmarshalJSON(data []byte) e
 // Use a type switch to determine the concrete type.  The possible types are:
 // - *LinkedIntegrationRuntimeType, *LinkedIntegrationRuntimeKeyAuthorization, *LinkedIntegrationRuntimeRbacAuthorization
 type LinkedIntegrationRuntimeTypeClassification interface {
-	// GetLinkedIntegrationRuntimeType() returns the LinkedIntegrationRuntimeType content of the underlying type.
+	// GetLinkedIntegrationRuntimeType returns the LinkedIntegrationRuntimeType content of the underlying type.
 	GetLinkedIntegrationRuntimeType() *LinkedIntegrationRuntimeType
 }
 
-// The base definition of a linked integration runtime.
+// LinkedIntegrationRuntimeType - The base definition of a linked integration runtime.
 type LinkedIntegrationRuntimeType struct {
 	// The authorization type for integration runtime sharing.
 	AuthorizationType *string `json:"authorizationType,omitempty"`
@@ -15690,11 +15690,12 @@ func (l *LinkedIntegrationRuntimeType) unmarshalInternal(rawMsg map[string]*json
 // - *SquareLinkedService, *SybaseLinkedService, *TeradataLinkedService, *VerticaLinkedService, *WebLinkedService, *XeroLinkedService,
 // - *ZohoLinkedService
 type LinkedServiceClassification interface {
-	// GetLinkedService() returns the LinkedService content of the underlying type.
+	// GetLinkedService returns the LinkedService content of the underlying type.
 	GetLinkedService() *LinkedService
 }
 
-// The Azure Synapse nested object which contains the information and credential which can be used to connect with related store or compute resource.
+// LinkedService - The Azure Synapse nested object which contains the information and credential which can be used to connect with related store or compute
+// resource.
 type LinkedService struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties *map[string]interface{}
@@ -15796,7 +15797,7 @@ type LinkedServiceBeginRenameLinkedServiceOptions struct {
 	// placeholder for future optional parameters
 }
 
-// Linked service debug resource.
+// LinkedServiceDebugResource - Linked service debug resource.
 type LinkedServiceDebugResource struct {
 	SubResourceDebugResource
 	// Properties of linked service.
@@ -15815,7 +15816,7 @@ type LinkedServiceGetLinkedServicesByWorkspaceOptions struct {
 	// placeholder for future optional parameters
 }
 
-// A list of linked service resources.
+// LinkedServiceListResponse - A list of linked service resources.
 type LinkedServiceListResponse struct {
 	// The link to the next page of results, if any remaining results exist.
 	NextLink *string `json:"nextLink,omitempty"`
@@ -15833,7 +15834,7 @@ type LinkedServiceListResponseResponse struct {
 	RawResponse *http.Response
 }
 
-// Linked service reference type.
+// LinkedServiceReference - Linked service reference type.
 type LinkedServiceReference struct {
 	// Arguments for LinkedService.
 	Parameters *map[string]interface{} `json:"parameters,omitempty"`
@@ -15845,7 +15846,7 @@ type LinkedServiceReference struct {
 	Type *Type `json:"type,omitempty"`
 }
 
-// Linked service resource type.
+// LinkedServiceResource - Linked service resource type.
 type LinkedServiceResource struct {
 	SubResource
 	// Properties of linked service.
@@ -15873,7 +15874,7 @@ type LinkedServiceResourceResponse struct {
 	RawResponse *http.Response
 }
 
-// Log storage settings.
+// LogStorageSettings - Log storage settings.
 type LogStorageSettings struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties *map[string]interface{}
@@ -15931,7 +15932,7 @@ func (l *LogStorageSettings) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Lookup activity.
+// LookupActivity - Lookup activity.
 type LookupActivity struct {
 	ExecutionActivity
 	// Lookup activity properties.
@@ -15965,7 +15966,7 @@ func (l *LookupActivity) UnmarshalJSON(data []byte) error {
 	return l.ExecutionActivity.unmarshalInternal(rawMsg)
 }
 
-// Lookup activity properties.
+// LookupActivityTypeProperties - Lookup activity properties.
 type LookupActivityTypeProperties struct {
 	// Lookup activity dataset reference.
 	Dataset *DatasetReference `json:"dataset,omitempty"`
@@ -15977,7 +15978,7 @@ type LookupActivityTypeProperties struct {
 	Source CopySourceClassification `json:"source,omitempty"`
 }
 
-// Magento server linked service.
+// MagentoLinkedService - Magento server linked service.
 type MagentoLinkedService struct {
 	LinkedService
 	// Magento server linked service properties.
@@ -16011,7 +16012,7 @@ func (m *MagentoLinkedService) UnmarshalJSON(data []byte) error {
 	return m.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Magento server linked service properties.
+// MagentoLinkedServiceTypeProperties - Magento server linked service properties.
 type MagentoLinkedServiceTypeProperties struct {
 	// The access token from Magento.
 	AccessToken SecretBaseClassification `json:"accessToken,omitempty"`
@@ -16069,7 +16070,7 @@ func (m *MagentoLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Magento server dataset.
+// MagentoObjectDataset - Magento server dataset.
 type MagentoObjectDataset struct {
 	Dataset
 	// Properties specific to this dataset type.
@@ -16103,7 +16104,7 @@ func (m *MagentoObjectDataset) UnmarshalJSON(data []byte) error {
 	return m.Dataset.unmarshalInternal(rawMsg)
 }
 
-// A copy activity Magento server source.
+// MagentoSource - A copy activity Magento server source.
 type MagentoSource struct {
 	TabularSource
 	// A query to retrieve data from source. Type: string (or Expression with resultType string).
@@ -16137,7 +16138,7 @@ func (m *MagentoSource) UnmarshalJSON(data []byte) error {
 	return m.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// The workspace managed identity
+// ManagedIdentity - The workspace managed identity
 type ManagedIdentity struct {
 	// READ-ONLY; The principal ID of the workspace managed identity
 	PrincipalID *string `json:"principalId,omitempty" azure:"ro"`
@@ -16149,7 +16150,7 @@ type ManagedIdentity struct {
 	Type *ResourceIdentityType `json:"type,omitempty"`
 }
 
-// Managed integration runtime, including managed elastic and managed dedicated integration runtimes.
+// ManagedIntegrationRuntime - Managed integration runtime, including managed elastic and managed dedicated integration runtimes.
 type ManagedIntegrationRuntime struct {
 	IntegrationRuntime
 	// READ-ONLY; Integration runtime state, only valid for managed dedicated integration runtime.
@@ -16190,7 +16191,7 @@ func (m *ManagedIntegrationRuntime) UnmarshalJSON(data []byte) error {
 	return m.IntegrationRuntime.unmarshalInternal(rawMsg)
 }
 
-// Managed integration runtime type properties.
+// ManagedIntegrationRuntimeTypeProperties - Managed integration runtime type properties.
 type ManagedIntegrationRuntimeTypeProperties struct {
 	// The compute resource for managed integration runtime.
 	ComputeProperties *IntegrationRuntimeComputeProperties `json:"computeProperties,omitempty"`
@@ -16199,7 +16200,7 @@ type ManagedIntegrationRuntimeTypeProperties struct {
 	SsisProperties *IntegrationRuntimeSsisProperties `json:"ssisProperties,omitempty"`
 }
 
-// Managed Virtual Network Settings
+// ManagedVirtualNetworkSettings - Managed Virtual Network Settings
 type ManagedVirtualNetworkSettings struct {
 	// Allowed Aad Tenant Ids For Linking
 	AllowedAADTenantIDsForLinking *[]*string `json:"allowedAadTenantIdsForLinking,omitempty"`
@@ -16211,7 +16212,7 @@ type ManagedVirtualNetworkSettings struct {
 	PreventDataExfiltration *bool `json:"preventDataExfiltration,omitempty"`
 }
 
-// Mapping data flow.
+// MappingDataFlow - Mapping data flow.
 type MappingDataFlow struct {
 	DataFlow
 	// Mapping data flow type properties.
@@ -16245,7 +16246,7 @@ func (m *MappingDataFlow) UnmarshalJSON(data []byte) error {
 	return m.DataFlow.unmarshalInternal(rawMsg)
 }
 
-// Mapping data flow type properties.
+// MappingDataFlowTypeProperties - Mapping data flow type properties.
 type MappingDataFlowTypeProperties struct {
 	// DataFlow script.
 	Script *string `json:"script,omitempty"`
@@ -16260,7 +16261,7 @@ type MappingDataFlowTypeProperties struct {
 	Transformations *[]*Transformation `json:"transformations,omitempty"`
 }
 
-// MariaDB server linked service.
+// MariaDBLinkedService - MariaDB server linked service.
 type MariaDBLinkedService struct {
 	LinkedService
 	// MariaDB server linked service properties.
@@ -16294,7 +16295,7 @@ func (m *MariaDBLinkedService) UnmarshalJSON(data []byte) error {
 	return m.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// MariaDB server linked service properties.
+// MariaDBLinkedServiceTypeProperties - MariaDB server linked service properties.
 type MariaDBLinkedServiceTypeProperties struct {
 	// An ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference.
 	ConnectionString interface{} `json:"connectionString,omitempty"`
@@ -16307,7 +16308,7 @@ type MariaDBLinkedServiceTypeProperties struct {
 	Pwd *AzureKeyVaultSecretReference `json:"pwd,omitempty"`
 }
 
-// A copy activity MariaDB server source.
+// MariaDBSource - A copy activity MariaDB server source.
 type MariaDBSource struct {
 	TabularSource
 	// A query to retrieve data from source. Type: string (or Expression with resultType string).
@@ -16341,7 +16342,7 @@ func (m *MariaDBSource) UnmarshalJSON(data []byte) error {
 	return m.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// MariaDB server dataset.
+// MariaDBTableDataset - MariaDB server dataset.
 type MariaDBTableDataset struct {
 	Dataset
 	// Properties specific to this dataset type.
@@ -16375,7 +16376,7 @@ func (m *MariaDBTableDataset) UnmarshalJSON(data []byte) error {
 	return m.Dataset.unmarshalInternal(rawMsg)
 }
 
-// Marketo server linked service.
+// MarketoLinkedService - Marketo server linked service.
 type MarketoLinkedService struct {
 	LinkedService
 	// Marketo server linked service properties.
@@ -16409,7 +16410,7 @@ func (m *MarketoLinkedService) UnmarshalJSON(data []byte) error {
 	return m.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Marketo server linked service properties.
+// MarketoLinkedServiceTypeProperties - Marketo server linked service properties.
 type MarketoLinkedServiceTypeProperties struct {
 	// The client Id of your Marketo service.
 	ClientID interface{} `json:"clientId,omitempty"`
@@ -16473,7 +16474,7 @@ func (m *MarketoLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Marketo server dataset.
+// MarketoObjectDataset - Marketo server dataset.
 type MarketoObjectDataset struct {
 	Dataset
 	// Properties specific to this dataset type.
@@ -16507,7 +16508,7 @@ func (m *MarketoObjectDataset) UnmarshalJSON(data []byte) error {
 	return m.Dataset.unmarshalInternal(rawMsg)
 }
 
-// A copy activity Marketo server source.
+// MarketoSource - A copy activity Marketo server source.
 type MarketoSource struct {
 	TabularSource
 	// A query to retrieve data from source. Type: string (or Expression with resultType string).
@@ -16541,7 +16542,7 @@ func (m *MarketoSource) UnmarshalJSON(data []byte) error {
 	return m.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// Microsoft Access linked service.
+// MicrosoftAccessLinkedService - Microsoft Access linked service.
 type MicrosoftAccessLinkedService struct {
 	LinkedService
 	// Microsoft Access linked service properties.
@@ -16575,7 +16576,7 @@ func (m *MicrosoftAccessLinkedService) UnmarshalJSON(data []byte) error {
 	return m.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Microsoft Access linked service properties.
+// MicrosoftAccessLinkedServiceTypeProperties - Microsoft Access linked service properties.
 type MicrosoftAccessLinkedServiceTypeProperties struct {
 	// Type of authentication used to connect to the Microsoft Access as ODBC data store. Possible values are: Anonymous and Basic. Type: string (or Expression
 	// with resultType string).
@@ -16633,7 +16634,7 @@ func (m *MicrosoftAccessLinkedServiceTypeProperties) UnmarshalJSON(data []byte) 
 	return nil
 }
 
-// A copy activity Microsoft Access sink.
+// MicrosoftAccessSink - A copy activity Microsoft Access sink.
 type MicrosoftAccessSink struct {
 	CopySink
 	// A query to execute before starting the copy. Type: string (or Expression with resultType string).
@@ -16667,7 +16668,7 @@ func (m *MicrosoftAccessSink) UnmarshalJSON(data []byte) error {
 	return m.CopySink.unmarshalInternal(rawMsg)
 }
 
-// A copy activity source for Microsoft Access.
+// MicrosoftAccessSource - A copy activity source for Microsoft Access.
 type MicrosoftAccessSource struct {
 	CopySource
 	// Database query. Type: string (or Expression with resultType string).
@@ -16701,7 +16702,7 @@ func (m *MicrosoftAccessSource) UnmarshalJSON(data []byte) error {
 	return m.CopySource.unmarshalInternal(rawMsg)
 }
 
-// The Microsoft Access table dataset.
+// MicrosoftAccessTableDataset - The Microsoft Access table dataset.
 type MicrosoftAccessTableDataset struct {
 	Dataset
 	// Microsoft Access table dataset properties.
@@ -16735,13 +16736,13 @@ func (m *MicrosoftAccessTableDataset) UnmarshalJSON(data []byte) error {
 	return m.Dataset.unmarshalInternal(rawMsg)
 }
 
-// Microsoft Access table dataset properties.
+// MicrosoftAccessTableDatasetTypeProperties - Microsoft Access table dataset properties.
 type MicrosoftAccessTableDatasetTypeProperties struct {
 	// The Microsoft Access table name. Type: string (or Expression with resultType string).
 	TableName interface{} `json:"tableName,omitempty"`
 }
 
-// The MongoDB database dataset.
+// MongoDbCollectionDataset - The MongoDB database dataset.
 type MongoDbCollectionDataset struct {
 	Dataset
 	// MongoDB database dataset properties.
@@ -16775,13 +16776,13 @@ func (m *MongoDbCollectionDataset) UnmarshalJSON(data []byte) error {
 	return m.Dataset.unmarshalInternal(rawMsg)
 }
 
-// MongoDB database dataset properties.
+// MongoDbCollectionDatasetTypeProperties - MongoDB database dataset properties.
 type MongoDbCollectionDatasetTypeProperties struct {
 	// The table name of the MongoDB database. Type: string (or Expression with resultType string).
 	CollectionName interface{} `json:"collectionName,omitempty"`
 }
 
-// Cursor methods for Mongodb query
+// MongoDbCursorMethodsProperties - Cursor methods for Mongodb query
 type MongoDbCursorMethodsProperties struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties *map[string]interface{}
@@ -16858,7 +16859,7 @@ func (m *MongoDbCursorMethodsProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Linked service for MongoDb data source.
+// MongoDbLinkedService - Linked service for MongoDb data source.
 type MongoDbLinkedService struct {
 	LinkedService
 	// MongoDB linked service properties.
@@ -16892,7 +16893,7 @@ func (m *MongoDbLinkedService) UnmarshalJSON(data []byte) error {
 	return m.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// MongoDB linked service properties.
+// MongoDbLinkedServiceTypeProperties - MongoDB linked service properties.
 type MongoDbLinkedServiceTypeProperties struct {
 	// Specifies whether to allow self-signed certificates from the server. The default value is false. Type: boolean (or Expression with resultType boolean).
 	AllowSelfSignedServerCert interface{} `json:"allowSelfSignedServerCert,omitempty"`
@@ -16974,7 +16975,7 @@ func (m *MongoDbLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// A copy activity source for a MongoDB database.
+// MongoDbSource - A copy activity source for a MongoDB database.
 type MongoDbSource struct {
 	CopySource
 	// Database query. Should be a SQL-92 query expression. Type: string (or Expression with resultType string).
@@ -17008,7 +17009,7 @@ func (m *MongoDbSource) UnmarshalJSON(data []byte) error {
 	return m.CopySource.unmarshalInternal(rawMsg)
 }
 
-// The MongoDB database dataset.
+// MongoDbV2CollectionDataset - The MongoDB database dataset.
 type MongoDbV2CollectionDataset struct {
 	Dataset
 	// MongoDB database dataset properties.
@@ -17042,13 +17043,13 @@ func (m *MongoDbV2CollectionDataset) UnmarshalJSON(data []byte) error {
 	return m.Dataset.unmarshalInternal(rawMsg)
 }
 
-// MongoDB database dataset properties.
+// MongoDbV2CollectionDatasetTypeProperties - MongoDB database dataset properties.
 type MongoDbV2CollectionDatasetTypeProperties struct {
 	// The collection name of the MongoDB database. Type: string (or Expression with resultType string).
 	Collection interface{} `json:"collection,omitempty"`
 }
 
-// Linked service for MongoDB data source.
+// MongoDbV2LinkedService - Linked service for MongoDB data source.
 type MongoDbV2LinkedService struct {
 	LinkedService
 	// MongoDB linked service properties.
@@ -17082,7 +17083,7 @@ func (m *MongoDbV2LinkedService) UnmarshalJSON(data []byte) error {
 	return m.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// MongoDB linked service properties.
+// MongoDbV2LinkedServiceTypeProperties - MongoDB linked service properties.
 type MongoDbV2LinkedServiceTypeProperties struct {
 	// The MongoDB connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Type: string, SecureString or AzureKeyVaultSecretReference.
 	ConnectionString interface{} `json:"connectionString,omitempty"`
@@ -17091,7 +17092,7 @@ type MongoDbV2LinkedServiceTypeProperties struct {
 	Database interface{} `json:"database,omitempty"`
 }
 
-// A copy activity source for a MongoDB database.
+// MongoDbV2Source - A copy activity source for a MongoDB database.
 type MongoDbV2Source struct {
 	CopySource
 	// Specifies the number of documents to return in each batch of the response from MongoDB instance. In most cases, modifying the batch size will not affect
@@ -17155,11 +17156,11 @@ func (m *MongoDbV2Source) UnmarshalJSON(data []byte) error {
 // - *MultiplePipelineTrigger, *BlobEventsTrigger, *BlobTrigger, *ScheduleTrigger
 type MultiplePipelineTriggerClassification interface {
 	TriggerClassification
-	// GetMultiplePipelineTrigger() returns the MultiplePipelineTrigger content of the underlying type.
+	// GetMultiplePipelineTrigger returns the MultiplePipelineTrigger content of the underlying type.
 	GetMultiplePipelineTrigger() *MultiplePipelineTrigger
 }
 
-// Base class for all triggers that support one to many model for trigger to pipeline.
+// MultiplePipelineTrigger - Base class for all triggers that support one to many model for trigger to pipeline.
 type MultiplePipelineTrigger struct {
 	Trigger
 	// Pipelines that need to be started.
@@ -17205,7 +17206,7 @@ func (m *MultiplePipelineTrigger) unmarshalInternal(rawMsg map[string]*json.RawM
 	return m.Trigger.unmarshalInternal(rawMsg)
 }
 
-// Linked service for MySQL data source.
+// MySQLLinkedService - Linked service for MySQL data source.
 type MySQLLinkedService struct {
 	LinkedService
 	// MySQL linked service properties.
@@ -17239,7 +17240,7 @@ func (m *MySQLLinkedService) UnmarshalJSON(data []byte) error {
 	return m.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// MySQL linked service properties.
+// MySQLLinkedServiceTypeProperties - MySQL linked service properties.
 type MySQLLinkedServiceTypeProperties struct {
 	// The connection string.
 	ConnectionString interface{} `json:"connectionString,omitempty"`
@@ -17252,7 +17253,7 @@ type MySQLLinkedServiceTypeProperties struct {
 	Password *AzureKeyVaultSecretReference `json:"password,omitempty"`
 }
 
-// A copy activity source for MySQL databases.
+// MySQLSource - A copy activity source for MySQL databases.
 type MySQLSource struct {
 	TabularSource
 	// Database query. Type: string (or Expression with resultType string).
@@ -17286,7 +17287,7 @@ func (m *MySQLSource) UnmarshalJSON(data []byte) error {
 	return m.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// The MySQL table dataset.
+// MySQLTableDataset - The MySQL table dataset.
 type MySQLTableDataset struct {
 	Dataset
 	// MySQL table dataset properties.
@@ -17320,13 +17321,13 @@ func (m *MySQLTableDataset) UnmarshalJSON(data []byte) error {
 	return m.Dataset.unmarshalInternal(rawMsg)
 }
 
-// MySql table dataset properties.
+// MySQLTableDatasetTypeProperties - MySql table dataset properties.
 type MySQLTableDatasetTypeProperties struct {
 	// The MySQL table name. Type: string (or Expression with resultType string).
 	TableName interface{} `json:"tableName,omitempty"`
 }
 
-// Netezza linked service.
+// NetezzaLinkedService - Netezza linked service.
 type NetezzaLinkedService struct {
 	LinkedService
 	// Netezza linked service properties.
@@ -17360,7 +17361,7 @@ func (n *NetezzaLinkedService) UnmarshalJSON(data []byte) error {
 	return n.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Netezza linked service properties.
+// NetezzaLinkedServiceTypeProperties - Netezza linked service properties.
 type NetezzaLinkedServiceTypeProperties struct {
 	// An ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference.
 	ConnectionString interface{} `json:"connectionString,omitempty"`
@@ -17373,7 +17374,7 @@ type NetezzaLinkedServiceTypeProperties struct {
 	Pwd *AzureKeyVaultSecretReference `json:"pwd,omitempty"`
 }
 
-// The settings that will be leveraged for Netezza source partitioning.
+// NetezzaPartitionSettings - The settings that will be leveraged for Netezza source partitioning.
 type NetezzaPartitionSettings struct {
 	// The name of the column in integer type that will be used for proceeding range partitioning. Type: string (or Expression with resultType string).
 	PartitionColumnName interface{} `json:"partitionColumnName,omitempty"`
@@ -17387,7 +17388,7 @@ type NetezzaPartitionSettings struct {
 	PartitionUpperBound interface{} `json:"partitionUpperBound,omitempty"`
 }
 
-// A copy activity Netezza source.
+// NetezzaSource - A copy activity Netezza source.
 type NetezzaSource struct {
 	TabularSource
 	// The partition mechanism that will be used for Netezza read in parallel.
@@ -17435,7 +17436,7 @@ func (n *NetezzaSource) UnmarshalJSON(data []byte) error {
 	return n.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// Netezza dataset.
+// NetezzaTableDataset - Netezza dataset.
 type NetezzaTableDataset struct {
 	Dataset
 	// Properties specific to this dataset type.
@@ -17469,7 +17470,7 @@ func (n *NetezzaTableDataset) UnmarshalJSON(data []byte) error {
 	return n.Dataset.unmarshalInternal(rawMsg)
 }
 
-// Netezza dataset properties.
+// NetezzaTableDatasetTypeProperties - Netezza dataset properties.
 type NetezzaTableDatasetTypeProperties struct {
 	// The schema name of the Netezza. Type: string (or Expression with resultType string).
 	Schema interface{} `json:"schema,omitempty"`
@@ -17590,7 +17591,7 @@ type NotebookBeginRenameNotebookOptions struct {
 	// placeholder for future optional parameters
 }
 
-// Notebook cell.
+// NotebookCell - Notebook cell.
 type NotebookCell struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties *map[string]interface{}
@@ -17669,7 +17670,7 @@ func (n *NotebookCell) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// An item of the notebook cell execution output.
+// NotebookCellOutputItem - An item of the notebook cell execution output.
 type NotebookCellOutputItem struct {
 	// Output data. Use MIME type as key, and content as value.
 	Data interface{} `json:"data,omitempty"`
@@ -17707,7 +17708,7 @@ type NotebookGetNotebooksByWorkspaceOptions struct {
 	// placeholder for future optional parameters
 }
 
-// Kernel information.
+// NotebookKernelSpec - Kernel information.
 type NotebookKernelSpec struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties *map[string]interface{}
@@ -17765,7 +17766,7 @@ func (n *NotebookKernelSpec) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Language info.
+// NotebookLanguageInfo - Language info.
 type NotebookLanguageInfo struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties *map[string]interface{}
@@ -17823,7 +17824,7 @@ func (n *NotebookLanguageInfo) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// A list of Notebook resources.
+// NotebookListResponse - A list of Notebook resources.
 type NotebookListResponse struct {
 	// The link to the next page of results, if any remaining results exist.
 	NextLink *string `json:"nextLink,omitempty"`
@@ -17841,7 +17842,7 @@ type NotebookListResponseResponse struct {
 	RawResponse *http.Response
 }
 
-// Notebook root-level metadata.
+// NotebookMetadata - Notebook root-level metadata.
 type NotebookMetadata struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties *map[string]interface{}
@@ -17899,7 +17900,7 @@ func (n *NotebookMetadata) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Notebook resource type.
+// NotebookResource - Notebook resource type.
 type NotebookResource struct {
 	// READ-ONLY; Resource Etag.
 	Etag *string `json:"etag,omitempty" azure:"ro"`
@@ -17938,7 +17939,7 @@ type NotebookResourceResponse struct {
 	RawResponse *http.Response
 }
 
-// Session properties.
+// NotebookSessionProperties - Session properties.
 type NotebookSessionProperties struct {
 	// Number of cores to use for the driver.
 	DriverCores *int32 `json:"driverCores,omitempty"`
@@ -17956,7 +17957,7 @@ type NotebookSessionProperties struct {
 	NumExecutors *int32 `json:"numExecutors,omitempty"`
 }
 
-// Open Data Protocol (OData) linked service.
+// ODataLinkedService - Open Data Protocol (OData) linked service.
 type ODataLinkedService struct {
 	LinkedService
 	// OData linked service properties.
@@ -17990,7 +17991,7 @@ func (o *ODataLinkedService) UnmarshalJSON(data []byte) error {
 	return o.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// OData linked service properties.
+// ODataLinkedServiceTypeProperties - OData linked service properties.
 type ODataLinkedServiceTypeProperties struct {
 	// Specify the resource you are requesting authorization to use Directory. Type: string (or Expression with resultType string).
 	AADResourceID interface{} `json:"aadResourceId,omitempty"`
@@ -18084,7 +18085,7 @@ func (o *ODataLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// The Open Data Protocol (OData) resource dataset.
+// ODataResourceDataset - The Open Data Protocol (OData) resource dataset.
 type ODataResourceDataset struct {
 	Dataset
 	// OData dataset properties.
@@ -18118,13 +18119,13 @@ func (o *ODataResourceDataset) UnmarshalJSON(data []byte) error {
 	return o.Dataset.unmarshalInternal(rawMsg)
 }
 
-// OData dataset properties.
+// ODataResourceDatasetTypeProperties - OData dataset properties.
 type ODataResourceDatasetTypeProperties struct {
 	// The OData resource path. Type: string (or Expression with resultType string).
 	Path interface{} `json:"path,omitempty"`
 }
 
-// A copy activity source for OData source.
+// ODataSource - A copy activity source for OData source.
 type ODataSource struct {
 	CopySource
 	// OData query. For example, "$top=1". Type: string (or Expression with resultType string).
@@ -18158,7 +18159,7 @@ func (o *ODataSource) UnmarshalJSON(data []byte) error {
 	return o.CopySource.unmarshalInternal(rawMsg)
 }
 
-// Open Database Connectivity (ODBC) linked service.
+// OdbcLinkedService - Open Database Connectivity (ODBC) linked service.
 type OdbcLinkedService struct {
 	LinkedService
 	// ODBC linked service properties.
@@ -18192,7 +18193,7 @@ func (o *OdbcLinkedService) UnmarshalJSON(data []byte) error {
 	return o.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// ODBC linked service properties.
+// OdbcLinkedServiceTypeProperties - ODBC linked service properties.
 type OdbcLinkedServiceTypeProperties struct {
 	// Type of authentication used to connect to the ODBC data store. Possible values are: Anonymous and Basic. Type: string (or Expression with resultType
 	// string).
@@ -18250,7 +18251,7 @@ func (o *OdbcLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// A copy activity ODBC sink.
+// OdbcSink - A copy activity ODBC sink.
 type OdbcSink struct {
 	CopySink
 	// A query to execute before starting the copy. Type: string (or Expression with resultType string).
@@ -18284,7 +18285,7 @@ func (o *OdbcSink) UnmarshalJSON(data []byte) error {
 	return o.CopySink.unmarshalInternal(rawMsg)
 }
 
-// A copy activity source for ODBC databases.
+// OdbcSource - A copy activity source for ODBC databases.
 type OdbcSource struct {
 	TabularSource
 	// Database query. Type: string (or Expression with resultType string).
@@ -18318,7 +18319,7 @@ func (o *OdbcSource) UnmarshalJSON(data []byte) error {
 	return o.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// The ODBC table dataset.
+// OdbcTableDataset - The ODBC table dataset.
 type OdbcTableDataset struct {
 	Dataset
 	// ODBC table dataset properties.
@@ -18352,13 +18353,13 @@ func (o *OdbcTableDataset) UnmarshalJSON(data []byte) error {
 	return o.Dataset.unmarshalInternal(rawMsg)
 }
 
-// ODBC table dataset properties.
+// OdbcTableDatasetTypeProperties - ODBC table dataset properties.
 type OdbcTableDatasetTypeProperties struct {
 	// The ODBC table name. Type: string (or Expression with resultType string).
 	TableName interface{} `json:"tableName,omitempty"`
 }
 
-// The Office365 account.
+// Office365Dataset - The Office365 account.
 type Office365Dataset struct {
 	Dataset
 	// Office365 dataset properties.
@@ -18392,7 +18393,7 @@ func (o *Office365Dataset) UnmarshalJSON(data []byte) error {
 	return o.Dataset.unmarshalInternal(rawMsg)
 }
 
-// Office365 dataset properties.
+// Office365DatasetTypeProperties - Office365 dataset properties.
 type Office365DatasetTypeProperties struct {
 	// A predicate expression that can be used to filter the specific rows to extract from Office 365. Type: string (or Expression with resultType string).
 	Predicate interface{} `json:"predicate,omitempty"`
@@ -18401,7 +18402,7 @@ type Office365DatasetTypeProperties struct {
 	TableName interface{} `json:"tableName,omitempty"`
 }
 
-// Office365 linked service.
+// Office365LinkedService - Office365 linked service.
 type Office365LinkedService struct {
 	LinkedService
 	// Office365 linked service properties.
@@ -18435,7 +18436,7 @@ func (o *Office365LinkedService) UnmarshalJSON(data []byte) error {
 	return o.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Office365 linked service properties.
+// Office365LinkedServiceTypeProperties - Office365 linked service properties.
 type Office365LinkedServiceTypeProperties struct {
 	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
 	// with resultType string).
@@ -18486,7 +18487,7 @@ func (o *Office365LinkedServiceTypeProperties) UnmarshalJSON(data []byte) error 
 	return nil
 }
 
-// A copy activity source for an Office 365 service.
+// Office365Source - A copy activity source for an Office 365 service.
 type Office365Source struct {
 	CopySource
 	// The groups containing all the users. Type: array of strings (or Expression with resultType array of strings).
@@ -18556,7 +18557,7 @@ func (o *Office365Source) UnmarshalJSON(data []byte) error {
 	return o.CopySource.unmarshalInternal(rawMsg)
 }
 
-// Operation status for the operation
+// OperationResult - Operation status for the operation
 type OperationResult struct {
 	// Error data
 	Error *CloudErrorBodyAutoGenerated `json:"error,omitempty"`
@@ -18574,7 +18575,7 @@ type OperationResultResponse struct {
 	RawResponse *http.Response
 }
 
-// Oracle database.
+// OracleLinkedService - Oracle database.
 type OracleLinkedService struct {
 	LinkedService
 	// Oracle database linked service properties.
@@ -18608,7 +18609,7 @@ func (o *OracleLinkedService) UnmarshalJSON(data []byte) error {
 	return o.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Oracle database linked service properties.
+// OracleLinkedServiceTypeProperties - Oracle database linked service properties.
 type OracleLinkedServiceTypeProperties struct {
 	// The connection string. Type: string, SecureString or AzureKeyVaultSecretReference.
 	ConnectionString interface{} `json:"connectionString,omitempty"`
@@ -18621,7 +18622,7 @@ type OracleLinkedServiceTypeProperties struct {
 	Password *AzureKeyVaultSecretReference `json:"password,omitempty"`
 }
 
-// The settings that will be leveraged for Oracle source partitioning.
+// OraclePartitionSettings - The settings that will be leveraged for Oracle source partitioning.
 type OraclePartitionSettings struct {
 	// The name of the column in integer type that will be used for proceeding range partitioning. Type: string (or Expression with resultType string).
 	PartitionColumnName interface{} `json:"partitionColumnName,omitempty"`
@@ -18638,7 +18639,7 @@ type OraclePartitionSettings struct {
 	PartitionUpperBound interface{} `json:"partitionUpperBound,omitempty"`
 }
 
-// Oracle Service Cloud linked service.
+// OracleServiceCloudLinkedService - Oracle Service Cloud linked service.
 type OracleServiceCloudLinkedService struct {
 	LinkedService
 	// Oracle Service Cloud linked service properties.
@@ -18672,7 +18673,7 @@ func (o *OracleServiceCloudLinkedService) UnmarshalJSON(data []byte) error {
 	return o.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Oracle Service Cloud linked service properties.
+// OracleServiceCloudLinkedServiceTypeProperties - Oracle Service Cloud linked service properties.
 type OracleServiceCloudLinkedServiceTypeProperties struct {
 	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
 	// with resultType string).
@@ -18738,7 +18739,7 @@ func (o *OracleServiceCloudLinkedServiceTypeProperties) UnmarshalJSON(data []byt
 	return nil
 }
 
-// Oracle Service Cloud dataset.
+// OracleServiceCloudObjectDataset - Oracle Service Cloud dataset.
 type OracleServiceCloudObjectDataset struct {
 	Dataset
 	// Properties specific to this dataset type.
@@ -18772,7 +18773,7 @@ func (o *OracleServiceCloudObjectDataset) UnmarshalJSON(data []byte) error {
 	return o.Dataset.unmarshalInternal(rawMsg)
 }
 
-// A copy activity Oracle Service Cloud source.
+// OracleServiceCloudSource - A copy activity Oracle Service Cloud source.
 type OracleServiceCloudSource struct {
 	TabularSource
 	// A query to retrieve data from source. Type: string (or Expression with resultType string).
@@ -18806,7 +18807,7 @@ func (o *OracleServiceCloudSource) UnmarshalJSON(data []byte) error {
 	return o.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// A copy activity Oracle sink.
+// OracleSink - A copy activity Oracle sink.
 type OracleSink struct {
 	CopySink
 	// SQL pre-copy script. Type: string (or Expression with resultType string).
@@ -18840,7 +18841,7 @@ func (o *OracleSink) UnmarshalJSON(data []byte) error {
 	return o.CopySink.unmarshalInternal(rawMsg)
 }
 
-// A copy activity Oracle source.
+// OracleSource - A copy activity Oracle source.
 type OracleSource struct {
 	CopySource
 	// Oracle reader query. Type: string (or Expression with resultType string).
@@ -18895,7 +18896,7 @@ func (o *OracleSource) UnmarshalJSON(data []byte) error {
 	return o.CopySource.unmarshalInternal(rawMsg)
 }
 
-// The on-premises Oracle database dataset.
+// OracleTableDataset - The on-premises Oracle database dataset.
 type OracleTableDataset struct {
 	Dataset
 	// On-premises Oracle dataset properties.
@@ -18929,7 +18930,7 @@ func (o *OracleTableDataset) UnmarshalJSON(data []byte) error {
 	return o.Dataset.unmarshalInternal(rawMsg)
 }
 
-// On-premises Oracle dataset properties.
+// OracleTableDatasetTypeProperties - On-premises Oracle dataset properties.
 type OracleTableDatasetTypeProperties struct {
 	// The schema name of the on-premises Oracle database. Type: string (or Expression with resultType string).
 	Schema interface{} `json:"schema,omitempty"`
@@ -18941,7 +18942,7 @@ type OracleTableDatasetTypeProperties struct {
 	TableName interface{} `json:"tableName,omitempty"`
 }
 
-// ORC dataset.
+// OrcDataset - ORC dataset.
 type OrcDataset struct {
 	Dataset
 	// ORC dataset properties.
@@ -18975,7 +18976,7 @@ func (o *OrcDataset) UnmarshalJSON(data []byte) error {
 	return o.Dataset.unmarshalInternal(rawMsg)
 }
 
-// ORC dataset properties.
+// OrcDatasetTypeProperties - ORC dataset properties.
 type OrcDatasetTypeProperties struct {
 	// The location of the ORC data storage.
 	Location            DatasetLocationClassification `json:"location,omitempty"`
@@ -19005,7 +19006,7 @@ func (o *OrcDatasetTypeProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// The data stored in Optimized Row Columnar (ORC) format.
+// OrcFormat - The data stored in Optimized Row Columnar (ORC) format.
 type OrcFormat struct {
 	DatasetStorageFormat
 }
@@ -19016,7 +19017,7 @@ func (o OrcFormat) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// A copy activity ORC sink.
+// OrcSink - A copy activity ORC sink.
 type OrcSink struct {
 	CopySink
 	// ORC store settings.
@@ -19050,7 +19051,7 @@ func (o *OrcSink) UnmarshalJSON(data []byte) error {
 	return o.CopySink.unmarshalInternal(rawMsg)
 }
 
-// A copy activity ORC source.
+// OrcSource - A copy activity ORC source.
 type OrcSource struct {
 	CopySource
 	// ORC store settings.
@@ -19084,7 +19085,7 @@ func (o *OrcSource) UnmarshalJSON(data []byte) error {
 	return o.CopySource.unmarshalInternal(rawMsg)
 }
 
-// Definition of a single parameter for an entity.
+// ParameterSpecification - Definition of a single parameter for an entity.
 type ParameterSpecification struct {
 	// Default value of parameter.
 	DefaultValue interface{} `json:"defaultValue,omitempty"`
@@ -19093,7 +19094,7 @@ type ParameterSpecification struct {
 	Type *ParameterType `json:"type,omitempty"`
 }
 
-// Parquet dataset.
+// ParquetDataset - Parquet dataset.
 type ParquetDataset struct {
 	Dataset
 	// Parquet dataset properties.
@@ -19127,7 +19128,7 @@ func (p *ParquetDataset) UnmarshalJSON(data []byte) error {
 	return p.Dataset.unmarshalInternal(rawMsg)
 }
 
-// Parquet dataset properties.
+// ParquetDatasetTypeProperties - Parquet dataset properties.
 type ParquetDatasetTypeProperties struct {
 	CompressionCodec *ParquetCompressionCodec `json:"compressionCodec,omitempty"`
 
@@ -19158,7 +19159,7 @@ func (p *ParquetDatasetTypeProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// The data stored in Parquet format.
+// ParquetFormat - The data stored in Parquet format.
 type ParquetFormat struct {
 	DatasetStorageFormat
 }
@@ -19169,7 +19170,7 @@ func (p ParquetFormat) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// A copy activity Parquet sink.
+// ParquetSink - A copy activity Parquet sink.
 type ParquetSink struct {
 	CopySink
 	// Parquet store settings.
@@ -19203,7 +19204,7 @@ func (p *ParquetSink) UnmarshalJSON(data []byte) error {
 	return p.CopySink.unmarshalInternal(rawMsg)
 }
 
-// A copy activity Parquet source.
+// ParquetSource - A copy activity Parquet source.
 type ParquetSource struct {
 	CopySource
 	// Parquet store settings.
@@ -19237,7 +19238,7 @@ func (p *ParquetSource) UnmarshalJSON(data []byte) error {
 	return p.CopySource.unmarshalInternal(rawMsg)
 }
 
-// Paypal Service linked service.
+// PaypalLinkedService - Paypal Service linked service.
 type PaypalLinkedService struct {
 	LinkedService
 	// Paypal Service linked service properties.
@@ -19271,7 +19272,7 @@ func (p *PaypalLinkedService) UnmarshalJSON(data []byte) error {
 	return p.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Paypal Service linked service properties.
+// PaypalLinkedServiceTypeProperties - Paypal Service linked service properties.
 type PaypalLinkedServiceTypeProperties struct {
 	// The client ID associated with your PayPal application.
 	ClientID interface{} `json:"clientId,omitempty"`
@@ -19335,7 +19336,7 @@ func (p *PaypalLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Paypal Service dataset.
+// PaypalObjectDataset - Paypal Service dataset.
 type PaypalObjectDataset struct {
 	Dataset
 	// Properties specific to this dataset type.
@@ -19369,7 +19370,7 @@ func (p *PaypalObjectDataset) UnmarshalJSON(data []byte) error {
 	return p.Dataset.unmarshalInternal(rawMsg)
 }
 
-// A copy activity Paypal Service source.
+// PaypalSource - A copy activity Paypal Service source.
 type PaypalSource struct {
 	TabularSource
 	// A query to retrieve data from source. Type: string (or Expression with resultType string).
@@ -19403,7 +19404,7 @@ func (p *PaypalSource) UnmarshalJSON(data []byte) error {
 	return p.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// Phoenix Dataset Properties
+// PhoenixDatasetTypeProperties - Phoenix Dataset Properties
 type PhoenixDatasetTypeProperties struct {
 	// The schema name of the Phoenix. Type: string (or Expression with resultType string).
 	Schema interface{} `json:"schema,omitempty"`
@@ -19415,7 +19416,7 @@ type PhoenixDatasetTypeProperties struct {
 	TableName interface{} `json:"tableName,omitempty"`
 }
 
-// Phoenix server linked service.
+// PhoenixLinkedService - Phoenix server linked service.
 type PhoenixLinkedService struct {
 	LinkedService
 	// Phoenix server linked service properties.
@@ -19449,7 +19450,7 @@ func (p *PhoenixLinkedService) UnmarshalJSON(data []byte) error {
 	return p.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Phoenix server linked service properties.
+// PhoenixLinkedServiceTypeProperties - Phoenix server linked service properties.
 type PhoenixLinkedServiceTypeProperties struct {
 	// Specifies whether to require a CA-issued SSL certificate name to match the host name of the server when connecting over SSL. The default value is false.
 	AllowHostNameCNMismatch interface{} `json:"allowHostNameCNMismatch,omitempty"`
@@ -19544,7 +19545,7 @@ func (p *PhoenixLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Phoenix server dataset.
+// PhoenixObjectDataset - Phoenix server dataset.
 type PhoenixObjectDataset struct {
 	Dataset
 	// Properties specific to this dataset type.
@@ -19578,7 +19579,7 @@ func (p *PhoenixObjectDataset) UnmarshalJSON(data []byte) error {
 	return p.Dataset.unmarshalInternal(rawMsg)
 }
 
-// A copy activity Phoenix server source.
+// PhoenixSource - A copy activity Phoenix server source.
 type PhoenixSource struct {
 	TabularSource
 	// A query to retrieve data from source. Type: string (or Expression with resultType string).
@@ -19612,7 +19613,7 @@ func (p *PhoenixSource) UnmarshalJSON(data []byte) error {
 	return p.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// A workspace pipeline.
+// Pipeline - A workspace pipeline.
 type Pipeline struct {
 	// List of activities in pipeline.
 	Activities *[]ActivityClassification `json:"activities,omitempty"`
@@ -19667,7 +19668,7 @@ type PipelineCreatePipelineRunOptions struct {
 	StartActivityName *string
 }
 
-// The folder that this Pipeline is in. If not specified, Pipeline will appear at the root level.
+// PipelineFolder - The folder that this Pipeline is in. If not specified, Pipeline will appear at the root level.
 type PipelineFolder struct {
 	// The name of the folder that this Pipeline is in.
 	Name *string `json:"name,omitempty"`
@@ -19685,7 +19686,7 @@ type PipelineGetPipelinesByWorkspaceOptions struct {
 	// placeholder for future optional parameters
 }
 
-// A list of pipeline resources.
+// PipelineListResponse - A list of pipeline resources.
 type PipelineListResponse struct {
 	// The link to the next page of results, if any remaining results exist.
 	NextLink *string `json:"nextLink,omitempty"`
@@ -19703,7 +19704,7 @@ type PipelineListResponseResponse struct {
 	RawResponse *http.Response
 }
 
-// Pipeline reference type.
+// PipelineReference - Pipeline reference type.
 type PipelineReference struct {
 	// Reference name.
 	Name *string `json:"name,omitempty"`
@@ -19715,7 +19716,7 @@ type PipelineReference struct {
 	Type *PipelineReferenceType `json:"type,omitempty"`
 }
 
-// Pipeline resource type.
+// PipelineResource - Pipeline resource type.
 type PipelineResource struct {
 	SubResource
 	// Contains additional key/value pairs not defined in the schema.
@@ -19796,7 +19797,7 @@ type PipelineResourceResponse struct {
 	RawResponse *http.Response
 }
 
-// Information about a pipeline run.
+// PipelineRun - Information about a pipeline run.
 type PipelineRun struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties *map[string]interface{}
@@ -19941,7 +19942,7 @@ type PipelineRunGetPipelineRunOptions struct {
 	// placeholder for future optional parameters
 }
 
-// Provides entity name and id that started the pipeline run.
+// PipelineRunInvokedBy - Provides entity name and id that started the pipeline run.
 type PipelineRunInvokedBy struct {
 	// READ-ONLY; The ID of the entity that started the run.
 	ID *string `json:"id,omitempty" azure:"ro"`
@@ -19972,7 +19973,7 @@ type PipelineRunResponse struct {
 	RawResponse *http.Response
 }
 
-// A list pipeline runs.
+// PipelineRunsQueryResponse - A list pipeline runs.
 type PipelineRunsQueryResponse struct {
 	// The continuation token for getting the next page of results, if any remaining results exist, null otherwise.
 	ContinuationToken *string `json:"continuationToken,omitempty"`
@@ -19990,7 +19991,7 @@ type PipelineRunsQueryResponseResponse struct {
 	RawResponse *http.Response
 }
 
-// PolyBase settings.
+// PolybaseSettings - PolyBase settings.
 type PolybaseSettings struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties *map[string]interface{}
@@ -20065,7 +20066,7 @@ func (p *PolybaseSettings) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Linked service for PostgreSQL data source.
+// PostgreSQLLinkedService - Linked service for PostgreSQL data source.
 type PostgreSQLLinkedService struct {
 	LinkedService
 	// PostgreSQL linked service properties.
@@ -20099,7 +20100,7 @@ func (p *PostgreSQLLinkedService) UnmarshalJSON(data []byte) error {
 	return p.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// PostgreSQL linked service properties.
+// PostgreSQLLinkedServiceTypeProperties - PostgreSQL linked service properties.
 type PostgreSQLLinkedServiceTypeProperties struct {
 	// The connection string.
 	ConnectionString interface{} `json:"connectionString,omitempty"`
@@ -20112,7 +20113,7 @@ type PostgreSQLLinkedServiceTypeProperties struct {
 	Password *AzureKeyVaultSecretReference `json:"password,omitempty"`
 }
 
-// A copy activity source for PostgreSQL databases.
+// PostgreSQLSource - A copy activity source for PostgreSQL databases.
 type PostgreSQLSource struct {
 	TabularSource
 	// Database query. Type: string (or Expression with resultType string).
@@ -20146,7 +20147,7 @@ func (p *PostgreSQLSource) UnmarshalJSON(data []byte) error {
 	return p.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// The PostgreSQL table dataset.
+// PostgreSQLTableDataset - The PostgreSQL table dataset.
 type PostgreSQLTableDataset struct {
 	Dataset
 	// PostgreSQL table dataset properties.
@@ -20180,7 +20181,7 @@ func (p *PostgreSQLTableDataset) UnmarshalJSON(data []byte) error {
 	return p.Dataset.unmarshalInternal(rawMsg)
 }
 
-// PostgreSQL table dataset properties.
+// PostgreSQLTableDatasetTypeProperties - PostgreSQL table dataset properties.
 type PostgreSQLTableDatasetTypeProperties struct {
 	// The PostgreSQL schema name. Type: string (or Expression with resultType string).
 	Schema interface{} `json:"schema,omitempty"`
@@ -20192,7 +20193,7 @@ type PostgreSQLTableDatasetTypeProperties struct {
 	TableName interface{} `json:"tableName,omitempty"`
 }
 
-// Presto Dataset Properties
+// PrestoDatasetTypeProperties - Presto Dataset Properties
 type PrestoDatasetTypeProperties struct {
 	// The schema name of the Presto. Type: string (or Expression with resultType string).
 	Schema interface{} `json:"schema,omitempty"`
@@ -20204,7 +20205,7 @@ type PrestoDatasetTypeProperties struct {
 	TableName interface{} `json:"tableName,omitempty"`
 }
 
-// Presto server linked service.
+// PrestoLinkedService - Presto server linked service.
 type PrestoLinkedService struct {
 	LinkedService
 	// Presto server linked service properties.
@@ -20238,7 +20239,7 @@ func (p *PrestoLinkedService) UnmarshalJSON(data []byte) error {
 	return p.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Presto server linked service properties.
+// PrestoLinkedServiceTypeProperties - Presto server linked service properties.
 type PrestoLinkedServiceTypeProperties struct {
 	// Specifies whether to require a CA-issued SSL certificate name to match the host name of the server when connecting over SSL. The default value is false.
 	AllowHostNameCNMismatch interface{} `json:"allowHostNameCNMismatch,omitempty"`
@@ -20346,7 +20347,7 @@ func (p *PrestoLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Presto server dataset.
+// PrestoObjectDataset - Presto server dataset.
 type PrestoObjectDataset struct {
 	Dataset
 	// Properties specific to this dataset type.
@@ -20380,7 +20381,7 @@ func (p *PrestoObjectDataset) UnmarshalJSON(data []byte) error {
 	return p.Dataset.unmarshalInternal(rawMsg)
 }
 
-// A copy activity Presto server source.
+// PrestoSource - A copy activity Presto server source.
 type PrestoSource struct {
 	TabularSource
 	// A query to retrieve data from source. Type: string (or Expression with resultType string).
@@ -20414,20 +20415,20 @@ func (p *PrestoSource) UnmarshalJSON(data []byte) error {
 	return p.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// Private endpoint details
+// PrivateEndpoint - Private endpoint details
 type PrivateEndpoint struct {
 	// READ-ONLY; Resource id of the private endpoint.
 	ID *string `json:"id,omitempty" azure:"ro"`
 }
 
-// A private endpoint connection
+// PrivateEndpointConnection - A private endpoint connection
 type PrivateEndpointConnection struct {
 	ProxyResource
 	// Private endpoint connection properties.
 	Properties *PrivateEndpointConnectionProperties `json:"properties,omitempty"`
 }
 
-// Properties of a private endpoint connection.
+// PrivateEndpointConnectionProperties - Properties of a private endpoint connection.
 type PrivateEndpointConnectionProperties struct {
 	// The private endpoint which the connection belongs to.
 	PrivateEndpoint *PrivateEndpoint `json:"privateEndpoint,omitempty"`
@@ -20439,7 +20440,7 @@ type PrivateEndpointConnectionProperties struct {
 	ProvisioningState *string `json:"provisioningState,omitempty" azure:"ro"`
 }
 
-// Connection state details of the private endpoint
+// PrivateLinkServiceConnectionState - Connection state details of the private endpoint
 type PrivateLinkServiceConnectionState struct {
 	// READ-ONLY; The actions required for private link service connection.
 	ActionsRequired *string `json:"actionsRequired,omitempty" azure:"ro"`
@@ -20451,18 +20452,18 @@ type PrivateLinkServiceConnectionState struct {
 	Status *string `json:"status,omitempty"`
 }
 
-// The resource model definition for a Azure Resource Manager proxy resource. It will not have tags and a location
+// ProxyResource - The resource model definition for a Azure Resource Manager proxy resource. It will not have tags and a location
 type ProxyResource struct {
 	Resource
 }
 
-// Purview Configuration
+// PurviewConfiguration - Purview Configuration
 type PurviewConfiguration struct {
 	// Purview Resource ID
 	PurviewResourceID *string `json:"purviewResourceId,omitempty"`
 }
 
-// A list of active debug sessions.
+// QueryDataFlowDebugSessionsResponse - A list of active debug sessions.
 type QueryDataFlowDebugSessionsResponse struct {
 	// The link to the next page of results, if any remaining results exist.
 	NextLink *string `json:"nextLink,omitempty"`
@@ -20480,7 +20481,7 @@ type QueryDataFlowDebugSessionsResponseResponse struct {
 	RawResponse *http.Response
 }
 
-// QuickBooks server linked service.
+// QuickBooksLinkedService - QuickBooks server linked service.
 type QuickBooksLinkedService struct {
 	LinkedService
 	// QuickBooks server linked service properties.
@@ -20514,7 +20515,7 @@ func (q *QuickBooksLinkedService) UnmarshalJSON(data []byte) error {
 	return q.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// QuickBooks server linked service properties.
+// QuickBooksLinkedServiceTypeProperties - QuickBooks server linked service properties.
 type QuickBooksLinkedServiceTypeProperties struct {
 	// The access token for OAuth 1.0 authentication.
 	AccessToken SecretBaseClassification `json:"accessToken,omitempty"`
@@ -20583,7 +20584,7 @@ func (q *QuickBooksLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error
 	return nil
 }
 
-// QuickBooks server dataset.
+// QuickBooksObjectDataset - QuickBooks server dataset.
 type QuickBooksObjectDataset struct {
 	Dataset
 	// Properties specific to this dataset type.
@@ -20617,7 +20618,7 @@ func (q *QuickBooksObjectDataset) UnmarshalJSON(data []byte) error {
 	return q.Dataset.unmarshalInternal(rawMsg)
 }
 
-// A copy activity QuickBooks server source.
+// QuickBooksSource - A copy activity QuickBooks server source.
 type QuickBooksSource struct {
 	TabularSource
 	// A query to retrieve data from source. Type: string (or Expression with resultType string).
@@ -20651,7 +20652,7 @@ func (q *QuickBooksSource) UnmarshalJSON(data []byte) error {
 	return q.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// The recurrence schedule.
+// RecurrenceSchedule - The recurrence schedule.
 type RecurrenceSchedule struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties *map[string]interface{}
@@ -20730,7 +20731,7 @@ func (r *RecurrenceSchedule) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// The recurrence schedule occurrence.
+// RecurrenceScheduleOccurrence - The recurrence schedule occurrence.
 type RecurrenceScheduleOccurrence struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties *map[string]interface{}
@@ -20788,7 +20789,7 @@ func (r *RecurrenceScheduleOccurrence) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Redirect incompatible row settings
+// RedirectIncompatibleRowSettings - Redirect incompatible row settings
 type RedirectIncompatibleRowSettings struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties *map[string]interface{}
@@ -20848,8 +20849,8 @@ func (r *RedirectIncompatibleRowSettings) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// The Amazon S3 settings needed for the interim Amazon S3 when copying from Amazon Redshift with unload. With this, data from Amazon Redshift source will
-// be unloaded into S3 first and then copied into
+// RedshiftUnloadSettings - The Amazon S3 settings needed for the interim Amazon S3 when copying from Amazon Redshift with unload. With this, data from
+// Amazon Redshift source will be unloaded into S3 first and then copied into
 // the targeted sink from the interim S3.
 type RedshiftUnloadSettings struct {
 	// The bucket of the interim Amazon S3 which will be used to store the unloaded data from Amazon Redshift source. The bucket must be in the same region
@@ -20861,7 +20862,7 @@ type RedshiftUnloadSettings struct {
 	S3LinkedServiceName *LinkedServiceReference `json:"s3LinkedServiceName,omitempty"`
 }
 
-// A copy activity source for various relational databases.
+// RelationalSource - A copy activity source for various relational databases.
 type RelationalSource struct {
 	CopySource
 	// Database query. Type: string (or Expression with resultType string).
@@ -20895,7 +20896,7 @@ func (r *RelationalSource) UnmarshalJSON(data []byte) error {
 	return r.CopySource.unmarshalInternal(rawMsg)
 }
 
-// The relational table dataset.
+// RelationalTableDataset - The relational table dataset.
 type RelationalTableDataset struct {
 	Dataset
 	// Relational table dataset properties.
@@ -20929,13 +20930,13 @@ func (r *RelationalTableDataset) UnmarshalJSON(data []byte) error {
 	return r.Dataset.unmarshalInternal(rawMsg)
 }
 
-// Relational table dataset properties.
+// RelationalTableDatasetTypeProperties - Relational table dataset properties.
 type RelationalTableDatasetTypeProperties struct {
 	// The relational table name. Type: string (or Expression with resultType string).
 	TableName interface{} `json:"tableName,omitempty"`
 }
 
-// A list of rerun triggers.
+// RerunTriggerListResponse - A list of rerun triggers.
 type RerunTriggerListResponse struct {
 	// READ-ONLY; The continuation token for getting the next page of results, if any remaining results exist, null otherwise.
 	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
@@ -20944,14 +20945,15 @@ type RerunTriggerListResponse struct {
 	Value *[]*RerunTriggerResource `json:"value,omitempty"`
 }
 
-// RerunTrigger resource type.
+// RerunTriggerResource - RerunTrigger resource type.
 type RerunTriggerResource struct {
 	SubResource
 	// Properties of the rerun trigger.
 	Properties *RerunTumblingWindowTrigger `json:"properties,omitempty"`
 }
 
-// Trigger that schedules pipeline reruns for all fixed time interval windows from a requested start time to requested end time.
+// RerunTumblingWindowTrigger - Trigger that schedules pipeline reruns for all fixed time interval windows from a requested start time to requested end
+// time.
 type RerunTumblingWindowTrigger struct {
 	Trigger
 	// Rerun Trigger properties.
@@ -20985,7 +20987,7 @@ func (r *RerunTumblingWindowTrigger) UnmarshalJSON(data []byte) error {
 	return r.Trigger.unmarshalInternal(rawMsg)
 }
 
-// Rerun tumbling window trigger Parameters.
+// RerunTumblingWindowTriggerActionParameters - Rerun tumbling window trigger Parameters.
 type RerunTumblingWindowTriggerActionParameters struct {
 	// The end time for the time period for which restatement is initiated. Only UTC time is currently supported.
 	EndTime *time.Time `json:"endTime,omitempty"`
@@ -21036,7 +21038,7 @@ func (r *RerunTumblingWindowTriggerActionParameters) UnmarshalJSON(data []byte) 
 	return nil
 }
 
-// Rerun Trigger properties.
+// RerunTumblingWindowTriggerTypeProperties - Rerun Trigger properties.
 type RerunTumblingWindowTriggerTypeProperties struct {
 	// The max number of parallel time windows (ready for execution) for which a rerun is triggered.
 	MaxConcurrency *int32 `json:"maxConcurrency,omitempty"`
@@ -21094,7 +21096,7 @@ func (r *RerunTumblingWindowTriggerTypeProperties) UnmarshalJSON(data []byte) er
 	return nil
 }
 
-// Common fields that are returned in the response for all Azure Resource Manager resources
+// Resource - Common fields that are returned in the response for all Azure Resource Manager resources
 type Resource struct {
 	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string `json:"id,omitempty" azure:"ro"`
@@ -21135,7 +21137,7 @@ func (r *Resource) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
 	return nil
 }
 
-// Responsys linked service.
+// ResponsysLinkedService - Responsys linked service.
 type ResponsysLinkedService struct {
 	LinkedService
 	// Responsys linked service properties.
@@ -21169,7 +21171,7 @@ func (r *ResponsysLinkedService) UnmarshalJSON(data []byte) error {
 	return r.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Responsys linked service properties.
+// ResponsysLinkedServiceTypeProperties - Responsys linked service properties.
 type ResponsysLinkedServiceTypeProperties struct {
 	// The client ID associated with the Responsys application. Type: string (or Expression with resultType string).
 	ClientID interface{} `json:"clientId,omitempty"`
@@ -21235,7 +21237,7 @@ func (r *ResponsysLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error 
 	return nil
 }
 
-// Responsys dataset.
+// ResponsysObjectDataset - Responsys dataset.
 type ResponsysObjectDataset struct {
 	Dataset
 	// Properties specific to this dataset type.
@@ -21269,7 +21271,7 @@ func (r *ResponsysObjectDataset) UnmarshalJSON(data []byte) error {
 	return r.Dataset.unmarshalInternal(rawMsg)
 }
 
-// A copy activity Responsys source.
+// ResponsysSource - A copy activity Responsys source.
 type ResponsysSource struct {
 	TabularSource
 	// A query to retrieve data from source. Type: string (or Expression with resultType string).
@@ -21303,7 +21305,7 @@ func (r *ResponsysSource) UnmarshalJSON(data []byte) error {
 	return r.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// A Rest service dataset.
+// RestResourceDataset - A Rest service dataset.
 type RestResourceDataset struct {
 	Dataset
 	// Properties specific to this dataset type.
@@ -21337,7 +21339,7 @@ func (r *RestResourceDataset) UnmarshalJSON(data []byte) error {
 	return r.Dataset.unmarshalInternal(rawMsg)
 }
 
-// Properties specific to this dataset type.
+// RestResourceDatasetTypeProperties - Properties specific to this dataset type.
 type RestResourceDatasetTypeProperties struct {
 	// The additional HTTP headers in the request to the RESTful API. Type: string (or Expression with resultType string).
 	AdditionalHeaders interface{} `json:"additionalHeaders,omitempty"`
@@ -21355,7 +21357,7 @@ type RestResourceDatasetTypeProperties struct {
 	RequestMethod interface{} `json:"requestMethod,omitempty"`
 }
 
-// Rest Service linked service.
+// RestServiceLinkedService - Rest Service linked service.
 type RestServiceLinkedService struct {
 	LinkedService
 	// Rest Service linked service properties.
@@ -21389,7 +21391,7 @@ func (r *RestServiceLinkedService) UnmarshalJSON(data []byte) error {
 	return r.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Rest Service linked service properties.
+// RestServiceLinkedServiceTypeProperties - Rest Service linked service properties.
 type RestServiceLinkedServiceTypeProperties struct {
 	// The resource you are requesting authorization to use.
 	AADResourceID interface{} `json:"aadResourceId,omitempty"`
@@ -21471,7 +21473,7 @@ func (r *RestServiceLinkedServiceTypeProperties) UnmarshalJSON(data []byte) erro
 	return nil
 }
 
-// A copy activity Rest service source.
+// RestSource - A copy activity Rest service source.
 type RestSource struct {
 	CopySource
 	// The additional HTTP headers in the request to the RESTful API. Type: string (or Expression with resultType string).
@@ -21542,7 +21544,7 @@ func (r *RestSource) UnmarshalJSON(data []byte) error {
 	return r.CopySource.unmarshalInternal(rawMsg)
 }
 
-// Execution policy for an activity.
+// RetryPolicy - Execution policy for an activity.
 type RetryPolicy struct {
 	// Maximum ordinary retry attempts. Default is 0. Type: integer (or Expression with resultType integer), minimum: 0.
 	Count interface{} `json:"count,omitempty"`
@@ -21551,7 +21553,7 @@ type RetryPolicy struct {
 	IntervalInSeconds *int32 `json:"intervalInSeconds,omitempty"`
 }
 
-// Query parameters for listing runs.
+// RunFilterParameters - Query parameters for listing runs.
 type RunFilterParameters struct {
 	// The continuation token for getting the next page of results. Null for first page.
 	ContinuationToken *string `json:"continuationToken,omitempty"`
@@ -21616,7 +21618,7 @@ func (r *RunFilterParameters) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Query filter option for listing runs.
+// RunQueryFilter - Query filter option for listing runs.
 type RunQueryFilter struct {
 	// Parameter name to be used for filter. The allowed operands to query pipeline runs are PipelineName, RunStart, RunEnd and Status; to query activity runs
 	// are ActivityName, ActivityRunStart,
@@ -21630,7 +21632,7 @@ type RunQueryFilter struct {
 	Values *[]*string `json:"values,omitempty"`
 }
 
-// An object to provide order by options for listing runs.
+// RunQueryOrderBy - An object to provide order by options for listing runs.
 type RunQueryOrderBy struct {
 	// Sorting order of the parameter.
 	Order *RunQueryOrder `json:"order,omitempty"`
@@ -21641,7 +21643,7 @@ type RunQueryOrderBy struct {
 	OrderBy *RunQueryOrderByField `json:"orderBy,omitempty"`
 }
 
-// SQL pool SKU
+// SKU - SQL pool SKU
 type SKU struct {
 	// If the SKU supports scale out/in then the capacity integer should be included. If scale out/in is not possible for the resource this may be omitted.
 	Capacity *int32 `json:"capacity,omitempty"`
@@ -21653,7 +21655,7 @@ type SKU struct {
 	Tier *string `json:"tier,omitempty"`
 }
 
-// The connection used to execute the SQL script.
+// SQLConnection - The connection used to execute the SQL script.
 type SQLConnection struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties *map[string]interface{}
@@ -21711,7 +21713,7 @@ func (s *SQLConnection) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// A copy activity SQL Data Warehouse sink.
+// SQLDWSink - A copy activity SQL Data Warehouse sink.
 type SQLDWSink struct {
 	CopySink
 	// Indicates to use Copy Command to copy data into SQL Data Warehouse. Type: boolean (or Expression with resultType boolean).
@@ -21780,7 +21782,7 @@ func (s *SQLDWSink) UnmarshalJSON(data []byte) error {
 	return s.CopySink.unmarshalInternal(rawMsg)
 }
 
-// A copy activity SQL Data Warehouse source.
+// SQLDWSource - A copy activity SQL Data Warehouse source.
 type SQLDWSource struct {
 	TabularSource
 	// SQL Data Warehouse reader query. Type: string (or Expression with resultType string).
@@ -21830,7 +21832,7 @@ func (s *SQLDWSource) UnmarshalJSON(data []byte) error {
 	return s.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// A copy activity Azure SQL Managed Instance sink.
+// SQLMISink - A copy activity Azure SQL Managed Instance sink.
 type SQLMISink struct {
 	CopySink
 	// SQL pre-copy script. Type: string (or Expression with resultType string).
@@ -21899,7 +21901,7 @@ func (s *SQLMISink) UnmarshalJSON(data []byte) error {
 	return s.CopySink.unmarshalInternal(rawMsg)
 }
 
-// A copy activity Azure SQL Managed Instance source.
+// SQLMISource - A copy activity Azure SQL Managed Instance source.
 type SQLMISource struct {
 	TabularSource
 	// Which additional types to produce.
@@ -21955,7 +21957,7 @@ func (s *SQLMISource) UnmarshalJSON(data []byte) error {
 	return s.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// A SQL Analytics pool
+// SQLPool - A SQL Analytics pool
 type SQLPool struct {
 	TrackedResource
 	// SQL pool properties
@@ -21965,7 +21967,7 @@ type SQLPool struct {
 	SKU *SKU `json:"sku,omitempty"`
 }
 
-// List of SQL pools
+// SQLPoolInfoListResult - List of SQL pools
 type SQLPoolInfoListResult struct {
 	// Link to the next page of results
 	NextLink *string `json:"nextLink,omitempty"`
@@ -21983,7 +21985,7 @@ type SQLPoolInfoListResultResponse struct {
 	SQLPoolInfoListResult *SQLPoolInfoListResult
 }
 
-// SQL pool reference type.
+// SQLPoolReference - SQL pool reference type.
 type SQLPoolReference struct {
 	// Reference SQL pool name.
 	ReferenceName *string `json:"referenceName,omitempty"`
@@ -21992,7 +21994,7 @@ type SQLPoolReference struct {
 	Type *SQLPoolReferenceType `json:"type,omitempty"`
 }
 
-// Properties of a SQL Analytics pool
+// SQLPoolResourceProperties - Properties of a SQL Analytics pool
 type SQLPoolResourceProperties struct {
 	// Collation mode
 	Collation *string `json:"collation,omitempty"`
@@ -22092,7 +22094,7 @@ type SQLPoolResponse struct {
 	SQLPool *SQLPool
 }
 
-// Execute SQL pool stored procedure activity.
+// SQLPoolStoredProcedureActivity - Execute SQL pool stored procedure activity.
 type SQLPoolStoredProcedureActivity struct {
 	Activity
 	// SQL pool stored procedure reference.
@@ -22133,7 +22135,7 @@ func (s *SQLPoolStoredProcedureActivity) UnmarshalJSON(data []byte) error {
 	return s.Activity.unmarshalInternal(rawMsg)
 }
 
-// SQL stored procedure activity properties.
+// SQLPoolStoredProcedureActivityTypeProperties - SQL stored procedure activity properties.
 type SQLPoolStoredProcedureActivityTypeProperties struct {
 	// Stored procedure name. Type: string (or Expression with resultType string).
 	StoredProcedureName interface{} `json:"storedProcedureName,omitempty"`
@@ -22152,7 +22154,7 @@ type SQLPoolsListOptions struct {
 	// placeholder for future optional parameters
 }
 
-// SQL script.
+// SQLScript - SQL script.
 type SQLScript struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties *map[string]interface{}
@@ -22233,7 +22235,7 @@ type SQLScriptBeginRenameSQLScriptOptions struct {
 	// placeholder for future optional parameters
 }
 
-// The content of the SQL script.
+// SQLScriptContent - The content of the SQL script.
 type SQLScriptContent struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties *map[string]interface{}
@@ -22310,7 +22312,7 @@ type SQLScriptGetSQLScriptsByWorkspaceOptions struct {
 	// placeholder for future optional parameters
 }
 
-// The metadata of the SQL script.
+// SQLScriptMetadata - The metadata of the SQL script.
 type SQLScriptMetadata struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties *map[string]interface{}
@@ -22361,7 +22363,7 @@ func (s *SQLScriptMetadata) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Sql Script resource type.
+// SQLScriptResource - Sql Script resource type.
 type SQLScriptResource struct {
 	// READ-ONLY; Resource Etag.
 	Etag *string `json:"etag,omitempty" azure:"ro"`
@@ -22400,7 +22402,7 @@ type SQLScriptResourceResponse struct {
 	SQLScriptResource *SQLScriptResource
 }
 
-// A list of sql scripts resources.
+// SQLScriptsListResponse - A list of sql scripts resources.
 type SQLScriptsListResponse struct {
 	// The link to the next page of results, if any remaining results exist.
 	NextLink *string `json:"nextLink,omitempty"`
@@ -22418,7 +22420,7 @@ type SQLScriptsListResponseResponse struct {
 	SQLScriptsListResponse *SQLScriptsListResponse
 }
 
-// SQL Server linked service.
+// SQLServerLinkedService - SQL Server linked service.
 type SQLServerLinkedService struct {
 	LinkedService
 	// SQL Server linked service properties.
@@ -22452,7 +22454,7 @@ func (s *SQLServerLinkedService) UnmarshalJSON(data []byte) error {
 	return s.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// SQL Server linked service properties.
+// SQLServerLinkedServiceTypeProperties - SQL Server linked service properties.
 type SQLServerLinkedServiceTypeProperties struct {
 	// The connection string. Type: string, SecureString or AzureKeyVaultSecretReference.
 	ConnectionString interface{} `json:"connectionString,omitempty"`
@@ -22497,7 +22499,7 @@ func (s *SQLServerLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error 
 	return nil
 }
 
-// A copy activity SQL server sink.
+// SQLServerSink - A copy activity SQL server sink.
 type SQLServerSink struct {
 	CopySink
 	// SQL pre-copy script. Type: string (or Expression with resultType string).
@@ -22566,7 +22568,7 @@ func (s *SQLServerSink) UnmarshalJSON(data []byte) error {
 	return s.CopySink.unmarshalInternal(rawMsg)
 }
 
-// A copy activity SQL server source.
+// SQLServerSource - A copy activity SQL server source.
 type SQLServerSource struct {
 	TabularSource
 	// Which additional types to produce.
@@ -22622,7 +22624,7 @@ func (s *SQLServerSource) UnmarshalJSON(data []byte) error {
 	return s.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// SQL stored procedure activity type.
+// SQLServerStoredProcedureActivity - SQL stored procedure activity type.
 type SQLServerStoredProcedureActivity struct {
 	ExecutionActivity
 	// SQL stored procedure activity properties.
@@ -22656,7 +22658,7 @@ func (s *SQLServerStoredProcedureActivity) UnmarshalJSON(data []byte) error {
 	return s.ExecutionActivity.unmarshalInternal(rawMsg)
 }
 
-// SQL stored procedure activity properties.
+// SQLServerStoredProcedureActivityTypeProperties - SQL stored procedure activity properties.
 type SQLServerStoredProcedureActivityTypeProperties struct {
 	// Stored procedure name. Type: string (or Expression with resultType string).
 	StoredProcedureName interface{} `json:"storedProcedureName,omitempty"`
@@ -22665,7 +22667,7 @@ type SQLServerStoredProcedureActivityTypeProperties struct {
 	StoredProcedureParameters *map[string]*StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
 }
 
-// The on-premises SQL Server dataset.
+// SQLServerTableDataset - The on-premises SQL Server dataset.
 type SQLServerTableDataset struct {
 	Dataset
 	// On-premises SQL Server dataset properties.
@@ -22699,7 +22701,7 @@ func (s *SQLServerTableDataset) UnmarshalJSON(data []byte) error {
 	return s.Dataset.unmarshalInternal(rawMsg)
 }
 
-// On-premises SQL Server dataset properties.
+// SQLServerTableDatasetTypeProperties - On-premises SQL Server dataset properties.
 type SQLServerTableDatasetTypeProperties struct {
 	// The schema name of the SQL Server dataset. Type: string (or Expression with resultType string).
 	Schema interface{} `json:"schema,omitempty"`
@@ -22711,7 +22713,7 @@ type SQLServerTableDatasetTypeProperties struct {
 	TableName interface{} `json:"tableName,omitempty"`
 }
 
-// A copy activity SQL sink.
+// SQLSink - A copy activity SQL sink.
 type SQLSink struct {
 	CopySink
 	// SQL pre-copy script. Type: string (or Expression with resultType string).
@@ -22780,7 +22782,7 @@ func (s *SQLSink) UnmarshalJSON(data []byte) error {
 	return s.CopySink.unmarshalInternal(rawMsg)
 }
 
-// A copy activity SQL source.
+// SQLSource - A copy activity SQL source.
 type SQLSource struct {
 	TabularSource
 	// SQL reader query. Type: string (or Expression with resultType string).
@@ -22829,7 +22831,7 @@ func (s *SQLSource) UnmarshalJSON(data []byte) error {
 	return s.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// SSIS access credential.
+// SSISAccessCredential - SSIS access credential.
 type SSISAccessCredential struct {
 	// Domain for windows authentication.
 	Domain interface{} `json:"domain,omitempty"`
@@ -22867,7 +22869,7 @@ func (s *SSISAccessCredential) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// SSIS embedded child package.
+// SSISChildPackage - SSIS embedded child package.
 type SSISChildPackage struct {
 	// Content for embedded child package. Type: string (or Expression with resultType string).
 	PackageContent interface{} `json:"packageContent,omitempty"`
@@ -22882,7 +22884,7 @@ type SSISChildPackage struct {
 	PackagePath interface{} `json:"packagePath,omitempty"`
 }
 
-// SSIS package execution credential.
+// SSISExecutionCredential - SSIS package execution credential.
 type SSISExecutionCredential struct {
 	// Domain for windows authentication.
 	Domain interface{} `json:"domain,omitempty"`
@@ -22894,13 +22896,13 @@ type SSISExecutionCredential struct {
 	UserName interface{} `json:"userName,omitempty"`
 }
 
-// SSIS execution parameter.
+// SSISExecutionParameter - SSIS execution parameter.
 type SSISExecutionParameter struct {
 	// SSIS package execution parameter value. Type: string (or Expression with resultType string).
 	Value interface{} `json:"value,omitempty"`
 }
 
-// SSIS package execution log location
+// SSISLogLocation - SSIS package execution log location
 type SSISLogLocation struct {
 	// The SSIS package execution log path. Type: string (or Expression with resultType string).
 	LogPath interface{} `json:"logPath,omitempty"`
@@ -22912,7 +22914,7 @@ type SSISLogLocation struct {
 	TypeProperties *SSISLogLocationTypeProperties `json:"typeProperties,omitempty"`
 }
 
-// SSIS package execution log location properties.
+// SSISLogLocationTypeProperties - SSIS package execution log location properties.
 type SSISLogLocationTypeProperties struct {
 	// The package execution log access credential.
 	AccessCredential *SSISAccessCredential `json:"accessCredential,omitempty"`
@@ -22921,7 +22923,7 @@ type SSISLogLocationTypeProperties struct {
 	LogRefreshInterval interface{} `json:"logRefreshInterval,omitempty"`
 }
 
-// SSIS package location.
+// SSISPackageLocation - SSIS package location.
 type SSISPackageLocation struct {
 	// The SSIS package path. Type: string (or Expression with resultType string).
 	PackagePath interface{} `json:"packagePath,omitempty"`
@@ -22933,7 +22935,7 @@ type SSISPackageLocation struct {
 	TypeProperties *SSISPackageLocationTypeProperties `json:"typeProperties,omitempty"`
 }
 
-// SSIS package location properties.
+// SSISPackageLocationTypeProperties - SSIS package location properties.
 type SSISPackageLocationTypeProperties struct {
 	// The package access credential.
 	AccessCredential *SSISAccessCredential `json:"accessCredential,omitempty"`
@@ -22957,7 +22959,7 @@ type SSISPackageLocationTypeProperties struct {
 	PackagePassword SecretBaseClassification `json:"packagePassword,omitempty"`
 }
 
-// SSIS property override.
+// SSISPropertyOverride - SSIS property override.
 type SSISPropertyOverride struct {
 	// Whether SSIS package property override value is sensitive data. Value will be encrypted in SSISDB if it is true
 	IsSensitive *bool `json:"isSensitive,omitempty"`
@@ -22966,7 +22968,7 @@ type SSISPropertyOverride struct {
 	Value interface{} `json:"value,omitempty"`
 }
 
-// Linked service for Salesforce.
+// SalesforceLinkedService - Linked service for Salesforce.
 type SalesforceLinkedService struct {
 	LinkedService
 	// Salesforce linked service properties.
@@ -23000,7 +23002,7 @@ func (s *SalesforceLinkedService) UnmarshalJSON(data []byte) error {
 	return s.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Salesforce linked service properties.
+// SalesforceLinkedServiceTypeProperties - Salesforce linked service properties.
 type SalesforceLinkedServiceTypeProperties struct {
 	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
 	// with resultType string).
@@ -23053,7 +23055,7 @@ func (s *SalesforceLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error
 	return nil
 }
 
-// Salesforce Marketing Cloud linked service.
+// SalesforceMarketingCloudLinkedService - Salesforce Marketing Cloud linked service.
 type SalesforceMarketingCloudLinkedService struct {
 	LinkedService
 	// Salesforce Marketing Cloud linked service properties.
@@ -23087,7 +23089,7 @@ func (s *SalesforceMarketingCloudLinkedService) UnmarshalJSON(data []byte) error
 	return s.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Salesforce Marketing Cloud linked service properties.
+// SalesforceMarketingCloudLinkedServiceTypeProperties - Salesforce Marketing Cloud linked service properties.
 type SalesforceMarketingCloudLinkedServiceTypeProperties struct {
 	// The client ID associated with the Salesforce Marketing Cloud application. Type: string (or Expression with resultType string).
 	ClientID interface{} `json:"clientId,omitempty"`
@@ -23147,7 +23149,7 @@ func (s *SalesforceMarketingCloudLinkedServiceTypeProperties) UnmarshalJSON(data
 	return nil
 }
 
-// Salesforce Marketing Cloud dataset.
+// SalesforceMarketingCloudObjectDataset - Salesforce Marketing Cloud dataset.
 type SalesforceMarketingCloudObjectDataset struct {
 	Dataset
 	// Properties specific to this dataset type.
@@ -23181,7 +23183,7 @@ func (s *SalesforceMarketingCloudObjectDataset) UnmarshalJSON(data []byte) error
 	return s.Dataset.unmarshalInternal(rawMsg)
 }
 
-// A copy activity Salesforce Marketing Cloud source.
+// SalesforceMarketingCloudSource - A copy activity Salesforce Marketing Cloud source.
 type SalesforceMarketingCloudSource struct {
 	TabularSource
 	// A query to retrieve data from source. Type: string (or Expression with resultType string).
@@ -23215,7 +23217,7 @@ func (s *SalesforceMarketingCloudSource) UnmarshalJSON(data []byte) error {
 	return s.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// The Salesforce object dataset.
+// SalesforceObjectDataset - The Salesforce object dataset.
 type SalesforceObjectDataset struct {
 	Dataset
 	// Salesforce object dataset properties.
@@ -23249,13 +23251,13 @@ func (s *SalesforceObjectDataset) UnmarshalJSON(data []byte) error {
 	return s.Dataset.unmarshalInternal(rawMsg)
 }
 
-// Salesforce object dataset properties.
+// SalesforceObjectDatasetTypeProperties - Salesforce object dataset properties.
 type SalesforceObjectDatasetTypeProperties struct {
 	// The Salesforce object API name. Type: string (or Expression with resultType string).
 	ObjectAPIName interface{} `json:"objectApiName,omitempty"`
 }
 
-// Linked service for Salesforce Service Cloud.
+// SalesforceServiceCloudLinkedService - Linked service for Salesforce Service Cloud.
 type SalesforceServiceCloudLinkedService struct {
 	LinkedService
 	// Salesforce Service Cloud linked service properties.
@@ -23289,7 +23291,7 @@ func (s *SalesforceServiceCloudLinkedService) UnmarshalJSON(data []byte) error {
 	return s.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Salesforce Service Cloud linked service properties.
+// SalesforceServiceCloudLinkedServiceTypeProperties - Salesforce Service Cloud linked service properties.
 type SalesforceServiceCloudLinkedServiceTypeProperties struct {
 	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
 	// with resultType string).
@@ -23348,7 +23350,7 @@ func (s *SalesforceServiceCloudLinkedServiceTypeProperties) UnmarshalJSON(data [
 	return nil
 }
 
-// The Salesforce Service Cloud object dataset.
+// SalesforceServiceCloudObjectDataset - The Salesforce Service Cloud object dataset.
 type SalesforceServiceCloudObjectDataset struct {
 	Dataset
 	// Salesforce Service Cloud object dataset properties.
@@ -23382,13 +23384,13 @@ func (s *SalesforceServiceCloudObjectDataset) UnmarshalJSON(data []byte) error {
 	return s.Dataset.unmarshalInternal(rawMsg)
 }
 
-// Salesforce Service Cloud object dataset properties.
+// SalesforceServiceCloudObjectDatasetTypeProperties - Salesforce Service Cloud object dataset properties.
 type SalesforceServiceCloudObjectDatasetTypeProperties struct {
 	// The Salesforce Service Cloud object API name. Type: string (or Expression with resultType string).
 	ObjectAPIName interface{} `json:"objectApiName,omitempty"`
 }
 
-// A copy activity Salesforce Service Cloud sink.
+// SalesforceServiceCloudSink - A copy activity Salesforce Service Cloud sink.
 type SalesforceServiceCloudSink struct {
 	CopySink
 	// The name of the external ID field for upsert operation. Default value is 'Id' column. Type: string (or Expression with resultType string).
@@ -23440,7 +23442,7 @@ func (s *SalesforceServiceCloudSink) UnmarshalJSON(data []byte) error {
 	return s.CopySink.unmarshalInternal(rawMsg)
 }
 
-// A copy activity Salesforce Service Cloud source.
+// SalesforceServiceCloudSource - A copy activity Salesforce Service Cloud source.
 type SalesforceServiceCloudSource struct {
 	CopySource
 	// Database query. Type: string (or Expression with resultType string).
@@ -23481,7 +23483,7 @@ func (s *SalesforceServiceCloudSource) UnmarshalJSON(data []byte) error {
 	return s.CopySource.unmarshalInternal(rawMsg)
 }
 
-// A copy activity Salesforce sink.
+// SalesforceSink - A copy activity Salesforce sink.
 type SalesforceSink struct {
 	CopySink
 	// The name of the external ID field for upsert operation. Default value is 'Id' column. Type: string (or Expression with resultType string).
@@ -23533,7 +23535,7 @@ func (s *SalesforceSink) UnmarshalJSON(data []byte) error {
 	return s.CopySink.unmarshalInternal(rawMsg)
 }
 
-// A copy activity Salesforce source.
+// SalesforceSource - A copy activity Salesforce source.
 type SalesforceSource struct {
 	TabularSource
 	// Database query. Type: string (or Expression with resultType string).
@@ -23574,7 +23576,7 @@ func (s *SalesforceSource) UnmarshalJSON(data []byte) error {
 	return s.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// SAP Business Warehouse Linked Service.
+// SapBWLinkedService - SAP Business Warehouse Linked Service.
 type SapBWLinkedService struct {
 	LinkedService
 	// Properties specific to this linked service type.
@@ -23608,7 +23610,7 @@ func (s *SapBWLinkedService) UnmarshalJSON(data []byte) error {
 	return s.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Properties specific to this linked service type.
+// SapBWLinkedServiceTypeProperties - Properties specific to this linked service type.
 type SapBWLinkedServiceTypeProperties struct {
 	// Client ID of the client on the BW system. (Usually a three-digit decimal number represented as a string) Type: string (or Expression with resultType
 	// string).
@@ -23666,7 +23668,7 @@ func (s *SapBWLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// The SAP BW cube dataset.
+// SapBwCubeDataset - The SAP BW cube dataset.
 type SapBwCubeDataset struct {
 	Dataset
 }
@@ -23677,7 +23679,7 @@ func (s SapBwCubeDataset) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// A copy activity source for SapBW server via MDX.
+// SapBwSource - A copy activity source for SapBW server via MDX.
 type SapBwSource struct {
 	TabularSource
 	// MDX query. Type: string (or Expression with resultType string).
@@ -23711,7 +23713,7 @@ func (s *SapBwSource) UnmarshalJSON(data []byte) error {
 	return s.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// Linked service for SAP Cloud for Customer.
+// SapCloudForCustomerLinkedService - Linked service for SAP Cloud for Customer.
 type SapCloudForCustomerLinkedService struct {
 	LinkedService
 	// SAP Cloud for Customer linked service properties.
@@ -23745,7 +23747,7 @@ func (s *SapCloudForCustomerLinkedService) UnmarshalJSON(data []byte) error {
 	return s.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// SAP Cloud for Customer linked service properties.
+// SapCloudForCustomerLinkedServiceTypeProperties - SAP Cloud for Customer linked service properties.
 type SapCloudForCustomerLinkedServiceTypeProperties struct {
 	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Either encryptedCredential
 	// or username/password must be provided. Type:
@@ -23792,7 +23794,7 @@ func (s *SapCloudForCustomerLinkedServiceTypeProperties) UnmarshalJSON(data []by
 	return nil
 }
 
-// The path of the SAP Cloud for Customer OData entity.
+// SapCloudForCustomerResourceDataset - The path of the SAP Cloud for Customer OData entity.
 type SapCloudForCustomerResourceDataset struct {
 	Dataset
 	// SAP Cloud For Customer OData resource dataset properties.
@@ -23826,13 +23828,13 @@ func (s *SapCloudForCustomerResourceDataset) UnmarshalJSON(data []byte) error {
 	return s.Dataset.unmarshalInternal(rawMsg)
 }
 
-// Sap Cloud For Customer OData resource dataset properties.
+// SapCloudForCustomerResourceDatasetTypeProperties - Sap Cloud For Customer OData resource dataset properties.
 type SapCloudForCustomerResourceDatasetTypeProperties struct {
 	// The path of the SAP Cloud for Customer OData entity. Type: string (or Expression with resultType string).
 	Path interface{} `json:"path,omitempty"`
 }
 
-// A copy activity SAP Cloud for Customer sink.
+// SapCloudForCustomerSink - A copy activity SAP Cloud for Customer sink.
 type SapCloudForCustomerSink struct {
 	CopySink
 	// The write behavior for the operation. Default is 'Insert'.
@@ -23866,7 +23868,7 @@ func (s *SapCloudForCustomerSink) UnmarshalJSON(data []byte) error {
 	return s.CopySink.unmarshalInternal(rawMsg)
 }
 
-// A copy activity source for SAP Cloud for Customer source.
+// SapCloudForCustomerSource - A copy activity source for SAP Cloud for Customer source.
 type SapCloudForCustomerSource struct {
 	TabularSource
 	// SAP Cloud for Customer OData query. For example, "$top=1". Type: string (or Expression with resultType string).
@@ -23900,7 +23902,7 @@ func (s *SapCloudForCustomerSource) UnmarshalJSON(data []byte) error {
 	return s.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// Linked service for SAP ERP Central Component(SAP ECC).
+// SapEccLinkedService - Linked service for SAP ERP Central Component(SAP ECC).
 type SapEccLinkedService struct {
 	LinkedService
 	// SAP ECC linked service properties.
@@ -23934,7 +23936,7 @@ func (s *SapEccLinkedService) UnmarshalJSON(data []byte) error {
 	return s.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// SAP ECC linked service properties.
+// SapEccLinkedServiceTypeProperties - SAP ECC linked service properties.
 type SapEccLinkedServiceTypeProperties struct {
 	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Either encryptedCredential
 	// or username/password must be provided. Type:
@@ -23980,7 +23982,7 @@ func (s *SapEccLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// The path of the SAP ECC OData entity.
+// SapEccResourceDataset - The path of the SAP ECC OData entity.
 type SapEccResourceDataset struct {
 	Dataset
 	// SAP ECC OData resource dataset properties.
@@ -24014,13 +24016,13 @@ func (s *SapEccResourceDataset) UnmarshalJSON(data []byte) error {
 	return s.Dataset.unmarshalInternal(rawMsg)
 }
 
-// Sap ECC OData resource dataset properties.
+// SapEccResourceDatasetTypeProperties - Sap ECC OData resource dataset properties.
 type SapEccResourceDatasetTypeProperties struct {
 	// The path of the SAP ECC OData entity. Type: string (or Expression with resultType string).
 	Path interface{} `json:"path,omitempty"`
 }
 
-// A copy activity source for SAP ECC source.
+// SapEccSource - A copy activity source for SAP ECC source.
 type SapEccSource struct {
 	TabularSource
 	// SAP ECC OData query. For example, "$top=1". Type: string (or Expression with resultType string).
@@ -24054,7 +24056,7 @@ func (s *SapEccSource) UnmarshalJSON(data []byte) error {
 	return s.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// SAP HANA Linked Service.
+// SapHanaLinkedService - SAP HANA Linked Service.
 type SapHanaLinkedService struct {
 	LinkedService
 	// Properties specific to this linked service type.
@@ -24088,7 +24090,7 @@ func (s *SapHanaLinkedService) UnmarshalJSON(data []byte) error {
 	return s.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Properties specific to this linked service type.
+// SapHanaLinkedServiceProperties - Properties specific to this linked service type.
 type SapHanaLinkedServiceProperties struct {
 	// The authentication type to be used to connect to the SAP HANA server.
 	AuthenticationType *SapHanaAuthenticationType `json:"authenticationType,omitempty"`
@@ -24145,13 +24147,13 @@ func (s *SapHanaLinkedServiceProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// The settings that will be leveraged for SAP HANA source partitioning.
+// SapHanaPartitionSettings - The settings that will be leveraged for SAP HANA source partitioning.
 type SapHanaPartitionSettings struct {
 	// The name of the column that will be used for proceeding range partitioning. Type: string (or Expression with resultType string).
 	PartitionColumnName interface{} `json:"partitionColumnName,omitempty"`
 }
 
-// A copy activity source for SAP HANA source.
+// SapHanaSource - A copy activity source for SAP HANA source.
 type SapHanaSource struct {
 	TabularSource
 	// The packet size of data read from SAP HANA. Type: integer(or Expression with resultType integer).
@@ -24206,7 +24208,7 @@ func (s *SapHanaSource) UnmarshalJSON(data []byte) error {
 	return s.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// SAP HANA Table properties.
+// SapHanaTableDataset - SAP HANA Table properties.
 type SapHanaTableDataset struct {
 	Dataset
 	// SAP HANA Table properties.
@@ -24240,7 +24242,7 @@ func (s *SapHanaTableDataset) UnmarshalJSON(data []byte) error {
 	return s.Dataset.unmarshalInternal(rawMsg)
 }
 
-// SAP HANA Table properties.
+// SapHanaTableDatasetTypeProperties - SAP HANA Table properties.
 type SapHanaTableDatasetTypeProperties struct {
 	// The schema name of SAP HANA. Type: string (or Expression with resultType string).
 	Schema interface{} `json:"schema,omitempty"`
@@ -24249,7 +24251,7 @@ type SapHanaTableDatasetTypeProperties struct {
 	Table interface{} `json:"table,omitempty"`
 }
 
-// SAP Business Warehouse Open Hub Destination Linked Service.
+// SapOpenHubLinkedService - SAP Business Warehouse Open Hub Destination Linked Service.
 type SapOpenHubLinkedService struct {
 	LinkedService
 	// Properties specific to SAP Business Warehouse Open Hub Destination linked service type.
@@ -24283,7 +24285,7 @@ func (s *SapOpenHubLinkedService) UnmarshalJSON(data []byte) error {
 	return s.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Properties specific to SAP Business Warehouse Open Hub Destination linked service type.
+// SapOpenHubLinkedServiceTypeProperties - Properties specific to SAP Business Warehouse Open Hub Destination linked service type.
 type SapOpenHubLinkedServiceTypeProperties struct {
 	// Client ID of the client on the BW system where the open hub destination is located. (Usually a three-digit decimal number represented as a string) Type:
 	// string (or Expression with resultType string).
@@ -24348,7 +24350,7 @@ func (s *SapOpenHubLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error
 	return nil
 }
 
-// A copy activity source for SAP Business Warehouse Open Hub Destination source.
+// SapOpenHubSource - A copy activity source for SAP Business Warehouse Open Hub Destination source.
 type SapOpenHubSource struct {
 	TabularSource
 	// The ID of request for delta loading. Once it is set, only data with requestId larger than the value of this property will be retrieved. The default value
@@ -24391,7 +24393,7 @@ func (s *SapOpenHubSource) UnmarshalJSON(data []byte) error {
 	return s.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// Sap Business Warehouse Open Hub Destination Table properties.
+// SapOpenHubTableDataset - Sap Business Warehouse Open Hub Destination Table properties.
 type SapOpenHubTableDataset struct {
 	Dataset
 	// Sap Business Warehouse Open Hub Destination Table properties.
@@ -24425,7 +24427,7 @@ func (s *SapOpenHubTableDataset) UnmarshalJSON(data []byte) error {
 	return s.Dataset.unmarshalInternal(rawMsg)
 }
 
-// Sap Business Warehouse Open Hub Destination Table properties.
+// SapOpenHubTableDatasetTypeProperties - Sap Business Warehouse Open Hub Destination Table properties.
 type SapOpenHubTableDatasetTypeProperties struct {
 	// The ID of request for delta loading. Once it is set, only data with requestId larger than the value of this property will be retrieved. The default value
 	// is 0. Type: integer (or Expression with
@@ -24439,7 +24441,7 @@ type SapOpenHubTableDatasetTypeProperties struct {
 	OpenHubDestinationName interface{} `json:"openHubDestinationName,omitempty"`
 }
 
-// SAP Table Linked Service.
+// SapTableLinkedService - SAP Table Linked Service.
 type SapTableLinkedService struct {
 	LinkedService
 	// Properties specific to this linked service type.
@@ -24473,7 +24475,7 @@ func (s *SapTableLinkedService) UnmarshalJSON(data []byte) error {
 	return s.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Properties specific to this linked service type.
+// SapTableLinkedServiceTypeProperties - Properties specific to this linked service type.
 type SapTableLinkedServiceTypeProperties struct {
 	// Client ID of the client on the SAP system where the table is located. (Usually a three-digit decimal number represented as a string) Type: string (or
 	// Expression with resultType string).
@@ -24593,7 +24595,7 @@ func (s *SapTableLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// The settings that will be leveraged for SAP table source partitioning.
+// SapTablePartitionSettings - The settings that will be leveraged for SAP table source partitioning.
 type SapTablePartitionSettings struct {
 	// The maximum value of partitions the table will be split into. Type: integer (or Expression with resultType string).
 	MaxPartitionsNumber interface{} `json:"maxPartitionsNumber,omitempty"`
@@ -24610,7 +24612,7 @@ type SapTablePartitionSettings struct {
 	PartitionUpperBound interface{} `json:"partitionUpperBound,omitempty"`
 }
 
-// SAP Table Resource properties.
+// SapTableResourceDataset - SAP Table Resource properties.
 type SapTableResourceDataset struct {
 	Dataset
 	// SAP Table Resource properties.
@@ -24644,13 +24646,13 @@ func (s *SapTableResourceDataset) UnmarshalJSON(data []byte) error {
 	return s.Dataset.unmarshalInternal(rawMsg)
 }
 
-// SAP Table Resource properties.
+// SapTableResourceDatasetTypeProperties - SAP Table Resource properties.
 type SapTableResourceDatasetTypeProperties struct {
 	// The name of the SAP Table. Type: string (or Expression with resultType string).
 	TableName interface{} `json:"tableName,omitempty"`
 }
 
-// A copy activity source for SAP Table source.
+// SapTableSource - A copy activity source for SAP Table source.
 type SapTableSource struct {
 	TabularSource
 	// Specifies the maximum number of rows that will be retrieved at a time when retrieving data from SAP Table. Type: integer (or Expression with resultType
@@ -24734,7 +24736,7 @@ func (s *SapTableSource) UnmarshalJSON(data []byte) error {
 	return s.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// Trigger that creates pipeline runs periodically, on schedule.
+// ScheduleTrigger - Trigger that creates pipeline runs periodically, on schedule.
 type ScheduleTrigger struct {
 	MultiplePipelineTrigger
 	// Schedule Trigger properties.
@@ -24768,7 +24770,7 @@ func (s *ScheduleTrigger) UnmarshalJSON(data []byte) error {
 	return s.MultiplePipelineTrigger.unmarshalInternal(rawMsg)
 }
 
-// The workflow trigger recurrence.
+// ScheduleTriggerRecurrence - The workflow trigger recurrence.
 type ScheduleTriggerRecurrence struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties *map[string]interface{}
@@ -24858,13 +24860,13 @@ func (s *ScheduleTriggerRecurrence) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Schedule Trigger properties.
+// ScheduleTriggerTypeProperties - Schedule Trigger properties.
 type ScheduleTriggerTypeProperties struct {
 	// Recurrence schedule configuration.
 	Recurrence *ScheduleTriggerRecurrence `json:"recurrence,omitempty"`
 }
 
-// Custom script action to run on HDI ondemand cluster once it's up.
+// ScriptAction - Custom script action to run on HDI ondemand cluster once it's up.
 type ScriptAction struct {
 	// The user provided name of the script action.
 	Name *string `json:"name,omitempty"`
@@ -24884,11 +24886,11 @@ type ScriptAction struct {
 // Use a type switch to determine the concrete type.  The possible types are:
 // - *SecretBase, *AzureKeyVaultSecretReference, *SecureString
 type SecretBaseClassification interface {
-	// GetSecretBase() returns the SecretBase content of the underlying type.
+	// GetSecretBase returns the SecretBase content of the underlying type.
 	GetSecretBase() *SecretBase
 }
 
-// The base definition of a secret type.
+// SecretBase - The base definition of a secret type.
 type SecretBase struct {
 	// Type of the secret.
 	Type *string `json:"type,omitempty"`
@@ -24928,7 +24930,7 @@ func (s *SecretBase) unmarshalInternal(rawMsg map[string]*json.RawMessage) error
 	return nil
 }
 
-// Azure Synapse secure string definition. The string value will be masked with asterisks '*' during Get or List API calls.
+// SecureString - Azure Synapse secure string definition. The string value will be masked with asterisks '*' during Get or List API calls.
 type SecureString struct {
 	SecretBase
 	// Value of secure string.
@@ -24962,7 +24964,7 @@ func (s *SecureString) UnmarshalJSON(data []byte) error {
 	return s.SecretBase.unmarshalInternal(rawMsg)
 }
 
-// Self referenced tumbling window trigger dependency.
+// SelfDependencyTumblingWindowTriggerReference - Self referenced tumbling window trigger dependency.
 type SelfDependencyTumblingWindowTriggerReference struct {
 	DependencyReference
 	// Timespan applied to the start time of a tumbling window when evaluating dependency.
@@ -25003,7 +25005,7 @@ func (s *SelfDependencyTumblingWindowTriggerReference) UnmarshalJSON(data []byte
 	return s.DependencyReference.unmarshalInternal(rawMsg)
 }
 
-// Self-hosted integration runtime.
+// SelfHostedIntegrationRuntime - Self-hosted integration runtime.
 type SelfHostedIntegrationRuntime struct {
 	IntegrationRuntime
 	// When this property is not null, means this is a linked integration runtime. The property is used to access original integration runtime.
@@ -25037,7 +25039,7 @@ func (s *SelfHostedIntegrationRuntime) UnmarshalJSON(data []byte) error {
 	return s.IntegrationRuntime.unmarshalInternal(rawMsg)
 }
 
-// The self-hosted integration runtime properties.
+// SelfHostedIntegrationRuntimeTypeProperties - The self-hosted integration runtime properties.
 type SelfHostedIntegrationRuntimeTypeProperties struct {
 	// Linked integration runtime type from data factory
 	LinkedInfo LinkedIntegrationRuntimeTypeClassification `json:"linkedInfo,omitempty"`
@@ -25063,7 +25065,7 @@ func (s *SelfHostedIntegrationRuntimeTypeProperties) UnmarshalJSON(data []byte) 
 	return nil
 }
 
-// ServiceNow server linked service.
+// ServiceNowLinkedService - ServiceNow server linked service.
 type ServiceNowLinkedService struct {
 	LinkedService
 	// ServiceNow server linked service properties.
@@ -25097,7 +25099,7 @@ func (s *ServiceNowLinkedService) UnmarshalJSON(data []byte) error {
 	return s.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// ServiceNow server linked service properties.
+// ServiceNowLinkedServiceTypeProperties - ServiceNow server linked service properties.
 type ServiceNowLinkedServiceTypeProperties struct {
 	// The authentication type to use.
 	AuthenticationType *ServiceNowAuthenticationType `json:"authenticationType,omitempty"`
@@ -25179,7 +25181,7 @@ func (s *ServiceNowLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error
 	return nil
 }
 
-// ServiceNow server dataset.
+// ServiceNowObjectDataset - ServiceNow server dataset.
 type ServiceNowObjectDataset struct {
 	Dataset
 	// Properties specific to this dataset type.
@@ -25213,7 +25215,7 @@ func (s *ServiceNowObjectDataset) UnmarshalJSON(data []byte) error {
 	return s.Dataset.unmarshalInternal(rawMsg)
 }
 
-// A copy activity ServiceNow server source.
+// ServiceNowSource - A copy activity ServiceNow server source.
 type ServiceNowSource struct {
 	TabularSource
 	// A query to retrieve data from source. Type: string (or Expression with resultType string).
@@ -25247,7 +25249,7 @@ func (s *ServiceNowSource) UnmarshalJSON(data []byte) error {
 	return s.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// Set value for a Variable.
+// SetVariableActivity - Set value for a Variable.
 type SetVariableActivity struct {
 	ControlActivity
 	// Set Variable activity properties.
@@ -25281,7 +25283,7 @@ func (s *SetVariableActivity) UnmarshalJSON(data []byte) error {
 	return s.ControlActivity.unmarshalInternal(rawMsg)
 }
 
-// SetVariable activity properties.
+// SetVariableActivityTypeProperties - SetVariable activity properties.
 type SetVariableActivityTypeProperties struct {
 	// Value to be set. Could be a static value or Expression
 	Value interface{} `json:"value,omitempty"`
@@ -25290,7 +25292,7 @@ type SetVariableActivityTypeProperties struct {
 	VariableName *string `json:"variableName,omitempty"`
 }
 
-// The location of SFTP dataset.
+// SftpLocation - The location of SFTP dataset.
 type SftpLocation struct {
 	DatasetLocation
 }
@@ -25301,7 +25303,7 @@ func (s SftpLocation) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// Sftp read settings.
+// SftpReadSettings - Sftp read settings.
 type SftpReadSettings struct {
 	StoreReadSettings
 	// The end of file's modified datetime. Type: string (or Expression with resultType string).
@@ -25363,7 +25365,7 @@ func (s *SftpReadSettings) UnmarshalJSON(data []byte) error {
 	return s.StoreReadSettings.unmarshalInternal(rawMsg)
 }
 
-// A linked service for an SSH File Transfer Protocol (SFTP) server.
+// SftpServerLinkedService - A linked service for an SSH File Transfer Protocol (SFTP) server.
 type SftpServerLinkedService struct {
 	LinkedService
 	// Properties specific to this linked service type.
@@ -25397,7 +25399,7 @@ func (s *SftpServerLinkedService) UnmarshalJSON(data []byte) error {
 	return s.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Properties specific to this linked service type.
+// SftpServerLinkedServiceTypeProperties - Properties specific to this linked service type.
 type SftpServerLinkedServiceTypeProperties struct {
 	// The authentication type to be used to connect to the FTP server.
 	AuthenticationType *SftpAuthenticationType `json:"authenticationType,omitempty"`
@@ -25490,7 +25492,7 @@ func (s *SftpServerLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error
 	return nil
 }
 
-// Sftp write settings.
+// SftpWriteSettings - Sftp write settings.
 type SftpWriteSettings struct {
 	StoreWriteSettings
 	// Specifies the timeout for writing each chunk to SFTP server. Default value: 01:00:00 (one hour). Type: string (or Expression with resultType string).
@@ -25524,7 +25526,7 @@ func (s *SftpWriteSettings) UnmarshalJSON(data []byte) error {
 	return s.StoreWriteSettings.unmarshalInternal(rawMsg)
 }
 
-// Shopify Service linked service.
+// ShopifyLinkedService - Shopify Service linked service.
 type ShopifyLinkedService struct {
 	LinkedService
 	// Shopify Service linked service properties.
@@ -25558,7 +25560,7 @@ func (s *ShopifyLinkedService) UnmarshalJSON(data []byte) error {
 	return s.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Shopify Service linked service properties.
+// ShopifyLinkedServiceTypeProperties - Shopify Service linked service properties.
 type ShopifyLinkedServiceTypeProperties struct {
 	// The API access token that can be used to access Shopify’s data. The token won't expire if it is offline mode.
 	AccessToken SecretBaseClassification `json:"accessToken,omitempty"`
@@ -25616,7 +25618,7 @@ func (s *ShopifyLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Shopify Service dataset.
+// ShopifyObjectDataset - Shopify Service dataset.
 type ShopifyObjectDataset struct {
 	Dataset
 	// Properties specific to this dataset type.
@@ -25650,7 +25652,7 @@ func (s *ShopifyObjectDataset) UnmarshalJSON(data []byte) error {
 	return s.Dataset.unmarshalInternal(rawMsg)
 }
 
-// A copy activity Shopify Service source.
+// ShopifySource - A copy activity Shopify Service source.
 type ShopifySource struct {
 	TabularSource
 	// A query to retrieve data from source. Type: string (or Expression with resultType string).
@@ -25857,7 +25859,7 @@ func (s *SparkBatchJobState) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Spark Properties
+// SparkDatasetTypeProperties - Spark Properties
 type SparkDatasetTypeProperties struct {
 	// The schema name of the Spark. Type: string (or Expression with resultType string).
 	Schema interface{} `json:"schema,omitempty"`
@@ -25869,7 +25871,7 @@ type SparkDatasetTypeProperties struct {
 	TableName interface{} `json:"tableName,omitempty"`
 }
 
-// Spark job definition.
+// SparkJobDefinition - Spark job definition.
 type SparkJobDefinition struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties *map[string]interface{}
@@ -25989,7 +25991,7 @@ type SparkJobDefinitionGetSparkJobDefinitionsByWorkspaceOptions struct {
 	// placeholder for future optional parameters
 }
 
-// Spark job definition resource type.
+// SparkJobDefinitionResource - Spark job definition resource type.
 type SparkJobDefinitionResource struct {
 	SubResource
 	// Properties of spark job definition.
@@ -26017,7 +26019,7 @@ type SparkJobDefinitionResourceResponse struct {
 	SparkJobDefinitionResource *SparkJobDefinitionResource
 }
 
-// A list of spark job definitions resources.
+// SparkJobDefinitionsListResponse - A list of spark job definitions resources.
 type SparkJobDefinitionsListResponse struct {
 	// The link to the next page of results, if any remaining results exist.
 	NextLink *string `json:"nextLink,omitempty"`
@@ -26035,7 +26037,7 @@ type SparkJobDefinitionsListResponseResponse struct {
 	SparkJobDefinitionsListResponse *SparkJobDefinitionsListResponse
 }
 
-// The properties of the Spark job.
+// SparkJobProperties - The properties of the Spark job.
 type SparkJobProperties struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties *map[string]interface{}
@@ -26170,7 +26172,7 @@ func (s *SparkJobProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Spark Server linked service.
+// SparkLinkedService - Spark Server linked service.
 type SparkLinkedService struct {
 	LinkedService
 	// Spark Server linked service properties.
@@ -26204,7 +26206,7 @@ func (s *SparkLinkedService) UnmarshalJSON(data []byte) error {
 	return s.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Spark Server linked service properties.
+// SparkLinkedServiceTypeProperties - Spark Server linked service properties.
 type SparkLinkedServiceTypeProperties struct {
 	// Specifies whether to require a CA-issued SSL certificate name to match the host name of the server when connecting over SSL. The default value is false.
 	AllowHostNameCNMismatch interface{} `json:"allowHostNameCNMismatch,omitempty"`
@@ -26311,7 +26313,7 @@ func (s *SparkLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Spark Server dataset.
+// SparkObjectDataset - Spark Server dataset.
 type SparkObjectDataset struct {
 	Dataset
 	// Properties specific to this dataset type.
@@ -26495,7 +26497,7 @@ func (s *SparkServicePlugin) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// A copy activity Spark Server source.
+// SparkSource - A copy activity Spark Server source.
 type SparkSource struct {
 	TabularSource
 	// A query to retrieve data from source. Type: string (or Expression with resultType string).
@@ -26529,7 +26531,7 @@ func (s *SparkSource) UnmarshalJSON(data []byte) error {
 	return s.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// Square Service linked service.
+// SquareLinkedService - Square Service linked service.
 type SquareLinkedService struct {
 	LinkedService
 	// Square Service linked service properties.
@@ -26563,7 +26565,7 @@ func (s *SquareLinkedService) UnmarshalJSON(data []byte) error {
 	return s.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Square Service linked service properties.
+// SquareLinkedServiceTypeProperties - Square Service linked service properties.
 type SquareLinkedServiceTypeProperties struct {
 	// The client ID associated with your Square application.
 	ClientID interface{} `json:"clientId,omitempty"`
@@ -26633,7 +26635,7 @@ func (s *SquareLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Square Service dataset.
+// SquareObjectDataset - Square Service dataset.
 type SquareObjectDataset struct {
 	Dataset
 	// Properties specific to this dataset type.
@@ -26667,7 +26669,7 @@ func (s *SquareObjectDataset) UnmarshalJSON(data []byte) error {
 	return s.Dataset.unmarshalInternal(rawMsg)
 }
 
-// A copy activity Square Service source.
+// SquareSource - A copy activity Square Service source.
 type SquareSource struct {
 	TabularSource
 	// A query to retrieve data from source. Type: string (or Expression with resultType string).
@@ -26701,7 +26703,7 @@ func (s *SquareSource) UnmarshalJSON(data []byte) error {
 	return s.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// The status of the operation.
+// SsisObjectMetadataStatusResponse - The status of the operation.
 type SsisObjectMetadataStatusResponse struct {
 	// The operation error message.
 	Error *string `json:"error,omitempty"`
@@ -26716,7 +26718,7 @@ type SsisObjectMetadataStatusResponse struct {
 	Status *string `json:"status,omitempty"`
 }
 
-// Staging settings.
+// StagingSettings - Staging settings.
 type StagingSettings struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties *map[string]interface{}
@@ -26781,7 +26783,7 @@ func (s *StagingSettings) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Request body structure for starting data flow debug session.
+// StartDataFlowDebugSessionRequest - Request body structure for starting data flow debug session.
 type StartDataFlowDebugSessionRequest struct {
 	// Data flow instance.
 	DataFlow *DataFlowResource `json:"dataFlow,omitempty"`
@@ -26805,7 +26807,7 @@ type StartDataFlowDebugSessionRequest struct {
 	Staging interface{} `json:"staging,omitempty"`
 }
 
-// Response body structure for starting data flow debug session.
+// StartDataFlowDebugSessionResponse - Response body structure for starting data flow debug session.
 type StartDataFlowDebugSessionResponse struct {
 	// The ID of data flow debug job version.
 	JobVersion *string `json:"jobVersion,omitempty"`
@@ -26818,11 +26820,11 @@ type StartDataFlowDebugSessionResponse struct {
 // - *AzureFileStorageReadSettings, *FileServerReadSettings, *FtpReadSettings, *GoogleCloudStorageReadSettings, *HdfsReadSettings,
 // - *HttpReadSettings, *SftpReadSettings
 type StoreReadSettingsClassification interface {
-	// GetStoreReadSettings() returns the StoreReadSettings content of the underlying type.
+	// GetStoreReadSettings returns the StoreReadSettings content of the underlying type.
 	GetStoreReadSettings() *StoreReadSettings
 }
 
-// Connector read setting.
+// StoreReadSettings - Connector read setting.
 type StoreReadSettings struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties *map[string]interface{}
@@ -26893,11 +26895,11 @@ func (s *StoreReadSettings) unmarshalInternal(rawMsg map[string]*json.RawMessage
 // - *StoreWriteSettings, *AzureBlobFSWriteSettings, *AzureBlobStorageWriteSettings, *AzureDataLakeStoreWriteSettings, *FileServerWriteSettings,
 // - *SftpWriteSettings
 type StoreWriteSettingsClassification interface {
-	// GetStoreWriteSettings() returns the StoreWriteSettings content of the underlying type.
+	// GetStoreWriteSettings returns the StoreWriteSettings content of the underlying type.
 	GetStoreWriteSettings() *StoreWriteSettings
 }
 
-// Connector write settings.
+// StoreWriteSettings - Connector write settings.
 type StoreWriteSettings struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties *map[string]interface{}
@@ -26969,7 +26971,7 @@ func (s *StoreWriteSettings) unmarshalInternal(rawMsg map[string]*json.RawMessag
 	return nil
 }
 
-// SQL stored procedure parameter.
+// StoredProcedureParameter - SQL stored procedure parameter.
 type StoredProcedureParameter struct {
 	// Stored procedure parameter type.
 	Type *StoredProcedureParameterType `json:"type,omitempty"`
@@ -26978,7 +26980,7 @@ type StoredProcedureParameter struct {
 	Value interface{} `json:"value,omitempty"`
 }
 
-// Azure Synapse nested resource, which belongs to a workspace.
+// SubResource - Azure Synapse nested resource, which belongs to a workspace.
 type SubResource struct {
 	AzureEntityResource
 }
@@ -26992,7 +26994,7 @@ func (s *SubResource) unmarshalInternal(rawMsg map[string]*json.RawMessage) erro
 	return s.AzureEntityResource.unmarshalInternal(rawMsg)
 }
 
-// Azure Synapse nested debug resource.
+// SubResourceDebugResource - Azure Synapse nested debug resource.
 type SubResourceDebugResource struct {
 	// The resource name.
 	Name *string `json:"name,omitempty"`
@@ -27019,8 +27021,8 @@ func (s *SubResourceDebugResource) unmarshalInternal(rawMsg map[string]*json.Raw
 	return nil
 }
 
-// This activity evaluates an expression and executes activities under the cases property that correspond to the expression evaluation expected in the equals
-// property.
+// SwitchActivity - This activity evaluates an expression and executes activities under the cases property that correspond to the expression evaluation
+// expected in the equals property.
 type SwitchActivity struct {
 	ControlActivity
 	// Switch activity properties.
@@ -27054,7 +27056,7 @@ func (s *SwitchActivity) UnmarshalJSON(data []byte) error {
 	return s.ControlActivity.unmarshalInternal(rawMsg)
 }
 
-// Switch activity properties.
+// SwitchActivityTypeProperties - Switch activity properties.
 type SwitchActivityTypeProperties struct {
 	// List of cases that correspond to expected values of the 'on' property. This is an optional property and if not provided, the activity will execute activities
 	// provided in defaultActivities.
@@ -27094,7 +27096,7 @@ func (s *SwitchActivityTypeProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Switch cases with have a value and corresponding activities.
+// SwitchCase - Switch cases with have a value and corresponding activities.
 type SwitchCase struct {
 	// List of activities to execute for satisfied case condition.
 	Activities *[]ActivityClassification `json:"activities,omitempty"`
@@ -27126,7 +27128,7 @@ func (s *SwitchCase) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Linked service for Sybase data source.
+// SybaseLinkedService - Linked service for Sybase data source.
 type SybaseLinkedService struct {
 	LinkedService
 	// Sybase linked service properties.
@@ -27160,7 +27162,7 @@ func (s *SybaseLinkedService) UnmarshalJSON(data []byte) error {
 	return s.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Sybase linked service properties.
+// SybaseLinkedServiceTypeProperties - Sybase linked service properties.
 type SybaseLinkedServiceTypeProperties struct {
 	// AuthenticationType to be used for connection.
 	AuthenticationType *SybaseAuthenticationType `json:"authenticationType,omitempty"`
@@ -27223,7 +27225,7 @@ func (s *SybaseLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// A copy activity source for Sybase databases.
+// SybaseSource - A copy activity source for Sybase databases.
 type SybaseSource struct {
 	TabularSource
 	// Database query. Type: string (or Expression with resultType string).
@@ -27257,7 +27259,7 @@ func (s *SybaseSource) UnmarshalJSON(data []byte) error {
 	return s.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// The Sybase table dataset.
+// SybaseTableDataset - The Sybase table dataset.
 type SybaseTableDataset struct {
 	Dataset
 	// Sybase table dataset properties.
@@ -27291,13 +27293,13 @@ func (s *SybaseTableDataset) UnmarshalJSON(data []byte) error {
 	return s.Dataset.unmarshalInternal(rawMsg)
 }
 
-// Sybase table dataset properties.
+// SybaseTableDatasetTypeProperties - Sybase table dataset properties.
 type SybaseTableDatasetTypeProperties struct {
 	// The Sybase table name. Type: string (or Expression with resultType string).
 	TableName interface{} `json:"tableName,omitempty"`
 }
 
-// Execute Synapse notebook activity.
+// SynapseNotebookActivity - Execute Synapse notebook activity.
 type SynapseNotebookActivity struct {
 	ExecutionActivity
 	// Execute Synapse notebook activity properties.
@@ -27331,7 +27333,7 @@ func (s *SynapseNotebookActivity) UnmarshalJSON(data []byte) error {
 	return s.ExecutionActivity.unmarshalInternal(rawMsg)
 }
 
-// Execute Synapse notebook activity properties.
+// SynapseNotebookActivityTypeProperties - Execute Synapse notebook activity properties.
 type SynapseNotebookActivityTypeProperties struct {
 	// Synapse notebook reference.
 	Notebook *SynapseNotebookReference `json:"notebook,omitempty"`
@@ -27340,7 +27342,7 @@ type SynapseNotebookActivityTypeProperties struct {
 	Parameters *map[string]interface{} `json:"parameters,omitempty"`
 }
 
-// Synapse notebook reference type.
+// SynapseNotebookReference - Synapse notebook reference type.
 type SynapseNotebookReference struct {
 	// Reference notebook name.
 	ReferenceName *string `json:"referenceName,omitempty"`
@@ -27349,13 +27351,13 @@ type SynapseNotebookReference struct {
 	Type *NotebookReferenceType `json:"type,omitempty"`
 }
 
-// Execute spark job activity properties.
+// SynapseSparkJobActivityTypeProperties - Execute spark job activity properties.
 type SynapseSparkJobActivityTypeProperties struct {
 	// Synapse spark job reference.
 	SparkJob *SynapseSparkJobReference `json:"sparkJob,omitempty"`
 }
 
-// Execute spark job activity.
+// SynapseSparkJobDefinitionActivity - Execute spark job activity.
 type SynapseSparkJobDefinitionActivity struct {
 	ExecutionActivity
 	// Execute spark job activity properties.
@@ -27389,7 +27391,7 @@ func (s *SynapseSparkJobDefinitionActivity) UnmarshalJSON(data []byte) error {
 	return s.ExecutionActivity.unmarshalInternal(rawMsg)
 }
 
-// Synapse spark job reference type.
+// SynapseSparkJobReference - Synapse spark job reference type.
 type SynapseSparkJobReference struct {
 	// Reference spark job name.
 	ReferenceName *string `json:"referenceName,omitempty"`
@@ -27411,11 +27413,11 @@ type SynapseSparkJobReference struct {
 // - *SqlServerSource, *SqlSource, *SquareSource, *SybaseSource, *TeradataSource, *VerticaSource, *XeroSource, *ZohoSource
 type TabularSourceClassification interface {
 	CopySourceClassification
-	// GetTabularSource() returns the TabularSource content of the underlying type.
+	// GetTabularSource returns the TabularSource content of the underlying type.
 	GetTabularSource() *TabularSource
 }
 
-// Copy activity sources of tabular type.
+// TabularSource - Copy activity sources of tabular type.
 type TabularSource struct {
 	CopySource
 	// Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+).)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
@@ -27461,7 +27463,7 @@ func (t *TabularSource) unmarshalInternal(rawMsg map[string]*json.RawMessage) er
 	return t.CopySource.unmarshalInternal(rawMsg)
 }
 
-// A copy activity tabular translator.
+// TabularTranslator - A copy activity tabular translator.
 type TabularTranslator struct {
 	CopyTranslator
 	// The JSON Path of the Nested Array that is going to do cross-apply. Type: object (or Expression with resultType object).
@@ -27530,7 +27532,7 @@ func (t *TabularTranslator) UnmarshalJSON(data []byte) error {
 	return t.CopyTranslator.unmarshalInternal(rawMsg)
 }
 
-// Linked service for Teradata data source.
+// TeradataLinkedService - Linked service for Teradata data source.
 type TeradataLinkedService struct {
 	LinkedService
 	// Teradata linked service properties.
@@ -27564,7 +27566,7 @@ func (t *TeradataLinkedService) UnmarshalJSON(data []byte) error {
 	return t.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Teradata linked service properties.
+// TeradataLinkedServiceTypeProperties - Teradata linked service properties.
 type TeradataLinkedServiceTypeProperties struct {
 	// AuthenticationType to be used for connection.
 	AuthenticationType *TeradataAuthenticationType `json:"authenticationType,omitempty"`
@@ -27621,7 +27623,7 @@ func (t *TeradataLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// The settings that will be leveraged for teradata source partitioning.
+// TeradataPartitionSettings - The settings that will be leveraged for teradata source partitioning.
 type TeradataPartitionSettings struct {
 	// The name of the column that will be used for proceeding range or hash partitioning. Type: string (or Expression with resultType string).
 	PartitionColumnName interface{} `json:"partitionColumnName,omitempty"`
@@ -27635,7 +27637,7 @@ type TeradataPartitionSettings struct {
 	PartitionUpperBound interface{} `json:"partitionUpperBound,omitempty"`
 }
 
-// A copy activity Teradata source.
+// TeradataSource - A copy activity Teradata source.
 type TeradataSource struct {
 	TabularSource
 	// The partition mechanism that will be used for teradata read in parallel.
@@ -27683,7 +27685,7 @@ func (t *TeradataSource) UnmarshalJSON(data []byte) error {
 	return t.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// The Teradata database dataset.
+// TeradataTableDataset - The Teradata database dataset.
 type TeradataTableDataset struct {
 	Dataset
 	// Teradata dataset properties.
@@ -27717,7 +27719,7 @@ func (t *TeradataTableDataset) UnmarshalJSON(data []byte) error {
 	return t.Dataset.unmarshalInternal(rawMsg)
 }
 
-// Teradata dataset properties.
+// TeradataTableDatasetTypeProperties - Teradata dataset properties.
 type TeradataTableDatasetTypeProperties struct {
 	// The database name of Teradata. Type: string (or Expression with resultType string).
 	Database interface{} `json:"database,omitempty"`
@@ -27726,7 +27728,7 @@ type TeradataTableDatasetTypeProperties struct {
 	Table interface{} `json:"table,omitempty"`
 }
 
-// The data stored in text format.
+// TextFormat - The data stored in text format.
 type TextFormat struct {
 	DatasetStorageFormat
 	// The column delimiter. Type: string (or Expression with resultType string).
@@ -27820,7 +27822,7 @@ func (t *TextFormat) UnmarshalJSON(data []byte) error {
 	return t.DatasetStorageFormat.unmarshalInternal(rawMsg)
 }
 
-// The resource model definition for an Azure Resource Manager tracked top level resource which has 'tags' and a 'location'
+// TrackedResource - The resource model definition for an Azure Resource Manager tracked top level resource which has 'tags' and a 'location'
 type TrackedResource struct {
 	Resource
 	// The geo-location where the resource lives
@@ -27830,7 +27832,7 @@ type TrackedResource struct {
 	Tags *map[string]*string `json:"tags,omitempty"`
 }
 
-// A data flow transformation.
+// Transformation - A data flow transformation.
 type Transformation struct {
 	// Transformation description.
 	Description *string `json:"description,omitempty"`
@@ -27845,11 +27847,11 @@ type Transformation struct {
 // - *Trigger, *BlobEventsTrigger, *BlobTrigger, *ChainingTrigger, *MultiplePipelineTrigger, *RerunTumblingWindowTrigger,
 // - *ScheduleTrigger, *TumblingWindowTrigger
 type TriggerClassification interface {
-	// GetTrigger() returns the Trigger content of the underlying type.
+	// GetTrigger returns the Trigger content of the underlying type.
 	GetTrigger() *Trigger
 }
 
-// Azure Synapse nested object which contains information about creating pipeline run
+// Trigger - Azure Synapse nested object which contains information about creating pipeline run
 type Trigger struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties *map[string]interface{}
@@ -27959,7 +27961,7 @@ type TriggerBeginUnsubscribeTriggerFromEventsOptions struct {
 	// placeholder for future optional parameters
 }
 
-// Defines the response of a provision trigger dependency operation.
+// TriggerDependencyProvisioningStatus - Defines the response of a provision trigger dependency operation.
 type TriggerDependencyProvisioningStatus struct {
 	// Provisioning status.
 	ProvisioningStatus *string `json:"provisioningStatus,omitempty"`
@@ -27974,11 +27976,11 @@ type TriggerDependencyProvisioningStatus struct {
 // - *TriggerDependencyReference, *TumblingWindowTriggerDependencyReference
 type TriggerDependencyReferenceClassification interface {
 	DependencyReferenceClassification
-	// GetTriggerDependencyReference() returns the TriggerDependencyReference content of the underlying type.
+	// GetTriggerDependencyReference returns the TriggerDependencyReference content of the underlying type.
 	GetTriggerDependencyReference() *TriggerDependencyReference
 }
 
-// Trigger referenced dependency.
+// TriggerDependencyReference - Trigger referenced dependency.
 type TriggerDependencyReference struct {
 	DependencyReference
 	// Referenced trigger.
@@ -28043,7 +28045,7 @@ type TriggerGetTriggersByWorkspaceOptions struct {
 	// placeholder for future optional parameters
 }
 
-// A list of trigger resources.
+// TriggerListResponse - A list of trigger resources.
 type TriggerListResponse struct {
 	// The link to the next page of results, if any remaining results exist.
 	NextLink *string `json:"nextLink,omitempty"`
@@ -28061,7 +28063,7 @@ type TriggerListResponseResponse struct {
 	TriggerListResponse *TriggerListResponse
 }
 
-// Pipeline that needs to be triggered with the given parameters.
+// TriggerPipelineReference - Pipeline that needs to be triggered with the given parameters.
 type TriggerPipelineReference struct {
 	// Pipeline parameters.
 	Parameters *map[string]interface{} `json:"parameters,omitempty"`
@@ -28070,7 +28072,7 @@ type TriggerPipelineReference struct {
 	PipelineReference *PipelineReference `json:"pipelineReference,omitempty"`
 }
 
-// Trigger reference type.
+// TriggerReference - Trigger reference type.
 type TriggerReference struct {
 	// Reference trigger name.
 	ReferenceName *string `json:"referenceName,omitempty"`
@@ -28079,7 +28081,7 @@ type TriggerReference struct {
 	Type *TriggerReferenceType `json:"type,omitempty"`
 }
 
-// Trigger resource type.
+// TriggerResource - Trigger resource type.
 type TriggerResource struct {
 	SubResource
 	// Properties of the trigger.
@@ -28107,7 +28109,7 @@ type TriggerResourceResponse struct {
 	TriggerResource *TriggerResource
 }
 
-// Trigger runs.
+// TriggerRun - Trigger runs.
 type TriggerRun struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties *map[string]interface{}
@@ -28224,7 +28226,7 @@ type TriggerRunRerunTriggerInstanceOptions struct {
 	// placeholder for future optional parameters
 }
 
-// A list of trigger runs.
+// TriggerRunsQueryResponse - A list of trigger runs.
 type TriggerRunsQueryResponse struct {
 	// The continuation token for getting the next page of results, if any remaining results exist, null otherwise.
 	ContinuationToken *string `json:"continuationToken,omitempty"`
@@ -28242,7 +28244,7 @@ type TriggerRunsQueryResponseResponse struct {
 	TriggerRunsQueryResponse *TriggerRunsQueryResponse
 }
 
-// Defines the response of a trigger subscription operation.
+// TriggerSubscriptionOperationStatus - Defines the response of a trigger subscription operation.
 type TriggerSubscriptionOperationStatus struct {
 	// READ-ONLY; Event Subscription Status.
 	Status *EventSubscriptionStatus `json:"status,omitempty" azure:"ro"`
@@ -28273,8 +28275,8 @@ type TriggerSubscriptionOperationStatusResponse struct {
 	TriggerSubscriptionOperationStatus *TriggerSubscriptionOperationStatus
 }
 
-// Trigger that schedules pipeline runs for all fixed time interval windows from a start time without gaps and also supports backfill scenarios (when start
-// time is in the past).
+// TumblingWindowTrigger - Trigger that schedules pipeline runs for all fixed time interval windows from a start time without gaps and also supports backfill
+// scenarios (when start time is in the past).
 type TumblingWindowTrigger struct {
 	Trigger
 	// Pipeline for which runs are created when an event is fired for trigger window that is ready.
@@ -28315,7 +28317,7 @@ func (t *TumblingWindowTrigger) UnmarshalJSON(data []byte) error {
 	return t.Trigger.unmarshalInternal(rawMsg)
 }
 
-// Referenced tumbling window trigger dependency.
+// TumblingWindowTriggerDependencyReference - Referenced tumbling window trigger dependency.
 type TumblingWindowTriggerDependencyReference struct {
 	TriggerDependencyReference
 	// Timespan applied to the start time of a tumbling window when evaluating dependency.
@@ -28356,7 +28358,7 @@ func (t *TumblingWindowTriggerDependencyReference) UnmarshalJSON(data []byte) er
 	return t.TriggerDependencyReference.unmarshalInternal(rawMsg)
 }
 
-// Tumbling Window Trigger properties.
+// TumblingWindowTriggerTypeProperties - Tumbling Window Trigger properties.
 type TumblingWindowTriggerTypeProperties struct {
 	// Specifies how long the trigger waits past due time before triggering new run. It doesn't alter window start and end time. The default is 0. Type: string
 	// (or Expression with resultType string),
@@ -28444,7 +28446,7 @@ func (t *TumblingWindowTriggerTypeProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// This activity executes inner activities until the specified boolean expression results to true or timeout is reached, whichever is earlier.
+// UntilActivity - This activity executes inner activities until the specified boolean expression results to true or timeout is reached, whichever is earlier.
 type UntilActivity struct {
 	ControlActivity
 	// Until activity properties.
@@ -28478,7 +28480,7 @@ func (u *UntilActivity) UnmarshalJSON(data []byte) error {
 	return u.ControlActivity.unmarshalInternal(rawMsg)
 }
 
-// Until activity properties.
+// UntilActivityTypeProperties - Until activity properties.
 type UntilActivityTypeProperties struct {
 	// List of activities to execute.
 	Activities *[]ActivityClassification `json:"activities,omitempty"`
@@ -28518,7 +28520,7 @@ func (u *UntilActivityTypeProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// User property.
+// UserProperty - User property.
 type UserProperty struct {
 	// User property name.
 	Name *string `json:"name,omitempty"`
@@ -28527,7 +28529,7 @@ type UserProperty struct {
 	Value interface{} `json:"value,omitempty"`
 }
 
-// This activity verifies that an external resource exists.
+// ValidationActivity - This activity verifies that an external resource exists.
 type ValidationActivity struct {
 	ControlActivity
 	// Validation activity properties.
@@ -28561,7 +28563,7 @@ func (v *ValidationActivity) UnmarshalJSON(data []byte) error {
 	return v.ControlActivity.unmarshalInternal(rawMsg)
 }
 
-// Validation activity properties.
+// ValidationActivityTypeProperties - Validation activity properties.
 type ValidationActivityTypeProperties struct {
 	// Can be used if dataset points to a folder. If set to true, the folder must have at least one file. If set to false, the folder must be empty. Type: boolean
 	// (or Expression with resultType boolean).
@@ -28584,7 +28586,7 @@ type ValidationActivityTypeProperties struct {
 	Timeout interface{} `json:"timeout,omitempty"`
 }
 
-// Definition of a single variable for a Pipeline.
+// VariableSpecification - Definition of a single variable for a Pipeline.
 type VariableSpecification struct {
 	// Default value of variable.
 	DefaultValue interface{} `json:"defaultValue,omitempty"`
@@ -28593,7 +28595,7 @@ type VariableSpecification struct {
 	Type *VariableType `json:"type,omitempty"`
 }
 
-// Vertica Properties
+// VerticaDatasetTypeProperties - Vertica Properties
 type VerticaDatasetTypeProperties struct {
 	// The schema name of the Vertica. Type: string (or Expression with resultType string).
 	Schema interface{} `json:"schema,omitempty"`
@@ -28605,7 +28607,7 @@ type VerticaDatasetTypeProperties struct {
 	TableName interface{} `json:"tableName,omitempty"`
 }
 
-// Vertica linked service.
+// VerticaLinkedService - Vertica linked service.
 type VerticaLinkedService struct {
 	LinkedService
 	// Vertica linked service properties.
@@ -28639,7 +28641,7 @@ func (v *VerticaLinkedService) UnmarshalJSON(data []byte) error {
 	return v.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Vertica linked service properties.
+// VerticaLinkedServiceTypeProperties - Vertica linked service properties.
 type VerticaLinkedServiceTypeProperties struct {
 	// An ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference.
 	ConnectionString interface{} `json:"connectionString,omitempty"`
@@ -28652,7 +28654,7 @@ type VerticaLinkedServiceTypeProperties struct {
 	Pwd *AzureKeyVaultSecretReference `json:"pwd,omitempty"`
 }
 
-// A copy activity Vertica source.
+// VerticaSource - A copy activity Vertica source.
 type VerticaSource struct {
 	TabularSource
 	// A query to retrieve data from source. Type: string (or Expression with resultType string).
@@ -28686,7 +28688,7 @@ func (v *VerticaSource) UnmarshalJSON(data []byte) error {
 	return v.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// Vertica dataset.
+// VerticaTableDataset - Vertica dataset.
 type VerticaTableDataset struct {
 	Dataset
 	// Properties specific to this dataset type.
@@ -28720,13 +28722,13 @@ func (v *VerticaTableDataset) UnmarshalJSON(data []byte) error {
 	return v.Dataset.unmarshalInternal(rawMsg)
 }
 
-// Virtual Network Profile
+// VirtualNetworkProfile - Virtual Network Profile
 type VirtualNetworkProfile struct {
 	// Subnet ID used for computes in workspace
 	ComputeSubnetID *string `json:"computeSubnetId,omitempty"`
 }
 
-// This activity suspends pipeline execution for the specified interval.
+// WaitActivity - This activity suspends pipeline execution for the specified interval.
 type WaitActivity struct {
 	ControlActivity
 	// Wait activity properties.
@@ -28760,13 +28762,13 @@ func (w *WaitActivity) UnmarshalJSON(data []byte) error {
 	return w.ControlActivity.unmarshalInternal(rawMsg)
 }
 
-// Wait activity properties.
+// WaitActivityTypeProperties - Wait activity properties.
 type WaitActivityTypeProperties struct {
 	// Duration in seconds.
 	WaitTimeInSeconds *int32 `json:"waitTimeInSeconds,omitempty"`
 }
 
-// Web activity.
+// WebActivity - Web activity.
 type WebActivity struct {
 	ExecutionActivity
 	// Web activity properties.
@@ -28800,7 +28802,7 @@ func (w *WebActivity) UnmarshalJSON(data []byte) error {
 	return w.ExecutionActivity.unmarshalInternal(rawMsg)
 }
 
-// Web activity authentication properties.
+// WebActivityAuthentication - Web activity authentication properties.
 type WebActivityAuthentication struct {
 	// Password for the PFX file or basic authentication.
 	Password SecretBaseClassification `json:"password,omitempty"`
@@ -28850,7 +28852,7 @@ func (w *WebActivityAuthentication) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Web activity type properties.
+// WebActivityTypeProperties - Web activity type properties.
 type WebActivityTypeProperties struct {
 	// Authentication method used for calling the endpoint.
 	Authentication *WebActivityAuthentication `json:"authentication,omitempty"`
@@ -28880,7 +28882,7 @@ type WebActivityTypeProperties struct {
 	URL interface{} `json:"url,omitempty"`
 }
 
-// A WebLinkedService that uses anonymous authentication to communicate with an HTTP endpoint.
+// WebAnonymousAuthentication - A WebLinkedService that uses anonymous authentication to communicate with an HTTP endpoint.
 type WebAnonymousAuthentication struct {
 	WebLinkedServiceTypeProperties
 }
@@ -28891,7 +28893,7 @@ func (w WebAnonymousAuthentication) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// A WebLinkedService that uses basic authentication to communicate with an HTTP endpoint.
+// WebBasicAuthentication - A WebLinkedService that uses basic authentication to communicate with an HTTP endpoint.
 type WebBasicAuthentication struct {
 	WebLinkedServiceTypeProperties
 	// The password for Basic authentication.
@@ -28932,8 +28934,8 @@ func (w *WebBasicAuthentication) UnmarshalJSON(data []byte) error {
 	return w.WebLinkedServiceTypeProperties.unmarshalInternal(rawMsg)
 }
 
-// A WebLinkedService that uses client certificate based authentication to communicate with an HTTP endpoint. This scheme follows mutual authentication;
-// the server must also provide valid credentials to
+// WebClientCertificateAuthentication - A WebLinkedService that uses client certificate based authentication to communicate with an HTTP endpoint. This
+// scheme follows mutual authentication; the server must also provide valid credentials to
 // the client.
 type WebClientCertificateAuthentication struct {
 	WebLinkedServiceTypeProperties
@@ -28975,7 +28977,7 @@ func (w *WebClientCertificateAuthentication) UnmarshalJSON(data []byte) error {
 	return w.WebLinkedServiceTypeProperties.unmarshalInternal(rawMsg)
 }
 
-// WebHook activity.
+// WebHookActivity - WebHook activity.
 type WebHookActivity struct {
 	ControlActivity
 	// WebHook activity properties.
@@ -29009,7 +29011,7 @@ func (w *WebHookActivity) UnmarshalJSON(data []byte) error {
 	return w.ControlActivity.unmarshalInternal(rawMsg)
 }
 
-// WebHook activity type properties.
+// WebHookActivityTypeProperties - WebHook activity type properties.
 type WebHookActivityTypeProperties struct {
 	// Authentication method used for calling the endpoint.
 	Authentication *WebActivityAuthentication `json:"authentication,omitempty"`
@@ -29038,7 +29040,7 @@ type WebHookActivityTypeProperties struct {
 	URL interface{} `json:"url,omitempty"`
 }
 
-// Web linked service.
+// WebLinkedService - Web linked service.
 type WebLinkedService struct {
 	LinkedService
 	// Web linked service properties.
@@ -29077,11 +29079,12 @@ func (w *WebLinkedService) UnmarshalJSON(data []byte) error {
 // Use a type switch to determine the concrete type.  The possible types are:
 // - *WebLinkedServiceTypeProperties, *WebAnonymousAuthentication, *WebBasicAuthentication, *WebClientCertificateAuthentication
 type WebLinkedServiceTypePropertiesClassification interface {
-	// GetWebLinkedServiceTypeProperties() returns the WebLinkedServiceTypeProperties content of the underlying type.
+	// GetWebLinkedServiceTypeProperties returns the WebLinkedServiceTypeProperties content of the underlying type.
 	GetWebLinkedServiceTypeProperties() *WebLinkedServiceTypeProperties
 }
 
-// Base definition of WebLinkedServiceTypeProperties, this typeProperties is polymorphic based on authenticationType, so not flattened in SDK models.
+// WebLinkedServiceTypeProperties - Base definition of WebLinkedServiceTypeProperties, this typeProperties is polymorphic based on authenticationType, so
+// not flattened in SDK models.
 type WebLinkedServiceTypeProperties struct {
 	// Type of authentication used to connect to the web table source.
 	AuthenticationType *WebAuthenticationType `json:"authenticationType,omitempty"`
@@ -29130,7 +29133,7 @@ func (w *WebLinkedServiceTypeProperties) unmarshalInternal(rawMsg map[string]*js
 	return nil
 }
 
-// A copy activity source for web page table.
+// WebSource - A copy activity source for web page table.
 type WebSource struct {
 	CopySource
 }
@@ -29141,7 +29144,7 @@ func (w WebSource) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// The dataset points to a HTML table in the web page.
+// WebTableDataset - The dataset points to a HTML table in the web page.
 type WebTableDataset struct {
 	Dataset
 	// Web table dataset properties.
@@ -29175,7 +29178,7 @@ func (w *WebTableDataset) UnmarshalJSON(data []byte) error {
 	return w.Dataset.unmarshalInternal(rawMsg)
 }
 
-// Web table dataset properties.
+// WebTableDatasetTypeProperties - Web table dataset properties.
 type WebTableDatasetTypeProperties struct {
 	// The zero-based index of the table in the web page. Type: integer (or Expression with resultType integer), minimum: 0.
 	Index interface{} `json:"index,omitempty"`
@@ -29184,7 +29187,7 @@ type WebTableDatasetTypeProperties struct {
 	Path interface{} `json:"path,omitempty"`
 }
 
-// A workspace
+// Workspace - A workspace
 type Workspace struct {
 	TrackedResource
 	// Identity of the workspace
@@ -29205,7 +29208,7 @@ type WorkspaceGitRepoManagementGetGitHubAccessTokenOptions struct {
 	ClientRequestID *string
 }
 
-// Identity properties of the workspace resource.
+// WorkspaceIdentity - Identity properties of the workspace resource.
 type WorkspaceIdentity struct {
 	// READ-ONLY; The principal id of the identity.
 	PrincipalID *string `json:"principalId,omitempty" azure:"ro"`
@@ -29217,7 +29220,7 @@ type WorkspaceIdentity struct {
 	Type *string `json:"type,omitempty"`
 }
 
-// Details of the customer managed key associated with the workspace
+// WorkspaceKeyDetails - Details of the customer managed key associated with the workspace
 type WorkspaceKeyDetails struct {
 	// Workspace Key sub-resource key vault url
 	KeyVaultURL *string `json:"keyVaultUrl,omitempty"`
@@ -29226,7 +29229,7 @@ type WorkspaceKeyDetails struct {
 	Name *string `json:"name,omitempty"`
 }
 
-// Workspace properties
+// WorkspaceProperties - Workspace properties
 type WorkspaceProperties struct {
 	// READ-ONLY; The ADLA resource ID.
 	AdlaResourceID *string `json:"adlaResourceId,omitempty" azure:"ro"`
@@ -29279,7 +29282,7 @@ type WorkspaceProperties struct {
 	WorkspaceUID *string `json:"workspaceUID,omitempty" azure:"ro"`
 }
 
-// Git integration settings
+// WorkspaceRepositoryConfiguration - Git integration settings
 type WorkspaceRepositoryConfiguration struct {
 	// Account name
 	AccountName *string `json:"accountName,omitempty"`
@@ -29318,7 +29321,7 @@ type WorkspaceResponse struct {
 	Workspace *Workspace
 }
 
-// Parameters for updating a workspace resource.
+// WorkspaceUpdateParameters - Parameters for updating a workspace resource.
 type WorkspaceUpdateParameters struct {
 	// Managed service identity of the workspace.
 	Identity *WorkspaceIdentity `json:"identity,omitempty"`
@@ -29327,7 +29330,7 @@ type WorkspaceUpdateParameters struct {
 	Tags *map[string]*string `json:"tags,omitempty"`
 }
 
-// Xero Service linked service.
+// XeroLinkedService - Xero Service linked service.
 type XeroLinkedService struct {
 	LinkedService
 	// Xero Service linked service properties.
@@ -29361,7 +29364,7 @@ func (x *XeroLinkedService) UnmarshalJSON(data []byte) error {
 	return x.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Xero Service linked service properties.
+// XeroLinkedServiceTypeProperties - Xero Service linked service properties.
 type XeroLinkedServiceTypeProperties struct {
 	// The consumer key associated with the Xero application.
 	ConsumerKey SecretBaseClassification `json:"consumerKey,omitempty"`
@@ -29426,7 +29429,7 @@ func (x *XeroLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Xero Service dataset.
+// XeroObjectDataset - Xero Service dataset.
 type XeroObjectDataset struct {
 	Dataset
 	// Properties specific to this dataset type.
@@ -29460,7 +29463,7 @@ func (x *XeroObjectDataset) UnmarshalJSON(data []byte) error {
 	return x.Dataset.unmarshalInternal(rawMsg)
 }
 
-// A copy activity Xero Service source.
+// XeroSource - A copy activity Xero Service source.
 type XeroSource struct {
 	TabularSource
 	// A query to retrieve data from source. Type: string (or Expression with resultType string).
@@ -29494,7 +29497,7 @@ func (x *XeroSource) UnmarshalJSON(data []byte) error {
 	return x.TabularSource.unmarshalInternal(rawMsg)
 }
 
-// Zoho server linked service.
+// ZohoLinkedService - Zoho server linked service.
 type ZohoLinkedService struct {
 	LinkedService
 	// Zoho server linked service properties.
@@ -29528,7 +29531,7 @@ func (z *ZohoLinkedService) UnmarshalJSON(data []byte) error {
 	return z.LinkedService.unmarshalInternal(rawMsg)
 }
 
-// Zoho server linked service properties.
+// ZohoLinkedServiceTypeProperties - Zoho server linked service properties.
 type ZohoLinkedServiceTypeProperties struct {
 	// The access token for Zoho authentication.
 	AccessToken SecretBaseClassification `json:"accessToken,omitempty"`
@@ -29586,7 +29589,7 @@ func (z *ZohoLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Zoho server dataset.
+// ZohoObjectDataset - Zoho server dataset.
 type ZohoObjectDataset struct {
 	Dataset
 	// Properties specific to this dataset type.
@@ -29620,7 +29623,7 @@ func (z *ZohoObjectDataset) UnmarshalJSON(data []byte) error {
 	return z.Dataset.unmarshalInternal(rawMsg)
 }
 
-// A copy activity Zoho server source.
+// ZohoSource - A copy activity Zoho server source.
 type ZohoSource struct {
 	TabularSource
 	// A query to retrieve data from source. Type: string (or Expression with resultType string).

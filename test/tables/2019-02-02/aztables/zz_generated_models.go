@@ -14,7 +14,7 @@ import (
 	"time"
 )
 
-// An Access policy.
+// AccessPolicy - An Access policy.
 type AccessPolicy struct {
 	// The datetime that the policy expires.
 	Expiry *time.Time `xml:"Expiry"`
@@ -59,8 +59,8 @@ func (a *AccessPolicy) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 	return nil
 }
 
-// CORS is an HTTP feature that enables a web application running under one domain to access resources in another domain. Web browsers implement a security
-// restriction known as same-origin policy that
+// CorsRule - CORS is an HTTP feature that enables a web application running under one domain to access resources in another domain. Web browsers implement
+// a security restriction known as same-origin policy that
 // prevents a web page from calling APIs in a different domain; CORS provides a secure way to allow one domain (the origin domain) to call APIs in another
 // domain.
 type CorsRule struct {
@@ -122,7 +122,7 @@ func (g *GeoReplication) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 	return nil
 }
 
-// Azure Analytics Logging settings.
+// Logging - Azure Analytics Logging settings.
 type Logging struct {
 	// Indicates whether all delete requests should be logged.
 	Delete *bool `xml:"Delete"`
@@ -202,7 +202,7 @@ type QueryOptions struct {
 	Top *int32
 }
 
-// The retention policy.
+// RetentionPolicy - The retention policy.
 type RetentionPolicy struct {
 	// Indicates the number of days that metrics or logging or soft-deleted data should be retained. All data older than this value will be deleted.
 	Days *int32 `xml:"Days"`
@@ -250,7 +250,7 @@ type ServiceSetPropertiesResponse struct {
 	Version *string
 }
 
-// A signed identifier.
+// SignedIdentifier - A signed identifier.
 type SignedIdentifier struct {
 	// The access policy.
 	AccessPolicy *AccessPolicy `xml:"AccessPolicy"`
@@ -359,7 +359,7 @@ type TableDeleteResponse struct {
 	Version *string
 }
 
-// The properties for the table entity query response.
+// TableEntityQueryResponse - The properties for the table entity query response.
 type TableEntityQueryResponse struct {
 	// The metadata response of the table.
 	OdataMetadata *string `json:"odata.metadata,omitempty"`
@@ -477,7 +477,7 @@ type TableMergeEntityResponse struct {
 	Version *string
 }
 
-// The properties for creating a table.
+// TableProperties - The properties for creating a table.
 type TableProperties struct {
 	// The name of the table to create.
 	TableName *string `json:"TableName,omitempty"`
@@ -511,7 +511,7 @@ type TableQueryOptions struct {
 	RequestID *string
 }
 
-// The properties for the table query response.
+// TableQueryResponse - The properties for the table query response.
 type TableQueryResponse struct {
 	// The metadata response of the table.
 	OdataMetadata *string `json:"odata.metadata,omitempty"`
@@ -544,14 +544,14 @@ type TableQueryResponseResponse struct {
 	XMSContinuationNextTableName *string
 }
 
-// The response for a single table.
+// TableResponse - The response for a single table.
 type TableResponse struct {
 	TableResponseProperties
 	// The metadata response of the table.
 	OdataMetadata *string `json:"odata.metadata,omitempty"`
 }
 
-// The properties for the table response.
+// TableResponseProperties - The properties for the table response.
 type TableResponseProperties struct {
 	// The edit link of the table.
 	OdataEditLink *string `json:"odata.editLink,omitempty"`
@@ -590,7 +590,7 @@ type TableResponseResponse struct {
 	Version *string
 }
 
-// Table Service error.
+// TableServiceError - Table Service error.
 type TableServiceError struct {
 	// The error message.
 	Message *string `json:"Message,omitempty"`
@@ -608,7 +608,7 @@ func (e TableServiceError) Error() string {
 	return msg
 }
 
-// Table Service Properties.
+// TableServiceProperties - Table Service Properties.
 type TableServiceProperties struct {
 	// The set of CORS rules.
 	Cors *[]*CorsRule `xml:"Cors>CorsRule"`
@@ -653,7 +653,7 @@ type TableServicePropertiesResponse struct {
 	Version *string `xml:"Version"`
 }
 
-// Stats for the service.
+// TableServiceStats - Stats for the service.
 type TableServiceStats struct {
 	// Geo-Replication information for the Secondary Storage Service.
 	GeoReplication *GeoReplication `xml:"GeoReplication"`

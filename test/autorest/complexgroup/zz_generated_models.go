@@ -339,7 +339,7 @@ type Dog struct {
 // Use a type switch to determine the concrete type.  The possible types are:
 // - *DotFish, *DotSalmon
 type DotFishClassification interface {
-	// GetDotFish() returns the DotFish content of the underlying type.
+	// GetDotFish returns the DotFish content of the underlying type.
 	GetDotFish() *DotFish
 }
 
@@ -535,7 +535,7 @@ func (e Error) Error() string {
 // Use a type switch to determine the concrete type.  The possible types are:
 // - *Fish, *Cookiecuttershark, *Goblinshark, *Salmon, *Sawshark, *Shark, *SmartSalmon
 type FishClassification interface {
-	// GetFish() returns the Fish content of the underlying type.
+	// GetFish returns the Fish content of the underlying type.
 	GetFish() *Fish
 }
 
@@ -711,7 +711,7 @@ type MyBaseHelperType struct {
 // Use a type switch to determine the concrete type.  The possible types are:
 // - *MyBaseType, *MyDerivedType
 type MyBaseTypeClassification interface {
-	// GetMyBaseType() returns the MyBaseType content of the underlying type.
+	// GetMyBaseType returns the MyBaseType content of the underlying type.
 	GetMyBaseType() *MyBaseType
 }
 
@@ -1012,7 +1012,7 @@ type ReadonlypropertyPutValidOptions struct {
 // - *Salmon, *SmartSalmon
 type SalmonClassification interface {
 	FishClassification
-	// GetSalmon() returns the Salmon content of the underlying type.
+	// GetSalmon returns the Salmon content of the underlying type.
 	GetSalmon() *Salmon
 }
 
@@ -1120,7 +1120,7 @@ func (s *Sawshark) UnmarshalJSON(data []byte) error {
 // - *Shark, *Cookiecuttershark, *Goblinshark, *Sawshark
 type SharkClassification interface {
 	FishClassification
-	// GetShark() returns the Shark content of the underlying type.
+	// GetShark returns the Shark content of the underlying type.
 	GetShark() *Shark
 }
 

@@ -33,7 +33,7 @@ type AutoRestValidationTestValidationOfMethodParametersOptions struct {
 	// placeholder for future optional parameters
 }
 
-// The product documentation.
+// ChildProduct - The product documentation.
 type ChildProduct struct {
 	// Constant string
 	ConstProperty *string `json:"constProperty,omitempty"`
@@ -42,7 +42,7 @@ type ChildProduct struct {
 	Count *int32 `json:"count,omitempty"`
 }
 
-// The product documentation.
+// ConstantProduct - The product documentation.
 type ConstantProduct struct {
 	// Constant string
 	ConstProperty *string `json:"constProperty,omitempty"`
@@ -75,7 +75,7 @@ func (e Error) Error() string {
 	return msg
 }
 
-// The product documentation.
+// Product - The product documentation.
 type Product struct {
 	// Non required int betwen 0 and 100 exclusive.
 	Capacity *int32 `json:"capacity,omitempty"`
