@@ -103,7 +103,7 @@ func unmarshalMyBaseTypeClassification(rawMsg *json.RawMessage) (MyBaseTypeClass
 	}
 	var b MyBaseTypeClassification
 	switch m["kind"] {
-	case MyKindKind1:
+	case string(MyKindKind1):
 		b = &MyDerivedType{}
 	default:
 		b = &MyBaseType{}

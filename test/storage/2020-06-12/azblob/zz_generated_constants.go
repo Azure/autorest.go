@@ -567,6 +567,7 @@ const (
 	StorageErrorCodeBlobNotFound                                      StorageErrorCode = "BlobNotFound"
 	StorageErrorCodeBlobOverwritten                                   StorageErrorCode = "BlobOverwritten"
 	StorageErrorCodeBlobTierInadequateForContentLength                StorageErrorCode = "BlobTierInadequateForContentLength"
+	StorageErrorCodeBlobUsesCustomerSpecifiedEncryption               StorageErrorCode = "BlobUsesCustomerSpecifiedEncryption"
 	StorageErrorCodeBlockCountExceedsLimit                            StorageErrorCode = "BlockCountExceedsLimit"
 	StorageErrorCodeBlockListTooLong                                  StorageErrorCode = "BlockListTooLong"
 	StorageErrorCodeCannotChangeToLowerTier                           StorageErrorCode = "CannotChangeToLowerTier"
@@ -684,6 +685,7 @@ func PossibleStorageErrorCodeValues() []StorageErrorCode {
 		StorageErrorCodeBlobNotFound,
 		StorageErrorCodeBlobOverwritten,
 		StorageErrorCodeBlobTierInadequateForContentLength,
+		StorageErrorCodeBlobUsesCustomerSpecifiedEncryption,
 		StorageErrorCodeBlockCountExceedsLimit,
 		StorageErrorCodeBlockListTooLong,
 		StorageErrorCodeCannotChangeToLowerTier,

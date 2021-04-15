@@ -1156,9 +1156,9 @@ func unmarshalIntegrationRuntimeClassification(rawMsg *json.RawMessage) (Integra
 	}
 	var b IntegrationRuntimeClassification
 	switch m["type"] {
-	case IntegrationRuntimeTypeManaged:
+	case string(IntegrationRuntimeTypeManaged):
 		b = &ManagedIntegrationRuntime{}
-	case IntegrationRuntimeTypeSelfHosted:
+	case string(IntegrationRuntimeTypeSelfHosted):
 		b = &SelfHostedIntegrationRuntime{}
 	default:
 		b = &IntegrationRuntime{}
@@ -1874,11 +1874,11 @@ func unmarshalWebLinkedServiceTypePropertiesClassification(rawMsg *json.RawMessa
 	}
 	var b WebLinkedServiceTypePropertiesClassification
 	switch m["authenticationType"] {
-	case WebAuthenticationTypeAnonymous:
+	case string(WebAuthenticationTypeAnonymous):
 		b = &WebAnonymousAuthentication{}
-	case WebAuthenticationTypeBasic:
+	case string(WebAuthenticationTypeBasic):
 		b = &WebBasicAuthentication{}
-	case WebAuthenticationTypeClientCertificate:
+	case string(WebAuthenticationTypeClientCertificate):
 		b = &WebClientCertificateAuthentication{}
 	default:
 		b = &WebLinkedServiceTypeProperties{}

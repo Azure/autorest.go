@@ -57,7 +57,12 @@ export async function generatePolymorphicHelpers(session: Session<CodeModel>): P
     text += `\tswitch m["${disc.discriminator!.property.serializedName}"] {\n`;
     for (const val of values(disc.discriminator!.all)) {
       const objSchema = <ObjectSchema>val;
-      text += `\tcase ${objSchema.discriminatorValue}:\n`;
+      let disc = objSchema.discriminatorValue;
+      // when the discriminator value is an enum, cast the const as a string
+      if (disc![0] !== '"') {
+        disc = `string(${disc})`;
+      }
+      text += `\tcase ${disc}:\n`;
       text += `\t\tb = &${val.language.go!.name}{}\n`;
     }
     text += '\tdefault:\n';
