@@ -70,7 +70,7 @@ func (client *linkedServiceClient) createOrUpdateLinkedServiceHandleResponse(res
 // createOrUpdateLinkedServiceHandleError handles the CreateOrUpdateLinkedService error response.
 func (client *linkedServiceClient) createOrUpdateLinkedServiceHandleError(resp *azcore.Response) error {
 	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
+	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
 		return err
 	}
 	return azcore.NewResponseError(&err, resp.Response)
@@ -114,7 +114,7 @@ func (client *linkedServiceClient) deleteLinkedServiceCreateRequest(ctx context.
 // deleteLinkedServiceHandleError handles the DeleteLinkedService error response.
 func (client *linkedServiceClient) deleteLinkedServiceHandleError(resp *azcore.Response) error {
 	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
+	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
 		return err
 	}
 	return azcore.NewResponseError(&err, resp.Response)
@@ -170,7 +170,7 @@ func (client *linkedServiceClient) getLinkedServiceHandleResponse(resp *azcore.R
 // getLinkedServiceHandleError handles the GetLinkedService error response.
 func (client *linkedServiceClient) getLinkedServiceHandleError(resp *azcore.Response) error {
 	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
+	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
 		return err
 	}
 	return azcore.NewResponseError(&err, resp.Response)
@@ -219,7 +219,7 @@ func (client *linkedServiceClient) getLinkedServicesByWorkspaceHandleResponse(re
 // getLinkedServicesByWorkspaceHandleError handles the GetLinkedServicesByWorkspace error response.
 func (client *linkedServiceClient) getLinkedServicesByWorkspaceHandleError(resp *azcore.Response) error {
 	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
+	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
 		return err
 	}
 	return azcore.NewResponseError(&err, resp.Response)
@@ -263,7 +263,7 @@ func (client *linkedServiceClient) renameLinkedServiceCreateRequest(ctx context.
 // renameLinkedServiceHandleError handles the RenameLinkedService error response.
 func (client *linkedServiceClient) renameLinkedServiceHandleError(resp *azcore.Response) error {
 	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
+	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
 		return err
 	}
 	return azcore.NewResponseError(&err, resp.Response)

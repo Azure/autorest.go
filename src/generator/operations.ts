@@ -840,7 +840,8 @@ function createProtocolErrHandler(op: Operation, imports: ImportManager): string
       typeName = schemaError.language.go!.internalErrorType;
     }
     unmarshaller += `var err ${typeName}\n`;
-    unmarshaller += `${prefix}if err := resp.UnmarshalAs${errFormat.toUpperCase()}(&err); err != nil {\n`;
+    const innerErr = schemaError.language.go!.flattenedErr? `.${schemaError.language.go!.flattenedErr}` : '';
+    unmarshaller += `${prefix}if err := resp.UnmarshalAs${errFormat.toUpperCase()}(&err${innerErr}); err != nil {\n`;
     unmarshaller += `${prefix}\treturn err\n`;
     unmarshaller += `${prefix}}\n`;
     if (schemaError.language.go!.internalErrorType) {
