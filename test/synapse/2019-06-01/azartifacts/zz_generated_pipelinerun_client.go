@@ -62,7 +62,7 @@ func (client *pipelineRunClient) cancelPipelineRunCreateRequest(ctx context.Cont
 // cancelPipelineRunHandleError handles the CancelPipelineRun error response.
 func (client *pipelineRunClient) cancelPipelineRunHandleError(resp *azcore.Response) error {
 	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
+	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
 		return err
 	}
 	return azcore.NewResponseError(&err, resp.Response)
@@ -115,7 +115,7 @@ func (client *pipelineRunClient) getPipelineRunHandleResponse(resp *azcore.Respo
 // getPipelineRunHandleError handles the GetPipelineRun error response.
 func (client *pipelineRunClient) getPipelineRunHandleError(resp *azcore.Response) error {
 	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
+	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
 		return err
 	}
 	return azcore.NewResponseError(&err, resp.Response)
@@ -172,7 +172,7 @@ func (client *pipelineRunClient) queryActivityRunsHandleResponse(resp *azcore.Re
 // queryActivityRunsHandleError handles the QueryActivityRuns error response.
 func (client *pipelineRunClient) queryActivityRunsHandleError(resp *azcore.Response) error {
 	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
+	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
 		return err
 	}
 	return azcore.NewResponseError(&err, resp.Response)
@@ -221,7 +221,7 @@ func (client *pipelineRunClient) queryPipelineRunsByWorkspaceHandleResponse(resp
 // queryPipelineRunsByWorkspaceHandleError handles the QueryPipelineRunsByWorkspace error response.
 func (client *pipelineRunClient) queryPipelineRunsByWorkspaceHandleError(resp *azcore.Response) error {
 	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
+	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
 		return err
 	}
 	return azcore.NewResponseError(&err, resp.Response)

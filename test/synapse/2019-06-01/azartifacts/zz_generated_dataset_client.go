@@ -70,7 +70,7 @@ func (client *datasetClient) createOrUpdateDatasetHandleResponse(resp *azcore.Re
 // createOrUpdateDatasetHandleError handles the CreateOrUpdateDataset error response.
 func (client *datasetClient) createOrUpdateDatasetHandleError(resp *azcore.Response) error {
 	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
+	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
 		return err
 	}
 	return azcore.NewResponseError(&err, resp.Response)
@@ -114,7 +114,7 @@ func (client *datasetClient) deleteDatasetCreateRequest(ctx context.Context, dat
 // deleteDatasetHandleError handles the DeleteDataset error response.
 func (client *datasetClient) deleteDatasetHandleError(resp *azcore.Response) error {
 	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
+	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
 		return err
 	}
 	return azcore.NewResponseError(&err, resp.Response)
@@ -170,7 +170,7 @@ func (client *datasetClient) getDatasetHandleResponse(resp *azcore.Response) (Da
 // getDatasetHandleError handles the GetDataset error response.
 func (client *datasetClient) getDatasetHandleError(resp *azcore.Response) error {
 	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
+	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
 		return err
 	}
 	return azcore.NewResponseError(&err, resp.Response)
@@ -219,7 +219,7 @@ func (client *datasetClient) getDatasetsByWorkspaceHandleResponse(resp *azcore.R
 // getDatasetsByWorkspaceHandleError handles the GetDatasetsByWorkspace error response.
 func (client *datasetClient) getDatasetsByWorkspaceHandleError(resp *azcore.Response) error {
 	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
+	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
 		return err
 	}
 	return azcore.NewResponseError(&err, resp.Response)
@@ -263,7 +263,7 @@ func (client *datasetClient) renameDatasetCreateRequest(ctx context.Context, dat
 // renameDatasetHandleError handles the RenameDataset error response.
 func (client *datasetClient) renameDatasetHandleError(resp *azcore.Response) error {
 	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
+	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
 		return err
 	}
 	return azcore.NewResponseError(&err, resp.Response)

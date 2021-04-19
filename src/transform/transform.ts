@@ -518,6 +518,9 @@ function processOperationResponses(session: Session<CodeModel>) {
             if (prop.language.go!.name === 'Error') {
               prop.language.go!.name = 'Inner' + prop.language.go!.name;
             }
+            if (prop.extensions?.['x-ms-client-flatten'] === true) {
+              schemaError.language.go!.flattenedErr = prop.language.go!.name;
+            }
           }
           // annotate all child and parent error types.  note that errorType has
           // special significance which is why we use inheritedErrorType instead.

@@ -70,7 +70,7 @@ func (client *sqlScriptClient) createOrUpdateSQLScriptHandleResponse(resp *azcor
 // createOrUpdateSQLScriptHandleError handles the CreateOrUpdateSQLScript error response.
 func (client *sqlScriptClient) createOrUpdateSQLScriptHandleError(resp *azcore.Response) error {
 	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
+	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
 		return err
 	}
 	return azcore.NewResponseError(&err, resp.Response)
@@ -114,7 +114,7 @@ func (client *sqlScriptClient) deleteSQLScriptCreateRequest(ctx context.Context,
 // deleteSQLScriptHandleError handles the DeleteSQLScript error response.
 func (client *sqlScriptClient) deleteSQLScriptHandleError(resp *azcore.Response) error {
 	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
+	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
 		return err
 	}
 	return azcore.NewResponseError(&err, resp.Response)
@@ -170,7 +170,7 @@ func (client *sqlScriptClient) getSQLScriptHandleResponse(resp *azcore.Response)
 // getSQLScriptHandleError handles the GetSQLScript error response.
 func (client *sqlScriptClient) getSQLScriptHandleError(resp *azcore.Response) error {
 	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
+	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
 		return err
 	}
 	return azcore.NewResponseError(&err, resp.Response)
@@ -219,7 +219,7 @@ func (client *sqlScriptClient) getSQLScriptsByWorkspaceHandleResponse(resp *azco
 // getSQLScriptsByWorkspaceHandleError handles the GetSQLScriptsByWorkspace error response.
 func (client *sqlScriptClient) getSQLScriptsByWorkspaceHandleError(resp *azcore.Response) error {
 	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
+	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
 		return err
 	}
 	return azcore.NewResponseError(&err, resp.Response)
@@ -263,7 +263,7 @@ func (client *sqlScriptClient) renameSQLScriptCreateRequest(ctx context.Context,
 // renameSQLScriptHandleError handles the RenameSQLScript error response.
 func (client *sqlScriptClient) renameSQLScriptHandleError(resp *azcore.Response) error {
 	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
+	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
 		return err
 	}
 	return azcore.NewResponseError(&err, resp.Response)

@@ -60,7 +60,7 @@ func (client *dataFlowDebugSessionClient) addDataFlowHandleResponse(resp *azcore
 // addDataFlowHandleError handles the AddDataFlow error response.
 func (client *dataFlowDebugSessionClient) addDataFlowHandleError(resp *azcore.Response) error {
 	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
+	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
 		return err
 	}
 	return azcore.NewResponseError(&err, resp.Response)
@@ -109,7 +109,7 @@ func (client *dataFlowDebugSessionClient) createDataFlowDebugSessionHandleRespon
 // createDataFlowDebugSessionHandleError handles the CreateDataFlowDebugSession error response.
 func (client *dataFlowDebugSessionClient) createDataFlowDebugSessionHandleError(resp *azcore.Response) error {
 	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
+	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
 		return err
 	}
 	return azcore.NewResponseError(&err, resp.Response)
@@ -149,7 +149,7 @@ func (client *dataFlowDebugSessionClient) deleteDataFlowDebugSessionCreateReques
 // deleteDataFlowDebugSessionHandleError handles the DeleteDataFlowDebugSession error response.
 func (client *dataFlowDebugSessionClient) deleteDataFlowDebugSessionHandleError(resp *azcore.Response) error {
 	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
+	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
 		return err
 	}
 	return azcore.NewResponseError(&err, resp.Response)
@@ -198,7 +198,7 @@ func (client *dataFlowDebugSessionClient) executeCommandHandleResponse(resp *azc
 // executeCommandHandleError handles the ExecuteCommand error response.
 func (client *dataFlowDebugSessionClient) executeCommandHandleError(resp *azcore.Response) error {
 	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
+	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
 		return err
 	}
 	return azcore.NewResponseError(&err, resp.Response)
@@ -247,7 +247,7 @@ func (client *dataFlowDebugSessionClient) queryDataFlowDebugSessionsByWorkspaceH
 // queryDataFlowDebugSessionsByWorkspaceHandleError handles the QueryDataFlowDebugSessionsByWorkspace error response.
 func (client *dataFlowDebugSessionClient) queryDataFlowDebugSessionsByWorkspaceHandleError(resp *azcore.Response) error {
 	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
+	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
 		return err
 	}
 	return azcore.NewResponseError(&err, resp.Response)

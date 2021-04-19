@@ -70,7 +70,7 @@ func (client *dataFlowClient) createOrUpdateDataFlowHandleResponse(resp *azcore.
 // createOrUpdateDataFlowHandleError handles the CreateOrUpdateDataFlow error response.
 func (client *dataFlowClient) createOrUpdateDataFlowHandleError(resp *azcore.Response) error {
 	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
+	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
 		return err
 	}
 	return azcore.NewResponseError(&err, resp.Response)
@@ -114,7 +114,7 @@ func (client *dataFlowClient) deleteDataFlowCreateRequest(ctx context.Context, d
 // deleteDataFlowHandleError handles the DeleteDataFlow error response.
 func (client *dataFlowClient) deleteDataFlowHandleError(resp *azcore.Response) error {
 	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
+	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
 		return err
 	}
 	return azcore.NewResponseError(&err, resp.Response)
@@ -170,7 +170,7 @@ func (client *dataFlowClient) getDataFlowHandleResponse(resp *azcore.Response) (
 // getDataFlowHandleError handles the GetDataFlow error response.
 func (client *dataFlowClient) getDataFlowHandleError(resp *azcore.Response) error {
 	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
+	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
 		return err
 	}
 	return azcore.NewResponseError(&err, resp.Response)
@@ -219,7 +219,7 @@ func (client *dataFlowClient) getDataFlowsByWorkspaceHandleResponse(resp *azcore
 // getDataFlowsByWorkspaceHandleError handles the GetDataFlowsByWorkspace error response.
 func (client *dataFlowClient) getDataFlowsByWorkspaceHandleError(resp *azcore.Response) error {
 	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
+	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
 		return err
 	}
 	return azcore.NewResponseError(&err, resp.Response)
@@ -263,7 +263,7 @@ func (client *dataFlowClient) renameDataFlowCreateRequest(ctx context.Context, d
 // renameDataFlowHandleError handles the RenameDataFlow error response.
 func (client *dataFlowClient) renameDataFlowHandleError(resp *azcore.Response) error {
 	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
+	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
 		return err
 	}
 	return azcore.NewResponseError(&err, resp.Response)
