@@ -45,8 +45,8 @@ func (p *httpPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-func (p *httpPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*http.Response, error) {
-	return p.pt.PollUntilDone(ctx, frequency, p.pipeline, nil)
+func (p *httpPoller) pollUntilDone(ctx context.Context, freq time.Duration) (*http.Response, error) {
+	return p.pt.PollUntilDone(ctx, freq, p.pipeline, nil)
 }
 
 // ProductArrayPoller provides polling facilities until the operation reaches a terminal state.
@@ -85,9 +85,9 @@ func (p *productArrayPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-func (p *productArrayPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (ProductArrayResponse, error) {
+func (p *productArrayPoller) pollUntilDone(ctx context.Context, freq time.Duration) (ProductArrayResponse, error) {
 	respType := ProductArrayResponse{ProductArray: []*Product{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, &respType.ProductArray)
+	resp, err := p.pt.PollUntilDone(ctx, freq, p.pipeline, &respType.ProductArray)
 	if err != nil {
 		return ProductArrayResponse{}, err
 	}
@@ -131,9 +131,9 @@ func (p *productPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-func (p *productPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (ProductResponse, error) {
+func (p *productPoller) pollUntilDone(ctx context.Context, freq time.Duration) (ProductResponse, error) {
 	respType := ProductResponse{Product: &Product{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.Product)
+	resp, err := p.pt.PollUntilDone(ctx, freq, p.pipeline, respType.Product)
 	if err != nil {
 		return ProductResponse{}, err
 	}
@@ -177,9 +177,9 @@ func (p *skuPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-func (p *skuPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (SKUResponse, error) {
+func (p *skuPoller) pollUntilDone(ctx context.Context, freq time.Duration) (SKUResponse, error) {
 	respType := SKUResponse{SKU: &SKU{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.SKU)
+	resp, err := p.pt.PollUntilDone(ctx, freq, p.pipeline, respType.SKU)
 	if err != nil {
 		return SKUResponse{}, err
 	}
@@ -223,9 +223,9 @@ func (p *subProductPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-func (p *subProductPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (SubProductResponse, error) {
+func (p *subProductPoller) pollUntilDone(ctx context.Context, freq time.Duration) (SubProductResponse, error) {
 	respType := SubProductResponse{SubProduct: &SubProduct{}}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType.SubProduct)
+	resp, err := p.pt.PollUntilDone(ctx, freq, p.pipeline, respType.SubProduct)
 	if err != nil {
 		return SubProductResponse{}, err
 	}

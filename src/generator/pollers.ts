@@ -37,27 +37,32 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
     bodyText += finalResponseDecl(poller);
     bodyText += '}\n\n';
     // now generate the internal poller type
-    // TODO: figure out story for data-plane
+    const pollerName = internalPollerTypeName(poller);
+    bodyText += `type ${pollerName} struct {\n`;
     if (isARM) {
-      const pollerName = internalPollerTypeName(poller);
-      bodyText += `type ${pollerName} struct {\n`;
       bodyText += '\tpipeline azcore.Pipeline\n';
-      if (poller.pager) {
-        bodyText += `\terrHandler ${ensureNameCase(poller.pager.respType, true)}HandleError\n`;
-        bodyText += `\trespHandler ${ensureNameCase(poller.pager.respType, true)}HandleResponse\n`;
-        bodyText += '\tstatusCodes []int\n';
-      }
       bodyText += '\tpt armcore.Poller\n';
-      bodyText += '}\n\n';
-      // internal poller methods
-      bodyText += `func (p *${pollerName}) Done() bool {\n\treturn p.pt.Done()\n}\n\n`;
-      bodyText += `func (p *${pollerName}) Poll(ctx context.Context) (*http.Response, error) {\n\treturn p.pt.Poll(ctx, p.pipeline)\n}\n\n`;
-      bodyText += pudFinalResp('FinalResponse', poller, imports);
-      bodyText += `func (p *${pollerName}) ResumeToken() (string, error) {\n\treturn p.pt.ResumeToken()\n}\n\n`;
-      bodyText += pudFinalResp('pollUntilDone', poller, imports);
-      if (poller.pager) {
-        bodyText += pagerHandleResponse(poller);
-      }
+    } else {
+      bodyText += '\tpt *azcore.LROPoller\n';
+    }
+    if (poller.pager) {
+      bodyText += `\terrHandler ${ensureNameCase(poller.pager.respType, true)}HandleError\n`;
+      bodyText += `\trespHandler ${ensureNameCase(poller.pager.respType, true)}HandleResponse\n`;
+      bodyText += '\tstatusCodes []int\n';
+    }
+    bodyText += '}\n\n';
+    // internal poller methods
+    bodyText += `func (p *${pollerName}) Done() bool {\n\treturn p.pt.Done()\n}\n\n`;
+    let plParam = '';
+    if (isARM) {
+      plParam = ', p.pipeline';
+    }
+    bodyText += `func (p *${pollerName}) Poll(ctx context.Context) (*http.Response, error) {\n\treturn p.pt.Poll(ctx${plParam})\n}\n\n`;
+    bodyText += pudFinalResp('FinalResponse', poller, imports, isARM);
+    bodyText += `func (p *${pollerName}) ResumeToken() (string, error) {\n\treturn p.pt.ResumeToken()\n}\n\n`;
+    bodyText += pudFinalResp('pollUntilDone', poller, imports, isARM);
+    if (poller.pager) {
+      bodyText += pagerHandleResponse(poller);
     }
   }
   text += imports.text();
@@ -87,19 +92,23 @@ function finalResponseDecl(poller: PollerInfo): string {
 
 // generates the pollUntilDone and FinalResponse methods.
 // the implementations are almost identical, just a few different params.
-function pudFinalResp(op: 'pollUntilDone' | 'FinalResponse', poller: PollerInfo, imports: ImportManager): string {
+function pudFinalResp(op: 'pollUntilDone' | 'FinalResponse', poller: PollerInfo, imports: ImportManager, isARM: boolean): string {
   let durParam = '';
   let freqParam = '';
+  let plParam = '';
   if (op === 'pollUntilDone') {
     imports.add('time');
-    durParam = ', frequency time.Duration';
-    freqParam = ', frequency';
+    durParam = ', freq time.Duration';
+    freqParam = ', freq';
+  }
+  if (isARM) {
+    plParam = ', p.pipeline';
   }
   let text = `func (p *${internalPollerTypeName(poller)}) ${op}(ctx context.Context${durParam}) (${getResponseType(poller)}, error) {\n`;
   if (poller.pager) {
     // pager-pollers have a slightly different impl
     text += `\trespType := &${ensureNameCase(poller.pager.name, true)}{}\n`;
-    text += `\tresp, err := p.pt.${op.capitalize()}(ctx${freqParam}, p.pipeline, respType)\n`;
+    text += `\tresp, err := p.pt.${op.capitalize()}(ctx${freqParam}${plParam}, respType)\n`;
     text += `\tif err != nil {\n\t\treturn nil, err\n\t}\n`;
     text += '\treturn p.handleResponse(&azcore.Response{Response: resp})\n';
   } else if (poller.respType) {
@@ -119,13 +128,13 @@ function pudFinalResp(op: 'pollUntilDone' | 'FinalResponse', poller: PollerInfo,
     } else {
       text += `\trespType := ${poller.respEnv}{${poller.respField}: ${respByRef}${poller.respType.language.go!.name}{}}\n`;
     }
-    text += `\tresp, err := p.pt.${op.capitalize()}(ctx${freqParam}, p.pipeline, ${reference}respType.${poller.respField})\n`;
+    text += `\tresp, err := p.pt.${op.capitalize()}(ctx${freqParam}${plParam}, ${reference}respType.${poller.respField})\n`;
     text += `\tif err != nil {\n\t\treturn ${poller.respEnv}{}, err\n\t}\n`;
     text += '\trespType.RawResponse = resp\n';
     text += '\treturn respType, nil\n';
   } else {
     // poller doesn't return a type
-    text += `\treturn p.pt.${op.capitalize()}(ctx${freqParam}, p.pipeline, nil)\n`;
+    text += `\treturn p.pt.${op.capitalize()}(ctx${freqParam}${plParam}, nil)\n`;
   }
   text += '}\n\n';
   return text;

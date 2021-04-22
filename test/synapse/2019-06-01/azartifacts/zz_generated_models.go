@@ -13,7 +13,6 @@ import (
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
-	"reflect"
 	"time"
 )
 
@@ -29658,9 +29657,12 @@ func (z *ZohoSource) UnmarshalJSON(data []byte) error {
 }
 
 func populate(m map[string]interface{}, k string, v interface{}) {
+	if v == nil {
+		return
+	}
 	if azcore.IsNullValue(v) {
 		m[k] = nil
-	} else if !reflect.ValueOf(v).IsNil() {
+	} else {
 		m[k] = v
 	}
 }

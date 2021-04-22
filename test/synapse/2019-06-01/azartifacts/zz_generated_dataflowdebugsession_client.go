@@ -11,6 +11,7 @@ import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
+	"time"
 )
 
 type dataFlowDebugSessionClient struct {
@@ -64,6 +65,41 @@ func (client *dataFlowDebugSessionClient) addDataFlowHandleError(resp *azcore.Re
 		return err
 	}
 	return azcore.NewResponseError(&err, resp.Response)
+}
+
+// BeginCreateDataFlowDebugSession - Creates a data flow debug session.
+func (client *dataFlowDebugSessionClient) BeginCreateDataFlowDebugSession(ctx context.Context, request CreateDataFlowDebugSessionRequest, options *DataFlowDebugSessionBeginCreateDataFlowDebugSessionOptions) (CreateDataFlowDebugSessionResponsePollerResponse, error) {
+	resp, err := client.createDataFlowDebugSession(ctx, request, options)
+	if err != nil {
+		return CreateDataFlowDebugSessionResponsePollerResponse{}, err
+	}
+	result := CreateDataFlowDebugSessionResponsePollerResponse{
+		RawResponse: resp.Response,
+	}
+	pt, err := azcore.NewLROPoller("dataFlowDebugSessionClient.CreateDataFlowDebugSession", resp, client.con.Pipeline(), client.createDataFlowDebugSessionHandleError)
+	if err != nil {
+		return CreateDataFlowDebugSessionResponsePollerResponse{}, err
+	}
+	poller := &createDataFlowDebugSessionResponsePoller{
+		pt: pt,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (CreateDataFlowDebugSessionResponseResponse, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
+}
+
+// ResumeCreateDataFlowDebugSession creates a new CreateDataFlowDebugSessionResponsePoller from the specified resume token.
+// token - The value must come from a previous call to CreateDataFlowDebugSessionResponsePoller.ResumeToken().
+func (client *dataFlowDebugSessionClient) ResumeCreateDataFlowDebugSession(token string) (CreateDataFlowDebugSessionResponsePoller, error) {
+	pt, err := azcore.NewLROPollerFromResumeToken("dataFlowDebugSessionClient.CreateDataFlowDebugSession", token, client.con.Pipeline(), client.createDataFlowDebugSessionHandleError)
+	if err != nil {
+		return nil, err
+	}
+	return &createDataFlowDebugSessionResponsePoller{
+		pt: pt,
+	}, nil
 }
 
 // CreateDataFlowDebugSession - Creates a data flow debug session.
@@ -153,6 +189,41 @@ func (client *dataFlowDebugSessionClient) deleteDataFlowDebugSessionHandleError(
 		return err
 	}
 	return azcore.NewResponseError(&err, resp.Response)
+}
+
+// BeginExecuteCommand - Execute a data flow debug command.
+func (client *dataFlowDebugSessionClient) BeginExecuteCommand(ctx context.Context, request DataFlowDebugCommandRequest, options *DataFlowDebugSessionBeginExecuteCommandOptions) (DataFlowDebugCommandResponsePollerResponse, error) {
+	resp, err := client.executeCommand(ctx, request, options)
+	if err != nil {
+		return DataFlowDebugCommandResponsePollerResponse{}, err
+	}
+	result := DataFlowDebugCommandResponsePollerResponse{
+		RawResponse: resp.Response,
+	}
+	pt, err := azcore.NewLROPoller("dataFlowDebugSessionClient.ExecuteCommand", resp, client.con.Pipeline(), client.executeCommandHandleError)
+	if err != nil {
+		return DataFlowDebugCommandResponsePollerResponse{}, err
+	}
+	poller := &dataFlowDebugCommandResponsePoller{
+		pt: pt,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DataFlowDebugCommandResponseResponse, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
+}
+
+// ResumeExecuteCommand creates a new DataFlowDebugCommandResponsePoller from the specified resume token.
+// token - The value must come from a previous call to DataFlowDebugCommandResponsePoller.ResumeToken().
+func (client *dataFlowDebugSessionClient) ResumeExecuteCommand(token string) (DataFlowDebugCommandResponsePoller, error) {
+	pt, err := azcore.NewLROPollerFromResumeToken("dataFlowDebugSessionClient.ExecuteCommand", token, client.con.Pipeline(), client.executeCommandHandleError)
+	if err != nil {
+		return nil, err
+	}
+	return &dataFlowDebugCommandResponsePoller{
+		pt: pt,
+	}, nil
 }
 
 // ExecuteCommand - Execute a data flow debug command.

@@ -44,10 +44,10 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     for (const op of values(group.operations)) {
       // protocol creation can add imports to the list so
       // it must be done before the imports are written out
-      if (isARM && isLROOperation(op)) {
+      if (isLROOperation(op)) {
         // generate Begin and Resume methods
-        opText += generateARMLROBeginMethod(op, imports);
-        opText += generateARMLROResumeMethod(op);
+        opText += generateLROBeginMethod(op, imports, isARM);
+        opText += generateLROResumeMethod(op, isARM);
       }
       opText += generateOperation(op, imports);
       opText += createProtocolRequest(session.model, op, imports);
@@ -1045,12 +1045,14 @@ function generateReturnsInfo(op: Operation, apiType: 'api' | 'op' | 'handler'): 
   return [returnType, 'error'];
 }
 
-function generateARMLROBeginMethod(op: Operation, imports: ImportManager): string {
+function generateLROBeginMethod(op: Operation, imports: ImportManager, isARM: boolean): string {
   const info = <OperationNaming>op.language.go!;
   const params = getAPIParametersSig(op, imports);
   const returns = generateReturnsInfo(op, 'api');
   const clientName = op.language.go!.clientName;
-  imports.add('github.com/Azure/azure-sdk-for-go/sdk/armcore');
+  if (isARM) {
+    imports.add('github.com/Azure/azure-sdk-for-go/sdk/armcore');
+  }
   imports.add('time');
   let text = '';
   if (hasDescription(op.language.go!)) {
@@ -1078,7 +1080,11 @@ function generateARMLROBeginMethod(op: Operation, imports: ImportManager): strin
   if (op.extensions?.['x-ms-long-running-operation-options']?.['final-state-via']) {
     finalState = op.extensions?.['x-ms-long-running-operation-options']?.['final-state-via'];
   }
-  text += `\tpt, err := armcore.NewPoller("${clientName}.${op.language.go!.name}", "${finalState}", resp, client.${info.protocolNaming.errorMethod})\n`;
+  if (isARM) {
+    text += `\tpt, err := armcore.NewPoller("${clientName}.${op.language.go!.name}", "${finalState}", resp, client.${info.protocolNaming.errorMethod})\n`;
+  } else {
+    text += `\tpt, err := azcore.NewLROPoller("${clientName}.${op.language.go!.name}",resp, client.con.Pipeline(), client.${info.protocolNaming.errorMethod})\n`;
+  }
   text += '\tif err != nil {\n';
   text += `\t\treturn ${zeroResp}, err\n`;
   text += '\t}\n';
@@ -1104,7 +1110,9 @@ function generateARMLROBeginMethod(op: Operation, imports: ImportManager): strin
     text += '\t\t},\n';
     text += `\t\tstatusCodes: []int{${formatStatusCodes(statusCodes)}},\n`;
   }
-  text += '\t\tpipeline: client.con.Pipeline(),\n';
+  if (isARM) {
+    text += '\t\tpipeline: client.con.Pipeline(),\n';
+  }
   text += '\t}\n';
   text += '\tresult.Poller = poller\n';
   // determine the poller response based on the name and whether is is a pageable operation
@@ -1123,18 +1131,24 @@ function generateARMLROBeginMethod(op: Operation, imports: ImportManager): strin
   return text;
 }
 
-function generateARMLROResumeMethod(op: Operation): string {
+function generateLROResumeMethod(op: Operation, isARM: boolean): string {
   const info = <OperationNaming>op.language.go!;
   const clientName = op.language.go!.clientName;
   let text = `// Resume${op.language.go!.name} creates a new ${op.language.go!.pollerType.name} from the specified resume token.\n`;
   text += `// token - The value must come from a previous call to ${op.language.go!.pollerType.name}.ResumeToken().\n`;
   text += `func (client *${clientName}) Resume${op.language.go!.name}(token string) (${op.language.go!.pollerType.name}, error) {\n`;
-  text += `\tpt, err := armcore.NewPollerFromResumeToken("${clientName}.${op.language.go!.name}", token, client.${info.protocolNaming.errorMethod})\n`;
+  if (isARM) {
+    text += `\tpt, err := armcore.NewPollerFromResumeToken("${clientName}.${op.language.go!.name}", token, client.${info.protocolNaming.errorMethod})\n`;
+  } else {
+    text += `\tpt, err := azcore.NewLROPollerFromResumeToken("${clientName}.${op.language.go!.name}",token, client.con.Pipeline(), client.${info.protocolNaming.errorMethod})\n`;
+  }
   text += '\tif err != nil {\n';
   text += '\t\treturn nil, err\n';
   text += '\t}\n';
   text += `\treturn &${internalPollerTypeName(<PollerInfo>op.language.go!.pollerType)}{\n`;
-  text += '\t\tpipeline: client.con.Pipeline(),\n';
+  if (isARM) {
+    text += '\t\tpipeline: client.con.Pipeline(),\n';
+  }
   text += '\t\tpt: pt,\n';
   text += '\t}, nil\n';
   text += '}\n\n';
