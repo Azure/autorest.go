@@ -46,14 +46,26 @@ func (client *sqlScriptClient) BeginCreateOrUpdateSQLScript(ctx context.Context,
 
 // ResumeCreateOrUpdateSQLScript creates a new SQLScriptResourcePoller from the specified resume token.
 // token - The value must come from a previous call to SQLScriptResourcePoller.ResumeToken().
-func (client *sqlScriptClient) ResumeCreateOrUpdateSQLScript(token string) (SQLScriptResourcePoller, error) {
+func (client *sqlScriptClient) ResumeCreateOrUpdateSQLScript(ctx context.Context, token string) (SQLScriptResourcePollerResponse, error) {
 	pt, err := azcore.NewLROPollerFromResumeToken("sqlScriptClient.CreateOrUpdateSQLScript", token, client.con.Pipeline(), client.createOrUpdateSQLScriptHandleError)
 	if err != nil {
-		return nil, err
+		return SQLScriptResourcePollerResponse{}, err
 	}
-	return &sqlScriptResourcePoller{
+	poller := &sqlScriptResourcePoller{
 		pt: pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return SQLScriptResourcePollerResponse{}, err
+	}
+	result := SQLScriptResourcePollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SQLScriptResourceResponse, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // CreateOrUpdateSQLScript - Creates or updates a Sql Script.
@@ -137,14 +149,26 @@ func (client *sqlScriptClient) BeginDeleteSQLScript(ctx context.Context, sqlScri
 
 // ResumeDeleteSQLScript creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *sqlScriptClient) ResumeDeleteSQLScript(token string) (HTTPPoller, error) {
+func (client *sqlScriptClient) ResumeDeleteSQLScript(ctx context.Context, token string) (HTTPPollerResponse, error) {
 	pt, err := azcore.NewLROPollerFromResumeToken("sqlScriptClient.DeleteSQLScript", token, client.con.Pipeline(), client.deleteSQLScriptHandleError)
 	if err != nil {
-		return nil, err
+		return HTTPPollerResponse{}, err
 	}
-	return &httpPoller{
+	poller := &httpPoller{
 		pt: pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return HTTPPollerResponse{}, err
+	}
+	result := HTTPPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // DeleteSQLScript - Deletes a Sql Script.
@@ -321,14 +345,26 @@ func (client *sqlScriptClient) BeginRenameSQLScript(ctx context.Context, sqlScri
 
 // ResumeRenameSQLScript creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *sqlScriptClient) ResumeRenameSQLScript(token string) (HTTPPoller, error) {
+func (client *sqlScriptClient) ResumeRenameSQLScript(ctx context.Context, token string) (HTTPPollerResponse, error) {
 	pt, err := azcore.NewLROPollerFromResumeToken("sqlScriptClient.RenameSQLScript", token, client.con.Pipeline(), client.renameSQLScriptHandleError)
 	if err != nil {
-		return nil, err
+		return HTTPPollerResponse{}, err
 	}
-	return &httpPoller{
+	poller := &httpPoller{
 		pt: pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return HTTPPollerResponse{}, err
+	}
+	result := HTTPPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // RenameSQLScript - Renames a sqlScript.

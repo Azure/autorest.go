@@ -44,8 +44,8 @@ func (client *NetworkSecurityGroupsClient) BeginCreateOrUpdate(ctx context.Conte
 		return NetworkSecurityGroupPollerResponse{}, err
 	}
 	poller := &networkSecurityGroupPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NetworkSecurityGroupResponse, error) {
@@ -56,15 +56,27 @@ func (client *NetworkSecurityGroupsClient) BeginCreateOrUpdate(ctx context.Conte
 
 // ResumeCreateOrUpdate creates a new NetworkSecurityGroupPoller from the specified resume token.
 // token - The value must come from a previous call to NetworkSecurityGroupPoller.ResumeToken().
-func (client *NetworkSecurityGroupsClient) ResumeCreateOrUpdate(token string) (NetworkSecurityGroupPoller, error) {
+func (client *NetworkSecurityGroupsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (NetworkSecurityGroupPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("NetworkSecurityGroupsClient.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
-		return nil, err
+		return NetworkSecurityGroupPollerResponse{}, err
 	}
-	return &networkSecurityGroupPoller{
+	poller := &networkSecurityGroupPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return NetworkSecurityGroupPollerResponse{}, err
+	}
+	result := NetworkSecurityGroupPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NetworkSecurityGroupResponse, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // CreateOrUpdate - Creates or updates a network security group in the specified resource group.
@@ -142,8 +154,8 @@ func (client *NetworkSecurityGroupsClient) BeginDelete(ctx context.Context, reso
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -154,15 +166,27 @@ func (client *NetworkSecurityGroupsClient) BeginDelete(ctx context.Context, reso
 
 // ResumeDelete creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *NetworkSecurityGroupsClient) ResumeDelete(token string) (HTTPPoller, error) {
+func (client *NetworkSecurityGroupsClient) ResumeDelete(ctx context.Context, token string) (HTTPPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("NetworkSecurityGroupsClient.Delete", token, client.deleteHandleError)
 	if err != nil {
-		return nil, err
+		return HTTPPollerResponse{}, err
 	}
-	return &httpPoller{
+	poller := &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return HTTPPollerResponse{}, err
+	}
+	result := HTTPPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // Delete - Deletes the specified network security group.

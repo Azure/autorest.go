@@ -163,7 +163,7 @@ func TestGetMultiplePagesLro(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	poller, err = client.ResumeGetMultiplePagesLRO(rt)
+	resp, err = client.ResumeGetMultiplePagesLRO(context.Background(), rt)
 	if err != nil {
 		t.Fatal(err)
 	}

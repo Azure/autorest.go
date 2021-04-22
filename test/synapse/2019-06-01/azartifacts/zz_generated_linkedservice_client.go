@@ -46,14 +46,26 @@ func (client *linkedServiceClient) BeginCreateOrUpdateLinkedService(ctx context.
 
 // ResumeCreateOrUpdateLinkedService creates a new LinkedServiceResourcePoller from the specified resume token.
 // token - The value must come from a previous call to LinkedServiceResourcePoller.ResumeToken().
-func (client *linkedServiceClient) ResumeCreateOrUpdateLinkedService(token string) (LinkedServiceResourcePoller, error) {
+func (client *linkedServiceClient) ResumeCreateOrUpdateLinkedService(ctx context.Context, token string) (LinkedServiceResourcePollerResponse, error) {
 	pt, err := azcore.NewLROPollerFromResumeToken("linkedServiceClient.CreateOrUpdateLinkedService", token, client.con.Pipeline(), client.createOrUpdateLinkedServiceHandleError)
 	if err != nil {
-		return nil, err
+		return LinkedServiceResourcePollerResponse{}, err
 	}
-	return &linkedServiceResourcePoller{
+	poller := &linkedServiceResourcePoller{
 		pt: pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return LinkedServiceResourcePollerResponse{}, err
+	}
+	result := LinkedServiceResourcePollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LinkedServiceResourceResponse, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // CreateOrUpdateLinkedService - Creates or updates a linked service.
@@ -137,14 +149,26 @@ func (client *linkedServiceClient) BeginDeleteLinkedService(ctx context.Context,
 
 // ResumeDeleteLinkedService creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *linkedServiceClient) ResumeDeleteLinkedService(token string) (HTTPPoller, error) {
+func (client *linkedServiceClient) ResumeDeleteLinkedService(ctx context.Context, token string) (HTTPPollerResponse, error) {
 	pt, err := azcore.NewLROPollerFromResumeToken("linkedServiceClient.DeleteLinkedService", token, client.con.Pipeline(), client.deleteLinkedServiceHandleError)
 	if err != nil {
-		return nil, err
+		return HTTPPollerResponse{}, err
 	}
-	return &httpPoller{
+	poller := &httpPoller{
 		pt: pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return HTTPPollerResponse{}, err
+	}
+	result := HTTPPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // DeleteLinkedService - Deletes a linked service.
@@ -321,14 +345,26 @@ func (client *linkedServiceClient) BeginRenameLinkedService(ctx context.Context,
 
 // ResumeRenameLinkedService creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *linkedServiceClient) ResumeRenameLinkedService(token string) (HTTPPoller, error) {
+func (client *linkedServiceClient) ResumeRenameLinkedService(ctx context.Context, token string) (HTTPPollerResponse, error) {
 	pt, err := azcore.NewLROPollerFromResumeToken("linkedServiceClient.RenameLinkedService", token, client.con.Pipeline(), client.renameLinkedServiceHandleError)
 	if err != nil {
-		return nil, err
+		return HTTPPollerResponse{}, err
 	}
-	return &httpPoller{
+	poller := &httpPoller{
 		pt: pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return HTTPPollerResponse{}, err
+	}
+	result := HTTPPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // RenameLinkedService - Renames a linked service.

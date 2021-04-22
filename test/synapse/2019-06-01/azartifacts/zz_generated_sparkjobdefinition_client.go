@@ -46,14 +46,26 @@ func (client *sparkJobDefinitionClient) BeginCreateOrUpdateSparkJobDefinition(ct
 
 // ResumeCreateOrUpdateSparkJobDefinition creates a new SparkJobDefinitionResourcePoller from the specified resume token.
 // token - The value must come from a previous call to SparkJobDefinitionResourcePoller.ResumeToken().
-func (client *sparkJobDefinitionClient) ResumeCreateOrUpdateSparkJobDefinition(token string) (SparkJobDefinitionResourcePoller, error) {
+func (client *sparkJobDefinitionClient) ResumeCreateOrUpdateSparkJobDefinition(ctx context.Context, token string) (SparkJobDefinitionResourcePollerResponse, error) {
 	pt, err := azcore.NewLROPollerFromResumeToken("sparkJobDefinitionClient.CreateOrUpdateSparkJobDefinition", token, client.con.Pipeline(), client.createOrUpdateSparkJobDefinitionHandleError)
 	if err != nil {
-		return nil, err
+		return SparkJobDefinitionResourcePollerResponse{}, err
 	}
-	return &sparkJobDefinitionResourcePoller{
+	poller := &sparkJobDefinitionResourcePoller{
 		pt: pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return SparkJobDefinitionResourcePollerResponse{}, err
+	}
+	result := SparkJobDefinitionResourcePollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SparkJobDefinitionResourceResponse, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // CreateOrUpdateSparkJobDefinition - Creates or updates a Spark Job Definition.
@@ -137,14 +149,26 @@ func (client *sparkJobDefinitionClient) BeginDebugSparkJobDefinition(ctx context
 
 // ResumeDebugSparkJobDefinition creates a new SparkBatchJobPoller from the specified resume token.
 // token - The value must come from a previous call to SparkBatchJobPoller.ResumeToken().
-func (client *sparkJobDefinitionClient) ResumeDebugSparkJobDefinition(token string) (SparkBatchJobPoller, error) {
+func (client *sparkJobDefinitionClient) ResumeDebugSparkJobDefinition(ctx context.Context, token string) (SparkBatchJobPollerResponse, error) {
 	pt, err := azcore.NewLROPollerFromResumeToken("sparkJobDefinitionClient.DebugSparkJobDefinition", token, client.con.Pipeline(), client.debugSparkJobDefinitionHandleError)
 	if err != nil {
-		return nil, err
+		return SparkBatchJobPollerResponse{}, err
 	}
-	return &sparkBatchJobPoller{
+	poller := &sparkBatchJobPoller{
 		pt: pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return SparkBatchJobPollerResponse{}, err
+	}
+	result := SparkBatchJobPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SparkBatchJobResponse, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // DebugSparkJobDefinition - Debug the spark job definition.
@@ -221,14 +245,26 @@ func (client *sparkJobDefinitionClient) BeginDeleteSparkJobDefinition(ctx contex
 
 // ResumeDeleteSparkJobDefinition creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *sparkJobDefinitionClient) ResumeDeleteSparkJobDefinition(token string) (HTTPPoller, error) {
+func (client *sparkJobDefinitionClient) ResumeDeleteSparkJobDefinition(ctx context.Context, token string) (HTTPPollerResponse, error) {
 	pt, err := azcore.NewLROPollerFromResumeToken("sparkJobDefinitionClient.DeleteSparkJobDefinition", token, client.con.Pipeline(), client.deleteSparkJobDefinitionHandleError)
 	if err != nil {
-		return nil, err
+		return HTTPPollerResponse{}, err
 	}
-	return &httpPoller{
+	poller := &httpPoller{
 		pt: pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return HTTPPollerResponse{}, err
+	}
+	result := HTTPPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // DeleteSparkJobDefinition - Deletes a Spark Job Definition.
@@ -300,14 +336,26 @@ func (client *sparkJobDefinitionClient) BeginExecuteSparkJobDefinition(ctx conte
 
 // ResumeExecuteSparkJobDefinition creates a new SparkBatchJobPoller from the specified resume token.
 // token - The value must come from a previous call to SparkBatchJobPoller.ResumeToken().
-func (client *sparkJobDefinitionClient) ResumeExecuteSparkJobDefinition(token string) (SparkBatchJobPoller, error) {
+func (client *sparkJobDefinitionClient) ResumeExecuteSparkJobDefinition(ctx context.Context, token string) (SparkBatchJobPollerResponse, error) {
 	pt, err := azcore.NewLROPollerFromResumeToken("sparkJobDefinitionClient.ExecuteSparkJobDefinition", token, client.con.Pipeline(), client.executeSparkJobDefinitionHandleError)
 	if err != nil {
-		return nil, err
+		return SparkBatchJobPollerResponse{}, err
 	}
-	return &sparkBatchJobPoller{
+	poller := &sparkBatchJobPoller{
 		pt: pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return SparkBatchJobPollerResponse{}, err
+	}
+	result := SparkBatchJobPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SparkBatchJobResponse, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // ExecuteSparkJobDefinition - Executes the spark job definition.
@@ -493,14 +541,26 @@ func (client *sparkJobDefinitionClient) BeginRenameSparkJobDefinition(ctx contex
 
 // ResumeRenameSparkJobDefinition creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *sparkJobDefinitionClient) ResumeRenameSparkJobDefinition(token string) (HTTPPoller, error) {
+func (client *sparkJobDefinitionClient) ResumeRenameSparkJobDefinition(ctx context.Context, token string) (HTTPPollerResponse, error) {
 	pt, err := azcore.NewLROPollerFromResumeToken("sparkJobDefinitionClient.RenameSparkJobDefinition", token, client.con.Pipeline(), client.renameSparkJobDefinitionHandleError)
 	if err != nil {
-		return nil, err
+		return HTTPPollerResponse{}, err
 	}
-	return &httpPoller{
+	poller := &httpPoller{
 		pt: pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return HTTPPollerResponse{}, err
+	}
+	result := HTTPPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // RenameSparkJobDefinition - Renames a sparkJobDefinition.

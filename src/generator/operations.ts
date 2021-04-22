@@ -47,7 +47,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       if (isLROOperation(op)) {
         // generate Begin and Resume methods
         opText += generateLROBeginMethod(op, imports, isARM);
-        opText += generateLROResumeMethod(op, isARM);
+        opText += generateLROResumeMethod(op, imports, isARM);
       }
       opText += generateOperation(op, imports);
       opText += createProtocolRequest(session.model, op, imports);
@@ -840,7 +840,7 @@ function createProtocolErrHandler(op: Operation, imports: ImportManager): string
       typeName = schemaError.language.go!.internalErrorType;
     }
     unmarshaller += `var err ${typeName}\n`;
-    const innerErr = schemaError.language.go!.flattenedErr? `.${schemaError.language.go!.flattenedErr}` : '';
+    const innerErr = schemaError.language.go!.flattenedErr ? `.${schemaError.language.go!.flattenedErr}` : '';
     unmarshaller += `${prefix}if err := resp.UnmarshalAs${errFormat.toUpperCase()}(&err${innerErr}); err != nil {\n`;
     unmarshaller += `${prefix}\treturn err\n`;
     unmarshaller += `${prefix}}\n`;
@@ -1088,31 +1088,52 @@ function generateLROBeginMethod(op: Operation, imports: ImportManager, isARM: bo
   text += '\tif err != nil {\n';
   text += `\t\treturn ${zeroResp}, err\n`;
   text += '\t}\n';
-  text += `\tpoller := &${internalPollerTypeName(<PollerInfo>op.language.go!.pollerType)}{\n`;
-  text += '\t\tpt: pt,\n';
+  text += emitPoller(op, isARM, imports);
+  text += '\tresult.Poller = poller\n';
+  // determine the poller response based on the name and whether is is a pageable operation
+  let pollerResponse = '*http.Response';
   if (isPageableOperation(op)) {
-    const statusCodes = getStatusCodes(op);
-    if (statusCodes.indexOf('200') < 0) {
-      statusCodes.push('200');
-    }
-    if (statusCodes.indexOf('204') < 0) {
-      statusCodes.push('204');
-    }
-    statusCodes.sort();
-    text += `\t\terrHandler: func(resp *azcore.Response) error {\n`;
-    text += `\t\t\tif resp.HasStatusCode(${formatStatusCodes(statusCodes)}) {\n`;
-    text += `\t\t\t\treturn nil\n`;
-    text += '\t\t\t}\n';
-    text += `\t\t\treturn client.${info.protocolNaming.errorMethod}(resp)\n`;
-    text += '\t\t},\n';
-    text += `\t\trespHandler: func(resp *azcore.Response) (${schemaResponse!.schema.language.go!.responseType.name}, error) {\n`;
-    text += generateResponseUnmarshaller(op, schemaResponse!, imports);
-    text += '\t\t},\n';
-    text += `\t\tstatusCodes: []int{${formatStatusCodes(statusCodes)}},\n`;
+    pollerResponse = op.language.go!.pageableType.name;
+  } else if (schemaResponse !== undefined) {
+    pollerResponse = schemaResponse.schema.language.go!.responseType.name;
   }
+  text += `\tresult.PollUntilDone = func(ctx context.Context, frequency time.Duration) (${pollerResponse}, error) {\n`;
+  text += `\t\treturn poller.pollUntilDone(ctx, frequency)\n`;
+  text += `\t}\n`;
+  text += `\treturn result, nil\n`;
+  // closing braces
+  text += '}\n\n';
+  return text;
+}
+
+function generateLROResumeMethod(op: Operation, imports: ImportManager, isARM: boolean): string {
+  const info = <OperationNaming>op.language.go!;
+  const clientName = op.language.go!.clientName;
+  const returns = generateReturnsInfo(op, 'api');
+  const zeroResp = getZeroReturnValue(op, 'api');
+  let text = `// Resume${op.language.go!.name} creates a new ${op.language.go!.pollerType.name} from the specified resume token.\n`;
+  text += `// token - The value must come from a previous call to ${op.language.go!.pollerType.name}.ResumeToken().\n`;
+  text += `func (client *${clientName}) Resume${op.language.go!.name}(ctx context.Context, token string) (${returns.join(', ')}) {\n`;
   if (isARM) {
-    text += '\t\tpipeline: client.con.Pipeline(),\n';
+    text += `\tpt, err := armcore.NewPollerFromResumeToken("${clientName}.${op.language.go!.name}", token, client.${info.protocolNaming.errorMethod})\n`;
+  } else {
+    text += `\tpt, err := azcore.NewLROPollerFromResumeToken("${clientName}.${op.language.go!.name}",token, client.con.Pipeline(), client.${info.protocolNaming.errorMethod})\n`;
   }
+  text += '\tif err != nil {\n';
+  text += `\t\treturn ${zeroResp}, err\n`;
+  text += '\t}\n';
+  text += emitPoller(op, isARM, imports);
+  text += '\tresp, err := poller.Poll(ctx)\n';
+  text += '\tif err != nil {\n';
+  text += `\t\treturn ${zeroResp}, err\n`;
+  text += '\t}\n';
+  const schemaResponse = getResponse(op);
+  if (schemaResponse === undefined) {
+    text += '\tresult := HTTPPollerResponse{\n';
+  } else {
+    text += `\tresult := ${schemaResponse.schema.language.go!.lroResponseType.language.go!.name}{\n`;
+  }
+  text += '\t\tRawResponse: resp,\n';
   text += '\t}\n';
   text += '\tresult.Poller = poller\n';
   // determine the poller response based on the name and whether is is a pageable operation
@@ -1131,27 +1152,35 @@ function generateLROBeginMethod(op: Operation, imports: ImportManager, isARM: bo
   return text;
 }
 
-function generateLROResumeMethod(op: Operation, isARM: boolean): string {
-  const info = <OperationNaming>op.language.go!;
-  const clientName = op.language.go!.clientName;
-  let text = `// Resume${op.language.go!.name} creates a new ${op.language.go!.pollerType.name} from the specified resume token.\n`;
-  text += `// token - The value must come from a previous call to ${op.language.go!.pollerType.name}.ResumeToken().\n`;
-  text += `func (client *${clientName}) Resume${op.language.go!.name}(token string) (${op.language.go!.pollerType.name}, error) {\n`;
-  if (isARM) {
-    text += `\tpt, err := armcore.NewPollerFromResumeToken("${clientName}.${op.language.go!.name}", token, client.${info.protocolNaming.errorMethod})\n`;
-  } else {
-    text += `\tpt, err := azcore.NewLROPollerFromResumeToken("${clientName}.${op.language.go!.name}",token, client.con.Pipeline(), client.${info.protocolNaming.errorMethod})\n`;
-  }
-  text += '\tif err != nil {\n';
-  text += '\t\treturn nil, err\n';
-  text += '\t}\n';
-  text += `\treturn &${internalPollerTypeName(<PollerInfo>op.language.go!.pollerType)}{\n`;
+function emitPoller(op: Operation, isARM: boolean, imports: ImportManager): string {
+  let text = `\tpoller := &${internalPollerTypeName(<PollerInfo>op.language.go!.pollerType)}{\n`;
   if (isARM) {
     text += '\t\tpipeline: client.con.Pipeline(),\n';
   }
   text += '\t\tpt: pt,\n';
-  text += '\t}, nil\n';
-  text += '}\n\n';
+  if (isPageableOperation(op)) {
+    const statusCodes = getStatusCodes(op);
+    if (statusCodes.indexOf('200') < 0) {
+      statusCodes.push('200');
+    }
+    if (statusCodes.indexOf('204') < 0) {
+      statusCodes.push('204');
+    }
+    statusCodes.sort();
+    text += `\t\terrHandler: func(resp *azcore.Response) error {\n`;
+    text += `\t\t\tif resp.HasStatusCode(${formatStatusCodes(statusCodes)}) {\n`;
+    text += `\t\t\t\treturn nil\n`;
+    text += '\t\t\t}\n';
+    const info = <OperationNaming>op.language.go!;
+    text += `\t\t\treturn client.${info.protocolNaming.errorMethod}(resp)\n`;
+    text += '\t\t},\n';
+    const schemaResponse = getResponse(op);
+    text += `\t\trespHandler: func(resp *azcore.Response) (${schemaResponse!.schema.language.go!.responseType.name}, error) {\n`;
+    text += generateResponseUnmarshaller(op, schemaResponse!, imports);
+    text += '\t\t},\n';
+    text += `\t\tstatusCodes: []int{${formatStatusCodes(statusCodes)}},\n`;
+  }
+  text += '\t}\n';
   return text;
 }
 

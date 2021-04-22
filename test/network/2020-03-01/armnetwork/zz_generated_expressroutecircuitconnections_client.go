@@ -44,8 +44,8 @@ func (client *ExpressRouteCircuitConnectionsClient) BeginCreateOrUpdate(ctx cont
 		return ExpressRouteCircuitConnectionPollerResponse{}, err
 	}
 	poller := &expressRouteCircuitConnectionPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitConnectionResponse, error) {
@@ -56,15 +56,27 @@ func (client *ExpressRouteCircuitConnectionsClient) BeginCreateOrUpdate(ctx cont
 
 // ResumeCreateOrUpdate creates a new ExpressRouteCircuitConnectionPoller from the specified resume token.
 // token - The value must come from a previous call to ExpressRouteCircuitConnectionPoller.ResumeToken().
-func (client *ExpressRouteCircuitConnectionsClient) ResumeCreateOrUpdate(token string) (ExpressRouteCircuitConnectionPoller, error) {
+func (client *ExpressRouteCircuitConnectionsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (ExpressRouteCircuitConnectionPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("ExpressRouteCircuitConnectionsClient.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
-		return nil, err
+		return ExpressRouteCircuitConnectionPollerResponse{}, err
 	}
-	return &expressRouteCircuitConnectionPoller{
+	poller := &expressRouteCircuitConnectionPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return ExpressRouteCircuitConnectionPollerResponse{}, err
+	}
+	result := ExpressRouteCircuitConnectionPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitConnectionResponse, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // CreateOrUpdate - Creates or updates a Express Route Circuit Connection in the specified express route circuits.
@@ -150,8 +162,8 @@ func (client *ExpressRouteCircuitConnectionsClient) BeginDelete(ctx context.Cont
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -162,15 +174,27 @@ func (client *ExpressRouteCircuitConnectionsClient) BeginDelete(ctx context.Cont
 
 // ResumeDelete creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *ExpressRouteCircuitConnectionsClient) ResumeDelete(token string) (HTTPPoller, error) {
+func (client *ExpressRouteCircuitConnectionsClient) ResumeDelete(ctx context.Context, token string) (HTTPPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("ExpressRouteCircuitConnectionsClient.Delete", token, client.deleteHandleError)
 	if err != nil {
-		return nil, err
+		return HTTPPollerResponse{}, err
 	}
-	return &httpPoller{
+	poller := &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return HTTPPollerResponse{}, err
+	}
+	result := HTTPPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // Delete - Deletes the specified Express Route Circuit Connection from the specified express route circuit.

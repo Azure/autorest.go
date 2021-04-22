@@ -44,8 +44,8 @@ func (client *VPNConnectionsClient) BeginCreateOrUpdate(ctx context.Context, res
 		return VPNConnectionPollerResponse{}, err
 	}
 	poller := &vpnConnectionPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VPNConnectionResponse, error) {
@@ -56,15 +56,27 @@ func (client *VPNConnectionsClient) BeginCreateOrUpdate(ctx context.Context, res
 
 // ResumeCreateOrUpdate creates a new VPNConnectionPoller from the specified resume token.
 // token - The value must come from a previous call to VPNConnectionPoller.ResumeToken().
-func (client *VPNConnectionsClient) ResumeCreateOrUpdate(token string) (VPNConnectionPoller, error) {
+func (client *VPNConnectionsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (VPNConnectionPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("VPNConnectionsClient.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
-		return nil, err
+		return VPNConnectionPollerResponse{}, err
 	}
-	return &vpnConnectionPoller{
+	poller := &vpnConnectionPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return VPNConnectionPollerResponse{}, err
+	}
+	result := VPNConnectionPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VPNConnectionResponse, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // CreateOrUpdate - Creates a vpn connection to a scalable vpn gateway if it doesn't exist else updates the existing connection.
@@ -146,8 +158,8 @@ func (client *VPNConnectionsClient) BeginDelete(ctx context.Context, resourceGro
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -158,15 +170,27 @@ func (client *VPNConnectionsClient) BeginDelete(ctx context.Context, resourceGro
 
 // ResumeDelete creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *VPNConnectionsClient) ResumeDelete(token string) (HTTPPoller, error) {
+func (client *VPNConnectionsClient) ResumeDelete(ctx context.Context, token string) (HTTPPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("VPNConnectionsClient.Delete", token, client.deleteHandleError)
 	if err != nil {
-		return nil, err
+		return HTTPPollerResponse{}, err
 	}
-	return &httpPoller{
+	poller := &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return HTTPPollerResponse{}, err
+	}
+	result := HTTPPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // Delete - Deletes a vpn connection.

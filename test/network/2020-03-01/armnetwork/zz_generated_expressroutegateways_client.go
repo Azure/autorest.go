@@ -44,8 +44,8 @@ func (client *ExpressRouteGatewaysClient) BeginCreateOrUpdate(ctx context.Contex
 		return ExpressRouteGatewayPollerResponse{}, err
 	}
 	poller := &expressRouteGatewayPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteGatewayResponse, error) {
@@ -56,15 +56,27 @@ func (client *ExpressRouteGatewaysClient) BeginCreateOrUpdate(ctx context.Contex
 
 // ResumeCreateOrUpdate creates a new ExpressRouteGatewayPoller from the specified resume token.
 // token - The value must come from a previous call to ExpressRouteGatewayPoller.ResumeToken().
-func (client *ExpressRouteGatewaysClient) ResumeCreateOrUpdate(token string) (ExpressRouteGatewayPoller, error) {
+func (client *ExpressRouteGatewaysClient) ResumeCreateOrUpdate(ctx context.Context, token string) (ExpressRouteGatewayPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("ExpressRouteGatewaysClient.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
-		return nil, err
+		return ExpressRouteGatewayPollerResponse{}, err
 	}
-	return &expressRouteGatewayPoller{
+	poller := &expressRouteGatewayPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return ExpressRouteGatewayPollerResponse{}, err
+	}
+	result := ExpressRouteGatewayPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteGatewayResponse, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // CreateOrUpdate - Creates or updates a ExpressRoute gateway in a specified resource group.
@@ -143,8 +155,8 @@ func (client *ExpressRouteGatewaysClient) BeginDelete(ctx context.Context, resou
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -155,15 +167,27 @@ func (client *ExpressRouteGatewaysClient) BeginDelete(ctx context.Context, resou
 
 // ResumeDelete creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *ExpressRouteGatewaysClient) ResumeDelete(token string) (HTTPPoller, error) {
+func (client *ExpressRouteGatewaysClient) ResumeDelete(ctx context.Context, token string) (HTTPPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("ExpressRouteGatewaysClient.Delete", token, client.deleteHandleError)
 	if err != nil {
-		return nil, err
+		return HTTPPollerResponse{}, err
 	}
-	return &httpPoller{
+	poller := &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return HTTPPollerResponse{}, err
+	}
+	result := HTTPPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // Delete - Deletes the specified ExpressRoute gateway in a resource group. An ExpressRoute gateway resource can only be deleted when there are no connection

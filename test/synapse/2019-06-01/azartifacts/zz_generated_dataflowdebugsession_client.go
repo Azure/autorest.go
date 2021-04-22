@@ -92,14 +92,26 @@ func (client *dataFlowDebugSessionClient) BeginCreateDataFlowDebugSession(ctx co
 
 // ResumeCreateDataFlowDebugSession creates a new CreateDataFlowDebugSessionResponsePoller from the specified resume token.
 // token - The value must come from a previous call to CreateDataFlowDebugSessionResponsePoller.ResumeToken().
-func (client *dataFlowDebugSessionClient) ResumeCreateDataFlowDebugSession(token string) (CreateDataFlowDebugSessionResponsePoller, error) {
+func (client *dataFlowDebugSessionClient) ResumeCreateDataFlowDebugSession(ctx context.Context, token string) (CreateDataFlowDebugSessionResponsePollerResponse, error) {
 	pt, err := azcore.NewLROPollerFromResumeToken("dataFlowDebugSessionClient.CreateDataFlowDebugSession", token, client.con.Pipeline(), client.createDataFlowDebugSessionHandleError)
 	if err != nil {
-		return nil, err
+		return CreateDataFlowDebugSessionResponsePollerResponse{}, err
 	}
-	return &createDataFlowDebugSessionResponsePoller{
+	poller := &createDataFlowDebugSessionResponsePoller{
 		pt: pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return CreateDataFlowDebugSessionResponsePollerResponse{}, err
+	}
+	result := CreateDataFlowDebugSessionResponsePollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (CreateDataFlowDebugSessionResponseResponse, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // CreateDataFlowDebugSession - Creates a data flow debug session.
@@ -216,14 +228,26 @@ func (client *dataFlowDebugSessionClient) BeginExecuteCommand(ctx context.Contex
 
 // ResumeExecuteCommand creates a new DataFlowDebugCommandResponsePoller from the specified resume token.
 // token - The value must come from a previous call to DataFlowDebugCommandResponsePoller.ResumeToken().
-func (client *dataFlowDebugSessionClient) ResumeExecuteCommand(token string) (DataFlowDebugCommandResponsePoller, error) {
+func (client *dataFlowDebugSessionClient) ResumeExecuteCommand(ctx context.Context, token string) (DataFlowDebugCommandResponsePollerResponse, error) {
 	pt, err := azcore.NewLROPollerFromResumeToken("dataFlowDebugSessionClient.ExecuteCommand", token, client.con.Pipeline(), client.executeCommandHandleError)
 	if err != nil {
-		return nil, err
+		return DataFlowDebugCommandResponsePollerResponse{}, err
 	}
-	return &dataFlowDebugCommandResponsePoller{
+	poller := &dataFlowDebugCommandResponsePoller{
 		pt: pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return DataFlowDebugCommandResponsePollerResponse{}, err
+	}
+	result := DataFlowDebugCommandResponsePollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DataFlowDebugCommandResponseResponse, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // ExecuteCommand - Execute a data flow debug command.

@@ -44,8 +44,8 @@ func (client *IPAllocationsClient) BeginCreateOrUpdate(ctx context.Context, reso
 		return IPAllocationPollerResponse{}, err
 	}
 	poller := &ipAllocationPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (IPAllocationResponse, error) {
@@ -56,15 +56,27 @@ func (client *IPAllocationsClient) BeginCreateOrUpdate(ctx context.Context, reso
 
 // ResumeCreateOrUpdate creates a new IPAllocationPoller from the specified resume token.
 // token - The value must come from a previous call to IPAllocationPoller.ResumeToken().
-func (client *IPAllocationsClient) ResumeCreateOrUpdate(token string) (IPAllocationPoller, error) {
+func (client *IPAllocationsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (IPAllocationPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("IPAllocationsClient.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
-		return nil, err
+		return IPAllocationPollerResponse{}, err
 	}
-	return &ipAllocationPoller{
+	poller := &ipAllocationPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return IPAllocationPollerResponse{}, err
+	}
+	result := IPAllocationPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (IPAllocationResponse, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // CreateOrUpdate - Creates or updates an IpAllocation in the specified resource group.
@@ -142,8 +154,8 @@ func (client *IPAllocationsClient) BeginDelete(ctx context.Context, resourceGrou
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -154,15 +166,27 @@ func (client *IPAllocationsClient) BeginDelete(ctx context.Context, resourceGrou
 
 // ResumeDelete creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *IPAllocationsClient) ResumeDelete(token string) (HTTPPoller, error) {
+func (client *IPAllocationsClient) ResumeDelete(ctx context.Context, token string) (HTTPPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("IPAllocationsClient.Delete", token, client.deleteHandleError)
 	if err != nil {
-		return nil, err
+		return HTTPPollerResponse{}, err
 	}
-	return &httpPoller{
+	poller := &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return HTTPPollerResponse{}, err
+	}
+	result := HTTPPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // Delete - Deletes the specified IpAllocation.

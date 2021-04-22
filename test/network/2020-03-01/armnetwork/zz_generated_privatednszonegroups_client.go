@@ -44,8 +44,8 @@ func (client *PrivateDNSZoneGroupsClient) BeginCreateOrUpdate(ctx context.Contex
 		return PrivateDNSZoneGroupPollerResponse{}, err
 	}
 	poller := &privateDNSZoneGroupPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (PrivateDNSZoneGroupResponse, error) {
@@ -56,15 +56,27 @@ func (client *PrivateDNSZoneGroupsClient) BeginCreateOrUpdate(ctx context.Contex
 
 // ResumeCreateOrUpdate creates a new PrivateDNSZoneGroupPoller from the specified resume token.
 // token - The value must come from a previous call to PrivateDNSZoneGroupPoller.ResumeToken().
-func (client *PrivateDNSZoneGroupsClient) ResumeCreateOrUpdate(token string) (PrivateDNSZoneGroupPoller, error) {
+func (client *PrivateDNSZoneGroupsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (PrivateDNSZoneGroupPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("PrivateDNSZoneGroupsClient.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
-		return nil, err
+		return PrivateDNSZoneGroupPollerResponse{}, err
 	}
-	return &privateDNSZoneGroupPoller{
+	poller := &privateDNSZoneGroupPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return PrivateDNSZoneGroupPollerResponse{}, err
+	}
+	result := PrivateDNSZoneGroupPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (PrivateDNSZoneGroupResponse, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // CreateOrUpdate - Creates or updates a private dns zone group in the specified private endpoint.
@@ -146,8 +158,8 @@ func (client *PrivateDNSZoneGroupsClient) BeginDelete(ctx context.Context, resou
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -158,15 +170,27 @@ func (client *PrivateDNSZoneGroupsClient) BeginDelete(ctx context.Context, resou
 
 // ResumeDelete creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *PrivateDNSZoneGroupsClient) ResumeDelete(token string) (HTTPPoller, error) {
+func (client *PrivateDNSZoneGroupsClient) ResumeDelete(ctx context.Context, token string) (HTTPPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("PrivateDNSZoneGroupsClient.Delete", token, client.deleteHandleError)
 	if err != nil {
-		return nil, err
+		return HTTPPollerResponse{}, err
 	}
-	return &httpPoller{
+	poller := &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return HTTPPollerResponse{}, err
+	}
+	result := HTTPPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // Delete - Deletes the specified private dns zone group.

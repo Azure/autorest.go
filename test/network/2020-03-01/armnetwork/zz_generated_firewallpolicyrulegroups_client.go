@@ -44,8 +44,8 @@ func (client *FirewallPolicyRuleGroupsClient) BeginCreateOrUpdate(ctx context.Co
 		return FirewallPolicyRuleGroupPollerResponse{}, err
 	}
 	poller := &firewallPolicyRuleGroupPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (FirewallPolicyRuleGroupResponse, error) {
@@ -56,15 +56,27 @@ func (client *FirewallPolicyRuleGroupsClient) BeginCreateOrUpdate(ctx context.Co
 
 // ResumeCreateOrUpdate creates a new FirewallPolicyRuleGroupPoller from the specified resume token.
 // token - The value must come from a previous call to FirewallPolicyRuleGroupPoller.ResumeToken().
-func (client *FirewallPolicyRuleGroupsClient) ResumeCreateOrUpdate(token string) (FirewallPolicyRuleGroupPoller, error) {
+func (client *FirewallPolicyRuleGroupsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (FirewallPolicyRuleGroupPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("FirewallPolicyRuleGroupsClient.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
-		return nil, err
+		return FirewallPolicyRuleGroupPollerResponse{}, err
 	}
-	return &firewallPolicyRuleGroupPoller{
+	poller := &firewallPolicyRuleGroupPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return FirewallPolicyRuleGroupPollerResponse{}, err
+	}
+	result := FirewallPolicyRuleGroupPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (FirewallPolicyRuleGroupResponse, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // CreateOrUpdate - Creates or updates the specified FirewallPolicyRuleGroup.
@@ -146,8 +158,8 @@ func (client *FirewallPolicyRuleGroupsClient) BeginDelete(ctx context.Context, r
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -158,15 +170,27 @@ func (client *FirewallPolicyRuleGroupsClient) BeginDelete(ctx context.Context, r
 
 // ResumeDelete creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *FirewallPolicyRuleGroupsClient) ResumeDelete(token string) (HTTPPoller, error) {
+func (client *FirewallPolicyRuleGroupsClient) ResumeDelete(ctx context.Context, token string) (HTTPPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("FirewallPolicyRuleGroupsClient.Delete", token, client.deleteHandleError)
 	if err != nil {
-		return nil, err
+		return HTTPPollerResponse{}, err
 	}
-	return &httpPoller{
+	poller := &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return HTTPPollerResponse{}, err
+	}
+	result := HTTPPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // Delete - Deletes the specified FirewallPolicyRuleGroup.
