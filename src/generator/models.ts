@@ -356,7 +356,7 @@ function generateStructs(imports: ImportManager, objects?: ObjectSchema[]): Stru
         const marshallerType = recursiveWalkObjs(obj, true);
         if (marshallerType === 1) {
           needsM = true;
-        } else if (marshallerType === 2) {
+        } else if (marshallerType > 1) {
           needsM = needsU = true;
         }
       } else if (relationship === 'parent') {
@@ -364,14 +364,14 @@ function generateStructs(imports: ImportManager, objects?: ObjectSchema[]): Stru
         const cMrshallerType = recursiveWalkObjs(obj, false);
         if (pMarshallerType === 1 || cMrshallerType === 1) {
           needsM = needsIntM = true;
-        } else if (pMarshallerType === 2 || cMrshallerType === 2) {
+        } else if (pMarshallerType > 1 || cMrshallerType > 1) {
           needsM = needsU = needsIntM = needsIntU = true;
         }
       } else {
         const marshallerType = recursiveWalkObjs(obj, false);
         if (marshallerType === 1) {
           needsIntM = true;
-        } else if (marshallerType === 2) {
+        } else if (marshallerType > 1) {
           needsIntM = needsIntU = true;
         }
       }
@@ -415,7 +415,7 @@ function generateStructs(imports: ImportManager, objects?: ObjectSchema[]): Stru
 
 // returns 0 if no nodes in the hierarchy require custom marshalling/unmarshalling.
 // returns 1 if only custom marshalling is required.
-// returns 2 if custom marshalling and unmarshalling is required.
+// returns greater than 1 if custom marshalling and unmarshalling is required.
 function recursiveWalkObjs(obj: ObjectSchema, parents: boolean): number {
   let result = 0;
   let cs: ComplexSchema[] | undefined;
@@ -433,9 +433,6 @@ function recursiveWalkObjs(obj: ObjectSchema, parents: boolean): number {
     }
     if (c.language.go!.needsDateTimeMarshalling || hasAdditionalProperties(c) || hasPolymorphicField(c) || c.discriminator || c.discriminatorValue) {
       result = 2;
-    }
-    if (result > 0) {
-      break;
     }
     result |= recursiveWalkObjs(c, parents);
   }
