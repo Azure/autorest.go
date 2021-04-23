@@ -13,6 +13,7 @@ import (
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
+	"reflect"
 	"time"
 )
 
@@ -6924,7 +6925,7 @@ func populate(m map[string]interface{}, k string, v interface{}) {
 	}
 	if azcore.IsNullValue(v) {
 		m[k] = nil
-	} else {
+	} else if !reflect.ValueOf(v).IsNil() {
 		m[k] = v
 	}
 }

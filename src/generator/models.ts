@@ -61,7 +61,7 @@ export async function generateModels(session: Session<CodeModel>): Promise<strin
     text += '\tif v == nil {\n\t\treturn\n\t}\n';
     text += '\tif azcore.IsNullValue(v) {\n';
     text += '\t\tm[k] = nil\n';
-    text += '\t} else {\n';
+    text += '\t} else if !reflect.ValueOf(v).IsNil() {\n';
     text += '\t\tm[k] = v\n';
     text += '\t}\n';
     text += '}\n\n';
@@ -400,6 +400,7 @@ function generateStructs(imports: ImportManager, objects?: ObjectSchema[]): Stru
       generateInternalUnmarshaller(obj, structDef, parentType);
     }
     if (needsM) {
+      imports.add('reflect');
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
       structDef.HasJSONMarshaller = true;
       generateJSONMarshaller(imports, obj, structDef, parentType);
