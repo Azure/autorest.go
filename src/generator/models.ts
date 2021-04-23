@@ -58,8 +58,9 @@ export async function generateModels(session: Session<CodeModel>): Promise<strin
   }
   if (needsJSONPopulate) {
     text += 'func populate(m map[string]interface{}, k string, v interface{}) {\n';
-    text += '\tif v == nil {\n\t\treturn\n\t}\n';
-    text += '\tif azcore.IsNullValue(v) {\n';
+    text += '\tif v == nil {\n';
+    text += '\t\treturn\n';
+    text += '\t} else if azcore.IsNullValue(v) {\n';
     text += '\t\tm[k] = nil\n';
     text += '\t} else if !reflect.ValueOf(v).IsNil() {\n';
     text += '\t\tm[k] = v\n';

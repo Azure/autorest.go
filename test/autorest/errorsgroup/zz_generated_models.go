@@ -319,8 +319,7 @@ func (p *PetSadError) unmarshalInternal(rawMsg map[string]*json.RawMessage) erro
 func populate(m map[string]interface{}, k string, v interface{}) {
 	if v == nil {
 		return
-	}
-	if azcore.IsNullValue(v) {
+	} else if azcore.IsNullValue(v) {
 		m[k] = nil
 	} else if !reflect.ValueOf(v).IsNil() {
 		m[k] = v
