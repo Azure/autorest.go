@@ -86,7 +86,7 @@ func (client *NetworkProfilesClient) createOrUpdateHandleResponse(resp *azcore.R
 func (client *NetworkProfilesClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -187,7 +187,7 @@ func (client *NetworkProfilesClient) deleteCreateRequest(ctx context.Context, re
 func (client *NetworkProfilesClient) deleteHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -251,7 +251,7 @@ func (client *NetworkProfilesClient) getHandleResponse(resp *azcore.Response) (N
 func (client *NetworkProfilesClient) getHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -308,7 +308,7 @@ func (client *NetworkProfilesClient) listHandleResponse(resp *azcore.Response) (
 func (client *NetworkProfilesClient) listHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -361,7 +361,7 @@ func (client *NetworkProfilesClient) listAllHandleResponse(resp *azcore.Response
 func (client *NetworkProfilesClient) listAllHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -422,7 +422,7 @@ func (client *NetworkProfilesClient) updateTagsHandleResponse(resp *azcore.Respo
 func (client *NetworkProfilesClient) updateTagsHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

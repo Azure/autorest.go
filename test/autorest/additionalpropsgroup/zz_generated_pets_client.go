@@ -65,7 +65,7 @@ func (client *PetsClient) createAPInPropertiesHandleResponse(resp *azcore.Respon
 func (client *PetsClient) createAPInPropertiesHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -111,7 +111,7 @@ func (client *PetsClient) createAPInPropertiesWithAPStringHandleResponse(resp *a
 func (client *PetsClient) createAPInPropertiesWithAPStringHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -157,7 +157,7 @@ func (client *PetsClient) createAPObjectHandleResponse(resp *azcore.Response) (P
 func (client *PetsClient) createAPObjectHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -203,7 +203,7 @@ func (client *PetsClient) createAPStringHandleResponse(resp *azcore.Response) (P
 func (client *PetsClient) createAPStringHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -249,7 +249,7 @@ func (client *PetsClient) createAPTrueHandleResponse(resp *azcore.Response) (Pet
 func (client *PetsClient) createAPTrueHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -295,7 +295,7 @@ func (client *PetsClient) createCatAPTrueHandleResponse(resp *azcore.Response) (
 func (client *PetsClient) createCatAPTrueHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

@@ -66,7 +66,7 @@ func (client *ArrayClient) getArrayEmptyHandleResponse(resp *azcore.Response) (S
 func (client *ArrayClient) getArrayEmptyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -112,7 +112,7 @@ func (client *ArrayClient) getArrayItemEmptyHandleResponse(resp *azcore.Response
 func (client *ArrayClient) getArrayItemEmptyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -158,7 +158,7 @@ func (client *ArrayClient) getArrayItemNullHandleResponse(resp *azcore.Response)
 func (client *ArrayClient) getArrayItemNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -204,7 +204,7 @@ func (client *ArrayClient) getArrayNullHandleResponse(resp *azcore.Response) (St
 func (client *ArrayClient) getArrayNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -250,7 +250,7 @@ func (client *ArrayClient) getArrayValidHandleResponse(resp *azcore.Response) (S
 func (client *ArrayClient) getArrayValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -296,7 +296,7 @@ func (client *ArrayClient) getBase64URLHandleResponse(resp *azcore.Response) (By
 func (client *ArrayClient) getBase64URLHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -342,7 +342,7 @@ func (client *ArrayClient) getBooleanInvalidNullHandleResponse(resp *azcore.Resp
 func (client *ArrayClient) getBooleanInvalidNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -388,7 +388,7 @@ func (client *ArrayClient) getBooleanInvalidStringHandleResponse(resp *azcore.Re
 func (client *ArrayClient) getBooleanInvalidStringHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -434,7 +434,7 @@ func (client *ArrayClient) getBooleanTfftHandleResponse(resp *azcore.Response) (
 func (client *ArrayClient) getBooleanTfftHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -480,7 +480,7 @@ func (client *ArrayClient) getByteInvalidNullHandleResponse(resp *azcore.Respons
 func (client *ArrayClient) getByteInvalidNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -526,7 +526,7 @@ func (client *ArrayClient) getByteValidHandleResponse(resp *azcore.Response) (By
 func (client *ArrayClient) getByteValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -572,7 +572,7 @@ func (client *ArrayClient) getComplexEmptyHandleResponse(resp *azcore.Response) 
 func (client *ArrayClient) getComplexEmptyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -618,7 +618,7 @@ func (client *ArrayClient) getComplexItemEmptyHandleResponse(resp *azcore.Respon
 func (client *ArrayClient) getComplexItemEmptyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -664,7 +664,7 @@ func (client *ArrayClient) getComplexItemNullHandleResponse(resp *azcore.Respons
 func (client *ArrayClient) getComplexItemNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -710,7 +710,7 @@ func (client *ArrayClient) getComplexNullHandleResponse(resp *azcore.Response) (
 func (client *ArrayClient) getComplexNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -756,7 +756,7 @@ func (client *ArrayClient) getComplexValidHandleResponse(resp *azcore.Response) 
 func (client *ArrayClient) getComplexValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -806,7 +806,7 @@ func (client *ArrayClient) getDateInvalidCharsHandleResponse(resp *azcore.Respon
 func (client *ArrayClient) getDateInvalidCharsHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -856,7 +856,7 @@ func (client *ArrayClient) getDateInvalidNullHandleResponse(resp *azcore.Respons
 func (client *ArrayClient) getDateInvalidNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -906,7 +906,7 @@ func (client *ArrayClient) getDateTimeInvalidCharsHandleResponse(resp *azcore.Re
 func (client *ArrayClient) getDateTimeInvalidCharsHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -956,7 +956,7 @@ func (client *ArrayClient) getDateTimeInvalidNullHandleResponse(resp *azcore.Res
 func (client *ArrayClient) getDateTimeInvalidNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1006,7 +1006,7 @@ func (client *ArrayClient) getDateTimeRFC1123ValidHandleResponse(resp *azcore.Re
 func (client *ArrayClient) getDateTimeRFC1123ValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1056,7 +1056,7 @@ func (client *ArrayClient) getDateTimeValidHandleResponse(resp *azcore.Response)
 func (client *ArrayClient) getDateTimeValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1106,7 +1106,7 @@ func (client *ArrayClient) getDateValidHandleResponse(resp *azcore.Response) (Ti
 func (client *ArrayClient) getDateValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1152,7 +1152,7 @@ func (client *ArrayClient) getDictionaryEmptyHandleResponse(resp *azcore.Respons
 func (client *ArrayClient) getDictionaryEmptyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1199,7 +1199,7 @@ func (client *ArrayClient) getDictionaryItemEmptyHandleResponse(resp *azcore.Res
 func (client *ArrayClient) getDictionaryItemEmptyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1246,7 +1246,7 @@ func (client *ArrayClient) getDictionaryItemNullHandleResponse(resp *azcore.Resp
 func (client *ArrayClient) getDictionaryItemNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1292,7 +1292,7 @@ func (client *ArrayClient) getDictionaryNullHandleResponse(resp *azcore.Response
 func (client *ArrayClient) getDictionaryNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1339,7 +1339,7 @@ func (client *ArrayClient) getDictionaryValidHandleResponse(resp *azcore.Respons
 func (client *ArrayClient) getDictionaryValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1385,7 +1385,7 @@ func (client *ArrayClient) getDoubleInvalidNullHandleResponse(resp *azcore.Respo
 func (client *ArrayClient) getDoubleInvalidNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1431,7 +1431,7 @@ func (client *ArrayClient) getDoubleInvalidStringHandleResponse(resp *azcore.Res
 func (client *ArrayClient) getDoubleInvalidStringHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1477,7 +1477,7 @@ func (client *ArrayClient) getDoubleValidHandleResponse(resp *azcore.Response) (
 func (client *ArrayClient) getDoubleValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1523,7 +1523,7 @@ func (client *ArrayClient) getDurationValidHandleResponse(resp *azcore.Response)
 func (client *ArrayClient) getDurationValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1569,7 +1569,7 @@ func (client *ArrayClient) getEmptyHandleResponse(resp *azcore.Response) (Int32A
 func (client *ArrayClient) getEmptyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1615,7 +1615,7 @@ func (client *ArrayClient) getEnumValidHandleResponse(resp *azcore.Response) (Fo
 func (client *ArrayClient) getEnumValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1661,7 +1661,7 @@ func (client *ArrayClient) getFloatInvalidNullHandleResponse(resp *azcore.Respon
 func (client *ArrayClient) getFloatInvalidNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1707,7 +1707,7 @@ func (client *ArrayClient) getFloatInvalidStringHandleResponse(resp *azcore.Resp
 func (client *ArrayClient) getFloatInvalidStringHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1753,7 +1753,7 @@ func (client *ArrayClient) getFloatValidHandleResponse(resp *azcore.Response) (F
 func (client *ArrayClient) getFloatValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1799,7 +1799,7 @@ func (client *ArrayClient) getIntInvalidNullHandleResponse(resp *azcore.Response
 func (client *ArrayClient) getIntInvalidNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1845,7 +1845,7 @@ func (client *ArrayClient) getIntInvalidStringHandleResponse(resp *azcore.Respon
 func (client *ArrayClient) getIntInvalidStringHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1891,7 +1891,7 @@ func (client *ArrayClient) getIntegerValidHandleResponse(resp *azcore.Response) 
 func (client *ArrayClient) getIntegerValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1937,7 +1937,7 @@ func (client *ArrayClient) getInvalidHandleResponse(resp *azcore.Response) (Int3
 func (client *ArrayClient) getInvalidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1983,7 +1983,7 @@ func (client *ArrayClient) getLongInvalidNullHandleResponse(resp *azcore.Respons
 func (client *ArrayClient) getLongInvalidNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2029,7 +2029,7 @@ func (client *ArrayClient) getLongInvalidStringHandleResponse(resp *azcore.Respo
 func (client *ArrayClient) getLongInvalidStringHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2075,7 +2075,7 @@ func (client *ArrayClient) getLongValidHandleResponse(resp *azcore.Response) (In
 func (client *ArrayClient) getLongValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2121,7 +2121,7 @@ func (client *ArrayClient) getNullHandleResponse(resp *azcore.Response) (Int32Ar
 func (client *ArrayClient) getNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2167,7 +2167,7 @@ func (client *ArrayClient) getStringEnumValidHandleResponse(resp *azcore.Respons
 func (client *ArrayClient) getStringEnumValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2213,7 +2213,7 @@ func (client *ArrayClient) getStringValidHandleResponse(resp *azcore.Response) (
 func (client *ArrayClient) getStringValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2259,7 +2259,7 @@ func (client *ArrayClient) getStringWithInvalidHandleResponse(resp *azcore.Respo
 func (client *ArrayClient) getStringWithInvalidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2305,7 +2305,7 @@ func (client *ArrayClient) getStringWithNullHandleResponse(resp *azcore.Response
 func (client *ArrayClient) getStringWithNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2351,7 +2351,7 @@ func (client *ArrayClient) getUUIDInvalidCharsHandleResponse(resp *azcore.Respon
 func (client *ArrayClient) getUUIDInvalidCharsHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2397,7 +2397,7 @@ func (client *ArrayClient) getUUIDValidHandleResponse(resp *azcore.Response) (St
 func (client *ArrayClient) getUUIDValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2434,7 +2434,7 @@ func (client *ArrayClient) putArrayValidCreateRequest(ctx context.Context, array
 func (client *ArrayClient) putArrayValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2471,7 +2471,7 @@ func (client *ArrayClient) putBooleanTfftCreateRequest(ctx context.Context, arra
 func (client *ArrayClient) putBooleanTfftHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2508,7 +2508,7 @@ func (client *ArrayClient) putByteValidCreateRequest(ctx context.Context, arrayB
 func (client *ArrayClient) putByteValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2545,7 +2545,7 @@ func (client *ArrayClient) putComplexValidCreateRequest(ctx context.Context, arr
 func (client *ArrayClient) putComplexValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2586,7 +2586,7 @@ func (client *ArrayClient) putDateTimeRFC1123ValidCreateRequest(ctx context.Cont
 func (client *ArrayClient) putDateTimeRFC1123ValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2623,7 +2623,7 @@ func (client *ArrayClient) putDateTimeValidCreateRequest(ctx context.Context, ar
 func (client *ArrayClient) putDateTimeValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2664,7 +2664,7 @@ func (client *ArrayClient) putDateValidCreateRequest(ctx context.Context, arrayB
 func (client *ArrayClient) putDateValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2702,7 +2702,7 @@ func (client *ArrayClient) putDictionaryValidCreateRequest(ctx context.Context, 
 func (client *ArrayClient) putDictionaryValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2739,7 +2739,7 @@ func (client *ArrayClient) putDoubleValidCreateRequest(ctx context.Context, arra
 func (client *ArrayClient) putDoubleValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2776,7 +2776,7 @@ func (client *ArrayClient) putDurationValidCreateRequest(ctx context.Context, ar
 func (client *ArrayClient) putDurationValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2813,7 +2813,7 @@ func (client *ArrayClient) putEmptyCreateRequest(ctx context.Context, arrayBody 
 func (client *ArrayClient) putEmptyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2850,7 +2850,7 @@ func (client *ArrayClient) putEnumValidCreateRequest(ctx context.Context, arrayB
 func (client *ArrayClient) putEnumValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2887,7 +2887,7 @@ func (client *ArrayClient) putFloatValidCreateRequest(ctx context.Context, array
 func (client *ArrayClient) putFloatValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2924,7 +2924,7 @@ func (client *ArrayClient) putIntegerValidCreateRequest(ctx context.Context, arr
 func (client *ArrayClient) putIntegerValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2961,7 +2961,7 @@ func (client *ArrayClient) putLongValidCreateRequest(ctx context.Context, arrayB
 func (client *ArrayClient) putLongValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2998,7 +2998,7 @@ func (client *ArrayClient) putStringEnumValidCreateRequest(ctx context.Context, 
 func (client *ArrayClient) putStringEnumValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -3035,7 +3035,7 @@ func (client *ArrayClient) putStringValidCreateRequest(ctx context.Context, arra
 func (client *ArrayClient) putStringValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -3072,7 +3072,7 @@ func (client *ArrayClient) putUUIDValidCreateRequest(ctx context.Context, arrayB
 func (client *ArrayClient) putUUIDValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

@@ -65,7 +65,7 @@ func (client *EnumClient) getNotExpandableHandleResponse(resp *azcore.Response) 
 func (client *EnumClient) getNotExpandableHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -111,7 +111,7 @@ func (client *EnumClient) getReferencedHandleResponse(resp *azcore.Response) (Co
 func (client *EnumClient) getReferencedHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -157,7 +157,7 @@ func (client *EnumClient) getReferencedConstantHandleResponse(resp *azcore.Respo
 func (client *EnumClient) getReferencedConstantHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -194,7 +194,7 @@ func (client *EnumClient) putNotExpandableCreateRequest(ctx context.Context, str
 func (client *EnumClient) putNotExpandableHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -231,7 +231,7 @@ func (client *EnumClient) putReferencedCreateRequest(ctx context.Context, enumSt
 func (client *EnumClient) putReferencedHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -268,7 +268,7 @@ func (client *EnumClient) putReferencedConstantCreateRequest(ctx context.Context
 func (client *EnumClient) putReferencedConstantHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

@@ -74,7 +74,7 @@ func (client *PetClient) doSomethingHandleResponse(resp *azcore.Response) (PetAc
 func (client *PetClient) doSomethingHandleError(resp *azcore.Response) error {
 	var err petActionError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(err.wrapped, resp.Response)
 }
@@ -126,19 +126,19 @@ func (client *PetClient) getPetByIDHandleError(resp *azcore.Response) error {
 	case http.StatusBadRequest:
 		var err string
 		if err := resp.UnmarshalAsJSON(&err); err != nil {
-			return err
+			return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 		}
 		return azcore.NewResponseError(fmt.Errorf("%v", err), resp.Response)
 	case http.StatusNotFound:
 		var err notFoundErrorBase
 		if err := resp.UnmarshalAsJSON(&err); err != nil {
-			return err
+			return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 		}
 		return azcore.NewResponseError(err.wrapped, resp.Response)
 	case http.StatusNotImplemented:
 		var err int32
 		if err := resp.UnmarshalAsJSON(&err); err != nil {
-			return err
+			return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 		}
 		return azcore.NewResponseError(fmt.Errorf("%v", err), resp.Response)
 	default:

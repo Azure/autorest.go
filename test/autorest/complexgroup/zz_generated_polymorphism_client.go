@@ -65,7 +65,7 @@ func (client *PolymorphismClient) getComplicatedHandleResponse(resp *azcore.Resp
 func (client *PolymorphismClient) getComplicatedHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -113,7 +113,7 @@ func (client *PolymorphismClient) getComposedWithDiscriminatorHandleResponse(res
 func (client *PolymorphismClient) getComposedWithDiscriminatorHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -161,7 +161,7 @@ func (client *PolymorphismClient) getComposedWithoutDiscriminatorHandleResponse(
 func (client *PolymorphismClient) getComposedWithoutDiscriminatorHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -207,7 +207,7 @@ func (client *PolymorphismClient) getDotSyntaxHandleResponse(resp *azcore.Respon
 func (client *PolymorphismClient) getDotSyntaxHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -253,7 +253,7 @@ func (client *PolymorphismClient) getValidHandleResponse(resp *azcore.Response) 
 func (client *PolymorphismClient) getValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -290,7 +290,7 @@ func (client *PolymorphismClient) putComplicatedCreateRequest(ctx context.Contex
 func (client *PolymorphismClient) putComplicatedHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -336,7 +336,7 @@ func (client *PolymorphismClient) putMissingDiscriminatorHandleResponse(resp *az
 func (client *PolymorphismClient) putMissingDiscriminatorHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -373,7 +373,7 @@ func (client *PolymorphismClient) putValidCreateRequest(ctx context.Context, com
 func (client *PolymorphismClient) putValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -411,7 +411,7 @@ func (client *PolymorphismClient) putValidMissingRequiredCreateRequest(ctx conte
 func (client *PolymorphismClient) putValidMissingRequiredHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

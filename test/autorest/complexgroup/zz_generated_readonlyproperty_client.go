@@ -65,7 +65,7 @@ func (client *ReadonlypropertyClient) getValidHandleResponse(resp *azcore.Respon
 func (client *ReadonlypropertyClient) getValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -102,7 +102,7 @@ func (client *ReadonlypropertyClient) putValidCreateRequest(ctx context.Context,
 func (client *ReadonlypropertyClient) putValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

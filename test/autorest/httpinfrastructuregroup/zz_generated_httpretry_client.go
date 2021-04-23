@@ -56,7 +56,7 @@ func (client *HTTPRetryClient) delete503CreateRequest(ctx context.Context, optio
 func (client *HTTPRetryClient) delete503HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -93,7 +93,7 @@ func (client *HTTPRetryClient) get502CreateRequest(ctx context.Context, options 
 func (client *HTTPRetryClient) get502HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -133,7 +133,7 @@ func (client *HTTPRetryClient) head408CreateRequest(ctx context.Context, options
 func (client *HTTPRetryClient) head408HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -179,7 +179,7 @@ func (client *HTTPRetryClient) options502HandleResponse(resp *azcore.Response) (
 func (client *HTTPRetryClient) options502HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -216,7 +216,7 @@ func (client *HTTPRetryClient) patch500CreateRequest(ctx context.Context, option
 func (client *HTTPRetryClient) patch500HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -253,7 +253,7 @@ func (client *HTTPRetryClient) patch504CreateRequest(ctx context.Context, option
 func (client *HTTPRetryClient) patch504HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -290,7 +290,7 @@ func (client *HTTPRetryClient) post503CreateRequest(ctx context.Context, options
 func (client *HTTPRetryClient) post503HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -327,7 +327,7 @@ func (client *HTTPRetryClient) put500CreateRequest(ctx context.Context, options 
 func (client *HTTPRetryClient) put500HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -364,7 +364,7 @@ func (client *HTTPRetryClient) put504CreateRequest(ctx context.Context, options 
 func (client *HTTPRetryClient) put504HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

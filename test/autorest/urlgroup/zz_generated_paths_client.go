@@ -62,7 +62,7 @@ func (client *PathsClient) arrayCSVInPathCreateRequest(ctx context.Context, arra
 func (client *PathsClient) arrayCSVInPathHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -100,7 +100,7 @@ func (client *PathsClient) base64URLCreateRequest(ctx context.Context, base64URL
 func (client *PathsClient) base64URLHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -138,7 +138,7 @@ func (client *PathsClient) byteEmptyCreateRequest(ctx context.Context, options *
 func (client *PathsClient) byteEmptyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -176,7 +176,7 @@ func (client *PathsClient) byteMultiByteCreateRequest(ctx context.Context, byteP
 func (client *PathsClient) byteMultiByteHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -214,7 +214,7 @@ func (client *PathsClient) byteNullCreateRequest(ctx context.Context, bytePath [
 func (client *PathsClient) byteNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -252,7 +252,7 @@ func (client *PathsClient) dateNullCreateRequest(ctx context.Context, datePath t
 func (client *PathsClient) dateNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -290,7 +290,7 @@ func (client *PathsClient) dateTimeNullCreateRequest(ctx context.Context, dateTi
 func (client *PathsClient) dateTimeNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -328,7 +328,7 @@ func (client *PathsClient) dateTimeValidCreateRequest(ctx context.Context, optio
 func (client *PathsClient) dateTimeValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -366,7 +366,7 @@ func (client *PathsClient) dateValidCreateRequest(ctx context.Context, options *
 func (client *PathsClient) dateValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -404,7 +404,7 @@ func (client *PathsClient) doubleDecimalNegativeCreateRequest(ctx context.Contex
 func (client *PathsClient) doubleDecimalNegativeHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -442,7 +442,7 @@ func (client *PathsClient) doubleDecimalPositiveCreateRequest(ctx context.Contex
 func (client *PathsClient) doubleDecimalPositiveHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -483,7 +483,7 @@ func (client *PathsClient) enumNullCreateRequest(ctx context.Context, enumPath U
 func (client *PathsClient) enumNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -524,7 +524,7 @@ func (client *PathsClient) enumValidCreateRequest(ctx context.Context, enumPath 
 func (client *PathsClient) enumValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -562,7 +562,7 @@ func (client *PathsClient) floatScientificNegativeCreateRequest(ctx context.Cont
 func (client *PathsClient) floatScientificNegativeHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -600,7 +600,7 @@ func (client *PathsClient) floatScientificPositiveCreateRequest(ctx context.Cont
 func (client *PathsClient) floatScientificPositiveHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -638,7 +638,7 @@ func (client *PathsClient) getBooleanFalseCreateRequest(ctx context.Context, opt
 func (client *PathsClient) getBooleanFalseHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -676,7 +676,7 @@ func (client *PathsClient) getBooleanTrueCreateRequest(ctx context.Context, opti
 func (client *PathsClient) getBooleanTrueHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -714,7 +714,7 @@ func (client *PathsClient) getIntNegativeOneMillionCreateRequest(ctx context.Con
 func (client *PathsClient) getIntNegativeOneMillionHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -752,7 +752,7 @@ func (client *PathsClient) getIntOneMillionCreateRequest(ctx context.Context, op
 func (client *PathsClient) getIntOneMillionHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -790,7 +790,7 @@ func (client *PathsClient) getNegativeTenBillionCreateRequest(ctx context.Contex
 func (client *PathsClient) getNegativeTenBillionHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -828,7 +828,7 @@ func (client *PathsClient) getTenBillionCreateRequest(ctx context.Context, optio
 func (client *PathsClient) getTenBillionHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -866,7 +866,7 @@ func (client *PathsClient) stringEmptyCreateRequest(ctx context.Context, options
 func (client *PathsClient) stringEmptyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -907,7 +907,7 @@ func (client *PathsClient) stringNullCreateRequest(ctx context.Context, stringPa
 func (client *PathsClient) stringNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -945,7 +945,7 @@ func (client *PathsClient) stringURLEncodedCreateRequest(ctx context.Context, op
 func (client *PathsClient) stringURLEncodedHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -983,7 +983,7 @@ func (client *PathsClient) stringURLNonEncodedCreateRequest(ctx context.Context,
 func (client *PathsClient) stringURLNonEncodedHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1021,7 +1021,7 @@ func (client *PathsClient) stringUnicodeCreateRequest(ctx context.Context, optio
 func (client *PathsClient) stringUnicodeHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1059,7 +1059,7 @@ func (client *PathsClient) unixTimeURLCreateRequest(ctx context.Context, unixTim
 func (client *PathsClient) unixTimeURLHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

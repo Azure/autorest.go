@@ -119,7 +119,7 @@ func (client *linkedServiceClient) createOrUpdateLinkedServiceHandleResponse(res
 func (client *linkedServiceClient) createOrUpdateLinkedServiceHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -210,7 +210,7 @@ func (client *linkedServiceClient) deleteLinkedServiceCreateRequest(ctx context.
 func (client *linkedServiceClient) deleteLinkedServiceHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -266,7 +266,7 @@ func (client *linkedServiceClient) getLinkedServiceHandleResponse(resp *azcore.R
 func (client *linkedServiceClient) getLinkedServiceHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -315,7 +315,7 @@ func (client *linkedServiceClient) getLinkedServicesByWorkspaceHandleResponse(re
 func (client *linkedServiceClient) getLinkedServicesByWorkspaceHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -406,7 +406,7 @@ func (client *linkedServiceClient) renameLinkedServiceCreateRequest(ctx context.
 func (client *linkedServiceClient) renameLinkedServiceHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

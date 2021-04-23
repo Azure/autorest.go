@@ -99,7 +99,7 @@ func (client *XMSClientRequestIDClient) paramGetCreateRequest(ctx context.Contex
 func (client *XMSClientRequestIDClient) paramGetHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

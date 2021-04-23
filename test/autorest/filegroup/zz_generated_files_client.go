@@ -57,7 +57,7 @@ func (client *FilesClient) getEmptyFileCreateRequest(ctx context.Context, option
 func (client *FilesClient) getEmptyFileHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -95,7 +95,7 @@ func (client *FilesClient) getFileCreateRequest(ctx context.Context, options *Fi
 func (client *FilesClient) getFileHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -133,7 +133,7 @@ func (client *FilesClient) getFileLargeCreateRequest(ctx context.Context, option
 func (client *FilesClient) getFileLargeHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

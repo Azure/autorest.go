@@ -87,7 +87,7 @@ func (client *VirtualNetworksClient) checkIPAddressAvailabilityHandleResponse(re
 func (client *VirtualNetworksClient) checkIPAddressAvailabilityHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -197,7 +197,7 @@ func (client *VirtualNetworksClient) createOrUpdateHandleResponse(resp *azcore.R
 func (client *VirtualNetworksClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -298,7 +298,7 @@ func (client *VirtualNetworksClient) deleteCreateRequest(ctx context.Context, re
 func (client *VirtualNetworksClient) deleteHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -362,7 +362,7 @@ func (client *VirtualNetworksClient) getHandleResponse(resp *azcore.Response) (V
 func (client *VirtualNetworksClient) getHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -419,7 +419,7 @@ func (client *VirtualNetworksClient) listHandleResponse(resp *azcore.Response) (
 func (client *VirtualNetworksClient) listHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -472,7 +472,7 @@ func (client *VirtualNetworksClient) listAllHandleResponse(resp *azcore.Response
 func (client *VirtualNetworksClient) listAllHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -533,7 +533,7 @@ func (client *VirtualNetworksClient) listUsageHandleResponse(resp *azcore.Respon
 func (client *VirtualNetworksClient) listUsageHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -594,7 +594,7 @@ func (client *VirtualNetworksClient) updateTagsHandleResponse(resp *azcore.Respo
 func (client *VirtualNetworksClient) updateTagsHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

@@ -56,7 +56,7 @@ func (client *HTTPSuccessClient) delete200CreateRequest(ctx context.Context, opt
 func (client *HTTPSuccessClient) delete200HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -93,7 +93,7 @@ func (client *HTTPSuccessClient) delete202CreateRequest(ctx context.Context, opt
 func (client *HTTPSuccessClient) delete202HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -130,7 +130,7 @@ func (client *HTTPSuccessClient) delete204CreateRequest(ctx context.Context, opt
 func (client *HTTPSuccessClient) delete204HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -176,7 +176,7 @@ func (client *HTTPSuccessClient) get200HandleResponse(resp *azcore.Response) (Bo
 func (client *HTTPSuccessClient) get200HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -216,7 +216,7 @@ func (client *HTTPSuccessClient) head200CreateRequest(ctx context.Context, optio
 func (client *HTTPSuccessClient) head200HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -256,7 +256,7 @@ func (client *HTTPSuccessClient) head204CreateRequest(ctx context.Context, optio
 func (client *HTTPSuccessClient) head204HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -296,7 +296,7 @@ func (client *HTTPSuccessClient) head404CreateRequest(ctx context.Context, optio
 func (client *HTTPSuccessClient) head404HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -342,7 +342,7 @@ func (client *HTTPSuccessClient) options200HandleResponse(resp *azcore.Response)
 func (client *HTTPSuccessClient) options200HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -379,7 +379,7 @@ func (client *HTTPSuccessClient) patch200CreateRequest(ctx context.Context, opti
 func (client *HTTPSuccessClient) patch200HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -416,7 +416,7 @@ func (client *HTTPSuccessClient) patch202CreateRequest(ctx context.Context, opti
 func (client *HTTPSuccessClient) patch202HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -453,7 +453,7 @@ func (client *HTTPSuccessClient) patch204CreateRequest(ctx context.Context, opti
 func (client *HTTPSuccessClient) patch204HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -490,7 +490,7 @@ func (client *HTTPSuccessClient) post200CreateRequest(ctx context.Context, optio
 func (client *HTTPSuccessClient) post200HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -527,7 +527,7 @@ func (client *HTTPSuccessClient) post201CreateRequest(ctx context.Context, optio
 func (client *HTTPSuccessClient) post201HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -564,7 +564,7 @@ func (client *HTTPSuccessClient) post202CreateRequest(ctx context.Context, optio
 func (client *HTTPSuccessClient) post202HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -601,7 +601,7 @@ func (client *HTTPSuccessClient) post204CreateRequest(ctx context.Context, optio
 func (client *HTTPSuccessClient) post204HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -638,7 +638,7 @@ func (client *HTTPSuccessClient) put200CreateRequest(ctx context.Context, option
 func (client *HTTPSuccessClient) put200HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -675,7 +675,7 @@ func (client *HTTPSuccessClient) put201CreateRequest(ctx context.Context, option
 func (client *HTTPSuccessClient) put201HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -712,7 +712,7 @@ func (client *HTTPSuccessClient) put202CreateRequest(ctx context.Context, option
 func (client *HTTPSuccessClient) put202HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -749,7 +749,7 @@ func (client *HTTPSuccessClient) put204CreateRequest(ctx context.Context, option
 func (client *HTTPSuccessClient) put204HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

@@ -65,7 +65,7 @@ func (client *InheritanceClient) getValidHandleResponse(resp *azcore.Response) (
 func (client *InheritanceClient) getValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -102,7 +102,7 @@ func (client *InheritanceClient) putValidCreateRequest(ctx context.Context, comp
 func (client *InheritanceClient) putValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

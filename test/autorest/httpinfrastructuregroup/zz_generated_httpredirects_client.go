@@ -57,7 +57,7 @@ func (client *HTTPRedirectsClient) delete307CreateRequest(ctx context.Context, o
 func (client *HTTPRedirectsClient) delete307HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -119,7 +119,7 @@ func (client *HTTPRedirectsClient) get300HandleResponse(resp *azcore.Response) (
 func (client *HTTPRedirectsClient) get300HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -156,7 +156,7 @@ func (client *HTTPRedirectsClient) get301CreateRequest(ctx context.Context, opti
 func (client *HTTPRedirectsClient) get301HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -193,7 +193,7 @@ func (client *HTTPRedirectsClient) get302CreateRequest(ctx context.Context, opti
 func (client *HTTPRedirectsClient) get302HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -230,7 +230,7 @@ func (client *HTTPRedirectsClient) get307CreateRequest(ctx context.Context, opti
 func (client *HTTPRedirectsClient) get307HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -279,7 +279,7 @@ func (client *HTTPRedirectsClient) head300HandleResponse(resp *azcore.Response) 
 func (client *HTTPRedirectsClient) head300HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -319,7 +319,7 @@ func (client *HTTPRedirectsClient) head301CreateRequest(ctx context.Context, opt
 func (client *HTTPRedirectsClient) head301HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -359,7 +359,7 @@ func (client *HTTPRedirectsClient) head302CreateRequest(ctx context.Context, opt
 func (client *HTTPRedirectsClient) head302HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -399,7 +399,7 @@ func (client *HTTPRedirectsClient) head307CreateRequest(ctx context.Context, opt
 func (client *HTTPRedirectsClient) head307HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -436,7 +436,7 @@ func (client *HTTPRedirectsClient) options307CreateRequest(ctx context.Context, 
 func (client *HTTPRedirectsClient) options307HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -483,7 +483,7 @@ func (client *HTTPRedirectsClient) patch302HandleResponse(resp *azcore.Response)
 func (client *HTTPRedirectsClient) patch302HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -520,7 +520,7 @@ func (client *HTTPRedirectsClient) patch307CreateRequest(ctx context.Context, op
 func (client *HTTPRedirectsClient) patch307HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -567,7 +567,7 @@ func (client *HTTPRedirectsClient) post303HandleResponse(resp *azcore.Response) 
 func (client *HTTPRedirectsClient) post303HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -604,7 +604,7 @@ func (client *HTTPRedirectsClient) post307CreateRequest(ctx context.Context, opt
 func (client *HTTPRedirectsClient) post307HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -651,7 +651,7 @@ func (client *HTTPRedirectsClient) put301HandleResponse(resp *azcore.Response) (
 func (client *HTTPRedirectsClient) put301HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -688,7 +688,7 @@ func (client *HTTPRedirectsClient) put307CreateRequest(ctx context.Context, opti
 func (client *HTTPRedirectsClient) put307HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

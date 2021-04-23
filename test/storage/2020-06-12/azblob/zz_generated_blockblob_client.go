@@ -203,7 +203,7 @@ func (client *blockBlobClient) commitBlockListHandleResponse(resp *azcore.Respon
 func (client *blockBlobClient) commitBlockListHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -305,7 +305,7 @@ func (client *blockBlobClient) getBlockListHandleResponse(resp *azcore.Response)
 func (client *blockBlobClient) getBlockListHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -495,7 +495,7 @@ func (client *blockBlobClient) putBlobFromURLHandleResponse(resp *azcore.Respons
 func (client *blockBlobClient) putBlobFromURLHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -613,7 +613,7 @@ func (client *blockBlobClient) stageBlockHandleResponse(resp *azcore.Response) (
 func (client *blockBlobClient) stageBlockHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -747,7 +747,7 @@ func (client *blockBlobClient) stageBlockFromURLHandleResponse(resp *azcore.Resp
 func (client *blockBlobClient) stageBlockFromURLHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -923,7 +923,7 @@ func (client *blockBlobClient) uploadHandleResponse(resp *azcore.Response) (Bloc
 func (client *blockBlobClient) uploadHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

@@ -65,7 +65,7 @@ func (client *NumberClient) getBigDecimalHandleResponse(resp *azcore.Response) (
 func (client *NumberClient) getBigDecimalHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -111,7 +111,7 @@ func (client *NumberClient) getBigDecimalNegativeDecimalHandleResponse(resp *azc
 func (client *NumberClient) getBigDecimalNegativeDecimalHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -157,7 +157,7 @@ func (client *NumberClient) getBigDecimalPositiveDecimalHandleResponse(resp *azc
 func (client *NumberClient) getBigDecimalPositiveDecimalHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -203,7 +203,7 @@ func (client *NumberClient) getBigDoubleHandleResponse(resp *azcore.Response) (F
 func (client *NumberClient) getBigDoubleHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -249,7 +249,7 @@ func (client *NumberClient) getBigDoubleNegativeDecimalHandleResponse(resp *azco
 func (client *NumberClient) getBigDoubleNegativeDecimalHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -295,7 +295,7 @@ func (client *NumberClient) getBigDoublePositiveDecimalHandleResponse(resp *azco
 func (client *NumberClient) getBigDoublePositiveDecimalHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -341,7 +341,7 @@ func (client *NumberClient) getBigFloatHandleResponse(resp *azcore.Response) (Fl
 func (client *NumberClient) getBigFloatHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -387,7 +387,7 @@ func (client *NumberClient) getInvalidDecimalHandleResponse(resp *azcore.Respons
 func (client *NumberClient) getInvalidDecimalHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -433,7 +433,7 @@ func (client *NumberClient) getInvalidDoubleHandleResponse(resp *azcore.Response
 func (client *NumberClient) getInvalidDoubleHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -479,7 +479,7 @@ func (client *NumberClient) getInvalidFloatHandleResponse(resp *azcore.Response)
 func (client *NumberClient) getInvalidFloatHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -525,7 +525,7 @@ func (client *NumberClient) getNullHandleResponse(resp *azcore.Response) (Float3
 func (client *NumberClient) getNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -571,7 +571,7 @@ func (client *NumberClient) getSmallDecimalHandleResponse(resp *azcore.Response)
 func (client *NumberClient) getSmallDecimalHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -617,7 +617,7 @@ func (client *NumberClient) getSmallDoubleHandleResponse(resp *azcore.Response) 
 func (client *NumberClient) getSmallDoubleHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -663,7 +663,7 @@ func (client *NumberClient) getSmallFloatHandleResponse(resp *azcore.Response) (
 func (client *NumberClient) getSmallFloatHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -700,7 +700,7 @@ func (client *NumberClient) putBigDecimalCreateRequest(ctx context.Context, numb
 func (client *NumberClient) putBigDecimalHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -737,7 +737,7 @@ func (client *NumberClient) putBigDecimalNegativeDecimalCreateRequest(ctx contex
 func (client *NumberClient) putBigDecimalNegativeDecimalHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -774,7 +774,7 @@ func (client *NumberClient) putBigDecimalPositiveDecimalCreateRequest(ctx contex
 func (client *NumberClient) putBigDecimalPositiveDecimalHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -811,7 +811,7 @@ func (client *NumberClient) putBigDoubleCreateRequest(ctx context.Context, numbe
 func (client *NumberClient) putBigDoubleHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -848,7 +848,7 @@ func (client *NumberClient) putBigDoubleNegativeDecimalCreateRequest(ctx context
 func (client *NumberClient) putBigDoubleNegativeDecimalHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -885,7 +885,7 @@ func (client *NumberClient) putBigDoublePositiveDecimalCreateRequest(ctx context
 func (client *NumberClient) putBigDoublePositiveDecimalHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -922,7 +922,7 @@ func (client *NumberClient) putBigFloatCreateRequest(ctx context.Context, number
 func (client *NumberClient) putBigFloatHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -959,7 +959,7 @@ func (client *NumberClient) putSmallDecimalCreateRequest(ctx context.Context, nu
 func (client *NumberClient) putSmallDecimalHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -996,7 +996,7 @@ func (client *NumberClient) putSmallDoubleCreateRequest(ctx context.Context, num
 func (client *NumberClient) putSmallDoubleHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1033,7 +1033,7 @@ func (client *NumberClient) putSmallFloatCreateRequest(ctx context.Context, numb
 func (client *NumberClient) putSmallFloatHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

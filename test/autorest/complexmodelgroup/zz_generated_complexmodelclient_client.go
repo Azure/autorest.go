@@ -79,7 +79,7 @@ func (client *ComplexModelClient) createHandleResponse(resp *azcore.Response) (C
 func (client *ComplexModelClient) createHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -135,7 +135,7 @@ func (client *ComplexModelClient) listHandleResponse(resp *azcore.Response) (Cat
 func (client *ComplexModelClient) listHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -192,7 +192,7 @@ func (client *ComplexModelClient) updateHandleResponse(resp *azcore.Response) (C
 func (client *ComplexModelClient) updateHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

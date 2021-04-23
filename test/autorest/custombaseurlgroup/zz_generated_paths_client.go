@@ -60,7 +60,7 @@ func (client *PathsClient) getEmptyCreateRequest(ctx context.Context, accountNam
 func (client *PathsClient) getEmptyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

@@ -62,7 +62,7 @@ func (client *SkipURLEncodingClient) getMethodPathValidCreateRequest(ctx context
 func (client *SkipURLEncodingClient) getMethodPathValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -104,7 +104,7 @@ func (client *SkipURLEncodingClient) getMethodQueryNullCreateRequest(ctx context
 func (client *SkipURLEncodingClient) getMethodQueryNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -144,7 +144,7 @@ func (client *SkipURLEncodingClient) getMethodQueryValidCreateRequest(ctx contex
 func (client *SkipURLEncodingClient) getMethodQueryValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -184,7 +184,7 @@ func (client *SkipURLEncodingClient) getPathQueryValidCreateRequest(ctx context.
 func (client *SkipURLEncodingClient) getPathQueryValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -225,7 +225,7 @@ func (client *SkipURLEncodingClient) getPathValidCreateRequest(ctx context.Conte
 func (client *SkipURLEncodingClient) getPathValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -263,7 +263,7 @@ func (client *SkipURLEncodingClient) getSwaggerPathValidCreateRequest(ctx contex
 func (client *SkipURLEncodingClient) getSwaggerPathValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -303,7 +303,7 @@ func (client *SkipURLEncodingClient) getSwaggerQueryValidCreateRequest(ctx conte
 func (client *SkipURLEncodingClient) getSwaggerQueryValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

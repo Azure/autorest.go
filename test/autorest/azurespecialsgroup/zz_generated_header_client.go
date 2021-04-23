@@ -66,7 +66,7 @@ func (client *HeaderClient) customNamedRequestIDHandleResponse(resp *azcore.Resp
 func (client *HeaderClient) customNamedRequestIDHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -116,7 +116,7 @@ func (client *HeaderClient) customNamedRequestIDHeadHandleResponse(resp *azcore.
 func (client *HeaderClient) customNamedRequestIDHeadHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -163,7 +163,7 @@ func (client *HeaderClient) customNamedRequestIDParamGroupingHandleResponse(resp
 func (client *HeaderClient) customNamedRequestIDParamGroupingHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

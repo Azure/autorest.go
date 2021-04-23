@@ -68,7 +68,7 @@ func (client *HTTPFailureClient) getEmptyErrorHandleResponse(resp *azcore.Respon
 func (client *HTTPFailureClient) getEmptyErrorHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

@@ -65,7 +65,7 @@ func (client *QueriesClient) arrayStringCSVEmptyCreateRequest(ctx context.Contex
 func (client *QueriesClient) arrayStringCSVEmptyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -107,7 +107,7 @@ func (client *QueriesClient) arrayStringCSVNullCreateRequest(ctx context.Context
 func (client *QueriesClient) arrayStringCSVNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -149,7 +149,7 @@ func (client *QueriesClient) arrayStringCSVValidCreateRequest(ctx context.Contex
 func (client *QueriesClient) arrayStringCSVValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -192,7 +192,7 @@ func (client *QueriesClient) arrayStringNoCollectionFormatEmptyCreateRequest(ctx
 func (client *QueriesClient) arrayStringNoCollectionFormatEmptyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -234,7 +234,7 @@ func (client *QueriesClient) arrayStringPipesValidCreateRequest(ctx context.Cont
 func (client *QueriesClient) arrayStringPipesValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -276,7 +276,7 @@ func (client *QueriesClient) arrayStringSsvValidCreateRequest(ctx context.Contex
 func (client *QueriesClient) arrayStringSsvValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -318,7 +318,7 @@ func (client *QueriesClient) arrayStringTsvValidCreateRequest(ctx context.Contex
 func (client *QueriesClient) arrayStringTsvValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -358,7 +358,7 @@ func (client *QueriesClient) byteEmptyCreateRequest(ctx context.Context, options
 func (client *QueriesClient) byteEmptyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -400,7 +400,7 @@ func (client *QueriesClient) byteMultiByteCreateRequest(ctx context.Context, opt
 func (client *QueriesClient) byteMultiByteHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -442,7 +442,7 @@ func (client *QueriesClient) byteNullCreateRequest(ctx context.Context, options 
 func (client *QueriesClient) byteNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -484,7 +484,7 @@ func (client *QueriesClient) dateNullCreateRequest(ctx context.Context, options 
 func (client *QueriesClient) dateNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -526,7 +526,7 @@ func (client *QueriesClient) dateTimeNullCreateRequest(ctx context.Context, opti
 func (client *QueriesClient) dateTimeNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -566,7 +566,7 @@ func (client *QueriesClient) dateTimeValidCreateRequest(ctx context.Context, opt
 func (client *QueriesClient) dateTimeValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -606,7 +606,7 @@ func (client *QueriesClient) dateValidCreateRequest(ctx context.Context, options
 func (client *QueriesClient) dateValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -646,7 +646,7 @@ func (client *QueriesClient) doubleDecimalNegativeCreateRequest(ctx context.Cont
 func (client *QueriesClient) doubleDecimalNegativeHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -686,7 +686,7 @@ func (client *QueriesClient) doubleDecimalPositiveCreateRequest(ctx context.Cont
 func (client *QueriesClient) doubleDecimalPositiveHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -728,7 +728,7 @@ func (client *QueriesClient) doubleNullCreateRequest(ctx context.Context, option
 func (client *QueriesClient) doubleNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -770,7 +770,7 @@ func (client *QueriesClient) enumNullCreateRequest(ctx context.Context, options 
 func (client *QueriesClient) enumNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -812,7 +812,7 @@ func (client *QueriesClient) enumValidCreateRequest(ctx context.Context, options
 func (client *QueriesClient) enumValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -854,7 +854,7 @@ func (client *QueriesClient) floatNullCreateRequest(ctx context.Context, options
 func (client *QueriesClient) floatNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -894,7 +894,7 @@ func (client *QueriesClient) floatScientificNegativeCreateRequest(ctx context.Co
 func (client *QueriesClient) floatScientificNegativeHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -934,7 +934,7 @@ func (client *QueriesClient) floatScientificPositiveCreateRequest(ctx context.Co
 func (client *QueriesClient) floatScientificPositiveHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -974,7 +974,7 @@ func (client *QueriesClient) getBooleanFalseCreateRequest(ctx context.Context, o
 func (client *QueriesClient) getBooleanFalseHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1016,7 +1016,7 @@ func (client *QueriesClient) getBooleanNullCreateRequest(ctx context.Context, op
 func (client *QueriesClient) getBooleanNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1056,7 +1056,7 @@ func (client *QueriesClient) getBooleanTrueCreateRequest(ctx context.Context, op
 func (client *QueriesClient) getBooleanTrueHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1096,7 +1096,7 @@ func (client *QueriesClient) getIntNegativeOneMillionCreateRequest(ctx context.C
 func (client *QueriesClient) getIntNegativeOneMillionHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1138,7 +1138,7 @@ func (client *QueriesClient) getIntNullCreateRequest(ctx context.Context, option
 func (client *QueriesClient) getIntNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1178,7 +1178,7 @@ func (client *QueriesClient) getIntOneMillionCreateRequest(ctx context.Context, 
 func (client *QueriesClient) getIntOneMillionHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1220,7 +1220,7 @@ func (client *QueriesClient) getLongNullCreateRequest(ctx context.Context, optio
 func (client *QueriesClient) getLongNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1260,7 +1260,7 @@ func (client *QueriesClient) getNegativeTenBillionCreateRequest(ctx context.Cont
 func (client *QueriesClient) getNegativeTenBillionHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1300,7 +1300,7 @@ func (client *QueriesClient) getTenBillionCreateRequest(ctx context.Context, opt
 func (client *QueriesClient) getTenBillionHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1340,7 +1340,7 @@ func (client *QueriesClient) stringEmptyCreateRequest(ctx context.Context, optio
 func (client *QueriesClient) stringEmptyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1382,7 +1382,7 @@ func (client *QueriesClient) stringNullCreateRequest(ctx context.Context, option
 func (client *QueriesClient) stringNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1422,7 +1422,7 @@ func (client *QueriesClient) stringURLEncodedCreateRequest(ctx context.Context, 
 func (client *QueriesClient) stringURLEncodedHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1462,7 +1462,7 @@ func (client *QueriesClient) stringUnicodeCreateRequest(ctx context.Context, opt
 func (client *QueriesClient) stringUnicodeHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

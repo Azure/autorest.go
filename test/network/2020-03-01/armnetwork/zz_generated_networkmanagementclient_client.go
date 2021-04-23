@@ -83,7 +83,7 @@ func (client *NetworkManagementClient) checkDNSNameAvailabilityHandleResponse(re
 func (client *NetworkManagementClient) checkDNSNameAvailabilityHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -184,7 +184,7 @@ func (client *NetworkManagementClient) deleteBastionShareableLinkCreateRequest(c
 func (client *NetworkManagementClient) deleteBastionShareableLinkHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -245,7 +245,7 @@ func (client *NetworkManagementClient) disconnectActiveSessionsHandleResponse(re
 func (client *NetworkManagementClient) disconnectActiveSessionsHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -357,7 +357,7 @@ func (client *NetworkManagementClient) generatevirtualwanvpnserverconfigurationv
 func (client *NetworkManagementClient) generatevirtualwanvpnserverconfigurationvpnprofileHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -495,7 +495,7 @@ func (client *NetworkManagementClient) getActiveSessionsHandleResponse(resp *azc
 func (client *NetworkManagementClient) getActiveSessionsHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -556,7 +556,7 @@ func (client *NetworkManagementClient) getBastionShareableLinkHandleResponse(res
 func (client *NetworkManagementClient) getBastionShareableLinkHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -694,7 +694,7 @@ func (client *NetworkManagementClient) putBastionShareableLinkHandleResponse(res
 func (client *NetworkManagementClient) putBastionShareableLinkHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -755,7 +755,7 @@ func (client *NetworkManagementClient) supportedSecurityProvidersHandleResponse(
 func (client *NetworkManagementClient) supportedSecurityProvidersHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

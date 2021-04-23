@@ -842,7 +842,7 @@ function createProtocolErrHandler(op: Operation, imports: ImportManager): string
     unmarshaller += `var err ${typeName}\n`;
     const innerErr = schemaError.language.go!.flattenedErr ? `.${schemaError.language.go!.flattenedErr}` : '';
     unmarshaller += `${prefix}if err := resp.UnmarshalAs${errFormat.toUpperCase()}(&err${innerErr}); err != nil {\n`;
-    unmarshaller += `${prefix}\treturn err\n`;
+    unmarshaller += `${prefix}\treturn azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)\n`;
     unmarshaller += `${prefix}}\n`;
     if (schemaError.language.go!.internalErrorType) {
       // err.wrapped is for discriminated error types, it will already be pointer-to-type

@@ -59,7 +59,7 @@ func (client *APIVersionDefaultClient) getMethodGlobalNotProvidedValidCreateRequ
 func (client *APIVersionDefaultClient) getMethodGlobalNotProvidedValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -99,7 +99,7 @@ func (client *APIVersionDefaultClient) getMethodGlobalValidCreateRequest(ctx con
 func (client *APIVersionDefaultClient) getMethodGlobalValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -139,7 +139,7 @@ func (client *APIVersionDefaultClient) getPathGlobalValidCreateRequest(ctx conte
 func (client *APIVersionDefaultClient) getPathGlobalValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -179,7 +179,7 @@ func (client *APIVersionDefaultClient) getSwaggerGlobalValidCreateRequest(ctx co
 func (client *APIVersionDefaultClient) getSwaggerGlobalValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
