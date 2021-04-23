@@ -26,7 +26,7 @@ func PossibleCMYKColorsValues() []CMYKColors {
 	}
 }
 
-// ToPtr() returns a *CMYKColors pointing to the current value.
+// ToPtr returns a *CMYKColors pointing to the current value.
 func (c CMYKColors) ToPtr() *CMYKColors {
 	return &c
 }
@@ -55,7 +55,7 @@ func PossibleGoblinSharkColorValues() []GoblinSharkColor {
 	}
 }
 
-// ToPtr() returns a *GoblinSharkColor pointing to the current value.
+// ToPtr returns a *GoblinSharkColor pointing to the current value.
 func (c GoblinSharkColor) ToPtr() *GoblinSharkColor {
 	return &c
 }
@@ -73,7 +73,7 @@ func PossibleMyKindValues() []MyKind {
 	}
 }
 
-// ToPtr() returns a *MyKind pointing to the current value.
+// ToPtr returns a *MyKind pointing to the current value.
 func (c MyKind) ToPtr() *MyKind {
 	return &c
 }

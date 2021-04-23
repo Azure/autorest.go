@@ -23,7 +23,7 @@ func PossibleAccessValues() []Access {
 	}
 }
 
-// ToPtr() returns a *Access pointing to the current value.
+// ToPtr returns a *Access pointing to the current value.
 func (c Access) ToPtr() *Access {
 	return &c
 }
@@ -50,7 +50,7 @@ func PossibleApplicationGatewayBackendHealthServerHealthValues() []ApplicationGa
 	}
 }
 
-// ToPtr() returns a *ApplicationGatewayBackendHealthServerHealth pointing to the current value.
+// ToPtr returns a *ApplicationGatewayBackendHealthServerHealth pointing to the current value.
 func (c ApplicationGatewayBackendHealthServerHealth) ToPtr() *ApplicationGatewayBackendHealthServerHealth {
 	return &c
 }
@@ -71,7 +71,7 @@ func PossibleApplicationGatewayCookieBasedAffinityValues() []ApplicationGatewayC
 	}
 }
 
-// ToPtr() returns a *ApplicationGatewayCookieBasedAffinity pointing to the current value.
+// ToPtr returns a *ApplicationGatewayCookieBasedAffinity pointing to the current value.
 func (c ApplicationGatewayCookieBasedAffinity) ToPtr() *ApplicationGatewayCookieBasedAffinity {
 	return &c
 }
@@ -92,7 +92,7 @@ func PossibleApplicationGatewayCustomErrorStatusCodeValues() []ApplicationGatewa
 	}
 }
 
-// ToPtr() returns a *ApplicationGatewayCustomErrorStatusCode pointing to the current value.
+// ToPtr returns a *ApplicationGatewayCustomErrorStatusCode pointing to the current value.
 func (c ApplicationGatewayCustomErrorStatusCode) ToPtr() *ApplicationGatewayCustomErrorStatusCode {
 	return &c
 }
@@ -113,7 +113,7 @@ func PossibleApplicationGatewayFirewallModeValues() []ApplicationGatewayFirewall
 	}
 }
 
-// ToPtr() returns a *ApplicationGatewayFirewallMode pointing to the current value.
+// ToPtr returns a *ApplicationGatewayFirewallMode pointing to the current value.
 func (c ApplicationGatewayFirewallMode) ToPtr() *ApplicationGatewayFirewallMode {
 	return &c
 }
@@ -138,7 +138,7 @@ func PossibleApplicationGatewayOperationalStateValues() []ApplicationGatewayOper
 	}
 }
 
-// ToPtr() returns a *ApplicationGatewayOperationalState pointing to the current value.
+// ToPtr returns a *ApplicationGatewayOperationalState pointing to the current value.
 func (c ApplicationGatewayOperationalState) ToPtr() *ApplicationGatewayOperationalState {
 	return &c
 }
@@ -159,7 +159,7 @@ func PossibleApplicationGatewayProtocolValues() []ApplicationGatewayProtocol {
 	}
 }
 
-// ToPtr() returns a *ApplicationGatewayProtocol pointing to the current value.
+// ToPtr returns a *ApplicationGatewayProtocol pointing to the current value.
 func (c ApplicationGatewayProtocol) ToPtr() *ApplicationGatewayProtocol {
 	return &c
 }
@@ -184,7 +184,7 @@ func PossibleApplicationGatewayRedirectTypeValues() []ApplicationGatewayRedirect
 	}
 }
 
-// ToPtr() returns a *ApplicationGatewayRedirectType pointing to the current value.
+// ToPtr returns a *ApplicationGatewayRedirectType pointing to the current value.
 func (c ApplicationGatewayRedirectType) ToPtr() *ApplicationGatewayRedirectType {
 	return &c
 }
@@ -205,7 +205,7 @@ func PossibleApplicationGatewayRequestRoutingRuleTypeValues() []ApplicationGatew
 	}
 }
 
-// ToPtr() returns a *ApplicationGatewayRequestRoutingRuleType pointing to the current value.
+// ToPtr returns a *ApplicationGatewayRequestRoutingRuleType pointing to the current value.
 func (c ApplicationGatewayRequestRoutingRuleType) ToPtr() *ApplicationGatewayRequestRoutingRuleType {
 	return &c
 }
@@ -236,7 +236,7 @@ func PossibleApplicationGatewaySKUNameValues() []ApplicationGatewaySKUName {
 	}
 }
 
-// ToPtr() returns a *ApplicationGatewaySKUName pointing to the current value.
+// ToPtr returns a *ApplicationGatewaySKUName pointing to the current value.
 func (c ApplicationGatewaySKUName) ToPtr() *ApplicationGatewaySKUName {
 	return &c
 }
@@ -309,7 +309,7 @@ func PossibleApplicationGatewaySSLCipherSuiteValues() []ApplicationGatewaySSLCip
 	}
 }
 
-// ToPtr() returns a *ApplicationGatewaySSLCipherSuite pointing to the current value.
+// ToPtr returns a *ApplicationGatewaySSLCipherSuite pointing to the current value.
 func (c ApplicationGatewaySSLCipherSuite) ToPtr() *ApplicationGatewaySSLCipherSuite {
 	return &c
 }
@@ -332,7 +332,7 @@ func PossibleApplicationGatewaySSLPolicyNameValues() []ApplicationGatewaySSLPoli
 	}
 }
 
-// ToPtr() returns a *ApplicationGatewaySSLPolicyName pointing to the current value.
+// ToPtr returns a *ApplicationGatewaySSLPolicyName pointing to the current value.
 func (c ApplicationGatewaySSLPolicyName) ToPtr() *ApplicationGatewaySSLPolicyName {
 	return &c
 }
@@ -353,7 +353,7 @@ func PossibleApplicationGatewaySSLPolicyTypeValues() []ApplicationGatewaySSLPoli
 	}
 }
 
-// ToPtr() returns a *ApplicationGatewaySSLPolicyType pointing to the current value.
+// ToPtr returns a *ApplicationGatewaySSLPolicyType pointing to the current value.
 func (c ApplicationGatewaySSLPolicyType) ToPtr() *ApplicationGatewaySSLPolicyType {
 	return &c
 }
@@ -376,7 +376,7 @@ func PossibleApplicationGatewaySSLProtocolValues() []ApplicationGatewaySSLProtoc
 	}
 }
 
-// ToPtr() returns a *ApplicationGatewaySSLProtocol pointing to the current value.
+// ToPtr returns a *ApplicationGatewaySSLProtocol pointing to the current value.
 func (c ApplicationGatewaySSLProtocol) ToPtr() *ApplicationGatewaySSLProtocol {
 	return &c
 }
@@ -401,7 +401,7 @@ func PossibleApplicationGatewayTierValues() []ApplicationGatewayTier {
 	}
 }
 
-// ToPtr() returns a *ApplicationGatewayTier pointing to the current value.
+// ToPtr returns a *ApplicationGatewayTier pointing to the current value.
 func (c ApplicationGatewayTier) ToPtr() *ApplicationGatewayTier {
 	return &c
 }
@@ -422,7 +422,7 @@ func PossibleAssociationTypeValues() []AssociationType {
 	}
 }
 
-// ToPtr() returns a *AssociationType pointing to the current value.
+// ToPtr returns a *AssociationType pointing to the current value.
 func (c AssociationType) ToPtr() *AssociationType {
 	return &c
 }
@@ -443,7 +443,7 @@ func PossibleAuthenticationMethodValues() []AuthenticationMethod {
 	}
 }
 
-// ToPtr() returns a *AuthenticationMethod pointing to the current value.
+// ToPtr returns a *AuthenticationMethod pointing to the current value.
 func (c AuthenticationMethod) ToPtr() *AuthenticationMethod {
 	return &c
 }
@@ -464,7 +464,7 @@ func PossibleAuthorizationUseStatusValues() []AuthorizationUseStatus {
 	}
 }
 
-// ToPtr() returns a *AuthorizationUseStatus pointing to the current value.
+// ToPtr returns a *AuthorizationUseStatus pointing to the current value.
 func (c AuthorizationUseStatus) ToPtr() *AuthorizationUseStatus {
 	return &c
 }
@@ -487,7 +487,7 @@ func PossibleAzureFirewallApplicationRuleProtocolTypeValues() []AzureFirewallApp
 	}
 }
 
-// ToPtr() returns a *AzureFirewallApplicationRuleProtocolType pointing to the current value.
+// ToPtr returns a *AzureFirewallApplicationRuleProtocolType pointing to the current value.
 func (c AzureFirewallApplicationRuleProtocolType) ToPtr() *AzureFirewallApplicationRuleProtocolType {
 	return &c
 }
@@ -508,7 +508,7 @@ func PossibleAzureFirewallNatRCActionTypeValues() []AzureFirewallNatRCActionType
 	}
 }
 
-// ToPtr() returns a *AzureFirewallNatRCActionType pointing to the current value.
+// ToPtr returns a *AzureFirewallNatRCActionType pointing to the current value.
 func (c AzureFirewallNatRCActionType) ToPtr() *AzureFirewallNatRCActionType {
 	return &c
 }
@@ -533,7 +533,7 @@ func PossibleAzureFirewallNetworkRuleProtocolValues() []AzureFirewallNetworkRule
 	}
 }
 
-// ToPtr() returns a *AzureFirewallNetworkRuleProtocol pointing to the current value.
+// ToPtr returns a *AzureFirewallNetworkRuleProtocol pointing to the current value.
 func (c AzureFirewallNetworkRuleProtocol) ToPtr() *AzureFirewallNetworkRuleProtocol {
 	return &c
 }
@@ -554,7 +554,7 @@ func PossibleAzureFirewallRCActionTypeValues() []AzureFirewallRCActionType {
 	}
 }
 
-// ToPtr() returns a *AzureFirewallRCActionType pointing to the current value.
+// ToPtr returns a *AzureFirewallRCActionType pointing to the current value.
 func (c AzureFirewallRCActionType) ToPtr() *AzureFirewallRCActionType {
 	return &c
 }
@@ -575,7 +575,7 @@ func PossibleAzureFirewallSKUNameValues() []AzureFirewallSKUName {
 	}
 }
 
-// ToPtr() returns a *AzureFirewallSKUName pointing to the current value.
+// ToPtr returns a *AzureFirewallSKUName pointing to the current value.
 func (c AzureFirewallSKUName) ToPtr() *AzureFirewallSKUName {
 	return &c
 }
@@ -594,7 +594,7 @@ func PossibleAzureFirewallSKUTierValues() []AzureFirewallSKUTier {
 	}
 }
 
-// ToPtr() returns a *AzureFirewallSKUTier pointing to the current value.
+// ToPtr returns a *AzureFirewallSKUTier pointing to the current value.
 func (c AzureFirewallSKUTier) ToPtr() *AzureFirewallSKUTier {
 	return &c
 }
@@ -617,7 +617,7 @@ func PossibleAzureFirewallThreatIntelModeValues() []AzureFirewallThreatIntelMode
 	}
 }
 
-// ToPtr() returns a *AzureFirewallThreatIntelMode pointing to the current value.
+// ToPtr returns a *AzureFirewallThreatIntelMode pointing to the current value.
 func (c AzureFirewallThreatIntelMode) ToPtr() *AzureFirewallThreatIntelMode {
 	return &c
 }
@@ -638,7 +638,7 @@ func PossibleBastionConnectProtocolValues() []BastionConnectProtocol {
 	}
 }
 
-// ToPtr() returns a *BastionConnectProtocol pointing to the current value.
+// ToPtr returns a *BastionConnectProtocol pointing to the current value.
 func (c BastionConnectProtocol) ToPtr() *BastionConnectProtocol {
 	return &c
 }
@@ -665,7 +665,7 @@ func PossibleBgpPeerStateValues() []BgpPeerState {
 	}
 }
 
-// ToPtr() returns a *BgpPeerState pointing to the current value.
+// ToPtr returns a *BgpPeerState pointing to the current value.
 func (c BgpPeerState) ToPtr() *BgpPeerState {
 	return &c
 }
@@ -688,7 +688,7 @@ func PossibleCircuitConnectionStatusValues() []CircuitConnectionStatus {
 	}
 }
 
-// ToPtr() returns a *CircuitConnectionStatus pointing to the current value.
+// ToPtr returns a *CircuitConnectionStatus pointing to the current value.
 func (c CircuitConnectionStatus) ToPtr() *CircuitConnectionStatus {
 	return &c
 }
@@ -707,7 +707,7 @@ func PossibleConnectionMonitorEndpointFilterItemTypeValues() []ConnectionMonitor
 	}
 }
 
-// ToPtr() returns a *ConnectionMonitorEndpointFilterItemType pointing to the current value.
+// ToPtr returns a *ConnectionMonitorEndpointFilterItemType pointing to the current value.
 func (c ConnectionMonitorEndpointFilterItemType) ToPtr() *ConnectionMonitorEndpointFilterItemType {
 	return &c
 }
@@ -726,7 +726,7 @@ func PossibleConnectionMonitorEndpointFilterTypeValues() []ConnectionMonitorEndp
 	}
 }
 
-// ToPtr() returns a *ConnectionMonitorEndpointFilterType pointing to the current value.
+// ToPtr returns a *ConnectionMonitorEndpointFilterType pointing to the current value.
 func (c ConnectionMonitorEndpointFilterType) ToPtr() *ConnectionMonitorEndpointFilterType {
 	return &c
 }
@@ -749,7 +749,7 @@ func PossibleConnectionMonitorSourceStatusValues() []ConnectionMonitorSourceStat
 	}
 }
 
-// ToPtr() returns a *ConnectionMonitorSourceStatus pointing to the current value.
+// ToPtr returns a *ConnectionMonitorSourceStatus pointing to the current value.
 func (c ConnectionMonitorSourceStatus) ToPtr() *ConnectionMonitorSourceStatus {
 	return &c
 }
@@ -772,7 +772,7 @@ func PossibleConnectionMonitorTestConfigurationProtocolValues() []ConnectionMoni
 	}
 }
 
-// ToPtr() returns a *ConnectionMonitorTestConfigurationProtocol pointing to the current value.
+// ToPtr returns a *ConnectionMonitorTestConfigurationProtocol pointing to the current value.
 func (c ConnectionMonitorTestConfigurationProtocol) ToPtr() *ConnectionMonitorTestConfigurationProtocol {
 	return &c
 }
@@ -793,7 +793,7 @@ func PossibleConnectionMonitorTypeValues() []ConnectionMonitorType {
 	}
 }
 
-// ToPtr() returns a *ConnectionMonitorType pointing to the current value.
+// ToPtr returns a *ConnectionMonitorType pointing to the current value.
 func (c ConnectionMonitorType) ToPtr() *ConnectionMonitorType {
 	return &c
 }
@@ -816,7 +816,7 @@ func PossibleConnectionStateValues() []ConnectionState {
 	}
 }
 
-// ToPtr() returns a *ConnectionState pointing to the current value.
+// ToPtr returns a *ConnectionState pointing to the current value.
 func (c ConnectionState) ToPtr() *ConnectionState {
 	return &c
 }
@@ -841,7 +841,7 @@ func PossibleConnectionStatusValues() []ConnectionStatus {
 	}
 }
 
-// ToPtr() returns a *ConnectionStatus pointing to the current value.
+// ToPtr returns a *ConnectionStatus pointing to the current value.
 func (c ConnectionStatus) ToPtr() *ConnectionStatus {
 	return &c
 }
@@ -864,7 +864,7 @@ func PossibleDdosCustomPolicyProtocolValues() []DdosCustomPolicyProtocol {
 	}
 }
 
-// ToPtr() returns a *DdosCustomPolicyProtocol pointing to the current value.
+// ToPtr returns a *DdosCustomPolicyProtocol pointing to the current value.
 func (c DdosCustomPolicyProtocol) ToPtr() *DdosCustomPolicyProtocol {
 	return &c
 }
@@ -891,7 +891,7 @@ func PossibleDdosCustomPolicyTriggerSensitivityOverrideValues() []DdosCustomPoli
 	}
 }
 
-// ToPtr() returns a *DdosCustomPolicyTriggerSensitivityOverride pointing to the current value.
+// ToPtr returns a *DdosCustomPolicyTriggerSensitivityOverride pointing to the current value.
 func (c DdosCustomPolicyTriggerSensitivityOverride) ToPtr() *DdosCustomPolicyTriggerSensitivityOverride {
 	return &c
 }
@@ -912,7 +912,7 @@ func PossibleDdosSettingsProtectionCoverageValues() []DdosSettingsProtectionCove
 	}
 }
 
-// ToPtr() returns a *DdosSettingsProtectionCoverage pointing to the current value.
+// ToPtr returns a *DdosSettingsProtectionCoverage pointing to the current value.
 func (c DdosSettingsProtectionCoverage) ToPtr() *DdosSettingsProtectionCoverage {
 	return &c
 }
@@ -945,7 +945,7 @@ func PossibleDhGroupValues() []DhGroup {
 	}
 }
 
-// ToPtr() returns a *DhGroup pointing to the current value.
+// ToPtr returns a *DhGroup pointing to the current value.
 func (c DhGroup) ToPtr() *DhGroup {
 	return &c
 }
@@ -966,7 +966,7 @@ func PossibleDirectionValues() []Direction {
 	}
 }
 
-// ToPtr() returns a *Direction pointing to the current value.
+// ToPtr returns a *Direction pointing to the current value.
 func (c Direction) ToPtr() *Direction {
 	return &c
 }
@@ -991,7 +991,7 @@ func PossibleEffectiveRouteSourceValues() []EffectiveRouteSource {
 	}
 }
 
-// ToPtr() returns a *EffectiveRouteSource pointing to the current value.
+// ToPtr returns a *EffectiveRouteSource pointing to the current value.
 func (c EffectiveRouteSource) ToPtr() *EffectiveRouteSource {
 	return &c
 }
@@ -1012,7 +1012,7 @@ func PossibleEffectiveRouteStateValues() []EffectiveRouteState {
 	}
 }
 
-// ToPtr() returns a *EffectiveRouteState pointing to the current value.
+// ToPtr returns a *EffectiveRouteState pointing to the current value.
 func (c EffectiveRouteState) ToPtr() *EffectiveRouteState {
 	return &c
 }
@@ -1035,7 +1035,7 @@ func PossibleEffectiveSecurityRuleProtocolValues() []EffectiveSecurityRuleProtoc
 	}
 }
 
-// ToPtr() returns a *EffectiveSecurityRuleProtocol pointing to the current value.
+// ToPtr returns a *EffectiveSecurityRuleProtocol pointing to the current value.
 func (c EffectiveSecurityRuleProtocol) ToPtr() *EffectiveSecurityRuleProtocol {
 	return &c
 }
@@ -1058,7 +1058,7 @@ func PossibleEvaluationStateValues() []EvaluationState {
 	}
 }
 
-// ToPtr() returns a *EvaluationState pointing to the current value.
+// ToPtr returns a *EvaluationState pointing to the current value.
 func (c EvaluationState) ToPtr() *EvaluationState {
 	return &c
 }
@@ -1083,7 +1083,7 @@ func PossibleExpressRouteCircuitPeeringAdvertisedPublicPrefixStateValues() []Exp
 	}
 }
 
-// ToPtr() returns a *ExpressRouteCircuitPeeringAdvertisedPublicPrefixState pointing to the current value.
+// ToPtr returns a *ExpressRouteCircuitPeeringAdvertisedPublicPrefixState pointing to the current value.
 func (c ExpressRouteCircuitPeeringAdvertisedPublicPrefixState) ToPtr() *ExpressRouteCircuitPeeringAdvertisedPublicPrefixState {
 	return &c
 }
@@ -1104,7 +1104,7 @@ func PossibleExpressRouteCircuitPeeringStateValues() []ExpressRouteCircuitPeerin
 	}
 }
 
-// ToPtr() returns a *ExpressRouteCircuitPeeringState pointing to the current value.
+// ToPtr returns a *ExpressRouteCircuitPeeringState pointing to the current value.
 func (c ExpressRouteCircuitPeeringState) ToPtr() *ExpressRouteCircuitPeeringState {
 	return &c
 }
@@ -1125,7 +1125,7 @@ func PossibleExpressRouteCircuitSKUFamilyValues() []ExpressRouteCircuitSKUFamily
 	}
 }
 
-// ToPtr() returns a *ExpressRouteCircuitSKUFamily pointing to the current value.
+// ToPtr returns a *ExpressRouteCircuitSKUFamily pointing to the current value.
 func (c ExpressRouteCircuitSKUFamily) ToPtr() *ExpressRouteCircuitSKUFamily {
 	return &c
 }
@@ -1150,7 +1150,7 @@ func PossibleExpressRouteCircuitSKUTierValues() []ExpressRouteCircuitSKUTier {
 	}
 }
 
-// ToPtr() returns a *ExpressRouteCircuitSKUTier pointing to the current value.
+// ToPtr returns a *ExpressRouteCircuitSKUTier pointing to the current value.
 func (c ExpressRouteCircuitSKUTier) ToPtr() *ExpressRouteCircuitSKUTier {
 	return &c
 }
@@ -1171,7 +1171,7 @@ func PossibleExpressRouteLinkAdminStateValues() []ExpressRouteLinkAdminState {
 	}
 }
 
-// ToPtr() returns a *ExpressRouteLinkAdminState pointing to the current value.
+// ToPtr returns a *ExpressRouteLinkAdminState pointing to the current value.
 func (c ExpressRouteLinkAdminState) ToPtr() *ExpressRouteLinkAdminState {
 	return &c
 }
@@ -1192,7 +1192,7 @@ func PossibleExpressRouteLinkConnectorTypeValues() []ExpressRouteLinkConnectorTy
 	}
 }
 
-// ToPtr() returns a *ExpressRouteLinkConnectorType pointing to the current value.
+// ToPtr returns a *ExpressRouteLinkConnectorType pointing to the current value.
 func (c ExpressRouteLinkConnectorType) ToPtr() *ExpressRouteLinkConnectorType {
 	return &c
 }
@@ -1213,7 +1213,7 @@ func PossibleExpressRouteLinkMacSecCipherValues() []ExpressRouteLinkMacSecCipher
 	}
 }
 
-// ToPtr() returns a *ExpressRouteLinkMacSecCipher pointing to the current value.
+// ToPtr returns a *ExpressRouteLinkMacSecCipher pointing to the current value.
 func (c ExpressRouteLinkMacSecCipher) ToPtr() *ExpressRouteLinkMacSecCipher {
 	return &c
 }
@@ -1234,7 +1234,7 @@ func PossibleExpressRoutePeeringStateValues() []ExpressRoutePeeringState {
 	}
 }
 
-// ToPtr() returns a *ExpressRoutePeeringState pointing to the current value.
+// ToPtr returns a *ExpressRoutePeeringState pointing to the current value.
 func (c ExpressRoutePeeringState) ToPtr() *ExpressRoutePeeringState {
 	return &c
 }
@@ -1257,7 +1257,7 @@ func PossibleExpressRoutePeeringTypeValues() []ExpressRoutePeeringType {
 	}
 }
 
-// ToPtr() returns a *ExpressRoutePeeringType pointing to the current value.
+// ToPtr returns a *ExpressRoutePeeringType pointing to the current value.
 func (c ExpressRoutePeeringType) ToPtr() *ExpressRoutePeeringType {
 	return &c
 }
@@ -1278,7 +1278,7 @@ func PossibleExpressRoutePortsEncapsulationValues() []ExpressRoutePortsEncapsula
 	}
 }
 
-// ToPtr() returns a *ExpressRoutePortsEncapsulation pointing to the current value.
+// ToPtr returns a *ExpressRoutePortsEncapsulation pointing to the current value.
 func (c ExpressRoutePortsEncapsulation) ToPtr() *ExpressRoutePortsEncapsulation {
 	return &c
 }
@@ -1299,7 +1299,7 @@ func PossibleFirewallPolicyFilterRuleActionTypeValues() []FirewallPolicyFilterRu
 	}
 }
 
-// ToPtr() returns a *FirewallPolicyFilterRuleActionType pointing to the current value.
+// ToPtr returns a *FirewallPolicyFilterRuleActionType pointing to the current value.
 func (c FirewallPolicyFilterRuleActionType) ToPtr() *FirewallPolicyFilterRuleActionType {
 	return &c
 }
@@ -1318,7 +1318,7 @@ func PossibleFirewallPolicyNatRuleActionTypeValues() []FirewallPolicyNatRuleActi
 	}
 }
 
-// ToPtr() returns a *FirewallPolicyNatRuleActionType pointing to the current value.
+// ToPtr returns a *FirewallPolicyNatRuleActionType pointing to the current value.
 func (c FirewallPolicyNatRuleActionType) ToPtr() *FirewallPolicyNatRuleActionType {
 	return &c
 }
@@ -1339,7 +1339,7 @@ func PossibleFirewallPolicyRuleConditionApplicationProtocolTypeValues() []Firewa
 	}
 }
 
-// ToPtr() returns a *FirewallPolicyRuleConditionApplicationProtocolType pointing to the current value.
+// ToPtr returns a *FirewallPolicyRuleConditionApplicationProtocolType pointing to the current value.
 func (c FirewallPolicyRuleConditionApplicationProtocolType) ToPtr() *FirewallPolicyRuleConditionApplicationProtocolType {
 	return &c
 }
@@ -1364,7 +1364,7 @@ func PossibleFirewallPolicyRuleConditionNetworkProtocolValues() []FirewallPolicy
 	}
 }
 
-// ToPtr() returns a *FirewallPolicyRuleConditionNetworkProtocol pointing to the current value.
+// ToPtr returns a *FirewallPolicyRuleConditionNetworkProtocol pointing to the current value.
 func (c FirewallPolicyRuleConditionNetworkProtocol) ToPtr() *FirewallPolicyRuleConditionNetworkProtocol {
 	return &c
 }
@@ -1387,7 +1387,7 @@ func PossibleFirewallPolicyRuleConditionTypeValues() []FirewallPolicyRuleConditi
 	}
 }
 
-// ToPtr() returns a *FirewallPolicyRuleConditionType pointing to the current value.
+// ToPtr returns a *FirewallPolicyRuleConditionType pointing to the current value.
 func (c FirewallPolicyRuleConditionType) ToPtr() *FirewallPolicyRuleConditionType {
 	return &c
 }
@@ -1408,7 +1408,7 @@ func PossibleFirewallPolicyRuleTypeValues() []FirewallPolicyRuleType {
 	}
 }
 
-// ToPtr() returns a *FirewallPolicyRuleType pointing to the current value.
+// ToPtr returns a *FirewallPolicyRuleType pointing to the current value.
 func (c FirewallPolicyRuleType) ToPtr() *FirewallPolicyRuleType {
 	return &c
 }
@@ -1427,7 +1427,7 @@ func PossibleFlowLogFormatTypeValues() []FlowLogFormatType {
 	}
 }
 
-// ToPtr() returns a *FlowLogFormatType pointing to the current value.
+// ToPtr returns a *FlowLogFormatType pointing to the current value.
 func (c FlowLogFormatType) ToPtr() *FlowLogFormatType {
 	return &c
 }
@@ -1448,7 +1448,7 @@ func PossibleHTTPConfigurationMethodValues() []HTTPConfigurationMethod {
 	}
 }
 
-// ToPtr() returns a *HTTPConfigurationMethod pointing to the current value.
+// ToPtr returns a *HTTPConfigurationMethod pointing to the current value.
 func (c HTTPConfigurationMethod) ToPtr() *HTTPConfigurationMethod {
 	return &c
 }
@@ -1467,7 +1467,7 @@ func PossibleHTTPMethodValues() []HTTPMethod {
 	}
 }
 
-// ToPtr() returns a *HTTPMethod pointing to the current value.
+// ToPtr returns a *HTTPMethod pointing to the current value.
 func (c HTTPMethod) ToPtr() *HTTPMethod {
 	return &c
 }
@@ -1492,7 +1492,7 @@ func PossibleHubVirtualNetworkConnectionStatusValues() []HubVirtualNetworkConnec
 	}
 }
 
-// ToPtr() returns a *HubVirtualNetworkConnectionStatus pointing to the current value.
+// ToPtr returns a *HubVirtualNetworkConnectionStatus pointing to the current value.
 func (c HubVirtualNetworkConnectionStatus) ToPtr() *HubVirtualNetworkConnectionStatus {
 	return &c
 }
@@ -1513,7 +1513,7 @@ func PossibleIPAllocationMethodValues() []IPAllocationMethod {
 	}
 }
 
-// ToPtr() returns a *IPAllocationMethod pointing to the current value.
+// ToPtr returns a *IPAllocationMethod pointing to the current value.
 func (c IPAllocationMethod) ToPtr() *IPAllocationMethod {
 	return &c
 }
@@ -1534,7 +1534,7 @@ func PossibleIPAllocationTypeValues() []IPAllocationType {
 	}
 }
 
-// ToPtr() returns a *IPAllocationType pointing to the current value.
+// ToPtr returns a *IPAllocationType pointing to the current value.
 func (c IPAllocationType) ToPtr() *IPAllocationType {
 	return &c
 }
@@ -1555,7 +1555,7 @@ func PossibleIPFlowProtocolValues() []IPFlowProtocol {
 	}
 }
 
-// ToPtr() returns a *IPFlowProtocol pointing to the current value.
+// ToPtr returns a *IPFlowProtocol pointing to the current value.
 func (c IPFlowProtocol) ToPtr() *IPFlowProtocol {
 	return &c
 }
@@ -1590,7 +1590,7 @@ func PossibleIPSecEncryptionValues() []IPSecEncryption {
 	}
 }
 
-// ToPtr() returns a *IPSecEncryption pointing to the current value.
+// ToPtr returns a *IPSecEncryption pointing to the current value.
 func (c IPSecEncryption) ToPtr() *IPSecEncryption {
 	return &c
 }
@@ -1619,7 +1619,7 @@ func PossibleIPSecIntegrityValues() []IPSecIntegrity {
 	}
 }
 
-// ToPtr() returns a *IPSecIntegrity pointing to the current value.
+// ToPtr returns a *IPSecIntegrity pointing to the current value.
 func (c IPSecIntegrity) ToPtr() *IPSecIntegrity {
 	return &c
 }
@@ -1640,7 +1640,7 @@ func PossibleIPVersionValues() []IPVersion {
 	}
 }
 
-// ToPtr() returns a *IPVersion pointing to the current value.
+// ToPtr returns a *IPVersion pointing to the current value.
 func (c IPVersion) ToPtr() *IPVersion {
 	return &c
 }
@@ -1671,7 +1671,7 @@ func PossibleIkeEncryptionValues() []IkeEncryption {
 	}
 }
 
-// ToPtr() returns a *IkeEncryption pointing to the current value.
+// ToPtr returns a *IkeEncryption pointing to the current value.
 func (c IkeEncryption) ToPtr() *IkeEncryption {
 	return &c
 }
@@ -1700,7 +1700,7 @@ func PossibleIkeIntegrityValues() []IkeIntegrity {
 	}
 }
 
-// ToPtr() returns a *IkeIntegrity pointing to the current value.
+// ToPtr returns a *IkeIntegrity pointing to the current value.
 func (c IkeIntegrity) ToPtr() *IkeIntegrity {
 	return &c
 }
@@ -1735,7 +1735,7 @@ func PossibleIssueTypeValues() []IssueType {
 	}
 }
 
-// ToPtr() returns a *IssueType pointing to the current value.
+// ToPtr returns a *IssueType pointing to the current value.
 func (c IssueType) ToPtr() *IssueType {
 	return &c
 }
@@ -1758,7 +1758,7 @@ func PossibleLoadBalancerOutboundRuleProtocolValues() []LoadBalancerOutboundRule
 	}
 }
 
-// ToPtr() returns a *LoadBalancerOutboundRuleProtocol pointing to the current value.
+// ToPtr returns a *LoadBalancerOutboundRuleProtocol pointing to the current value.
 func (c LoadBalancerOutboundRuleProtocol) ToPtr() *LoadBalancerOutboundRuleProtocol {
 	return &c
 }
@@ -1779,7 +1779,7 @@ func PossibleLoadBalancerSKUNameValues() []LoadBalancerSKUName {
 	}
 }
 
-// ToPtr() returns a *LoadBalancerSKUName pointing to the current value.
+// ToPtr returns a *LoadBalancerSKUName pointing to the current value.
 func (c LoadBalancerSKUName) ToPtr() *LoadBalancerSKUName {
 	return &c
 }
@@ -1802,7 +1802,7 @@ func PossibleLoadDistributionValues() []LoadDistribution {
 	}
 }
 
-// ToPtr() returns a *LoadDistribution pointing to the current value.
+// ToPtr returns a *LoadDistribution pointing to the current value.
 func (c LoadDistribution) ToPtr() *LoadDistribution {
 	return &c
 }
@@ -1821,7 +1821,7 @@ func PossibleManagedRuleEnabledStateValues() []ManagedRuleEnabledState {
 	}
 }
 
-// ToPtr() returns a *ManagedRuleEnabledState pointing to the current value.
+// ToPtr returns a *ManagedRuleEnabledState pointing to the current value.
 func (c ManagedRuleEnabledState) ToPtr() *ManagedRuleEnabledState {
 	return &c
 }
@@ -1840,7 +1840,7 @@ func PossibleNatGatewaySKUNameValues() []NatGatewaySKUName {
 	}
 }
 
-// ToPtr() returns a *NatGatewaySKUName pointing to the current value.
+// ToPtr returns a *NatGatewaySKUName pointing to the current value.
 func (c NatGatewaySKUName) ToPtr() *NatGatewaySKUName {
 	return &c
 }
@@ -1863,7 +1863,7 @@ func PossibleNetworkOperationStatusValues() []NetworkOperationStatus {
 	}
 }
 
-// ToPtr() returns a *NetworkOperationStatus pointing to the current value.
+// ToPtr returns a *NetworkOperationStatus pointing to the current value.
 func (c NetworkOperationStatus) ToPtr() *NetworkOperationStatus {
 	return &c
 }
@@ -1892,7 +1892,7 @@ func PossibleNextHopTypeValues() []NextHopType {
 	}
 }
 
-// ToPtr() returns a *NextHopType pointing to the current value.
+// ToPtr returns a *NextHopType pointing to the current value.
 func (c NextHopType) ToPtr() *NextHopType {
 	return &c
 }
@@ -1917,7 +1917,7 @@ func PossibleOfficeTrafficCategoryValues() []OfficeTrafficCategory {
 	}
 }
 
-// ToPtr() returns a *OfficeTrafficCategory pointing to the current value.
+// ToPtr returns a *OfficeTrafficCategory pointing to the current value.
 func (c OfficeTrafficCategory) ToPtr() *OfficeTrafficCategory {
 	return &c
 }
@@ -1940,7 +1940,7 @@ func PossibleOriginValues() []Origin {
 	}
 }
 
-// ToPtr() returns a *Origin pointing to the current value.
+// ToPtr returns a *Origin pointing to the current value.
 func (c Origin) ToPtr() *Origin {
 	return &c
 }
@@ -1959,7 +1959,7 @@ func PossibleOutputTypeValues() []OutputType {
 	}
 }
 
-// ToPtr() returns a *OutputType pointing to the current value.
+// ToPtr returns a *OutputType pointing to the current value.
 func (c OutputType) ToPtr() *OutputType {
 	return &c
 }
@@ -1982,7 +1982,7 @@ func PossibleOwaspCrsExclusionEntryMatchVariableValues() []OwaspCrsExclusionEntr
 	}
 }
 
-// ToPtr() returns a *OwaspCrsExclusionEntryMatchVariable pointing to the current value.
+// ToPtr returns a *OwaspCrsExclusionEntryMatchVariable pointing to the current value.
 func (c OwaspCrsExclusionEntryMatchVariable) ToPtr() *OwaspCrsExclusionEntryMatchVariable {
 	return &c
 }
@@ -2010,7 +2010,7 @@ func PossibleOwaspCrsExclusionEntrySelectorMatchOperatorValues() []OwaspCrsExclu
 	}
 }
 
-// ToPtr() returns a *OwaspCrsExclusionEntrySelectorMatchOperator pointing to the current value.
+// ToPtr returns a *OwaspCrsExclusionEntrySelectorMatchOperator pointing to the current value.
 func (c OwaspCrsExclusionEntrySelectorMatchOperator) ToPtr() *OwaspCrsExclusionEntrySelectorMatchOperator {
 	return &c
 }
@@ -2036,7 +2036,7 @@ func PossiblePcErrorValues() []PcError {
 	}
 }
 
-// ToPtr() returns a *PcError pointing to the current value.
+// ToPtr returns a *PcError pointing to the current value.
 func (c PcError) ToPtr() *PcError {
 	return &c
 }
@@ -2059,7 +2059,7 @@ func PossiblePcProtocolValues() []PcProtocol {
 	}
 }
 
-// ToPtr() returns a *PcProtocol pointing to the current value.
+// ToPtr returns a *PcProtocol pointing to the current value.
 func (c PcProtocol) ToPtr() *PcProtocol {
 	return &c
 }
@@ -2086,7 +2086,7 @@ func PossiblePcStatusValues() []PcStatus {
 	}
 }
 
-// ToPtr() returns a *PcStatus pointing to the current value.
+// ToPtr returns a *PcStatus pointing to the current value.
 func (c PcStatus) ToPtr() *PcStatus {
 	return &c
 }
@@ -2121,7 +2121,7 @@ func PossiblePfsGroupValues() []PfsGroup {
 	}
 }
 
-// ToPtr() returns a *PfsGroup pointing to the current value.
+// ToPtr returns a *PfsGroup pointing to the current value.
 func (c PfsGroup) ToPtr() *PfsGroup {
 	return &c
 }
@@ -2143,7 +2143,7 @@ func PossiblePreferredIPVersionValues() []PreferredIPVersion {
 	}
 }
 
-// ToPtr() returns a *PreferredIPVersion pointing to the current value.
+// ToPtr returns a *PreferredIPVersion pointing to the current value.
 func (c PreferredIPVersion) ToPtr() *PreferredIPVersion {
 	return &c
 }
@@ -2168,7 +2168,7 @@ func PossibleProbeProtocolValues() []ProbeProtocol {
 	}
 }
 
-// ToPtr() returns a *ProbeProtocol pointing to the current value.
+// ToPtr returns a *ProbeProtocol pointing to the current value.
 func (c ProbeProtocol) ToPtr() *ProbeProtocol {
 	return &c
 }
@@ -2189,7 +2189,7 @@ func PossibleProcessorArchitectureValues() []ProcessorArchitecture {
 	}
 }
 
-// ToPtr() returns a *ProcessorArchitecture pointing to the current value.
+// ToPtr returns a *ProcessorArchitecture pointing to the current value.
 func (c ProcessorArchitecture) ToPtr() *ProcessorArchitecture {
 	return &c
 }
@@ -2214,7 +2214,7 @@ func PossibleProtocolValues() []Protocol {
 	}
 }
 
-// ToPtr() returns a *Protocol pointing to the current value.
+// ToPtr returns a *Protocol pointing to the current value.
 func (c Protocol) ToPtr() *Protocol {
 	return &c
 }
@@ -2239,7 +2239,7 @@ func PossibleProvisioningStateValues() []ProvisioningState {
 	}
 }
 
-// ToPtr() returns a *ProvisioningState pointing to the current value.
+// ToPtr returns a *ProvisioningState pointing to the current value.
 func (c ProvisioningState) ToPtr() *ProvisioningState {
 	return &c
 }
@@ -2260,7 +2260,7 @@ func PossiblePublicIPAddressSKUNameValues() []PublicIPAddressSKUName {
 	}
 }
 
-// ToPtr() returns a *PublicIPAddressSKUName pointing to the current value.
+// ToPtr returns a *PublicIPAddressSKUName pointing to the current value.
 func (c PublicIPAddressSKUName) ToPtr() *PublicIPAddressSKUName {
 	return &c
 }
@@ -2279,7 +2279,7 @@ func PossiblePublicIPPrefixSKUNameValues() []PublicIPPrefixSKUName {
 	}
 }
 
-// ToPtr() returns a *PublicIPPrefixSKUName pointing to the current value.
+// ToPtr returns a *PublicIPPrefixSKUName pointing to the current value.
 func (c PublicIPPrefixSKUName) ToPtr() *PublicIPPrefixSKUName {
 	return &c
 }
@@ -2306,7 +2306,7 @@ func PossibleResourceIdentityTypeValues() []ResourceIdentityType {
 	}
 }
 
-// ToPtr() returns a *ResourceIdentityType pointing to the current value.
+// ToPtr returns a *ResourceIdentityType pointing to the current value.
 func (c ResourceIdentityType) ToPtr() *ResourceIdentityType {
 	return &c
 }
@@ -2325,7 +2325,7 @@ func PossibleRouteFilterRuleTypeValues() []RouteFilterRuleType {
 	}
 }
 
-// ToPtr() returns a *RouteFilterRuleType pointing to the current value.
+// ToPtr returns a *RouteFilterRuleType pointing to the current value.
 func (c RouteFilterRuleType) ToPtr() *RouteFilterRuleType {
 	return &c
 }
@@ -2352,7 +2352,7 @@ func PossibleRouteNextHopTypeValues() []RouteNextHopType {
 	}
 }
 
-// ToPtr() returns a *RouteNextHopType pointing to the current value.
+// ToPtr returns a *RouteNextHopType pointing to the current value.
 func (c RouteNextHopType) ToPtr() *RouteNextHopType {
 	return &c
 }
@@ -2377,7 +2377,7 @@ func PossibleSecurityPartnerProviderConnectionStatusValues() []SecurityPartnerPr
 	}
 }
 
-// ToPtr() returns a *SecurityPartnerProviderConnectionStatus pointing to the current value.
+// ToPtr returns a *SecurityPartnerProviderConnectionStatus pointing to the current value.
 func (c SecurityPartnerProviderConnectionStatus) ToPtr() *SecurityPartnerProviderConnectionStatus {
 	return &c
 }
@@ -2400,7 +2400,7 @@ func PossibleSecurityProviderNameValues() []SecurityProviderName {
 	}
 }
 
-// ToPtr() returns a *SecurityProviderName pointing to the current value.
+// ToPtr returns a *SecurityProviderName pointing to the current value.
 func (c SecurityProviderName) ToPtr() *SecurityProviderName {
 	return &c
 }
@@ -2421,7 +2421,7 @@ func PossibleSecurityRuleAccessValues() []SecurityRuleAccess {
 	}
 }
 
-// ToPtr() returns a *SecurityRuleAccess pointing to the current value.
+// ToPtr returns a *SecurityRuleAccess pointing to the current value.
 func (c SecurityRuleAccess) ToPtr() *SecurityRuleAccess {
 	return &c
 }
@@ -2442,7 +2442,7 @@ func PossibleSecurityRuleDirectionValues() []SecurityRuleDirection {
 	}
 }
 
-// ToPtr() returns a *SecurityRuleDirection pointing to the current value.
+// ToPtr returns a *SecurityRuleDirection pointing to the current value.
 func (c SecurityRuleDirection) ToPtr() *SecurityRuleDirection {
 	return &c
 }
@@ -2471,7 +2471,7 @@ func PossibleSecurityRuleProtocolValues() []SecurityRuleProtocol {
 	}
 }
 
-// ToPtr() returns a *SecurityRuleProtocol pointing to the current value.
+// ToPtr returns a *SecurityRuleProtocol pointing to the current value.
 func (c SecurityRuleProtocol) ToPtr() *SecurityRuleProtocol {
 	return &c
 }
@@ -2496,7 +2496,7 @@ func PossibleServiceProviderProvisioningStateValues() []ServiceProviderProvision
 	}
 }
 
-// ToPtr() returns a *ServiceProviderProvisioningState pointing to the current value.
+// ToPtr returns a *ServiceProviderProvisioningState pointing to the current value.
 func (c ServiceProviderProvisioningState) ToPtr() *ServiceProviderProvisioningState {
 	return &c
 }
@@ -2517,7 +2517,7 @@ func PossibleSeverityValues() []Severity {
 	}
 }
 
-// ToPtr() returns a *Severity pointing to the current value.
+// ToPtr returns a *Severity pointing to the current value.
 func (c Severity) ToPtr() *Severity {
 	return &c
 }
@@ -2540,7 +2540,7 @@ func PossibleTransportProtocolValues() []TransportProtocol {
 	}
 }
 
-// ToPtr() returns a *TransportProtocol pointing to the current value.
+// ToPtr returns a *TransportProtocol pointing to the current value.
 func (c TransportProtocol) ToPtr() *TransportProtocol {
 	return &c
 }
@@ -2565,7 +2565,7 @@ func PossibleTunnelConnectionStatusValues() []TunnelConnectionStatus {
 	}
 }
 
-// ToPtr() returns a *TunnelConnectionStatus pointing to the current value.
+// ToPtr returns a *TunnelConnectionStatus pointing to the current value.
 func (c TunnelConnectionStatus) ToPtr() *TunnelConnectionStatus {
 	return &c
 }
@@ -2584,7 +2584,7 @@ func PossibleUsageUnitValues() []UsageUnit {
 	}
 }
 
-// ToPtr() returns a *UsageUnit pointing to the current value.
+// ToPtr returns a *UsageUnit pointing to the current value.
 func (c UsageUnit) ToPtr() *UsageUnit {
 	return &c
 }
@@ -2607,7 +2607,7 @@ func PossibleVPNAuthenticationTypeValues() []VPNAuthenticationType {
 	}
 }
 
-// ToPtr() returns a *VPNAuthenticationType pointing to the current value.
+// ToPtr returns a *VPNAuthenticationType pointing to the current value.
 func (c VPNAuthenticationType) ToPtr() *VPNAuthenticationType {
 	return &c
 }
@@ -2630,7 +2630,7 @@ func PossibleVPNClientProtocolValues() []VPNClientProtocol {
 	}
 }
 
-// ToPtr() returns a *VPNClientProtocol pointing to the current value.
+// ToPtr returns a *VPNClientProtocol pointing to the current value.
 func (c VPNClientProtocol) ToPtr() *VPNClientProtocol {
 	return &c
 }
@@ -2655,7 +2655,7 @@ func PossibleVPNConnectionStatusValues() []VPNConnectionStatus {
 	}
 }
 
-// ToPtr() returns a *VPNConnectionStatus pointing to the current value.
+// ToPtr returns a *VPNConnectionStatus pointing to the current value.
 func (c VPNConnectionStatus) ToPtr() *VPNConnectionStatus {
 	return &c
 }
@@ -2678,7 +2678,7 @@ func PossibleVPNGatewayGenerationValues() []VPNGatewayGeneration {
 	}
 }
 
-// ToPtr() returns a *VPNGatewayGeneration pointing to the current value.
+// ToPtr returns a *VPNGatewayGeneration pointing to the current value.
 func (c VPNGatewayGeneration) ToPtr() *VPNGatewayGeneration {
 	return &c
 }
@@ -2699,7 +2699,7 @@ func PossibleVPNGatewayTunnelingProtocolValues() []VPNGatewayTunnelingProtocol {
 	}
 }
 
-// ToPtr() returns a *VPNGatewayTunnelingProtocol pointing to the current value.
+// ToPtr returns a *VPNGatewayTunnelingProtocol pointing to the current value.
 func (c VPNGatewayTunnelingProtocol) ToPtr() *VPNGatewayTunnelingProtocol {
 	return &c
 }
@@ -2720,7 +2720,7 @@ func PossibleVPNTypeValues() []VPNType {
 	}
 }
 
-// ToPtr() returns a *VPNType pointing to the current value.
+// ToPtr returns a *VPNType pointing to the current value.
 func (c VPNType) ToPtr() *VPNType {
 	return &c
 }
@@ -2743,7 +2743,7 @@ func PossibleVerbosityLevelValues() []VerbosityLevel {
 	}
 }
 
-// ToPtr() returns a *VerbosityLevel pointing to the current value.
+// ToPtr returns a *VerbosityLevel pointing to the current value.
 func (c VerbosityLevel) ToPtr() *VerbosityLevel {
 	return &c
 }
@@ -2764,7 +2764,7 @@ func PossibleVirtualNetworkGatewayConnectionProtocolValues() []VirtualNetworkGat
 	}
 }
 
-// ToPtr() returns a *VirtualNetworkGatewayConnectionProtocol pointing to the current value.
+// ToPtr returns a *VirtualNetworkGatewayConnectionProtocol pointing to the current value.
 func (c VirtualNetworkGatewayConnectionProtocol) ToPtr() *VirtualNetworkGatewayConnectionProtocol {
 	return &c
 }
@@ -2789,7 +2789,7 @@ func PossibleVirtualNetworkGatewayConnectionStatusValues() []VirtualNetworkGatew
 	}
 }
 
-// ToPtr() returns a *VirtualNetworkGatewayConnectionStatus pointing to the current value.
+// ToPtr returns a *VirtualNetworkGatewayConnectionStatus pointing to the current value.
 func (c VirtualNetworkGatewayConnectionStatus) ToPtr() *VirtualNetworkGatewayConnectionStatus {
 	return &c
 }
@@ -2814,7 +2814,7 @@ func PossibleVirtualNetworkGatewayConnectionTypeValues() []VirtualNetworkGateway
 	}
 }
 
-// ToPtr() returns a *VirtualNetworkGatewayConnectionType pointing to the current value.
+// ToPtr returns a *VirtualNetworkGatewayConnectionType pointing to the current value.
 func (c VirtualNetworkGatewayConnectionType) ToPtr() *VirtualNetworkGatewayConnectionType {
 	return &c
 }
@@ -2865,7 +2865,7 @@ func PossibleVirtualNetworkGatewaySKUNameValues() []VirtualNetworkGatewaySKUName
 	}
 }
 
-// ToPtr() returns a *VirtualNetworkGatewaySKUName pointing to the current value.
+// ToPtr returns a *VirtualNetworkGatewaySKUName pointing to the current value.
 func (c VirtualNetworkGatewaySKUName) ToPtr() *VirtualNetworkGatewaySKUName {
 	return &c
 }
@@ -2916,7 +2916,7 @@ func PossibleVirtualNetworkGatewaySKUTierValues() []VirtualNetworkGatewaySKUTier
 	}
 }
 
-// ToPtr() returns a *VirtualNetworkGatewaySKUTier pointing to the current value.
+// ToPtr returns a *VirtualNetworkGatewaySKUTier pointing to the current value.
 func (c VirtualNetworkGatewaySKUTier) ToPtr() *VirtualNetworkGatewaySKUTier {
 	return &c
 }
@@ -2937,7 +2937,7 @@ func PossibleVirtualNetworkGatewayTypeValues() []VirtualNetworkGatewayType {
 	}
 }
 
-// ToPtr() returns a *VirtualNetworkGatewayType pointing to the current value.
+// ToPtr returns a *VirtualNetworkGatewayType pointing to the current value.
 func (c VirtualNetworkGatewayType) ToPtr() *VirtualNetworkGatewayType {
 	return &c
 }
@@ -2960,7 +2960,7 @@ func PossibleVirtualNetworkPeeringStateValues() []VirtualNetworkPeeringState {
 	}
 }
 
-// ToPtr() returns a *VirtualNetworkPeeringState pointing to the current value.
+// ToPtr returns a *VirtualNetworkPeeringState pointing to the current value.
 func (c VirtualNetworkPeeringState) ToPtr() *VirtualNetworkPeeringState {
 	return &c
 }
@@ -2981,7 +2981,7 @@ func PossibleVirtualWanSecurityProviderTypeValues() []VirtualWanSecurityProvider
 	}
 }
 
-// ToPtr() returns a *VirtualWanSecurityProviderType pointing to the current value.
+// ToPtr returns a *VirtualWanSecurityProviderType pointing to the current value.
 func (c VirtualWanSecurityProviderType) ToPtr() *VirtualWanSecurityProviderType {
 	return &c
 }
@@ -3004,7 +3004,7 @@ func PossibleWebApplicationFirewallActionValues() []WebApplicationFirewallAction
 	}
 }
 
-// ToPtr() returns a *WebApplicationFirewallAction pointing to the current value.
+// ToPtr returns a *WebApplicationFirewallAction pointing to the current value.
 func (c WebApplicationFirewallAction) ToPtr() *WebApplicationFirewallAction {
 	return &c
 }
@@ -3025,7 +3025,7 @@ func PossibleWebApplicationFirewallEnabledStateValues() []WebApplicationFirewall
 	}
 }
 
-// ToPtr() returns a *WebApplicationFirewallEnabledState pointing to the current value.
+// ToPtr returns a *WebApplicationFirewallEnabledState pointing to the current value.
 func (c WebApplicationFirewallEnabledState) ToPtr() *WebApplicationFirewallEnabledState {
 	return &c
 }
@@ -3058,7 +3058,7 @@ func PossibleWebApplicationFirewallMatchVariableValues() []WebApplicationFirewal
 	}
 }
 
-// ToPtr() returns a *WebApplicationFirewallMatchVariable pointing to the current value.
+// ToPtr returns a *WebApplicationFirewallMatchVariable pointing to the current value.
 func (c WebApplicationFirewallMatchVariable) ToPtr() *WebApplicationFirewallMatchVariable {
 	return &c
 }
@@ -3079,7 +3079,7 @@ func PossibleWebApplicationFirewallModeValues() []WebApplicationFirewallMode {
 	}
 }
 
-// ToPtr() returns a *WebApplicationFirewallMode pointing to the current value.
+// ToPtr returns a *WebApplicationFirewallMode pointing to the current value.
 func (c WebApplicationFirewallMode) ToPtr() *WebApplicationFirewallMode {
 	return &c
 }
@@ -3118,7 +3118,7 @@ func PossibleWebApplicationFirewallOperatorValues() []WebApplicationFirewallOper
 	}
 }
 
-// ToPtr() returns a *WebApplicationFirewallOperator pointing to the current value.
+// ToPtr returns a *WebApplicationFirewallOperator pointing to the current value.
 func (c WebApplicationFirewallOperator) ToPtr() *WebApplicationFirewallOperator {
 	return &c
 }
@@ -3147,7 +3147,7 @@ func PossibleWebApplicationFirewallPolicyResourceStateValues() []WebApplicationF
 	}
 }
 
-// ToPtr() returns a *WebApplicationFirewallPolicyResourceState pointing to the current value.
+// ToPtr returns a *WebApplicationFirewallPolicyResourceState pointing to the current value.
 func (c WebApplicationFirewallPolicyResourceState) ToPtr() *WebApplicationFirewallPolicyResourceState {
 	return &c
 }
@@ -3168,7 +3168,7 @@ func PossibleWebApplicationFirewallRuleTypeValues() []WebApplicationFirewallRule
 	}
 }
 
-// ToPtr() returns a *WebApplicationFirewallRuleType pointing to the current value.
+// ToPtr returns a *WebApplicationFirewallRuleType pointing to the current value.
 func (c WebApplicationFirewallRuleType) ToPtr() *WebApplicationFirewallRuleType {
 	return &c
 }
@@ -3197,7 +3197,7 @@ func PossibleWebApplicationFirewallTransformValues() []WebApplicationFirewallTra
 	}
 }
 
-// ToPtr() returns a *WebApplicationFirewallTransform pointing to the current value.
+// ToPtr returns a *WebApplicationFirewallTransform pointing to the current value.
 func (c WebApplicationFirewallTransform) ToPtr() *WebApplicationFirewallTransform {
 	return &c
 }

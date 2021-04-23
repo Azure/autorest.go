@@ -41,7 +41,7 @@ func PossibleOperationResultStatusValues() []OperationResultStatus {
 	}
 }
 
-// ToPtr() returns a *OperationResultStatus pointing to the current value.
+// ToPtr returns a *OperationResultStatus pointing to the current value.
 func (c OperationResultStatus) ToPtr() *OperationResultStatus {
 	return &c
 }
@@ -79,7 +79,7 @@ func PossibleProductPropertiesProvisioningStateValuesValues() []ProductPropertie
 	}
 }
 
-// ToPtr() returns a *ProductPropertiesProvisioningStateValues pointing to the current value.
+// ToPtr returns a *ProductPropertiesProvisioningStateValues pointing to the current value.
 func (c ProductPropertiesProvisioningStateValues) ToPtr() *ProductPropertiesProvisioningStateValues {
 	return &c
 }
@@ -117,7 +117,7 @@ func PossibleSubProductPropertiesProvisioningStateValuesValues() []SubProductPro
 	}
 }
 
-// ToPtr() returns a *SubProductPropertiesProvisioningStateValues pointing to the current value.
+// ToPtr returns a *SubProductPropertiesProvisioningStateValues pointing to the current value.
 func (c SubProductPropertiesProvisioningStateValues) ToPtr() *SubProductPropertiesProvisioningStateValues {
 	return &c
 }

@@ -46,7 +46,7 @@ func PossibleAccessTierValues() []AccessTier {
 	}
 }
 
-// ToPtr() returns a *AccessTier pointing to the current value.
+// ToPtr returns a *AccessTier pointing to the current value.
 func (c AccessTier) ToPtr() *AccessTier {
 	return &c
 }
@@ -72,7 +72,7 @@ func PossibleAccountKindValues() []AccountKind {
 	}
 }
 
-// ToPtr() returns a *AccountKind pointing to the current value.
+// ToPtr returns a *AccountKind pointing to the current value.
 func (c AccountKind) ToPtr() *AccountKind {
 	return &c
 }
@@ -92,7 +92,7 @@ func PossibleArchiveStatusValues() []ArchiveStatus {
 	}
 }
 
-// ToPtr() returns a *ArchiveStatus pointing to the current value.
+// ToPtr returns a *ArchiveStatus pointing to the current value.
 func (c ArchiveStatus) ToPtr() *ArchiveStatus {
 	return &c
 }
@@ -116,7 +116,7 @@ func PossibleBlobExpiryOptionsValues() []BlobExpiryOptions {
 	}
 }
 
-// ToPtr() returns a *BlobExpiryOptions pointing to the current value.
+// ToPtr returns a *BlobExpiryOptions pointing to the current value.
 func (c BlobExpiryOptions) ToPtr() *BlobExpiryOptions {
 	return &c
 }
@@ -138,7 +138,7 @@ func PossibleBlobImmutabilityPolicyModeValues() []BlobImmutabilityPolicyMode {
 	}
 }
 
-// ToPtr() returns a *BlobImmutabilityPolicyMode pointing to the current value.
+// ToPtr returns a *BlobImmutabilityPolicyMode pointing to the current value.
 func (c BlobImmutabilityPolicyMode) ToPtr() *BlobImmutabilityPolicyMode {
 	return &c
 }
@@ -160,7 +160,7 @@ func PossibleBlobTypeValues() []BlobType {
 	}
 }
 
-// ToPtr() returns a *BlobType pointing to the current value.
+// ToPtr returns a *BlobType pointing to the current value.
 func (c BlobType) ToPtr() *BlobType {
 	return &c
 }
@@ -182,7 +182,7 @@ func PossibleBlockListTypeValues() []BlockListType {
 	}
 }
 
-// ToPtr() returns a *BlockListType pointing to the current value.
+// ToPtr returns a *BlockListType pointing to the current value.
 func (c BlockListType) ToPtr() *BlockListType {
 	return &c
 }
@@ -206,7 +206,7 @@ func PossibleCopyStatusTypeValues() []CopyStatusType {
 	}
 }
 
-// ToPtr() returns a *CopyStatusType pointing to the current value.
+// ToPtr returns a *CopyStatusType pointing to the current value.
 func (c CopyStatusType) ToPtr() *CopyStatusType {
 	return &c
 }
@@ -226,7 +226,7 @@ func PossibleDeleteSnapshotsOptionTypeValues() []DeleteSnapshotsOptionType {
 	}
 }
 
-// ToPtr() returns a *DeleteSnapshotsOptionType pointing to the current value.
+// ToPtr returns a *DeleteSnapshotsOptionType pointing to the current value.
 func (c DeleteSnapshotsOptionType) ToPtr() *DeleteSnapshotsOptionType {
 	return &c
 }
@@ -249,7 +249,7 @@ func PossibleGeoReplicationStatusTypeValues() []GeoReplicationStatusType {
 	}
 }
 
-// ToPtr() returns a *GeoReplicationStatusType pointing to the current value.
+// ToPtr returns a *GeoReplicationStatusType pointing to the current value.
 func (c GeoReplicationStatusType) ToPtr() *GeoReplicationStatusType {
 	return &c
 }
@@ -269,7 +269,7 @@ func PossibleLeaseDurationTypeValues() []LeaseDurationType {
 	}
 }
 
-// ToPtr() returns a *LeaseDurationType pointing to the current value.
+// ToPtr returns a *LeaseDurationType pointing to the current value.
 func (c LeaseDurationType) ToPtr() *LeaseDurationType {
 	return &c
 }
@@ -295,7 +295,7 @@ func PossibleLeaseStateTypeValues() []LeaseStateType {
 	}
 }
 
-// ToPtr() returns a *LeaseStateType pointing to the current value.
+// ToPtr returns a *LeaseStateType pointing to the current value.
 func (c LeaseStateType) ToPtr() *LeaseStateType {
 	return &c
 }
@@ -315,7 +315,7 @@ func PossibleLeaseStatusTypeValues() []LeaseStatusType {
 	}
 }
 
-// ToPtr() returns a *LeaseStatusType pointing to the current value.
+// ToPtr returns a *LeaseStatusType pointing to the current value.
 func (c LeaseStatusType) ToPtr() *LeaseStatusType {
 	return &c
 }
@@ -349,7 +349,7 @@ func PossibleListBlobsIncludeItemValues() []ListBlobsIncludeItem {
 	}
 }
 
-// ToPtr() returns a *ListBlobsIncludeItem pointing to the current value.
+// ToPtr returns a *ListBlobsIncludeItem pointing to the current value.
 func (c ListBlobsIncludeItem) ToPtr() *ListBlobsIncludeItem {
 	return &c
 }
@@ -369,7 +369,7 @@ func PossibleListContainersIncludeTypeValues() []ListContainersIncludeType {
 	}
 }
 
-// ToPtr() returns a *ListContainersIncludeType pointing to the current value.
+// ToPtr returns a *ListContainersIncludeType pointing to the current value.
 func (c ListContainersIncludeType) ToPtr() *ListContainersIncludeType {
 	return &c
 }
@@ -389,7 +389,7 @@ func PossiblePathRenameModeValues() []PathRenameMode {
 	}
 }
 
-// ToPtr() returns a *PathRenameMode pointing to the current value.
+// ToPtr returns a *PathRenameMode pointing to the current value.
 func (c PathRenameMode) ToPtr() *PathRenameMode {
 	return &c
 }
@@ -427,7 +427,7 @@ func PossiblePremiumPageBlobAccessTierValues() []PremiumPageBlobAccessTier {
 	}
 }
 
-// ToPtr() returns a *PremiumPageBlobAccessTier pointing to the current value.
+// ToPtr returns a *PremiumPageBlobAccessTier pointing to the current value.
 func (c PremiumPageBlobAccessTier) ToPtr() *PremiumPageBlobAccessTier {
 	return &c
 }
@@ -447,7 +447,7 @@ func PossiblePublicAccessTypeValues() []PublicAccessType {
 	}
 }
 
-// ToPtr() returns a *PublicAccessType pointing to the current value.
+// ToPtr returns a *PublicAccessType pointing to the current value.
 func (c PublicAccessType) ToPtr() *PublicAccessType {
 	return &c
 }
@@ -470,7 +470,7 @@ func PossibleQueryFormatTypeValues() []QueryFormatType {
 	}
 }
 
-// ToPtr() returns a *QueryFormatType pointing to the current value.
+// ToPtr returns a *QueryFormatType pointing to the current value.
 func (c QueryFormatType) ToPtr() *QueryFormatType {
 	return &c
 }
@@ -491,7 +491,7 @@ func PossibleRehydratePriorityValues() []RehydratePriority {
 	}
 }
 
-// ToPtr() returns a *RehydratePriority pointing to the current value.
+// ToPtr returns a *RehydratePriority pointing to the current value.
 func (c RehydratePriority) ToPtr() *RehydratePriority {
 	return &c
 }
@@ -517,7 +517,7 @@ func PossibleSKUNameValues() []SKUName {
 	}
 }
 
-// ToPtr() returns a *SKUName pointing to the current value.
+// ToPtr returns a *SKUName pointing to the current value.
 func (c SKUName) ToPtr() *SKUName {
 	return &c
 }
@@ -539,7 +539,7 @@ func PossibleSequenceNumberActionTypeValues() []SequenceNumberActionType {
 	}
 }
 
-// ToPtr() returns a *SequenceNumberActionType pointing to the current value.
+// ToPtr returns a *SequenceNumberActionType pointing to the current value.
 func (c SequenceNumberActionType) ToPtr() *SequenceNumberActionType {
 	return &c
 }
@@ -782,7 +782,7 @@ func PossibleStorageErrorCodeValues() []StorageErrorCode {
 	}
 }
 
-// ToPtr() returns a *StorageErrorCode pointing to the current value.
+// ToPtr returns a *StorageErrorCode pointing to the current value.
 func (c StorageErrorCode) ToPtr() *StorageErrorCode {
 	return &c
 }
