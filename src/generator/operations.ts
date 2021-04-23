@@ -1088,7 +1088,7 @@ function generateLROBeginMethod(op: Operation, imports: ImportManager, isARM: bo
   text += '\tif err != nil {\n';
   text += `\t\treturn ${zeroResp}, err\n`;
   text += '\t}\n';
-  text += emitPoller(op, isARM, imports);
+  text += emitPoller(op, imports, isARM);
   text += '\tresult.Poller = poller\n';
   // determine the poller response based on the name and whether is is a pageable operation
   let pollerResponse = '*http.Response';
@@ -1122,7 +1122,7 @@ function generateLROResumeMethod(op: Operation, imports: ImportManager, isARM: b
   text += '\tif err != nil {\n';
   text += `\t\treturn ${zeroResp}, err\n`;
   text += '\t}\n';
-  text += emitPoller(op, isARM, imports);
+  text += emitPoller(op, imports, isARM);
   text += '\tresp, err := poller.Poll(ctx)\n';
   text += '\tif err != nil {\n';
   text += `\t\treturn ${zeroResp}, err\n`;
@@ -1152,7 +1152,7 @@ function generateLROResumeMethod(op: Operation, imports: ImportManager, isARM: b
   return text;
 }
 
-function emitPoller(op: Operation, isARM: boolean, imports: ImportManager): string {
+function emitPoller(op: Operation, imports: ImportManager, isARM: boolean): string {
   let text = `\tpoller := &${internalPollerTypeName(<PollerInfo>op.language.go!.pollerType)}{\n`;
   if (isARM) {
     text += '\t\tpipeline: client.con.Pipeline(),\n';
