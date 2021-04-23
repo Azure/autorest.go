@@ -44,8 +44,8 @@ func (client *VirtualRouterPeeringsClient) BeginCreateOrUpdate(ctx context.Conte
 		return VirtualRouterPeeringPollerResponse{}, err
 	}
 	poller := &virtualRouterPeeringPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualRouterPeeringResponse, error) {
@@ -56,15 +56,27 @@ func (client *VirtualRouterPeeringsClient) BeginCreateOrUpdate(ctx context.Conte
 
 // ResumeCreateOrUpdate creates a new VirtualRouterPeeringPoller from the specified resume token.
 // token - The value must come from a previous call to VirtualRouterPeeringPoller.ResumeToken().
-func (client *VirtualRouterPeeringsClient) ResumeCreateOrUpdate(token string) (VirtualRouterPeeringPoller, error) {
+func (client *VirtualRouterPeeringsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (VirtualRouterPeeringPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("VirtualRouterPeeringsClient.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
-		return nil, err
+		return VirtualRouterPeeringPollerResponse{}, err
 	}
-	return &virtualRouterPeeringPoller{
+	poller := &virtualRouterPeeringPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return VirtualRouterPeeringPollerResponse{}, err
+	}
+	result := VirtualRouterPeeringPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualRouterPeeringResponse, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // CreateOrUpdate - Creates or updates the specified Virtual Router Peering.
@@ -146,8 +158,8 @@ func (client *VirtualRouterPeeringsClient) BeginDelete(ctx context.Context, reso
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -158,15 +170,27 @@ func (client *VirtualRouterPeeringsClient) BeginDelete(ctx context.Context, reso
 
 // ResumeDelete creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *VirtualRouterPeeringsClient) ResumeDelete(token string) (HTTPPoller, error) {
+func (client *VirtualRouterPeeringsClient) ResumeDelete(ctx context.Context, token string) (HTTPPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("VirtualRouterPeeringsClient.Delete", token, client.deleteHandleError)
 	if err != nil {
-		return nil, err
+		return HTTPPollerResponse{}, err
 	}
-	return &httpPoller{
+	poller := &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return HTTPPollerResponse{}, err
+	}
+	result := HTTPPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // Delete - Deletes the specified peering from a Virtual Router.

@@ -44,8 +44,8 @@ func (client *ApplicationGatewaysClient) BeginBackendHealth(ctx context.Context,
 		return ApplicationGatewayBackendHealthPollerResponse{}, err
 	}
 	poller := &applicationGatewayBackendHealthPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ApplicationGatewayBackendHealthResponse, error) {
@@ -56,15 +56,27 @@ func (client *ApplicationGatewaysClient) BeginBackendHealth(ctx context.Context,
 
 // ResumeBackendHealth creates a new ApplicationGatewayBackendHealthPoller from the specified resume token.
 // token - The value must come from a previous call to ApplicationGatewayBackendHealthPoller.ResumeToken().
-func (client *ApplicationGatewaysClient) ResumeBackendHealth(token string) (ApplicationGatewayBackendHealthPoller, error) {
+func (client *ApplicationGatewaysClient) ResumeBackendHealth(ctx context.Context, token string) (ApplicationGatewayBackendHealthPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("ApplicationGatewaysClient.BackendHealth", token, client.backendHealthHandleError)
 	if err != nil {
-		return nil, err
+		return ApplicationGatewayBackendHealthPollerResponse{}, err
 	}
-	return &applicationGatewayBackendHealthPoller{
+	poller := &applicationGatewayBackendHealthPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return ApplicationGatewayBackendHealthPollerResponse{}, err
+	}
+	result := ApplicationGatewayBackendHealthPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ApplicationGatewayBackendHealthResponse, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // BackendHealth - Gets the backend health of the specified application gateway in a resource group.
@@ -146,8 +158,8 @@ func (client *ApplicationGatewaysClient) BeginBackendHealthOnDemand(ctx context.
 		return ApplicationGatewayBackendHealthOnDemandPollerResponse{}, err
 	}
 	poller := &applicationGatewayBackendHealthOnDemandPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ApplicationGatewayBackendHealthOnDemandResponse, error) {
@@ -158,15 +170,27 @@ func (client *ApplicationGatewaysClient) BeginBackendHealthOnDemand(ctx context.
 
 // ResumeBackendHealthOnDemand creates a new ApplicationGatewayBackendHealthOnDemandPoller from the specified resume token.
 // token - The value must come from a previous call to ApplicationGatewayBackendHealthOnDemandPoller.ResumeToken().
-func (client *ApplicationGatewaysClient) ResumeBackendHealthOnDemand(token string) (ApplicationGatewayBackendHealthOnDemandPoller, error) {
+func (client *ApplicationGatewaysClient) ResumeBackendHealthOnDemand(ctx context.Context, token string) (ApplicationGatewayBackendHealthOnDemandPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("ApplicationGatewaysClient.BackendHealthOnDemand", token, client.backendHealthOnDemandHandleError)
 	if err != nil {
-		return nil, err
+		return ApplicationGatewayBackendHealthOnDemandPollerResponse{}, err
 	}
-	return &applicationGatewayBackendHealthOnDemandPoller{
+	poller := &applicationGatewayBackendHealthOnDemandPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return ApplicationGatewayBackendHealthOnDemandPollerResponse{}, err
+	}
+	result := ApplicationGatewayBackendHealthOnDemandPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ApplicationGatewayBackendHealthOnDemandResponse, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // BackendHealthOnDemand - Gets the backend health for given combination of backend pool and http setting of the specified application gateway in a resource
@@ -248,8 +272,8 @@ func (client *ApplicationGatewaysClient) BeginCreateOrUpdate(ctx context.Context
 		return ApplicationGatewayPollerResponse{}, err
 	}
 	poller := &applicationGatewayPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ApplicationGatewayResponse, error) {
@@ -260,15 +284,27 @@ func (client *ApplicationGatewaysClient) BeginCreateOrUpdate(ctx context.Context
 
 // ResumeCreateOrUpdate creates a new ApplicationGatewayPoller from the specified resume token.
 // token - The value must come from a previous call to ApplicationGatewayPoller.ResumeToken().
-func (client *ApplicationGatewaysClient) ResumeCreateOrUpdate(token string) (ApplicationGatewayPoller, error) {
+func (client *ApplicationGatewaysClient) ResumeCreateOrUpdate(ctx context.Context, token string) (ApplicationGatewayPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("ApplicationGatewaysClient.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
-		return nil, err
+		return ApplicationGatewayPollerResponse{}, err
 	}
-	return &applicationGatewayPoller{
+	poller := &applicationGatewayPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return ApplicationGatewayPollerResponse{}, err
+	}
+	result := ApplicationGatewayPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ApplicationGatewayResponse, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // CreateOrUpdate - Creates or updates the specified application gateway.
@@ -346,8 +382,8 @@ func (client *ApplicationGatewaysClient) BeginDelete(ctx context.Context, resour
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -358,15 +394,27 @@ func (client *ApplicationGatewaysClient) BeginDelete(ctx context.Context, resour
 
 // ResumeDelete creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *ApplicationGatewaysClient) ResumeDelete(token string) (HTTPPoller, error) {
+func (client *ApplicationGatewaysClient) ResumeDelete(ctx context.Context, token string) (HTTPPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("ApplicationGatewaysClient.Delete", token, client.deleteHandleError)
 	if err != nil {
-		return nil, err
+		return HTTPPollerResponse{}, err
 	}
-	return &httpPoller{
+	poller := &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return HTTPPollerResponse{}, err
+	}
+	result := HTTPPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // Delete - Deletes the specified application gateway.
@@ -981,8 +1029,8 @@ func (client *ApplicationGatewaysClient) BeginStart(ctx context.Context, resourc
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -993,15 +1041,27 @@ func (client *ApplicationGatewaysClient) BeginStart(ctx context.Context, resourc
 
 // ResumeStart creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *ApplicationGatewaysClient) ResumeStart(token string) (HTTPPoller, error) {
+func (client *ApplicationGatewaysClient) ResumeStart(ctx context.Context, token string) (HTTPPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("ApplicationGatewaysClient.Start", token, client.startHandleError)
 	if err != nil {
-		return nil, err
+		return HTTPPollerResponse{}, err
 	}
-	return &httpPoller{
+	poller := &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return HTTPPollerResponse{}, err
+	}
+	result := HTTPPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // Start - Starts the specified application gateway.
@@ -1070,8 +1130,8 @@ func (client *ApplicationGatewaysClient) BeginStop(ctx context.Context, resource
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -1082,15 +1142,27 @@ func (client *ApplicationGatewaysClient) BeginStop(ctx context.Context, resource
 
 // ResumeStop creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *ApplicationGatewaysClient) ResumeStop(token string) (HTTPPoller, error) {
+func (client *ApplicationGatewaysClient) ResumeStop(ctx context.Context, token string) (HTTPPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("ApplicationGatewaysClient.Stop", token, client.stopHandleError)
 	if err != nil {
-		return nil, err
+		return HTTPPollerResponse{}, err
 	}
-	return &httpPoller{
+	poller := &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return HTTPPollerResponse{}, err
+	}
+	result := HTTPPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // Stop - Stops the specified application gateway in a resource group.

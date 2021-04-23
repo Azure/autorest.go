@@ -173,6 +173,8 @@ function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, inBody: boolea
       return 'bool';
     case SchemaType.ByteArray:
       return '[]byte';
+    case SchemaType.Char:
+      return 'rune';
     case SchemaType.Constant:
       let constSchema = <ConstantSchema>schema;
       constSchema.valueType.language.go!.name = schemaTypeToGoType(codeModel, constSchema.valueType, inBody);
@@ -219,6 +221,7 @@ function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, inBody: boolea
       return 'float64';
     case SchemaType.Credential:
     case SchemaType.Duration:
+    case SchemaType.ODataQuery:
     case SchemaType.String:
     case SchemaType.Uuid:
     case SchemaType.Uri:
@@ -229,8 +232,14 @@ function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, inBody: boolea
         schema.language.go!.internalTimeType = 'dateType';
       }
       return 'time.Time';
-    default:
+    case SchemaType.Time:
+      return 'time.Time';
+    case SchemaType.Choice:
+    case SchemaType.SealedChoice:
+    case SchemaType.Object:
       return schema.language.go!.name;
+    default:
+      throw new Error(`unhandled schema type ${schema.type}`);
   }
 }
 
@@ -303,8 +312,9 @@ function processOperationRequests(session: Session<CodeModel>) {
       }
     }
   }
-  // track any client-level parameterized host params
-  const hostParams = new Map<Parameter, Array<OperationGroup>>();
+  // track any client-level parameterized host params.
+  // use the param name to avoid reference equality checks.
+  const hostParams = new Map<string, [Parameter, Array<OperationGroup>]>();
   // track any parameter groups and/or optional parameters
   const paramGroups = new Map<string, GroupProperty>();
   for (const group of values(session.model.operationGroups)) {
@@ -350,10 +360,10 @@ function processOperationRequests(session: Session<CodeModel>) {
         if (param.implementation === ImplementationLocation.Client && param.schema.type !== SchemaType.Constant && param.language.default.name !== '$host') {
           if (param.protocol.http!.in === 'uri') {
             // this is a parameterized host param
-            if (!hostParams.has(param)) {
-              hostParams.set(param, new Array<OperationGroup>());
+            if (!hostParams.has(param.language.go!.name)) {
+              hostParams.set(param.language.go!.name, [param, new Array<OperationGroup>()]);
             }
-            const groups = hostParams.get(param);
+            const groups = hostParams.get(param.language.go!.name)![1];
             if (!groups!.includes(group)) {
               groups!.push(group);
             }
@@ -462,8 +472,9 @@ function processOperationRequests(session: Session<CodeModel>) {
   // parameterized host gets split into two buckets.
   //  simple case  - all host params are client and shared across all operation groups
   //  complex case - client host params unique to op groups and/or method host params
-  for (const param of hostParams.keys()) {
-    const groups = hostParams.get(param);
+  for (const paramName of hostParams.keys()) {
+    const param = hostParams.get(paramName)![0];
+    const groups = hostParams.get(paramName)![1];
     if (groups!.length !== session.model.operationGroups.length) {
       // this host param doesn't appear in all operation groups so it goes in the operation group method
       for (const group of values(groups)) {

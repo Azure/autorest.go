@@ -44,8 +44,8 @@ func (client *PublicIPAddressesClient) BeginCreateOrUpdate(ctx context.Context, 
 		return PublicIPAddressPollerResponse{}, err
 	}
 	poller := &publicIPAddressPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (PublicIPAddressResponse, error) {
@@ -56,15 +56,27 @@ func (client *PublicIPAddressesClient) BeginCreateOrUpdate(ctx context.Context, 
 
 // ResumeCreateOrUpdate creates a new PublicIPAddressPoller from the specified resume token.
 // token - The value must come from a previous call to PublicIPAddressPoller.ResumeToken().
-func (client *PublicIPAddressesClient) ResumeCreateOrUpdate(token string) (PublicIPAddressPoller, error) {
+func (client *PublicIPAddressesClient) ResumeCreateOrUpdate(ctx context.Context, token string) (PublicIPAddressPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("PublicIPAddressesClient.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
-		return nil, err
+		return PublicIPAddressPollerResponse{}, err
 	}
-	return &publicIPAddressPoller{
+	poller := &publicIPAddressPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return PublicIPAddressPollerResponse{}, err
+	}
+	result := PublicIPAddressPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (PublicIPAddressResponse, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // CreateOrUpdate - Creates or updates a static or dynamic public IP address.
@@ -142,8 +154,8 @@ func (client *PublicIPAddressesClient) BeginDelete(ctx context.Context, resource
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -154,15 +166,27 @@ func (client *PublicIPAddressesClient) BeginDelete(ctx context.Context, resource
 
 // ResumeDelete creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *PublicIPAddressesClient) ResumeDelete(token string) (HTTPPoller, error) {
+func (client *PublicIPAddressesClient) ResumeDelete(ctx context.Context, token string) (HTTPPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("PublicIPAddressesClient.Delete", token, client.deleteHandleError)
 	if err != nil {
-		return nil, err
+		return HTTPPollerResponse{}, err
 	}
-	return &httpPoller{
+	poller := &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return HTTPPollerResponse{}, err
+	}
+	result := HTTPPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // Delete - Deletes the specified public IP address.

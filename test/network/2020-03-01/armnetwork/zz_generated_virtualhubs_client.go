@@ -44,8 +44,8 @@ func (client *VirtualHubsClient) BeginCreateOrUpdate(ctx context.Context, resour
 		return VirtualHubPollerResponse{}, err
 	}
 	poller := &virtualHubPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualHubResponse, error) {
@@ -56,15 +56,27 @@ func (client *VirtualHubsClient) BeginCreateOrUpdate(ctx context.Context, resour
 
 // ResumeCreateOrUpdate creates a new VirtualHubPoller from the specified resume token.
 // token - The value must come from a previous call to VirtualHubPoller.ResumeToken().
-func (client *VirtualHubsClient) ResumeCreateOrUpdate(token string) (VirtualHubPoller, error) {
+func (client *VirtualHubsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (VirtualHubPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("VirtualHubsClient.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
-		return nil, err
+		return VirtualHubPollerResponse{}, err
 	}
-	return &virtualHubPoller{
+	poller := &virtualHubPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return VirtualHubPollerResponse{}, err
+	}
+	result := VirtualHubPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualHubResponse, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // CreateOrUpdate - Creates a VirtualHub resource if it doesn't exist else updates the existing VirtualHub.
@@ -142,8 +154,8 @@ func (client *VirtualHubsClient) BeginDelete(ctx context.Context, resourceGroupN
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -154,15 +166,27 @@ func (client *VirtualHubsClient) BeginDelete(ctx context.Context, resourceGroupN
 
 // ResumeDelete creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *VirtualHubsClient) ResumeDelete(token string) (HTTPPoller, error) {
+func (client *VirtualHubsClient) ResumeDelete(ctx context.Context, token string) (HTTPPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("VirtualHubsClient.Delete", token, client.deleteHandleError)
 	if err != nil {
-		return nil, err
+		return HTTPPollerResponse{}, err
 	}
-	return &httpPoller{
+	poller := &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return HTTPPollerResponse{}, err
+	}
+	result := HTTPPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // Delete - Deletes a VirtualHub.

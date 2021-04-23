@@ -40,8 +40,8 @@ func (client *LROSADsClient) BeginDelete202NonRetry400(ctx context.Context, opti
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -52,15 +52,27 @@ func (client *LROSADsClient) BeginDelete202NonRetry400(ctx context.Context, opti
 
 // ResumeDelete202NonRetry400 creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *LROSADsClient) ResumeDelete202NonRetry400(token string) (HTTPPoller, error) {
+func (client *LROSADsClient) ResumeDelete202NonRetry400(ctx context.Context, token string) (HTTPPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("LROSADsClient.Delete202NonRetry400", token, client.delete202NonRetry400HandleError)
 	if err != nil {
-		return nil, err
+		return HTTPPollerResponse{}, err
 	}
-	return &httpPoller{
+	poller := &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return HTTPPollerResponse{}, err
+	}
+	result := HTTPPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // Delete202NonRetry400 - Long running delete request, service returns a 202 with a location header
@@ -115,8 +127,8 @@ func (client *LROSADsClient) BeginDelete202RetryInvalidHeader(ctx context.Contex
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -127,15 +139,27 @@ func (client *LROSADsClient) BeginDelete202RetryInvalidHeader(ctx context.Contex
 
 // ResumeDelete202RetryInvalidHeader creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *LROSADsClient) ResumeDelete202RetryInvalidHeader(token string) (HTTPPoller, error) {
+func (client *LROSADsClient) ResumeDelete202RetryInvalidHeader(ctx context.Context, token string) (HTTPPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("LROSADsClient.Delete202RetryInvalidHeader", token, client.delete202RetryInvalidHeaderHandleError)
 	if err != nil {
-		return nil, err
+		return HTTPPollerResponse{}, err
 	}
-	return &httpPoller{
+	poller := &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return HTTPPollerResponse{}, err
+	}
+	result := HTTPPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // Delete202RetryInvalidHeader - Long running delete request, service returns a 202 to the initial request receing a reponse with an invalid 'Location'
@@ -190,8 +214,8 @@ func (client *LROSADsClient) BeginDelete204Succeeded(ctx context.Context, option
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -202,15 +226,27 @@ func (client *LROSADsClient) BeginDelete204Succeeded(ctx context.Context, option
 
 // ResumeDelete204Succeeded creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *LROSADsClient) ResumeDelete204Succeeded(token string) (HTTPPoller, error) {
+func (client *LROSADsClient) ResumeDelete204Succeeded(ctx context.Context, token string) (HTTPPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("LROSADsClient.Delete204Succeeded", token, client.delete204SucceededHandleError)
 	if err != nil {
-		return nil, err
+		return HTTPPollerResponse{}, err
 	}
-	return &httpPoller{
+	poller := &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return HTTPPollerResponse{}, err
+	}
+	result := HTTPPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // Delete204Succeeded - Long running delete request, service returns a 204 to the initial request, indicating success.
@@ -265,8 +301,8 @@ func (client *LROSADsClient) BeginDeleteAsyncRelativeRetry400(ctx context.Contex
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -277,15 +313,27 @@ func (client *LROSADsClient) BeginDeleteAsyncRelativeRetry400(ctx context.Contex
 
 // ResumeDeleteAsyncRelativeRetry400 creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *LROSADsClient) ResumeDeleteAsyncRelativeRetry400(token string) (HTTPPoller, error) {
+func (client *LROSADsClient) ResumeDeleteAsyncRelativeRetry400(ctx context.Context, token string) (HTTPPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("LROSADsClient.DeleteAsyncRelativeRetry400", token, client.deleteAsyncRelativeRetry400HandleError)
 	if err != nil {
-		return nil, err
+		return HTTPPollerResponse{}, err
 	}
-	return &httpPoller{
+	poller := &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return HTTPPollerResponse{}, err
+	}
+	result := HTTPPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // DeleteAsyncRelativeRetry400 - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated in the Azure-AsyncOperation
@@ -341,8 +389,8 @@ func (client *LROSADsClient) BeginDeleteAsyncRelativeRetryInvalidHeader(ctx cont
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -353,15 +401,27 @@ func (client *LROSADsClient) BeginDeleteAsyncRelativeRetryInvalidHeader(ctx cont
 
 // ResumeDeleteAsyncRelativeRetryInvalidHeader creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *LROSADsClient) ResumeDeleteAsyncRelativeRetryInvalidHeader(token string) (HTTPPoller, error) {
+func (client *LROSADsClient) ResumeDeleteAsyncRelativeRetryInvalidHeader(ctx context.Context, token string) (HTTPPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("LROSADsClient.DeleteAsyncRelativeRetryInvalidHeader", token, client.deleteAsyncRelativeRetryInvalidHeaderHandleError)
 	if err != nil {
-		return nil, err
+		return HTTPPollerResponse{}, err
 	}
-	return &httpPoller{
+	poller := &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return HTTPPollerResponse{}, err
+	}
+	result := HTTPPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // DeleteAsyncRelativeRetryInvalidHeader - Long running delete request, service returns a 202 to the initial request. The endpoint indicated in the Azure-AsyncOperation
@@ -417,8 +477,8 @@ func (client *LROSADsClient) BeginDeleteAsyncRelativeRetryInvalidJSONPolling(ctx
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -429,15 +489,27 @@ func (client *LROSADsClient) BeginDeleteAsyncRelativeRetryInvalidJSONPolling(ctx
 
 // ResumeDeleteAsyncRelativeRetryInvalidJSONPolling creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *LROSADsClient) ResumeDeleteAsyncRelativeRetryInvalidJSONPolling(token string) (HTTPPoller, error) {
+func (client *LROSADsClient) ResumeDeleteAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, token string) (HTTPPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("LROSADsClient.DeleteAsyncRelativeRetryInvalidJSONPolling", token, client.deleteAsyncRelativeRetryInvalidJSONPollingHandleError)
 	if err != nil {
-		return nil, err
+		return HTTPPollerResponse{}, err
 	}
-	return &httpPoller{
+	poller := &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return HTTPPollerResponse{}, err
+	}
+	result := HTTPPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // DeleteAsyncRelativeRetryInvalidJSONPolling - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated in
@@ -493,8 +565,8 @@ func (client *LROSADsClient) BeginDeleteAsyncRelativeRetryNoStatus(ctx context.C
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -505,15 +577,27 @@ func (client *LROSADsClient) BeginDeleteAsyncRelativeRetryNoStatus(ctx context.C
 
 // ResumeDeleteAsyncRelativeRetryNoStatus creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *LROSADsClient) ResumeDeleteAsyncRelativeRetryNoStatus(token string) (HTTPPoller, error) {
+func (client *LROSADsClient) ResumeDeleteAsyncRelativeRetryNoStatus(ctx context.Context, token string) (HTTPPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("LROSADsClient.DeleteAsyncRelativeRetryNoStatus", token, client.deleteAsyncRelativeRetryNoStatusHandleError)
 	if err != nil {
-		return nil, err
+		return HTTPPollerResponse{}, err
 	}
-	return &httpPoller{
+	poller := &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return HTTPPollerResponse{}, err
+	}
+	result := HTTPPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // DeleteAsyncRelativeRetryNoStatus - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated in the Azure-AsyncOperation
@@ -568,8 +652,8 @@ func (client *LROSADsClient) BeginDeleteNonRetry400(ctx context.Context, options
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -580,15 +664,27 @@ func (client *LROSADsClient) BeginDeleteNonRetry400(ctx context.Context, options
 
 // ResumeDeleteNonRetry400 creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *LROSADsClient) ResumeDeleteNonRetry400(token string) (HTTPPoller, error) {
+func (client *LROSADsClient) ResumeDeleteNonRetry400(ctx context.Context, token string) (HTTPPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("LROSADsClient.DeleteNonRetry400", token, client.deleteNonRetry400HandleError)
 	if err != nil {
-		return nil, err
+		return HTTPPollerResponse{}, err
 	}
-	return &httpPoller{
+	poller := &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return HTTPPollerResponse{}, err
+	}
+	result := HTTPPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // DeleteNonRetry400 - Long running delete request, service returns a 400 with an error body
@@ -642,8 +738,8 @@ func (client *LROSADsClient) BeginPost202NoLocation(ctx context.Context, options
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -654,15 +750,27 @@ func (client *LROSADsClient) BeginPost202NoLocation(ctx context.Context, options
 
 // ResumePost202NoLocation creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *LROSADsClient) ResumePost202NoLocation(token string) (HTTPPoller, error) {
+func (client *LROSADsClient) ResumePost202NoLocation(ctx context.Context, token string) (HTTPPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("LROSADsClient.Post202NoLocation", token, client.post202NoLocationHandleError)
 	if err != nil {
-		return nil, err
+		return HTTPPollerResponse{}, err
 	}
-	return &httpPoller{
+	poller := &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return HTTPPollerResponse{}, err
+	}
+	result := HTTPPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // Post202NoLocation - Long running post request, service returns a 202 to the initial request, without a location header.
@@ -719,8 +827,8 @@ func (client *LROSADsClient) BeginPost202NonRetry400(ctx context.Context, option
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -731,15 +839,27 @@ func (client *LROSADsClient) BeginPost202NonRetry400(ctx context.Context, option
 
 // ResumePost202NonRetry400 creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *LROSADsClient) ResumePost202NonRetry400(token string) (HTTPPoller, error) {
+func (client *LROSADsClient) ResumePost202NonRetry400(ctx context.Context, token string) (HTTPPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("LROSADsClient.Post202NonRetry400", token, client.post202NonRetry400HandleError)
 	if err != nil {
-		return nil, err
+		return HTTPPollerResponse{}, err
 	}
-	return &httpPoller{
+	poller := &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return HTTPPollerResponse{}, err
+	}
+	result := HTTPPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // Post202NonRetry400 - Long running post request, service returns a 202 with a location header
@@ -796,8 +916,8 @@ func (client *LROSADsClient) BeginPost202RetryInvalidHeader(ctx context.Context,
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -808,15 +928,27 @@ func (client *LROSADsClient) BeginPost202RetryInvalidHeader(ctx context.Context,
 
 // ResumePost202RetryInvalidHeader creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *LROSADsClient) ResumePost202RetryInvalidHeader(token string) (HTTPPoller, error) {
+func (client *LROSADsClient) ResumePost202RetryInvalidHeader(ctx context.Context, token string) (HTTPPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("LROSADsClient.Post202RetryInvalidHeader", token, client.post202RetryInvalidHeaderHandleError)
 	if err != nil {
-		return nil, err
+		return HTTPPollerResponse{}, err
 	}
-	return &httpPoller{
+	poller := &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return HTTPPollerResponse{}, err
+	}
+	result := HTTPPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // Post202RetryInvalidHeader - Long running post request, service returns a 202 to the initial request, with invalid 'Location' and 'Retry-After' headers.
@@ -874,8 +1006,8 @@ func (client *LROSADsClient) BeginPostAsyncRelativeRetry400(ctx context.Context,
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -886,15 +1018,27 @@ func (client *LROSADsClient) BeginPostAsyncRelativeRetry400(ctx context.Context,
 
 // ResumePostAsyncRelativeRetry400 creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *LROSADsClient) ResumePostAsyncRelativeRetry400(token string) (HTTPPoller, error) {
+func (client *LROSADsClient) ResumePostAsyncRelativeRetry400(ctx context.Context, token string) (HTTPPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("LROSADsClient.PostAsyncRelativeRetry400", token, client.postAsyncRelativeRetry400HandleError)
 	if err != nil {
-		return nil, err
+		return HTTPPollerResponse{}, err
 	}
-	return &httpPoller{
+	poller := &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return HTTPPollerResponse{}, err
+	}
+	result := HTTPPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // PostAsyncRelativeRetry400 - Long running post request, service returns a 202 to the initial request Poll the endpoint indicated in the Azure-AsyncOperation
@@ -954,8 +1098,8 @@ func (client *LROSADsClient) BeginPostAsyncRelativeRetryInvalidHeader(ctx contex
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -966,15 +1110,27 @@ func (client *LROSADsClient) BeginPostAsyncRelativeRetryInvalidHeader(ctx contex
 
 // ResumePostAsyncRelativeRetryInvalidHeader creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *LROSADsClient) ResumePostAsyncRelativeRetryInvalidHeader(token string) (HTTPPoller, error) {
+func (client *LROSADsClient) ResumePostAsyncRelativeRetryInvalidHeader(ctx context.Context, token string) (HTTPPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("LROSADsClient.PostAsyncRelativeRetryInvalidHeader", token, client.postAsyncRelativeRetryInvalidHeaderHandleError)
 	if err != nil {
-		return nil, err
+		return HTTPPollerResponse{}, err
 	}
-	return &httpPoller{
+	poller := &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return HTTPPollerResponse{}, err
+	}
+	result := HTTPPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // PostAsyncRelativeRetryInvalidHeader - Long running post request, service returns a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’.
@@ -1035,8 +1191,8 @@ func (client *LROSADsClient) BeginPostAsyncRelativeRetryInvalidJSONPolling(ctx c
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -1047,15 +1203,27 @@ func (client *LROSADsClient) BeginPostAsyncRelativeRetryInvalidJSONPolling(ctx c
 
 // ResumePostAsyncRelativeRetryInvalidJSONPolling creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *LROSADsClient) ResumePostAsyncRelativeRetryInvalidJSONPolling(token string) (HTTPPoller, error) {
+func (client *LROSADsClient) ResumePostAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, token string) (HTTPPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("LROSADsClient.PostAsyncRelativeRetryInvalidJSONPolling", token, client.postAsyncRelativeRetryInvalidJSONPollingHandleError)
 	if err != nil {
-		return nil, err
+		return HTTPPollerResponse{}, err
 	}
-	return &httpPoller{
+	poller := &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return HTTPPollerResponse{}, err
+	}
+	result := HTTPPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // PostAsyncRelativeRetryInvalidJSONPolling - Long running post request, service returns a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’.
@@ -1116,8 +1284,8 @@ func (client *LROSADsClient) BeginPostAsyncRelativeRetryNoPayload(ctx context.Co
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -1128,15 +1296,27 @@ func (client *LROSADsClient) BeginPostAsyncRelativeRetryNoPayload(ctx context.Co
 
 // ResumePostAsyncRelativeRetryNoPayload creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *LROSADsClient) ResumePostAsyncRelativeRetryNoPayload(token string) (HTTPPoller, error) {
+func (client *LROSADsClient) ResumePostAsyncRelativeRetryNoPayload(ctx context.Context, token string) (HTTPPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("LROSADsClient.PostAsyncRelativeRetryNoPayload", token, client.postAsyncRelativeRetryNoPayloadHandleError)
 	if err != nil {
-		return nil, err
+		return HTTPPollerResponse{}, err
 	}
-	return &httpPoller{
+	poller := &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return HTTPPollerResponse{}, err
+	}
+	result := HTTPPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // PostAsyncRelativeRetryNoPayload - Long running post request, service returns a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’.
@@ -1195,8 +1375,8 @@ func (client *LROSADsClient) BeginPostNonRetry400(ctx context.Context, options *
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -1207,15 +1387,27 @@ func (client *LROSADsClient) BeginPostNonRetry400(ctx context.Context, options *
 
 // ResumePostNonRetry400 creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *LROSADsClient) ResumePostNonRetry400(token string) (HTTPPoller, error) {
+func (client *LROSADsClient) ResumePostNonRetry400(ctx context.Context, token string) (HTTPPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("LROSADsClient.PostNonRetry400", token, client.postNonRetry400HandleError)
 	if err != nil {
-		return nil, err
+		return HTTPPollerResponse{}, err
 	}
-	return &httpPoller{
+	poller := &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return HTTPPollerResponse{}, err
+	}
+	result := HTTPPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // PostNonRetry400 - Long running post request, service returns a 400 with no error body
@@ -1272,8 +1464,8 @@ func (client *LROSADsClient) BeginPut200InvalidJSON(ctx context.Context, options
 		return ProductPollerResponse{}, err
 	}
 	poller := &productPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ProductResponse, error) {
@@ -1284,15 +1476,27 @@ func (client *LROSADsClient) BeginPut200InvalidJSON(ctx context.Context, options
 
 // ResumePut200InvalidJSON creates a new ProductPoller from the specified resume token.
 // token - The value must come from a previous call to ProductPoller.ResumeToken().
-func (client *LROSADsClient) ResumePut200InvalidJSON(token string) (ProductPoller, error) {
+func (client *LROSADsClient) ResumePut200InvalidJSON(ctx context.Context, token string) (ProductPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("LROSADsClient.Put200InvalidJSON", token, client.put200InvalidJSONHandleError)
 	if err != nil {
-		return nil, err
+		return ProductPollerResponse{}, err
 	}
-	return &productPoller{
+	poller := &productPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return ProductPollerResponse{}, err
+	}
+	result := ProductPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ProductResponse, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // Put200InvalidJSON - Long running put request, service returns a 200 to the initial request, with an entity that is not a valid json
@@ -1359,8 +1563,8 @@ func (client *LROSADsClient) BeginPutAsyncRelativeRetry400(ctx context.Context, 
 		return ProductPollerResponse{}, err
 	}
 	poller := &productPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ProductResponse, error) {
@@ -1371,15 +1575,27 @@ func (client *LROSADsClient) BeginPutAsyncRelativeRetry400(ctx context.Context, 
 
 // ResumePutAsyncRelativeRetry400 creates a new ProductPoller from the specified resume token.
 // token - The value must come from a previous call to ProductPoller.ResumeToken().
-func (client *LROSADsClient) ResumePutAsyncRelativeRetry400(token string) (ProductPoller, error) {
+func (client *LROSADsClient) ResumePutAsyncRelativeRetry400(ctx context.Context, token string) (ProductPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("LROSADsClient.PutAsyncRelativeRetry400", token, client.putAsyncRelativeRetry400HandleError)
 	if err != nil {
-		return nil, err
+		return ProductPollerResponse{}, err
 	}
-	return &productPoller{
+	poller := &productPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return ProductPollerResponse{}, err
+	}
+	result := ProductPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ProductResponse, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // PutAsyncRelativeRetry400 - Long running put request, service returns a 200 with ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation
@@ -1447,8 +1663,8 @@ func (client *LROSADsClient) BeginPutAsyncRelativeRetryInvalidHeader(ctx context
 		return ProductPollerResponse{}, err
 	}
 	poller := &productPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ProductResponse, error) {
@@ -1459,15 +1675,27 @@ func (client *LROSADsClient) BeginPutAsyncRelativeRetryInvalidHeader(ctx context
 
 // ResumePutAsyncRelativeRetryInvalidHeader creates a new ProductPoller from the specified resume token.
 // token - The value must come from a previous call to ProductPoller.ResumeToken().
-func (client *LROSADsClient) ResumePutAsyncRelativeRetryInvalidHeader(token string) (ProductPoller, error) {
+func (client *LROSADsClient) ResumePutAsyncRelativeRetryInvalidHeader(ctx context.Context, token string) (ProductPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("LROSADsClient.PutAsyncRelativeRetryInvalidHeader", token, client.putAsyncRelativeRetryInvalidHeaderHandleError)
 	if err != nil {
-		return nil, err
+		return ProductPollerResponse{}, err
 	}
-	return &productPoller{
+	poller := &productPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return ProductPollerResponse{}, err
+	}
+	result := ProductPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ProductResponse, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // PutAsyncRelativeRetryInvalidHeader - Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’.
@@ -1536,8 +1764,8 @@ func (client *LROSADsClient) BeginPutAsyncRelativeRetryInvalidJSONPolling(ctx co
 		return ProductPollerResponse{}, err
 	}
 	poller := &productPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ProductResponse, error) {
@@ -1548,15 +1776,27 @@ func (client *LROSADsClient) BeginPutAsyncRelativeRetryInvalidJSONPolling(ctx co
 
 // ResumePutAsyncRelativeRetryInvalidJSONPolling creates a new ProductPoller from the specified resume token.
 // token - The value must come from a previous call to ProductPoller.ResumeToken().
-func (client *LROSADsClient) ResumePutAsyncRelativeRetryInvalidJSONPolling(token string) (ProductPoller, error) {
+func (client *LROSADsClient) ResumePutAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, token string) (ProductPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("LROSADsClient.PutAsyncRelativeRetryInvalidJSONPolling", token, client.putAsyncRelativeRetryInvalidJSONPollingHandleError)
 	if err != nil {
-		return nil, err
+		return ProductPollerResponse{}, err
 	}
-	return &productPoller{
+	poller := &productPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return ProductPollerResponse{}, err
+	}
+	result := ProductPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ProductResponse, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // PutAsyncRelativeRetryInvalidJSONPolling - Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’.
@@ -1626,8 +1866,8 @@ func (client *LROSADsClient) BeginPutAsyncRelativeRetryNoStatus(ctx context.Cont
 		return ProductPollerResponse{}, err
 	}
 	poller := &productPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ProductResponse, error) {
@@ -1638,15 +1878,27 @@ func (client *LROSADsClient) BeginPutAsyncRelativeRetryNoStatus(ctx context.Cont
 
 // ResumePutAsyncRelativeRetryNoStatus creates a new ProductPoller from the specified resume token.
 // token - The value must come from a previous call to ProductPoller.ResumeToken().
-func (client *LROSADsClient) ResumePutAsyncRelativeRetryNoStatus(token string) (ProductPoller, error) {
+func (client *LROSADsClient) ResumePutAsyncRelativeRetryNoStatus(ctx context.Context, token string) (ProductPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("LROSADsClient.PutAsyncRelativeRetryNoStatus", token, client.putAsyncRelativeRetryNoStatusHandleError)
 	if err != nil {
-		return nil, err
+		return ProductPollerResponse{}, err
 	}
-	return &productPoller{
+	poller := &productPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return ProductPollerResponse{}, err
+	}
+	result := ProductPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ProductResponse, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // PutAsyncRelativeRetryNoStatus - Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’.
@@ -1716,8 +1968,8 @@ func (client *LROSADsClient) BeginPutAsyncRelativeRetryNoStatusPayload(ctx conte
 		return ProductPollerResponse{}, err
 	}
 	poller := &productPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ProductResponse, error) {
@@ -1728,15 +1980,27 @@ func (client *LROSADsClient) BeginPutAsyncRelativeRetryNoStatusPayload(ctx conte
 
 // ResumePutAsyncRelativeRetryNoStatusPayload creates a new ProductPoller from the specified resume token.
 // token - The value must come from a previous call to ProductPoller.ResumeToken().
-func (client *LROSADsClient) ResumePutAsyncRelativeRetryNoStatusPayload(token string) (ProductPoller, error) {
+func (client *LROSADsClient) ResumePutAsyncRelativeRetryNoStatusPayload(ctx context.Context, token string) (ProductPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("LROSADsClient.PutAsyncRelativeRetryNoStatusPayload", token, client.putAsyncRelativeRetryNoStatusPayloadHandleError)
 	if err != nil {
-		return nil, err
+		return ProductPollerResponse{}, err
 	}
-	return &productPoller{
+	poller := &productPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return ProductPollerResponse{}, err
+	}
+	result := ProductPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ProductResponse, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // PutAsyncRelativeRetryNoStatusPayload - Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’.
@@ -1804,8 +2068,8 @@ func (client *LROSADsClient) BeginPutError201NoProvisioningStatePayload(ctx cont
 		return ProductPollerResponse{}, err
 	}
 	poller := &productPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ProductResponse, error) {
@@ -1816,15 +2080,27 @@ func (client *LROSADsClient) BeginPutError201NoProvisioningStatePayload(ctx cont
 
 // ResumePutError201NoProvisioningStatePayload creates a new ProductPoller from the specified resume token.
 // token - The value must come from a previous call to ProductPoller.ResumeToken().
-func (client *LROSADsClient) ResumePutError201NoProvisioningStatePayload(token string) (ProductPoller, error) {
+func (client *LROSADsClient) ResumePutError201NoProvisioningStatePayload(ctx context.Context, token string) (ProductPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("LROSADsClient.PutError201NoProvisioningStatePayload", token, client.putError201NoProvisioningStatePayloadHandleError)
 	if err != nil {
-		return nil, err
+		return ProductPollerResponse{}, err
 	}
-	return &productPoller{
+	poller := &productPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return ProductPollerResponse{}, err
+	}
+	result := ProductPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ProductResponse, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // PutError201NoProvisioningStatePayload - Long running put request, service returns a 201 to the initial request with no payload
@@ -1890,8 +2166,8 @@ func (client *LROSADsClient) BeginPutNonRetry201Creating400(ctx context.Context,
 		return ProductPollerResponse{}, err
 	}
 	poller := &productPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ProductResponse, error) {
@@ -1902,15 +2178,27 @@ func (client *LROSADsClient) BeginPutNonRetry201Creating400(ctx context.Context,
 
 // ResumePutNonRetry201Creating400 creates a new ProductPoller from the specified resume token.
 // token - The value must come from a previous call to ProductPoller.ResumeToken().
-func (client *LROSADsClient) ResumePutNonRetry201Creating400(token string) (ProductPoller, error) {
+func (client *LROSADsClient) ResumePutNonRetry201Creating400(ctx context.Context, token string) (ProductPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("LROSADsClient.PutNonRetry201Creating400", token, client.putNonRetry201Creating400HandleError)
 	if err != nil {
-		return nil, err
+		return ProductPollerResponse{}, err
 	}
-	return &productPoller{
+	poller := &productPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return ProductPollerResponse{}, err
+	}
+	result := ProductPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ProductResponse, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // PutNonRetry201Creating400 - Long running put request, service returns a Product with 'ProvisioningState' = 'Creating' and 201 response code
@@ -1977,8 +2265,8 @@ func (client *LROSADsClient) BeginPutNonRetry201Creating400InvalidJSON(ctx conte
 		return ProductPollerResponse{}, err
 	}
 	poller := &productPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ProductResponse, error) {
@@ -1989,15 +2277,27 @@ func (client *LROSADsClient) BeginPutNonRetry201Creating400InvalidJSON(ctx conte
 
 // ResumePutNonRetry201Creating400InvalidJSON creates a new ProductPoller from the specified resume token.
 // token - The value must come from a previous call to ProductPoller.ResumeToken().
-func (client *LROSADsClient) ResumePutNonRetry201Creating400InvalidJSON(token string) (ProductPoller, error) {
+func (client *LROSADsClient) ResumePutNonRetry201Creating400InvalidJSON(ctx context.Context, token string) (ProductPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("LROSADsClient.PutNonRetry201Creating400InvalidJSON", token, client.putNonRetry201Creating400InvalidJSONHandleError)
 	if err != nil {
-		return nil, err
+		return ProductPollerResponse{}, err
 	}
-	return &productPoller{
+	poller := &productPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return ProductPollerResponse{}, err
+	}
+	result := ProductPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ProductResponse, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // PutNonRetry201Creating400InvalidJSON - Long running put request, service returns a Product with 'ProvisioningState' = 'Creating' and 201 response code
@@ -2063,8 +2363,8 @@ func (client *LROSADsClient) BeginPutNonRetry400(ctx context.Context, options *L
 		return ProductPollerResponse{}, err
 	}
 	poller := &productPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ProductResponse, error) {
@@ -2075,15 +2375,27 @@ func (client *LROSADsClient) BeginPutNonRetry400(ctx context.Context, options *L
 
 // ResumePutNonRetry400 creates a new ProductPoller from the specified resume token.
 // token - The value must come from a previous call to ProductPoller.ResumeToken().
-func (client *LROSADsClient) ResumePutNonRetry400(token string) (ProductPoller, error) {
+func (client *LROSADsClient) ResumePutNonRetry400(ctx context.Context, token string) (ProductPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("LROSADsClient.PutNonRetry400", token, client.putNonRetry400HandleError)
 	if err != nil {
-		return nil, err
+		return ProductPollerResponse{}, err
 	}
-	return &productPoller{
+	poller := &productPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return ProductPollerResponse{}, err
+	}
+	result := ProductPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ProductResponse, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // PutNonRetry400 - Long running put request, service returns a 400 to the initial request

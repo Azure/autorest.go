@@ -42,8 +42,8 @@ func (client *LROsCustomHeaderClient) BeginPost202Retry200(ctx context.Context, 
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -54,15 +54,27 @@ func (client *LROsCustomHeaderClient) BeginPost202Retry200(ctx context.Context, 
 
 // ResumePost202Retry200 creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *LROsCustomHeaderClient) ResumePost202Retry200(token string) (HTTPPoller, error) {
+func (client *LROsCustomHeaderClient) ResumePost202Retry200(ctx context.Context, token string) (HTTPPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("LROsCustomHeaderClient.Post202Retry200", token, client.post202Retry200HandleError)
 	if err != nil {
-		return nil, err
+		return HTTPPollerResponse{}, err
 	}
-	return &httpPoller{
+	poller := &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return HTTPPollerResponse{}, err
+	}
+	result := HTTPPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // Post202Retry200 - x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 is required message header for all requests. Long running post request,
@@ -123,8 +135,8 @@ func (client *LROsCustomHeaderClient) BeginPostAsyncRetrySucceeded(ctx context.C
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -135,15 +147,27 @@ func (client *LROsCustomHeaderClient) BeginPostAsyncRetrySucceeded(ctx context.C
 
 // ResumePostAsyncRetrySucceeded creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *LROsCustomHeaderClient) ResumePostAsyncRetrySucceeded(token string) (HTTPPoller, error) {
+func (client *LROsCustomHeaderClient) ResumePostAsyncRetrySucceeded(ctx context.Context, token string) (HTTPPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("LROsCustomHeaderClient.PostAsyncRetrySucceeded", token, client.postAsyncRetrySucceededHandleError)
 	if err != nil {
-		return nil, err
+		return HTTPPollerResponse{}, err
 	}
-	return &httpPoller{
+	poller := &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return HTTPPollerResponse{}, err
+	}
+	result := HTTPPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // PostAsyncRetrySucceeded - x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 is required message header for all requests. Long running post
@@ -204,8 +228,8 @@ func (client *LROsCustomHeaderClient) BeginPut201CreatingSucceeded200(ctx contex
 		return ProductPollerResponse{}, err
 	}
 	poller := &productPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ProductResponse, error) {
@@ -216,15 +240,27 @@ func (client *LROsCustomHeaderClient) BeginPut201CreatingSucceeded200(ctx contex
 
 // ResumePut201CreatingSucceeded200 creates a new ProductPoller from the specified resume token.
 // token - The value must come from a previous call to ProductPoller.ResumeToken().
-func (client *LROsCustomHeaderClient) ResumePut201CreatingSucceeded200(token string) (ProductPoller, error) {
+func (client *LROsCustomHeaderClient) ResumePut201CreatingSucceeded200(ctx context.Context, token string) (ProductPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("LROsCustomHeaderClient.Put201CreatingSucceeded200", token, client.put201CreatingSucceeded200HandleError)
 	if err != nil {
-		return nil, err
+		return ProductPollerResponse{}, err
 	}
-	return &productPoller{
+	poller := &productPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return ProductPollerResponse{}, err
+	}
+	result := ProductPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ProductResponse, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // Put201CreatingSucceeded200 - x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 is required message header for all requests. Long running
@@ -294,8 +330,8 @@ func (client *LROsCustomHeaderClient) BeginPutAsyncRetrySucceeded(ctx context.Co
 		return ProductPollerResponse{}, err
 	}
 	poller := &productPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ProductResponse, error) {
@@ -306,15 +342,27 @@ func (client *LROsCustomHeaderClient) BeginPutAsyncRetrySucceeded(ctx context.Co
 
 // ResumePutAsyncRetrySucceeded creates a new ProductPoller from the specified resume token.
 // token - The value must come from a previous call to ProductPoller.ResumeToken().
-func (client *LROsCustomHeaderClient) ResumePutAsyncRetrySucceeded(token string) (ProductPoller, error) {
+func (client *LROsCustomHeaderClient) ResumePutAsyncRetrySucceeded(ctx context.Context, token string) (ProductPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("LROsCustomHeaderClient.PutAsyncRetrySucceeded", token, client.putAsyncRetrySucceededHandleError)
 	if err != nil {
-		return nil, err
+		return ProductPollerResponse{}, err
 	}
-	return &productPoller{
+	poller := &productPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return ProductPollerResponse{}, err
+	}
+	result := ProductPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ProductResponse, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // PutAsyncRetrySucceeded - x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 is required message header for all requests. Long running put

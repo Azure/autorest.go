@@ -44,8 +44,8 @@ func (client *NatGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resour
 		return NatGatewayPollerResponse{}, err
 	}
 	poller := &natGatewayPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NatGatewayResponse, error) {
@@ -56,15 +56,27 @@ func (client *NatGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resour
 
 // ResumeCreateOrUpdate creates a new NatGatewayPoller from the specified resume token.
 // token - The value must come from a previous call to NatGatewayPoller.ResumeToken().
-func (client *NatGatewaysClient) ResumeCreateOrUpdate(token string) (NatGatewayPoller, error) {
+func (client *NatGatewaysClient) ResumeCreateOrUpdate(ctx context.Context, token string) (NatGatewayPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("NatGatewaysClient.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
-		return nil, err
+		return NatGatewayPollerResponse{}, err
 	}
-	return &natGatewayPoller{
+	poller := &natGatewayPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return NatGatewayPollerResponse{}, err
+	}
+	result := NatGatewayPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NatGatewayResponse, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // CreateOrUpdate - Creates or updates a nat gateway.
@@ -142,8 +154,8 @@ func (client *NatGatewaysClient) BeginDelete(ctx context.Context, resourceGroupN
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -154,15 +166,27 @@ func (client *NatGatewaysClient) BeginDelete(ctx context.Context, resourceGroupN
 
 // ResumeDelete creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *NatGatewaysClient) ResumeDelete(token string) (HTTPPoller, error) {
+func (client *NatGatewaysClient) ResumeDelete(ctx context.Context, token string) (HTTPPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("NatGatewaysClient.Delete", token, client.deleteHandleError)
 	if err != nil {
-		return nil, err
+		return HTTPPollerResponse{}, err
 	}
-	return &httpPoller{
+	poller := &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return HTTPPollerResponse{}, err
+	}
+	result := HTTPPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // Delete - Deletes the specified nat gateway.

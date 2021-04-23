@@ -38,21 +38,21 @@ func TestBeginPost202Retry200(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	poller, err := op.ResumePost202Retry200(tk)
+	env, err = op.ResumePost202Retry200(ctxWithHTTPHeader(), tk)
 	if err != nil {
 		t.Fatal(err)
 	}
 	var resp *http.Response
 	for {
-		resp, err = poller.Poll(ctxWithHTTPHeader())
+		resp, err = env.Poller.Poll(ctxWithHTTPHeader())
 		if err != nil {
 			t.Fatal(err)
 		}
-		if poller.Done() {
+		if env.Poller.Done() {
 			break
 		}
 	}
-	resp, err = poller.FinalResponse(context.Background())
+	resp, err = env.Poller.FinalResponse(context.Background())
 	if err != nil {
 		t.Fatalf("Unexpected error: %v", err)
 	}
@@ -72,21 +72,21 @@ func TestBeginPostAsyncRetrySucceeded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	poller, err := op.ResumePostAsyncRetrySucceeded(tk)
+	env, err = op.ResumePostAsyncRetrySucceeded(ctxWithHTTPHeader(), tk)
 	if err != nil {
 		t.Fatal(err)
 	}
 	var resp *http.Response
 	for {
-		resp, err = poller.Poll(ctxWithHTTPHeader())
+		resp, err = env.Poller.Poll(ctxWithHTTPHeader())
 		if err != nil {
 			t.Fatal(err)
 		}
-		if poller.Done() {
+		if env.Poller.Done() {
 			break
 		}
 	}
-	resp, err = poller.FinalResponse(context.Background())
+	resp, err = env.Poller.FinalResponse(context.Background())
 	if err != nil {
 		t.Fatalf("Unexpected error: %v", err)
 	}
@@ -106,20 +106,20 @@ func TestBeginPut201CreatingSucceeded200(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	poller, err := op.ResumePut201CreatingSucceeded200(tk)
+	env, err = op.ResumePut201CreatingSucceeded200(ctxWithHTTPHeader(), tk)
 	if err != nil {
 		t.Fatal(err)
 	}
 	for {
-		_, err = poller.Poll(ctxWithHTTPHeader())
+		_, err = env.Poller.Poll(ctxWithHTTPHeader())
 		if err != nil {
 			t.Fatal(err)
 		}
-		if poller.Done() {
+		if env.Poller.Done() {
 			break
 		}
 	}
-	pr, err := poller.FinalResponse(ctxWithHTTPHeader())
+	pr, err := env.Poller.FinalResponse(ctxWithHTTPHeader())
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -150,20 +150,20 @@ func TestBeginPutAsyncRetrySucceeded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	poller, err := op.ResumePutAsyncRetrySucceeded(tk)
+	env, err = op.ResumePutAsyncRetrySucceeded(ctxWithHTTPHeader(), tk)
 	if err != nil {
 		t.Fatal(err)
 	}
 	for {
-		_, err = poller.Poll(ctxWithHTTPHeader())
+		_, err = env.Poller.Poll(ctxWithHTTPHeader())
 		if err != nil {
 			t.Fatal(err)
 		}
-		if poller.Done() {
+		if env.Poller.Done() {
 			break
 		}
 	}
-	pr, err := poller.FinalResponse(ctxWithHTTPHeader())
+	pr, err := env.Poller.FinalResponse(ctxWithHTTPHeader())
 	if err != nil {
 		t.Fatal(err)
 	}

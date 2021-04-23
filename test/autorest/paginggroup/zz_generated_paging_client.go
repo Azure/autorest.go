@@ -314,7 +314,8 @@ func (client *PagingClient) BeginGetMultiplePagesLRO(ctx context.Context, option
 		return ProductResultPagerPollerResponse{}, err
 	}
 	poller := &productResultPagerPoller{
-		pt: pt,
+		pipeline: client.con.Pipeline(),
+		pt:       pt,
 		errHandler: func(resp *azcore.Response) error {
 			if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 				return nil
@@ -329,7 +330,6 @@ func (client *PagingClient) BeginGetMultiplePagesLRO(ctx context.Context, option
 			return ProductResultResponse{RawResponse: resp.Response, ProductResult: val}, nil
 		},
 		statusCodes: []int{http.StatusOK, http.StatusAccepted, http.StatusNoContent},
-		pipeline:    client.con.Pipeline(),
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ProductResultPager, error) {
@@ -340,15 +340,41 @@ func (client *PagingClient) BeginGetMultiplePagesLRO(ctx context.Context, option
 
 // ResumeGetMultiplePagesLRO creates a new ProductResultPagerPoller from the specified resume token.
 // token - The value must come from a previous call to ProductResultPagerPoller.ResumeToken().
-func (client *PagingClient) ResumeGetMultiplePagesLRO(token string) (ProductResultPagerPoller, error) {
+func (client *PagingClient) ResumeGetMultiplePagesLRO(ctx context.Context, token string) (ProductResultPagerPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("PagingClient.GetMultiplePagesLRO", token, client.getMultiplePagesLROHandleError)
 	if err != nil {
-		return nil, err
+		return ProductResultPagerPollerResponse{}, err
 	}
-	return &productResultPagerPoller{
+	poller := &productResultPagerPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+		errHandler: func(resp *azcore.Response) error {
+			if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+				return nil
+			}
+			return client.getMultiplePagesLROHandleError(resp)
+		},
+		respHandler: func(resp *azcore.Response) (ProductResultResponse, error) {
+			var val *ProductResult
+			if err := resp.UnmarshalAsJSON(&val); err != nil {
+				return ProductResultResponse{}, err
+			}
+			return ProductResultResponse{RawResponse: resp.Response, ProductResult: val}, nil
+		},
+		statusCodes: []int{http.StatusOK, http.StatusAccepted, http.StatusNoContent},
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return ProductResultPagerPollerResponse{}, err
+	}
+	result := ProductResultPagerPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ProductResultPager, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // GetMultiplePagesLRO - A long-running paging operation that includes a nextLink that has 10 pages

@@ -26,10 +26,10 @@ type ProductResultPagerPoller interface {
 
 type productResultPagerPoller struct {
 	pipeline    azcore.Pipeline
+	pt          armcore.Poller
 	errHandler  productResultHandleError
 	respHandler productResultHandleResponse
 	statusCodes []int
-	pt          armcore.Poller
 }
 
 func (p *productResultPagerPoller) Done() bool {
@@ -53,9 +53,9 @@ func (p *productResultPagerPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-func (p *productResultPagerPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (ProductResultPager, error) {
+func (p *productResultPagerPoller) pollUntilDone(ctx context.Context, freq time.Duration) (ProductResultPager, error) {
 	respType := &productResultPager{}
-	resp, err := p.pt.PollUntilDone(ctx, frequency, p.pipeline, respType)
+	resp, err := p.pt.PollUntilDone(ctx, freq, p.pipeline, respType)
 	if err != nil {
 		return nil, err
 	}

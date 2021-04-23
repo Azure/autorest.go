@@ -31,7 +31,7 @@ func TestLRORetrysBeginDelete202Retry200(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	poller, err = op.ResumeDelete202Retry200(rt)
+	resp, err = op.ResumeDelete202Retry200(context.Background(), rt)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -55,7 +55,7 @@ func TestLRORetrysBeginDeleteAsyncRelativeRetrySucceeded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	poller, err = op.ResumeDeleteAsyncRelativeRetrySucceeded(rt)
+	resp, err = op.ResumeDeleteAsyncRelativeRetrySucceeded(context.Background(), rt)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -79,7 +79,7 @@ func TestLRORetrysBeginDeleteProvisioning202Accepted200Succeeded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	poller, err = op.ResumeDeleteProvisioning202Accepted200Succeeded(rt)
+	resp, err = op.ResumeDeleteProvisioning202Accepted200Succeeded(context.Background(), rt)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -114,7 +114,7 @@ func TestLRORetrysBeginPost202Retry200(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	poller, err = op.ResumePost202Retry200(rt)
+	resp, err = op.ResumePost202Retry200(context.Background(), rt)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -138,7 +138,7 @@ func TestLRORetrysBeginPostAsyncRelativeRetrySucceeded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	poller, err = op.ResumePostAsyncRelativeRetrySucceeded(rt)
+	resp, err = op.ResumePostAsyncRelativeRetrySucceeded(context.Background(), rt)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -162,7 +162,7 @@ func TestLRORetrysBeginPut201CreatingSucceeded200(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	poller, err = op.ResumePut201CreatingSucceeded200(rt)
+	resp, err = op.ResumePut201CreatingSucceeded200(context.Background(), rt)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -197,7 +197,7 @@ func TestLRORetrysBeginPutAsyncRelativeRetrySucceeded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	poller, err = op.ResumePutAsyncRelativeRetrySucceeded(rt)
+	resp, err = op.ResumePutAsyncRelativeRetrySucceeded(context.Background(), rt)
 	if err != nil {
 		t.Fatal(err)
 	}

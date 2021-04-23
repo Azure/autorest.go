@@ -44,8 +44,8 @@ func (client *ServiceEndpointPoliciesClient) BeginCreateOrUpdate(ctx context.Con
 		return ServiceEndpointPolicyPollerResponse{}, err
 	}
 	poller := &serviceEndpointPolicyPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ServiceEndpointPolicyResponse, error) {
@@ -56,15 +56,27 @@ func (client *ServiceEndpointPoliciesClient) BeginCreateOrUpdate(ctx context.Con
 
 // ResumeCreateOrUpdate creates a new ServiceEndpointPolicyPoller from the specified resume token.
 // token - The value must come from a previous call to ServiceEndpointPolicyPoller.ResumeToken().
-func (client *ServiceEndpointPoliciesClient) ResumeCreateOrUpdate(token string) (ServiceEndpointPolicyPoller, error) {
+func (client *ServiceEndpointPoliciesClient) ResumeCreateOrUpdate(ctx context.Context, token string) (ServiceEndpointPolicyPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("ServiceEndpointPoliciesClient.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
-		return nil, err
+		return ServiceEndpointPolicyPollerResponse{}, err
 	}
-	return &serviceEndpointPolicyPoller{
+	poller := &serviceEndpointPolicyPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return ServiceEndpointPolicyPollerResponse{}, err
+	}
+	result := ServiceEndpointPolicyPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ServiceEndpointPolicyResponse, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // CreateOrUpdate - Creates or updates a service Endpoint Policies.
@@ -142,8 +154,8 @@ func (client *ServiceEndpointPoliciesClient) BeginDelete(ctx context.Context, re
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -154,15 +166,27 @@ func (client *ServiceEndpointPoliciesClient) BeginDelete(ctx context.Context, re
 
 // ResumeDelete creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *ServiceEndpointPoliciesClient) ResumeDelete(token string) (HTTPPoller, error) {
+func (client *ServiceEndpointPoliciesClient) ResumeDelete(ctx context.Context, token string) (HTTPPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("ServiceEndpointPoliciesClient.Delete", token, client.deleteHandleError)
 	if err != nil {
-		return nil, err
+		return HTTPPollerResponse{}, err
 	}
-	return &httpPoller{
+	poller := &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return HTTPPollerResponse{}, err
+	}
+	result := HTTPPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // Delete - Deletes the specified service endpoint policy.

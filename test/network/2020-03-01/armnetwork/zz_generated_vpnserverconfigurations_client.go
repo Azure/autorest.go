@@ -44,8 +44,8 @@ func (client *VPNServerConfigurationsClient) BeginCreateOrUpdate(ctx context.Con
 		return VPNServerConfigurationPollerResponse{}, err
 	}
 	poller := &vpnServerConfigurationPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VPNServerConfigurationResponse, error) {
@@ -56,15 +56,27 @@ func (client *VPNServerConfigurationsClient) BeginCreateOrUpdate(ctx context.Con
 
 // ResumeCreateOrUpdate creates a new VPNServerConfigurationPoller from the specified resume token.
 // token - The value must come from a previous call to VPNServerConfigurationPoller.ResumeToken().
-func (client *VPNServerConfigurationsClient) ResumeCreateOrUpdate(token string) (VPNServerConfigurationPoller, error) {
+func (client *VPNServerConfigurationsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (VPNServerConfigurationPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("VPNServerConfigurationsClient.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
-		return nil, err
+		return VPNServerConfigurationPollerResponse{}, err
 	}
-	return &vpnServerConfigurationPoller{
+	poller := &vpnServerConfigurationPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return VPNServerConfigurationPollerResponse{}, err
+	}
+	result := VPNServerConfigurationPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VPNServerConfigurationResponse, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // CreateOrUpdate - Creates a VpnServerConfiguration resource if it doesn't exist else updates the existing VpnServerConfiguration.
@@ -142,8 +154,8 @@ func (client *VPNServerConfigurationsClient) BeginDelete(ctx context.Context, re
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -154,15 +166,27 @@ func (client *VPNServerConfigurationsClient) BeginDelete(ctx context.Context, re
 
 // ResumeDelete creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *VPNServerConfigurationsClient) ResumeDelete(token string) (HTTPPoller, error) {
+func (client *VPNServerConfigurationsClient) ResumeDelete(ctx context.Context, token string) (HTTPPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("VPNServerConfigurationsClient.Delete", token, client.deleteHandleError)
 	if err != nil {
-		return nil, err
+		return HTTPPollerResponse{}, err
 	}
-	return &httpPoller{
+	poller := &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return HTTPPollerResponse{}, err
+	}
+	result := HTTPPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // Delete - Deletes a VpnServerConfiguration.

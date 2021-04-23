@@ -44,8 +44,8 @@ func (client *LoadBalancersClient) BeginCreateOrUpdate(ctx context.Context, reso
 		return LoadBalancerPollerResponse{}, err
 	}
 	poller := &loadBalancerPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LoadBalancerResponse, error) {
@@ -56,15 +56,27 @@ func (client *LoadBalancersClient) BeginCreateOrUpdate(ctx context.Context, reso
 
 // ResumeCreateOrUpdate creates a new LoadBalancerPoller from the specified resume token.
 // token - The value must come from a previous call to LoadBalancerPoller.ResumeToken().
-func (client *LoadBalancersClient) ResumeCreateOrUpdate(token string) (LoadBalancerPoller, error) {
+func (client *LoadBalancersClient) ResumeCreateOrUpdate(ctx context.Context, token string) (LoadBalancerPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("LoadBalancersClient.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
-		return nil, err
+		return LoadBalancerPollerResponse{}, err
 	}
-	return &loadBalancerPoller{
+	poller := &loadBalancerPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return LoadBalancerPollerResponse{}, err
+	}
+	result := LoadBalancerPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LoadBalancerResponse, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // CreateOrUpdate - Creates or updates a load balancer.
@@ -142,8 +154,8 @@ func (client *LoadBalancersClient) BeginDelete(ctx context.Context, resourceGrou
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -154,15 +166,27 @@ func (client *LoadBalancersClient) BeginDelete(ctx context.Context, resourceGrou
 
 // ResumeDelete creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *LoadBalancersClient) ResumeDelete(token string) (HTTPPoller, error) {
+func (client *LoadBalancersClient) ResumeDelete(ctx context.Context, token string) (HTTPPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("LoadBalancersClient.Delete", token, client.deleteHandleError)
 	if err != nil {
-		return nil, err
+		return HTTPPollerResponse{}, err
 	}
-	return &httpPoller{
+	poller := &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return HTTPPollerResponse{}, err
+	}
+	result := HTTPPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // Delete - Deletes the specified load balancer.

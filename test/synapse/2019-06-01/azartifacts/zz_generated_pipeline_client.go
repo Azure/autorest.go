@@ -15,10 +15,58 @@ import (
 	"net/url"
 	"strconv"
 	"strings"
+	"time"
 )
 
 type pipelineClient struct {
 	con *connection
+}
+
+// BeginCreateOrUpdatePipeline - Creates or updates a pipeline.
+func (client *pipelineClient) BeginCreateOrUpdatePipeline(ctx context.Context, pipelineName string, pipeline PipelineResource, options *PipelineBeginCreateOrUpdatePipelineOptions) (PipelineResourcePollerResponse, error) {
+	resp, err := client.createOrUpdatePipeline(ctx, pipelineName, pipeline, options)
+	if err != nil {
+		return PipelineResourcePollerResponse{}, err
+	}
+	result := PipelineResourcePollerResponse{
+		RawResponse: resp.Response,
+	}
+	pt, err := azcore.NewLROPoller("pipelineClient.CreateOrUpdatePipeline", resp, client.con.Pipeline(), client.createOrUpdatePipelineHandleError)
+	if err != nil {
+		return PipelineResourcePollerResponse{}, err
+	}
+	poller := &pipelineResourcePoller{
+		pt: pt,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (PipelineResourceResponse, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
+}
+
+// ResumeCreateOrUpdatePipeline creates a new PipelineResourcePoller from the specified resume token.
+// token - The value must come from a previous call to PipelineResourcePoller.ResumeToken().
+func (client *pipelineClient) ResumeCreateOrUpdatePipeline(ctx context.Context, token string) (PipelineResourcePollerResponse, error) {
+	pt, err := azcore.NewLROPollerFromResumeToken("pipelineClient.CreateOrUpdatePipeline", token, client.con.Pipeline(), client.createOrUpdatePipelineHandleError)
+	if err != nil {
+		return PipelineResourcePollerResponse{}, err
+	}
+	poller := &pipelineResourcePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return PipelineResourcePollerResponse{}, err
+	}
+	result := PipelineResourcePollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (PipelineResourceResponse, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // CreateOrUpdatePipeline - Creates or updates a pipeline.
@@ -140,6 +188,53 @@ func (client *pipelineClient) createPipelineRunHandleError(resp *azcore.Response
 		return err
 	}
 	return azcore.NewResponseError(&err, resp.Response)
+}
+
+// BeginDeletePipeline - Deletes a pipeline.
+func (client *pipelineClient) BeginDeletePipeline(ctx context.Context, pipelineName string, options *PipelineBeginDeletePipelineOptions) (HTTPPollerResponse, error) {
+	resp, err := client.deletePipeline(ctx, pipelineName, options)
+	if err != nil {
+		return HTTPPollerResponse{}, err
+	}
+	result := HTTPPollerResponse{
+		RawResponse: resp.Response,
+	}
+	pt, err := azcore.NewLROPoller("pipelineClient.DeletePipeline", resp, client.con.Pipeline(), client.deletePipelineHandleError)
+	if err != nil {
+		return HTTPPollerResponse{}, err
+	}
+	poller := &httpPoller{
+		pt: pt,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
+}
+
+// ResumeDeletePipeline creates a new HTTPPoller from the specified resume token.
+// token - The value must come from a previous call to HTTPPoller.ResumeToken().
+func (client *pipelineClient) ResumeDeletePipeline(ctx context.Context, token string) (HTTPPollerResponse, error) {
+	pt, err := azcore.NewLROPollerFromResumeToken("pipelineClient.DeletePipeline", token, client.con.Pipeline(), client.deletePipelineHandleError)
+	if err != nil {
+		return HTTPPollerResponse{}, err
+	}
+	poller := &httpPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return HTTPPollerResponse{}, err
+	}
+	result := HTTPPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // DeletePipeline - Deletes a pipeline.
@@ -289,6 +384,53 @@ func (client *pipelineClient) getPipelinesByWorkspaceHandleError(resp *azcore.Re
 		return err
 	}
 	return azcore.NewResponseError(&err, resp.Response)
+}
+
+// BeginRenamePipeline - Renames a pipeline.
+func (client *pipelineClient) BeginRenamePipeline(ctx context.Context, pipelineName string, request ArtifactRenameRequest, options *PipelineBeginRenamePipelineOptions) (HTTPPollerResponse, error) {
+	resp, err := client.renamePipeline(ctx, pipelineName, request, options)
+	if err != nil {
+		return HTTPPollerResponse{}, err
+	}
+	result := HTTPPollerResponse{
+		RawResponse: resp.Response,
+	}
+	pt, err := azcore.NewLROPoller("pipelineClient.RenamePipeline", resp, client.con.Pipeline(), client.renamePipelineHandleError)
+	if err != nil {
+		return HTTPPollerResponse{}, err
+	}
+	poller := &httpPoller{
+		pt: pt,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
+}
+
+// ResumeRenamePipeline creates a new HTTPPoller from the specified resume token.
+// token - The value must come from a previous call to HTTPPoller.ResumeToken().
+func (client *pipelineClient) ResumeRenamePipeline(ctx context.Context, token string) (HTTPPollerResponse, error) {
+	pt, err := azcore.NewLROPollerFromResumeToken("pipelineClient.RenamePipeline", token, client.con.Pipeline(), client.renamePipelineHandleError)
+	if err != nil {
+		return HTTPPollerResponse{}, err
+	}
+	poller := &httpPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return HTTPPollerResponse{}, err
+	}
+	result := HTTPPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // RenamePipeline - Renames a pipeline.

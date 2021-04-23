@@ -16,6 +16,7 @@ import (
 	"net/url"
 	"strconv"
 	"strings"
+	"time"
 )
 
 type libraryClient struct {
@@ -68,6 +69,53 @@ func (client *libraryClient) appendHandleError(resp *azcore.Response) error {
 		return err
 	}
 	return azcore.NewResponseError(&err, resp.Response)
+}
+
+// BeginCreate - Creates a library with the library name.
+func (client *libraryClient) BeginCreate(ctx context.Context, libraryName string, options *LibraryBeginCreateOptions) (LibraryResourceInfoPollerResponse, error) {
+	resp, err := client.create(ctx, libraryName, options)
+	if err != nil {
+		return LibraryResourceInfoPollerResponse{}, err
+	}
+	result := LibraryResourceInfoPollerResponse{
+		RawResponse: resp.Response,
+	}
+	pt, err := azcore.NewLROPoller("libraryClient.Create", resp, client.con.Pipeline(), client.createHandleError)
+	if err != nil {
+		return LibraryResourceInfoPollerResponse{}, err
+	}
+	poller := &libraryResourceInfoPoller{
+		pt: pt,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LibraryResourceInfoResponse, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
+}
+
+// ResumeCreate creates a new LibraryResourceInfoPoller from the specified resume token.
+// token - The value must come from a previous call to LibraryResourceInfoPoller.ResumeToken().
+func (client *libraryClient) ResumeCreate(ctx context.Context, token string) (LibraryResourceInfoPollerResponse, error) {
+	pt, err := azcore.NewLROPollerFromResumeToken("libraryClient.Create", token, client.con.Pipeline(), client.createHandleError)
+	if err != nil {
+		return LibraryResourceInfoPollerResponse{}, err
+	}
+	poller := &libraryResourceInfoPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return LibraryResourceInfoPollerResponse{}, err
+	}
+	result := LibraryResourceInfoPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LibraryResourceInfoResponse, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // Create - Creates a library with the library name.
@@ -123,6 +171,53 @@ func (client *libraryClient) createHandleError(resp *azcore.Response) error {
 	return azcore.NewResponseError(&err, resp.Response)
 }
 
+// BeginDelete - Delete Library
+func (client *libraryClient) BeginDelete(ctx context.Context, libraryName string, options *LibraryBeginDeleteOptions) (LibraryResourceInfoPollerResponse, error) {
+	resp, err := client.deleteOperation(ctx, libraryName, options)
+	if err != nil {
+		return LibraryResourceInfoPollerResponse{}, err
+	}
+	result := LibraryResourceInfoPollerResponse{
+		RawResponse: resp.Response,
+	}
+	pt, err := azcore.NewLROPoller("libraryClient.Delete", resp, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return LibraryResourceInfoPollerResponse{}, err
+	}
+	poller := &libraryResourceInfoPoller{
+		pt: pt,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LibraryResourceInfoResponse, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
+}
+
+// ResumeDelete creates a new LibraryResourceInfoPoller from the specified resume token.
+// token - The value must come from a previous call to LibraryResourceInfoPoller.ResumeToken().
+func (client *libraryClient) ResumeDelete(ctx context.Context, token string) (LibraryResourceInfoPollerResponse, error) {
+	pt, err := azcore.NewLROPollerFromResumeToken("libraryClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return LibraryResourceInfoPollerResponse{}, err
+	}
+	poller := &libraryResourceInfoPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return LibraryResourceInfoPollerResponse{}, err
+	}
+	result := LibraryResourceInfoPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LibraryResourceInfoResponse, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
+}
+
 // Delete - Delete Library
 func (client *libraryClient) deleteOperation(ctx context.Context, libraryName string, options *LibraryBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, libraryName, options)
@@ -174,6 +269,53 @@ func (client *libraryClient) deleteHandleError(resp *azcore.Response) error {
 		return err
 	}
 	return azcore.NewResponseError(&err, resp.Response)
+}
+
+// BeginFlush - Flush Library
+func (client *libraryClient) BeginFlush(ctx context.Context, libraryName string, options *LibraryBeginFlushOptions) (LibraryResourceInfoPollerResponse, error) {
+	resp, err := client.flush(ctx, libraryName, options)
+	if err != nil {
+		return LibraryResourceInfoPollerResponse{}, err
+	}
+	result := LibraryResourceInfoPollerResponse{
+		RawResponse: resp.Response,
+	}
+	pt, err := azcore.NewLROPoller("libraryClient.Flush", resp, client.con.Pipeline(), client.flushHandleError)
+	if err != nil {
+		return LibraryResourceInfoPollerResponse{}, err
+	}
+	poller := &libraryResourceInfoPoller{
+		pt: pt,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LibraryResourceInfoResponse, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
+}
+
+// ResumeFlush creates a new LibraryResourceInfoPoller from the specified resume token.
+// token - The value must come from a previous call to LibraryResourceInfoPoller.ResumeToken().
+func (client *libraryClient) ResumeFlush(ctx context.Context, token string) (LibraryResourceInfoPollerResponse, error) {
+	pt, err := azcore.NewLROPollerFromResumeToken("libraryClient.Flush", token, client.con.Pipeline(), client.flushHandleError)
+	if err != nil {
+		return LibraryResourceInfoPollerResponse{}, err
+	}
+	poller := &libraryResourceInfoPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return LibraryResourceInfoPollerResponse{}, err
+	}
+	result := LibraryResourceInfoPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LibraryResourceInfoResponse, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // Flush - Flush Library

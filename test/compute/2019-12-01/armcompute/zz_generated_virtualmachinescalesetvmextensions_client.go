@@ -44,8 +44,8 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) BeginCreateOrUpdate(ctx 
 		return VirtualMachineExtensionPollerResponse{}, err
 	}
 	poller := &virtualMachineExtensionPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineExtensionResponse, error) {
@@ -56,15 +56,27 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) BeginCreateOrUpdate(ctx 
 
 // ResumeCreateOrUpdate creates a new VirtualMachineExtensionPoller from the specified resume token.
 // token - The value must come from a previous call to VirtualMachineExtensionPoller.ResumeToken().
-func (client *VirtualMachineScaleSetVMExtensionsClient) ResumeCreateOrUpdate(token string) (VirtualMachineExtensionPoller, error) {
+func (client *VirtualMachineScaleSetVMExtensionsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (VirtualMachineExtensionPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("VirtualMachineScaleSetVMExtensionsClient.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
-		return nil, err
+		return VirtualMachineExtensionPollerResponse{}, err
 	}
-	return &virtualMachineExtensionPoller{
+	poller := &virtualMachineExtensionPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return VirtualMachineExtensionPollerResponse{}, err
+	}
+	result := VirtualMachineExtensionPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineExtensionResponse, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // CreateOrUpdate - The operation to create or update the VMSS VM extension.
@@ -150,8 +162,8 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) BeginDelete(ctx context.
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -162,15 +174,27 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) BeginDelete(ctx context.
 
 // ResumeDelete creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *VirtualMachineScaleSetVMExtensionsClient) ResumeDelete(token string) (HTTPPoller, error) {
+func (client *VirtualMachineScaleSetVMExtensionsClient) ResumeDelete(ctx context.Context, token string) (HTTPPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("VirtualMachineScaleSetVMExtensionsClient.Delete", token, client.deleteHandleError)
 	if err != nil {
-		return nil, err
+		return HTTPPollerResponse{}, err
 	}
-	return &httpPoller{
+	poller := &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return HTTPPollerResponse{}, err
+	}
+	result := HTTPPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // Delete - The operation to delete the VMSS VM extension.
@@ -387,8 +411,8 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) BeginUpdate(ctx context.
 		return VirtualMachineExtensionPollerResponse{}, err
 	}
 	poller := &virtualMachineExtensionPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineExtensionResponse, error) {
@@ -399,15 +423,27 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) BeginUpdate(ctx context.
 
 // ResumeUpdate creates a new VirtualMachineExtensionPoller from the specified resume token.
 // token - The value must come from a previous call to VirtualMachineExtensionPoller.ResumeToken().
-func (client *VirtualMachineScaleSetVMExtensionsClient) ResumeUpdate(token string) (VirtualMachineExtensionPoller, error) {
+func (client *VirtualMachineScaleSetVMExtensionsClient) ResumeUpdate(ctx context.Context, token string) (VirtualMachineExtensionPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("VirtualMachineScaleSetVMExtensionsClient.Update", token, client.updateHandleError)
 	if err != nil {
-		return nil, err
+		return VirtualMachineExtensionPollerResponse{}, err
 	}
-	return &virtualMachineExtensionPoller{
+	poller := &virtualMachineExtensionPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return VirtualMachineExtensionPollerResponse{}, err
+	}
+	result := VirtualMachineExtensionPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineExtensionResponse, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // Update - The operation to update the VMSS VM extension.

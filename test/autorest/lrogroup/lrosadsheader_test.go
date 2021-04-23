@@ -8,8 +8,6 @@ import (
 	"net/http"
 	"testing"
 	"time"
-
-	"github.com/google/go-cmp/cmp"
 )
 
 func newLrosaDsClient() *LROSADsClient {
@@ -30,16 +28,9 @@ func TestLROSADSBeginDelete202NonRetry400(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	poller, err = op.ResumeDelete202NonRetry400(rt)
-	if err != nil {
-		t.Fatal(err)
-	}
-	res, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	resp, err = op.ResumeDelete202NonRetry400(context.Background(), rt)
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
-	}
-	if res != nil {
-		t.Fatal("expected a nil response with the error")
 	}
 }
 
@@ -85,16 +76,9 @@ func TestLROSADSBeginDeleteAsyncRelativeRetry400(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	poller, err = op.ResumeDeleteAsyncRelativeRetry400(rt)
-	if err != nil {
-		t.Fatal(err)
-	}
-	res, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	resp, err = op.ResumeDeleteAsyncRelativeRetry400(context.Background(), rt)
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
-	}
-	if res != nil {
-		t.Fatal("expected a nil response with the error")
 	}
 }
 
@@ -117,16 +101,9 @@ func TestLROSADSBeginDeleteAsyncRelativeRetryInvalidJSONPolling(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	poller, err = op.ResumeDeleteAsyncRelativeRetryInvalidJSONPolling(rt)
-	if err != nil {
-		t.Fatal(err)
-	}
-	res, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	resp, err = op.ResumeDeleteAsyncRelativeRetryInvalidJSONPolling(context.Background(), rt)
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
-	}
-	if res != nil {
-		t.Fatal("expected a nil response with the error")
 	}
 }
 
@@ -141,16 +118,9 @@ func TestLROSADSBeginDeleteAsyncRelativeRetryNoStatus(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	poller, err = op.ResumeDeleteAsyncRelativeRetryNoStatus(rt)
-	if err != nil {
-		t.Fatal(err)
-	}
-	res, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	resp, err = op.ResumeDeleteAsyncRelativeRetryNoStatus(context.Background(), rt)
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
-	}
-	if res != nil {
-		t.Fatal("expected a nil response with the error")
 	}
 }
 
@@ -181,16 +151,9 @@ func TestLROSADSBeginPost202NonRetry400(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	poller, err = op.ResumePost202NonRetry400(rt)
-	if err != nil {
-		t.Fatal(err)
-	}
-	res, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	resp, err = op.ResumePost202NonRetry400(context.Background(), rt)
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
-	}
-	if res != nil {
-		t.Fatal("expected a nil response with the error")
 	}
 }
 
@@ -213,16 +176,9 @@ func TestLROSADSBeginPostAsyncRelativeRetry400(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	poller, err = op.ResumePostAsyncRelativeRetry400(rt)
-	if err != nil {
-		t.Fatal(err)
-	}
-	res, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	resp, err = op.ResumePostAsyncRelativeRetry400(context.Background(), rt)
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
-	}
-	if res != nil {
-		t.Fatal("expected a nil response with the error")
 	}
 }
 
@@ -245,16 +201,9 @@ func TestLROSADSBeginPostAsyncRelativeRetryInvalidJSONPolling(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	poller, err = op.ResumePostAsyncRelativeRetryInvalidJSONPolling(rt)
-	if err != nil {
-		t.Fatal(err)
-	}
-	res, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	resp, err = op.ResumePostAsyncRelativeRetryInvalidJSONPolling(context.Background(), rt)
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
-	}
-	if res != nil {
-		t.Fatal("expected a nil response with the error")
 	}
 }
 
@@ -269,16 +218,9 @@ func TestLROSADSBeginPostAsyncRelativeRetryNoPayload(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	poller, err = op.ResumePostAsyncRelativeRetryNoPayload(rt)
-	if err != nil {
-		t.Fatal(err)
-	}
-	res, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	resp, err = op.ResumePostAsyncRelativeRetryNoPayload(context.Background(), rt)
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
-	}
-	if res != nil {
-		t.Fatal("expected a nil response with the error")
 	}
 }
 
@@ -309,16 +251,9 @@ func TestLROSADSBeginPutAsyncRelativeRetry400(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	poller, err = op.ResumePutAsyncRelativeRetry400(rt)
-	if err != nil {
-		t.Fatal(err)
-	}
-	res, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	resp, err = op.ResumePutAsyncRelativeRetry400(context.Background(), rt)
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
-	}
-	if r := cmp.Diff(res, ProductResponse{}); r != "" {
-		t.Fatal(r)
 	}
 }
 
@@ -341,16 +276,9 @@ func TestLROSADSBeginPutAsyncRelativeRetryInvalidJSONPolling(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	poller, err = op.ResumePutAsyncRelativeRetryInvalidJSONPolling(rt)
-	if err != nil {
-		t.Fatal(err)
-	}
-	res, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	resp, err = op.ResumePutAsyncRelativeRetryInvalidJSONPolling(context.Background(), rt)
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
-	}
-	if r := cmp.Diff(res, ProductResponse{}); r != "" {
-		t.Fatal(r)
 	}
 }
 
@@ -365,16 +293,9 @@ func TestLROSADSBeginPutAsyncRelativeRetryNoStatus(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	poller, err = op.ResumePutAsyncRelativeRetryNoStatus(rt)
-	if err != nil {
-		t.Fatal(err)
-	}
-	res, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	resp, err = op.ResumePutAsyncRelativeRetryNoStatus(context.Background(), rt)
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
-	}
-	if r := cmp.Diff(res, ProductResponse{}); r != "" {
-		t.Fatal(r)
 	}
 }
 
@@ -389,16 +310,9 @@ func TestLROSADSBeginPutAsyncRelativeRetryNoStatusPayload(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	poller, err = op.ResumePutAsyncRelativeRetryNoStatusPayload(rt)
-	if err != nil {
-		t.Fatal(err)
-	}
-	res, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	resp, err = op.ResumePutAsyncRelativeRetryNoStatusPayload(context.Background(), rt)
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
-	}
-	if r := cmp.Diff(res, ProductResponse{}); r != "" {
-		t.Fatal(r)
 	}
 }
 
@@ -413,16 +327,9 @@ func TestLROSADSBeginPutError201NoProvisioningStatePayload(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	poller, err = op.ResumePutError201NoProvisioningStatePayload(rt)
-	if err != nil {
-		t.Fatal(err)
-	}
-	res, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	resp, err = op.ResumePutError201NoProvisioningStatePayload(context.Background(), rt)
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
-	}
-	if r := cmp.Diff(res, ProductResponse{}); r != "" {
-		t.Fatal(r)
 	}
 }
 
@@ -437,16 +344,9 @@ func TestLROSADSBeginPutNonRetry201Creating400(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	poller, err = op.ResumePutNonRetry201Creating400(rt)
-	if err != nil {
-		t.Fatal(err)
-	}
-	res, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	resp, err = op.ResumePutNonRetry201Creating400(context.Background(), rt)
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
-	}
-	if r := cmp.Diff(res, ProductResponse{}); r != "" {
-		t.Fatal(r)
 	}
 }
 
@@ -461,16 +361,9 @@ func TestLROSADSBeginPutNonRetry201Creating400InvalidJSON(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	poller, err = op.ResumePutNonRetry201Creating400InvalidJSON(rt)
-	if err != nil {
-		t.Fatal(err)
-	}
-	res, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	resp, err = op.ResumePutNonRetry201Creating400InvalidJSON(context.Background(), rt)
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
-	}
-	if r := cmp.Diff(res, ProductResponse{}); r != "" {
-		t.Fatal(r)
 	}
 }
 

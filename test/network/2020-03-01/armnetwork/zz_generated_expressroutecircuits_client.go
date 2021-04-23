@@ -44,8 +44,8 @@ func (client *ExpressRouteCircuitsClient) BeginCreateOrUpdate(ctx context.Contex
 		return ExpressRouteCircuitPollerResponse{}, err
 	}
 	poller := &expressRouteCircuitPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitResponse, error) {
@@ -56,15 +56,27 @@ func (client *ExpressRouteCircuitsClient) BeginCreateOrUpdate(ctx context.Contex
 
 // ResumeCreateOrUpdate creates a new ExpressRouteCircuitPoller from the specified resume token.
 // token - The value must come from a previous call to ExpressRouteCircuitPoller.ResumeToken().
-func (client *ExpressRouteCircuitsClient) ResumeCreateOrUpdate(token string) (ExpressRouteCircuitPoller, error) {
+func (client *ExpressRouteCircuitsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (ExpressRouteCircuitPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("ExpressRouteCircuitsClient.CreateOrUpdate", token, client.createOrUpdateHandleError)
 	if err != nil {
-		return nil, err
+		return ExpressRouteCircuitPollerResponse{}, err
 	}
-	return &expressRouteCircuitPoller{
+	poller := &expressRouteCircuitPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return ExpressRouteCircuitPollerResponse{}, err
+	}
+	result := ExpressRouteCircuitPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitResponse, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // CreateOrUpdate - Creates or updates an express route circuit.
@@ -142,8 +154,8 @@ func (client *ExpressRouteCircuitsClient) BeginDelete(ctx context.Context, resou
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -154,15 +166,27 @@ func (client *ExpressRouteCircuitsClient) BeginDelete(ctx context.Context, resou
 
 // ResumeDelete creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *ExpressRouteCircuitsClient) ResumeDelete(token string) (HTTPPoller, error) {
+func (client *ExpressRouteCircuitsClient) ResumeDelete(ctx context.Context, token string) (HTTPPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("ExpressRouteCircuitsClient.Delete", token, client.deleteHandleError)
 	if err != nil {
-		return nil, err
+		return HTTPPollerResponse{}, err
 	}
-	return &httpPoller{
+	poller := &httpPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return HTTPPollerResponse{}, err
+	}
+	result := HTTPPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // Delete - Deletes the specified express route circuit.
@@ -528,8 +552,8 @@ func (client *ExpressRouteCircuitsClient) BeginListArpTable(ctx context.Context,
 		return ExpressRouteCircuitsArpTableListResultPollerResponse{}, err
 	}
 	poller := &expressRouteCircuitsArpTableListResultPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitsArpTableListResultResponse, error) {
@@ -540,15 +564,27 @@ func (client *ExpressRouteCircuitsClient) BeginListArpTable(ctx context.Context,
 
 // ResumeListArpTable creates a new ExpressRouteCircuitsArpTableListResultPoller from the specified resume token.
 // token - The value must come from a previous call to ExpressRouteCircuitsArpTableListResultPoller.ResumeToken().
-func (client *ExpressRouteCircuitsClient) ResumeListArpTable(token string) (ExpressRouteCircuitsArpTableListResultPoller, error) {
+func (client *ExpressRouteCircuitsClient) ResumeListArpTable(ctx context.Context, token string) (ExpressRouteCircuitsArpTableListResultPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("ExpressRouteCircuitsClient.ListArpTable", token, client.listArpTableHandleError)
 	if err != nil {
-		return nil, err
+		return ExpressRouteCircuitsArpTableListResultPollerResponse{}, err
 	}
-	return &expressRouteCircuitsArpTableListResultPoller{
+	poller := &expressRouteCircuitsArpTableListResultPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return ExpressRouteCircuitsArpTableListResultPollerResponse{}, err
+	}
+	result := ExpressRouteCircuitsArpTableListResultPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitsArpTableListResultResponse, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // ListArpTable - Gets the currently advertised ARP table associated with the express route circuit in a resource group.
@@ -634,8 +670,8 @@ func (client *ExpressRouteCircuitsClient) BeginListRoutesTable(ctx context.Conte
 		return ExpressRouteCircuitsRoutesTableListResultPollerResponse{}, err
 	}
 	poller := &expressRouteCircuitsRoutesTableListResultPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitsRoutesTableListResultResponse, error) {
@@ -646,15 +682,27 @@ func (client *ExpressRouteCircuitsClient) BeginListRoutesTable(ctx context.Conte
 
 // ResumeListRoutesTable creates a new ExpressRouteCircuitsRoutesTableListResultPoller from the specified resume token.
 // token - The value must come from a previous call to ExpressRouteCircuitsRoutesTableListResultPoller.ResumeToken().
-func (client *ExpressRouteCircuitsClient) ResumeListRoutesTable(token string) (ExpressRouteCircuitsRoutesTableListResultPoller, error) {
+func (client *ExpressRouteCircuitsClient) ResumeListRoutesTable(ctx context.Context, token string) (ExpressRouteCircuitsRoutesTableListResultPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("ExpressRouteCircuitsClient.ListRoutesTable", token, client.listRoutesTableHandleError)
 	if err != nil {
-		return nil, err
+		return ExpressRouteCircuitsRoutesTableListResultPollerResponse{}, err
 	}
-	return &expressRouteCircuitsRoutesTableListResultPoller{
+	poller := &expressRouteCircuitsRoutesTableListResultPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return ExpressRouteCircuitsRoutesTableListResultPollerResponse{}, err
+	}
+	result := ExpressRouteCircuitsRoutesTableListResultPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitsRoutesTableListResultResponse, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // ListRoutesTable - Gets the currently advertised routes table associated with the express route circuit in a resource group.
@@ -740,8 +788,8 @@ func (client *ExpressRouteCircuitsClient) BeginListRoutesTableSummary(ctx contex
 		return ExpressRouteCircuitsRoutesTableSummaryListResultPollerResponse{}, err
 	}
 	poller := &expressRouteCircuitsRoutesTableSummaryListResultPoller{
-		pt:       pt,
 		pipeline: client.con.Pipeline(),
+		pt:       pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitsRoutesTableSummaryListResultResponse, error) {
@@ -752,15 +800,27 @@ func (client *ExpressRouteCircuitsClient) BeginListRoutesTableSummary(ctx contex
 
 // ResumeListRoutesTableSummary creates a new ExpressRouteCircuitsRoutesTableSummaryListResultPoller from the specified resume token.
 // token - The value must come from a previous call to ExpressRouteCircuitsRoutesTableSummaryListResultPoller.ResumeToken().
-func (client *ExpressRouteCircuitsClient) ResumeListRoutesTableSummary(token string) (ExpressRouteCircuitsRoutesTableSummaryListResultPoller, error) {
+func (client *ExpressRouteCircuitsClient) ResumeListRoutesTableSummary(ctx context.Context, token string) (ExpressRouteCircuitsRoutesTableSummaryListResultPollerResponse, error) {
 	pt, err := armcore.NewPollerFromResumeToken("ExpressRouteCircuitsClient.ListRoutesTableSummary", token, client.listRoutesTableSummaryHandleError)
 	if err != nil {
-		return nil, err
+		return ExpressRouteCircuitsRoutesTableSummaryListResultPollerResponse{}, err
 	}
-	return &expressRouteCircuitsRoutesTableSummaryListResultPoller{
+	poller := &expressRouteCircuitsRoutesTableSummaryListResultPoller{
 		pipeline: client.con.Pipeline(),
 		pt:       pt,
-	}, nil
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return ExpressRouteCircuitsRoutesTableSummaryListResultPollerResponse{}, err
+	}
+	result := ExpressRouteCircuitsRoutesTableSummaryListResultPollerResponse{
+		RawResponse: resp,
+	}
+	result.Poller = poller
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitsRoutesTableSummaryListResultResponse, error) {
+		return poller.pollUntilDone(ctx, frequency)
+	}
+	return result, nil
 }
 
 // ListRoutesTableSummary - Gets the currently advertised routes table summary associated with the express route circuit in a resource group.
