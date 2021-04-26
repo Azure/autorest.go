@@ -96,15 +96,18 @@ export function hasAdditionalProperties(obj: ObjectSchema): DictionarySchema | u
 
 // returns true if the object contains a property that's a discriminated type
 export function hasPolymorphicField(obj: ObjectSchema): boolean {
-  let found = false;
   for (const prop of values(obj.properties)) {
     if (isObjectSchema(prop.schema)) {
-      found = prop.schema.discriminator !== undefined;
+      if (prop.schema.discriminator !== undefined) {
+        return true;
+      }
     } else if (isArraySchema(prop.schema) && isObjectSchema(prop.schema.elementType)) {
-      found = prop.schema.elementType.discriminator !== undefined;
+      if (prop.schema.elementType.discriminator !== undefined) {
+        return true;
+      }
     }
   }
-  return found;
+  return false;
 }
 
 // returns the object's position in an inheritence hierarchy
