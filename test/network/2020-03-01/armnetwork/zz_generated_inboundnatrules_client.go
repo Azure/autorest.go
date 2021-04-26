@@ -139,7 +139,7 @@ func (client *InboundNatRulesClient) createOrUpdateHandleResponse(resp *azcore.R
 func (client *InboundNatRulesClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -244,7 +244,7 @@ func (client *InboundNatRulesClient) deleteCreateRequest(ctx context.Context, re
 func (client *InboundNatRulesClient) deleteHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -312,7 +312,7 @@ func (client *InboundNatRulesClient) getHandleResponse(resp *azcore.Response) (I
 func (client *InboundNatRulesClient) getHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -373,7 +373,7 @@ func (client *InboundNatRulesClient) listHandleResponse(resp *azcore.Response) (
 func (client *InboundNatRulesClient) listHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

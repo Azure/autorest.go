@@ -87,7 +87,7 @@ func (client *ServiceClient) getPropertiesHandleResponse(resp *azcore.Response) 
 func (client *ServiceClient) getPropertiesHandleError(resp *azcore.Response) error {
 	var err TableServiceError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -161,7 +161,7 @@ func (client *ServiceClient) getStatisticsHandleResponse(resp *azcore.Response) 
 func (client *ServiceClient) getStatisticsHandleError(resp *azcore.Response) error {
 	var err TableServiceError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -224,7 +224,7 @@ func (client *ServiceClient) setPropertiesHandleResponse(resp *azcore.Response) 
 func (client *ServiceClient) setPropertiesHandleError(resp *azcore.Response) error {
 	var err TableServiceError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

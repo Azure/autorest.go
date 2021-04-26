@@ -139,7 +139,7 @@ func (client *PrivateDNSZoneGroupsClient) createOrUpdateHandleResponse(resp *azc
 func (client *PrivateDNSZoneGroupsClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -244,7 +244,7 @@ func (client *PrivateDNSZoneGroupsClient) deleteCreateRequest(ctx context.Contex
 func (client *PrivateDNSZoneGroupsClient) deleteHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -309,7 +309,7 @@ func (client *PrivateDNSZoneGroupsClient) getHandleResponse(resp *azcore.Respons
 func (client *PrivateDNSZoneGroupsClient) getHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -370,7 +370,7 @@ func (client *PrivateDNSZoneGroupsClient) listHandleResponse(resp *azcore.Respon
 func (client *PrivateDNSZoneGroupsClient) listHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

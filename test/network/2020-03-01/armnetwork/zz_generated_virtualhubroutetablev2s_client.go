@@ -139,7 +139,7 @@ func (client *VirtualHubRouteTableV2SClient) createOrUpdateHandleResponse(resp *
 func (client *VirtualHubRouteTableV2SClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -244,7 +244,7 @@ func (client *VirtualHubRouteTableV2SClient) deleteCreateRequest(ctx context.Con
 func (client *VirtualHubRouteTableV2SClient) deleteHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -309,7 +309,7 @@ func (client *VirtualHubRouteTableV2SClient) getHandleResponse(resp *azcore.Resp
 func (client *VirtualHubRouteTableV2SClient) getHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -370,7 +370,7 @@ func (client *VirtualHubRouteTableV2SClient) listHandleResponse(resp *azcore.Res
 func (client *VirtualHubRouteTableV2SClient) listHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

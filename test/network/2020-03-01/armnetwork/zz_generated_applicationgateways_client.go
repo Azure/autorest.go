@@ -138,7 +138,7 @@ func (client *ApplicationGatewaysClient) backendHealthHandleResponse(resp *azcor
 func (client *ApplicationGatewaysClient) backendHealthHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -253,7 +253,7 @@ func (client *ApplicationGatewaysClient) backendHealthOnDemandHandleResponse(res
 func (client *ApplicationGatewaysClient) backendHealthOnDemandHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -363,7 +363,7 @@ func (client *ApplicationGatewaysClient) createOrUpdateHandleResponse(resp *azco
 func (client *ApplicationGatewaysClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -464,7 +464,7 @@ func (client *ApplicationGatewaysClient) deleteCreateRequest(ctx context.Context
 func (client *ApplicationGatewaysClient) deleteHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -525,7 +525,7 @@ func (client *ApplicationGatewaysClient) getHandleResponse(resp *azcore.Response
 func (client *ApplicationGatewaysClient) getHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -582,7 +582,7 @@ func (client *ApplicationGatewaysClient) getSSLPredefinedPolicyHandleResponse(re
 func (client *ApplicationGatewaysClient) getSSLPredefinedPolicyHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -639,7 +639,7 @@ func (client *ApplicationGatewaysClient) listHandleResponse(resp *azcore.Respons
 func (client *ApplicationGatewaysClient) listHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -692,7 +692,7 @@ func (client *ApplicationGatewaysClient) listAllHandleResponse(resp *azcore.Resp
 func (client *ApplicationGatewaysClient) listAllHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -745,7 +745,7 @@ func (client *ApplicationGatewaysClient) listAvailableRequestHeadersHandleRespon
 func (client *ApplicationGatewaysClient) listAvailableRequestHeadersHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -798,7 +798,7 @@ func (client *ApplicationGatewaysClient) listAvailableResponseHeadersHandleRespo
 func (client *ApplicationGatewaysClient) listAvailableResponseHeadersHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -851,7 +851,7 @@ func (client *ApplicationGatewaysClient) listAvailableSSLOptionsHandleResponse(r
 func (client *ApplicationGatewaysClient) listAvailableSSLOptionsHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -904,7 +904,7 @@ func (client *ApplicationGatewaysClient) listAvailableSSLPredefinedPoliciesHandl
 func (client *ApplicationGatewaysClient) listAvailableSSLPredefinedPoliciesHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -957,7 +957,7 @@ func (client *ApplicationGatewaysClient) listAvailableServerVariablesHandleRespo
 func (client *ApplicationGatewaysClient) listAvailableServerVariablesHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1010,7 +1010,7 @@ func (client *ApplicationGatewaysClient) listAvailableWafRuleSetsHandleResponse(
 func (client *ApplicationGatewaysClient) listAvailableWafRuleSetsHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1111,7 +1111,7 @@ func (client *ApplicationGatewaysClient) startCreateRequest(ctx context.Context,
 func (client *ApplicationGatewaysClient) startHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1212,7 +1212,7 @@ func (client *ApplicationGatewaysClient) stopCreateRequest(ctx context.Context, 
 func (client *ApplicationGatewaysClient) stopHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1273,7 +1273,7 @@ func (client *ApplicationGatewaysClient) updateTagsHandleResponse(resp *azcore.R
 func (client *ApplicationGatewaysClient) updateTagsHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

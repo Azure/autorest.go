@@ -56,7 +56,7 @@ func (client *HTTPServerFailureClient) delete505CreateRequest(ctx context.Contex
 func (client *HTTPServerFailureClient) delete505HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -93,7 +93,7 @@ func (client *HTTPServerFailureClient) get501CreateRequest(ctx context.Context, 
 func (client *HTTPServerFailureClient) get501HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -130,7 +130,7 @@ func (client *HTTPServerFailureClient) head501CreateRequest(ctx context.Context,
 func (client *HTTPServerFailureClient) head501HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -167,7 +167,7 @@ func (client *HTTPServerFailureClient) post505CreateRequest(ctx context.Context,
 func (client *HTTPServerFailureClient) post505HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

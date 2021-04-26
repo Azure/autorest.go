@@ -135,7 +135,7 @@ func (client *NetworkVirtualAppliancesClient) createOrUpdateHandleResponse(resp 
 func (client *NetworkVirtualAppliancesClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -236,7 +236,7 @@ func (client *NetworkVirtualAppliancesClient) deleteCreateRequest(ctx context.Co
 func (client *NetworkVirtualAppliancesClient) deleteHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -300,7 +300,7 @@ func (client *NetworkVirtualAppliancesClient) getHandleResponse(resp *azcore.Res
 func (client *NetworkVirtualAppliancesClient) getHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -353,7 +353,7 @@ func (client *NetworkVirtualAppliancesClient) listHandleResponse(resp *azcore.Re
 func (client *NetworkVirtualAppliancesClient) listHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -410,7 +410,7 @@ func (client *NetworkVirtualAppliancesClient) listByResourceGroupHandleResponse(
 func (client *NetworkVirtualAppliancesClient) listByResourceGroupHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -471,7 +471,7 @@ func (client *NetworkVirtualAppliancesClient) updateTagsHandleResponse(resp *azc
 func (client *NetworkVirtualAppliancesClient) updateTagsHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

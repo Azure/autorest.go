@@ -119,7 +119,7 @@ func (client *sparkJobDefinitionClient) createOrUpdateSparkJobDefinitionHandleRe
 func (client *sparkJobDefinitionClient) createOrUpdateSparkJobDefinitionHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -215,7 +215,7 @@ func (client *sparkJobDefinitionClient) debugSparkJobDefinitionHandleResponse(re
 func (client *sparkJobDefinitionClient) debugSparkJobDefinitionHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -306,7 +306,7 @@ func (client *sparkJobDefinitionClient) deleteSparkJobDefinitionCreateRequest(ct
 func (client *sparkJobDefinitionClient) deleteSparkJobDefinitionHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -406,7 +406,7 @@ func (client *sparkJobDefinitionClient) executeSparkJobDefinitionHandleResponse(
 func (client *sparkJobDefinitionClient) executeSparkJobDefinitionHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -462,7 +462,7 @@ func (client *sparkJobDefinitionClient) getSparkJobDefinitionHandleResponse(resp
 func (client *sparkJobDefinitionClient) getSparkJobDefinitionHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -511,7 +511,7 @@ func (client *sparkJobDefinitionClient) getSparkJobDefinitionsByWorkspaceHandleR
 func (client *sparkJobDefinitionClient) getSparkJobDefinitionsByWorkspaceHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -602,7 +602,7 @@ func (client *sparkJobDefinitionClient) renameSparkJobDefinitionCreateRequest(ct
 func (client *sparkJobDefinitionClient) renameSparkJobDefinitionHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

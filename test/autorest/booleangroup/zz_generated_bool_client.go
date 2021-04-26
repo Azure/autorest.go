@@ -65,7 +65,7 @@ func (client *BoolClient) getFalseHandleResponse(resp *azcore.Response) (BoolRes
 func (client *BoolClient) getFalseHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -111,7 +111,7 @@ func (client *BoolClient) getInvalidHandleResponse(resp *azcore.Response) (BoolR
 func (client *BoolClient) getInvalidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -157,7 +157,7 @@ func (client *BoolClient) getNullHandleResponse(resp *azcore.Response) (BoolResp
 func (client *BoolClient) getNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -203,7 +203,7 @@ func (client *BoolClient) getTrueHandleResponse(resp *azcore.Response) (BoolResp
 func (client *BoolClient) getTrueHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -240,7 +240,7 @@ func (client *BoolClient) putFalseCreateRequest(ctx context.Context, options *Bo
 func (client *BoolClient) putFalseHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -277,7 +277,7 @@ func (client *BoolClient) putTrueCreateRequest(ctx context.Context, options *Boo
 func (client *BoolClient) putTrueHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

@@ -63,7 +63,7 @@ func (client *FormdataClient) uploadFileCreateRequest(ctx context.Context, fileC
 func (client *FormdataClient) uploadFileHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -101,7 +101,7 @@ func (client *FormdataClient) uploadFileViaBodyCreateRequest(ctx context.Context
 func (client *FormdataClient) uploadFileViaBodyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -144,7 +144,7 @@ func (client *FormdataClient) uploadFilesCreateRequest(ctx context.Context, file
 func (client *FormdataClient) uploadFilesHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

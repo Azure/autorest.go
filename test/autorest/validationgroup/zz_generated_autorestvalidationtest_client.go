@@ -178,7 +178,7 @@ func (client *AutoRestValidationTestClient) validationOfBodyHandleResponse(resp 
 func (client *AutoRestValidationTestClient) validationOfBodyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -236,7 +236,7 @@ func (client *AutoRestValidationTestClient) validationOfMethodParametersHandleRe
 func (client *AutoRestValidationTestClient) validationOfMethodParametersHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

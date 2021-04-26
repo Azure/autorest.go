@@ -120,7 +120,7 @@ func (client *pipelineClient) createOrUpdatePipelineHandleResponse(resp *azcore.
 func (client *pipelineClient) createOrUpdatePipelineHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -185,7 +185,7 @@ func (client *pipelineClient) createPipelineRunHandleResponse(resp *azcore.Respo
 func (client *pipelineClient) createPipelineRunHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -276,7 +276,7 @@ func (client *pipelineClient) deletePipelineCreateRequest(ctx context.Context, p
 func (client *pipelineClient) deletePipelineHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -332,7 +332,7 @@ func (client *pipelineClient) getPipelineHandleResponse(resp *azcore.Response) (
 func (client *pipelineClient) getPipelineHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -381,7 +381,7 @@ func (client *pipelineClient) getPipelinesByWorkspaceHandleResponse(resp *azcore
 func (client *pipelineClient) getPipelinesByWorkspaceHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -472,7 +472,7 @@ func (client *pipelineClient) renamePipelineCreateRequest(ctx context.Context, p
 func (client *pipelineClient) renamePipelineHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

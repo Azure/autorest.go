@@ -139,7 +139,7 @@ func (client *SubnetsClient) createOrUpdateHandleResponse(resp *azcore.Response)
 func (client *SubnetsClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -244,7 +244,7 @@ func (client *SubnetsClient) deleteCreateRequest(ctx context.Context, resourceGr
 func (client *SubnetsClient) deleteHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -312,7 +312,7 @@ func (client *SubnetsClient) getHandleResponse(resp *azcore.Response) (SubnetRes
 func (client *SubnetsClient) getHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -373,7 +373,7 @@ func (client *SubnetsClient) listHandleResponse(resp *azcore.Response) (SubnetLi
 func (client *SubnetsClient) listHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -478,7 +478,7 @@ func (client *SubnetsClient) prepareNetworkPoliciesCreateRequest(ctx context.Con
 func (client *SubnetsClient) prepareNetworkPoliciesHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -583,7 +583,7 @@ func (client *SubnetsClient) unprepareNetworkPoliciesCreateRequest(ctx context.C
 func (client *SubnetsClient) unprepareNetworkPoliciesHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

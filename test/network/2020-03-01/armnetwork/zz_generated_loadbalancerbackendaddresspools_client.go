@@ -89,7 +89,7 @@ func (client *LoadBalancerBackendAddressPoolsClient) getHandleResponse(resp *azc
 func (client *LoadBalancerBackendAddressPoolsClient) getHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -150,7 +150,7 @@ func (client *LoadBalancerBackendAddressPoolsClient) listHandleResponse(resp *az
 func (client *LoadBalancerBackendAddressPoolsClient) listHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

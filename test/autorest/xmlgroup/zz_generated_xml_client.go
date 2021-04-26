@@ -615,7 +615,7 @@ func (client *XMLClient) getSimpleHandleResponse(resp *azcore.Response) (Slidesh
 func (client *XMLClient) getSimpleHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1358,7 +1358,7 @@ func (client *XMLClient) putSimpleCreateRequest(ctx context.Context, slideshow S
 func (client *XMLClient) putSimpleHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1395,7 +1395,7 @@ func (client *XMLClient) putWrappedListsCreateRequest(ctx context.Context, wrapp
 func (client *XMLClient) putWrappedListsHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

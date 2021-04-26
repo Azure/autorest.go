@@ -135,7 +135,7 @@ func (client *ServiceEndpointPoliciesClient) createOrUpdateHandleResponse(resp *
 func (client *ServiceEndpointPoliciesClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -236,7 +236,7 @@ func (client *ServiceEndpointPoliciesClient) deleteCreateRequest(ctx context.Con
 func (client *ServiceEndpointPoliciesClient) deleteHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -300,7 +300,7 @@ func (client *ServiceEndpointPoliciesClient) getHandleResponse(resp *azcore.Resp
 func (client *ServiceEndpointPoliciesClient) getHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -353,7 +353,7 @@ func (client *ServiceEndpointPoliciesClient) listHandleResponse(resp *azcore.Res
 func (client *ServiceEndpointPoliciesClient) listHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -410,7 +410,7 @@ func (client *ServiceEndpointPoliciesClient) listByResourceGroupHandleResponse(r
 func (client *ServiceEndpointPoliciesClient) listByResourceGroupHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -471,7 +471,7 @@ func (client *ServiceEndpointPoliciesClient) updateTagsHandleResponse(resp *azco
 func (client *ServiceEndpointPoliciesClient) updateTagsHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

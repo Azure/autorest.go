@@ -65,7 +65,7 @@ func (client *DictionaryClient) getEmptyHandleResponse(resp *azcore.Response) (D
 func (client *DictionaryClient) getEmptyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -111,7 +111,7 @@ func (client *DictionaryClient) getNotProvidedHandleResponse(resp *azcore.Respon
 func (client *DictionaryClient) getNotProvidedHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -157,7 +157,7 @@ func (client *DictionaryClient) getNullHandleResponse(resp *azcore.Response) (Di
 func (client *DictionaryClient) getNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -203,7 +203,7 @@ func (client *DictionaryClient) getValidHandleResponse(resp *azcore.Response) (D
 func (client *DictionaryClient) getValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -240,7 +240,7 @@ func (client *DictionaryClient) putEmptyCreateRequest(ctx context.Context, compl
 func (client *DictionaryClient) putEmptyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -277,7 +277,7 @@ func (client *DictionaryClient) putValidCreateRequest(ctx context.Context, compl
 func (client *DictionaryClient) putValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

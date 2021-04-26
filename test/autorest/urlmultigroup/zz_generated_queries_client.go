@@ -63,7 +63,7 @@ func (client *QueriesClient) arrayStringMultiEmptyCreateRequest(ctx context.Cont
 func (client *QueriesClient) arrayStringMultiEmptyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -107,7 +107,7 @@ func (client *QueriesClient) arrayStringMultiNullCreateRequest(ctx context.Conte
 func (client *QueriesClient) arrayStringMultiNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -151,7 +151,7 @@ func (client *QueriesClient) arrayStringMultiValidCreateRequest(ctx context.Cont
 func (client *QueriesClient) arrayStringMultiValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

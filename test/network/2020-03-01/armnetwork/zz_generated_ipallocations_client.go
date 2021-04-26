@@ -135,7 +135,7 @@ func (client *IPAllocationsClient) createOrUpdateHandleResponse(resp *azcore.Res
 func (client *IPAllocationsClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -236,7 +236,7 @@ func (client *IPAllocationsClient) deleteCreateRequest(ctx context.Context, reso
 func (client *IPAllocationsClient) deleteHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -300,7 +300,7 @@ func (client *IPAllocationsClient) getHandleResponse(resp *azcore.Response) (IPA
 func (client *IPAllocationsClient) getHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -353,7 +353,7 @@ func (client *IPAllocationsClient) listHandleResponse(resp *azcore.Response) (IP
 func (client *IPAllocationsClient) listHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -410,7 +410,7 @@ func (client *IPAllocationsClient) listByResourceGroupHandleResponse(resp *azcor
 func (client *IPAllocationsClient) listByResourceGroupHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -471,7 +471,7 @@ func (client *IPAllocationsClient) updateTagsHandleResponse(resp *azcore.Respons
 func (client *IPAllocationsClient) updateTagsHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

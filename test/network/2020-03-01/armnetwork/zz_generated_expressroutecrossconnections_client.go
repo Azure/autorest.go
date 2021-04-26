@@ -135,7 +135,7 @@ func (client *ExpressRouteCrossConnectionsClient) createOrUpdateHandleResponse(r
 func (client *ExpressRouteCrossConnectionsClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -196,7 +196,7 @@ func (client *ExpressRouteCrossConnectionsClient) getHandleResponse(resp *azcore
 func (client *ExpressRouteCrossConnectionsClient) getHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -249,7 +249,7 @@ func (client *ExpressRouteCrossConnectionsClient) listHandleResponse(resp *azcor
 func (client *ExpressRouteCrossConnectionsClient) listHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -367,7 +367,7 @@ func (client *ExpressRouteCrossConnectionsClient) listArpTableHandleResponse(res
 func (client *ExpressRouteCrossConnectionsClient) listArpTableHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -424,7 +424,7 @@ func (client *ExpressRouteCrossConnectionsClient) listByResourceGroupHandleRespo
 func (client *ExpressRouteCrossConnectionsClient) listByResourceGroupHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -542,7 +542,7 @@ func (client *ExpressRouteCrossConnectionsClient) listRoutesTableHandleResponse(
 func (client *ExpressRouteCrossConnectionsClient) listRoutesTableHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -660,7 +660,7 @@ func (client *ExpressRouteCrossConnectionsClient) listRoutesTableSummaryHandleRe
 func (client *ExpressRouteCrossConnectionsClient) listRoutesTableSummaryHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -721,7 +721,7 @@ func (client *ExpressRouteCrossConnectionsClient) updateTagsHandleResponse(resp 
 func (client *ExpressRouteCrossConnectionsClient) updateTagsHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

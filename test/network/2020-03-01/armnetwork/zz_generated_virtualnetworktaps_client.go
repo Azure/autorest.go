@@ -135,7 +135,7 @@ func (client *VirtualNetworkTapsClient) createOrUpdateHandleResponse(resp *azcor
 func (client *VirtualNetworkTapsClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -236,7 +236,7 @@ func (client *VirtualNetworkTapsClient) deleteCreateRequest(ctx context.Context,
 func (client *VirtualNetworkTapsClient) deleteHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -297,7 +297,7 @@ func (client *VirtualNetworkTapsClient) getHandleResponse(resp *azcore.Response)
 func (client *VirtualNetworkTapsClient) getHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -350,7 +350,7 @@ func (client *VirtualNetworkTapsClient) listAllHandleResponse(resp *azcore.Respo
 func (client *VirtualNetworkTapsClient) listAllHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -407,7 +407,7 @@ func (client *VirtualNetworkTapsClient) listByResourceGroupHandleResponse(resp *
 func (client *VirtualNetworkTapsClient) listByResourceGroupHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -468,7 +468,7 @@ func (client *VirtualNetworkTapsClient) updateTagsHandleResponse(resp *azcore.Re
 func (client *VirtualNetworkTapsClient) updateTagsHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

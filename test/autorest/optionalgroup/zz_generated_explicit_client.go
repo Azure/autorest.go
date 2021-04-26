@@ -61,7 +61,7 @@ func (client *ExplicitClient) postOptionalArrayHeaderCreateRequest(ctx context.C
 func (client *ExplicitClient) postOptionalArrayHeaderHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -101,7 +101,7 @@ func (client *ExplicitClient) postOptionalArrayParameterCreateRequest(ctx contex
 func (client *ExplicitClient) postOptionalArrayParameterHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -141,7 +141,7 @@ func (client *ExplicitClient) postOptionalArrayPropertyCreateRequest(ctx context
 func (client *ExplicitClient) postOptionalArrayPropertyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -181,7 +181,7 @@ func (client *ExplicitClient) postOptionalClassParameterCreateRequest(ctx contex
 func (client *ExplicitClient) postOptionalClassParameterHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -221,7 +221,7 @@ func (client *ExplicitClient) postOptionalClassPropertyCreateRequest(ctx context
 func (client *ExplicitClient) postOptionalClassPropertyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -261,7 +261,7 @@ func (client *ExplicitClient) postOptionalIntegerHeaderCreateRequest(ctx context
 func (client *ExplicitClient) postOptionalIntegerHeaderHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -301,7 +301,7 @@ func (client *ExplicitClient) postOptionalIntegerParameterCreateRequest(ctx cont
 func (client *ExplicitClient) postOptionalIntegerParameterHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -341,7 +341,7 @@ func (client *ExplicitClient) postOptionalIntegerPropertyCreateRequest(ctx conte
 func (client *ExplicitClient) postOptionalIntegerPropertyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -381,7 +381,7 @@ func (client *ExplicitClient) postOptionalStringHeaderCreateRequest(ctx context.
 func (client *ExplicitClient) postOptionalStringHeaderHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -421,7 +421,7 @@ func (client *ExplicitClient) postOptionalStringParameterCreateRequest(ctx conte
 func (client *ExplicitClient) postOptionalStringParameterHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -461,7 +461,7 @@ func (client *ExplicitClient) postOptionalStringPropertyCreateRequest(ctx contex
 func (client *ExplicitClient) postOptionalStringPropertyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -500,7 +500,7 @@ func (client *ExplicitClient) postRequiredArrayHeaderCreateRequest(ctx context.C
 func (client *ExplicitClient) postRequiredArrayHeaderHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -537,7 +537,7 @@ func (client *ExplicitClient) postRequiredArrayParameterCreateRequest(ctx contex
 func (client *ExplicitClient) postRequiredArrayParameterHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -575,7 +575,7 @@ func (client *ExplicitClient) postRequiredArrayPropertyCreateRequest(ctx context
 func (client *ExplicitClient) postRequiredArrayPropertyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -612,7 +612,7 @@ func (client *ExplicitClient) postRequiredClassParameterCreateRequest(ctx contex
 func (client *ExplicitClient) postRequiredClassParameterHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -650,7 +650,7 @@ func (client *ExplicitClient) postRequiredClassPropertyCreateRequest(ctx context
 func (client *ExplicitClient) postRequiredClassPropertyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -689,7 +689,7 @@ func (client *ExplicitClient) postRequiredIntegerHeaderCreateRequest(ctx context
 func (client *ExplicitClient) postRequiredIntegerHeaderHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -726,7 +726,7 @@ func (client *ExplicitClient) postRequiredIntegerParameterCreateRequest(ctx cont
 func (client *ExplicitClient) postRequiredIntegerParameterHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -764,7 +764,7 @@ func (client *ExplicitClient) postRequiredIntegerPropertyCreateRequest(ctx conte
 func (client *ExplicitClient) postRequiredIntegerPropertyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -803,7 +803,7 @@ func (client *ExplicitClient) postRequiredStringHeaderCreateRequest(ctx context.
 func (client *ExplicitClient) postRequiredStringHeaderHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -840,7 +840,7 @@ func (client *ExplicitClient) postRequiredStringParameterCreateRequest(ctx conte
 func (client *ExplicitClient) postRequiredStringParameterHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -878,7 +878,7 @@ func (client *ExplicitClient) postRequiredStringPropertyCreateRequest(ctx contex
 func (client *ExplicitClient) postRequiredStringPropertyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

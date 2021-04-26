@@ -118,7 +118,7 @@ func (client *LROsClient) delete202NoRetry204HandleResponse(resp *azcore.Respons
 func (client *LROsClient) delete202NoRetry204HandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -215,7 +215,7 @@ func (client *LROsClient) delete202Retry200HandleResponse(resp *azcore.Response)
 func (client *LROsClient) delete202Retry200HandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -301,7 +301,7 @@ func (client *LROsClient) delete204SucceededCreateRequest(ctx context.Context, o
 func (client *LROsClient) delete204SucceededHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -389,7 +389,7 @@ func (client *LROsClient) deleteAsyncNoHeaderInRetryCreateRequest(ctx context.Co
 func (client *LROsClient) deleteAsyncNoHeaderInRetryHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -477,7 +477,7 @@ func (client *LROsClient) deleteAsyncNoRetrySucceededCreateRequest(ctx context.C
 func (client *LROsClient) deleteAsyncNoRetrySucceededHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -565,7 +565,7 @@ func (client *LROsClient) deleteAsyncRetryFailedCreateRequest(ctx context.Contex
 func (client *LROsClient) deleteAsyncRetryFailedHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -653,7 +653,7 @@ func (client *LROsClient) deleteAsyncRetrySucceededCreateRequest(ctx context.Con
 func (client *LROsClient) deleteAsyncRetrySucceededHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -741,7 +741,7 @@ func (client *LROsClient) deleteAsyncRetrycanceledCreateRequest(ctx context.Cont
 func (client *LROsClient) deleteAsyncRetrycanceledHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -829,7 +829,7 @@ func (client *LROsClient) deleteNoHeaderInRetryCreateRequest(ctx context.Context
 func (client *LROsClient) deleteNoHeaderInRetryHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -928,7 +928,7 @@ func (client *LROsClient) deleteProvisioning202Accepted200SucceededHandleRespons
 func (client *LROsClient) deleteProvisioning202Accepted200SucceededHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1027,7 +1027,7 @@ func (client *LROsClient) deleteProvisioning202DeletingFailed200HandleResponse(r
 func (client *LROsClient) deleteProvisioning202DeletingFailed200HandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1126,7 +1126,7 @@ func (client *LROsClient) deleteProvisioning202Deletingcanceled200HandleResponse
 func (client *LROsClient) deleteProvisioning202Deletingcanceled200HandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1223,7 +1223,7 @@ func (client *LROsClient) post200WithPayloadHandleResponse(resp *azcore.Response
 func (client *LROsClient) post200WithPayloadHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1320,7 +1320,7 @@ func (client *LROsClient) post202ListHandleResponse(resp *azcore.Response) (Prod
 func (client *LROsClient) post202ListHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1419,7 +1419,7 @@ func (client *LROsClient) post202NoRetry204HandleResponse(resp *azcore.Response)
 func (client *LROsClient) post202NoRetry204HandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1510,7 +1510,7 @@ func (client *LROsClient) post202Retry200CreateRequest(ctx context.Context, opti
 func (client *LROsClient) post202Retry200HandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1612,7 +1612,7 @@ func (client *LROsClient) postAsyncNoRetrySucceededHandleResponse(resp *azcore.R
 func (client *LROsClient) postAsyncNoRetrySucceededHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1705,7 +1705,7 @@ func (client *LROsClient) postAsyncRetryFailedCreateRequest(ctx context.Context,
 func (client *LROsClient) postAsyncRetryFailedHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1807,7 +1807,7 @@ func (client *LROsClient) postAsyncRetrySucceededHandleResponse(resp *azcore.Res
 func (client *LROsClient) postAsyncRetrySucceededHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1900,7 +1900,7 @@ func (client *LROsClient) postAsyncRetrycanceledCreateRequest(ctx context.Contex
 func (client *LROsClient) postAsyncRetrycanceledHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1997,7 +1997,7 @@ func (client *LROsClient) postDoubleHeadersFinalAzureHeaderGetHandleResponse(res
 func (client *LROsClient) postDoubleHeadersFinalAzureHeaderGetHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2096,7 +2096,7 @@ func (client *LROsClient) postDoubleHeadersFinalAzureHeaderGetDefaultHandleRespo
 func (client *LROsClient) postDoubleHeadersFinalAzureHeaderGetDefaultHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2193,7 +2193,7 @@ func (client *LROsClient) postDoubleHeadersFinalLocationGetHandleResponse(resp *
 func (client *LROsClient) postDoubleHeadersFinalLocationGetHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2295,7 +2295,7 @@ func (client *LROsClient) put200Acceptedcanceled200HandleResponse(resp *azcore.R
 func (client *LROsClient) put200Acceptedcanceled200HandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2393,7 +2393,7 @@ func (client *LROsClient) put200SucceededHandleResponse(resp *azcore.Response) (
 func (client *LROsClient) put200SucceededHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2491,7 +2491,7 @@ func (client *LROsClient) put200SucceededNoStateHandleResponse(resp *azcore.Resp
 func (client *LROsClient) put200SucceededNoStateHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2593,7 +2593,7 @@ func (client *LROsClient) put200UpdatingSucceeded204HandleResponse(resp *azcore.
 func (client *LROsClient) put200UpdatingSucceeded204HandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2695,7 +2695,7 @@ func (client *LROsClient) put201CreatingFailed200HandleResponse(resp *azcore.Res
 func (client *LROsClient) put201CreatingFailed200HandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2797,7 +2797,7 @@ func (client *LROsClient) put201CreatingSucceeded200HandleResponse(resp *azcore.
 func (client *LROsClient) put201CreatingSucceeded200HandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2895,7 +2895,7 @@ func (client *LROsClient) put201SucceededHandleResponse(resp *azcore.Response) (
 func (client *LROsClient) put201SucceededHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2995,7 +2995,7 @@ func (client *LROsClient) put202Retry200HandleResponse(resp *azcore.Response) (P
 func (client *LROsClient) put202Retry200HandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -3095,7 +3095,7 @@ func (client *LROsClient) putAsyncNoHeaderInRetryHandleResponse(resp *azcore.Res
 func (client *LROsClient) putAsyncNoHeaderInRetryHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -3197,7 +3197,7 @@ func (client *LROsClient) putAsyncNoRetrySucceededHandleResponse(resp *azcore.Re
 func (client *LROsClient) putAsyncNoRetrySucceededHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -3299,7 +3299,7 @@ func (client *LROsClient) putAsyncNoRetrycanceledHandleResponse(resp *azcore.Res
 func (client *LROsClient) putAsyncNoRetrycanceledHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -3397,7 +3397,7 @@ func (client *LROsClient) putAsyncNonResourceHandleResponse(resp *azcore.Respons
 func (client *LROsClient) putAsyncNonResourceHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -3499,7 +3499,7 @@ func (client *LROsClient) putAsyncRetryFailedHandleResponse(resp *azcore.Respons
 func (client *LROsClient) putAsyncRetryFailedHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -3601,7 +3601,7 @@ func (client *LROsClient) putAsyncRetrySucceededHandleResponse(resp *azcore.Resp
 func (client *LROsClient) putAsyncRetrySucceededHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -3699,7 +3699,7 @@ func (client *LROsClient) putAsyncSubResourceHandleResponse(resp *azcore.Respons
 func (client *LROsClient) putAsyncSubResourceHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -3799,7 +3799,7 @@ func (client *LROsClient) putNoHeaderInRetryHandleResponse(resp *azcore.Response
 func (client *LROsClient) putNoHeaderInRetryHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -3897,7 +3897,7 @@ func (client *LROsClient) putNonResourceHandleResponse(resp *azcore.Response) (S
 func (client *LROsClient) putNonResourceHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -3995,7 +3995,7 @@ func (client *LROsClient) putSubResourceHandleResponse(resp *azcore.Response) (S
 func (client *LROsClient) putSubResourceHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

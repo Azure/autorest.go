@@ -64,7 +64,7 @@ func (client *SubscriptionInMethodClient) postMethodLocalNullCreateRequest(ctx c
 func (client *SubscriptionInMethodClient) postMethodLocalNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -105,7 +105,7 @@ func (client *SubscriptionInMethodClient) postMethodLocalValidCreateRequest(ctx 
 func (client *SubscriptionInMethodClient) postMethodLocalValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -146,7 +146,7 @@ func (client *SubscriptionInMethodClient) postPathLocalValidCreateRequest(ctx co
 func (client *SubscriptionInMethodClient) postPathLocalValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -187,7 +187,7 @@ func (client *SubscriptionInMethodClient) postSwaggerLocalValidCreateRequest(ctx
 func (client *SubscriptionInMethodClient) postSwaggerLocalValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

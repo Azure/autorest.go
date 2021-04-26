@@ -74,7 +74,7 @@ func (client *ParameterGroupingClient) postMultiParamGroupsCreateRequest(ctx con
 func (client *ParameterGroupingClient) postMultiParamGroupsHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -119,7 +119,7 @@ func (client *ParameterGroupingClient) postOptionalCreateRequest(ctx context.Con
 func (client *ParameterGroupingClient) postOptionalHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -168,7 +168,7 @@ func (client *ParameterGroupingClient) postRequiredCreateRequest(ctx context.Con
 func (client *ParameterGroupingClient) postRequiredHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -213,7 +213,7 @@ func (client *ParameterGroupingClient) postSharedParameterGroupObjectCreateReque
 func (client *ParameterGroupingClient) postSharedParameterGroupObjectHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

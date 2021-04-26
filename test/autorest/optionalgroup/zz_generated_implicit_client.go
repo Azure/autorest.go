@@ -68,7 +68,7 @@ func (client *ImplicitClient) getOptionalGlobalQueryCreateRequest(ctx context.Co
 func (client *ImplicitClient) getOptionalGlobalQueryHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -109,7 +109,7 @@ func (client *ImplicitClient) getRequiredGlobalPathCreateRequest(ctx context.Con
 func (client *ImplicitClient) getRequiredGlobalPathHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -149,7 +149,7 @@ func (client *ImplicitClient) getRequiredGlobalQueryCreateRequest(ctx context.Co
 func (client *ImplicitClient) getRequiredGlobalQueryHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -190,7 +190,7 @@ func (client *ImplicitClient) getRequiredPathCreateRequest(ctx context.Context, 
 func (client *ImplicitClient) getRequiredPathHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -230,7 +230,7 @@ func (client *ImplicitClient) putOptionalBodyCreateRequest(ctx context.Context, 
 func (client *ImplicitClient) putOptionalBodyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -270,7 +270,7 @@ func (client *ImplicitClient) putOptionalHeaderCreateRequest(ctx context.Context
 func (client *ImplicitClient) putOptionalHeaderHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -312,7 +312,7 @@ func (client *ImplicitClient) putOptionalQueryCreateRequest(ctx context.Context,
 func (client *ImplicitClient) putOptionalQueryHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

@@ -139,7 +139,7 @@ func (client *VPNConnectionsClient) createOrUpdateHandleResponse(resp *azcore.Re
 func (client *VPNConnectionsClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -244,7 +244,7 @@ func (client *VPNConnectionsClient) deleteCreateRequest(ctx context.Context, res
 func (client *VPNConnectionsClient) deleteHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -309,7 +309,7 @@ func (client *VPNConnectionsClient) getHandleResponse(resp *azcore.Response) (VP
 func (client *VPNConnectionsClient) getHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -370,7 +370,7 @@ func (client *VPNConnectionsClient) listByVPNGatewayHandleResponse(resp *azcore.
 func (client *VPNConnectionsClient) listByVPNGatewayHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

@@ -143,7 +143,7 @@ func (client *ExpressRouteCircuitConnectionsClient) createOrUpdateHandleResponse
 func (client *ExpressRouteCircuitConnectionsClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -252,7 +252,7 @@ func (client *ExpressRouteCircuitConnectionsClient) deleteCreateRequest(ctx cont
 func (client *ExpressRouteCircuitConnectionsClient) deleteHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -321,7 +321,7 @@ func (client *ExpressRouteCircuitConnectionsClient) getHandleResponse(resp *azco
 func (client *ExpressRouteCircuitConnectionsClient) getHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -386,7 +386,7 @@ func (client *ExpressRouteCircuitConnectionsClient) listHandleResponse(resp *azc
 func (client *ExpressRouteCircuitConnectionsClient) listHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

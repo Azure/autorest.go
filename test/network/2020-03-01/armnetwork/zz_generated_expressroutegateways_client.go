@@ -135,7 +135,7 @@ func (client *ExpressRouteGatewaysClient) createOrUpdateHandleResponse(resp *azc
 func (client *ExpressRouteGatewaysClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -238,7 +238,7 @@ func (client *ExpressRouteGatewaysClient) deleteCreateRequest(ctx context.Contex
 func (client *ExpressRouteGatewaysClient) deleteHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -299,7 +299,7 @@ func (client *ExpressRouteGatewaysClient) getHandleResponse(resp *azcore.Respons
 func (client *ExpressRouteGatewaysClient) getHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -356,7 +356,7 @@ func (client *ExpressRouteGatewaysClient) listByResourceGroupHandleResponse(resp
 func (client *ExpressRouteGatewaysClient) listByResourceGroupHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -409,7 +409,7 @@ func (client *ExpressRouteGatewaysClient) listBySubscriptionHandleResponse(resp 
 func (client *ExpressRouteGatewaysClient) listBySubscriptionHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

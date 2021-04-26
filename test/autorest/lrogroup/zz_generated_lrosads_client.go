@@ -107,7 +107,7 @@ func (client *LROSADsClient) delete202NonRetry400CreateRequest(ctx context.Conte
 func (client *LROSADsClient) delete202NonRetry400HandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -195,7 +195,7 @@ func (client *LROSADsClient) delete202RetryInvalidHeaderCreateRequest(ctx contex
 func (client *LROSADsClient) delete202RetryInvalidHeaderHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -281,7 +281,7 @@ func (client *LROSADsClient) delete204SucceededCreateRequest(ctx context.Context
 func (client *LROSADsClient) delete204SucceededHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -369,7 +369,7 @@ func (client *LROSADsClient) deleteAsyncRelativeRetry400CreateRequest(ctx contex
 func (client *LROSADsClient) deleteAsyncRelativeRetry400HandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -457,7 +457,7 @@ func (client *LROSADsClient) deleteAsyncRelativeRetryInvalidHeaderCreateRequest(
 func (client *LROSADsClient) deleteAsyncRelativeRetryInvalidHeaderHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -545,7 +545,7 @@ func (client *LROSADsClient) deleteAsyncRelativeRetryInvalidJSONPollingCreateReq
 func (client *LROSADsClient) deleteAsyncRelativeRetryInvalidJSONPollingHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -633,7 +633,7 @@ func (client *LROSADsClient) deleteAsyncRelativeRetryNoStatusCreateRequest(ctx c
 func (client *LROSADsClient) deleteAsyncRelativeRetryNoStatusHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -719,7 +719,7 @@ func (client *LROSADsClient) deleteNonRetry400CreateRequest(ctx context.Context,
 func (client *LROSADsClient) deleteNonRetry400HandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -808,7 +808,7 @@ func (client *LROSADsClient) post202NoLocationCreateRequest(ctx context.Context,
 func (client *LROSADsClient) post202NoLocationHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -897,7 +897,7 @@ func (client *LROSADsClient) post202NonRetry400CreateRequest(ctx context.Context
 func (client *LROSADsClient) post202NonRetry400HandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -986,7 +986,7 @@ func (client *LROSADsClient) post202RetryInvalidHeaderCreateRequest(ctx context.
 func (client *LROSADsClient) post202RetryInvalidHeaderHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1077,7 +1077,7 @@ func (client *LROSADsClient) postAsyncRelativeRetry400CreateRequest(ctx context.
 func (client *LROSADsClient) postAsyncRelativeRetry400HandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1170,7 +1170,7 @@ func (client *LROSADsClient) postAsyncRelativeRetryInvalidHeaderCreateRequest(ct
 func (client *LROSADsClient) postAsyncRelativeRetryInvalidHeaderHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1263,7 +1263,7 @@ func (client *LROSADsClient) postAsyncRelativeRetryInvalidJSONPollingCreateReque
 func (client *LROSADsClient) postAsyncRelativeRetryInvalidJSONPollingHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1356,7 +1356,7 @@ func (client *LROSADsClient) postAsyncRelativeRetryNoPayloadCreateRequest(ctx co
 func (client *LROSADsClient) postAsyncRelativeRetryNoPayloadHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1445,7 +1445,7 @@ func (client *LROSADsClient) postNonRetry400CreateRequest(ctx context.Context, o
 func (client *LROSADsClient) postNonRetry400HandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1543,7 +1543,7 @@ func (client *LROSADsClient) put200InvalidJSONHandleResponse(resp *azcore.Respon
 func (client *LROSADsClient) put200InvalidJSONHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1643,7 +1643,7 @@ func (client *LROSADsClient) putAsyncRelativeRetry400HandleResponse(resp *azcore
 func (client *LROSADsClient) putAsyncRelativeRetry400HandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1743,7 +1743,7 @@ func (client *LROSADsClient) putAsyncRelativeRetryInvalidHeaderHandleResponse(re
 func (client *LROSADsClient) putAsyncRelativeRetryInvalidHeaderHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1845,7 +1845,7 @@ func (client *LROSADsClient) putAsyncRelativeRetryInvalidJSONPollingHandleRespon
 func (client *LROSADsClient) putAsyncRelativeRetryInvalidJSONPollingHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1947,7 +1947,7 @@ func (client *LROSADsClient) putAsyncRelativeRetryNoStatusHandleResponse(resp *a
 func (client *LROSADsClient) putAsyncRelativeRetryNoStatusHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2049,7 +2049,7 @@ func (client *LROSADsClient) putAsyncRelativeRetryNoStatusPayloadHandleResponse(
 func (client *LROSADsClient) putAsyncRelativeRetryNoStatusPayloadHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2147,7 +2147,7 @@ func (client *LROSADsClient) putError201NoProvisioningStatePayloadHandleResponse
 func (client *LROSADsClient) putError201NoProvisioningStatePayloadHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2245,7 +2245,7 @@ func (client *LROSADsClient) putNonRetry201Creating400HandleResponse(resp *azcor
 func (client *LROSADsClient) putNonRetry201Creating400HandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2344,7 +2344,7 @@ func (client *LROSADsClient) putNonRetry201Creating400InvalidJSONHandleResponse(
 func (client *LROSADsClient) putNonRetry201Creating400InvalidJSONHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2442,7 +2442,7 @@ func (client *LROSADsClient) putNonRetry400HandleResponse(resp *azcore.Response)
 func (client *LROSADsClient) putNonRetry400HandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

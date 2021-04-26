@@ -134,7 +134,7 @@ func (client *TableClient) createHandleResponse(resp *azcore.Response) (interfac
 func (client *TableClient) createHandleError(resp *azcore.Response) error {
 	var err TableServiceError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -201,7 +201,7 @@ func (client *TableClient) deleteHandleResponse(resp *azcore.Response) (TableDel
 func (client *TableClient) deleteHandleError(resp *azcore.Response) error {
 	var err TableServiceError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -286,7 +286,7 @@ func (client *TableClient) deleteEntityHandleResponse(resp *azcore.Response) (Ta
 func (client *TableClient) deleteEntityHandleError(resp *azcore.Response) error {
 	var err TableServiceError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -362,7 +362,7 @@ func (client *TableClient) getAccessPolicyHandleResponse(resp *azcore.Response) 
 func (client *TableClient) getAccessPolicyHandleError(resp *azcore.Response) error {
 	var err TableServiceError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -497,7 +497,7 @@ func (client *TableClient) insertEntityHandleResponse(resp *azcore.Response) (in
 func (client *TableClient) insertEntityHandleError(resp *azcore.Response) error {
 	var err TableServiceError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -590,7 +590,7 @@ func (client *TableClient) mergeEntityHandleResponse(resp *azcore.Response) (Tab
 func (client *TableClient) mergeEntityHandleError(resp *azcore.Response) error {
 	var err TableServiceError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -782,7 +782,7 @@ func (client *TableClient) queryEntitiesHandleResponse(resp *azcore.Response) (T
 func (client *TableClient) queryEntitiesHandleError(resp *azcore.Response) error {
 	var err TableServiceError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -891,7 +891,7 @@ func (client *TableClient) queryEntityWithPartitionAndRowKeyHandleResponse(resp 
 func (client *TableClient) queryEntityWithPartitionAndRowKeyHandleError(resp *azcore.Response) error {
 	var err TableServiceError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -971,7 +971,7 @@ func (client *TableClient) setAccessPolicyHandleResponse(resp *azcore.Response) 
 func (client *TableClient) setAccessPolicyHandleError(resp *azcore.Response) error {
 	var err TableServiceError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1064,7 +1064,7 @@ func (client *TableClient) updateEntityHandleResponse(resp *azcore.Response) (Ta
 func (client *TableClient) updateEntityHandleError(resp *azcore.Response) error {
 	var err TableServiceError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

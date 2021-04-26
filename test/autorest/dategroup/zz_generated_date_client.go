@@ -66,7 +66,7 @@ func (client *DateClient) getInvalidDateHandleResponse(resp *azcore.Response) (T
 func (client *DateClient) getInvalidDateHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -112,7 +112,7 @@ func (client *DateClient) getMaxDateHandleResponse(resp *azcore.Response) (TimeR
 func (client *DateClient) getMaxDateHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -158,7 +158,7 @@ func (client *DateClient) getMinDateHandleResponse(resp *azcore.Response) (TimeR
 func (client *DateClient) getMinDateHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -204,7 +204,7 @@ func (client *DateClient) getNullHandleResponse(resp *azcore.Response) (TimeResp
 func (client *DateClient) getNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -250,7 +250,7 @@ func (client *DateClient) getOverflowDateHandleResponse(resp *azcore.Response) (
 func (client *DateClient) getOverflowDateHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -296,7 +296,7 @@ func (client *DateClient) getUnderflowDateHandleResponse(resp *azcore.Response) 
 func (client *DateClient) getUnderflowDateHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -333,7 +333,7 @@ func (client *DateClient) putMaxDateCreateRequest(ctx context.Context, dateBody 
 func (client *DateClient) putMaxDateHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -370,7 +370,7 @@ func (client *DateClient) putMinDateCreateRequest(ctx context.Context, dateBody 
 func (client *DateClient) putMinDateHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

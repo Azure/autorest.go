@@ -63,7 +63,7 @@ func (client *triggerRunClient) cancelTriggerInstanceCreateRequest(ctx context.C
 func (client *triggerRunClient) cancelTriggerInstanceHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -112,7 +112,7 @@ func (client *triggerRunClient) queryTriggerRunsByWorkspaceHandleResponse(resp *
 func (client *triggerRunClient) queryTriggerRunsByWorkspaceHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -160,7 +160,7 @@ func (client *triggerRunClient) rerunTriggerInstanceCreateRequest(ctx context.Co
 func (client *triggerRunClient) rerunTriggerInstanceHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

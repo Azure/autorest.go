@@ -139,7 +139,7 @@ func (client *ExpressRouteCircuitPeeringsClient) createOrUpdateHandleResponse(re
 func (client *ExpressRouteCircuitPeeringsClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -244,7 +244,7 @@ func (client *ExpressRouteCircuitPeeringsClient) deleteCreateRequest(ctx context
 func (client *ExpressRouteCircuitPeeringsClient) deleteHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -309,7 +309,7 @@ func (client *ExpressRouteCircuitPeeringsClient) getHandleResponse(resp *azcore.
 func (client *ExpressRouteCircuitPeeringsClient) getHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -370,7 +370,7 @@ func (client *ExpressRouteCircuitPeeringsClient) listHandleResponse(resp *azcore
 func (client *ExpressRouteCircuitPeeringsClient) listHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

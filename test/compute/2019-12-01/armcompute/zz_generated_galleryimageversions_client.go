@@ -143,7 +143,7 @@ func (client *GalleryImageVersionsClient) createOrUpdateHandleResponse(resp *azc
 func (client *GalleryImageVersionsClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -252,7 +252,7 @@ func (client *GalleryImageVersionsClient) deleteCreateRequest(ctx context.Contex
 func (client *GalleryImageVersionsClient) deleteHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -324,7 +324,7 @@ func (client *GalleryImageVersionsClient) getHandleResponse(resp *azcore.Respons
 func (client *GalleryImageVersionsClient) getHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -389,7 +389,7 @@ func (client *GalleryImageVersionsClient) listByGalleryImageHandleResponse(resp 
 func (client *GalleryImageVersionsClient) listByGalleryImageHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -507,7 +507,7 @@ func (client *GalleryImageVersionsClient) updateHandleResponse(resp *azcore.Resp
 func (client *GalleryImageVersionsClient) updateHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

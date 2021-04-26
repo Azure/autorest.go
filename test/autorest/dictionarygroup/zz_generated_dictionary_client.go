@@ -66,7 +66,7 @@ func (client *DictionaryClient) getArrayEmptyHandleResponse(resp *azcore.Respons
 func (client *DictionaryClient) getArrayEmptyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -112,7 +112,7 @@ func (client *DictionaryClient) getArrayItemEmptyHandleResponse(resp *azcore.Res
 func (client *DictionaryClient) getArrayItemEmptyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -158,7 +158,7 @@ func (client *DictionaryClient) getArrayItemNullHandleResponse(resp *azcore.Resp
 func (client *DictionaryClient) getArrayItemNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -204,7 +204,7 @@ func (client *DictionaryClient) getArrayNullHandleResponse(resp *azcore.Response
 func (client *DictionaryClient) getArrayNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -250,7 +250,7 @@ func (client *DictionaryClient) getArrayValidHandleResponse(resp *azcore.Respons
 func (client *DictionaryClient) getArrayValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -296,7 +296,7 @@ func (client *DictionaryClient) getBase64URLHandleResponse(resp *azcore.Response
 func (client *DictionaryClient) getBase64URLHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -342,7 +342,7 @@ func (client *DictionaryClient) getBooleanInvalidNullHandleResponse(resp *azcore
 func (client *DictionaryClient) getBooleanInvalidNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -388,7 +388,7 @@ func (client *DictionaryClient) getBooleanInvalidStringHandleResponse(resp *azco
 func (client *DictionaryClient) getBooleanInvalidStringHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -434,7 +434,7 @@ func (client *DictionaryClient) getBooleanTfftHandleResponse(resp *azcore.Respon
 func (client *DictionaryClient) getBooleanTfftHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -480,7 +480,7 @@ func (client *DictionaryClient) getByteInvalidNullHandleResponse(resp *azcore.Re
 func (client *DictionaryClient) getByteInvalidNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -526,7 +526,7 @@ func (client *DictionaryClient) getByteValidHandleResponse(resp *azcore.Response
 func (client *DictionaryClient) getByteValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -572,7 +572,7 @@ func (client *DictionaryClient) getComplexEmptyHandleResponse(resp *azcore.Respo
 func (client *DictionaryClient) getComplexEmptyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -618,7 +618,7 @@ func (client *DictionaryClient) getComplexItemEmptyHandleResponse(resp *azcore.R
 func (client *DictionaryClient) getComplexItemEmptyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -664,7 +664,7 @@ func (client *DictionaryClient) getComplexItemNullHandleResponse(resp *azcore.Re
 func (client *DictionaryClient) getComplexItemNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -710,7 +710,7 @@ func (client *DictionaryClient) getComplexNullHandleResponse(resp *azcore.Respon
 func (client *DictionaryClient) getComplexNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -757,7 +757,7 @@ func (client *DictionaryClient) getComplexValidHandleResponse(resp *azcore.Respo
 func (client *DictionaryClient) getComplexValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -807,7 +807,7 @@ func (client *DictionaryClient) getDateInvalidCharsHandleResponse(resp *azcore.R
 func (client *DictionaryClient) getDateInvalidCharsHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -857,7 +857,7 @@ func (client *DictionaryClient) getDateInvalidNullHandleResponse(resp *azcore.Re
 func (client *DictionaryClient) getDateInvalidNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -907,7 +907,7 @@ func (client *DictionaryClient) getDateTimeInvalidCharsHandleResponse(resp *azco
 func (client *DictionaryClient) getDateTimeInvalidCharsHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -957,7 +957,7 @@ func (client *DictionaryClient) getDateTimeInvalidNullHandleResponse(resp *azcor
 func (client *DictionaryClient) getDateTimeInvalidNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1008,7 +1008,7 @@ func (client *DictionaryClient) getDateTimeRFC1123ValidHandleResponse(resp *azco
 func (client *DictionaryClient) getDateTimeRFC1123ValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1058,7 +1058,7 @@ func (client *DictionaryClient) getDateTimeValidHandleResponse(resp *azcore.Resp
 func (client *DictionaryClient) getDateTimeValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1108,7 +1108,7 @@ func (client *DictionaryClient) getDateValidHandleResponse(resp *azcore.Response
 func (client *DictionaryClient) getDateValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1154,7 +1154,7 @@ func (client *DictionaryClient) getDictionaryEmptyHandleResponse(resp *azcore.Re
 func (client *DictionaryClient) getDictionaryEmptyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1201,7 +1201,7 @@ func (client *DictionaryClient) getDictionaryItemEmptyHandleResponse(resp *azcor
 func (client *DictionaryClient) getDictionaryItemEmptyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1248,7 +1248,7 @@ func (client *DictionaryClient) getDictionaryItemNullHandleResponse(resp *azcore
 func (client *DictionaryClient) getDictionaryItemNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1294,7 +1294,7 @@ func (client *DictionaryClient) getDictionaryNullHandleResponse(resp *azcore.Res
 func (client *DictionaryClient) getDictionaryNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1341,7 +1341,7 @@ func (client *DictionaryClient) getDictionaryValidHandleResponse(resp *azcore.Re
 func (client *DictionaryClient) getDictionaryValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1387,7 +1387,7 @@ func (client *DictionaryClient) getDoubleInvalidNullHandleResponse(resp *azcore.
 func (client *DictionaryClient) getDoubleInvalidNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1433,7 +1433,7 @@ func (client *DictionaryClient) getDoubleInvalidStringHandleResponse(resp *azcor
 func (client *DictionaryClient) getDoubleInvalidStringHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1479,7 +1479,7 @@ func (client *DictionaryClient) getDoubleValidHandleResponse(resp *azcore.Respon
 func (client *DictionaryClient) getDoubleValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1525,7 +1525,7 @@ func (client *DictionaryClient) getDurationValidHandleResponse(resp *azcore.Resp
 func (client *DictionaryClient) getDurationValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1571,7 +1571,7 @@ func (client *DictionaryClient) getEmptyHandleResponse(resp *azcore.Response) (M
 func (client *DictionaryClient) getEmptyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1617,7 +1617,7 @@ func (client *DictionaryClient) getEmptyStringKeyHandleResponse(resp *azcore.Res
 func (client *DictionaryClient) getEmptyStringKeyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1663,7 +1663,7 @@ func (client *DictionaryClient) getFloatInvalidNullHandleResponse(resp *azcore.R
 func (client *DictionaryClient) getFloatInvalidNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1709,7 +1709,7 @@ func (client *DictionaryClient) getFloatInvalidStringHandleResponse(resp *azcore
 func (client *DictionaryClient) getFloatInvalidStringHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1755,7 +1755,7 @@ func (client *DictionaryClient) getFloatValidHandleResponse(resp *azcore.Respons
 func (client *DictionaryClient) getFloatValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1801,7 +1801,7 @@ func (client *DictionaryClient) getIntInvalidNullHandleResponse(resp *azcore.Res
 func (client *DictionaryClient) getIntInvalidNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1847,7 +1847,7 @@ func (client *DictionaryClient) getIntInvalidStringHandleResponse(resp *azcore.R
 func (client *DictionaryClient) getIntInvalidStringHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1893,7 +1893,7 @@ func (client *DictionaryClient) getIntegerValidHandleResponse(resp *azcore.Respo
 func (client *DictionaryClient) getIntegerValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1939,7 +1939,7 @@ func (client *DictionaryClient) getInvalidHandleResponse(resp *azcore.Response) 
 func (client *DictionaryClient) getInvalidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1985,7 +1985,7 @@ func (client *DictionaryClient) getLongInvalidNullHandleResponse(resp *azcore.Re
 func (client *DictionaryClient) getLongInvalidNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2031,7 +2031,7 @@ func (client *DictionaryClient) getLongInvalidStringHandleResponse(resp *azcore.
 func (client *DictionaryClient) getLongInvalidStringHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2077,7 +2077,7 @@ func (client *DictionaryClient) getLongValidHandleResponse(resp *azcore.Response
 func (client *DictionaryClient) getLongValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2123,7 +2123,7 @@ func (client *DictionaryClient) getNullHandleResponse(resp *azcore.Response) (Ma
 func (client *DictionaryClient) getNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2169,7 +2169,7 @@ func (client *DictionaryClient) getNullKeyHandleResponse(resp *azcore.Response) 
 func (client *DictionaryClient) getNullKeyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2215,7 +2215,7 @@ func (client *DictionaryClient) getNullValueHandleResponse(resp *azcore.Response
 func (client *DictionaryClient) getNullValueHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2261,7 +2261,7 @@ func (client *DictionaryClient) getStringValidHandleResponse(resp *azcore.Respon
 func (client *DictionaryClient) getStringValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2307,7 +2307,7 @@ func (client *DictionaryClient) getStringWithInvalidHandleResponse(resp *azcore.
 func (client *DictionaryClient) getStringWithInvalidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2353,7 +2353,7 @@ func (client *DictionaryClient) getStringWithNullHandleResponse(resp *azcore.Res
 func (client *DictionaryClient) getStringWithNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2390,7 +2390,7 @@ func (client *DictionaryClient) putArrayValidCreateRequest(ctx context.Context, 
 func (client *DictionaryClient) putArrayValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2427,7 +2427,7 @@ func (client *DictionaryClient) putBooleanTfftCreateRequest(ctx context.Context,
 func (client *DictionaryClient) putBooleanTfftHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2464,7 +2464,7 @@ func (client *DictionaryClient) putByteValidCreateRequest(ctx context.Context, a
 func (client *DictionaryClient) putByteValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2502,7 +2502,7 @@ func (client *DictionaryClient) putComplexValidCreateRequest(ctx context.Context
 func (client *DictionaryClient) putComplexValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2544,7 +2544,7 @@ func (client *DictionaryClient) putDateTimeRFC1123ValidCreateRequest(ctx context
 func (client *DictionaryClient) putDateTimeRFC1123ValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2585,7 +2585,7 @@ func (client *DictionaryClient) putDateTimeValidCreateRequest(ctx context.Contex
 func (client *DictionaryClient) putDateTimeValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2626,7 +2626,7 @@ func (client *DictionaryClient) putDateValidCreateRequest(ctx context.Context, a
 func (client *DictionaryClient) putDateValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2664,7 +2664,7 @@ func (client *DictionaryClient) putDictionaryValidCreateRequest(ctx context.Cont
 func (client *DictionaryClient) putDictionaryValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2701,7 +2701,7 @@ func (client *DictionaryClient) putDoubleValidCreateRequest(ctx context.Context,
 func (client *DictionaryClient) putDoubleValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2738,7 +2738,7 @@ func (client *DictionaryClient) putDurationValidCreateRequest(ctx context.Contex
 func (client *DictionaryClient) putDurationValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2775,7 +2775,7 @@ func (client *DictionaryClient) putEmptyCreateRequest(ctx context.Context, array
 func (client *DictionaryClient) putEmptyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2812,7 +2812,7 @@ func (client *DictionaryClient) putFloatValidCreateRequest(ctx context.Context, 
 func (client *DictionaryClient) putFloatValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2849,7 +2849,7 @@ func (client *DictionaryClient) putIntegerValidCreateRequest(ctx context.Context
 func (client *DictionaryClient) putIntegerValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2886,7 +2886,7 @@ func (client *DictionaryClient) putLongValidCreateRequest(ctx context.Context, a
 func (client *DictionaryClient) putLongValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2923,7 +2923,7 @@ func (client *DictionaryClient) putStringValidCreateRequest(ctx context.Context,
 func (client *DictionaryClient) putStringValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

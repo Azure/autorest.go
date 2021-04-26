@@ -135,7 +135,7 @@ func (client *DdosCustomPoliciesClient) createOrUpdateHandleResponse(resp *azcor
 func (client *DdosCustomPoliciesClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -236,7 +236,7 @@ func (client *DdosCustomPoliciesClient) deleteCreateRequest(ctx context.Context,
 func (client *DdosCustomPoliciesClient) deleteHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -297,7 +297,7 @@ func (client *DdosCustomPoliciesClient) getHandleResponse(resp *azcore.Response)
 func (client *DdosCustomPoliciesClient) getHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -358,7 +358,7 @@ func (client *DdosCustomPoliciesClient) updateTagsHandleResponse(resp *azcore.Re
 func (client *DdosCustomPoliciesClient) updateTagsHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

@@ -68,7 +68,7 @@ func (client *SubscriptionInCredentialsClient) postMethodGlobalNotProvidedValidC
 func (client *SubscriptionInCredentialsClient) postMethodGlobalNotProvidedValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -110,7 +110,7 @@ func (client *SubscriptionInCredentialsClient) postMethodGlobalNullCreateRequest
 func (client *SubscriptionInCredentialsClient) postMethodGlobalNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -151,7 +151,7 @@ func (client *SubscriptionInCredentialsClient) postMethodGlobalValidCreateReques
 func (client *SubscriptionInCredentialsClient) postMethodGlobalValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -192,7 +192,7 @@ func (client *SubscriptionInCredentialsClient) postPathGlobalValidCreateRequest(
 func (client *SubscriptionInCredentialsClient) postPathGlobalValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -233,7 +233,7 @@ func (client *SubscriptionInCredentialsClient) postSwaggerGlobalValidCreateReque
 func (client *SubscriptionInCredentialsClient) postSwaggerGlobalValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

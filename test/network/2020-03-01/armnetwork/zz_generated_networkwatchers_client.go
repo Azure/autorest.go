@@ -137,7 +137,7 @@ func (client *NetworkWatchersClient) checkConnectivityHandleResponse(resp *azcor
 func (client *NetworkWatchersClient) checkConnectivityHandleError(resp *azcore.Response) error {
 	var err ErrorResponse
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -198,7 +198,7 @@ func (client *NetworkWatchersClient) createOrUpdateHandleResponse(resp *azcore.R
 func (client *NetworkWatchersClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	var err ErrorResponse
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -299,7 +299,7 @@ func (client *NetworkWatchersClient) deleteCreateRequest(ctx context.Context, re
 func (client *NetworkWatchersClient) deleteHandleError(resp *azcore.Response) error {
 	var err ErrorResponse
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -360,7 +360,7 @@ func (client *NetworkWatchersClient) getHandleResponse(resp *azcore.Response) (N
 func (client *NetworkWatchersClient) getHandleError(resp *azcore.Response) error {
 	var err ErrorResponse
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -472,7 +472,7 @@ func (client *NetworkWatchersClient) getAzureReachabilityReportHandleResponse(re
 func (client *NetworkWatchersClient) getAzureReachabilityReportHandleError(resp *azcore.Response) error {
 	var err ErrorResponse
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -582,7 +582,7 @@ func (client *NetworkWatchersClient) getFlowLogStatusHandleResponse(resp *azcore
 func (client *NetworkWatchersClient) getFlowLogStatusHandleError(resp *azcore.Response) error {
 	var err ErrorResponse
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -700,7 +700,7 @@ func (client *NetworkWatchersClient) getNetworkConfigurationDiagnosticHandleResp
 func (client *NetworkWatchersClient) getNetworkConfigurationDiagnosticHandleError(resp *azcore.Response) error {
 	var err ErrorResponse
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -810,7 +810,7 @@ func (client *NetworkWatchersClient) getNextHopHandleResponse(resp *azcore.Respo
 func (client *NetworkWatchersClient) getNextHopHandleError(resp *azcore.Response) error {
 	var err ErrorResponse
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -871,7 +871,7 @@ func (client *NetworkWatchersClient) getTopologyHandleResponse(resp *azcore.Resp
 func (client *NetworkWatchersClient) getTopologyHandleError(resp *azcore.Response) error {
 	var err ErrorResponse
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -981,7 +981,7 @@ func (client *NetworkWatchersClient) getTroubleshootingHandleResponse(resp *azco
 func (client *NetworkWatchersClient) getTroubleshootingHandleError(resp *azcore.Response) error {
 	var err ErrorResponse
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1091,7 +1091,7 @@ func (client *NetworkWatchersClient) getTroubleshootingResultHandleResponse(resp
 func (client *NetworkWatchersClient) getTroubleshootingResultHandleError(resp *azcore.Response) error {
 	var err ErrorResponse
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1201,7 +1201,7 @@ func (client *NetworkWatchersClient) getVMSecurityRulesHandleResponse(resp *azco
 func (client *NetworkWatchersClient) getVMSecurityRulesHandleError(resp *azcore.Response) error {
 	var err ErrorResponse
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1258,7 +1258,7 @@ func (client *NetworkWatchersClient) listHandleResponse(resp *azcore.Response) (
 func (client *NetworkWatchersClient) listHandleError(resp *azcore.Response) error {
 	var err ErrorResponse
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1311,7 +1311,7 @@ func (client *NetworkWatchersClient) listAllHandleResponse(resp *azcore.Response
 func (client *NetworkWatchersClient) listAllHandleError(resp *azcore.Response) error {
 	var err ErrorResponse
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1423,7 +1423,7 @@ func (client *NetworkWatchersClient) listAvailableProvidersHandleResponse(resp *
 func (client *NetworkWatchersClient) listAvailableProvidersHandleError(resp *azcore.Response) error {
 	var err ErrorResponse
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1533,7 +1533,7 @@ func (client *NetworkWatchersClient) setFlowLogConfigurationHandleResponse(resp 
 func (client *NetworkWatchersClient) setFlowLogConfigurationHandleError(resp *azcore.Response) error {
 	var err ErrorResponse
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1594,7 +1594,7 @@ func (client *NetworkWatchersClient) updateTagsHandleResponse(resp *azcore.Respo
 func (client *NetworkWatchersClient) updateTagsHandleError(resp *azcore.Response) error {
 	var err ErrorResponse
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1704,7 +1704,7 @@ func (client *NetworkWatchersClient) verifyIPFlowHandleResponse(resp *azcore.Res
 func (client *NetworkWatchersClient) verifyIPFlowHandleError(resp *azcore.Response) error {
 	var err ErrorResponse
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

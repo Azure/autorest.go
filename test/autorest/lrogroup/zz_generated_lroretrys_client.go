@@ -109,7 +109,7 @@ func (client *LRORetrysClient) delete202Retry200CreateRequest(ctx context.Contex
 func (client *LRORetrysClient) delete202Retry200HandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -197,7 +197,7 @@ func (client *LRORetrysClient) deleteAsyncRelativeRetrySucceededCreateRequest(ct
 func (client *LRORetrysClient) deleteAsyncRelativeRetrySucceededHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -296,7 +296,7 @@ func (client *LRORetrysClient) deleteProvisioning202Accepted200SucceededHandleRe
 func (client *LRORetrysClient) deleteProvisioning202Accepted200SucceededHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -387,7 +387,7 @@ func (client *LRORetrysClient) post202Retry200CreateRequest(ctx context.Context,
 func (client *LRORetrysClient) post202Retry200HandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -480,7 +480,7 @@ func (client *LRORetrysClient) postAsyncRelativeRetrySucceededCreateRequest(ctx 
 func (client *LRORetrysClient) postAsyncRelativeRetrySucceededHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -582,7 +582,7 @@ func (client *LRORetrysClient) put201CreatingSucceeded200HandleResponse(resp *az
 func (client *LRORetrysClient) put201CreatingSucceeded200HandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -684,7 +684,7 @@ func (client *LRORetrysClient) putAsyncRelativeRetrySucceededHandleResponse(resp
 func (client *LRORetrysClient) putAsyncRelativeRetrySucceededHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

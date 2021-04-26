@@ -86,7 +86,7 @@ func (client *PathItemsClient) getAllWithValuesCreateRequest(ctx context.Context
 func (client *PathItemsClient) getAllWithValuesHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -148,7 +148,7 @@ func (client *PathItemsClient) getGlobalAndLocalQueryNullCreateRequest(ctx conte
 func (client *PathItemsClient) getGlobalAndLocalQueryNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -210,7 +210,7 @@ func (client *PathItemsClient) getGlobalQueryNullCreateRequest(ctx context.Conte
 func (client *PathItemsClient) getGlobalQueryNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -272,7 +272,7 @@ func (client *PathItemsClient) getLocalPathItemQueryNullCreateRequest(ctx contex
 func (client *PathItemsClient) getLocalPathItemQueryNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

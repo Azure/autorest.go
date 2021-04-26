@@ -135,7 +135,7 @@ func (client *P2SVPNGatewaysClient) createOrUpdateHandleResponse(resp *azcore.Re
 func (client *P2SVPNGatewaysClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -236,7 +236,7 @@ func (client *P2SVPNGatewaysClient) deleteCreateRequest(ctx context.Context, res
 func (client *P2SVPNGatewaysClient) deleteHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -337,7 +337,7 @@ func (client *P2SVPNGatewaysClient) disconnectP2SVPNConnectionsCreateRequest(ctx
 func (client *P2SVPNGatewaysClient) disconnectP2SVPNConnectionsHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -447,7 +447,7 @@ func (client *P2SVPNGatewaysClient) generateVPNProfileHandleResponse(resp *azcor
 func (client *P2SVPNGatewaysClient) generateVPNProfileHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -508,7 +508,7 @@ func (client *P2SVPNGatewaysClient) getHandleResponse(resp *azcore.Response) (P2
 func (client *P2SVPNGatewaysClient) getHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -618,7 +618,7 @@ func (client *P2SVPNGatewaysClient) getP2SVPNConnectionHealthHandleResponse(resp
 func (client *P2SVPNGatewaysClient) getP2SVPNConnectionHealthHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -730,7 +730,7 @@ func (client *P2SVPNGatewaysClient) getP2SVPNConnectionHealthDetailedHandleRespo
 func (client *P2SVPNGatewaysClient) getP2SVPNConnectionHealthDetailedHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -783,7 +783,7 @@ func (client *P2SVPNGatewaysClient) listHandleResponse(resp *azcore.Response) (L
 func (client *P2SVPNGatewaysClient) listHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -840,7 +840,7 @@ func (client *P2SVPNGatewaysClient) listByResourceGroupHandleResponse(resp *azco
 func (client *P2SVPNGatewaysClient) listByResourceGroupHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -901,7 +901,7 @@ func (client *P2SVPNGatewaysClient) updateTagsHandleResponse(resp *azcore.Respon
 func (client *P2SVPNGatewaysClient) updateTagsHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

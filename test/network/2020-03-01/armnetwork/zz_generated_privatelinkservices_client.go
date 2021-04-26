@@ -131,7 +131,7 @@ func (client *PrivateLinkServicesClient) checkPrivateLinkServiceVisibilityHandle
 func (client *PrivateLinkServicesClient) checkPrivateLinkServiceVisibilityHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -242,7 +242,7 @@ func (client *PrivateLinkServicesClient) checkPrivateLinkServiceVisibilityByReso
 func (client *PrivateLinkServicesClient) checkPrivateLinkServiceVisibilityByResourceGroupHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -352,7 +352,7 @@ func (client *PrivateLinkServicesClient) createOrUpdateHandleResponse(resp *azco
 func (client *PrivateLinkServicesClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -453,7 +453,7 @@ func (client *PrivateLinkServicesClient) deleteCreateRequest(ctx context.Context
 func (client *PrivateLinkServicesClient) deleteHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -558,7 +558,7 @@ func (client *PrivateLinkServicesClient) deletePrivateEndpointConnectionCreateRe
 func (client *PrivateLinkServicesClient) deletePrivateEndpointConnectionHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -622,7 +622,7 @@ func (client *PrivateLinkServicesClient) getHandleResponse(resp *azcore.Response
 func (client *PrivateLinkServicesClient) getHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -690,7 +690,7 @@ func (client *PrivateLinkServicesClient) getPrivateEndpointConnectionHandleRespo
 func (client *PrivateLinkServicesClient) getPrivateEndpointConnectionHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -747,7 +747,7 @@ func (client *PrivateLinkServicesClient) listHandleResponse(resp *azcore.Respons
 func (client *PrivateLinkServicesClient) listHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -805,7 +805,7 @@ func (client *PrivateLinkServicesClient) listAutoApprovedPrivateLinkServicesHand
 func (client *PrivateLinkServicesClient) listAutoApprovedPrivateLinkServicesHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -867,7 +867,7 @@ func (client *PrivateLinkServicesClient) listAutoApprovedPrivateLinkServicesByRe
 func (client *PrivateLinkServicesClient) listAutoApprovedPrivateLinkServicesByResourceGroupHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -920,7 +920,7 @@ func (client *PrivateLinkServicesClient) listBySubscriptionHandleResponse(resp *
 func (client *PrivateLinkServicesClient) listBySubscriptionHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -981,7 +981,7 @@ func (client *PrivateLinkServicesClient) listPrivateEndpointConnectionsHandleRes
 func (client *PrivateLinkServicesClient) listPrivateEndpointConnectionsHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1046,7 +1046,7 @@ func (client *PrivateLinkServicesClient) updatePrivateEndpointConnectionHandleRe
 func (client *PrivateLinkServicesClient) updatePrivateEndpointConnectionHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

@@ -139,7 +139,7 @@ func (client *VirtualRouterPeeringsClient) createOrUpdateHandleResponse(resp *az
 func (client *VirtualRouterPeeringsClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -244,7 +244,7 @@ func (client *VirtualRouterPeeringsClient) deleteCreateRequest(ctx context.Conte
 func (client *VirtualRouterPeeringsClient) deleteHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -309,7 +309,7 @@ func (client *VirtualRouterPeeringsClient) getHandleResponse(resp *azcore.Respon
 func (client *VirtualRouterPeeringsClient) getHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -370,7 +370,7 @@ func (client *VirtualRouterPeeringsClient) listHandleResponse(resp *azcore.Respo
 func (client *VirtualRouterPeeringsClient) listHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

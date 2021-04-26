@@ -119,7 +119,7 @@ func (client *datasetClient) createOrUpdateDatasetHandleResponse(resp *azcore.Re
 func (client *datasetClient) createOrUpdateDatasetHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -210,7 +210,7 @@ func (client *datasetClient) deleteDatasetCreateRequest(ctx context.Context, dat
 func (client *datasetClient) deleteDatasetHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -266,7 +266,7 @@ func (client *datasetClient) getDatasetHandleResponse(resp *azcore.Response) (Da
 func (client *datasetClient) getDatasetHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -315,7 +315,7 @@ func (client *datasetClient) getDatasetsByWorkspaceHandleResponse(resp *azcore.R
 func (client *datasetClient) getDatasetsByWorkspaceHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -406,7 +406,7 @@ func (client *datasetClient) renameDatasetCreateRequest(ctx context.Context, dat
 func (client *datasetClient) renameDatasetHandleError(resp *azcore.Response) error {
 	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

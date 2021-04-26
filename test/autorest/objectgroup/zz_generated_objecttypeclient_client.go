@@ -66,7 +66,7 @@ func (client *ObjectTypeClient) getHandleResponse(resp *azcore.Response) (Interf
 func (client *ObjectTypeClient) getHandleError(resp *azcore.Response) error {
 	var err interface{}
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(fmt.Errorf("%v", err), resp.Response)
 }
@@ -103,7 +103,7 @@ func (client *ObjectTypeClient) putCreateRequest(ctx context.Context, putObject 
 func (client *ObjectTypeClient) putHandleError(resp *azcore.Response) error {
 	var err interface{}
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(fmt.Errorf("%v", err), resp.Response)
 }

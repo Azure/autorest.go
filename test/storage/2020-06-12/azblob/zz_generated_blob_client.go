@@ -91,7 +91,7 @@ func (client *blobClient) abortCopyFromURLHandleResponse(resp *azcore.Response) 
 func (client *blobClient) abortCopyFromURLHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -194,7 +194,7 @@ func (client *blobClient) acquireLeaseHandleResponse(resp *azcore.Response) (Blo
 func (client *blobClient) acquireLeaseHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -299,7 +299,7 @@ func (client *blobClient) breakLeaseHandleResponse(resp *azcore.Response) (BlobB
 func (client *blobClient) breakLeaseHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -398,7 +398,7 @@ func (client *blobClient) changeLeaseHandleResponse(resp *azcore.Response) (Blob
 func (client *blobClient) changeLeaseHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -553,7 +553,7 @@ func (client *blobClient) copyFromURLHandleResponse(resp *azcore.Response) (Blob
 func (client *blobClient) copyFromURLHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -679,7 +679,7 @@ func (client *blobClient) createSnapshotHandleResponse(resp *azcore.Response) (B
 func (client *blobClient) createSnapshotHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -786,7 +786,7 @@ func (client *blobClient) deleteHandleResponse(resp *azcore.Response) (BlobDelet
 func (client *blobClient) deleteHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -854,7 +854,7 @@ func (client *blobClient) deleteImmutabilityPolicyHandleResponse(resp *azcore.Re
 func (client *blobClient) deleteImmutabilityPolicyHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1153,7 +1153,7 @@ func (client *blobClient) downloadHandleResponse(resp *azcore.Response) (BlobDow
 func (client *blobClient) downloadHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1258,7 +1258,7 @@ func (client *blobClient) getAccessControlHandleResponse(resp *azcore.Response) 
 func (client *blobClient) getAccessControlHandleError(resp *azcore.Response) error {
 	var err DataLakeStorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1327,7 +1327,7 @@ func (client *blobClient) getAccountInfoHandleResponse(resp *azcore.Response) (B
 func (client *blobClient) getAccountInfoHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1646,7 +1646,7 @@ func (client *blobClient) getPropertiesHandleResponse(resp *azcore.Response) (Bl
 func (client *blobClient) getPropertiesHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1730,7 +1730,7 @@ func (client *blobClient) getTagsHandleResponse(resp *azcore.Response) (BlobTags
 func (client *blobClient) getTagsHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1961,7 +1961,7 @@ func (client *blobClient) queryHandleResponse(resp *azcore.Response) (BlobQueryR
 func (client *blobClient) queryHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2056,7 +2056,7 @@ func (client *blobClient) releaseLeaseHandleResponse(resp *azcore.Response) (Blo
 func (client *blobClient) releaseLeaseHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2202,7 +2202,7 @@ func (client *blobClient) renameHandleResponse(resp *azcore.Response) (BlobRenam
 func (client *blobClient) renameHandleError(resp *azcore.Response) error {
 	var err DataLakeStorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2300,7 +2300,7 @@ func (client *blobClient) renewLeaseHandleResponse(resp *azcore.Response) (BlobR
 func (client *blobClient) renewLeaseHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2402,7 +2402,7 @@ func (client *blobClient) setAccessControlHandleResponse(resp *azcore.Response) 
 func (client *blobClient) setAccessControlHandleError(resp *azcore.Response) error {
 	var err DataLakeStorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2484,7 +2484,7 @@ func (client *blobClient) setExpiryHandleResponse(resp *azcore.Response) (BlobSe
 func (client *blobClient) setExpiryHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2605,7 +2605,7 @@ func (client *blobClient) setHTTPHeadersHandleResponse(resp *azcore.Response) (B
 func (client *blobClient) setHTTPHeadersHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2692,7 +2692,7 @@ func (client *blobClient) setImmutabilityPolicyHandleResponse(resp *azcore.Respo
 func (client *blobClient) setImmutabilityPolicyHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2768,7 +2768,7 @@ func (client *blobClient) setLegalHoldHandleResponse(resp *azcore.Response) (Blo
 func (client *blobClient) setLegalHoldHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2897,7 +2897,7 @@ func (client *blobClient) setMetadataHandleResponse(resp *azcore.Response) (Blob
 func (client *blobClient) setMetadataHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -2983,7 +2983,7 @@ func (client *blobClient) setTagsHandleResponse(resp *azcore.Response) (BlobSetT
 func (client *blobClient) setTagsHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -3063,7 +3063,7 @@ func (client *blobClient) setTierHandleResponse(resp *azcore.Response) (BlobSetT
 func (client *blobClient) setTierHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -3209,7 +3209,7 @@ func (client *blobClient) startCopyFromURLHandleResponse(resp *azcore.Response) 
 func (client *blobClient) startCopyFromURLHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -3277,7 +3277,7 @@ func (client *blobClient) undeleteHandleResponse(resp *azcore.Response) (BlobUnd
 func (client *blobClient) undeleteHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

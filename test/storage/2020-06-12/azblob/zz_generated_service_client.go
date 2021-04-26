@@ -99,7 +99,7 @@ func (client *serviceClient) filterBlobsHandleResponse(resp *azcore.Response) (F
 func (client *serviceClient) filterBlobsHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -175,7 +175,7 @@ func (client *serviceClient) getAccountInfoHandleResponse(resp *azcore.Response)
 func (client *serviceClient) getAccountInfoHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -242,7 +242,7 @@ func (client *serviceClient) getPropertiesHandleResponse(resp *azcore.Response) 
 func (client *serviceClient) getPropertiesHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -316,7 +316,7 @@ func (client *serviceClient) getStatisticsHandleResponse(resp *azcore.Response) 
 func (client *serviceClient) getStatisticsHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -389,7 +389,7 @@ func (client *serviceClient) getUserDelegationKeyHandleResponse(resp *azcore.Res
 func (client *serviceClient) getUserDelegationKeyHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -466,7 +466,7 @@ func (client *serviceClient) listContainersSegmentHandleResponse(resp *azcore.Re
 func (client *serviceClient) listContainersSegmentHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -529,7 +529,7 @@ func (client *serviceClient) setPropertiesHandleResponse(resp *azcore.Response) 
 func (client *serviceClient) setPropertiesHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -593,7 +593,7 @@ func (client *serviceClient) submitBatchHandleResponse(resp *azcore.Response) (S
 func (client *serviceClient) submitBatchHandleError(resp *azcore.Response) error {
 	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

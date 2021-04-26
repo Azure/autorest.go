@@ -68,7 +68,7 @@ func (client *MultipleInheritanceServiceClient) getCatHandleResponse(resp *azcor
 func (client *MultipleInheritanceServiceClient) getCatHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -114,7 +114,7 @@ func (client *MultipleInheritanceServiceClient) getFelineHandleResponse(resp *az
 func (client *MultipleInheritanceServiceClient) getFelineHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -160,7 +160,7 @@ func (client *MultipleInheritanceServiceClient) getHorseHandleResponse(resp *azc
 func (client *MultipleInheritanceServiceClient) getHorseHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -206,7 +206,7 @@ func (client *MultipleInheritanceServiceClient) getKittenHandleResponse(resp *az
 func (client *MultipleInheritanceServiceClient) getKittenHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -252,7 +252,7 @@ func (client *MultipleInheritanceServiceClient) getPetHandleResponse(resp *azcor
 func (client *MultipleInheritanceServiceClient) getPetHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

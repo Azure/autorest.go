@@ -61,7 +61,7 @@ func (client *APIVersionLocalClient) getMethodLocalNullCreateRequest(ctx context
 func (client *APIVersionLocalClient) getMethodLocalNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -101,7 +101,7 @@ func (client *APIVersionLocalClient) getMethodLocalValidCreateRequest(ctx contex
 func (client *APIVersionLocalClient) getMethodLocalValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -141,7 +141,7 @@ func (client *APIVersionLocalClient) getPathLocalValidCreateRequest(ctx context.
 func (client *APIVersionLocalClient) getPathLocalValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -181,7 +181,7 @@ func (client *APIVersionLocalClient) getSwaggerLocalValidCreateRequest(ctx conte
 func (client *APIVersionLocalClient) getSwaggerLocalValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

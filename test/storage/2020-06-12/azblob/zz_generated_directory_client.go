@@ -143,7 +143,7 @@ func (client *directoryClient) createHandleResponse(resp *azcore.Response) (Dire
 func (client *directoryClient) createHandleError(resp *azcore.Response) error {
 	var err DataLakeStorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -232,7 +232,7 @@ func (client *directoryClient) deleteHandleResponse(resp *azcore.Response) (Dire
 func (client *directoryClient) deleteHandleError(resp *azcore.Response) error {
 	var err DataLakeStorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -337,7 +337,7 @@ func (client *directoryClient) getAccessControlHandleResponse(resp *azcore.Respo
 func (client *directoryClient) getAccessControlHandleError(resp *azcore.Response) error {
 	var err DataLakeStorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -489,7 +489,7 @@ func (client *directoryClient) renameHandleResponse(resp *azcore.Response) (Dire
 func (client *directoryClient) renameHandleError(resp *azcore.Response) error {
 	var err DataLakeStorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -591,7 +591,7 @@ func (client *directoryClient) setAccessControlHandleResponse(resp *azcore.Respo
 func (client *directoryClient) setAccessControlHandleError(resp *azcore.Response) error {
 	var err DataLakeStorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

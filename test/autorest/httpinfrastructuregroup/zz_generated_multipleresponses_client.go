@@ -80,7 +80,7 @@ func (client *MultipleResponsesClient) get200Model201ModelDefaultError200ValidHa
 func (client *MultipleResponsesClient) get200Model201ModelDefaultError200ValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -138,7 +138,7 @@ func (client *MultipleResponsesClient) get200Model201ModelDefaultError201ValidHa
 func (client *MultipleResponsesClient) get200Model201ModelDefaultError201ValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -196,7 +196,7 @@ func (client *MultipleResponsesClient) get200Model201ModelDefaultError400ValidHa
 func (client *MultipleResponsesClient) get200Model201ModelDefaultError400ValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -242,7 +242,7 @@ func (client *MultipleResponsesClient) get200Model204NoModelDefaultError200Valid
 func (client *MultipleResponsesClient) get200Model204NoModelDefaultError200ValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -288,7 +288,7 @@ func (client *MultipleResponsesClient) get200Model204NoModelDefaultError201Inval
 func (client *MultipleResponsesClient) get200Model204NoModelDefaultError201InvalidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -334,7 +334,7 @@ func (client *MultipleResponsesClient) get200Model204NoModelDefaultError202NoneH
 func (client *MultipleResponsesClient) get200Model204NoModelDefaultError202NoneHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -380,7 +380,7 @@ func (client *MultipleResponsesClient) get200Model204NoModelDefaultError204Valid
 func (client *MultipleResponsesClient) get200Model204NoModelDefaultError204ValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -426,7 +426,7 @@ func (client *MultipleResponsesClient) get200Model204NoModelDefaultError400Valid
 func (client *MultipleResponsesClient) get200Model204NoModelDefaultError400ValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -637,7 +637,7 @@ func (client *MultipleResponsesClient) get200ModelA201ModelC404ModelDDefaultErro
 func (client *MultipleResponsesClient) get200ModelA201ModelC404ModelDDefaultError200ValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -701,7 +701,7 @@ func (client *MultipleResponsesClient) get200ModelA201ModelC404ModelDDefaultErro
 func (client *MultipleResponsesClient) get200ModelA201ModelC404ModelDDefaultError201ValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -765,7 +765,7 @@ func (client *MultipleResponsesClient) get200ModelA201ModelC404ModelDDefaultErro
 func (client *MultipleResponsesClient) get200ModelA201ModelC404ModelDDefaultError400ValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -829,7 +829,7 @@ func (client *MultipleResponsesClient) get200ModelA201ModelC404ModelDDefaultErro
 func (client *MultipleResponsesClient) get200ModelA201ModelC404ModelDDefaultError404ValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1062,7 +1062,7 @@ func (client *MultipleResponsesClient) get202None204NoneDefaultError202NoneCreat
 func (client *MultipleResponsesClient) get202None204NoneDefaultError202NoneHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1099,7 +1099,7 @@ func (client *MultipleResponsesClient) get202None204NoneDefaultError204NoneCreat
 func (client *MultipleResponsesClient) get202None204NoneDefaultError204NoneHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1136,7 +1136,7 @@ func (client *MultipleResponsesClient) get202None204NoneDefaultError400ValidCrea
 func (client *MultipleResponsesClient) get202None204NoneDefaultError400ValidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1427,7 +1427,7 @@ func (client *MultipleResponsesClient) getDefaultModelA400NoneCreateRequest(ctx 
 func (client *MultipleResponsesClient) getDefaultModelA400NoneHandleError(resp *azcore.Response) error {
 	var err MyException
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1464,7 +1464,7 @@ func (client *MultipleResponsesClient) getDefaultModelA400ValidCreateRequest(ctx
 func (client *MultipleResponsesClient) getDefaultModelA400ValidHandleError(resp *azcore.Response) error {
 	var err MyException
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

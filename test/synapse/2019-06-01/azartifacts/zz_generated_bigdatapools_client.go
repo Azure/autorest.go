@@ -68,7 +68,7 @@ func (client *bigDataPoolsClient) getHandleResponse(resp *azcore.Response) (BigD
 func (client *bigDataPoolsClient) getHandleError(resp *azcore.Response) error {
 	var err ErrorContract
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -117,7 +117,7 @@ func (client *bigDataPoolsClient) listHandleResponse(resp *azcore.Response) (Big
 func (client *bigDataPoolsClient) listHandleError(resp *azcore.Response) error {
 	var err ErrorContract
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

@@ -68,7 +68,7 @@ func (client *integrationRuntimesClient) getHandleResponse(resp *azcore.Response
 func (client *integrationRuntimesClient) getHandleError(resp *azcore.Response) error {
 	var err ErrorContract
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -117,7 +117,7 @@ func (client *integrationRuntimesClient) listHandleResponse(resp *azcore.Respons
 func (client *integrationRuntimesClient) listHandleError(resp *azcore.Response) error {
 	var err ErrorContract
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

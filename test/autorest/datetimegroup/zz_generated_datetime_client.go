@@ -66,7 +66,7 @@ func (client *DatetimeClient) getInvalidHandleResponse(resp *azcore.Response) (T
 func (client *DatetimeClient) getInvalidHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -112,7 +112,7 @@ func (client *DatetimeClient) getLocalNegativeOffsetLowercaseMaxDateTimeHandleRe
 func (client *DatetimeClient) getLocalNegativeOffsetLowercaseMaxDateTimeHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -158,7 +158,7 @@ func (client *DatetimeClient) getLocalNegativeOffsetMinDateTimeHandleResponse(re
 func (client *DatetimeClient) getLocalNegativeOffsetMinDateTimeHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -204,7 +204,7 @@ func (client *DatetimeClient) getLocalNegativeOffsetUppercaseMaxDateTimeHandleRe
 func (client *DatetimeClient) getLocalNegativeOffsetUppercaseMaxDateTimeHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -250,7 +250,7 @@ func (client *DatetimeClient) getLocalNoOffsetMinDateTimeHandleResponse(resp *az
 func (client *DatetimeClient) getLocalNoOffsetMinDateTimeHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -296,7 +296,7 @@ func (client *DatetimeClient) getLocalPositiveOffsetLowercaseMaxDateTimeHandleRe
 func (client *DatetimeClient) getLocalPositiveOffsetLowercaseMaxDateTimeHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -342,7 +342,7 @@ func (client *DatetimeClient) getLocalPositiveOffsetMinDateTimeHandleResponse(re
 func (client *DatetimeClient) getLocalPositiveOffsetMinDateTimeHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -388,7 +388,7 @@ func (client *DatetimeClient) getLocalPositiveOffsetUppercaseMaxDateTimeHandleRe
 func (client *DatetimeClient) getLocalPositiveOffsetUppercaseMaxDateTimeHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -434,7 +434,7 @@ func (client *DatetimeClient) getNullHandleResponse(resp *azcore.Response) (Time
 func (client *DatetimeClient) getNullHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -480,7 +480,7 @@ func (client *DatetimeClient) getOverflowHandleResponse(resp *azcore.Response) (
 func (client *DatetimeClient) getOverflowHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -526,7 +526,7 @@ func (client *DatetimeClient) getUTCLowercaseMaxDateTimeHandleResponse(resp *azc
 func (client *DatetimeClient) getUTCLowercaseMaxDateTimeHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -572,7 +572,7 @@ func (client *DatetimeClient) getUTCMinDateTimeHandleResponse(resp *azcore.Respo
 func (client *DatetimeClient) getUTCMinDateTimeHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -618,7 +618,7 @@ func (client *DatetimeClient) getUTCUppercaseMaxDateTimeHandleResponse(resp *azc
 func (client *DatetimeClient) getUTCUppercaseMaxDateTimeHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -664,7 +664,7 @@ func (client *DatetimeClient) getUTCUppercaseMaxDateTime7DigitsHandleResponse(re
 func (client *DatetimeClient) getUTCUppercaseMaxDateTime7DigitsHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -710,7 +710,7 @@ func (client *DatetimeClient) getUnderflowHandleResponse(resp *azcore.Response) 
 func (client *DatetimeClient) getUnderflowHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -747,7 +747,7 @@ func (client *DatetimeClient) putLocalNegativeOffsetMaxDateTimeCreateRequest(ctx
 func (client *DatetimeClient) putLocalNegativeOffsetMaxDateTimeHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -784,7 +784,7 @@ func (client *DatetimeClient) putLocalNegativeOffsetMinDateTimeCreateRequest(ctx
 func (client *DatetimeClient) putLocalNegativeOffsetMinDateTimeHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -821,7 +821,7 @@ func (client *DatetimeClient) putLocalPositiveOffsetMaxDateTimeCreateRequest(ctx
 func (client *DatetimeClient) putLocalPositiveOffsetMaxDateTimeHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -858,7 +858,7 @@ func (client *DatetimeClient) putLocalPositiveOffsetMinDateTimeCreateRequest(ctx
 func (client *DatetimeClient) putLocalPositiveOffsetMinDateTimeHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -895,7 +895,7 @@ func (client *DatetimeClient) putUTCMaxDateTimeCreateRequest(ctx context.Context
 func (client *DatetimeClient) putUTCMaxDateTimeHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -932,7 +932,7 @@ func (client *DatetimeClient) putUTCMaxDateTime7DigitsCreateRequest(ctx context.
 func (client *DatetimeClient) putUTCMaxDateTime7DigitsHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -969,7 +969,7 @@ func (client *DatetimeClient) putUTCMinDateTimeCreateRequest(ctx context.Context
 func (client *DatetimeClient) putUTCMinDateTimeHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }

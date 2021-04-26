@@ -59,7 +59,7 @@ func (client *HeaderClient) customRequestIDCreateRequest(ctx context.Context, op
 func (client *HeaderClient) customRequestIDHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -98,7 +98,7 @@ func (client *HeaderClient) paramBoolCreateRequest(ctx context.Context, scenario
 func (client *HeaderClient) paramBoolHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -137,7 +137,7 @@ func (client *HeaderClient) paramByteCreateRequest(ctx context.Context, scenario
 func (client *HeaderClient) paramByteHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -176,7 +176,7 @@ func (client *HeaderClient) paramDateCreateRequest(ctx context.Context, scenario
 func (client *HeaderClient) paramDateHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -215,7 +215,7 @@ func (client *HeaderClient) paramDatetimeCreateRequest(ctx context.Context, scen
 func (client *HeaderClient) paramDatetimeHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -257,7 +257,7 @@ func (client *HeaderClient) paramDatetimeRFC1123CreateRequest(ctx context.Contex
 func (client *HeaderClient) paramDatetimeRFC1123HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -296,7 +296,7 @@ func (client *HeaderClient) paramDoubleCreateRequest(ctx context.Context, scenar
 func (client *HeaderClient) paramDoubleHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -335,7 +335,7 @@ func (client *HeaderClient) paramDurationCreateRequest(ctx context.Context, scen
 func (client *HeaderClient) paramDurationHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -376,7 +376,7 @@ func (client *HeaderClient) paramEnumCreateRequest(ctx context.Context, scenario
 func (client *HeaderClient) paramEnumHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -414,7 +414,7 @@ func (client *HeaderClient) paramExistingKeyCreateRequest(ctx context.Context, u
 func (client *HeaderClient) paramExistingKeyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -453,7 +453,7 @@ func (client *HeaderClient) paramFloatCreateRequest(ctx context.Context, scenari
 func (client *HeaderClient) paramFloatHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -492,7 +492,7 @@ func (client *HeaderClient) paramIntegerCreateRequest(ctx context.Context, scena
 func (client *HeaderClient) paramIntegerHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -531,7 +531,7 @@ func (client *HeaderClient) paramLongCreateRequest(ctx context.Context, scenario
 func (client *HeaderClient) paramLongHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -569,7 +569,7 @@ func (client *HeaderClient) paramProtectedKeyCreateRequest(ctx context.Context, 
 func (client *HeaderClient) paramProtectedKeyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -611,7 +611,7 @@ func (client *HeaderClient) paramStringCreateRequest(ctx context.Context, scenar
 func (client *HeaderClient) paramStringHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -662,7 +662,7 @@ func (client *HeaderClient) responseBoolHandleResponse(resp *azcore.Response) (H
 func (client *HeaderClient) responseBoolHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -713,7 +713,7 @@ func (client *HeaderClient) responseByteHandleResponse(resp *azcore.Response) (H
 func (client *HeaderClient) responseByteHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -764,7 +764,7 @@ func (client *HeaderClient) responseDateHandleResponse(resp *azcore.Response) (H
 func (client *HeaderClient) responseDateHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -815,7 +815,7 @@ func (client *HeaderClient) responseDatetimeHandleResponse(resp *azcore.Response
 func (client *HeaderClient) responseDatetimeHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -866,7 +866,7 @@ func (client *HeaderClient) responseDatetimeRFC1123HandleResponse(resp *azcore.R
 func (client *HeaderClient) responseDatetimeRFC1123HandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -917,7 +917,7 @@ func (client *HeaderClient) responseDoubleHandleResponse(resp *azcore.Response) 
 func (client *HeaderClient) responseDoubleHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -964,7 +964,7 @@ func (client *HeaderClient) responseDurationHandleResponse(resp *azcore.Response
 func (client *HeaderClient) responseDurationHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1011,7 +1011,7 @@ func (client *HeaderClient) responseEnumHandleResponse(resp *azcore.Response) (H
 func (client *HeaderClient) responseEnumHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1057,7 +1057,7 @@ func (client *HeaderClient) responseExistingKeyHandleResponse(resp *azcore.Respo
 func (client *HeaderClient) responseExistingKeyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1109,7 +1109,7 @@ func (client *HeaderClient) responseFloatHandleResponse(resp *azcore.Response) (
 func (client *HeaderClient) responseFloatHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1161,7 +1161,7 @@ func (client *HeaderClient) responseIntegerHandleResponse(resp *azcore.Response)
 func (client *HeaderClient) responseIntegerHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1212,7 +1212,7 @@ func (client *HeaderClient) responseLongHandleResponse(resp *azcore.Response) (H
 func (client *HeaderClient) responseLongHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1258,7 +1258,7 @@ func (client *HeaderClient) responseProtectedKeyHandleResponse(resp *azcore.Resp
 func (client *HeaderClient) responseProtectedKeyHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
@@ -1305,7 +1305,7 @@ func (client *HeaderClient) responseStringHandleResponse(resp *azcore.Response) 
 func (client *HeaderClient) responseStringHandleError(resp *azcore.Response) error {
 	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
+		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
 	}
 	return azcore.NewResponseError(&err, resp.Response)
 }
