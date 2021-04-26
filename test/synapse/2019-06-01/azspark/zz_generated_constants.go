@@ -32,7 +32,7 @@ func PossiblePluginCurrentStateValues() []PluginCurrentState {
 	}
 }
 
-// ToPtr() returns a *PluginCurrentState pointing to the current value.
+// ToPtr returns a *PluginCurrentState pointing to the current value.
 func (c PluginCurrentState) ToPtr() *PluginCurrentState {
 	return &c
 }
@@ -54,7 +54,7 @@ func PossibleSchedulerCurrentStateValues() []SchedulerCurrentState {
 	}
 }
 
-// ToPtr() returns a *SchedulerCurrentState pointing to the current value.
+// ToPtr returns a *SchedulerCurrentState pointing to the current value.
 func (c SchedulerCurrentState) ToPtr() *SchedulerCurrentState {
 	return &c
 }
@@ -79,7 +79,7 @@ func PossibleSparkBatchJobResultTypeValues() []SparkBatchJobResultType {
 	}
 }
 
-// ToPtr() returns a *SparkBatchJobResultType pointing to the current value.
+// ToPtr returns a *SparkBatchJobResultType pointing to the current value.
 func (c SparkBatchJobResultType) ToPtr() *SparkBatchJobResultType {
 	return &c
 }
@@ -103,7 +103,7 @@ func PossibleSparkErrorSourceValues() []SparkErrorSource {
 	}
 }
 
-// ToPtr() returns a *SparkErrorSource pointing to the current value.
+// ToPtr returns a *SparkErrorSource pointing to the current value.
 func (c SparkErrorSource) ToPtr() *SparkErrorSource {
 	return &c
 }
@@ -124,7 +124,7 @@ func PossibleSparkJobTypeValues() []SparkJobType {
 	}
 }
 
-// ToPtr() returns a *SparkJobType pointing to the current value.
+// ToPtr returns a *SparkJobType pointing to the current value.
 func (c SparkJobType) ToPtr() *SparkJobType {
 	return &c
 }
@@ -148,7 +148,7 @@ func PossibleSparkSessionResultTypeValues() []SparkSessionResultType {
 	}
 }
 
-// ToPtr() returns a *SparkSessionResultType pointing to the current value.
+// ToPtr returns a *SparkSessionResultType pointing to the current value.
 func (c SparkSessionResultType) ToPtr() *SparkSessionResultType {
 	return &c
 }
@@ -172,7 +172,7 @@ func PossibleSparkStatementLanguageTypeValues() []SparkStatementLanguageType {
 	}
 }
 
-// ToPtr() returns a *SparkStatementLanguageType pointing to the current value.
+// ToPtr returns a *SparkStatementLanguageType pointing to the current value.
 func (c SparkStatementLanguageType) ToPtr() *SparkStatementLanguageType {
 	return &c
 }
