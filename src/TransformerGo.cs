@@ -353,10 +353,10 @@ namespace AutoRest.Go
         private static void FixStutteringTypeNames(CodeModelGo cmg)
         {
             // Trim the package name from exported types; append a suitable qualifier, if needed, to avoid conflicts.
-            var exportedTypes = new HashSet<object>();
-            exportedTypes.UnionWith(cmg.EnumTypes);
-            exportedTypes.UnionWith(cmg.Methods);
-            exportedTypes.UnionWith(cmg.ModelTypes);
+            var exportedTypes = new List<object>();
+            exportedTypes.AddRange(cmg.EnumTypes);
+            exportedTypes.AddRange(cmg.Methods);
+            exportedTypes.AddRange(cmg.ModelTypes);
 
             var stutteringTypes = exportedTypes
                                     .Where(exported =>
@@ -374,7 +374,7 @@ namespace AutoRest.Go
                         name = name.Value.TrimPackageName(cmg.Namespace);
 
                         var nameInUse = exportedTypes
-                                            .Any(et => (et is IModelType modeltype && modeltype.Name.Equals(name)) || (et is Method methodType && methodType.Name.Equals(name)));
+                                            .Any(et => (et is IModelType modelType && modelType.Name.Equals(name)) || (et is Method methodType && methodType.Name.Equals(name)));
                         if (exported is EnumType enumType)
                         {
                             enumType.Name.Value = CodeNamerGo.AttachTypeName(name, cmg.Namespace, nameInUse, "Enum");
