@@ -49,7 +49,7 @@ func TestValidationValidationOfBody(t *testing.T) {
 	client := newAutoRestValidationTestClient()
 	result, err := client.ValidationOfBody(context.Background(), "123", 150, &AutoRestValidationTestValidationOfBodyOptions{
 		Body: &Product{
-			DisplayNames: &[]*string{
+			DisplayNames: []*string{
 				to.StringPtr("displayname1"),
 				to.StringPtr("displayname2"),
 				to.StringPtr("displayname3"),

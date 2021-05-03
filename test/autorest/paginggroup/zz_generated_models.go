@@ -9,7 +9,10 @@ package paginggroup
 
 import (
 	"context"
+	"encoding/json"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
+	"reflect"
 	"time"
 )
 
@@ -22,8 +25,16 @@ type CustomParameterGroup struct {
 }
 
 type OdataProductResult struct {
-	OdataNextLink *string     `json:"odata.nextLink,omitempty"`
-	Values        *[]*Product `json:"values,omitempty"`
+	OdataNextLink *string    `json:"odata.nextLink,omitempty"`
+	Values        []*Product `json:"values,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type OdataProductResult.
+func (o OdataProductResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "odata.nextLink", o.OdataNextLink)
+	populate(objectMap, "values", o.Values)
+	return json.Marshal(objectMap)
 }
 
 // OdataProductResultResponse is the response envelope for operations that return a OdataProductResult type.
@@ -149,8 +160,16 @@ type ProductProperties struct {
 }
 
 type ProductResult struct {
-	NextLink *string     `json:"nextLink,omitempty"`
-	Values   *[]*Product `json:"values,omitempty"`
+	NextLink *string    `json:"nextLink,omitempty"`
+	Values   []*Product `json:"values,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ProductResult.
+func (p ProductResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", p.NextLink)
+	populate(objectMap, "values", p.Values)
+	return json.Marshal(objectMap)
 }
 
 // ProductResultPagerPollerResponse is the response envelope for operations that asynchronously return a ProductResultPager type.
@@ -174,8 +193,16 @@ type ProductResultResponse struct {
 }
 
 type ProductResultValue struct {
-	NextLink *string     `json:"nextLink,omitempty"`
-	Value    *[]*Product `json:"value,omitempty"`
+	NextLink *string    `json:"nextLink,omitempty"`
+	Value    []*Product `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ProductResultValue.
+func (p ProductResultValue) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", p.NextLink)
+	populate(objectMap, "value", p.Value)
+	return json.Marshal(objectMap)
 }
 
 // ProductResultValueResponse is the response envelope for operations that return a ProductResultValue type.
@@ -187,8 +214,16 @@ type ProductResultValueResponse struct {
 }
 
 type ProductResultValueWithXMSClientName struct {
-	Indexes  *[]*Product `json:"values,omitempty"`
-	NextLink *string     `json:"nextLink,omitempty"`
+	Indexes  []*Product `json:"values,omitempty"`
+	NextLink *string    `json:"nextLink,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ProductResultValueWithXMSClientName.
+func (p ProductResultValueWithXMSClientName) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "values", p.Indexes)
+	populate(objectMap, "nextLink", p.NextLink)
+	return json.Marshal(objectMap)
 }
 
 // ProductResultValueWithXMSClientNameResponse is the response envelope for operations that return a ProductResultValueWithXMSClientName type.
@@ -197,4 +232,14 @@ type ProductResultValueWithXMSClientNameResponse struct {
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+func populate(m map[string]interface{}, k string, v interface{}) {
+	if v == nil {
+		return
+	} else if azcore.IsNullValue(v) {
+		m[k] = nil
+	} else if !reflect.ValueOf(v).IsNil() {
+		m[k] = v
+	}
 }

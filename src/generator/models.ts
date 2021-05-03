@@ -7,7 +7,7 @@ import { Session } from '@autorest/extension-base';
 import { comment } from '@azure-tools/codegen';
 import { CodeModel, ComplexSchema, ConstantSchema, DictionarySchema, GroupProperty, ImplementationLocation, ObjectSchema, Language, Schema, SchemaType, Parameter, Property } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
-import { isArraySchema, isObjectSchema, getRelationship, hasAdditionalProperties, hasPolymorphicField, commentLength } from '../common/helpers';
+import { isArraySchema, isObjectSchema, hasAdditionalProperties, hasPolymorphicField, commentLength } from '../common/helpers';
 import { contentPreamble, elementByValueForParam, hasDescription, sortAscending, substituteDiscriminator } from './helpers';
 import { ImportManager } from './imports';
 
@@ -154,48 +154,7 @@ class StructDef {
       if (this.Language.marshallingFormat === 'json') {
         serialization += ',omitempty';
       } else if (this.Language.marshallingFormat === 'xml') {
-        // default to using the serialization name
-        if (prop.schema.serialization?.xml?.name) {
-          // xml can specifiy its own name, prefer that if available
-          serialization = prop.schema.serialization.xml.name;
-        }
-        if (prop.schema.serialization?.xml?.attribute) {
-          // value comes from an xml attribute
-          serialization += ',attr';
-        } else if (isArraySchema(prop.schema)) {
-          // start with the serialized name of the element, preferring xml name if available
-          let inner = prop.schema.elementType.language.go!.name;
-          if (prop.schema.elementType.serialization?.xml?.name) {
-            inner = prop.schema.elementType.serialization.xml.name;
-          }
-          // arrays can be wrapped or unwrapped.  here's a wrapped example
-          // note how the array of apple objects is "wrapped" in GoodApples
-          // <AppleBarrel>
-          //   <GoodApples>
-          //     <Apple>Fuji</Apple>
-          //     <Apple>Gala</Apple>
-          //   </GoodApples>
-          // </AppleBarrel>
-
-          // here's an unwrapped example, the array of slide objects
-          // is embedded directly in the object (no "wrapping")
-          // <slideshow>
-          //   <slide>
-          //     <title>Wake up to WonderWidgets!</title>
-          //   </slide>
-          //   <slide>
-          //     <title>Overview</title>
-          //   </slide>
-          // </slideshow>
-
-          // arrays in the response type are handled slightly different as we
-          // unmarshal directly into them so no need to add the unwrapping.
-          if (prop.schema.serialization?.xml?.wrapped && this.Language.responseType !== true) {
-            serialization += `>${inner}`;
-          } else {
-            serialization = inner;
-          }
-        }
+        serialization = getXMLSerialization(prop, this.Language);
       }
       let readOnly = '';
       if (prop.readOnly) {
@@ -261,6 +220,53 @@ class StructDef {
   }
 }
 
+function getXMLSerialization(prop: Property, lang: Language): string {
+  let serialization = prop.serializedName;
+  // default to using the serialization name
+  if (prop.schema.serialization?.xml?.name) {
+    // xml can specifiy its own name, prefer that if available
+    serialization = prop.schema.serialization.xml.name;
+  }
+  if (prop.schema.serialization?.xml?.attribute) {
+    // value comes from an xml attribute
+    serialization += ',attr';
+  } else if (isArraySchema(prop.schema)) {
+    // start with the serialized name of the element, preferring xml name if available
+    let inner = prop.schema.elementType.language.go!.name;
+    if (prop.schema.elementType.serialization?.xml?.name) {
+      inner = prop.schema.elementType.serialization.xml.name;
+    }
+    // arrays can be wrapped or unwrapped.  here's a wrapped example
+    // note how the array of apple objects is "wrapped" in GoodApples
+    // <AppleBarrel>
+    //   <GoodApples>
+    //     <Apple>Fuji</Apple>
+    //     <Apple>Gala</Apple>
+    //   </GoodApples>
+    // </AppleBarrel>
+
+    // here's an unwrapped example, the array of slide objects
+    // is embedded directly in the object (no "wrapping")
+    // <slideshow>
+    //   <slide>
+    //     <title>Wake up to WonderWidgets!</title>
+    //   </slide>
+    //   <slide>
+    //     <title>Overview</title>
+    //   </slide>
+    // </slideshow>
+
+    // arrays in the response type are handled slightly different as we
+    // unmarshal directly into them so no need to add the unwrapping.
+    if (prop.schema.serialization?.xml?.wrapped && lang.responseType !== true) {
+      serialization += `>${inner}`;
+    } else {
+      serialization = inner;
+    }
+  }
+  return serialization;
+}
+
 function generateStructs(imports: ImportManager, objects?: ObjectSchema[]): StructDef[] {
   const structTypes = new Array<StructDef>();
   for (const obj of values(objects)) {
@@ -288,7 +294,7 @@ function generateStructs(imports: ImportManager, objects?: ObjectSchema[]): Stru
     }
     if (obj.language.go!.marshallingFormat === 'xml') {
       // due to differences in XML marshallers/unmarshallers, we use different codegen than for JSON
-      if (obj.language.go!.needsDateTimeMarshalling || obj.language.go!.xmlWrapperName) {
+      if (obj.language.go!.needsDateTimeMarshalling || obj.language.go!.xmlWrapperName || needsXMLArrayMarshalling(obj)) {
         generateXMLMarshaller(structDef);
         if (obj.language.go!.needsDateTimeMarshalling) {
           generateXMLUnmarshaller(structDef);
@@ -299,87 +305,24 @@ function generateStructs(imports: ImportManager, objects?: ObjectSchema[]): Stru
       structTypes.push(structDef);
       continue;
     }
-    // track which marshallers and unmarshallers we need to generate
-    let needsIntM, needsIntU = false;
-    let needsM, needsU = false;
-    const relationship = getRelationship(obj);
     if (obj.discriminator) {
       // only need to generate interface method and internal marshaller for discriminators (Fish, Salmon, Shark)
       generateDiscriminatorMarkerMethod(obj, structDef);
-      needsIntM = needsIntU = needsU = true;
-      // the root type doesn't get a marshaller as callers don't instantiate instances of it
-      if (!obj.language.go!.rootDiscriminator) {
-        needsM = true;
-      }
-    } else if (obj.discriminatorValue) {
-      // this is a leaf node in a discriminated type hierarchy
-      // this check must come before hasRelationship() which is for non-discriminated type inheritence cases
-      needsM = needsU = true;
-    } else if (relationship !== 'none') {
-      // always need M and U for time/additional properties
-      if (obj.language.go!.needsDateTimeMarshalling || hasAdditionalProperties(obj)) {
-        needsM = needsU = true;
-        if (relationship === 'root') {
-          // children will depend on these
-          needsIntM = needsIntU = true;
-        }
-      }
-      // if any type in a hierarchy requires custom marshalling then all types in it will require it.
-      // the only slight exception is the leaf child, it won't need the internal marshaller or unmarshaller.
-      // this case is to handle inheritence for non-discriminated types.
-      if (relationship === 'leaf') {
-        const marshallerType = recursiveWalkObjs(obj, true);
-        if (marshallerType === 1) {
-          needsM = true;
-        } else if (marshallerType > 1) {
-          needsM = needsU = true;
-        }
-      } else if (relationship === 'parent') {
-        const pMarshallerType = recursiveWalkObjs(obj, true);
-        const cMrshallerType = recursiveWalkObjs(obj, false);
-        if (pMarshallerType === 1 || cMrshallerType === 1) {
-          needsM = needsIntM = true;
-        } else if (pMarshallerType > 1 || cMrshallerType > 1) {
-          needsM = needsU = needsIntM = needsIntU = true;
-        }
-      } else {
-        const marshallerType = recursiveWalkObjs(obj, false);
-        if (marshallerType === 1) {
-          needsIntM = true;
-        } else if (marshallerType > 1) {
-          needsIntM = needsIntU = true;
-        }
-      }
-    } else if (obj.language.go!.needsDateTimeMarshalling || hasAdditionalProperties(obj) || obj.language.go!.needsDateMarshalling) {
-      // singular type not in any hierarchy
-      needsM = needsU = true;
-    } else if (hasPolymorphicField(obj)) {
-      // singular type not in any hierarchy
-      needsU = true;
     }
-    // we check needsPatchMarshaller separately from other
-    // states since it's not mutually exclusive with them.
-    // be sure to skip this for root discriminators.
-    if (obj.language.go!.needsPatchMarshaller === true && !obj.language.go!.rootDiscriminator) {
-      needsM = true;
-      if (relationship === 'root' || relationship === 'parent') {
-        // the type has child types so generate the internal marshaller
-        needsIntM = true;
-      }
-    }
-    if (needsIntM) {
+    const needs = determineMarshallers(obj);
+    if (needs.intM) {
       generateInternalMarshaller(obj, structDef, parentType);
     }
-    if (needsIntU) {
+    if (needs.intU) {
       generateInternalUnmarshaller(obj, structDef, parentType);
     }
-    if (needsM) {
+    if (needs.M) {
       imports.add('reflect');
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
       structDef.HasJSONMarshaller = true;
       generateJSONMarshaller(imports, obj, structDef, parentType);
     }
-    if (needsU) {
+    if (needs.U) {
       structDef.HasJSONUnmarshaller = true;
       generateJSONUnmarshaller(imports, obj, structDef, parentType);
     }
@@ -388,35 +331,150 @@ function generateStructs(imports: ImportManager, objects?: ObjectSchema[]): Stru
   return structTypes;
 }
 
-// returns 0 if no nodes in the hierarchy require custom marshalling/unmarshalling.
-// returns 1 if only custom marshalling is required.
-// returns greater than 1 if custom marshalling and unmarshalling is required.
-function recursiveWalkObjs(obj: ObjectSchema, parents: boolean): number {
-  let result = 0;
+interface Marshallers {
+  intM: boolean
+  intU: boolean
+  M: boolean
+  U: boolean
+}
+
+function mergeMarshallers(lhs: Marshallers, rhs: Marshallers): Marshallers {
+  return {
+    intM: lhs.intM || rhs.intM,
+    intU: lhs.intU || rhs.intU,
+    M: lhs.M || rhs.M,
+    U: lhs.U || rhs.U
+  }
+}
+
+// determines the marshallers need for the specified object.
+// it examines the complete inheritance graph to make the determination.
+function determineMarshallers(obj: ObjectSchema): Marshallers {
+  // things that require internal marshallers and/or unmarshallers:
+  //   inheritance
+  //   discriminated types
+
+  const parents = recursiveDetermineMarshallers(obj, true);
+  const children = recursiveDetermineMarshallers(obj, false);
+  return mergeMarshallers(parents, children);
+}
+
+// determines the marshallers needed for this specific object.
+// it does not look at the object graph or consider inheritance.
+function determineMarshallersForObj(obj: ObjectSchema): Marshallers {
+  // things that require custom marshalling and/or unmarshalling:
+  //   needsDateTimeMarshalling M, U
+  //   needsDateMarshalling     M, U
+  //   hasAdditionalProperties  M, U
+  //   hasPolymorphicField      M, U
+  //   discriminatorValue       M, U
+  //   hasArrayMap              M
+  //   needsPatchMarshaller     M
+
+  let needsM = false, needsU = false;
+  if (obj.language.go!.needsDateTimeMarshalling ||
+    obj.language.go!.needsDateMarshalling ||
+    hasAdditionalProperties(obj) ||
+    hasPolymorphicField(obj) ||
+    obj.discriminatorValue) {
+    needsM = needsU = true;
+  } else if (obj.language.go!.hasArrayMap ||
+    obj.language.go!.needsPatchMarshaller) {
+    needsM = true;
+  }
+  return {
+    intM: false,
+    intU: false,
+    M: needsM,
+    U: needsU,
+  }
+}
+
+// walks the inheritance graph of obj to determine marshallers.
+// when parents is true, the parents are walked, else the children.
+function recursiveDetermineMarshallers(obj: ObjectSchema, parents: boolean): Marshallers {
   let cs: ComplexSchema[] | undefined;
   if (parents) {
     cs = obj.parents?.immediate;
   } else {
     cs = obj.children?.immediate;
   }
+
+  // first check ourselves
+  let result = determineMarshallersForObj(obj);
+
+  // we must include any siblings in the calculation.  if one sibling
+  // requires custom marshallers then they all need them.  consider the
+  // following example (taken from body-complex.json)
+  //   Pet -> Cat
+  //   Pet -> Dog
+  // Cat requires a custom marshaller, so one will be added to Pet too.
+  // Dog does not require a custom marshaller, however if we don't give
+  // it one, it will inherit the one from Pet, causing Dog's fields to
+  // be omitted from the payload.
+  if (obj.parents) {
+    let parent: ObjectSchema | undefined;
+    for (const cs of values(<ComplexSchema[]>obj.parents.immediate)) {
+      if (!isObjectSchema(cs)) {
+        continue;
+      }
+      parent = cs;
+      break;
+    }
+    for (const sibling of values(parent?.children?.immediate)) {
+      if (!isObjectSchema(sibling)) {
+        continue;
+      }
+      const sibres = determineMarshallersForObj(sibling);
+      result = mergeMarshallers(result, sibres);
+    }
+  }
+
+  // now check children/parents
   for (const c of values(cs)) {
     if (!isObjectSchema(c)) {
       continue;
     }
-    if (c.language.go!.needsPatchMarshaller === true) {
-      result = 1;
+    // if we already know we need all kinds don't bother to keep walking the hierarchy
+    if (!result.M || !result.U || !result.intM || !result.intU) {
+      const other = recursiveDetermineMarshallers(c, parents);
+      result = mergeMarshallers(result, other);
     }
-    if (c.language.go!.needsDateTimeMarshalling || hasAdditionalProperties(c) || hasPolymorphicField(c) || c.discriminator || c.discriminatorValue) {
-      result = 2;
-    }
-    result |= recursiveWalkObjs(c, parents);
   }
+
+  // finally, understand our place in the hierarchy
+  if (obj.children && obj.parents) {
+    // parent needs both
+    result.intM = result.M;
+    result.intU = result.U;
+  } else if (obj.children) {
+    // root also needs both
+    result.intM = result.M;
+    result.intU = result.U;
+  } else if (obj.parents) {
+    // leaf requires no internal marshallers
+    result.intM = result.intU = false;
+  }
+  // the root type doesn't get a marshaller as callers don't instantiate instances of it
+  if (obj.language.go!.rootDiscriminator) {
+    result.M = false;
+  }
+
   return result;
 }
 
 function needsXMLDictionaryUnmarshalling(obj: ObjectSchema): boolean {
   for (const prop of values(obj.properties)) {
     if (prop.language.go!.needsXMLDictionaryUnmarshalling) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function needsXMLArrayMarshalling(obj: ObjectSchema): boolean {
+  for (const prop of values(obj.properties)) {
+    if (prop.language.go!.needsXMLArrayMarshalling) {
       return true;
     }
   }
@@ -538,7 +596,7 @@ function generateInternalMarshaller(obj: ObjectSchema, structDef: StructDef, par
   }
   if (hasAdditionalProperties(obj)) {
     marshalInteral += `\tif ${receiver}.AdditionalProperties != nil {\n`;
-    marshalInteral += `\t\tfor key, val := range *${receiver}.AdditionalProperties {\n`;
+    marshalInteral += `\t\tfor key, val := range ${receiver}.AdditionalProperties {\n`;
     marshalInteral += '\t\t\tobjectMap[key] = val\n';
     marshalInteral += '\t\t}\n';;
     marshalInteral += '\t}\n';
@@ -597,7 +655,7 @@ function generateJSONMarshaller(imports: ImportManager, obj: ObjectSchema, struc
     }
     if (hasAdditionalProperties(obj)) {
       marshaller += `\tif ${receiver}.AdditionalProperties != nil {\n`;
-      marshaller += `\t\tfor key, val := range *${receiver}.AdditionalProperties {\n`;
+      marshaller += `\t\tfor key, val := range ${receiver}.AdditionalProperties {\n`;
       marshaller += '\t\t\tobjectMap[key] = val\n';
       marshaller += '\t\t}\n';;
       marshaller += '\t}\n';
@@ -622,7 +680,8 @@ function generateJSONUnmarshaller(imports: ImportManager, obj: ObjectSchema, str
   unmarshaller += '\tif err := json.Unmarshal(data, &rawMsg); err != nil {\n';
   unmarshaller += '\t\treturn err\n';
   unmarshaller += '\t}\n';
-  if (obj.language.go!.errorType || obj.language.go!.inheritedErrorType) {
+  // the raw field won't exist on parents of the errorType
+  if (obj.language.go!.errorType || obj.language.go!.inheritedErrorType === 'child') {
     unmarshaller += `\t${receiver}.raw = string(data)\n`;
   }
   if (obj.discriminator || obj.children?.immediate && isObjectSchema(obj.children.immediate[0])) {
@@ -644,12 +703,12 @@ function generateJSONUnmarshallerBody(obj: ObjectSchema, structDef: StructDef, p
       ptr = '*';
       ref = '&';
     }
-    addlPropsText += `${tab}\t\t\t${receiver}.AdditionalProperties = &map[string]${ptr}${addlProps.elementType.language.go!.name}{}\n`;
+    addlPropsText += `${tab}\t\t\t${receiver}.AdditionalProperties = map[string]${ptr}${addlProps.elementType.language.go!.name}{}\n`;
     addlPropsText += `${tab}\t\t}\n`;
     addlPropsText += `${tab}\t\tif val != nil {\n`;
     addlPropsText += `${tab}\t\t\tvar aux ${addlProps.elementType.language.go!.name}\n`;
     addlPropsText += `${tab}\t\t\terr = json.Unmarshal(val, &aux)\n`;
-    addlPropsText += `${tab}\t\t\t(*${receiver}.AdditionalProperties)[key] = ${ref}aux\n`;
+    addlPropsText += `${tab}\t\t\t${receiver}.AdditionalProperties[key] = ${ref}aux\n`;
     addlPropsText += `${tab}\t\t}\n`;
     addlPropsText += `${tab}\t\tdelete(rawMsg, key)\n`;
     return addlPropsText;
@@ -725,6 +784,18 @@ function generateXMLMarshaller(structDef: StructDef) {
     text += `\tstart.Name.Local = "${structDef.Language.xmlWrapperName}"\n`;
   }
   text += generateAliasType(structDef, receiver, true);
+  // check for fields that require array marshalling
+  const arrays = new Array<Property>();
+  for (const prop of values(structDef.Properties)) {
+    if (prop.language.go!.needsXMLArrayMarshalling) {
+      arrays.push(prop);
+    }
+  }
+  for (const array of values(arrays)) {
+    text += `\tif ${receiver}.${array.language.go!.name} != nil {\n`;
+    text += `\t\taux.${array.language.go!.name} = &${receiver}.${array.language.go!.name}\n`;
+    text += '\t}\n';
+  }
   text += '\treturn e.EncodeElement(aux, start)\n';
   text += '}\n\n';
   structDef.Methods.push({ name: 'MarshalXML', desc: desc, text: text });
@@ -743,7 +814,7 @@ function generateXMLUnmarshaller(structDef: StructDef) {
     if (prop.schema.type === SchemaType.DateTime) {
       text += `\t${receiver}.${prop.language.go!.name} = (*time.Time)(aux.${prop.language.go!.name})\n`;
     } else if (prop.language.go!.isAdditionalProperties || prop.language.go!.needsXMLDictionaryUnmarshalling) {
-      text += `\t${receiver}.${prop.language.go!.name} = (*map[string]*string)(aux.${prop.language.go!.name})\n`;
+      text += `\t${receiver}.${prop.language.go!.name} = (map[string]*string)(aux.${prop.language.go!.name})\n`;
     }
   }
   text += '\treturn nil\n';
@@ -757,15 +828,13 @@ function generateAliasType(structDef: StructDef, receiver: string, forMarshal: b
   text += `\taux := &struct {\n`;
   text += `\t\t*alias\n`;
   for (const prop of values(structDef.Properties)) {
-    let sn = prop.serializedName;
-    if (prop.schema.serialization?.xml?.name) {
-      // xml can specifiy its own name, prefer that if available
-      sn = prop.schema.serialization.xml.name;
-    }
+    let sn = getXMLSerialization(prop, structDef.Language);
     if (prop.schema.type === SchemaType.DateTime) {
       text += `\t\t${prop.language.go!.name} *${prop.schema.language.go!.internalTimeType} \`${structDef.Language.marshallingFormat}:"${sn}"\`\n`;
     } else if (prop.language.go!.isAdditionalProperties || prop.language.go!.needsXMLDictionaryUnmarshalling) {
-      text += `\t\t${prop.language.go!.name} *additionalProperties \`${structDef.Language.marshallingFormat}:"${sn}"\`\n`;
+      text += `\t\t${prop.language.go!.name} additionalProperties \`${structDef.Language.marshallingFormat}:"${sn}"\`\n`;
+    } else if (prop.language.go!.needsXMLArrayMarshalling) {
+      text += `\t\t${prop.language.go!.name} *${prop.schema.language.go!.name} \`${structDef.Language.marshallingFormat}:"${sn}"\`\n`;
     }
   }
   text += `\t}{\n`;

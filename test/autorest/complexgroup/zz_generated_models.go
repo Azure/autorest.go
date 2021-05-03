@@ -41,7 +41,14 @@ type ArrayPutValidOptions struct {
 }
 
 type ArrayWrapper struct {
-	Array *[]*string `json:"array,omitempty"`
+	Array []*string `json:"array,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ArrayWrapper.
+func (a ArrayWrapper) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "array", a.Array)
+	return json.Marshal(objectMap)
 }
 
 // ArrayWrapperResponse is the response envelope for operations that return a ArrayWrapper type.
@@ -114,7 +121,14 @@ type BooleanWrapperResponse struct {
 }
 
 type ByteWrapper struct {
-	Field *[]byte `json:"field,omitempty"`
+	Field []byte `json:"field,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ByteWrapper.
+func (b ByteWrapper) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "field", b.Field)
+	return json.Marshal(objectMap)
 }
 
 // ByteWrapperResponse is the response envelope for operations that return a ByteWrapper type.
@@ -128,7 +142,20 @@ type ByteWrapperResponse struct {
 type Cat struct {
 	Pet
 	Color *string `json:"color,omitempty"`
-	Hates *[]*Dog `json:"hates,omitempty"`
+	Hates []*Dog  `json:"hates,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type Cat.
+func (c Cat) MarshalJSON() ([]byte, error) {
+	objectMap := c.marshalInternal()
+	return json.Marshal(objectMap)
+}
+
+func (c Cat) marshalInternal() map[string]interface{} {
+	objectMap := c.Pet.marshalInternal()
+	populate(objectMap, "color", c.Color)
+	populate(objectMap, "hates", c.Hates)
+	return objectMap
 }
 
 type Cookiecuttershark struct {
@@ -317,7 +344,14 @@ type DictionaryPutValidOptions struct {
 
 type DictionaryWrapper struct {
 	// Dictionary of
-	DefaultProgram *map[string]*string `json:"defaultProgram,omitempty"`
+	DefaultProgram map[string]*string `json:"defaultProgram,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type DictionaryWrapper.
+func (d DictionaryWrapper) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "defaultProgram", d.DefaultProgram)
+	return json.Marshal(objectMap)
 }
 
 // DictionaryWrapperResponse is the response envelope for operations that return a DictionaryWrapper type.
@@ -331,6 +365,13 @@ type DictionaryWrapperResponse struct {
 type Dog struct {
 	Pet
 	Food *string `json:"food,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type Dog.
+func (d Dog) MarshalJSON() ([]byte, error) {
+	objectMap := d.Pet.marshalInternal()
+	populate(objectMap, "food", d.Food)
+	return json.Marshal(objectMap)
 }
 
 // DotFishClassification provides polymorphic access to related types.
@@ -386,10 +427,20 @@ func (d *DotFish) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 }
 
 type DotFishMarket struct {
-	Fishes       *[]DotFishClassification `json:"fishes,omitempty"`
-	Salmons      *[]*DotSalmon            `json:"salmons,omitempty"`
-	SampleFish   DotFishClassification    `json:"sampleFish,omitempty"`
-	SampleSalmon *DotSalmon               `json:"sampleSalmon,omitempty"`
+	Fishes       []DotFishClassification `json:"fishes,omitempty"`
+	Salmons      []*DotSalmon            `json:"salmons,omitempty"`
+	SampleFish   DotFishClassification   `json:"sampleFish,omitempty"`
+	SampleSalmon *DotSalmon              `json:"sampleSalmon,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type DotFishMarket.
+func (d DotFishMarket) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "fishes", d.Fishes)
+	populate(objectMap, "salmons", d.Salmons)
+	populate(objectMap, "sampleFish", d.SampleFish)
+	populate(objectMap, "sampleSalmon", d.SampleSalmon)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DotFishMarket.
@@ -532,10 +583,10 @@ type FishClassification interface {
 }
 
 type Fish struct {
-	Fishtype *string               `json:"fishtype,omitempty"`
-	Length   *float32              `json:"length,omitempty"`
-	Siblings *[]FishClassification `json:"siblings,omitempty"`
-	Species  *string               `json:"species,omitempty"`
+	Fishtype *string              `json:"fishtype,omitempty"`
+	Length   *float32             `json:"length,omitempty"`
+	Siblings []FishClassification `json:"siblings,omitempty"`
+	Species  *string              `json:"species,omitempty"`
 }
 
 // GetFish implements the FishClassification interface for type Fish.
@@ -810,6 +861,19 @@ type Pet struct {
 	Name *string `json:"name,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type Pet.
+func (p Pet) MarshalJSON() ([]byte, error) {
+	objectMap := p.marshalInternal()
+	return json.Marshal(objectMap)
+}
+
+func (p Pet) marshalInternal() map[string]interface{} {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "id", p.ID)
+	populate(objectMap, "name", p.Name)
+	return objectMap
+}
+
 // PolymorphicrecursiveGetValidOptions contains the optional parameters for the Polymorphicrecursive.GetValid method.
 type PolymorphicrecursiveGetValidOptions struct {
 	// placeholder for future optional parameters
@@ -1076,7 +1140,7 @@ func (s *SalmonResponse) UnmarshalJSON(data []byte) error {
 
 type Sawshark struct {
 	Shark
-	Picture *[]byte `json:"picture,omitempty"`
+	Picture []byte `json:"picture,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type Sawshark.
@@ -1172,6 +1236,13 @@ type Siamese struct {
 	Breed *string `json:"breed,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type Siamese.
+func (s Siamese) MarshalJSON() ([]byte, error) {
+	objectMap := s.Cat.marshalInternal()
+	populate(objectMap, "breed", s.Breed)
+	return json.Marshal(objectMap)
+}
+
 // SiameseResponse is the response envelope for operations that return a Siamese type.
 type SiameseResponse struct {
 	// RawResponse contains the underlying HTTP response.
@@ -1182,7 +1253,7 @@ type SiameseResponse struct {
 type SmartSalmon struct {
 	Salmon
 	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties *map[string]interface{}
+	AdditionalProperties map[string]interface{}
 	CollegeDegree        *string `json:"college_degree,omitempty"`
 }
 
@@ -1191,7 +1262,7 @@ func (s SmartSalmon) MarshalJSON() ([]byte, error) {
 	objectMap := s.Salmon.marshalInternal("smart_salmon")
 	populate(objectMap, "college_degree", s.CollegeDegree)
 	if s.AdditionalProperties != nil {
-		for key, val := range *s.AdditionalProperties {
+		for key, val := range s.AdditionalProperties {
 			objectMap[key] = val
 		}
 	}
@@ -1221,12 +1292,12 @@ func (s *SmartSalmon) UnmarshalJSON(data []byte) error {
 	for key, val := range rawMsg {
 		var err error
 		if s.AdditionalProperties == nil {
-			s.AdditionalProperties = &map[string]interface{}{}
+			s.AdditionalProperties = map[string]interface{}{}
 		}
 		if val != nil {
 			var aux interface{}
 			err = json.Unmarshal(val, &aux)
-			(*s.AdditionalProperties)[key] = aux
+			s.AdditionalProperties[key] = aux
 		}
 		delete(rawMsg, key)
 		if err != nil {

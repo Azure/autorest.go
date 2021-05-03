@@ -29,7 +29,7 @@ func unmarshalFirewallPolicyRuleClassification(rawMsg json.RawMessage) (Firewall
 	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalFirewallPolicyRuleClassificationArray(rawMsg json.RawMessage) (*[]FirewallPolicyRuleClassification, error) {
+func unmarshalFirewallPolicyRuleClassificationArray(rawMsg json.RawMessage) ([]FirewallPolicyRuleClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
@@ -45,7 +45,7 @@ func unmarshalFirewallPolicyRuleClassificationArray(rawMsg json.RawMessage) (*[]
 		}
 		fArray[index] = f
 	}
-	return &fArray, nil
+	return fArray, nil
 }
 
 func unmarshalFirewallPolicyRuleConditionClassification(rawMsg json.RawMessage) (FirewallPolicyRuleConditionClassification, error) {
@@ -70,7 +70,7 @@ func unmarshalFirewallPolicyRuleConditionClassification(rawMsg json.RawMessage) 
 	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalFirewallPolicyRuleConditionClassificationArray(rawMsg json.RawMessage) (*[]FirewallPolicyRuleConditionClassification, error) {
+func unmarshalFirewallPolicyRuleConditionClassificationArray(rawMsg json.RawMessage) ([]FirewallPolicyRuleConditionClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
@@ -86,5 +86,5 @@ func unmarshalFirewallPolicyRuleConditionClassificationArray(rawMsg json.RawMess
 		}
 		fArray[index] = f
 	}
-	return &fArray, nil
+	return fArray, nil
 }

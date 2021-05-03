@@ -264,13 +264,13 @@ func TestGetSimple(t *testing.T) {
 		Author: to.StringPtr("Yours Truly"),
 		Date:   to.StringPtr("Date of publication"),
 		Title:  to.StringPtr("Sample Slide Show"),
-		Slides: &[]*Slide{
+		Slides: []*Slide{
 			{
 				Title: to.StringPtr("Wake up to WonderWidgets!"),
 				Type:  to.StringPtr("all"),
 			},
 			{
-				Items: stringPtrArrayPtr(to.StringPtrArray("Why WonderWidgets are great", "", "Who buys WonderWidgets")),
+				Items: to.StringPtrArray("Why WonderWidgets are great", "", "Who buys WonderWidgets"),
 				Title: to.StringPtr("Overview"),
 				Type:  to.StringPtr("all"),
 			},
@@ -291,8 +291,8 @@ func TestGetWrappedLists(t *testing.T) {
 		t.Fatalf("unexpected status code %d", s)
 	}
 	expected := &AppleBarrel{
-		BadApples:  stringPtrArrayPtr(to.StringPtrArray("Red Delicious")),
-		GoodApples: stringPtrArrayPtr(to.StringPtrArray("Fuji", "Gala")),
+		BadApples:  to.StringPtrArray("Red Delicious"),
+		GoodApples: to.StringPtrArray("Fuji", "Gala"),
 	}
 	if r := cmp.Diff(result.AppleBarrel, expected); r != "" {
 		t.Fatal(r)
@@ -342,9 +342,9 @@ func TestListBlobs(t *testing.T) {
 	}
 	expected := ListBlobsResponse{
 		Blobs: &Blobs{
-			Blob: &[]*Blob{
+			Blob: []*Blob{
 				{
-					Metadata: &map[string]*string{
+					Metadata: map[string]*string{
 						"color":            to.StringPtr("blue"),
 						"blobnumber":       to.StringPtr("01"),
 						"somemetadataname": to.StringPtr("SomeMetadataValue"),
@@ -364,7 +364,7 @@ func TestListBlobs(t *testing.T) {
 					},
 				},
 				{
-					Metadata: &map[string]*string{
+					Metadata: map[string]*string{
 						"color":             to.StringPtr("green"),
 						"blobnumber":        to.StringPtr("02"),
 						"somemetadataname":  to.StringPtr("SomeMetadataValue"),
@@ -385,7 +385,7 @@ func TestListBlobs(t *testing.T) {
 					Snapshot: to.StringPtr("2009-09-09T09:20:03.0427659Z"),
 				},
 				{
-					Metadata: &map[string]*string{
+					Metadata: map[string]*string{
 						"color":            to.StringPtr("green"),
 						"blobnumber":       to.StringPtr("02"),
 						"somemetadataname": to.StringPtr("SomeMetadataValue"),
@@ -405,7 +405,7 @@ func TestListBlobs(t *testing.T) {
 					Snapshot: to.StringPtr("2009-09-09T09:20:03.1587543Z"),
 				},
 				{
-					Metadata: &map[string]*string{
+					Metadata: map[string]*string{
 						"color":            to.StringPtr("green"),
 						"blobnumber":       to.StringPtr("02"),
 						"somemetadataname": to.StringPtr("SomeMetadataValue"),
@@ -425,7 +425,7 @@ func TestListBlobs(t *testing.T) {
 					},
 				},
 				{
-					Metadata: &map[string]*string{
+					Metadata: map[string]*string{
 						"color":            to.StringPtr("yellow"),
 						"blobnumber":       to.StringPtr("03"),
 						"somemetadataname": to.StringPtr("SomeMetadataValue"),
@@ -468,7 +468,7 @@ func TestListContainers(t *testing.T) {
 		ServiceEndpoint: to.StringPtr("https://myaccount.blob.core.windows.net/"),
 		MaxResults:      to.Int32Ptr(3),
 		NextMarker:      to.StringPtr("video"),
-		Containers: &[]*Container{
+		Containers: []*Container{
 			{
 				Name: to.StringPtr("audio"),
 				Properties: &ContainerProperties{
@@ -568,7 +568,7 @@ func TestPutEmptyChildElement(t *testing.T) {
 func TestPutEmptyList(t *testing.T) {
 	client := newXMLClient()
 	result, err := client.PutEmptyList(context.Background(), Slideshow{
-		Slides: &[]*Slide{},
+		Slides: []*Slide{},
 	}, nil)
 	if err != nil {
 		t.Fatal(err)
@@ -592,8 +592,8 @@ func TestPutEmptyRootList(t *testing.T) {
 func TestPutEmptyWrappedLists(t *testing.T) {
 	client := newXMLClient()
 	result, err := client.PutEmptyWrappedLists(context.Background(), AppleBarrel{
-		BadApples:  &[]*string{},
-		GoodApples: &[]*string{},
+		BadApples:  []*string{},
+		GoodApples: []*string{},
 	}, nil)
 	if err != nil {
 		t.Fatal(err)
@@ -688,13 +688,13 @@ func TestPutSimple(t *testing.T) {
 		Author: to.StringPtr("Yours Truly"),
 		Date:   to.StringPtr("Date of publication"),
 		Title:  to.StringPtr("Sample Slide Show"),
-		Slides: &[]*Slide{
+		Slides: []*Slide{
 			{
 				Title: to.StringPtr("Wake up to WonderWidgets!"),
 				Type:  to.StringPtr("all"),
 			},
 			{
-				Items: stringPtrArrayPtr(to.StringPtrArray("Why WonderWidgets are great", "", "Who buys WonderWidgets")),
+				Items: to.StringPtrArray("Why WonderWidgets are great", "", "Who buys WonderWidgets"),
 				Title: to.StringPtr("Overview"),
 				Type:  to.StringPtr("all"),
 			},
@@ -711,8 +711,8 @@ func TestPutSimple(t *testing.T) {
 func TestPutWrappedLists(t *testing.T) {
 	client := newXMLClient()
 	result, err := client.PutWrappedLists(context.Background(), AppleBarrel{
-		BadApples:  stringPtrArrayPtr(to.StringPtrArray("Red Delicious")),
-		GoodApples: stringPtrArrayPtr(to.StringPtrArray("Fuji", "Gala")),
+		BadApples:  to.StringPtrArray("Red Delicious"),
+		GoodApples: to.StringPtrArray("Fuji", "Gala"),
 	}, nil)
 	if err != nil {
 		t.Fatal(err)
@@ -720,8 +720,4 @@ func TestPutWrappedLists(t *testing.T) {
 	if s := result.StatusCode; s != http.StatusCreated {
 		t.Fatalf("unexpected status code %d", s)
 	}
-}
-
-func stringPtrArrayPtr(s []*string) *[]*string {
-	return &s
 }

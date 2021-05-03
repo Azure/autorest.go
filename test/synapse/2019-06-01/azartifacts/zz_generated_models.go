@@ -35,10 +35,10 @@ type ActivityClassification interface {
 // Activity - A pipeline activity.
 type Activity struct {
 	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties *map[string]interface{}
+	AdditionalProperties map[string]interface{}
 
 	// Activity depends on condition.
-	DependsOn *[]*ActivityDependency `json:"dependsOn,omitempty"`
+	DependsOn []*ActivityDependency `json:"dependsOn,omitempty"`
 
 	// Activity description.
 	Description *string `json:"description,omitempty"`
@@ -50,7 +50,7 @@ type Activity struct {
 	Type *string `json:"type,omitempty"`
 
 	// Activity user properties.
-	UserProperties *[]*UserProperty `json:"userProperties,omitempty"`
+	UserProperties []*UserProperty `json:"userProperties,omitempty"`
 }
 
 // GetActivity implements the ActivityClassification interface for type Activity.
@@ -74,7 +74,7 @@ func (a Activity) marshalInternal(discValue string) map[string]interface{} {
 	objectMap["type"] = a.Type
 	populate(objectMap, "userProperties", a.UserProperties)
 	if a.AdditionalProperties != nil {
-		for key, val := range *a.AdditionalProperties {
+		for key, val := range a.AdditionalProperties {
 			objectMap[key] = val
 		}
 	}
@@ -102,12 +102,12 @@ func (a *Activity) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 			delete(rawMsg, key)
 		default:
 			if a.AdditionalProperties == nil {
-				a.AdditionalProperties = &map[string]interface{}{}
+				a.AdditionalProperties = map[string]interface{}{}
 			}
 			if val != nil {
 				var aux interface{}
 				err = json.Unmarshal(val, &aux)
-				(*a.AdditionalProperties)[key] = aux
+				a.AdditionalProperties[key] = aux
 			}
 			delete(rawMsg, key)
 		}
@@ -124,10 +124,10 @@ type ActivityDependency struct {
 	Activity *string `json:"activity,omitempty"`
 
 	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties *map[string]interface{}
+	AdditionalProperties map[string]interface{}
 
 	// Match-Condition for the dependency.
-	DependencyConditions *[]*DependencyCondition `json:"dependencyConditions,omitempty"`
+	DependencyConditions []*DependencyCondition `json:"dependencyConditions,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ActivityDependency.
@@ -136,7 +136,7 @@ func (a ActivityDependency) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "activity", a.Activity)
 	populate(objectMap, "dependencyConditions", a.DependencyConditions)
 	if a.AdditionalProperties != nil {
-		for key, val := range *a.AdditionalProperties {
+		for key, val := range a.AdditionalProperties {
 			objectMap[key] = val
 		}
 	}
@@ -160,12 +160,12 @@ func (a *ActivityDependency) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		default:
 			if a.AdditionalProperties == nil {
-				a.AdditionalProperties = &map[string]interface{}{}
+				a.AdditionalProperties = map[string]interface{}{}
 			}
 			if val != nil {
 				var aux interface{}
 				err = json.Unmarshal(val, &aux)
-				(*a.AdditionalProperties)[key] = aux
+				a.AdditionalProperties[key] = aux
 			}
 			delete(rawMsg, key)
 		}
@@ -179,7 +179,7 @@ func (a *ActivityDependency) UnmarshalJSON(data []byte) error {
 // ActivityPolicy - Execution policy for an activity.
 type ActivityPolicy struct {
 	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties *map[string]interface{}
+	AdditionalProperties map[string]interface{}
 
 	// Maximum ordinary retry attempts. Default is 0. Type: integer (or Expression with resultType integer), minimum: 0.
 	Retry interface{} `json:"retry,omitempty"`
@@ -206,7 +206,7 @@ func (a ActivityPolicy) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "secureOutput", a.SecureOutput)
 	populate(objectMap, "timeout", a.Timeout)
 	if a.AdditionalProperties != nil {
-		for key, val := range *a.AdditionalProperties {
+		for key, val := range a.AdditionalProperties {
 			objectMap[key] = val
 		}
 	}
@@ -239,12 +239,12 @@ func (a *ActivityPolicy) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		default:
 			if a.AdditionalProperties == nil {
-				a.AdditionalProperties = &map[string]interface{}{}
+				a.AdditionalProperties = map[string]interface{}{}
 			}
 			if val != nil {
 				var aux interface{}
 				err = json.Unmarshal(val, &aux)
-				(*a.AdditionalProperties)[key] = aux
+				a.AdditionalProperties[key] = aux
 			}
 			delete(rawMsg, key)
 		}
@@ -273,7 +273,7 @@ type ActivityRun struct {
 	ActivityType *string `json:"activityType,omitempty" azure:"ro"`
 
 	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties *map[string]interface{}
+	AdditionalProperties map[string]interface{}
 
 	// READ-ONLY; The duration of the activity run.
 	DurationInMs *int32 `json:"durationInMs,omitempty" azure:"ro"`
@@ -317,7 +317,7 @@ func (a ActivityRun) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "pipelineRunId", a.PipelineRunID)
 	populate(objectMap, "status", a.Status)
 	if a.AdditionalProperties != nil {
-		for key, val := range *a.AdditionalProperties {
+		for key, val := range a.AdditionalProperties {
 			objectMap[key] = val
 		}
 	}
@@ -378,12 +378,12 @@ func (a *ActivityRun) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		default:
 			if a.AdditionalProperties == nil {
-				a.AdditionalProperties = &map[string]interface{}{}
+				a.AdditionalProperties = map[string]interface{}{}
 			}
 			if val != nil {
 				var aux interface{}
 				err = json.Unmarshal(val, &aux)
-				(*a.AdditionalProperties)[key] = aux
+				a.AdditionalProperties[key] = aux
 			}
 			delete(rawMsg, key)
 		}
@@ -400,7 +400,15 @@ type ActivityRunsQueryResponse struct {
 	ContinuationToken *string `json:"continuationToken,omitempty"`
 
 	// List of activity runs.
-	Value *[]*ActivityRun `json:"value,omitempty"`
+	Value []*ActivityRun `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ActivityRunsQueryResponse.
+func (a ActivityRunsQueryResponse) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "continuationToken", a.ContinuationToken)
+	populate(objectMap, "value", a.Value)
+	return json.Marshal(objectMap)
 }
 
 // ActivityRunsQueryResponseResponse is the response envelope for operations that return a ActivityRunsQueryResponse type.
@@ -494,6 +502,22 @@ type AmazonMWSLinkedServiceTypeProperties struct {
 
 	// Specifies whether to verify the identity of the server when connecting over SSL. The default value is true.
 	UsePeerVerification interface{} `json:"usePeerVerification,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AmazonMWSLinkedServiceTypeProperties.
+func (a AmazonMWSLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "accessKeyId", a.AccessKeyID)
+	populate(objectMap, "encryptedCredential", a.EncryptedCredential)
+	populate(objectMap, "endpoint", a.Endpoint)
+	populate(objectMap, "marketplaceID", a.MarketplaceID)
+	populate(objectMap, "mwsAuthToken", a.MwsAuthToken)
+	populate(objectMap, "secretKey", a.SecretKey)
+	populate(objectMap, "sellerID", a.SellerID)
+	populate(objectMap, "useEncryptedEndpoints", a.UseEncryptedEndpoints)
+	populate(objectMap, "useHostVerification", a.UseHostVerification)
+	populate(objectMap, "usePeerVerification", a.UsePeerVerification)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AmazonMWSLinkedServiceTypeProperties.
@@ -666,6 +690,18 @@ type AmazonRedshiftLinkedServiceTypeProperties struct {
 
 	// The username of the Amazon Redshift source. Type: string (or Expression with resultType string).
 	Username interface{} `json:"username,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AmazonRedshiftLinkedServiceTypeProperties.
+func (a AmazonRedshiftLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "database", a.Database)
+	populate(objectMap, "encryptedCredential", a.EncryptedCredential)
+	populate(objectMap, "password", a.Password)
+	populate(objectMap, "port", a.Port)
+	populate(objectMap, "server", a.Server)
+	populate(objectMap, "username", a.Username)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AmazonRedshiftLinkedServiceTypeProperties.
@@ -842,6 +878,16 @@ type AmazonS3LinkedServiceTypeProperties struct {
 	// endpoint or want to switch between https and
 	// http. Type: string (or Expression with resultType string).
 	ServiceURL interface{} `json:"serviceUrl,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AmazonS3LinkedServiceTypeProperties.
+func (a AmazonS3LinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "accessKeyId", a.AccessKeyID)
+	populate(objectMap, "encryptedCredential", a.EncryptedCredential)
+	populate(objectMap, "secretAccessKey", a.SecretAccessKey)
+	populate(objectMap, "serviceUrl", a.ServiceURL)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AmazonS3LinkedServiceTypeProperties.
@@ -1103,6 +1149,15 @@ type AvroDatasetTypeProperties struct {
 	Location DatasetLocationClassification `json:"location,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type AvroDatasetTypeProperties.
+func (a AvroDatasetTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "avroCompressionCodec", a.AvroCompressionCodec)
+	populate(objectMap, "avroCompressionLevel", a.AvroCompressionLevel)
+	populate(objectMap, "location", a.Location)
+	return json.Marshal(objectMap)
+}
+
 // UnmarshalJSON implements the json.Unmarshaller interface for type AvroDatasetTypeProperties.
 func (a *AvroDatasetTypeProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
@@ -1312,6 +1367,18 @@ type AzureBatchLinkedServiceTypeProperties struct {
 	PoolName interface{} `json:"poolName,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type AzureBatchLinkedServiceTypeProperties.
+func (a AzureBatchLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "accessKey", a.AccessKey)
+	populate(objectMap, "accountName", a.AccountName)
+	populate(objectMap, "batchUri", a.BatchURI)
+	populate(objectMap, "encryptedCredential", a.EncryptedCredential)
+	populate(objectMap, "linkedServiceName", a.LinkedServiceName)
+	populate(objectMap, "poolName", a.PoolName)
+	return json.Marshal(objectMap)
+}
+
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureBatchLinkedServiceTypeProperties.
 func (a *AzureBatchLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
@@ -1401,6 +1468,18 @@ type AzureBlobFSLinkedServiceTypeProperties struct {
 
 	// Endpoint for the Azure Data Lake Storage Gen2 service. Type: string (or Expression with resultType string).
 	URL interface{} `json:"url,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AzureBlobFSLinkedServiceTypeProperties.
+func (a AzureBlobFSLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "accountKey", a.AccountKey)
+	populate(objectMap, "encryptedCredential", a.EncryptedCredential)
+	populate(objectMap, "servicePrincipalId", a.ServicePrincipalID)
+	populate(objectMap, "servicePrincipalKey", a.ServicePrincipalKey)
+	populate(objectMap, "tenant", a.Tenant)
+	populate(objectMap, "url", a.URL)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureBlobFSLinkedServiceTypeProperties.
@@ -1722,6 +1801,21 @@ type AzureBlobStorageLinkedServiceTypeProperties struct {
 	Tenant interface{} `json:"tenant,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type AzureBlobStorageLinkedServiceTypeProperties.
+func (a AzureBlobStorageLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "accountKey", a.AccountKey)
+	populate(objectMap, "connectionString", a.ConnectionString)
+	populate(objectMap, "encryptedCredential", a.EncryptedCredential)
+	populate(objectMap, "sasToken", a.SasToken)
+	populate(objectMap, "sasUri", a.SasURI)
+	populate(objectMap, "serviceEndpoint", a.ServiceEndpoint)
+	populate(objectMap, "servicePrincipalId", a.ServicePrincipalID)
+	populate(objectMap, "servicePrincipalKey", a.ServicePrincipalKey)
+	populate(objectMap, "tenant", a.Tenant)
+	return json.Marshal(objectMap)
+}
+
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureBlobStorageLinkedServiceTypeProperties.
 func (a *AzureBlobStorageLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
@@ -2012,6 +2106,17 @@ type AzureDataExplorerLinkedServiceTypeProperties struct {
 	Tenant interface{} `json:"tenant,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type AzureDataExplorerLinkedServiceTypeProperties.
+func (a AzureDataExplorerLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "database", a.Database)
+	populate(objectMap, "endpoint", a.Endpoint)
+	populate(objectMap, "servicePrincipalId", a.ServicePrincipalID)
+	populate(objectMap, "servicePrincipalKey", a.ServicePrincipalKey)
+	populate(objectMap, "tenant", a.Tenant)
+	return json.Marshal(objectMap)
+}
+
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureDataExplorerLinkedServiceTypeProperties.
 func (a *AzureDataExplorerLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
@@ -2236,6 +2341,20 @@ type AzureDataLakeAnalyticsLinkedServiceTypeProperties struct {
 	Tenant interface{} `json:"tenant,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type AzureDataLakeAnalyticsLinkedServiceTypeProperties.
+func (a AzureDataLakeAnalyticsLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "accountName", a.AccountName)
+	populate(objectMap, "dataLakeAnalyticsUri", a.DataLakeAnalyticsURI)
+	populate(objectMap, "encryptedCredential", a.EncryptedCredential)
+	populate(objectMap, "resourceGroupName", a.ResourceGroupName)
+	populate(objectMap, "servicePrincipalId", a.ServicePrincipalID)
+	populate(objectMap, "servicePrincipalKey", a.ServicePrincipalKey)
+	populate(objectMap, "subscriptionId", a.SubscriptionID)
+	populate(objectMap, "tenant", a.Tenant)
+	return json.Marshal(objectMap)
+}
+
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureDataLakeAnalyticsLinkedServiceTypeProperties.
 func (a *AzureDataLakeAnalyticsLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
@@ -2337,6 +2456,20 @@ type AzureDataLakeStoreLinkedServiceTypeProperties struct {
 
 	// The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string).
 	Tenant interface{} `json:"tenant,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AzureDataLakeStoreLinkedServiceTypeProperties.
+func (a AzureDataLakeStoreLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "accountName", a.AccountName)
+	populate(objectMap, "dataLakeStoreUri", a.DataLakeStoreURI)
+	populate(objectMap, "encryptedCredential", a.EncryptedCredential)
+	populate(objectMap, "resourceGroupName", a.ResourceGroupName)
+	populate(objectMap, "servicePrincipalId", a.ServicePrincipalID)
+	populate(objectMap, "servicePrincipalKey", a.ServicePrincipalKey)
+	populate(objectMap, "subscriptionId", a.SubscriptionID)
+	populate(objectMap, "tenant", a.Tenant)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureDataLakeStoreLinkedServiceTypeProperties.
@@ -2600,7 +2733,7 @@ type AzureDatabricksLinkedServiceTypeProperties struct {
 	InstancePoolID interface{} `json:"instancePoolId,omitempty"`
 
 	// Additional tags for cluster resources. This property is ignored in instance pool configurations.
-	NewClusterCustomTags *map[string]interface{} `json:"newClusterCustomTags,omitempty"`
+	NewClusterCustomTags map[string]interface{} `json:"newClusterCustomTags,omitempty"`
 
 	// The driver node type for the new job cluster. This property is ignored in instance pool configurations. Type: string (or Expression with resultType string).
 	NewClusterDriverNodeType interface{} `json:"newClusterDriverNodeType,omitempty"`
@@ -2626,15 +2759,35 @@ type AzureDatabricksLinkedServiceTypeProperties struct {
 	NewClusterNumOfWorker interface{} `json:"newClusterNumOfWorker,omitempty"`
 
 	// A set of optional, user-specified Spark configuration key-value pairs.
-	NewClusterSparkConf *map[string]interface{} `json:"newClusterSparkConf,omitempty"`
+	NewClusterSparkConf map[string]interface{} `json:"newClusterSparkConf,omitempty"`
 
 	// A set of optional, user-specified Spark environment variables key-value pairs.
-	NewClusterSparkEnvVars *map[string]interface{} `json:"newClusterSparkEnvVars,omitempty"`
+	NewClusterSparkEnvVars map[string]interface{} `json:"newClusterSparkEnvVars,omitempty"`
 
 	// If not using an existing interactive cluster, this specifies the Spark version of a new job cluster or instance pool nodes created for each run of this
 	// activity. Required if instancePoolId is
 	// specified. Type: string (or Expression with resultType string).
 	NewClusterVersion interface{} `json:"newClusterVersion,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AzureDatabricksLinkedServiceTypeProperties.
+func (a AzureDatabricksLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "accessToken", a.AccessToken)
+	populate(objectMap, "domain", a.Domain)
+	populate(objectMap, "encryptedCredential", a.EncryptedCredential)
+	populate(objectMap, "existingClusterId", a.ExistingClusterID)
+	populate(objectMap, "instancePoolId", a.InstancePoolID)
+	populate(objectMap, "newClusterCustomTags", a.NewClusterCustomTags)
+	populate(objectMap, "newClusterDriverNodeType", a.NewClusterDriverNodeType)
+	populate(objectMap, "newClusterEnableElasticDisk", a.NewClusterEnableElasticDisk)
+	populate(objectMap, "newClusterInitScripts", a.NewClusterInitScripts)
+	populate(objectMap, "newClusterNodeType", a.NewClusterNodeType)
+	populate(objectMap, "newClusterNumOfWorker", a.NewClusterNumOfWorker)
+	populate(objectMap, "newClusterSparkConf", a.NewClusterSparkConf)
+	populate(objectMap, "newClusterSparkEnvVars", a.NewClusterSparkEnvVars)
+	populate(objectMap, "newClusterVersion", a.NewClusterVersion)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureDatabricksLinkedServiceTypeProperties.
@@ -2787,6 +2940,16 @@ type AzureFileStorageLinkedServiceTypeProperties struct {
 
 	// User ID to logon the server. Type: string (or Expression with resultType string).
 	UserID interface{} `json:"userId,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AzureFileStorageLinkedServiceTypeProperties.
+func (a AzureFileStorageLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "encryptedCredential", a.EncryptedCredential)
+	populate(objectMap, "host", a.Host)
+	populate(objectMap, "password", a.Password)
+	populate(objectMap, "userId", a.UserID)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureFileStorageLinkedServiceTypeProperties.
@@ -2997,6 +3160,15 @@ type AzureFunctionLinkedServiceTypeProperties struct {
 	FunctionKey SecretBaseClassification `json:"functionKey,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type AzureFunctionLinkedServiceTypeProperties.
+func (a AzureFunctionLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "encryptedCredential", a.EncryptedCredential)
+	populate(objectMap, "functionAppUrl", a.FunctionAppURL)
+	populate(objectMap, "functionKey", a.FunctionKey)
+	return json.Marshal(objectMap)
+}
+
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureFunctionLinkedServiceTypeProperties.
 func (a *AzureFunctionLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
@@ -3150,17 +3322,26 @@ type AzureMLBatchExecutionActivityTypeProperties struct {
 	// Key,Value pairs to be passed to the Azure ML Batch Execution Service endpoint. Keys must match the names of web service parameters defined in the published
 	// Azure ML web service. Values will be passed
 	// in the GlobalParameters property of the Azure ML batch execution request.
-	GlobalParameters *map[string]interface{} `json:"globalParameters,omitempty"`
+	GlobalParameters map[string]interface{} `json:"globalParameters,omitempty"`
 
 	// Key,Value pairs, mapping the names of Azure ML endpoint's Web Service Inputs to AzureMLWebServiceFile objects specifying the input Blob locations.. This
 	// information will be passed in the
 	// WebServiceInputs property of the Azure ML batch execution request.
-	WebServiceInputs *map[string]*AzureMLWebServiceFile `json:"webServiceInputs,omitempty"`
+	WebServiceInputs map[string]*AzureMLWebServiceFile `json:"webServiceInputs,omitempty"`
 
 	// Key,Value pairs, mapping the names of Azure ML endpoint's Web Service Outputs to AzureMLWebServiceFile objects specifying the output Blob locations.
 	// This information will be passed in the
 	// WebServiceOutputs property of the Azure ML batch execution request.
-	WebServiceOutputs *map[string]*AzureMLWebServiceFile `json:"webServiceOutputs,omitempty"`
+	WebServiceOutputs map[string]*AzureMLWebServiceFile `json:"webServiceOutputs,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AzureMLBatchExecutionActivityTypeProperties.
+func (a AzureMLBatchExecutionActivityTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "globalParameters", a.GlobalParameters)
+	populate(objectMap, "webServiceInputs", a.WebServiceInputs)
+	populate(objectMap, "webServiceOutputs", a.WebServiceOutputs)
+	return json.Marshal(objectMap)
 }
 
 // AzureMLExecutePipelineActivity - Azure ML Execute Pipeline activity.
@@ -3283,6 +3464,19 @@ type AzureMLLinkedServiceTypeProperties struct {
 	UpdateResourceEndpoint interface{} `json:"updateResourceEndpoint,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type AzureMLLinkedServiceTypeProperties.
+func (a AzureMLLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "apiKey", a.APIKey)
+	populate(objectMap, "encryptedCredential", a.EncryptedCredential)
+	populate(objectMap, "mlEndpoint", a.MlEndpoint)
+	populate(objectMap, "servicePrincipalId", a.ServicePrincipalID)
+	populate(objectMap, "servicePrincipalKey", a.ServicePrincipalKey)
+	populate(objectMap, "tenant", a.Tenant)
+	populate(objectMap, "updateResourceEndpoint", a.UpdateResourceEndpoint)
+	return json.Marshal(objectMap)
+}
+
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureMLLinkedServiceTypeProperties.
 func (a *AzureMLLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
@@ -3379,6 +3573,19 @@ type AzureMLServiceLinkedServiceTypeProperties struct {
 
 	// The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string).
 	Tenant interface{} `json:"tenant,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AzureMLServiceLinkedServiceTypeProperties.
+func (a AzureMLServiceLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "encryptedCredential", a.EncryptedCredential)
+	populate(objectMap, "mlWorkspaceName", a.MlWorkspaceName)
+	populate(objectMap, "resourceGroupName", a.ResourceGroupName)
+	populate(objectMap, "servicePrincipalId", a.ServicePrincipalID)
+	populate(objectMap, "servicePrincipalKey", a.ServicePrincipalKey)
+	populate(objectMap, "subscriptionId", a.SubscriptionID)
+	populate(objectMap, "tenant", a.Tenant)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureMLServiceLinkedServiceTypeProperties.
@@ -3977,6 +4184,18 @@ type AzureSQLDWLinkedServiceTypeProperties struct {
 	Tenant interface{} `json:"tenant,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type AzureSQLDWLinkedServiceTypeProperties.
+func (a AzureSQLDWLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "connectionString", a.ConnectionString)
+	populate(objectMap, "encryptedCredential", a.EncryptedCredential)
+	populate(objectMap, "password", a.Password)
+	populate(objectMap, "servicePrincipalId", a.ServicePrincipalID)
+	populate(objectMap, "servicePrincipalKey", a.ServicePrincipalKey)
+	populate(objectMap, "tenant", a.Tenant)
+	return json.Marshal(objectMap)
+}
+
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureSQLDWLinkedServiceTypeProperties.
 func (a *AzureSQLDWLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
@@ -4114,6 +4333,18 @@ type AzureSQLDatabaseLinkedServiceTypeProperties struct {
 	Tenant interface{} `json:"tenant,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type AzureSQLDatabaseLinkedServiceTypeProperties.
+func (a AzureSQLDatabaseLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "connectionString", a.ConnectionString)
+	populate(objectMap, "encryptedCredential", a.EncryptedCredential)
+	populate(objectMap, "password", a.Password)
+	populate(objectMap, "servicePrincipalId", a.ServicePrincipalID)
+	populate(objectMap, "servicePrincipalKey", a.ServicePrincipalKey)
+	populate(objectMap, "tenant", a.Tenant)
+	return json.Marshal(objectMap)
+}
+
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureSQLDatabaseLinkedServiceTypeProperties.
 func (a *AzureSQLDatabaseLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
@@ -4203,6 +4434,18 @@ type AzureSQLMILinkedServiceTypeProperties struct {
 
 	// The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string).
 	Tenant interface{} `json:"tenant,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AzureSQLMILinkedServiceTypeProperties.
+func (a AzureSQLMILinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "connectionString", a.ConnectionString)
+	populate(objectMap, "encryptedCredential", a.EncryptedCredential)
+	populate(objectMap, "password", a.Password)
+	populate(objectMap, "servicePrincipalId", a.ServicePrincipalID)
+	populate(objectMap, "servicePrincipalKey", a.ServicePrincipalKey)
+	populate(objectMap, "tenant", a.Tenant)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureSQLMILinkedServiceTypeProperties.
@@ -4299,7 +4542,7 @@ type AzureSQLSink struct {
 	SQLWriterTableType interface{} `json:"sqlWriterTableType,omitempty"`
 
 	// SQL stored procedure parameters.
-	StoredProcedureParameters *map[string]*StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
+	StoredProcedureParameters map[string]*StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
 
 	// The stored procedure parameter name of the table type. Type: string (or Expression with resultType string).
 	StoredProcedureTableTypeParameterName interface{} `json:"storedProcedureTableTypeParameterName,omitempty"`
@@ -4369,7 +4612,7 @@ type AzureSQLSource struct {
 	SQLReaderStoredProcedureName interface{} `json:"sqlReaderStoredProcedureName,omitempty"`
 
 	// Value and type setting for stored procedure parameters. Example: "{Parameter1: {value: "1", type: "int"}}".
-	StoredProcedureParameters *map[string]*StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
+	StoredProcedureParameters map[string]*StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type AzureSQLSource.
@@ -4576,6 +4819,15 @@ type AzureSearchLinkedServiceTypeProperties struct {
 
 	// URL for Azure Search service. Type: string (or Expression with resultType string).
 	URL interface{} `json:"url,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AzureSearchLinkedServiceTypeProperties.
+func (a AzureSearchLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "encryptedCredential", a.EncryptedCredential)
+	populate(objectMap, "key", a.Key)
+	populate(objectMap, "url", a.URL)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureSearchLinkedServiceTypeProperties.
@@ -4843,13 +5095,28 @@ type BigDataPoolResourceInfo struct {
 	Properties *BigDataPoolResourceProperties `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type BigDataPoolResourceInfo.
+func (b BigDataPoolResourceInfo) MarshalJSON() ([]byte, error) {
+	objectMap := b.TrackedResource.marshalInternal()
+	populate(objectMap, "properties", b.Properties)
+	return json.Marshal(objectMap)
+}
+
 // BigDataPoolResourceInfoListResult - Collection of Big Data pool information
 type BigDataPoolResourceInfoListResult struct {
 	// Link to the next page of results
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// List of Big Data pools
-	Value *[]*BigDataPoolResourceInfo `json:"value,omitempty"`
+	Value []*BigDataPoolResourceInfo `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type BigDataPoolResourceInfoListResult.
+func (b BigDataPoolResourceInfoListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", b.NextLink)
+	populate(objectMap, "value", b.Value)
+	return json.Marshal(objectMap)
 }
 
 // BigDataPoolResourceInfoListResultResponse is the response envelope for operations that return a BigDataPoolResourceInfoListResult type.
@@ -4885,7 +5152,7 @@ type BigDataPoolResourceProperties struct {
 	CreationDate *time.Time `json:"creationDate,omitempty"`
 
 	// List of custom libraries/packages associated with the spark pool.
-	CustomLibraries *[]*LibraryInfo `json:"customLibraries,omitempty"`
+	CustomLibraries []*LibraryInfo `json:"customLibraries,omitempty"`
 
 	// The default folder where Spark logs will be written.
 	DefaultSparkLogFolder *string `json:"defaultSparkLogFolder,omitempty"`
@@ -5079,6 +5346,14 @@ type BinaryDatasetTypeProperties struct {
 	Location DatasetLocationClassification `json:"location,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type BinaryDatasetTypeProperties.
+func (b BinaryDatasetTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "compression", b.Compression)
+	populate(objectMap, "location", b.Location)
+	return json.Marshal(objectMap)
+}
+
 // UnmarshalJSON implements the json.Unmarshaller interface for type BinaryDatasetTypeProperties.
 func (b *BinaryDatasetTypeProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
@@ -5217,13 +5492,24 @@ type BlobEventsTriggerTypeProperties struct {
 	BlobPathEndsWith *string `json:"blobPathEndsWith,omitempty"`
 
 	// The type of events that cause this trigger to fire.
-	Events *[]*BlobEventType `json:"events,omitempty"`
+	Events []*BlobEventType `json:"events,omitempty"`
 
 	// If set to true, blobs with zero bytes will be ignored.
 	IgnoreEmptyBlobs *bool `json:"ignoreEmptyBlobs,omitempty"`
 
 	// The ARM resource ID of the Storage Account.
 	Scope *string `json:"scope,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type BlobEventsTriggerTypeProperties.
+func (b BlobEventsTriggerTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "blobPathBeginsWith", b.BlobPathBeginsWith)
+	populate(objectMap, "blobPathEndsWith", b.BlobPathEndsWith)
+	populate(objectMap, "events", b.Events)
+	populate(objectMap, "ignoreEmptyBlobs", b.IgnoreEmptyBlobs)
+	populate(objectMap, "scope", b.Scope)
+	return json.Marshal(objectMap)
 }
 
 // BlobSink - A copy activity Azure Blob sink.
@@ -5431,6 +5717,18 @@ type CassandraLinkedServiceTypeProperties struct {
 	Username interface{} `json:"username,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type CassandraLinkedServiceTypeProperties.
+func (c CassandraLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "authenticationType", c.AuthenticationType)
+	populate(objectMap, "encryptedCredential", c.EncryptedCredential)
+	populate(objectMap, "host", c.Host)
+	populate(objectMap, "password", c.Password)
+	populate(objectMap, "port", c.Port)
+	populate(objectMap, "username", c.Username)
+	return json.Marshal(objectMap)
+}
+
 // UnmarshalJSON implements the json.Unmarshaller interface for type CassandraLinkedServiceTypeProperties.
 func (c *CassandraLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
@@ -5599,10 +5897,18 @@ func (c *ChainingTrigger) UnmarshalJSON(data []byte) error {
 // ChainingTriggerTypeProperties - Chaining Trigger properties.
 type ChainingTriggerTypeProperties struct {
 	// Upstream Pipelines.
-	DependsOn *[]*PipelineReference `json:"dependsOn,omitempty"`
+	DependsOn []*PipelineReference `json:"dependsOn,omitempty"`
 
 	// Run Dimension property that needs to be emitted by upstream pipelines.
 	RunDimension *string `json:"runDimension,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ChainingTriggerTypeProperties.
+func (c ChainingTriggerTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "dependsOn", c.DependsOn)
+	populate(objectMap, "runDimension", c.RunDimension)
+	return json.Marshal(objectMap)
 }
 
 // CloudError - The object that defines the structure of an Azure Synapse error response.
@@ -5639,7 +5945,7 @@ type CloudErrorBody struct {
 	Code *string `json:"code,omitempty"`
 
 	// Array with additional error details.
-	Details *[]*CloudError `json:"details,omitempty"`
+	Details []*CloudError `json:"details,omitempty"`
 
 	// Error message.
 	Message *string `json:"message,omitempty"`
@@ -5648,19 +5954,39 @@ type CloudErrorBody struct {
 	Target *string `json:"target,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type CloudErrorBody.
+func (c CloudErrorBody) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "code", c.Code)
+	populate(objectMap, "details", c.Details)
+	populate(objectMap, "message", c.Message)
+	populate(objectMap, "target", c.Target)
+	return json.Marshal(objectMap)
+}
+
 // CloudErrorBodyAutoGenerated - The object that defines the structure of an Azure Synapse error.
 type CloudErrorBodyAutoGenerated struct {
 	// Error code.
 	Code *string `json:"code,omitempty"`
 
 	// Array with additional error details.
-	Details *[]*CloudErrorAutoGenerated `json:"details,omitempty"`
+	Details []*CloudErrorAutoGenerated `json:"details,omitempty"`
 
 	// Error message.
 	Message *string `json:"message,omitempty"`
 
 	// Property name/path in request associated with error.
 	Target *string `json:"target,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type CloudErrorBodyAutoGenerated.
+func (c CloudErrorBodyAutoGenerated) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "code", c.Code)
+	populate(objectMap, "details", c.Details)
+	populate(objectMap, "message", c.Message)
+	populate(objectMap, "target", c.Target)
+	return json.Marshal(objectMap)
 }
 
 // CommonDataServiceForAppsEntityDataset - The Common Data Service for Apps entity dataset.
@@ -5789,6 +6115,24 @@ type CommonDataServiceForAppsLinkedServiceTypeProperties struct {
 
 	// User name to access the Common Data Service for Apps instance. Type: string (or Expression with resultType string).
 	Username interface{} `json:"username,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type CommonDataServiceForAppsLinkedServiceTypeProperties.
+func (c CommonDataServiceForAppsLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "authenticationType", c.AuthenticationType)
+	populate(objectMap, "deploymentType", c.DeploymentType)
+	populate(objectMap, "encryptedCredential", c.EncryptedCredential)
+	populate(objectMap, "hostName", c.HostName)
+	populate(objectMap, "organizationName", c.OrganizationName)
+	populate(objectMap, "password", c.Password)
+	populate(objectMap, "port", c.Port)
+	populate(objectMap, "servicePrincipalCredential", c.ServicePrincipalCredential)
+	populate(objectMap, "servicePrincipalCredentialType", c.ServicePrincipalCredentialType)
+	populate(objectMap, "servicePrincipalId", c.ServicePrincipalID)
+	populate(objectMap, "serviceUri", c.ServiceURI)
+	populate(objectMap, "username", c.Username)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type CommonDataServiceForAppsLinkedServiceTypeProperties.
@@ -5988,6 +6332,19 @@ type ConcurLinkedServiceTypeProperties struct {
 	Username interface{} `json:"username,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type ConcurLinkedServiceTypeProperties.
+func (c ConcurLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "clientId", c.ClientID)
+	populate(objectMap, "encryptedCredential", c.EncryptedCredential)
+	populate(objectMap, "password", c.Password)
+	populate(objectMap, "useEncryptedEndpoints", c.UseEncryptedEndpoints)
+	populate(objectMap, "useHostVerification", c.UseHostVerification)
+	populate(objectMap, "usePeerVerification", c.UsePeerVerification)
+	populate(objectMap, "username", c.Username)
+	return json.Marshal(objectMap)
+}
+
 // UnmarshalJSON implements the json.Unmarshaller interface for type ConcurLinkedServiceTypeProperties.
 func (c *ConcurLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
@@ -6132,10 +6489,10 @@ func (c *ControlActivity) unmarshalInternal(rawMsg map[string]json.RawMessage) e
 type CopyActivity struct {
 	ExecutionActivity
 	// List of inputs for the activity.
-	Inputs *[]*DatasetReference `json:"inputs,omitempty"`
+	Inputs []*DatasetReference `json:"inputs,omitempty"`
 
 	// List of outputs for the activity.
-	Outputs *[]*DatasetReference `json:"outputs,omitempty"`
+	Outputs []*DatasetReference `json:"outputs,omitempty"`
 
 	// Copy activity properties.
 	TypeProperties *CopyActivityTypeProperties `json:"typeProperties,omitempty"`
@@ -6193,10 +6550,10 @@ type CopyActivityTypeProperties struct {
 	ParallelCopies interface{} `json:"parallelCopies,omitempty"`
 
 	// Preserve rules.
-	Preserve *[]interface{} `json:"preserve,omitempty"`
+	Preserve []interface{} `json:"preserve,omitempty"`
 
 	// Preserve Rules.
-	PreserveRules *[]interface{} `json:"preserveRules,omitempty"`
+	PreserveRules []interface{} `json:"preserveRules,omitempty"`
 
 	// Redirect incompatible row settings when EnableSkipIncompatibleRow is true.
 	RedirectIncompatibleRowSettings *RedirectIncompatibleRowSettings `json:"redirectIncompatibleRowSettings,omitempty"`
@@ -6212,6 +6569,23 @@ type CopyActivityTypeProperties struct {
 
 	// Copy activity translator. If not specified, tabular translator is used.
 	Translator interface{} `json:"translator,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type CopyActivityTypeProperties.
+func (c CopyActivityTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "dataIntegrationUnits", c.DataIntegrationUnits)
+	populate(objectMap, "enableSkipIncompatibleRow", c.EnableSkipIncompatibleRow)
+	populate(objectMap, "enableStaging", c.EnableStaging)
+	populate(objectMap, "parallelCopies", c.ParallelCopies)
+	populate(objectMap, "preserve", c.Preserve)
+	populate(objectMap, "preserveRules", c.PreserveRules)
+	populate(objectMap, "redirectIncompatibleRowSettings", c.RedirectIncompatibleRowSettings)
+	populate(objectMap, "sink", c.Sink)
+	populate(objectMap, "source", c.Source)
+	populate(objectMap, "stagingSettings", c.StagingSettings)
+	populate(objectMap, "translator", c.Translator)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type CopyActivityTypeProperties.
@@ -6280,7 +6654,7 @@ type CopySinkClassification interface {
 // CopySink - A copy activity sink.
 type CopySink struct {
 	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties *map[string]interface{}
+	AdditionalProperties map[string]interface{}
 
 	// The maximum concurrent connection count for the sink data store. Type: integer (or Expression with resultType integer).
 	MaxConcurrentConnections interface{} `json:"maxConcurrentConnections,omitempty"`
@@ -6323,7 +6697,7 @@ func (c CopySink) marshalInternal(discValue string) map[string]interface{} {
 	populate(objectMap, "writeBatchSize", c.WriteBatchSize)
 	populate(objectMap, "writeBatchTimeout", c.WriteBatchTimeout)
 	if c.AdditionalProperties != nil {
-		for key, val := range *c.AdditionalProperties {
+		for key, val := range c.AdditionalProperties {
 			objectMap[key] = val
 		}
 	}
@@ -6354,12 +6728,12 @@ func (c *CopySink) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 			delete(rawMsg, key)
 		default:
 			if c.AdditionalProperties == nil {
-				c.AdditionalProperties = &map[string]interface{}{}
+				c.AdditionalProperties = map[string]interface{}{}
 			}
 			if val != nil {
 				var aux interface{}
 				err = json.Unmarshal(val, &aux)
-				(*c.AdditionalProperties)[key] = aux
+				c.AdditionalProperties[key] = aux
 			}
 			delete(rawMsg, key)
 		}
@@ -6394,7 +6768,7 @@ type CopySourceClassification interface {
 // CopySource - A copy activity source.
 type CopySource struct {
 	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties *map[string]interface{}
+	AdditionalProperties map[string]interface{}
 
 	// The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer).
 	MaxConcurrentConnections interface{} `json:"maxConcurrentConnections,omitempty"`
@@ -6429,7 +6803,7 @@ func (c CopySource) marshalInternal(discValue string) map[string]interface{} {
 	c.Type = &discValue
 	objectMap["type"] = c.Type
 	if c.AdditionalProperties != nil {
-		for key, val := range *c.AdditionalProperties {
+		for key, val := range c.AdditionalProperties {
 			objectMap[key] = val
 		}
 	}
@@ -6454,12 +6828,12 @@ func (c *CopySource) unmarshalInternal(rawMsg map[string]json.RawMessage) error 
 			delete(rawMsg, key)
 		default:
 			if c.AdditionalProperties == nil {
-				c.AdditionalProperties = &map[string]interface{}{}
+				c.AdditionalProperties = map[string]interface{}{}
 			}
 			if val != nil {
 				var aux interface{}
 				err = json.Unmarshal(val, &aux)
-				(*c.AdditionalProperties)[key] = aux
+				c.AdditionalProperties[key] = aux
 			}
 			delete(rawMsg, key)
 		}
@@ -6482,7 +6856,7 @@ type CopyTranslatorClassification interface {
 // CopyTranslator - A copy activity translator.
 type CopyTranslator struct {
 	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties *map[string]interface{}
+	AdditionalProperties map[string]interface{}
 
 	// Copy translator type.
 	Type *string `json:"type,omitempty"`
@@ -6505,7 +6879,7 @@ func (c CopyTranslator) marshalInternal(discValue string) map[string]interface{}
 	c.Type = &discValue
 	objectMap["type"] = c.Type
 	if c.AdditionalProperties != nil {
-		for key, val := range *c.AdditionalProperties {
+		for key, val := range c.AdditionalProperties {
 			objectMap[key] = val
 		}
 	}
@@ -6521,12 +6895,12 @@ func (c *CopyTranslator) unmarshalInternal(rawMsg map[string]json.RawMessage) er
 			delete(rawMsg, key)
 		default:
 			if c.AdditionalProperties == nil {
-				c.AdditionalProperties = &map[string]interface{}{}
+				c.AdditionalProperties = map[string]interface{}{}
 			}
 			if val != nil {
 				var aux interface{}
 				err = json.Unmarshal(val, &aux)
-				(*c.AdditionalProperties)[key] = aux
+				c.AdditionalProperties[key] = aux
 			}
 			delete(rawMsg, key)
 		}
@@ -6588,6 +6962,17 @@ type CosmosDbLinkedServiceTypeProperties struct {
 	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
 	// with resultType string).
 	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type CosmosDbLinkedServiceTypeProperties.
+func (c CosmosDbLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "accountEndpoint", c.AccountEndpoint)
+	populate(objectMap, "accountKey", c.AccountKey)
+	populate(objectMap, "connectionString", c.ConnectionString)
+	populate(objectMap, "database", c.Database)
+	populate(objectMap, "encryptedCredential", c.EncryptedCredential)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type CosmosDbLinkedServiceTypeProperties.
@@ -7137,10 +7522,18 @@ func (c *CustomActivity) UnmarshalJSON(data []byte) error {
 // CustomActivityReferenceObject - Reference objects for custom activity
 type CustomActivityReferenceObject struct {
 	// Dataset references.
-	Datasets *[]*DatasetReference `json:"datasets,omitempty"`
+	Datasets []*DatasetReference `json:"datasets,omitempty"`
 
 	// Linked service references.
-	LinkedServices *[]*LinkedServiceReference `json:"linkedServices,omitempty"`
+	LinkedServices []*LinkedServiceReference `json:"linkedServices,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type CustomActivityReferenceObject.
+func (c CustomActivityReferenceObject) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "datasets", c.Datasets)
+	populate(objectMap, "linkedServices", c.LinkedServices)
+	return json.Marshal(objectMap)
 }
 
 // CustomActivityTypeProperties - Custom activity properties.
@@ -7150,7 +7543,7 @@ type CustomActivityTypeProperties struct {
 
 	// User defined property bag. There is no restriction on the keys or values that can be used. The user specified custom activity has the full responsibility
 	// to consume and interpret the content defined.
-	ExtendedProperties *map[string]interface{} `json:"extendedProperties,omitempty"`
+	ExtendedProperties map[string]interface{} `json:"extendedProperties,omitempty"`
 
 	// Folder path for resource files Type: string (or Expression with resultType string).
 	FolderPath interface{} `json:"folderPath,omitempty"`
@@ -7163,6 +7556,18 @@ type CustomActivityTypeProperties struct {
 
 	// The retention time for the files submitted for custom activity. Type: double (or Expression with resultType double).
 	RetentionTimeInDays interface{} `json:"retentionTimeInDays,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type CustomActivityTypeProperties.
+func (c CustomActivityTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "command", c.Command)
+	populate(objectMap, "extendedProperties", c.ExtendedProperties)
+	populate(objectMap, "folderPath", c.FolderPath)
+	populate(objectMap, "referenceObjects", c.ReferenceObjects)
+	populate(objectMap, "resourceLinkedService", c.ResourceLinkedService)
+	populate(objectMap, "retentionTimeInDays", c.RetentionTimeInDays)
+	return json.Marshal(objectMap)
 }
 
 // CustomDataSourceLinkedService - Custom linked service.
@@ -7251,37 +7656,6 @@ type CustomSetupBase struct {
 // GetCustomSetupBase implements the CustomSetupBaseClassification interface for type CustomSetupBase.
 func (c *CustomSetupBase) GetCustomSetupBase() *CustomSetupBase { return c }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type CustomSetupBase.
-func (c *CustomSetupBase) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
-	}
-	return c.unmarshalInternal(rawMsg)
-}
-
-func (c CustomSetupBase) marshalInternal(discValue string) map[string]interface{} {
-	objectMap := make(map[string]interface{})
-	c.Type = &discValue
-	objectMap["type"] = c.Type
-	return objectMap
-}
-
-func (c *CustomSetupBase) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "type":
-			err = unpopulate(val, &c.Type)
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return err
-		}
-	}
-	return nil
-}
-
 // CustomerManagedKeyDetails - Details of the customer managed key associated with the workspace
 type CustomerManagedKeyDetails struct {
 	// The key object of the workspace
@@ -7305,12 +7679,20 @@ type DWCopyCommandSettings struct {
 	// Additional options directly passed to SQL DW in Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType object).
 	// Example: "additionalOptions": { "MAXERRORS":
 	// "1000", "DATEFORMAT": "'ymd'" }
-	AdditionalOptions *map[string]*string `json:"additionalOptions,omitempty"`
+	AdditionalOptions map[string]*string `json:"additionalOptions,omitempty"`
 
 	// Specifies the default values for each target column in SQL DW. The default values in the property overwrite the DEFAULT constraint set in the DB, and
 	// identity column cannot have a default value. Type:
 	// array of objects (or Expression with resultType array of objects).
-	DefaultValues *[]*DWCopyCommandDefaultValue `json:"defaultValues,omitempty"`
+	DefaultValues []*DWCopyCommandDefaultValue `json:"defaultValues,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type DWCopyCommandSettings.
+func (d DWCopyCommandSettings) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "additionalOptions", d.AdditionalOptions)
+	populate(objectMap, "defaultValues", d.DefaultValues)
+	return json.Marshal(objectMap)
 }
 
 // DataFlowClassification provides polymorphic access to related types.
@@ -7325,7 +7707,7 @@ type DataFlowClassification interface {
 // DataFlow - Azure Synapse nested object which contains a flow with data movements and transformations.
 type DataFlow struct {
 	// List of tags that can be used for describing the data flow.
-	Annotations *[]interface{} `json:"annotations,omitempty"`
+	Annotations []interface{} `json:"annotations,omitempty"`
 
 	// The description of the data flow.
 	Description *string `json:"description,omitempty"`
@@ -7447,19 +7829,19 @@ type DataFlowDebugCommandResponseResponse struct {
 // DataFlowDebugPackage - Request body structure for starting data flow debug session.
 type DataFlowDebugPackage struct {
 	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties *map[string]interface{}
+	AdditionalProperties map[string]interface{}
 
 	// Data flow instance.
 	DataFlow *DataFlowDebugResource `json:"dataFlow,omitempty"`
 
 	// List of datasets.
-	Datasets *[]*DatasetDebugResource `json:"datasets,omitempty"`
+	Datasets []*DatasetDebugResource `json:"datasets,omitempty"`
 
 	// Data flow debug settings.
 	DebugSettings *DataFlowDebugPackageDebugSettings `json:"debugSettings,omitempty"`
 
 	// List of linked services.
-	LinkedServices *[]*LinkedServiceDebugResource `json:"linkedServices,omitempty"`
+	LinkedServices []*LinkedServiceDebugResource `json:"linkedServices,omitempty"`
 
 	// The ID of data flow debug session.
 	SessionID *string `json:"sessionId,omitempty"`
@@ -7478,7 +7860,7 @@ func (d DataFlowDebugPackage) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "sessionId", d.SessionID)
 	populate(objectMap, "staging", d.Staging)
 	if d.AdditionalProperties != nil {
-		for key, val := range *d.AdditionalProperties {
+		for key, val := range d.AdditionalProperties {
 			objectMap[key] = val
 		}
 	}
@@ -7514,12 +7896,12 @@ func (d *DataFlowDebugPackage) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		default:
 			if d.AdditionalProperties == nil {
-				d.AdditionalProperties = &map[string]interface{}{}
+				d.AdditionalProperties = map[string]interface{}{}
 			}
 			if val != nil {
 				var aux interface{}
 				err = json.Unmarshal(val, &aux)
-				(*d.AdditionalProperties)[key] = aux
+				d.AdditionalProperties[key] = aux
 			}
 			delete(rawMsg, key)
 		}
@@ -7536,10 +7918,19 @@ type DataFlowDebugPackageDebugSettings struct {
 	DatasetParameters interface{} `json:"datasetParameters,omitempty"`
 
 	// Data flow parameters.
-	Parameters *map[string]interface{} `json:"parameters,omitempty"`
+	Parameters map[string]interface{} `json:"parameters,omitempty"`
 
 	// Source setting for data flow debug.
-	SourceSettings *[]*DataFlowSourceSetting `json:"sourceSettings,omitempty"`
+	SourceSettings []*DataFlowSourceSetting `json:"sourceSettings,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type DataFlowDebugPackageDebugSettings.
+func (d DataFlowDebugPackageDebugSettings) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "datasetParameters", d.DatasetParameters)
+	populate(objectMap, "parameters", d.Parameters)
+	populate(objectMap, "sourceSettings", d.SourceSettings)
+	return json.Marshal(objectMap)
 }
 
 // DataFlowDebugPreviewDataRequest - Request body structure for data flow preview data.
@@ -7568,6 +7959,33 @@ type DataFlowDebugResource struct {
 	SubResourceDebugResource
 	// Data flow properties.
 	Properties DataFlowClassification `json:"properties,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type DataFlowDebugResource.
+func (d DataFlowDebugResource) MarshalJSON() ([]byte, error) {
+	objectMap := d.SubResourceDebugResource.marshalInternal()
+	populate(objectMap, "properties", d.Properties)
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type DataFlowDebugResource.
+func (d *DataFlowDebugResource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "properties":
+			d.Properties, err = unmarshalDataFlowClassification(val)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return d.SubResourceDebugResource.unmarshalInternal(rawMsg)
 }
 
 // DataFlowDebugResultResponse - Response body structure of data flow result for data preview, statistics or expression preview.
@@ -7603,7 +8021,7 @@ type DataFlowDebugSessionDeleteDataFlowDebugSessionOptions struct {
 // DataFlowDebugSessionInfo - Data flow debug session info.
 type DataFlowDebugSessionInfo struct {
 	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties *map[string]interface{}
+	AdditionalProperties map[string]interface{}
 
 	// Compute type of the cluster.
 	ComputeType *string `json:"computeType,omitempty"`
@@ -7646,7 +8064,7 @@ func (d DataFlowDebugSessionInfo) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "startTime", d.StartTime)
 	populate(objectMap, "timeToLiveInMinutes", d.TimeToLiveInMinutes)
 	if d.AdditionalProperties != nil {
-		for key, val := range *d.AdditionalProperties {
+		for key, val := range d.AdditionalProperties {
 			objectMap[key] = val
 		}
 	}
@@ -7691,12 +8109,12 @@ func (d *DataFlowDebugSessionInfo) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		default:
 			if d.AdditionalProperties == nil {
-				d.AdditionalProperties = &map[string]interface{}{}
+				d.AdditionalProperties = map[string]interface{}{}
 			}
 			if val != nil {
 				var aux interface{}
 				err = json.Unmarshal(val, &aux)
-				(*d.AdditionalProperties)[key] = aux
+				d.AdditionalProperties[key] = aux
 			}
 			delete(rawMsg, key)
 		}
@@ -7716,7 +8134,7 @@ type DataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspaceOptions struct {
 // DataFlowDebugStatisticsRequest - Request body structure for data flow statistics.
 type DataFlowDebugStatisticsRequest struct {
 	// List of column names.
-	Columns *[]*string `json:"columns,omitempty"`
+	Columns []*string `json:"columns,omitempty"`
 
 	// The data flow which contains the debug session.
 	DataFlowName *string `json:"dataFlowName,omitempty"`
@@ -7726,6 +8144,16 @@ type DataFlowDebugStatisticsRequest struct {
 
 	// The output stream name.
 	StreamName *string `json:"streamName,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type DataFlowDebugStatisticsRequest.
+func (d DataFlowDebugStatisticsRequest) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "columns", d.Columns)
+	populate(objectMap, "dataFlowName", d.DataFlowName)
+	populate(objectMap, "sessionId", d.SessionID)
+	populate(objectMap, "streamName", d.StreamName)
+	return json.Marshal(objectMap)
 }
 
 // DataFlowFolder - The folder that this data flow is in. If not specified, Data flow will appear at the root level.
@@ -7752,7 +8180,15 @@ type DataFlowListResponse struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// List of data flows.
-	Value *[]*DataFlowResource `json:"value,omitempty"`
+	Value []*DataFlowResource `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type DataFlowListResponse.
+func (d DataFlowListResponse) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", d.NextLink)
+	populate(objectMap, "value", d.Value)
+	return json.Marshal(objectMap)
 }
 
 // DataFlowListResponseResponse is the response envelope for operations that return a DataFlowListResponse type.
@@ -7767,7 +8203,7 @@ type DataFlowListResponseResponse struct {
 // DataFlowReference - Data flow reference type.
 type DataFlowReference struct {
 	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties *map[string]interface{}
+	AdditionalProperties map[string]interface{}
 
 	// Reference data flow parameters from dataset.
 	DatasetParameters interface{} `json:"datasetParameters,omitempty"`
@@ -7786,7 +8222,7 @@ func (d DataFlowReference) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "referenceName", d.ReferenceName)
 	populate(objectMap, "type", d.Type)
 	if d.AdditionalProperties != nil {
-		for key, val := range *d.AdditionalProperties {
+		for key, val := range d.AdditionalProperties {
 			objectMap[key] = val
 		}
 	}
@@ -7813,12 +8249,12 @@ func (d *DataFlowReference) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		default:
 			if d.AdditionalProperties == nil {
-				d.AdditionalProperties = &map[string]interface{}{}
+				d.AdditionalProperties = map[string]interface{}{}
 			}
 			if val != nil {
 				var aux interface{}
 				err = json.Unmarshal(val, &aux)
-				(*d.AdditionalProperties)[key] = aux
+				d.AdditionalProperties[key] = aux
 			}
 			delete(rawMsg, key)
 		}
@@ -7834,6 +8270,33 @@ type DataFlowResource struct {
 	SubResource
 	// Data flow properties.
 	Properties DataFlowClassification `json:"properties,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type DataFlowResource.
+func (d DataFlowResource) MarshalJSON() ([]byte, error) {
+	objectMap := d.SubResource.marshalInternal()
+	populate(objectMap, "properties", d.Properties)
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type DataFlowResource.
+func (d *DataFlowResource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "properties":
+			d.Properties, err = unmarshalDataFlowClassification(val)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return d.SubResource.unmarshalInternal(rawMsg)
 }
 
 // DataFlowResourcePollerResponse is the response envelope for operations that asynchronously return a DataFlowResource type.
@@ -7874,7 +8337,7 @@ type DataFlowSource struct {
 // DataFlowSourceSetting - Definition of data flow source setting for debug.
 type DataFlowSourceSetting struct {
 	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties *map[string]interface{}
+	AdditionalProperties map[string]interface{}
 
 	// Defines the row limit of data flow source in debug.
 	RowLimit *int32 `json:"rowLimit,omitempty"`
@@ -7889,7 +8352,7 @@ func (d DataFlowSourceSetting) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "rowLimit", d.RowLimit)
 	populate(objectMap, "sourceName", d.SourceName)
 	if d.AdditionalProperties != nil {
-		for key, val := range *d.AdditionalProperties {
+		for key, val := range d.AdditionalProperties {
 			objectMap[key] = val
 		}
 	}
@@ -7913,12 +8376,12 @@ func (d *DataFlowSourceSetting) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		default:
 			if d.AdditionalProperties == nil {
-				d.AdditionalProperties = &map[string]interface{}{}
+				d.AdditionalProperties = map[string]interface{}{}
 			}
 			if val != nil {
 				var aux interface{}
 				err = json.Unmarshal(val, &aux)
-				(*d.AdditionalProperties)[key] = aux
+				d.AdditionalProperties[key] = aux
 			}
 			delete(rawMsg, key)
 		}
@@ -7981,7 +8444,7 @@ type DataLakeAnalyticsUSQLActivityTypeProperties struct {
 	DegreeOfParallelism interface{} `json:"degreeOfParallelism,omitempty"`
 
 	// Parameters for U-SQL job request.
-	Parameters *map[string]interface{} `json:"parameters,omitempty"`
+	Parameters map[string]interface{} `json:"parameters,omitempty"`
 
 	// Determines which jobs out of all that are queued should be selected to run first. The lower the number, the higher the priority. Default value is 1000.
 	// Type: integer (or Expression with resultType
@@ -7996,6 +8459,19 @@ type DataLakeAnalyticsUSQLActivityTypeProperties struct {
 
 	// Case-sensitive path to folder that contains the U-SQL script. Type: string (or Expression with resultType string).
 	ScriptPath interface{} `json:"scriptPath,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type DataLakeAnalyticsUSQLActivityTypeProperties.
+func (d DataLakeAnalyticsUSQLActivityTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "compilationMode", d.CompilationMode)
+	populate(objectMap, "degreeOfParallelism", d.DegreeOfParallelism)
+	populate(objectMap, "parameters", d.Parameters)
+	populate(objectMap, "priority", d.Priority)
+	populate(objectMap, "runtimeVersion", d.RuntimeVersion)
+	populate(objectMap, "scriptLinkedService", d.ScriptLinkedService)
+	populate(objectMap, "scriptPath", d.ScriptPath)
+	return json.Marshal(objectMap)
 }
 
 // DataLakeStorageAccountDetails - Details of the data lake storage account associated with the workspace
@@ -8045,14 +8521,23 @@ func (d *DatabricksNotebookActivity) UnmarshalJSON(data []byte) error {
 type DatabricksNotebookActivityTypeProperties struct {
 	// Base parameters to be used for each run of this job.If the notebook takes a parameter that is not specified, the default value from the notebook will
 	// be used.
-	BaseParameters *map[string]interface{} `json:"baseParameters,omitempty"`
+	BaseParameters map[string]interface{} `json:"baseParameters,omitempty"`
 
 	// A list of libraries to be installed on the cluster that will execute the job.
-	Libraries *[]map[string]interface{} `json:"libraries,omitempty"`
+	Libraries []map[string]interface{} `json:"libraries,omitempty"`
 
 	// The absolute path of the notebook to be run in the Databricks Workspace. This path must begin with a slash. Type: string (or Expression with resultType
 	// string).
 	NotebookPath interface{} `json:"notebookPath,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type DatabricksNotebookActivityTypeProperties.
+func (d DatabricksNotebookActivityTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "baseParameters", d.BaseParameters)
+	populate(objectMap, "libraries", d.Libraries)
+	populate(objectMap, "notebookPath", d.NotebookPath)
+	return json.Marshal(objectMap)
 }
 
 // DatabricksSparkJarActivity - DatabricksSparkJar activity.
@@ -8092,14 +8577,23 @@ func (d *DatabricksSparkJarActivity) UnmarshalJSON(data []byte) error {
 // DatabricksSparkJarActivityTypeProperties - Databricks SparkJar activity properties.
 type DatabricksSparkJarActivityTypeProperties struct {
 	// A list of libraries to be installed on the cluster that will execute the job.
-	Libraries *[]map[string]interface{} `json:"libraries,omitempty"`
+	Libraries []map[string]interface{} `json:"libraries,omitempty"`
 
 	// The full name of the class containing the main method to be executed. This class must be contained in a JAR provided as a library. Type: string (or Expression
 	// with resultType string).
 	MainClassName interface{} `json:"mainClassName,omitempty"`
 
 	// Parameters that will be passed to the main method.
-	Parameters *[]interface{} `json:"parameters,omitempty"`
+	Parameters []interface{} `json:"parameters,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type DatabricksSparkJarActivityTypeProperties.
+func (d DatabricksSparkJarActivityTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "libraries", d.Libraries)
+	populate(objectMap, "mainClassName", d.MainClassName)
+	populate(objectMap, "parameters", d.Parameters)
+	return json.Marshal(objectMap)
 }
 
 // DatabricksSparkPythonActivity - DatabricksSparkPython activity.
@@ -8139,13 +8633,22 @@ func (d *DatabricksSparkPythonActivity) UnmarshalJSON(data []byte) error {
 // DatabricksSparkPythonActivityTypeProperties - Databricks SparkPython activity properties.
 type DatabricksSparkPythonActivityTypeProperties struct {
 	// A list of libraries to be installed on the cluster that will execute the job.
-	Libraries *[]map[string]interface{} `json:"libraries,omitempty"`
+	Libraries []map[string]interface{} `json:"libraries,omitempty"`
 
 	// Command line parameters that will be passed to the Python file.
-	Parameters *[]interface{} `json:"parameters,omitempty"`
+	Parameters []interface{} `json:"parameters,omitempty"`
 
 	// The URI of the Python file to be executed. DBFS paths are supported. Type: string (or Expression with resultType string).
 	PythonFile interface{} `json:"pythonFile,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type DatabricksSparkPythonActivityTypeProperties.
+func (d DatabricksSparkPythonActivityTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "libraries", d.Libraries)
+	populate(objectMap, "parameters", d.Parameters)
+	populate(objectMap, "pythonFile", d.PythonFile)
+	return json.Marshal(objectMap)
 }
 
 // DatasetClassification provides polymorphic access to related types.
@@ -8175,10 +8678,10 @@ type DatasetClassification interface {
 // Dataset - The Azure Data Factory nested object which identifies data within different data stores, such as tables, files, folders, and documents.
 type Dataset struct {
 	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties *map[string]interface{}
+	AdditionalProperties map[string]interface{}
 
 	// List of tags that can be used for describing the Dataset.
-	Annotations *[]interface{} `json:"annotations,omitempty"`
+	Annotations []interface{} `json:"annotations,omitempty"`
 
 	// Dataset description.
 	Description *string `json:"description,omitempty"`
@@ -8190,7 +8693,7 @@ type Dataset struct {
 	LinkedServiceName *LinkedServiceReference `json:"linkedServiceName,omitempty"`
 
 	// Parameters for dataset.
-	Parameters *map[string]*ParameterSpecification `json:"parameters,omitempty"`
+	Parameters map[string]*ParameterSpecification `json:"parameters,omitempty"`
 
 	// Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement.
 	Schema interface{} `json:"schema,omitempty"`
@@ -8226,7 +8729,7 @@ func (d Dataset) marshalInternal(discValue string) map[string]interface{} {
 	d.Type = &discValue
 	objectMap["type"] = d.Type
 	if d.AdditionalProperties != nil {
-		for key, val := range *d.AdditionalProperties {
+		for key, val := range d.AdditionalProperties {
 			objectMap[key] = val
 		}
 	}
@@ -8263,12 +8766,12 @@ func (d *Dataset) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 			delete(rawMsg, key)
 		default:
 			if d.AdditionalProperties == nil {
-				d.AdditionalProperties = &map[string]interface{}{}
+				d.AdditionalProperties = map[string]interface{}{}
 			}
 			if val != nil {
 				var aux interface{}
 				err = json.Unmarshal(val, &aux)
-				(*d.AdditionalProperties)[key] = aux
+				d.AdditionalProperties[key] = aux
 			}
 			delete(rawMsg, key)
 		}
@@ -8318,7 +8821,7 @@ type DatasetCompressionClassification interface {
 // DatasetCompression - The compression method used on a dataset.
 type DatasetCompression struct {
 	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties *map[string]interface{}
+	AdditionalProperties map[string]interface{}
 
 	// Type of dataset compression.
 	Type *string `json:"type,omitempty"`
@@ -8341,7 +8844,7 @@ func (d DatasetCompression) marshalInternal(discValue string) map[string]interfa
 	d.Type = &discValue
 	objectMap["type"] = d.Type
 	if d.AdditionalProperties != nil {
-		for key, val := range *d.AdditionalProperties {
+		for key, val := range d.AdditionalProperties {
 			objectMap[key] = val
 		}
 	}
@@ -8357,12 +8860,12 @@ func (d *DatasetCompression) unmarshalInternal(rawMsg map[string]json.RawMessage
 			delete(rawMsg, key)
 		default:
 			if d.AdditionalProperties == nil {
-				d.AdditionalProperties = &map[string]interface{}{}
+				d.AdditionalProperties = map[string]interface{}{}
 			}
 			if val != nil {
 				var aux interface{}
 				err = json.Unmarshal(val, &aux)
-				(*d.AdditionalProperties)[key] = aux
+				d.AdditionalProperties[key] = aux
 			}
 			delete(rawMsg, key)
 		}
@@ -8387,6 +8890,33 @@ type DatasetDebugResource struct {
 	SubResourceDebugResource
 	// Dataset properties.
 	Properties DatasetClassification `json:"properties,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type DatasetDebugResource.
+func (d DatasetDebugResource) MarshalJSON() ([]byte, error) {
+	objectMap := d.SubResourceDebugResource.marshalInternal()
+	populate(objectMap, "properties", d.Properties)
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type DatasetDebugResource.
+func (d *DatasetDebugResource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "properties":
+			d.Properties, err = unmarshalDatasetClassification(val)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return d.SubResourceDebugResource.unmarshalInternal(rawMsg)
 }
 
 // DatasetDeflateCompression - The Deflate compression method used on a dataset.
@@ -8481,7 +9011,15 @@ type DatasetListResponse struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// List of datasets.
-	Value *[]*DatasetResource `json:"value,omitempty"`
+	Value []*DatasetResource `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type DatasetListResponse.
+func (d DatasetListResponse) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", d.NextLink)
+	populate(objectMap, "value", d.Value)
+	return json.Marshal(objectMap)
 }
 
 // DatasetListResponseResponse is the response envelope for operations that return a DatasetListResponse type.
@@ -8507,7 +9045,7 @@ type DatasetLocationClassification interface {
 // DatasetLocation - Dataset location.
 type DatasetLocation struct {
 	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties *map[string]interface{}
+	AdditionalProperties map[string]interface{}
 
 	// Specify the file name of dataset. Type: string (or Expression with resultType string).
 	FileName interface{} `json:"fileName,omitempty"`
@@ -8538,7 +9076,7 @@ func (d DatasetLocation) marshalInternal(discValue string) map[string]interface{
 	d.Type = &discValue
 	objectMap["type"] = d.Type
 	if d.AdditionalProperties != nil {
-		for key, val := range *d.AdditionalProperties {
+		for key, val := range d.AdditionalProperties {
 			objectMap[key] = val
 		}
 	}
@@ -8560,12 +9098,12 @@ func (d *DatasetLocation) unmarshalInternal(rawMsg map[string]json.RawMessage) e
 			delete(rawMsg, key)
 		default:
 			if d.AdditionalProperties == nil {
-				d.AdditionalProperties = &map[string]interface{}{}
+				d.AdditionalProperties = map[string]interface{}{}
 			}
 			if val != nil {
 				var aux interface{}
 				err = json.Unmarshal(val, &aux)
-				(*d.AdditionalProperties)[key] = aux
+				d.AdditionalProperties[key] = aux
 			}
 			delete(rawMsg, key)
 		}
@@ -8579,7 +9117,7 @@ func (d *DatasetLocation) unmarshalInternal(rawMsg map[string]json.RawMessage) e
 // DatasetReference - Dataset reference type.
 type DatasetReference struct {
 	// Arguments for dataset.
-	Parameters *map[string]interface{} `json:"parameters,omitempty"`
+	Parameters map[string]interface{} `json:"parameters,omitempty"`
 
 	// Reference dataset name.
 	ReferenceName *string `json:"referenceName,omitempty"`
@@ -8588,11 +9126,47 @@ type DatasetReference struct {
 	Type *DatasetReferenceType `json:"type,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type DatasetReference.
+func (d DatasetReference) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "parameters", d.Parameters)
+	populate(objectMap, "referenceName", d.ReferenceName)
+	populate(objectMap, "type", d.Type)
+	return json.Marshal(objectMap)
+}
+
 // DatasetResource - Dataset resource type.
 type DatasetResource struct {
 	SubResource
 	// Dataset properties.
 	Properties DatasetClassification `json:"properties,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type DatasetResource.
+func (d DatasetResource) MarshalJSON() ([]byte, error) {
+	objectMap := d.SubResource.marshalInternal()
+	populate(objectMap, "properties", d.Properties)
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type DatasetResource.
+func (d *DatasetResource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "properties":
+			d.Properties, err = unmarshalDatasetClassification(val)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return d.SubResource.unmarshalInternal(rawMsg)
 }
 
 // DatasetResourcePollerResponse is the response envelope for operations that asynchronously return a DatasetResource type.
@@ -8619,7 +9193,7 @@ type DatasetResourceResponse struct {
 // DatasetSchemaDataElement - Columns that define the physical type schema of the dataset.
 type DatasetSchemaDataElement struct {
 	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties *map[string]interface{}
+	AdditionalProperties map[string]interface{}
 
 	// Name of the schema column. Type: string (or Expression with resultType string).
 	Name interface{} `json:"name,omitempty"`
@@ -8634,7 +9208,7 @@ func (d DatasetSchemaDataElement) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "name", d.Name)
 	populate(objectMap, "type", d.Type)
 	if d.AdditionalProperties != nil {
-		for key, val := range *d.AdditionalProperties {
+		for key, val := range d.AdditionalProperties {
 			objectMap[key] = val
 		}
 	}
@@ -8658,12 +9232,12 @@ func (d *DatasetSchemaDataElement) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		default:
 			if d.AdditionalProperties == nil {
-				d.AdditionalProperties = &map[string]interface{}{}
+				d.AdditionalProperties = map[string]interface{}{}
 			}
 			if val != nil {
 				var aux interface{}
 				err = json.Unmarshal(val, &aux)
-				(*d.AdditionalProperties)[key] = aux
+				d.AdditionalProperties[key] = aux
 			}
 			delete(rawMsg, key)
 		}
@@ -8686,7 +9260,7 @@ type DatasetStorageFormatClassification interface {
 // DatasetStorageFormat - The format definition of a storage.
 type DatasetStorageFormat struct {
 	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties *map[string]interface{}
+	AdditionalProperties map[string]interface{}
 
 	// Deserializer. Type: string (or Expression with resultType string).
 	Deserializer interface{} `json:"deserializer,omitempty"`
@@ -8717,7 +9291,7 @@ func (d DatasetStorageFormat) marshalInternal(discValue string) map[string]inter
 	d.Type = &discValue
 	objectMap["type"] = d.Type
 	if d.AdditionalProperties != nil {
-		for key, val := range *d.AdditionalProperties {
+		for key, val := range d.AdditionalProperties {
 			objectMap[key] = val
 		}
 	}
@@ -8739,12 +9313,12 @@ func (d *DatasetStorageFormat) unmarshalInternal(rawMsg map[string]json.RawMessa
 			delete(rawMsg, key)
 		default:
 			if d.AdditionalProperties == nil {
-				d.AdditionalProperties = &map[string]interface{}{}
+				d.AdditionalProperties = map[string]interface{}{}
 			}
 			if val != nil {
 				var aux interface{}
 				err = json.Unmarshal(val, &aux)
-				(*d.AdditionalProperties)[key] = aux
+				d.AdditionalProperties[key] = aux
 			}
 			delete(rawMsg, key)
 		}
@@ -8849,6 +9423,20 @@ type Db2LinkedServiceTypeProperties struct {
 
 	// Username for authentication. Type: string (or Expression with resultType string).
 	Username interface{} `json:"username,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type Db2LinkedServiceTypeProperties.
+func (d Db2LinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "authenticationType", d.AuthenticationType)
+	populate(objectMap, "certificateCommonName", d.CertificateCommonName)
+	populate(objectMap, "database", d.Database)
+	populate(objectMap, "encryptedCredential", d.EncryptedCredential)
+	populate(objectMap, "packageCollection", d.PackageCollection)
+	populate(objectMap, "password", d.Password)
+	populate(objectMap, "server", d.Server)
+	populate(objectMap, "username", d.Username)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type Db2LinkedServiceTypeProperties.
@@ -9100,6 +9688,22 @@ type DelimitedTextDatasetTypeProperties struct {
 
 	// The row delimiter. Type: string (or Expression with resultType string).
 	RowDelimiter interface{} `json:"rowDelimiter,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type DelimitedTextDatasetTypeProperties.
+func (d DelimitedTextDatasetTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "columnDelimiter", d.ColumnDelimiter)
+	populate(objectMap, "compressionCodec", d.CompressionCodec)
+	populate(objectMap, "compressionLevel", d.CompressionLevel)
+	populate(objectMap, "encodingName", d.EncodingName)
+	populate(objectMap, "escapeChar", d.EscapeChar)
+	populate(objectMap, "firstRowAsHeader", d.FirstRowAsHeader)
+	populate(objectMap, "location", d.Location)
+	populate(objectMap, "nullValue", d.NullValue)
+	populate(objectMap, "quoteChar", d.QuoteChar)
+	populate(objectMap, "rowDelimiter", d.RowDelimiter)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DelimitedTextDatasetTypeProperties.
@@ -9691,6 +10295,18 @@ type DynamicsAXLinkedServiceTypeProperties struct {
 	URL interface{} `json:"url,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type DynamicsAXLinkedServiceTypeProperties.
+func (d DynamicsAXLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "aadResourceId", d.AADResourceID)
+	populate(objectMap, "encryptedCredential", d.EncryptedCredential)
+	populate(objectMap, "servicePrincipalId", d.ServicePrincipalID)
+	populate(objectMap, "servicePrincipalKey", d.ServicePrincipalKey)
+	populate(objectMap, "tenant", d.Tenant)
+	populate(objectMap, "url", d.URL)
+	return json.Marshal(objectMap)
+}
+
 // UnmarshalJSON implements the json.Unmarshaller interface for type DynamicsAXLinkedServiceTypeProperties.
 func (d *DynamicsAXLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
@@ -9924,6 +10540,24 @@ type DynamicsCrmLinkedServiceTypeProperties struct {
 
 	// User name to access the Dynamics CRM instance. Type: string (or Expression with resultType string).
 	Username interface{} `json:"username,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type DynamicsCrmLinkedServiceTypeProperties.
+func (d DynamicsCrmLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "authenticationType", d.AuthenticationType)
+	populate(objectMap, "deploymentType", d.DeploymentType)
+	populate(objectMap, "encryptedCredential", d.EncryptedCredential)
+	populate(objectMap, "hostName", d.HostName)
+	populate(objectMap, "organizationName", d.OrganizationName)
+	populate(objectMap, "password", d.Password)
+	populate(objectMap, "port", d.Port)
+	populate(objectMap, "servicePrincipalCredential", d.ServicePrincipalCredential)
+	populate(objectMap, "servicePrincipalCredentialType", d.ServicePrincipalCredentialType)
+	populate(objectMap, "servicePrincipalId", d.ServicePrincipalID)
+	populate(objectMap, "serviceUri", d.ServiceURI)
+	populate(objectMap, "username", d.Username)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DynamicsCrmLinkedServiceTypeProperties.
@@ -10188,6 +10822,24 @@ type DynamicsLinkedServiceTypeProperties struct {
 	Username interface{} `json:"username,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type DynamicsLinkedServiceTypeProperties.
+func (d DynamicsLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "authenticationType", d.AuthenticationType)
+	populate(objectMap, "deploymentType", d.DeploymentType)
+	populate(objectMap, "encryptedCredential", d.EncryptedCredential)
+	populate(objectMap, "hostName", d.HostName)
+	populate(objectMap, "organizationName", d.OrganizationName)
+	populate(objectMap, "password", d.Password)
+	populate(objectMap, "port", d.Port)
+	populate(objectMap, "servicePrincipalCredential", d.ServicePrincipalCredential)
+	populate(objectMap, "servicePrincipalCredentialType", d.ServicePrincipalCredentialType)
+	populate(objectMap, "servicePrincipalId", d.ServicePrincipalID)
+	populate(objectMap, "serviceUri", d.ServiceURI)
+	populate(objectMap, "username", d.Username)
+	return json.Marshal(objectMap)
+}
+
 // UnmarshalJSON implements the json.Unmarshaller interface for type DynamicsLinkedServiceTypeProperties.
 func (d *DynamicsLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
@@ -10384,6 +11036,19 @@ type EloquaLinkedServiceTypeProperties struct {
 	Username interface{} `json:"username,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type EloquaLinkedServiceTypeProperties.
+func (e EloquaLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "encryptedCredential", e.EncryptedCredential)
+	populate(objectMap, "endpoint", e.Endpoint)
+	populate(objectMap, "password", e.Password)
+	populate(objectMap, "useEncryptedEndpoints", e.UseEncryptedEndpoints)
+	populate(objectMap, "useHostVerification", e.UseHostVerification)
+	populate(objectMap, "usePeerVerification", e.UsePeerVerification)
+	populate(objectMap, "username", e.Username)
+	return json.Marshal(objectMap)
+}
+
 // UnmarshalJSON implements the json.Unmarshaller interface for type EloquaLinkedServiceTypeProperties.
 func (e *EloquaLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
@@ -10535,19 +11200,30 @@ func (e ErrorContract) Error() string {
 // error response format.)
 type ErrorResponse struct {
 	// READ-ONLY; The error additional info.
-	AdditionalInfo *[]*ErrorAdditionalInfo `json:"additionalInfo,omitempty" azure:"ro"`
+	AdditionalInfo []*ErrorAdditionalInfo `json:"additionalInfo,omitempty" azure:"ro"`
 
 	// READ-ONLY; The error code.
 	Code *string `json:"code,omitempty" azure:"ro"`
 
 	// READ-ONLY; The error details.
-	Details *[]*ErrorResponse `json:"details,omitempty" azure:"ro"`
+	Details []*ErrorResponse `json:"details,omitempty" azure:"ro"`
 
 	// READ-ONLY; The error message.
 	Message *string `json:"message,omitempty" azure:"ro"`
 
 	// READ-ONLY; The error target.
 	Target *string `json:"target,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ErrorResponse.
+func (e ErrorResponse) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "additionalInfo", e.AdditionalInfo)
+	populate(objectMap, "code", e.Code)
+	populate(objectMap, "details", e.Details)
+	populate(objectMap, "message", e.Message)
+	populate(objectMap, "target", e.Target)
+	return json.Marshal(objectMap)
 }
 
 // EvaluateDataFlowExpressionRequest - Request body structure for data flow expression preview.
@@ -10663,13 +11339,22 @@ func (e *ExecutePipelineActivity) UnmarshalJSON(data []byte) error {
 // ExecutePipelineActivityTypeProperties - Execute pipeline activity properties.
 type ExecutePipelineActivityTypeProperties struct {
 	// Pipeline parameters.
-	Parameters *map[string]interface{} `json:"parameters,omitempty"`
+	Parameters map[string]interface{} `json:"parameters,omitempty"`
 
 	// Pipeline reference.
 	Pipeline *PipelineReference `json:"pipeline,omitempty"`
 
 	// Defines whether activity execution will wait for the dependent pipeline execution to finish. Default is false.
 	WaitOnCompletion *bool `json:"waitOnCompletion,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ExecutePipelineActivityTypeProperties.
+func (e ExecutePipelineActivityTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "parameters", e.Parameters)
+	populate(objectMap, "pipeline", e.Pipeline)
+	populate(objectMap, "waitOnCompletion", e.WaitOnCompletion)
+	return json.Marshal(objectMap)
 }
 
 // ExecuteSSISPackageActivity - Execute SSIS package activity.
@@ -10724,25 +11409,43 @@ type ExecuteSSISPackageActivityTypeProperties struct {
 	LoggingLevel interface{} `json:"loggingLevel,omitempty"`
 
 	// The package level connection managers to execute the SSIS package.
-	PackageConnectionManagers *map[string]map[string]*SSISExecutionParameter `json:"packageConnectionManagers,omitempty"`
+	PackageConnectionManagers map[string]map[string]*SSISExecutionParameter `json:"packageConnectionManagers,omitempty"`
 
 	// SSIS package location.
 	PackageLocation *SSISPackageLocation `json:"packageLocation,omitempty"`
 
 	// The package level parameters to execute the SSIS package.
-	PackageParameters *map[string]*SSISExecutionParameter `json:"packageParameters,omitempty"`
+	PackageParameters map[string]*SSISExecutionParameter `json:"packageParameters,omitempty"`
 
 	// The project level connection managers to execute the SSIS package.
-	ProjectConnectionManagers *map[string]map[string]*SSISExecutionParameter `json:"projectConnectionManagers,omitempty"`
+	ProjectConnectionManagers map[string]map[string]*SSISExecutionParameter `json:"projectConnectionManagers,omitempty"`
 
 	// The project level parameters to execute the SSIS package.
-	ProjectParameters *map[string]*SSISExecutionParameter `json:"projectParameters,omitempty"`
+	ProjectParameters map[string]*SSISExecutionParameter `json:"projectParameters,omitempty"`
 
 	// The property overrides to execute the SSIS package.
-	PropertyOverrides *map[string]*SSISPropertyOverride `json:"propertyOverrides,omitempty"`
+	PropertyOverrides map[string]*SSISPropertyOverride `json:"propertyOverrides,omitempty"`
 
 	// Specifies the runtime to execute SSIS package. The value should be "x86" or "x64". Type: string (or Expression with resultType string).
 	Runtime interface{} `json:"runtime,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ExecuteSSISPackageActivityTypeProperties.
+func (e ExecuteSSISPackageActivityTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "connectVia", e.ConnectVia)
+	populate(objectMap, "environmentPath", e.EnvironmentPath)
+	populate(objectMap, "executionCredential", e.ExecutionCredential)
+	populate(objectMap, "logLocation", e.LogLocation)
+	populate(objectMap, "loggingLevel", e.LoggingLevel)
+	populate(objectMap, "packageConnectionManagers", e.PackageConnectionManagers)
+	populate(objectMap, "packageLocation", e.PackageLocation)
+	populate(objectMap, "packageParameters", e.PackageParameters)
+	populate(objectMap, "projectConnectionManagers", e.ProjectConnectionManagers)
+	populate(objectMap, "projectParameters", e.ProjectParameters)
+	populate(objectMap, "propertyOverrides", e.PropertyOverrides)
+	populate(objectMap, "runtime", e.Runtime)
+	return json.Marshal(objectMap)
 }
 
 // ExecutionActivityClassification provides polymorphic access to related types.
@@ -10888,6 +11591,16 @@ type FileServerLinkedServiceTypeProperties struct {
 
 	// User ID to logon the server. Type: string (or Expression with resultType string).
 	UserID interface{} `json:"userId,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type FileServerLinkedServiceTypeProperties.
+func (f FileServerLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "encryptedCredential", f.EncryptedCredential)
+	populate(objectMap, "host", f.Host)
+	populate(objectMap, "password", f.Password)
+	populate(objectMap, "userId", f.UserID)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type FileServerLinkedServiceTypeProperties.
@@ -11158,7 +11871,7 @@ func (f *ForEachActivity) UnmarshalJSON(data []byte) error {
 // ForEachActivityTypeProperties - ForEach activity properties.
 type ForEachActivityTypeProperties struct {
 	// List of activities to execute .
-	Activities *[]ActivityClassification `json:"activities,omitempty"`
+	Activities []ActivityClassification `json:"activities,omitempty"`
 
 	// Batch count to be used for controlling the number of parallel execution (when isSequential is set to false).
 	BatchCount *int32 `json:"batchCount,omitempty"`
@@ -11168,6 +11881,16 @@ type ForEachActivityTypeProperties struct {
 
 	// Collection to iterate.
 	Items *Expression `json:"items,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ForEachActivityTypeProperties.
+func (f ForEachActivityTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "activities", f.Activities)
+	populate(objectMap, "batchCount", f.BatchCount)
+	populate(objectMap, "isSequential", f.IsSequential)
+	populate(objectMap, "items", f.Items)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ForEachActivityTypeProperties.
@@ -11211,7 +11934,7 @@ type FormatReadSettingsClassification interface {
 // FormatReadSettings - Format read settings.
 type FormatReadSettings struct {
 	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties *map[string]interface{}
+	AdditionalProperties map[string]interface{}
 
 	// The read setting type.
 	Type *string `json:"type,omitempty"`
@@ -11234,7 +11957,7 @@ func (f FormatReadSettings) marshalInternal(discValue string) map[string]interfa
 	f.Type = &discValue
 	objectMap["type"] = f.Type
 	if f.AdditionalProperties != nil {
-		for key, val := range *f.AdditionalProperties {
+		for key, val := range f.AdditionalProperties {
 			objectMap[key] = val
 		}
 	}
@@ -11250,12 +11973,12 @@ func (f *FormatReadSettings) unmarshalInternal(rawMsg map[string]json.RawMessage
 			delete(rawMsg, key)
 		default:
 			if f.AdditionalProperties == nil {
-				f.AdditionalProperties = &map[string]interface{}{}
+				f.AdditionalProperties = map[string]interface{}{}
 			}
 			if val != nil {
 				var aux interface{}
 				err = json.Unmarshal(val, &aux)
-				(*f.AdditionalProperties)[key] = aux
+				f.AdditionalProperties[key] = aux
 			}
 			delete(rawMsg, key)
 		}
@@ -11278,7 +12001,7 @@ type FormatWriteSettingsClassification interface {
 // FormatWriteSettings - Format write settings.
 type FormatWriteSettings struct {
 	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties *map[string]interface{}
+	AdditionalProperties map[string]interface{}
 
 	// The write setting type.
 	Type *string `json:"type,omitempty"`
@@ -11301,7 +12024,7 @@ func (f FormatWriteSettings) marshalInternal(discValue string) map[string]interf
 	f.Type = &discValue
 	objectMap["type"] = f.Type
 	if f.AdditionalProperties != nil {
-		for key, val := range *f.AdditionalProperties {
+		for key, val := range f.AdditionalProperties {
 			objectMap[key] = val
 		}
 	}
@@ -11317,12 +12040,12 @@ func (f *FormatWriteSettings) unmarshalInternal(rawMsg map[string]json.RawMessag
 			delete(rawMsg, key)
 		default:
 			if f.AdditionalProperties == nil {
-				f.AdditionalProperties = &map[string]interface{}{}
+				f.AdditionalProperties = map[string]interface{}{}
 			}
 			if val != nil {
 				var aux interface{}
 				err = json.Unmarshal(val, &aux)
-				(*f.AdditionalProperties)[key] = aux
+				f.AdditionalProperties[key] = aux
 			}
 			delete(rawMsg, key)
 		}
@@ -11452,6 +12175,20 @@ type FtpServerLinkedServiceTypeProperties struct {
 	UserName interface{} `json:"userName,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type FtpServerLinkedServiceTypeProperties.
+func (f FtpServerLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "authenticationType", f.AuthenticationType)
+	populate(objectMap, "enableSsl", f.EnableSSL)
+	populate(objectMap, "enableServerCertificateValidation", f.EnableServerCertificateValidation)
+	populate(objectMap, "encryptedCredential", f.EncryptedCredential)
+	populate(objectMap, "host", f.Host)
+	populate(objectMap, "password", f.Password)
+	populate(objectMap, "port", f.Port)
+	populate(objectMap, "userName", f.UserName)
+	return json.Marshal(objectMap)
+}
+
 // UnmarshalJSON implements the json.Unmarshaller interface for type FtpServerLinkedServiceTypeProperties.
 func (f *FtpServerLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
@@ -11550,7 +12287,15 @@ type GetMetadataActivityTypeProperties struct {
 	Dataset *DatasetReference `json:"dataset,omitempty"`
 
 	// Fields of metadata to get from dataset.
-	FieldList *[]interface{} `json:"fieldList,omitempty"`
+	FieldList []interface{} `json:"fieldList,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type GetMetadataActivityTypeProperties.
+func (g GetMetadataActivityTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "dataset", g.Dataset)
+	populate(objectMap, "fieldList", g.FieldList)
+	return json.Marshal(objectMap)
 }
 
 // GetSsisObjectMetadataRequest - The request payload of get SSIS object metadata.
@@ -11653,6 +12398,23 @@ type GoogleAdWordsLinkedServiceTypeProperties struct {
 
 	// Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false.
 	UseSystemTrustStore interface{} `json:"useSystemTrustStore,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type GoogleAdWordsLinkedServiceTypeProperties.
+func (g GoogleAdWordsLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "authenticationType", g.AuthenticationType)
+	populate(objectMap, "clientCustomerID", g.ClientCustomerID)
+	populate(objectMap, "clientId", g.ClientID)
+	populate(objectMap, "clientSecret", g.ClientSecret)
+	populate(objectMap, "developerToken", g.DeveloperToken)
+	populate(objectMap, "email", g.Email)
+	populate(objectMap, "encryptedCredential", g.EncryptedCredential)
+	populate(objectMap, "keyFilePath", g.KeyFilePath)
+	populate(objectMap, "refreshToken", g.RefreshToken)
+	populate(objectMap, "trustedCertPath", g.TrustedCertPath)
+	populate(objectMap, "useSystemTrustStore", g.UseSystemTrustStore)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type GoogleAdWordsLinkedServiceTypeProperties.
@@ -11862,6 +12624,24 @@ type GoogleBigQueryLinkedServiceTypeProperties struct {
 	UseSystemTrustStore interface{} `json:"useSystemTrustStore,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type GoogleBigQueryLinkedServiceTypeProperties.
+func (g GoogleBigQueryLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "additionalProjects", g.AdditionalProjects)
+	populate(objectMap, "authenticationType", g.AuthenticationType)
+	populate(objectMap, "clientId", g.ClientID)
+	populate(objectMap, "clientSecret", g.ClientSecret)
+	populate(objectMap, "email", g.Email)
+	populate(objectMap, "encryptedCredential", g.EncryptedCredential)
+	populate(objectMap, "keyFilePath", g.KeyFilePath)
+	populate(objectMap, "project", g.Project)
+	populate(objectMap, "refreshToken", g.RefreshToken)
+	populate(objectMap, "requestGoogleDriveScope", g.RequestGoogleDriveScope)
+	populate(objectMap, "trustedCertPath", g.TrustedCertPath)
+	populate(objectMap, "useSystemTrustStore", g.UseSystemTrustStore)
+	return json.Marshal(objectMap)
+}
+
 // UnmarshalJSON implements the json.Unmarshaller interface for type GoogleBigQueryLinkedServiceTypeProperties.
 func (g *GoogleBigQueryLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
@@ -12033,6 +12813,16 @@ type GoogleCloudStorageLinkedServiceTypeProperties struct {
 	// a different service endpoint or want to switch
 	// between https and http. Type: string (or Expression with resultType string).
 	ServiceURL interface{} `json:"serviceUrl,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type GoogleCloudStorageLinkedServiceTypeProperties.
+func (g GoogleCloudStorageLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "accessKeyId", g.AccessKeyID)
+	populate(objectMap, "encryptedCredential", g.EncryptedCredential)
+	populate(objectMap, "secretAccessKey", g.SecretAccessKey)
+	populate(objectMap, "serviceUrl", g.ServiceURL)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type GoogleCloudStorageLinkedServiceTypeProperties.
@@ -12381,6 +13171,23 @@ type HBaseLinkedServiceTypeProperties struct {
 	Username interface{} `json:"username,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type HBaseLinkedServiceTypeProperties.
+func (h HBaseLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "allowHostNameCNMismatch", h.AllowHostNameCNMismatch)
+	populate(objectMap, "allowSelfSignedServerCert", h.AllowSelfSignedServerCert)
+	populate(objectMap, "authenticationType", h.AuthenticationType)
+	populate(objectMap, "enableSsl", h.EnableSSL)
+	populate(objectMap, "encryptedCredential", h.EncryptedCredential)
+	populate(objectMap, "httpPath", h.HTTPPath)
+	populate(objectMap, "host", h.Host)
+	populate(objectMap, "password", h.Password)
+	populate(objectMap, "port", h.Port)
+	populate(objectMap, "trustedCertPath", h.TrustedCertPath)
+	populate(objectMap, "username", h.Username)
+	return json.Marshal(objectMap)
+}
+
 // UnmarshalJSON implements the json.Unmarshaller interface for type HBaseLinkedServiceTypeProperties.
 func (h *HBaseLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
@@ -12536,10 +13343,10 @@ func (h *HDInsightHiveActivity) UnmarshalJSON(data []byte) error {
 // HDInsightHiveActivityTypeProperties - HDInsight Hive activity properties.
 type HDInsightHiveActivityTypeProperties struct {
 	// User specified arguments to HDInsightActivity.
-	Arguments *[]interface{} `json:"arguments,omitempty"`
+	Arguments []interface{} `json:"arguments,omitempty"`
 
 	// Allows user to specify defines for Hive job request.
-	Defines *map[string]interface{} `json:"defines,omitempty"`
+	Defines map[string]interface{} `json:"defines,omitempty"`
 
 	// Debug info option.
 	GetDebugInfo *HDInsightActivityDebugInfoOption `json:"getDebugInfo,omitempty"`
@@ -12554,10 +13361,24 @@ type HDInsightHiveActivityTypeProperties struct {
 	ScriptPath interface{} `json:"scriptPath,omitempty"`
 
 	// Storage linked service references.
-	StorageLinkedServices *[]*LinkedServiceReference `json:"storageLinkedServices,omitempty"`
+	StorageLinkedServices []*LinkedServiceReference `json:"storageLinkedServices,omitempty"`
 
 	// User specified arguments under hivevar namespace.
-	Variables *[]interface{} `json:"variables,omitempty"`
+	Variables []interface{} `json:"variables,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type HDInsightHiveActivityTypeProperties.
+func (h HDInsightHiveActivityTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "arguments", h.Arguments)
+	populate(objectMap, "defines", h.Defines)
+	populate(objectMap, "getDebugInfo", h.GetDebugInfo)
+	populate(objectMap, "queryTimeout", h.QueryTimeout)
+	populate(objectMap, "scriptLinkedService", h.ScriptLinkedService)
+	populate(objectMap, "scriptPath", h.ScriptPath)
+	populate(objectMap, "storageLinkedServices", h.StorageLinkedServices)
+	populate(objectMap, "variables", h.Variables)
+	return json.Marshal(objectMap)
 }
 
 // HDInsightLinkedService - HDInsight linked service.
@@ -12620,6 +13441,20 @@ type HDInsightLinkedServiceTypeProperties struct {
 
 	// HDInsight cluster user name. Type: string (or Expression with resultType string).
 	UserName interface{} `json:"userName,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type HDInsightLinkedServiceTypeProperties.
+func (h HDInsightLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "clusterUri", h.ClusterURI)
+	populate(objectMap, "encryptedCredential", h.EncryptedCredential)
+	populate(objectMap, "fileSystem", h.FileSystem)
+	populate(objectMap, "hcatalogLinkedServiceName", h.HcatalogLinkedServiceName)
+	populate(objectMap, "isEspEnabled", h.IsEspEnabled)
+	populate(objectMap, "linkedServiceName", h.LinkedServiceName)
+	populate(objectMap, "password", h.Password)
+	populate(objectMap, "userName", h.UserName)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type HDInsightLinkedServiceTypeProperties.
@@ -12700,13 +13535,13 @@ func (h *HDInsightMapReduceActivity) UnmarshalJSON(data []byte) error {
 // HDInsightMapReduceActivityTypeProperties - HDInsight MapReduce activity properties.
 type HDInsightMapReduceActivityTypeProperties struct {
 	// User specified arguments to HDInsightActivity.
-	Arguments *[]interface{} `json:"arguments,omitempty"`
+	Arguments []interface{} `json:"arguments,omitempty"`
 
 	// Class name. Type: string (or Expression with resultType string).
 	ClassName interface{} `json:"className,omitempty"`
 
 	// Allows user to specify defines for the MapReduce job request.
-	Defines *map[string]interface{} `json:"defines,omitempty"`
+	Defines map[string]interface{} `json:"defines,omitempty"`
 
 	// Debug info option.
 	GetDebugInfo *HDInsightActivityDebugInfoOption `json:"getDebugInfo,omitempty"`
@@ -12715,13 +13550,27 @@ type HDInsightMapReduceActivityTypeProperties struct {
 	JarFilePath interface{} `json:"jarFilePath,omitempty"`
 
 	// Jar libs.
-	JarLibs *[]interface{} `json:"jarLibs,omitempty"`
+	JarLibs []interface{} `json:"jarLibs,omitempty"`
 
 	// Jar linked service reference.
 	JarLinkedService *LinkedServiceReference `json:"jarLinkedService,omitempty"`
 
 	// Storage linked service references.
-	StorageLinkedServices *[]*LinkedServiceReference `json:"storageLinkedServices,omitempty"`
+	StorageLinkedServices []*LinkedServiceReference `json:"storageLinkedServices,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type HDInsightMapReduceActivityTypeProperties.
+func (h HDInsightMapReduceActivityTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "arguments", h.Arguments)
+	populate(objectMap, "className", h.ClassName)
+	populate(objectMap, "defines", h.Defines)
+	populate(objectMap, "getDebugInfo", h.GetDebugInfo)
+	populate(objectMap, "jarFilePath", h.JarFilePath)
+	populate(objectMap, "jarLibs", h.JarLibs)
+	populate(objectMap, "jarLinkedService", h.JarLinkedService)
+	populate(objectMap, "storageLinkedServices", h.StorageLinkedServices)
+	return json.Marshal(objectMap)
 }
 
 // HDInsightOnDemandLinkedService - HDInsight ondemand linked service.
@@ -12761,7 +13610,7 @@ func (h *HDInsightOnDemandLinkedService) UnmarshalJSON(data []byte) error {
 // HDInsightOnDemandLinkedServiceTypeProperties - HDInsight ondemand linked service properties.
 type HDInsightOnDemandLinkedServiceTypeProperties struct {
 	// Specifies additional storage accounts for the HDInsight linked service so that the Data Factory service can register them on your behalf.
-	AdditionalLinkedServiceNames *[]*LinkedServiceReference `json:"additionalLinkedServiceNames,omitempty"`
+	AdditionalLinkedServiceNames []*LinkedServiceReference `json:"additionalLinkedServiceNames,omitempty"`
 
 	// The prefix of cluster name, postfix will be distinct with timestamp. Type: string (or Expression with resultType string).
 	ClusterNamePrefix interface{} `json:"clusterNamePrefix,omitempty"`
@@ -12827,7 +13676,7 @@ type HDInsightOnDemandLinkedServiceTypeProperties struct {
 
 	// Custom script actions to run on HDI ondemand cluster once it's up. Please refer to
 	// https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-hadoop-customize-cluster-linux?toc=%2Fen-us%2Fazure%2Fhdinsight%2Fr-server%2FTOC.json&bc=%2Fen-us%2Fazure%2Fbread%2Ftoc.json#understanding-script-actions.
-	ScriptActions *[]*ScriptAction `json:"scriptActions,omitempty"`
+	ScriptActions []*ScriptAction `json:"scriptActions,omitempty"`
 
 	// The service principal id for the hostSubscriptionId. Type: string (or Expression with resultType string).
 	ServicePrincipalID interface{} `json:"servicePrincipalId,omitempty"`
@@ -12864,6 +13713,45 @@ type HDInsightOnDemandLinkedServiceTypeProperties struct {
 
 	// Specifies the size of the Zoo Keeper node for the HDInsight cluster.
 	ZookeeperNodeSize interface{} `json:"zookeeperNodeSize,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type HDInsightOnDemandLinkedServiceTypeProperties.
+func (h HDInsightOnDemandLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "additionalLinkedServiceNames", h.AdditionalLinkedServiceNames)
+	populate(objectMap, "clusterNamePrefix", h.ClusterNamePrefix)
+	populate(objectMap, "clusterPassword", h.ClusterPassword)
+	populate(objectMap, "clusterResourceGroup", h.ClusterResourceGroup)
+	populate(objectMap, "clusterSshPassword", h.ClusterSSHPassword)
+	populate(objectMap, "clusterSshUserName", h.ClusterSSHUserName)
+	populate(objectMap, "clusterSize", h.ClusterSize)
+	populate(objectMap, "clusterType", h.ClusterType)
+	populate(objectMap, "clusterUserName", h.ClusterUserName)
+	populate(objectMap, "coreConfiguration", h.CoreConfiguration)
+	populate(objectMap, "dataNodeSize", h.DataNodeSize)
+	populate(objectMap, "encryptedCredential", h.EncryptedCredential)
+	populate(objectMap, "hBaseConfiguration", h.HBaseConfiguration)
+	populate(objectMap, "hcatalogLinkedServiceName", h.HcatalogLinkedServiceName)
+	populate(objectMap, "hdfsConfiguration", h.HdfsConfiguration)
+	populate(objectMap, "headNodeSize", h.HeadNodeSize)
+	populate(objectMap, "hiveConfiguration", h.HiveConfiguration)
+	populate(objectMap, "hostSubscriptionId", h.HostSubscriptionID)
+	populate(objectMap, "linkedServiceName", h.LinkedServiceName)
+	populate(objectMap, "mapReduceConfiguration", h.MapReduceConfiguration)
+	populate(objectMap, "oozieConfiguration", h.OozieConfiguration)
+	populate(objectMap, "scriptActions", h.ScriptActions)
+	populate(objectMap, "servicePrincipalId", h.ServicePrincipalID)
+	populate(objectMap, "servicePrincipalKey", h.ServicePrincipalKey)
+	populate(objectMap, "sparkVersion", h.SparkVersion)
+	populate(objectMap, "stormConfiguration", h.StormConfiguration)
+	populate(objectMap, "subnetName", h.SubnetName)
+	populate(objectMap, "tenant", h.Tenant)
+	populate(objectMap, "timeToLive", h.TimeToLive)
+	populate(objectMap, "version", h.Version)
+	populate(objectMap, "virtualNetworkId", h.VirtualNetworkID)
+	populate(objectMap, "yarnConfiguration", h.YarnConfiguration)
+	populate(objectMap, "zookeeperNodeSize", h.ZookeeperNodeSize)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type HDInsightOnDemandLinkedServiceTypeProperties.
@@ -13022,7 +13910,7 @@ type HDInsightPigActivityTypeProperties struct {
 	Arguments interface{} `json:"arguments,omitempty"`
 
 	// Allows user to specify defines for Pig job request.
-	Defines *map[string]interface{} `json:"defines,omitempty"`
+	Defines map[string]interface{} `json:"defines,omitempty"`
 
 	// Debug info option.
 	GetDebugInfo *HDInsightActivityDebugInfoOption `json:"getDebugInfo,omitempty"`
@@ -13034,7 +13922,19 @@ type HDInsightPigActivityTypeProperties struct {
 	ScriptPath interface{} `json:"scriptPath,omitempty"`
 
 	// Storage linked service references.
-	StorageLinkedServices *[]*LinkedServiceReference `json:"storageLinkedServices,omitempty"`
+	StorageLinkedServices []*LinkedServiceReference `json:"storageLinkedServices,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type HDInsightPigActivityTypeProperties.
+func (h HDInsightPigActivityTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "arguments", h.Arguments)
+	populate(objectMap, "defines", h.Defines)
+	populate(objectMap, "getDebugInfo", h.GetDebugInfo)
+	populate(objectMap, "scriptLinkedService", h.ScriptLinkedService)
+	populate(objectMap, "scriptPath", h.ScriptPath)
+	populate(objectMap, "storageLinkedServices", h.StorageLinkedServices)
+	return json.Marshal(objectMap)
 }
 
 // HDInsightSparkActivity - HDInsight Spark activity.
@@ -13074,7 +13974,7 @@ func (h *HDInsightSparkActivity) UnmarshalJSON(data []byte) error {
 // HDInsightSparkActivityTypeProperties - HDInsight spark activity properties.
 type HDInsightSparkActivityTypeProperties struct {
 	// The user-specified arguments to HDInsightSparkActivity.
-	Arguments *[]interface{} `json:"arguments,omitempty"`
+	Arguments []interface{} `json:"arguments,omitempty"`
 
 	// The application's Java/Spark main class.
 	ClassName *string `json:"className,omitempty"`
@@ -13092,10 +13992,24 @@ type HDInsightSparkActivityTypeProperties struct {
 	RootPath interface{} `json:"rootPath,omitempty"`
 
 	// Spark configuration property.
-	SparkConfig *map[string]interface{} `json:"sparkConfig,omitempty"`
+	SparkConfig map[string]interface{} `json:"sparkConfig,omitempty"`
 
 	// The storage linked service for uploading the entry file and dependencies, and for receiving logs.
 	SparkJobLinkedService *LinkedServiceReference `json:"sparkJobLinkedService,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type HDInsightSparkActivityTypeProperties.
+func (h HDInsightSparkActivityTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "arguments", h.Arguments)
+	populate(objectMap, "className", h.ClassName)
+	populate(objectMap, "entryFilePath", h.EntryFilePath)
+	populate(objectMap, "getDebugInfo", h.GetDebugInfo)
+	populate(objectMap, "proxyUser", h.ProxyUser)
+	populate(objectMap, "rootPath", h.RootPath)
+	populate(objectMap, "sparkConfig", h.SparkConfig)
+	populate(objectMap, "sparkJobLinkedService", h.SparkJobLinkedService)
+	return json.Marshal(objectMap)
 }
 
 // HDInsightStreamingActivity - HDInsight streaming activity type.
@@ -13135,22 +14049,22 @@ func (h *HDInsightStreamingActivity) UnmarshalJSON(data []byte) error {
 // HDInsightStreamingActivityTypeProperties - HDInsight streaming activity properties.
 type HDInsightStreamingActivityTypeProperties struct {
 	// User specified arguments to HDInsightActivity.
-	Arguments *[]interface{} `json:"arguments,omitempty"`
+	Arguments []interface{} `json:"arguments,omitempty"`
 
 	// Combiner executable name. Type: string (or Expression with resultType string).
 	Combiner interface{} `json:"combiner,omitempty"`
 
 	// Command line environment values.
-	CommandEnvironment *[]interface{} `json:"commandEnvironment,omitempty"`
+	CommandEnvironment []interface{} `json:"commandEnvironment,omitempty"`
 
 	// Allows user to specify defines for streaming job request.
-	Defines *map[string]interface{} `json:"defines,omitempty"`
+	Defines map[string]interface{} `json:"defines,omitempty"`
 
 	// Linked service reference where the files are located.
 	FileLinkedService *LinkedServiceReference `json:"fileLinkedService,omitempty"`
 
 	// Paths to streaming job files. Can be directories.
-	FilePaths *[]interface{} `json:"filePaths,omitempty"`
+	FilePaths []interface{} `json:"filePaths,omitempty"`
 
 	// Debug info option.
 	GetDebugInfo *HDInsightActivityDebugInfoOption `json:"getDebugInfo,omitempty"`
@@ -13168,7 +14082,25 @@ type HDInsightStreamingActivityTypeProperties struct {
 	Reducer interface{} `json:"reducer,omitempty"`
 
 	// Storage linked service references.
-	StorageLinkedServices *[]*LinkedServiceReference `json:"storageLinkedServices,omitempty"`
+	StorageLinkedServices []*LinkedServiceReference `json:"storageLinkedServices,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type HDInsightStreamingActivityTypeProperties.
+func (h HDInsightStreamingActivityTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "arguments", h.Arguments)
+	populate(objectMap, "combiner", h.Combiner)
+	populate(objectMap, "commandEnvironment", h.CommandEnvironment)
+	populate(objectMap, "defines", h.Defines)
+	populate(objectMap, "fileLinkedService", h.FileLinkedService)
+	populate(objectMap, "filePaths", h.FilePaths)
+	populate(objectMap, "getDebugInfo", h.GetDebugInfo)
+	populate(objectMap, "input", h.Input)
+	populate(objectMap, "mapper", h.Mapper)
+	populate(objectMap, "output", h.Output)
+	populate(objectMap, "reducer", h.Reducer)
+	populate(objectMap, "storageLinkedServices", h.StorageLinkedServices)
+	return json.Marshal(objectMap)
 }
 
 // HTTPLinkedService - Linked service for an HTTP source.
@@ -13235,6 +14167,20 @@ type HTTPLinkedServiceTypeProperties struct {
 
 	// User name for Basic, Digest, or Windows authentication. Type: string (or Expression with resultType string).
 	UserName interface{} `json:"userName,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type HTTPLinkedServiceTypeProperties.
+func (h HTTPLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "authenticationType", h.AuthenticationType)
+	populate(objectMap, "certThumbprint", h.CertThumbprint)
+	populate(objectMap, "embeddedCertData", h.EmbeddedCertData)
+	populate(objectMap, "enableServerCertificateValidation", h.EnableServerCertificateValidation)
+	populate(objectMap, "encryptedCredential", h.EncryptedCredential)
+	populate(objectMap, "password", h.Password)
+	populate(objectMap, "url", h.URL)
+	populate(objectMap, "userName", h.UserName)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type HTTPLinkedServiceTypeProperties.
@@ -13466,6 +14412,17 @@ type HdfsLinkedServiceTypeProperties struct {
 
 	// User name for Windows authentication. Type: string (or Expression with resultType string).
 	UserName interface{} `json:"userName,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type HdfsLinkedServiceTypeProperties.
+func (h HdfsLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "authenticationType", h.AuthenticationType)
+	populate(objectMap, "encryptedCredential", h.EncryptedCredential)
+	populate(objectMap, "password", h.Password)
+	populate(objectMap, "url", h.URL)
+	populate(objectMap, "userName", h.UserName)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type HdfsLinkedServiceTypeProperties.
@@ -13731,6 +14688,29 @@ type HiveLinkedServiceTypeProperties struct {
 	ZooKeeperNameSpace interface{} `json:"zooKeeperNameSpace,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type HiveLinkedServiceTypeProperties.
+func (h HiveLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "allowHostNameCNMismatch", h.AllowHostNameCNMismatch)
+	populate(objectMap, "allowSelfSignedServerCert", h.AllowSelfSignedServerCert)
+	populate(objectMap, "authenticationType", h.AuthenticationType)
+	populate(objectMap, "enableSsl", h.EnableSSL)
+	populate(objectMap, "encryptedCredential", h.EncryptedCredential)
+	populate(objectMap, "httpPath", h.HTTPPath)
+	populate(objectMap, "host", h.Host)
+	populate(objectMap, "password", h.Password)
+	populate(objectMap, "port", h.Port)
+	populate(objectMap, "serverType", h.ServerType)
+	populate(objectMap, "serviceDiscoveryMode", h.ServiceDiscoveryMode)
+	populate(objectMap, "thriftTransportProtocol", h.ThriftTransportProtocol)
+	populate(objectMap, "trustedCertPath", h.TrustedCertPath)
+	populate(objectMap, "useNativeQuery", h.UseNativeQuery)
+	populate(objectMap, "useSystemTrustStore", h.UseSystemTrustStore)
+	populate(objectMap, "username", h.Username)
+	populate(objectMap, "zooKeeperNameSpace", h.ZooKeeperNameSpace)
+	return json.Marshal(objectMap)
+}
+
 // UnmarshalJSON implements the json.Unmarshaller interface for type HiveLinkedServiceTypeProperties.
 func (h *HiveLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
@@ -13930,6 +14910,20 @@ type HubspotLinkedServiceTypeProperties struct {
 	UsePeerVerification interface{} `json:"usePeerVerification,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type HubspotLinkedServiceTypeProperties.
+func (h HubspotLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "accessToken", h.AccessToken)
+	populate(objectMap, "clientId", h.ClientID)
+	populate(objectMap, "clientSecret", h.ClientSecret)
+	populate(objectMap, "encryptedCredential", h.EncryptedCredential)
+	populate(objectMap, "refreshToken", h.RefreshToken)
+	populate(objectMap, "useEncryptedEndpoints", h.UseEncryptedEndpoints)
+	populate(objectMap, "useHostVerification", h.UseHostVerification)
+	populate(objectMap, "usePeerVerification", h.UsePeerVerification)
+	return json.Marshal(objectMap)
+}
+
 // UnmarshalJSON implements the json.Unmarshaller interface for type HubspotLinkedServiceTypeProperties.
 func (h *HubspotLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
@@ -14082,11 +15076,20 @@ type IfConditionActivityTypeProperties struct {
 
 	// List of activities to execute if expression is evaluated to false. This is an optional property and if not provided, the activity will exit without any
 	// action.
-	IfFalseActivities *[]ActivityClassification `json:"ifFalseActivities,omitempty"`
+	IfFalseActivities []ActivityClassification `json:"ifFalseActivities,omitempty"`
 
 	// List of activities to execute if expression is evaluated to true. This is an optional property and if not provided, the activity will exit without any
 	// action.
-	IfTrueActivities *[]ActivityClassification `json:"ifTrueActivities,omitempty"`
+	IfTrueActivities []ActivityClassification `json:"ifTrueActivities,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type IfConditionActivityTypeProperties.
+func (i IfConditionActivityTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "expression", i.Expression)
+	populate(objectMap, "ifFalseActivities", i.IfFalseActivities)
+	populate(objectMap, "ifTrueActivities", i.IfTrueActivities)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type IfConditionActivityTypeProperties.
@@ -14198,6 +15201,23 @@ type ImpalaLinkedServiceTypeProperties struct {
 
 	// The user name used to access the Impala server. The default value is anonymous when using SASLUsername.
 	Username interface{} `json:"username,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ImpalaLinkedServiceTypeProperties.
+func (i ImpalaLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "allowHostNameCNMismatch", i.AllowHostNameCNMismatch)
+	populate(objectMap, "allowSelfSignedServerCert", i.AllowSelfSignedServerCert)
+	populate(objectMap, "authenticationType", i.AuthenticationType)
+	populate(objectMap, "enableSsl", i.EnableSSL)
+	populate(objectMap, "encryptedCredential", i.EncryptedCredential)
+	populate(objectMap, "host", i.Host)
+	populate(objectMap, "password", i.Password)
+	populate(objectMap, "port", i.Port)
+	populate(objectMap, "trustedCertPath", i.TrustedCertPath)
+	populate(objectMap, "useSystemTrustStore", i.UseSystemTrustStore)
+	populate(objectMap, "username", i.Username)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ImpalaLinkedServiceTypeProperties.
@@ -14375,6 +15395,18 @@ type InformixLinkedServiceTypeProperties struct {
 	UserName interface{} `json:"userName,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type InformixLinkedServiceTypeProperties.
+func (i InformixLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "authenticationType", i.AuthenticationType)
+	populate(objectMap, "connectionString", i.ConnectionString)
+	populate(objectMap, "credential", i.Credential)
+	populate(objectMap, "encryptedCredential", i.EncryptedCredential)
+	populate(objectMap, "password", i.Password)
+	populate(objectMap, "userName", i.UserName)
+	return json.Marshal(objectMap)
+}
+
 // UnmarshalJSON implements the json.Unmarshaller interface for type InformixLinkedServiceTypeProperties.
 func (i *InformixLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
@@ -14530,7 +15562,7 @@ type IntegrationRuntimeClassification interface {
 // IntegrationRuntime - Azure Synapse nested object which serves as a compute resource for activities.
 type IntegrationRuntime struct {
 	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties *map[string]interface{}
+	AdditionalProperties map[string]interface{}
 
 	// Integration runtime description.
 	Description *string `json:"description,omitempty"`
@@ -14557,7 +15589,7 @@ func (i IntegrationRuntime) marshalInternal(discValue IntegrationRuntimeType) ma
 	i.Type = &discValue
 	objectMap["type"] = i.Type
 	if i.AdditionalProperties != nil {
-		for key, val := range *i.AdditionalProperties {
+		for key, val := range i.AdditionalProperties {
 			objectMap[key] = val
 		}
 	}
@@ -14576,12 +15608,12 @@ func (i *IntegrationRuntime) unmarshalInternal(rawMsg map[string]json.RawMessage
 			delete(rawMsg, key)
 		default:
 			if i.AdditionalProperties == nil {
-				i.AdditionalProperties = &map[string]interface{}{}
+				i.AdditionalProperties = map[string]interface{}{}
 			}
 			if val != nil {
 				var aux interface{}
 				err = json.Unmarshal(val, &aux)
-				(*i.AdditionalProperties)[key] = aux
+				i.AdditionalProperties[key] = aux
 			}
 			delete(rawMsg, key)
 		}
@@ -14595,7 +15627,7 @@ func (i *IntegrationRuntime) unmarshalInternal(rawMsg map[string]json.RawMessage
 // IntegrationRuntimeComputeProperties - The compute resource properties for managed integration runtime.
 type IntegrationRuntimeComputeProperties struct {
 	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties *map[string]interface{}
+	AdditionalProperties map[string]interface{}
 
 	// Data flow properties for managed integration runtime.
 	DataFlowProperties *IntegrationRuntimeDataFlowProperties `json:"dataFlowProperties,omitempty"`
@@ -14626,7 +15658,7 @@ func (i IntegrationRuntimeComputeProperties) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "numberOfNodes", i.NumberOfNodes)
 	populate(objectMap, "vNetProperties", i.VNetProperties)
 	if i.AdditionalProperties != nil {
-		for key, val := range *i.AdditionalProperties {
+		for key, val := range i.AdditionalProperties {
 			objectMap[key] = val
 		}
 	}
@@ -14662,12 +15694,12 @@ func (i *IntegrationRuntimeComputeProperties) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		default:
 			if i.AdditionalProperties == nil {
-				i.AdditionalProperties = &map[string]interface{}{}
+				i.AdditionalProperties = map[string]interface{}{}
 			}
 			if val != nil {
 				var aux interface{}
 				err = json.Unmarshal(val, &aux)
-				(*i.AdditionalProperties)[key] = aux
+				i.AdditionalProperties[key] = aux
 			}
 			delete(rawMsg, key)
 		}
@@ -14690,7 +15722,7 @@ type IntegrationRuntimeCustomSetupScriptProperties struct {
 // IntegrationRuntimeDataFlowProperties - Data flow properties for managed integration runtime.
 type IntegrationRuntimeDataFlowProperties struct {
 	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties *map[string]interface{}
+	AdditionalProperties map[string]interface{}
 
 	// Compute type of the cluster which will execute data flow job.
 	ComputeType *DataFlowComputeType `json:"computeType,omitempty"`
@@ -14709,7 +15741,7 @@ func (i IntegrationRuntimeDataFlowProperties) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "coreCount", i.CoreCount)
 	populate(objectMap, "timeToLive", i.TimeToLive)
 	if i.AdditionalProperties != nil {
-		for key, val := range *i.AdditionalProperties {
+		for key, val := range i.AdditionalProperties {
 			objectMap[key] = val
 		}
 	}
@@ -14736,12 +15768,12 @@ func (i *IntegrationRuntimeDataFlowProperties) UnmarshalJSON(data []byte) error 
 			delete(rawMsg, key)
 		default:
 			if i.AdditionalProperties == nil {
-				i.AdditionalProperties = &map[string]interface{}{}
+				i.AdditionalProperties = map[string]interface{}{}
 			}
 			if val != nil {
 				var aux interface{}
 				err = json.Unmarshal(val, &aux)
-				(*i.AdditionalProperties)[key] = aux
+				i.AdditionalProperties[key] = aux
 			}
 			delete(rawMsg, key)
 		}
@@ -14770,7 +15802,15 @@ type IntegrationRuntimeListResponse struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// List of integration runtimes.
-	Value *[]*IntegrationRuntimeResource `json:"value,omitempty"`
+	Value []*IntegrationRuntimeResource `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type IntegrationRuntimeListResponse.
+func (i IntegrationRuntimeListResponse) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", i.NextLink)
+	populate(objectMap, "value", i.Value)
+	return json.Marshal(objectMap)
 }
 
 // IntegrationRuntimeListResponseResponse is the response envelope for operations that return a IntegrationRuntimeListResponse type.
@@ -14785,7 +15825,7 @@ type IntegrationRuntimeListResponseResponse struct {
 // IntegrationRuntimeReference - Integration runtime reference type.
 type IntegrationRuntimeReference struct {
 	// Arguments for integration runtime.
-	Parameters *map[string]interface{} `json:"parameters,omitempty"`
+	Parameters map[string]interface{} `json:"parameters,omitempty"`
 
 	// Reference integration runtime name.
 	ReferenceName *string `json:"referenceName,omitempty"`
@@ -14794,11 +15834,47 @@ type IntegrationRuntimeReference struct {
 	Type *IntegrationRuntimeReferenceType `json:"type,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type IntegrationRuntimeReference.
+func (i IntegrationRuntimeReference) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "parameters", i.Parameters)
+	populate(objectMap, "referenceName", i.ReferenceName)
+	populate(objectMap, "type", i.Type)
+	return json.Marshal(objectMap)
+}
+
 // IntegrationRuntimeResource - Integration runtime resource type.
 type IntegrationRuntimeResource struct {
 	SubResource
 	// Integration runtime properties.
 	Properties IntegrationRuntimeClassification `json:"properties,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type IntegrationRuntimeResource.
+func (i IntegrationRuntimeResource) MarshalJSON() ([]byte, error) {
+	objectMap := i.SubResource.marshalInternal()
+	populate(objectMap, "properties", i.Properties)
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type IntegrationRuntimeResource.
+func (i *IntegrationRuntimeResource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "properties":
+			i.Properties, err = unmarshalIntegrationRuntimeClassification(val)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return i.SubResource.unmarshalInternal(rawMsg)
 }
 
 // IntegrationRuntimeResourceResponse is the response envelope for operations that return a IntegrationRuntimeResource type.
@@ -14813,7 +15889,7 @@ type IntegrationRuntimeResourceResponse struct {
 // IntegrationRuntimeSsisCatalogInfo - Catalog information for managed dedicated integration runtime.
 type IntegrationRuntimeSsisCatalogInfo struct {
 	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties *map[string]interface{}
+	AdditionalProperties map[string]interface{}
 
 	// The password of the administrator user account of the catalog database.
 	CatalogAdminPassword *SecureString `json:"catalogAdminPassword,omitempty"`
@@ -14836,7 +15912,7 @@ func (i IntegrationRuntimeSsisCatalogInfo) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "catalogPricingTier", i.CatalogPricingTier)
 	populate(objectMap, "catalogServerEndpoint", i.CatalogServerEndpoint)
 	if i.AdditionalProperties != nil {
-		for key, val := range *i.AdditionalProperties {
+		for key, val := range i.AdditionalProperties {
 			objectMap[key] = val
 		}
 	}
@@ -14866,12 +15942,12 @@ func (i *IntegrationRuntimeSsisCatalogInfo) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		default:
 			if i.AdditionalProperties == nil {
-				i.AdditionalProperties = &map[string]interface{}{}
+				i.AdditionalProperties = map[string]interface{}{}
 			}
 			if val != nil {
 				var aux interface{}
 				err = json.Unmarshal(val, &aux)
-				(*i.AdditionalProperties)[key] = aux
+				i.AdditionalProperties[key] = aux
 			}
 			delete(rawMsg, key)
 		}
@@ -14885,7 +15961,7 @@ func (i *IntegrationRuntimeSsisCatalogInfo) UnmarshalJSON(data []byte) error {
 // IntegrationRuntimeSsisProperties - SSIS properties for managed integration runtime.
 type IntegrationRuntimeSsisProperties struct {
 	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties *map[string]interface{}
+	AdditionalProperties map[string]interface{}
 
 	// Catalog information for managed dedicated integration runtime.
 	CatalogInfo *IntegrationRuntimeSsisCatalogInfo `json:"catalogInfo,omitempty"`
@@ -14900,7 +15976,7 @@ type IntegrationRuntimeSsisProperties struct {
 	Edition *IntegrationRuntimeEdition `json:"edition,omitempty"`
 
 	// Custom setup without script properties for a SSIS integration runtime.
-	ExpressCustomSetupProperties *[]CustomSetupBaseClassification `json:"expressCustomSetupProperties,omitempty"`
+	ExpressCustomSetupProperties []CustomSetupBaseClassification `json:"expressCustomSetupProperties,omitempty"`
 
 	// License type for bringing your own license scenario.
 	LicenseType *IntegrationRuntimeLicenseType `json:"licenseType,omitempty"`
@@ -14916,7 +15992,7 @@ func (i IntegrationRuntimeSsisProperties) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "expressCustomSetupProperties", i.ExpressCustomSetupProperties)
 	populate(objectMap, "licenseType", i.LicenseType)
 	if i.AdditionalProperties != nil {
-		for key, val := range *i.AdditionalProperties {
+		for key, val := range i.AdditionalProperties {
 			objectMap[key] = val
 		}
 	}
@@ -14952,12 +16028,12 @@ func (i *IntegrationRuntimeSsisProperties) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		default:
 			if i.AdditionalProperties == nil {
-				i.AdditionalProperties = &map[string]interface{}{}
+				i.AdditionalProperties = map[string]interface{}{}
 			}
 			if val != nil {
 				var aux interface{}
 				err = json.Unmarshal(val, &aux)
-				(*i.AdditionalProperties)[key] = aux
+				i.AdditionalProperties[key] = aux
 			}
 			delete(rawMsg, key)
 		}
@@ -14971,10 +16047,10 @@ func (i *IntegrationRuntimeSsisProperties) UnmarshalJSON(data []byte) error {
 // IntegrationRuntimeVNetProperties - VNet properties for managed integration runtime.
 type IntegrationRuntimeVNetProperties struct {
 	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties *map[string]interface{}
+	AdditionalProperties map[string]interface{}
 
 	// Resource IDs of the public IP addresses that this integration runtime will use.
-	PublicIPs *[]*string `json:"publicIPs,omitempty"`
+	PublicIPs []*string `json:"publicIPs,omitempty"`
 
 	// The name of the subnet this integration runtime will join.
 	Subnet *string `json:"subnet,omitempty"`
@@ -14990,7 +16066,7 @@ func (i IntegrationRuntimeVNetProperties) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "subnet", i.Subnet)
 	populate(objectMap, "vNetId", i.VNetID)
 	if i.AdditionalProperties != nil {
-		for key, val := range *i.AdditionalProperties {
+		for key, val := range i.AdditionalProperties {
 			objectMap[key] = val
 		}
 	}
@@ -15017,12 +16093,12 @@ func (i *IntegrationRuntimeVNetProperties) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		default:
 			if i.AdditionalProperties == nil {
-				i.AdditionalProperties = &map[string]interface{}{}
+				i.AdditionalProperties = map[string]interface{}{}
 			}
 			if val != nil {
 				var aux interface{}
 				err = json.Unmarshal(val, &aux)
-				(*i.AdditionalProperties)[key] = aux
+				i.AdditionalProperties[key] = aux
 			}
 			delete(rawMsg, key)
 		}
@@ -15089,6 +16165,15 @@ type JSONDatasetTypeProperties struct {
 
 	// The location of the json data storage.
 	Location DatasetLocationClassification `json:"location,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type JSONDatasetTypeProperties.
+func (j JSONDatasetTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "compression", j.Compression)
+	populate(objectMap, "encodingName", j.EncodingName)
+	populate(objectMap, "location", j.Location)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type JSONDatasetTypeProperties.
@@ -15358,6 +16443,20 @@ type JiraLinkedServiceTypeProperties struct {
 	Username interface{} `json:"username,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type JiraLinkedServiceTypeProperties.
+func (j JiraLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "encryptedCredential", j.EncryptedCredential)
+	populate(objectMap, "host", j.Host)
+	populate(objectMap, "password", j.Password)
+	populate(objectMap, "port", j.Port)
+	populate(objectMap, "useEncryptedEndpoints", j.UseEncryptedEndpoints)
+	populate(objectMap, "useHostVerification", j.UseHostVerification)
+	populate(objectMap, "usePeerVerification", j.UsePeerVerification)
+	populate(objectMap, "username", j.Username)
+	return json.Marshal(objectMap)
+}
+
 // UnmarshalJSON implements the json.Unmarshaller interface for type JiraLinkedServiceTypeProperties.
 func (j *JiraLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
@@ -15587,7 +16686,15 @@ type LibraryListResponse struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// List of Library.
-	Value *[]*LibraryResource `json:"value,omitempty"`
+	Value []*LibraryResource `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type LibraryListResponse.
+func (l LibraryListResponse) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", l.NextLink)
+	populate(objectMap, "value", l.Value)
+	return json.Marshal(objectMap)
 }
 
 // LibraryListResponseResponse is the response envelope for operations that return a LibraryListResponse type.
@@ -15653,6 +16760,33 @@ type LibraryResource struct {
 	SubResource
 	// Library/package properties.
 	Properties *LibraryResourceProperties `json:"properties,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type LibraryResource.
+func (l LibraryResource) MarshalJSON() ([]byte, error) {
+	objectMap := l.SubResource.marshalInternal()
+	populate(objectMap, "properties", l.Properties)
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type LibraryResource.
+func (l *LibraryResource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "properties":
+			err = unpopulate(val, &l.Properties)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return l.SubResource.unmarshalInternal(rawMsg)
 }
 
 // LibraryResourceInfo - Library resource info
@@ -15889,10 +17023,10 @@ type LinkedServiceClassification interface {
 // resource.
 type LinkedService struct {
 	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties *map[string]interface{}
+	AdditionalProperties map[string]interface{}
 
 	// List of tags that can be used for describing the linked service.
-	Annotations *[]interface{} `json:"annotations,omitempty"`
+	Annotations []interface{} `json:"annotations,omitempty"`
 
 	// The integration runtime reference.
 	ConnectVia *IntegrationRuntimeReference `json:"connectVia,omitempty"`
@@ -15901,7 +17035,7 @@ type LinkedService struct {
 	Description *string `json:"description,omitempty"`
 
 	// Parameters for linked service.
-	Parameters *map[string]*ParameterSpecification `json:"parameters,omitempty"`
+	Parameters map[string]*ParameterSpecification `json:"parameters,omitempty"`
 
 	// Type of linked service.
 	Type *string `json:"type,omitempty"`
@@ -15928,7 +17062,7 @@ func (l LinkedService) marshalInternal(discValue string) map[string]interface{} 
 	l.Type = &discValue
 	objectMap["type"] = l.Type
 	if l.AdditionalProperties != nil {
-		for key, val := range *l.AdditionalProperties {
+		for key, val := range l.AdditionalProperties {
 			objectMap[key] = val
 		}
 	}
@@ -15956,12 +17090,12 @@ func (l *LinkedService) unmarshalInternal(rawMsg map[string]json.RawMessage) err
 			delete(rawMsg, key)
 		default:
 			if l.AdditionalProperties == nil {
-				l.AdditionalProperties = &map[string]interface{}{}
+				l.AdditionalProperties = map[string]interface{}{}
 			}
 			if val != nil {
 				var aux interface{}
 				err = json.Unmarshal(val, &aux)
-				(*l.AdditionalProperties)[key] = aux
+				l.AdditionalProperties[key] = aux
 			}
 			delete(rawMsg, key)
 		}
@@ -15995,6 +17129,33 @@ type LinkedServiceDebugResource struct {
 	Properties LinkedServiceClassification `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type LinkedServiceDebugResource.
+func (l LinkedServiceDebugResource) MarshalJSON() ([]byte, error) {
+	objectMap := l.SubResourceDebugResource.marshalInternal()
+	populate(objectMap, "properties", l.Properties)
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type LinkedServiceDebugResource.
+func (l *LinkedServiceDebugResource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "properties":
+			l.Properties, err = unmarshalLinkedServiceClassification(val)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return l.SubResourceDebugResource.unmarshalInternal(rawMsg)
+}
+
 // LinkedServiceGetLinkedServiceOptions contains the optional parameters for the LinkedService.GetLinkedService method.
 type LinkedServiceGetLinkedServiceOptions struct {
 	// ETag of the linked service entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content
@@ -16013,7 +17174,15 @@ type LinkedServiceListResponse struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// List of linked services.
-	Value *[]*LinkedServiceResource `json:"value,omitempty"`
+	Value []*LinkedServiceResource `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type LinkedServiceListResponse.
+func (l LinkedServiceListResponse) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", l.NextLink)
+	populate(objectMap, "value", l.Value)
+	return json.Marshal(objectMap)
 }
 
 // LinkedServiceListResponseResponse is the response envelope for operations that return a LinkedServiceListResponse type.
@@ -16028,7 +17197,7 @@ type LinkedServiceListResponseResponse struct {
 // LinkedServiceReference - Linked service reference type.
 type LinkedServiceReference struct {
 	// Arguments for LinkedService.
-	Parameters *map[string]interface{} `json:"parameters,omitempty"`
+	Parameters map[string]interface{} `json:"parameters,omitempty"`
 
 	// Reference LinkedService name.
 	ReferenceName *string `json:"referenceName,omitempty"`
@@ -16037,11 +17206,47 @@ type LinkedServiceReference struct {
 	Type *Type `json:"type,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type LinkedServiceReference.
+func (l LinkedServiceReference) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "parameters", l.Parameters)
+	populate(objectMap, "referenceName", l.ReferenceName)
+	populate(objectMap, "type", l.Type)
+	return json.Marshal(objectMap)
+}
+
 // LinkedServiceResource - Linked service resource type.
 type LinkedServiceResource struct {
 	SubResource
 	// Properties of linked service.
 	Properties LinkedServiceClassification `json:"properties,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type LinkedServiceResource.
+func (l LinkedServiceResource) MarshalJSON() ([]byte, error) {
+	objectMap := l.SubResource.marshalInternal()
+	populate(objectMap, "properties", l.Properties)
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type LinkedServiceResource.
+func (l *LinkedServiceResource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "properties":
+			l.Properties, err = unmarshalLinkedServiceClassification(val)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return l.SubResource.unmarshalInternal(rawMsg)
 }
 
 // LinkedServiceResourcePollerResponse is the response envelope for operations that asynchronously return a LinkedServiceResource type.
@@ -16068,7 +17273,7 @@ type LinkedServiceResourceResponse struct {
 // LogStorageSettings - Log storage settings.
 type LogStorageSettings struct {
 	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties *map[string]interface{}
+	AdditionalProperties map[string]interface{}
 
 	// Log storage linked service reference.
 	LinkedServiceName *LinkedServiceReference `json:"linkedServiceName,omitempty"`
@@ -16083,7 +17288,7 @@ func (l LogStorageSettings) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "linkedServiceName", l.LinkedServiceName)
 	populate(objectMap, "path", l.Path)
 	if l.AdditionalProperties != nil {
-		for key, val := range *l.AdditionalProperties {
+		for key, val := range l.AdditionalProperties {
 			objectMap[key] = val
 		}
 	}
@@ -16107,12 +17312,12 @@ func (l *LogStorageSettings) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		default:
 			if l.AdditionalProperties == nil {
-				l.AdditionalProperties = &map[string]interface{}{}
+				l.AdditionalProperties = map[string]interface{}{}
 			}
 			if val != nil {
 				var aux interface{}
 				err = json.Unmarshal(val, &aux)
-				(*l.AdditionalProperties)[key] = aux
+				l.AdditionalProperties[key] = aux
 			}
 			delete(rawMsg, key)
 		}
@@ -16167,6 +17372,15 @@ type LookupActivityTypeProperties struct {
 
 	// Dataset-specific source properties, same as copy activity source.
 	Source CopySourceClassification `json:"source,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type LookupActivityTypeProperties.
+func (l LookupActivityTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "dataset", l.Dataset)
+	populate(objectMap, "firstRowOnly", l.FirstRowOnly)
+	populate(objectMap, "source", l.Source)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type LookupActivityTypeProperties.
@@ -16250,6 +17464,18 @@ type MagentoLinkedServiceTypeProperties struct {
 
 	// Specifies whether to verify the identity of the server when connecting over SSL. The default value is true.
 	UsePeerVerification interface{} `json:"usePeerVerification,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type MagentoLinkedServiceTypeProperties.
+func (m MagentoLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "accessToken", m.AccessToken)
+	populate(objectMap, "encryptedCredential", m.EncryptedCredential)
+	populate(objectMap, "host", m.Host)
+	populate(objectMap, "useEncryptedEndpoints", m.UseEncryptedEndpoints)
+	populate(objectMap, "useHostVerification", m.UseHostVerification)
+	populate(objectMap, "usePeerVerification", m.UsePeerVerification)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type MagentoLinkedServiceTypeProperties.
@@ -16420,13 +17646,22 @@ type ManagedIntegrationRuntimeTypeProperties struct {
 // ManagedVirtualNetworkSettings - Managed Virtual Network Settings
 type ManagedVirtualNetworkSettings struct {
 	// Allowed Aad Tenant Ids For Linking
-	AllowedAADTenantIDsForLinking *[]*string `json:"allowedAadTenantIdsForLinking,omitempty"`
+	AllowedAADTenantIDsForLinking []*string `json:"allowedAadTenantIdsForLinking,omitempty"`
 
 	// Linked Access Check On Target Resource
 	LinkedAccessCheckOnTargetResource *bool `json:"linkedAccessCheckOnTargetResource,omitempty"`
 
 	// Prevent Data Exfiltration
 	PreventDataExfiltration *bool `json:"preventDataExfiltration,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ManagedVirtualNetworkSettings.
+func (m ManagedVirtualNetworkSettings) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "allowedAadTenantIdsForLinking", m.AllowedAADTenantIDsForLinking)
+	populate(objectMap, "linkedAccessCheckOnTargetResource", m.LinkedAccessCheckOnTargetResource)
+	populate(objectMap, "preventDataExfiltration", m.PreventDataExfiltration)
+	return json.Marshal(objectMap)
 }
 
 // MappingDataFlow - Mapping data flow.
@@ -16469,13 +17704,23 @@ type MappingDataFlowTypeProperties struct {
 	Script *string `json:"script,omitempty"`
 
 	// List of sinks in data flow.
-	Sinks *[]*DataFlowSink `json:"sinks,omitempty"`
+	Sinks []*DataFlowSink `json:"sinks,omitempty"`
 
 	// List of sources in data flow.
-	Sources *[]*DataFlowSource `json:"sources,omitempty"`
+	Sources []*DataFlowSource `json:"sources,omitempty"`
 
 	// List of transformations in data flow.
-	Transformations *[]*Transformation `json:"transformations,omitempty"`
+	Transformations []*Transformation `json:"transformations,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type MappingDataFlowTypeProperties.
+func (m MappingDataFlowTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "script", m.Script)
+	populate(objectMap, "sinks", m.Sinks)
+	populate(objectMap, "sources", m.Sources)
+	populate(objectMap, "transformations", m.Transformations)
+	return json.Marshal(objectMap)
 }
 
 // MariaDBLinkedService - MariaDB server linked service.
@@ -16653,6 +17898,19 @@ type MarketoLinkedServiceTypeProperties struct {
 	UsePeerVerification interface{} `json:"usePeerVerification,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type MarketoLinkedServiceTypeProperties.
+func (m MarketoLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "clientId", m.ClientID)
+	populate(objectMap, "clientSecret", m.ClientSecret)
+	populate(objectMap, "encryptedCredential", m.EncryptedCredential)
+	populate(objectMap, "endpoint", m.Endpoint)
+	populate(objectMap, "useEncryptedEndpoints", m.UseEncryptedEndpoints)
+	populate(objectMap, "useHostVerification", m.UseHostVerification)
+	populate(objectMap, "usePeerVerification", m.UsePeerVerification)
+	return json.Marshal(objectMap)
+}
+
 // UnmarshalJSON implements the json.Unmarshaller interface for type MarketoLinkedServiceTypeProperties.
 func (m *MarketoLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
@@ -16814,6 +18072,18 @@ type MicrosoftAccessLinkedServiceTypeProperties struct {
 
 	// User name for Basic authentication. Type: string (or Expression with resultType string).
 	UserName interface{} `json:"userName,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type MicrosoftAccessLinkedServiceTypeProperties.
+func (m MicrosoftAccessLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "authenticationType", m.AuthenticationType)
+	populate(objectMap, "connectionString", m.ConnectionString)
+	populate(objectMap, "credential", m.Credential)
+	populate(objectMap, "encryptedCredential", m.EncryptedCredential)
+	populate(objectMap, "password", m.Password)
+	populate(objectMap, "userName", m.UserName)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type MicrosoftAccessLinkedServiceTypeProperties.
@@ -17002,7 +18272,7 @@ type MongoDbCollectionDatasetTypeProperties struct {
 // MongoDbCursorMethodsProperties - Cursor methods for Mongodb query
 type MongoDbCursorMethodsProperties struct {
 	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties *map[string]interface{}
+	AdditionalProperties map[string]interface{}
 
 	// Specifies the maximum number of documents the server returns. limit() is analogous to the LIMIT statement in a SQL database. Type: integer (or Expression
 	// with resultType integer).
@@ -17030,7 +18300,7 @@ func (m MongoDbCursorMethodsProperties) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "skip", m.Skip)
 	populate(objectMap, "sort", m.Sort)
 	if m.AdditionalProperties != nil {
-		for key, val := range *m.AdditionalProperties {
+		for key, val := range m.AdditionalProperties {
 			objectMap[key] = val
 		}
 	}
@@ -17060,12 +18330,12 @@ func (m *MongoDbCursorMethodsProperties) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		default:
 			if m.AdditionalProperties == nil {
-				m.AdditionalProperties = &map[string]interface{}{}
+				m.AdditionalProperties = map[string]interface{}{}
 			}
 			if val != nil {
 				var aux interface{}
 				err = json.Unmarshal(val, &aux)
-				(*m.AdditionalProperties)[key] = aux
+				m.AdditionalProperties[key] = aux
 			}
 			delete(rawMsg, key)
 		}
@@ -17143,6 +18413,22 @@ type MongoDbLinkedServiceTypeProperties struct {
 
 	// Username for authentication. Type: string (or Expression with resultType string).
 	Username interface{} `json:"username,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type MongoDbLinkedServiceTypeProperties.
+func (m MongoDbLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "allowSelfSignedServerCert", m.AllowSelfSignedServerCert)
+	populate(objectMap, "authSource", m.AuthSource)
+	populate(objectMap, "authenticationType", m.AuthenticationType)
+	populate(objectMap, "databaseName", m.DatabaseName)
+	populate(objectMap, "enableSsl", m.EnableSSL)
+	populate(objectMap, "encryptedCredential", m.EncryptedCredential)
+	populate(objectMap, "password", m.Password)
+	populate(objectMap, "port", m.Port)
+	populate(objectMap, "server", m.Server)
+	populate(objectMap, "username", m.Username)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type MongoDbLinkedServiceTypeProperties.
@@ -17381,7 +18667,7 @@ type MultiplePipelineTriggerClassification interface {
 type MultiplePipelineTrigger struct {
 	Trigger
 	// Pipelines that need to be started.
-	Pipelines *[]*TriggerPipelineReference `json:"pipelines,omitempty"`
+	Pipelines []*TriggerPipelineReference `json:"pipelines,omitempty"`
 }
 
 // GetMultiplePipelineTrigger implements the MultiplePipelineTriggerClassification interface for type MultiplePipelineTrigger.
@@ -17702,13 +18988,13 @@ type NetezzaTableDatasetTypeProperties struct {
 // Notebook.
 type Notebook struct {
 	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties *map[string]interface{}
+	AdditionalProperties map[string]interface{}
 
 	// Big data pool reference.
 	BigDataPool *BigDataPoolReference `json:"bigDataPool,omitempty"`
 
 	// Array of cells of the current notebook.
-	Cells *[]*NotebookCell `json:"cells,omitempty"`
+	Cells []*NotebookCell `json:"cells,omitempty"`
 
 	// The description of the notebook.
 	Description *string `json:"description,omitempty"`
@@ -17737,7 +19023,7 @@ func (n Notebook) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "nbformat_minor", n.NbformatMinor)
 	populate(objectMap, "sessionProperties", n.SessionProperties)
 	if n.AdditionalProperties != nil {
-		for key, val := range *n.AdditionalProperties {
+		for key, val := range n.AdditionalProperties {
 			objectMap[key] = val
 		}
 	}
@@ -17776,12 +19062,12 @@ func (n *Notebook) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		default:
 			if n.AdditionalProperties == nil {
-				n.AdditionalProperties = &map[string]interface{}{}
+				n.AdditionalProperties = map[string]interface{}{}
 			}
 			if val != nil {
 				var aux interface{}
 				err = json.Unmarshal(val, &aux)
-				(*n.AdditionalProperties)[key] = aux
+				n.AdditionalProperties[key] = aux
 			}
 			delete(rawMsg, key)
 		}
@@ -17811,7 +19097,7 @@ type NotebookBeginRenameNotebookOptions struct {
 // NotebookCell - Notebook cell.
 type NotebookCell struct {
 	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties *map[string]interface{}
+	AdditionalProperties map[string]interface{}
 
 	// Attachments associated with the cell.
 	Attachments interface{} `json:"attachments,omitempty"`
@@ -17823,10 +19109,10 @@ type NotebookCell struct {
 	Metadata interface{} `json:"metadata,omitempty"`
 
 	// Cell-level output items.
-	Outputs *[]*NotebookCellOutputItem `json:"outputs,omitempty"`
+	Outputs []*NotebookCellOutputItem `json:"outputs,omitempty"`
 
 	// Contents of the cell, represented as an array of lines.
-	Source *[]*string `json:"source,omitempty"`
+	Source []*string `json:"source,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type NotebookCell.
@@ -17838,7 +19124,7 @@ func (n NotebookCell) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "outputs", n.Outputs)
 	populate(objectMap, "source", n.Source)
 	if n.AdditionalProperties != nil {
-		for key, val := range *n.AdditionalProperties {
+		for key, val := range n.AdditionalProperties {
 			objectMap[key] = val
 		}
 	}
@@ -17871,12 +19157,12 @@ func (n *NotebookCell) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		default:
 			if n.AdditionalProperties == nil {
-				n.AdditionalProperties = &map[string]interface{}{}
+				n.AdditionalProperties = map[string]interface{}{}
 			}
 			if val != nil {
 				var aux interface{}
 				err = json.Unmarshal(val, &aux)
-				(*n.AdditionalProperties)[key] = aux
+				n.AdditionalProperties[key] = aux
 			}
 			delete(rawMsg, key)
 		}
@@ -17928,7 +19214,7 @@ type NotebookGetNotebooksByWorkspaceOptions struct {
 // NotebookKernelSpec - Kernel information.
 type NotebookKernelSpec struct {
 	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties *map[string]interface{}
+	AdditionalProperties map[string]interface{}
 
 	// Name to display in UI.
 	DisplayName *string `json:"display_name,omitempty"`
@@ -17943,7 +19229,7 @@ func (n NotebookKernelSpec) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "display_name", n.DisplayName)
 	populate(objectMap, "name", n.Name)
 	if n.AdditionalProperties != nil {
-		for key, val := range *n.AdditionalProperties {
+		for key, val := range n.AdditionalProperties {
 			objectMap[key] = val
 		}
 	}
@@ -17967,12 +19253,12 @@ func (n *NotebookKernelSpec) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		default:
 			if n.AdditionalProperties == nil {
-				n.AdditionalProperties = &map[string]interface{}{}
+				n.AdditionalProperties = map[string]interface{}{}
 			}
 			if val != nil {
 				var aux interface{}
 				err = json.Unmarshal(val, &aux)
-				(*n.AdditionalProperties)[key] = aux
+				n.AdditionalProperties[key] = aux
 			}
 			delete(rawMsg, key)
 		}
@@ -17986,7 +19272,7 @@ func (n *NotebookKernelSpec) UnmarshalJSON(data []byte) error {
 // NotebookLanguageInfo - Language info.
 type NotebookLanguageInfo struct {
 	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties *map[string]interface{}
+	AdditionalProperties map[string]interface{}
 
 	// The codemirror mode to use for code in this language.
 	CodemirrorMode *string `json:"codemirror_mode,omitempty"`
@@ -18001,7 +19287,7 @@ func (n NotebookLanguageInfo) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "codemirror_mode", n.CodemirrorMode)
 	populate(objectMap, "name", n.Name)
 	if n.AdditionalProperties != nil {
-		for key, val := range *n.AdditionalProperties {
+		for key, val := range n.AdditionalProperties {
 			objectMap[key] = val
 		}
 	}
@@ -18025,12 +19311,12 @@ func (n *NotebookLanguageInfo) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		default:
 			if n.AdditionalProperties == nil {
-				n.AdditionalProperties = &map[string]interface{}{}
+				n.AdditionalProperties = map[string]interface{}{}
 			}
 			if val != nil {
 				var aux interface{}
 				err = json.Unmarshal(val, &aux)
-				(*n.AdditionalProperties)[key] = aux
+				n.AdditionalProperties[key] = aux
 			}
 			delete(rawMsg, key)
 		}
@@ -18047,7 +19333,15 @@ type NotebookListResponse struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// List of Notebooks.
-	Value *[]*NotebookResource `json:"value,omitempty"`
+	Value []*NotebookResource `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type NotebookListResponse.
+func (n NotebookListResponse) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", n.NextLink)
+	populate(objectMap, "value", n.Value)
+	return json.Marshal(objectMap)
 }
 
 // NotebookListResponseResponse is the response envelope for operations that return a NotebookListResponse type.
@@ -18062,7 +19356,7 @@ type NotebookListResponseResponse struct {
 // NotebookMetadata - Notebook root-level metadata.
 type NotebookMetadata struct {
 	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties *map[string]interface{}
+	AdditionalProperties map[string]interface{}
 
 	// Kernel information.
 	Kernelspec *NotebookKernelSpec `json:"kernelspec,omitempty"`
@@ -18077,7 +19371,7 @@ func (n NotebookMetadata) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "kernelspec", n.Kernelspec)
 	populate(objectMap, "language_info", n.LanguageInfo)
 	if n.AdditionalProperties != nil {
-		for key, val := range *n.AdditionalProperties {
+		for key, val := range n.AdditionalProperties {
 			objectMap[key] = val
 		}
 	}
@@ -18101,12 +19395,12 @@ func (n *NotebookMetadata) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		default:
 			if n.AdditionalProperties == nil {
-				n.AdditionalProperties = &map[string]interface{}{}
+				n.AdditionalProperties = map[string]interface{}{}
 			}
 			if val != nil {
 				var aux interface{}
 				err = json.Unmarshal(val, &aux)
-				(*n.AdditionalProperties)[key] = aux
+				n.AdditionalProperties[key] = aux
 			}
 			delete(rawMsg, key)
 		}
@@ -18247,6 +19541,24 @@ type ODataLinkedServiceTypeProperties struct {
 
 	// User name of the OData service. Type: string (or Expression with resultType string).
 	UserName interface{} `json:"userName,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ODataLinkedServiceTypeProperties.
+func (o ODataLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "aadResourceId", o.AADResourceID)
+	populate(objectMap, "aadServicePrincipalCredentialType", o.AADServicePrincipalCredentialType)
+	populate(objectMap, "authenticationType", o.AuthenticationType)
+	populate(objectMap, "encryptedCredential", o.EncryptedCredential)
+	populate(objectMap, "password", o.Password)
+	populate(objectMap, "servicePrincipalEmbeddedCert", o.ServicePrincipalEmbeddedCert)
+	populate(objectMap, "servicePrincipalEmbeddedCertPassword", o.ServicePrincipalEmbeddedCertPassword)
+	populate(objectMap, "servicePrincipalId", o.ServicePrincipalID)
+	populate(objectMap, "servicePrincipalKey", o.ServicePrincipalKey)
+	populate(objectMap, "tenant", o.Tenant)
+	populate(objectMap, "url", o.URL)
+	populate(objectMap, "userName", o.UserName)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ODataLinkedServiceTypeProperties.
@@ -18431,6 +19743,18 @@ type OdbcLinkedServiceTypeProperties struct {
 
 	// User name for Basic authentication. Type: string (or Expression with resultType string).
 	UserName interface{} `json:"userName,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type OdbcLinkedServiceTypeProperties.
+func (o OdbcLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "authenticationType", o.AuthenticationType)
+	populate(objectMap, "connectionString", o.ConnectionString)
+	populate(objectMap, "credential", o.Credential)
+	populate(objectMap, "encryptedCredential", o.EncryptedCredential)
+	populate(objectMap, "password", o.Password)
+	populate(objectMap, "userName", o.UserName)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type OdbcLinkedServiceTypeProperties.
@@ -18670,6 +19994,17 @@ type Office365LinkedServiceTypeProperties struct {
 
 	// Specify the tenant information under which your Azure AD web application resides. Type: string (or Expression with resultType string).
 	ServicePrincipalTenantID interface{} `json:"servicePrincipalTenantId,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type Office365LinkedServiceTypeProperties.
+func (o Office365LinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "encryptedCredential", o.EncryptedCredential)
+	populate(objectMap, "office365TenantId", o.Office365TenantID)
+	populate(objectMap, "servicePrincipalId", o.ServicePrincipalID)
+	populate(objectMap, "servicePrincipalKey", o.ServicePrincipalKey)
+	populate(objectMap, "servicePrincipalTenantId", o.ServicePrincipalTenantID)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type Office365LinkedServiceTypeProperties.
@@ -18916,6 +20251,19 @@ type OracleServiceCloudLinkedServiceTypeProperties struct {
 
 	// The user name that you use to access Oracle Service Cloud server.
 	Username interface{} `json:"username,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type OracleServiceCloudLinkedServiceTypeProperties.
+func (o OracleServiceCloudLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "encryptedCredential", o.EncryptedCredential)
+	populate(objectMap, "host", o.Host)
+	populate(objectMap, "password", o.Password)
+	populate(objectMap, "useEncryptedEndpoints", o.UseEncryptedEndpoints)
+	populate(objectMap, "useHostVerification", o.UseHostVerification)
+	populate(objectMap, "usePeerVerification", o.UsePeerVerification)
+	populate(objectMap, "username", o.Username)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type OracleServiceCloudLinkedServiceTypeProperties.
@@ -19200,6 +20548,14 @@ type OrcDatasetTypeProperties struct {
 	OrcCompressionCodec *OrcCompressionCodec          `json:"orcCompressionCodec,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type OrcDatasetTypeProperties.
+func (o OrcDatasetTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "location", o.Location)
+	populate(objectMap, "orcCompressionCodec", o.OrcCompressionCodec)
+	return json.Marshal(objectMap)
+}
+
 // UnmarshalJSON implements the json.Unmarshaller interface for type OrcDatasetTypeProperties.
 func (o *OrcDatasetTypeProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
@@ -19351,6 +20707,14 @@ type ParquetDatasetTypeProperties struct {
 
 	// The location of the parquet storage.
 	Location DatasetLocationClassification `json:"location,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ParquetDatasetTypeProperties.
+func (p ParquetDatasetTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "compressionCodec", p.CompressionCodec)
+	populate(objectMap, "location", p.Location)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ParquetDatasetTypeProperties.
@@ -19513,6 +20877,19 @@ type PaypalLinkedServiceTypeProperties struct {
 
 	// Specifies whether to verify the identity of the server when connecting over SSL. The default value is true.
 	UsePeerVerification interface{} `json:"usePeerVerification,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type PaypalLinkedServiceTypeProperties.
+func (p PaypalLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "clientId", p.ClientID)
+	populate(objectMap, "clientSecret", p.ClientSecret)
+	populate(objectMap, "encryptedCredential", p.EncryptedCredential)
+	populate(objectMap, "host", p.Host)
+	populate(objectMap, "useEncryptedEndpoints", p.UseEncryptedEndpoints)
+	populate(objectMap, "useHostVerification", p.UseHostVerification)
+	populate(objectMap, "usePeerVerification", p.UsePeerVerification)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type PaypalLinkedServiceTypeProperties.
@@ -19709,6 +21086,24 @@ type PhoenixLinkedServiceTypeProperties struct {
 	Username interface{} `json:"username,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type PhoenixLinkedServiceTypeProperties.
+func (p PhoenixLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "allowHostNameCNMismatch", p.AllowHostNameCNMismatch)
+	populate(objectMap, "allowSelfSignedServerCert", p.AllowSelfSignedServerCert)
+	populate(objectMap, "authenticationType", p.AuthenticationType)
+	populate(objectMap, "enableSsl", p.EnableSSL)
+	populate(objectMap, "encryptedCredential", p.EncryptedCredential)
+	populate(objectMap, "httpPath", p.HTTPPath)
+	populate(objectMap, "host", p.Host)
+	populate(objectMap, "password", p.Password)
+	populate(objectMap, "port", p.Port)
+	populate(objectMap, "trustedCertPath", p.TrustedCertPath)
+	populate(objectMap, "useSystemTrustStore", p.UseSystemTrustStore)
+	populate(objectMap, "username", p.Username)
+	return json.Marshal(objectMap)
+}
+
 // UnmarshalJSON implements the json.Unmarshaller interface for type PhoenixLinkedServiceTypeProperties.
 func (p *PhoenixLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
@@ -19833,10 +21228,10 @@ func (p *PhoenixSource) UnmarshalJSON(data []byte) error {
 // Pipeline - A workspace pipeline.
 type Pipeline struct {
 	// List of activities in pipeline.
-	Activities *[]ActivityClassification `json:"activities,omitempty"`
+	Activities []ActivityClassification `json:"activities,omitempty"`
 
 	// List of tags that can be used for describing the Pipeline.
-	Annotations *[]interface{} `json:"annotations,omitempty"`
+	Annotations []interface{} `json:"annotations,omitempty"`
 
 	// The max number of concurrent runs for the pipeline.
 	Concurrency *int32 `json:"concurrency,omitempty"`
@@ -19848,13 +21243,27 @@ type Pipeline struct {
 	Folder *PipelineFolder `json:"folder,omitempty"`
 
 	// List of parameters for pipeline.
-	Parameters *map[string]*ParameterSpecification `json:"parameters,omitempty"`
+	Parameters map[string]*ParameterSpecification `json:"parameters,omitempty"`
 
 	// Dimensions emitted by Pipeline.
-	RunDimensions *map[string]interface{} `json:"runDimensions,omitempty"`
+	RunDimensions map[string]interface{} `json:"runDimensions,omitempty"`
 
 	// List of variables for pipeline.
-	Variables *map[string]*VariableSpecification `json:"variables,omitempty"`
+	Variables map[string]*VariableSpecification `json:"variables,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type Pipeline.
+func (p Pipeline) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "activities", p.Activities)
+	populate(objectMap, "annotations", p.Annotations)
+	populate(objectMap, "concurrency", p.Concurrency)
+	populate(objectMap, "description", p.Description)
+	populate(objectMap, "folder", p.Folder)
+	populate(objectMap, "parameters", p.Parameters)
+	populate(objectMap, "runDimensions", p.RunDimensions)
+	populate(objectMap, "variables", p.Variables)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type Pipeline.
@@ -19950,7 +21359,15 @@ type PipelineListResponse struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// List of pipelines.
-	Value *[]*PipelineResource `json:"value,omitempty"`
+	Value []*PipelineResource `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type PipelineListResponse.
+func (p PipelineListResponse) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", p.NextLink)
+	populate(objectMap, "value", p.Value)
+	return json.Marshal(objectMap)
 }
 
 // PipelineListResponseResponse is the response envelope for operations that return a PipelineListResponse type.
@@ -19978,7 +21395,7 @@ type PipelineReference struct {
 type PipelineResource struct {
 	SubResource
 	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties *map[string]interface{}
+	AdditionalProperties map[string]interface{}
 
 	// Properties of the pipeline.
 	Properties *Pipeline `json:"properties,omitempty"`
@@ -19989,7 +21406,7 @@ func (p PipelineResource) MarshalJSON() ([]byte, error) {
 	objectMap := p.SubResource.marshalInternal()
 	populate(objectMap, "properties", p.Properties)
 	if p.AdditionalProperties != nil {
-		for key, val := range *p.AdditionalProperties {
+		for key, val := range p.AdditionalProperties {
 			objectMap[key] = val
 		}
 	}
@@ -20019,12 +21436,12 @@ func (p *PipelineResource) UnmarshalJSON(data []byte) error {
 	for key, val := range rawMsg {
 		var err error
 		if p.AdditionalProperties == nil {
-			p.AdditionalProperties = &map[string]interface{}{}
+			p.AdditionalProperties = map[string]interface{}{}
 		}
 		if val != nil {
 			var aux interface{}
 			err = json.Unmarshal(val, &aux)
-			(*p.AdditionalProperties)[key] = aux
+			p.AdditionalProperties[key] = aux
 		}
 		delete(rawMsg, key)
 		if err != nil {
@@ -20058,7 +21475,7 @@ type PipelineResourceResponse struct {
 // PipelineRun - Information about a pipeline run.
 type PipelineRun struct {
 	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties *map[string]interface{}
+	AdditionalProperties map[string]interface{}
 
 	// READ-ONLY; The duration of a pipeline run.
 	DurationInMs *int32 `json:"durationInMs,omitempty" azure:"ro"`
@@ -20076,7 +21493,7 @@ type PipelineRun struct {
 	Message *string `json:"message,omitempty" azure:"ro"`
 
 	// READ-ONLY; The full or partial list of parameter name, value pair used in the pipeline run.
-	Parameters *map[string]*string `json:"parameters,omitempty" azure:"ro"`
+	Parameters map[string]*string `json:"parameters,omitempty" azure:"ro"`
 
 	// READ-ONLY; The pipeline name.
 	PipelineName *string `json:"pipelineName,omitempty" azure:"ro"`
@@ -20113,7 +21530,7 @@ func (p PipelineRun) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "runStart", (*timeRFC3339)(p.RunStart))
 	populate(objectMap, "status", p.Status)
 	if p.AdditionalProperties != nil {
-		for key, val := range *p.AdditionalProperties {
+		for key, val := range p.AdditionalProperties {
 			objectMap[key] = val
 		}
 	}
@@ -20173,12 +21590,12 @@ func (p *PipelineRun) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		default:
 			if p.AdditionalProperties == nil {
-				p.AdditionalProperties = &map[string]interface{}{}
+				p.AdditionalProperties = map[string]interface{}{}
 			}
 			if val != nil {
 				var aux interface{}
 				err = json.Unmarshal(val, &aux)
-				(*p.AdditionalProperties)[key] = aux
+				p.AdditionalProperties[key] = aux
 			}
 			delete(rawMsg, key)
 		}
@@ -20237,7 +21654,15 @@ type PipelineRunsQueryResponse struct {
 	ContinuationToken *string `json:"continuationToken,omitempty"`
 
 	// List of pipeline runs.
-	Value *[]*PipelineRun `json:"value,omitempty"`
+	Value []*PipelineRun `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type PipelineRunsQueryResponse.
+func (p PipelineRunsQueryResponse) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "continuationToken", p.ContinuationToken)
+	populate(objectMap, "value", p.Value)
+	return json.Marshal(objectMap)
 }
 
 // PipelineRunsQueryResponseResponse is the response envelope for operations that return a PipelineRunsQueryResponse type.
@@ -20252,7 +21677,7 @@ type PipelineRunsQueryResponseResponse struct {
 // PolybaseSettings - PolyBase settings.
 type PolybaseSettings struct {
 	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties *map[string]interface{}
+	AdditionalProperties map[string]interface{}
 
 	// Determines the number of rows to attempt to retrieve before the PolyBase recalculates the percentage of rejected rows. Type: integer (or Expression with
 	// resultType integer), minimum: 0.
@@ -20278,7 +21703,7 @@ func (p PolybaseSettings) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "rejectValue", p.RejectValue)
 	populate(objectMap, "useTypeDefault", p.UseTypeDefault)
 	if p.AdditionalProperties != nil {
-		for key, val := range *p.AdditionalProperties {
+		for key, val := range p.AdditionalProperties {
 			objectMap[key] = val
 		}
 	}
@@ -20308,12 +21733,12 @@ func (p *PolybaseSettings) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		default:
 			if p.AdditionalProperties == nil {
-				p.AdditionalProperties = &map[string]interface{}{}
+				p.AdditionalProperties = map[string]interface{}{}
 			}
 			if val != nil {
 				var aux interface{}
 				err = json.Unmarshal(val, &aux)
-				(*p.AdditionalProperties)[key] = aux
+				p.AdditionalProperties[key] = aux
 			}
 			delete(rawMsg, key)
 		}
@@ -20546,6 +21971,26 @@ type PrestoLinkedServiceTypeProperties struct {
 	Username interface{} `json:"username,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type PrestoLinkedServiceTypeProperties.
+func (p PrestoLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "allowHostNameCNMismatch", p.AllowHostNameCNMismatch)
+	populate(objectMap, "allowSelfSignedServerCert", p.AllowSelfSignedServerCert)
+	populate(objectMap, "authenticationType", p.AuthenticationType)
+	populate(objectMap, "catalog", p.Catalog)
+	populate(objectMap, "enableSsl", p.EnableSSL)
+	populate(objectMap, "encryptedCredential", p.EncryptedCredential)
+	populate(objectMap, "host", p.Host)
+	populate(objectMap, "password", p.Password)
+	populate(objectMap, "port", p.Port)
+	populate(objectMap, "serverVersion", p.ServerVersion)
+	populate(objectMap, "timeZoneID", p.TimeZoneID)
+	populate(objectMap, "trustedCertPath", p.TrustedCertPath)
+	populate(objectMap, "useSystemTrustStore", p.UseSystemTrustStore)
+	populate(objectMap, "username", p.Username)
+	return json.Marshal(objectMap)
+}
+
 // UnmarshalJSON implements the json.Unmarshaller interface for type PrestoLinkedServiceTypeProperties.
 func (p *PrestoLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
@@ -20686,6 +22131,13 @@ type PrivateEndpointConnection struct {
 	Properties *PrivateEndpointConnectionProperties `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type PrivateEndpointConnection.
+func (p PrivateEndpointConnection) MarshalJSON() ([]byte, error) {
+	objectMap := p.ProxyResource.marshalInternal()
+	populate(objectMap, "properties", p.Properties)
+	return json.Marshal(objectMap)
+}
+
 // PrivateEndpointConnectionProperties - Properties of a private endpoint connection.
 type PrivateEndpointConnectionProperties struct {
 	// The private endpoint which the connection belongs to.
@@ -20715,6 +22167,11 @@ type ProxyResource struct {
 	Resource
 }
 
+func (p ProxyResource) marshalInternal() map[string]interface{} {
+	objectMap := p.Resource.marshalInternal()
+	return objectMap
+}
+
 // PurviewConfiguration - Purview Configuration
 type PurviewConfiguration struct {
 	// Purview Resource ID
@@ -20727,7 +22184,15 @@ type QueryDataFlowDebugSessionsResponse struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// Array with all active debug sessions.
-	Value *[]*DataFlowDebugSessionInfo `json:"value,omitempty"`
+	Value []*DataFlowDebugSessionInfo `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type QueryDataFlowDebugSessionsResponse.
+func (q QueryDataFlowDebugSessionsResponse) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", q.NextLink)
+	populate(objectMap, "value", q.Value)
+	return json.Marshal(objectMap)
 }
 
 // QueryDataFlowDebugSessionsResponseResponse is the response envelope for operations that return a QueryDataFlowDebugSessionsResponse type.
@@ -20799,6 +22264,20 @@ type QuickBooksLinkedServiceTypeProperties struct {
 
 	// Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true.
 	UseEncryptedEndpoints interface{} `json:"useEncryptedEndpoints,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type QuickBooksLinkedServiceTypeProperties.
+func (q QuickBooksLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "accessToken", q.AccessToken)
+	populate(objectMap, "accessTokenSecret", q.AccessTokenSecret)
+	populate(objectMap, "companyId", q.CompanyID)
+	populate(objectMap, "consumerKey", q.ConsumerKey)
+	populate(objectMap, "consumerSecret", q.ConsumerSecret)
+	populate(objectMap, "encryptedCredential", q.EncryptedCredential)
+	populate(objectMap, "endpoint", q.Endpoint)
+	populate(objectMap, "useEncryptedEndpoints", q.UseEncryptedEndpoints)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type QuickBooksLinkedServiceTypeProperties.
@@ -20913,22 +22392,22 @@ func (q *QuickBooksSource) UnmarshalJSON(data []byte) error {
 // RecurrenceSchedule - The recurrence schedule.
 type RecurrenceSchedule struct {
 	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties *map[string]interface{}
+	AdditionalProperties map[string]interface{}
 
 	// The hours.
-	Hours *[]*int32 `json:"hours,omitempty"`
+	Hours []*int32 `json:"hours,omitempty"`
 
 	// The minutes.
-	Minutes *[]*int32 `json:"minutes,omitempty"`
+	Minutes []*int32 `json:"minutes,omitempty"`
 
 	// The month days.
-	MonthDays *[]*int32 `json:"monthDays,omitempty"`
+	MonthDays []*int32 `json:"monthDays,omitempty"`
 
 	// The monthly occurrences.
-	MonthlyOccurrences *[]*RecurrenceScheduleOccurrence `json:"monthlyOccurrences,omitempty"`
+	MonthlyOccurrences []*RecurrenceScheduleOccurrence `json:"monthlyOccurrences,omitempty"`
 
 	// The days of the week.
-	WeekDays *[]*DayOfWeek `json:"weekDays,omitempty"`
+	WeekDays []*DayOfWeek `json:"weekDays,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type RecurrenceSchedule.
@@ -20940,7 +22419,7 @@ func (r RecurrenceSchedule) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "monthlyOccurrences", r.MonthlyOccurrences)
 	populate(objectMap, "weekDays", r.WeekDays)
 	if r.AdditionalProperties != nil {
-		for key, val := range *r.AdditionalProperties {
+		for key, val := range r.AdditionalProperties {
 			objectMap[key] = val
 		}
 	}
@@ -20973,12 +22452,12 @@ func (r *RecurrenceSchedule) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		default:
 			if r.AdditionalProperties == nil {
-				r.AdditionalProperties = &map[string]interface{}{}
+				r.AdditionalProperties = map[string]interface{}{}
 			}
 			if val != nil {
 				var aux interface{}
 				err = json.Unmarshal(val, &aux)
-				(*r.AdditionalProperties)[key] = aux
+				r.AdditionalProperties[key] = aux
 			}
 			delete(rawMsg, key)
 		}
@@ -20992,7 +22471,7 @@ func (r *RecurrenceSchedule) UnmarshalJSON(data []byte) error {
 // RecurrenceScheduleOccurrence - The recurrence schedule occurrence.
 type RecurrenceScheduleOccurrence struct {
 	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties *map[string]interface{}
+	AdditionalProperties map[string]interface{}
 
 	// The day of the week.
 	Day *DayOfWeek `json:"day,omitempty"`
@@ -21007,7 +22486,7 @@ func (r RecurrenceScheduleOccurrence) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "day", r.Day)
 	populate(objectMap, "occurrence", r.Occurrence)
 	if r.AdditionalProperties != nil {
-		for key, val := range *r.AdditionalProperties {
+		for key, val := range r.AdditionalProperties {
 			objectMap[key] = val
 		}
 	}
@@ -21031,12 +22510,12 @@ func (r *RecurrenceScheduleOccurrence) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		default:
 			if r.AdditionalProperties == nil {
-				r.AdditionalProperties = &map[string]interface{}{}
+				r.AdditionalProperties = map[string]interface{}{}
 			}
 			if val != nil {
 				var aux interface{}
 				err = json.Unmarshal(val, &aux)
-				(*r.AdditionalProperties)[key] = aux
+				r.AdditionalProperties[key] = aux
 			}
 			delete(rawMsg, key)
 		}
@@ -21050,7 +22529,7 @@ func (r *RecurrenceScheduleOccurrence) UnmarshalJSON(data []byte) error {
 // RedirectIncompatibleRowSettings - Redirect incompatible row settings
 type RedirectIncompatibleRowSettings struct {
 	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties *map[string]interface{}
+	AdditionalProperties map[string]interface{}
 
 	// Name of the Azure Storage, Storage SAS, or Azure Data Lake Store linked service used for redirecting incompatible row. Must be specified if redirectIncompatibleRowSettings
 	// is specified. Type: string
@@ -21067,7 +22546,7 @@ func (r RedirectIncompatibleRowSettings) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "linkedServiceName", r.LinkedServiceName)
 	populate(objectMap, "path", r.Path)
 	if r.AdditionalProperties != nil {
-		for key, val := range *r.AdditionalProperties {
+		for key, val := range r.AdditionalProperties {
 			objectMap[key] = val
 		}
 	}
@@ -21091,12 +22570,12 @@ func (r *RedirectIncompatibleRowSettings) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		default:
 			if r.AdditionalProperties == nil {
-				r.AdditionalProperties = &map[string]interface{}{}
+				r.AdditionalProperties = map[string]interface{}{}
 			}
 			if val != nil {
 				var aux interface{}
 				err = json.Unmarshal(val, &aux)
-				(*r.AdditionalProperties)[key] = aux
+				r.AdditionalProperties[key] = aux
 			}
 			delete(rawMsg, key)
 		}
@@ -21200,7 +22679,15 @@ type RerunTriggerListResponse struct {
 	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 
 	// List of rerun triggers.
-	Value *[]*RerunTriggerResource `json:"value,omitempty"`
+	Value []*RerunTriggerResource `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type RerunTriggerListResponse.
+func (r RerunTriggerListResponse) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", r.NextLink)
+	populate(objectMap, "value", r.Value)
+	return json.Marshal(objectMap)
 }
 
 // RerunTriggerResource - RerunTrigger resource type.
@@ -21208,6 +22695,33 @@ type RerunTriggerResource struct {
 	SubResource
 	// Properties of the rerun trigger.
 	Properties *RerunTumblingWindowTrigger `json:"properties,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type RerunTriggerResource.
+func (r RerunTriggerResource) MarshalJSON() ([]byte, error) {
+	objectMap := r.SubResource.marshalInternal()
+	populate(objectMap, "properties", r.Properties)
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type RerunTriggerResource.
+func (r *RerunTriggerResource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "properties":
+			err = unpopulate(val, &r.Properties)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return r.SubResource.unmarshalInternal(rawMsg)
 }
 
 // RerunTumblingWindowTrigger - Trigger that schedules pipeline reruns for all fixed time interval windows from a requested start time to requested end
@@ -21366,6 +22880,21 @@ type Resource struct {
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type Resource.
+func (r Resource) MarshalJSON() ([]byte, error) {
+	objectMap := r.marshalInternal()
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type Resource.
+func (r *Resource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	return r.unmarshalInternal(rawMsg)
+}
+
 func (r Resource) marshalInternal() map[string]interface{} {
 	objectMap := make(map[string]interface{})
 	populate(objectMap, "id", r.ID)
@@ -21455,6 +22984,19 @@ type ResponsysLinkedServiceTypeProperties struct {
 	// Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. Type: boolean (or Expression with resultType
 	// boolean).
 	UsePeerVerification interface{} `json:"usePeerVerification,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ResponsysLinkedServiceTypeProperties.
+func (r ResponsysLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "clientId", r.ClientID)
+	populate(objectMap, "clientSecret", r.ClientSecret)
+	populate(objectMap, "encryptedCredential", r.EncryptedCredential)
+	populate(objectMap, "endpoint", r.Endpoint)
+	populate(objectMap, "useEncryptedEndpoints", r.UseEncryptedEndpoints)
+	populate(objectMap, "useHostVerification", r.UseHostVerification)
+	populate(objectMap, "usePeerVerification", r.UsePeerVerification)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ResponsysLinkedServiceTypeProperties.
@@ -21684,6 +23226,22 @@ type RestServiceLinkedServiceTypeProperties struct {
 	UserName interface{} `json:"userName,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type RestServiceLinkedServiceTypeProperties.
+func (r RestServiceLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "aadResourceId", r.AADResourceID)
+	populate(objectMap, "authenticationType", r.AuthenticationType)
+	populate(objectMap, "enableServerCertificateValidation", r.EnableServerCertificateValidation)
+	populate(objectMap, "encryptedCredential", r.EncryptedCredential)
+	populate(objectMap, "password", r.Password)
+	populate(objectMap, "servicePrincipalId", r.ServicePrincipalID)
+	populate(objectMap, "servicePrincipalKey", r.ServicePrincipalKey)
+	populate(objectMap, "tenant", r.Tenant)
+	populate(objectMap, "url", r.URL)
+	populate(objectMap, "userName", r.UserName)
+	return json.Marshal(objectMap)
+}
+
 // UnmarshalJSON implements the json.Unmarshaller interface for type RestServiceLinkedServiceTypeProperties.
 func (r *RestServiceLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
@@ -21817,7 +23375,7 @@ type RunFilterParameters struct {
 	ContinuationToken *string `json:"continuationToken,omitempty"`
 
 	// List of filters.
-	Filters *[]*RunQueryFilter `json:"filters,omitempty"`
+	Filters []*RunQueryFilter `json:"filters,omitempty"`
 
 	// The time at or after which the run event was updated in 'ISO 8601' format.
 	LastUpdatedAfter *time.Time `json:"lastUpdatedAfter,omitempty"`
@@ -21826,7 +23384,7 @@ type RunFilterParameters struct {
 	LastUpdatedBefore *time.Time `json:"lastUpdatedBefore,omitempty"`
 
 	// List of OrderBy option.
-	OrderBy *[]*RunQueryOrderBy `json:"orderBy,omitempty"`
+	OrderBy []*RunQueryOrderBy `json:"orderBy,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type RunFilterParameters.
@@ -21887,7 +23445,16 @@ type RunQueryFilter struct {
 	Operator *RunQueryFilterOperator `json:"operator,omitempty"`
 
 	// List of filter values.
-	Values *[]*string `json:"values,omitempty"`
+	Values []*string `json:"values,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type RunQueryFilter.
+func (r RunQueryFilter) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "operand", r.Operand)
+	populate(objectMap, "operator", r.Operator)
+	populate(objectMap, "values", r.Values)
+	return json.Marshal(objectMap)
 }
 
 // RunQueryOrderBy - An object to provide order by options for listing runs.
@@ -21916,7 +23483,7 @@ type SKU struct {
 // SQLConnection - The connection used to execute the SQL script.
 type SQLConnection struct {
 	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties *map[string]interface{}
+	AdditionalProperties map[string]interface{}
 
 	// The identifier of the connection.
 	Name *string `json:"name,omitempty"`
@@ -21931,7 +23498,7 @@ func (s SQLConnection) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "name", s.Name)
 	populate(objectMap, "type", s.Type)
 	if s.AdditionalProperties != nil {
-		for key, val := range *s.AdditionalProperties {
+		for key, val := range s.AdditionalProperties {
 			objectMap[key] = val
 		}
 	}
@@ -21955,12 +23522,12 @@ func (s *SQLConnection) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		default:
 			if s.AdditionalProperties == nil {
-				s.AdditionalProperties = &map[string]interface{}{}
+				s.AdditionalProperties = map[string]interface{}{}
 			}
 			if val != nil {
 				var aux interface{}
 				err = json.Unmarshal(val, &aux)
-				(*s.AdditionalProperties)[key] = aux
+				s.AdditionalProperties[key] = aux
 			}
 			delete(rawMsg, key)
 		}
@@ -22103,7 +23670,7 @@ type SQLMISink struct {
 	SQLWriterTableType interface{} `json:"sqlWriterTableType,omitempty"`
 
 	// SQL stored procedure parameters.
-	StoredProcedureParameters *map[string]*StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
+	StoredProcedureParameters map[string]*StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
 
 	// The stored procedure parameter name of the table type. Type: string (or Expression with resultType string).
 	StoredProcedureTableTypeParameterName interface{} `json:"storedProcedureTableTypeParameterName,omitempty"`
@@ -22173,7 +23740,7 @@ type SQLMISource struct {
 	SQLReaderStoredProcedureName interface{} `json:"sqlReaderStoredProcedureName,omitempty"`
 
 	// Value and type setting for stored procedure parameters. Example: "{Parameter1: {value: "1", type: "int"}}".
-	StoredProcedureParameters *map[string]*StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
+	StoredProcedureParameters map[string]*StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type SQLMISource.
@@ -22225,13 +23792,29 @@ type SQLPool struct {
 	SKU *SKU `json:"sku,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type SQLPool.
+func (s SQLPool) MarshalJSON() ([]byte, error) {
+	objectMap := s.TrackedResource.marshalInternal()
+	populate(objectMap, "properties", s.Properties)
+	populate(objectMap, "sku", s.SKU)
+	return json.Marshal(objectMap)
+}
+
 // SQLPoolInfoListResult - List of SQL pools
 type SQLPoolInfoListResult struct {
 	// Link to the next page of results
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// List of SQL pools
-	Value *[]*SQLPool `json:"value,omitempty"`
+	Value []*SQLPool `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SQLPoolInfoListResult.
+func (s SQLPoolInfoListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", s.NextLink)
+	populate(objectMap, "value", s.Value)
+	return json.Marshal(objectMap)
 }
 
 // SQLPoolInfoListResultResponse is the response envelope for operations that return a SQLPoolInfoListResult type.
@@ -22399,7 +23982,15 @@ type SQLPoolStoredProcedureActivityTypeProperties struct {
 	StoredProcedureName interface{} `json:"storedProcedureName,omitempty"`
 
 	// Value and type setting for stored procedure parameters. Example: "{Parameter1: {value: "1", type: "int"}}".
-	StoredProcedureParameters *map[string]*StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
+	StoredProcedureParameters map[string]*StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SQLPoolStoredProcedureActivityTypeProperties.
+func (s SQLPoolStoredProcedureActivityTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "storedProcedureName", s.StoredProcedureName)
+	populate(objectMap, "storedProcedureParameters", s.StoredProcedureParameters)
+	return json.Marshal(objectMap)
 }
 
 // SQLPoolsGetOptions contains the optional parameters for the SQLPools.Get method.
@@ -22415,7 +24006,7 @@ type SQLPoolsListOptions struct {
 // SQLScript - SQL script.
 type SQLScript struct {
 	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties *map[string]interface{}
+	AdditionalProperties map[string]interface{}
 
 	// The content of the SQL script.
 	Content *SQLScriptContent `json:"content,omitempty"`
@@ -22434,7 +24025,7 @@ func (s SQLScript) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "description", s.Description)
 	populate(objectMap, "type", s.Type)
 	if s.AdditionalProperties != nil {
-		for key, val := range *s.AdditionalProperties {
+		for key, val := range s.AdditionalProperties {
 			objectMap[key] = val
 		}
 	}
@@ -22461,12 +24052,12 @@ func (s *SQLScript) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		default:
 			if s.AdditionalProperties == nil {
-				s.AdditionalProperties = &map[string]interface{}{}
+				s.AdditionalProperties = map[string]interface{}{}
 			}
 			if val != nil {
 				var aux interface{}
 				err = json.Unmarshal(val, &aux)
-				(*s.AdditionalProperties)[key] = aux
+				s.AdditionalProperties[key] = aux
 			}
 			delete(rawMsg, key)
 		}
@@ -22496,7 +24087,7 @@ type SQLScriptBeginRenameSQLScriptOptions struct {
 // SQLScriptContent - The content of the SQL script.
 type SQLScriptContent struct {
 	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties *map[string]interface{}
+	AdditionalProperties map[string]interface{}
 
 	// The connection used to execute the SQL script.
 	CurrentConnection *SQLConnection `json:"currentConnection,omitempty"`
@@ -22515,7 +24106,7 @@ func (s SQLScriptContent) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "metadata", s.Metadata)
 	populate(objectMap, "query", s.Query)
 	if s.AdditionalProperties != nil {
-		for key, val := range *s.AdditionalProperties {
+		for key, val := range s.AdditionalProperties {
 			objectMap[key] = val
 		}
 	}
@@ -22542,12 +24133,12 @@ func (s *SQLScriptContent) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		default:
 			if s.AdditionalProperties == nil {
-				s.AdditionalProperties = &map[string]interface{}{}
+				s.AdditionalProperties = map[string]interface{}{}
 			}
 			if val != nil {
 				var aux interface{}
 				err = json.Unmarshal(val, &aux)
-				(*s.AdditionalProperties)[key] = aux
+				s.AdditionalProperties[key] = aux
 			}
 			delete(rawMsg, key)
 		}
@@ -22573,7 +24164,7 @@ type SQLScriptGetSQLScriptsByWorkspaceOptions struct {
 // SQLScriptMetadata - The metadata of the SQL script.
 type SQLScriptMetadata struct {
 	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties *map[string]interface{}
+	AdditionalProperties map[string]interface{}
 
 	// The language of the SQL script.
 	Language *string `json:"language,omitempty"`
@@ -22584,7 +24175,7 @@ func (s SQLScriptMetadata) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	populate(objectMap, "language", s.Language)
 	if s.AdditionalProperties != nil {
-		for key, val := range *s.AdditionalProperties {
+		for key, val := range s.AdditionalProperties {
 			objectMap[key] = val
 		}
 	}
@@ -22605,12 +24196,12 @@ func (s *SQLScriptMetadata) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		default:
 			if s.AdditionalProperties == nil {
-				s.AdditionalProperties = &map[string]interface{}{}
+				s.AdditionalProperties = map[string]interface{}{}
 			}
 			if val != nil {
 				var aux interface{}
 				err = json.Unmarshal(val, &aux)
-				(*s.AdditionalProperties)[key] = aux
+				s.AdditionalProperties[key] = aux
 			}
 			delete(rawMsg, key)
 		}
@@ -22666,7 +24257,15 @@ type SQLScriptsListResponse struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// List of sql scripts.
-	Value *[]*SQLScriptResource `json:"value,omitempty"`
+	Value []*SQLScriptResource `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SQLScriptsListResponse.
+func (s SQLScriptsListResponse) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", s.NextLink)
+	populate(objectMap, "value", s.Value)
+	return json.Marshal(objectMap)
 }
 
 // SQLScriptsListResponseResponse is the response envelope for operations that return a SQLScriptsListResponse type.
@@ -22728,6 +24327,16 @@ type SQLServerLinkedServiceTypeProperties struct {
 	UserName interface{} `json:"userName,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type SQLServerLinkedServiceTypeProperties.
+func (s SQLServerLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "connectionString", s.ConnectionString)
+	populate(objectMap, "encryptedCredential", s.EncryptedCredential)
+	populate(objectMap, "password", s.Password)
+	populate(objectMap, "userName", s.UserName)
+	return json.Marshal(objectMap)
+}
+
 // UnmarshalJSON implements the json.Unmarshaller interface for type SQLServerLinkedServiceTypeProperties.
 func (s *SQLServerLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
@@ -22770,7 +24379,7 @@ type SQLServerSink struct {
 	SQLWriterTableType interface{} `json:"sqlWriterTableType,omitempty"`
 
 	// SQL stored procedure parameters.
-	StoredProcedureParameters *map[string]*StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
+	StoredProcedureParameters map[string]*StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
 
 	// The stored procedure parameter name of the table type. Type: string (or Expression with resultType string).
 	StoredProcedureTableTypeParameterName interface{} `json:"storedProcedureTableTypeParameterName,omitempty"`
@@ -22840,7 +24449,7 @@ type SQLServerSource struct {
 	SQLReaderStoredProcedureName interface{} `json:"sqlReaderStoredProcedureName,omitempty"`
 
 	// Value and type setting for stored procedure parameters. Example: "{Parameter1: {value: "1", type: "int"}}".
-	StoredProcedureParameters *map[string]*StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
+	StoredProcedureParameters map[string]*StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type SQLServerSource.
@@ -22922,7 +24531,15 @@ type SQLServerStoredProcedureActivityTypeProperties struct {
 	StoredProcedureName interface{} `json:"storedProcedureName,omitempty"`
 
 	// Value and type setting for stored procedure parameters. Example: "{Parameter1: {value: "1", type: "int"}}".
-	StoredProcedureParameters *map[string]*StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
+	StoredProcedureParameters map[string]*StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SQLServerStoredProcedureActivityTypeProperties.
+func (s SQLServerStoredProcedureActivityTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "storedProcedureName", s.StoredProcedureName)
+	populate(objectMap, "storedProcedureParameters", s.StoredProcedureParameters)
+	return json.Marshal(objectMap)
 }
 
 // SQLServerTableDataset - The on-premises SQL Server dataset.
@@ -22984,7 +24601,7 @@ type SQLSink struct {
 	SQLWriterTableType interface{} `json:"sqlWriterTableType,omitempty"`
 
 	// SQL stored procedure parameters.
-	StoredProcedureParameters *map[string]*StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
+	StoredProcedureParameters map[string]*StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
 
 	// The stored procedure parameter name of the table type. Type: string (or Expression with resultType string).
 	StoredProcedureTableTypeParameterName interface{} `json:"storedProcedureTableTypeParameterName,omitempty"`
@@ -23051,7 +24668,7 @@ type SQLSource struct {
 	SQLReaderStoredProcedureName interface{} `json:"sqlReaderStoredProcedureName,omitempty"`
 
 	// Value and type setting for stored procedure parameters. Example: "{Parameter1: {value: "1", type: "int"}}".
-	StoredProcedureParameters *map[string]*StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
+	StoredProcedureParameters map[string]*StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type SQLSource.
@@ -23099,6 +24716,15 @@ type SSISAccessCredential struct {
 
 	// UseName for windows authentication.
 	UserName interface{} `json:"userName,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SSISAccessCredential.
+func (s SSISAccessCredential) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "domain", s.Domain)
+	populate(objectMap, "password", s.Password)
+	populate(objectMap, "userName", s.UserName)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SSISAccessCredential.
@@ -23199,7 +24825,7 @@ type SSISPackageLocationTypeProperties struct {
 	AccessCredential *SSISAccessCredential `json:"accessCredential,omitempty"`
 
 	// The embedded child package list.
-	ChildPackages *[]*SSISChildPackage `json:"childPackages,omitempty"`
+	ChildPackages []*SSISChildPackage `json:"childPackages,omitempty"`
 
 	// The configuration file of the package execution. Type: string (or Expression with resultType string).
 	ConfigurationPath interface{} `json:"configurationPath,omitempty"`
@@ -23215,6 +24841,19 @@ type SSISPackageLocationTypeProperties struct {
 
 	// Password of the package.
 	PackagePassword SecretBaseClassification `json:"packagePassword,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SSISPackageLocationTypeProperties.
+func (s SSISPackageLocationTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "accessCredential", s.AccessCredential)
+	populate(objectMap, "childPackages", s.ChildPackages)
+	populate(objectMap, "configurationPath", s.ConfigurationPath)
+	populate(objectMap, "packageContent", s.PackageContent)
+	populate(objectMap, "packageLastModifiedDate", s.PackageLastModifiedDate)
+	populate(objectMap, "packageName", s.PackageName)
+	populate(objectMap, "packagePassword", s.PackagePassword)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SSISPackageLocationTypeProperties.
@@ -23319,6 +24958,17 @@ type SalesforceLinkedServiceTypeProperties struct {
 	Username interface{} `json:"username,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type SalesforceLinkedServiceTypeProperties.
+func (s SalesforceLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "encryptedCredential", s.EncryptedCredential)
+	populate(objectMap, "environmentUrl", s.EnvironmentURL)
+	populate(objectMap, "password", s.Password)
+	populate(objectMap, "securityToken", s.SecurityToken)
+	populate(objectMap, "username", s.Username)
+	return json.Marshal(objectMap)
+}
+
 // UnmarshalJSON implements the json.Unmarshaller interface for type SalesforceLinkedServiceTypeProperties.
 func (s *SalesforceLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
@@ -23408,6 +25058,18 @@ type SalesforceMarketingCloudLinkedServiceTypeProperties struct {
 	// Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. Type: boolean (or Expression with resultType
 	// boolean).
 	UsePeerVerification interface{} `json:"usePeerVerification,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SalesforceMarketingCloudLinkedServiceTypeProperties.
+func (s SalesforceMarketingCloudLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "clientId", s.ClientID)
+	populate(objectMap, "clientSecret", s.ClientSecret)
+	populate(objectMap, "encryptedCredential", s.EncryptedCredential)
+	populate(objectMap, "useEncryptedEndpoints", s.UseEncryptedEndpoints)
+	populate(objectMap, "useHostVerification", s.UseHostVerification)
+	populate(objectMap, "usePeerVerification", s.UsePeerVerification)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SalesforceMarketingCloudLinkedServiceTypeProperties.
@@ -23609,6 +25271,18 @@ type SalesforceServiceCloudLinkedServiceTypeProperties struct {
 
 	// The username for Basic authentication of the Salesforce instance. Type: string (or Expression with resultType string).
 	Username interface{} `json:"username,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SalesforceServiceCloudLinkedServiceTypeProperties.
+func (s SalesforceServiceCloudLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "encryptedCredential", s.EncryptedCredential)
+	populate(objectMap, "environmentUrl", s.EnvironmentURL)
+	populate(objectMap, "extendedProperties", s.ExtendedProperties)
+	populate(objectMap, "password", s.Password)
+	populate(objectMap, "securityToken", s.SecurityToken)
+	populate(objectMap, "username", s.Username)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SalesforceServiceCloudLinkedServiceTypeProperties.
@@ -23929,6 +25603,18 @@ type SapBWLinkedServiceTypeProperties struct {
 	UserName interface{} `json:"userName,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type SapBWLinkedServiceTypeProperties.
+func (s SapBWLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "clientId", s.ClientID)
+	populate(objectMap, "encryptedCredential", s.EncryptedCredential)
+	populate(objectMap, "password", s.Password)
+	populate(objectMap, "server", s.Server)
+	populate(objectMap, "systemNumber", s.SystemNumber)
+	populate(objectMap, "userName", s.UserName)
+	return json.Marshal(objectMap)
+}
+
 // UnmarshalJSON implements the json.Unmarshaller interface for type SapBWLinkedServiceTypeProperties.
 func (s *SapBWLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
@@ -24059,6 +25745,16 @@ type SapCloudForCustomerLinkedServiceTypeProperties struct {
 
 	// The username for Basic authentication. Type: string (or Expression with resultType string).
 	Username interface{} `json:"username,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SapCloudForCustomerLinkedServiceTypeProperties.
+func (s SapCloudForCustomerLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "encryptedCredential", s.EncryptedCredential)
+	populate(objectMap, "password", s.Password)
+	populate(objectMap, "url", s.URL)
+	populate(objectMap, "username", s.Username)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SapCloudForCustomerLinkedServiceTypeProperties.
@@ -24249,6 +25945,16 @@ type SapEccLinkedServiceTypeProperties struct {
 	Username *string `json:"username,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type SapEccLinkedServiceTypeProperties.
+func (s SapEccLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "encryptedCredential", s.EncryptedCredential)
+	populate(objectMap, "password", s.Password)
+	populate(objectMap, "url", s.URL)
+	populate(objectMap, "username", s.Username)
+	return json.Marshal(objectMap)
+}
+
 // UnmarshalJSON implements the json.Unmarshaller interface for type SapEccLinkedServiceTypeProperties.
 func (s *SapEccLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
@@ -24406,6 +26112,18 @@ type SapHanaLinkedServiceProperties struct {
 
 	// Username to access the SAP HANA server. Type: string (or Expression with resultType string).
 	UserName interface{} `json:"userName,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SapHanaLinkedServiceProperties.
+func (s SapHanaLinkedServiceProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "authenticationType", s.AuthenticationType)
+	populate(objectMap, "connectionString", s.ConnectionString)
+	populate(objectMap, "encryptedCredential", s.EncryptedCredential)
+	populate(objectMap, "password", s.Password)
+	populate(objectMap, "server", s.Server)
+	populate(objectMap, "userName", s.UserName)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SapHanaLinkedServiceProperties.
@@ -24606,6 +26324,19 @@ type SapOpenHubLinkedServiceTypeProperties struct {
 
 	// Username to access the SAP BW server where the open hub destination is located. Type: string (or Expression with resultType string).
 	UserName interface{} `json:"userName,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SapOpenHubLinkedServiceTypeProperties.
+func (s SapOpenHubLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "clientId", s.ClientID)
+	populate(objectMap, "encryptedCredential", s.EncryptedCredential)
+	populate(objectMap, "language", s.Language)
+	populate(objectMap, "password", s.Password)
+	populate(objectMap, "server", s.Server)
+	populate(objectMap, "systemNumber", s.SystemNumber)
+	populate(objectMap, "userName", s.UserName)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SapOpenHubLinkedServiceTypeProperties.
@@ -24824,6 +26555,28 @@ type SapTableLinkedServiceTypeProperties struct {
 
 	// Username to access the SAP server where the table is located. Type: string (or Expression with resultType string).
 	UserName interface{} `json:"userName,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SapTableLinkedServiceTypeProperties.
+func (s SapTableLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "clientId", s.ClientID)
+	populate(objectMap, "encryptedCredential", s.EncryptedCredential)
+	populate(objectMap, "language", s.Language)
+	populate(objectMap, "logonGroup", s.LogonGroup)
+	populate(objectMap, "messageServer", s.MessageServer)
+	populate(objectMap, "messageServerService", s.MessageServerService)
+	populate(objectMap, "password", s.Password)
+	populate(objectMap, "server", s.Server)
+	populate(objectMap, "sncLibraryPath", s.SncLibraryPath)
+	populate(objectMap, "sncMode", s.SncMode)
+	populate(objectMap, "sncMyName", s.SncMyName)
+	populate(objectMap, "sncPartnerName", s.SncPartnerName)
+	populate(objectMap, "sncQop", s.SncQop)
+	populate(objectMap, "systemId", s.SystemID)
+	populate(objectMap, "systemNumber", s.SystemNumber)
+	populate(objectMap, "userName", s.UserName)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SapTableLinkedServiceTypeProperties.
@@ -25069,7 +26822,7 @@ func (s *ScheduleTrigger) UnmarshalJSON(data []byte) error {
 // ScheduleTriggerRecurrence - The workflow trigger recurrence.
 type ScheduleTriggerRecurrence struct {
 	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties *map[string]interface{}
+	AdditionalProperties map[string]interface{}
 
 	// The end time.
 	EndTime *time.Time `json:"endTime,omitempty"`
@@ -25100,7 +26853,7 @@ func (s ScheduleTriggerRecurrence) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "startTime", (*timeRFC3339)(s.StartTime))
 	populate(objectMap, "timeZone", s.TimeZone)
 	if s.AdditionalProperties != nil {
-		for key, val := range *s.AdditionalProperties {
+		for key, val := range s.AdditionalProperties {
 			objectMap[key] = val
 		}
 	}
@@ -25140,12 +26893,12 @@ func (s *ScheduleTriggerRecurrence) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		default:
 			if s.AdditionalProperties == nil {
-				s.AdditionalProperties = &map[string]interface{}{}
+				s.AdditionalProperties = map[string]interface{}{}
 			}
 			if val != nil {
 				var aux interface{}
 				err = json.Unmarshal(val, &aux)
-				(*s.AdditionalProperties)[key] = aux
+				s.AdditionalProperties[key] = aux
 			}
 			delete(rawMsg, key)
 		}
@@ -25341,6 +27094,13 @@ type SelfHostedIntegrationRuntimeTypeProperties struct {
 	LinkedInfo LinkedIntegrationRuntimeTypeClassification `json:"linkedInfo,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type SelfHostedIntegrationRuntimeTypeProperties.
+func (s SelfHostedIntegrationRuntimeTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "linkedInfo", s.LinkedInfo)
+	return json.Marshal(objectMap)
+}
+
 // UnmarshalJSON implements the json.Unmarshaller interface for type SelfHostedIntegrationRuntimeTypeProperties.
 func (s *SelfHostedIntegrationRuntimeTypeProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
@@ -25428,6 +27188,22 @@ type ServiceNowLinkedServiceTypeProperties struct {
 
 	// The user name used to connect to the ServiceNow server for Basic and OAuth2 authentication.
 	Username interface{} `json:"username,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ServiceNowLinkedServiceTypeProperties.
+func (s ServiceNowLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "authenticationType", s.AuthenticationType)
+	populate(objectMap, "clientId", s.ClientID)
+	populate(objectMap, "clientSecret", s.ClientSecret)
+	populate(objectMap, "encryptedCredential", s.EncryptedCredential)
+	populate(objectMap, "endpoint", s.Endpoint)
+	populate(objectMap, "password", s.Password)
+	populate(objectMap, "useEncryptedEndpoints", s.UseEncryptedEndpoints)
+	populate(objectMap, "useHostVerification", s.UseHostVerification)
+	populate(objectMap, "usePeerVerification", s.UsePeerVerification)
+	populate(objectMap, "username", s.Username)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ServiceNowLinkedServiceTypeProperties.
@@ -25738,6 +27514,23 @@ type SftpServerLinkedServiceTypeProperties struct {
 	UserName interface{} `json:"userName,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type SftpServerLinkedServiceTypeProperties.
+func (s SftpServerLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "authenticationType", s.AuthenticationType)
+	populate(objectMap, "encryptedCredential", s.EncryptedCredential)
+	populate(objectMap, "host", s.Host)
+	populate(objectMap, "hostKeyFingerprint", s.HostKeyFingerprint)
+	populate(objectMap, "passPhrase", s.PassPhrase)
+	populate(objectMap, "password", s.Password)
+	populate(objectMap, "port", s.Port)
+	populate(objectMap, "privateKeyContent", s.PrivateKeyContent)
+	populate(objectMap, "privateKeyPath", s.PrivateKeyPath)
+	populate(objectMap, "skipHostKeyValidation", s.SkipHostKeyValidation)
+	populate(objectMap, "userName", s.UserName)
+	return json.Marshal(objectMap)
+}
+
 // UnmarshalJSON implements the json.Unmarshaller interface for type SftpServerLinkedServiceTypeProperties.
 func (s *SftpServerLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
@@ -25879,6 +27672,18 @@ type ShopifyLinkedServiceTypeProperties struct {
 	UsePeerVerification interface{} `json:"usePeerVerification,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type ShopifyLinkedServiceTypeProperties.
+func (s ShopifyLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "accessToken", s.AccessToken)
+	populate(objectMap, "encryptedCredential", s.EncryptedCredential)
+	populate(objectMap, "host", s.Host)
+	populate(objectMap, "useEncryptedEndpoints", s.UseEncryptedEndpoints)
+	populate(objectMap, "useHostVerification", s.UseHostVerification)
+	populate(objectMap, "usePeerVerification", s.UsePeerVerification)
+	return json.Marshal(objectMap)
+}
+
 // UnmarshalJSON implements the json.Unmarshaller interface for type ShopifyLinkedServiceTypeProperties.
 func (s *ShopifyLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
@@ -25987,13 +27792,13 @@ type SparkBatchJob struct {
 	AppID *string `json:"appId,omitempty"`
 
 	// The detailed application info.
-	AppInfo *map[string]*string `json:"appInfo,omitempty"`
+	AppInfo map[string]*string `json:"appInfo,omitempty"`
 
 	// The artifact identifier.
 	ArtifactID *string `json:"artifactId,omitempty"`
 
 	// The error information.
-	Errors *[]*SparkServiceError `json:"errorInfo,omitempty"`
+	Errors []*SparkServiceError `json:"errorInfo,omitempty"`
 
 	// The session Id.
 	ID *int32 `json:"id,omitempty"`
@@ -26003,7 +27808,7 @@ type SparkBatchJob struct {
 	LivyInfo *SparkBatchJobState `json:"livyInfo,omitempty"`
 
 	// The log lines.
-	LogLines *[]*string `json:"log,omitempty"`
+	LogLines []*string `json:"log,omitempty"`
 
 	// The batch name.
 	Name *string `json:"name,omitempty"`
@@ -26030,10 +27835,34 @@ type SparkBatchJob struct {
 	SubmitterName *string `json:"submitterName,omitempty"`
 
 	// The tags.
-	Tags *map[string]*string `json:"tags,omitempty"`
+	Tags map[string]*string `json:"tags,omitempty"`
 
 	// The workspace name.
 	WorkspaceName *string `json:"workspaceName,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SparkBatchJob.
+func (s SparkBatchJob) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "appId", s.AppID)
+	populate(objectMap, "appInfo", s.AppInfo)
+	populate(objectMap, "artifactId", s.ArtifactID)
+	populate(objectMap, "errorInfo", s.Errors)
+	populate(objectMap, "id", s.ID)
+	populate(objectMap, "jobType", s.JobType)
+	populate(objectMap, "livyInfo", s.LivyInfo)
+	populate(objectMap, "log", s.LogLines)
+	populate(objectMap, "name", s.Name)
+	populate(objectMap, "pluginInfo", s.Plugin)
+	populate(objectMap, "result", s.Result)
+	populate(objectMap, "schedulerInfo", s.Scheduler)
+	populate(objectMap, "sparkPoolName", s.SparkPoolName)
+	populate(objectMap, "state", s.State)
+	populate(objectMap, "submitterId", s.SubmitterID)
+	populate(objectMap, "submitterName", s.SubmitterName)
+	populate(objectMap, "tags", s.Tags)
+	populate(objectMap, "workspaceName", s.WorkspaceName)
+	return json.Marshal(objectMap)
 }
 
 // SparkBatchJobPollerResponse is the response envelope for operations that asynchronously return a SparkBatchJob type.
@@ -26170,7 +27999,7 @@ type SparkDatasetTypeProperties struct {
 // SparkJobDefinition - Spark job definition.
 type SparkJobDefinition struct {
 	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties *map[string]interface{}
+	AdditionalProperties map[string]interface{}
 
 	// The description of the Spark job definition.
 	Description *string `json:"description,omitempty"`
@@ -26197,7 +28026,7 @@ func (s SparkJobDefinition) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "requiredSparkVersion", s.RequiredSparkVersion)
 	populate(objectMap, "targetBigDataPool", s.TargetBigDataPool)
 	if s.AdditionalProperties != nil {
-		for key, val := range *s.AdditionalProperties {
+		for key, val := range s.AdditionalProperties {
 			objectMap[key] = val
 		}
 	}
@@ -26230,12 +28059,12 @@ func (s *SparkJobDefinition) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		default:
 			if s.AdditionalProperties == nil {
-				s.AdditionalProperties = &map[string]interface{}{}
+				s.AdditionalProperties = map[string]interface{}{}
 			}
 			if val != nil {
 				var aux interface{}
 				err = json.Unmarshal(val, &aux)
-				(*s.AdditionalProperties)[key] = aux
+				s.AdditionalProperties[key] = aux
 			}
 			delete(rawMsg, key)
 		}
@@ -26294,6 +28123,33 @@ type SparkJobDefinitionResource struct {
 	Properties *SparkJobDefinition `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type SparkJobDefinitionResource.
+func (s SparkJobDefinitionResource) MarshalJSON() ([]byte, error) {
+	objectMap := s.SubResource.marshalInternal()
+	populate(objectMap, "properties", s.Properties)
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type SparkJobDefinitionResource.
+func (s *SparkJobDefinitionResource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "properties":
+			err = unpopulate(val, &s.Properties)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return s.SubResource.unmarshalInternal(rawMsg)
+}
+
 // SparkJobDefinitionResourcePollerResponse is the response envelope for operations that asynchronously return a SparkJobDefinitionResource type.
 type SparkJobDefinitionResourcePollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
@@ -26321,7 +28177,15 @@ type SparkJobDefinitionsListResponse struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// List of spark job definitions.
-	Value *[]*SparkJobDefinitionResource `json:"value,omitempty"`
+	Value []*SparkJobDefinitionResource `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SparkJobDefinitionsListResponse.
+func (s SparkJobDefinitionsListResponse) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", s.NextLink)
+	populate(objectMap, "value", s.Value)
+	return json.Marshal(objectMap)
 }
 
 // SparkJobDefinitionsListResponseResponse is the response envelope for operations that return a SparkJobDefinitionsListResponse type.
@@ -26336,13 +28200,13 @@ type SparkJobDefinitionsListResponseResponse struct {
 // SparkJobProperties - The properties of the Spark job.
 type SparkJobProperties struct {
 	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties *map[string]interface{}
+	AdditionalProperties map[string]interface{}
 
 	// Archives to be used in this job.
-	Archives *[]*string `json:"archives,omitempty"`
+	Archives []*string `json:"archives,omitempty"`
 
 	// Command line arguments for the application.
-	Args *[]*string `json:"args,omitempty"`
+	Args []*string `json:"args,omitempty"`
 
 	// Main class for Java/Scala application.
 	ClassName *string `json:"className,omitempty"`
@@ -26366,10 +28230,10 @@ type SparkJobProperties struct {
 	File *string `json:"file,omitempty"`
 
 	// files to be used in this job.
-	Files *[]*string `json:"files,omitempty"`
+	Files []*string `json:"files,omitempty"`
 
 	// Jars to be used in this job.
-	Jars *[]*string `json:"jars,omitempty"`
+	Jars []*string `json:"jars,omitempty"`
 
 	// The name of the job.
 	Name *string `json:"name,omitempty"`
@@ -26395,7 +28259,7 @@ func (s SparkJobProperties) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "name", s.Name)
 	populate(objectMap, "numExecutors", s.NumExecutors)
 	if s.AdditionalProperties != nil {
-		for key, val := range *s.AdditionalProperties {
+		for key, val := range s.AdditionalProperties {
 			objectMap[key] = val
 		}
 	}
@@ -26452,12 +28316,12 @@ func (s *SparkJobProperties) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		default:
 			if s.AdditionalProperties == nil {
-				s.AdditionalProperties = &map[string]interface{}{}
+				s.AdditionalProperties = map[string]interface{}{}
 			}
 			if val != nil {
 				var aux interface{}
 				err = json.Unmarshal(val, &aux)
-				(*s.AdditionalProperties)[key] = aux
+				s.AdditionalProperties[key] = aux
 			}
 			delete(rawMsg, key)
 		}
@@ -26548,6 +28412,26 @@ type SparkLinkedServiceTypeProperties struct {
 
 	// The user name that you use to access Spark Server.
 	Username interface{} `json:"username,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SparkLinkedServiceTypeProperties.
+func (s SparkLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "allowHostNameCNMismatch", s.AllowHostNameCNMismatch)
+	populate(objectMap, "allowSelfSignedServerCert", s.AllowSelfSignedServerCert)
+	populate(objectMap, "authenticationType", s.AuthenticationType)
+	populate(objectMap, "enableSsl", s.EnableSSL)
+	populate(objectMap, "encryptedCredential", s.EncryptedCredential)
+	populate(objectMap, "httpPath", s.HTTPPath)
+	populate(objectMap, "host", s.Host)
+	populate(objectMap, "password", s.Password)
+	populate(objectMap, "port", s.Port)
+	populate(objectMap, "serverType", s.ServerType)
+	populate(objectMap, "thriftTransportProtocol", s.ThriftTransportProtocol)
+	populate(objectMap, "trustedCertPath", s.TrustedCertPath)
+	populate(objectMap, "useSystemTrustStore", s.UseSystemTrustStore)
+	populate(objectMap, "username", s.Username)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SparkLinkedServiceTypeProperties.
@@ -26644,22 +28528,42 @@ func (s *SparkObjectDataset) UnmarshalJSON(data []byte) error {
 }
 
 type SparkRequest struct {
-	Archives  *[]*string `json:"archives,omitempty"`
-	Arguments *[]*string `json:"args,omitempty"`
-	ClassName *string    `json:"className,omitempty"`
+	Archives  []*string `json:"archives,omitempty"`
+	Arguments []*string `json:"args,omitempty"`
+	ClassName *string   `json:"className,omitempty"`
 
 	// Dictionary of
-	Configuration  *map[string]*string `json:"conf,omitempty"`
-	DriverCores    *int32              `json:"driverCores,omitempty"`
-	DriverMemory   *string             `json:"driverMemory,omitempty"`
-	ExecutorCores  *int32              `json:"executorCores,omitempty"`
-	ExecutorCount  *int32              `json:"numExecutors,omitempty"`
-	ExecutorMemory *string             `json:"executorMemory,omitempty"`
-	File           *string             `json:"file,omitempty"`
-	Files          *[]*string          `json:"files,omitempty"`
-	Jars           *[]*string          `json:"jars,omitempty"`
-	Name           *string             `json:"name,omitempty"`
-	PythonFiles    *[]*string          `json:"pyFiles,omitempty"`
+	Configuration  map[string]*string `json:"conf,omitempty"`
+	DriverCores    *int32             `json:"driverCores,omitempty"`
+	DriverMemory   *string            `json:"driverMemory,omitempty"`
+	ExecutorCores  *int32             `json:"executorCores,omitempty"`
+	ExecutorCount  *int32             `json:"numExecutors,omitempty"`
+	ExecutorMemory *string            `json:"executorMemory,omitempty"`
+	File           *string            `json:"file,omitempty"`
+	Files          []*string          `json:"files,omitempty"`
+	Jars           []*string          `json:"jars,omitempty"`
+	Name           *string            `json:"name,omitempty"`
+	PythonFiles    []*string          `json:"pyFiles,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SparkRequest.
+func (s SparkRequest) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "archives", s.Archives)
+	populate(objectMap, "args", s.Arguments)
+	populate(objectMap, "className", s.ClassName)
+	populate(objectMap, "conf", s.Configuration)
+	populate(objectMap, "driverCores", s.DriverCores)
+	populate(objectMap, "driverMemory", s.DriverMemory)
+	populate(objectMap, "executorCores", s.ExecutorCores)
+	populate(objectMap, "numExecutors", s.ExecutorCount)
+	populate(objectMap, "executorMemory", s.ExecutorMemory)
+	populate(objectMap, "file", s.File)
+	populate(objectMap, "files", s.Files)
+	populate(objectMap, "jars", s.Jars)
+	populate(objectMap, "name", s.Name)
+	populate(objectMap, "pyFiles", s.PythonFiles)
+	return json.Marshal(objectMap)
 }
 
 type SparkScheduler struct {
@@ -26890,6 +28794,20 @@ type SquareLinkedServiceTypeProperties struct {
 	UsePeerVerification interface{} `json:"usePeerVerification,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type SquareLinkedServiceTypeProperties.
+func (s SquareLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "clientId", s.ClientID)
+	populate(objectMap, "clientSecret", s.ClientSecret)
+	populate(objectMap, "encryptedCredential", s.EncryptedCredential)
+	populate(objectMap, "host", s.Host)
+	populate(objectMap, "redirectUri", s.RedirectURI)
+	populate(objectMap, "useEncryptedEndpoints", s.UseEncryptedEndpoints)
+	populate(objectMap, "useHostVerification", s.UseHostVerification)
+	populate(objectMap, "usePeerVerification", s.UsePeerVerification)
+	return json.Marshal(objectMap)
+}
+
 // UnmarshalJSON implements the json.Unmarshaller interface for type SquareLinkedServiceTypeProperties.
 func (s *SquareLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
@@ -27017,7 +28935,7 @@ type SsisObjectMetadataStatusResponse struct {
 // StagingSettings - Staging settings.
 type StagingSettings struct {
 	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties *map[string]interface{}
+	AdditionalProperties map[string]interface{}
 
 	// Specifies whether to use compression when copying data via an interim staging. Default value is false. Type: boolean (or Expression with resultType boolean).
 	EnableCompression interface{} `json:"enableCompression,omitempty"`
@@ -27036,7 +28954,7 @@ func (s StagingSettings) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "linkedServiceName", s.LinkedServiceName)
 	populate(objectMap, "path", s.Path)
 	if s.AdditionalProperties != nil {
-		for key, val := range *s.AdditionalProperties {
+		for key, val := range s.AdditionalProperties {
 			objectMap[key] = val
 		}
 	}
@@ -27063,12 +28981,12 @@ func (s *StagingSettings) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		default:
 			if s.AdditionalProperties == nil {
-				s.AdditionalProperties = &map[string]interface{}{}
+				s.AdditionalProperties = map[string]interface{}{}
 			}
 			if val != nil {
 				var aux interface{}
 				err = json.Unmarshal(val, &aux)
-				(*s.AdditionalProperties)[key] = aux
+				s.AdditionalProperties[key] = aux
 			}
 			delete(rawMsg, key)
 		}
@@ -27085,7 +29003,7 @@ type StartDataFlowDebugSessionRequest struct {
 	DataFlow *DataFlowResource `json:"dataFlow,omitempty"`
 
 	// List of datasets.
-	Datasets *[]*DatasetResource `json:"datasets,omitempty"`
+	Datasets []*DatasetResource `json:"datasets,omitempty"`
 
 	// Data flow debug settings.
 	DebugSettings interface{} `json:"debugSettings,omitempty"`
@@ -27094,13 +29012,26 @@ type StartDataFlowDebugSessionRequest struct {
 	IncrementalDebug *bool `json:"incrementalDebug,omitempty"`
 
 	// List of linked services.
-	LinkedServices *[]*LinkedServiceResource `json:"linkedServices,omitempty"`
+	LinkedServices []*LinkedServiceResource `json:"linkedServices,omitempty"`
 
 	// The ID of data flow debug session.
 	SessionID *string `json:"sessionId,omitempty"`
 
 	// Staging info for debug session.
 	Staging interface{} `json:"staging,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type StartDataFlowDebugSessionRequest.
+func (s StartDataFlowDebugSessionRequest) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "dataFlow", s.DataFlow)
+	populate(objectMap, "datasets", s.Datasets)
+	populate(objectMap, "debugSettings", s.DebugSettings)
+	populate(objectMap, "incrementalDebug", s.IncrementalDebug)
+	populate(objectMap, "linkedServices", s.LinkedServices)
+	populate(objectMap, "sessionId", s.SessionID)
+	populate(objectMap, "staging", s.Staging)
+	return json.Marshal(objectMap)
 }
 
 // StartDataFlowDebugSessionResponse - Response body structure for starting data flow debug session.
@@ -27123,7 +29054,7 @@ type StoreReadSettingsClassification interface {
 // StoreReadSettings - Connector read setting.
 type StoreReadSettings struct {
 	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties *map[string]interface{}
+	AdditionalProperties map[string]interface{}
 
 	// The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer).
 	MaxConcurrentConnections interface{} `json:"maxConcurrentConnections,omitempty"`
@@ -27150,7 +29081,7 @@ func (s StoreReadSettings) marshalInternal(discValue string) map[string]interfac
 	s.Type = &discValue
 	objectMap["type"] = s.Type
 	if s.AdditionalProperties != nil {
-		for key, val := range *s.AdditionalProperties {
+		for key, val := range s.AdditionalProperties {
 			objectMap[key] = val
 		}
 	}
@@ -27169,12 +29100,12 @@ func (s *StoreReadSettings) unmarshalInternal(rawMsg map[string]json.RawMessage)
 			delete(rawMsg, key)
 		default:
 			if s.AdditionalProperties == nil {
-				s.AdditionalProperties = &map[string]interface{}{}
+				s.AdditionalProperties = map[string]interface{}{}
 			}
 			if val != nil {
 				var aux interface{}
 				err = json.Unmarshal(val, &aux)
-				(*s.AdditionalProperties)[key] = aux
+				s.AdditionalProperties[key] = aux
 			}
 			delete(rawMsg, key)
 		}
@@ -27198,7 +29129,7 @@ type StoreWriteSettingsClassification interface {
 // StoreWriteSettings - Connector write settings.
 type StoreWriteSettings struct {
 	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties *map[string]interface{}
+	AdditionalProperties map[string]interface{}
 
 	// The type of copy behavior for copy sink.
 	CopyBehavior interface{} `json:"copyBehavior,omitempty"`
@@ -27229,7 +29160,7 @@ func (s StoreWriteSettings) marshalInternal(discValue string) map[string]interfa
 	s.Type = &discValue
 	objectMap["type"] = s.Type
 	if s.AdditionalProperties != nil {
-		for key, val := range *s.AdditionalProperties {
+		for key, val := range s.AdditionalProperties {
 			objectMap[key] = val
 		}
 	}
@@ -27251,12 +29182,12 @@ func (s *StoreWriteSettings) unmarshalInternal(rawMsg map[string]json.RawMessage
 			delete(rawMsg, key)
 		default:
 			if s.AdditionalProperties == nil {
-				s.AdditionalProperties = &map[string]interface{}{}
+				s.AdditionalProperties = map[string]interface{}{}
 			}
 			if val != nil {
 				var aux interface{}
 				err = json.Unmarshal(val, &aux)
-				(*s.AdditionalProperties)[key] = aux
+				s.AdditionalProperties[key] = aux
 			}
 			delete(rawMsg, key)
 		}
@@ -27294,6 +29225,21 @@ func (s *SubResource) unmarshalInternal(rawMsg map[string]json.RawMessage) error
 type SubResourceDebugResource struct {
 	// The resource name.
 	Name *string `json:"name,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SubResourceDebugResource.
+func (s SubResourceDebugResource) MarshalJSON() ([]byte, error) {
+	objectMap := s.marshalInternal()
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type SubResourceDebugResource.
+func (s *SubResourceDebugResource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	return s.unmarshalInternal(rawMsg)
 }
 
 func (s SubResourceDebugResource) marshalInternal() map[string]interface{} {
@@ -27356,14 +29302,23 @@ func (s *SwitchActivity) UnmarshalJSON(data []byte) error {
 type SwitchActivityTypeProperties struct {
 	// List of cases that correspond to expected values of the 'on' property. This is an optional property and if not provided, the activity will execute activities
 	// provided in defaultActivities.
-	Cases *[]*SwitchCase `json:"cases,omitempty"`
+	Cases []*SwitchCase `json:"cases,omitempty"`
 
 	// List of activities to execute if no case condition is satisfied. This is an optional property and if not provided, the activity will exit without any
 	// action.
-	DefaultActivities *[]ActivityClassification `json:"defaultActivities,omitempty"`
+	DefaultActivities []ActivityClassification `json:"defaultActivities,omitempty"`
 
 	// An expression that would evaluate to a string or integer. This is used to determine the block of activities in cases that will be executed.
 	On *Expression `json:"on,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SwitchActivityTypeProperties.
+func (s SwitchActivityTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "cases", s.Cases)
+	populate(objectMap, "defaultActivities", s.DefaultActivities)
+	populate(objectMap, "on", s.On)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SwitchActivityTypeProperties.
@@ -27395,10 +29350,18 @@ func (s *SwitchActivityTypeProperties) UnmarshalJSON(data []byte) error {
 // SwitchCase - Switch cases with have a value and corresponding activities.
 type SwitchCase struct {
 	// List of activities to execute for satisfied case condition.
-	Activities *[]ActivityClassification `json:"activities,omitempty"`
+	Activities []ActivityClassification `json:"activities,omitempty"`
 
 	// Expected value that satisfies the expression result of the 'on' property.
 	Value *string `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SwitchCase.
+func (s SwitchCase) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "activities", s.Activities)
+	populate(objectMap, "value", s.Value)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SwitchCase.
@@ -27481,6 +29444,19 @@ type SybaseLinkedServiceTypeProperties struct {
 
 	// Username for authentication. Type: string (or Expression with resultType string).
 	Username interface{} `json:"username,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SybaseLinkedServiceTypeProperties.
+func (s SybaseLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "authenticationType", s.AuthenticationType)
+	populate(objectMap, "database", s.Database)
+	populate(objectMap, "encryptedCredential", s.EncryptedCredential)
+	populate(objectMap, "password", s.Password)
+	populate(objectMap, "schema", s.Schema)
+	populate(objectMap, "server", s.Server)
+	populate(objectMap, "username", s.Username)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SybaseLinkedServiceTypeProperties.
@@ -27635,7 +29611,15 @@ type SynapseNotebookActivityTypeProperties struct {
 	Notebook *SynapseNotebookReference `json:"notebook,omitempty"`
 
 	// Notebook parameters.
-	Parameters *map[string]interface{} `json:"parameters,omitempty"`
+	Parameters map[string]interface{} `json:"parameters,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SynapseNotebookActivityTypeProperties.
+func (s SynapseNotebookActivityTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "notebook", s.Notebook)
+	populate(objectMap, "parameters", s.Parameters)
+	return json.Marshal(objectMap)
 }
 
 // SynapseNotebookReference - Synapse notebook reference type.
@@ -27884,6 +29868,18 @@ type TeradataLinkedServiceTypeProperties struct {
 	Username interface{} `json:"username,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type TeradataLinkedServiceTypeProperties.
+func (t TeradataLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "authenticationType", t.AuthenticationType)
+	populate(objectMap, "connectionString", t.ConnectionString)
+	populate(objectMap, "encryptedCredential", t.EncryptedCredential)
+	populate(objectMap, "password", t.Password)
+	populate(objectMap, "server", t.Server)
+	populate(objectMap, "username", t.Username)
+	return json.Marshal(objectMap)
+}
+
 // UnmarshalJSON implements the json.Unmarshaller interface for type TeradataLinkedServiceTypeProperties.
 func (t *TeradataLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
@@ -28125,7 +30121,20 @@ type TrackedResource struct {
 	Location *string `json:"location,omitempty"`
 
 	// Resource tags.
-	Tags *map[string]*string `json:"tags,omitempty"`
+	Tags map[string]*string `json:"tags,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type TrackedResource.
+func (t TrackedResource) MarshalJSON() ([]byte, error) {
+	objectMap := t.marshalInternal()
+	return json.Marshal(objectMap)
+}
+
+func (t TrackedResource) marshalInternal() map[string]interface{} {
+	objectMap := t.Resource.marshalInternal()
+	populate(objectMap, "location", t.Location)
+	populate(objectMap, "tags", t.Tags)
+	return objectMap
 }
 
 // Transformation - A data flow transformation.
@@ -28150,10 +30159,10 @@ type TriggerClassification interface {
 // Trigger - Azure Synapse nested object which contains information about creating pipeline run
 type Trigger struct {
 	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties *map[string]interface{}
+	AdditionalProperties map[string]interface{}
 
 	// List of tags that can be used for describing the trigger.
-	Annotations *[]interface{} `json:"annotations,omitempty"`
+	Annotations []interface{} `json:"annotations,omitempty"`
 
 	// Trigger description.
 	Description *string `json:"description,omitempty"`
@@ -28185,7 +30194,7 @@ func (t Trigger) marshalInternal(discValue string) map[string]interface{} {
 	t.Type = &discValue
 	objectMap["type"] = t.Type
 	if t.AdditionalProperties != nil {
-		for key, val := range *t.AdditionalProperties {
+		for key, val := range t.AdditionalProperties {
 			objectMap[key] = val
 		}
 	}
@@ -28210,12 +30219,12 @@ func (t *Trigger) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 			delete(rawMsg, key)
 		default:
 			if t.AdditionalProperties == nil {
-				t.AdditionalProperties = &map[string]interface{}{}
+				t.AdditionalProperties = map[string]interface{}{}
 			}
 			if val != nil {
 				var aux interface{}
 				err = json.Unmarshal(val, &aux)
-				(*t.AdditionalProperties)[key] = aux
+				t.AdditionalProperties[key] = aux
 			}
 			delete(rawMsg, key)
 		}
@@ -28347,7 +30356,15 @@ type TriggerListResponse struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// List of triggers.
-	Value *[]*TriggerResource `json:"value,omitempty"`
+	Value []*TriggerResource `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type TriggerListResponse.
+func (t TriggerListResponse) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", t.NextLink)
+	populate(objectMap, "value", t.Value)
+	return json.Marshal(objectMap)
 }
 
 // TriggerListResponseResponse is the response envelope for operations that return a TriggerListResponse type.
@@ -28362,10 +30379,18 @@ type TriggerListResponseResponse struct {
 // TriggerPipelineReference - Pipeline that needs to be triggered with the given parameters.
 type TriggerPipelineReference struct {
 	// Pipeline parameters.
-	Parameters *map[string]interface{} `json:"parameters,omitempty"`
+	Parameters map[string]interface{} `json:"parameters,omitempty"`
 
 	// Pipeline reference.
 	PipelineReference *PipelineReference `json:"pipelineReference,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type TriggerPipelineReference.
+func (t TriggerPipelineReference) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "parameters", t.Parameters)
+	populate(objectMap, "pipelineReference", t.PipelineReference)
+	return json.Marshal(objectMap)
 }
 
 // TriggerReference - Trigger reference type.
@@ -28382,6 +30407,33 @@ type TriggerResource struct {
 	SubResource
 	// Properties of the trigger.
 	Properties TriggerClassification `json:"properties,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type TriggerResource.
+func (t TriggerResource) MarshalJSON() ([]byte, error) {
+	objectMap := t.SubResource.marshalInternal()
+	populate(objectMap, "properties", t.Properties)
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type TriggerResource.
+func (t *TriggerResource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "properties":
+			t.Properties, err = unmarshalTriggerClassification(val)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return t.SubResource.unmarshalInternal(rawMsg)
 }
 
 // TriggerResourcePollerResponse is the response envelope for operations that asynchronously return a TriggerResource type.
@@ -28408,13 +30460,13 @@ type TriggerResourceResponse struct {
 // TriggerRun - Trigger runs.
 type TriggerRun struct {
 	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties *map[string]interface{}
+	AdditionalProperties map[string]interface{}
 
 	// READ-ONLY; Trigger error message.
 	Message *string `json:"message,omitempty" azure:"ro"`
 
 	// READ-ONLY; List of property name and value related to trigger run. Name, value pair depends on type of trigger.
-	Properties *map[string]*string `json:"properties,omitempty" azure:"ro"`
+	Properties map[string]*string `json:"properties,omitempty" azure:"ro"`
 
 	// READ-ONLY; Trigger run status.
 	Status *TriggerRunStatus `json:"status,omitempty" azure:"ro"`
@@ -28432,7 +30484,7 @@ type TriggerRun struct {
 	TriggerType *string `json:"triggerType,omitempty" azure:"ro"`
 
 	// READ-ONLY; List of pipeline name and run Id triggered by the trigger run.
-	TriggeredPipelines *map[string]*string `json:"triggeredPipelines,omitempty" azure:"ro"`
+	TriggeredPipelines map[string]*string `json:"triggeredPipelines,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type TriggerRun.
@@ -28447,7 +30499,7 @@ func (t TriggerRun) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "triggerType", t.TriggerType)
 	populate(objectMap, "triggeredPipelines", t.TriggeredPipelines)
 	if t.AdditionalProperties != nil {
-		for key, val := range *t.AdditionalProperties {
+		for key, val := range t.AdditionalProperties {
 			objectMap[key] = val
 		}
 	}
@@ -28491,12 +30543,12 @@ func (t *TriggerRun) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		default:
 			if t.AdditionalProperties == nil {
-				t.AdditionalProperties = &map[string]interface{}{}
+				t.AdditionalProperties = map[string]interface{}{}
 			}
 			if val != nil {
 				var aux interface{}
 				err = json.Unmarshal(val, &aux)
-				(*t.AdditionalProperties)[key] = aux
+				t.AdditionalProperties[key] = aux
 			}
 			delete(rawMsg, key)
 		}
@@ -28528,7 +30580,15 @@ type TriggerRunsQueryResponse struct {
 	ContinuationToken *string `json:"continuationToken,omitempty"`
 
 	// List of trigger runs.
-	Value *[]*TriggerRun `json:"value,omitempty"`
+	Value []*TriggerRun `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type TriggerRunsQueryResponse.
+func (t TriggerRunsQueryResponse) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "continuationToken", t.ContinuationToken)
+	populate(objectMap, "value", t.Value)
+	return json.Marshal(objectMap)
 }
 
 // TriggerRunsQueryResponseResponse is the response envelope for operations that return a TriggerRunsQueryResponse type.
@@ -28662,7 +30722,7 @@ type TumblingWindowTriggerTypeProperties struct {
 	Delay interface{} `json:"delay,omitempty"`
 
 	// Triggers that this trigger depends on. Only tumbling window triggers are supported.
-	DependsOn *[]DependencyReferenceClassification `json:"dependsOn,omitempty"`
+	DependsOn []DependencyReferenceClassification `json:"dependsOn,omitempty"`
 
 	// The end time for the time period for the trigger during which events are fired for windows that are ready. Only UTC time is currently supported.
 	EndTime *time.Time `json:"endTime,omitempty"`
@@ -28779,7 +30839,7 @@ func (u *UntilActivity) UnmarshalJSON(data []byte) error {
 // UntilActivityTypeProperties - Until activity properties.
 type UntilActivityTypeProperties struct {
 	// List of activities to execute.
-	Activities *[]ActivityClassification `json:"activities,omitempty"`
+	Activities []ActivityClassification `json:"activities,omitempty"`
 
 	// An expression that would evaluate to Boolean. The loop will continue until this expression evaluates to true
 	Expression *Expression `json:"expression,omitempty"`
@@ -28788,6 +30848,15 @@ type UntilActivityTypeProperties struct {
 	// Type: string (or Expression with resultType
 	// string), pattern: ((\d+).)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). Type: string (or Expression with resultType string), pattern: ((\d+).)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
 	Timeout interface{} `json:"timeout,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type UntilActivityTypeProperties.
+func (u UntilActivityTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "activities", u.Activities)
+	populate(objectMap, "expression", u.Expression)
+	populate(objectMap, "timeout", u.Timeout)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type UntilActivityTypeProperties.
@@ -29116,6 +31185,17 @@ type WebActivityAuthentication struct {
 	Username *string `json:"username,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type WebActivityAuthentication.
+func (w WebActivityAuthentication) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "password", w.Password)
+	populate(objectMap, "pfx", w.Pfx)
+	populate(objectMap, "resource", w.Resource)
+	populate(objectMap, "type", w.Type)
+	populate(objectMap, "username", w.Username)
+	return json.Marshal(objectMap)
+}
+
 // UnmarshalJSON implements the json.Unmarshaller interface for type WebActivityAuthentication.
 func (w *WebActivityAuthentication) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
@@ -29161,7 +31241,7 @@ type WebActivityTypeProperties struct {
 	ConnectVia *IntegrationRuntimeReference `json:"connectVia,omitempty"`
 
 	// List of datasets passed to web endpoint.
-	Datasets *[]*DatasetReference `json:"datasets,omitempty"`
+	Datasets []*DatasetReference `json:"datasets,omitempty"`
 
 	// Represents the headers that will be sent to the request. For example, to set the language and type on a request: "headers" : { "Accept-Language": "en-us",
 	// "Content-Type": "application/json" }. Type:
@@ -29169,13 +31249,27 @@ type WebActivityTypeProperties struct {
 	Headers interface{} `json:"headers,omitempty"`
 
 	// List of linked services passed to web endpoint.
-	LinkedServices *[]*LinkedServiceReference `json:"linkedServices,omitempty"`
+	LinkedServices []*LinkedServiceReference `json:"linkedServices,omitempty"`
 
 	// Rest API method for target endpoint.
 	Method *WebActivityMethod `json:"method,omitempty"`
 
 	// Web activity target endpoint and path. Type: string (or Expression with resultType string).
 	URL interface{} `json:"url,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type WebActivityTypeProperties.
+func (w WebActivityTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "authentication", w.Authentication)
+	populate(objectMap, "body", w.Body)
+	populate(objectMap, "connectVia", w.ConnectVia)
+	populate(objectMap, "datasets", w.Datasets)
+	populate(objectMap, "headers", w.Headers)
+	populate(objectMap, "linkedServices", w.LinkedServices)
+	populate(objectMap, "method", w.Method)
+	populate(objectMap, "url", w.URL)
+	return json.Marshal(objectMap)
 }
 
 // WebAnonymousAuthentication - A WebLinkedService that uses anonymous authentication to communicate with an HTTP endpoint.
@@ -29493,6 +31587,14 @@ type Workspace struct {
 	Properties *WorkspaceProperties `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type Workspace.
+func (w Workspace) MarshalJSON() ([]byte, error) {
+	objectMap := w.TrackedResource.marshalInternal()
+	populate(objectMap, "identity", w.Identity)
+	populate(objectMap, "properties", w.Properties)
+	return json.Marshal(objectMap)
+}
+
 // WorkspaceGetOptions contains the optional parameters for the Workspace.Get method.
 type WorkspaceGetOptions struct {
 	// placeholder for future optional parameters
@@ -29531,7 +31633,7 @@ type WorkspaceProperties struct {
 	AdlaResourceID *string `json:"adlaResourceId,omitempty" azure:"ro"`
 
 	// Connectivity endpoints
-	ConnectivityEndpoints *map[string]*string `json:"connectivityEndpoints,omitempty"`
+	ConnectivityEndpoints map[string]*string `json:"connectivityEndpoints,omitempty"`
 
 	// Workspace default data lake storage account details
 	DefaultDataLakeStorage *DataLakeStorageAccountDetails `json:"defaultDataLakeStorage,omitempty"`
@@ -29540,7 +31642,7 @@ type WorkspaceProperties struct {
 	Encryption *EncryptionDetails `json:"encryption,omitempty"`
 
 	// READ-ONLY; Workspace level configs and feature flags
-	ExtraProperties *map[string]interface{} `json:"extraProperties,omitempty" azure:"ro"`
+	ExtraProperties map[string]interface{} `json:"extraProperties,omitempty" azure:"ro"`
 
 	// Workspace managed resource group. The resource group name uniquely identifies the resource group within the user subscriptionId. The resource group name
 	// must be no longer than 90 characters long, and
@@ -29554,7 +31656,7 @@ type WorkspaceProperties struct {
 	ManagedVirtualNetworkSettings *ManagedVirtualNetworkSettings `json:"managedVirtualNetworkSettings,omitempty"`
 
 	// Private endpoint connections to the workspace
-	PrivateEndpointConnections *[]*PrivateEndpointConnection `json:"privateEndpointConnections,omitempty"`
+	PrivateEndpointConnections []*PrivateEndpointConnection `json:"privateEndpointConnections,omitempty"`
 
 	// READ-ONLY; Resource provisioning state
 	ProvisioningState *string `json:"provisioningState,omitempty" azure:"ro"`
@@ -29576,6 +31678,28 @@ type WorkspaceProperties struct {
 
 	// READ-ONLY; The workspace unique identifier
 	WorkspaceUID *string `json:"workspaceUID,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type WorkspaceProperties.
+func (w WorkspaceProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "adlaResourceId", w.AdlaResourceID)
+	populate(objectMap, "connectivityEndpoints", w.ConnectivityEndpoints)
+	populate(objectMap, "defaultDataLakeStorage", w.DefaultDataLakeStorage)
+	populate(objectMap, "encryption", w.Encryption)
+	populate(objectMap, "extraProperties", w.ExtraProperties)
+	populate(objectMap, "managedResourceGroupName", w.ManagedResourceGroupName)
+	populate(objectMap, "managedVirtualNetwork", w.ManagedVirtualNetwork)
+	populate(objectMap, "managedVirtualNetworkSettings", w.ManagedVirtualNetworkSettings)
+	populate(objectMap, "privateEndpointConnections", w.PrivateEndpointConnections)
+	populate(objectMap, "provisioningState", w.ProvisioningState)
+	populate(objectMap, "purviewConfiguration", w.PurviewConfiguration)
+	populate(objectMap, "sqlAdministratorLogin", w.SQLAdministratorLogin)
+	populate(objectMap, "sqlAdministratorLoginPassword", w.SQLAdministratorLoginPassword)
+	populate(objectMap, "virtualNetworkProfile", w.VirtualNetworkProfile)
+	populate(objectMap, "workspaceRepositoryConfiguration", w.WorkspaceRepositoryConfiguration)
+	populate(objectMap, "workspaceUID", w.WorkspaceUID)
+	return json.Marshal(objectMap)
 }
 
 // WorkspaceRepositoryConfiguration - Git integration settings
@@ -29623,7 +31747,15 @@ type WorkspaceUpdateParameters struct {
 	Identity *WorkspaceIdentity `json:"identity,omitempty"`
 
 	// The resource tags.
-	Tags *map[string]*string `json:"tags,omitempty"`
+	Tags map[string]*string `json:"tags,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type WorkspaceUpdateParameters.
+func (w WorkspaceUpdateParameters) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "identity", w.Identity)
+	populate(objectMap, "tags", w.Tags)
+	return json.Marshal(objectMap)
 }
 
 // XeroLinkedService - Xero Service linked service.
@@ -29685,6 +31817,19 @@ type XeroLinkedServiceTypeProperties struct {
 
 	// Specifies whether to verify the identity of the server when connecting over SSL. The default value is true.
 	UsePeerVerification interface{} `json:"usePeerVerification,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type XeroLinkedServiceTypeProperties.
+func (x XeroLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "consumerKey", x.ConsumerKey)
+	populate(objectMap, "encryptedCredential", x.EncryptedCredential)
+	populate(objectMap, "host", x.Host)
+	populate(objectMap, "privateKey", x.PrivateKey)
+	populate(objectMap, "useEncryptedEndpoints", x.UseEncryptedEndpoints)
+	populate(objectMap, "useHostVerification", x.UseHostVerification)
+	populate(objectMap, "usePeerVerification", x.UsePeerVerification)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type XeroLinkedServiceTypeProperties.
@@ -29848,6 +31993,18 @@ type ZohoLinkedServiceTypeProperties struct {
 
 	// Specifies whether to verify the identity of the server when connecting over SSL. The default value is true.
 	UsePeerVerification interface{} `json:"usePeerVerification,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ZohoLinkedServiceTypeProperties.
+func (z ZohoLinkedServiceTypeProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "accessToken", z.AccessToken)
+	populate(objectMap, "encryptedCredential", z.EncryptedCredential)
+	populate(objectMap, "endpoint", z.Endpoint)
+	populate(objectMap, "useEncryptedEndpoints", z.UseEncryptedEndpoints)
+	populate(objectMap, "useHostVerification", z.UseHostVerification)
+	populate(objectMap, "usePeerVerification", z.UsePeerVerification)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ZohoLinkedServiceTypeProperties.

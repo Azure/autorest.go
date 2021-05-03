@@ -103,7 +103,7 @@ func unmarshalActivityClassification(rawMsg json.RawMessage) (ActivityClassifica
 	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalActivityClassificationArray(rawMsg json.RawMessage) (*[]ActivityClassification, error) {
+func unmarshalActivityClassificationArray(rawMsg json.RawMessage) ([]ActivityClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
@@ -119,7 +119,7 @@ func unmarshalActivityClassificationArray(rawMsg json.RawMessage) (*[]ActivityCl
 		}
 		fArray[index] = f
 	}
-	return &fArray, nil
+	return fArray, nil
 }
 
 func unmarshalControlActivityClassification(rawMsg json.RawMessage) (ControlActivityClassification, error) {
@@ -160,7 +160,7 @@ func unmarshalControlActivityClassification(rawMsg json.RawMessage) (ControlActi
 	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalControlActivityClassificationArray(rawMsg json.RawMessage) (*[]ControlActivityClassification, error) {
+func unmarshalControlActivityClassificationArray(rawMsg json.RawMessage) ([]ControlActivityClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
@@ -176,7 +176,7 @@ func unmarshalControlActivityClassificationArray(rawMsg json.RawMessage) (*[]Con
 		}
 		fArray[index] = f
 	}
-	return &fArray, nil
+	return fArray, nil
 }
 
 func unmarshalCopySinkClassification(rawMsg json.RawMessage) (CopySinkClassification, error) {
@@ -263,7 +263,7 @@ func unmarshalCopySinkClassification(rawMsg json.RawMessage) (CopySinkClassifica
 	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalCopySinkClassificationArray(rawMsg json.RawMessage) (*[]CopySinkClassification, error) {
+func unmarshalCopySinkClassificationArray(rawMsg json.RawMessage) ([]CopySinkClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
@@ -279,7 +279,7 @@ func unmarshalCopySinkClassificationArray(rawMsg json.RawMessage) (*[]CopySinkCl
 		}
 		fArray[index] = f
 	}
-	return &fArray, nil
+	return fArray, nil
 }
 
 func unmarshalCopySourceClassification(rawMsg json.RawMessage) (CopySourceClassification, error) {
@@ -472,7 +472,7 @@ func unmarshalCopySourceClassification(rawMsg json.RawMessage) (CopySourceClassi
 	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalCopySourceClassificationArray(rawMsg json.RawMessage) (*[]CopySourceClassification, error) {
+func unmarshalCopySourceClassificationArray(rawMsg json.RawMessage) ([]CopySourceClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
@@ -488,7 +488,7 @@ func unmarshalCopySourceClassificationArray(rawMsg json.RawMessage) (*[]CopySour
 		}
 		fArray[index] = f
 	}
-	return &fArray, nil
+	return fArray, nil
 }
 
 func unmarshalCopyTranslatorClassification(rawMsg json.RawMessage) (CopyTranslatorClassification, error) {
@@ -509,7 +509,7 @@ func unmarshalCopyTranslatorClassification(rawMsg json.RawMessage) (CopyTranslat
 	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalCopyTranslatorClassificationArray(rawMsg json.RawMessage) (*[]CopyTranslatorClassification, error) {
+func unmarshalCopyTranslatorClassificationArray(rawMsg json.RawMessage) ([]CopyTranslatorClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
@@ -525,7 +525,7 @@ func unmarshalCopyTranslatorClassificationArray(rawMsg json.RawMessage) (*[]Copy
 		}
 		fArray[index] = f
 	}
-	return &fArray, nil
+	return fArray, nil
 }
 
 func unmarshalCustomSetupBaseClassification(rawMsg json.RawMessage) (CustomSetupBaseClassification, error) {
@@ -544,7 +544,7 @@ func unmarshalCustomSetupBaseClassification(rawMsg json.RawMessage) (CustomSetup
 	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalCustomSetupBaseClassificationArray(rawMsg json.RawMessage) (*[]CustomSetupBaseClassification, error) {
+func unmarshalCustomSetupBaseClassificationArray(rawMsg json.RawMessage) ([]CustomSetupBaseClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
@@ -560,7 +560,7 @@ func unmarshalCustomSetupBaseClassificationArray(rawMsg json.RawMessage) (*[]Cus
 		}
 		fArray[index] = f
 	}
-	return &fArray, nil
+	return fArray, nil
 }
 
 func unmarshalDataFlowClassification(rawMsg json.RawMessage) (DataFlowClassification, error) {
@@ -581,7 +581,7 @@ func unmarshalDataFlowClassification(rawMsg json.RawMessage) (DataFlowClassifica
 	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalDataFlowClassificationArray(rawMsg json.RawMessage) (*[]DataFlowClassification, error) {
+func unmarshalDataFlowClassificationArray(rawMsg json.RawMessage) ([]DataFlowClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
@@ -597,7 +597,7 @@ func unmarshalDataFlowClassificationArray(rawMsg json.RawMessage) (*[]DataFlowCl
 		}
 		fArray[index] = f
 	}
-	return &fArray, nil
+	return fArray, nil
 }
 
 func unmarshalDatasetClassification(rawMsg json.RawMessage) (DatasetClassification, error) {
@@ -778,7 +778,7 @@ func unmarshalDatasetClassification(rawMsg json.RawMessage) (DatasetClassificati
 	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalDatasetClassificationArray(rawMsg json.RawMessage) (*[]DatasetClassification, error) {
+func unmarshalDatasetClassificationArray(rawMsg json.RawMessage) ([]DatasetClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
@@ -794,7 +794,7 @@ func unmarshalDatasetClassificationArray(rawMsg json.RawMessage) (*[]DatasetClas
 		}
 		fArray[index] = f
 	}
-	return &fArray, nil
+	return fArray, nil
 }
 
 func unmarshalDatasetCompressionClassification(rawMsg json.RawMessage) (DatasetCompressionClassification, error) {
@@ -821,7 +821,7 @@ func unmarshalDatasetCompressionClassification(rawMsg json.RawMessage) (DatasetC
 	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalDatasetCompressionClassificationArray(rawMsg json.RawMessage) (*[]DatasetCompressionClassification, error) {
+func unmarshalDatasetCompressionClassificationArray(rawMsg json.RawMessage) ([]DatasetCompressionClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
@@ -837,7 +837,7 @@ func unmarshalDatasetCompressionClassificationArray(rawMsg json.RawMessage) (*[]
 		}
 		fArray[index] = f
 	}
-	return &fArray, nil
+	return fArray, nil
 }
 
 func unmarshalDatasetLocationClassification(rawMsg json.RawMessage) (DatasetLocationClassification, error) {
@@ -878,7 +878,7 @@ func unmarshalDatasetLocationClassification(rawMsg json.RawMessage) (DatasetLoca
 	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalDatasetLocationClassificationArray(rawMsg json.RawMessage) (*[]DatasetLocationClassification, error) {
+func unmarshalDatasetLocationClassificationArray(rawMsg json.RawMessage) ([]DatasetLocationClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
@@ -894,7 +894,7 @@ func unmarshalDatasetLocationClassificationArray(rawMsg json.RawMessage) (*[]Dat
 		}
 		fArray[index] = f
 	}
-	return &fArray, nil
+	return fArray, nil
 }
 
 func unmarshalDatasetStorageFormatClassification(rawMsg json.RawMessage) (DatasetStorageFormatClassification, error) {
@@ -923,7 +923,7 @@ func unmarshalDatasetStorageFormatClassification(rawMsg json.RawMessage) (Datase
 	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalDatasetStorageFormatClassificationArray(rawMsg json.RawMessage) (*[]DatasetStorageFormatClassification, error) {
+func unmarshalDatasetStorageFormatClassificationArray(rawMsg json.RawMessage) ([]DatasetStorageFormatClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
@@ -939,7 +939,7 @@ func unmarshalDatasetStorageFormatClassificationArray(rawMsg json.RawMessage) (*
 		}
 		fArray[index] = f
 	}
-	return &fArray, nil
+	return fArray, nil
 }
 
 func unmarshalDependencyReferenceClassification(rawMsg json.RawMessage) (DependencyReferenceClassification, error) {
@@ -964,7 +964,7 @@ func unmarshalDependencyReferenceClassification(rawMsg json.RawMessage) (Depende
 	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalDependencyReferenceClassificationArray(rawMsg json.RawMessage) (*[]DependencyReferenceClassification, error) {
+func unmarshalDependencyReferenceClassificationArray(rawMsg json.RawMessage) ([]DependencyReferenceClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
@@ -980,7 +980,7 @@ func unmarshalDependencyReferenceClassificationArray(rawMsg json.RawMessage) (*[
 		}
 		fArray[index] = f
 	}
-	return &fArray, nil
+	return fArray, nil
 }
 
 func unmarshalExecutionActivityClassification(rawMsg json.RawMessage) (ExecutionActivityClassification, error) {
@@ -1049,7 +1049,7 @@ func unmarshalExecutionActivityClassification(rawMsg json.RawMessage) (Execution
 	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalExecutionActivityClassificationArray(rawMsg json.RawMessage) (*[]ExecutionActivityClassification, error) {
+func unmarshalExecutionActivityClassificationArray(rawMsg json.RawMessage) ([]ExecutionActivityClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
@@ -1065,7 +1065,7 @@ func unmarshalExecutionActivityClassificationArray(rawMsg json.RawMessage) (*[]E
 		}
 		fArray[index] = f
 	}
-	return &fArray, nil
+	return fArray, nil
 }
 
 func unmarshalFormatReadSettingsClassification(rawMsg json.RawMessage) (FormatReadSettingsClassification, error) {
@@ -1086,7 +1086,7 @@ func unmarshalFormatReadSettingsClassification(rawMsg json.RawMessage) (FormatRe
 	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalFormatReadSettingsClassificationArray(rawMsg json.RawMessage) (*[]FormatReadSettingsClassification, error) {
+func unmarshalFormatReadSettingsClassificationArray(rawMsg json.RawMessage) ([]FormatReadSettingsClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
@@ -1102,7 +1102,7 @@ func unmarshalFormatReadSettingsClassificationArray(rawMsg json.RawMessage) (*[]
 		}
 		fArray[index] = f
 	}
-	return &fArray, nil
+	return fArray, nil
 }
 
 func unmarshalFormatWriteSettingsClassification(rawMsg json.RawMessage) (FormatWriteSettingsClassification, error) {
@@ -1127,7 +1127,7 @@ func unmarshalFormatWriteSettingsClassification(rawMsg json.RawMessage) (FormatW
 	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalFormatWriteSettingsClassificationArray(rawMsg json.RawMessage) (*[]FormatWriteSettingsClassification, error) {
+func unmarshalFormatWriteSettingsClassificationArray(rawMsg json.RawMessage) ([]FormatWriteSettingsClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
@@ -1143,7 +1143,7 @@ func unmarshalFormatWriteSettingsClassificationArray(rawMsg json.RawMessage) (*[
 		}
 		fArray[index] = f
 	}
-	return &fArray, nil
+	return fArray, nil
 }
 
 func unmarshalIntegrationRuntimeClassification(rawMsg json.RawMessage) (IntegrationRuntimeClassification, error) {
@@ -1166,7 +1166,7 @@ func unmarshalIntegrationRuntimeClassification(rawMsg json.RawMessage) (Integrat
 	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalIntegrationRuntimeClassificationArray(rawMsg json.RawMessage) (*[]IntegrationRuntimeClassification, error) {
+func unmarshalIntegrationRuntimeClassificationArray(rawMsg json.RawMessage) ([]IntegrationRuntimeClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
@@ -1182,7 +1182,7 @@ func unmarshalIntegrationRuntimeClassificationArray(rawMsg json.RawMessage) (*[]
 		}
 		fArray[index] = f
 	}
-	return &fArray, nil
+	return fArray, nil
 }
 
 func unmarshalLinkedIntegrationRuntimeTypeClassification(rawMsg json.RawMessage) (LinkedIntegrationRuntimeTypeClassification, error) {
@@ -1205,7 +1205,7 @@ func unmarshalLinkedIntegrationRuntimeTypeClassification(rawMsg json.RawMessage)
 	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalLinkedIntegrationRuntimeTypeClassificationArray(rawMsg json.RawMessage) (*[]LinkedIntegrationRuntimeTypeClassification, error) {
+func unmarshalLinkedIntegrationRuntimeTypeClassificationArray(rawMsg json.RawMessage) ([]LinkedIntegrationRuntimeTypeClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
@@ -1221,7 +1221,7 @@ func unmarshalLinkedIntegrationRuntimeTypeClassificationArray(rawMsg json.RawMes
 		}
 		fArray[index] = f
 	}
-	return &fArray, nil
+	return fArray, nil
 }
 
 func unmarshalLinkedServiceClassification(rawMsg json.RawMessage) (LinkedServiceClassification, error) {
@@ -1428,7 +1428,7 @@ func unmarshalLinkedServiceClassification(rawMsg json.RawMessage) (LinkedService
 	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalLinkedServiceClassificationArray(rawMsg json.RawMessage) (*[]LinkedServiceClassification, error) {
+func unmarshalLinkedServiceClassificationArray(rawMsg json.RawMessage) ([]LinkedServiceClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
@@ -1444,7 +1444,7 @@ func unmarshalLinkedServiceClassificationArray(rawMsg json.RawMessage) (*[]Linke
 		}
 		fArray[index] = f
 	}
-	return &fArray, nil
+	return fArray, nil
 }
 
 func unmarshalMultiplePipelineTriggerClassification(rawMsg json.RawMessage) (MultiplePipelineTriggerClassification, error) {
@@ -1469,7 +1469,7 @@ func unmarshalMultiplePipelineTriggerClassification(rawMsg json.RawMessage) (Mul
 	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalMultiplePipelineTriggerClassificationArray(rawMsg json.RawMessage) (*[]MultiplePipelineTriggerClassification, error) {
+func unmarshalMultiplePipelineTriggerClassificationArray(rawMsg json.RawMessage) ([]MultiplePipelineTriggerClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
@@ -1485,7 +1485,7 @@ func unmarshalMultiplePipelineTriggerClassificationArray(rawMsg json.RawMessage)
 		}
 		fArray[index] = f
 	}
-	return &fArray, nil
+	return fArray, nil
 }
 
 func unmarshalSecretBaseClassification(rawMsg json.RawMessage) (SecretBaseClassification, error) {
@@ -1508,7 +1508,7 @@ func unmarshalSecretBaseClassification(rawMsg json.RawMessage) (SecretBaseClassi
 	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalSecretBaseClassificationArray(rawMsg json.RawMessage) (*[]SecretBaseClassification, error) {
+func unmarshalSecretBaseClassificationArray(rawMsg json.RawMessage) ([]SecretBaseClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
@@ -1524,7 +1524,7 @@ func unmarshalSecretBaseClassificationArray(rawMsg json.RawMessage) (*[]SecretBa
 		}
 		fArray[index] = f
 	}
-	return &fArray, nil
+	return fArray, nil
 }
 
 func unmarshalStoreReadSettingsClassification(rawMsg json.RawMessage) (StoreReadSettingsClassification, error) {
@@ -1565,7 +1565,7 @@ func unmarshalStoreReadSettingsClassification(rawMsg json.RawMessage) (StoreRead
 	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalStoreReadSettingsClassificationArray(rawMsg json.RawMessage) (*[]StoreReadSettingsClassification, error) {
+func unmarshalStoreReadSettingsClassificationArray(rawMsg json.RawMessage) ([]StoreReadSettingsClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
@@ -1581,7 +1581,7 @@ func unmarshalStoreReadSettingsClassificationArray(rawMsg json.RawMessage) (*[]S
 		}
 		fArray[index] = f
 	}
-	return &fArray, nil
+	return fArray, nil
 }
 
 func unmarshalStoreWriteSettingsClassification(rawMsg json.RawMessage) (StoreWriteSettingsClassification, error) {
@@ -1610,7 +1610,7 @@ func unmarshalStoreWriteSettingsClassification(rawMsg json.RawMessage) (StoreWri
 	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalStoreWriteSettingsClassificationArray(rawMsg json.RawMessage) (*[]StoreWriteSettingsClassification, error) {
+func unmarshalStoreWriteSettingsClassificationArray(rawMsg json.RawMessage) ([]StoreWriteSettingsClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
@@ -1626,7 +1626,7 @@ func unmarshalStoreWriteSettingsClassificationArray(rawMsg json.RawMessage) (*[]
 		}
 		fArray[index] = f
 	}
-	return &fArray, nil
+	return fArray, nil
 }
 
 func unmarshalTabularSourceClassification(rawMsg json.RawMessage) (TabularSourceClassification, error) {
@@ -1759,7 +1759,7 @@ func unmarshalTabularSourceClassification(rawMsg json.RawMessage) (TabularSource
 	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalTabularSourceClassificationArray(rawMsg json.RawMessage) (*[]TabularSourceClassification, error) {
+func unmarshalTabularSourceClassificationArray(rawMsg json.RawMessage) ([]TabularSourceClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
@@ -1775,7 +1775,7 @@ func unmarshalTabularSourceClassificationArray(rawMsg json.RawMessage) (*[]Tabul
 		}
 		fArray[index] = f
 	}
-	return &fArray, nil
+	return fArray, nil
 }
 
 func unmarshalTriggerClassification(rawMsg json.RawMessage) (TriggerClassification, error) {
@@ -1808,7 +1808,7 @@ func unmarshalTriggerClassification(rawMsg json.RawMessage) (TriggerClassificati
 	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalTriggerClassificationArray(rawMsg json.RawMessage) (*[]TriggerClassification, error) {
+func unmarshalTriggerClassificationArray(rawMsg json.RawMessage) ([]TriggerClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
@@ -1824,7 +1824,7 @@ func unmarshalTriggerClassificationArray(rawMsg json.RawMessage) (*[]TriggerClas
 		}
 		fArray[index] = f
 	}
-	return &fArray, nil
+	return fArray, nil
 }
 
 func unmarshalTriggerDependencyReferenceClassification(rawMsg json.RawMessage) (TriggerDependencyReferenceClassification, error) {
@@ -1845,7 +1845,7 @@ func unmarshalTriggerDependencyReferenceClassification(rawMsg json.RawMessage) (
 	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalTriggerDependencyReferenceClassificationArray(rawMsg json.RawMessage) (*[]TriggerDependencyReferenceClassification, error) {
+func unmarshalTriggerDependencyReferenceClassificationArray(rawMsg json.RawMessage) ([]TriggerDependencyReferenceClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
@@ -1861,7 +1861,7 @@ func unmarshalTriggerDependencyReferenceClassificationArray(rawMsg json.RawMessa
 		}
 		fArray[index] = f
 	}
-	return &fArray, nil
+	return fArray, nil
 }
 
 func unmarshalWebLinkedServiceTypePropertiesClassification(rawMsg json.RawMessage) (WebLinkedServiceTypePropertiesClassification, error) {
@@ -1886,7 +1886,7 @@ func unmarshalWebLinkedServiceTypePropertiesClassification(rawMsg json.RawMessag
 	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalWebLinkedServiceTypePropertiesClassificationArray(rawMsg json.RawMessage) (*[]WebLinkedServiceTypePropertiesClassification, error) {
+func unmarshalWebLinkedServiceTypePropertiesClassificationArray(rawMsg json.RawMessage) ([]WebLinkedServiceTypePropertiesClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
@@ -1902,5 +1902,5 @@ func unmarshalWebLinkedServiceTypePropertiesClassificationArray(rawMsg json.RawM
 		}
 		fArray[index] = f
 	}
-	return &fArray, nil
+	return fArray, nil
 }

@@ -109,6 +109,13 @@ async function process(session: Session<CodeModel>) {
         prop.language.go!.needsXMLDictionaryUnmarshalling = true;
         session.model.language.go!.needsXMLDictionaryUnmarshalling = true;
       }
+      if (prop.schema.type === SchemaType.Array || prop.schema.type === SchemaType.ByteArray || prop.schema.type === SchemaType.Dictionary) {
+        obj.language.go!.hasArrayMap = true;
+        prop.language.go!.byValue = true;
+        if (prop.schema.type !== SchemaType.Dictionary && obj.language.go!.marshallingFormat === 'xml') {
+          prop.language.go!.needsXMLArrayMarshalling = true;
+        }
+      }
     }
     if (!obj.language.go!.marshallingFormat) {
       // TODO: workaround due to https://github.com/Azure/autorest.go/issues/412
@@ -122,6 +129,7 @@ async function process(session: Session<CodeModel>) {
       // add an 'AdditionalProperties' field to the type
       const addProps = newProperty('AdditionalProperties', 'Contains additional key/value pairs not defined in the schema.', addPropsSchema);
       addProps.language.go!.isAdditionalProperties = true;
+      addProps.language.go!.byValue = true;
       obj.properties?.push(addProps);
     }
   }
@@ -538,12 +546,12 @@ function processOperationResponses(session: Session<CodeModel>) {
           // special significance which is why we use inheritedErrorType instead.
           for (const child of values(schemaError.children?.all)) {
             if (isObjectSchema(child)) {
-              child.language.go!.inheritedErrorType = true;
+              child.language.go!.inheritedErrorType = 'child';
             }
           }
           for (const parent of values(schemaError.parents?.all)) {
             if (isObjectSchema(parent)) {
-              parent.language.go!.inheritedErrorType = true;
+              parent.language.go!.inheritedErrorType = 'parent';
             }
           }
           if (schemaError.discriminator) {

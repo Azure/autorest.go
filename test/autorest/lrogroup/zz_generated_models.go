@@ -9,7 +9,10 @@ package lrogroup
 
 import (
 	"context"
+	"encoding/json"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
+	"reflect"
 	"time"
 )
 
@@ -507,6 +510,13 @@ type Product struct {
 	Properties *ProductProperties `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type Product.
+func (p Product) MarshalJSON() ([]byte, error) {
+	objectMap := p.Resource.marshalInternal()
+	populate(objectMap, "properties", p.Properties)
+	return json.Marshal(objectMap)
+}
+
 // ProductArrayPollerResponse is the response envelope for operations that asynchronously return a []*Product type.
 type ProductArrayPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
@@ -566,10 +576,26 @@ type Resource struct {
 	Name *string `json:"name,omitempty" azure:"ro"`
 
 	// Dictionary of
-	Tags *map[string]*string `json:"tags,omitempty"`
+	Tags map[string]*string `json:"tags,omitempty"`
 
 	// READ-ONLY; Resource Type
 	Type *string `json:"type,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type Resource.
+func (r Resource) MarshalJSON() ([]byte, error) {
+	objectMap := r.marshalInternal()
+	return json.Marshal(objectMap)
+}
+
+func (r Resource) marshalInternal() map[string]interface{} {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "id", r.ID)
+	populate(objectMap, "location", r.Location)
+	populate(objectMap, "name", r.Name)
+	populate(objectMap, "tags", r.Tags)
+	populate(objectMap, "type", r.Type)
+	return objectMap
 }
 
 type SKU struct {
@@ -630,4 +656,14 @@ type SubProductResponse struct {
 type SubResource struct {
 	// READ-ONLY; Sub Resource Id
 	ID *string `json:"id,omitempty" azure:"ro"`
+}
+
+func populate(m map[string]interface{}, k string, v interface{}) {
+	if v == nil {
+		return
+	} else if azcore.IsNullValue(v) {
+		m[k] = nil
+	} else if !reflect.ValueOf(v).IsNil() {
+		m[k] = v
+	}
 }

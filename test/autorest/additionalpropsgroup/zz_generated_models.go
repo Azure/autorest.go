@@ -69,12 +69,22 @@ func (e Error) Error() string {
 
 type PetAPInProperties struct {
 	// Dictionary of
-	AdditionalProperties *map[string]*float32 `json:"additionalProperties,omitempty"`
-	ID                   *int32               `json:"id,omitempty"`
-	Name                 *string              `json:"name,omitempty"`
+	AdditionalProperties map[string]*float32 `json:"additionalProperties,omitempty"`
+	ID                   *int32              `json:"id,omitempty"`
+	Name                 *string             `json:"name,omitempty"`
 
 	// Status - READ-ONLY
 	Status *bool `json:"status,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type PetAPInProperties.
+func (p PetAPInProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "additionalProperties", p.AdditionalProperties)
+	populate(objectMap, "id", p.ID)
+	populate(objectMap, "name", p.Name)
+	populate(objectMap, "status", p.Status)
+	return json.Marshal(objectMap)
 }
 
 // PetAPInPropertiesResponse is the response envelope for operations that return a PetAPInProperties type.
@@ -87,13 +97,13 @@ type PetAPInPropertiesResponse struct {
 
 type PetAPInPropertiesWithAPString struct {
 	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties *map[string]*string
+	AdditionalProperties map[string]*string
 
 	// Dictionary of
-	AdditionalProperties1 *map[string]*float32 `json:"additionalProperties,omitempty"`
-	ID                    *int32               `json:"id,omitempty"`
-	Name                  *string              `json:"name,omitempty"`
-	OdataLocation         *string              `json:"@odata.location,omitempty"`
+	AdditionalProperties1 map[string]*float32 `json:"additionalProperties,omitempty"`
+	ID                    *int32              `json:"id,omitempty"`
+	Name                  *string             `json:"name,omitempty"`
+	OdataLocation         *string             `json:"@odata.location,omitempty"`
 
 	// Status - READ-ONLY
 	Status *bool `json:"status,omitempty" azure:"ro"`
@@ -108,7 +118,7 @@ func (p PetAPInPropertiesWithAPString) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "@odata.location", p.OdataLocation)
 	populate(objectMap, "status", p.Status)
 	if p.AdditionalProperties != nil {
-		for key, val := range *p.AdditionalProperties {
+		for key, val := range p.AdditionalProperties {
 			objectMap[key] = val
 		}
 	}
@@ -141,12 +151,12 @@ func (p *PetAPInPropertiesWithAPString) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		default:
 			if p.AdditionalProperties == nil {
-				p.AdditionalProperties = &map[string]*string{}
+				p.AdditionalProperties = map[string]*string{}
 			}
 			if val != nil {
 				var aux string
 				err = json.Unmarshal(val, &aux)
-				(*p.AdditionalProperties)[key] = &aux
+				p.AdditionalProperties[key] = &aux
 			}
 			delete(rawMsg, key)
 		}
@@ -167,7 +177,7 @@ type PetAPInPropertiesWithAPStringResponse struct {
 
 type PetAPObject struct {
 	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties *map[string]interface{}
+	AdditionalProperties map[string]interface{}
 	ID                   *int32  `json:"id,omitempty"`
 	Name                 *string `json:"name,omitempty"`
 
@@ -182,7 +192,7 @@ func (p PetAPObject) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "name", p.Name)
 	populate(objectMap, "status", p.Status)
 	if p.AdditionalProperties != nil {
-		for key, val := range *p.AdditionalProperties {
+		for key, val := range p.AdditionalProperties {
 			objectMap[key] = val
 		}
 	}
@@ -209,12 +219,12 @@ func (p *PetAPObject) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		default:
 			if p.AdditionalProperties == nil {
-				p.AdditionalProperties = &map[string]interface{}{}
+				p.AdditionalProperties = map[string]interface{}{}
 			}
 			if val != nil {
 				var aux interface{}
 				err = json.Unmarshal(val, &aux)
-				(*p.AdditionalProperties)[key] = aux
+				p.AdditionalProperties[key] = aux
 			}
 			delete(rawMsg, key)
 		}
@@ -235,7 +245,7 @@ type PetAPObjectResponse struct {
 
 type PetAPString struct {
 	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties *map[string]*string
+	AdditionalProperties map[string]*string
 	ID                   *int32  `json:"id,omitempty"`
 	Name                 *string `json:"name,omitempty"`
 
@@ -250,7 +260,7 @@ func (p PetAPString) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "name", p.Name)
 	populate(objectMap, "status", p.Status)
 	if p.AdditionalProperties != nil {
-		for key, val := range *p.AdditionalProperties {
+		for key, val := range p.AdditionalProperties {
 			objectMap[key] = val
 		}
 	}
@@ -277,12 +287,12 @@ func (p *PetAPString) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		default:
 			if p.AdditionalProperties == nil {
-				p.AdditionalProperties = &map[string]*string{}
+				p.AdditionalProperties = map[string]*string{}
 			}
 			if val != nil {
 				var aux string
 				err = json.Unmarshal(val, &aux)
-				(*p.AdditionalProperties)[key] = &aux
+				p.AdditionalProperties[key] = &aux
 			}
 			delete(rawMsg, key)
 		}
@@ -303,7 +313,7 @@ type PetAPStringResponse struct {
 
 type PetAPTrue struct {
 	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties *map[string]interface{}
+	AdditionalProperties map[string]interface{}
 	ID                   *int32  `json:"id,omitempty"`
 	Name                 *string `json:"name,omitempty"`
 
@@ -332,7 +342,7 @@ func (p PetAPTrue) marshalInternal() map[string]interface{} {
 	populate(objectMap, "name", p.Name)
 	populate(objectMap, "status", p.Status)
 	if p.AdditionalProperties != nil {
-		for key, val := range *p.AdditionalProperties {
+		for key, val := range p.AdditionalProperties {
 			objectMap[key] = val
 		}
 	}
@@ -354,12 +364,12 @@ func (p *PetAPTrue) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 			delete(rawMsg, key)
 		default:
 			if p.AdditionalProperties == nil {
-				p.AdditionalProperties = &map[string]interface{}{}
+				p.AdditionalProperties = map[string]interface{}{}
 			}
 			if val != nil {
 				var aux interface{}
 				err = json.Unmarshal(val, &aux)
-				(*p.AdditionalProperties)[key] = aux
+				p.AdditionalProperties[key] = aux
 			}
 			delete(rawMsg, key)
 		}

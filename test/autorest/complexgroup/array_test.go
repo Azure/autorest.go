@@ -23,7 +23,7 @@ func TestArrayGetEmpty(t *testing.T) {
 		t.Fatalf("GetEmpty: %v", err)
 	}
 	if r := cmp.Diff(result.ArrayWrapper, &ArrayWrapper{
-		Array: &[]*string{},
+		Array: []*string{},
 	}); r != "" {
 		t.Fatal(r)
 	}
@@ -47,7 +47,7 @@ func TestArrayGetValid(t *testing.T) {
 		t.Fatalf("GetValid: %v", err)
 	}
 	if r := cmp.Diff(result.ArrayWrapper, &ArrayWrapper{
-		Array: &[]*string{
+		Array: []*string{
 			to.StringPtr("1, 2, 3, 4"),
 			to.StringPtr(""),
 			nil,
@@ -61,7 +61,7 @@ func TestArrayGetValid(t *testing.T) {
 
 func TestArrayPutEmpty(t *testing.T) {
 	client := newArrayClient()
-	result, err := client.PutEmpty(context.Background(), ArrayWrapper{Array: &[]*string{}}, nil)
+	result, err := client.PutEmpty(context.Background(), ArrayWrapper{Array: []*string{}}, nil)
 	if err != nil {
 		t.Fatalf("PutEmpty: %v", err)
 	}
@@ -72,7 +72,7 @@ func TestArrayPutEmpty(t *testing.T) {
 
 func TestArrayPutValid(t *testing.T) {
 	client := newArrayClient()
-	result, err := client.PutValid(context.Background(), ArrayWrapper{Array: &[]*string{
+	result, err := client.PutValid(context.Background(), ArrayWrapper{Array: []*string{
 		to.StringPtr("1, 2, 3, 4"),
 		to.StringPtr(""),
 		nil,

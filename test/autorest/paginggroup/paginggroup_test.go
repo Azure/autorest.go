@@ -40,7 +40,7 @@ func TestGetMultiplePages(t *testing.T) {
 	count := 0
 	for page.NextPage(context.Background()) {
 		resp := page.PageResponse()
-		if len(*resp.ProductResult.Values) == 0 {
+		if len(resp.ProductResult.Values) == 0 {
 			t.Fatal("missing payload")
 		}
 		count++
@@ -63,7 +63,7 @@ func TestGetMultiplePagesFailure(t *testing.T) {
 	count := 0
 	for page.NextPage(context.Background()) {
 		resp := page.PageResponse()
-		if len(*resp.ProductResult.Values) == 0 {
+		if len(resp.ProductResult.Values) == 0 {
 			t.Fatal("missing payload")
 		}
 		count++
@@ -86,7 +86,7 @@ func TestGetMultiplePagesFailureURI(t *testing.T) {
 	count := 0
 	for page.NextPage(context.Background()) {
 		resp := page.PageResponse()
-		if len(*resp.ProductResult.Values) == 0 {
+		if len(resp.ProductResult.Values) == 0 {
 			t.Fatal("missing payload")
 		}
 		count++
@@ -109,7 +109,7 @@ func TestGetMultiplePagesFragmentNextLink(t *testing.T) {
 	count := 0
 	for page.NextPage(context.Background()) {
 		resp := page.PageResponse()
-		if len(*resp.OdataProductResult.Values) == 0 {
+		if len(resp.OdataProductResult.Values) == 0 {
 			t.Fatal("missing payload")
 		}
 		count++
@@ -135,7 +135,7 @@ func TestGetMultiplePagesFragmentWithGroupingNextLink(t *testing.T) {
 	count := 0
 	for page.NextPage(context.Background()) {
 		resp := page.PageResponse()
-		if len(*resp.OdataProductResult.Values) == 0 {
+		if len(resp.OdataProductResult.Values) == 0 {
 			t.Fatal("missing payload")
 		}
 		count++
@@ -174,7 +174,7 @@ func TestGetMultiplePagesLro(t *testing.T) {
 	count := 0
 	for pager.NextPage(context.Background()) {
 		resp := pager.PageResponse()
-		if len(*resp.ProductResult.Values) == 0 {
+		if len(resp.ProductResult.Values) == 0 {
 			t.Fatal("missing payload")
 		}
 		count++
@@ -195,7 +195,7 @@ func TestGetMultiplePagesRetryFirst(t *testing.T) {
 	count := 0
 	for page.NextPage(context.Background()) {
 		resp := page.PageResponse()
-		if len(*resp.ProductResult.Values) == 0 {
+		if len(resp.ProductResult.Values) == 0 {
 			t.Fatal("missing payload")
 		}
 		count++
@@ -218,7 +218,7 @@ func TestGetMultiplePagesRetrySecond(t *testing.T) {
 	count := 0
 	for page.NextPage(context.Background()) {
 		resp := page.PageResponse()
-		if len(*resp.ProductResult.Values) == 0 {
+		if len(resp.ProductResult.Values) == 0 {
 			t.Fatal("missing payload")
 		}
 		count++
@@ -241,7 +241,7 @@ func TestGetMultiplePagesWithOffset(t *testing.T) {
 	count := 0
 	for page.NextPage(context.Background()) {
 		resp := page.PageResponse()
-		if len(*resp.ProductResult.Values) == 0 {
+		if len(resp.ProductResult.Values) == 0 {
 			t.Fatal("missing payload")
 		}
 		count++
@@ -264,7 +264,7 @@ func TestGetNoItemNamePages(t *testing.T) {
 	count := 0
 	for page.NextPage(context.Background()) {
 		resp := page.PageResponse()
-		if len(*resp.ProductResultValue.Value) == 0 {
+		if len(resp.ProductResultValue.Value) == 0 {
 			t.Fatal("missing payload")
 		}
 		count++
@@ -287,7 +287,7 @@ func TestGetNullNextLinkNamePages(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if len(*resp.ProductResult.Values) == 0 {
+	if len(resp.ProductResult.Values) == 0 {
 		t.Fatal("missing payload")
 	}
 }
@@ -299,7 +299,7 @@ func TestGetOdataMultiplePages(t *testing.T) {
 	count := 0
 	for page.NextPage(context.Background()) {
 		resp := page.PageResponse()
-		if len(*resp.OdataProductResult.Values) == 0 {
+		if len(resp.OdataProductResult.Values) == 0 {
 			t.Fatal("missing payload")
 		}
 		count++
@@ -322,7 +322,7 @@ func TestGetPagingModelWithItemNameWithXMSClientName(t *testing.T) {
 	count := 0
 	for page.NextPage(context.Background()) {
 		resp := page.PageResponse()
-		if len(*resp.ProductResultValueWithXMSClientName.Indexes) == 0 {
+		if len(resp.ProductResultValueWithXMSClientName.Indexes) == 0 {
 			t.Fatal("missing payload")
 		}
 		count++
@@ -345,7 +345,7 @@ func TestGetSinglePages(t *testing.T) {
 	count := 0
 	for page.NextPage(context.Background()) {
 		resp := page.PageResponse()
-		if len(*resp.ProductResult.Values) == 0 {
+		if len(resp.ProductResult.Values) == 0 {
 			t.Fatal("missing payload")
 		}
 		count++
@@ -368,7 +368,7 @@ func TestGetSinglePagesFailure(t *testing.T) {
 	count := 0
 	for page.NextPage(context.Background()) {
 		resp := page.PageResponse()
-		if len(*resp.ProductResult.Values) == 0 {
+		if len(resp.ProductResult.Values) == 0 {
 			t.Fatal("missing payload")
 		}
 		count++
@@ -391,7 +391,7 @@ func TestGetWithQueryParams(t *testing.T) {
 	count := 0
 	for page.NextPage(context.Background()) {
 		resp := page.PageResponse()
-		if len(*resp.ProductResult.Values) == 0 {
+		if len(resp.ProductResult.Values) == 0 {
 			t.Fatal("missing payload")
 		}
 		count++
