@@ -52,8 +52,14 @@
     {
       "commandKind": "global",
       "name": "regenerate",
-      "summary": "run node ./rushScripts/regeneration.js to regenerate all swaggers specified in the autorest.testserver",
+      "summary": "run node .scripts/regeneration.js to regenerate all swaggers specified in the autorest.testserver",
       "shellCommand": "node .scripts/regeneration.js"
+    },
+    {
+      "commandKind": "global",
+      "name": "modtidy",
+      "summary": "run node .scripts/modtidy.js to perform tidy up all go.mod files",
+      "shellCommand": "node .scripts/modtidy.js"
     }
   ],
   "parameters": []
