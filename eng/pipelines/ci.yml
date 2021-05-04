@@ -19,12 +19,12 @@ jobs:
 
     strategy:
       matrix:
-        Linux_Go113:
+        Linux_Go115:
           vm.image: 'ubuntu-18.04'
-          go.version: '1.14.10'
-        Linux_Go114:
+          go.version: '1.15.11'
+        Linux_Go116:
           vm.image: 'ubuntu-18.04'
-          go.version: '1.15.3'
+          go.version: '1.16.3'
 
     pool:
       vmImage: '$(vm.image)'
@@ -78,6 +78,21 @@ jobs:
           }
           exit $exit
         displayName: 'Build'
+
+      - pwsh: |
+          $modDirs = (./eng/scripts/get_module_dirs.ps1 -serviceDir $(goTestPath))
+          $exit = 0
+          foreach ($md in $modDirs) {
+            pushd $md
+            Write-Host "##[command]Executing go mod tidy in $md"
+            go mod tidy
+            $diff = (git diff -w .)
+            if ($diff.Length > 0) {
+              $exit = 1
+            }
+          }
+          exit $exit
+        displayName: 'Mod Tidy'
 
       - pwsh: |
           $modDirs = (./eng/scripts/get_module_dirs.ps1 -serviceDir $(goTestPath))
