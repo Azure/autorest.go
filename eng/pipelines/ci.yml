@@ -87,7 +87,8 @@ jobs:
             Write-Host "##[command]Executing go mod tidy in $md"
             go mod tidy
             $diff = (git diff -w .)
-            if ($diff.Length > 0) {
+            write-host ($diff -join "`n")
+            if ($diff.Length -gt 0) {
               $exit = 1
             }
           }
