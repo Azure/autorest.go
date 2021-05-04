@@ -9,12 +9,12 @@ package azartifacts
 
 import "encoding/json"
 
-func unmarshalActivityClassification(rawMsg *json.RawMessage) (ActivityClassification, error) {
+func unmarshalActivityClassification(rawMsg json.RawMessage) (ActivityClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
 	var m map[string]interface{}
-	if err := json.Unmarshal(*rawMsg, &m); err != nil {
+	if err := json.Unmarshal(rawMsg, &m); err != nil {
 		return nil, err
 	}
 	var b ActivityClassification
@@ -100,15 +100,15 @@ func unmarshalActivityClassification(rawMsg *json.RawMessage) (ActivityClassific
 	default:
 		b = &Activity{}
 	}
-	return b, json.Unmarshal(*rawMsg, b)
+	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalActivityClassificationArray(rawMsg *json.RawMessage) (*[]ActivityClassification, error) {
+func unmarshalActivityClassificationArray(rawMsg json.RawMessage) (*[]ActivityClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
-	var rawMessages []*json.RawMessage
-	if err := json.Unmarshal(*rawMsg, &rawMessages); err != nil {
+	var rawMessages []json.RawMessage
+	if err := json.Unmarshal(rawMsg, &rawMessages); err != nil {
 		return nil, err
 	}
 	fArray := make([]ActivityClassification, len(rawMessages))
@@ -122,12 +122,12 @@ func unmarshalActivityClassificationArray(rawMsg *json.RawMessage) (*[]ActivityC
 	return &fArray, nil
 }
 
-func unmarshalControlActivityClassification(rawMsg *json.RawMessage) (ControlActivityClassification, error) {
+func unmarshalControlActivityClassification(rawMsg json.RawMessage) (ControlActivityClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
 	var m map[string]interface{}
-	if err := json.Unmarshal(*rawMsg, &m); err != nil {
+	if err := json.Unmarshal(rawMsg, &m); err != nil {
 		return nil, err
 	}
 	var b ControlActivityClassification
@@ -157,15 +157,15 @@ func unmarshalControlActivityClassification(rawMsg *json.RawMessage) (ControlAct
 	default:
 		b = &ControlActivity{}
 	}
-	return b, json.Unmarshal(*rawMsg, b)
+	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalControlActivityClassificationArray(rawMsg *json.RawMessage) (*[]ControlActivityClassification, error) {
+func unmarshalControlActivityClassificationArray(rawMsg json.RawMessage) (*[]ControlActivityClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
-	var rawMessages []*json.RawMessage
-	if err := json.Unmarshal(*rawMsg, &rawMessages); err != nil {
+	var rawMessages []json.RawMessage
+	if err := json.Unmarshal(rawMsg, &rawMessages); err != nil {
 		return nil, err
 	}
 	fArray := make([]ControlActivityClassification, len(rawMessages))
@@ -179,12 +179,12 @@ func unmarshalControlActivityClassificationArray(rawMsg *json.RawMessage) (*[]Co
 	return &fArray, nil
 }
 
-func unmarshalCopySinkClassification(rawMsg *json.RawMessage) (CopySinkClassification, error) {
+func unmarshalCopySinkClassification(rawMsg json.RawMessage) (CopySinkClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
 	var m map[string]interface{}
-	if err := json.Unmarshal(*rawMsg, &m); err != nil {
+	if err := json.Unmarshal(rawMsg, &m); err != nil {
 		return nil, err
 	}
 	var b CopySinkClassification
@@ -260,15 +260,15 @@ func unmarshalCopySinkClassification(rawMsg *json.RawMessage) (CopySinkClassific
 	default:
 		b = &CopySink{}
 	}
-	return b, json.Unmarshal(*rawMsg, b)
+	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalCopySinkClassificationArray(rawMsg *json.RawMessage) (*[]CopySinkClassification, error) {
+func unmarshalCopySinkClassificationArray(rawMsg json.RawMessage) (*[]CopySinkClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
-	var rawMessages []*json.RawMessage
-	if err := json.Unmarshal(*rawMsg, &rawMessages); err != nil {
+	var rawMessages []json.RawMessage
+	if err := json.Unmarshal(rawMsg, &rawMessages); err != nil {
 		return nil, err
 	}
 	fArray := make([]CopySinkClassification, len(rawMessages))
@@ -282,12 +282,12 @@ func unmarshalCopySinkClassificationArray(rawMsg *json.RawMessage) (*[]CopySinkC
 	return &fArray, nil
 }
 
-func unmarshalCopySourceClassification(rawMsg *json.RawMessage) (CopySourceClassification, error) {
+func unmarshalCopySourceClassification(rawMsg json.RawMessage) (CopySourceClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
 	var m map[string]interface{}
-	if err := json.Unmarshal(*rawMsg, &m); err != nil {
+	if err := json.Unmarshal(rawMsg, &m); err != nil {
 		return nil, err
 	}
 	var b CopySourceClassification
@@ -469,15 +469,15 @@ func unmarshalCopySourceClassification(rawMsg *json.RawMessage) (CopySourceClass
 	default:
 		b = &CopySource{}
 	}
-	return b, json.Unmarshal(*rawMsg, b)
+	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalCopySourceClassificationArray(rawMsg *json.RawMessage) (*[]CopySourceClassification, error) {
+func unmarshalCopySourceClassificationArray(rawMsg json.RawMessage) (*[]CopySourceClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
-	var rawMessages []*json.RawMessage
-	if err := json.Unmarshal(*rawMsg, &rawMessages); err != nil {
+	var rawMessages []json.RawMessage
+	if err := json.Unmarshal(rawMsg, &rawMessages); err != nil {
 		return nil, err
 	}
 	fArray := make([]CopySourceClassification, len(rawMessages))
@@ -491,12 +491,12 @@ func unmarshalCopySourceClassificationArray(rawMsg *json.RawMessage) (*[]CopySou
 	return &fArray, nil
 }
 
-func unmarshalCopyTranslatorClassification(rawMsg *json.RawMessage) (CopyTranslatorClassification, error) {
+func unmarshalCopyTranslatorClassification(rawMsg json.RawMessage) (CopyTranslatorClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
 	var m map[string]interface{}
-	if err := json.Unmarshal(*rawMsg, &m); err != nil {
+	if err := json.Unmarshal(rawMsg, &m); err != nil {
 		return nil, err
 	}
 	var b CopyTranslatorClassification
@@ -506,15 +506,15 @@ func unmarshalCopyTranslatorClassification(rawMsg *json.RawMessage) (CopyTransla
 	default:
 		b = &CopyTranslator{}
 	}
-	return b, json.Unmarshal(*rawMsg, b)
+	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalCopyTranslatorClassificationArray(rawMsg *json.RawMessage) (*[]CopyTranslatorClassification, error) {
+func unmarshalCopyTranslatorClassificationArray(rawMsg json.RawMessage) (*[]CopyTranslatorClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
-	var rawMessages []*json.RawMessage
-	if err := json.Unmarshal(*rawMsg, &rawMessages); err != nil {
+	var rawMessages []json.RawMessage
+	if err := json.Unmarshal(rawMsg, &rawMessages); err != nil {
 		return nil, err
 	}
 	fArray := make([]CopyTranslatorClassification, len(rawMessages))
@@ -528,12 +528,12 @@ func unmarshalCopyTranslatorClassificationArray(rawMsg *json.RawMessage) (*[]Cop
 	return &fArray, nil
 }
 
-func unmarshalCustomSetupBaseClassification(rawMsg *json.RawMessage) (CustomSetupBaseClassification, error) {
+func unmarshalCustomSetupBaseClassification(rawMsg json.RawMessage) (CustomSetupBaseClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
 	var m map[string]interface{}
-	if err := json.Unmarshal(*rawMsg, &m); err != nil {
+	if err := json.Unmarshal(rawMsg, &m); err != nil {
 		return nil, err
 	}
 	var b CustomSetupBaseClassification
@@ -541,15 +541,15 @@ func unmarshalCustomSetupBaseClassification(rawMsg *json.RawMessage) (CustomSetu
 	default:
 		b = &CustomSetupBase{}
 	}
-	return b, json.Unmarshal(*rawMsg, b)
+	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalCustomSetupBaseClassificationArray(rawMsg *json.RawMessage) (*[]CustomSetupBaseClassification, error) {
+func unmarshalCustomSetupBaseClassificationArray(rawMsg json.RawMessage) (*[]CustomSetupBaseClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
-	var rawMessages []*json.RawMessage
-	if err := json.Unmarshal(*rawMsg, &rawMessages); err != nil {
+	var rawMessages []json.RawMessage
+	if err := json.Unmarshal(rawMsg, &rawMessages); err != nil {
 		return nil, err
 	}
 	fArray := make([]CustomSetupBaseClassification, len(rawMessages))
@@ -563,12 +563,12 @@ func unmarshalCustomSetupBaseClassificationArray(rawMsg *json.RawMessage) (*[]Cu
 	return &fArray, nil
 }
 
-func unmarshalDataFlowClassification(rawMsg *json.RawMessage) (DataFlowClassification, error) {
+func unmarshalDataFlowClassification(rawMsg json.RawMessage) (DataFlowClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
 	var m map[string]interface{}
-	if err := json.Unmarshal(*rawMsg, &m); err != nil {
+	if err := json.Unmarshal(rawMsg, &m); err != nil {
 		return nil, err
 	}
 	var b DataFlowClassification
@@ -578,15 +578,15 @@ func unmarshalDataFlowClassification(rawMsg *json.RawMessage) (DataFlowClassific
 	default:
 		b = &DataFlow{}
 	}
-	return b, json.Unmarshal(*rawMsg, b)
+	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalDataFlowClassificationArray(rawMsg *json.RawMessage) (*[]DataFlowClassification, error) {
+func unmarshalDataFlowClassificationArray(rawMsg json.RawMessage) (*[]DataFlowClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
-	var rawMessages []*json.RawMessage
-	if err := json.Unmarshal(*rawMsg, &rawMessages); err != nil {
+	var rawMessages []json.RawMessage
+	if err := json.Unmarshal(rawMsg, &rawMessages); err != nil {
 		return nil, err
 	}
 	fArray := make([]DataFlowClassification, len(rawMessages))
@@ -600,12 +600,12 @@ func unmarshalDataFlowClassificationArray(rawMsg *json.RawMessage) (*[]DataFlowC
 	return &fArray, nil
 }
 
-func unmarshalDatasetClassification(rawMsg *json.RawMessage) (DatasetClassification, error) {
+func unmarshalDatasetClassification(rawMsg json.RawMessage) (DatasetClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
 	var m map[string]interface{}
-	if err := json.Unmarshal(*rawMsg, &m); err != nil {
+	if err := json.Unmarshal(rawMsg, &m); err != nil {
 		return nil, err
 	}
 	var b DatasetClassification
@@ -775,15 +775,15 @@ func unmarshalDatasetClassification(rawMsg *json.RawMessage) (DatasetClassificat
 	default:
 		b = &Dataset{}
 	}
-	return b, json.Unmarshal(*rawMsg, b)
+	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalDatasetClassificationArray(rawMsg *json.RawMessage) (*[]DatasetClassification, error) {
+func unmarshalDatasetClassificationArray(rawMsg json.RawMessage) (*[]DatasetClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
-	var rawMessages []*json.RawMessage
-	if err := json.Unmarshal(*rawMsg, &rawMessages); err != nil {
+	var rawMessages []json.RawMessage
+	if err := json.Unmarshal(rawMsg, &rawMessages); err != nil {
 		return nil, err
 	}
 	fArray := make([]DatasetClassification, len(rawMessages))
@@ -797,12 +797,12 @@ func unmarshalDatasetClassificationArray(rawMsg *json.RawMessage) (*[]DatasetCla
 	return &fArray, nil
 }
 
-func unmarshalDatasetCompressionClassification(rawMsg *json.RawMessage) (DatasetCompressionClassification, error) {
+func unmarshalDatasetCompressionClassification(rawMsg json.RawMessage) (DatasetCompressionClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
 	var m map[string]interface{}
-	if err := json.Unmarshal(*rawMsg, &m); err != nil {
+	if err := json.Unmarshal(rawMsg, &m); err != nil {
 		return nil, err
 	}
 	var b DatasetCompressionClassification
@@ -818,15 +818,15 @@ func unmarshalDatasetCompressionClassification(rawMsg *json.RawMessage) (Dataset
 	default:
 		b = &DatasetCompression{}
 	}
-	return b, json.Unmarshal(*rawMsg, b)
+	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalDatasetCompressionClassificationArray(rawMsg *json.RawMessage) (*[]DatasetCompressionClassification, error) {
+func unmarshalDatasetCompressionClassificationArray(rawMsg json.RawMessage) (*[]DatasetCompressionClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
-	var rawMessages []*json.RawMessage
-	if err := json.Unmarshal(*rawMsg, &rawMessages); err != nil {
+	var rawMessages []json.RawMessage
+	if err := json.Unmarshal(rawMsg, &rawMessages); err != nil {
 		return nil, err
 	}
 	fArray := make([]DatasetCompressionClassification, len(rawMessages))
@@ -840,12 +840,12 @@ func unmarshalDatasetCompressionClassificationArray(rawMsg *json.RawMessage) (*[
 	return &fArray, nil
 }
 
-func unmarshalDatasetLocationClassification(rawMsg *json.RawMessage) (DatasetLocationClassification, error) {
+func unmarshalDatasetLocationClassification(rawMsg json.RawMessage) (DatasetLocationClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
 	var m map[string]interface{}
-	if err := json.Unmarshal(*rawMsg, &m); err != nil {
+	if err := json.Unmarshal(rawMsg, &m); err != nil {
 		return nil, err
 	}
 	var b DatasetLocationClassification
@@ -875,15 +875,15 @@ func unmarshalDatasetLocationClassification(rawMsg *json.RawMessage) (DatasetLoc
 	default:
 		b = &DatasetLocation{}
 	}
-	return b, json.Unmarshal(*rawMsg, b)
+	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalDatasetLocationClassificationArray(rawMsg *json.RawMessage) (*[]DatasetLocationClassification, error) {
+func unmarshalDatasetLocationClassificationArray(rawMsg json.RawMessage) (*[]DatasetLocationClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
-	var rawMessages []*json.RawMessage
-	if err := json.Unmarshal(*rawMsg, &rawMessages); err != nil {
+	var rawMessages []json.RawMessage
+	if err := json.Unmarshal(rawMsg, &rawMessages); err != nil {
 		return nil, err
 	}
 	fArray := make([]DatasetLocationClassification, len(rawMessages))
@@ -897,12 +897,12 @@ func unmarshalDatasetLocationClassificationArray(rawMsg *json.RawMessage) (*[]Da
 	return &fArray, nil
 }
 
-func unmarshalDatasetStorageFormatClassification(rawMsg *json.RawMessage) (DatasetStorageFormatClassification, error) {
+func unmarshalDatasetStorageFormatClassification(rawMsg json.RawMessage) (DatasetStorageFormatClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
 	var m map[string]interface{}
-	if err := json.Unmarshal(*rawMsg, &m); err != nil {
+	if err := json.Unmarshal(rawMsg, &m); err != nil {
 		return nil, err
 	}
 	var b DatasetStorageFormatClassification
@@ -920,15 +920,15 @@ func unmarshalDatasetStorageFormatClassification(rawMsg *json.RawMessage) (Datas
 	default:
 		b = &DatasetStorageFormat{}
 	}
-	return b, json.Unmarshal(*rawMsg, b)
+	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalDatasetStorageFormatClassificationArray(rawMsg *json.RawMessage) (*[]DatasetStorageFormatClassification, error) {
+func unmarshalDatasetStorageFormatClassificationArray(rawMsg json.RawMessage) (*[]DatasetStorageFormatClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
-	var rawMessages []*json.RawMessage
-	if err := json.Unmarshal(*rawMsg, &rawMessages); err != nil {
+	var rawMessages []json.RawMessage
+	if err := json.Unmarshal(rawMsg, &rawMessages); err != nil {
 		return nil, err
 	}
 	fArray := make([]DatasetStorageFormatClassification, len(rawMessages))
@@ -942,12 +942,12 @@ func unmarshalDatasetStorageFormatClassificationArray(rawMsg *json.RawMessage) (
 	return &fArray, nil
 }
 
-func unmarshalDependencyReferenceClassification(rawMsg *json.RawMessage) (DependencyReferenceClassification, error) {
+func unmarshalDependencyReferenceClassification(rawMsg json.RawMessage) (DependencyReferenceClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
 	var m map[string]interface{}
-	if err := json.Unmarshal(*rawMsg, &m); err != nil {
+	if err := json.Unmarshal(rawMsg, &m); err != nil {
 		return nil, err
 	}
 	var b DependencyReferenceClassification
@@ -961,15 +961,15 @@ func unmarshalDependencyReferenceClassification(rawMsg *json.RawMessage) (Depend
 	default:
 		b = &DependencyReference{}
 	}
-	return b, json.Unmarshal(*rawMsg, b)
+	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalDependencyReferenceClassificationArray(rawMsg *json.RawMessage) (*[]DependencyReferenceClassification, error) {
+func unmarshalDependencyReferenceClassificationArray(rawMsg json.RawMessage) (*[]DependencyReferenceClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
-	var rawMessages []*json.RawMessage
-	if err := json.Unmarshal(*rawMsg, &rawMessages); err != nil {
+	var rawMessages []json.RawMessage
+	if err := json.Unmarshal(rawMsg, &rawMessages); err != nil {
 		return nil, err
 	}
 	fArray := make([]DependencyReferenceClassification, len(rawMessages))
@@ -983,12 +983,12 @@ func unmarshalDependencyReferenceClassificationArray(rawMsg *json.RawMessage) (*
 	return &fArray, nil
 }
 
-func unmarshalExecutionActivityClassification(rawMsg *json.RawMessage) (ExecutionActivityClassification, error) {
+func unmarshalExecutionActivityClassification(rawMsg json.RawMessage) (ExecutionActivityClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
 	var m map[string]interface{}
-	if err := json.Unmarshal(*rawMsg, &m); err != nil {
+	if err := json.Unmarshal(rawMsg, &m); err != nil {
 		return nil, err
 	}
 	var b ExecutionActivityClassification
@@ -1046,15 +1046,15 @@ func unmarshalExecutionActivityClassification(rawMsg *json.RawMessage) (Executio
 	default:
 		b = &ExecutionActivity{}
 	}
-	return b, json.Unmarshal(*rawMsg, b)
+	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalExecutionActivityClassificationArray(rawMsg *json.RawMessage) (*[]ExecutionActivityClassification, error) {
+func unmarshalExecutionActivityClassificationArray(rawMsg json.RawMessage) (*[]ExecutionActivityClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
-	var rawMessages []*json.RawMessage
-	if err := json.Unmarshal(*rawMsg, &rawMessages); err != nil {
+	var rawMessages []json.RawMessage
+	if err := json.Unmarshal(rawMsg, &rawMessages); err != nil {
 		return nil, err
 	}
 	fArray := make([]ExecutionActivityClassification, len(rawMessages))
@@ -1068,12 +1068,12 @@ func unmarshalExecutionActivityClassificationArray(rawMsg *json.RawMessage) (*[]
 	return &fArray, nil
 }
 
-func unmarshalFormatReadSettingsClassification(rawMsg *json.RawMessage) (FormatReadSettingsClassification, error) {
+func unmarshalFormatReadSettingsClassification(rawMsg json.RawMessage) (FormatReadSettingsClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
 	var m map[string]interface{}
-	if err := json.Unmarshal(*rawMsg, &m); err != nil {
+	if err := json.Unmarshal(rawMsg, &m); err != nil {
 		return nil, err
 	}
 	var b FormatReadSettingsClassification
@@ -1083,15 +1083,15 @@ func unmarshalFormatReadSettingsClassification(rawMsg *json.RawMessage) (FormatR
 	default:
 		b = &FormatReadSettings{}
 	}
-	return b, json.Unmarshal(*rawMsg, b)
+	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalFormatReadSettingsClassificationArray(rawMsg *json.RawMessage) (*[]FormatReadSettingsClassification, error) {
+func unmarshalFormatReadSettingsClassificationArray(rawMsg json.RawMessage) (*[]FormatReadSettingsClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
-	var rawMessages []*json.RawMessage
-	if err := json.Unmarshal(*rawMsg, &rawMessages); err != nil {
+	var rawMessages []json.RawMessage
+	if err := json.Unmarshal(rawMsg, &rawMessages); err != nil {
 		return nil, err
 	}
 	fArray := make([]FormatReadSettingsClassification, len(rawMessages))
@@ -1105,12 +1105,12 @@ func unmarshalFormatReadSettingsClassificationArray(rawMsg *json.RawMessage) (*[
 	return &fArray, nil
 }
 
-func unmarshalFormatWriteSettingsClassification(rawMsg *json.RawMessage) (FormatWriteSettingsClassification, error) {
+func unmarshalFormatWriteSettingsClassification(rawMsg json.RawMessage) (FormatWriteSettingsClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
 	var m map[string]interface{}
-	if err := json.Unmarshal(*rawMsg, &m); err != nil {
+	if err := json.Unmarshal(rawMsg, &m); err != nil {
 		return nil, err
 	}
 	var b FormatWriteSettingsClassification
@@ -1124,15 +1124,15 @@ func unmarshalFormatWriteSettingsClassification(rawMsg *json.RawMessage) (Format
 	default:
 		b = &FormatWriteSettings{}
 	}
-	return b, json.Unmarshal(*rawMsg, b)
+	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalFormatWriteSettingsClassificationArray(rawMsg *json.RawMessage) (*[]FormatWriteSettingsClassification, error) {
+func unmarshalFormatWriteSettingsClassificationArray(rawMsg json.RawMessage) (*[]FormatWriteSettingsClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
-	var rawMessages []*json.RawMessage
-	if err := json.Unmarshal(*rawMsg, &rawMessages); err != nil {
+	var rawMessages []json.RawMessage
+	if err := json.Unmarshal(rawMsg, &rawMessages); err != nil {
 		return nil, err
 	}
 	fArray := make([]FormatWriteSettingsClassification, len(rawMessages))
@@ -1146,12 +1146,12 @@ func unmarshalFormatWriteSettingsClassificationArray(rawMsg *json.RawMessage) (*
 	return &fArray, nil
 }
 
-func unmarshalIntegrationRuntimeClassification(rawMsg *json.RawMessage) (IntegrationRuntimeClassification, error) {
+func unmarshalIntegrationRuntimeClassification(rawMsg json.RawMessage) (IntegrationRuntimeClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
 	var m map[string]interface{}
-	if err := json.Unmarshal(*rawMsg, &m); err != nil {
+	if err := json.Unmarshal(rawMsg, &m); err != nil {
 		return nil, err
 	}
 	var b IntegrationRuntimeClassification
@@ -1163,15 +1163,15 @@ func unmarshalIntegrationRuntimeClassification(rawMsg *json.RawMessage) (Integra
 	default:
 		b = &IntegrationRuntime{}
 	}
-	return b, json.Unmarshal(*rawMsg, b)
+	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalIntegrationRuntimeClassificationArray(rawMsg *json.RawMessage) (*[]IntegrationRuntimeClassification, error) {
+func unmarshalIntegrationRuntimeClassificationArray(rawMsg json.RawMessage) (*[]IntegrationRuntimeClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
-	var rawMessages []*json.RawMessage
-	if err := json.Unmarshal(*rawMsg, &rawMessages); err != nil {
+	var rawMessages []json.RawMessage
+	if err := json.Unmarshal(rawMsg, &rawMessages); err != nil {
 		return nil, err
 	}
 	fArray := make([]IntegrationRuntimeClassification, len(rawMessages))
@@ -1185,12 +1185,12 @@ func unmarshalIntegrationRuntimeClassificationArray(rawMsg *json.RawMessage) (*[
 	return &fArray, nil
 }
 
-func unmarshalLinkedIntegrationRuntimeTypeClassification(rawMsg *json.RawMessage) (LinkedIntegrationRuntimeTypeClassification, error) {
+func unmarshalLinkedIntegrationRuntimeTypeClassification(rawMsg json.RawMessage) (LinkedIntegrationRuntimeTypeClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
 	var m map[string]interface{}
-	if err := json.Unmarshal(*rawMsg, &m); err != nil {
+	if err := json.Unmarshal(rawMsg, &m); err != nil {
 		return nil, err
 	}
 	var b LinkedIntegrationRuntimeTypeClassification
@@ -1202,15 +1202,15 @@ func unmarshalLinkedIntegrationRuntimeTypeClassification(rawMsg *json.RawMessage
 	default:
 		b = &LinkedIntegrationRuntimeType{}
 	}
-	return b, json.Unmarshal(*rawMsg, b)
+	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalLinkedIntegrationRuntimeTypeClassificationArray(rawMsg *json.RawMessage) (*[]LinkedIntegrationRuntimeTypeClassification, error) {
+func unmarshalLinkedIntegrationRuntimeTypeClassificationArray(rawMsg json.RawMessage) (*[]LinkedIntegrationRuntimeTypeClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
-	var rawMessages []*json.RawMessage
-	if err := json.Unmarshal(*rawMsg, &rawMessages); err != nil {
+	var rawMessages []json.RawMessage
+	if err := json.Unmarshal(rawMsg, &rawMessages); err != nil {
 		return nil, err
 	}
 	fArray := make([]LinkedIntegrationRuntimeTypeClassification, len(rawMessages))
@@ -1224,12 +1224,12 @@ func unmarshalLinkedIntegrationRuntimeTypeClassificationArray(rawMsg *json.RawMe
 	return &fArray, nil
 }
 
-func unmarshalLinkedServiceClassification(rawMsg *json.RawMessage) (LinkedServiceClassification, error) {
+func unmarshalLinkedServiceClassification(rawMsg json.RawMessage) (LinkedServiceClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
 	var m map[string]interface{}
-	if err := json.Unmarshal(*rawMsg, &m); err != nil {
+	if err := json.Unmarshal(rawMsg, &m); err != nil {
 		return nil, err
 	}
 	var b LinkedServiceClassification
@@ -1425,15 +1425,15 @@ func unmarshalLinkedServiceClassification(rawMsg *json.RawMessage) (LinkedServic
 	default:
 		b = &LinkedService{}
 	}
-	return b, json.Unmarshal(*rawMsg, b)
+	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalLinkedServiceClassificationArray(rawMsg *json.RawMessage) (*[]LinkedServiceClassification, error) {
+func unmarshalLinkedServiceClassificationArray(rawMsg json.RawMessage) (*[]LinkedServiceClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
-	var rawMessages []*json.RawMessage
-	if err := json.Unmarshal(*rawMsg, &rawMessages); err != nil {
+	var rawMessages []json.RawMessage
+	if err := json.Unmarshal(rawMsg, &rawMessages); err != nil {
 		return nil, err
 	}
 	fArray := make([]LinkedServiceClassification, len(rawMessages))
@@ -1447,12 +1447,12 @@ func unmarshalLinkedServiceClassificationArray(rawMsg *json.RawMessage) (*[]Link
 	return &fArray, nil
 }
 
-func unmarshalMultiplePipelineTriggerClassification(rawMsg *json.RawMessage) (MultiplePipelineTriggerClassification, error) {
+func unmarshalMultiplePipelineTriggerClassification(rawMsg json.RawMessage) (MultiplePipelineTriggerClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
 	var m map[string]interface{}
-	if err := json.Unmarshal(*rawMsg, &m); err != nil {
+	if err := json.Unmarshal(rawMsg, &m); err != nil {
 		return nil, err
 	}
 	var b MultiplePipelineTriggerClassification
@@ -1466,15 +1466,15 @@ func unmarshalMultiplePipelineTriggerClassification(rawMsg *json.RawMessage) (Mu
 	default:
 		b = &MultiplePipelineTrigger{}
 	}
-	return b, json.Unmarshal(*rawMsg, b)
+	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalMultiplePipelineTriggerClassificationArray(rawMsg *json.RawMessage) (*[]MultiplePipelineTriggerClassification, error) {
+func unmarshalMultiplePipelineTriggerClassificationArray(rawMsg json.RawMessage) (*[]MultiplePipelineTriggerClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
-	var rawMessages []*json.RawMessage
-	if err := json.Unmarshal(*rawMsg, &rawMessages); err != nil {
+	var rawMessages []json.RawMessage
+	if err := json.Unmarshal(rawMsg, &rawMessages); err != nil {
 		return nil, err
 	}
 	fArray := make([]MultiplePipelineTriggerClassification, len(rawMessages))
@@ -1488,12 +1488,12 @@ func unmarshalMultiplePipelineTriggerClassificationArray(rawMsg *json.RawMessage
 	return &fArray, nil
 }
 
-func unmarshalSecretBaseClassification(rawMsg *json.RawMessage) (SecretBaseClassification, error) {
+func unmarshalSecretBaseClassification(rawMsg json.RawMessage) (SecretBaseClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
 	var m map[string]interface{}
-	if err := json.Unmarshal(*rawMsg, &m); err != nil {
+	if err := json.Unmarshal(rawMsg, &m); err != nil {
 		return nil, err
 	}
 	var b SecretBaseClassification
@@ -1505,15 +1505,15 @@ func unmarshalSecretBaseClassification(rawMsg *json.RawMessage) (SecretBaseClass
 	default:
 		b = &SecretBase{}
 	}
-	return b, json.Unmarshal(*rawMsg, b)
+	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalSecretBaseClassificationArray(rawMsg *json.RawMessage) (*[]SecretBaseClassification, error) {
+func unmarshalSecretBaseClassificationArray(rawMsg json.RawMessage) (*[]SecretBaseClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
-	var rawMessages []*json.RawMessage
-	if err := json.Unmarshal(*rawMsg, &rawMessages); err != nil {
+	var rawMessages []json.RawMessage
+	if err := json.Unmarshal(rawMsg, &rawMessages); err != nil {
 		return nil, err
 	}
 	fArray := make([]SecretBaseClassification, len(rawMessages))
@@ -1527,12 +1527,12 @@ func unmarshalSecretBaseClassificationArray(rawMsg *json.RawMessage) (*[]SecretB
 	return &fArray, nil
 }
 
-func unmarshalStoreReadSettingsClassification(rawMsg *json.RawMessage) (StoreReadSettingsClassification, error) {
+func unmarshalStoreReadSettingsClassification(rawMsg json.RawMessage) (StoreReadSettingsClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
 	var m map[string]interface{}
-	if err := json.Unmarshal(*rawMsg, &m); err != nil {
+	if err := json.Unmarshal(rawMsg, &m); err != nil {
 		return nil, err
 	}
 	var b StoreReadSettingsClassification
@@ -1562,15 +1562,15 @@ func unmarshalStoreReadSettingsClassification(rawMsg *json.RawMessage) (StoreRea
 	default:
 		b = &StoreReadSettings{}
 	}
-	return b, json.Unmarshal(*rawMsg, b)
+	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalStoreReadSettingsClassificationArray(rawMsg *json.RawMessage) (*[]StoreReadSettingsClassification, error) {
+func unmarshalStoreReadSettingsClassificationArray(rawMsg json.RawMessage) (*[]StoreReadSettingsClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
-	var rawMessages []*json.RawMessage
-	if err := json.Unmarshal(*rawMsg, &rawMessages); err != nil {
+	var rawMessages []json.RawMessage
+	if err := json.Unmarshal(rawMsg, &rawMessages); err != nil {
 		return nil, err
 	}
 	fArray := make([]StoreReadSettingsClassification, len(rawMessages))
@@ -1584,12 +1584,12 @@ func unmarshalStoreReadSettingsClassificationArray(rawMsg *json.RawMessage) (*[]
 	return &fArray, nil
 }
 
-func unmarshalStoreWriteSettingsClassification(rawMsg *json.RawMessage) (StoreWriteSettingsClassification, error) {
+func unmarshalStoreWriteSettingsClassification(rawMsg json.RawMessage) (StoreWriteSettingsClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
 	var m map[string]interface{}
-	if err := json.Unmarshal(*rawMsg, &m); err != nil {
+	if err := json.Unmarshal(rawMsg, &m); err != nil {
 		return nil, err
 	}
 	var b StoreWriteSettingsClassification
@@ -1607,15 +1607,15 @@ func unmarshalStoreWriteSettingsClassification(rawMsg *json.RawMessage) (StoreWr
 	default:
 		b = &StoreWriteSettings{}
 	}
-	return b, json.Unmarshal(*rawMsg, b)
+	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalStoreWriteSettingsClassificationArray(rawMsg *json.RawMessage) (*[]StoreWriteSettingsClassification, error) {
+func unmarshalStoreWriteSettingsClassificationArray(rawMsg json.RawMessage) (*[]StoreWriteSettingsClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
-	var rawMessages []*json.RawMessage
-	if err := json.Unmarshal(*rawMsg, &rawMessages); err != nil {
+	var rawMessages []json.RawMessage
+	if err := json.Unmarshal(rawMsg, &rawMessages); err != nil {
 		return nil, err
 	}
 	fArray := make([]StoreWriteSettingsClassification, len(rawMessages))
@@ -1629,12 +1629,12 @@ func unmarshalStoreWriteSettingsClassificationArray(rawMsg *json.RawMessage) (*[
 	return &fArray, nil
 }
 
-func unmarshalTabularSourceClassification(rawMsg *json.RawMessage) (TabularSourceClassification, error) {
+func unmarshalTabularSourceClassification(rawMsg json.RawMessage) (TabularSourceClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
 	var m map[string]interface{}
-	if err := json.Unmarshal(*rawMsg, &m); err != nil {
+	if err := json.Unmarshal(rawMsg, &m); err != nil {
 		return nil, err
 	}
 	var b TabularSourceClassification
@@ -1756,15 +1756,15 @@ func unmarshalTabularSourceClassification(rawMsg *json.RawMessage) (TabularSourc
 	default:
 		b = &TabularSource{}
 	}
-	return b, json.Unmarshal(*rawMsg, b)
+	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalTabularSourceClassificationArray(rawMsg *json.RawMessage) (*[]TabularSourceClassification, error) {
+func unmarshalTabularSourceClassificationArray(rawMsg json.RawMessage) (*[]TabularSourceClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
-	var rawMessages []*json.RawMessage
-	if err := json.Unmarshal(*rawMsg, &rawMessages); err != nil {
+	var rawMessages []json.RawMessage
+	if err := json.Unmarshal(rawMsg, &rawMessages); err != nil {
 		return nil, err
 	}
 	fArray := make([]TabularSourceClassification, len(rawMessages))
@@ -1778,12 +1778,12 @@ func unmarshalTabularSourceClassificationArray(rawMsg *json.RawMessage) (*[]Tabu
 	return &fArray, nil
 }
 
-func unmarshalTriggerClassification(rawMsg *json.RawMessage) (TriggerClassification, error) {
+func unmarshalTriggerClassification(rawMsg json.RawMessage) (TriggerClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
 	var m map[string]interface{}
-	if err := json.Unmarshal(*rawMsg, &m); err != nil {
+	if err := json.Unmarshal(rawMsg, &m); err != nil {
 		return nil, err
 	}
 	var b TriggerClassification
@@ -1805,15 +1805,15 @@ func unmarshalTriggerClassification(rawMsg *json.RawMessage) (TriggerClassificat
 	default:
 		b = &Trigger{}
 	}
-	return b, json.Unmarshal(*rawMsg, b)
+	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalTriggerClassificationArray(rawMsg *json.RawMessage) (*[]TriggerClassification, error) {
+func unmarshalTriggerClassificationArray(rawMsg json.RawMessage) (*[]TriggerClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
-	var rawMessages []*json.RawMessage
-	if err := json.Unmarshal(*rawMsg, &rawMessages); err != nil {
+	var rawMessages []json.RawMessage
+	if err := json.Unmarshal(rawMsg, &rawMessages); err != nil {
 		return nil, err
 	}
 	fArray := make([]TriggerClassification, len(rawMessages))
@@ -1827,12 +1827,12 @@ func unmarshalTriggerClassificationArray(rawMsg *json.RawMessage) (*[]TriggerCla
 	return &fArray, nil
 }
 
-func unmarshalTriggerDependencyReferenceClassification(rawMsg *json.RawMessage) (TriggerDependencyReferenceClassification, error) {
+func unmarshalTriggerDependencyReferenceClassification(rawMsg json.RawMessage) (TriggerDependencyReferenceClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
 	var m map[string]interface{}
-	if err := json.Unmarshal(*rawMsg, &m); err != nil {
+	if err := json.Unmarshal(rawMsg, &m); err != nil {
 		return nil, err
 	}
 	var b TriggerDependencyReferenceClassification
@@ -1842,15 +1842,15 @@ func unmarshalTriggerDependencyReferenceClassification(rawMsg *json.RawMessage) 
 	default:
 		b = &TriggerDependencyReference{}
 	}
-	return b, json.Unmarshal(*rawMsg, b)
+	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalTriggerDependencyReferenceClassificationArray(rawMsg *json.RawMessage) (*[]TriggerDependencyReferenceClassification, error) {
+func unmarshalTriggerDependencyReferenceClassificationArray(rawMsg json.RawMessage) (*[]TriggerDependencyReferenceClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
-	var rawMessages []*json.RawMessage
-	if err := json.Unmarshal(*rawMsg, &rawMessages); err != nil {
+	var rawMessages []json.RawMessage
+	if err := json.Unmarshal(rawMsg, &rawMessages); err != nil {
 		return nil, err
 	}
 	fArray := make([]TriggerDependencyReferenceClassification, len(rawMessages))
@@ -1864,12 +1864,12 @@ func unmarshalTriggerDependencyReferenceClassificationArray(rawMsg *json.RawMess
 	return &fArray, nil
 }
 
-func unmarshalWebLinkedServiceTypePropertiesClassification(rawMsg *json.RawMessage) (WebLinkedServiceTypePropertiesClassification, error) {
+func unmarshalWebLinkedServiceTypePropertiesClassification(rawMsg json.RawMessage) (WebLinkedServiceTypePropertiesClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
 	var m map[string]interface{}
-	if err := json.Unmarshal(*rawMsg, &m); err != nil {
+	if err := json.Unmarshal(rawMsg, &m); err != nil {
 		return nil, err
 	}
 	var b WebLinkedServiceTypePropertiesClassification
@@ -1883,15 +1883,15 @@ func unmarshalWebLinkedServiceTypePropertiesClassification(rawMsg *json.RawMessa
 	default:
 		b = &WebLinkedServiceTypeProperties{}
 	}
-	return b, json.Unmarshal(*rawMsg, b)
+	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalWebLinkedServiceTypePropertiesClassificationArray(rawMsg *json.RawMessage) (*[]WebLinkedServiceTypePropertiesClassification, error) {
+func unmarshalWebLinkedServiceTypePropertiesClassificationArray(rawMsg json.RawMessage) (*[]WebLinkedServiceTypePropertiesClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
-	var rawMessages []*json.RawMessage
-	if err := json.Unmarshal(*rawMsg, &rawMessages); err != nil {
+	var rawMessages []json.RawMessage
+	if err := json.Unmarshal(rawMsg, &rawMessages); err != nil {
 		return nil, err
 	}
 	fArray := make([]WebLinkedServiceTypePropertiesClassification, len(rawMessages))
@@ -1903,8 +1903,4 @@ func unmarshalWebLinkedServiceTypePropertiesClassificationArray(rawMsg *json.Raw
 		fArray[index] = f
 	}
 	return &fArray, nil
-}
-
-func strptr(s string) *string {
-	return &s
 }

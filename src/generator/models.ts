@@ -68,11 +68,11 @@ export async function generateModels(session: Session<CodeModel>): Promise<strin
     text += '}\n\n';
   }
   if (needsJSONUnpopulate) {
-    text += 'func unpopulate(data *json.RawMessage, v interface{}) error {\n';
+    text += 'func unpopulate(data json.RawMessage, v interface{}) error {\n';
     text += '\tif data == nil {\n';
     text += '\t\treturn nil\n';
     text += '\t}\n';
-    text += '\treturn json.Unmarshal(*data, v)\n';
+    text += '\treturn json.Unmarshal(data, v)\n';
     text += '}\n\n';
   }
   return text;
@@ -507,7 +507,7 @@ function generateUnmarshallerForResponseEnvelope(structDef: StructDef) {
   if (field === '' || type === '') {
     throw new Error(`failed to the discriminated type field for response envelope ${structDef.Language.name}`);
   }
-  unmarshaller += `\tres, err := unmarshal${type}((*json.RawMessage)(&data))\n`;
+  unmarshaller += `\tres, err := unmarshal${type}(data)\n`;
   unmarshaller += '\tif err != nil {\n';
   unmarshaller += '\t\treturn err\n';
   unmarshaller += '\t}\n';
@@ -581,7 +581,7 @@ function generateInternalMarshaller(obj: ObjectSchema, structDef: StructDef, par
 function generateInternalUnmarshaller(obj: ObjectSchema, structDef: StructDef, parentType?: ObjectSchema) {
   const typeName = obj.language.go!.name;
   const receiver = structDef.receiverName();
-  let unmarshalInternall = `func (${receiver} *${typeName}) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {\n`;
+  let unmarshalInternall = `func (${receiver} *${typeName}) unmarshalInternal(rawMsg map[string]json.RawMessage) error {\n`;
   unmarshalInternall += generateJSONUnmarshallerBody(obj, structDef, parentType);
   unmarshalInternall += '}\n\n';
   structDef.Methods.push({ name: 'unmarshalInternal', desc: '', text: unmarshalInternall });
@@ -648,7 +648,7 @@ function generateJSONUnmarshaller(imports: ImportManager, obj: ObjectSchema, str
   const typeName = structDef.Language.name;
   const receiver = structDef.receiverName();
   let unmarshaller = `func (${receiver} *${typeName}) UnmarshalJSON(data []byte) error {\n`;
-  unmarshaller += '\tvar rawMsg map[string]*json.RawMessage\n';
+  unmarshaller += '\tvar rawMsg map[string]json.RawMessage\n';
   unmarshaller += '\tif err := json.Unmarshal(data, &rawMsg); err != nil {\n';
   unmarshaller += '\t\treturn err\n';
   unmarshaller += '\t}\n';
@@ -675,7 +675,7 @@ function generateJSONUnmarshallerBody(obj: ObjectSchema, structDef: StructDef, p
     addlPropsText += `${tab}\t\t}\n`;
     addlPropsText += `${tab}\t\tif val != nil {\n`;
     addlPropsText += `${tab}\t\t\tvar aux ${addlProps.elementType.language.go!.name}\n`;
-    addlPropsText += `${tab}\t\t\terr = json.Unmarshal(*val, &aux)\n`;
+    addlPropsText += `${tab}\t\t\terr = json.Unmarshal(val, &aux)\n`;
     addlPropsText += `${tab}\t\t\t(*${receiver}.AdditionalProperties)[key] = ${ref}aux\n`;
     addlPropsText += `${tab}\t\t}\n`;
     addlPropsText += `${tab}\t\tdelete(rawMsg, key)\n`;

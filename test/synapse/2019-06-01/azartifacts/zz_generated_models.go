@@ -59,7 +59,7 @@ func (a *Activity) GetActivity() *Activity { return a }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type Activity.
 func (a *Activity) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -82,7 +82,7 @@ func (a Activity) marshalInternal(discValue string) map[string]interface{} {
 	return objectMap
 }
 
-func (a *Activity) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+func (a *Activity) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -107,7 +107,7 @@ func (a *Activity) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
 			}
 			if val != nil {
 				var aux interface{}
-				err = json.Unmarshal(*val, &aux)
+				err = json.Unmarshal(val, &aux)
 				(*a.AdditionalProperties)[key] = aux
 			}
 			delete(rawMsg, key)
@@ -146,7 +146,7 @@ func (a ActivityDependency) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ActivityDependency.
 func (a *ActivityDependency) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -165,7 +165,7 @@ func (a *ActivityDependency) UnmarshalJSON(data []byte) error {
 			}
 			if val != nil {
 				var aux interface{}
-				err = json.Unmarshal(*val, &aux)
+				err = json.Unmarshal(val, &aux)
 				(*a.AdditionalProperties)[key] = aux
 			}
 			delete(rawMsg, key)
@@ -216,7 +216,7 @@ func (a ActivityPolicy) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ActivityPolicy.
 func (a *ActivityPolicy) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -244,7 +244,7 @@ func (a *ActivityPolicy) UnmarshalJSON(data []byte) error {
 			}
 			if val != nil {
 				var aux interface{}
-				err = json.Unmarshal(*val, &aux)
+				err = json.Unmarshal(val, &aux)
 				(*a.AdditionalProperties)[key] = aux
 			}
 			delete(rawMsg, key)
@@ -327,7 +327,7 @@ func (a ActivityRun) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ActivityRun.
 func (a *ActivityRun) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -383,7 +383,7 @@ func (a *ActivityRun) UnmarshalJSON(data []byte) error {
 			}
 			if val != nil {
 				var aux interface{}
-				err = json.Unmarshal(*val, &aux)
+				err = json.Unmarshal(val, &aux)
 				(*a.AdditionalProperties)[key] = aux
 			}
 			delete(rawMsg, key)
@@ -444,7 +444,7 @@ func (a AmazonMWSLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AmazonMWSLinkedService.
 func (a *AmazonMWSLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -499,7 +499,7 @@ type AmazonMWSLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AmazonMWSLinkedServiceTypeProperties.
 func (a *AmazonMWSLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -560,7 +560,7 @@ func (a AmazonMWSObjectDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AmazonMWSObjectDataset.
 func (a *AmazonMWSObjectDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -594,7 +594,7 @@ func (a AmazonMWSSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AmazonMWSSource.
 func (a *AmazonMWSSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -628,7 +628,7 @@ func (a AmazonRedshiftLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AmazonRedshiftLinkedService.
 func (a *AmazonRedshiftLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -671,7 +671,7 @@ type AmazonRedshiftLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AmazonRedshiftLinkedServiceTypeProperties.
 func (a *AmazonRedshiftLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -726,7 +726,7 @@ func (a AmazonRedshiftSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AmazonRedshiftSource.
 func (a *AmazonRedshiftSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -763,7 +763,7 @@ func (a AmazonRedshiftTableDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AmazonRedshiftTableDataset.
 func (a *AmazonRedshiftTableDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -809,7 +809,7 @@ func (a AmazonS3LinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AmazonS3LinkedService.
 func (a *AmazonS3LinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -847,7 +847,7 @@ type AmazonS3LinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AmazonS3LinkedServiceTypeProperties.
 func (a *AmazonS3LinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -894,7 +894,7 @@ func (a AmazonS3Location) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AmazonS3Location.
 func (a *AmazonS3Location) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -955,7 +955,7 @@ func (a AmazonS3ReadSettings) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AmazonS3ReadSettings.
 func (a *AmazonS3ReadSettings) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -1007,7 +1007,7 @@ func (a AppendVariableActivity) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AppendVariableActivity.
 func (a *AppendVariableActivity) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -1077,7 +1077,7 @@ func (a AvroDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AvroDataset.
 func (a *AvroDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -1106,7 +1106,7 @@ type AvroDatasetTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AvroDatasetTypeProperties.
 func (a *AvroDatasetTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -1161,7 +1161,7 @@ func (a AvroSink) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AvroSink.
 func (a *AvroSink) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -1198,7 +1198,7 @@ func (a AvroSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AvroSource.
 func (a *AvroSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -1236,7 +1236,7 @@ func (a AvroWriteSettings) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AvroWriteSettings.
 func (a *AvroWriteSettings) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -1273,7 +1273,7 @@ func (a AzureBatchLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureBatchLinkedService.
 func (a *AzureBatchLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -1315,7 +1315,7 @@ type AzureBatchLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureBatchLinkedServiceTypeProperties.
 func (a *AzureBatchLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -1364,7 +1364,7 @@ func (a AzureBlobFSLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureBlobFSLinkedService.
 func (a *AzureBlobFSLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -1406,7 +1406,7 @@ type AzureBlobFSLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureBlobFSLinkedServiceTypeProperties.
 func (a *AzureBlobFSLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -1455,7 +1455,7 @@ func (a AzureBlobFSLocation) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureBlobFSLocation.
 func (a *AzureBlobFSLocation) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -1509,7 +1509,7 @@ func (a AzureBlobFSReadSettings) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureBlobFSReadSettings.
 func (a *AzureBlobFSReadSettings) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -1558,7 +1558,7 @@ func (a AzureBlobFSSink) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureBlobFSSink.
 func (a *AzureBlobFSSink) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -1600,7 +1600,7 @@ func (a AzureBlobFSSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureBlobFSSource.
 func (a *AzureBlobFSSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -1640,7 +1640,7 @@ func (a AzureBlobFSWriteSettings) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureBlobFSWriteSettings.
 func (a *AzureBlobFSWriteSettings) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -1674,7 +1674,7 @@ func (a AzureBlobStorageLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureBlobStorageLinkedService.
 func (a *AzureBlobStorageLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -1725,7 +1725,7 @@ type AzureBlobStorageLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureBlobStorageLinkedServiceTypeProperties.
 func (a *AzureBlobStorageLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -1783,7 +1783,7 @@ func (a AzureBlobStorageLocation) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureBlobStorageLocation.
 func (a *AzureBlobStorageLocation) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -1841,7 +1841,7 @@ func (a AzureBlobStorageReadSettings) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureBlobStorageReadSettings.
 func (a *AzureBlobStorageReadSettings) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -1893,7 +1893,7 @@ func (a AzureBlobStorageWriteSettings) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureBlobStorageWriteSettings.
 func (a *AzureBlobStorageWriteSettings) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -1927,7 +1927,7 @@ func (a AzureDataExplorerCommandActivity) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureDataExplorerCommandActivity.
 func (a *AzureDataExplorerCommandActivity) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -1976,7 +1976,7 @@ func (a AzureDataExplorerLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureDataExplorerLinkedService.
 func (a *AzureDataExplorerLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -2015,7 +2015,7 @@ type AzureDataExplorerLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureDataExplorerLinkedServiceTypeProperties.
 func (a *AzureDataExplorerLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -2069,7 +2069,7 @@ func (a AzureDataExplorerSink) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureDataExplorerSink.
 func (a *AzureDataExplorerSink) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -2117,7 +2117,7 @@ func (a AzureDataExplorerSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureDataExplorerSource.
 func (a *AzureDataExplorerSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -2157,7 +2157,7 @@ func (a AzureDataExplorerTableDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureDataExplorerTableDataset.
 func (a *AzureDataExplorerTableDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -2191,7 +2191,7 @@ func (a AzureDataLakeAnalyticsLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureDataLakeAnalyticsLinkedService.
 func (a *AzureDataLakeAnalyticsLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -2239,7 +2239,7 @@ type AzureDataLakeAnalyticsLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureDataLakeAnalyticsLinkedServiceTypeProperties.
 func (a *AzureDataLakeAnalyticsLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -2294,7 +2294,7 @@ func (a AzureDataLakeStoreLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureDataLakeStoreLinkedService.
 func (a *AzureDataLakeStoreLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -2342,7 +2342,7 @@ type AzureDataLakeStoreLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureDataLakeStoreLinkedServiceTypeProperties.
 func (a *AzureDataLakeStoreLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -2428,7 +2428,7 @@ func (a AzureDataLakeStoreReadSettings) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureDataLakeStoreReadSettings.
 func (a *AzureDataLakeStoreReadSettings) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -2481,7 +2481,7 @@ func (a AzureDataLakeStoreSink) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureDataLakeStoreSink.
 func (a *AzureDataLakeStoreSink) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -2518,7 +2518,7 @@ func (a AzureDataLakeStoreSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureDataLakeStoreSource.
 func (a *AzureDataLakeStoreSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -2563,7 +2563,7 @@ func (a AzureDatabricksLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureDatabricksLinkedService.
 func (a *AzureDatabricksLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -2640,7 +2640,7 @@ type AzureDatabricksLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureDatabricksLinkedServiceTypeProperties.
 func (a *AzureDatabricksLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -2712,7 +2712,7 @@ func (a AzureEntityResource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureEntityResource.
 func (a *AzureEntityResource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -2725,7 +2725,7 @@ func (a AzureEntityResource) marshalInternal() map[string]interface{} {
 	return objectMap
 }
 
-func (a *AzureEntityResource) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+func (a *AzureEntityResource) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -2756,7 +2756,7 @@ func (a AzureFileStorageLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureFileStorageLinkedService.
 func (a *AzureFileStorageLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -2792,7 +2792,7 @@ type AzureFileStorageLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureFileStorageLinkedServiceTypeProperties.
 func (a *AzureFileStorageLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -2866,7 +2866,7 @@ func (a AzureFileStorageReadSettings) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureFileStorageReadSettings.
 func (a *AzureFileStorageReadSettings) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -2915,7 +2915,7 @@ func (a AzureFunctionActivity) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureFunctionActivity.
 func (a *AzureFunctionActivity) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -2967,7 +2967,7 @@ func (a AzureFunctionLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureFunctionLinkedService.
 func (a *AzureFunctionLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -3000,7 +3000,7 @@ type AzureFunctionLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureFunctionLinkedServiceTypeProperties.
 func (a *AzureFunctionLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -3040,7 +3040,7 @@ func (a AzureKeyVaultLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureKeyVaultLinkedService.
 func (a *AzureKeyVaultLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -3088,7 +3088,7 @@ func (a AzureKeyVaultSecretReference) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureKeyVaultSecretReference.
 func (a *AzureKeyVaultSecretReference) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -3128,7 +3128,7 @@ func (a AzureMLBatchExecutionActivity) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureMLBatchExecutionActivity.
 func (a *AzureMLBatchExecutionActivity) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -3180,7 +3180,7 @@ func (a AzureMLExecutePipelineActivity) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureMLExecutePipelineActivity.
 func (a *AzureMLExecutePipelineActivity) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -3240,7 +3240,7 @@ func (a AzureMLLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureMLLinkedService.
 func (a *AzureMLLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -3286,7 +3286,7 @@ type AzureMLLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureMLLinkedServiceTypeProperties.
 func (a *AzureMLLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -3338,7 +3338,7 @@ func (a AzureMLServiceLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureMLServiceLinkedService.
 func (a *AzureMLServiceLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -3384,7 +3384,7 @@ type AzureMLServiceLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureMLServiceLinkedServiceTypeProperties.
 func (a *AzureMLServiceLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -3436,7 +3436,7 @@ func (a AzureMLUpdateResourceActivity) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureMLUpdateResourceActivity.
 func (a *AzureMLUpdateResourceActivity) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -3493,7 +3493,7 @@ func (a AzureMariaDBLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureMariaDBLinkedService.
 func (a *AzureMariaDBLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -3540,7 +3540,7 @@ func (a AzureMariaDBSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureMariaDBSource.
 func (a *AzureMariaDBSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -3574,7 +3574,7 @@ func (a AzureMariaDBTableDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureMariaDBTableDataset.
 func (a *AzureMariaDBTableDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -3608,7 +3608,7 @@ func (a AzureMySQLLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureMySQLLinkedService.
 func (a *AzureMySQLLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -3655,7 +3655,7 @@ func (a AzureMySQLSink) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureMySQLSink.
 func (a *AzureMySQLSink) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -3689,7 +3689,7 @@ func (a AzureMySQLSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureMySQLSource.
 func (a *AzureMySQLSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -3723,7 +3723,7 @@ func (a AzureMySQLTableDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureMySQLTableDataset.
 func (a *AzureMySQLTableDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -3766,7 +3766,7 @@ func (a AzurePostgreSQLLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzurePostgreSQLLinkedService.
 func (a *AzurePostgreSQLLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -3813,7 +3813,7 @@ func (a AzurePostgreSQLSink) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzurePostgreSQLSink.
 func (a *AzurePostgreSQLSink) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -3847,7 +3847,7 @@ func (a AzurePostgreSQLSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzurePostgreSQLSource.
 func (a *AzurePostgreSQLSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -3881,7 +3881,7 @@ func (a AzurePostgreSQLTableDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzurePostgreSQLTableDataset.
 func (a *AzurePostgreSQLTableDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -3938,7 +3938,7 @@ func (a AzureSQLDWLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureSQLDWLinkedService.
 func (a *AzureSQLDWLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -3980,7 +3980,7 @@ type AzureSQLDWLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureSQLDWLinkedServiceTypeProperties.
 func (a *AzureSQLDWLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -4029,7 +4029,7 @@ func (a AzureSQLDWTableDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureSQLDWTableDataset.
 func (a *AzureSQLDWTableDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -4075,7 +4075,7 @@ func (a AzureSQLDatabaseLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureSQLDatabaseLinkedService.
 func (a *AzureSQLDatabaseLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -4117,7 +4117,7 @@ type AzureSQLDatabaseLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureSQLDatabaseLinkedServiceTypeProperties.
 func (a *AzureSQLDatabaseLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -4166,7 +4166,7 @@ func (a AzureSQLMILinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureSQLMILinkedService.
 func (a *AzureSQLMILinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -4208,7 +4208,7 @@ type AzureSQLMILinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureSQLMILinkedServiceTypeProperties.
 func (a *AzureSQLMILinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -4257,7 +4257,7 @@ func (a AzureSQLMITableDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureSQLMITableDataset.
 func (a *AzureSQLMITableDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -4323,7 +4323,7 @@ func (a AzureSQLSink) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureSQLSink.
 func (a *AzureSQLSink) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -4385,7 +4385,7 @@ func (a AzureSQLSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureSQLSource.
 func (a *AzureSQLSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -4428,7 +4428,7 @@ func (a AzureSQLTableDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureSQLTableDataset.
 func (a *AzureSQLTableDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -4474,7 +4474,7 @@ func (a AzureSearchIndexDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureSearchIndexDataset.
 func (a *AzureSearchIndexDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -4514,7 +4514,7 @@ func (a AzureSearchIndexSink) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureSearchIndexSink.
 func (a *AzureSearchIndexSink) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -4548,7 +4548,7 @@ func (a AzureSearchLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureSearchLinkedService.
 func (a *AzureSearchLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -4581,7 +4581,7 @@ type AzureSearchLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureSearchLinkedServiceTypeProperties.
 func (a *AzureSearchLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -4621,7 +4621,7 @@ func (a AzureStorageLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureStorageLinkedService.
 func (a *AzureStorageLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -4674,7 +4674,7 @@ func (a AzureTableDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureTableDataset.
 func (a *AzureTableDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -4726,7 +4726,7 @@ func (a AzureTableSink) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureTableSink.
 func (a *AzureTableSink) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -4773,7 +4773,7 @@ func (a AzureTableSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureTableSource.
 func (a *AzureTableSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -4810,7 +4810,7 @@ func (a AzureTableStorageLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureTableStorageLinkedService.
 func (a *AzureTableStorageLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -4954,7 +4954,7 @@ func (b BigDataPoolResourceProperties) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type BigDataPoolResourceProperties.
 func (b *BigDataPoolResourceProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -5053,7 +5053,7 @@ func (b BinaryDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type BinaryDataset.
 func (b *BinaryDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -5082,7 +5082,7 @@ type BinaryDatasetTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type BinaryDatasetTypeProperties.
 func (b *BinaryDatasetTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -5119,7 +5119,7 @@ func (b BinarySink) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type BinarySink.
 func (b *BinarySink) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -5153,7 +5153,7 @@ func (b BinarySource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type BinarySource.
 func (b *BinarySource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -5187,7 +5187,7 @@ func (b BlobEventsTrigger) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type BlobEventsTrigger.
 func (b *BlobEventsTrigger) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -5255,7 +5255,7 @@ func (b BlobSink) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type BlobSink.
 func (b *BlobSink) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -5306,7 +5306,7 @@ func (b BlobSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type BlobSource.
 func (b *BlobSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -5346,7 +5346,7 @@ func (b BlobTrigger) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type BlobTrigger.
 func (b *BlobTrigger) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -5392,7 +5392,7 @@ func (c CassandraLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type CassandraLinkedService.
 func (c *CassandraLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -5434,7 +5434,7 @@ type CassandraLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type CassandraLinkedServiceTypeProperties.
 func (c *CassandraLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -5489,7 +5489,7 @@ func (c CassandraSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type CassandraSource.
 func (c *CassandraSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -5526,7 +5526,7 @@ func (c CassandraTableDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type CassandraTableDataset.
 func (c *CassandraTableDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -5576,7 +5576,7 @@ func (c ChainingTrigger) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ChainingTrigger.
 func (c *ChainingTrigger) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -5712,7 +5712,7 @@ func (c CommonDataServiceForAppsEntityDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type CommonDataServiceForAppsEntityDataset.
 func (c *CommonDataServiceForAppsEntityDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -5752,7 +5752,7 @@ func (c CommonDataServiceForAppsLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type CommonDataServiceForAppsLinkedService.
 func (c *CommonDataServiceForAppsLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -5826,7 +5826,7 @@ type CommonDataServiceForAppsLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type CommonDataServiceForAppsLinkedServiceTypeProperties.
 func (c *CommonDataServiceForAppsLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -5902,7 +5902,7 @@ func (c CommonDataServiceForAppsSink) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type CommonDataServiceForAppsSink.
 func (c *CommonDataServiceForAppsSink) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -5943,7 +5943,7 @@ func (c CommonDataServiceForAppsSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type CommonDataServiceForAppsSource.
 func (c *CommonDataServiceForAppsSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -5977,7 +5977,7 @@ func (c ConcurLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ConcurLinkedService.
 func (c *ConcurLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -6023,7 +6023,7 @@ type ConcurLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ConcurLinkedServiceTypeProperties.
 func (c *ConcurLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -6075,7 +6075,7 @@ func (c ConcurObjectDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ConcurObjectDataset.
 func (c *ConcurObjectDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -6109,7 +6109,7 @@ func (c ConcurSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ConcurSource.
 func (c *ConcurSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -6157,7 +6157,7 @@ func (c ControlActivity) marshalInternal(discValue string) map[string]interface{
 	return objectMap
 }
 
-func (c *ControlActivity) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+func (c *ControlActivity) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 	return c.Activity.unmarshalInternal(rawMsg)
 }
 
@@ -6185,7 +6185,7 @@ func (c CopyActivity) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type CopyActivity.
 func (c *CopyActivity) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -6249,7 +6249,7 @@ type CopyActivityTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type CopyActivityTypeProperties.
 func (c *CopyActivityTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -6339,7 +6339,7 @@ func (c *CopySink) GetCopySink() *CopySink { return c }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type CopySink.
 func (c *CopySink) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -6363,7 +6363,7 @@ func (c CopySink) marshalInternal(discValue string) map[string]interface{} {
 	return objectMap
 }
 
-func (c *CopySink) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+func (c *CopySink) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -6391,7 +6391,7 @@ func (c *CopySink) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
 			}
 			if val != nil {
 				var aux interface{}
-				err = json.Unmarshal(*val, &aux)
+				err = json.Unmarshal(val, &aux)
 				(*c.AdditionalProperties)[key] = aux
 			}
 			delete(rawMsg, key)
@@ -6446,7 +6446,7 @@ func (c *CopySource) GetCopySource() *CopySource { return c }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type CopySource.
 func (c *CopySource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -6468,7 +6468,7 @@ func (c CopySource) marshalInternal(discValue string) map[string]interface{} {
 	return objectMap
 }
 
-func (c *CopySource) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+func (c *CopySource) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -6490,7 +6490,7 @@ func (c *CopySource) unmarshalInternal(rawMsg map[string]*json.RawMessage) error
 			}
 			if val != nil {
 				var aux interface{}
-				err = json.Unmarshal(*val, &aux)
+				err = json.Unmarshal(val, &aux)
 				(*c.AdditionalProperties)[key] = aux
 			}
 			delete(rawMsg, key)
@@ -6525,7 +6525,7 @@ func (c *CopyTranslator) GetCopyTranslator() *CopyTranslator { return c }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type CopyTranslator.
 func (c *CopyTranslator) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -6544,7 +6544,7 @@ func (c CopyTranslator) marshalInternal(discValue string) map[string]interface{}
 	return objectMap
 }
 
-func (c *CopyTranslator) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+func (c *CopyTranslator) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -6557,7 +6557,7 @@ func (c *CopyTranslator) unmarshalInternal(rawMsg map[string]*json.RawMessage) e
 			}
 			if val != nil {
 				var aux interface{}
-				err = json.Unmarshal(*val, &aux)
+				err = json.Unmarshal(val, &aux)
 				(*c.AdditionalProperties)[key] = aux
 			}
 			delete(rawMsg, key)
@@ -6585,7 +6585,7 @@ func (c CosmosDbLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type CosmosDbLinkedService.
 func (c *CosmosDbLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -6624,7 +6624,7 @@ type CosmosDbLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type CosmosDbLinkedServiceTypeProperties.
 func (c *CosmosDbLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -6670,7 +6670,7 @@ func (c CosmosDbMongoDbAPICollectionDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type CosmosDbMongoDbAPICollectionDataset.
 func (c *CosmosDbMongoDbAPICollectionDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -6710,7 +6710,7 @@ func (c CosmosDbMongoDbAPILinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type CosmosDbMongoDbAPILinkedService.
 func (c *CosmosDbMongoDbAPILinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -6755,7 +6755,7 @@ func (c CosmosDbMongoDbAPISink) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type CosmosDbMongoDbAPISink.
 func (c *CosmosDbMongoDbAPISink) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -6804,7 +6804,7 @@ func (c CosmosDbMongoDbAPISource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type CosmosDbMongoDbAPISource.
 func (c *CosmosDbMongoDbAPISource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -6847,7 +6847,7 @@ func (c CosmosDbSQLAPICollectionDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type CosmosDbSQLAPICollectionDataset.
 func (c *CosmosDbSQLAPICollectionDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -6887,7 +6887,7 @@ func (c CosmosDbSQLAPISink) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type CosmosDbSQLAPISink.
 func (c *CosmosDbSQLAPISink) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -6929,7 +6929,7 @@ func (c CosmosDbSQLAPISource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type CosmosDbSQLAPISource.
 func (c *CosmosDbSQLAPISource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -6969,7 +6969,7 @@ func (c CouchbaseLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type CouchbaseLinkedService.
 func (c *CouchbaseLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -7016,7 +7016,7 @@ func (c CouchbaseSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type CouchbaseSource.
 func (c *CouchbaseSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -7050,7 +7050,7 @@ func (c CouchbaseTableDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type CouchbaseTableDataset.
 func (c *CouchbaseTableDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -7148,7 +7148,7 @@ func (c CustomActivity) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type CustomActivity.
 func (c *CustomActivity) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -7213,7 +7213,7 @@ func (c CustomDataSourceLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type CustomDataSourceLinkedService.
 func (c *CustomDataSourceLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -7247,7 +7247,7 @@ func (c CustomDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type CustomDataset.
 func (c *CustomDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -7285,7 +7285,7 @@ func (c *CustomSetupBase) GetCustomSetupBase() *CustomSetupBase { return c }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type CustomSetupBase.
 func (c *CustomSetupBase) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -7299,7 +7299,7 @@ func (c CustomSetupBase) marshalInternal(discValue string) map[string]interface{
 	return objectMap
 }
 
-func (c *CustomSetupBase) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+func (c *CustomSetupBase) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -7374,7 +7374,7 @@ func (d *DataFlow) GetDataFlow() *DataFlow { return d }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DataFlow.
 func (d *DataFlow) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -7391,7 +7391,7 @@ func (d DataFlow) marshalInternal(discValue string) map[string]interface{} {
 	return objectMap
 }
 
-func (d *DataFlow) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+func (d *DataFlow) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -7519,7 +7519,7 @@ func (d DataFlowDebugPackage) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DataFlowDebugPackage.
 func (d *DataFlowDebugPackage) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -7550,7 +7550,7 @@ func (d *DataFlowDebugPackage) UnmarshalJSON(data []byte) error {
 			}
 			if val != nil {
 				var aux interface{}
-				err = json.Unmarshal(*val, &aux)
+				err = json.Unmarshal(val, &aux)
 				(*d.AdditionalProperties)[key] = aux
 			}
 			delete(rawMsg, key)
@@ -7687,7 +7687,7 @@ func (d DataFlowDebugSessionInfo) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DataFlowDebugSessionInfo.
 func (d *DataFlowDebugSessionInfo) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -7727,7 +7727,7 @@ func (d *DataFlowDebugSessionInfo) UnmarshalJSON(data []byte) error {
 			}
 			if val != nil {
 				var aux interface{}
-				err = json.Unmarshal(*val, &aux)
+				err = json.Unmarshal(val, &aux)
 				(*d.AdditionalProperties)[key] = aux
 			}
 			delete(rawMsg, key)
@@ -7827,7 +7827,7 @@ func (d DataFlowReference) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DataFlowReference.
 func (d *DataFlowReference) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -7849,7 +7849,7 @@ func (d *DataFlowReference) UnmarshalJSON(data []byte) error {
 			}
 			if val != nil {
 				var aux interface{}
-				err = json.Unmarshal(*val, &aux)
+				err = json.Unmarshal(val, &aux)
 				(*d.AdditionalProperties)[key] = aux
 			}
 			delete(rawMsg, key)
@@ -7930,7 +7930,7 @@ func (d DataFlowSourceSetting) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DataFlowSourceSetting.
 func (d *DataFlowSourceSetting) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -7949,7 +7949,7 @@ func (d *DataFlowSourceSetting) UnmarshalJSON(data []byte) error {
 			}
 			if val != nil {
 				var aux interface{}
-				err = json.Unmarshal(*val, &aux)
+				err = json.Unmarshal(val, &aux)
 				(*d.AdditionalProperties)[key] = aux
 			}
 			delete(rawMsg, key)
@@ -7986,7 +7986,7 @@ func (d DataLakeAnalyticsUSQLActivity) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DataLakeAnalyticsUSQLActivity.
 func (d *DataLakeAnalyticsUSQLActivity) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -8055,7 +8055,7 @@ func (d DatabricksNotebookActivity) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DatabricksNotebookActivity.
 func (d *DatabricksNotebookActivity) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -8103,7 +8103,7 @@ func (d DatabricksSparkJarActivity) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DatabricksSparkJarActivity.
 func (d *DatabricksSparkJarActivity) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -8150,7 +8150,7 @@ func (d DatabricksSparkPythonActivity) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DatabricksSparkPythonActivity.
 func (d *DatabricksSparkPythonActivity) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -8239,7 +8239,7 @@ func (d *Dataset) GetDataset() *Dataset { return d }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type Dataset.
 func (d *Dataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -8265,7 +8265,7 @@ func (d Dataset) marshalInternal(discValue string) map[string]interface{} {
 	return objectMap
 }
 
-func (d *Dataset) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+func (d *Dataset) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -8299,7 +8299,7 @@ func (d *Dataset) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
 			}
 			if val != nil {
 				var aux interface{}
-				err = json.Unmarshal(*val, &aux)
+				err = json.Unmarshal(val, &aux)
 				(*d.AdditionalProperties)[key] = aux
 			}
 			delete(rawMsg, key)
@@ -8361,7 +8361,7 @@ func (d *DatasetCompression) GetDatasetCompression() *DatasetCompression { retur
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DatasetCompression.
 func (d *DatasetCompression) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -8380,7 +8380,7 @@ func (d DatasetCompression) marshalInternal(discValue string) map[string]interfa
 	return objectMap
 }
 
-func (d *DatasetCompression) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+func (d *DatasetCompression) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -8393,7 +8393,7 @@ func (d *DatasetCompression) unmarshalInternal(rawMsg map[string]*json.RawMessag
 			}
 			if val != nil {
 				var aux interface{}
-				err = json.Unmarshal(*val, &aux)
+				err = json.Unmarshal(val, &aux)
 				(*d.AdditionalProperties)[key] = aux
 			}
 			delete(rawMsg, key)
@@ -8437,7 +8437,7 @@ func (d DatasetDeflateCompression) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DatasetDeflateCompression.
 func (d *DatasetDeflateCompression) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -8477,7 +8477,7 @@ func (d DatasetGZipCompression) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DatasetGZipCompression.
 func (d *DatasetGZipCompression) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -8555,7 +8555,7 @@ func (d *DatasetLocation) GetDatasetLocation() *DatasetLocation { return d }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DatasetLocation.
 func (d *DatasetLocation) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -8576,7 +8576,7 @@ func (d DatasetLocation) marshalInternal(discValue string) map[string]interface{
 	return objectMap
 }
 
-func (d *DatasetLocation) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+func (d *DatasetLocation) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -8595,7 +8595,7 @@ func (d *DatasetLocation) unmarshalInternal(rawMsg map[string]*json.RawMessage) 
 			}
 			if val != nil {
 				var aux interface{}
-				err = json.Unmarshal(*val, &aux)
+				err = json.Unmarshal(val, &aux)
 				(*d.AdditionalProperties)[key] = aux
 			}
 			delete(rawMsg, key)
@@ -8674,7 +8674,7 @@ func (d DatasetSchemaDataElement) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DatasetSchemaDataElement.
 func (d *DatasetSchemaDataElement) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -8693,7 +8693,7 @@ func (d *DatasetSchemaDataElement) UnmarshalJSON(data []byte) error {
 			}
 			if val != nil {
 				var aux interface{}
-				err = json.Unmarshal(*val, &aux)
+				err = json.Unmarshal(val, &aux)
 				(*d.AdditionalProperties)[key] = aux
 			}
 			delete(rawMsg, key)
@@ -8734,7 +8734,7 @@ func (d *DatasetStorageFormat) GetDatasetStorageFormat() *DatasetStorageFormat {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DatasetStorageFormat.
 func (d *DatasetStorageFormat) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -8755,7 +8755,7 @@ func (d DatasetStorageFormat) marshalInternal(discValue string) map[string]inter
 	return objectMap
 }
 
-func (d *DatasetStorageFormat) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+func (d *DatasetStorageFormat) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -8774,7 +8774,7 @@ func (d *DatasetStorageFormat) unmarshalInternal(rawMsg map[string]*json.RawMess
 			}
 			if val != nil {
 				var aux interface{}
-				err = json.Unmarshal(*val, &aux)
+				err = json.Unmarshal(val, &aux)
 				(*d.AdditionalProperties)[key] = aux
 			}
 			delete(rawMsg, key)
@@ -8802,7 +8802,7 @@ func (d DatasetZipDeflateCompression) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DatasetZipDeflateCompression.
 func (d *DatasetZipDeflateCompression) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -8836,7 +8836,7 @@ func (d Db2LinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type Db2LinkedService.
 func (d *Db2LinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -8884,7 +8884,7 @@ type Db2LinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type Db2LinkedServiceTypeProperties.
 func (d *Db2LinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -8939,7 +8939,7 @@ func (d Db2Source) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type Db2Source.
 func (d *Db2Source) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -8973,7 +8973,7 @@ func (d Db2TableDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type Db2TableDataset.
 func (d *Db2TableDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -9019,7 +9019,7 @@ func (d DeleteActivity) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DeleteActivity.
 func (d *DeleteActivity) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -9080,7 +9080,7 @@ func (d DelimitedTextDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DelimitedTextDataset.
 func (d *DelimitedTextDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -9135,7 +9135,7 @@ type DelimitedTextDatasetTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DelimitedTextDatasetTypeProperties.
 func (d *DelimitedTextDatasetTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -9196,7 +9196,7 @@ func (d DelimitedTextReadSettings) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DelimitedTextReadSettings.
 func (d *DelimitedTextReadSettings) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -9234,7 +9234,7 @@ func (d DelimitedTextSink) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DelimitedTextSink.
 func (d *DelimitedTextSink) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -9275,7 +9275,7 @@ func (d DelimitedTextSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DelimitedTextSource.
 func (d *DelimitedTextSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -9316,7 +9316,7 @@ func (d DelimitedTextWriteSettings) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DelimitedTextWriteSettings.
 func (d *DelimitedTextWriteSettings) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -9357,7 +9357,7 @@ func (d *DependencyReference) GetDependencyReference() *DependencyReference { re
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DependencyReference.
 func (d *DependencyReference) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -9371,7 +9371,7 @@ func (d DependencyReference) marshalInternal(discValue string) map[string]interf
 	return objectMap
 }
 
-func (d *DependencyReference) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+func (d *DependencyReference) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -9416,7 +9416,7 @@ func (d DocumentDbCollectionDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DocumentDbCollectionDataset.
 func (d *DocumentDbCollectionDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -9460,7 +9460,7 @@ func (d DocumentDbCollectionSink) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DocumentDbCollectionSink.
 func (d *DocumentDbCollectionSink) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -9505,7 +9505,7 @@ func (d DocumentDbCollectionSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DocumentDbCollectionSource.
 func (d *DocumentDbCollectionSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -9557,7 +9557,7 @@ func (d DrillLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DrillLinkedService.
 func (d *DrillLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -9604,7 +9604,7 @@ func (d DrillSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DrillSource.
 func (d *DrillSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -9638,7 +9638,7 @@ func (d DrillTableDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DrillTableDataset.
 func (d *DrillTableDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -9678,7 +9678,7 @@ func (d DynamicsAXLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DynamicsAXLinkedService.
 func (d *DynamicsAXLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -9724,7 +9724,7 @@ type DynamicsAXLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DynamicsAXLinkedServiceTypeProperties.
 func (d *DynamicsAXLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -9773,7 +9773,7 @@ func (d DynamicsAXResourceDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DynamicsAXResourceDataset.
 func (d *DynamicsAXResourceDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -9813,7 +9813,7 @@ func (d DynamicsAXSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DynamicsAXSource.
 func (d *DynamicsAXSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -9847,7 +9847,7 @@ func (d DynamicsCrmEntityDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DynamicsCrmEntityDataset.
 func (d *DynamicsCrmEntityDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -9887,7 +9887,7 @@ func (d DynamicsCrmLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DynamicsCrmLinkedService.
 func (d *DynamicsCrmLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -9959,7 +9959,7 @@ type DynamicsCrmLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DynamicsCrmLinkedServiceTypeProperties.
 func (d *DynamicsCrmLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -10035,7 +10035,7 @@ func (d DynamicsCrmSink) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DynamicsCrmSink.
 func (d *DynamicsCrmSink) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -10075,7 +10075,7 @@ func (d DynamicsCrmSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DynamicsCrmSource.
 func (d *DynamicsCrmSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -10109,7 +10109,7 @@ func (d DynamicsEntityDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DynamicsEntityDataset.
 func (d *DynamicsEntityDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -10149,7 +10149,7 @@ func (d DynamicsLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DynamicsLinkedService.
 func (d *DynamicsLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -10221,7 +10221,7 @@ type DynamicsLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DynamicsLinkedServiceTypeProperties.
 func (d *DynamicsLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -10297,7 +10297,7 @@ func (d DynamicsSink) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DynamicsSink.
 func (d *DynamicsSink) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -10337,7 +10337,7 @@ func (d DynamicsSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DynamicsSource.
 func (d *DynamicsSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -10371,7 +10371,7 @@ func (e EloquaLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type EloquaLinkedService.
 func (e *EloquaLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -10417,7 +10417,7 @@ type EloquaLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type EloquaLinkedServiceTypeProperties.
 func (e *EloquaLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -10469,7 +10469,7 @@ func (e EloquaObjectDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type EloquaObjectDataset.
 func (e *EloquaObjectDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -10503,7 +10503,7 @@ func (e EloquaSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type EloquaSource.
 func (e *EloquaSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -10634,7 +10634,7 @@ func (e ExecuteDataFlowActivity) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ExecuteDataFlowActivity.
 func (e *ExecuteDataFlowActivity) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -10692,7 +10692,7 @@ func (e ExecutePipelineActivity) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ExecutePipelineActivity.
 func (e *ExecutePipelineActivity) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -10738,7 +10738,7 @@ func (e ExecuteSSISPackageActivity) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ExecuteSSISPackageActivity.
 func (e *ExecuteSSISPackageActivity) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -10831,7 +10831,7 @@ func (e ExecutionActivity) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ExecutionActivity.
 func (e *ExecutionActivity) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -10845,7 +10845,7 @@ func (e ExecutionActivity) marshalInternal(discValue string) map[string]interfac
 	return objectMap
 }
 
-func (e *ExecutionActivity) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+func (e *ExecutionActivity) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -10906,7 +10906,7 @@ func (f FileServerLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type FileServerLinkedService.
 func (f *FileServerLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -10942,7 +10942,7 @@ type FileServerLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type FileServerLinkedServiceTypeProperties.
 func (f *FileServerLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -11016,7 +11016,7 @@ func (f FileServerReadSettings) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type FileServerReadSettings.
 func (f *FileServerReadSettings) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -11076,7 +11076,7 @@ func (f FileSystemSink) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type FileSystemSink.
 func (f *FileSystemSink) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -11110,7 +11110,7 @@ func (f FileSystemSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type FileSystemSource.
 func (f *FileSystemSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -11144,7 +11144,7 @@ func (f FilterActivity) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type FilterActivity.
 func (f *FilterActivity) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -11187,7 +11187,7 @@ func (f ForEachActivity) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ForEachActivity.
 func (f *ForEachActivity) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -11222,7 +11222,7 @@ type ForEachActivityTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ForEachActivityTypeProperties.
 func (f *ForEachActivityTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -11272,7 +11272,7 @@ func (f *FormatReadSettings) GetFormatReadSettings() *FormatReadSettings { retur
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type FormatReadSettings.
 func (f *FormatReadSettings) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -11291,7 +11291,7 @@ func (f FormatReadSettings) marshalInternal(discValue string) map[string]interfa
 	return objectMap
 }
 
-func (f *FormatReadSettings) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+func (f *FormatReadSettings) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -11304,7 +11304,7 @@ func (f *FormatReadSettings) unmarshalInternal(rawMsg map[string]*json.RawMessag
 			}
 			if val != nil {
 				var aux interface{}
-				err = json.Unmarshal(*val, &aux)
+				err = json.Unmarshal(val, &aux)
 				(*f.AdditionalProperties)[key] = aux
 			}
 			delete(rawMsg, key)
@@ -11339,7 +11339,7 @@ func (f *FormatWriteSettings) GetFormatWriteSettings() *FormatWriteSettings { re
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type FormatWriteSettings.
 func (f *FormatWriteSettings) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -11358,7 +11358,7 @@ func (f FormatWriteSettings) marshalInternal(discValue string) map[string]interf
 	return objectMap
 }
 
-func (f *FormatWriteSettings) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+func (f *FormatWriteSettings) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -11371,7 +11371,7 @@ func (f *FormatWriteSettings) unmarshalInternal(rawMsg map[string]*json.RawMessa
 			}
 			if val != nil {
 				var aux interface{}
-				err = json.Unmarshal(*val, &aux)
+				err = json.Unmarshal(val, &aux)
 				(*f.AdditionalProperties)[key] = aux
 			}
 			delete(rawMsg, key)
@@ -11411,7 +11411,7 @@ func (f FtpReadSettings) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type FtpReadSettings.
 func (f *FtpReadSettings) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -11454,7 +11454,7 @@ func (f FtpServerLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type FtpServerLinkedService.
 func (f *FtpServerLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -11504,7 +11504,7 @@ type FtpServerLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type FtpServerLinkedServiceTypeProperties.
 func (f *FtpServerLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -11576,7 +11576,7 @@ func (g GetMetadataActivity) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type GetMetadataActivity.
 func (g *GetMetadataActivity) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -11648,7 +11648,7 @@ func (g GoogleAdWordsLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type GoogleAdWordsLinkedService.
 func (g *GoogleAdWordsLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -11707,7 +11707,7 @@ type GoogleAdWordsLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type GoogleAdWordsLinkedServiceTypeProperties.
 func (g *GoogleAdWordsLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -11771,7 +11771,7 @@ func (g GoogleAdWordsObjectDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type GoogleAdWordsObjectDataset.
 func (g *GoogleAdWordsObjectDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -11805,7 +11805,7 @@ func (g GoogleAdWordsSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type GoogleAdWordsSource.
 func (g *GoogleAdWordsSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -11851,7 +11851,7 @@ func (g GoogleBigQueryLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type GoogleBigQueryLinkedService.
 func (g *GoogleBigQueryLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -11914,7 +11914,7 @@ type GoogleBigQueryLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type GoogleBigQueryLinkedServiceTypeProperties.
 func (g *GoogleBigQueryLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -11981,7 +11981,7 @@ func (g GoogleBigQueryObjectDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type GoogleBigQueryObjectDataset.
 func (g *GoogleBigQueryObjectDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -12015,7 +12015,7 @@ func (g GoogleBigQuerySource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type GoogleBigQuerySource.
 func (g *GoogleBigQuerySource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -12049,7 +12049,7 @@ func (g GoogleCloudStorageLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type GoogleCloudStorageLinkedService.
 func (g *GoogleCloudStorageLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -12087,7 +12087,7 @@ type GoogleCloudStorageLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type GoogleCloudStorageLinkedServiceTypeProperties.
 func (g *GoogleCloudStorageLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -12134,7 +12134,7 @@ func (g GoogleCloudStorageLocation) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type GoogleCloudStorageLocation.
 func (g *GoogleCloudStorageLocation) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -12195,7 +12195,7 @@ func (g GoogleCloudStorageReadSettings) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type GoogleCloudStorageReadSettings.
 func (g *GoogleCloudStorageReadSettings) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -12259,7 +12259,7 @@ func (g GreenplumLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type GreenplumLinkedService.
 func (g *GreenplumLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -12306,7 +12306,7 @@ func (g GreenplumSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type GreenplumSource.
 func (g *GreenplumSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -12340,7 +12340,7 @@ func (g GreenplumTableDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type GreenplumTableDataset.
 func (g *GreenplumTableDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -12374,7 +12374,7 @@ func (h HBaseLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type HBaseLinkedService.
 func (h *HBaseLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -12433,7 +12433,7 @@ type HBaseLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type HBaseLinkedServiceTypeProperties.
 func (h *HBaseLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -12497,7 +12497,7 @@ func (h HBaseObjectDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type HBaseObjectDataset.
 func (h *HBaseObjectDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -12531,7 +12531,7 @@ func (h HBaseSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type HBaseSource.
 func (h *HBaseSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -12565,7 +12565,7 @@ func (h HDInsightHiveActivity) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type HDInsightHiveActivity.
 func (h *HDInsightHiveActivity) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -12626,7 +12626,7 @@ func (h HDInsightLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type HDInsightLinkedService.
 func (h *HDInsightLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -12674,7 +12674,7 @@ type HDInsightLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type HDInsightLinkedServiceTypeProperties.
 func (h *HDInsightLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -12729,7 +12729,7 @@ func (h HDInsightMapReduceActivity) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type HDInsightMapReduceActivity.
 func (h *HDInsightMapReduceActivity) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -12790,7 +12790,7 @@ func (h HDInsightOnDemandLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type HDInsightOnDemandLinkedService.
 func (h *HDInsightOnDemandLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -12918,7 +12918,7 @@ type HDInsightOnDemandLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type HDInsightOnDemandLinkedServiceTypeProperties.
 func (h *HDInsightOnDemandLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -13048,7 +13048,7 @@ func (h HDInsightPigActivity) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type HDInsightPigActivity.
 func (h *HDInsightPigActivity) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -13103,7 +13103,7 @@ func (h HDInsightSparkActivity) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type HDInsightSparkActivity.
 func (h *HDInsightSparkActivity) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -13164,7 +13164,7 @@ func (h HDInsightStreamingActivity) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type HDInsightStreamingActivity.
 func (h *HDInsightStreamingActivity) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -13237,7 +13237,7 @@ func (h HTTPLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type HTTPLinkedService.
 func (h *HTTPLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -13289,7 +13289,7 @@ type HTTPLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type HTTPLinkedServiceTypeProperties.
 func (h *HTTPLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -13368,7 +13368,7 @@ func (h HTTPReadSettings) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type HTTPReadSettings.
 func (h *HTTPReadSettings) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -13411,7 +13411,7 @@ func (h HTTPServerLocation) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type HTTPServerLocation.
 func (h *HTTPServerLocation) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -13447,7 +13447,7 @@ func (h HTTPSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type HTTPSource.
 func (h *HTTPSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -13481,7 +13481,7 @@ func (h HdfsLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type HdfsLinkedService.
 func (h *HdfsLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -13520,7 +13520,7 @@ type HdfsLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type HdfsLinkedServiceTypeProperties.
 func (h *HdfsLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -13601,7 +13601,7 @@ func (h HdfsReadSettings) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type HdfsReadSettings.
 func (h *HdfsReadSettings) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -13657,7 +13657,7 @@ func (h HdfsSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type HdfsSource.
 func (h *HdfsSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -13706,7 +13706,7 @@ func (h HiveLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type HiveLinkedService.
 func (h *HiveLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -13783,7 +13783,7 @@ type HiveLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type HiveLinkedServiceTypeProperties.
 func (h *HiveLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -13865,7 +13865,7 @@ func (h HiveObjectDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type HiveObjectDataset.
 func (h *HiveObjectDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -13899,7 +13899,7 @@ func (h HiveSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type HiveSource.
 func (h *HiveSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -13933,7 +13933,7 @@ func (h HubspotLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type HubspotLinkedService.
 func (h *HubspotLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -13982,7 +13982,7 @@ type HubspotLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type HubspotLinkedServiceTypeProperties.
 func (h *HubspotLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -14037,7 +14037,7 @@ func (h HubspotObjectDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type HubspotObjectDataset.
 func (h *HubspotObjectDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -14071,7 +14071,7 @@ func (h HubspotSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type HubspotSource.
 func (h *HubspotSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -14106,7 +14106,7 @@ func (i IfConditionActivity) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type IfConditionActivity.
 func (i *IfConditionActivity) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -14141,7 +14141,7 @@ type IfConditionActivityTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type IfConditionActivityTypeProperties.
 func (i *IfConditionActivityTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -14193,7 +14193,7 @@ func (i ImpalaLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ImpalaLinkedService.
 func (i *ImpalaLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -14252,7 +14252,7 @@ type ImpalaLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ImpalaLinkedServiceTypeProperties.
 func (i *ImpalaLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -14316,7 +14316,7 @@ func (i ImpalaObjectDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ImpalaObjectDataset.
 func (i *ImpalaObjectDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -14350,7 +14350,7 @@ func (i ImpalaSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ImpalaSource.
 func (i *ImpalaSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -14384,7 +14384,7 @@ func (i InformixLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type InformixLinkedService.
 func (i *InformixLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -14427,7 +14427,7 @@ type InformixLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type InformixLinkedServiceTypeProperties.
 func (i *InformixLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -14476,7 +14476,7 @@ func (i InformixSink) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type InformixSink.
 func (i *InformixSink) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -14510,7 +14510,7 @@ func (i InformixSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type InformixSource.
 func (i *InformixSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -14544,7 +14544,7 @@ func (i InformixTableDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type InformixTableDataset.
 func (i *InformixTableDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -14594,7 +14594,7 @@ func (i *IntegrationRuntime) GetIntegrationRuntime() *IntegrationRuntime { retur
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type IntegrationRuntime.
 func (i *IntegrationRuntime) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -14614,7 +14614,7 @@ func (i IntegrationRuntime) marshalInternal(discValue IntegrationRuntimeType) ma
 	return objectMap
 }
 
-func (i *IntegrationRuntime) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+func (i *IntegrationRuntime) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -14630,7 +14630,7 @@ func (i *IntegrationRuntime) unmarshalInternal(rawMsg map[string]*json.RawMessag
 			}
 			if val != nil {
 				var aux interface{}
-				err = json.Unmarshal(*val, &aux)
+				err = json.Unmarshal(val, &aux)
 				(*i.AdditionalProperties)[key] = aux
 			}
 			delete(rawMsg, key)
@@ -14685,7 +14685,7 @@ func (i IntegrationRuntimeComputeProperties) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type IntegrationRuntimeComputeProperties.
 func (i *IntegrationRuntimeComputeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -14716,7 +14716,7 @@ func (i *IntegrationRuntimeComputeProperties) UnmarshalJSON(data []byte) error {
 			}
 			if val != nil {
 				var aux interface{}
-				err = json.Unmarshal(*val, &aux)
+				err = json.Unmarshal(val, &aux)
 				(*i.AdditionalProperties)[key] = aux
 			}
 			delete(rawMsg, key)
@@ -14768,7 +14768,7 @@ func (i IntegrationRuntimeDataFlowProperties) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type IntegrationRuntimeDataFlowProperties.
 func (i *IntegrationRuntimeDataFlowProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -14790,7 +14790,7 @@ func (i *IntegrationRuntimeDataFlowProperties) UnmarshalJSON(data []byte) error 
 			}
 			if val != nil {
 				var aux interface{}
-				err = json.Unmarshal(*val, &aux)
+				err = json.Unmarshal(val, &aux)
 				(*i.AdditionalProperties)[key] = aux
 			}
 			delete(rawMsg, key)
@@ -14895,7 +14895,7 @@ func (i IntegrationRuntimeSsisCatalogInfo) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type IntegrationRuntimeSsisCatalogInfo.
 func (i *IntegrationRuntimeSsisCatalogInfo) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -14920,7 +14920,7 @@ func (i *IntegrationRuntimeSsisCatalogInfo) UnmarshalJSON(data []byte) error {
 			}
 			if val != nil {
 				var aux interface{}
-				err = json.Unmarshal(*val, &aux)
+				err = json.Unmarshal(val, &aux)
 				(*i.AdditionalProperties)[key] = aux
 			}
 			delete(rawMsg, key)
@@ -14975,7 +14975,7 @@ func (i IntegrationRuntimeSsisProperties) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type IntegrationRuntimeSsisProperties.
 func (i *IntegrationRuntimeSsisProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -15006,7 +15006,7 @@ func (i *IntegrationRuntimeSsisProperties) UnmarshalJSON(data []byte) error {
 			}
 			if val != nil {
 				var aux interface{}
-				err = json.Unmarshal(*val, &aux)
+				err = json.Unmarshal(val, &aux)
 				(*i.AdditionalProperties)[key] = aux
 			}
 			delete(rawMsg, key)
@@ -15049,7 +15049,7 @@ func (i IntegrationRuntimeVNetProperties) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type IntegrationRuntimeVNetProperties.
 func (i *IntegrationRuntimeVNetProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -15071,7 +15071,7 @@ func (i *IntegrationRuntimeVNetProperties) UnmarshalJSON(data []byte) error {
 			}
 			if val != nil {
 				var aux interface{}
-				err = json.Unmarshal(*val, &aux)
+				err = json.Unmarshal(val, &aux)
 				(*i.AdditionalProperties)[key] = aux
 			}
 			delete(rawMsg, key)
@@ -15109,7 +15109,7 @@ func (j JSONDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type JSONDataset.
 func (j *JSONDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -15143,7 +15143,7 @@ type JSONDatasetTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type JSONDatasetTypeProperties.
 func (j *JSONDatasetTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -15205,7 +15205,7 @@ func (j JSONFormat) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type JSONFormat.
 func (j *JSONFormat) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -15255,7 +15255,7 @@ func (j JSONSink) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type JSONSink.
 func (j *JSONSink) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -15292,7 +15292,7 @@ func (j JSONSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type JSONSource.
 func (j *JSONSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -15326,7 +15326,7 @@ func (j JSONWriteSettings) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type JSONWriteSettings.
 func (j *JSONWriteSettings) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -15360,7 +15360,7 @@ func (j JiraLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type JiraLinkedService.
 func (j *JiraLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -15410,7 +15410,7 @@ type JiraLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type JiraLinkedServiceTypeProperties.
 func (j *JiraLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -15465,7 +15465,7 @@ func (j JiraObjectDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type JiraObjectDataset.
 func (j *JiraObjectDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -15499,7 +15499,7 @@ func (j JiraSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type JiraSource.
 func (j *JiraSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -15588,7 +15588,7 @@ func (l LibraryInfo) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type LibraryInfo.
 func (l *LibraryInfo) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -15672,7 +15672,7 @@ func (l LibraryRequirements) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type LibraryRequirements.
 func (l *LibraryRequirements) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -15805,7 +15805,7 @@ func (l LinkedIntegrationRuntimeKeyAuthorization) MarshalJSON() ([]byte, error) 
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type LinkedIntegrationRuntimeKeyAuthorization.
 func (l *LinkedIntegrationRuntimeKeyAuthorization) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -15839,7 +15839,7 @@ func (l LinkedIntegrationRuntimeRbacAuthorization) MarshalJSON() ([]byte, error)
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type LinkedIntegrationRuntimeRbacAuthorization.
 func (l *LinkedIntegrationRuntimeRbacAuthorization) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -15879,7 +15879,7 @@ func (l *LinkedIntegrationRuntimeType) GetLinkedIntegrationRuntimeType() *Linked
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type LinkedIntegrationRuntimeType.
 func (l *LinkedIntegrationRuntimeType) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -15893,7 +15893,7 @@ func (l LinkedIntegrationRuntimeType) marshalInternal(discValue string) map[stri
 	return objectMap
 }
 
-func (l *LinkedIntegrationRuntimeType) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+func (l *LinkedIntegrationRuntimeType) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -15963,7 +15963,7 @@ func (l *LinkedService) GetLinkedService() *LinkedService { return l }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type LinkedService.
 func (l *LinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -15986,7 +15986,7 @@ func (l LinkedService) marshalInternal(discValue string) map[string]interface{} 
 	return objectMap
 }
 
-func (l *LinkedService) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+func (l *LinkedService) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -16011,7 +16011,7 @@ func (l *LinkedService) unmarshalInternal(rawMsg map[string]*json.RawMessage) er
 			}
 			if val != nil {
 				var aux interface{}
-				err = json.Unmarshal(*val, &aux)
+				err = json.Unmarshal(val, &aux)
 				(*l.AdditionalProperties)[key] = aux
 			}
 			delete(rawMsg, key)
@@ -16143,7 +16143,7 @@ func (l LogStorageSettings) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type LogStorageSettings.
 func (l *LogStorageSettings) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -16162,7 +16162,7 @@ func (l *LogStorageSettings) UnmarshalJSON(data []byte) error {
 			}
 			if val != nil {
 				var aux interface{}
-				err = json.Unmarshal(*val, &aux)
+				err = json.Unmarshal(val, &aux)
 				(*l.AdditionalProperties)[key] = aux
 			}
 			delete(rawMsg, key)
@@ -16190,7 +16190,7 @@ func (l LookupActivity) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type LookupActivity.
 func (l *LookupActivity) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -16222,7 +16222,7 @@ type LookupActivityTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type LookupActivityTypeProperties.
 func (l *LookupActivityTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -16262,7 +16262,7 @@ func (m MagentoLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type MagentoLinkedService.
 func (m *MagentoLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -16305,7 +16305,7 @@ type MagentoLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type MagentoLinkedServiceTypeProperties.
 func (m *MagentoLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -16354,7 +16354,7 @@ func (m MagentoObjectDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type MagentoObjectDataset.
 func (m *MagentoObjectDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -16388,7 +16388,7 @@ func (m MagentoSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type MagentoSource.
 func (m *MagentoSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -16438,7 +16438,7 @@ func (m ManagedIntegrationRuntime) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ManagedIntegrationRuntime.
 func (m *ManagedIntegrationRuntime) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -16496,7 +16496,7 @@ func (m MappingDataFlow) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type MappingDataFlow.
 func (m *MappingDataFlow) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -16545,7 +16545,7 @@ func (m MariaDBLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type MariaDBLinkedService.
 func (m *MariaDBLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -16592,7 +16592,7 @@ func (m MariaDBSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type MariaDBSource.
 func (m *MariaDBSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -16626,7 +16626,7 @@ func (m MariaDBTableDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type MariaDBTableDataset.
 func (m *MariaDBTableDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -16660,7 +16660,7 @@ func (m MarketoLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type MarketoLinkedService.
 func (m *MarketoLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -16706,7 +16706,7 @@ type MarketoLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type MarketoLinkedServiceTypeProperties.
 func (m *MarketoLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -16758,7 +16758,7 @@ func (m MarketoObjectDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type MarketoObjectDataset.
 func (m *MarketoObjectDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -16792,7 +16792,7 @@ func (m MarketoSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type MarketoSource.
 func (m *MarketoSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -16826,7 +16826,7 @@ func (m MicrosoftAccessLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type MicrosoftAccessLinkedService.
 func (m *MicrosoftAccessLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -16869,7 +16869,7 @@ type MicrosoftAccessLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type MicrosoftAccessLinkedServiceTypeProperties.
 func (m *MicrosoftAccessLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -16918,7 +16918,7 @@ func (m MicrosoftAccessSink) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type MicrosoftAccessSink.
 func (m *MicrosoftAccessSink) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -16952,7 +16952,7 @@ func (m MicrosoftAccessSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type MicrosoftAccessSource.
 func (m *MicrosoftAccessSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -16986,7 +16986,7 @@ func (m MicrosoftAccessTableDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type MicrosoftAccessTableDataset.
 func (m *MicrosoftAccessTableDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -17026,7 +17026,7 @@ func (m MongoDbCollectionDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type MongoDbCollectionDataset.
 func (m *MongoDbCollectionDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -17090,7 +17090,7 @@ func (m MongoDbCursorMethodsProperties) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type MongoDbCursorMethodsProperties.
 func (m *MongoDbCursorMethodsProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -17115,7 +17115,7 @@ func (m *MongoDbCursorMethodsProperties) UnmarshalJSON(data []byte) error {
 			}
 			if val != nil {
 				var aux interface{}
-				err = json.Unmarshal(*val, &aux)
+				err = json.Unmarshal(val, &aux)
 				(*m.AdditionalProperties)[key] = aux
 			}
 			delete(rawMsg, key)
@@ -17143,7 +17143,7 @@ func (m MongoDbLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type MongoDbLinkedService.
 func (m *MongoDbLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -17198,7 +17198,7 @@ type MongoDbLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type MongoDbLinkedServiceTypeProperties.
 func (m *MongoDbLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -17259,7 +17259,7 @@ func (m MongoDbSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type MongoDbSource.
 func (m *MongoDbSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -17293,7 +17293,7 @@ func (m MongoDbV2CollectionDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type MongoDbV2CollectionDataset.
 func (m *MongoDbV2CollectionDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -17333,7 +17333,7 @@ func (m MongoDbV2LinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type MongoDbV2LinkedService.
 func (m *MongoDbV2LinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -17391,7 +17391,7 @@ func (m MongoDbV2Source) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type MongoDbV2Source.
 func (m *MongoDbV2Source) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -17446,7 +17446,7 @@ func (m MultiplePipelineTrigger) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type MultiplePipelineTrigger.
 func (m *MultiplePipelineTrigger) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -17459,7 +17459,7 @@ func (m MultiplePipelineTrigger) marshalInternal(discValue string) map[string]in
 	return objectMap
 }
 
-func (m *MultiplePipelineTrigger) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+func (m *MultiplePipelineTrigger) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -17490,7 +17490,7 @@ func (m MySQLLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type MySQLLinkedService.
 func (m *MySQLLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -17537,7 +17537,7 @@ func (m MySQLSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type MySQLSource.
 func (m *MySQLSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -17571,7 +17571,7 @@ func (m MySQLTableDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type MySQLTableDataset.
 func (m *MySQLTableDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -17611,7 +17611,7 @@ func (n NetezzaLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type NetezzaLinkedService.
 func (n *NetezzaLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -17680,7 +17680,7 @@ func (n NetezzaSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type NetezzaSource.
 func (n *NetezzaSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -17720,7 +17720,7 @@ func (n NetezzaTableDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type NetezzaTableDataset.
 func (n *NetezzaTableDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -17797,7 +17797,7 @@ func (n Notebook) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type Notebook.
 func (n *Notebook) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -17831,7 +17831,7 @@ func (n *Notebook) UnmarshalJSON(data []byte) error {
 			}
 			if val != nil {
 				var aux interface{}
-				err = json.Unmarshal(*val, &aux)
+				err = json.Unmarshal(val, &aux)
 				(*n.AdditionalProperties)[key] = aux
 			}
 			delete(rawMsg, key)
@@ -17898,7 +17898,7 @@ func (n NotebookCell) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type NotebookCell.
 func (n *NotebookCell) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -17926,7 +17926,7 @@ func (n *NotebookCell) UnmarshalJSON(data []byte) error {
 			}
 			if val != nil {
 				var aux interface{}
-				err = json.Unmarshal(*val, &aux)
+				err = json.Unmarshal(val, &aux)
 				(*n.AdditionalProperties)[key] = aux
 			}
 			delete(rawMsg, key)
@@ -18003,7 +18003,7 @@ func (n NotebookKernelSpec) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type NotebookKernelSpec.
 func (n *NotebookKernelSpec) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -18022,7 +18022,7 @@ func (n *NotebookKernelSpec) UnmarshalJSON(data []byte) error {
 			}
 			if val != nil {
 				var aux interface{}
-				err = json.Unmarshal(*val, &aux)
+				err = json.Unmarshal(val, &aux)
 				(*n.AdditionalProperties)[key] = aux
 			}
 			delete(rawMsg, key)
@@ -18061,7 +18061,7 @@ func (n NotebookLanguageInfo) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type NotebookLanguageInfo.
 func (n *NotebookLanguageInfo) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -18080,7 +18080,7 @@ func (n *NotebookLanguageInfo) UnmarshalJSON(data []byte) error {
 			}
 			if val != nil {
 				var aux interface{}
-				err = json.Unmarshal(*val, &aux)
+				err = json.Unmarshal(val, &aux)
 				(*n.AdditionalProperties)[key] = aux
 			}
 			delete(rawMsg, key)
@@ -18137,7 +18137,7 @@ func (n NotebookMetadata) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type NotebookMetadata.
 func (n *NotebookMetadata) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -18156,7 +18156,7 @@ func (n *NotebookMetadata) UnmarshalJSON(data []byte) error {
 			}
 			if val != nil {
 				var aux interface{}
-				err = json.Unmarshal(*val, &aux)
+				err = json.Unmarshal(val, &aux)
 				(*n.AdditionalProperties)[key] = aux
 			}
 			delete(rawMsg, key)
@@ -18241,7 +18241,7 @@ func (o ODataLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ODataLinkedService.
 func (o *ODataLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -18302,7 +18302,7 @@ type ODataLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ODataLinkedServiceTypeProperties.
 func (o *ODataLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -18369,7 +18369,7 @@ func (o ODataResourceDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ODataResourceDataset.
 func (o *ODataResourceDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -18409,7 +18409,7 @@ func (o ODataSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ODataSource.
 func (o *ODataSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -18443,7 +18443,7 @@ func (o OdbcLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type OdbcLinkedService.
 func (o *OdbcLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -18486,7 +18486,7 @@ type OdbcLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type OdbcLinkedServiceTypeProperties.
 func (o *OdbcLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -18535,7 +18535,7 @@ func (o OdbcSink) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type OdbcSink.
 func (o *OdbcSink) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -18569,7 +18569,7 @@ func (o OdbcSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type OdbcSource.
 func (o *OdbcSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -18603,7 +18603,7 @@ func (o OdbcTableDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type OdbcTableDataset.
 func (o *OdbcTableDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -18643,7 +18643,7 @@ func (o Office365Dataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type Office365Dataset.
 func (o *Office365Dataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -18686,7 +18686,7 @@ func (o Office365LinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type Office365LinkedService.
 func (o *Office365LinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -18725,7 +18725,7 @@ type Office365LinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type Office365LinkedServiceTypeProperties.
 func (o *Office365LinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -18792,7 +18792,7 @@ func (o Office365Source) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type Office365Source.
 func (o *Office365Source) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -18859,7 +18859,7 @@ func (o OracleLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type OracleLinkedService.
 func (o *OracleLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -18923,7 +18923,7 @@ func (o OracleServiceCloudLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type OracleServiceCloudLinkedService.
 func (o *OracleServiceCloudLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -18971,7 +18971,7 @@ type OracleServiceCloudLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type OracleServiceCloudLinkedServiceTypeProperties.
 func (o *OracleServiceCloudLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -19023,7 +19023,7 @@ func (o OracleServiceCloudObjectDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type OracleServiceCloudObjectDataset.
 func (o *OracleServiceCloudObjectDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -19057,7 +19057,7 @@ func (o OracleServiceCloudSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type OracleServiceCloudSource.
 func (o *OracleServiceCloudSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -19091,7 +19091,7 @@ func (o OracleSink) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type OracleSink.
 func (o *OracleSink) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -19137,7 +19137,7 @@ func (o OracleSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type OracleSource.
 func (o *OracleSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -19180,7 +19180,7 @@ func (o OracleTableDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type OracleTableDataset.
 func (o *OracleTableDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -19226,7 +19226,7 @@ func (o OrcDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type OrcDataset.
 func (o *OrcDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -19253,7 +19253,7 @@ type OrcDatasetTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type OrcDatasetTypeProperties.
 func (o *OrcDatasetTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -19301,7 +19301,7 @@ func (o OrcSink) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type OrcSink.
 func (o *OrcSink) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -19335,7 +19335,7 @@ func (o OrcSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type OrcSource.
 func (o *OrcSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -19378,7 +19378,7 @@ func (p ParquetDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ParquetDataset.
 func (p *ParquetDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -19406,7 +19406,7 @@ type ParquetDatasetTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ParquetDatasetTypeProperties.
 func (p *ParquetDatasetTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -19454,7 +19454,7 @@ func (p ParquetSink) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ParquetSink.
 func (p *ParquetSink) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -19488,7 +19488,7 @@ func (p ParquetSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ParquetSource.
 func (p *ParquetSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -19522,7 +19522,7 @@ func (p PaypalLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type PaypalLinkedService.
 func (p *PaypalLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -19568,7 +19568,7 @@ type PaypalLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type PaypalLinkedServiceTypeProperties.
 func (p *PaypalLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -19620,7 +19620,7 @@ func (p PaypalObjectDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type PaypalObjectDataset.
 func (p *PaypalObjectDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -19654,7 +19654,7 @@ func (p PaypalSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type PaypalSource.
 func (p *PaypalSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -19700,7 +19700,7 @@ func (p PhoenixLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type PhoenixLinkedService.
 func (p *PhoenixLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -19762,7 +19762,7 @@ type PhoenixLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type PhoenixLinkedServiceTypeProperties.
 func (p *PhoenixLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -19829,7 +19829,7 @@ func (p PhoenixObjectDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type PhoenixObjectDataset.
 func (p *PhoenixObjectDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -19863,7 +19863,7 @@ func (p PhoenixSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type PhoenixSource.
 func (p *PhoenixSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -19910,7 +19910,7 @@ type Pipeline struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type Pipeline.
 func (p *Pipeline) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -20049,7 +20049,7 @@ func (p PipelineResource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type PipelineResource.
 func (p *PipelineResource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -20074,7 +20074,7 @@ func (p *PipelineResource) UnmarshalJSON(data []byte) error {
 		}
 		if val != nil {
 			var aux interface{}
-			err = json.Unmarshal(*val, &aux)
+			err = json.Unmarshal(val, &aux)
 			(*p.AdditionalProperties)[key] = aux
 		}
 		delete(rawMsg, key)
@@ -20173,7 +20173,7 @@ func (p PipelineRun) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type PipelineRun.
 func (p *PipelineRun) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -20228,7 +20228,7 @@ func (p *PipelineRun) UnmarshalJSON(data []byte) error {
 			}
 			if val != nil {
 				var aux interface{}
-				err = json.Unmarshal(*val, &aux)
+				err = json.Unmarshal(val, &aux)
 				(*p.AdditionalProperties)[key] = aux
 			}
 			delete(rawMsg, key)
@@ -20338,7 +20338,7 @@ func (p PolybaseSettings) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type PolybaseSettings.
 func (p *PolybaseSettings) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -20363,7 +20363,7 @@ func (p *PolybaseSettings) UnmarshalJSON(data []byte) error {
 			}
 			if val != nil {
 				var aux interface{}
-				err = json.Unmarshal(*val, &aux)
+				err = json.Unmarshal(val, &aux)
 				(*p.AdditionalProperties)[key] = aux
 			}
 			delete(rawMsg, key)
@@ -20391,7 +20391,7 @@ func (p PostgreSQLLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type PostgreSQLLinkedService.
 func (p *PostgreSQLLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -20438,7 +20438,7 @@ func (p PostgreSQLSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type PostgreSQLSource.
 func (p *PostgreSQLSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -20472,7 +20472,7 @@ func (p PostgreSQLTableDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type PostgreSQLTableDataset.
 func (p *PostgreSQLTableDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -20530,7 +20530,7 @@ func (p PrestoLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type PrestoLinkedService.
 func (p *PrestoLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -20599,7 +20599,7 @@ type PrestoLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type PrestoLinkedServiceTypeProperties.
 func (p *PrestoLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -20672,7 +20672,7 @@ func (p PrestoObjectDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type PrestoObjectDataset.
 func (p *PrestoObjectDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -20706,7 +20706,7 @@ func (p PrestoSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type PrestoSource.
 func (p *PrestoSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -20806,7 +20806,7 @@ func (q QuickBooksLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type QuickBooksLinkedService.
 func (q *QuickBooksLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -20854,7 +20854,7 @@ type QuickBooksLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type QuickBooksLinkedServiceTypeProperties.
 func (q *QuickBooksLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -20909,7 +20909,7 @@ func (q QuickBooksObjectDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type QuickBooksObjectDataset.
 func (q *QuickBooksObjectDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -20943,7 +20943,7 @@ func (q QuickBooksSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type QuickBooksSource.
 func (q *QuickBooksSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -21000,7 +21000,7 @@ func (r RecurrenceSchedule) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type RecurrenceSchedule.
 func (r *RecurrenceSchedule) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -21028,7 +21028,7 @@ func (r *RecurrenceSchedule) UnmarshalJSON(data []byte) error {
 			}
 			if val != nil {
 				var aux interface{}
-				err = json.Unmarshal(*val, &aux)
+				err = json.Unmarshal(val, &aux)
 				(*r.AdditionalProperties)[key] = aux
 			}
 			delete(rawMsg, key)
@@ -21067,7 +21067,7 @@ func (r RecurrenceScheduleOccurrence) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type RecurrenceScheduleOccurrence.
 func (r *RecurrenceScheduleOccurrence) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -21086,7 +21086,7 @@ func (r *RecurrenceScheduleOccurrence) UnmarshalJSON(data []byte) error {
 			}
 			if val != nil {
 				var aux interface{}
-				err = json.Unmarshal(*val, &aux)
+				err = json.Unmarshal(val, &aux)
 				(*r.AdditionalProperties)[key] = aux
 			}
 			delete(rawMsg, key)
@@ -21127,7 +21127,7 @@ func (r RedirectIncompatibleRowSettings) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type RedirectIncompatibleRowSettings.
 func (r *RedirectIncompatibleRowSettings) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -21146,7 +21146,7 @@ func (r *RedirectIncompatibleRowSettings) UnmarshalJSON(data []byte) error {
 			}
 			if val != nil {
 				var aux interface{}
-				err = json.Unmarshal(*val, &aux)
+				err = json.Unmarshal(val, &aux)
 				(*r.AdditionalProperties)[key] = aux
 			}
 			delete(rawMsg, key)
@@ -21187,7 +21187,7 @@ func (r RelationalSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type RelationalSource.
 func (r *RelationalSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -21221,7 +21221,7 @@ func (r RelationalTableDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type RelationalTableDataset.
 func (r *RelationalTableDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -21278,7 +21278,7 @@ func (r RerunTumblingWindowTrigger) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type RerunTumblingWindowTrigger.
 func (r *RerunTumblingWindowTrigger) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -21319,7 +21319,7 @@ func (r RerunTumblingWindowTriggerActionParameters) MarshalJSON() ([]byte, error
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type RerunTumblingWindowTriggerActionParameters.
 func (r *RerunTumblingWindowTriggerActionParameters) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -21374,7 +21374,7 @@ func (r RerunTumblingWindowTriggerTypeProperties) MarshalJSON() ([]byte, error) 
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type RerunTumblingWindowTriggerTypeProperties.
 func (r *RerunTumblingWindowTriggerTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -21425,7 +21425,7 @@ func (r Resource) marshalInternal() map[string]interface{} {
 	return objectMap
 }
 
-func (r *Resource) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+func (r *Resource) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -21462,7 +21462,7 @@ func (r ResponsysLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ResponsysLinkedService.
 func (r *ResponsysLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -21510,7 +21510,7 @@ type ResponsysLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ResponsysLinkedServiceTypeProperties.
 func (r *ResponsysLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -21562,7 +21562,7 @@ func (r ResponsysObjectDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ResponsysObjectDataset.
 func (r *ResponsysObjectDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -21596,7 +21596,7 @@ func (r ResponsysSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ResponsysSource.
 func (r *ResponsysSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -21630,7 +21630,7 @@ func (r RestResourceDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type RestResourceDataset.
 func (r *RestResourceDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -21682,7 +21682,7 @@ func (r RestServiceLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type RestServiceLinkedService.
 func (r *RestServiceLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -21737,7 +21737,7 @@ type RestServiceLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type RestServiceLinkedServiceTypeProperties.
 func (r *RestServiceLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -21820,7 +21820,7 @@ func (r RestSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type RestSource.
 func (r *RestSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -21893,7 +21893,7 @@ func (r RunFilterParameters) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type RunFilterParameters.
 func (r *RunFilterParameters) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -21991,7 +21991,7 @@ func (s SQLConnection) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SQLConnection.
 func (s *SQLConnection) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -22010,7 +22010,7 @@ func (s *SQLConnection) UnmarshalJSON(data []byte) error {
 			}
 			if val != nil {
 				var aux interface{}
-				err = json.Unmarshal(*val, &aux)
+				err = json.Unmarshal(val, &aux)
 				(*s.AdditionalProperties)[key] = aux
 			}
 			delete(rawMsg, key)
@@ -22058,7 +22058,7 @@ func (s SQLDWSink) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SQLDWSink.
 func (s *SQLDWSink) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -22117,7 +22117,7 @@ func (s SQLDWSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SQLDWSource.
 func (s *SQLDWSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -22177,7 +22177,7 @@ func (s SQLMISink) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SQLMISink.
 func (s *SQLMISink) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -22239,7 +22239,7 @@ func (s SQLMISource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SQLMISource.
 func (s *SQLMISource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -22350,7 +22350,7 @@ func (s SQLPoolResourceProperties) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SQLPoolResourceProperties.
 func (s *SQLPoolResourceProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -22423,7 +22423,7 @@ func (s SQLPoolStoredProcedureActivity) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SQLPoolStoredProcedureActivity.
 func (s *SQLPoolStoredProcedureActivity) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -22494,7 +22494,7 @@ func (s SQLScript) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SQLScript.
 func (s *SQLScript) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -22516,7 +22516,7 @@ func (s *SQLScript) UnmarshalJSON(data []byte) error {
 			}
 			if val != nil {
 				var aux interface{}
-				err = json.Unmarshal(*val, &aux)
+				err = json.Unmarshal(val, &aux)
 				(*s.AdditionalProperties)[key] = aux
 			}
 			delete(rawMsg, key)
@@ -22575,7 +22575,7 @@ func (s SQLScriptContent) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SQLScriptContent.
 func (s *SQLScriptContent) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -22597,7 +22597,7 @@ func (s *SQLScriptContent) UnmarshalJSON(data []byte) error {
 			}
 			if val != nil {
 				var aux interface{}
-				err = json.Unmarshal(*val, &aux)
+				err = json.Unmarshal(val, &aux)
 				(*s.AdditionalProperties)[key] = aux
 			}
 			delete(rawMsg, key)
@@ -22644,7 +22644,7 @@ func (s SQLScriptMetadata) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SQLScriptMetadata.
 func (s *SQLScriptMetadata) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -22660,7 +22660,7 @@ func (s *SQLScriptMetadata) UnmarshalJSON(data []byte) error {
 			}
 			if val != nil {
 				var aux interface{}
-				err = json.Unmarshal(*val, &aux)
+				err = json.Unmarshal(val, &aux)
 				(*s.AdditionalProperties)[key] = aux
 			}
 			delete(rawMsg, key)
@@ -22745,7 +22745,7 @@ func (s SQLServerLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SQLServerLinkedService.
 func (s *SQLServerLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -22781,7 +22781,7 @@ type SQLServerLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SQLServerLinkedServiceTypeProperties.
 func (s *SQLServerLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -22844,7 +22844,7 @@ func (s SQLServerSink) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SQLServerSink.
 func (s *SQLServerSink) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -22906,7 +22906,7 @@ func (s SQLServerSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SQLServerSource.
 func (s *SQLServerSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -22949,7 +22949,7 @@ func (s SQLServerStoredProcedureActivity) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SQLServerStoredProcedureActivity.
 func (s *SQLServerStoredProcedureActivity) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -22992,7 +22992,7 @@ func (s SQLServerTableDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SQLServerTableDataset.
 func (s *SQLServerTableDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -23058,7 +23058,7 @@ func (s SQLSink) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SQLSink.
 func (s *SQLSink) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -23116,7 +23116,7 @@ func (s SQLSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SQLSource.
 func (s *SQLSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -23154,7 +23154,7 @@ type SSISAccessCredential struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SSISAccessCredential.
 func (s *SSISAccessCredential) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -23270,7 +23270,7 @@ type SSISPackageLocationTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SSISPackageLocationTypeProperties.
 func (s *SSISPackageLocationTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -23331,7 +23331,7 @@ func (s SalesforceLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SalesforceLinkedService.
 func (s *SalesforceLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -23372,7 +23372,7 @@ type SalesforceLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SalesforceLinkedServiceTypeProperties.
 func (s *SalesforceLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -23418,7 +23418,7 @@ func (s SalesforceMarketingCloudLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SalesforceMarketingCloudLinkedService.
 func (s *SalesforceMarketingCloudLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -23463,7 +23463,7 @@ type SalesforceMarketingCloudLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SalesforceMarketingCloudLinkedServiceTypeProperties.
 func (s *SalesforceMarketingCloudLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -23512,7 +23512,7 @@ func (s SalesforceMarketingCloudObjectDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SalesforceMarketingCloudObjectDataset.
 func (s *SalesforceMarketingCloudObjectDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -23546,7 +23546,7 @@ func (s SalesforceMarketingCloudSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SalesforceMarketingCloudSource.
 func (s *SalesforceMarketingCloudSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -23580,7 +23580,7 @@ func (s SalesforceObjectDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SalesforceObjectDataset.
 func (s *SalesforceObjectDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -23620,7 +23620,7 @@ func (s SalesforceServiceCloudLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SalesforceServiceCloudLinkedService.
 func (s *SalesforceServiceCloudLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -23664,7 +23664,7 @@ type SalesforceServiceCloudLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SalesforceServiceCloudLinkedServiceTypeProperties.
 func (s *SalesforceServiceCloudLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -23713,7 +23713,7 @@ func (s SalesforceServiceCloudObjectDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SalesforceServiceCloudObjectDataset.
 func (s *SalesforceServiceCloudObjectDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -23765,7 +23765,7 @@ func (s SalesforceServiceCloudSink) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SalesforceServiceCloudSink.
 func (s *SalesforceServiceCloudSink) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -23809,7 +23809,7 @@ func (s SalesforceServiceCloudSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SalesforceServiceCloudSource.
 func (s *SalesforceServiceCloudSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -23858,7 +23858,7 @@ func (s SalesforceSink) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SalesforceSink.
 func (s *SalesforceSink) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -23902,7 +23902,7 @@ func (s SalesforceSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SalesforceSource.
 func (s *SalesforceSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -23939,7 +23939,7 @@ func (s SapBWLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SapBWLinkedService.
 func (s *SapBWLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -23982,7 +23982,7 @@ type SapBWLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SapBWLinkedServiceTypeProperties.
 func (s *SapBWLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -24042,7 +24042,7 @@ func (s SapBwSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SapBwSource.
 func (s *SapBwSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -24076,7 +24076,7 @@ func (s SapCloudForCustomerLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SapCloudForCustomerLinkedService.
 func (s *SapCloudForCustomerLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -24114,7 +24114,7 @@ type SapCloudForCustomerLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SapCloudForCustomerLinkedServiceTypeProperties.
 func (s *SapCloudForCustomerLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -24157,7 +24157,7 @@ func (s SapCloudForCustomerResourceDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SapCloudForCustomerResourceDataset.
 func (s *SapCloudForCustomerResourceDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -24197,7 +24197,7 @@ func (s SapCloudForCustomerSink) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SapCloudForCustomerSink.
 func (s *SapCloudForCustomerSink) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -24231,7 +24231,7 @@ func (s SapCloudForCustomerSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SapCloudForCustomerSource.
 func (s *SapCloudForCustomerSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -24265,7 +24265,7 @@ func (s SapEccLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SapEccLinkedService.
 func (s *SapEccLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -24302,7 +24302,7 @@ type SapEccLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SapEccLinkedServiceTypeProperties.
 func (s *SapEccLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -24345,7 +24345,7 @@ func (s SapEccResourceDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SapEccResourceDataset.
 func (s *SapEccResourceDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -24385,7 +24385,7 @@ func (s SapEccSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SapEccSource.
 func (s *SapEccSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -24419,7 +24419,7 @@ func (s SapHanaLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SapHanaLinkedService.
 func (s *SapHanaLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -24461,7 +24461,7 @@ type SapHanaLinkedServiceProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SapHanaLinkedServiceProperties.
 func (s *SapHanaLinkedServiceProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -24528,7 +24528,7 @@ func (s SapHanaSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SapHanaSource.
 func (s *SapHanaSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -24571,7 +24571,7 @@ func (s SapHanaTableDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SapHanaTableDataset.
 func (s *SapHanaTableDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -24614,7 +24614,7 @@ func (s SapOpenHubLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SapOpenHubLinkedService.
 func (s *SapOpenHubLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -24661,7 +24661,7 @@ type SapOpenHubLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SapOpenHubLinkedServiceTypeProperties.
 func (s *SapOpenHubLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -24719,7 +24719,7 @@ func (s SapOpenHubSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SapOpenHubSource.
 func (s *SapOpenHubSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -24756,7 +24756,7 @@ func (s SapOpenHubTableDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SapOpenHubTableDataset.
 func (s *SapOpenHubTableDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -24804,7 +24804,7 @@ func (s SapTableLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SapTableLinkedService.
 func (s *SapTableLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -24879,7 +24879,7 @@ type SapTableLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SapTableLinkedServiceTypeProperties.
 func (s *SapTableLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -24975,7 +24975,7 @@ func (s SapTableResourceDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SapTableResourceDataset.
 func (s *SapTableResourceDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -25044,7 +25044,7 @@ func (s SapTableSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SapTableSource.
 func (s *SapTableSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -25099,7 +25099,7 @@ func (s ScheduleTrigger) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ScheduleTrigger.
 func (s *ScheduleTrigger) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -25160,7 +25160,7 @@ func (s ScheduleTriggerRecurrence) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ScheduleTriggerRecurrence.
 func (s *ScheduleTriggerRecurrence) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -25195,7 +25195,7 @@ func (s *ScheduleTriggerRecurrence) UnmarshalJSON(data []byte) error {
 			}
 			if val != nil {
 				var aux interface{}
-				err = json.Unmarshal(*val, &aux)
+				err = json.Unmarshal(val, &aux)
 				(*s.AdditionalProperties)[key] = aux
 			}
 			delete(rawMsg, key)
@@ -25248,7 +25248,7 @@ func (s *SecretBase) GetSecretBase() *SecretBase { return s }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SecretBase.
 func (s *SecretBase) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -25262,7 +25262,7 @@ func (s SecretBase) marshalInternal(discValue string) map[string]interface{} {
 	return objectMap
 }
 
-func (s *SecretBase) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+func (s *SecretBase) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -25293,7 +25293,7 @@ func (s SecureString) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SecureString.
 func (s *SecureString) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -25331,7 +25331,7 @@ func (s SelfDependencyTumblingWindowTriggerReference) MarshalJSON() ([]byte, err
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SelfDependencyTumblingWindowTriggerReference.
 func (s *SelfDependencyTumblingWindowTriggerReference) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -25368,7 +25368,7 @@ func (s SelfHostedIntegrationRuntime) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SelfHostedIntegrationRuntime.
 func (s *SelfHostedIntegrationRuntime) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -25394,7 +25394,7 @@ type SelfHostedIntegrationRuntimeTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SelfHostedIntegrationRuntimeTypeProperties.
 func (s *SelfHostedIntegrationRuntimeTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -25428,7 +25428,7 @@ func (s ServiceNowLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ServiceNowLinkedService.
 func (s *ServiceNowLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -25483,7 +25483,7 @@ type ServiceNowLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ServiceNowLinkedServiceTypeProperties.
 func (s *ServiceNowLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -25544,7 +25544,7 @@ func (s ServiceNowObjectDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ServiceNowObjectDataset.
 func (s *ServiceNowObjectDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -25578,7 +25578,7 @@ func (s ServiceNowSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ServiceNowSource.
 func (s *ServiceNowSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -25612,7 +25612,7 @@ func (s SetVariableActivity) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SetVariableActivity.
 func (s *SetVariableActivity) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -25682,7 +25682,7 @@ func (s SftpReadSettings) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SftpReadSettings.
 func (s *SftpReadSettings) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -25728,7 +25728,7 @@ func (s SftpServerLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SftpServerLinkedService.
 func (s *SftpServerLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -25791,7 +25791,7 @@ type SftpServerLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SftpServerLinkedServiceTypeProperties.
 func (s *SftpServerLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -25855,7 +25855,7 @@ func (s SftpWriteSettings) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SftpWriteSettings.
 func (s *SftpWriteSettings) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -25889,7 +25889,7 @@ func (s ShopifyLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ShopifyLinkedService.
 func (s *ShopifyLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -25932,7 +25932,7 @@ type ShopifyLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ShopifyLinkedServiceTypeProperties.
 func (s *ShopifyLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -25981,7 +25981,7 @@ func (s ShopifyObjectDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ShopifyObjectDataset.
 func (s *ShopifyObjectDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -26015,7 +26015,7 @@ func (s ShopifySource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ShopifySource.
 func (s *ShopifySource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -26150,7 +26150,7 @@ func (s SparkBatchJobState) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SparkBatchJobState.
 func (s *SparkBatchJobState) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -26257,7 +26257,7 @@ func (s SparkJobDefinition) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SparkJobDefinition.
 func (s *SparkJobDefinition) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -26285,7 +26285,7 @@ func (s *SparkJobDefinition) UnmarshalJSON(data []byte) error {
 			}
 			if val != nil {
 				var aux interface{}
-				err = json.Unmarshal(*val, &aux)
+				err = json.Unmarshal(val, &aux)
 				(*s.AdditionalProperties)[key] = aux
 			}
 			delete(rawMsg, key)
@@ -26455,7 +26455,7 @@ func (s SparkJobProperties) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SparkJobProperties.
 func (s *SparkJobProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -26507,7 +26507,7 @@ func (s *SparkJobProperties) UnmarshalJSON(data []byte) error {
 			}
 			if val != nil {
 				var aux interface{}
-				err = json.Unmarshal(*val, &aux)
+				err = json.Unmarshal(val, &aux)
 				(*s.AdditionalProperties)[key] = aux
 			}
 			delete(rawMsg, key)
@@ -26535,7 +26535,7 @@ func (s SparkLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SparkLinkedService.
 func (s *SparkLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -26603,7 +26603,7 @@ type SparkLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SparkLinkedServiceTypeProperties.
 func (s *SparkLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -26676,7 +26676,7 @@ func (s SparkObjectDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SparkObjectDataset.
 func (s *SparkObjectDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -26734,7 +26734,7 @@ func (s SparkScheduler) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SparkScheduler.
 func (s *SparkScheduler) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -26801,7 +26801,7 @@ func (s SparkServicePlugin) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SparkServicePlugin.
 func (s *SparkServicePlugin) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -26860,7 +26860,7 @@ func (s SparkSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SparkSource.
 func (s *SparkSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -26894,7 +26894,7 @@ func (s SquareLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SquareLinkedService.
 func (s *SquareLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -26943,7 +26943,7 @@ type SquareLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SquareLinkedServiceTypeProperties.
 func (s *SquareLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -26998,7 +26998,7 @@ func (s SquareObjectDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SquareObjectDataset.
 func (s *SquareObjectDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -27032,7 +27032,7 @@ func (s SquareSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SquareSource.
 func (s *SquareSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -27096,7 +27096,7 @@ func (s StagingSettings) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type StagingSettings.
 func (s *StagingSettings) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -27118,7 +27118,7 @@ func (s *StagingSettings) UnmarshalJSON(data []byte) error {
 			}
 			if val != nil {
 				var aux interface{}
-				err = json.Unmarshal(*val, &aux)
+				err = json.Unmarshal(val, &aux)
 				(*s.AdditionalProperties)[key] = aux
 			}
 			delete(rawMsg, key)
@@ -27188,7 +27188,7 @@ func (s *StoreReadSettings) GetStoreReadSettings() *StoreReadSettings { return s
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type StoreReadSettings.
 func (s *StoreReadSettings) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -27208,7 +27208,7 @@ func (s StoreReadSettings) marshalInternal(discValue string) map[string]interfac
 	return objectMap
 }
 
-func (s *StoreReadSettings) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+func (s *StoreReadSettings) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -27224,7 +27224,7 @@ func (s *StoreReadSettings) unmarshalInternal(rawMsg map[string]*json.RawMessage
 			}
 			if val != nil {
 				var aux interface{}
-				err = json.Unmarshal(*val, &aux)
+				err = json.Unmarshal(val, &aux)
 				(*s.AdditionalProperties)[key] = aux
 			}
 			delete(rawMsg, key)
@@ -27266,7 +27266,7 @@ func (s *StoreWriteSettings) GetStoreWriteSettings() *StoreWriteSettings { retur
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type StoreWriteSettings.
 func (s *StoreWriteSettings) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -27287,7 +27287,7 @@ func (s StoreWriteSettings) marshalInternal(discValue string) map[string]interfa
 	return objectMap
 }
 
-func (s *StoreWriteSettings) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+func (s *StoreWriteSettings) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -27306,7 +27306,7 @@ func (s *StoreWriteSettings) unmarshalInternal(rawMsg map[string]*json.RawMessag
 			}
 			if val != nil {
 				var aux interface{}
-				err = json.Unmarshal(*val, &aux)
+				err = json.Unmarshal(val, &aux)
 				(*s.AdditionalProperties)[key] = aux
 			}
 			delete(rawMsg, key)
@@ -27337,7 +27337,7 @@ func (s SubResource) marshalInternal() map[string]interface{} {
 	return objectMap
 }
 
-func (s *SubResource) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+func (s *SubResource) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 	return s.AzureEntityResource.unmarshalInternal(rawMsg)
 }
 
@@ -27353,7 +27353,7 @@ func (s SubResourceDebugResource) marshalInternal() map[string]interface{} {
 	return objectMap
 }
 
-func (s *SubResourceDebugResource) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+func (s *SubResourceDebugResource) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -27385,7 +27385,7 @@ func (s SwitchActivity) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SwitchActivity.
 func (s *SwitchActivity) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -27419,7 +27419,7 @@ type SwitchActivityTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SwitchActivityTypeProperties.
 func (s *SwitchActivityTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -27454,7 +27454,7 @@ type SwitchCase struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SwitchCase.
 func (s *SwitchCase) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -27491,7 +27491,7 @@ func (s SybaseLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SybaseLinkedService.
 func (s *SybaseLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -27536,7 +27536,7 @@ type SybaseLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SybaseLinkedServiceTypeProperties.
 func (s *SybaseLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -27588,7 +27588,7 @@ func (s SybaseSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SybaseSource.
 func (s *SybaseSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -27622,7 +27622,7 @@ func (s SybaseTableDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SybaseTableDataset.
 func (s *SybaseTableDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -27662,7 +27662,7 @@ func (s SynapseNotebookActivity) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SynapseNotebookActivity.
 func (s *SynapseNotebookActivity) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -27720,7 +27720,7 @@ func (s SynapseSparkJobDefinitionActivity) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SynapseSparkJobDefinitionActivity.
 func (s *SynapseSparkJobDefinitionActivity) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -27782,7 +27782,7 @@ func (t TabularSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type TabularSource.
 func (t *TabularSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -27795,7 +27795,7 @@ func (t TabularSource) marshalInternal(discValue string) map[string]interface{} 
 	return objectMap
 }
 
-func (t *TabularSource) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+func (t *TabularSource) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -27849,7 +27849,7 @@ func (t TabularTranslator) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type TabularTranslator.
 func (t *TabularTranslator) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -27895,7 +27895,7 @@ func (t TeradataLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type TeradataLinkedService.
 func (t *TeradataLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -27937,7 +27937,7 @@ type TeradataLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type TeradataLinkedServiceTypeProperties.
 func (t *TeradataLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -28008,7 +28008,7 @@ func (t TeradataSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type TeradataSource.
 func (t *TeradataSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -28048,7 +28048,7 @@ func (t TeradataTableDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type TeradataTableDataset.
 func (t *TeradataTableDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -28127,7 +28127,7 @@ func (t TextFormat) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type TextFormat.
 func (t *TextFormat) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -28221,7 +28221,7 @@ func (t *Trigger) GetTrigger() *Trigger { return t }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type Trigger.
 func (t *Trigger) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -28243,7 +28243,7 @@ func (t Trigger) marshalInternal(discValue string) map[string]interface{} {
 	return objectMap
 }
 
-func (t *Trigger) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+func (t *Trigger) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -28265,7 +28265,7 @@ func (t *Trigger) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
 			}
 			if val != nil {
 				var aux interface{}
-				err = json.Unmarshal(*val, &aux)
+				err = json.Unmarshal(val, &aux)
 				(*t.AdditionalProperties)[key] = aux
 			}
 			delete(rawMsg, key)
@@ -28347,7 +28347,7 @@ func (t TriggerDependencyReference) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type TriggerDependencyReference.
 func (t *TriggerDependencyReference) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -28360,7 +28360,7 @@ func (t TriggerDependencyReference) marshalInternal(discValue string) map[string
 	return objectMap
 }
 
-func (t *TriggerDependencyReference) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+func (t *TriggerDependencyReference) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -28507,7 +28507,7 @@ func (t TriggerRun) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type TriggerRun.
 func (t *TriggerRun) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -28546,7 +28546,7 @@ func (t *TriggerRun) UnmarshalJSON(data []byte) error {
 			}
 			if val != nil {
 				var aux interface{}
-				err = json.Unmarshal(*val, &aux)
+				err = json.Unmarshal(val, &aux)
 				(*t.AdditionalProperties)[key] = aux
 			}
 			delete(rawMsg, key)
@@ -28643,7 +28643,7 @@ func (t TumblingWindowTrigger) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type TumblingWindowTrigger.
 func (t *TumblingWindowTrigger) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -28684,7 +28684,7 @@ func (t TumblingWindowTriggerDependencyReference) MarshalJSON() ([]byte, error) 
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type TumblingWindowTriggerDependencyReference.
 func (t *TumblingWindowTriggerDependencyReference) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -28750,7 +28750,7 @@ func (t TumblingWindowTriggerTypeProperties) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type TumblingWindowTriggerTypeProperties.
 func (t *TumblingWindowTriggerTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -28809,7 +28809,7 @@ func (u UntilActivity) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type UntilActivity.
 func (u *UntilActivity) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -28843,7 +28843,7 @@ type UntilActivityTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type UntilActivityTypeProperties.
 func (u *UntilActivityTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -28892,7 +28892,7 @@ func (v ValidationActivity) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ValidationActivity.
 func (v *ValidationActivity) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -28970,7 +28970,7 @@ func (v VerticaLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type VerticaLinkedService.
 func (v *VerticaLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -29017,7 +29017,7 @@ func (v VerticaSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type VerticaSource.
 func (v *VerticaSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -29051,7 +29051,7 @@ func (v VerticaTableDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type VerticaTableDataset.
 func (v *VerticaTableDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -29091,7 +29091,7 @@ func (w WaitActivity) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type WaitActivity.
 func (w *WaitActivity) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -29131,7 +29131,7 @@ func (w WebActivity) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type WebActivity.
 func (w *WebActivity) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -29169,7 +29169,7 @@ type WebActivityAuthentication struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type WebActivityAuthentication.
 func (w *WebActivityAuthentication) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -29260,7 +29260,7 @@ func (w WebBasicAuthentication) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type WebBasicAuthentication.
 func (w *WebBasicAuthentication) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -29303,7 +29303,7 @@ func (w WebClientCertificateAuthentication) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type WebClientCertificateAuthentication.
 func (w *WebClientCertificateAuthentication) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -29340,7 +29340,7 @@ func (w WebHookActivity) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type WebHookActivity.
 func (w *WebHookActivity) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -29403,7 +29403,7 @@ func (w WebLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type WebLinkedService.
 func (w *WebLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -29447,7 +29447,7 @@ func (w *WebLinkedServiceTypeProperties) GetWebLinkedServiceTypeProperties() *We
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type WebLinkedServiceTypeProperties.
 func (w *WebLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -29462,7 +29462,7 @@ func (w WebLinkedServiceTypeProperties) marshalInternal(discValue WebAuthenticat
 	return objectMap
 }
 
-func (w *WebLinkedServiceTypeProperties) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+func (w *WebLinkedServiceTypeProperties) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -29507,7 +29507,7 @@ func (w WebTableDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type WebTableDataset.
 func (w *WebTableDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -29693,7 +29693,7 @@ func (x XeroLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type XeroLinkedService.
 func (x *XeroLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -29740,7 +29740,7 @@ type XeroLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type XeroLinkedServiceTypeProperties.
 func (x *XeroLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -29792,7 +29792,7 @@ func (x XeroObjectDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type XeroObjectDataset.
 func (x *XeroObjectDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -29826,7 +29826,7 @@ func (x XeroSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type XeroSource.
 func (x *XeroSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -29860,7 +29860,7 @@ func (z ZohoLinkedService) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ZohoLinkedService.
 func (z *ZohoLinkedService) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -29903,7 +29903,7 @@ type ZohoLinkedServiceTypeProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ZohoLinkedServiceTypeProperties.
 func (z *ZohoLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -29952,7 +29952,7 @@ func (z ZohoObjectDataset) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ZohoObjectDataset.
 func (z *ZohoObjectDataset) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -29986,7 +29986,7 @@ func (z ZohoSource) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ZohoSource.
 func (z *ZohoSource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -30014,9 +30014,9 @@ func populate(m map[string]interface{}, k string, v interface{}) {
 	}
 }
 
-func unpopulate(data *json.RawMessage, v interface{}) error {
+func unpopulate(data json.RawMessage, v interface{}) error {
 	if data == nil {
 		return nil
 	}
-	return json.Unmarshal(*data, v)
+	return json.Unmarshal(data, v)
 }

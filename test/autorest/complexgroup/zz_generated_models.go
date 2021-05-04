@@ -157,7 +157,7 @@ func (d DateWrapper) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DateWrapper.
 func (d *DateWrapper) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -205,7 +205,7 @@ func (d DatetimeWrapper) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DatetimeWrapper.
 func (d *DatetimeWrapper) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -253,7 +253,7 @@ func (d Datetimerfc1123Wrapper) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type Datetimerfc1123Wrapper.
 func (d *Datetimerfc1123Wrapper) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -353,7 +353,7 @@ func (d *DotFish) GetDotFish() *DotFish { return d }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DotFish.
 func (d *DotFish) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -368,7 +368,7 @@ func (d DotFish) marshalInternal(discValue string) map[string]interface{} {
 	return objectMap
 }
 
-func (d *DotFish) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+func (d *DotFish) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -395,7 +395,7 @@ type DotFishMarket struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DotFishMarket.
 func (d *DotFishMarket) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -440,7 +440,7 @@ type DotFishResponse struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DotFishResponse.
 func (d *DotFishResponse) UnmarshalJSON(data []byte) error {
-	res, err := unmarshalDotFishClassification((*json.RawMessage)(&data))
+	res, err := unmarshalDotFishClassification(data)
 	if err != nil {
 		return err
 	}
@@ -464,7 +464,7 @@ func (d DotSalmon) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DotSalmon.
 func (d *DotSalmon) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -551,7 +551,7 @@ func (f *Fish) GetFish() *Fish { return f }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type Fish.
 func (f *Fish) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -568,7 +568,7 @@ func (f Fish) marshalInternal(discValue string) map[string]interface{} {
 	return objectMap
 }
 
-func (f *Fish) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+func (f *Fish) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -602,7 +602,7 @@ type FishResponse struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type FishResponse.
 func (f *FishResponse) UnmarshalJSON(data []byte) error {
-	res, err := unmarshalFishClassification((*json.RawMessage)(&data))
+	res, err := unmarshalFishClassification(data)
 	if err != nil {
 		return err
 	}
@@ -645,7 +645,7 @@ func (g Goblinshark) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type Goblinshark.
 func (g *Goblinshark) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -726,7 +726,7 @@ func (m *MyBaseType) GetMyBaseType() *MyBaseType { return m }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type MyBaseType.
 func (m *MyBaseType) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -742,7 +742,7 @@ func (m MyBaseType) marshalInternal(discValue MyKind) map[string]interface{} {
 	return objectMap
 }
 
-func (m *MyBaseType) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+func (m *MyBaseType) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -773,7 +773,7 @@ type MyBaseTypeResponse struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type MyBaseTypeResponse.
 func (m *MyBaseTypeResponse) UnmarshalJSON(data []byte) error {
-	res, err := unmarshalMyBaseTypeClassification((*json.RawMessage)(&data))
+	res, err := unmarshalMyBaseTypeClassification(data)
 	if err != nil {
 		return err
 	}
@@ -795,7 +795,7 @@ func (m MyDerivedType) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type MyDerivedType.
 func (m *MyDerivedType) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -1033,7 +1033,7 @@ func (s Salmon) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type Salmon.
 func (s *Salmon) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -1047,7 +1047,7 @@ func (s Salmon) marshalInternal(discValue string) map[string]interface{} {
 	return objectMap
 }
 
-func (s *Salmon) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+func (s *Salmon) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -1074,7 +1074,7 @@ type SalmonResponse struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SalmonResponse.
 func (s *SalmonResponse) UnmarshalJSON(data []byte) error {
-	res, err := unmarshalSalmonClassification((*json.RawMessage)(&data))
+	res, err := unmarshalSalmonClassification(data)
 	if err != nil {
 		return err
 	}
@@ -1096,7 +1096,7 @@ func (s Sawshark) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type Sawshark.
 func (s *Sawshark) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -1141,7 +1141,7 @@ func (s Shark) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type Shark.
 func (s *Shark) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -1155,7 +1155,7 @@ func (s Shark) marshalInternal(discValue string) map[string]interface{} {
 	return objectMap
 }
 
-func (s *Shark) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+func (s *Shark) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -1208,7 +1208,7 @@ func (s SmartSalmon) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SmartSalmon.
 func (s *SmartSalmon) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -1233,7 +1233,7 @@ func (s *SmartSalmon) UnmarshalJSON(data []byte) error {
 		}
 		if val != nil {
 			var aux interface{}
-			err = json.Unmarshal(*val, &aux)
+			err = json.Unmarshal(val, &aux)
 			(*s.AdditionalProperties)[key] = aux
 		}
 		delete(rawMsg, key)
@@ -1267,9 +1267,9 @@ func populate(m map[string]interface{}, k string, v interface{}) {
 	}
 }
 
-func unpopulate(data *json.RawMessage, v interface{}) error {
+func unpopulate(data json.RawMessage, v interface{}) error {
 	if data == nil {
 		return nil
 	}
-	return json.Unmarshal(*data, v)
+	return json.Unmarshal(data, v)
 }

@@ -40,17 +40,17 @@ export async function generatePolymorphicHelpers(session: Session<CodeModel>): P
       text += '}\n\n';
       const receiver = <string>disc.language.go!.internalErrorType[0];
       text += `func (${receiver} *${disc.language.go!.internalErrorType}) UnmarshalJSON(data []byte) (err error) {\n`;
-      text += `\t${receiver}.wrapped, err = unmarshal${discName}((*json.RawMessage)(&data))\n`;
+      text += `\t${receiver}.wrapped, err = unmarshal${discName}(data)\n`;
       text += '\treturn\n';
       text += '}\n\n';
     }
     // scalar unmarshaller
-    text += `func unmarshal${discName}(rawMsg *json.RawMessage) (${discName}, error) {\n`;
+    text += `func unmarshal${discName}(rawMsg json.RawMessage) (${discName}, error) {\n`;
     text += '\tif rawMsg == nil {\n';
     text += '\t\treturn nil, nil\n';
     text += '\t}\n';
     text += '\tvar m map[string]interface{}\n';
-    text += '\tif err := json.Unmarshal(*rawMsg, &m); err != nil {\n';
+    text += '\tif err := json.Unmarshal(rawMsg, &m); err != nil {\n';
     text += '\t\treturn nil, err\n';
     text += '\t}\n';
     text += `\tvar b ${discName}\n`;
@@ -68,16 +68,16 @@ export async function generatePolymorphicHelpers(session: Session<CodeModel>): P
     text += '\tdefault:\n';
     text += `\t\tb = &${disc.language.go!.name}{}\n`;
     text += '\t}\n';
-    text += '\treturn b, json.Unmarshal(*rawMsg, b)\n';
+    text += '\treturn b, json.Unmarshal(rawMsg, b)\n';
     text += '}\n\n';
 
     // array unmarshaller
-    text += `func unmarshal${discName}Array(rawMsg *json.RawMessage) (*[]${discName}, error) {\n`;
+    text += `func unmarshal${discName}Array(rawMsg json.RawMessage) (*[]${discName}, error) {\n`;
     text += '\tif rawMsg == nil {\n';
     text += '\t\treturn nil, nil\n';
     text += '\t}\n';
-    text += '\tvar rawMessages []*json.RawMessage\n';
-    text += '\tif err := json.Unmarshal(*rawMsg, &rawMessages); err != nil {\n';
+    text += '\tvar rawMessages []json.RawMessage\n';
+    text += '\tif err := json.Unmarshal(rawMsg, &rawMessages); err != nil {\n';
     text += '\t\treturn nil, err\n';
     text += '\t}\n';
     text += `\tfArray := make([]${discName}, len(rawMessages))\n`;
@@ -91,9 +91,5 @@ export async function generatePolymorphicHelpers(session: Session<CodeModel>): P
     text += '\treturn &fArray, nil\n';
     text += '}\n\n';
   }
-  // helper used in discriminator marshallers
-  text += 'func strptr(s string) *string {\n';
-  text += '\treturn &s\n';
-  text += '}\n\n';
   return text;
 }
