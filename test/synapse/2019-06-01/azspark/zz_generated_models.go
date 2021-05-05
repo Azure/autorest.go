@@ -192,7 +192,7 @@ func (s SparkBatchJobState) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SparkBatchJobState.
 func (s *SparkBatchJobState) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -288,7 +288,7 @@ func (s SparkScheduler) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SparkScheduler.
 func (s *SparkScheduler) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -355,7 +355,7 @@ func (s SparkServicePlugin) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SparkServicePlugin.
 func (s *SparkServicePlugin) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -554,7 +554,7 @@ func (s SparkSessionState) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SparkSessionState.
 func (s *SparkSessionState) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -683,9 +683,9 @@ func populate(m map[string]interface{}, k string, v interface{}) {
 	}
 }
 
-func unpopulate(data *json.RawMessage, v interface{}) error {
+func unpopulate(data json.RawMessage, v interface{}) error {
 	if data == nil {
 		return nil
 	}
-	return json.Unmarshal(*data, v)
+	return json.Unmarshal(data, v)
 }

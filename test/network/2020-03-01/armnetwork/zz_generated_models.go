@@ -1305,7 +1305,7 @@ func (a ApplicationRuleCondition) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ApplicationRuleCondition.
 func (a *ApplicationRuleCondition) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -2175,7 +2175,7 @@ func (a AzureReachabilityReportLatencyInfo) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureReachabilityReportLatencyInfo.
 func (a *AzureReachabilityReportLatencyInfo) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -2241,7 +2241,7 @@ func (a AzureReachabilityReportParameters) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AzureReachabilityReportParameters.
 func (a *AzureReachabilityReportParameters) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -2945,7 +2945,7 @@ func (c ConnectionMonitorParameters) marshalInternal() map[string]interface{} {
 	return objectMap
 }
 
-func (c *ConnectionMonitorParameters) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+func (c *ConnectionMonitorParameters) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -3078,7 +3078,7 @@ func (c ConnectionMonitorResultProperties) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ConnectionMonitorResultProperties.
 func (c *ConnectionMonitorResultProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -3340,7 +3340,7 @@ func (c ConnectionStateSnapshot) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ConnectionStateSnapshot.
 func (c *ConnectionStateSnapshot) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -5682,7 +5682,7 @@ func (f FirewallPolicyFilterRule) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type FirewallPolicyFilterRule.
 func (f *FirewallPolicyFilterRule) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -5755,7 +5755,7 @@ func (f FirewallPolicyNatRule) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type FirewallPolicyNatRule.
 func (f *FirewallPolicyNatRule) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -5856,7 +5856,7 @@ func (f *FirewallPolicyRule) GetFirewallPolicyRule() *FirewallPolicyRule { retur
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type FirewallPolicyRule.
 func (f *FirewallPolicyRule) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -5872,7 +5872,7 @@ func (f FirewallPolicyRule) marshalInternal(discValue FirewallPolicyRuleType) ma
 	return objectMap
 }
 
-func (f *FirewallPolicyRule) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+func (f *FirewallPolicyRule) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -5921,7 +5921,7 @@ func (f *FirewallPolicyRuleCondition) GetFirewallPolicyRuleCondition() *Firewall
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type FirewallPolicyRuleCondition.
 func (f *FirewallPolicyRuleCondition) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -5937,7 +5937,7 @@ func (f FirewallPolicyRuleCondition) marshalInternal(discValue FirewallPolicyRul
 	return objectMap
 }
 
-func (f *FirewallPolicyRuleCondition) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+func (f *FirewallPolicyRuleCondition) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -6027,7 +6027,7 @@ type FirewallPolicyRuleGroupProperties struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type FirewallPolicyRuleGroupProperties.
 func (f *FirewallPolicyRuleGroupProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -7905,7 +7905,7 @@ func (n NatRuleCondition) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type NatRuleCondition.
 func (n *NatRuleCondition) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -8594,7 +8594,7 @@ func (n NetworkRuleCondition) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type NetworkRuleCondition.
 func (n *NetworkRuleCondition) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -9455,7 +9455,7 @@ func (p PacketCaptureQueryStatusResult) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type PacketCaptureQueryStatusResult.
 func (p *PacketCaptureQueryStatusResult) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -11961,7 +11961,7 @@ func (t Topology) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type Topology.
 func (t *Topology) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -12151,7 +12151,7 @@ func (t TroubleshootingResult) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type TroubleshootingResult.
 func (t *TroubleshootingResult) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -14821,9 +14821,9 @@ func populate(m map[string]interface{}, k string, v interface{}) {
 	}
 }
 
-func unpopulate(data *json.RawMessage, v interface{}) error {
+func unpopulate(data json.RawMessage, v interface{}) error {
 	if data == nil {
 		return nil
 	}
-	return json.Unmarshal(*data, v)
+	return json.Unmarshal(data, v)
 }

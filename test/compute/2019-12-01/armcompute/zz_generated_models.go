@@ -894,7 +894,7 @@ func (d DedicatedHostProperties) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DedicatedHostProperties.
 func (d *DedicatedHostProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -1287,7 +1287,7 @@ func (d DiskProperties) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DiskProperties.
 func (d *DiskProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -1653,7 +1653,7 @@ func (g GalleryApplicationProperties) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type GalleryApplicationProperties.
 func (g *GalleryApplicationProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -1782,7 +1782,7 @@ func (g GalleryApplicationVersionPublishingProfile) MarshalJSON() ([]byte, error
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type GalleryApplicationVersionPublishingProfile.
 func (g *GalleryApplicationVersionPublishingProfile) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -1911,7 +1911,7 @@ func (g GalleryArtifactPublishingProfileBase) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type GalleryArtifactPublishingProfileBase.
 func (g *GalleryArtifactPublishingProfileBase) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -1929,7 +1929,7 @@ func (g GalleryArtifactPublishingProfileBase) marshalInternal() map[string]inter
 	return objectMap
 }
 
-func (g *GalleryArtifactPublishingProfileBase) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+func (g *GalleryArtifactPublishingProfileBase) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -2117,7 +2117,7 @@ func (g GalleryImageProperties) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type GalleryImageProperties.
 func (g *GalleryImageProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -2707,7 +2707,7 @@ func (i InstanceViewStatus) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type InstanceViewStatus.
 func (i *InstanceViewStatus) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -2850,7 +2850,7 @@ func (l LogAnalyticsInputBase) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type LogAnalyticsInputBase.
 func (l *LogAnalyticsInputBase) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -2868,7 +2868,7 @@ func (l LogAnalyticsInputBase) marshalInternal() map[string]interface{} {
 	return objectMap
 }
 
-func (l *LogAnalyticsInputBase) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+func (l *LogAnalyticsInputBase) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -2974,7 +2974,7 @@ func (m MaintenanceRedeployStatus) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type MaintenanceRedeployStatus.
 func (m *MaintenanceRedeployStatus) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -3404,7 +3404,7 @@ func (r RequestRateByIntervalInput) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type RequestRateByIntervalInput.
 func (r *RequestRateByIntervalInput) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -3675,7 +3675,7 @@ func (r RollingUpgradeRunningStatus) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type RollingUpgradeRunningStatus.
 func (r *RollingUpgradeRunningStatus) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -4127,7 +4127,7 @@ func (s SnapshotProperties) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type SnapshotProperties.
 func (s *SnapshotProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -4441,7 +4441,7 @@ func (u UpgradeOperationHistoryStatus) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type UpgradeOperationHistoryStatus.
 func (u *UpgradeOperationHistoryStatus) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -6929,9 +6929,9 @@ func populate(m map[string]interface{}, k string, v interface{}) {
 	}
 }
 
-func unpopulate(data *json.RawMessage, v interface{}) error {
+func unpopulate(data json.RawMessage, v interface{}) error {
 	if data == nil {
 		return nil
 	}
-	return json.Unmarshal(*data, v)
+	return json.Unmarshal(data, v)
 }

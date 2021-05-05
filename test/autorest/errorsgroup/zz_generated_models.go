@@ -26,7 +26,7 @@ type AnimalNotFound struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AnimalNotFound.
 func (a *AnimalNotFound) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -48,7 +48,7 @@ type BaseError struct {
 	SomeBaseProp *string `json:"someBaseProp,omitempty"`
 }
 
-func (b *BaseError) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+func (b *BaseError) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -70,7 +70,7 @@ type LinkNotFound struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type LinkNotFound.
 func (l *LinkNotFound) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -124,14 +124,14 @@ func (n *NotFoundErrorBase) GetNotFoundErrorBase() *NotFoundErrorBase { return n
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type NotFoundErrorBase.
 func (n *NotFoundErrorBase) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
 	return n.unmarshalInternal(rawMsg)
 }
 
-func (n *NotFoundErrorBase) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+func (n *NotFoundErrorBase) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -196,14 +196,14 @@ func (p *PetActionError) GetPetActionError() *PetActionError { return p }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type PetActionError.
 func (p *PetActionError) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
 	return p.unmarshalInternal(rawMsg)
 }
 
-func (p *PetActionError) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+func (p *PetActionError) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -247,7 +247,7 @@ type PetHungryOrThirstyError struct {
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type PetHungryOrThirstyError.
 func (p *PetHungryOrThirstyError) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
@@ -294,14 +294,14 @@ func (p *PetSadError) GetPetSadError() *PetSadError { return p }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type PetSadError.
 func (p *PetSadError) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]*json.RawMessage
+	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
 	return p.unmarshalInternal(rawMsg)
 }
 
-func (p *PetSadError) unmarshalInternal(rawMsg map[string]*json.RawMessage) error {
+func (p *PetSadError) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -326,9 +326,9 @@ func populate(m map[string]interface{}, k string, v interface{}) {
 	}
 }
 
-func unpopulate(data *json.RawMessage, v interface{}) error {
+func unpopulate(data json.RawMessage, v interface{}) error {
 	if data == nil {
 		return nil
 	}
-	return json.Unmarshal(*data, v)
+	return json.Unmarshal(data, v)
 }

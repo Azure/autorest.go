@@ -9,12 +9,12 @@ package complexgroup
 
 import "encoding/json"
 
-func unmarshalDotFishClassification(rawMsg *json.RawMessage) (DotFishClassification, error) {
+func unmarshalDotFishClassification(rawMsg json.RawMessage) (DotFishClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
 	var m map[string]interface{}
-	if err := json.Unmarshal(*rawMsg, &m); err != nil {
+	if err := json.Unmarshal(rawMsg, &m); err != nil {
 		return nil, err
 	}
 	var b DotFishClassification
@@ -24,15 +24,15 @@ func unmarshalDotFishClassification(rawMsg *json.RawMessage) (DotFishClassificat
 	default:
 		b = &DotFish{}
 	}
-	return b, json.Unmarshal(*rawMsg, b)
+	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalDotFishClassificationArray(rawMsg *json.RawMessage) (*[]DotFishClassification, error) {
+func unmarshalDotFishClassificationArray(rawMsg json.RawMessage) (*[]DotFishClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
-	var rawMessages []*json.RawMessage
-	if err := json.Unmarshal(*rawMsg, &rawMessages); err != nil {
+	var rawMessages []json.RawMessage
+	if err := json.Unmarshal(rawMsg, &rawMessages); err != nil {
 		return nil, err
 	}
 	fArray := make([]DotFishClassification, len(rawMessages))
@@ -46,12 +46,12 @@ func unmarshalDotFishClassificationArray(rawMsg *json.RawMessage) (*[]DotFishCla
 	return &fArray, nil
 }
 
-func unmarshalFishClassification(rawMsg *json.RawMessage) (FishClassification, error) {
+func unmarshalFishClassification(rawMsg json.RawMessage) (FishClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
 	var m map[string]interface{}
-	if err := json.Unmarshal(*rawMsg, &m); err != nil {
+	if err := json.Unmarshal(rawMsg, &m); err != nil {
 		return nil, err
 	}
 	var b FishClassification
@@ -71,15 +71,15 @@ func unmarshalFishClassification(rawMsg *json.RawMessage) (FishClassification, e
 	default:
 		b = &Fish{}
 	}
-	return b, json.Unmarshal(*rawMsg, b)
+	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalFishClassificationArray(rawMsg *json.RawMessage) (*[]FishClassification, error) {
+func unmarshalFishClassificationArray(rawMsg json.RawMessage) (*[]FishClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
-	var rawMessages []*json.RawMessage
-	if err := json.Unmarshal(*rawMsg, &rawMessages); err != nil {
+	var rawMessages []json.RawMessage
+	if err := json.Unmarshal(rawMsg, &rawMessages); err != nil {
 		return nil, err
 	}
 	fArray := make([]FishClassification, len(rawMessages))
@@ -93,12 +93,12 @@ func unmarshalFishClassificationArray(rawMsg *json.RawMessage) (*[]FishClassific
 	return &fArray, nil
 }
 
-func unmarshalMyBaseTypeClassification(rawMsg *json.RawMessage) (MyBaseTypeClassification, error) {
+func unmarshalMyBaseTypeClassification(rawMsg json.RawMessage) (MyBaseTypeClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
 	var m map[string]interface{}
-	if err := json.Unmarshal(*rawMsg, &m); err != nil {
+	if err := json.Unmarshal(rawMsg, &m); err != nil {
 		return nil, err
 	}
 	var b MyBaseTypeClassification
@@ -108,15 +108,15 @@ func unmarshalMyBaseTypeClassification(rawMsg *json.RawMessage) (MyBaseTypeClass
 	default:
 		b = &MyBaseType{}
 	}
-	return b, json.Unmarshal(*rawMsg, b)
+	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalMyBaseTypeClassificationArray(rawMsg *json.RawMessage) (*[]MyBaseTypeClassification, error) {
+func unmarshalMyBaseTypeClassificationArray(rawMsg json.RawMessage) (*[]MyBaseTypeClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
-	var rawMessages []*json.RawMessage
-	if err := json.Unmarshal(*rawMsg, &rawMessages); err != nil {
+	var rawMessages []json.RawMessage
+	if err := json.Unmarshal(rawMsg, &rawMessages); err != nil {
 		return nil, err
 	}
 	fArray := make([]MyBaseTypeClassification, len(rawMessages))
@@ -130,12 +130,12 @@ func unmarshalMyBaseTypeClassificationArray(rawMsg *json.RawMessage) (*[]MyBaseT
 	return &fArray, nil
 }
 
-func unmarshalSalmonClassification(rawMsg *json.RawMessage) (SalmonClassification, error) {
+func unmarshalSalmonClassification(rawMsg json.RawMessage) (SalmonClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
 	var m map[string]interface{}
-	if err := json.Unmarshal(*rawMsg, &m); err != nil {
+	if err := json.Unmarshal(rawMsg, &m); err != nil {
 		return nil, err
 	}
 	var b SalmonClassification
@@ -145,15 +145,15 @@ func unmarshalSalmonClassification(rawMsg *json.RawMessage) (SalmonClassificatio
 	default:
 		b = &Salmon{}
 	}
-	return b, json.Unmarshal(*rawMsg, b)
+	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalSalmonClassificationArray(rawMsg *json.RawMessage) (*[]SalmonClassification, error) {
+func unmarshalSalmonClassificationArray(rawMsg json.RawMessage) (*[]SalmonClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
-	var rawMessages []*json.RawMessage
-	if err := json.Unmarshal(*rawMsg, &rawMessages); err != nil {
+	var rawMessages []json.RawMessage
+	if err := json.Unmarshal(rawMsg, &rawMessages); err != nil {
 		return nil, err
 	}
 	fArray := make([]SalmonClassification, len(rawMessages))
@@ -167,12 +167,12 @@ func unmarshalSalmonClassificationArray(rawMsg *json.RawMessage) (*[]SalmonClass
 	return &fArray, nil
 }
 
-func unmarshalSharkClassification(rawMsg *json.RawMessage) (SharkClassification, error) {
+func unmarshalSharkClassification(rawMsg json.RawMessage) (SharkClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
 	var m map[string]interface{}
-	if err := json.Unmarshal(*rawMsg, &m); err != nil {
+	if err := json.Unmarshal(rawMsg, &m); err != nil {
 		return nil, err
 	}
 	var b SharkClassification
@@ -186,15 +186,15 @@ func unmarshalSharkClassification(rawMsg *json.RawMessage) (SharkClassification,
 	default:
 		b = &Shark{}
 	}
-	return b, json.Unmarshal(*rawMsg, b)
+	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalSharkClassificationArray(rawMsg *json.RawMessage) (*[]SharkClassification, error) {
+func unmarshalSharkClassificationArray(rawMsg json.RawMessage) (*[]SharkClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
-	var rawMessages []*json.RawMessage
-	if err := json.Unmarshal(*rawMsg, &rawMessages); err != nil {
+	var rawMessages []json.RawMessage
+	if err := json.Unmarshal(rawMsg, &rawMessages); err != nil {
 		return nil, err
 	}
 	fArray := make([]SharkClassification, len(rawMessages))
@@ -206,8 +206,4 @@ func unmarshalSharkClassificationArray(rawMsg *json.RawMessage) (*[]SharkClassif
 		fArray[index] = f
 	}
 	return &fArray, nil
-}
-
-func strptr(s string) *string {
-	return &s
 }
