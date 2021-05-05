@@ -9,6 +9,7 @@ package complexgroup
 
 import (
 	"context"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 )
@@ -63,11 +64,15 @@ func (client *PolymorphismClient) getComplicatedHandleResponse(resp *azcore.Resp
 
 // getComplicatedHandleError handles the GetComplicated error response.
 func (client *PolymorphismClient) getComplicatedHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetComposedWithDiscriminator - Get complex object composing a polymorphic scalar property and array property with polymorphic element type, with discriminator
@@ -111,11 +116,15 @@ func (client *PolymorphismClient) getComposedWithDiscriminatorHandleResponse(res
 
 // getComposedWithDiscriminatorHandleError handles the GetComposedWithDiscriminator error response.
 func (client *PolymorphismClient) getComposedWithDiscriminatorHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetComposedWithoutDiscriminator - Get complex object composing a polymorphic scalar property and array property with polymorphic element type, without
@@ -159,11 +168,15 @@ func (client *PolymorphismClient) getComposedWithoutDiscriminatorHandleResponse(
 
 // getComposedWithoutDiscriminatorHandleError handles the GetComposedWithoutDiscriminator error response.
 func (client *PolymorphismClient) getComposedWithoutDiscriminatorHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetDotSyntax - Get complex types that are polymorphic, JSON key contains a dot
@@ -205,11 +218,15 @@ func (client *PolymorphismClient) getDotSyntaxHandleResponse(resp *azcore.Respon
 
 // getDotSyntaxHandleError handles the GetDotSyntax error response.
 func (client *PolymorphismClient) getDotSyntaxHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetValid - Get complex types that are polymorphic
@@ -251,11 +268,15 @@ func (client *PolymorphismClient) getValidHandleResponse(resp *azcore.Response) 
 
 // getValidHandleError handles the GetValid error response.
 func (client *PolymorphismClient) getValidHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // PutComplicated - Put complex types that are polymorphic, but not at the root of the hierarchy; also have additional properties
@@ -288,11 +309,15 @@ func (client *PolymorphismClient) putComplicatedCreateRequest(ctx context.Contex
 
 // putComplicatedHandleError handles the PutComplicated error response.
 func (client *PolymorphismClient) putComplicatedHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // PutMissingDiscriminator - Put complex types that are polymorphic, omitting the discriminator
@@ -334,11 +359,15 @@ func (client *PolymorphismClient) putMissingDiscriminatorHandleResponse(resp *az
 
 // putMissingDiscriminatorHandleError handles the PutMissingDiscriminator error response.
 func (client *PolymorphismClient) putMissingDiscriminatorHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // PutValid - Put complex types that are polymorphic
@@ -371,11 +400,15 @@ func (client *PolymorphismClient) putValidCreateRequest(ctx context.Context, com
 
 // putValidHandleError handles the PutValid error response.
 func (client *PolymorphismClient) putValidHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // PutValidMissingRequired - Put complex types that are polymorphic, attempting to omit required 'birthday' field - the request should not be allowed from
@@ -409,9 +442,13 @@ func (client *PolymorphismClient) putValidMissingRequiredCreateRequest(ctx conte
 
 // putValidMissingRequiredHandleError handles the PutValidMissingRequired error response.
 func (client *PolymorphismClient) putValidMissingRequiredHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

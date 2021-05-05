@@ -7,26 +7,16 @@
 
 package paramgroupinggroup
 
-import "fmt"
-
 type Error struct {
+	raw     string
 	Message *string `json:"message,omitempty"`
 	Status  *int32  `json:"status,omitempty"`
 }
 
 // Error implements the error interface for type Error.
+// The contents of the error text are not contractual and subject to change.
 func (e Error) Error() string {
-	msg := ""
-	if e.Message != nil {
-		msg += fmt.Sprintf("Message: %v\n", *e.Message)
-	}
-	if e.Status != nil {
-		msg += fmt.Sprintf("Status: %v\n", *e.Status)
-	}
-	if msg == "" {
-		msg = "missing error info"
-	}
-	return msg
+	return e.raw
 }
 
 // FirstParameterGroup contains a group of parameters for the ParameterGrouping.PostMultiParamGroups method.

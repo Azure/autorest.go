@@ -9,6 +9,7 @@ package datetimegroup
 
 import (
 	"context"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"time"
@@ -64,11 +65,15 @@ func (client *DatetimeClient) getInvalidHandleResponse(resp *azcore.Response) (T
 
 // getInvalidHandleError handles the GetInvalid error response.
 func (client *DatetimeClient) getInvalidHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetLocalNegativeOffsetLowercaseMaxDateTime - Get max datetime value with positive num offset 9999-12-31t23:59:59.999-14:00
@@ -110,11 +115,15 @@ func (client *DatetimeClient) getLocalNegativeOffsetLowercaseMaxDateTimeHandleRe
 
 // getLocalNegativeOffsetLowercaseMaxDateTimeHandleError handles the GetLocalNegativeOffsetLowercaseMaxDateTime error response.
 func (client *DatetimeClient) getLocalNegativeOffsetLowercaseMaxDateTimeHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetLocalNegativeOffsetMinDateTime - Get min datetime value 0001-01-01T00:00:00-14:00
@@ -156,11 +165,15 @@ func (client *DatetimeClient) getLocalNegativeOffsetMinDateTimeHandleResponse(re
 
 // getLocalNegativeOffsetMinDateTimeHandleError handles the GetLocalNegativeOffsetMinDateTime error response.
 func (client *DatetimeClient) getLocalNegativeOffsetMinDateTimeHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetLocalNegativeOffsetUppercaseMaxDateTime - Get max datetime value with positive num offset 9999-12-31T23:59:59.999-14:00
@@ -202,11 +215,15 @@ func (client *DatetimeClient) getLocalNegativeOffsetUppercaseMaxDateTimeHandleRe
 
 // getLocalNegativeOffsetUppercaseMaxDateTimeHandleError handles the GetLocalNegativeOffsetUppercaseMaxDateTime error response.
 func (client *DatetimeClient) getLocalNegativeOffsetUppercaseMaxDateTimeHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetLocalNoOffsetMinDateTime - Get min datetime value 0001-01-01T00:00:00
@@ -248,11 +265,15 @@ func (client *DatetimeClient) getLocalNoOffsetMinDateTimeHandleResponse(resp *az
 
 // getLocalNoOffsetMinDateTimeHandleError handles the GetLocalNoOffsetMinDateTime error response.
 func (client *DatetimeClient) getLocalNoOffsetMinDateTimeHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetLocalPositiveOffsetLowercaseMaxDateTime - Get max datetime value with positive num offset 9999-12-31t23:59:59.999+14:00
@@ -294,11 +315,15 @@ func (client *DatetimeClient) getLocalPositiveOffsetLowercaseMaxDateTimeHandleRe
 
 // getLocalPositiveOffsetLowercaseMaxDateTimeHandleError handles the GetLocalPositiveOffsetLowercaseMaxDateTime error response.
 func (client *DatetimeClient) getLocalPositiveOffsetLowercaseMaxDateTimeHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetLocalPositiveOffsetMinDateTime - Get min datetime value 0001-01-01T00:00:00+14:00
@@ -340,11 +365,15 @@ func (client *DatetimeClient) getLocalPositiveOffsetMinDateTimeHandleResponse(re
 
 // getLocalPositiveOffsetMinDateTimeHandleError handles the GetLocalPositiveOffsetMinDateTime error response.
 func (client *DatetimeClient) getLocalPositiveOffsetMinDateTimeHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetLocalPositiveOffsetUppercaseMaxDateTime - Get max datetime value with positive num offset 9999-12-31T23:59:59.999+14:00
@@ -386,11 +415,15 @@ func (client *DatetimeClient) getLocalPositiveOffsetUppercaseMaxDateTimeHandleRe
 
 // getLocalPositiveOffsetUppercaseMaxDateTimeHandleError handles the GetLocalPositiveOffsetUppercaseMaxDateTime error response.
 func (client *DatetimeClient) getLocalPositiveOffsetUppercaseMaxDateTimeHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetNull - Get null datetime value
@@ -432,11 +465,15 @@ func (client *DatetimeClient) getNullHandleResponse(resp *azcore.Response) (Time
 
 // getNullHandleError handles the GetNull error response.
 func (client *DatetimeClient) getNullHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetOverflow - Get overflow datetime value
@@ -478,11 +515,15 @@ func (client *DatetimeClient) getOverflowHandleResponse(resp *azcore.Response) (
 
 // getOverflowHandleError handles the GetOverflow error response.
 func (client *DatetimeClient) getOverflowHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetUTCLowercaseMaxDateTime - Get max datetime value 9999-12-31t23:59:59.999z
@@ -524,11 +565,15 @@ func (client *DatetimeClient) getUTCLowercaseMaxDateTimeHandleResponse(resp *azc
 
 // getUTCLowercaseMaxDateTimeHandleError handles the GetUTCLowercaseMaxDateTime error response.
 func (client *DatetimeClient) getUTCLowercaseMaxDateTimeHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetUTCMinDateTime - Get min datetime value 0001-01-01T00:00:00Z
@@ -570,11 +615,15 @@ func (client *DatetimeClient) getUTCMinDateTimeHandleResponse(resp *azcore.Respo
 
 // getUTCMinDateTimeHandleError handles the GetUTCMinDateTime error response.
 func (client *DatetimeClient) getUTCMinDateTimeHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetUTCUppercaseMaxDateTime - Get max datetime value 9999-12-31T23:59:59.999Z
@@ -616,11 +665,15 @@ func (client *DatetimeClient) getUTCUppercaseMaxDateTimeHandleResponse(resp *azc
 
 // getUTCUppercaseMaxDateTimeHandleError handles the GetUTCUppercaseMaxDateTime error response.
 func (client *DatetimeClient) getUTCUppercaseMaxDateTimeHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetUTCUppercaseMaxDateTime7Digits - This is against the recommendation that asks for 3 digits, but allow to test what happens in that scenario
@@ -662,11 +715,15 @@ func (client *DatetimeClient) getUTCUppercaseMaxDateTime7DigitsHandleResponse(re
 
 // getUTCUppercaseMaxDateTime7DigitsHandleError handles the GetUTCUppercaseMaxDateTime7Digits error response.
 func (client *DatetimeClient) getUTCUppercaseMaxDateTime7DigitsHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetUnderflow - Get underflow datetime value
@@ -708,11 +765,15 @@ func (client *DatetimeClient) getUnderflowHandleResponse(resp *azcore.Response) 
 
 // getUnderflowHandleError handles the GetUnderflow error response.
 func (client *DatetimeClient) getUnderflowHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // PutLocalNegativeOffsetMaxDateTime - Put max datetime value with positive numoffset 9999-12-31t23:59:59.999-14:00
@@ -745,11 +806,15 @@ func (client *DatetimeClient) putLocalNegativeOffsetMaxDateTimeCreateRequest(ctx
 
 // putLocalNegativeOffsetMaxDateTimeHandleError handles the PutLocalNegativeOffsetMaxDateTime error response.
 func (client *DatetimeClient) putLocalNegativeOffsetMaxDateTimeHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // PutLocalNegativeOffsetMinDateTime - Put min datetime value 0001-01-01T00:00:00-14:00
@@ -782,11 +847,15 @@ func (client *DatetimeClient) putLocalNegativeOffsetMinDateTimeCreateRequest(ctx
 
 // putLocalNegativeOffsetMinDateTimeHandleError handles the PutLocalNegativeOffsetMinDateTime error response.
 func (client *DatetimeClient) putLocalNegativeOffsetMinDateTimeHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // PutLocalPositiveOffsetMaxDateTime - Put max datetime value with positive numoffset 9999-12-31t23:59:59.999+14:00
@@ -819,11 +888,15 @@ func (client *DatetimeClient) putLocalPositiveOffsetMaxDateTimeCreateRequest(ctx
 
 // putLocalPositiveOffsetMaxDateTimeHandleError handles the PutLocalPositiveOffsetMaxDateTime error response.
 func (client *DatetimeClient) putLocalPositiveOffsetMaxDateTimeHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // PutLocalPositiveOffsetMinDateTime - Put min datetime value 0001-01-01T00:00:00+14:00
@@ -856,11 +929,15 @@ func (client *DatetimeClient) putLocalPositiveOffsetMinDateTimeCreateRequest(ctx
 
 // putLocalPositiveOffsetMinDateTimeHandleError handles the PutLocalPositiveOffsetMinDateTime error response.
 func (client *DatetimeClient) putLocalPositiveOffsetMinDateTimeHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // PutUTCMaxDateTime - Put max datetime value 9999-12-31T23:59:59.999Z
@@ -893,11 +970,15 @@ func (client *DatetimeClient) putUTCMaxDateTimeCreateRequest(ctx context.Context
 
 // putUTCMaxDateTimeHandleError handles the PutUTCMaxDateTime error response.
 func (client *DatetimeClient) putUTCMaxDateTimeHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // PutUTCMaxDateTime7Digits - This is against the recommendation that asks for 3 digits, but allow to test what happens in that scenario
@@ -930,11 +1011,15 @@ func (client *DatetimeClient) putUTCMaxDateTime7DigitsCreateRequest(ctx context.
 
 // putUTCMaxDateTime7DigitsHandleError handles the PutUTCMaxDateTime7Digits error response.
 func (client *DatetimeClient) putUTCMaxDateTime7DigitsHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // PutUTCMinDateTime - Put min datetime value 0001-01-01T00:00:00Z
@@ -967,9 +1052,13 @@ func (client *DatetimeClient) putUTCMinDateTimeCreateRequest(ctx context.Context
 
 // putUTCMinDateTimeHandleError handles the PutUTCMinDateTime error response.
 func (client *DatetimeClient) putUTCMinDateTimeHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

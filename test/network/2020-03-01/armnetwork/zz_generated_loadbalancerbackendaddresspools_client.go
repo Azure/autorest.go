@@ -10,6 +10,7 @@ package armnetwork
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
@@ -87,11 +88,15 @@ func (client *LoadBalancerBackendAddressPoolsClient) getHandleResponse(resp *azc
 
 // getHandleError handles the Get error response.
 func (client *LoadBalancerBackendAddressPoolsClient) getHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // List - Gets all the load balancer backed address pools.
@@ -148,9 +153,13 @@ func (client *LoadBalancerBackendAddressPoolsClient) listHandleResponse(resp *az
 
 // listHandleError handles the List error response.
 func (client *LoadBalancerBackendAddressPoolsClient) listHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

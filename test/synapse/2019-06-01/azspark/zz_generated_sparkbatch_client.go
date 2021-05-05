@@ -10,9 +10,7 @@ package azspark
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -53,9 +51,9 @@ func (client *sparkBatchClient) cancelSparkBatchJobCreateRequest(ctx context.Con
 
 // cancelSparkBatchJobHandleError handles the CancelSparkBatchJob error response.
 func (client *sparkBatchClient) cancelSparkBatchJobHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -107,9 +105,9 @@ func (client *sparkBatchClient) createSparkBatchJobHandleResponse(resp *azcore.R
 
 // createSparkBatchJobHandleError handles the CreateSparkBatchJob error response.
 func (client *sparkBatchClient) createSparkBatchJobHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -162,9 +160,9 @@ func (client *sparkBatchClient) getSparkBatchJobHandleResponse(resp *azcore.Resp
 
 // getSparkBatchJobHandleError handles the GetSparkBatchJob error response.
 func (client *sparkBatchClient) getSparkBatchJobHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -222,9 +220,9 @@ func (client *sparkBatchClient) getSparkBatchJobsHandleResponse(resp *azcore.Res
 
 // getSparkBatchJobsHandleError handles the GetSparkBatchJobs error response.
 func (client *sparkBatchClient) getSparkBatchJobsHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)

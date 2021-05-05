@@ -9,6 +9,7 @@ package azartifacts
 
 import (
 	"context"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 )
@@ -59,9 +60,13 @@ func (client *workspaceClient) getHandleResponse(resp *azcore.Response) (Workspa
 
 // getHandleError handles the Get error response.
 func (client *workspaceClient) getHandleError(resp *azcore.Response) error {
-	var err ErrorContract
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := ErrorContract{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

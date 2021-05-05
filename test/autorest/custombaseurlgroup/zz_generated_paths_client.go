@@ -9,6 +9,7 @@ package custombaseurlgroup
 
 import (
 	"context"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"strings"
@@ -58,9 +59,13 @@ func (client *PathsClient) getEmptyCreateRequest(ctx context.Context, accountNam
 
 // getEmptyHandleError handles the GetEmpty error response.
 func (client *PathsClient) getEmptyHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

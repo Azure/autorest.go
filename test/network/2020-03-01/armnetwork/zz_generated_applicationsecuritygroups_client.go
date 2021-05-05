@@ -10,6 +10,7 @@ package armnetwork
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
@@ -133,11 +134,15 @@ func (client *ApplicationSecurityGroupsClient) createOrUpdateHandleResponse(resp
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *ApplicationSecurityGroupsClient) createOrUpdateHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginDelete - Deletes the specified application security group.
@@ -234,11 +239,15 @@ func (client *ApplicationSecurityGroupsClient) deleteCreateRequest(ctx context.C
 
 // deleteHandleError handles the Delete error response.
 func (client *ApplicationSecurityGroupsClient) deleteHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Get - Gets information about the specified application security group.
@@ -295,11 +304,15 @@ func (client *ApplicationSecurityGroupsClient) getHandleResponse(resp *azcore.Re
 
 // getHandleError handles the Get error response.
 func (client *ApplicationSecurityGroupsClient) getHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // List - Gets all the application security groups in a resource group.
@@ -352,11 +365,15 @@ func (client *ApplicationSecurityGroupsClient) listHandleResponse(resp *azcore.R
 
 // listHandleError handles the List error response.
 func (client *ApplicationSecurityGroupsClient) listHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // ListAll - Gets all application security groups in a subscription.
@@ -405,11 +422,15 @@ func (client *ApplicationSecurityGroupsClient) listAllHandleResponse(resp *azcor
 
 // listAllHandleError handles the ListAll error response.
 func (client *ApplicationSecurityGroupsClient) listAllHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // UpdateTags - Updates an application security group's tags.
@@ -466,9 +487,13 @@ func (client *ApplicationSecurityGroupsClient) updateTagsHandleResponse(resp *az
 
 // updateTagsHandleError handles the UpdateTags error response.
 func (client *ApplicationSecurityGroupsClient) updateTagsHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

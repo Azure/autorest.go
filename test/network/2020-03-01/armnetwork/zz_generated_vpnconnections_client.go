@@ -10,6 +10,7 @@ package armnetwork
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
@@ -137,11 +138,15 @@ func (client *VPNConnectionsClient) createOrUpdateHandleResponse(resp *azcore.Re
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *VPNConnectionsClient) createOrUpdateHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginDelete - Deletes a vpn connection.
@@ -242,11 +247,15 @@ func (client *VPNConnectionsClient) deleteCreateRequest(ctx context.Context, res
 
 // deleteHandleError handles the Delete error response.
 func (client *VPNConnectionsClient) deleteHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Get - Retrieves the details of a vpn connection.
@@ -307,11 +316,15 @@ func (client *VPNConnectionsClient) getHandleResponse(resp *azcore.Response) (VP
 
 // getHandleError handles the Get error response.
 func (client *VPNConnectionsClient) getHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // ListByVPNGateway - Retrieves all vpn connections for a particular virtual wan vpn gateway.
@@ -368,9 +381,13 @@ func (client *VPNConnectionsClient) listByVPNGatewayHandleResponse(resp *azcore.
 
 // listByVPNGatewayHandleError handles the ListByVPNGateway error response.
 func (client *VPNConnectionsClient) listByVPNGatewayHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

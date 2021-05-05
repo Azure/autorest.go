@@ -9,7 +9,7 @@ package objectgroup
 
 import (
 	"context"
-	"fmt"
+	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 )
@@ -64,11 +64,14 @@ func (client *ObjectTypeClient) getHandleResponse(resp *azcore.Response) (Interf
 
 // getHandleError handles the Get error response.
 func (client *ObjectTypeClient) getHandleError(resp *azcore.Response) error {
-	var err interface{}
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(fmt.Errorf("%v", err), resp.Response)
+	if len(body) == 0 {
+		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
+	}
+	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
 // Put - Basic put that puts an object. Pass in {'foo': 'bar'} to get a 200 and anything else to get an object error.
@@ -101,9 +104,12 @@ func (client *ObjectTypeClient) putCreateRequest(ctx context.Context, putObject 
 
 // putHandleError handles the Put error response.
 func (client *ObjectTypeClient) putHandleError(resp *azcore.Response) error {
-	var err interface{}
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(fmt.Errorf("%v", err), resp.Response)
+	if len(body) == 0 {
+		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
+	}
+	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }

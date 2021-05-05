@@ -10,9 +10,7 @@ package nonstringenumgroup
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"io/ioutil"
 	"net/http"
 )
 
@@ -66,9 +64,9 @@ func (client *IntClient) getHandleResponse(resp *azcore.Response) (IntEnumRespon
 
 // getHandleError handles the Get error response.
 func (client *IntClient) getHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -118,9 +116,9 @@ func (client *IntClient) putHandleResponse(resp *azcore.Response) (StringRespons
 
 // putHandleError handles the Put error response.
 func (client *IntClient) putHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)

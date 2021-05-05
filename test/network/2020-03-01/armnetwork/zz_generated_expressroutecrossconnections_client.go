@@ -10,6 +10,7 @@ package armnetwork
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
@@ -133,11 +134,15 @@ func (client *ExpressRouteCrossConnectionsClient) createOrUpdateHandleResponse(r
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *ExpressRouteCrossConnectionsClient) createOrUpdateHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Get - Gets details about the specified ExpressRouteCrossConnection.
@@ -194,11 +199,15 @@ func (client *ExpressRouteCrossConnectionsClient) getHandleResponse(resp *azcore
 
 // getHandleError handles the Get error response.
 func (client *ExpressRouteCrossConnectionsClient) getHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // List - Retrieves all the ExpressRouteCrossConnections in a subscription.
@@ -247,11 +256,15 @@ func (client *ExpressRouteCrossConnectionsClient) listHandleResponse(resp *azcor
 
 // listHandleError handles the List error response.
 func (client *ExpressRouteCrossConnectionsClient) listHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginListArpTable - Gets the currently advertised ARP table associated with the express route cross connection in a resource group.
@@ -365,11 +378,15 @@ func (client *ExpressRouteCrossConnectionsClient) listArpTableHandleResponse(res
 
 // listArpTableHandleError handles the ListArpTable error response.
 func (client *ExpressRouteCrossConnectionsClient) listArpTableHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // ListByResourceGroup - Retrieves all the ExpressRouteCrossConnections in a resource group.
@@ -422,11 +439,15 @@ func (client *ExpressRouteCrossConnectionsClient) listByResourceGroupHandleRespo
 
 // listByResourceGroupHandleError handles the ListByResourceGroup error response.
 func (client *ExpressRouteCrossConnectionsClient) listByResourceGroupHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginListRoutesTable - Gets the currently advertised routes table associated with the express route cross connection in a resource group.
@@ -540,11 +561,15 @@ func (client *ExpressRouteCrossConnectionsClient) listRoutesTableHandleResponse(
 
 // listRoutesTableHandleError handles the ListRoutesTable error response.
 func (client *ExpressRouteCrossConnectionsClient) listRoutesTableHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginListRoutesTableSummary - Gets the route table summary associated with the express route cross connection in a resource group.
@@ -658,11 +683,15 @@ func (client *ExpressRouteCrossConnectionsClient) listRoutesTableSummaryHandleRe
 
 // listRoutesTableSummaryHandleError handles the ListRoutesTableSummary error response.
 func (client *ExpressRouteCrossConnectionsClient) listRoutesTableSummaryHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // UpdateTags - Updates an express route cross connection tags.
@@ -719,9 +748,13 @@ func (client *ExpressRouteCrossConnectionsClient) updateTagsHandleResponse(resp 
 
 // updateTagsHandleError handles the UpdateTags error response.
 func (client *ExpressRouteCrossConnectionsClient) updateTagsHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

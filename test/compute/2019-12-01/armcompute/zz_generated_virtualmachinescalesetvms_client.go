@@ -10,10 +10,8 @@ package armcompute
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -134,9 +132,9 @@ func (client *VirtualMachineScaleSetVMsClient) deallocateCreateRequest(ctx conte
 
 // deallocateHandleError handles the Deallocate error response.
 func (client *VirtualMachineScaleSetVMsClient) deallocateHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -241,9 +239,9 @@ func (client *VirtualMachineScaleSetVMsClient) deleteCreateRequest(ctx context.C
 
 // deleteHandleError handles the Delete error response.
 func (client *VirtualMachineScaleSetVMsClient) deleteHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -312,9 +310,9 @@ func (client *VirtualMachineScaleSetVMsClient) getHandleResponse(resp *azcore.Re
 
 // getHandleError handles the Get error response.
 func (client *VirtualMachineScaleSetVMsClient) getHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -380,9 +378,9 @@ func (client *VirtualMachineScaleSetVMsClient) getInstanceViewHandleResponse(res
 
 // getInstanceViewHandleError handles the GetInstanceView error response.
 func (client *VirtualMachineScaleSetVMsClient) getInstanceViewHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -453,9 +451,9 @@ func (client *VirtualMachineScaleSetVMsClient) listHandleResponse(resp *azcore.R
 
 // listHandleError handles the List error response.
 func (client *VirtualMachineScaleSetVMsClient) listHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -562,9 +560,9 @@ func (client *VirtualMachineScaleSetVMsClient) performMaintenanceCreateRequest(c
 
 // performMaintenanceHandleError handles the PerformMaintenance error response.
 func (client *VirtualMachineScaleSetVMsClient) performMaintenanceHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -676,9 +674,9 @@ func (client *VirtualMachineScaleSetVMsClient) powerOffCreateRequest(ctx context
 
 // powerOffHandleError handles the PowerOff error response.
 func (client *VirtualMachineScaleSetVMsClient) powerOffHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -783,9 +781,9 @@ func (client *VirtualMachineScaleSetVMsClient) redeployCreateRequest(ctx context
 
 // redeployHandleError handles the Redeploy error response.
 func (client *VirtualMachineScaleSetVMsClient) redeployHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -893,9 +891,9 @@ func (client *VirtualMachineScaleSetVMsClient) reimageCreateRequest(ctx context.
 
 // reimageHandleError handles the Reimage error response.
 func (client *VirtualMachineScaleSetVMsClient) reimageHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -1002,9 +1000,9 @@ func (client *VirtualMachineScaleSetVMsClient) reimageAllCreateRequest(ctx conte
 
 // reimageAllHandleError handles the ReimageAll error response.
 func (client *VirtualMachineScaleSetVMsClient) reimageAllHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -1109,9 +1107,9 @@ func (client *VirtualMachineScaleSetVMsClient) restartCreateRequest(ctx context.
 
 // restartHandleError handles the Restart error response.
 func (client *VirtualMachineScaleSetVMsClient) restartHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -1226,9 +1224,9 @@ func (client *VirtualMachineScaleSetVMsClient) runCommandHandleResponse(resp *az
 
 // runCommandHandleError handles the RunCommand error response.
 func (client *VirtualMachineScaleSetVMsClient) runCommandHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -1285,9 +1283,9 @@ func (client *VirtualMachineScaleSetVMsClient) simulateEvictionCreateRequest(ctx
 
 // simulateEvictionHandleError handles the SimulateEviction error response.
 func (client *VirtualMachineScaleSetVMsClient) simulateEvictionHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -1392,9 +1390,9 @@ func (client *VirtualMachineScaleSetVMsClient) startCreateRequest(ctx context.Co
 
 // startHandleError handles the Start error response.
 func (client *VirtualMachineScaleSetVMsClient) startHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -1509,9 +1507,9 @@ func (client *VirtualMachineScaleSetVMsClient) updateHandleResponse(resp *azcore
 
 // updateHandleError handles the Update error response.
 func (client *VirtualMachineScaleSetVMsClient) updateHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)

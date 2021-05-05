@@ -9,7 +9,6 @@ package xmlgroup
 
 import (
 	"encoding/xml"
-	"fmt"
 	"net/http"
 	"time"
 )
@@ -341,23 +340,15 @@ type CorsRule struct {
 }
 
 type Error struct {
+	raw     string
 	Message *string `xml:"message"`
 	Status  *int32  `xml:"status"`
 }
 
 // Error implements the error interface for type Error.
+// The contents of the error text are not contractual and subject to change.
 func (e Error) Error() string {
-	msg := ""
-	if e.Message != nil {
-		msg += fmt.Sprintf("Message: %v\n", *e.Message)
-	}
-	if e.Status != nil {
-		msg += fmt.Sprintf("Status: %v\n", *e.Status)
-	}
-	if msg == "" {
-		msg = "missing error info"
-	}
-	return msg
+	return e.raw
 }
 
 type JSONInput struct {

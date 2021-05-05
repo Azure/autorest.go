@@ -10,6 +10,7 @@ package azurespecialsgroup
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -66,11 +67,15 @@ func (client *SubscriptionInCredentialsClient) postMethodGlobalNotProvidedValidC
 
 // postMethodGlobalNotProvidedValidHandleError handles the PostMethodGlobalNotProvidedValid error response.
 func (client *SubscriptionInCredentialsClient) postMethodGlobalNotProvidedValidHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // PostMethodGlobalNull - POST method with subscriptionId modeled in credentials. Set the credential subscriptionId to null, and client-side validation
@@ -108,11 +113,15 @@ func (client *SubscriptionInCredentialsClient) postMethodGlobalNullCreateRequest
 
 // postMethodGlobalNullHandleError handles the PostMethodGlobalNull error response.
 func (client *SubscriptionInCredentialsClient) postMethodGlobalNullHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // PostMethodGlobalValid - POST method with subscriptionId modeled in credentials. Set the credential subscriptionId to '1234-5678-9012-3456' to succeed
@@ -149,11 +158,15 @@ func (client *SubscriptionInCredentialsClient) postMethodGlobalValidCreateReques
 
 // postMethodGlobalValidHandleError handles the PostMethodGlobalValid error response.
 func (client *SubscriptionInCredentialsClient) postMethodGlobalValidHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // PostPathGlobalValid - POST method with subscriptionId modeled in credentials. Set the credential subscriptionId to '1234-5678-9012-3456' to succeed
@@ -190,11 +203,15 @@ func (client *SubscriptionInCredentialsClient) postPathGlobalValidCreateRequest(
 
 // postPathGlobalValidHandleError handles the PostPathGlobalValid error response.
 func (client *SubscriptionInCredentialsClient) postPathGlobalValidHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // PostSwaggerGlobalValid - POST method with subscriptionId modeled in credentials. Set the credential subscriptionId to '1234-5678-9012-3456' to succeed
@@ -231,9 +248,13 @@ func (client *SubscriptionInCredentialsClient) postSwaggerGlobalValidCreateReque
 
 // postSwaggerGlobalValidHandleError handles the PostSwaggerGlobalValid error response.
 func (client *SubscriptionInCredentialsClient) postSwaggerGlobalValidHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

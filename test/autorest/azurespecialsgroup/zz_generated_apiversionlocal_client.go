@@ -9,6 +9,7 @@ package azurespecialsgroup
 
 import (
 	"context"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 )
@@ -59,11 +60,15 @@ func (client *APIVersionLocalClient) getMethodLocalNullCreateRequest(ctx context
 
 // getMethodLocalNullHandleError handles the GetMethodLocalNull error response.
 func (client *APIVersionLocalClient) getMethodLocalNullHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetMethodLocalValid - Get method with api-version modeled in the method. pass in api-version = '2.0' to succeed
@@ -99,11 +104,15 @@ func (client *APIVersionLocalClient) getMethodLocalValidCreateRequest(ctx contex
 
 // getMethodLocalValidHandleError handles the GetMethodLocalValid error response.
 func (client *APIVersionLocalClient) getMethodLocalValidHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetPathLocalValid - Get method with api-version modeled in the method. pass in api-version = '2.0' to succeed
@@ -139,11 +148,15 @@ func (client *APIVersionLocalClient) getPathLocalValidCreateRequest(ctx context.
 
 // getPathLocalValidHandleError handles the GetPathLocalValid error response.
 func (client *APIVersionLocalClient) getPathLocalValidHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetSwaggerLocalValid - Get method with api-version modeled in the method. pass in api-version = '2.0' to succeed
@@ -179,9 +192,13 @@ func (client *APIVersionLocalClient) getSwaggerLocalValidCreateRequest(ctx conte
 
 // getSwaggerLocalValidHandleError handles the GetSwaggerLocalValid error response.
 func (client *APIVersionLocalClient) getSwaggerLocalValidHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

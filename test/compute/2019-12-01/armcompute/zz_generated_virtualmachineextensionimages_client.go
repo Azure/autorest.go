@@ -10,10 +10,8 @@ package armcompute
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -94,9 +92,9 @@ func (client *VirtualMachineExtensionImagesClient) getHandleResponse(resp *azcor
 
 // getHandleError handles the Get error response.
 func (client *VirtualMachineExtensionImagesClient) getHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -158,9 +156,9 @@ func (client *VirtualMachineExtensionImagesClient) listTypesHandleResponse(resp 
 
 // listTypesHandleError handles the ListTypes error response.
 func (client *VirtualMachineExtensionImagesClient) listTypesHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -235,9 +233,9 @@ func (client *VirtualMachineExtensionImagesClient) listVersionsHandleResponse(re
 
 // listVersionsHandleError handles the ListVersions error response.
 func (client *VirtualMachineExtensionImagesClient) listVersionsHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)

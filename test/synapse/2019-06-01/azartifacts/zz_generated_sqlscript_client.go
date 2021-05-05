@@ -10,6 +10,7 @@ package azartifacts
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -117,11 +118,15 @@ func (client *sqlScriptClient) createOrUpdateSQLScriptHandleResponse(resp *azcor
 
 // createOrUpdateSQLScriptHandleError handles the CreateOrUpdateSQLScript error response.
 func (client *sqlScriptClient) createOrUpdateSQLScriptHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginDeleteSQLScript - Deletes a Sql Script.
@@ -208,11 +213,15 @@ func (client *sqlScriptClient) deleteSQLScriptCreateRequest(ctx context.Context,
 
 // deleteSQLScriptHandleError handles the DeleteSQLScript error response.
 func (client *sqlScriptClient) deleteSQLScriptHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetSQLScript - Gets a sql script.
@@ -264,11 +273,15 @@ func (client *sqlScriptClient) getSQLScriptHandleResponse(resp *azcore.Response)
 
 // getSQLScriptHandleError handles the GetSQLScript error response.
 func (client *sqlScriptClient) getSQLScriptHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetSQLScriptsByWorkspace - Lists sql scripts.
@@ -313,11 +326,15 @@ func (client *sqlScriptClient) getSQLScriptsByWorkspaceHandleResponse(resp *azco
 
 // getSQLScriptsByWorkspaceHandleError handles the GetSQLScriptsByWorkspace error response.
 func (client *sqlScriptClient) getSQLScriptsByWorkspaceHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginRenameSQLScript - Renames a sqlScript.
@@ -404,9 +421,13 @@ func (client *sqlScriptClient) renameSQLScriptCreateRequest(ctx context.Context,
 
 // renameSQLScriptHandleError handles the RenameSQLScript error response.
 func (client *sqlScriptClient) renameSQLScriptHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

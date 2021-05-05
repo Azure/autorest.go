@@ -10,10 +10,8 @@ package armcompute
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strings"
@@ -139,9 +137,9 @@ func (client *DedicatedHostsClient) createOrUpdateHandleResponse(resp *azcore.Re
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *DedicatedHostsClient) createOrUpdateHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -246,9 +244,9 @@ func (client *DedicatedHostsClient) deleteCreateRequest(ctx context.Context, res
 
 // deleteHandleError handles the Delete error response.
 func (client *DedicatedHostsClient) deleteHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -317,9 +315,9 @@ func (client *DedicatedHostsClient) getHandleResponse(resp *azcore.Response) (De
 
 // getHandleError handles the Get error response.
 func (client *DedicatedHostsClient) getHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -382,9 +380,9 @@ func (client *DedicatedHostsClient) listByHostGroupHandleResponse(resp *azcore.R
 
 // listByHostGroupHandleError handles the ListByHostGroup error response.
 func (client *DedicatedHostsClient) listByHostGroupHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -499,9 +497,9 @@ func (client *DedicatedHostsClient) updateHandleResponse(resp *azcore.Response) 
 
 // updateHandleError handles the Update error response.
 func (client *DedicatedHostsClient) updateHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)

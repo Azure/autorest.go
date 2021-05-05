@@ -10,6 +10,7 @@ package azartifacts
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -61,11 +62,15 @@ func (client *triggerRunClient) cancelTriggerInstanceCreateRequest(ctx context.C
 
 // cancelTriggerInstanceHandleError handles the CancelTriggerInstance error response.
 func (client *triggerRunClient) cancelTriggerInstanceHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // QueryTriggerRunsByWorkspace - Query trigger runs.
@@ -110,11 +115,15 @@ func (client *triggerRunClient) queryTriggerRunsByWorkspaceHandleResponse(resp *
 
 // queryTriggerRunsByWorkspaceHandleError handles the QueryTriggerRunsByWorkspace error response.
 func (client *triggerRunClient) queryTriggerRunsByWorkspaceHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // RerunTriggerInstance - Rerun single trigger instance by runId.
@@ -158,9 +167,13 @@ func (client *triggerRunClient) rerunTriggerInstanceCreateRequest(ctx context.Co
 
 // rerunTriggerInstanceHandleError handles the RerunTriggerInstance error response.
 func (client *triggerRunClient) rerunTriggerInstanceHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

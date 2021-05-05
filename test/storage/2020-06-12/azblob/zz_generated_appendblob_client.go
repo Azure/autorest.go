@@ -10,6 +10,7 @@ package azblob
 import (
 	"context"
 	"encoding/base64"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"strconv"
@@ -174,11 +175,15 @@ func (client *appendBlobClient) appendBlockHandleResponse(resp *azcore.Response)
 
 // appendBlockHandleError handles the AppendBlock error response.
 func (client *appendBlobClient) appendBlockHandleError(resp *azcore.Response) error {
-	var err StorageError
-	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := StorageError{raw: string(body)}
+	if err := resp.UnmarshalAsXML(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // AppendBlockFromURL - The Append Block operation commits a new block of data to the end of an existing append blob where the contents are read from a
@@ -351,11 +356,15 @@ func (client *appendBlobClient) appendBlockFromURLHandleResponse(resp *azcore.Re
 
 // appendBlockFromURLHandleError handles the AppendBlockFromURL error response.
 func (client *appendBlobClient) appendBlockFromURLHandleError(resp *azcore.Response) error {
-	var err StorageError
-	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := StorageError{raw: string(body)}
+	if err := resp.UnmarshalAsXML(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Create - The Create Append Blob operation creates a new append blob.
@@ -518,11 +527,15 @@ func (client *appendBlobClient) createHandleResponse(resp *azcore.Response) (App
 
 // createHandleError handles the Create error response.
 func (client *appendBlobClient) createHandleError(resp *azcore.Response) error {
-	var err StorageError
-	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := StorageError{raw: string(body)}
+	if err := resp.UnmarshalAsXML(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Seal - The Seal operation seals the Append Blob to make it read-only. Seal is supported only on version 2019-12-12 version or later.
@@ -621,9 +634,13 @@ func (client *appendBlobClient) sealHandleResponse(resp *azcore.Response) (Appen
 
 // sealHandleError handles the Seal error response.
 func (client *appendBlobClient) sealHandleError(resp *azcore.Response) error {
-	var err StorageError
-	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := StorageError{raw: string(body)}
+	if err := resp.UnmarshalAsXML(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

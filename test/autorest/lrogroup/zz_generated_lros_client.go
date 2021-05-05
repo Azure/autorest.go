@@ -9,6 +9,7 @@ package lrogroup
 
 import (
 	"context"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
@@ -116,11 +117,15 @@ func (client *LROsClient) delete202NoRetry204HandleResponse(resp *azcore.Respons
 
 // delete202NoRetry204HandleError handles the Delete202NoRetry204 error response.
 func (client *LROsClient) delete202NoRetry204HandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginDelete202Retry200 - Long running delete request, service returns a 202 to the initial request. Polls return this value until the last poll returns
@@ -213,11 +218,15 @@ func (client *LROsClient) delete202Retry200HandleResponse(resp *azcore.Response)
 
 // delete202Retry200HandleError handles the Delete202Retry200 error response.
 func (client *LROsClient) delete202Retry200HandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginDelete204Succeeded - Long running delete succeeds and returns right away
@@ -299,11 +308,15 @@ func (client *LROsClient) delete204SucceededCreateRequest(ctx context.Context, o
 
 // delete204SucceededHandleError handles the Delete204Succeeded error response.
 func (client *LROsClient) delete204SucceededHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginDeleteAsyncNoHeaderInRetry - Long running delete request, service returns an Azure-AsyncOperation header in the initial request. Subsequent calls
@@ -387,11 +400,15 @@ func (client *LROsClient) deleteAsyncNoHeaderInRetryCreateRequest(ctx context.Co
 
 // deleteAsyncNoHeaderInRetryHandleError handles the DeleteAsyncNoHeaderInRetry error response.
 func (client *LROsClient) deleteAsyncNoHeaderInRetryHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginDeleteAsyncNoRetrySucceeded - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated in the Azure-AsyncOperation
@@ -475,11 +492,15 @@ func (client *LROsClient) deleteAsyncNoRetrySucceededCreateRequest(ctx context.C
 
 // deleteAsyncNoRetrySucceededHandleError handles the DeleteAsyncNoRetrySucceeded error response.
 func (client *LROsClient) deleteAsyncNoRetrySucceededHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginDeleteAsyncRetryFailed - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated in the Azure-AsyncOperation
@@ -563,11 +584,15 @@ func (client *LROsClient) deleteAsyncRetryFailedCreateRequest(ctx context.Contex
 
 // deleteAsyncRetryFailedHandleError handles the DeleteAsyncRetryFailed error response.
 func (client *LROsClient) deleteAsyncRetryFailedHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginDeleteAsyncRetrySucceeded - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated in the Azure-AsyncOperation
@@ -651,11 +676,15 @@ func (client *LROsClient) deleteAsyncRetrySucceededCreateRequest(ctx context.Con
 
 // deleteAsyncRetrySucceededHandleError handles the DeleteAsyncRetrySucceeded error response.
 func (client *LROsClient) deleteAsyncRetrySucceededHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginDeleteAsyncRetrycanceled - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated in the Azure-AsyncOperation
@@ -739,11 +768,15 @@ func (client *LROsClient) deleteAsyncRetrycanceledCreateRequest(ctx context.Cont
 
 // deleteAsyncRetrycanceledHandleError handles the DeleteAsyncRetrycanceled error response.
 func (client *LROsClient) deleteAsyncRetrycanceledHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginDeleteNoHeaderInRetry - Long running delete request, service returns a location header in the initial request. Subsequent calls to operation status
@@ -827,11 +860,15 @@ func (client *LROsClient) deleteNoHeaderInRetryCreateRequest(ctx context.Context
 
 // deleteNoHeaderInRetryHandleError handles the DeleteNoHeaderInRetry error response.
 func (client *LROsClient) deleteNoHeaderInRetryHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginDeleteProvisioning202Accepted200Succeeded - Long running delete request, service returns a 202 to the initial request, with an entity that contains
@@ -926,11 +963,15 @@ func (client *LROsClient) deleteProvisioning202Accepted200SucceededHandleRespons
 
 // deleteProvisioning202Accepted200SucceededHandleError handles the DeleteProvisioning202Accepted200Succeeded error response.
 func (client *LROsClient) deleteProvisioning202Accepted200SucceededHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginDeleteProvisioning202DeletingFailed200 - Long running delete request, service returns a 202 to the initial request, with an entity that contains
@@ -1025,11 +1066,15 @@ func (client *LROsClient) deleteProvisioning202DeletingFailed200HandleResponse(r
 
 // deleteProvisioning202DeletingFailed200HandleError handles the DeleteProvisioning202DeletingFailed200 error response.
 func (client *LROsClient) deleteProvisioning202DeletingFailed200HandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginDeleteProvisioning202Deletingcanceled200 - Long running delete request, service returns a 202 to the initial request, with an entity that contains
@@ -1124,11 +1169,15 @@ func (client *LROsClient) deleteProvisioning202Deletingcanceled200HandleResponse
 
 // deleteProvisioning202Deletingcanceled200HandleError handles the DeleteProvisioning202Deletingcanceled200 error response.
 func (client *LROsClient) deleteProvisioning202Deletingcanceled200HandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginPost200WithPayload - Long running post request, service returns a 202 to the initial request, with 'Location' header. Poll returns a 200 with a
@@ -1221,11 +1270,15 @@ func (client *LROsClient) post200WithPayloadHandleResponse(resp *azcore.Response
 
 // post200WithPayloadHandleError handles the Post200WithPayload error response.
 func (client *LROsClient) post200WithPayloadHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginPost202List - Long running put request, service returns a 202 with empty body to first request, returns a 200 with body [{ 'id': '100', 'name':
@@ -1318,11 +1371,15 @@ func (client *LROsClient) post202ListHandleResponse(resp *azcore.Response) (Prod
 
 // post202ListHandleError handles the Post202List error response.
 func (client *LROsClient) post202ListHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginPost202NoRetry204 - Long running post request, service returns a 202 to the initial request, with 'Location' header, 204 with noresponse body after
@@ -1417,11 +1474,15 @@ func (client *LROsClient) post202NoRetry204HandleResponse(resp *azcore.Response)
 
 // post202NoRetry204HandleError handles the Post202NoRetry204 error response.
 func (client *LROsClient) post202NoRetry204HandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginPost202Retry200 - Long running post request, service returns a 202 to the initial request, with 'Location' and 'Retry-After' headers, Polls return
@@ -1508,11 +1569,15 @@ func (client *LROsClient) post202Retry200CreateRequest(ctx context.Context, opti
 
 // post202Retry200HandleError handles the Post202Retry200 error response.
 func (client *LROsClient) post202Retry200HandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginPostAsyncNoRetrySucceeded - Long running post request, service returns a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’.
@@ -1610,11 +1675,15 @@ func (client *LROsClient) postAsyncNoRetrySucceededHandleResponse(resp *azcore.R
 
 // postAsyncNoRetrySucceededHandleError handles the PostAsyncNoRetrySucceeded error response.
 func (client *LROsClient) postAsyncNoRetrySucceededHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginPostAsyncRetryFailed - Long running post request, service returns a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’.
@@ -1703,11 +1772,15 @@ func (client *LROsClient) postAsyncRetryFailedCreateRequest(ctx context.Context,
 
 // postAsyncRetryFailedHandleError handles the PostAsyncRetryFailed error response.
 func (client *LROsClient) postAsyncRetryFailedHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginPostAsyncRetrySucceeded - Long running post request, service returns a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’.
@@ -1805,11 +1878,15 @@ func (client *LROsClient) postAsyncRetrySucceededHandleResponse(resp *azcore.Res
 
 // postAsyncRetrySucceededHandleError handles the PostAsyncRetrySucceeded error response.
 func (client *LROsClient) postAsyncRetrySucceededHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginPostAsyncRetrycanceled - Long running post request, service returns a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’.
@@ -1898,11 +1975,15 @@ func (client *LROsClient) postAsyncRetrycanceledCreateRequest(ctx context.Contex
 
 // postAsyncRetrycanceledHandleError handles the PostAsyncRetrycanceled error response.
 func (client *LROsClient) postAsyncRetrycanceledHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginPostDoubleHeadersFinalAzureHeaderGet - Long running post request, service returns a 202 to the initial request with both Location and Azure-Async
@@ -1995,11 +2076,15 @@ func (client *LROsClient) postDoubleHeadersFinalAzureHeaderGetHandleResponse(res
 
 // postDoubleHeadersFinalAzureHeaderGetHandleError handles the PostDoubleHeadersFinalAzureHeaderGet error response.
 func (client *LROsClient) postDoubleHeadersFinalAzureHeaderGetHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginPostDoubleHeadersFinalAzureHeaderGetDefault - Long running post request, service returns a 202 to the initial request with both Location and Azure-Async
@@ -2094,11 +2179,15 @@ func (client *LROsClient) postDoubleHeadersFinalAzureHeaderGetDefaultHandleRespo
 
 // postDoubleHeadersFinalAzureHeaderGetDefaultHandleError handles the PostDoubleHeadersFinalAzureHeaderGetDefault error response.
 func (client *LROsClient) postDoubleHeadersFinalAzureHeaderGetDefaultHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginPostDoubleHeadersFinalLocationGet - Long running post request, service returns a 202 to the initial request with both Location and Azure-Async header.
@@ -2191,11 +2280,15 @@ func (client *LROsClient) postDoubleHeadersFinalLocationGetHandleResponse(resp *
 
 // postDoubleHeadersFinalLocationGetHandleError handles the PostDoubleHeadersFinalLocationGet error response.
 func (client *LROsClient) postDoubleHeadersFinalLocationGetHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginPut200Acceptedcanceled200 - Long running put request, service returns a 201 to the initial request, with an entity that contains ProvisioningState=’Creating’.
@@ -2293,11 +2386,15 @@ func (client *LROsClient) put200Acceptedcanceled200HandleResponse(resp *azcore.R
 
 // put200Acceptedcanceled200HandleError handles the Put200Acceptedcanceled200 error response.
 func (client *LROsClient) put200Acceptedcanceled200HandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginPut200Succeeded - Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Succeeded’.
@@ -2391,11 +2488,15 @@ func (client *LROsClient) put200SucceededHandleResponse(resp *azcore.Response) (
 
 // put200SucceededHandleError handles the Put200Succeeded error response.
 func (client *LROsClient) put200SucceededHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginPut200SucceededNoState - Long running put request, service returns a 200 to the initial request, with an entity that does not contain ProvisioningState=’Succeeded’.
@@ -2489,11 +2590,15 @@ func (client *LROsClient) put200SucceededNoStateHandleResponse(resp *azcore.Resp
 
 // put200SucceededNoStateHandleError handles the Put200SucceededNoState error response.
 func (client *LROsClient) put200SucceededNoStateHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginPut200UpdatingSucceeded204 - Long running put request, service returns a 201 to the initial request, with an entity that contains ProvisioningState=’Updating’.
@@ -2591,11 +2696,15 @@ func (client *LROsClient) put200UpdatingSucceeded204HandleResponse(resp *azcore.
 
 // put200UpdatingSucceeded204HandleError handles the Put200UpdatingSucceeded204 error response.
 func (client *LROsClient) put200UpdatingSucceeded204HandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginPut201CreatingFailed200 - Long running put request, service returns a 201 to the initial request, with an entity that contains ProvisioningState=’Created’.
@@ -2693,11 +2802,15 @@ func (client *LROsClient) put201CreatingFailed200HandleResponse(resp *azcore.Res
 
 // put201CreatingFailed200HandleError handles the Put201CreatingFailed200 error response.
 func (client *LROsClient) put201CreatingFailed200HandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginPut201CreatingSucceeded200 - Long running put request, service returns a 201 to the initial request, with an entity that contains ProvisioningState=’Creating’.
@@ -2795,11 +2908,15 @@ func (client *LROsClient) put201CreatingSucceeded200HandleResponse(resp *azcore.
 
 // put201CreatingSucceeded200HandleError handles the Put201CreatingSucceeded200 error response.
 func (client *LROsClient) put201CreatingSucceeded200HandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginPut201Succeeded - Long running put request, service returns a 201 to the initial request, with an entity that contains ProvisioningState=’Succeeded’.
@@ -2893,11 +3010,15 @@ func (client *LROsClient) put201SucceededHandleResponse(resp *azcore.Response) (
 
 // put201SucceededHandleError handles the Put201Succeeded error response.
 func (client *LROsClient) put201SucceededHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginPut202Retry200 - Long running put request, service returns a 202 to the initial request, with a location header that points to a polling URL that
@@ -2993,11 +3114,15 @@ func (client *LROsClient) put202Retry200HandleResponse(resp *azcore.Response) (P
 
 // put202Retry200HandleError handles the Put202Retry200 error response.
 func (client *LROsClient) put202Retry200HandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginPutAsyncNoHeaderInRetry - Long running put request, service returns a 202 to the initial request with Azure-AsyncOperation header. Subsequent calls
@@ -3093,11 +3218,15 @@ func (client *LROsClient) putAsyncNoHeaderInRetryHandleResponse(resp *azcore.Res
 
 // putAsyncNoHeaderInRetryHandleError handles the PutAsyncNoHeaderInRetry error response.
 func (client *LROsClient) putAsyncNoHeaderInRetryHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginPutAsyncNoRetrySucceeded - Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’.
@@ -3195,11 +3324,15 @@ func (client *LROsClient) putAsyncNoRetrySucceededHandleResponse(resp *azcore.Re
 
 // putAsyncNoRetrySucceededHandleError handles the PutAsyncNoRetrySucceeded error response.
 func (client *LROsClient) putAsyncNoRetrySucceededHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginPutAsyncNoRetrycanceled - Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’.
@@ -3297,11 +3430,15 @@ func (client *LROsClient) putAsyncNoRetrycanceledHandleResponse(resp *azcore.Res
 
 // putAsyncNoRetrycanceledHandleError handles the PutAsyncNoRetrycanceled error response.
 func (client *LROsClient) putAsyncNoRetrycanceledHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginPutAsyncNonResource - Long running put request with non resource.
@@ -3395,11 +3532,15 @@ func (client *LROsClient) putAsyncNonResourceHandleResponse(resp *azcore.Respons
 
 // putAsyncNonResourceHandleError handles the PutAsyncNonResource error response.
 func (client *LROsClient) putAsyncNonResourceHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginPutAsyncRetryFailed - Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’.
@@ -3497,11 +3638,15 @@ func (client *LROsClient) putAsyncRetryFailedHandleResponse(resp *azcore.Respons
 
 // putAsyncRetryFailedHandleError handles the PutAsyncRetryFailed error response.
 func (client *LROsClient) putAsyncRetryFailedHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginPutAsyncRetrySucceeded - Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’.
@@ -3599,11 +3744,15 @@ func (client *LROsClient) putAsyncRetrySucceededHandleResponse(resp *azcore.Resp
 
 // putAsyncRetrySucceededHandleError handles the PutAsyncRetrySucceeded error response.
 func (client *LROsClient) putAsyncRetrySucceededHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginPutAsyncSubResource - Long running put request with sub resource.
@@ -3697,11 +3846,15 @@ func (client *LROsClient) putAsyncSubResourceHandleResponse(resp *azcore.Respons
 
 // putAsyncSubResourceHandleError handles the PutAsyncSubResource error response.
 func (client *LROsClient) putAsyncSubResourceHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginPutNoHeaderInRetry - Long running put request, service returns a 202 to the initial request with location header. Subsequent calls to operation
@@ -3797,11 +3950,15 @@ func (client *LROsClient) putNoHeaderInRetryHandleResponse(resp *azcore.Response
 
 // putNoHeaderInRetryHandleError handles the PutNoHeaderInRetry error response.
 func (client *LROsClient) putNoHeaderInRetryHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginPutNonResource - Long running put request with non resource.
@@ -3895,11 +4052,15 @@ func (client *LROsClient) putNonResourceHandleResponse(resp *azcore.Response) (S
 
 // putNonResourceHandleError handles the PutNonResource error response.
 func (client *LROsClient) putNonResourceHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginPutSubResource - Long running put request with sub resource.
@@ -3993,9 +4154,13 @@ func (client *LROsClient) putSubResourceHandleResponse(resp *azcore.Response) (S
 
 // putSubResourceHandleError handles the PutSubResource error response.
 func (client *LROsClient) putSubResourceHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

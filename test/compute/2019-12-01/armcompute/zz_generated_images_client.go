@@ -10,10 +10,8 @@ package armcompute
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strings"
@@ -135,9 +133,9 @@ func (client *ImagesClient) createOrUpdateHandleResponse(resp *azcore.Response) 
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *ImagesClient) createOrUpdateHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -238,9 +236,9 @@ func (client *ImagesClient) deleteCreateRequest(ctx context.Context, resourceGro
 
 // deleteHandleError handles the Delete error response.
 func (client *ImagesClient) deleteHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -305,9 +303,9 @@ func (client *ImagesClient) getHandleResponse(resp *azcore.Response) (ImageRespo
 
 // getHandleError handles the Get error response.
 func (client *ImagesClient) getHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -362,9 +360,9 @@ func (client *ImagesClient) listHandleResponse(resp *azcore.Response) (ImageList
 
 // listHandleError handles the List error response.
 func (client *ImagesClient) listHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -422,9 +420,9 @@ func (client *ImagesClient) listByResourceGroupHandleResponse(resp *azcore.Respo
 
 // listByResourceGroupHandleError handles the ListByResourceGroup error response.
 func (client *ImagesClient) listByResourceGroupHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -535,9 +533,9 @@ func (client *ImagesClient) updateHandleResponse(resp *azcore.Response) (ImageRe
 
 // updateHandleError handles the Update error response.
 func (client *ImagesClient) updateHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)

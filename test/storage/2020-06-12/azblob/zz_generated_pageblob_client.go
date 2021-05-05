@@ -10,6 +10,7 @@ package azblob
 import (
 	"context"
 	"encoding/base64"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"strconv"
@@ -156,11 +157,15 @@ func (client *pageBlobClient) clearPagesHandleResponse(resp *azcore.Response) (P
 
 // clearPagesHandleError handles the ClearPages error response.
 func (client *pageBlobClient) clearPagesHandleError(resp *azcore.Response) error {
-	var err StorageError
-	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := StorageError{raw: string(body)}
+	if err := resp.UnmarshalAsXML(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // CopyIncremental - The Copy Incremental operation copies a snapshot of the source page blob to a destination page blob. The snapshot is copied such that
@@ -260,11 +265,15 @@ func (client *pageBlobClient) copyIncrementalHandleResponse(resp *azcore.Respons
 
 // copyIncrementalHandleError handles the CopyIncremental error response.
 func (client *pageBlobClient) copyIncrementalHandleError(resp *azcore.Response) error {
-	var err StorageError
-	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := StorageError{raw: string(body)}
+	if err := resp.UnmarshalAsXML(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Create - The Create operation creates a new page blob.
@@ -434,11 +443,15 @@ func (client *pageBlobClient) createHandleResponse(resp *azcore.Response) (PageB
 
 // createHandleError handles the Create error response.
 func (client *pageBlobClient) createHandleError(resp *azcore.Response) error {
-	var err StorageError
-	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := StorageError{raw: string(body)}
+	if err := resp.UnmarshalAsXML(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetPageRanges - The Get Page Ranges operation returns the list of valid page ranges for a page blob or snapshot of a page blob
@@ -547,11 +560,15 @@ func (client *pageBlobClient) getPageRangesHandleResponse(resp *azcore.Response)
 
 // getPageRangesHandleError handles the GetPageRanges error response.
 func (client *pageBlobClient) getPageRangesHandleError(resp *azcore.Response) error {
-	var err StorageError
-	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := StorageError{raw: string(body)}
+	if err := resp.UnmarshalAsXML(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetPageRangesDiff - The Get Page Ranges Diff operation returns the list of valid page ranges for a page blob that were changed between target blob and
@@ -667,11 +684,15 @@ func (client *pageBlobClient) getPageRangesDiffHandleResponse(resp *azcore.Respo
 
 // getPageRangesDiffHandleError handles the GetPageRangesDiff error response.
 func (client *pageBlobClient) getPageRangesDiffHandleError(resp *azcore.Response) error {
-	var err StorageError
-	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := StorageError{raw: string(body)}
+	if err := resp.UnmarshalAsXML(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Resize - Resize the Blob
@@ -783,11 +804,15 @@ func (client *pageBlobClient) resizeHandleResponse(resp *azcore.Response) (PageB
 
 // resizeHandleError handles the Resize error response.
 func (client *pageBlobClient) resizeHandleError(resp *azcore.Response) error {
-	var err StorageError
-	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := StorageError{raw: string(body)}
+	if err := resp.UnmarshalAsXML(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // UpdateSequenceNumber - Update the sequence number of the blob
@@ -890,11 +915,15 @@ func (client *pageBlobClient) updateSequenceNumberHandleResponse(resp *azcore.Re
 
 // updateSequenceNumberHandleError handles the UpdateSequenceNumber error response.
 func (client *pageBlobClient) updateSequenceNumberHandleError(resp *azcore.Response) error {
-	var err StorageError
-	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := StorageError{raw: string(body)}
+	if err := resp.UnmarshalAsXML(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // UploadPages - The Upload Pages operation writes a range of pages to a page blob
@@ -1052,11 +1081,15 @@ func (client *pageBlobClient) uploadPagesHandleResponse(resp *azcore.Response) (
 
 // uploadPagesHandleError handles the UploadPages error response.
 func (client *pageBlobClient) uploadPagesHandleError(resp *azcore.Response) error {
-	var err StorageError
-	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := StorageError{raw: string(body)}
+	if err := resp.UnmarshalAsXML(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // UploadPagesFromURL - The Upload Pages operation writes a range of pages to a page blob where the contents are read from a URL
@@ -1223,9 +1256,13 @@ func (client *pageBlobClient) uploadPagesFromURLHandleResponse(resp *azcore.Resp
 
 // uploadPagesFromURLHandleError handles the UploadPagesFromURL error response.
 func (client *pageBlobClient) uploadPagesFromURLHandleError(resp *azcore.Response) error {
-	var err StorageError
-	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := StorageError{raw: string(body)}
+	if err := resp.UnmarshalAsXML(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

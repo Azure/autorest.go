@@ -10,6 +10,7 @@ package azartifacts
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -66,11 +67,15 @@ func (client *integrationRuntimesClient) getHandleResponse(resp *azcore.Response
 
 // getHandleError handles the Get error response.
 func (client *integrationRuntimesClient) getHandleError(resp *azcore.Response) error {
-	var err ErrorContract
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := ErrorContract{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // List - List Integration Runtimes
@@ -115,9 +120,13 @@ func (client *integrationRuntimesClient) listHandleResponse(resp *azcore.Respons
 
 // listHandleError handles the List error response.
 func (client *integrationRuntimesClient) listHandleError(resp *azcore.Response) error {
-	var err ErrorContract
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := ErrorContract{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

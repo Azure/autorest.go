@@ -10,6 +10,7 @@ package armnetwork
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
@@ -133,11 +134,15 @@ func (client *VirtualNetworkGatewaysClient) createOrUpdateHandleResponse(resp *a
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *VirtualNetworkGatewaysClient) createOrUpdateHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginDelete - Deletes the specified virtual network gateway.
@@ -234,11 +239,15 @@ func (client *VirtualNetworkGatewaysClient) deleteCreateRequest(ctx context.Cont
 
 // deleteHandleError handles the Delete error response.
 func (client *VirtualNetworkGatewaysClient) deleteHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginDisconnectVirtualNetworkGatewayVPNConnections - Disconnect vpn connections of virtual network gateway in the specified resource group.
@@ -335,11 +344,15 @@ func (client *VirtualNetworkGatewaysClient) disconnectVirtualNetworkGatewayVPNCo
 
 // disconnectVirtualNetworkGatewayVPNConnectionsHandleError handles the DisconnectVirtualNetworkGatewayVPNConnections error response.
 func (client *VirtualNetworkGatewaysClient) disconnectVirtualNetworkGatewayVPNConnectionsHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginGenerateVPNProfile - Generates VPN profile for P2S client of the virtual network gateway in the specified resource group. Used for IKEV2 and radius
@@ -447,11 +460,15 @@ func (client *VirtualNetworkGatewaysClient) generateVPNProfileHandleResponse(res
 
 // generateVPNProfileHandleError handles the GenerateVPNProfile error response.
 func (client *VirtualNetworkGatewaysClient) generateVPNProfileHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginGeneratevpnclientpackage - Generates VPN client package for P2S client of the virtual network gateway in the specified resource group.
@@ -557,11 +574,15 @@ func (client *VirtualNetworkGatewaysClient) generatevpnclientpackageHandleRespon
 
 // generatevpnclientpackageHandleError handles the Generatevpnclientpackage error response.
 func (client *VirtualNetworkGatewaysClient) generatevpnclientpackageHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Get - Gets the specified virtual network gateway by resource group.
@@ -618,11 +639,15 @@ func (client *VirtualNetworkGatewaysClient) getHandleResponse(resp *azcore.Respo
 
 // getHandleError handles the Get error response.
 func (client *VirtualNetworkGatewaysClient) getHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginGetAdvertisedRoutes - This operation retrieves a list of routes the virtual network gateway is advertising to the specified peer.
@@ -729,11 +754,15 @@ func (client *VirtualNetworkGatewaysClient) getAdvertisedRoutesHandleResponse(re
 
 // getAdvertisedRoutesHandleError handles the GetAdvertisedRoutes error response.
 func (client *VirtualNetworkGatewaysClient) getAdvertisedRoutesHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginGetBgpPeerStatus - The GetBgpPeerStatus operation retrieves the status of all BGP peers.
@@ -842,11 +871,15 @@ func (client *VirtualNetworkGatewaysClient) getBgpPeerStatusHandleResponse(resp 
 
 // getBgpPeerStatusHandleError handles the GetBgpPeerStatus error response.
 func (client *VirtualNetworkGatewaysClient) getBgpPeerStatusHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginGetLearnedRoutes - This operation retrieves a list of routes the virtual network gateway has learned, including routes learned from BGP peers.
@@ -952,11 +985,15 @@ func (client *VirtualNetworkGatewaysClient) getLearnedRoutesHandleResponse(resp 
 
 // getLearnedRoutesHandleError handles the GetLearnedRoutes error response.
 func (client *VirtualNetworkGatewaysClient) getLearnedRoutesHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginGetVPNProfilePackageURL - Gets pre-generated VPN profile for P2S client of the virtual network gateway in the specified resource group. The profile
@@ -1064,11 +1101,15 @@ func (client *VirtualNetworkGatewaysClient) getVPNProfilePackageURLHandleRespons
 
 // getVPNProfilePackageURLHandleError handles the GetVPNProfilePackageURL error response.
 func (client *VirtualNetworkGatewaysClient) getVPNProfilePackageURLHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginGetVpnclientConnectionHealth - Get VPN client connection health detail per P2S client connection of the virtual network gateway in the specified
@@ -1176,11 +1217,15 @@ func (client *VirtualNetworkGatewaysClient) getVpnclientConnectionHealthHandleRe
 
 // getVpnclientConnectionHealthHandleError handles the GetVpnclientConnectionHealth error response.
 func (client *VirtualNetworkGatewaysClient) getVpnclientConnectionHealthHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginGetVpnclientIPSecParameters - The Get VpnclientIpsecParameters operation retrieves information about the vpnclient ipsec policy for P2S client of
@@ -1290,11 +1335,15 @@ func (client *VirtualNetworkGatewaysClient) getVpnclientIPSecParametersHandleRes
 
 // getVpnclientIPSecParametersHandleError handles the GetVpnclientIPSecParameters error response.
 func (client *VirtualNetworkGatewaysClient) getVpnclientIPSecParametersHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // List - Gets all virtual network gateways by resource group.
@@ -1347,11 +1396,15 @@ func (client *VirtualNetworkGatewaysClient) listHandleResponse(resp *azcore.Resp
 
 // listHandleError handles the List error response.
 func (client *VirtualNetworkGatewaysClient) listHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // ListConnections - Gets all the connections in a virtual network gateway.
@@ -1408,11 +1461,15 @@ func (client *VirtualNetworkGatewaysClient) listConnectionsHandleResponse(resp *
 
 // listConnectionsHandleError handles the ListConnections error response.
 func (client *VirtualNetworkGatewaysClient) listConnectionsHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginReset - Resets the primary of the virtual network gateway in the specified resource group.
@@ -1521,11 +1578,15 @@ func (client *VirtualNetworkGatewaysClient) resetHandleResponse(resp *azcore.Res
 
 // resetHandleError handles the Reset error response.
 func (client *VirtualNetworkGatewaysClient) resetHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginResetVPNClientSharedKey - Resets the VPN client shared key of the virtual network gateway in the specified resource group.
@@ -1622,11 +1683,15 @@ func (client *VirtualNetworkGatewaysClient) resetVPNClientSharedKeyCreateRequest
 
 // resetVPNClientSharedKeyHandleError handles the ResetVPNClientSharedKey error response.
 func (client *VirtualNetworkGatewaysClient) resetVPNClientSharedKeyHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginSetVpnclientIPSecParameters - The Set VpnclientIpsecParameters operation sets the vpnclient ipsec policy for P2S client of virtual network gateway
@@ -1734,11 +1799,15 @@ func (client *VirtualNetworkGatewaysClient) setVpnclientIPSecParametersHandleRes
 
 // setVpnclientIPSecParametersHandleError handles the SetVpnclientIPSecParameters error response.
 func (client *VirtualNetworkGatewaysClient) setVpnclientIPSecParametersHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginStartPacketCapture - Starts packet capture on virtual network gateway in the specified resource group.
@@ -1847,11 +1916,15 @@ func (client *VirtualNetworkGatewaysClient) startPacketCaptureHandleResponse(res
 
 // startPacketCaptureHandleError handles the StartPacketCapture error response.
 func (client *VirtualNetworkGatewaysClient) startPacketCaptureHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginStopPacketCapture - Stops packet capture on virtual network gateway in the specified resource group.
@@ -1957,11 +2030,15 @@ func (client *VirtualNetworkGatewaysClient) stopPacketCaptureHandleResponse(resp
 
 // stopPacketCaptureHandleError handles the StopPacketCapture error response.
 func (client *VirtualNetworkGatewaysClient) stopPacketCaptureHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // SupportedVPNDevices - Gets a xml format representation for supported vpn devices.
@@ -2018,11 +2095,15 @@ func (client *VirtualNetworkGatewaysClient) supportedVPNDevicesHandleResponse(re
 
 // supportedVPNDevicesHandleError handles the SupportedVPNDevices error response.
 func (client *VirtualNetworkGatewaysClient) supportedVPNDevicesHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginUpdateTags - Updates a virtual network gateway tags.
@@ -2128,11 +2209,15 @@ func (client *VirtualNetworkGatewaysClient) updateTagsHandleResponse(resp *azcor
 
 // updateTagsHandleError handles the UpdateTags error response.
 func (client *VirtualNetworkGatewaysClient) updateTagsHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // VPNDeviceConfigurationScript - Gets a xml format representation for vpn device configuration script.
@@ -2189,9 +2274,13 @@ func (client *VirtualNetworkGatewaysClient) vpnDeviceConfigurationScriptHandleRe
 
 // vpnDeviceConfigurationScriptHandleError handles the VPNDeviceConfigurationScript error response.
 func (client *VirtualNetworkGatewaysClient) vpnDeviceConfigurationScriptHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

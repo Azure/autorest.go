@@ -10,10 +10,8 @@ package armcompute
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strings"
@@ -131,9 +129,9 @@ func (client *LogAnalyticsClient) exportRequestRateByIntervalHandleResponse(resp
 
 // exportRequestRateByIntervalHandleError handles the ExportRequestRateByInterval error response.
 func (client *LogAnalyticsClient) exportRequestRateByIntervalHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -240,9 +238,9 @@ func (client *LogAnalyticsClient) exportThrottledRequestsHandleResponse(resp *az
 
 // exportThrottledRequestsHandleError handles the ExportThrottledRequests error response.
 func (client *LogAnalyticsClient) exportThrottledRequestsHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)

@@ -9,29 +9,20 @@ package lrogroup
 
 import (
 	"context"
-	"fmt"
 	"net/http"
 	"time"
 )
 
 type CloudError struct {
+	raw     string
 	Code    *int32  `json:"code,omitempty"`
 	Message *string `json:"message,omitempty"`
 }
 
 // Error implements the error interface for type CloudError.
+// The contents of the error text are not contractual and subject to change.
 func (e CloudError) Error() string {
-	msg := ""
-	if e.Code != nil {
-		msg += fmt.Sprintf("Code: %v\n", *e.Code)
-	}
-	if e.Message != nil {
-		msg += fmt.Sprintf("Message: %v\n", *e.Message)
-	}
-	if msg == "" {
-		msg = "missing error info"
-	}
-	return msg
+	return e.raw
 }
 
 // HTTPPollerResponse contains the asynchronous HTTP response from the call to the service endpoint.

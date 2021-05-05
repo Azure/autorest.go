@@ -10,6 +10,7 @@ package armnetwork
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
@@ -135,11 +136,15 @@ func (client *NetworkWatchersClient) checkConnectivityHandleResponse(resp *azcor
 
 // checkConnectivityHandleError handles the CheckConnectivity error response.
 func (client *NetworkWatchersClient) checkConnectivityHandleError(resp *azcore.Response) error {
-	var err ErrorResponse
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := ErrorResponse{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // CreateOrUpdate - Creates or updates a network watcher in the specified resource group.
@@ -196,11 +201,15 @@ func (client *NetworkWatchersClient) createOrUpdateHandleResponse(resp *azcore.R
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *NetworkWatchersClient) createOrUpdateHandleError(resp *azcore.Response) error {
-	var err ErrorResponse
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := ErrorResponse{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginDelete - Deletes the specified network watcher resource.
@@ -297,11 +306,15 @@ func (client *NetworkWatchersClient) deleteCreateRequest(ctx context.Context, re
 
 // deleteHandleError handles the Delete error response.
 func (client *NetworkWatchersClient) deleteHandleError(resp *azcore.Response) error {
-	var err ErrorResponse
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := ErrorResponse{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Get - Gets the specified network watcher by resource group.
@@ -358,11 +371,15 @@ func (client *NetworkWatchersClient) getHandleResponse(resp *azcore.Response) (N
 
 // getHandleError handles the Get error response.
 func (client *NetworkWatchersClient) getHandleError(resp *azcore.Response) error {
-	var err ErrorResponse
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := ErrorResponse{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginGetAzureReachabilityReport - NOTE: This feature is currently in preview and still being tested for stability. Gets the relative latency score for
@@ -470,11 +487,15 @@ func (client *NetworkWatchersClient) getAzureReachabilityReportHandleResponse(re
 
 // getAzureReachabilityReportHandleError handles the GetAzureReachabilityReport error response.
 func (client *NetworkWatchersClient) getAzureReachabilityReportHandleError(resp *azcore.Response) error {
-	var err ErrorResponse
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := ErrorResponse{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginGetFlowLogStatus - Queries status of flow log and traffic analytics (optional) on a specified resource.
@@ -580,11 +601,15 @@ func (client *NetworkWatchersClient) getFlowLogStatusHandleResponse(resp *azcore
 
 // getFlowLogStatusHandleError handles the GetFlowLogStatus error response.
 func (client *NetworkWatchersClient) getFlowLogStatusHandleError(resp *azcore.Response) error {
-	var err ErrorResponse
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := ErrorResponse{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginGetNetworkConfigurationDiagnostic - Gets Network Configuration Diagnostic data to help customers understand and debug network behavior. It provides
@@ -698,11 +723,15 @@ func (client *NetworkWatchersClient) getNetworkConfigurationDiagnosticHandleResp
 
 // getNetworkConfigurationDiagnosticHandleError handles the GetNetworkConfigurationDiagnostic error response.
 func (client *NetworkWatchersClient) getNetworkConfigurationDiagnosticHandleError(resp *azcore.Response) error {
-	var err ErrorResponse
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := ErrorResponse{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginGetNextHop - Gets the next hop from the specified VM.
@@ -808,11 +837,15 @@ func (client *NetworkWatchersClient) getNextHopHandleResponse(resp *azcore.Respo
 
 // getNextHopHandleError handles the GetNextHop error response.
 func (client *NetworkWatchersClient) getNextHopHandleError(resp *azcore.Response) error {
-	var err ErrorResponse
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := ErrorResponse{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetTopology - Gets the current network topology by resource group.
@@ -869,11 +902,15 @@ func (client *NetworkWatchersClient) getTopologyHandleResponse(resp *azcore.Resp
 
 // getTopologyHandleError handles the GetTopology error response.
 func (client *NetworkWatchersClient) getTopologyHandleError(resp *azcore.Response) error {
-	var err ErrorResponse
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := ErrorResponse{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginGetTroubleshooting - Initiate troubleshooting on a specified resource.
@@ -979,11 +1016,15 @@ func (client *NetworkWatchersClient) getTroubleshootingHandleResponse(resp *azco
 
 // getTroubleshootingHandleError handles the GetTroubleshooting error response.
 func (client *NetworkWatchersClient) getTroubleshootingHandleError(resp *azcore.Response) error {
-	var err ErrorResponse
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := ErrorResponse{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginGetTroubleshootingResult - Get the last completed troubleshooting result on a specified resource.
@@ -1089,11 +1130,15 @@ func (client *NetworkWatchersClient) getTroubleshootingResultHandleResponse(resp
 
 // getTroubleshootingResultHandleError handles the GetTroubleshootingResult error response.
 func (client *NetworkWatchersClient) getTroubleshootingResultHandleError(resp *azcore.Response) error {
-	var err ErrorResponse
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := ErrorResponse{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginGetVMSecurityRules - Gets the configured and effective security group rules on the specified VM.
@@ -1199,11 +1244,15 @@ func (client *NetworkWatchersClient) getVMSecurityRulesHandleResponse(resp *azco
 
 // getVMSecurityRulesHandleError handles the GetVMSecurityRules error response.
 func (client *NetworkWatchersClient) getVMSecurityRulesHandleError(resp *azcore.Response) error {
-	var err ErrorResponse
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := ErrorResponse{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // List - Gets all network watchers by resource group.
@@ -1256,11 +1305,15 @@ func (client *NetworkWatchersClient) listHandleResponse(resp *azcore.Response) (
 
 // listHandleError handles the List error response.
 func (client *NetworkWatchersClient) listHandleError(resp *azcore.Response) error {
-	var err ErrorResponse
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := ErrorResponse{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // ListAll - Gets all network watchers by subscription.
@@ -1309,11 +1362,15 @@ func (client *NetworkWatchersClient) listAllHandleResponse(resp *azcore.Response
 
 // listAllHandleError handles the ListAll error response.
 func (client *NetworkWatchersClient) listAllHandleError(resp *azcore.Response) error {
-	var err ErrorResponse
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := ErrorResponse{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginListAvailableProviders - NOTE: This feature is currently in preview and still being tested for stability. Lists all available internet service providers
@@ -1421,11 +1478,15 @@ func (client *NetworkWatchersClient) listAvailableProvidersHandleResponse(resp *
 
 // listAvailableProvidersHandleError handles the ListAvailableProviders error response.
 func (client *NetworkWatchersClient) listAvailableProvidersHandleError(resp *azcore.Response) error {
-	var err ErrorResponse
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := ErrorResponse{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginSetFlowLogConfiguration - Configures flow log and traffic analytics (optional) on a specified resource.
@@ -1531,11 +1592,15 @@ func (client *NetworkWatchersClient) setFlowLogConfigurationHandleResponse(resp 
 
 // setFlowLogConfigurationHandleError handles the SetFlowLogConfiguration error response.
 func (client *NetworkWatchersClient) setFlowLogConfigurationHandleError(resp *azcore.Response) error {
-	var err ErrorResponse
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := ErrorResponse{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // UpdateTags - Updates a network watcher tags.
@@ -1592,11 +1657,15 @@ func (client *NetworkWatchersClient) updateTagsHandleResponse(resp *azcore.Respo
 
 // updateTagsHandleError handles the UpdateTags error response.
 func (client *NetworkWatchersClient) updateTagsHandleError(resp *azcore.Response) error {
-	var err ErrorResponse
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := ErrorResponse{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginVerifyIPFlow - Verify IP flow from the specified VM to a location given the currently configured NSG rules.
@@ -1702,9 +1771,13 @@ func (client *NetworkWatchersClient) verifyIPFlowHandleResponse(resp *azcore.Res
 
 // verifyIPFlowHandleError handles the VerifyIPFlow error response.
 func (client *NetworkWatchersClient) verifyIPFlowHandleError(resp *azcore.Response) error {
-	var err ErrorResponse
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := ErrorResponse{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

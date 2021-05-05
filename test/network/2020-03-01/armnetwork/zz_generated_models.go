@@ -10,7 +10,6 @@ package armnetwork
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"reflect"
@@ -2742,32 +2741,15 @@ type CheckPrivateLinkServiceVisibilityRequest struct {
 
 // CloudError - An error response from the service.
 type CloudError struct {
+	raw string
 	// Cloud error body.
 	InnerError *CloudErrorBody `json:"error,omitempty"`
 }
 
 // Error implements the error interface for type CloudError.
+// The contents of the error text are not contractual and subject to change.
 func (e CloudError) Error() string {
-	msg := ""
-	if e.InnerError != nil {
-		msg += "InnerError: \n"
-		if e.InnerError.Code != nil {
-			msg += fmt.Sprintf("\tCode: %v\n", *e.InnerError.Code)
-		}
-		if e.InnerError.Message != nil {
-			msg += fmt.Sprintf("\tMessage: %v\n", *e.InnerError.Message)
-		}
-		if e.InnerError.Target != nil {
-			msg += fmt.Sprintf("\tTarget: %v\n", *e.InnerError.Target)
-		}
-		if e.InnerError.Details != nil {
-			msg += fmt.Sprintf("\tDetails: %v\n", *e.InnerError.Details)
-		}
-	}
-	if msg == "" {
-		msg = "missing error info"
-	}
-	return msg
+	return e.raw
 }
 
 // CloudErrorBody - An error response from the service.
@@ -4047,6 +4029,7 @@ type EndpointServicesListResultResponse struct {
 
 // Error - Common error representation.
 type Error struct {
+	raw string
 	// Error code.
 	Code *string `json:"code,omitempty"`
 
@@ -4064,27 +4047,9 @@ type Error struct {
 }
 
 // Error implements the error interface for type Error.
+// The contents of the error text are not contractual and subject to change.
 func (e Error) Error() string {
-	msg := ""
-	if e.Code != nil {
-		msg += fmt.Sprintf("Code: %v\n", *e.Code)
-	}
-	if e.Details != nil {
-		msg += fmt.Sprintf("Details: %v\n", *e.Details)
-	}
-	if e.InnerError != nil {
-		msg += fmt.Sprintf("InnerError: %v\n", *e.InnerError)
-	}
-	if e.Message != nil {
-		msg += fmt.Sprintf("Message: %v\n", *e.Message)
-	}
-	if e.Target != nil {
-		msg += fmt.Sprintf("Target: %v\n", *e.Target)
-	}
-	if msg == "" {
-		msg = "missing error info"
-	}
-	return msg
+	return e.raw
 }
 
 // ErrorDetails - Common error details representation.
@@ -4101,29 +4066,15 @@ type ErrorDetails struct {
 
 // ErrorResponse - The error object.
 type ErrorResponse struct {
+	raw string
 	// The error details object.
 	InnerError *ErrorDetails `json:"error,omitempty"`
 }
 
 // Error implements the error interface for type ErrorResponse.
+// The contents of the error text are not contractual and subject to change.
 func (e ErrorResponse) Error() string {
-	msg := ""
-	if e.InnerError != nil {
-		msg += "InnerError: \n"
-		if e.InnerError.Code != nil {
-			msg += fmt.Sprintf("\tCode: %v\n", *e.InnerError.Code)
-		}
-		if e.InnerError.Target != nil {
-			msg += fmt.Sprintf("\tTarget: %v\n", *e.InnerError.Target)
-		}
-		if e.InnerError.Message != nil {
-			msg += fmt.Sprintf("\tMessage: %v\n", *e.InnerError.Message)
-		}
-	}
-	if msg == "" {
-		msg = "missing error info"
-	}
-	return msg
+	return e.raw
 }
 
 // EvaluatedNetworkSecurityGroup - Results of network security group evaluation.

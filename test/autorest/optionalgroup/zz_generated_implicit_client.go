@@ -10,6 +10,7 @@ package optionalgroup
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -66,11 +67,15 @@ func (client *ImplicitClient) getOptionalGlobalQueryCreateRequest(ctx context.Co
 
 // getOptionalGlobalQueryHandleError handles the GetOptionalGlobalQuery error response.
 func (client *ImplicitClient) getOptionalGlobalQueryHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetRequiredGlobalPath - Test implicitly required path parameter
@@ -107,11 +112,15 @@ func (client *ImplicitClient) getRequiredGlobalPathCreateRequest(ctx context.Con
 
 // getRequiredGlobalPathHandleError handles the GetRequiredGlobalPath error response.
 func (client *ImplicitClient) getRequiredGlobalPathHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetRequiredGlobalQuery - Test implicitly required query parameter
@@ -147,11 +156,15 @@ func (client *ImplicitClient) getRequiredGlobalQueryCreateRequest(ctx context.Co
 
 // getRequiredGlobalQueryHandleError handles the GetRequiredGlobalQuery error response.
 func (client *ImplicitClient) getRequiredGlobalQueryHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetRequiredPath - Test implicitly required path parameter
@@ -188,11 +201,15 @@ func (client *ImplicitClient) getRequiredPathCreateRequest(ctx context.Context, 
 
 // getRequiredPathHandleError handles the GetRequiredPath error response.
 func (client *ImplicitClient) getRequiredPathHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // PutOptionalBody - Test implicitly optional body parameter
@@ -228,11 +245,15 @@ func (client *ImplicitClient) putOptionalBodyCreateRequest(ctx context.Context, 
 
 // putOptionalBodyHandleError handles the PutOptionalBody error response.
 func (client *ImplicitClient) putOptionalBodyHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // PutOptionalHeader - Test implicitly optional header parameter
@@ -268,11 +289,15 @@ func (client *ImplicitClient) putOptionalHeaderCreateRequest(ctx context.Context
 
 // putOptionalHeaderHandleError handles the PutOptionalHeader error response.
 func (client *ImplicitClient) putOptionalHeaderHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // PutOptionalQuery - Test implicitly optional query parameter
@@ -310,9 +335,13 @@ func (client *ImplicitClient) putOptionalQueryCreateRequest(ctx context.Context,
 
 // putOptionalQueryHandleError handles the PutOptionalQuery error response.
 func (client *ImplicitClient) putOptionalQueryHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

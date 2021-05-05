@@ -9,6 +9,7 @@ package aztables
 
 import (
 	"context"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"strconv"
@@ -85,11 +86,15 @@ func (client *ServiceClient) getPropertiesHandleResponse(resp *azcore.Response) 
 
 // getPropertiesHandleError handles the GetProperties error response.
 func (client *ServiceClient) getPropertiesHandleError(resp *azcore.Response) error {
-	var err TableServiceError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := TableServiceError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetStatistics - Retrieves statistics related to replication for the Table service. It is only available on the secondary location endpoint when read-access
@@ -159,11 +164,15 @@ func (client *ServiceClient) getStatisticsHandleResponse(resp *azcore.Response) 
 
 // getStatisticsHandleError handles the GetStatistics error response.
 func (client *ServiceClient) getStatisticsHandleError(resp *azcore.Response) error {
-	var err TableServiceError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := TableServiceError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // SetProperties - Sets properties for an account's Table service endpoint, including properties for Analytics and CORS (Cross-Origin Resource Sharing)
@@ -222,9 +231,13 @@ func (client *ServiceClient) setPropertiesHandleResponse(resp *azcore.Response) 
 
 // setPropertiesHandleError handles the SetProperties error response.
 func (client *ServiceClient) setPropertiesHandleError(resp *azcore.Response) error {
-	var err TableServiceError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := TableServiceError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

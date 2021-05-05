@@ -10,6 +10,7 @@ package azartifacts
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -61,11 +62,15 @@ func (client *pipelineRunClient) cancelPipelineRunCreateRequest(ctx context.Cont
 
 // cancelPipelineRunHandleError handles the CancelPipelineRun error response.
 func (client *pipelineRunClient) cancelPipelineRunHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetPipelineRun - Get a pipeline run by its run ID.
@@ -114,11 +119,15 @@ func (client *pipelineRunClient) getPipelineRunHandleResponse(resp *azcore.Respo
 
 // getPipelineRunHandleError handles the GetPipelineRun error response.
 func (client *pipelineRunClient) getPipelineRunHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // QueryActivityRuns - Query activity runs based on input filter conditions.
@@ -171,11 +180,15 @@ func (client *pipelineRunClient) queryActivityRunsHandleResponse(resp *azcore.Re
 
 // queryActivityRunsHandleError handles the QueryActivityRuns error response.
 func (client *pipelineRunClient) queryActivityRunsHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // QueryPipelineRunsByWorkspace - Query pipeline runs in the workspace based on input filter conditions.
@@ -220,9 +233,13 @@ func (client *pipelineRunClient) queryPipelineRunsByWorkspaceHandleResponse(resp
 
 // queryPipelineRunsByWorkspaceHandleError handles the QueryPipelineRunsByWorkspace error response.
 func (client *pipelineRunClient) queryPipelineRunsByWorkspaceHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

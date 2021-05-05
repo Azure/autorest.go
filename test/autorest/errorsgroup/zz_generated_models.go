@@ -9,7 +9,6 @@ package errorsgroup
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"reflect"
@@ -30,6 +29,7 @@ func (a *AnimalNotFound) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
+	a.raw = string(data)
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -74,6 +74,7 @@ func (l *LinkNotFound) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
+	l.raw = string(data)
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -100,23 +101,15 @@ type NotFoundErrorBaseClassification interface {
 
 type NotFoundErrorBase struct {
 	BaseError
+	raw          string
 	Reason       *string `json:"reason,omitempty"`
 	WhatNotFound *string `json:"whatNotFound,omitempty"`
 }
 
 // Error implements the error interface for type NotFoundErrorBase.
+// The contents of the error text are not contractual and subject to change.
 func (e NotFoundErrorBase) Error() string {
-	msg := ""
-	if e.Reason != nil {
-		msg += fmt.Sprintf("Reason: %v\n", *e.Reason)
-	}
-	if e.WhatNotFound != nil {
-		msg += fmt.Sprintf("WhatNotFound: %v\n", *e.WhatNotFound)
-	}
-	if msg == "" {
-		msg = "missing error info"
-	}
-	return msg
+	return e.raw
 }
 
 // GetNotFoundErrorBase implements the NotFoundErrorBaseClassification interface for type NotFoundErrorBase.
@@ -128,6 +121,7 @@ func (n *NotFoundErrorBase) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
+	n.raw = string(data)
 	return n.unmarshalInternal(rawMsg)
 }
 
@@ -171,24 +165,16 @@ type PetActionErrorClassification interface {
 }
 
 type PetActionError struct {
+	raw string
 	// the error message
 	ErrorMessage *string `json:"errorMessage,omitempty"`
 	ErrorType    *string `json:"errorType,omitempty"`
 }
 
 // Error implements the error interface for type PetActionError.
+// The contents of the error text are not contractual and subject to change.
 func (e PetActionError) Error() string {
-	msg := ""
-	if e.ErrorMessage != nil {
-		msg += fmt.Sprintf("ErrorMessage: %v\n", *e.ErrorMessage)
-	}
-	if e.ErrorType != nil {
-		msg += fmt.Sprintf("ErrorType: %v\n", *e.ErrorType)
-	}
-	if msg == "" {
-		msg = "missing error info"
-	}
-	return msg
+	return e.raw
 }
 
 // GetPetActionError implements the PetActionErrorClassification interface for type PetActionError.
@@ -200,6 +186,7 @@ func (p *PetActionError) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
+	p.raw = string(data)
 	return p.unmarshalInternal(rawMsg)
 }
 
@@ -251,6 +238,7 @@ func (p *PetHungryOrThirstyError) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
+	p.raw = string(data)
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -298,6 +286,7 @@ func (p *PetSadError) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
+	p.raw = string(data)
 	return p.unmarshalInternal(rawMsg)
 }
 

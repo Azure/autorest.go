@@ -10,6 +10,7 @@ package armnetwork
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
@@ -137,11 +138,15 @@ func (client *PacketCapturesClient) createHandleResponse(resp *azcore.Response) 
 
 // createHandleError handles the Create error response.
 func (client *PacketCapturesClient) createHandleError(resp *azcore.Response) error {
-	var err ErrorResponse
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := ErrorResponse{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginDelete - Deletes the specified packet capture session.
@@ -242,11 +247,15 @@ func (client *PacketCapturesClient) deleteCreateRequest(ctx context.Context, res
 
 // deleteHandleError handles the Delete error response.
 func (client *PacketCapturesClient) deleteHandleError(resp *azcore.Response) error {
-	var err ErrorResponse
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := ErrorResponse{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Get - Gets a packet capture session by name.
@@ -307,11 +316,15 @@ func (client *PacketCapturesClient) getHandleResponse(resp *azcore.Response) (Pa
 
 // getHandleError handles the Get error response.
 func (client *PacketCapturesClient) getHandleError(resp *azcore.Response) error {
-	var err ErrorResponse
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := ErrorResponse{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginGetStatus - Query the status of a running packet capture session.
@@ -421,11 +434,15 @@ func (client *PacketCapturesClient) getStatusHandleResponse(resp *azcore.Respons
 
 // getStatusHandleError handles the GetStatus error response.
 func (client *PacketCapturesClient) getStatusHandleError(resp *azcore.Response) error {
-	var err ErrorResponse
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := ErrorResponse{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // List - Lists all packet capture sessions within the specified resource group.
@@ -482,11 +499,15 @@ func (client *PacketCapturesClient) listHandleResponse(resp *azcore.Response) (P
 
 // listHandleError handles the List error response.
 func (client *PacketCapturesClient) listHandleError(resp *azcore.Response) error {
-	var err ErrorResponse
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := ErrorResponse{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginStop - Stops a specified packet capture session.
@@ -587,9 +608,13 @@ func (client *PacketCapturesClient) stopCreateRequest(ctx context.Context, resou
 
 // stopHandleError handles the Stop error response.
 func (client *PacketCapturesClient) stopHandleError(resp *azcore.Response) error {
-	var err ErrorResponse
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := ErrorResponse{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

@@ -10,6 +10,7 @@ package azblob
 import (
 	"context"
 	"encoding/base64"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"strconv"
@@ -201,11 +202,15 @@ func (client *blockBlobClient) commitBlockListHandleResponse(resp *azcore.Respon
 
 // commitBlockListHandleError handles the CommitBlockList error response.
 func (client *blockBlobClient) commitBlockListHandleError(resp *azcore.Response) error {
-	var err StorageError
-	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := StorageError{raw: string(body)}
+	if err := resp.UnmarshalAsXML(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetBlockList - The Get Block List operation retrieves the list of blocks that have been uploaded as part of a block blob
@@ -303,11 +308,15 @@ func (client *blockBlobClient) getBlockListHandleResponse(resp *azcore.Response)
 
 // getBlockListHandleError handles the GetBlockList error response.
 func (client *blockBlobClient) getBlockListHandleError(resp *azcore.Response) error {
-	var err StorageError
-	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := StorageError{raw: string(body)}
+	if err := resp.UnmarshalAsXML(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // PutBlobFromURL - The Put Blob from URL operation creates a new Block Blob where the contents of the blob are read from a given URL. This API is supported
@@ -493,11 +502,15 @@ func (client *blockBlobClient) putBlobFromURLHandleResponse(resp *azcore.Respons
 
 // putBlobFromURLHandleError handles the PutBlobFromURL error response.
 func (client *blockBlobClient) putBlobFromURLHandleError(resp *azcore.Response) error {
-	var err StorageError
-	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := StorageError{raw: string(body)}
+	if err := resp.UnmarshalAsXML(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // StageBlock - The Stage Block operation creates a new block to be committed as part of a blob
@@ -611,11 +624,15 @@ func (client *blockBlobClient) stageBlockHandleResponse(resp *azcore.Response) (
 
 // stageBlockHandleError handles the StageBlock error response.
 func (client *blockBlobClient) stageBlockHandleError(resp *azcore.Response) error {
-	var err StorageError
-	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := StorageError{raw: string(body)}
+	if err := resp.UnmarshalAsXML(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // StageBlockFromURL - The Stage Block operation creates a new block to be committed as part of a blob where the contents are read from a URL.
@@ -745,11 +762,15 @@ func (client *blockBlobClient) stageBlockFromURLHandleResponse(resp *azcore.Resp
 
 // stageBlockFromURLHandleError handles the StageBlockFromURL error response.
 func (client *blockBlobClient) stageBlockFromURLHandleError(resp *azcore.Response) error {
-	var err StorageError
-	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := StorageError{raw: string(body)}
+	if err := resp.UnmarshalAsXML(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Upload - The Upload Block Blob operation updates the content of an existing block blob. Updating an existing block blob overwrites any existing metadata
@@ -921,9 +942,13 @@ func (client *blockBlobClient) uploadHandleResponse(resp *azcore.Response) (Bloc
 
 // uploadHandleError handles the Upload error response.
 func (client *blockBlobClient) uploadHandleError(resp *azcore.Response) error {
-	var err StorageError
-	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := StorageError{raw: string(body)}
+	if err := resp.UnmarshalAsXML(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

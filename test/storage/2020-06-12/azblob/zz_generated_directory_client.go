@@ -9,6 +9,7 @@ package azblob
 
 import (
 	"context"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"strconv"
@@ -141,11 +142,15 @@ func (client *directoryClient) createHandleResponse(resp *azcore.Response) (Dire
 
 // createHandleError handles the Create error response.
 func (client *directoryClient) createHandleError(resp *azcore.Response) error {
-	var err DataLakeStorageError
-	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := DataLakeStorageError{raw: string(body)}
+	if err := resp.UnmarshalAsXML(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Delete - Deletes the directory
@@ -230,11 +235,15 @@ func (client *directoryClient) deleteHandleResponse(resp *azcore.Response) (Dire
 
 // deleteHandleError handles the Delete error response.
 func (client *directoryClient) deleteHandleError(resp *azcore.Response) error {
-	var err DataLakeStorageError
-	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := DataLakeStorageError{raw: string(body)}
+	if err := resp.UnmarshalAsXML(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetAccessControl - Get the owner, group, permissions, or access control list for a directory.
@@ -335,11 +344,15 @@ func (client *directoryClient) getAccessControlHandleResponse(resp *azcore.Respo
 
 // getAccessControlHandleError handles the GetAccessControl error response.
 func (client *directoryClient) getAccessControlHandleError(resp *azcore.Response) error {
-	var err DataLakeStorageError
-	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := DataLakeStorageError{raw: string(body)}
+	if err := resp.UnmarshalAsXML(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Rename - Rename a directory. By default, the destination is overwritten and if the destination already exists and has a lease the lease is broken. This
@@ -487,11 +500,15 @@ func (client *directoryClient) renameHandleResponse(resp *azcore.Response) (Dire
 
 // renameHandleError handles the Rename error response.
 func (client *directoryClient) renameHandleError(resp *azcore.Response) error {
-	var err DataLakeStorageError
-	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := DataLakeStorageError{raw: string(body)}
+	if err := resp.UnmarshalAsXML(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // SetAccessControl - Set the owner, group, permissions, or access control list for a directory.
@@ -589,9 +606,13 @@ func (client *directoryClient) setAccessControlHandleResponse(resp *azcore.Respo
 
 // setAccessControlHandleError handles the SetAccessControl error response.
 func (client *directoryClient) setAccessControlHandleError(resp *azcore.Response) error {
-	var err DataLakeStorageError
-	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := DataLakeStorageError{raw: string(body)}
+	if err := resp.UnmarshalAsXML(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

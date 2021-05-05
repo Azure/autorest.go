@@ -10,10 +10,8 @@ package armcompute
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strings"
@@ -135,9 +133,9 @@ func (client *DisksClient) createOrUpdateHandleResponse(resp *azcore.Response) (
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *DisksClient) createOrUpdateHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -238,9 +236,9 @@ func (client *DisksClient) deleteCreateRequest(ctx context.Context, resourceGrou
 
 // deleteHandleError handles the Delete error response.
 func (client *DisksClient) deleteHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -302,9 +300,9 @@ func (client *DisksClient) getHandleResponse(resp *azcore.Response) (DiskRespons
 
 // getHandleError handles the Get error response.
 func (client *DisksClient) getHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -415,9 +413,9 @@ func (client *DisksClient) grantAccessHandleResponse(resp *azcore.Response) (Acc
 
 // grantAccessHandleError handles the GrantAccess error response.
 func (client *DisksClient) grantAccessHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -471,9 +469,9 @@ func (client *DisksClient) listHandleResponse(resp *azcore.Response) (DiskListRe
 
 // listHandleError handles the List error response.
 func (client *DisksClient) listHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -531,9 +529,9 @@ func (client *DisksClient) listByResourceGroupHandleResponse(resp *azcore.Respon
 
 // listByResourceGroupHandleError handles the ListByResourceGroup error response.
 func (client *DisksClient) listByResourceGroupHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -634,9 +632,9 @@ func (client *DisksClient) revokeAccessCreateRequest(ctx context.Context, resour
 
 // revokeAccessHandleError handles the RevokeAccess error response.
 func (client *DisksClient) revokeAccessHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -747,9 +745,9 @@ func (client *DisksClient) updateHandleResponse(resp *azcore.Response) (DiskResp
 
 // updateHandleError handles the Update error response.
 func (client *DisksClient) updateHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)

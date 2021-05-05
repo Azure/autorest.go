@@ -10,9 +10,7 @@ package headgroup
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"io/ioutil"
 	"net/http"
 )
 
@@ -59,9 +57,9 @@ func (client *HTTPSuccessClient) head200CreateRequest(ctx context.Context, optio
 
 // head200HandleError handles the Head200 error response.
 func (client *HTTPSuccessClient) head200HandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -101,9 +99,9 @@ func (client *HTTPSuccessClient) head204CreateRequest(ctx context.Context, optio
 
 // head204HandleError handles the Head204 error response.
 func (client *HTTPSuccessClient) head204HandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -143,9 +141,9 @@ func (client *HTTPSuccessClient) head404CreateRequest(ctx context.Context, optio
 
 // head404HandleError handles the Head404 error response.
 func (client *HTTPSuccessClient) head404HandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)

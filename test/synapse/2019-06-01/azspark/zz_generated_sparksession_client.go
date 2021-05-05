@@ -10,9 +10,7 @@ package azspark
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -53,9 +51,9 @@ func (client *sparkSessionClient) cancelSparkSessionCreateRequest(ctx context.Co
 
 // cancelSparkSessionHandleError handles the CancelSparkSession error response.
 func (client *sparkSessionClient) cancelSparkSessionHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -104,9 +102,9 @@ func (client *sparkSessionClient) cancelSparkStatementHandleResponse(resp *azcor
 
 // cancelSparkStatementHandleError handles the CancelSparkStatement error response.
 func (client *sparkSessionClient) cancelSparkStatementHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -158,9 +156,9 @@ func (client *sparkSessionClient) createSparkSessionHandleResponse(resp *azcore.
 
 // createSparkSessionHandleError handles the CreateSparkSession error response.
 func (client *sparkSessionClient) createSparkSessionHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -208,9 +206,9 @@ func (client *sparkSessionClient) createSparkStatementHandleResponse(resp *azcor
 
 // createSparkStatementHandleError handles the CreateSparkStatement error response.
 func (client *sparkSessionClient) createSparkStatementHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -263,9 +261,9 @@ func (client *sparkSessionClient) getSparkSessionHandleResponse(resp *azcore.Res
 
 // getSparkSessionHandleError handles the GetSparkSession error response.
 func (client *sparkSessionClient) getSparkSessionHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -323,9 +321,9 @@ func (client *sparkSessionClient) getSparkSessionsHandleResponse(resp *azcore.Re
 
 // getSparkSessionsHandleError handles the GetSparkSessions error response.
 func (client *sparkSessionClient) getSparkSessionsHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -374,9 +372,9 @@ func (client *sparkSessionClient) getSparkStatementHandleResponse(resp *azcore.R
 
 // getSparkStatementHandleError handles the GetSparkStatement error response.
 func (client *sparkSessionClient) getSparkStatementHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -424,9 +422,9 @@ func (client *sparkSessionClient) getSparkStatementsHandleResponse(resp *azcore.
 
 // getSparkStatementsHandleError handles the GetSparkStatements error response.
 func (client *sparkSessionClient) getSparkStatementsHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -464,9 +462,9 @@ func (client *sparkSessionClient) resetSparkSessionTimeoutCreateRequest(ctx cont
 
 // resetSparkSessionTimeoutHandleError handles the ResetSparkSessionTimeout error response.
 func (client *sparkSessionClient) resetSparkSessionTimeoutHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)

@@ -551,6 +551,10 @@ function processOperationResponses(session: Session<CodeModel>) {
           }
         } else {
           schemaError.language.go!.name = schemaTypeToGoType(session.model, schemaError, true);
+          if (schemaError.type === SchemaType.Any) {
+            ex.language.go!.genericError = true;
+            continue;
+          }
         }
         schemaError.language.go!.errorType = true;
         recursiveAddMarshallingFormat(schemaError, marshallingFormat);

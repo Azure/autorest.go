@@ -12,7 +12,6 @@ import (
 	"errors"
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"io/ioutil"
 	"net/http"
 )
 
@@ -66,11 +65,15 @@ func (client *MultipleInheritanceServiceClient) getCatHandleResponse(resp *azcor
 
 // getCatHandleError handles the GetCat error response.
 func (client *MultipleInheritanceServiceClient) getCatHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetFeline - Get a feline where meows and hisses are true
@@ -112,11 +115,15 @@ func (client *MultipleInheritanceServiceClient) getFelineHandleResponse(resp *az
 
 // getFelineHandleError handles the GetFeline error response.
 func (client *MultipleInheritanceServiceClient) getFelineHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetHorse - Get a horse with name 'Fred' and isAShowHorse true
@@ -158,11 +165,15 @@ func (client *MultipleInheritanceServiceClient) getHorseHandleResponse(resp *azc
 
 // getHorseHandleError handles the GetHorse error response.
 func (client *MultipleInheritanceServiceClient) getHorseHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetKitten - Get a kitten with name 'Gatito' where likesMilk and meows is true, and hisses and eatsMiceYet is false
@@ -204,11 +215,15 @@ func (client *MultipleInheritanceServiceClient) getKittenHandleResponse(resp *az
 
 // getKittenHandleError handles the GetKitten error response.
 func (client *MultipleInheritanceServiceClient) getKittenHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetPet - Get a pet with name 'Peanut'
@@ -250,11 +265,15 @@ func (client *MultipleInheritanceServiceClient) getPetHandleResponse(resp *azcor
 
 // getPetHandleError handles the GetPet error response.
 func (client *MultipleInheritanceServiceClient) getPetHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // PutCat - Put a cat with name 'Boots' where likesMilk and hisses is false, meows is true
@@ -296,9 +315,9 @@ func (client *MultipleInheritanceServiceClient) putCatHandleResponse(resp *azcor
 
 // putCatHandleError handles the PutCat error response.
 func (client *MultipleInheritanceServiceClient) putCatHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -345,9 +364,9 @@ func (client *MultipleInheritanceServiceClient) putFelineHandleResponse(resp *az
 
 // putFelineHandleError handles the PutFeline error response.
 func (client *MultipleInheritanceServiceClient) putFelineHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -394,9 +413,9 @@ func (client *MultipleInheritanceServiceClient) putHorseHandleResponse(resp *azc
 
 // putHorseHandleError handles the PutHorse error response.
 func (client *MultipleInheritanceServiceClient) putHorseHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -443,9 +462,9 @@ func (client *MultipleInheritanceServiceClient) putKittenHandleResponse(resp *az
 
 // putKittenHandleError handles the PutKitten error response.
 func (client *MultipleInheritanceServiceClient) putKittenHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -492,9 +511,9 @@ func (client *MultipleInheritanceServiceClient) putPetHandleResponse(resp *azcor
 
 // putPetHandleError handles the PutPet error response.
 func (client *MultipleInheritanceServiceClient) putPetHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)

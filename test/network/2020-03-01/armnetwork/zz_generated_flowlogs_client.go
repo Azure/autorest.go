@@ -10,6 +10,7 @@ package armnetwork
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
@@ -137,11 +138,15 @@ func (client *FlowLogsClient) createOrUpdateHandleResponse(resp *azcore.Response
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *FlowLogsClient) createOrUpdateHandleError(resp *azcore.Response) error {
-	var err ErrorResponse
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := ErrorResponse{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginDelete - Deletes the specified flow log resource.
@@ -242,11 +247,15 @@ func (client *FlowLogsClient) deleteCreateRequest(ctx context.Context, resourceG
 
 // deleteHandleError handles the Delete error response.
 func (client *FlowLogsClient) deleteHandleError(resp *azcore.Response) error {
-	var err ErrorResponse
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := ErrorResponse{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Get - Gets a flow log resource by name.
@@ -307,11 +316,15 @@ func (client *FlowLogsClient) getHandleResponse(resp *azcore.Response) (FlowLogR
 
 // getHandleError handles the Get error response.
 func (client *FlowLogsClient) getHandleError(resp *azcore.Response) error {
-	var err ErrorResponse
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := ErrorResponse{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // List - Lists all flow log resources for the specified Network Watcher.
@@ -368,9 +381,13 @@ func (client *FlowLogsClient) listHandleResponse(resp *azcore.Response) (FlowLog
 
 // listHandleError handles the List error response.
 func (client *FlowLogsClient) listHandleError(resp *azcore.Response) error {
-	var err ErrorResponse
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := ErrorResponse{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

@@ -10,6 +10,7 @@ package azblob
 import (
 	"context"
 	"encoding/base64"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"strconv"
@@ -89,11 +90,15 @@ func (client *blobClient) abortCopyFromURLHandleResponse(resp *azcore.Response) 
 
 // abortCopyFromURLHandleError handles the AbortCopyFromURL error response.
 func (client *blobClient) abortCopyFromURLHandleError(resp *azcore.Response) error {
-	var err StorageError
-	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := StorageError{raw: string(body)}
+	if err := resp.UnmarshalAsXML(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // AcquireLease - [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete operations
@@ -192,11 +197,15 @@ func (client *blobClient) acquireLeaseHandleResponse(resp *azcore.Response) (Blo
 
 // acquireLeaseHandleError handles the AcquireLease error response.
 func (client *blobClient) acquireLeaseHandleError(resp *azcore.Response) error {
-	var err StorageError
-	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := StorageError{raw: string(body)}
+	if err := resp.UnmarshalAsXML(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BreakLease - [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete operations
@@ -297,11 +306,15 @@ func (client *blobClient) breakLeaseHandleResponse(resp *azcore.Response) (BlobB
 
 // breakLeaseHandleError handles the BreakLease error response.
 func (client *blobClient) breakLeaseHandleError(resp *azcore.Response) error {
-	var err StorageError
-	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := StorageError{raw: string(body)}
+	if err := resp.UnmarshalAsXML(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // ChangeLease - [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete operations
@@ -396,11 +409,15 @@ func (client *blobClient) changeLeaseHandleResponse(resp *azcore.Response) (Blob
 
 // changeLeaseHandleError handles the ChangeLease error response.
 func (client *blobClient) changeLeaseHandleError(resp *azcore.Response) error {
-	var err StorageError
-	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := StorageError{raw: string(body)}
+	if err := resp.UnmarshalAsXML(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // CopyFromURL - The Copy From URL operation copies a blob or an internet resource to a new blob. It will not return a response until the copy is complete.
@@ -551,11 +568,15 @@ func (client *blobClient) copyFromURLHandleResponse(resp *azcore.Response) (Blob
 
 // copyFromURLHandleError handles the CopyFromURL error response.
 func (client *blobClient) copyFromURLHandleError(resp *azcore.Response) error {
-	var err StorageError
-	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := StorageError{raw: string(body)}
+	if err := resp.UnmarshalAsXML(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // CreateSnapshot - The Create Snapshot operation creates a read-only snapshot of a blob
@@ -677,11 +698,15 @@ func (client *blobClient) createSnapshotHandleResponse(resp *azcore.Response) (B
 
 // createSnapshotHandleError handles the CreateSnapshot error response.
 func (client *blobClient) createSnapshotHandleError(resp *azcore.Response) error {
-	var err StorageError
-	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := StorageError{raw: string(body)}
+	if err := resp.UnmarshalAsXML(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Delete - If the storage account's soft delete feature is disabled then, when a blob is deleted, it is permanently removed from the storage account. If
@@ -784,11 +809,15 @@ func (client *blobClient) deleteHandleResponse(resp *azcore.Response) (BlobDelet
 
 // deleteHandleError handles the Delete error response.
 func (client *blobClient) deleteHandleError(resp *azcore.Response) error {
-	var err StorageError
-	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := StorageError{raw: string(body)}
+	if err := resp.UnmarshalAsXML(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // DeleteImmutabilityPolicy - The Delete Immutability Policy operation deletes the immutability policy on the blob
@@ -852,11 +881,15 @@ func (client *blobClient) deleteImmutabilityPolicyHandleResponse(resp *azcore.Re
 
 // deleteImmutabilityPolicyHandleError handles the DeleteImmutabilityPolicy error response.
 func (client *blobClient) deleteImmutabilityPolicyHandleError(resp *azcore.Response) error {
-	var err StorageError
-	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := StorageError{raw: string(body)}
+	if err := resp.UnmarshalAsXML(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Download - The Download operation reads or downloads a blob from the system, including its metadata and properties. You can also call Download to read
@@ -1151,11 +1184,15 @@ func (client *blobClient) downloadHandleResponse(resp *azcore.Response) (BlobDow
 
 // downloadHandleError handles the Download error response.
 func (client *blobClient) downloadHandleError(resp *azcore.Response) error {
-	var err StorageError
-	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := StorageError{raw: string(body)}
+	if err := resp.UnmarshalAsXML(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetAccessControl - Get the owner, group, permissions, or access control list for a blob.
@@ -1256,11 +1293,15 @@ func (client *blobClient) getAccessControlHandleResponse(resp *azcore.Response) 
 
 // getAccessControlHandleError handles the GetAccessControl error response.
 func (client *blobClient) getAccessControlHandleError(resp *azcore.Response) error {
-	var err DataLakeStorageError
-	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := DataLakeStorageError{raw: string(body)}
+	if err := resp.UnmarshalAsXML(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetAccountInfo - Returns the sku name and account kind
@@ -1325,11 +1366,15 @@ func (client *blobClient) getAccountInfoHandleResponse(resp *azcore.Response) (B
 
 // getAccountInfoHandleError handles the GetAccountInfo error response.
 func (client *blobClient) getAccountInfoHandleError(resp *azcore.Response) error {
-	var err StorageError
-	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := StorageError{raw: string(body)}
+	if err := resp.UnmarshalAsXML(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetProperties - The Get Properties operation returns all user-defined metadata, standard HTTP properties, and system properties for the blob. It does
@@ -1644,11 +1689,15 @@ func (client *blobClient) getPropertiesHandleResponse(resp *azcore.Response) (Bl
 
 // getPropertiesHandleError handles the GetProperties error response.
 func (client *blobClient) getPropertiesHandleError(resp *azcore.Response) error {
-	var err StorageError
-	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := StorageError{raw: string(body)}
+	if err := resp.UnmarshalAsXML(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetTags - The Get Tags operation enables users to get the tags associated with a blob.
@@ -1728,11 +1777,15 @@ func (client *blobClient) getTagsHandleResponse(resp *azcore.Response) (BlobTags
 
 // getTagsHandleError handles the GetTags error response.
 func (client *blobClient) getTagsHandleError(resp *azcore.Response) error {
-	var err StorageError
-	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := StorageError{raw: string(body)}
+	if err := resp.UnmarshalAsXML(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Query - The Query operation enables users to select/project on blob data by providing simple query expressions.
@@ -1959,11 +2012,15 @@ func (client *blobClient) queryHandleResponse(resp *azcore.Response) (BlobQueryR
 
 // queryHandleError handles the Query error response.
 func (client *blobClient) queryHandleError(resp *azcore.Response) error {
-	var err StorageError
-	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := StorageError{raw: string(body)}
+	if err := resp.UnmarshalAsXML(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // ReleaseLease - [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete operations
@@ -2054,11 +2111,15 @@ func (client *blobClient) releaseLeaseHandleResponse(resp *azcore.Response) (Blo
 
 // releaseLeaseHandleError handles the ReleaseLease error response.
 func (client *blobClient) releaseLeaseHandleError(resp *azcore.Response) error {
-	var err StorageError
-	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := StorageError{raw: string(body)}
+	if err := resp.UnmarshalAsXML(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Rename - Rename a blob/file. By default, the destination is overwritten and if the destination already exists and has a lease the lease is broken. This
@@ -2200,11 +2261,15 @@ func (client *blobClient) renameHandleResponse(resp *azcore.Response) (BlobRenam
 
 // renameHandleError handles the Rename error response.
 func (client *blobClient) renameHandleError(resp *azcore.Response) error {
-	var err DataLakeStorageError
-	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := DataLakeStorageError{raw: string(body)}
+	if err := resp.UnmarshalAsXML(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // RenewLease - [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete operations
@@ -2298,11 +2363,15 @@ func (client *blobClient) renewLeaseHandleResponse(resp *azcore.Response) (BlobR
 
 // renewLeaseHandleError handles the RenewLease error response.
 func (client *blobClient) renewLeaseHandleError(resp *azcore.Response) error {
-	var err StorageError
-	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := StorageError{raw: string(body)}
+	if err := resp.UnmarshalAsXML(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // SetAccessControl - Set the owner, group, permissions, or access control list for a blob.
@@ -2400,11 +2469,15 @@ func (client *blobClient) setAccessControlHandleResponse(resp *azcore.Response) 
 
 // setAccessControlHandleError handles the SetAccessControl error response.
 func (client *blobClient) setAccessControlHandleError(resp *azcore.Response) error {
-	var err DataLakeStorageError
-	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := DataLakeStorageError{raw: string(body)}
+	if err := resp.UnmarshalAsXML(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // SetExpiry - Sets the time a blob will expire and be deleted.
@@ -2482,11 +2555,15 @@ func (client *blobClient) setExpiryHandleResponse(resp *azcore.Response) (BlobSe
 
 // setExpiryHandleError handles the SetExpiry error response.
 func (client *blobClient) setExpiryHandleError(resp *azcore.Response) error {
-	var err StorageError
-	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := StorageError{raw: string(body)}
+	if err := resp.UnmarshalAsXML(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // SetHTTPHeaders - The Set HTTP Headers operation sets system properties on the blob
@@ -2603,11 +2680,15 @@ func (client *blobClient) setHTTPHeadersHandleResponse(resp *azcore.Response) (B
 
 // setHTTPHeadersHandleError handles the SetHTTPHeaders error response.
 func (client *blobClient) setHTTPHeadersHandleError(resp *azcore.Response) error {
-	var err StorageError
-	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := StorageError{raw: string(body)}
+	if err := resp.UnmarshalAsXML(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // SetImmutabilityPolicy - The Set Immutability Policy operation sets the immutability policy on the blob
@@ -2690,11 +2771,15 @@ func (client *blobClient) setImmutabilityPolicyHandleResponse(resp *azcore.Respo
 
 // setImmutabilityPolicyHandleError handles the SetImmutabilityPolicy error response.
 func (client *blobClient) setImmutabilityPolicyHandleError(resp *azcore.Response) error {
-	var err StorageError
-	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := StorageError{raw: string(body)}
+	if err := resp.UnmarshalAsXML(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // SetLegalHold - The Set Legal Hold operation sets a legal hold on the blob.
@@ -2766,11 +2851,15 @@ func (client *blobClient) setLegalHoldHandleResponse(resp *azcore.Response) (Blo
 
 // setLegalHoldHandleError handles the SetLegalHold error response.
 func (client *blobClient) setLegalHoldHandleError(resp *azcore.Response) error {
-	var err StorageError
-	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := StorageError{raw: string(body)}
+	if err := resp.UnmarshalAsXML(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // SetMetadata - The Set Blob Metadata operation sets user-defined metadata for the specified blob as one or more name-value pairs
@@ -2895,11 +2984,15 @@ func (client *blobClient) setMetadataHandleResponse(resp *azcore.Response) (Blob
 
 // setMetadataHandleError handles the SetMetadata error response.
 func (client *blobClient) setMetadataHandleError(resp *azcore.Response) error {
-	var err StorageError
-	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := StorageError{raw: string(body)}
+	if err := resp.UnmarshalAsXML(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // SetTags - The Set Tags operation enables users to set tags on a blob.
@@ -2981,11 +3074,15 @@ func (client *blobClient) setTagsHandleResponse(resp *azcore.Response) (BlobSetT
 
 // setTagsHandleError handles the SetTags error response.
 func (client *blobClient) setTagsHandleError(resp *azcore.Response) error {
-	var err StorageError
-	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := StorageError{raw: string(body)}
+	if err := resp.UnmarshalAsXML(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // SetTier - The Set Tier operation sets the tier on a blob. The operation is allowed on a page blob in a premium storage account and on a block blob in
@@ -3061,11 +3158,15 @@ func (client *blobClient) setTierHandleResponse(resp *azcore.Response) (BlobSetT
 
 // setTierHandleError handles the SetTier error response.
 func (client *blobClient) setTierHandleError(resp *azcore.Response) error {
-	var err StorageError
-	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := StorageError{raw: string(body)}
+	if err := resp.UnmarshalAsXML(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // StartCopyFromURL - The Start Copy From URL operation copies a blob or an internet resource to a new blob.
@@ -3207,11 +3308,15 @@ func (client *blobClient) startCopyFromURLHandleResponse(resp *azcore.Response) 
 
 // startCopyFromURLHandleError handles the StartCopyFromURL error response.
 func (client *blobClient) startCopyFromURLHandleError(resp *azcore.Response) error {
-	var err StorageError
-	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := StorageError{raw: string(body)}
+	if err := resp.UnmarshalAsXML(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Undelete - Undelete a blob that was previously soft deleted
@@ -3275,9 +3380,13 @@ func (client *blobClient) undeleteHandleResponse(resp *azcore.Response) (BlobUnd
 
 // undeleteHandleError handles the Undelete error response.
 func (client *blobClient) undeleteHandleError(resp *azcore.Response) error {
-	var err StorageError
-	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := StorageError{raw: string(body)}
+	if err := resp.UnmarshalAsXML(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

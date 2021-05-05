@@ -9,6 +9,7 @@ package optionalgroup
 
 import (
 	"context"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"strconv"
@@ -59,11 +60,15 @@ func (client *ExplicitClient) postOptionalArrayHeaderCreateRequest(ctx context.C
 
 // postOptionalArrayHeaderHandleError handles the PostOptionalArrayHeader error response.
 func (client *ExplicitClient) postOptionalArrayHeaderHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // PostOptionalArrayParameter - Test explicitly optional array. Please put null.
@@ -99,11 +104,15 @@ func (client *ExplicitClient) postOptionalArrayParameterCreateRequest(ctx contex
 
 // postOptionalArrayParameterHandleError handles the PostOptionalArrayParameter error response.
 func (client *ExplicitClient) postOptionalArrayParameterHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // PostOptionalArrayProperty - Test explicitly optional array. Please put a valid array-wrapper with 'value' = null.
@@ -139,11 +148,15 @@ func (client *ExplicitClient) postOptionalArrayPropertyCreateRequest(ctx context
 
 // postOptionalArrayPropertyHandleError handles the PostOptionalArrayProperty error response.
 func (client *ExplicitClient) postOptionalArrayPropertyHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // PostOptionalClassParameter - Test explicitly optional complex object. Please put null.
@@ -179,11 +192,15 @@ func (client *ExplicitClient) postOptionalClassParameterCreateRequest(ctx contex
 
 // postOptionalClassParameterHandleError handles the PostOptionalClassParameter error response.
 func (client *ExplicitClient) postOptionalClassParameterHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // PostOptionalClassProperty - Test explicitly optional complex object. Please put a valid class-wrapper with 'value' = null.
@@ -219,11 +236,15 @@ func (client *ExplicitClient) postOptionalClassPropertyCreateRequest(ctx context
 
 // postOptionalClassPropertyHandleError handles the PostOptionalClassProperty error response.
 func (client *ExplicitClient) postOptionalClassPropertyHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // PostOptionalIntegerHeader - Test explicitly optional integer. Please put a header 'headerParameter' => null.
@@ -259,11 +280,15 @@ func (client *ExplicitClient) postOptionalIntegerHeaderCreateRequest(ctx context
 
 // postOptionalIntegerHeaderHandleError handles the PostOptionalIntegerHeader error response.
 func (client *ExplicitClient) postOptionalIntegerHeaderHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // PostOptionalIntegerParameter - Test explicitly optional integer. Please put null.
@@ -299,11 +324,15 @@ func (client *ExplicitClient) postOptionalIntegerParameterCreateRequest(ctx cont
 
 // postOptionalIntegerParameterHandleError handles the PostOptionalIntegerParameter error response.
 func (client *ExplicitClient) postOptionalIntegerParameterHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // PostOptionalIntegerProperty - Test explicitly optional integer. Please put a valid int-wrapper with 'value' = null.
@@ -339,11 +368,15 @@ func (client *ExplicitClient) postOptionalIntegerPropertyCreateRequest(ctx conte
 
 // postOptionalIntegerPropertyHandleError handles the PostOptionalIntegerProperty error response.
 func (client *ExplicitClient) postOptionalIntegerPropertyHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // PostOptionalStringHeader - Test explicitly optional string. Please put a header 'headerParameter' => null.
@@ -379,11 +412,15 @@ func (client *ExplicitClient) postOptionalStringHeaderCreateRequest(ctx context.
 
 // postOptionalStringHeaderHandleError handles the PostOptionalStringHeader error response.
 func (client *ExplicitClient) postOptionalStringHeaderHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // PostOptionalStringParameter - Test explicitly optional string. Please put null.
@@ -419,11 +456,15 @@ func (client *ExplicitClient) postOptionalStringParameterCreateRequest(ctx conte
 
 // postOptionalStringParameterHandleError handles the PostOptionalStringParameter error response.
 func (client *ExplicitClient) postOptionalStringParameterHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // PostOptionalStringProperty - Test explicitly optional integer. Please put a valid string-wrapper with 'value' = null.
@@ -459,11 +500,15 @@ func (client *ExplicitClient) postOptionalStringPropertyCreateRequest(ctx contex
 
 // postOptionalStringPropertyHandleError handles the PostOptionalStringProperty error response.
 func (client *ExplicitClient) postOptionalStringPropertyHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // PostRequiredArrayHeader - Test explicitly required array. Please put a header 'headerParameter' => null and the client library should throw before the
@@ -498,11 +543,15 @@ func (client *ExplicitClient) postRequiredArrayHeaderCreateRequest(ctx context.C
 
 // postRequiredArrayHeaderHandleError handles the PostRequiredArrayHeader error response.
 func (client *ExplicitClient) postRequiredArrayHeaderHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // PostRequiredArrayParameter - Test explicitly required array. Please put null and the client library should throw before the request is sent.
@@ -535,11 +584,15 @@ func (client *ExplicitClient) postRequiredArrayParameterCreateRequest(ctx contex
 
 // postRequiredArrayParameterHandleError handles the PostRequiredArrayParameter error response.
 func (client *ExplicitClient) postRequiredArrayParameterHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // PostRequiredArrayProperty - Test explicitly required array. Please put a valid array-wrapper with 'value' = null and the client library should throw
@@ -573,11 +626,15 @@ func (client *ExplicitClient) postRequiredArrayPropertyCreateRequest(ctx context
 
 // postRequiredArrayPropertyHandleError handles the PostRequiredArrayProperty error response.
 func (client *ExplicitClient) postRequiredArrayPropertyHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // PostRequiredClassParameter - Test explicitly required complex object. Please put null and the client library should throw before the request is sent.
@@ -610,11 +667,15 @@ func (client *ExplicitClient) postRequiredClassParameterCreateRequest(ctx contex
 
 // postRequiredClassParameterHandleError handles the PostRequiredClassParameter error response.
 func (client *ExplicitClient) postRequiredClassParameterHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // PostRequiredClassProperty - Test explicitly required complex object. Please put a valid class-wrapper with 'value' = null and the client library should
@@ -648,11 +709,15 @@ func (client *ExplicitClient) postRequiredClassPropertyCreateRequest(ctx context
 
 // postRequiredClassPropertyHandleError handles the PostRequiredClassProperty error response.
 func (client *ExplicitClient) postRequiredClassPropertyHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // PostRequiredIntegerHeader - Test explicitly required integer. Please put a header 'headerParameter' => null and the client library should throw before
@@ -687,11 +752,15 @@ func (client *ExplicitClient) postRequiredIntegerHeaderCreateRequest(ctx context
 
 // postRequiredIntegerHeaderHandleError handles the PostRequiredIntegerHeader error response.
 func (client *ExplicitClient) postRequiredIntegerHeaderHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // PostRequiredIntegerParameter - Test explicitly required integer. Please put null and the client library should throw before the request is sent.
@@ -724,11 +793,15 @@ func (client *ExplicitClient) postRequiredIntegerParameterCreateRequest(ctx cont
 
 // postRequiredIntegerParameterHandleError handles the PostRequiredIntegerParameter error response.
 func (client *ExplicitClient) postRequiredIntegerParameterHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // PostRequiredIntegerProperty - Test explicitly required integer. Please put a valid int-wrapper with 'value' = null and the client library should throw
@@ -762,11 +835,15 @@ func (client *ExplicitClient) postRequiredIntegerPropertyCreateRequest(ctx conte
 
 // postRequiredIntegerPropertyHandleError handles the PostRequiredIntegerProperty error response.
 func (client *ExplicitClient) postRequiredIntegerPropertyHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // PostRequiredStringHeader - Test explicitly required string. Please put a header 'headerParameter' => null and the client library should throw before
@@ -801,11 +878,15 @@ func (client *ExplicitClient) postRequiredStringHeaderCreateRequest(ctx context.
 
 // postRequiredStringHeaderHandleError handles the PostRequiredStringHeader error response.
 func (client *ExplicitClient) postRequiredStringHeaderHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // PostRequiredStringParameter - Test explicitly required string. Please put null and the client library should throw before the request is sent.
@@ -838,11 +919,15 @@ func (client *ExplicitClient) postRequiredStringParameterCreateRequest(ctx conte
 
 // postRequiredStringParameterHandleError handles the PostRequiredStringParameter error response.
 func (client *ExplicitClient) postRequiredStringParameterHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // PostRequiredStringProperty - Test explicitly required string. Please put a valid string-wrapper with 'value' = null and the client library should throw
@@ -876,9 +961,13 @@ func (client *ExplicitClient) postRequiredStringPropertyCreateRequest(ctx contex
 
 // postRequiredStringPropertyHandleError handles the PostRequiredStringProperty error response.
 func (client *ExplicitClient) postRequiredStringPropertyHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

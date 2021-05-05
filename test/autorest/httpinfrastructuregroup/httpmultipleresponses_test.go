@@ -12,6 +12,7 @@ import (
 
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 	"github.com/google/go-cmp/cmp"
+	"github.com/google/go-cmp/cmp/cmpopts"
 )
 
 func newMultipleResponsesClient() *MultipleResponsesClient {
@@ -55,7 +56,7 @@ func TestGet200Model201ModelDefaultError201Valid(t *testing.T) {
 			StatusCode: to.StringPtr("201"),
 		},
 		TextStatusCode: to.StringPtr("Created"),
-	}); r != "" {
+	}, cmpopts.IgnoreUnexported(MyException{})); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -71,7 +72,7 @@ func TestGet200Model201ModelDefaultError400Valid(t *testing.T) {
 	if r := cmp.Diff(r, &Error{
 		Message: to.StringPtr("client error"),
 		Status:  to.Int32Ptr(400),
-	}); r != "" {
+	}, cmpopts.IgnoreUnexported(Error{})); r != "" {
 		t.Fatal(r)
 	}
 	if result != nil {
@@ -88,7 +89,7 @@ func TestGet200Model204NoModelDefaultError200Valid(t *testing.T) {
 	}
 	if r := cmp.Diff(result.MyException, &MyException{
 		StatusCode: to.StringPtr("200"),
-	}); r != "" {
+	}, cmpopts.IgnoreUnexported(MyException{})); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -101,7 +102,7 @@ func TestGet200Model204NoModelDefaultError201Invalid(t *testing.T) {
 	if !errors.As(err, &r) {
 		t.Fatal("unexpected error type")
 	}
-	if r := cmp.Diff(r, &Error{}); r != "" {
+	if r := cmp.Diff(r, &Error{}, cmpopts.IgnoreUnexported(Error{})); r != "" {
 		t.Fatal(r)
 	}
 	if !reflect.ValueOf(result).IsZero() {
@@ -117,7 +118,7 @@ func TestGet200Model204NoModelDefaultError202None(t *testing.T) {
 	if !errors.As(err, &r) {
 		t.Fatal("unexpected error type")
 	}
-	if r := cmp.Diff(r, &Error{}); r != "" {
+	if r := cmp.Diff(r, &Error{}, cmpopts.IgnoreUnexported(Error{})); r != "" {
 		t.Fatal(r)
 	}
 	if !reflect.ValueOf(result).IsZero() {
@@ -151,7 +152,7 @@ func TestGet200Model204NoModelDefaultError400Valid(t *testing.T) {
 	if r := cmp.Diff(r, &Error{
 		Message: to.StringPtr("client error"),
 		Status:  to.Int32Ptr(400),
-	}); r != "" {
+	}, cmpopts.IgnoreUnexported(Error{})); r != "" {
 		t.Fatal(r)
 	}
 	if !reflect.ValueOf(result).IsZero() {
@@ -185,7 +186,7 @@ func TestGet200ModelA200Valid(t *testing.T) {
 	}
 	if r := cmp.Diff(result.MyException, &MyException{
 		StatusCode: to.StringPtr("200"),
-	}); r != "" {
+	}, cmpopts.IgnoreUnexported(MyException{})); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -203,7 +204,7 @@ func TestGet200ModelA201ModelC404ModelDDefaultError200Valid(t *testing.T) {
 	}
 	if r := cmp.Diff(r.MyException, &MyException{
 		StatusCode: to.StringPtr("200"),
-	}); r != "" {
+	}, cmpopts.IgnoreUnexported(MyException{})); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -237,7 +238,7 @@ func TestGet200ModelA201ModelC404ModelDDefaultError400Valid(t *testing.T) {
 	if r := cmp.Diff(r, &Error{
 		Message: to.StringPtr("client error"),
 		Status:  to.Int32Ptr(400),
-	}); r != "" {
+	}, cmpopts.IgnoreUnexported(Error{})); r != "" {
 		t.Fatal(r)
 	}
 	if result != nil {
@@ -272,7 +273,7 @@ func TestGet200ModelA202Valid(t *testing.T) {
 	}
 	if r := cmp.Diff(result.MyException, &MyException{
 		StatusCode: to.StringPtr("200"),
-	}); r != "" {
+	}, cmpopts.IgnoreUnexported(MyException{})); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -411,7 +412,7 @@ func TestGetDefaultModelA200Valid(t *testing.T) {
 	}
 	if r := cmp.Diff(result.MyException, &MyException{
 		StatusCode: to.StringPtr("200"),
-	}); r != "" {
+	}, cmpopts.IgnoreUnexported(MyException{})); r != "" {
 		t.Fatal(r)
 	}
 }

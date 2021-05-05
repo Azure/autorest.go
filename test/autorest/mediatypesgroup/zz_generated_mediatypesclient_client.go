@@ -10,9 +10,7 @@ package mediatypesgroup
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"io/ioutil"
 	"net/http"
 	"strings"
 )
@@ -71,9 +69,9 @@ func (client *MediaTypesClient) analyzeBodyHandleResponse(resp *azcore.Response)
 
 // analyzeBodyHandleError handles the AnalyzeBody error response.
 func (client *MediaTypesClient) analyzeBodyHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -123,9 +121,9 @@ func (client *MediaTypesClient) analyzeBodyWithSourcePathHandleResponse(resp *az
 
 // analyzeBodyWithSourcePathHandleError handles the AnalyzeBodyWithSourcePath error response.
 func (client *MediaTypesClient) analyzeBodyWithSourcePathHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -176,9 +174,9 @@ func (client *MediaTypesClient) contentTypeWithEncodingHandleResponse(resp *azco
 
 // contentTypeWithEncodingHandleError handles the ContentTypeWithEncoding error response.
 func (client *MediaTypesClient) contentTypeWithEncodingHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)

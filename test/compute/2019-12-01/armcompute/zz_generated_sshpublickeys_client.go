@@ -10,10 +10,8 @@ package armcompute
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strings"
@@ -85,9 +83,9 @@ func (client *SSHPublicKeysClient) createHandleResponse(resp *azcore.Response) (
 
 // createHandleError handles the Create error response.
 func (client *SSHPublicKeysClient) createHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -139,9 +137,9 @@ func (client *SSHPublicKeysClient) deleteCreateRequest(ctx context.Context, reso
 
 // deleteHandleError handles the Delete error response.
 func (client *SSHPublicKeysClient) deleteHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -205,9 +203,9 @@ func (client *SSHPublicKeysClient) generateKeyPairHandleResponse(resp *azcore.Re
 
 // generateKeyPairHandleError handles the GenerateKeyPair error response.
 func (client *SSHPublicKeysClient) generateKeyPairHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -269,9 +267,9 @@ func (client *SSHPublicKeysClient) getHandleResponse(resp *azcore.Response) (SSH
 
 // getHandleError handles the Get error response.
 func (client *SSHPublicKeysClient) getHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -330,9 +328,9 @@ func (client *SSHPublicKeysClient) listByResourceGroupHandleResponse(resp *azcor
 
 // listByResourceGroupHandleError handles the ListByResourceGroup error response.
 func (client *SSHPublicKeysClient) listByResourceGroupHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -387,9 +385,9 @@ func (client *SSHPublicKeysClient) listBySubscriptionHandleResponse(resp *azcore
 
 // listBySubscriptionHandleError handles the ListBySubscription error response.
 func (client *SSHPublicKeysClient) listBySubscriptionHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -451,9 +449,9 @@ func (client *SSHPublicKeysClient) updateHandleResponse(resp *azcore.Response) (
 
 // updateHandleError handles the Update error response.
 func (client *SSHPublicKeysClient) updateHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)

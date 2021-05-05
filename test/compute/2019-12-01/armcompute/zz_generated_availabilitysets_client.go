@@ -10,10 +10,8 @@ package armcompute
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strings"
@@ -85,9 +83,9 @@ func (client *AvailabilitySetsClient) createOrUpdateHandleResponse(resp *azcore.
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *AvailabilitySetsClient) createOrUpdateHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -139,9 +137,9 @@ func (client *AvailabilitySetsClient) deleteCreateRequest(ctx context.Context, r
 
 // deleteHandleError handles the Delete error response.
 func (client *AvailabilitySetsClient) deleteHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -203,9 +201,9 @@ func (client *AvailabilitySetsClient) getHandleResponse(resp *azcore.Response) (
 
 // getHandleError handles the Get error response.
 func (client *AvailabilitySetsClient) getHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -263,9 +261,9 @@ func (client *AvailabilitySetsClient) listHandleResponse(resp *azcore.Response) 
 
 // listHandleError handles the List error response.
 func (client *AvailabilitySetsClient) listHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -327,9 +325,9 @@ func (client *AvailabilitySetsClient) listAvailableSizesHandleResponse(resp *azc
 
 // listAvailableSizesHandleError handles the ListAvailableSizes error response.
 func (client *AvailabilitySetsClient) listAvailableSizesHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -386,9 +384,9 @@ func (client *AvailabilitySetsClient) listBySubscriptionHandleResponse(resp *azc
 
 // listBySubscriptionHandleError handles the ListBySubscription error response.
 func (client *AvailabilitySetsClient) listBySubscriptionHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -450,9 +448,9 @@ func (client *AvailabilitySetsClient) updateHandleResponse(resp *azcore.Response
 
 // updateHandleError handles the Update error response.
 func (client *AvailabilitySetsClient) updateHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
