@@ -9,6 +9,7 @@ package complexgroup
 
 import (
 	"context"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 )
@@ -25,6 +26,7 @@ func NewReadonlypropertyClient(con *Connection) *ReadonlypropertyClient {
 }
 
 // GetValid - Get complex types that have readonly properties
+// If the operation fails it returns the *Error error type.
 func (client *ReadonlypropertyClient) GetValid(ctx context.Context, options *ReadonlypropertyGetValidOptions) (ReadonlyObjResponse, error) {
 	req, err := client.getValidCreateRequest(ctx, options)
 	if err != nil {
@@ -63,14 +65,19 @@ func (client *ReadonlypropertyClient) getValidHandleResponse(resp *azcore.Respon
 
 // getValidHandleError handles the GetValid error response.
 func (client *ReadonlypropertyClient) getValidHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // PutValid - Put complex types that have readonly properties
+// If the operation fails it returns the *Error error type.
 func (client *ReadonlypropertyClient) PutValid(ctx context.Context, complexBody ReadonlyObj, options *ReadonlypropertyPutValidOptions) (*http.Response, error) {
 	req, err := client.putValidCreateRequest(ctx, complexBody, options)
 	if err != nil {
@@ -100,9 +107,13 @@ func (client *ReadonlypropertyClient) putValidCreateRequest(ctx context.Context,
 
 // putValidHandleError handles the PutValid error response.
 func (client *ReadonlypropertyClient) putValidHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

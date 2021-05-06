@@ -10,6 +10,7 @@ package complexmodelgroup
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -28,6 +29,7 @@ func NewComplexModelClient(con *Connection) *ComplexModelClient {
 }
 
 // Create - Resets products.
+// If the operation fails it returns the *Error error type.
 func (client *ComplexModelClient) Create(ctx context.Context, subscriptionID string, resourceGroupName string, bodyParameter CatalogDictionaryOfArray, options *ComplexModelClientCreateOptions) (CatalogDictionaryResponse, error) {
 	req, err := client.createCreateRequest(ctx, subscriptionID, resourceGroupName, bodyParameter, options)
 	if err != nil {
@@ -77,16 +79,21 @@ func (client *ComplexModelClient) createHandleResponse(resp *azcore.Response) (C
 
 // createHandleError handles the Create error response.
 func (client *ComplexModelClient) createHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // List - The Products endpoint returns information about the Uber products offered at a given location. The response includes the display name and other
 // details about each product, and lists the products in
 // the proper display order.
+// If the operation fails it returns the *Error error type.
 func (client *ComplexModelClient) List(ctx context.Context, resourceGroupName string, options *ComplexModelClientListOptions) (CatalogArrayResponse, error) {
 	req, err := client.listCreateRequest(ctx, resourceGroupName, options)
 	if err != nil {
@@ -133,14 +140,19 @@ func (client *ComplexModelClient) listHandleResponse(resp *azcore.Response) (Cat
 
 // listHandleError handles the List error response.
 func (client *ComplexModelClient) listHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Update - Resets products.
+// If the operation fails it returns the *Error error type.
 func (client *ComplexModelClient) Update(ctx context.Context, subscriptionID string, resourceGroupName string, bodyParameter CatalogArrayOfDictionary, options *ComplexModelClientUpdateOptions) (CatalogArrayResponse, error) {
 	req, err := client.updateCreateRequest(ctx, subscriptionID, resourceGroupName, bodyParameter, options)
 	if err != nil {
@@ -190,9 +202,13 @@ func (client *ComplexModelClient) updateHandleResponse(resp *azcore.Response) (C
 
 // updateHandleError handles the Update error response.
 func (client *ComplexModelClient) updateHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

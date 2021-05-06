@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { KnownMediaType, serialize } from '@azure-tools/codegen';
+import { comment, KnownMediaType, serialize } from '@azure-tools/codegen';
 import { Host, startSession, Session } from '@autorest/extension-base';
 import { ObjectSchema, ArraySchema, ChoiceValue, codeModelSchema, CodeModel, DateTimeSchema, GroupProperty, HttpHeader, HttpResponse, ImplementationLocation, Language, OperationGroup, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Response, Schema, DictionarySchema, Protocol, ChoiceSchema, SealedChoiceSchema, ConstantSchema, Request } from '@autorest/codemodel';
 import { clone, items, values } from '@azure-tools/linq';
@@ -512,6 +512,7 @@ function processOperationResponses(session: Session<CodeModel>) {
   for (const group of values(session.model.operationGroups)) {
     for (const op of values(group.operations)) {
       // annotate all exception types as errors; this is so we know to generate an Error() method
+      const exTypeNames = new Array<string>();
       for (const ex of values(op.exceptions)) {
         const marshallingFormat = getMarshallingFormat(ex.protocol);
         if (marshallingFormat === 'na') {
@@ -549,11 +550,34 @@ function processOperationResponses(session: Session<CodeModel>) {
             // if the error is a discriminator we need to create an internal wrapper type
             schemaError.language.go!.internalErrorType = (<string>schemaError.language.go!.name).uncapitalize();
           }
+          if (schemaError.discriminator) {
+            for (const dt of values(<Array<string>>schemaError.language.go!.discriminatorTypes)) {
+              if (!exTypeNames.includes(dt)) {
+                exTypeNames.push(dt);
+              }
+            }
+          } else {
+            exTypeNames.push('*' + schemaError.language.go!.name);
+          }
         } else {
           schemaError.language.go!.name = schemaTypeToGoType(session.model, schemaError, true);
+          if (schemaError.type === SchemaType.Any) {
+            ex.language.go!.genericError = true;
+            continue;
+          }
         }
         schemaError.language.go!.errorType = true;
         recursiveAddMarshallingFormat(schemaError, marshallingFormat);
+      }
+      op.language.go!.description += '\nIf the operation fails it returns ';
+      if (exTypeNames.length > 1) {
+        exTypeNames.sort();
+        op.language.go!.description += `one of the following error types.\n`;
+        op.language.go!.description += comment(exTypeNames.join(', '), ' - ');
+      } else if (exTypeNames.length === 1) {
+        op.language.go!.description += `the ${exTypeNames[0]} error type.`;
+      } else {
+        op.language.go!.description += 'a generic error.';
       }
       if (!op.responses) {
         continue;

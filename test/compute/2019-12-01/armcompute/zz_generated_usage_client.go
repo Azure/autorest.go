@@ -10,10 +10,8 @@ package armcompute
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strings"
@@ -32,6 +30,7 @@ func NewUsageClient(con *armcore.Connection, subscriptionID string) *UsageClient
 }
 
 // List - Gets, for the specified location, the current compute resource usage information as well as the limits for compute resources under the subscription.
+// If the operation fails it returns a generic error.
 func (client *UsageClient) List(location string, options *UsageListOptions) ListUsagesResultPager {
 	return &listUsagesResultPager{
 		pipeline: client.con.Pipeline(),
@@ -81,9 +80,9 @@ func (client *UsageClient) listHandleResponse(resp *azcore.Response) (ListUsages
 
 // listHandleError handles the List error response.
 func (client *UsageClient) listHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)

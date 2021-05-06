@@ -10,6 +10,7 @@ package azartifacts
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -21,6 +22,7 @@ type triggerRunClient struct {
 }
 
 // CancelTriggerInstance - Cancel single trigger instance by runId.
+// If the operation fails it returns the *CloudError error type.
 func (client *triggerRunClient) CancelTriggerInstance(ctx context.Context, triggerName string, runID string, options *TriggerRunCancelTriggerInstanceOptions) (*http.Response, error) {
 	req, err := client.cancelTriggerInstanceCreateRequest(ctx, triggerName, runID, options)
 	if err != nil {
@@ -61,14 +63,19 @@ func (client *triggerRunClient) cancelTriggerInstanceCreateRequest(ctx context.C
 
 // cancelTriggerInstanceHandleError handles the CancelTriggerInstance error response.
 func (client *triggerRunClient) cancelTriggerInstanceHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // QueryTriggerRunsByWorkspace - Query trigger runs.
+// If the operation fails it returns the *CloudError error type.
 func (client *triggerRunClient) QueryTriggerRunsByWorkspace(ctx context.Context, filterParameters RunFilterParameters, options *TriggerRunQueryTriggerRunsByWorkspaceOptions) (TriggerRunsQueryResponseResponse, error) {
 	req, err := client.queryTriggerRunsByWorkspaceCreateRequest(ctx, filterParameters, options)
 	if err != nil {
@@ -110,14 +117,19 @@ func (client *triggerRunClient) queryTriggerRunsByWorkspaceHandleResponse(resp *
 
 // queryTriggerRunsByWorkspaceHandleError handles the QueryTriggerRunsByWorkspace error response.
 func (client *triggerRunClient) queryTriggerRunsByWorkspaceHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // RerunTriggerInstance - Rerun single trigger instance by runId.
+// If the operation fails it returns the *CloudError error type.
 func (client *triggerRunClient) RerunTriggerInstance(ctx context.Context, triggerName string, runID string, options *TriggerRunRerunTriggerInstanceOptions) (*http.Response, error) {
 	req, err := client.rerunTriggerInstanceCreateRequest(ctx, triggerName, runID, options)
 	if err != nil {
@@ -158,9 +170,13 @@ func (client *triggerRunClient) rerunTriggerInstanceCreateRequest(ctx context.Co
 
 // rerunTriggerInstanceHandleError handles the RerunTriggerInstance error response.
 func (client *triggerRunClient) rerunTriggerInstanceHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

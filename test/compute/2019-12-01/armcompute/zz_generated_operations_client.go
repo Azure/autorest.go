@@ -10,10 +10,8 @@ package armcompute
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"io/ioutil"
 	"net/http"
 )
 
@@ -29,6 +27,7 @@ func NewOperationsClient(con *armcore.Connection) *OperationsClient {
 }
 
 // List - Gets a list of compute operations.
+// If the operation fails it returns a generic error.
 func (client *OperationsClient) List(ctx context.Context, options *OperationsListOptions) (ComputeOperationListResultResponse, error) {
 	req, err := client.listCreateRequest(ctx, options)
 	if err != nil {
@@ -70,9 +69,9 @@ func (client *OperationsClient) listHandleResponse(resp *azcore.Response) (Compu
 
 // listHandleError handles the List error response.
 func (client *OperationsClient) listHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)

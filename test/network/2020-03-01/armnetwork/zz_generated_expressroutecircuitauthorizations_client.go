@@ -10,6 +10,7 @@ package armnetwork
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
@@ -31,6 +32,7 @@ func NewExpressRouteCircuitAuthorizationsClient(con *armcore.Connection, subscri
 }
 
 // BeginCreateOrUpdate - Creates or updates an authorization in the specified express route circuit.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteCircuitAuthorizationsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, circuitName string, authorizationName string, authorizationParameters ExpressRouteCircuitAuthorization, options *ExpressRouteCircuitAuthorizationsBeginCreateOrUpdateOptions) (ExpressRouteCircuitAuthorizationPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, circuitName, authorizationName, authorizationParameters, options)
 	if err != nil {
@@ -80,6 +82,7 @@ func (client *ExpressRouteCircuitAuthorizationsClient) ResumeCreateOrUpdate(ctx 
 }
 
 // CreateOrUpdate - Creates or updates an authorization in the specified express route circuit.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteCircuitAuthorizationsClient) createOrUpdate(ctx context.Context, resourceGroupName string, circuitName string, authorizationName string, authorizationParameters ExpressRouteCircuitAuthorization, options *ExpressRouteCircuitAuthorizationsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, circuitName, authorizationName, authorizationParameters, options)
 	if err != nil {
@@ -137,14 +140,19 @@ func (client *ExpressRouteCircuitAuthorizationsClient) createOrUpdateHandleRespo
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *ExpressRouteCircuitAuthorizationsClient) createOrUpdateHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginDelete - Deletes the specified authorization from the specified express route circuit.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteCircuitAuthorizationsClient) BeginDelete(ctx context.Context, resourceGroupName string, circuitName string, authorizationName string, options *ExpressRouteCircuitAuthorizationsBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, circuitName, authorizationName, options)
 	if err != nil {
@@ -194,6 +202,7 @@ func (client *ExpressRouteCircuitAuthorizationsClient) ResumeDelete(ctx context.
 }
 
 // Delete - Deletes the specified authorization from the specified express route circuit.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteCircuitAuthorizationsClient) deleteOperation(ctx context.Context, resourceGroupName string, circuitName string, authorizationName string, options *ExpressRouteCircuitAuthorizationsBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, circuitName, authorizationName, options)
 	if err != nil {
@@ -242,14 +251,19 @@ func (client *ExpressRouteCircuitAuthorizationsClient) deleteCreateRequest(ctx c
 
 // deleteHandleError handles the Delete error response.
 func (client *ExpressRouteCircuitAuthorizationsClient) deleteHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Get - Gets the specified authorization from the specified express route circuit.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteCircuitAuthorizationsClient) Get(ctx context.Context, resourceGroupName string, circuitName string, authorizationName string, options *ExpressRouteCircuitAuthorizationsGetOptions) (ExpressRouteCircuitAuthorizationResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, circuitName, authorizationName, options)
 	if err != nil {
@@ -307,14 +321,19 @@ func (client *ExpressRouteCircuitAuthorizationsClient) getHandleResponse(resp *a
 
 // getHandleError handles the Get error response.
 func (client *ExpressRouteCircuitAuthorizationsClient) getHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // List - Gets all authorizations in an express route circuit.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteCircuitAuthorizationsClient) List(resourceGroupName string, circuitName string, options *ExpressRouteCircuitAuthorizationsListOptions) AuthorizationListResultPager {
 	return &authorizationListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -368,9 +387,13 @@ func (client *ExpressRouteCircuitAuthorizationsClient) listHandleResponse(resp *
 
 // listHandleError handles the List error response.
 func (client *ExpressRouteCircuitAuthorizationsClient) listHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

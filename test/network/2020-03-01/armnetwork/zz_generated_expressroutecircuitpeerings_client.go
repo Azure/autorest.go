@@ -10,6 +10,7 @@ package armnetwork
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
@@ -31,6 +32,7 @@ func NewExpressRouteCircuitPeeringsClient(con *armcore.Connection, subscriptionI
 }
 
 // BeginCreateOrUpdate - Creates or updates a peering in the specified express route circuits.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteCircuitPeeringsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, peeringParameters ExpressRouteCircuitPeering, options *ExpressRouteCircuitPeeringsBeginCreateOrUpdateOptions) (ExpressRouteCircuitPeeringPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, circuitName, peeringName, peeringParameters, options)
 	if err != nil {
@@ -80,6 +82,7 @@ func (client *ExpressRouteCircuitPeeringsClient) ResumeCreateOrUpdate(ctx contex
 }
 
 // CreateOrUpdate - Creates or updates a peering in the specified express route circuits.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteCircuitPeeringsClient) createOrUpdate(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, peeringParameters ExpressRouteCircuitPeering, options *ExpressRouteCircuitPeeringsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, circuitName, peeringName, peeringParameters, options)
 	if err != nil {
@@ -137,14 +140,19 @@ func (client *ExpressRouteCircuitPeeringsClient) createOrUpdateHandleResponse(re
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *ExpressRouteCircuitPeeringsClient) createOrUpdateHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginDelete - Deletes the specified peering from the specified express route circuit.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteCircuitPeeringsClient) BeginDelete(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, options *ExpressRouteCircuitPeeringsBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, circuitName, peeringName, options)
 	if err != nil {
@@ -194,6 +202,7 @@ func (client *ExpressRouteCircuitPeeringsClient) ResumeDelete(ctx context.Contex
 }
 
 // Delete - Deletes the specified peering from the specified express route circuit.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteCircuitPeeringsClient) deleteOperation(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, options *ExpressRouteCircuitPeeringsBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, circuitName, peeringName, options)
 	if err != nil {
@@ -242,14 +251,19 @@ func (client *ExpressRouteCircuitPeeringsClient) deleteCreateRequest(ctx context
 
 // deleteHandleError handles the Delete error response.
 func (client *ExpressRouteCircuitPeeringsClient) deleteHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Get - Gets the specified peering for the express route circuit.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteCircuitPeeringsClient) Get(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, options *ExpressRouteCircuitPeeringsGetOptions) (ExpressRouteCircuitPeeringResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, circuitName, peeringName, options)
 	if err != nil {
@@ -307,14 +321,19 @@ func (client *ExpressRouteCircuitPeeringsClient) getHandleResponse(resp *azcore.
 
 // getHandleError handles the Get error response.
 func (client *ExpressRouteCircuitPeeringsClient) getHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // List - Gets all peerings in a specified express route circuit.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteCircuitPeeringsClient) List(resourceGroupName string, circuitName string, options *ExpressRouteCircuitPeeringsListOptions) ExpressRouteCircuitPeeringListResultPager {
 	return &expressRouteCircuitPeeringListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -368,9 +387,13 @@ func (client *ExpressRouteCircuitPeeringsClient) listHandleResponse(resp *azcore
 
 // listHandleError handles the List error response.
 func (client *ExpressRouteCircuitPeeringsClient) listHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

@@ -10,6 +10,7 @@ package armnetwork
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
@@ -31,6 +32,7 @@ func NewNetworkInterfaceTapConfigurationsClient(con *armcore.Connection, subscri
 }
 
 // BeginCreateOrUpdate - Creates or updates a Tap configuration in the specified NetworkInterface.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkInterfaceTapConfigurationsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, tapConfigurationParameters NetworkInterfaceTapConfiguration, options *NetworkInterfaceTapConfigurationsBeginCreateOrUpdateOptions) (NetworkInterfaceTapConfigurationPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, networkInterfaceName, tapConfigurationName, tapConfigurationParameters, options)
 	if err != nil {
@@ -80,6 +82,7 @@ func (client *NetworkInterfaceTapConfigurationsClient) ResumeCreateOrUpdate(ctx 
 }
 
 // CreateOrUpdate - Creates or updates a Tap configuration in the specified NetworkInterface.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkInterfaceTapConfigurationsClient) createOrUpdate(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, tapConfigurationParameters NetworkInterfaceTapConfiguration, options *NetworkInterfaceTapConfigurationsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, networkInterfaceName, tapConfigurationName, tapConfigurationParameters, options)
 	if err != nil {
@@ -137,14 +140,19 @@ func (client *NetworkInterfaceTapConfigurationsClient) createOrUpdateHandleRespo
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *NetworkInterfaceTapConfigurationsClient) createOrUpdateHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginDelete - Deletes the specified tap configuration from the NetworkInterface.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkInterfaceTapConfigurationsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, options *NetworkInterfaceTapConfigurationsBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, networkInterfaceName, tapConfigurationName, options)
 	if err != nil {
@@ -194,6 +202,7 @@ func (client *NetworkInterfaceTapConfigurationsClient) ResumeDelete(ctx context.
 }
 
 // Delete - Deletes the specified tap configuration from the NetworkInterface.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkInterfaceTapConfigurationsClient) deleteOperation(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, options *NetworkInterfaceTapConfigurationsBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, networkInterfaceName, tapConfigurationName, options)
 	if err != nil {
@@ -242,14 +251,19 @@ func (client *NetworkInterfaceTapConfigurationsClient) deleteCreateRequest(ctx c
 
 // deleteHandleError handles the Delete error response.
 func (client *NetworkInterfaceTapConfigurationsClient) deleteHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Get - Get the specified tap configuration on a network interface.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkInterfaceTapConfigurationsClient) Get(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, options *NetworkInterfaceTapConfigurationsGetOptions) (NetworkInterfaceTapConfigurationResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkInterfaceName, tapConfigurationName, options)
 	if err != nil {
@@ -307,14 +321,19 @@ func (client *NetworkInterfaceTapConfigurationsClient) getHandleResponse(resp *a
 
 // getHandleError handles the Get error response.
 func (client *NetworkInterfaceTapConfigurationsClient) getHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // List - Get all Tap configurations in a network interface.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkInterfaceTapConfigurationsClient) List(resourceGroupName string, networkInterfaceName string, options *NetworkInterfaceTapConfigurationsListOptions) NetworkInterfaceTapConfigurationListResultPager {
 	return &networkInterfaceTapConfigurationListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -368,9 +387,13 @@ func (client *NetworkInterfaceTapConfigurationsClient) listHandleResponse(resp *
 
 // listHandleError handles the List error response.
 func (client *NetworkInterfaceTapConfigurationsClient) listHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

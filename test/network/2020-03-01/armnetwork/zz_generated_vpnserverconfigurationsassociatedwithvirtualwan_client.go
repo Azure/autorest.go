@@ -10,6 +10,7 @@ package armnetwork
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
@@ -31,6 +32,7 @@ func NewVPNServerConfigurationsAssociatedWithVirtualWanClient(con *armcore.Conne
 }
 
 // BeginList - Gives the list of VpnServerConfigurations associated with Virtual Wan in a resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) BeginList(ctx context.Context, resourceGroupName string, virtualWANName string, options *VPNServerConfigurationsAssociatedWithVirtualWanBeginListOptions) (VPNServerConfigurationsResponsePollerResponse, error) {
 	resp, err := client.listOperation(ctx, resourceGroupName, virtualWANName, options)
 	if err != nil {
@@ -80,6 +82,7 @@ func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) ResumeList(
 }
 
 // List - Gives the list of VpnServerConfigurations associated with Virtual Wan in a resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) listOperation(ctx context.Context, resourceGroupName string, virtualWANName string, options *VPNServerConfigurationsAssociatedWithVirtualWanBeginListOptions) (*azcore.Response, error) {
 	req, err := client.listCreateRequest(ctx, resourceGroupName, virtualWANName, options)
 	if err != nil {
@@ -133,9 +136,13 @@ func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) listHandleR
 
 // listHandleError handles the List error response.
 func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) listHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

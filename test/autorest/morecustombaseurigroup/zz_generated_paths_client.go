@@ -10,6 +10,7 @@ package morecustombaseurigroup
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -29,6 +30,7 @@ func NewPathsClient(con *Connection, subscriptionID string) *PathsClient {
 }
 
 // GetEmpty - Get a 200 to test a valid base uri
+// If the operation fails it returns the *Error error type.
 func (client *PathsClient) GetEmpty(ctx context.Context, vault string, secret string, keyName string, options *PathsGetEmptyOptions) (*http.Response, error) {
 	req, err := client.getEmptyCreateRequest(ctx, vault, secret, keyName, options)
 	if err != nil {
@@ -75,9 +77,13 @@ func (client *PathsClient) getEmptyCreateRequest(ctx context.Context, vault stri
 
 // getEmptyHandleError handles the GetEmpty error response.
 func (client *PathsClient) getEmptyHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

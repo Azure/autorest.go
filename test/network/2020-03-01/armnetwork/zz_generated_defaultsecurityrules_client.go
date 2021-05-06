@@ -10,6 +10,7 @@ package armnetwork
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
@@ -30,6 +31,7 @@ func NewDefaultSecurityRulesClient(con *armcore.Connection, subscriptionID strin
 }
 
 // Get - Get the specified default network security rule.
+// If the operation fails it returns the *CloudError error type.
 func (client *DefaultSecurityRulesClient) Get(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, defaultSecurityRuleName string, options *DefaultSecurityRulesGetOptions) (SecurityRuleResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkSecurityGroupName, defaultSecurityRuleName, options)
 	if err != nil {
@@ -87,14 +89,19 @@ func (client *DefaultSecurityRulesClient) getHandleResponse(resp *azcore.Respons
 
 // getHandleError handles the Get error response.
 func (client *DefaultSecurityRulesClient) getHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // List - Gets all default security rules in a network security group.
+// If the operation fails it returns the *CloudError error type.
 func (client *DefaultSecurityRulesClient) List(resourceGroupName string, networkSecurityGroupName string, options *DefaultSecurityRulesListOptions) SecurityRuleListResultPager {
 	return &securityRuleListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -148,9 +155,13 @@ func (client *DefaultSecurityRulesClient) listHandleResponse(resp *azcore.Respon
 
 // listHandleError handles the List error response.
 func (client *DefaultSecurityRulesClient) listHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

@@ -10,6 +10,7 @@ package azurespecialsgroup
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -29,6 +30,7 @@ func NewSubscriptionInMethodClient(con *Connection) *SubscriptionInMethodClient 
 
 // PostMethodLocalNull - POST method with subscriptionId modeled in the method. pass in subscription id = null, client-side validation should prevent you
 // from making this call
+// If the operation fails it returns the *Error error type.
 func (client *SubscriptionInMethodClient) PostMethodLocalNull(ctx context.Context, subscriptionID string, options *SubscriptionInMethodPostMethodLocalNullOptions) (*http.Response, error) {
 	req, err := client.postMethodLocalNullCreateRequest(ctx, subscriptionID, options)
 	if err != nil {
@@ -62,14 +64,19 @@ func (client *SubscriptionInMethodClient) postMethodLocalNullCreateRequest(ctx c
 
 // postMethodLocalNullHandleError handles the PostMethodLocalNull error response.
 func (client *SubscriptionInMethodClient) postMethodLocalNullHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // PostMethodLocalValid - POST method with subscriptionId modeled in the method. pass in subscription id = '1234-5678-9012-3456' to succeed
+// If the operation fails it returns the *Error error type.
 func (client *SubscriptionInMethodClient) PostMethodLocalValid(ctx context.Context, subscriptionID string, options *SubscriptionInMethodPostMethodLocalValidOptions) (*http.Response, error) {
 	req, err := client.postMethodLocalValidCreateRequest(ctx, subscriptionID, options)
 	if err != nil {
@@ -103,14 +110,19 @@ func (client *SubscriptionInMethodClient) postMethodLocalValidCreateRequest(ctx 
 
 // postMethodLocalValidHandleError handles the PostMethodLocalValid error response.
 func (client *SubscriptionInMethodClient) postMethodLocalValidHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // PostPathLocalValid - POST method with subscriptionId modeled in the method. pass in subscription id = '1234-5678-9012-3456' to succeed
+// If the operation fails it returns the *Error error type.
 func (client *SubscriptionInMethodClient) PostPathLocalValid(ctx context.Context, subscriptionID string, options *SubscriptionInMethodPostPathLocalValidOptions) (*http.Response, error) {
 	req, err := client.postPathLocalValidCreateRequest(ctx, subscriptionID, options)
 	if err != nil {
@@ -144,14 +156,19 @@ func (client *SubscriptionInMethodClient) postPathLocalValidCreateRequest(ctx co
 
 // postPathLocalValidHandleError handles the PostPathLocalValid error response.
 func (client *SubscriptionInMethodClient) postPathLocalValidHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // PostSwaggerLocalValid - POST method with subscriptionId modeled in the method. pass in subscription id = '1234-5678-9012-3456' to succeed
+// If the operation fails it returns the *Error error type.
 func (client *SubscriptionInMethodClient) PostSwaggerLocalValid(ctx context.Context, subscriptionID string, options *SubscriptionInMethodPostSwaggerLocalValidOptions) (*http.Response, error) {
 	req, err := client.postSwaggerLocalValidCreateRequest(ctx, subscriptionID, options)
 	if err != nil {
@@ -185,9 +202,13 @@ func (client *SubscriptionInMethodClient) postSwaggerLocalValidCreateRequest(ctx
 
 // postSwaggerLocalValidHandleError handles the PostSwaggerLocalValid error response.
 func (client *SubscriptionInMethodClient) postSwaggerLocalValidHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

@@ -10,9 +10,7 @@ package mediatypesgroup
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"io/ioutil"
 	"net/http"
 	"strings"
 )
@@ -29,6 +27,7 @@ func NewMediaTypesClient(con *Connection) *MediaTypesClient {
 }
 
 // AnalyzeBody - Analyze body, that could be different media types.
+// If the operation fails it returns a generic error.
 func (client *MediaTypesClient) AnalyzeBody(ctx context.Context, contentType ContentType, options *MediaTypesClientAnalyzeBodyOptions) (StringResponse, error) {
 	req, err := client.analyzeBodyCreateRequest(ctx, contentType, options)
 	if err != nil {
@@ -71,9 +70,9 @@ func (client *MediaTypesClient) analyzeBodyHandleResponse(resp *azcore.Response)
 
 // analyzeBodyHandleError handles the AnalyzeBody error response.
 func (client *MediaTypesClient) analyzeBodyHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -82,6 +81,7 @@ func (client *MediaTypesClient) analyzeBodyHandleError(resp *azcore.Response) er
 }
 
 // AnalyzeBodyWithSourcePath - Analyze body, that could be different media types.
+// If the operation fails it returns a generic error.
 func (client *MediaTypesClient) AnalyzeBodyWithSourcePath(ctx context.Context, options *MediaTypesClientAnalyzeBodyWithSourcePathOptions) (StringResponse, error) {
 	req, err := client.analyzeBodyWithSourcePathCreateRequest(ctx, options)
 	if err != nil {
@@ -123,9 +123,9 @@ func (client *MediaTypesClient) analyzeBodyWithSourcePathHandleResponse(resp *az
 
 // analyzeBodyWithSourcePathHandleError handles the AnalyzeBodyWithSourcePath error response.
 func (client *MediaTypesClient) analyzeBodyWithSourcePathHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -134,6 +134,7 @@ func (client *MediaTypesClient) analyzeBodyWithSourcePathHandleError(resp *azcor
 }
 
 // ContentTypeWithEncoding - Pass in contentType 'text/plain; encoding=UTF-8' to pass test. Value for input does not matter
+// If the operation fails it returns a generic error.
 func (client *MediaTypesClient) ContentTypeWithEncoding(ctx context.Context, options *MediaTypesClientContentTypeWithEncodingOptions) (StringResponse, error) {
 	req, err := client.contentTypeWithEncodingCreateRequest(ctx, options)
 	if err != nil {
@@ -176,9 +177,9 @@ func (client *MediaTypesClient) contentTypeWithEncodingHandleResponse(resp *azco
 
 // contentTypeWithEncodingHandleError handles the ContentTypeWithEncoding error response.
 func (client *MediaTypesClient) contentTypeWithEncodingHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)

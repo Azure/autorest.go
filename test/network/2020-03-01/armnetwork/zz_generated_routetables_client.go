@@ -10,6 +10,7 @@ package armnetwork
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
@@ -31,6 +32,7 @@ func NewRouteTablesClient(con *armcore.Connection, subscriptionID string) *Route
 }
 
 // BeginCreateOrUpdate - Create or updates a route table in a specified resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *RouteTablesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, routeTableName string, parameters RouteTable, options *RouteTablesBeginCreateOrUpdateOptions) (RouteTablePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, routeTableName, parameters, options)
 	if err != nil {
@@ -80,6 +82,7 @@ func (client *RouteTablesClient) ResumeCreateOrUpdate(ctx context.Context, token
 }
 
 // CreateOrUpdate - Create or updates a route table in a specified resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *RouteTablesClient) createOrUpdate(ctx context.Context, resourceGroupName string, routeTableName string, parameters RouteTable, options *RouteTablesBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, routeTableName, parameters, options)
 	if err != nil {
@@ -133,14 +136,19 @@ func (client *RouteTablesClient) createOrUpdateHandleResponse(resp *azcore.Respo
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *RouteTablesClient) createOrUpdateHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginDelete - Deletes the specified route table.
+// If the operation fails it returns the *CloudError error type.
 func (client *RouteTablesClient) BeginDelete(ctx context.Context, resourceGroupName string, routeTableName string, options *RouteTablesBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, routeTableName, options)
 	if err != nil {
@@ -190,6 +198,7 @@ func (client *RouteTablesClient) ResumeDelete(ctx context.Context, token string)
 }
 
 // Delete - Deletes the specified route table.
+// If the operation fails it returns the *CloudError error type.
 func (client *RouteTablesClient) deleteOperation(ctx context.Context, resourceGroupName string, routeTableName string, options *RouteTablesBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, routeTableName, options)
 	if err != nil {
@@ -234,14 +243,19 @@ func (client *RouteTablesClient) deleteCreateRequest(ctx context.Context, resour
 
 // deleteHandleError handles the Delete error response.
 func (client *RouteTablesClient) deleteHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Get - Gets the specified route table.
+// If the operation fails it returns the *CloudError error type.
 func (client *RouteTablesClient) Get(ctx context.Context, resourceGroupName string, routeTableName string, options *RouteTablesGetOptions) (RouteTableResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, routeTableName, options)
 	if err != nil {
@@ -298,14 +312,19 @@ func (client *RouteTablesClient) getHandleResponse(resp *azcore.Response) (Route
 
 // getHandleError handles the Get error response.
 func (client *RouteTablesClient) getHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // List - Gets all route tables in a resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *RouteTablesClient) List(resourceGroupName string, options *RouteTablesListOptions) RouteTableListResultPager {
 	return &routeTableListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -355,14 +374,19 @@ func (client *RouteTablesClient) listHandleResponse(resp *azcore.Response) (Rout
 
 // listHandleError handles the List error response.
 func (client *RouteTablesClient) listHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // ListAll - Gets all route tables in a subscription.
+// If the operation fails it returns the *CloudError error type.
 func (client *RouteTablesClient) ListAll(options *RouteTablesListAllOptions) RouteTableListResultPager {
 	return &routeTableListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -408,14 +432,19 @@ func (client *RouteTablesClient) listAllHandleResponse(resp *azcore.Response) (R
 
 // listAllHandleError handles the ListAll error response.
 func (client *RouteTablesClient) listAllHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // UpdateTags - Updates a route table tags.
+// If the operation fails it returns the *CloudError error type.
 func (client *RouteTablesClient) UpdateTags(ctx context.Context, resourceGroupName string, routeTableName string, parameters TagsObject, options *RouteTablesUpdateTagsOptions) (RouteTableResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, routeTableName, parameters, options)
 	if err != nil {
@@ -469,9 +498,13 @@ func (client *RouteTablesClient) updateTagsHandleResponse(resp *azcore.Response)
 
 // updateTagsHandleError handles the UpdateTags error response.
 func (client *RouteTablesClient) updateTagsHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

@@ -13,7 +13,6 @@ import (
 	"errors"
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"io/ioutil"
 	"net/http"
 )
 
@@ -29,6 +28,7 @@ func NewXMLClient(con *Connection) *XMLClient {
 }
 
 // GetACLs - Gets storage ACLs for a container.
+// If the operation fails it returns a generic error.
 func (client *XMLClient) GetACLs(ctx context.Context, options *XMLGetACLsOptions) (SignedIdentifierArrayResponse, error) {
 	req, err := client.getACLsCreateRequest(ctx, options)
 	if err != nil {
@@ -71,9 +71,9 @@ func (client *XMLClient) getACLsHandleResponse(resp *azcore.Response) (SignedIde
 
 // getACLsHandleError handles the GetACLs error response.
 func (client *XMLClient) getACLsHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -82,6 +82,7 @@ func (client *XMLClient) getACLsHandleError(resp *azcore.Response) error {
 }
 
 // GetComplexTypeRefNoMeta - Get a complex type that has a ref to a complex type with no XML node
+// If the operation fails it returns a generic error.
 func (client *XMLClient) GetComplexTypeRefNoMeta(ctx context.Context, options *XMLGetComplexTypeRefNoMetaOptions) (RootWithRefAndNoMetaResponse, error) {
 	req, err := client.getComplexTypeRefNoMetaCreateRequest(ctx, options)
 	if err != nil {
@@ -120,9 +121,9 @@ func (client *XMLClient) getComplexTypeRefNoMetaHandleResponse(resp *azcore.Resp
 
 // getComplexTypeRefNoMetaHandleError handles the GetComplexTypeRefNoMeta error response.
 func (client *XMLClient) getComplexTypeRefNoMetaHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -131,6 +132,7 @@ func (client *XMLClient) getComplexTypeRefNoMetaHandleError(resp *azcore.Respons
 }
 
 // GetComplexTypeRefWithMeta - Get a complex type that has a ref to a complex type with XML node
+// If the operation fails it returns a generic error.
 func (client *XMLClient) GetComplexTypeRefWithMeta(ctx context.Context, options *XMLGetComplexTypeRefWithMetaOptions) (RootWithRefAndMetaResponse, error) {
 	req, err := client.getComplexTypeRefWithMetaCreateRequest(ctx, options)
 	if err != nil {
@@ -169,9 +171,9 @@ func (client *XMLClient) getComplexTypeRefWithMetaHandleResponse(resp *azcore.Re
 
 // getComplexTypeRefWithMetaHandleError handles the GetComplexTypeRefWithMeta error response.
 func (client *XMLClient) getComplexTypeRefWithMetaHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -180,6 +182,7 @@ func (client *XMLClient) getComplexTypeRefWithMetaHandleError(resp *azcore.Respo
 }
 
 // GetEmptyChildElement - Gets an XML document with an empty child element.
+// If the operation fails it returns a generic error.
 func (client *XMLClient) GetEmptyChildElement(ctx context.Context, options *XMLGetEmptyChildElementOptions) (BananaResponse, error) {
 	req, err := client.getEmptyChildElementCreateRequest(ctx, options)
 	if err != nil {
@@ -218,9 +221,9 @@ func (client *XMLClient) getEmptyChildElementHandleResponse(resp *azcore.Respons
 
 // getEmptyChildElementHandleError handles the GetEmptyChildElement error response.
 func (client *XMLClient) getEmptyChildElementHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -229,6 +232,7 @@ func (client *XMLClient) getEmptyChildElementHandleError(resp *azcore.Response) 
 }
 
 // GetEmptyList - Get an empty list.
+// If the operation fails it returns a generic error.
 func (client *XMLClient) GetEmptyList(ctx context.Context, options *XMLGetEmptyListOptions) (SlideshowResponse, error) {
 	req, err := client.getEmptyListCreateRequest(ctx, options)
 	if err != nil {
@@ -267,9 +271,9 @@ func (client *XMLClient) getEmptyListHandleResponse(resp *azcore.Response) (Slid
 
 // getEmptyListHandleError handles the GetEmptyList error response.
 func (client *XMLClient) getEmptyListHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -278,6 +282,7 @@ func (client *XMLClient) getEmptyListHandleError(resp *azcore.Response) error {
 }
 
 // GetEmptyRootList - Gets an empty list as the root element.
+// If the operation fails it returns a generic error.
 func (client *XMLClient) GetEmptyRootList(ctx context.Context, options *XMLGetEmptyRootListOptions) (BananaArrayResponse, error) {
 	req, err := client.getEmptyRootListCreateRequest(ctx, options)
 	if err != nil {
@@ -316,9 +321,9 @@ func (client *XMLClient) getEmptyRootListHandleResponse(resp *azcore.Response) (
 
 // getEmptyRootListHandleError handles the GetEmptyRootList error response.
 func (client *XMLClient) getEmptyRootListHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -327,6 +332,7 @@ func (client *XMLClient) getEmptyRootListHandleError(resp *azcore.Response) erro
 }
 
 // GetEmptyWrappedLists - Gets some empty wrapped lists.
+// If the operation fails it returns a generic error.
 func (client *XMLClient) GetEmptyWrappedLists(ctx context.Context, options *XMLGetEmptyWrappedListsOptions) (AppleBarrelResponse, error) {
 	req, err := client.getEmptyWrappedListsCreateRequest(ctx, options)
 	if err != nil {
@@ -365,9 +371,9 @@ func (client *XMLClient) getEmptyWrappedListsHandleResponse(resp *azcore.Respons
 
 // getEmptyWrappedListsHandleError handles the GetEmptyWrappedLists error response.
 func (client *XMLClient) getEmptyWrappedListsHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -376,6 +382,7 @@ func (client *XMLClient) getEmptyWrappedListsHandleError(resp *azcore.Response) 
 }
 
 // GetHeaders - Get strongly-typed response headers.
+// If the operation fails it returns a generic error.
 func (client *XMLClient) GetHeaders(ctx context.Context, options *XMLGetHeadersOptions) (XMLGetHeadersResponse, error) {
 	req, err := client.getHeadersCreateRequest(ctx, options)
 	if err != nil {
@@ -413,9 +420,9 @@ func (client *XMLClient) getHeadersHandleResponse(resp *azcore.Response) (XMLGet
 
 // getHeadersHandleError handles the GetHeaders error response.
 func (client *XMLClient) getHeadersHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -424,6 +431,7 @@ func (client *XMLClient) getHeadersHandleError(resp *azcore.Response) error {
 }
 
 // GetRootList - Gets a list as the root element.
+// If the operation fails it returns a generic error.
 func (client *XMLClient) GetRootList(ctx context.Context, options *XMLGetRootListOptions) (BananaArrayResponse, error) {
 	req, err := client.getRootListCreateRequest(ctx, options)
 	if err != nil {
@@ -462,9 +470,9 @@ func (client *XMLClient) getRootListHandleResponse(resp *azcore.Response) (Banan
 
 // getRootListHandleError handles the GetRootList error response.
 func (client *XMLClient) getRootListHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -473,6 +481,7 @@ func (client *XMLClient) getRootListHandleError(resp *azcore.Response) error {
 }
 
 // GetRootListSingleItem - Gets a list with a single item.
+// If the operation fails it returns a generic error.
 func (client *XMLClient) GetRootListSingleItem(ctx context.Context, options *XMLGetRootListSingleItemOptions) (BananaArrayResponse, error) {
 	req, err := client.getRootListSingleItemCreateRequest(ctx, options)
 	if err != nil {
@@ -511,9 +520,9 @@ func (client *XMLClient) getRootListSingleItemHandleResponse(resp *azcore.Respon
 
 // getRootListSingleItemHandleError handles the GetRootListSingleItem error response.
 func (client *XMLClient) getRootListSingleItemHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -522,6 +531,7 @@ func (client *XMLClient) getRootListSingleItemHandleError(resp *azcore.Response)
 }
 
 // GetServiceProperties - Gets storage service properties.
+// If the operation fails it returns a generic error.
 func (client *XMLClient) GetServiceProperties(ctx context.Context, options *XMLGetServicePropertiesOptions) (StorageServicePropertiesResponse, error) {
 	req, err := client.getServicePropertiesCreateRequest(ctx, options)
 	if err != nil {
@@ -564,9 +574,9 @@ func (client *XMLClient) getServicePropertiesHandleResponse(resp *azcore.Respons
 
 // getServicePropertiesHandleError handles the GetServiceProperties error response.
 func (client *XMLClient) getServicePropertiesHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -575,6 +585,7 @@ func (client *XMLClient) getServicePropertiesHandleError(resp *azcore.Response) 
 }
 
 // GetSimple - Get a simple XML document
+// If the operation fails it returns the *Error error type.
 func (client *XMLClient) GetSimple(ctx context.Context, options *XMLGetSimpleOptions) (SlideshowResponse, error) {
 	req, err := client.getSimpleCreateRequest(ctx, options)
 	if err != nil {
@@ -613,14 +624,19 @@ func (client *XMLClient) getSimpleHandleResponse(resp *azcore.Response) (Slidesh
 
 // getSimpleHandleError handles the GetSimple error response.
 func (client *XMLClient) getSimpleHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsXML(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetWrappedLists - Get an XML document with multiple wrapped lists
+// If the operation fails it returns a generic error.
 func (client *XMLClient) GetWrappedLists(ctx context.Context, options *XMLGetWrappedListsOptions) (AppleBarrelResponse, error) {
 	req, err := client.getWrappedListsCreateRequest(ctx, options)
 	if err != nil {
@@ -659,9 +675,9 @@ func (client *XMLClient) getWrappedListsHandleResponse(resp *azcore.Response) (A
 
 // getWrappedListsHandleError handles the GetWrappedLists error response.
 func (client *XMLClient) getWrappedListsHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -671,6 +687,7 @@ func (client *XMLClient) getWrappedListsHandleError(resp *azcore.Response) error
 
 // GetXMsText - Get back an XML object with an x-ms-text property, which should translate to the returned object's 'language' property being 'english' and
 // its 'content' property being 'I am text'
+// If the operation fails it returns a generic error.
 func (client *XMLClient) GetXMsText(ctx context.Context, options *XMLGetXMsTextOptions) (ObjectWithXMsTextPropertyResponse, error) {
 	req, err := client.getXMsTextCreateRequest(ctx, options)
 	if err != nil {
@@ -709,9 +726,9 @@ func (client *XMLClient) getXMsTextHandleResponse(resp *azcore.Response) (Object
 
 // getXMsTextHandleError handles the GetXMsText error response.
 func (client *XMLClient) getXMsTextHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -720,6 +737,7 @@ func (client *XMLClient) getXMsTextHandleError(resp *azcore.Response) error {
 }
 
 // JSONInput - A Swagger with XML that has one operation that takes JSON as input. You need to send the ID number 42
+// If the operation fails it returns a generic error.
 func (client *XMLClient) JSONInput(ctx context.Context, properties JSONInput, options *XMLJSONInputOptions) (*http.Response, error) {
 	req, err := client.jsonInputCreateRequest(ctx, properties, options)
 	if err != nil {
@@ -748,9 +766,9 @@ func (client *XMLClient) jsonInputCreateRequest(ctx context.Context, properties 
 
 // jsonInputHandleError handles the JSONInput error response.
 func (client *XMLClient) jsonInputHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -759,6 +777,7 @@ func (client *XMLClient) jsonInputHandleError(resp *azcore.Response) error {
 }
 
 // JSONOutput - A Swagger with XML that has one operation that returns JSON. ID number 42
+// If the operation fails it returns a generic error.
 func (client *XMLClient) JSONOutput(ctx context.Context, options *XMLJSONOutputOptions) (JSONOutputResponse, error) {
 	req, err := client.jsonOutputCreateRequest(ctx, options)
 	if err != nil {
@@ -797,9 +816,9 @@ func (client *XMLClient) jsonOutputHandleResponse(resp *azcore.Response) (JSONOu
 
 // jsonOutputHandleError handles the JSONOutput error response.
 func (client *XMLClient) jsonOutputHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -808,6 +827,7 @@ func (client *XMLClient) jsonOutputHandleError(resp *azcore.Response) error {
 }
 
 // ListBlobs - Lists blobs in a storage container.
+// If the operation fails it returns a generic error.
 func (client *XMLClient) ListBlobs(ctx context.Context, options *XMLListBlobsOptions) (ListBlobsResponseResponse, error) {
 	req, err := client.listBlobsCreateRequest(ctx, options)
 	if err != nil {
@@ -850,9 +870,9 @@ func (client *XMLClient) listBlobsHandleResponse(resp *azcore.Response) (ListBlo
 
 // listBlobsHandleError handles the ListBlobs error response.
 func (client *XMLClient) listBlobsHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -861,6 +881,7 @@ func (client *XMLClient) listBlobsHandleError(resp *azcore.Response) error {
 }
 
 // ListContainers - Lists containers in a storage account.
+// If the operation fails it returns a generic error.
 func (client *XMLClient) ListContainers(ctx context.Context, options *XMLListContainersOptions) (ListContainersResponseResponse, error) {
 	req, err := client.listContainersCreateRequest(ctx, options)
 	if err != nil {
@@ -902,9 +923,9 @@ func (client *XMLClient) listContainersHandleResponse(resp *azcore.Response) (Li
 
 // listContainersHandleError handles the ListContainers error response.
 func (client *XMLClient) listContainersHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -913,6 +934,7 @@ func (client *XMLClient) listContainersHandleError(resp *azcore.Response) error 
 }
 
 // PutACLs - Puts storage ACLs for a container.
+// If the operation fails it returns a generic error.
 func (client *XMLClient) PutACLs(ctx context.Context, properties []*SignedIdentifier, options *XMLPutACLsOptions) (*http.Response, error) {
 	req, err := client.putACLsCreateRequest(ctx, properties, options)
 	if err != nil {
@@ -949,9 +971,9 @@ func (client *XMLClient) putACLsCreateRequest(ctx context.Context, properties []
 
 // putACLsHandleError handles the PutACLs error response.
 func (client *XMLClient) putACLsHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -960,6 +982,7 @@ func (client *XMLClient) putACLsHandleError(resp *azcore.Response) error {
 }
 
 // PutComplexTypeRefNoMeta - Puts a complex type that has a ref to a complex type with no XML node
+// If the operation fails it returns a generic error.
 func (client *XMLClient) PutComplexTypeRefNoMeta(ctx context.Context, model RootWithRefAndNoMeta, options *XMLPutComplexTypeRefNoMetaOptions) (*http.Response, error) {
 	req, err := client.putComplexTypeRefNoMetaCreateRequest(ctx, model, options)
 	if err != nil {
@@ -988,9 +1011,9 @@ func (client *XMLClient) putComplexTypeRefNoMetaCreateRequest(ctx context.Contex
 
 // putComplexTypeRefNoMetaHandleError handles the PutComplexTypeRefNoMeta error response.
 func (client *XMLClient) putComplexTypeRefNoMetaHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -999,6 +1022,7 @@ func (client *XMLClient) putComplexTypeRefNoMetaHandleError(resp *azcore.Respons
 }
 
 // PutComplexTypeRefWithMeta - Puts a complex type that has a ref to a complex type with XML node
+// If the operation fails it returns a generic error.
 func (client *XMLClient) PutComplexTypeRefWithMeta(ctx context.Context, model RootWithRefAndMeta, options *XMLPutComplexTypeRefWithMetaOptions) (*http.Response, error) {
 	req, err := client.putComplexTypeRefWithMetaCreateRequest(ctx, model, options)
 	if err != nil {
@@ -1027,9 +1051,9 @@ func (client *XMLClient) putComplexTypeRefWithMetaCreateRequest(ctx context.Cont
 
 // putComplexTypeRefWithMetaHandleError handles the PutComplexTypeRefWithMeta error response.
 func (client *XMLClient) putComplexTypeRefWithMetaHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -1038,6 +1062,7 @@ func (client *XMLClient) putComplexTypeRefWithMetaHandleError(resp *azcore.Respo
 }
 
 // PutEmptyChildElement - Puts a value with an empty child element.
+// If the operation fails it returns a generic error.
 func (client *XMLClient) PutEmptyChildElement(ctx context.Context, banana Banana, options *XMLPutEmptyChildElementOptions) (*http.Response, error) {
 	req, err := client.putEmptyChildElementCreateRequest(ctx, banana, options)
 	if err != nil {
@@ -1066,9 +1091,9 @@ func (client *XMLClient) putEmptyChildElementCreateRequest(ctx context.Context, 
 
 // putEmptyChildElementHandleError handles the PutEmptyChildElement error response.
 func (client *XMLClient) putEmptyChildElementHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -1077,6 +1102,7 @@ func (client *XMLClient) putEmptyChildElementHandleError(resp *azcore.Response) 
 }
 
 // PutEmptyList - Puts an empty list.
+// If the operation fails it returns a generic error.
 func (client *XMLClient) PutEmptyList(ctx context.Context, slideshow Slideshow, options *XMLPutEmptyListOptions) (*http.Response, error) {
 	req, err := client.putEmptyListCreateRequest(ctx, slideshow, options)
 	if err != nil {
@@ -1105,9 +1131,9 @@ func (client *XMLClient) putEmptyListCreateRequest(ctx context.Context, slidesho
 
 // putEmptyListHandleError handles the PutEmptyList error response.
 func (client *XMLClient) putEmptyListHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -1116,6 +1142,7 @@ func (client *XMLClient) putEmptyListHandleError(resp *azcore.Response) error {
 }
 
 // PutEmptyRootList - Puts an empty list as the root element.
+// If the operation fails it returns a generic error.
 func (client *XMLClient) PutEmptyRootList(ctx context.Context, bananas []*Banana, options *XMLPutEmptyRootListOptions) (*http.Response, error) {
 	req, err := client.putEmptyRootListCreateRequest(ctx, bananas, options)
 	if err != nil {
@@ -1148,9 +1175,9 @@ func (client *XMLClient) putEmptyRootListCreateRequest(ctx context.Context, bana
 
 // putEmptyRootListHandleError handles the PutEmptyRootList error response.
 func (client *XMLClient) putEmptyRootListHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -1159,6 +1186,7 @@ func (client *XMLClient) putEmptyRootListHandleError(resp *azcore.Response) erro
 }
 
 // PutEmptyWrappedLists - Puts some empty wrapped lists.
+// If the operation fails it returns a generic error.
 func (client *XMLClient) PutEmptyWrappedLists(ctx context.Context, appleBarrel AppleBarrel, options *XMLPutEmptyWrappedListsOptions) (*http.Response, error) {
 	req, err := client.putEmptyWrappedListsCreateRequest(ctx, appleBarrel, options)
 	if err != nil {
@@ -1187,9 +1215,9 @@ func (client *XMLClient) putEmptyWrappedListsCreateRequest(ctx context.Context, 
 
 // putEmptyWrappedListsHandleError handles the PutEmptyWrappedLists error response.
 func (client *XMLClient) putEmptyWrappedListsHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -1198,6 +1226,7 @@ func (client *XMLClient) putEmptyWrappedListsHandleError(resp *azcore.Response) 
 }
 
 // PutRootList - Puts a list as the root element.
+// If the operation fails it returns a generic error.
 func (client *XMLClient) PutRootList(ctx context.Context, bananas []*Banana, options *XMLPutRootListOptions) (*http.Response, error) {
 	req, err := client.putRootListCreateRequest(ctx, bananas, options)
 	if err != nil {
@@ -1230,9 +1259,9 @@ func (client *XMLClient) putRootListCreateRequest(ctx context.Context, bananas [
 
 // putRootListHandleError handles the PutRootList error response.
 func (client *XMLClient) putRootListHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -1241,6 +1270,7 @@ func (client *XMLClient) putRootListHandleError(resp *azcore.Response) error {
 }
 
 // PutRootListSingleItem - Puts a list with a single item.
+// If the operation fails it returns a generic error.
 func (client *XMLClient) PutRootListSingleItem(ctx context.Context, bananas []*Banana, options *XMLPutRootListSingleItemOptions) (*http.Response, error) {
 	req, err := client.putRootListSingleItemCreateRequest(ctx, bananas, options)
 	if err != nil {
@@ -1273,9 +1303,9 @@ func (client *XMLClient) putRootListSingleItemCreateRequest(ctx context.Context,
 
 // putRootListSingleItemHandleError handles the PutRootListSingleItem error response.
 func (client *XMLClient) putRootListSingleItemHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -1284,6 +1314,7 @@ func (client *XMLClient) putRootListSingleItemHandleError(resp *azcore.Response)
 }
 
 // PutServiceProperties - Puts storage service properties.
+// If the operation fails it returns a generic error.
 func (client *XMLClient) PutServiceProperties(ctx context.Context, properties StorageServiceProperties, options *XMLPutServicePropertiesOptions) (*http.Response, error) {
 	req, err := client.putServicePropertiesCreateRequest(ctx, properties, options)
 	if err != nil {
@@ -1316,9 +1347,9 @@ func (client *XMLClient) putServicePropertiesCreateRequest(ctx context.Context, 
 
 // putServicePropertiesHandleError handles the PutServiceProperties error response.
 func (client *XMLClient) putServicePropertiesHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -1327,6 +1358,7 @@ func (client *XMLClient) putServicePropertiesHandleError(resp *azcore.Response) 
 }
 
 // PutSimple - Put a simple XML document
+// If the operation fails it returns the *Error error type.
 func (client *XMLClient) PutSimple(ctx context.Context, slideshow Slideshow, options *XMLPutSimpleOptions) (*http.Response, error) {
 	req, err := client.putSimpleCreateRequest(ctx, slideshow, options)
 	if err != nil {
@@ -1356,14 +1388,19 @@ func (client *XMLClient) putSimpleCreateRequest(ctx context.Context, slideshow S
 
 // putSimpleHandleError handles the PutSimple error response.
 func (client *XMLClient) putSimpleHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsXML(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // PutWrappedLists - Put an XML document with multiple wrapped lists
+// If the operation fails it returns the *Error error type.
 func (client *XMLClient) PutWrappedLists(ctx context.Context, wrappedLists AppleBarrel, options *XMLPutWrappedListsOptions) (*http.Response, error) {
 	req, err := client.putWrappedListsCreateRequest(ctx, wrappedLists, options)
 	if err != nil {
@@ -1393,9 +1430,13 @@ func (client *XMLClient) putWrappedListsCreateRequest(ctx context.Context, wrapp
 
 // putWrappedListsHandleError handles the PutWrappedLists error response.
 func (client *XMLClient) putWrappedListsHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsXML(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

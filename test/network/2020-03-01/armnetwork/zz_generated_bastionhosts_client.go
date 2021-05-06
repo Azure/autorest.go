@@ -10,6 +10,7 @@ package armnetwork
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
@@ -31,6 +32,7 @@ func NewBastionHostsClient(con *armcore.Connection, subscriptionID string) *Bast
 }
 
 // BeginCreateOrUpdate - Creates or updates the specified Bastion Host.
+// If the operation fails it returns the *CloudError error type.
 func (client *BastionHostsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, bastionHostName string, parameters BastionHost, options *BastionHostsBeginCreateOrUpdateOptions) (BastionHostPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, bastionHostName, parameters, options)
 	if err != nil {
@@ -80,6 +82,7 @@ func (client *BastionHostsClient) ResumeCreateOrUpdate(ctx context.Context, toke
 }
 
 // CreateOrUpdate - Creates or updates the specified Bastion Host.
+// If the operation fails it returns the *CloudError error type.
 func (client *BastionHostsClient) createOrUpdate(ctx context.Context, resourceGroupName string, bastionHostName string, parameters BastionHost, options *BastionHostsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, bastionHostName, parameters, options)
 	if err != nil {
@@ -133,14 +136,19 @@ func (client *BastionHostsClient) createOrUpdateHandleResponse(resp *azcore.Resp
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *BastionHostsClient) createOrUpdateHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginDelete - Deletes the specified Bastion Host.
+// If the operation fails it returns the *CloudError error type.
 func (client *BastionHostsClient) BeginDelete(ctx context.Context, resourceGroupName string, bastionHostName string, options *BastionHostsBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, bastionHostName, options)
 	if err != nil {
@@ -190,6 +198,7 @@ func (client *BastionHostsClient) ResumeDelete(ctx context.Context, token string
 }
 
 // Delete - Deletes the specified Bastion Host.
+// If the operation fails it returns the *CloudError error type.
 func (client *BastionHostsClient) deleteOperation(ctx context.Context, resourceGroupName string, bastionHostName string, options *BastionHostsBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, bastionHostName, options)
 	if err != nil {
@@ -234,14 +243,19 @@ func (client *BastionHostsClient) deleteCreateRequest(ctx context.Context, resou
 
 // deleteHandleError handles the Delete error response.
 func (client *BastionHostsClient) deleteHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Get - Gets the specified Bastion Host.
+// If the operation fails it returns the *CloudError error type.
 func (client *BastionHostsClient) Get(ctx context.Context, resourceGroupName string, bastionHostName string, options *BastionHostsGetOptions) (BastionHostResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, bastionHostName, options)
 	if err != nil {
@@ -295,14 +309,19 @@ func (client *BastionHostsClient) getHandleResponse(resp *azcore.Response) (Bast
 
 // getHandleError handles the Get error response.
 func (client *BastionHostsClient) getHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // List - Lists all Bastion Hosts in a subscription.
+// If the operation fails it returns the *CloudError error type.
 func (client *BastionHostsClient) List(options *BastionHostsListOptions) BastionHostListResultPager {
 	return &bastionHostListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -348,14 +367,19 @@ func (client *BastionHostsClient) listHandleResponse(resp *azcore.Response) (Bas
 
 // listHandleError handles the List error response.
 func (client *BastionHostsClient) listHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // ListByResourceGroup - Lists all Bastion Hosts in a resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *BastionHostsClient) ListByResourceGroup(resourceGroupName string, options *BastionHostsListByResourceGroupOptions) BastionHostListResultPager {
 	return &bastionHostListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -405,9 +429,13 @@ func (client *BastionHostsClient) listByResourceGroupHandleResponse(resp *azcore
 
 // listByResourceGroupHandleError handles the ListByResourceGroup error response.
 func (client *BastionHostsClient) listByResourceGroupHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

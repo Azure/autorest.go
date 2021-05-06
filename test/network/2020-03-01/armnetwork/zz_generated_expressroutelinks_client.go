@@ -10,6 +10,7 @@ package armnetwork
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
@@ -30,6 +31,7 @@ func NewExpressRouteLinksClient(con *armcore.Connection, subscriptionID string) 
 }
 
 // Get - Retrieves the specified ExpressRouteLink resource.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteLinksClient) Get(ctx context.Context, resourceGroupName string, expressRoutePortName string, linkName string, options *ExpressRouteLinksGetOptions) (ExpressRouteLinkResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, expressRoutePortName, linkName, options)
 	if err != nil {
@@ -87,14 +89,19 @@ func (client *ExpressRouteLinksClient) getHandleResponse(resp *azcore.Response) 
 
 // getHandleError handles the Get error response.
 func (client *ExpressRouteLinksClient) getHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // List - Retrieve the ExpressRouteLink sub-resources of the specified ExpressRoutePort resource.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteLinksClient) List(resourceGroupName string, expressRoutePortName string, options *ExpressRouteLinksListOptions) ExpressRouteLinkListResultPager {
 	return &expressRouteLinkListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -148,9 +155,13 @@ func (client *ExpressRouteLinksClient) listHandleResponse(resp *azcore.Response)
 
 // listHandleError handles the List error response.
 func (client *ExpressRouteLinksClient) listHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

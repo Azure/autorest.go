@@ -10,6 +10,7 @@ package azartifacts
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -22,6 +23,7 @@ type sparkJobDefinitionClient struct {
 }
 
 // BeginCreateOrUpdateSparkJobDefinition - Creates or updates a Spark Job Definition.
+// If the operation fails it returns the *CloudError error type.
 func (client *sparkJobDefinitionClient) BeginCreateOrUpdateSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string, sparkJobDefinition SparkJobDefinitionResource, options *SparkJobDefinitionBeginCreateOrUpdateSparkJobDefinitionOptions) (SparkJobDefinitionResourcePollerResponse, error) {
 	resp, err := client.createOrUpdateSparkJobDefinition(ctx, sparkJobDefinitionName, sparkJobDefinition, options)
 	if err != nil {
@@ -69,6 +71,7 @@ func (client *sparkJobDefinitionClient) ResumeCreateOrUpdateSparkJobDefinition(c
 }
 
 // CreateOrUpdateSparkJobDefinition - Creates or updates a Spark Job Definition.
+// If the operation fails it returns the *CloudError error type.
 func (client *sparkJobDefinitionClient) createOrUpdateSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string, sparkJobDefinition SparkJobDefinitionResource, options *SparkJobDefinitionBeginCreateOrUpdateSparkJobDefinitionOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateSparkJobDefinitionCreateRequest(ctx, sparkJobDefinitionName, sparkJobDefinition, options)
 	if err != nil {
@@ -117,14 +120,19 @@ func (client *sparkJobDefinitionClient) createOrUpdateSparkJobDefinitionHandleRe
 
 // createOrUpdateSparkJobDefinitionHandleError handles the CreateOrUpdateSparkJobDefinition error response.
 func (client *sparkJobDefinitionClient) createOrUpdateSparkJobDefinitionHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginDebugSparkJobDefinition - Debug the spark job definition.
+// If the operation fails it returns the *CloudError error type.
 func (client *sparkJobDefinitionClient) BeginDebugSparkJobDefinition(ctx context.Context, sparkJobDefinitionAzureResource SparkJobDefinitionResource, options *SparkJobDefinitionBeginDebugSparkJobDefinitionOptions) (SparkBatchJobPollerResponse, error) {
 	resp, err := client.debugSparkJobDefinition(ctx, sparkJobDefinitionAzureResource, options)
 	if err != nil {
@@ -172,6 +180,7 @@ func (client *sparkJobDefinitionClient) ResumeDebugSparkJobDefinition(ctx contex
 }
 
 // DebugSparkJobDefinition - Debug the spark job definition.
+// If the operation fails it returns the *CloudError error type.
 func (client *sparkJobDefinitionClient) debugSparkJobDefinition(ctx context.Context, sparkJobDefinitionAzureResource SparkJobDefinitionResource, options *SparkJobDefinitionBeginDebugSparkJobDefinitionOptions) (*azcore.Response, error) {
 	req, err := client.debugSparkJobDefinitionCreateRequest(ctx, sparkJobDefinitionAzureResource, options)
 	if err != nil {
@@ -213,14 +222,19 @@ func (client *sparkJobDefinitionClient) debugSparkJobDefinitionHandleResponse(re
 
 // debugSparkJobDefinitionHandleError handles the DebugSparkJobDefinition error response.
 func (client *sparkJobDefinitionClient) debugSparkJobDefinitionHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginDeleteSparkJobDefinition - Deletes a Spark Job Definition.
+// If the operation fails it returns the *CloudError error type.
 func (client *sparkJobDefinitionClient) BeginDeleteSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string, options *SparkJobDefinitionBeginDeleteSparkJobDefinitionOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteSparkJobDefinition(ctx, sparkJobDefinitionName, options)
 	if err != nil {
@@ -268,6 +282,7 @@ func (client *sparkJobDefinitionClient) ResumeDeleteSparkJobDefinition(ctx conte
 }
 
 // DeleteSparkJobDefinition - Deletes a Spark Job Definition.
+// If the operation fails it returns the *CloudError error type.
 func (client *sparkJobDefinitionClient) deleteSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string, options *SparkJobDefinitionBeginDeleteSparkJobDefinitionOptions) (*azcore.Response, error) {
 	req, err := client.deleteSparkJobDefinitionCreateRequest(ctx, sparkJobDefinitionName, options)
 	if err != nil {
@@ -304,14 +319,19 @@ func (client *sparkJobDefinitionClient) deleteSparkJobDefinitionCreateRequest(ct
 
 // deleteSparkJobDefinitionHandleError handles the DeleteSparkJobDefinition error response.
 func (client *sparkJobDefinitionClient) deleteSparkJobDefinitionHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginExecuteSparkJobDefinition - Executes the spark job definition.
+// If the operation fails it returns the *CloudError error type.
 func (client *sparkJobDefinitionClient) BeginExecuteSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string, options *SparkJobDefinitionBeginExecuteSparkJobDefinitionOptions) (SparkBatchJobPollerResponse, error) {
 	resp, err := client.executeSparkJobDefinition(ctx, sparkJobDefinitionName, options)
 	if err != nil {
@@ -359,6 +379,7 @@ func (client *sparkJobDefinitionClient) ResumeExecuteSparkJobDefinition(ctx cont
 }
 
 // ExecuteSparkJobDefinition - Executes the spark job definition.
+// If the operation fails it returns the *CloudError error type.
 func (client *sparkJobDefinitionClient) executeSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string, options *SparkJobDefinitionBeginExecuteSparkJobDefinitionOptions) (*azcore.Response, error) {
 	req, err := client.executeSparkJobDefinitionCreateRequest(ctx, sparkJobDefinitionName, options)
 	if err != nil {
@@ -404,14 +425,19 @@ func (client *sparkJobDefinitionClient) executeSparkJobDefinitionHandleResponse(
 
 // executeSparkJobDefinitionHandleError handles the ExecuteSparkJobDefinition error response.
 func (client *sparkJobDefinitionClient) executeSparkJobDefinitionHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetSparkJobDefinition - Gets a Spark Job Definition.
+// If the operation fails it returns the *CloudError error type.
 func (client *sparkJobDefinitionClient) GetSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string, options *SparkJobDefinitionGetSparkJobDefinitionOptions) (SparkJobDefinitionResourceResponse, error) {
 	req, err := client.getSparkJobDefinitionCreateRequest(ctx, sparkJobDefinitionName, options)
 	if err != nil {
@@ -460,14 +486,19 @@ func (client *sparkJobDefinitionClient) getSparkJobDefinitionHandleResponse(resp
 
 // getSparkJobDefinitionHandleError handles the GetSparkJobDefinition error response.
 func (client *sparkJobDefinitionClient) getSparkJobDefinitionHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetSparkJobDefinitionsByWorkspace - Lists spark job definitions.
+// If the operation fails it returns the *CloudError error type.
 func (client *sparkJobDefinitionClient) GetSparkJobDefinitionsByWorkspace(options *SparkJobDefinitionGetSparkJobDefinitionsByWorkspaceOptions) SparkJobDefinitionsListResponsePager {
 	return &sparkJobDefinitionsListResponsePager{
 		pipeline: client.con.Pipeline(),
@@ -509,14 +540,19 @@ func (client *sparkJobDefinitionClient) getSparkJobDefinitionsByWorkspaceHandleR
 
 // getSparkJobDefinitionsByWorkspaceHandleError handles the GetSparkJobDefinitionsByWorkspace error response.
 func (client *sparkJobDefinitionClient) getSparkJobDefinitionsByWorkspaceHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginRenameSparkJobDefinition - Renames a sparkJobDefinition.
+// If the operation fails it returns the *CloudError error type.
 func (client *sparkJobDefinitionClient) BeginRenameSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string, request ArtifactRenameRequest, options *SparkJobDefinitionBeginRenameSparkJobDefinitionOptions) (HTTPPollerResponse, error) {
 	resp, err := client.renameSparkJobDefinition(ctx, sparkJobDefinitionName, request, options)
 	if err != nil {
@@ -564,6 +600,7 @@ func (client *sparkJobDefinitionClient) ResumeRenameSparkJobDefinition(ctx conte
 }
 
 // RenameSparkJobDefinition - Renames a sparkJobDefinition.
+// If the operation fails it returns the *CloudError error type.
 func (client *sparkJobDefinitionClient) renameSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string, request ArtifactRenameRequest, options *SparkJobDefinitionBeginRenameSparkJobDefinitionOptions) (*azcore.Response, error) {
 	req, err := client.renameSparkJobDefinitionCreateRequest(ctx, sparkJobDefinitionName, request, options)
 	if err != nil {
@@ -600,9 +637,13 @@ func (client *sparkJobDefinitionClient) renameSparkJobDefinitionCreateRequest(ct
 
 // renameSparkJobDefinitionHandleError handles the RenameSparkJobDefinition error response.
 func (client *sparkJobDefinitionClient) renameSparkJobDefinitionHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

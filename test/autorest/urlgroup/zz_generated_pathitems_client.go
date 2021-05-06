@@ -10,6 +10,7 @@ package urlgroup
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -32,6 +33,7 @@ func NewPathItemsClient(con *Connection, globalStringPath string, globalStringQu
 // GetAllWithValues - send globalStringPath='globalStringPath', pathItemStringPath='pathItemStringPath', localStringPath='localStringPath', globalStringQuery='globalStringQuery',
 // pathItemStringQuery='pathItemStringQuery',
 // localStringQuery='localStringQuery'
+// If the operation fails it returns the *Error error type.
 func (client *PathItemsClient) GetAllWithValues(ctx context.Context, pathItemStringPath string, localStringPath string, options *PathItemsGetAllWithValuesOptions) (*http.Response, error) {
 	req, err := client.getAllWithValuesCreateRequest(ctx, pathItemStringPath, localStringPath, options)
 	if err != nil {
@@ -84,16 +86,21 @@ func (client *PathItemsClient) getAllWithValuesCreateRequest(ctx context.Context
 
 // getAllWithValuesHandleError handles the GetAllWithValues error response.
 func (client *PathItemsClient) getAllWithValuesHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetGlobalAndLocalQueryNull - send globalStringPath=globalStringPath, pathItemStringPath='pathItemStringPath', localStringPath='localStringPath', globalStringQuery=null,
 // pathItemStringQuery='pathItemStringQuery',
 // localStringQuery=null
+// If the operation fails it returns the *Error error type.
 func (client *PathItemsClient) GetGlobalAndLocalQueryNull(ctx context.Context, pathItemStringPath string, localStringPath string, options *PathItemsGetGlobalAndLocalQueryNullOptions) (*http.Response, error) {
 	req, err := client.getGlobalAndLocalQueryNullCreateRequest(ctx, pathItemStringPath, localStringPath, options)
 	if err != nil {
@@ -146,16 +153,21 @@ func (client *PathItemsClient) getGlobalAndLocalQueryNullCreateRequest(ctx conte
 
 // getGlobalAndLocalQueryNullHandleError handles the GetGlobalAndLocalQueryNull error response.
 func (client *PathItemsClient) getGlobalAndLocalQueryNullHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetGlobalQueryNull - send globalStringPath='globalStringPath', pathItemStringPath='pathItemStringPath', localStringPath='localStringPath', globalStringQuery=null,
 // pathItemStringQuery='pathItemStringQuery',
 // localStringQuery='localStringQuery'
+// If the operation fails it returns the *Error error type.
 func (client *PathItemsClient) GetGlobalQueryNull(ctx context.Context, pathItemStringPath string, localStringPath string, options *PathItemsGetGlobalQueryNullOptions) (*http.Response, error) {
 	req, err := client.getGlobalQueryNullCreateRequest(ctx, pathItemStringPath, localStringPath, options)
 	if err != nil {
@@ -208,16 +220,21 @@ func (client *PathItemsClient) getGlobalQueryNullCreateRequest(ctx context.Conte
 
 // getGlobalQueryNullHandleError handles the GetGlobalQueryNull error response.
 func (client *PathItemsClient) getGlobalQueryNullHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetLocalPathItemQueryNull - send globalStringPath='globalStringPath', pathItemStringPath='pathItemStringPath', localStringPath='localStringPath', globalStringQuery='globalStringQuery',
 // pathItemStringQuery=null,
 // localStringQuery=null
+// If the operation fails it returns the *Error error type.
 func (client *PathItemsClient) GetLocalPathItemQueryNull(ctx context.Context, pathItemStringPath string, localStringPath string, options *PathItemsGetLocalPathItemQueryNullOptions) (*http.Response, error) {
 	req, err := client.getLocalPathItemQueryNullCreateRequest(ctx, pathItemStringPath, localStringPath, options)
 	if err != nil {
@@ -270,9 +287,13 @@ func (client *PathItemsClient) getLocalPathItemQueryNullCreateRequest(ctx contex
 
 // getLocalPathItemQueryNullHandleError handles the GetLocalPathItemQueryNull error response.
 func (client *PathItemsClient) getLocalPathItemQueryNullHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

@@ -9,6 +9,7 @@ package httpinfrastructuregroup
 
 import (
 	"context"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 )
@@ -25,6 +26,7 @@ func NewHTTPRetryClient(con *Connection) *HTTPRetryClient {
 }
 
 // Delete503 - Return 503 status code, then 200 after retry
+// If the operation fails it returns the *Error error type.
 func (client *HTTPRetryClient) Delete503(ctx context.Context, options *HTTPRetryDelete503Options) (*http.Response, error) {
 	req, err := client.delete503CreateRequest(ctx, options)
 	if err != nil {
@@ -54,14 +56,19 @@ func (client *HTTPRetryClient) delete503CreateRequest(ctx context.Context, optio
 
 // delete503HandleError handles the Delete503 error response.
 func (client *HTTPRetryClient) delete503HandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Get502 - Return 502 status code, then 200 after retry
+// If the operation fails it returns the *Error error type.
 func (client *HTTPRetryClient) Get502(ctx context.Context, options *HTTPRetryGet502Options) (*http.Response, error) {
 	req, err := client.get502CreateRequest(ctx, options)
 	if err != nil {
@@ -91,14 +98,19 @@ func (client *HTTPRetryClient) get502CreateRequest(ctx context.Context, options 
 
 // get502HandleError handles the Get502 error response.
 func (client *HTTPRetryClient) get502HandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Head408 - Return 408 status code, then 200 after retry
+// If the operation fails it returns the *Error error type.
 func (client *HTTPRetryClient) Head408(ctx context.Context, options *HTTPRetryHead408Options) (BooleanResponse, error) {
 	req, err := client.head408CreateRequest(ctx, options)
 	if err != nil {
@@ -131,14 +143,19 @@ func (client *HTTPRetryClient) head408CreateRequest(ctx context.Context, options
 
 // head408HandleError handles the Head408 error response.
 func (client *HTTPRetryClient) head408HandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Options502 - Return 502 status code, then 200 after retry
+// If the operation fails it returns the *Error error type.
 func (client *HTTPRetryClient) Options502(ctx context.Context, options *HTTPRetryOptions502Options) (BoolResponse, error) {
 	req, err := client.options502CreateRequest(ctx, options)
 	if err != nil {
@@ -177,14 +194,19 @@ func (client *HTTPRetryClient) options502HandleResponse(resp *azcore.Response) (
 
 // options502HandleError handles the Options502 error response.
 func (client *HTTPRetryClient) options502HandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Patch500 - Return 500 status code, then 200 after retry
+// If the operation fails it returns the *Error error type.
 func (client *HTTPRetryClient) Patch500(ctx context.Context, options *HTTPRetryPatch500Options) (*http.Response, error) {
 	req, err := client.patch500CreateRequest(ctx, options)
 	if err != nil {
@@ -214,14 +236,19 @@ func (client *HTTPRetryClient) patch500CreateRequest(ctx context.Context, option
 
 // patch500HandleError handles the Patch500 error response.
 func (client *HTTPRetryClient) patch500HandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Patch504 - Return 504 status code, then 200 after retry
+// If the operation fails it returns the *Error error type.
 func (client *HTTPRetryClient) Patch504(ctx context.Context, options *HTTPRetryPatch504Options) (*http.Response, error) {
 	req, err := client.patch504CreateRequest(ctx, options)
 	if err != nil {
@@ -251,14 +278,19 @@ func (client *HTTPRetryClient) patch504CreateRequest(ctx context.Context, option
 
 // patch504HandleError handles the Patch504 error response.
 func (client *HTTPRetryClient) patch504HandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Post503 - Return 503 status code, then 200 after retry
+// If the operation fails it returns the *Error error type.
 func (client *HTTPRetryClient) Post503(ctx context.Context, options *HTTPRetryPost503Options) (*http.Response, error) {
 	req, err := client.post503CreateRequest(ctx, options)
 	if err != nil {
@@ -288,14 +320,19 @@ func (client *HTTPRetryClient) post503CreateRequest(ctx context.Context, options
 
 // post503HandleError handles the Post503 error response.
 func (client *HTTPRetryClient) post503HandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Put500 - Return 500 status code, then 200 after retry
+// If the operation fails it returns the *Error error type.
 func (client *HTTPRetryClient) Put500(ctx context.Context, options *HTTPRetryPut500Options) (*http.Response, error) {
 	req, err := client.put500CreateRequest(ctx, options)
 	if err != nil {
@@ -325,14 +362,19 @@ func (client *HTTPRetryClient) put500CreateRequest(ctx context.Context, options 
 
 // put500HandleError handles the Put500 error response.
 func (client *HTTPRetryClient) put500HandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Put504 - Return 504 status code, then 200 after retry
+// If the operation fails it returns the *Error error type.
 func (client *HTTPRetryClient) Put504(ctx context.Context, options *HTTPRetryPut504Options) (*http.Response, error) {
 	req, err := client.put504CreateRequest(ctx, options)
 	if err != nil {
@@ -362,9 +404,13 @@ func (client *HTTPRetryClient) put504CreateRequest(ctx context.Context, options 
 
 // put504HandleError handles the Put504 error response.
 func (client *HTTPRetryClient) put504HandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

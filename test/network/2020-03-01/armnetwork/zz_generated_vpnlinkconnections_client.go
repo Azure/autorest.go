@@ -10,6 +10,7 @@ package armnetwork
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
@@ -30,6 +31,7 @@ func NewVPNLinkConnectionsClient(con *armcore.Connection, subscriptionID string)
 }
 
 // ListByVPNConnection - Retrieves all vpn site link connections for a particular virtual wan vpn gateway vpn connection.
+// If the operation fails it returns the *CloudError error type.
 func (client *VPNLinkConnectionsClient) ListByVPNConnection(resourceGroupName string, gatewayName string, connectionName string, options *VPNLinkConnectionsListByVPNConnectionOptions) ListVPNSiteLinkConnectionsResultPager {
 	return &listVPNSiteLinkConnectionsResultPager{
 		pipeline: client.con.Pipeline(),
@@ -87,9 +89,13 @@ func (client *VPNLinkConnectionsClient) listByVPNConnectionHandleResponse(resp *
 
 // listByVPNConnectionHandleError handles the ListByVPNConnection error response.
 func (client *VPNLinkConnectionsClient) listByVPNConnectionHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

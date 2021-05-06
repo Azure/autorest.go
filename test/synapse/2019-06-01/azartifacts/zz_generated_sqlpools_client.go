@@ -10,6 +10,7 @@ package azartifacts
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -21,6 +22,7 @@ type sqlPoolsClient struct {
 }
 
 // Get - Get Sql Pool
+// If the operation fails it returns the *ErrorContract error type.
 func (client *sqlPoolsClient) Get(ctx context.Context, sqlPoolName string, options *SQLPoolsGetOptions) (SQLPoolResponse, error) {
 	req, err := client.getCreateRequest(ctx, sqlPoolName, options)
 	if err != nil {
@@ -66,14 +68,19 @@ func (client *sqlPoolsClient) getHandleResponse(resp *azcore.Response) (SQLPoolR
 
 // getHandleError handles the Get error response.
 func (client *sqlPoolsClient) getHandleError(resp *azcore.Response) error {
-	var err ErrorContract
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := ErrorContract{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // List - List Sql Pools
+// If the operation fails it returns the *ErrorContract error type.
 func (client *sqlPoolsClient) List(ctx context.Context, options *SQLPoolsListOptions) (SQLPoolInfoListResultResponse, error) {
 	req, err := client.listCreateRequest(ctx, options)
 	if err != nil {
@@ -115,9 +122,13 @@ func (client *sqlPoolsClient) listHandleResponse(resp *azcore.Response) (SQLPool
 
 // listHandleError handles the List error response.
 func (client *sqlPoolsClient) listHandleError(resp *azcore.Response) error {
-	var err ErrorContract
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := ErrorContract{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

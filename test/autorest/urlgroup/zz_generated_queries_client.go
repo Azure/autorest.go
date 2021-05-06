@@ -10,6 +10,7 @@ package urlgroup
 import (
 	"context"
 	"encoding/base64"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"strconv"
@@ -29,6 +30,7 @@ func NewQueriesClient(con *Connection) *QueriesClient {
 }
 
 // ArrayStringCSVEmpty - Get an empty array [] of string using the csv-array format
+// If the operation fails it returns the *Error error type.
 func (client *QueriesClient) ArrayStringCSVEmpty(ctx context.Context, options *QueriesArrayStringCSVEmptyOptions) (*http.Response, error) {
 	req, err := client.arrayStringCSVEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -63,14 +65,19 @@ func (client *QueriesClient) arrayStringCSVEmptyCreateRequest(ctx context.Contex
 
 // arrayStringCSVEmptyHandleError handles the ArrayStringCSVEmpty error response.
 func (client *QueriesClient) arrayStringCSVEmptyHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // ArrayStringCSVNull - Get a null array of string using the csv-array format
+// If the operation fails it returns the *Error error type.
 func (client *QueriesClient) ArrayStringCSVNull(ctx context.Context, options *QueriesArrayStringCSVNullOptions) (*http.Response, error) {
 	req, err := client.arrayStringCSVNullCreateRequest(ctx, options)
 	if err != nil {
@@ -105,14 +112,19 @@ func (client *QueriesClient) arrayStringCSVNullCreateRequest(ctx context.Context
 
 // arrayStringCSVNullHandleError handles the ArrayStringCSVNull error response.
 func (client *QueriesClient) arrayStringCSVNullHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // ArrayStringCSVValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format
+// If the operation fails it returns the *Error error type.
 func (client *QueriesClient) ArrayStringCSVValid(ctx context.Context, options *QueriesArrayStringCSVValidOptions) (*http.Response, error) {
 	req, err := client.arrayStringCSVValidCreateRequest(ctx, options)
 	if err != nil {
@@ -147,15 +159,20 @@ func (client *QueriesClient) arrayStringCSVValidCreateRequest(ctx context.Contex
 
 // arrayStringCSVValidHandleError handles the ArrayStringCSVValid error response.
 func (client *QueriesClient) arrayStringCSVValidHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // ArrayStringNoCollectionFormatEmpty - Array query has no defined collection format, should default to csv. Pass in ['hello', 'nihao', 'bonjour'] for the
 // 'arrayQuery' parameter to the service
+// If the operation fails it returns the *Error error type.
 func (client *QueriesClient) ArrayStringNoCollectionFormatEmpty(ctx context.Context, options *QueriesArrayStringNoCollectionFormatEmptyOptions) (*http.Response, error) {
 	req, err := client.arrayStringNoCollectionFormatEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -190,14 +207,19 @@ func (client *QueriesClient) arrayStringNoCollectionFormatEmptyCreateRequest(ctx
 
 // arrayStringNoCollectionFormatEmptyHandleError handles the ArrayStringNoCollectionFormatEmpty error response.
 func (client *QueriesClient) arrayStringNoCollectionFormatEmptyHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // ArrayStringPipesValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the pipes-array format
+// If the operation fails it returns the *Error error type.
 func (client *QueriesClient) ArrayStringPipesValid(ctx context.Context, options *QueriesArrayStringPipesValidOptions) (*http.Response, error) {
 	req, err := client.arrayStringPipesValidCreateRequest(ctx, options)
 	if err != nil {
@@ -232,14 +254,19 @@ func (client *QueriesClient) arrayStringPipesValidCreateRequest(ctx context.Cont
 
 // arrayStringPipesValidHandleError handles the ArrayStringPipesValid error response.
 func (client *QueriesClient) arrayStringPipesValidHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // ArrayStringSsvValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the ssv-array format
+// If the operation fails it returns the *Error error type.
 func (client *QueriesClient) ArrayStringSsvValid(ctx context.Context, options *QueriesArrayStringSsvValidOptions) (*http.Response, error) {
 	req, err := client.arrayStringSsvValidCreateRequest(ctx, options)
 	if err != nil {
@@ -274,14 +301,19 @@ func (client *QueriesClient) arrayStringSsvValidCreateRequest(ctx context.Contex
 
 // arrayStringSsvValidHandleError handles the ArrayStringSsvValid error response.
 func (client *QueriesClient) arrayStringSsvValidHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // ArrayStringTsvValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the tsv-array format
+// If the operation fails it returns the *Error error type.
 func (client *QueriesClient) ArrayStringTsvValid(ctx context.Context, options *QueriesArrayStringTsvValidOptions) (*http.Response, error) {
 	req, err := client.arrayStringTsvValidCreateRequest(ctx, options)
 	if err != nil {
@@ -316,14 +348,19 @@ func (client *QueriesClient) arrayStringTsvValidCreateRequest(ctx context.Contex
 
 // arrayStringTsvValidHandleError handles the ArrayStringTsvValid error response.
 func (client *QueriesClient) arrayStringTsvValidHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // ByteEmpty - Get '' as byte array
+// If the operation fails it returns the *Error error type.
 func (client *QueriesClient) ByteEmpty(ctx context.Context, options *QueriesByteEmptyOptions) (*http.Response, error) {
 	req, err := client.byteEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -356,14 +393,19 @@ func (client *QueriesClient) byteEmptyCreateRequest(ctx context.Context, options
 
 // byteEmptyHandleError handles the ByteEmpty error response.
 func (client *QueriesClient) byteEmptyHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // ByteMultiByte - Get '啊齄丂狛狜隣郎隣兀﨩' multibyte value as utf-8 encoded byte array
+// If the operation fails it returns the *Error error type.
 func (client *QueriesClient) ByteMultiByte(ctx context.Context, options *QueriesByteMultiByteOptions) (*http.Response, error) {
 	req, err := client.byteMultiByteCreateRequest(ctx, options)
 	if err != nil {
@@ -398,14 +440,19 @@ func (client *QueriesClient) byteMultiByteCreateRequest(ctx context.Context, opt
 
 // byteMultiByteHandleError handles the ByteMultiByte error response.
 func (client *QueriesClient) byteMultiByteHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // ByteNull - Get null as byte array (no query parameters in uri)
+// If the operation fails it returns the *Error error type.
 func (client *QueriesClient) ByteNull(ctx context.Context, options *QueriesByteNullOptions) (*http.Response, error) {
 	req, err := client.byteNullCreateRequest(ctx, options)
 	if err != nil {
@@ -440,14 +487,19 @@ func (client *QueriesClient) byteNullCreateRequest(ctx context.Context, options 
 
 // byteNullHandleError handles the ByteNull error response.
 func (client *QueriesClient) byteNullHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // DateNull - Get null as date - this should result in no query parameters in uri
+// If the operation fails it returns the *Error error type.
 func (client *QueriesClient) DateNull(ctx context.Context, options *QueriesDateNullOptions) (*http.Response, error) {
 	req, err := client.dateNullCreateRequest(ctx, options)
 	if err != nil {
@@ -482,14 +534,19 @@ func (client *QueriesClient) dateNullCreateRequest(ctx context.Context, options 
 
 // dateNullHandleError handles the DateNull error response.
 func (client *QueriesClient) dateNullHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // DateTimeNull - Get null as date-time, should result in no query parameters in uri
+// If the operation fails it returns the *Error error type.
 func (client *QueriesClient) DateTimeNull(ctx context.Context, options *QueriesDateTimeNullOptions) (*http.Response, error) {
 	req, err := client.dateTimeNullCreateRequest(ctx, options)
 	if err != nil {
@@ -524,14 +581,19 @@ func (client *QueriesClient) dateTimeNullCreateRequest(ctx context.Context, opti
 
 // dateTimeNullHandleError handles the DateTimeNull error response.
 func (client *QueriesClient) dateTimeNullHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // DateTimeValid - Get '2012-01-01T01:01:01Z' as date-time
+// If the operation fails it returns the *Error error type.
 func (client *QueriesClient) DateTimeValid(ctx context.Context, options *QueriesDateTimeValidOptions) (*http.Response, error) {
 	req, err := client.dateTimeValidCreateRequest(ctx, options)
 	if err != nil {
@@ -564,14 +626,19 @@ func (client *QueriesClient) dateTimeValidCreateRequest(ctx context.Context, opt
 
 // dateTimeValidHandleError handles the DateTimeValid error response.
 func (client *QueriesClient) dateTimeValidHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // DateValid - Get '2012-01-01' as date
+// If the operation fails it returns the *Error error type.
 func (client *QueriesClient) DateValid(ctx context.Context, options *QueriesDateValidOptions) (*http.Response, error) {
 	req, err := client.dateValidCreateRequest(ctx, options)
 	if err != nil {
@@ -604,14 +671,19 @@ func (client *QueriesClient) dateValidCreateRequest(ctx context.Context, options
 
 // dateValidHandleError handles the DateValid error response.
 func (client *QueriesClient) dateValidHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // DoubleDecimalNegative - Get '-9999999.999' numeric value
+// If the operation fails it returns the *Error error type.
 func (client *QueriesClient) DoubleDecimalNegative(ctx context.Context, options *QueriesDoubleDecimalNegativeOptions) (*http.Response, error) {
 	req, err := client.doubleDecimalNegativeCreateRequest(ctx, options)
 	if err != nil {
@@ -644,14 +716,19 @@ func (client *QueriesClient) doubleDecimalNegativeCreateRequest(ctx context.Cont
 
 // doubleDecimalNegativeHandleError handles the DoubleDecimalNegative error response.
 func (client *QueriesClient) doubleDecimalNegativeHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // DoubleDecimalPositive - Get '9999999.999' numeric value
+// If the operation fails it returns the *Error error type.
 func (client *QueriesClient) DoubleDecimalPositive(ctx context.Context, options *QueriesDoubleDecimalPositiveOptions) (*http.Response, error) {
 	req, err := client.doubleDecimalPositiveCreateRequest(ctx, options)
 	if err != nil {
@@ -684,14 +761,19 @@ func (client *QueriesClient) doubleDecimalPositiveCreateRequest(ctx context.Cont
 
 // doubleDecimalPositiveHandleError handles the DoubleDecimalPositive error response.
 func (client *QueriesClient) doubleDecimalPositiveHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // DoubleNull - Get null numeric value (no query parameter)
+// If the operation fails it returns the *Error error type.
 func (client *QueriesClient) DoubleNull(ctx context.Context, options *QueriesDoubleNullOptions) (*http.Response, error) {
 	req, err := client.doubleNullCreateRequest(ctx, options)
 	if err != nil {
@@ -726,14 +808,19 @@ func (client *QueriesClient) doubleNullCreateRequest(ctx context.Context, option
 
 // doubleNullHandleError handles the DoubleNull error response.
 func (client *QueriesClient) doubleNullHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // EnumNull - Get null (no query parameter in url)
+// If the operation fails it returns the *Error error type.
 func (client *QueriesClient) EnumNull(ctx context.Context, options *QueriesEnumNullOptions) (*http.Response, error) {
 	req, err := client.enumNullCreateRequest(ctx, options)
 	if err != nil {
@@ -768,14 +855,19 @@ func (client *QueriesClient) enumNullCreateRequest(ctx context.Context, options 
 
 // enumNullHandleError handles the EnumNull error response.
 func (client *QueriesClient) enumNullHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // EnumValid - Get using uri with query parameter 'green color'
+// If the operation fails it returns the *Error error type.
 func (client *QueriesClient) EnumValid(ctx context.Context, options *QueriesEnumValidOptions) (*http.Response, error) {
 	req, err := client.enumValidCreateRequest(ctx, options)
 	if err != nil {
@@ -810,14 +902,19 @@ func (client *QueriesClient) enumValidCreateRequest(ctx context.Context, options
 
 // enumValidHandleError handles the EnumValid error response.
 func (client *QueriesClient) enumValidHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // FloatNull - Get null numeric value (no query parameter)
+// If the operation fails it returns the *Error error type.
 func (client *QueriesClient) FloatNull(ctx context.Context, options *QueriesFloatNullOptions) (*http.Response, error) {
 	req, err := client.floatNullCreateRequest(ctx, options)
 	if err != nil {
@@ -852,14 +949,19 @@ func (client *QueriesClient) floatNullCreateRequest(ctx context.Context, options
 
 // floatNullHandleError handles the FloatNull error response.
 func (client *QueriesClient) floatNullHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // FloatScientificNegative - Get '-1.034E-20' numeric value
+// If the operation fails it returns the *Error error type.
 func (client *QueriesClient) FloatScientificNegative(ctx context.Context, options *QueriesFloatScientificNegativeOptions) (*http.Response, error) {
 	req, err := client.floatScientificNegativeCreateRequest(ctx, options)
 	if err != nil {
@@ -892,14 +994,19 @@ func (client *QueriesClient) floatScientificNegativeCreateRequest(ctx context.Co
 
 // floatScientificNegativeHandleError handles the FloatScientificNegative error response.
 func (client *QueriesClient) floatScientificNegativeHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // FloatScientificPositive - Get '1.034E+20' numeric value
+// If the operation fails it returns the *Error error type.
 func (client *QueriesClient) FloatScientificPositive(ctx context.Context, options *QueriesFloatScientificPositiveOptions) (*http.Response, error) {
 	req, err := client.floatScientificPositiveCreateRequest(ctx, options)
 	if err != nil {
@@ -932,14 +1039,19 @@ func (client *QueriesClient) floatScientificPositiveCreateRequest(ctx context.Co
 
 // floatScientificPositiveHandleError handles the FloatScientificPositive error response.
 func (client *QueriesClient) floatScientificPositiveHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetBooleanFalse - Get false Boolean value on path
+// If the operation fails it returns the *Error error type.
 func (client *QueriesClient) GetBooleanFalse(ctx context.Context, options *QueriesGetBooleanFalseOptions) (*http.Response, error) {
 	req, err := client.getBooleanFalseCreateRequest(ctx, options)
 	if err != nil {
@@ -972,14 +1084,19 @@ func (client *QueriesClient) getBooleanFalseCreateRequest(ctx context.Context, o
 
 // getBooleanFalseHandleError handles the GetBooleanFalse error response.
 func (client *QueriesClient) getBooleanFalseHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetBooleanNull - Get null Boolean value on query (query string should be absent)
+// If the operation fails it returns the *Error error type.
 func (client *QueriesClient) GetBooleanNull(ctx context.Context, options *QueriesGetBooleanNullOptions) (*http.Response, error) {
 	req, err := client.getBooleanNullCreateRequest(ctx, options)
 	if err != nil {
@@ -1014,14 +1131,19 @@ func (client *QueriesClient) getBooleanNullCreateRequest(ctx context.Context, op
 
 // getBooleanNullHandleError handles the GetBooleanNull error response.
 func (client *QueriesClient) getBooleanNullHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetBooleanTrue - Get true Boolean value on path
+// If the operation fails it returns the *Error error type.
 func (client *QueriesClient) GetBooleanTrue(ctx context.Context, options *QueriesGetBooleanTrueOptions) (*http.Response, error) {
 	req, err := client.getBooleanTrueCreateRequest(ctx, options)
 	if err != nil {
@@ -1054,14 +1176,19 @@ func (client *QueriesClient) getBooleanTrueCreateRequest(ctx context.Context, op
 
 // getBooleanTrueHandleError handles the GetBooleanTrue error response.
 func (client *QueriesClient) getBooleanTrueHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetIntNegativeOneMillion - Get '-1000000' integer value
+// If the operation fails it returns the *Error error type.
 func (client *QueriesClient) GetIntNegativeOneMillion(ctx context.Context, options *QueriesGetIntNegativeOneMillionOptions) (*http.Response, error) {
 	req, err := client.getIntNegativeOneMillionCreateRequest(ctx, options)
 	if err != nil {
@@ -1094,14 +1221,19 @@ func (client *QueriesClient) getIntNegativeOneMillionCreateRequest(ctx context.C
 
 // getIntNegativeOneMillionHandleError handles the GetIntNegativeOneMillion error response.
 func (client *QueriesClient) getIntNegativeOneMillionHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetIntNull - Get null integer value (no query parameter)
+// If the operation fails it returns the *Error error type.
 func (client *QueriesClient) GetIntNull(ctx context.Context, options *QueriesGetIntNullOptions) (*http.Response, error) {
 	req, err := client.getIntNullCreateRequest(ctx, options)
 	if err != nil {
@@ -1136,14 +1268,19 @@ func (client *QueriesClient) getIntNullCreateRequest(ctx context.Context, option
 
 // getIntNullHandleError handles the GetIntNull error response.
 func (client *QueriesClient) getIntNullHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetIntOneMillion - Get '1000000' integer value
+// If the operation fails it returns the *Error error type.
 func (client *QueriesClient) GetIntOneMillion(ctx context.Context, options *QueriesGetIntOneMillionOptions) (*http.Response, error) {
 	req, err := client.getIntOneMillionCreateRequest(ctx, options)
 	if err != nil {
@@ -1176,14 +1313,19 @@ func (client *QueriesClient) getIntOneMillionCreateRequest(ctx context.Context, 
 
 // getIntOneMillionHandleError handles the GetIntOneMillion error response.
 func (client *QueriesClient) getIntOneMillionHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetLongNull - Get 'null 64 bit integer value (no query param in uri)
+// If the operation fails it returns the *Error error type.
 func (client *QueriesClient) GetLongNull(ctx context.Context, options *QueriesGetLongNullOptions) (*http.Response, error) {
 	req, err := client.getLongNullCreateRequest(ctx, options)
 	if err != nil {
@@ -1218,14 +1360,19 @@ func (client *QueriesClient) getLongNullCreateRequest(ctx context.Context, optio
 
 // getLongNullHandleError handles the GetLongNull error response.
 func (client *QueriesClient) getLongNullHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetNegativeTenBillion - Get '-10000000000' 64 bit integer value
+// If the operation fails it returns the *Error error type.
 func (client *QueriesClient) GetNegativeTenBillion(ctx context.Context, options *QueriesGetNegativeTenBillionOptions) (*http.Response, error) {
 	req, err := client.getNegativeTenBillionCreateRequest(ctx, options)
 	if err != nil {
@@ -1258,14 +1405,19 @@ func (client *QueriesClient) getNegativeTenBillionCreateRequest(ctx context.Cont
 
 // getNegativeTenBillionHandleError handles the GetNegativeTenBillion error response.
 func (client *QueriesClient) getNegativeTenBillionHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetTenBillion - Get '10000000000' 64 bit integer value
+// If the operation fails it returns the *Error error type.
 func (client *QueriesClient) GetTenBillion(ctx context.Context, options *QueriesGetTenBillionOptions) (*http.Response, error) {
 	req, err := client.getTenBillionCreateRequest(ctx, options)
 	if err != nil {
@@ -1298,14 +1450,19 @@ func (client *QueriesClient) getTenBillionCreateRequest(ctx context.Context, opt
 
 // getTenBillionHandleError handles the GetTenBillion error response.
 func (client *QueriesClient) getTenBillionHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // StringEmpty - Get ''
+// If the operation fails it returns the *Error error type.
 func (client *QueriesClient) StringEmpty(ctx context.Context, options *QueriesStringEmptyOptions) (*http.Response, error) {
 	req, err := client.stringEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -1338,14 +1495,19 @@ func (client *QueriesClient) stringEmptyCreateRequest(ctx context.Context, optio
 
 // stringEmptyHandleError handles the StringEmpty error response.
 func (client *QueriesClient) stringEmptyHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // StringNull - Get null (no query parameter in url)
+// If the operation fails it returns the *Error error type.
 func (client *QueriesClient) StringNull(ctx context.Context, options *QueriesStringNullOptions) (*http.Response, error) {
 	req, err := client.stringNullCreateRequest(ctx, options)
 	if err != nil {
@@ -1380,14 +1542,19 @@ func (client *QueriesClient) stringNullCreateRequest(ctx context.Context, option
 
 // stringNullHandleError handles the StringNull error response.
 func (client *QueriesClient) stringNullHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // StringURLEncoded - Get 'begin!*'();:@ &=+$,/?#[]end
+// If the operation fails it returns the *Error error type.
 func (client *QueriesClient) StringURLEncoded(ctx context.Context, options *QueriesStringURLEncodedOptions) (*http.Response, error) {
 	req, err := client.stringURLEncodedCreateRequest(ctx, options)
 	if err != nil {
@@ -1420,14 +1587,19 @@ func (client *QueriesClient) stringURLEncodedCreateRequest(ctx context.Context, 
 
 // stringURLEncodedHandleError handles the StringURLEncoded error response.
 func (client *QueriesClient) stringURLEncodedHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // StringUnicode - Get '啊齄丂狛狜隣郎隣兀﨩' multi-byte string value
+// If the operation fails it returns the *Error error type.
 func (client *QueriesClient) StringUnicode(ctx context.Context, options *QueriesStringUnicodeOptions) (*http.Response, error) {
 	req, err := client.stringUnicodeCreateRequest(ctx, options)
 	if err != nil {
@@ -1460,9 +1632,13 @@ func (client *QueriesClient) stringUnicodeCreateRequest(ctx context.Context, opt
 
 // stringUnicodeHandleError handles the StringUnicode error response.
 func (client *QueriesClient) stringUnicodeHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

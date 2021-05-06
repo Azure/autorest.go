@@ -10,6 +10,7 @@ package armnetwork
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
@@ -31,6 +32,7 @@ func NewDdosProtectionPlansClient(con *armcore.Connection, subscriptionID string
 }
 
 // BeginCreateOrUpdate - Creates or updates a DDoS protection plan.
+// If the operation fails it returns the *CloudError error type.
 func (client *DdosProtectionPlansClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, parameters DdosProtectionPlan, options *DdosProtectionPlansBeginCreateOrUpdateOptions) (DdosProtectionPlanPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, ddosProtectionPlanName, parameters, options)
 	if err != nil {
@@ -80,6 +82,7 @@ func (client *DdosProtectionPlansClient) ResumeCreateOrUpdate(ctx context.Contex
 }
 
 // CreateOrUpdate - Creates or updates a DDoS protection plan.
+// If the operation fails it returns the *CloudError error type.
 func (client *DdosProtectionPlansClient) createOrUpdate(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, parameters DdosProtectionPlan, options *DdosProtectionPlansBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, ddosProtectionPlanName, parameters, options)
 	if err != nil {
@@ -133,14 +136,19 @@ func (client *DdosProtectionPlansClient) createOrUpdateHandleResponse(resp *azco
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *DdosProtectionPlansClient) createOrUpdateHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginDelete - Deletes the specified DDoS protection plan.
+// If the operation fails it returns the *CloudError error type.
 func (client *DdosProtectionPlansClient) BeginDelete(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, options *DdosProtectionPlansBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, ddosProtectionPlanName, options)
 	if err != nil {
@@ -190,6 +198,7 @@ func (client *DdosProtectionPlansClient) ResumeDelete(ctx context.Context, token
 }
 
 // Delete - Deletes the specified DDoS protection plan.
+// If the operation fails it returns the *CloudError error type.
 func (client *DdosProtectionPlansClient) deleteOperation(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, options *DdosProtectionPlansBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, ddosProtectionPlanName, options)
 	if err != nil {
@@ -234,14 +243,19 @@ func (client *DdosProtectionPlansClient) deleteCreateRequest(ctx context.Context
 
 // deleteHandleError handles the Delete error response.
 func (client *DdosProtectionPlansClient) deleteHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Get - Gets information about the specified DDoS protection plan.
+// If the operation fails it returns the *CloudError error type.
 func (client *DdosProtectionPlansClient) Get(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, options *DdosProtectionPlansGetOptions) (DdosProtectionPlanResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, ddosProtectionPlanName, options)
 	if err != nil {
@@ -295,14 +309,19 @@ func (client *DdosProtectionPlansClient) getHandleResponse(resp *azcore.Response
 
 // getHandleError handles the Get error response.
 func (client *DdosProtectionPlansClient) getHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // List - Gets all DDoS protection plans in a subscription.
+// If the operation fails it returns the *CloudError error type.
 func (client *DdosProtectionPlansClient) List(options *DdosProtectionPlansListOptions) DdosProtectionPlanListResultPager {
 	return &ddosProtectionPlanListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -348,14 +367,19 @@ func (client *DdosProtectionPlansClient) listHandleResponse(resp *azcore.Respons
 
 // listHandleError handles the List error response.
 func (client *DdosProtectionPlansClient) listHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // ListByResourceGroup - Gets all the DDoS protection plans in a resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *DdosProtectionPlansClient) ListByResourceGroup(resourceGroupName string, options *DdosProtectionPlansListByResourceGroupOptions) DdosProtectionPlanListResultPager {
 	return &ddosProtectionPlanListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -405,14 +429,19 @@ func (client *DdosProtectionPlansClient) listByResourceGroupHandleResponse(resp 
 
 // listByResourceGroupHandleError handles the ListByResourceGroup error response.
 func (client *DdosProtectionPlansClient) listByResourceGroupHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // UpdateTags - Update a DDoS protection plan tags.
+// If the operation fails it returns the *CloudError error type.
 func (client *DdosProtectionPlansClient) UpdateTags(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, parameters TagsObject, options *DdosProtectionPlansUpdateTagsOptions) (DdosProtectionPlanResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, ddosProtectionPlanName, parameters, options)
 	if err != nil {
@@ -466,9 +495,13 @@ func (client *DdosProtectionPlansClient) updateTagsHandleResponse(resp *azcore.R
 
 // updateTagsHandleError handles the UpdateTags error response.
 func (client *DdosProtectionPlansClient) updateTagsHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

@@ -9,7 +9,6 @@ package aztables
 
 import (
 	"encoding/xml"
-	"fmt"
 	"net/http"
 	"time"
 )
@@ -591,21 +590,17 @@ type TableResponseResponse struct {
 }
 
 // TableServiceError - Table Service error.
+// Implements the error and azcore.HTTPResponse interfaces.
 type TableServiceError struct {
+	raw string
 	// The error message.
 	Message *string `json:"Message,omitempty"`
 }
 
 // Error implements the error interface for type TableServiceError.
+// The contents of the error text are not contractual and subject to change.
 func (e TableServiceError) Error() string {
-	msg := ""
-	if e.Message != nil {
-		msg += fmt.Sprintf("Message: %v\n", *e.Message)
-	}
-	if msg == "" {
-		msg = "missing error info"
-	}
-	return msg
+	return e.raw
 }
 
 // TableServiceProperties - Table Service Properties.

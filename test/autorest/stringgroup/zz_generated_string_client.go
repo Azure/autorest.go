@@ -9,6 +9,7 @@ package stringgroup
 
 import (
 	"context"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 )
@@ -25,6 +26,7 @@ func NewStringClient(con *Connection) *StringClient {
 }
 
 // GetBase64Encoded - Get value that is base64 encoded
+// If the operation fails it returns the *Error error type.
 func (client *StringClient) GetBase64Encoded(ctx context.Context, options *StringGetBase64EncodedOptions) (ByteArrayResponse, error) {
 	req, err := client.getBase64EncodedCreateRequest(ctx, options)
 	if err != nil {
@@ -63,14 +65,19 @@ func (client *StringClient) getBase64EncodedHandleResponse(resp *azcore.Response
 
 // getBase64EncodedHandleError handles the GetBase64Encoded error response.
 func (client *StringClient) getBase64EncodedHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetBase64URLEncoded - Get value that is base64url encoded
+// If the operation fails it returns the *Error error type.
 func (client *StringClient) GetBase64URLEncoded(ctx context.Context, options *StringGetBase64URLEncodedOptions) (ByteArrayResponse, error) {
 	req, err := client.getBase64URLEncodedCreateRequest(ctx, options)
 	if err != nil {
@@ -109,14 +116,19 @@ func (client *StringClient) getBase64URLEncodedHandleResponse(resp *azcore.Respo
 
 // getBase64URLEncodedHandleError handles the GetBase64URLEncoded error response.
 func (client *StringClient) getBase64URLEncodedHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetEmpty - Get empty string value value ''
+// If the operation fails it returns the *Error error type.
 func (client *StringClient) GetEmpty(ctx context.Context, options *StringGetEmptyOptions) (StringResponse, error) {
 	req, err := client.getEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -155,14 +167,19 @@ func (client *StringClient) getEmptyHandleResponse(resp *azcore.Response) (Strin
 
 // getEmptyHandleError handles the GetEmpty error response.
 func (client *StringClient) getEmptyHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetMBCS - Get mbcs string value '啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€'
+// If the operation fails it returns the *Error error type.
 func (client *StringClient) GetMBCS(ctx context.Context, options *StringGetMBCSOptions) (StringResponse, error) {
 	req, err := client.getMBCSCreateRequest(ctx, options)
 	if err != nil {
@@ -201,14 +218,19 @@ func (client *StringClient) getMBCSHandleResponse(resp *azcore.Response) (String
 
 // getMBCSHandleError handles the GetMBCS error response.
 func (client *StringClient) getMBCSHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetNotProvided - Get String value when no string value is sent in response payload
+// If the operation fails it returns the *Error error type.
 func (client *StringClient) GetNotProvided(ctx context.Context, options *StringGetNotProvidedOptions) (StringResponse, error) {
 	req, err := client.getNotProvidedCreateRequest(ctx, options)
 	if err != nil {
@@ -247,14 +269,19 @@ func (client *StringClient) getNotProvidedHandleResponse(resp *azcore.Response) 
 
 // getNotProvidedHandleError handles the GetNotProvided error response.
 func (client *StringClient) getNotProvidedHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetNull - Get null string value value
+// If the operation fails it returns the *Error error type.
 func (client *StringClient) GetNull(ctx context.Context, options *StringGetNullOptions) (StringResponse, error) {
 	req, err := client.getNullCreateRequest(ctx, options)
 	if err != nil {
@@ -293,14 +320,19 @@ func (client *StringClient) getNullHandleResponse(resp *azcore.Response) (String
 
 // getNullHandleError handles the GetNull error response.
 func (client *StringClient) getNullHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetNullBase64URLEncoded - Get null value that is expected to be base64url encoded
+// If the operation fails it returns the *Error error type.
 func (client *StringClient) GetNullBase64URLEncoded(ctx context.Context, options *StringGetNullBase64URLEncodedOptions) (ByteArrayResponse, error) {
 	req, err := client.getNullBase64URLEncodedCreateRequest(ctx, options)
 	if err != nil {
@@ -339,14 +371,19 @@ func (client *StringClient) getNullBase64URLEncodedHandleResponse(resp *azcore.R
 
 // getNullBase64URLEncodedHandleError handles the GetNullBase64URLEncoded error response.
 func (client *StringClient) getNullBase64URLEncodedHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetWhitespace - Get string value with leading and trailing whitespace 'Now is the time for all good men to come to the aid of their country'
+// If the operation fails it returns the *Error error type.
 func (client *StringClient) GetWhitespace(ctx context.Context, options *StringGetWhitespaceOptions) (StringResponse, error) {
 	req, err := client.getWhitespaceCreateRequest(ctx, options)
 	if err != nil {
@@ -385,14 +422,19 @@ func (client *StringClient) getWhitespaceHandleResponse(resp *azcore.Response) (
 
 // getWhitespaceHandleError handles the GetWhitespace error response.
 func (client *StringClient) getWhitespaceHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // PutBase64URLEncoded - Put value that is base64url encoded
+// If the operation fails it returns the *Error error type.
 func (client *StringClient) PutBase64URLEncoded(ctx context.Context, stringBody []byte, options *StringPutBase64URLEncodedOptions) (*http.Response, error) {
 	req, err := client.putBase64URLEncodedCreateRequest(ctx, stringBody, options)
 	if err != nil {
@@ -422,14 +464,19 @@ func (client *StringClient) putBase64URLEncodedCreateRequest(ctx context.Context
 
 // putBase64URLEncodedHandleError handles the PutBase64URLEncoded error response.
 func (client *StringClient) putBase64URLEncodedHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // PutEmpty - Set string value empty ''
+// If the operation fails it returns the *Error error type.
 func (client *StringClient) PutEmpty(ctx context.Context, options *StringPutEmptyOptions) (*http.Response, error) {
 	req, err := client.putEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -459,14 +506,19 @@ func (client *StringClient) putEmptyCreateRequest(ctx context.Context, options *
 
 // putEmptyHandleError handles the PutEmpty error response.
 func (client *StringClient) putEmptyHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // PutMBCS - Set string value mbcs '啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€'
+// If the operation fails it returns the *Error error type.
 func (client *StringClient) PutMBCS(ctx context.Context, options *StringPutMBCSOptions) (*http.Response, error) {
 	req, err := client.putMBCSCreateRequest(ctx, options)
 	if err != nil {
@@ -496,14 +548,19 @@ func (client *StringClient) putMBCSCreateRequest(ctx context.Context, options *S
 
 // putMBCSHandleError handles the PutMBCS error response.
 func (client *StringClient) putMBCSHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // PutNull - Set string value null
+// If the operation fails it returns the *Error error type.
 func (client *StringClient) PutNull(ctx context.Context, options *StringPutNullOptions) (*http.Response, error) {
 	req, err := client.putNullCreateRequest(ctx, options)
 	if err != nil {
@@ -536,14 +593,19 @@ func (client *StringClient) putNullCreateRequest(ctx context.Context, options *S
 
 // putNullHandleError handles the PutNull error response.
 func (client *StringClient) putNullHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // PutWhitespace - Set String value with leading and trailing whitespace 'Now is the time for all good men to come to the aid of their country'
+// If the operation fails it returns the *Error error type.
 func (client *StringClient) PutWhitespace(ctx context.Context, options *StringPutWhitespaceOptions) (*http.Response, error) {
 	req, err := client.putWhitespaceCreateRequest(ctx, options)
 	if err != nil {
@@ -573,9 +635,13 @@ func (client *StringClient) putWhitespaceCreateRequest(ctx context.Context, opti
 
 // putWhitespaceHandleError handles the PutWhitespace error response.
 func (client *StringClient) putWhitespaceHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

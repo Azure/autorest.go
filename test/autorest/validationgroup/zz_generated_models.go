@@ -7,10 +7,7 @@
 
 package validationgroup
 
-import (
-	"fmt"
-	"net/http"
-)
+import "net/http"
 
 // AutoRestValidationTestGetWithConstantInPathOptions contains the optional parameters for the AutoRestValidationTest.GetWithConstantInPath method.
 type AutoRestValidationTestGetWithConstantInPathOptions struct {
@@ -51,28 +48,18 @@ type ConstantProduct struct {
 	ConstProperty2 *string `json:"constProperty2,omitempty"`
 }
 
+// Implements the error and azcore.HTTPResponse interfaces.
 type Error struct {
+	raw     string
 	Code    *int32  `json:"code,omitempty"`
 	Fields  *string `json:"fields,omitempty"`
 	Message *string `json:"message,omitempty"`
 }
 
 // Error implements the error interface for type Error.
+// The contents of the error text are not contractual and subject to change.
 func (e Error) Error() string {
-	msg := ""
-	if e.Code != nil {
-		msg += fmt.Sprintf("Code: %v\n", *e.Code)
-	}
-	if e.Fields != nil {
-		msg += fmt.Sprintf("Fields: %v\n", *e.Fields)
-	}
-	if e.Message != nil {
-		msg += fmt.Sprintf("Message: %v\n", *e.Message)
-	}
-	if msg == "" {
-		msg = "missing error info"
-	}
-	return msg
+	return e.raw
 }
 
 // Product - The product documentation.

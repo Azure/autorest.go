@@ -10,7 +10,6 @@ package armcompute
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"reflect"
@@ -303,36 +302,17 @@ type BootDiagnosticsInstanceView struct {
 }
 
 // CloudError - An error response from the Compute service.
+// Implements the error and azcore.HTTPResponse interfaces.
 type CloudError struct {
+	raw string
 	// Api error.
 	InnerError *APIError `json:"error,omitempty"`
 }
 
 // Error implements the error interface for type CloudError.
+// The contents of the error text are not contractual and subject to change.
 func (e CloudError) Error() string {
-	msg := ""
-	if e.InnerError != nil {
-		msg += "InnerError: \n"
-		if e.InnerError.Details != nil {
-			msg += fmt.Sprintf("\tDetails: %v\n", *e.InnerError.Details)
-		}
-		if e.InnerError.Innererror != nil {
-			msg += fmt.Sprintf("\tInnererror: %v\n", *e.InnerError.Innererror)
-		}
-		if e.InnerError.Code != nil {
-			msg += fmt.Sprintf("\tCode: %v\n", *e.InnerError.Code)
-		}
-		if e.InnerError.Target != nil {
-			msg += fmt.Sprintf("\tTarget: %v\n", *e.InnerError.Target)
-		}
-		if e.InnerError.Message != nil {
-			msg += fmt.Sprintf("\tMessage: %v\n", *e.InnerError.Message)
-		}
-	}
-	if msg == "" {
-		msg = "missing error info"
-	}
-	return msg
+	return e.raw
 }
 
 // ComputeOperationListResult - The List Compute Operation operation response.

@@ -12,7 +12,6 @@ import (
 	"errors"
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strings"
@@ -30,6 +29,8 @@ func NewPetClient(con *Connection) *PetClient {
 }
 
 // DoSomething - Asks pet to do something
+// If the operation fails it returns one of the following error types.
+// - *PetActionError, *PetHungryOrThirstyError, *PetSadError
 func (client *PetClient) DoSomething(ctx context.Context, whatAction string, options *PetDoSomethingOptions) (PetActionResponse, error) {
 	req, err := client.doSomethingCreateRequest(ctx, whatAction, options)
 	if err != nil {
@@ -72,14 +73,20 @@ func (client *PetClient) doSomethingHandleResponse(resp *azcore.Response) (PetAc
 
 // doSomethingHandleError handles the DoSomething error response.
 func (client *PetClient) doSomethingHandleError(resp *azcore.Response) error {
-	var err petActionError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(err.wrapped, resp.Response)
+	var errType petActionError
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(errType.wrapped, resp.Response)
 }
 
 // GetPetByID - Gets pets by id.
+// If the operation fails it returns one of the following error types.
+// - *AnimalNotFound, *LinkNotFound, *NotFoundErrorBase
 func (client *PetClient) GetPetByID(ctx context.Context, petID string, options *PetGetPetByIDOptions) (PetResponse, error) {
 	req, err := client.getPetByIDCreateRequest(ctx, petID, options)
 	if err != nil {
@@ -122,30 +129,30 @@ func (client *PetClient) getPetByIDHandleResponse(resp *azcore.Response) (PetRes
 
 // getPetByIDHandleError handles the GetPetByID error response.
 func (client *PetClient) getPetByIDHandleError(resp *azcore.Response) error {
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
+	}
 	switch resp.StatusCode {
 	case http.StatusBadRequest:
-		var err string
-		if err := resp.UnmarshalAsJSON(&err); err != nil {
-			return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+		var errType string
+		if err := resp.UnmarshalAsJSON(&errType); err != nil {
+			return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
 		}
-		return azcore.NewResponseError(fmt.Errorf("%v", err), resp.Response)
+		return azcore.NewResponseError(fmt.Errorf("%v", errType), resp.Response)
 	case http.StatusNotFound:
-		var err notFoundErrorBase
-		if err := resp.UnmarshalAsJSON(&err); err != nil {
-			return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+		var errType notFoundErrorBase
+		if err := resp.UnmarshalAsJSON(&errType); err != nil {
+			return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
 		}
-		return azcore.NewResponseError(err.wrapped, resp.Response)
+		return azcore.NewResponseError(errType.wrapped, resp.Response)
 	case http.StatusNotImplemented:
-		var err int32
-		if err := resp.UnmarshalAsJSON(&err); err != nil {
-			return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+		var errType int32
+		if err := resp.UnmarshalAsJSON(&errType); err != nil {
+			return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
 		}
-		return azcore.NewResponseError(fmt.Errorf("%v", err), resp.Response)
+		return azcore.NewResponseError(fmt.Errorf("%v", errType), resp.Response)
 	default:
-		body, err := ioutil.ReadAll(resp.Body)
-		if err != nil {
-			return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
-		}
 		if len(body) == 0 {
 			return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
 		}

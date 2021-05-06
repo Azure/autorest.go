@@ -10,6 +10,7 @@ package azartifacts
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -22,6 +23,7 @@ type linkedServiceClient struct {
 }
 
 // BeginCreateOrUpdateLinkedService - Creates or updates a linked service.
+// If the operation fails it returns the *CloudError error type.
 func (client *linkedServiceClient) BeginCreateOrUpdateLinkedService(ctx context.Context, linkedServiceName string, linkedService LinkedServiceResource, options *LinkedServiceBeginCreateOrUpdateLinkedServiceOptions) (LinkedServiceResourcePollerResponse, error) {
 	resp, err := client.createOrUpdateLinkedService(ctx, linkedServiceName, linkedService, options)
 	if err != nil {
@@ -69,6 +71,7 @@ func (client *linkedServiceClient) ResumeCreateOrUpdateLinkedService(ctx context
 }
 
 // CreateOrUpdateLinkedService - Creates or updates a linked service.
+// If the operation fails it returns the *CloudError error type.
 func (client *linkedServiceClient) createOrUpdateLinkedService(ctx context.Context, linkedServiceName string, linkedService LinkedServiceResource, options *LinkedServiceBeginCreateOrUpdateLinkedServiceOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateLinkedServiceCreateRequest(ctx, linkedServiceName, linkedService, options)
 	if err != nil {
@@ -117,14 +120,19 @@ func (client *linkedServiceClient) createOrUpdateLinkedServiceHandleResponse(res
 
 // createOrUpdateLinkedServiceHandleError handles the CreateOrUpdateLinkedService error response.
 func (client *linkedServiceClient) createOrUpdateLinkedServiceHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginDeleteLinkedService - Deletes a linked service.
+// If the operation fails it returns the *CloudError error type.
 func (client *linkedServiceClient) BeginDeleteLinkedService(ctx context.Context, linkedServiceName string, options *LinkedServiceBeginDeleteLinkedServiceOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteLinkedService(ctx, linkedServiceName, options)
 	if err != nil {
@@ -172,6 +180,7 @@ func (client *linkedServiceClient) ResumeDeleteLinkedService(ctx context.Context
 }
 
 // DeleteLinkedService - Deletes a linked service.
+// If the operation fails it returns the *CloudError error type.
 func (client *linkedServiceClient) deleteLinkedService(ctx context.Context, linkedServiceName string, options *LinkedServiceBeginDeleteLinkedServiceOptions) (*azcore.Response, error) {
 	req, err := client.deleteLinkedServiceCreateRequest(ctx, linkedServiceName, options)
 	if err != nil {
@@ -208,14 +217,19 @@ func (client *linkedServiceClient) deleteLinkedServiceCreateRequest(ctx context.
 
 // deleteLinkedServiceHandleError handles the DeleteLinkedService error response.
 func (client *linkedServiceClient) deleteLinkedServiceHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetLinkedService - Gets a linked service.
+// If the operation fails it returns the *CloudError error type.
 func (client *linkedServiceClient) GetLinkedService(ctx context.Context, linkedServiceName string, options *LinkedServiceGetLinkedServiceOptions) (LinkedServiceResourceResponse, error) {
 	req, err := client.getLinkedServiceCreateRequest(ctx, linkedServiceName, options)
 	if err != nil {
@@ -264,14 +278,19 @@ func (client *linkedServiceClient) getLinkedServiceHandleResponse(resp *azcore.R
 
 // getLinkedServiceHandleError handles the GetLinkedService error response.
 func (client *linkedServiceClient) getLinkedServiceHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetLinkedServicesByWorkspace - Lists linked services.
+// If the operation fails it returns the *CloudError error type.
 func (client *linkedServiceClient) GetLinkedServicesByWorkspace(options *LinkedServiceGetLinkedServicesByWorkspaceOptions) LinkedServiceListResponsePager {
 	return &linkedServiceListResponsePager{
 		pipeline: client.con.Pipeline(),
@@ -313,14 +332,19 @@ func (client *linkedServiceClient) getLinkedServicesByWorkspaceHandleResponse(re
 
 // getLinkedServicesByWorkspaceHandleError handles the GetLinkedServicesByWorkspace error response.
 func (client *linkedServiceClient) getLinkedServicesByWorkspaceHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginRenameLinkedService - Renames a linked service.
+// If the operation fails it returns the *CloudError error type.
 func (client *linkedServiceClient) BeginRenameLinkedService(ctx context.Context, linkedServiceName string, request ArtifactRenameRequest, options *LinkedServiceBeginRenameLinkedServiceOptions) (HTTPPollerResponse, error) {
 	resp, err := client.renameLinkedService(ctx, linkedServiceName, request, options)
 	if err != nil {
@@ -368,6 +392,7 @@ func (client *linkedServiceClient) ResumeRenameLinkedService(ctx context.Context
 }
 
 // RenameLinkedService - Renames a linked service.
+// If the operation fails it returns the *CloudError error type.
 func (client *linkedServiceClient) renameLinkedService(ctx context.Context, linkedServiceName string, request ArtifactRenameRequest, options *LinkedServiceBeginRenameLinkedServiceOptions) (*azcore.Response, error) {
 	req, err := client.renameLinkedServiceCreateRequest(ctx, linkedServiceName, request, options)
 	if err != nil {
@@ -404,9 +429,13 @@ func (client *linkedServiceClient) renameLinkedServiceCreateRequest(ctx context.
 
 // renameLinkedServiceHandleError handles the RenameLinkedService error response.
 func (client *linkedServiceClient) renameLinkedServiceHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

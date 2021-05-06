@@ -10,6 +10,7 @@ package armcompute
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
@@ -31,6 +32,7 @@ func NewDiskEncryptionSetsClient(con *armcore.Connection, subscriptionID string)
 }
 
 // BeginCreateOrUpdate - Creates or updates a disk encryption set
+// If the operation fails it returns the *CloudError error type.
 func (client *DiskEncryptionSetsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, diskEncryptionSet DiskEncryptionSet, options *DiskEncryptionSetsBeginCreateOrUpdateOptions) (DiskEncryptionSetPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, diskEncryptionSetName, diskEncryptionSet, options)
 	if err != nil {
@@ -80,6 +82,7 @@ func (client *DiskEncryptionSetsClient) ResumeCreateOrUpdate(ctx context.Context
 }
 
 // CreateOrUpdate - Creates or updates a disk encryption set
+// If the operation fails it returns the *CloudError error type.
 func (client *DiskEncryptionSetsClient) createOrUpdate(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, diskEncryptionSet DiskEncryptionSet, options *DiskEncryptionSetsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, diskEncryptionSetName, diskEncryptionSet, options)
 	if err != nil {
@@ -133,14 +136,19 @@ func (client *DiskEncryptionSetsClient) createOrUpdateHandleResponse(resp *azcor
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *DiskEncryptionSetsClient) createOrUpdateHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginDelete - Deletes a disk encryption set.
+// If the operation fails it returns the *CloudError error type.
 func (client *DiskEncryptionSetsClient) BeginDelete(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, options *DiskEncryptionSetsBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, diskEncryptionSetName, options)
 	if err != nil {
@@ -190,6 +198,7 @@ func (client *DiskEncryptionSetsClient) ResumeDelete(ctx context.Context, token 
 }
 
 // Delete - Deletes a disk encryption set.
+// If the operation fails it returns the *CloudError error type.
 func (client *DiskEncryptionSetsClient) deleteOperation(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, options *DiskEncryptionSetsBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, diskEncryptionSetName, options)
 	if err != nil {
@@ -234,14 +243,19 @@ func (client *DiskEncryptionSetsClient) deleteCreateRequest(ctx context.Context,
 
 // deleteHandleError handles the Delete error response.
 func (client *DiskEncryptionSetsClient) deleteHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Get - Gets information about a disk encryption set.
+// If the operation fails it returns the *CloudError error type.
 func (client *DiskEncryptionSetsClient) Get(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, options *DiskEncryptionSetsGetOptions) (DiskEncryptionSetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, diskEncryptionSetName, options)
 	if err != nil {
@@ -295,14 +309,19 @@ func (client *DiskEncryptionSetsClient) getHandleResponse(resp *azcore.Response)
 
 // getHandleError handles the Get error response.
 func (client *DiskEncryptionSetsClient) getHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // List - Lists all the disk encryption sets under a subscription.
+// If the operation fails it returns the *CloudError error type.
 func (client *DiskEncryptionSetsClient) List(options *DiskEncryptionSetsListOptions) DiskEncryptionSetListPager {
 	return &diskEncryptionSetListPager{
 		pipeline: client.con.Pipeline(),
@@ -348,14 +367,19 @@ func (client *DiskEncryptionSetsClient) listHandleResponse(resp *azcore.Response
 
 // listHandleError handles the List error response.
 func (client *DiskEncryptionSetsClient) listHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // ListByResourceGroup - Lists all the disk encryption sets under a resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *DiskEncryptionSetsClient) ListByResourceGroup(resourceGroupName string, options *DiskEncryptionSetsListByResourceGroupOptions) DiskEncryptionSetListPager {
 	return &diskEncryptionSetListPager{
 		pipeline: client.con.Pipeline(),
@@ -405,14 +429,19 @@ func (client *DiskEncryptionSetsClient) listByResourceGroupHandleResponse(resp *
 
 // listByResourceGroupHandleError handles the ListByResourceGroup error response.
 func (client *DiskEncryptionSetsClient) listByResourceGroupHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginUpdate - Updates (patches) a disk encryption set.
+// If the operation fails it returns the *CloudError error type.
 func (client *DiskEncryptionSetsClient) BeginUpdate(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, diskEncryptionSet DiskEncryptionSetUpdate, options *DiskEncryptionSetsBeginUpdateOptions) (DiskEncryptionSetPollerResponse, error) {
 	resp, err := client.update(ctx, resourceGroupName, diskEncryptionSetName, diskEncryptionSet, options)
 	if err != nil {
@@ -462,6 +491,7 @@ func (client *DiskEncryptionSetsClient) ResumeUpdate(ctx context.Context, token 
 }
 
 // Update - Updates (patches) a disk encryption set.
+// If the operation fails it returns the *CloudError error type.
 func (client *DiskEncryptionSetsClient) update(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, diskEncryptionSet DiskEncryptionSetUpdate, options *DiskEncryptionSetsBeginUpdateOptions) (*azcore.Response, error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, diskEncryptionSetName, diskEncryptionSet, options)
 	if err != nil {
@@ -515,9 +545,13 @@ func (client *DiskEncryptionSetsClient) updateHandleResponse(resp *azcore.Respon
 
 // updateHandleError handles the Update error response.
 func (client *DiskEncryptionSetsClient) updateHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

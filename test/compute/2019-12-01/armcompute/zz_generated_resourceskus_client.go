@@ -10,10 +10,8 @@ package armcompute
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strings"
@@ -32,6 +30,7 @@ func NewResourceSKUsClient(con *armcore.Connection, subscriptionID string) *Reso
 }
 
 // List - Gets the list of Microsoft.Compute SKUs available for your Subscription.
+// If the operation fails it returns a generic error.
 func (client *ResourceSKUsClient) List(options *ResourceSKUsListOptions) ResourceSKUsResultPager {
 	return &resourceSKUsResultPager{
 		pipeline: client.con.Pipeline(),
@@ -80,9 +79,9 @@ func (client *ResourceSKUsClient) listHandleResponse(resp *azcore.Response) (Res
 
 // listHandleError handles the List error response.
 func (client *ResourceSKUsClient) listHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)

@@ -10,10 +10,8 @@ package armcompute
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -33,6 +31,7 @@ func NewVirtualMachineImagesClient(con *armcore.Connection, subscriptionID strin
 }
 
 // Get - Gets a virtual machine image.
+// If the operation fails it returns a generic error.
 func (client *VirtualMachineImagesClient) Get(ctx context.Context, location string, publisherName string, offer string, skus string, version string, options *VirtualMachineImagesGetOptions) (VirtualMachineImageResponse, error) {
 	req, err := client.getCreateRequest(ctx, location, publisherName, offer, skus, version, options)
 	if err != nil {
@@ -98,9 +97,9 @@ func (client *VirtualMachineImagesClient) getHandleResponse(resp *azcore.Respons
 
 // getHandleError handles the Get error response.
 func (client *VirtualMachineImagesClient) getHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -109,6 +108,7 @@ func (client *VirtualMachineImagesClient) getHandleError(resp *azcore.Response) 
 }
 
 // List - Gets a list of all virtual machine image versions for the specified location, publisher, offer, and SKU.
+// If the operation fails it returns a generic error.
 func (client *VirtualMachineImagesClient) List(ctx context.Context, location string, publisherName string, offer string, skus string, options *VirtualMachineImagesListOptions) (VirtualMachineImageResourceArrayResponse, error) {
 	req, err := client.listCreateRequest(ctx, location, publisherName, offer, skus, options)
 	if err != nil {
@@ -179,9 +179,9 @@ func (client *VirtualMachineImagesClient) listHandleResponse(resp *azcore.Respon
 
 // listHandleError handles the List error response.
 func (client *VirtualMachineImagesClient) listHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -190,6 +190,7 @@ func (client *VirtualMachineImagesClient) listHandleError(resp *azcore.Response)
 }
 
 // ListOffers - Gets a list of virtual machine image offers for the specified location and publisher.
+// If the operation fails it returns a generic error.
 func (client *VirtualMachineImagesClient) ListOffers(ctx context.Context, location string, publisherName string, options *VirtualMachineImagesListOffersOptions) (VirtualMachineImageResourceArrayResponse, error) {
 	req, err := client.listOffersCreateRequest(ctx, location, publisherName, options)
 	if err != nil {
@@ -243,9 +244,9 @@ func (client *VirtualMachineImagesClient) listOffersHandleResponse(resp *azcore.
 
 // listOffersHandleError handles the ListOffers error response.
 func (client *VirtualMachineImagesClient) listOffersHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -254,6 +255,7 @@ func (client *VirtualMachineImagesClient) listOffersHandleError(resp *azcore.Res
 }
 
 // ListPublishers - Gets a list of virtual machine image publishers for the specified Azure location.
+// If the operation fails it returns a generic error.
 func (client *VirtualMachineImagesClient) ListPublishers(ctx context.Context, location string, options *VirtualMachineImagesListPublishersOptions) (VirtualMachineImageResourceArrayResponse, error) {
 	req, err := client.listPublishersCreateRequest(ctx, location, options)
 	if err != nil {
@@ -303,9 +305,9 @@ func (client *VirtualMachineImagesClient) listPublishersHandleResponse(resp *azc
 
 // listPublishersHandleError handles the ListPublishers error response.
 func (client *VirtualMachineImagesClient) listPublishersHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -314,6 +316,7 @@ func (client *VirtualMachineImagesClient) listPublishersHandleError(resp *azcore
 }
 
 // ListSKUs - Gets a list of virtual machine image SKUs for the specified location, publisher, and offer.
+// If the operation fails it returns a generic error.
 func (client *VirtualMachineImagesClient) ListSKUs(ctx context.Context, location string, publisherName string, offer string, options *VirtualMachineImagesListSKUsOptions) (VirtualMachineImageResourceArrayResponse, error) {
 	req, err := client.listSKUsCreateRequest(ctx, location, publisherName, offer, options)
 	if err != nil {
@@ -371,9 +374,9 @@ func (client *VirtualMachineImagesClient) listSKUsHandleResponse(resp *azcore.Re
 
 // listSKUsHandleError handles the ListSKUs error response.
 func (client *VirtualMachineImagesClient) listSKUsHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)

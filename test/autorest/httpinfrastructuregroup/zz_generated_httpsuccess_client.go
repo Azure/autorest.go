@@ -9,6 +9,7 @@ package httpinfrastructuregroup
 
 import (
 	"context"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 )
@@ -25,6 +26,7 @@ func NewHTTPSuccessClient(con *Connection) *HTTPSuccessClient {
 }
 
 // Delete200 - Delete simple boolean value true returns 200
+// If the operation fails it returns the *Error error type.
 func (client *HTTPSuccessClient) Delete200(ctx context.Context, options *HTTPSuccessDelete200Options) (*http.Response, error) {
 	req, err := client.delete200CreateRequest(ctx, options)
 	if err != nil {
@@ -54,14 +56,19 @@ func (client *HTTPSuccessClient) delete200CreateRequest(ctx context.Context, opt
 
 // delete200HandleError handles the Delete200 error response.
 func (client *HTTPSuccessClient) delete200HandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Delete202 - Delete true Boolean value in request returns 202 (accepted)
+// If the operation fails it returns the *Error error type.
 func (client *HTTPSuccessClient) Delete202(ctx context.Context, options *HTTPSuccessDelete202Options) (*http.Response, error) {
 	req, err := client.delete202CreateRequest(ctx, options)
 	if err != nil {
@@ -91,14 +98,19 @@ func (client *HTTPSuccessClient) delete202CreateRequest(ctx context.Context, opt
 
 // delete202HandleError handles the Delete202 error response.
 func (client *HTTPSuccessClient) delete202HandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Delete204 - Delete true Boolean value in request returns 204 (no content)
+// If the operation fails it returns the *Error error type.
 func (client *HTTPSuccessClient) Delete204(ctx context.Context, options *HTTPSuccessDelete204Options) (*http.Response, error) {
 	req, err := client.delete204CreateRequest(ctx, options)
 	if err != nil {
@@ -128,14 +140,19 @@ func (client *HTTPSuccessClient) delete204CreateRequest(ctx context.Context, opt
 
 // delete204HandleError handles the Delete204 error response.
 func (client *HTTPSuccessClient) delete204HandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Get200 - Get 200 success
+// If the operation fails it returns the *Error error type.
 func (client *HTTPSuccessClient) Get200(ctx context.Context, options *HTTPSuccessGet200Options) (BoolResponse, error) {
 	req, err := client.get200CreateRequest(ctx, options)
 	if err != nil {
@@ -174,14 +191,19 @@ func (client *HTTPSuccessClient) get200HandleResponse(resp *azcore.Response) (Bo
 
 // get200HandleError handles the Get200 error response.
 func (client *HTTPSuccessClient) get200HandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Head200 - Return 200 status code if successful
+// If the operation fails it returns the *Error error type.
 func (client *HTTPSuccessClient) Head200(ctx context.Context, options *HTTPSuccessHead200Options) (BooleanResponse, error) {
 	req, err := client.head200CreateRequest(ctx, options)
 	if err != nil {
@@ -214,14 +236,19 @@ func (client *HTTPSuccessClient) head200CreateRequest(ctx context.Context, optio
 
 // head200HandleError handles the Head200 error response.
 func (client *HTTPSuccessClient) head200HandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Head204 - Return 204 status code if successful
+// If the operation fails it returns the *Error error type.
 func (client *HTTPSuccessClient) Head204(ctx context.Context, options *HTTPSuccessHead204Options) (BooleanResponse, error) {
 	req, err := client.head204CreateRequest(ctx, options)
 	if err != nil {
@@ -254,14 +281,19 @@ func (client *HTTPSuccessClient) head204CreateRequest(ctx context.Context, optio
 
 // head204HandleError handles the Head204 error response.
 func (client *HTTPSuccessClient) head204HandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Head404 - Return 404 status code
+// If the operation fails it returns the *Error error type.
 func (client *HTTPSuccessClient) Head404(ctx context.Context, options *HTTPSuccessHead404Options) (BooleanResponse, error) {
 	req, err := client.head404CreateRequest(ctx, options)
 	if err != nil {
@@ -294,14 +326,19 @@ func (client *HTTPSuccessClient) head404CreateRequest(ctx context.Context, optio
 
 // head404HandleError handles the Head404 error response.
 func (client *HTTPSuccessClient) head404HandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Options200 - Options 200 success
+// If the operation fails it returns the *Error error type.
 func (client *HTTPSuccessClient) Options200(ctx context.Context, options *HTTPSuccessOptions200Options) (BoolResponse, error) {
 	req, err := client.options200CreateRequest(ctx, options)
 	if err != nil {
@@ -340,14 +377,19 @@ func (client *HTTPSuccessClient) options200HandleResponse(resp *azcore.Response)
 
 // options200HandleError handles the Options200 error response.
 func (client *HTTPSuccessClient) options200HandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Patch200 - Patch true Boolean value in request returning 200
+// If the operation fails it returns the *Error error type.
 func (client *HTTPSuccessClient) Patch200(ctx context.Context, options *HTTPSuccessPatch200Options) (*http.Response, error) {
 	req, err := client.patch200CreateRequest(ctx, options)
 	if err != nil {
@@ -377,14 +419,19 @@ func (client *HTTPSuccessClient) patch200CreateRequest(ctx context.Context, opti
 
 // patch200HandleError handles the Patch200 error response.
 func (client *HTTPSuccessClient) patch200HandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Patch202 - Patch true Boolean value in request returns 202
+// If the operation fails it returns the *Error error type.
 func (client *HTTPSuccessClient) Patch202(ctx context.Context, options *HTTPSuccessPatch202Options) (*http.Response, error) {
 	req, err := client.patch202CreateRequest(ctx, options)
 	if err != nil {
@@ -414,14 +461,19 @@ func (client *HTTPSuccessClient) patch202CreateRequest(ctx context.Context, opti
 
 // patch202HandleError handles the Patch202 error response.
 func (client *HTTPSuccessClient) patch202HandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Patch204 - Patch true Boolean value in request returns 204 (no content)
+// If the operation fails it returns the *Error error type.
 func (client *HTTPSuccessClient) Patch204(ctx context.Context, options *HTTPSuccessPatch204Options) (*http.Response, error) {
 	req, err := client.patch204CreateRequest(ctx, options)
 	if err != nil {
@@ -451,14 +503,19 @@ func (client *HTTPSuccessClient) patch204CreateRequest(ctx context.Context, opti
 
 // patch204HandleError handles the Patch204 error response.
 func (client *HTTPSuccessClient) patch204HandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Post200 - Post bollean value true in request that returns a 200
+// If the operation fails it returns the *Error error type.
 func (client *HTTPSuccessClient) Post200(ctx context.Context, options *HTTPSuccessPost200Options) (*http.Response, error) {
 	req, err := client.post200CreateRequest(ctx, options)
 	if err != nil {
@@ -488,14 +545,19 @@ func (client *HTTPSuccessClient) post200CreateRequest(ctx context.Context, optio
 
 // post200HandleError handles the Post200 error response.
 func (client *HTTPSuccessClient) post200HandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Post201 - Post true Boolean value in request returns 201 (Created)
+// If the operation fails it returns the *Error error type.
 func (client *HTTPSuccessClient) Post201(ctx context.Context, options *HTTPSuccessPost201Options) (*http.Response, error) {
 	req, err := client.post201CreateRequest(ctx, options)
 	if err != nil {
@@ -525,14 +587,19 @@ func (client *HTTPSuccessClient) post201CreateRequest(ctx context.Context, optio
 
 // post201HandleError handles the Post201 error response.
 func (client *HTTPSuccessClient) post201HandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Post202 - Post true Boolean value in request returns 202 (Accepted)
+// If the operation fails it returns the *Error error type.
 func (client *HTTPSuccessClient) Post202(ctx context.Context, options *HTTPSuccessPost202Options) (*http.Response, error) {
 	req, err := client.post202CreateRequest(ctx, options)
 	if err != nil {
@@ -562,14 +629,19 @@ func (client *HTTPSuccessClient) post202CreateRequest(ctx context.Context, optio
 
 // post202HandleError handles the Post202 error response.
 func (client *HTTPSuccessClient) post202HandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Post204 - Post true Boolean value in request returns 204 (no content)
+// If the operation fails it returns the *Error error type.
 func (client *HTTPSuccessClient) Post204(ctx context.Context, options *HTTPSuccessPost204Options) (*http.Response, error) {
 	req, err := client.post204CreateRequest(ctx, options)
 	if err != nil {
@@ -599,14 +671,19 @@ func (client *HTTPSuccessClient) post204CreateRequest(ctx context.Context, optio
 
 // post204HandleError handles the Post204 error response.
 func (client *HTTPSuccessClient) post204HandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Put200 - Put boolean value true returning 200 success
+// If the operation fails it returns the *Error error type.
 func (client *HTTPSuccessClient) Put200(ctx context.Context, options *HTTPSuccessPut200Options) (*http.Response, error) {
 	req, err := client.put200CreateRequest(ctx, options)
 	if err != nil {
@@ -636,14 +713,19 @@ func (client *HTTPSuccessClient) put200CreateRequest(ctx context.Context, option
 
 // put200HandleError handles the Put200 error response.
 func (client *HTTPSuccessClient) put200HandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Put201 - Put true Boolean value in request returns 201
+// If the operation fails it returns the *Error error type.
 func (client *HTTPSuccessClient) Put201(ctx context.Context, options *HTTPSuccessPut201Options) (*http.Response, error) {
 	req, err := client.put201CreateRequest(ctx, options)
 	if err != nil {
@@ -673,14 +755,19 @@ func (client *HTTPSuccessClient) put201CreateRequest(ctx context.Context, option
 
 // put201HandleError handles the Put201 error response.
 func (client *HTTPSuccessClient) put201HandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Put202 - Put true Boolean value in request returns 202 (Accepted)
+// If the operation fails it returns the *Error error type.
 func (client *HTTPSuccessClient) Put202(ctx context.Context, options *HTTPSuccessPut202Options) (*http.Response, error) {
 	req, err := client.put202CreateRequest(ctx, options)
 	if err != nil {
@@ -710,14 +797,19 @@ func (client *HTTPSuccessClient) put202CreateRequest(ctx context.Context, option
 
 // put202HandleError handles the Put202 error response.
 func (client *HTTPSuccessClient) put202HandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Put204 - Put true Boolean value in request returns 204 (no content)
+// If the operation fails it returns the *Error error type.
 func (client *HTTPSuccessClient) Put204(ctx context.Context, options *HTTPSuccessPut204Options) (*http.Response, error) {
 	req, err := client.put204CreateRequest(ctx, options)
 	if err != nil {
@@ -747,9 +839,13 @@ func (client *HTTPSuccessClient) put204CreateRequest(ctx context.Context, option
 
 // put204HandleError handles the Put204 error response.
 func (client *HTTPSuccessClient) put204HandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

@@ -12,7 +12,6 @@ import (
 	"errors"
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"io/ioutil"
 	"net/http"
 )
 
@@ -28,6 +27,7 @@ func NewXMSClientRequestIDClient(con *Connection) *XMSClientRequestIDClient {
 }
 
 // Get - Get method that overwrites x-ms-client-request header with value 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.
+// If the operation fails it returns a generic error.
 func (client *XMSClientRequestIDClient) Get(ctx context.Context, options *XMSClientRequestIDGetOptions) (*http.Response, error) {
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
@@ -56,9 +56,9 @@ func (client *XMSClientRequestIDClient) getCreateRequest(ctx context.Context, op
 
 // getHandleError handles the Get error response.
 func (client *XMSClientRequestIDClient) getHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -67,6 +67,7 @@ func (client *XMSClientRequestIDClient) getHandleError(resp *azcore.Response) er
 }
 
 // ParamGet - Get method that overwrites x-ms-client-request header with value 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.
+// If the operation fails it returns the *Error error type.
 func (client *XMSClientRequestIDClient) ParamGet(ctx context.Context, xmsClientRequestID string, options *XMSClientRequestIDParamGetOptions) (*http.Response, error) {
 	req, err := client.paramGetCreateRequest(ctx, xmsClientRequestID, options)
 	if err != nil {
@@ -97,9 +98,13 @@ func (client *XMSClientRequestIDClient) paramGetCreateRequest(ctx context.Contex
 
 // paramGetHandleError handles the ParamGet error response.
 func (client *XMSClientRequestIDClient) paramGetHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

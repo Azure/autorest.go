@@ -13,6 +13,7 @@ import (
 
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 	"github.com/google/go-cmp/cmp"
+	"github.com/google/go-cmp/cmp/cmpopts"
 )
 
 func newPetClient() *PetClient {
@@ -48,7 +49,7 @@ func TestDoSomethingError1(t *testing.T) {
 			ErrorType:    to.StringPtr("PetSadError"),
 		},
 		Reason: to.StringPtr("need more treats"),
-	}); r != "" {
+	}, cmpopts.IgnoreUnexported(PetActionError{})); r != "" {
 		t.Fatal(r)
 	}
 	if !reflect.ValueOf(result).IsZero() {
@@ -72,7 +73,7 @@ func TestDoSomethingError2(t *testing.T) {
 			Reason: to.StringPtr("need more everything"),
 		},
 		HungryOrThirsty: to.StringPtr("hungry and thirsty"),
-	}); r != "" {
+	}, cmpopts.IgnoreUnexported(PetActionError{})); r != "" {
 		t.Fatal(r)
 	}
 	if !reflect.ValueOf(result).IsZero() {
@@ -87,7 +88,7 @@ func TestDoSomethingError3(t *testing.T) {
 	if !errors.As(err, &actErr) {
 		t.Fatal("expected PetActionError")
 	}
-	if r := cmp.Diff(actErr, &PetActionError{}); r != "" {
+	if r := cmp.Diff(actErr, &PetActionError{}, cmpopts.IgnoreUnexported(PetActionError{})); r != "" {
 		t.Fatal(r)
 	}
 	if !reflect.ValueOf(result).IsZero() {
@@ -139,7 +140,7 @@ func TestGetPetByIDError1(t *testing.T) {
 			WhatNotFound: to.StringPtr("AnimalNotFound"),
 		},
 		Name: to.StringPtr("coyote"),
-	}); r != "" {
+	}, cmpopts.IgnoreUnexported(NotFoundErrorBase{})); r != "" {
 		t.Fatal(r)
 	}
 	if !reflect.ValueOf(result).IsZero() {
@@ -163,7 +164,7 @@ func TestGetPetByIDError2(t *testing.T) {
 			WhatNotFound: to.StringPtr("InvalidResourceLink"),
 		},
 		WhatSubAddress: to.StringPtr("pet/yourpet was not found"),
-	}); r != "" {
+	}, cmpopts.IgnoreUnexported(NotFoundErrorBase{})); r != "" {
 		t.Fatal(r)
 	}
 	if !reflect.ValueOf(result).IsZero() {

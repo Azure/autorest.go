@@ -10,6 +10,7 @@ package azartifacts
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -22,6 +23,7 @@ type notebookClient struct {
 }
 
 // BeginCreateOrUpdateNotebook - Creates or updates a Note Book.
+// If the operation fails it returns the *CloudError error type.
 func (client *notebookClient) BeginCreateOrUpdateNotebook(ctx context.Context, notebookName string, notebook NotebookResource, options *NotebookBeginCreateOrUpdateNotebookOptions) (NotebookResourcePollerResponse, error) {
 	resp, err := client.createOrUpdateNotebook(ctx, notebookName, notebook, options)
 	if err != nil {
@@ -69,6 +71,7 @@ func (client *notebookClient) ResumeCreateOrUpdateNotebook(ctx context.Context, 
 }
 
 // CreateOrUpdateNotebook - Creates or updates a Note Book.
+// If the operation fails it returns the *CloudError error type.
 func (client *notebookClient) createOrUpdateNotebook(ctx context.Context, notebookName string, notebook NotebookResource, options *NotebookBeginCreateOrUpdateNotebookOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateNotebookCreateRequest(ctx, notebookName, notebook, options)
 	if err != nil {
@@ -117,14 +120,19 @@ func (client *notebookClient) createOrUpdateNotebookHandleResponse(resp *azcore.
 
 // createOrUpdateNotebookHandleError handles the CreateOrUpdateNotebook error response.
 func (client *notebookClient) createOrUpdateNotebookHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginDeleteNotebook - Deletes a Note book.
+// If the operation fails it returns the *CloudError error type.
 func (client *notebookClient) BeginDeleteNotebook(ctx context.Context, notebookName string, options *NotebookBeginDeleteNotebookOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteNotebook(ctx, notebookName, options)
 	if err != nil {
@@ -172,6 +180,7 @@ func (client *notebookClient) ResumeDeleteNotebook(ctx context.Context, token st
 }
 
 // DeleteNotebook - Deletes a Note book.
+// If the operation fails it returns the *CloudError error type.
 func (client *notebookClient) deleteNotebook(ctx context.Context, notebookName string, options *NotebookBeginDeleteNotebookOptions) (*azcore.Response, error) {
 	req, err := client.deleteNotebookCreateRequest(ctx, notebookName, options)
 	if err != nil {
@@ -208,14 +217,19 @@ func (client *notebookClient) deleteNotebookCreateRequest(ctx context.Context, n
 
 // deleteNotebookHandleError handles the DeleteNotebook error response.
 func (client *notebookClient) deleteNotebookHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetNotebook - Gets a Note Book.
+// If the operation fails it returns the *CloudError error type.
 func (client *notebookClient) GetNotebook(ctx context.Context, notebookName string, options *NotebookGetNotebookOptions) (NotebookResourceResponse, error) {
 	req, err := client.getNotebookCreateRequest(ctx, notebookName, options)
 	if err != nil {
@@ -264,14 +278,19 @@ func (client *notebookClient) getNotebookHandleResponse(resp *azcore.Response) (
 
 // getNotebookHandleError handles the GetNotebook error response.
 func (client *notebookClient) getNotebookHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetNotebookSummaryByWorkSpace - Lists a summary of Notebooks.
+// If the operation fails it returns the *CloudError error type.
 func (client *notebookClient) GetNotebookSummaryByWorkSpace(options *NotebookGetNotebookSummaryByWorkSpaceOptions) NotebookListResponsePager {
 	return &notebookListResponsePager{
 		pipeline: client.con.Pipeline(),
@@ -313,14 +332,19 @@ func (client *notebookClient) getNotebookSummaryByWorkSpaceHandleResponse(resp *
 
 // getNotebookSummaryByWorkSpaceHandleError handles the GetNotebookSummaryByWorkSpace error response.
 func (client *notebookClient) getNotebookSummaryByWorkSpaceHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetNotebooksByWorkspace - Lists Notebooks.
+// If the operation fails it returns the *CloudError error type.
 func (client *notebookClient) GetNotebooksByWorkspace(options *NotebookGetNotebooksByWorkspaceOptions) NotebookListResponsePager {
 	return &notebookListResponsePager{
 		pipeline: client.con.Pipeline(),
@@ -362,14 +386,19 @@ func (client *notebookClient) getNotebooksByWorkspaceHandleResponse(resp *azcore
 
 // getNotebooksByWorkspaceHandleError handles the GetNotebooksByWorkspace error response.
 func (client *notebookClient) getNotebooksByWorkspaceHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginRenameNotebook - Renames a notebook.
+// If the operation fails it returns the *CloudError error type.
 func (client *notebookClient) BeginRenameNotebook(ctx context.Context, notebookName string, request ArtifactRenameRequest, options *NotebookBeginRenameNotebookOptions) (HTTPPollerResponse, error) {
 	resp, err := client.renameNotebook(ctx, notebookName, request, options)
 	if err != nil {
@@ -417,6 +446,7 @@ func (client *notebookClient) ResumeRenameNotebook(ctx context.Context, token st
 }
 
 // RenameNotebook - Renames a notebook.
+// If the operation fails it returns the *CloudError error type.
 func (client *notebookClient) renameNotebook(ctx context.Context, notebookName string, request ArtifactRenameRequest, options *NotebookBeginRenameNotebookOptions) (*azcore.Response, error) {
 	req, err := client.renameNotebookCreateRequest(ctx, notebookName, request, options)
 	if err != nil {
@@ -453,9 +483,13 @@ func (client *notebookClient) renameNotebookCreateRequest(ctx context.Context, n
 
 // renameNotebookHandleError handles the RenameNotebook error response.
 func (client *notebookClient) renameNotebookHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

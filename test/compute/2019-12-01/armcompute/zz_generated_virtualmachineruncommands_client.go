@@ -10,10 +10,8 @@ package armcompute
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strings"
@@ -32,6 +30,7 @@ func NewVirtualMachineRunCommandsClient(con *armcore.Connection, subscriptionID 
 }
 
 // Get - Gets specific run command for a subscription in a location.
+// If the operation fails it returns a generic error.
 func (client *VirtualMachineRunCommandsClient) Get(ctx context.Context, location string, commandID string, options *VirtualMachineRunCommandsGetOptions) (RunCommandDocumentResponse, error) {
 	req, err := client.getCreateRequest(ctx, location, commandID, options)
 	if err != nil {
@@ -85,9 +84,9 @@ func (client *VirtualMachineRunCommandsClient) getHandleResponse(resp *azcore.Re
 
 // getHandleError handles the Get error response.
 func (client *VirtualMachineRunCommandsClient) getHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -96,6 +95,7 @@ func (client *VirtualMachineRunCommandsClient) getHandleError(resp *azcore.Respo
 }
 
 // List - Lists all available run commands for a subscription in a location.
+// If the operation fails it returns a generic error.
 func (client *VirtualMachineRunCommandsClient) List(location string, options *VirtualMachineRunCommandsListOptions) RunCommandListResultPager {
 	return &runCommandListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -145,9 +145,9 @@ func (client *VirtualMachineRunCommandsClient) listHandleResponse(resp *azcore.R
 
 // listHandleError handles the List error response.
 func (client *VirtualMachineRunCommandsClient) listHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)

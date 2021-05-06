@@ -10,6 +10,7 @@ package armnetwork
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
@@ -31,6 +32,7 @@ func NewVPNSitesConfigurationClient(con *armcore.Connection, subscriptionID stri
 }
 
 // BeginDownload - Gives the sas-url to download the configurations for vpn-sites in a resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *VPNSitesConfigurationClient) BeginDownload(ctx context.Context, resourceGroupName string, virtualWANName string, request GetVPNSitesConfigurationRequest, options *VPNSitesConfigurationBeginDownloadOptions) (HTTPPollerResponse, error) {
 	resp, err := client.download(ctx, resourceGroupName, virtualWANName, request, options)
 	if err != nil {
@@ -80,6 +82,7 @@ func (client *VPNSitesConfigurationClient) ResumeDownload(ctx context.Context, t
 }
 
 // Download - Gives the sas-url to download the configurations for vpn-sites in a resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *VPNSitesConfigurationClient) download(ctx context.Context, resourceGroupName string, virtualWANName string, request GetVPNSitesConfigurationRequest, options *VPNSitesConfigurationBeginDownloadOptions) (*azcore.Response, error) {
 	req, err := client.downloadCreateRequest(ctx, resourceGroupName, virtualWANName, request, options)
 	if err != nil {
@@ -124,9 +127,13 @@ func (client *VPNSitesConfigurationClient) downloadCreateRequest(ctx context.Con
 
 // downloadHandleError handles the Download error response.
 func (client *VPNSitesConfigurationClient) downloadHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

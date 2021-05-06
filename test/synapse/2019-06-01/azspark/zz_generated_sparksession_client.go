@@ -10,9 +10,7 @@ package azspark
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -24,6 +22,7 @@ type sparkSessionClient struct {
 }
 
 // CancelSparkSession - Cancels a running spark session.
+// If the operation fails it returns a generic error.
 func (client *sparkSessionClient) CancelSparkSession(ctx context.Context, sessionID int32, options *SparkSessionCancelSparkSessionOptions) (*http.Response, error) {
 	req, err := client.cancelSparkSessionCreateRequest(ctx, sessionID, options)
 	if err != nil {
@@ -53,9 +52,9 @@ func (client *sparkSessionClient) cancelSparkSessionCreateRequest(ctx context.Co
 
 // cancelSparkSessionHandleError handles the CancelSparkSession error response.
 func (client *sparkSessionClient) cancelSparkSessionHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -64,6 +63,7 @@ func (client *sparkSessionClient) cancelSparkSessionHandleError(resp *azcore.Res
 }
 
 // CancelSparkStatement - Kill a statement within a session.
+// If the operation fails it returns a generic error.
 func (client *sparkSessionClient) CancelSparkStatement(ctx context.Context, sessionID int32, statementID int32, options *SparkSessionCancelSparkStatementOptions) (SparkStatementCancellationResultResponse, error) {
 	req, err := client.cancelSparkStatementCreateRequest(ctx, sessionID, statementID, options)
 	if err != nil {
@@ -104,9 +104,9 @@ func (client *sparkSessionClient) cancelSparkStatementHandleResponse(resp *azcor
 
 // cancelSparkStatementHandleError handles the CancelSparkStatement error response.
 func (client *sparkSessionClient) cancelSparkStatementHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -115,6 +115,7 @@ func (client *sparkSessionClient) cancelSparkStatementHandleError(resp *azcore.R
 }
 
 // CreateSparkSession - Create new spark session.
+// If the operation fails it returns a generic error.
 func (client *sparkSessionClient) CreateSparkSession(ctx context.Context, sparkSessionOptions SparkSessionOptions, options *SparkSessionCreateSparkSessionOptions) (SparkSessionResponse, error) {
 	req, err := client.createSparkSessionCreateRequest(ctx, sparkSessionOptions, options)
 	if err != nil {
@@ -158,9 +159,9 @@ func (client *sparkSessionClient) createSparkSessionHandleResponse(resp *azcore.
 
 // createSparkSessionHandleError handles the CreateSparkSession error response.
 func (client *sparkSessionClient) createSparkSessionHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -169,6 +170,7 @@ func (client *sparkSessionClient) createSparkSessionHandleError(resp *azcore.Res
 }
 
 // CreateSparkStatement - Create statement within a spark session.
+// If the operation fails it returns a generic error.
 func (client *sparkSessionClient) CreateSparkStatement(ctx context.Context, sessionID int32, sparkStatementOptions SparkStatementOptions, options *SparkSessionCreateSparkStatementOptions) (SparkStatementResponse, error) {
 	req, err := client.createSparkStatementCreateRequest(ctx, sessionID, sparkStatementOptions, options)
 	if err != nil {
@@ -208,9 +210,9 @@ func (client *sparkSessionClient) createSparkStatementHandleResponse(resp *azcor
 
 // createSparkStatementHandleError handles the CreateSparkStatement error response.
 func (client *sparkSessionClient) createSparkStatementHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -219,6 +221,7 @@ func (client *sparkSessionClient) createSparkStatementHandleError(resp *azcore.R
 }
 
 // GetSparkSession - Gets a single spark session.
+// If the operation fails it returns a generic error.
 func (client *sparkSessionClient) GetSparkSession(ctx context.Context, sessionID int32, options *SparkSessionGetSparkSessionOptions) (SparkSessionResponse, error) {
 	req, err := client.getSparkSessionCreateRequest(ctx, sessionID, options)
 	if err != nil {
@@ -263,9 +266,9 @@ func (client *sparkSessionClient) getSparkSessionHandleResponse(resp *azcore.Res
 
 // getSparkSessionHandleError handles the GetSparkSession error response.
 func (client *sparkSessionClient) getSparkSessionHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -274,6 +277,7 @@ func (client *sparkSessionClient) getSparkSessionHandleError(resp *azcore.Respon
 }
 
 // GetSparkSessions - List all spark sessions which are running under a particular spark pool.
+// If the operation fails it returns a generic error.
 func (client *sparkSessionClient) GetSparkSessions(ctx context.Context, options *SparkSessionGetSparkSessionsOptions) (SparkSessionCollectionResponse, error) {
 	req, err := client.getSparkSessionsCreateRequest(ctx, options)
 	if err != nil {
@@ -323,9 +327,9 @@ func (client *sparkSessionClient) getSparkSessionsHandleResponse(resp *azcore.Re
 
 // getSparkSessionsHandleError handles the GetSparkSessions error response.
 func (client *sparkSessionClient) getSparkSessionsHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -334,6 +338,7 @@ func (client *sparkSessionClient) getSparkSessionsHandleError(resp *azcore.Respo
 }
 
 // GetSparkStatement - Gets a single statement within a spark session.
+// If the operation fails it returns a generic error.
 func (client *sparkSessionClient) GetSparkStatement(ctx context.Context, sessionID int32, statementID int32, options *SparkSessionGetSparkStatementOptions) (SparkStatementResponse, error) {
 	req, err := client.getSparkStatementCreateRequest(ctx, sessionID, statementID, options)
 	if err != nil {
@@ -374,9 +379,9 @@ func (client *sparkSessionClient) getSparkStatementHandleResponse(resp *azcore.R
 
 // getSparkStatementHandleError handles the GetSparkStatement error response.
 func (client *sparkSessionClient) getSparkStatementHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -385,6 +390,7 @@ func (client *sparkSessionClient) getSparkStatementHandleError(resp *azcore.Resp
 }
 
 // GetSparkStatements - Gets a list of statements within a spark session.
+// If the operation fails it returns a generic error.
 func (client *sparkSessionClient) GetSparkStatements(ctx context.Context, sessionID int32, options *SparkSessionGetSparkStatementsOptions) (SparkStatementCollectionResponse, error) {
 	req, err := client.getSparkStatementsCreateRequest(ctx, sessionID, options)
 	if err != nil {
@@ -424,9 +430,9 @@ func (client *sparkSessionClient) getSparkStatementsHandleResponse(resp *azcore.
 
 // getSparkStatementsHandleError handles the GetSparkStatements error response.
 func (client *sparkSessionClient) getSparkStatementsHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -435,6 +441,7 @@ func (client *sparkSessionClient) getSparkStatementsHandleError(resp *azcore.Res
 }
 
 // ResetSparkSessionTimeout - Sends a keep alive call to the current session to reset the session timeout.
+// If the operation fails it returns a generic error.
 func (client *sparkSessionClient) ResetSparkSessionTimeout(ctx context.Context, sessionID int32, options *SparkSessionResetSparkSessionTimeoutOptions) (*http.Response, error) {
 	req, err := client.resetSparkSessionTimeoutCreateRequest(ctx, sessionID, options)
 	if err != nil {
@@ -464,9 +471,9 @@ func (client *sparkSessionClient) resetSparkSessionTimeoutCreateRequest(ctx cont
 
 // resetSparkSessionTimeoutHandleError handles the ResetSparkSessionTimeout error response.
 func (client *sparkSessionClient) resetSparkSessionTimeoutHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)

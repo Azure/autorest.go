@@ -10,6 +10,7 @@ package armnetwork
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
@@ -30,6 +31,7 @@ func NewAzureFirewallFqdnTagsClient(con *armcore.Connection, subscriptionID stri
 }
 
 // ListAll - Gets all the Azure Firewall FQDN Tags in a subscription.
+// If the operation fails it returns the *CloudError error type.
 func (client *AzureFirewallFqdnTagsClient) ListAll(options *AzureFirewallFqdnTagsListAllOptions) AzureFirewallFqdnTagListResultPager {
 	return &azureFirewallFqdnTagListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -75,9 +77,13 @@ func (client *AzureFirewallFqdnTagsClient) listAllHandleResponse(resp *azcore.Re
 
 // listAllHandleError handles the ListAll error response.
 func (client *AzureFirewallFqdnTagsClient) listAllHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

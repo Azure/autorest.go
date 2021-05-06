@@ -9,6 +9,7 @@ package reportgroup
 
 import (
 	"context"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 )
@@ -25,6 +26,7 @@ func NewAutoRestReportServiceClient(con *Connection) *AutoRestReportServiceClien
 }
 
 // GetOptionalReport - Get optional test coverage report
+// If the operation fails it returns the *Error error type.
 func (client *AutoRestReportServiceClient) GetOptionalReport(ctx context.Context, options *AutoRestReportServiceGetOptionalReportOptions) (MapOfInt32Response, error) {
 	req, err := client.getOptionalReportCreateRequest(ctx, options)
 	if err != nil {
@@ -68,14 +70,19 @@ func (client *AutoRestReportServiceClient) getOptionalReportHandleResponse(resp 
 
 // getOptionalReportHandleError handles the GetOptionalReport error response.
 func (client *AutoRestReportServiceClient) getOptionalReportHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetReport - Get test coverage report
+// If the operation fails it returns the *Error error type.
 func (client *AutoRestReportServiceClient) GetReport(ctx context.Context, options *AutoRestReportServiceGetReportOptions) (MapOfInt32Response, error) {
 	req, err := client.getReportCreateRequest(ctx, options)
 	if err != nil {
@@ -119,9 +126,13 @@ func (client *AutoRestReportServiceClient) getReportHandleResponse(resp *azcore.
 
 // getReportHandleError handles the GetReport error response.
 func (client *AutoRestReportServiceClient) getReportHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

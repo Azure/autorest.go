@@ -12,7 +12,6 @@ import (
 	"errors"
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"io/ioutil"
 	"net/http"
 )
 
@@ -28,6 +27,7 @@ func NewHTTPFailureClient(con *Connection) *HTTPFailureClient {
 }
 
 // GetEmptyError - Get empty error form server
+// If the operation fails it returns the *Error error type.
 func (client *HTTPFailureClient) GetEmptyError(ctx context.Context, options *HTTPFailureGetEmptyErrorOptions) (BoolResponse, error) {
 	req, err := client.getEmptyErrorCreateRequest(ctx, options)
 	if err != nil {
@@ -66,14 +66,19 @@ func (client *HTTPFailureClient) getEmptyErrorHandleResponse(resp *azcore.Respon
 
 // getEmptyErrorHandleError handles the GetEmptyError error response.
 func (client *HTTPFailureClient) getEmptyErrorHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetNoModelEmpty - Get empty response from server
+// If the operation fails it returns a generic error.
 func (client *HTTPFailureClient) GetNoModelEmpty(ctx context.Context, options *HTTPFailureGetNoModelEmptyOptions) (BoolResponse, error) {
 	req, err := client.getNoModelEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -112,9 +117,9 @@ func (client *HTTPFailureClient) getNoModelEmptyHandleResponse(resp *azcore.Resp
 
 // getNoModelEmptyHandleError handles the GetNoModelEmpty error response.
 func (client *HTTPFailureClient) getNoModelEmptyHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -123,6 +128,7 @@ func (client *HTTPFailureClient) getNoModelEmptyHandleError(resp *azcore.Respons
 }
 
 // GetNoModelError - Get empty error form server
+// If the operation fails it returns a generic error.
 func (client *HTTPFailureClient) GetNoModelError(ctx context.Context, options *HTTPFailureGetNoModelErrorOptions) (BoolResponse, error) {
 	req, err := client.getNoModelErrorCreateRequest(ctx, options)
 	if err != nil {
@@ -161,9 +167,9 @@ func (client *HTTPFailureClient) getNoModelErrorHandleResponse(resp *azcore.Resp
 
 // getNoModelErrorHandleError handles the GetNoModelError error response.
 func (client *HTTPFailureClient) getNoModelErrorHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)

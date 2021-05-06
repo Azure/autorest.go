@@ -10,10 +10,8 @@ package armcompute
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strings"
@@ -32,6 +30,7 @@ func NewAvailabilitySetsClient(con *armcore.Connection, subscriptionID string) *
 }
 
 // CreateOrUpdate - Create or update an availability set.
+// If the operation fails it returns a generic error.
 func (client *AvailabilitySetsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, availabilitySetName string, parameters AvailabilitySet, options *AvailabilitySetsCreateOrUpdateOptions) (AvailabilitySetResponse, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, availabilitySetName, parameters, options)
 	if err != nil {
@@ -85,9 +84,9 @@ func (client *AvailabilitySetsClient) createOrUpdateHandleResponse(resp *azcore.
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *AvailabilitySetsClient) createOrUpdateHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -96,6 +95,7 @@ func (client *AvailabilitySetsClient) createOrUpdateHandleError(resp *azcore.Res
 }
 
 // Delete - Delete an availability set.
+// If the operation fails it returns a generic error.
 func (client *AvailabilitySetsClient) Delete(ctx context.Context, resourceGroupName string, availabilitySetName string, options *AvailabilitySetsDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, availabilitySetName, options)
 	if err != nil {
@@ -139,9 +139,9 @@ func (client *AvailabilitySetsClient) deleteCreateRequest(ctx context.Context, r
 
 // deleteHandleError handles the Delete error response.
 func (client *AvailabilitySetsClient) deleteHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -150,6 +150,7 @@ func (client *AvailabilitySetsClient) deleteHandleError(resp *azcore.Response) e
 }
 
 // Get - Retrieves information about an availability set.
+// If the operation fails it returns a generic error.
 func (client *AvailabilitySetsClient) Get(ctx context.Context, resourceGroupName string, availabilitySetName string, options *AvailabilitySetsGetOptions) (AvailabilitySetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, availabilitySetName, options)
 	if err != nil {
@@ -203,9 +204,9 @@ func (client *AvailabilitySetsClient) getHandleResponse(resp *azcore.Response) (
 
 // getHandleError handles the Get error response.
 func (client *AvailabilitySetsClient) getHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -214,6 +215,7 @@ func (client *AvailabilitySetsClient) getHandleError(resp *azcore.Response) erro
 }
 
 // List - Lists all availability sets in a resource group.
+// If the operation fails it returns a generic error.
 func (client *AvailabilitySetsClient) List(resourceGroupName string, options *AvailabilitySetsListOptions) AvailabilitySetListResultPager {
 	return &availabilitySetListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -263,9 +265,9 @@ func (client *AvailabilitySetsClient) listHandleResponse(resp *azcore.Response) 
 
 // listHandleError handles the List error response.
 func (client *AvailabilitySetsClient) listHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -274,6 +276,7 @@ func (client *AvailabilitySetsClient) listHandleError(resp *azcore.Response) err
 }
 
 // ListAvailableSizes - Lists all available virtual machine sizes that can be used to create a new virtual machine in an existing availability set.
+// If the operation fails it returns a generic error.
 func (client *AvailabilitySetsClient) ListAvailableSizes(ctx context.Context, resourceGroupName string, availabilitySetName string, options *AvailabilitySetsListAvailableSizesOptions) (VirtualMachineSizeListResultResponse, error) {
 	req, err := client.listAvailableSizesCreateRequest(ctx, resourceGroupName, availabilitySetName, options)
 	if err != nil {
@@ -327,9 +330,9 @@ func (client *AvailabilitySetsClient) listAvailableSizesHandleResponse(resp *azc
 
 // listAvailableSizesHandleError handles the ListAvailableSizes error response.
 func (client *AvailabilitySetsClient) listAvailableSizesHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -338,6 +341,7 @@ func (client *AvailabilitySetsClient) listAvailableSizesHandleError(resp *azcore
 }
 
 // ListBySubscription - Lists all availability sets in a subscription.
+// If the operation fails it returns a generic error.
 func (client *AvailabilitySetsClient) ListBySubscription(options *AvailabilitySetsListBySubscriptionOptions) AvailabilitySetListResultPager {
 	return &availabilitySetListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -386,9 +390,9 @@ func (client *AvailabilitySetsClient) listBySubscriptionHandleResponse(resp *azc
 
 // listBySubscriptionHandleError handles the ListBySubscription error response.
 func (client *AvailabilitySetsClient) listBySubscriptionHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -397,6 +401,7 @@ func (client *AvailabilitySetsClient) listBySubscriptionHandleError(resp *azcore
 }
 
 // Update - Update an availability set.
+// If the operation fails it returns a generic error.
 func (client *AvailabilitySetsClient) Update(ctx context.Context, resourceGroupName string, availabilitySetName string, parameters AvailabilitySetUpdate, options *AvailabilitySetsUpdateOptions) (AvailabilitySetResponse, error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, availabilitySetName, parameters, options)
 	if err != nil {
@@ -450,9 +455,9 @@ func (client *AvailabilitySetsClient) updateHandleResponse(resp *azcore.Response
 
 // updateHandleError handles the Update error response.
 func (client *AvailabilitySetsClient) updateHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)

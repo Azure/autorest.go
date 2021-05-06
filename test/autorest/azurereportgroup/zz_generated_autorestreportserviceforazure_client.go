@@ -9,6 +9,7 @@ package azurereportgroup
 
 import (
 	"context"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 )
@@ -25,6 +26,7 @@ func NewAutoRestReportServiceForAzureClient(con *Connection) *AutoRestReportServ
 }
 
 // GetReport - Get test coverage report
+// If the operation fails it returns the *Error error type.
 func (client *AutoRestReportServiceForAzureClient) GetReport(ctx context.Context, options *AutoRestReportServiceForAzureGetReportOptions) (MapOfInt32Response, error) {
 	req, err := client.getReportCreateRequest(ctx, options)
 	if err != nil {
@@ -68,9 +70,13 @@ func (client *AutoRestReportServiceForAzureClient) getReportHandleResponse(resp 
 
 // getReportHandleError handles the GetReport error response.
 func (client *AutoRestReportServiceForAzureClient) getReportHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

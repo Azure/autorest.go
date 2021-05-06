@@ -10,10 +10,8 @@ package armcompute
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strings"
@@ -33,6 +31,7 @@ func NewVirtualMachineScaleSetExtensionsClient(con *armcore.Connection, subscrip
 }
 
 // BeginCreateOrUpdate - The operation to create or update an extension.
+// If the operation fails it returns a generic error.
 func (client *VirtualMachineScaleSetExtensionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, vmssExtensionName string, extensionParameters VirtualMachineScaleSetExtension, options *VirtualMachineScaleSetExtensionsBeginCreateOrUpdateOptions) (VirtualMachineScaleSetExtensionPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, vmScaleSetName, vmssExtensionName, extensionParameters, options)
 	if err != nil {
@@ -82,6 +81,7 @@ func (client *VirtualMachineScaleSetExtensionsClient) ResumeCreateOrUpdate(ctx c
 }
 
 // CreateOrUpdate - The operation to create or update an extension.
+// If the operation fails it returns a generic error.
 func (client *VirtualMachineScaleSetExtensionsClient) createOrUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, vmssExtensionName string, extensionParameters VirtualMachineScaleSetExtension, options *VirtualMachineScaleSetExtensionsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, vmScaleSetName, vmssExtensionName, extensionParameters, options)
 	if err != nil {
@@ -139,9 +139,9 @@ func (client *VirtualMachineScaleSetExtensionsClient) createOrUpdateHandleRespon
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *VirtualMachineScaleSetExtensionsClient) createOrUpdateHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -150,6 +150,7 @@ func (client *VirtualMachineScaleSetExtensionsClient) createOrUpdateHandleError(
 }
 
 // BeginDelete - The operation to delete the extension.
+// If the operation fails it returns a generic error.
 func (client *VirtualMachineScaleSetExtensionsClient) BeginDelete(ctx context.Context, resourceGroupName string, vmScaleSetName string, vmssExtensionName string, options *VirtualMachineScaleSetExtensionsBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, vmScaleSetName, vmssExtensionName, options)
 	if err != nil {
@@ -199,6 +200,7 @@ func (client *VirtualMachineScaleSetExtensionsClient) ResumeDelete(ctx context.C
 }
 
 // Delete - The operation to delete the extension.
+// If the operation fails it returns a generic error.
 func (client *VirtualMachineScaleSetExtensionsClient) deleteOperation(ctx context.Context, resourceGroupName string, vmScaleSetName string, vmssExtensionName string, options *VirtualMachineScaleSetExtensionsBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, vmScaleSetName, vmssExtensionName, options)
 	if err != nil {
@@ -246,9 +248,9 @@ func (client *VirtualMachineScaleSetExtensionsClient) deleteCreateRequest(ctx co
 
 // deleteHandleError handles the Delete error response.
 func (client *VirtualMachineScaleSetExtensionsClient) deleteHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -257,6 +259,7 @@ func (client *VirtualMachineScaleSetExtensionsClient) deleteHandleError(resp *az
 }
 
 // Get - The operation to get the extension.
+// If the operation fails it returns a generic error.
 func (client *VirtualMachineScaleSetExtensionsClient) Get(ctx context.Context, resourceGroupName string, vmScaleSetName string, vmssExtensionName string, options *VirtualMachineScaleSetExtensionsGetOptions) (VirtualMachineScaleSetExtensionResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, vmScaleSetName, vmssExtensionName, options)
 	if err != nil {
@@ -317,9 +320,9 @@ func (client *VirtualMachineScaleSetExtensionsClient) getHandleResponse(resp *az
 
 // getHandleError handles the Get error response.
 func (client *VirtualMachineScaleSetExtensionsClient) getHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -328,6 +331,7 @@ func (client *VirtualMachineScaleSetExtensionsClient) getHandleError(resp *azcor
 }
 
 // List - Gets a list of all extensions in a VM scale set.
+// If the operation fails it returns a generic error.
 func (client *VirtualMachineScaleSetExtensionsClient) List(resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetExtensionsListOptions) VirtualMachineScaleSetExtensionListResultPager {
 	return &virtualMachineScaleSetExtensionListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -381,9 +385,9 @@ func (client *VirtualMachineScaleSetExtensionsClient) listHandleResponse(resp *a
 
 // listHandleError handles the List error response.
 func (client *VirtualMachineScaleSetExtensionsClient) listHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -392,6 +396,7 @@ func (client *VirtualMachineScaleSetExtensionsClient) listHandleError(resp *azco
 }
 
 // BeginUpdate - The operation to update an extension.
+// If the operation fails it returns a generic error.
 func (client *VirtualMachineScaleSetExtensionsClient) BeginUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, vmssExtensionName string, extensionParameters VirtualMachineScaleSetExtensionUpdate, options *VirtualMachineScaleSetExtensionsBeginUpdateOptions) (VirtualMachineScaleSetExtensionPollerResponse, error) {
 	resp, err := client.update(ctx, resourceGroupName, vmScaleSetName, vmssExtensionName, extensionParameters, options)
 	if err != nil {
@@ -441,6 +446,7 @@ func (client *VirtualMachineScaleSetExtensionsClient) ResumeUpdate(ctx context.C
 }
 
 // Update - The operation to update an extension.
+// If the operation fails it returns a generic error.
 func (client *VirtualMachineScaleSetExtensionsClient) update(ctx context.Context, resourceGroupName string, vmScaleSetName string, vmssExtensionName string, extensionParameters VirtualMachineScaleSetExtensionUpdate, options *VirtualMachineScaleSetExtensionsBeginUpdateOptions) (*azcore.Response, error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, vmScaleSetName, vmssExtensionName, extensionParameters, options)
 	if err != nil {
@@ -498,9 +504,9 @@ func (client *VirtualMachineScaleSetExtensionsClient) updateHandleResponse(resp 
 
 // updateHandleError handles the Update error response.
 func (client *VirtualMachineScaleSetExtensionsClient) updateHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)

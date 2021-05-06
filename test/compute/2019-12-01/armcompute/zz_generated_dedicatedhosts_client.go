@@ -10,10 +10,8 @@ package armcompute
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strings"
@@ -33,6 +31,7 @@ func NewDedicatedHostsClient(con *armcore.Connection, subscriptionID string) *De
 }
 
 // BeginCreateOrUpdate - Create or update a dedicated host .
+// If the operation fails it returns a generic error.
 func (client *DedicatedHostsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, parameters DedicatedHost, options *DedicatedHostsBeginCreateOrUpdateOptions) (DedicatedHostPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, hostGroupName, hostName, parameters, options)
 	if err != nil {
@@ -82,6 +81,7 @@ func (client *DedicatedHostsClient) ResumeCreateOrUpdate(ctx context.Context, to
 }
 
 // CreateOrUpdate - Create or update a dedicated host .
+// If the operation fails it returns a generic error.
 func (client *DedicatedHostsClient) createOrUpdate(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, parameters DedicatedHost, options *DedicatedHostsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, hostGroupName, hostName, parameters, options)
 	if err != nil {
@@ -139,9 +139,9 @@ func (client *DedicatedHostsClient) createOrUpdateHandleResponse(resp *azcore.Re
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *DedicatedHostsClient) createOrUpdateHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -150,6 +150,7 @@ func (client *DedicatedHostsClient) createOrUpdateHandleError(resp *azcore.Respo
 }
 
 // BeginDelete - Delete a dedicated host.
+// If the operation fails it returns a generic error.
 func (client *DedicatedHostsClient) BeginDelete(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, options *DedicatedHostsBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, hostGroupName, hostName, options)
 	if err != nil {
@@ -199,6 +200,7 @@ func (client *DedicatedHostsClient) ResumeDelete(ctx context.Context, token stri
 }
 
 // Delete - Delete a dedicated host.
+// If the operation fails it returns a generic error.
 func (client *DedicatedHostsClient) deleteOperation(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, options *DedicatedHostsBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, hostGroupName, hostName, options)
 	if err != nil {
@@ -246,9 +248,9 @@ func (client *DedicatedHostsClient) deleteCreateRequest(ctx context.Context, res
 
 // deleteHandleError handles the Delete error response.
 func (client *DedicatedHostsClient) deleteHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -257,6 +259,7 @@ func (client *DedicatedHostsClient) deleteHandleError(resp *azcore.Response) err
 }
 
 // Get - Retrieves information about a dedicated host.
+// If the operation fails it returns a generic error.
 func (client *DedicatedHostsClient) Get(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, options *DedicatedHostsGetOptions) (DedicatedHostResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, hostGroupName, hostName, options)
 	if err != nil {
@@ -317,9 +320,9 @@ func (client *DedicatedHostsClient) getHandleResponse(resp *azcore.Response) (De
 
 // getHandleError handles the Get error response.
 func (client *DedicatedHostsClient) getHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -329,6 +332,7 @@ func (client *DedicatedHostsClient) getHandleError(resp *azcore.Response) error 
 
 // ListByHostGroup - Lists all of the dedicated hosts in the specified dedicated host group. Use the nextLink property in the response to get the next page
 // of dedicated hosts.
+// If the operation fails it returns a generic error.
 func (client *DedicatedHostsClient) ListByHostGroup(resourceGroupName string, hostGroupName string, options *DedicatedHostsListByHostGroupOptions) DedicatedHostListResultPager {
 	return &dedicatedHostListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -382,9 +386,9 @@ func (client *DedicatedHostsClient) listByHostGroupHandleResponse(resp *azcore.R
 
 // listByHostGroupHandleError handles the ListByHostGroup error response.
 func (client *DedicatedHostsClient) listByHostGroupHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -393,6 +397,7 @@ func (client *DedicatedHostsClient) listByHostGroupHandleError(resp *azcore.Resp
 }
 
 // BeginUpdate - Update an dedicated host .
+// If the operation fails it returns a generic error.
 func (client *DedicatedHostsClient) BeginUpdate(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, parameters DedicatedHostUpdate, options *DedicatedHostsBeginUpdateOptions) (DedicatedHostPollerResponse, error) {
 	resp, err := client.update(ctx, resourceGroupName, hostGroupName, hostName, parameters, options)
 	if err != nil {
@@ -442,6 +447,7 @@ func (client *DedicatedHostsClient) ResumeUpdate(ctx context.Context, token stri
 }
 
 // Update - Update an dedicated host .
+// If the operation fails it returns a generic error.
 func (client *DedicatedHostsClient) update(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, parameters DedicatedHostUpdate, options *DedicatedHostsBeginUpdateOptions) (*azcore.Response, error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, hostGroupName, hostName, parameters, options)
 	if err != nil {
@@ -499,9 +505,9 @@ func (client *DedicatedHostsClient) updateHandleResponse(resp *azcore.Response) 
 
 // updateHandleError handles the Update error response.
 func (client *DedicatedHostsClient) updateHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)

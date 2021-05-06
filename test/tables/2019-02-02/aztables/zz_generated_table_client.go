@@ -13,7 +13,6 @@ import (
 	"errors"
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -33,6 +32,7 @@ func NewTableClient(con *Connection) *TableClient {
 }
 
 // Create - Creates a new table under the given account.
+// If the operation fails it returns the *TableServiceError error type.
 // Possible return types are *TableResponseResponse, *TableCreateResponse
 func (client *TableClient) Create(ctx context.Context, tableProperties TableProperties, tableCreateOptions *TableCreateOptions, queryOptions *QueryOptions) (interface{}, error) {
 	req, err := client.createCreateRequest(ctx, tableProperties, tableCreateOptions, queryOptions)
@@ -132,14 +132,19 @@ func (client *TableClient) createHandleResponse(resp *azcore.Response) (interfac
 
 // createHandleError handles the Create error response.
 func (client *TableClient) createHandleError(resp *azcore.Response) error {
-	var err TableServiceError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := TableServiceError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Delete - Operation permanently deletes the specified table.
+// If the operation fails it returns the *TableServiceError error type.
 func (client *TableClient) Delete(ctx context.Context, table string, options *TableDeleteOptions) (TableDeleteResponse, error) {
 	req, err := client.deleteCreateRequest(ctx, table, options)
 	if err != nil {
@@ -199,14 +204,19 @@ func (client *TableClient) deleteHandleResponse(resp *azcore.Response) (TableDel
 
 // deleteHandleError handles the Delete error response.
 func (client *TableClient) deleteHandleError(resp *azcore.Response) error {
-	var err TableServiceError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := TableServiceError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // DeleteEntity - Deletes the specified entity in a table.
+// If the operation fails it returns the *TableServiceError error type.
 func (client *TableClient) DeleteEntity(ctx context.Context, table string, partitionKey string, rowKey string, ifMatch string, tableDeleteEntityOptions *TableDeleteEntityOptions, queryOptions *QueryOptions) (TableDeleteEntityResponse, error) {
 	req, err := client.deleteEntityCreateRequest(ctx, table, partitionKey, rowKey, ifMatch, tableDeleteEntityOptions, queryOptions)
 	if err != nil {
@@ -284,14 +294,19 @@ func (client *TableClient) deleteEntityHandleResponse(resp *azcore.Response) (Ta
 
 // deleteEntityHandleError handles the DeleteEntity error response.
 func (client *TableClient) deleteEntityHandleError(resp *azcore.Response) error {
-	var err TableServiceError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := TableServiceError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetAccessPolicy - Retrieves details about any stored access policies specified on the table that may be used with Shared Access Signatures.
+// If the operation fails it returns the *TableServiceError error type.
 func (client *TableClient) GetAccessPolicy(ctx context.Context, table string, options *TableGetAccessPolicyOptions) (SignedIdentifierArrayResponse, error) {
 	req, err := client.getAccessPolicyCreateRequest(ctx, table, options)
 	if err != nil {
@@ -360,14 +375,19 @@ func (client *TableClient) getAccessPolicyHandleResponse(resp *azcore.Response) 
 
 // getAccessPolicyHandleError handles the GetAccessPolicy error response.
 func (client *TableClient) getAccessPolicyHandleError(resp *azcore.Response) error {
-	var err TableServiceError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := TableServiceError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // InsertEntity - Insert entity in a table.
+// If the operation fails it returns the *TableServiceError error type.
 // Possible return types are *MapOfInterfaceResponse, *TableInsertEntityResponse
 func (client *TableClient) InsertEntity(ctx context.Context, table string, tableInsertEntityOptions *TableInsertEntityOptions, queryOptions *QueryOptions) (interface{}, error) {
 	req, err := client.insertEntityCreateRequest(ctx, table, tableInsertEntityOptions, queryOptions)
@@ -495,14 +515,19 @@ func (client *TableClient) insertEntityHandleResponse(resp *azcore.Response) (in
 
 // insertEntityHandleError handles the InsertEntity error response.
 func (client *TableClient) insertEntityHandleError(resp *azcore.Response) error {
-	var err TableServiceError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := TableServiceError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // MergeEntity - Merge entity in a table.
+// If the operation fails it returns the *TableServiceError error type.
 func (client *TableClient) MergeEntity(ctx context.Context, table string, partitionKey string, rowKey string, tableMergeEntityOptions *TableMergeEntityOptions, queryOptions *QueryOptions) (TableMergeEntityResponse, error) {
 	req, err := client.mergeEntityCreateRequest(ctx, table, partitionKey, rowKey, tableMergeEntityOptions, queryOptions)
 	if err != nil {
@@ -588,14 +613,19 @@ func (client *TableClient) mergeEntityHandleResponse(resp *azcore.Response) (Tab
 
 // mergeEntityHandleError handles the MergeEntity error response.
 func (client *TableClient) mergeEntityHandleError(resp *azcore.Response) error {
-	var err TableServiceError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := TableServiceError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Query - Queries tables under the given account.
+// If the operation fails it returns a generic error.
 func (client *TableClient) Query(ctx context.Context, tableQueryOptions *TableQueryOptions, queryOptions *QueryOptions) (TableQueryResponseResponse, error) {
 	req, err := client.queryCreateRequest(ctx, tableQueryOptions, queryOptions)
 	if err != nil {
@@ -676,9 +706,9 @@ func (client *TableClient) queryHandleResponse(resp *azcore.Response) (TableQuer
 
 // queryHandleError handles the Query error response.
 func (client *TableClient) queryHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -687,6 +717,7 @@ func (client *TableClient) queryHandleError(resp *azcore.Response) error {
 }
 
 // QueryEntities - Queries entities in a table.
+// If the operation fails it returns the *TableServiceError error type.
 func (client *TableClient) QueryEntities(ctx context.Context, table string, tableQueryEntitiesOptions *TableQueryEntitiesOptions, queryOptions *QueryOptions) (TableEntityQueryResponseResponse, error) {
 	req, err := client.queryEntitiesCreateRequest(ctx, table, tableQueryEntitiesOptions, queryOptions)
 	if err != nil {
@@ -780,14 +811,19 @@ func (client *TableClient) queryEntitiesHandleResponse(resp *azcore.Response) (T
 
 // queryEntitiesHandleError handles the QueryEntities error response.
 func (client *TableClient) queryEntitiesHandleError(resp *azcore.Response) error {
-	var err TableServiceError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := TableServiceError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // QueryEntityWithPartitionAndRowKey - Queries a single entity in a table.
+// If the operation fails it returns the *TableServiceError error type.
 func (client *TableClient) QueryEntityWithPartitionAndRowKey(ctx context.Context, table string, partitionKey string, rowKey string, tableQueryEntityWithPartitionAndRowKeyOptions *TableQueryEntityWithPartitionAndRowKeyOptions, queryOptions *QueryOptions) (MapOfInterfaceResponse, error) {
 	req, err := client.queryEntityWithPartitionAndRowKeyCreateRequest(ctx, table, partitionKey, rowKey, tableQueryEntityWithPartitionAndRowKeyOptions, queryOptions)
 	if err != nil {
@@ -889,14 +925,19 @@ func (client *TableClient) queryEntityWithPartitionAndRowKeyHandleResponse(resp 
 
 // queryEntityWithPartitionAndRowKeyHandleError handles the QueryEntityWithPartitionAndRowKey error response.
 func (client *TableClient) queryEntityWithPartitionAndRowKeyHandleError(resp *azcore.Response) error {
-	var err TableServiceError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := TableServiceError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // SetAccessPolicy - Sets stored access policies for the table that may be used with Shared Access Signatures.
+// If the operation fails it returns the *TableServiceError error type.
 func (client *TableClient) SetAccessPolicy(ctx context.Context, table string, options *TableSetAccessPolicyOptions) (TableSetAccessPolicyResponse, error) {
 	req, err := client.setAccessPolicyCreateRequest(ctx, table, options)
 	if err != nil {
@@ -969,14 +1010,19 @@ func (client *TableClient) setAccessPolicyHandleResponse(resp *azcore.Response) 
 
 // setAccessPolicyHandleError handles the SetAccessPolicy error response.
 func (client *TableClient) setAccessPolicyHandleError(resp *azcore.Response) error {
-	var err TableServiceError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := TableServiceError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // UpdateEntity - Update entity in a table.
+// If the operation fails it returns the *TableServiceError error type.
 func (client *TableClient) UpdateEntity(ctx context.Context, table string, partitionKey string, rowKey string, tableUpdateEntityOptions *TableUpdateEntityOptions, queryOptions *QueryOptions) (TableUpdateEntityResponse, error) {
 	req, err := client.updateEntityCreateRequest(ctx, table, partitionKey, rowKey, tableUpdateEntityOptions, queryOptions)
 	if err != nil {
@@ -1062,9 +1108,13 @@ func (client *TableClient) updateEntityHandleResponse(resp *azcore.Response) (Ta
 
 // updateEntityHandleError handles the UpdateEntity error response.
 func (client *TableClient) updateEntityHandleError(resp *azcore.Response) error {
-	var err TableServiceError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := TableServiceError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

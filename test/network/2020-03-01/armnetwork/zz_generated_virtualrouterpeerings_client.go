@@ -10,6 +10,7 @@ package armnetwork
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
@@ -31,6 +32,7 @@ func NewVirtualRouterPeeringsClient(con *armcore.Connection, subscriptionID stri
 }
 
 // BeginCreateOrUpdate - Creates or updates the specified Virtual Router Peering.
+// If the operation fails it returns the *Error error type.
 func (client *VirtualRouterPeeringsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualRouterName string, peeringName string, parameters VirtualRouterPeering, options *VirtualRouterPeeringsBeginCreateOrUpdateOptions) (VirtualRouterPeeringPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualRouterName, peeringName, parameters, options)
 	if err != nil {
@@ -80,6 +82,7 @@ func (client *VirtualRouterPeeringsClient) ResumeCreateOrUpdate(ctx context.Cont
 }
 
 // CreateOrUpdate - Creates or updates the specified Virtual Router Peering.
+// If the operation fails it returns the *Error error type.
 func (client *VirtualRouterPeeringsClient) createOrUpdate(ctx context.Context, resourceGroupName string, virtualRouterName string, peeringName string, parameters VirtualRouterPeering, options *VirtualRouterPeeringsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, virtualRouterName, peeringName, parameters, options)
 	if err != nil {
@@ -137,14 +140,19 @@ func (client *VirtualRouterPeeringsClient) createOrUpdateHandleResponse(resp *az
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *VirtualRouterPeeringsClient) createOrUpdateHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginDelete - Deletes the specified peering from a Virtual Router.
+// If the operation fails it returns the *Error error type.
 func (client *VirtualRouterPeeringsClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualRouterName string, peeringName string, options *VirtualRouterPeeringsBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, virtualRouterName, peeringName, options)
 	if err != nil {
@@ -194,6 +202,7 @@ func (client *VirtualRouterPeeringsClient) ResumeDelete(ctx context.Context, tok
 }
 
 // Delete - Deletes the specified peering from a Virtual Router.
+// If the operation fails it returns the *Error error type.
 func (client *VirtualRouterPeeringsClient) deleteOperation(ctx context.Context, resourceGroupName string, virtualRouterName string, peeringName string, options *VirtualRouterPeeringsBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, virtualRouterName, peeringName, options)
 	if err != nil {
@@ -242,14 +251,19 @@ func (client *VirtualRouterPeeringsClient) deleteCreateRequest(ctx context.Conte
 
 // deleteHandleError handles the Delete error response.
 func (client *VirtualRouterPeeringsClient) deleteHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Get - Gets the specified Virtual Router Peering.
+// If the operation fails it returns the *Error error type.
 func (client *VirtualRouterPeeringsClient) Get(ctx context.Context, resourceGroupName string, virtualRouterName string, peeringName string, options *VirtualRouterPeeringsGetOptions) (VirtualRouterPeeringResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, virtualRouterName, peeringName, options)
 	if err != nil {
@@ -307,14 +321,19 @@ func (client *VirtualRouterPeeringsClient) getHandleResponse(resp *azcore.Respon
 
 // getHandleError handles the Get error response.
 func (client *VirtualRouterPeeringsClient) getHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // List - Lists all Virtual Router Peerings in a Virtual Router resource.
+// If the operation fails it returns the *Error error type.
 func (client *VirtualRouterPeeringsClient) List(resourceGroupName string, virtualRouterName string, options *VirtualRouterPeeringsListOptions) VirtualRouterPeeringListResultPager {
 	return &virtualRouterPeeringListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -368,9 +387,13 @@ func (client *VirtualRouterPeeringsClient) listHandleResponse(resp *azcore.Respo
 
 // listHandleError handles the List error response.
 func (client *VirtualRouterPeeringsClient) listHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

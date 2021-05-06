@@ -805,16 +805,14 @@ function createProtocolErrHandler(op: Operation, imports: ImportManager): string
   const name = info.protocolNaming.errorMethod;
   let text = `${comment(name, '// ')} handles the ${info.name} error response.\n`;
   text += `func (client *${op.language.go!.clientName}) ${name}(resp *azcore.Response) error {\n`;
+  text += '\tbody, err := resp.Payload()\n';
+  text += '\tif err != nil {\n';
+  text += '\t\treturn azcore.NewResponseError(err, resp.Response)\n';
+  text += '\t}\n';
   // define a generic error for when there are no exceptions or no error schema
   const generateGenericError = function () {
     imports.add('errors');
-    imports.add('io/ioutil');
-    imports.add('fmt');
-    return `body, err := ioutil.ReadAll(resp.Body)
-    if err != nil {
-      return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
-    }
-    if len(body) == 0 {
+    return `\tif len(body) == 0 {
       return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
     }
     return azcore.NewResponseError(errors.New(string(body)), resp.Response)
@@ -839,20 +837,26 @@ function createProtocolErrHandler(op: Operation, imports: ImportManager): string
     if (schemaError.language.go!.internalErrorType) {
       typeName = schemaError.language.go!.internalErrorType;
     }
-    unmarshaller += `var err ${typeName}\n`;
+    imports.add('fmt');
+    // for wrapped errors, raw is initialized in the unmarshaller.
+    // error types other than object obviously don't have a raw field.
+    if (!schemaError.language.go!.internalErrorType && schemaError.type === SchemaType.Object) {
+      unmarshaller += `\t${prefix}errType := ${typeName}{raw: string(body)}\n`;
+    } else {
+      unmarshaller += `\tvar errType ${typeName}\n`;
+    }
     const innerErr = schemaError.language.go!.flattenedErr ? `.${schemaError.language.go!.flattenedErr}` : '';
-    unmarshaller += `${prefix}if err := resp.UnmarshalAs${errFormat.toUpperCase()}(&err${innerErr}); err != nil {\n`;
-    unmarshaller += `${prefix}\treturn azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)\n`;
+    unmarshaller += `${prefix}if err := resp.UnmarshalAs${errFormat.toUpperCase()}(&errType${innerErr}); err != nil {\n`;
+    unmarshaller += `${prefix}\treturn azcore.NewResponseError(fmt.Errorf("%s\\n%s", string(body), err), resp.Response)\n`;
     unmarshaller += `${prefix}}\n`;
     if (schemaError.language.go!.internalErrorType) {
       // err.wrapped is for discriminated error types, it will already be pointer-to-type
-      unmarshaller += `${prefix}return azcore.NewResponseError(err.wrapped, resp.Response)\n`;
+      unmarshaller += `${prefix}return azcore.NewResponseError(errType.wrapped, resp.Response)\n`;
     } else if (schemaError.type === SchemaType.Object) {
       // for consistency with success responses, return pointer-to-error type
-      unmarshaller += `${prefix}return azcore.NewResponseError(&err, resp.Response)\n`;
+      unmarshaller += `${prefix}return azcore.NewResponseError(&errType, resp.Response)\n`;
     } else {
-      imports.add('fmt');
-      unmarshaller += `${prefix}return azcore.NewResponseError(fmt.Errorf("%v", err), resp.Response)\n`;
+      unmarshaller += `${prefix}return azcore.NewResponseError(fmt.Errorf("%v", errType), resp.Response)\n`;
     }
     return unmarshaller;
   };

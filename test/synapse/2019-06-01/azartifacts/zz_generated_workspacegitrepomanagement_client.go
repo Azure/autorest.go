@@ -10,9 +10,7 @@ package azartifacts
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"io/ioutil"
 	"net/http"
 )
 
@@ -21,6 +19,7 @@ type workspaceGitRepoManagementClient struct {
 }
 
 // GetGitHubAccessToken - Get the GitHub access token.
+// If the operation fails it returns a generic error.
 func (client *workspaceGitRepoManagementClient) GetGitHubAccessToken(ctx context.Context, gitHubAccessTokenRequest GitHubAccessTokenRequest, options *WorkspaceGitRepoManagementGetGitHubAccessTokenOptions) (GitHubAccessTokenResponseResponse, error) {
 	req, err := client.getGitHubAccessTokenCreateRequest(ctx, gitHubAccessTokenRequest, options)
 	if err != nil {
@@ -65,9 +64,9 @@ func (client *workspaceGitRepoManagementClient) getGitHubAccessTokenHandleRespon
 
 // getGitHubAccessTokenHandleError handles the GetGitHubAccessToken error response.
 func (client *workspaceGitRepoManagementClient) getGitHubAccessTokenHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)

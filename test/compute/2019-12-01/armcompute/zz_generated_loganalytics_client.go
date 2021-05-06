@@ -10,10 +10,8 @@ package armcompute
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strings"
@@ -33,6 +31,7 @@ func NewLogAnalyticsClient(con *armcore.Connection, subscriptionID string) *LogA
 }
 
 // BeginExportRequestRateByInterval - Export logs that show Api requests made by this subscription in the given time window to show throttling activities.
+// If the operation fails it returns a generic error.
 func (client *LogAnalyticsClient) BeginExportRequestRateByInterval(ctx context.Context, location string, parameters RequestRateByIntervalInput, options *LogAnalyticsBeginExportRequestRateByIntervalOptions) (LogAnalyticsOperationResultPollerResponse, error) {
 	resp, err := client.exportRequestRateByInterval(ctx, location, parameters, options)
 	if err != nil {
@@ -82,6 +81,7 @@ func (client *LogAnalyticsClient) ResumeExportRequestRateByInterval(ctx context.
 }
 
 // ExportRequestRateByInterval - Export logs that show Api requests made by this subscription in the given time window to show throttling activities.
+// If the operation fails it returns a generic error.
 func (client *LogAnalyticsClient) exportRequestRateByInterval(ctx context.Context, location string, parameters RequestRateByIntervalInput, options *LogAnalyticsBeginExportRequestRateByIntervalOptions) (*azcore.Response, error) {
 	req, err := client.exportRequestRateByIntervalCreateRequest(ctx, location, parameters, options)
 	if err != nil {
@@ -131,9 +131,9 @@ func (client *LogAnalyticsClient) exportRequestRateByIntervalHandleResponse(resp
 
 // exportRequestRateByIntervalHandleError handles the ExportRequestRateByInterval error response.
 func (client *LogAnalyticsClient) exportRequestRateByIntervalHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -142,6 +142,7 @@ func (client *LogAnalyticsClient) exportRequestRateByIntervalHandleError(resp *a
 }
 
 // BeginExportThrottledRequests - Export logs that show total throttled Api requests for this subscription in the given time window.
+// If the operation fails it returns a generic error.
 func (client *LogAnalyticsClient) BeginExportThrottledRequests(ctx context.Context, location string, parameters ThrottledRequestsInput, options *LogAnalyticsBeginExportThrottledRequestsOptions) (LogAnalyticsOperationResultPollerResponse, error) {
 	resp, err := client.exportThrottledRequests(ctx, location, parameters, options)
 	if err != nil {
@@ -191,6 +192,7 @@ func (client *LogAnalyticsClient) ResumeExportThrottledRequests(ctx context.Cont
 }
 
 // ExportThrottledRequests - Export logs that show total throttled Api requests for this subscription in the given time window.
+// If the operation fails it returns a generic error.
 func (client *LogAnalyticsClient) exportThrottledRequests(ctx context.Context, location string, parameters ThrottledRequestsInput, options *LogAnalyticsBeginExportThrottledRequestsOptions) (*azcore.Response, error) {
 	req, err := client.exportThrottledRequestsCreateRequest(ctx, location, parameters, options)
 	if err != nil {
@@ -240,9 +242,9 @@ func (client *LogAnalyticsClient) exportThrottledRequestsHandleResponse(resp *az
 
 // exportThrottledRequestsHandleError handles the ExportThrottledRequests error response.
 func (client *LogAnalyticsClient) exportThrottledRequestsHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)

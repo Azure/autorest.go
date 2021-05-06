@@ -10,6 +10,7 @@ package armnetwork
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
@@ -31,6 +32,7 @@ func NewPrivateLinkServicesClient(con *armcore.Connection, subscriptionID string
 }
 
 // BeginCheckPrivateLinkServiceVisibility - Checks whether the subscription is visible to private link service.
+// If the operation fails it returns the *CloudError error type.
 func (client *PrivateLinkServicesClient) BeginCheckPrivateLinkServiceVisibility(ctx context.Context, location string, parameters CheckPrivateLinkServiceVisibilityRequest, options *PrivateLinkServicesBeginCheckPrivateLinkServiceVisibilityOptions) (PrivateLinkServiceVisibilityPollerResponse, error) {
 	resp, err := client.checkPrivateLinkServiceVisibility(ctx, location, parameters, options)
 	if err != nil {
@@ -80,6 +82,7 @@ func (client *PrivateLinkServicesClient) ResumeCheckPrivateLinkServiceVisibility
 }
 
 // CheckPrivateLinkServiceVisibility - Checks whether the subscription is visible to private link service.
+// If the operation fails it returns the *CloudError error type.
 func (client *PrivateLinkServicesClient) checkPrivateLinkServiceVisibility(ctx context.Context, location string, parameters CheckPrivateLinkServiceVisibilityRequest, options *PrivateLinkServicesBeginCheckPrivateLinkServiceVisibilityOptions) (*azcore.Response, error) {
 	req, err := client.checkPrivateLinkServiceVisibilityCreateRequest(ctx, location, parameters, options)
 	if err != nil {
@@ -129,15 +132,20 @@ func (client *PrivateLinkServicesClient) checkPrivateLinkServiceVisibilityHandle
 
 // checkPrivateLinkServiceVisibilityHandleError handles the CheckPrivateLinkServiceVisibility error response.
 func (client *PrivateLinkServicesClient) checkPrivateLinkServiceVisibilityHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginCheckPrivateLinkServiceVisibilityByResourceGroup - Checks whether the subscription is visible to private link service in the specified resource
 // group.
+// If the operation fails it returns the *CloudError error type.
 func (client *PrivateLinkServicesClient) BeginCheckPrivateLinkServiceVisibilityByResourceGroup(ctx context.Context, location string, resourceGroupName string, parameters CheckPrivateLinkServiceVisibilityRequest, options *PrivateLinkServicesBeginCheckPrivateLinkServiceVisibilityByResourceGroupOptions) (PrivateLinkServiceVisibilityPollerResponse, error) {
 	resp, err := client.checkPrivateLinkServiceVisibilityByResourceGroup(ctx, location, resourceGroupName, parameters, options)
 	if err != nil {
@@ -187,6 +195,7 @@ func (client *PrivateLinkServicesClient) ResumeCheckPrivateLinkServiceVisibility
 }
 
 // CheckPrivateLinkServiceVisibilityByResourceGroup - Checks whether the subscription is visible to private link service in the specified resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *PrivateLinkServicesClient) checkPrivateLinkServiceVisibilityByResourceGroup(ctx context.Context, location string, resourceGroupName string, parameters CheckPrivateLinkServiceVisibilityRequest, options *PrivateLinkServicesBeginCheckPrivateLinkServiceVisibilityByResourceGroupOptions) (*azcore.Response, error) {
 	req, err := client.checkPrivateLinkServiceVisibilityByResourceGroupCreateRequest(ctx, location, resourceGroupName, parameters, options)
 	if err != nil {
@@ -240,14 +249,19 @@ func (client *PrivateLinkServicesClient) checkPrivateLinkServiceVisibilityByReso
 
 // checkPrivateLinkServiceVisibilityByResourceGroupHandleError handles the CheckPrivateLinkServiceVisibilityByResourceGroup error response.
 func (client *PrivateLinkServicesClient) checkPrivateLinkServiceVisibilityByResourceGroupHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginCreateOrUpdate - Creates or updates an private link service in the specified resource group.
+// If the operation fails it returns the *Error error type.
 func (client *PrivateLinkServicesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, serviceName string, parameters PrivateLinkService, options *PrivateLinkServicesBeginCreateOrUpdateOptions) (PrivateLinkServicePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, serviceName, parameters, options)
 	if err != nil {
@@ -297,6 +311,7 @@ func (client *PrivateLinkServicesClient) ResumeCreateOrUpdate(ctx context.Contex
 }
 
 // CreateOrUpdate - Creates or updates an private link service in the specified resource group.
+// If the operation fails it returns the *Error error type.
 func (client *PrivateLinkServicesClient) createOrUpdate(ctx context.Context, resourceGroupName string, serviceName string, parameters PrivateLinkService, options *PrivateLinkServicesBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, serviceName, parameters, options)
 	if err != nil {
@@ -350,14 +365,19 @@ func (client *PrivateLinkServicesClient) createOrUpdateHandleResponse(resp *azco
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *PrivateLinkServicesClient) createOrUpdateHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginDelete - Deletes the specified private link service.
+// If the operation fails it returns the *Error error type.
 func (client *PrivateLinkServicesClient) BeginDelete(ctx context.Context, resourceGroupName string, serviceName string, options *PrivateLinkServicesBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, serviceName, options)
 	if err != nil {
@@ -407,6 +427,7 @@ func (client *PrivateLinkServicesClient) ResumeDelete(ctx context.Context, token
 }
 
 // Delete - Deletes the specified private link service.
+// If the operation fails it returns the *Error error type.
 func (client *PrivateLinkServicesClient) deleteOperation(ctx context.Context, resourceGroupName string, serviceName string, options *PrivateLinkServicesBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, serviceName, options)
 	if err != nil {
@@ -451,14 +472,19 @@ func (client *PrivateLinkServicesClient) deleteCreateRequest(ctx context.Context
 
 // deleteHandleError handles the Delete error response.
 func (client *PrivateLinkServicesClient) deleteHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginDeletePrivateEndpointConnection - Delete private end point connection for a private link service in a subscription.
+// If the operation fails it returns the *Error error type.
 func (client *PrivateLinkServicesClient) BeginDeletePrivateEndpointConnection(ctx context.Context, resourceGroupName string, serviceName string, peConnectionName string, options *PrivateLinkServicesBeginDeletePrivateEndpointConnectionOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deletePrivateEndpointConnection(ctx, resourceGroupName, serviceName, peConnectionName, options)
 	if err != nil {
@@ -508,6 +534,7 @@ func (client *PrivateLinkServicesClient) ResumeDeletePrivateEndpointConnection(c
 }
 
 // DeletePrivateEndpointConnection - Delete private end point connection for a private link service in a subscription.
+// If the operation fails it returns the *Error error type.
 func (client *PrivateLinkServicesClient) deletePrivateEndpointConnection(ctx context.Context, resourceGroupName string, serviceName string, peConnectionName string, options *PrivateLinkServicesBeginDeletePrivateEndpointConnectionOptions) (*azcore.Response, error) {
 	req, err := client.deletePrivateEndpointConnectionCreateRequest(ctx, resourceGroupName, serviceName, peConnectionName, options)
 	if err != nil {
@@ -556,14 +583,19 @@ func (client *PrivateLinkServicesClient) deletePrivateEndpointConnectionCreateRe
 
 // deletePrivateEndpointConnectionHandleError handles the DeletePrivateEndpointConnection error response.
 func (client *PrivateLinkServicesClient) deletePrivateEndpointConnectionHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Get - Gets the specified private link service by resource group.
+// If the operation fails it returns the *Error error type.
 func (client *PrivateLinkServicesClient) Get(ctx context.Context, resourceGroupName string, serviceName string, options *PrivateLinkServicesGetOptions) (PrivateLinkServiceResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, serviceName, options)
 	if err != nil {
@@ -620,14 +652,19 @@ func (client *PrivateLinkServicesClient) getHandleResponse(resp *azcore.Response
 
 // getHandleError handles the Get error response.
 func (client *PrivateLinkServicesClient) getHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetPrivateEndpointConnection - Get the specific private end point connection by specific private link service in the resource group.
+// If the operation fails it returns the *Error error type.
 func (client *PrivateLinkServicesClient) GetPrivateEndpointConnection(ctx context.Context, resourceGroupName string, serviceName string, peConnectionName string, options *PrivateLinkServicesGetPrivateEndpointConnectionOptions) (PrivateEndpointConnectionResponse, error) {
 	req, err := client.getPrivateEndpointConnectionCreateRequest(ctx, resourceGroupName, serviceName, peConnectionName, options)
 	if err != nil {
@@ -688,14 +725,19 @@ func (client *PrivateLinkServicesClient) getPrivateEndpointConnectionHandleRespo
 
 // getPrivateEndpointConnectionHandleError handles the GetPrivateEndpointConnection error response.
 func (client *PrivateLinkServicesClient) getPrivateEndpointConnectionHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // List - Gets all private link services in a resource group.
+// If the operation fails it returns the *Error error type.
 func (client *PrivateLinkServicesClient) List(resourceGroupName string, options *PrivateLinkServicesListOptions) PrivateLinkServiceListResultPager {
 	return &privateLinkServiceListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -745,15 +787,20 @@ func (client *PrivateLinkServicesClient) listHandleResponse(resp *azcore.Respons
 
 // listHandleError handles the List error response.
 func (client *PrivateLinkServicesClient) listHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // ListAutoApprovedPrivateLinkServices - Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved in this
 // subscription in this region.
+// If the operation fails it returns the *CloudError error type.
 func (client *PrivateLinkServicesClient) ListAutoApprovedPrivateLinkServices(location string, options *PrivateLinkServicesListAutoApprovedPrivateLinkServicesOptions) AutoApprovedPrivateLinkServicesResultPager {
 	return &autoApprovedPrivateLinkServicesResultPager{
 		pipeline: client.con.Pipeline(),
@@ -803,15 +850,20 @@ func (client *PrivateLinkServicesClient) listAutoApprovedPrivateLinkServicesHand
 
 // listAutoApprovedPrivateLinkServicesHandleError handles the ListAutoApprovedPrivateLinkServices error response.
 func (client *PrivateLinkServicesClient) listAutoApprovedPrivateLinkServicesHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // ListAutoApprovedPrivateLinkServicesByResourceGroup - Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved
 // in this subscription in this region.
+// If the operation fails it returns the *CloudError error type.
 func (client *PrivateLinkServicesClient) ListAutoApprovedPrivateLinkServicesByResourceGroup(location string, resourceGroupName string, options *PrivateLinkServicesListAutoApprovedPrivateLinkServicesByResourceGroupOptions) AutoApprovedPrivateLinkServicesResultPager {
 	return &autoApprovedPrivateLinkServicesResultPager{
 		pipeline: client.con.Pipeline(),
@@ -865,14 +917,19 @@ func (client *PrivateLinkServicesClient) listAutoApprovedPrivateLinkServicesByRe
 
 // listAutoApprovedPrivateLinkServicesByResourceGroupHandleError handles the ListAutoApprovedPrivateLinkServicesByResourceGroup error response.
 func (client *PrivateLinkServicesClient) listAutoApprovedPrivateLinkServicesByResourceGroupHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // ListBySubscription - Gets all private link service in a subscription.
+// If the operation fails it returns the *Error error type.
 func (client *PrivateLinkServicesClient) ListBySubscription(options *PrivateLinkServicesListBySubscriptionOptions) PrivateLinkServiceListResultPager {
 	return &privateLinkServiceListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -918,14 +975,19 @@ func (client *PrivateLinkServicesClient) listBySubscriptionHandleResponse(resp *
 
 // listBySubscriptionHandleError handles the ListBySubscription error response.
 func (client *PrivateLinkServicesClient) listBySubscriptionHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // ListPrivateEndpointConnections - Gets all private end point connections for a specific private link service.
+// If the operation fails it returns the *Error error type.
 func (client *PrivateLinkServicesClient) ListPrivateEndpointConnections(resourceGroupName string, serviceName string, options *PrivateLinkServicesListPrivateEndpointConnectionsOptions) PrivateEndpointConnectionListResultPager {
 	return &privateEndpointConnectionListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -979,14 +1041,19 @@ func (client *PrivateLinkServicesClient) listPrivateEndpointConnectionsHandleRes
 
 // listPrivateEndpointConnectionsHandleError handles the ListPrivateEndpointConnections error response.
 func (client *PrivateLinkServicesClient) listPrivateEndpointConnectionsHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // UpdatePrivateEndpointConnection - Approve or reject private end point connection for a private link service in a subscription.
+// If the operation fails it returns the *Error error type.
 func (client *PrivateLinkServicesClient) UpdatePrivateEndpointConnection(ctx context.Context, resourceGroupName string, serviceName string, peConnectionName string, parameters PrivateEndpointConnection, options *PrivateLinkServicesUpdatePrivateEndpointConnectionOptions) (PrivateEndpointConnectionResponse, error) {
 	req, err := client.updatePrivateEndpointConnectionCreateRequest(ctx, resourceGroupName, serviceName, peConnectionName, parameters, options)
 	if err != nil {
@@ -1044,9 +1111,13 @@ func (client *PrivateLinkServicesClient) updatePrivateEndpointConnectionHandleRe
 
 // updatePrivateEndpointConnectionHandleError handles the UpdatePrivateEndpointConnection error response.
 func (client *PrivateLinkServicesClient) updatePrivateEndpointConnectionHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

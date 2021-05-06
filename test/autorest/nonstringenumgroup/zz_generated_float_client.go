@@ -10,9 +10,7 @@ package nonstringenumgroup
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"io/ioutil"
 	"net/http"
 )
 
@@ -28,6 +26,7 @@ func NewFloatClient(con *Connection) *FloatClient {
 }
 
 // Get - Get a float enum
+// If the operation fails it returns a generic error.
 func (client *FloatClient) Get(ctx context.Context, options *FloatGetOptions) (FloatEnumResponse, error) {
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
@@ -66,9 +65,9 @@ func (client *FloatClient) getHandleResponse(resp *azcore.Response) (FloatEnumRe
 
 // getHandleError handles the Get error response.
 func (client *FloatClient) getHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -77,6 +76,7 @@ func (client *FloatClient) getHandleError(resp *azcore.Response) error {
 }
 
 // Put - Put a float enum
+// If the operation fails it returns a generic error.
 func (client *FloatClient) Put(ctx context.Context, options *FloatPutOptions) (StringResponse, error) {
 	req, err := client.putCreateRequest(ctx, options)
 	if err != nil {
@@ -118,9 +118,9 @@ func (client *FloatClient) putHandleResponse(resp *azcore.Response) (StringRespo
 
 // putHandleError handles the Put error response.
 func (client *FloatClient) putHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)

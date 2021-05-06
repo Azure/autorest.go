@@ -9,6 +9,7 @@ package booleangroup
 
 import (
 	"context"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 )
@@ -25,6 +26,7 @@ func NewBoolClient(con *Connection) *BoolClient {
 }
 
 // GetFalse - Get false Boolean value
+// If the operation fails it returns the *Error error type.
 func (client *BoolClient) GetFalse(ctx context.Context, options *BoolGetFalseOptions) (BoolResponse, error) {
 	req, err := client.getFalseCreateRequest(ctx, options)
 	if err != nil {
@@ -63,14 +65,19 @@ func (client *BoolClient) getFalseHandleResponse(resp *azcore.Response) (BoolRes
 
 // getFalseHandleError handles the GetFalse error response.
 func (client *BoolClient) getFalseHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetInvalid - Get invalid Boolean value
+// If the operation fails it returns the *Error error type.
 func (client *BoolClient) GetInvalid(ctx context.Context, options *BoolGetInvalidOptions) (BoolResponse, error) {
 	req, err := client.getInvalidCreateRequest(ctx, options)
 	if err != nil {
@@ -109,14 +116,19 @@ func (client *BoolClient) getInvalidHandleResponse(resp *azcore.Response) (BoolR
 
 // getInvalidHandleError handles the GetInvalid error response.
 func (client *BoolClient) getInvalidHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetNull - Get null Boolean value
+// If the operation fails it returns the *Error error type.
 func (client *BoolClient) GetNull(ctx context.Context, options *BoolGetNullOptions) (BoolResponse, error) {
 	req, err := client.getNullCreateRequest(ctx, options)
 	if err != nil {
@@ -155,14 +167,19 @@ func (client *BoolClient) getNullHandleResponse(resp *azcore.Response) (BoolResp
 
 // getNullHandleError handles the GetNull error response.
 func (client *BoolClient) getNullHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetTrue - Get true Boolean value
+// If the operation fails it returns the *Error error type.
 func (client *BoolClient) GetTrue(ctx context.Context, options *BoolGetTrueOptions) (BoolResponse, error) {
 	req, err := client.getTrueCreateRequest(ctx, options)
 	if err != nil {
@@ -201,14 +218,19 @@ func (client *BoolClient) getTrueHandleResponse(resp *azcore.Response) (BoolResp
 
 // getTrueHandleError handles the GetTrue error response.
 func (client *BoolClient) getTrueHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // PutFalse - Set Boolean value false
+// If the operation fails it returns the *Error error type.
 func (client *BoolClient) PutFalse(ctx context.Context, options *BoolPutFalseOptions) (*http.Response, error) {
 	req, err := client.putFalseCreateRequest(ctx, options)
 	if err != nil {
@@ -238,14 +260,19 @@ func (client *BoolClient) putFalseCreateRequest(ctx context.Context, options *Bo
 
 // putFalseHandleError handles the PutFalse error response.
 func (client *BoolClient) putFalseHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // PutTrue - Set Boolean value true
+// If the operation fails it returns the *Error error type.
 func (client *BoolClient) PutTrue(ctx context.Context, options *BoolPutTrueOptions) (*http.Response, error) {
 	req, err := client.putTrueCreateRequest(ctx, options)
 	if err != nil {
@@ -275,9 +302,13 @@ func (client *BoolClient) putTrueCreateRequest(ctx context.Context, options *Boo
 
 // putTrueHandleError handles the PutTrue error response.
 func (client *BoolClient) putTrueHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

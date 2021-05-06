@@ -10,6 +10,7 @@ package armnetwork
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
@@ -30,6 +31,7 @@ func NewExpressRoutePortsLocationsClient(con *armcore.Connection, subscriptionID
 }
 
 // Get - Retrieves a single ExpressRoutePort peering location, including the list of available bandwidths available at said peering location.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRoutePortsLocationsClient) Get(ctx context.Context, locationName string, options *ExpressRoutePortsLocationsGetOptions) (ExpressRoutePortsLocationResponse, error) {
 	req, err := client.getCreateRequest(ctx, locationName, options)
 	if err != nil {
@@ -79,15 +81,20 @@ func (client *ExpressRoutePortsLocationsClient) getHandleResponse(resp *azcore.R
 
 // getHandleError handles the Get error response.
 func (client *ExpressRoutePortsLocationsClient) getHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // List - Retrieves all ExpressRoutePort peering locations. Does not return available bandwidths for each location. Available bandwidths can only be obtained
 // when retrieving a specific peering location.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRoutePortsLocationsClient) List(options *ExpressRoutePortsLocationsListOptions) ExpressRoutePortsLocationListResultPager {
 	return &expressRoutePortsLocationListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -133,9 +140,13 @@ func (client *ExpressRoutePortsLocationsClient) listHandleResponse(resp *azcore.
 
 // listHandleError handles the List error response.
 func (client *ExpressRoutePortsLocationsClient) listHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

@@ -45,7 +45,7 @@ export async function generateModels(session: Session<CodeModel>): Promise<strin
     struct.Methods.sort((a: StructMethod, b: StructMethod) => { return sortAscending(a.name, b.name) });
     for (const method of values(struct.Methods)) {
       if (method.desc.length > 0) {
-        text += `// ${method.desc}\n`;
+        text += `${comment(method.desc, '// ', undefined, commentLength)}\n`;
       }
       text += method.text;
     }
@@ -115,6 +115,9 @@ class StructDef {
     if (hasDescription(this.Language)) {
       text += `${comment(this.Language.description, '// ', undefined, commentLength)}\n`;
     }
+    if (this.Language.errorType) {
+      text += '// Implements the error and azcore.HTTPResponse interfaces.\n';
+    }
     text += `type ${this.Language.name} struct {\n`;
     // any composed types go first
     for (const comp of values(this.ComposedOf)) {
@@ -125,6 +128,9 @@ class StructDef {
     if (this.Properties === undefined && this.Parameters?.length === 0) {
       // this is an optional params placeholder struct
       text += '\t// placeholder for future optional parameters\n';
+    }
+    if (this.Language.errorType) {
+      text += '\traw string\n';
     }
     for (const prop of values(this.Properties)) {
       if (hasDescription(prop.language.go!)) {
@@ -276,42 +282,9 @@ function generateStructs(imports: ImportManager, objects?: ObjectSchema[]): Stru
     if (obj.language.go!.errorType) {
       // add Error() method
       let text = `func (e ${obj.language.go!.name}) Error() string {\n`;
-      text += `\tmsg := ""\n`;
-      for (const prop of values(structDef.Properties)) {
-        text += `\tif e.${prop.language.go!.name} != nil {\n`;
-        // check if the property is an object or a basic type and output the corresponding error message.
-        // this will only include details for the top level information in the corresponding type. 
-        if (!isObjectSchema(prop.schema)) {
-          text += `\t\tmsg += fmt.Sprintf("${prop.language.go!.name}: %v\\n", *e.${prop.language.go!.name})\n`;
-        } else if (prop.language.go!.errorType) {
-          // if the field is another error type simply add that error message to the current error.
-          text += `\t\tmsg += fmt.Sprintf("${prop.language.go!.name}: %v\\n", *e.${prop.language.go!.name}.Error())\n`;
-        } else {
-          // if the property is an object schema add the information in the Go struct to the error message 
-          text += `\t\tmsg += "${prop.language.go!.name}: \\n"\n`;
-          for (const s of values(objects)) {
-            if (s.language.go!.name === prop.schema.language.go!.name) {
-              for (const p of values(s.properties)) {
-                text += `\t\tif e.${prop.language.go!.name}.${p.language.go!.name} != nil {\n`;
-                if (p.language.go!.errorType) {
-                  text += `\t\tmsg += fmt.Sprintf("${prop.language.go!.name}: %v\\n", *e.${prop.language.go!.name}.Error())\n`;
-                } else {
-                  text += `\t\t\tmsg += fmt.Sprintf("\\t${p.language.go!.name}: %v\\n", *e.${prop.language.go!.name}.${p.language.go!.name})\n`;
-                }
-                text += '\t\t}\n';
-              }
-              break;
-            }
-          }
-        }
-        text += `\t}\n`;
-      }
-      text += '\tif msg == "" {\n';
-      text += '\t\tmsg = "missing error info"\n';
-      text += '\t}\n';
-      text += '\treturn msg\n';
+      text += `\treturn e.raw\n`;
       text += '}\n\n';
-      structDef.Methods.push({ name: 'Error', desc: `Error implements the error interface for type ${obj.language.go!.name}.`, text: text });
+      structDef.Methods.push({ name: 'Error', desc: `Error implements the error interface for type ${obj.language.go!.name}.\nThe contents of the error text are not contractual and subject to change.`, text: text });
     }
     if (obj.language.go!.marshallingFormat === 'xml') {
       // due to differences in XML marshallers/unmarshallers, we use different codegen than for JSON
@@ -451,9 +424,6 @@ function needsXMLDictionaryUnmarshalling(obj: ObjectSchema): boolean {
 }
 
 function generateStruct(imports: ImportManager, lang: Language, props?: Property[]): StructDef {
-  if (lang.errorType) {
-    imports.add('fmt');
-  }
   if (lang.responseType) {
     imports.add('net/http');
   }
@@ -652,6 +622,9 @@ function generateJSONUnmarshaller(imports: ImportManager, obj: ObjectSchema, str
   unmarshaller += '\tif err := json.Unmarshal(data, &rawMsg); err != nil {\n';
   unmarshaller += '\t\treturn err\n';
   unmarshaller += '\t}\n';
+  if (obj.language.go!.errorType || obj.language.go!.inheritedErrorType) {
+    unmarshaller += `\t${receiver}.raw = string(data)\n`;
+  }
   if (obj.discriminator || obj.children?.immediate && isObjectSchema(obj.children.immediate[0])) {
     unmarshaller += `\treturn ${receiver}.unmarshalInternal(rawMsg)\n`;
   } else {

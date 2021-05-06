@@ -10,6 +10,7 @@ package armnetwork
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
@@ -31,6 +32,7 @@ func NewFirewallPoliciesClient(con *armcore.Connection, subscriptionID string) *
 }
 
 // BeginCreateOrUpdate - Creates or updates the specified Firewall Policy.
+// If the operation fails it returns the *CloudError error type.
 func (client *FirewallPoliciesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, firewallPolicyName string, parameters FirewallPolicy, options *FirewallPoliciesBeginCreateOrUpdateOptions) (FirewallPolicyPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, firewallPolicyName, parameters, options)
 	if err != nil {
@@ -80,6 +82,7 @@ func (client *FirewallPoliciesClient) ResumeCreateOrUpdate(ctx context.Context, 
 }
 
 // CreateOrUpdate - Creates or updates the specified Firewall Policy.
+// If the operation fails it returns the *CloudError error type.
 func (client *FirewallPoliciesClient) createOrUpdate(ctx context.Context, resourceGroupName string, firewallPolicyName string, parameters FirewallPolicy, options *FirewallPoliciesBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, firewallPolicyName, parameters, options)
 	if err != nil {
@@ -133,14 +136,19 @@ func (client *FirewallPoliciesClient) createOrUpdateHandleResponse(resp *azcore.
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *FirewallPoliciesClient) createOrUpdateHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginDelete - Deletes the specified Firewall Policy.
+// If the operation fails it returns the *CloudError error type.
 func (client *FirewallPoliciesClient) BeginDelete(ctx context.Context, resourceGroupName string, firewallPolicyName string, options *FirewallPoliciesBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, firewallPolicyName, options)
 	if err != nil {
@@ -190,6 +198,7 @@ func (client *FirewallPoliciesClient) ResumeDelete(ctx context.Context, token st
 }
 
 // Delete - Deletes the specified Firewall Policy.
+// If the operation fails it returns the *CloudError error type.
 func (client *FirewallPoliciesClient) deleteOperation(ctx context.Context, resourceGroupName string, firewallPolicyName string, options *FirewallPoliciesBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, firewallPolicyName, options)
 	if err != nil {
@@ -234,14 +243,19 @@ func (client *FirewallPoliciesClient) deleteCreateRequest(ctx context.Context, r
 
 // deleteHandleError handles the Delete error response.
 func (client *FirewallPoliciesClient) deleteHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Get - Gets the specified Firewall Policy.
+// If the operation fails it returns the *CloudError error type.
 func (client *FirewallPoliciesClient) Get(ctx context.Context, resourceGroupName string, firewallPolicyName string, options *FirewallPoliciesGetOptions) (FirewallPolicyResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, firewallPolicyName, options)
 	if err != nil {
@@ -298,14 +312,19 @@ func (client *FirewallPoliciesClient) getHandleResponse(resp *azcore.Response) (
 
 // getHandleError handles the Get error response.
 func (client *FirewallPoliciesClient) getHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // List - Lists all Firewall Policies in a resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *FirewallPoliciesClient) List(resourceGroupName string, options *FirewallPoliciesListOptions) FirewallPolicyListResultPager {
 	return &firewallPolicyListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -355,14 +374,19 @@ func (client *FirewallPoliciesClient) listHandleResponse(resp *azcore.Response) 
 
 // listHandleError handles the List error response.
 func (client *FirewallPoliciesClient) listHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // ListAll - Gets all the Firewall Policies in a subscription.
+// If the operation fails it returns the *CloudError error type.
 func (client *FirewallPoliciesClient) ListAll(options *FirewallPoliciesListAllOptions) FirewallPolicyListResultPager {
 	return &firewallPolicyListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -408,9 +432,13 @@ func (client *FirewallPoliciesClient) listAllHandleResponse(resp *azcore.Respons
 
 // listAllHandleError handles the ListAll error response.
 func (client *FirewallPoliciesClient) listAllHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

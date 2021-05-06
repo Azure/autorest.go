@@ -10,6 +10,7 @@ package azartifacts
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -23,6 +24,7 @@ type pipelineClient struct {
 }
 
 // BeginCreateOrUpdatePipeline - Creates or updates a pipeline.
+// If the operation fails it returns the *CloudError error type.
 func (client *pipelineClient) BeginCreateOrUpdatePipeline(ctx context.Context, pipelineName string, pipeline PipelineResource, options *PipelineBeginCreateOrUpdatePipelineOptions) (PipelineResourcePollerResponse, error) {
 	resp, err := client.createOrUpdatePipeline(ctx, pipelineName, pipeline, options)
 	if err != nil {
@@ -70,6 +72,7 @@ func (client *pipelineClient) ResumeCreateOrUpdatePipeline(ctx context.Context, 
 }
 
 // CreateOrUpdatePipeline - Creates or updates a pipeline.
+// If the operation fails it returns the *CloudError error type.
 func (client *pipelineClient) createOrUpdatePipeline(ctx context.Context, pipelineName string, pipeline PipelineResource, options *PipelineBeginCreateOrUpdatePipelineOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdatePipelineCreateRequest(ctx, pipelineName, pipeline, options)
 	if err != nil {
@@ -118,14 +121,19 @@ func (client *pipelineClient) createOrUpdatePipelineHandleResponse(resp *azcore.
 
 // createOrUpdatePipelineHandleError handles the CreateOrUpdatePipeline error response.
 func (client *pipelineClient) createOrUpdatePipelineHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // CreatePipelineRun - Creates a run of a pipeline.
+// If the operation fails it returns the *CloudError error type.
 func (client *pipelineClient) CreatePipelineRun(ctx context.Context, pipelineName string, options *PipelineCreatePipelineRunOptions) (CreateRunResponseResponse, error) {
 	req, err := client.createPipelineRunCreateRequest(ctx, pipelineName, options)
 	if err != nil {
@@ -183,14 +191,19 @@ func (client *pipelineClient) createPipelineRunHandleResponse(resp *azcore.Respo
 
 // createPipelineRunHandleError handles the CreatePipelineRun error response.
 func (client *pipelineClient) createPipelineRunHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginDeletePipeline - Deletes a pipeline.
+// If the operation fails it returns the *CloudError error type.
 func (client *pipelineClient) BeginDeletePipeline(ctx context.Context, pipelineName string, options *PipelineBeginDeletePipelineOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deletePipeline(ctx, pipelineName, options)
 	if err != nil {
@@ -238,6 +251,7 @@ func (client *pipelineClient) ResumeDeletePipeline(ctx context.Context, token st
 }
 
 // DeletePipeline - Deletes a pipeline.
+// If the operation fails it returns the *CloudError error type.
 func (client *pipelineClient) deletePipeline(ctx context.Context, pipelineName string, options *PipelineBeginDeletePipelineOptions) (*azcore.Response, error) {
 	req, err := client.deletePipelineCreateRequest(ctx, pipelineName, options)
 	if err != nil {
@@ -274,14 +288,19 @@ func (client *pipelineClient) deletePipelineCreateRequest(ctx context.Context, p
 
 // deletePipelineHandleError handles the DeletePipeline error response.
 func (client *pipelineClient) deletePipelineHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetPipeline - Gets a pipeline.
+// If the operation fails it returns the *CloudError error type.
 func (client *pipelineClient) GetPipeline(ctx context.Context, pipelineName string, options *PipelineGetPipelineOptions) (PipelineResourceResponse, error) {
 	req, err := client.getPipelineCreateRequest(ctx, pipelineName, options)
 	if err != nil {
@@ -330,14 +349,19 @@ func (client *pipelineClient) getPipelineHandleResponse(resp *azcore.Response) (
 
 // getPipelineHandleError handles the GetPipeline error response.
 func (client *pipelineClient) getPipelineHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetPipelinesByWorkspace - Lists pipelines.
+// If the operation fails it returns the *CloudError error type.
 func (client *pipelineClient) GetPipelinesByWorkspace(options *PipelineGetPipelinesByWorkspaceOptions) PipelineListResponsePager {
 	return &pipelineListResponsePager{
 		pipeline: client.con.Pipeline(),
@@ -379,14 +403,19 @@ func (client *pipelineClient) getPipelinesByWorkspaceHandleResponse(resp *azcore
 
 // getPipelinesByWorkspaceHandleError handles the GetPipelinesByWorkspace error response.
 func (client *pipelineClient) getPipelinesByWorkspaceHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginRenamePipeline - Renames a pipeline.
+// If the operation fails it returns the *CloudError error type.
 func (client *pipelineClient) BeginRenamePipeline(ctx context.Context, pipelineName string, request ArtifactRenameRequest, options *PipelineBeginRenamePipelineOptions) (HTTPPollerResponse, error) {
 	resp, err := client.renamePipeline(ctx, pipelineName, request, options)
 	if err != nil {
@@ -434,6 +463,7 @@ func (client *pipelineClient) ResumeRenamePipeline(ctx context.Context, token st
 }
 
 // RenamePipeline - Renames a pipeline.
+// If the operation fails it returns the *CloudError error type.
 func (client *pipelineClient) renamePipeline(ctx context.Context, pipelineName string, request ArtifactRenameRequest, options *PipelineBeginRenamePipelineOptions) (*azcore.Response, error) {
 	req, err := client.renamePipelineCreateRequest(ctx, pipelineName, request, options)
 	if err != nil {
@@ -470,9 +500,13 @@ func (client *pipelineClient) renamePipelineCreateRequest(ctx context.Context, p
 
 // renamePipelineHandleError handles the RenamePipeline error response.
 func (client *pipelineClient) renamePipelineHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

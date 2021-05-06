@@ -10,10 +10,8 @@ package armcompute
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strings"
@@ -32,6 +30,7 @@ func NewVirtualMachineSizesClient(con *armcore.Connection, subscriptionID string
 }
 
 // List - This API is deprecated. Use Resources Skus [https://docs.microsoft.com/en-us/rest/api/compute/resourceskus/list]
+// If the operation fails it returns a generic error.
 func (client *VirtualMachineSizesClient) List(ctx context.Context, location string, options *VirtualMachineSizesListOptions) (VirtualMachineSizeListResultResponse, error) {
 	req, err := client.listCreateRequest(ctx, location, options)
 	if err != nil {
@@ -81,9 +80,9 @@ func (client *VirtualMachineSizesClient) listHandleResponse(resp *azcore.Respons
 
 // listHandleError handles the List error response.
 func (client *VirtualMachineSizesClient) listHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)

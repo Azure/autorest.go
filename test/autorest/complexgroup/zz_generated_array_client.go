@@ -9,6 +9,7 @@ package complexgroup
 
 import (
 	"context"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 )
@@ -25,6 +26,7 @@ func NewArrayClient(con *Connection) *ArrayClient {
 }
 
 // GetEmpty - Get complex types with array property which is empty
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) GetEmpty(ctx context.Context, options *ArrayGetEmptyOptions) (ArrayWrapperResponse, error) {
 	req, err := client.getEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -63,14 +65,19 @@ func (client *ArrayClient) getEmptyHandleResponse(resp *azcore.Response) (ArrayW
 
 // getEmptyHandleError handles the GetEmpty error response.
 func (client *ArrayClient) getEmptyHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetNotProvided - Get complex types with array property while server doesn't provide a response payload
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) GetNotProvided(ctx context.Context, options *ArrayGetNotProvidedOptions) (ArrayWrapperResponse, error) {
 	req, err := client.getNotProvidedCreateRequest(ctx, options)
 	if err != nil {
@@ -109,14 +116,19 @@ func (client *ArrayClient) getNotProvidedHandleResponse(resp *azcore.Response) (
 
 // getNotProvidedHandleError handles the GetNotProvided error response.
 func (client *ArrayClient) getNotProvidedHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetValid - Get complex types with array property
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) GetValid(ctx context.Context, options *ArrayGetValidOptions) (ArrayWrapperResponse, error) {
 	req, err := client.getValidCreateRequest(ctx, options)
 	if err != nil {
@@ -155,14 +167,19 @@ func (client *ArrayClient) getValidHandleResponse(resp *azcore.Response) (ArrayW
 
 // getValidHandleError handles the GetValid error response.
 func (client *ArrayClient) getValidHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // PutEmpty - Put complex types with array property which is empty
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) PutEmpty(ctx context.Context, complexBody ArrayWrapper, options *ArrayPutEmptyOptions) (*http.Response, error) {
 	req, err := client.putEmptyCreateRequest(ctx, complexBody, options)
 	if err != nil {
@@ -192,14 +209,19 @@ func (client *ArrayClient) putEmptyCreateRequest(ctx context.Context, complexBod
 
 // putEmptyHandleError handles the PutEmpty error response.
 func (client *ArrayClient) putEmptyHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // PutValid - Put complex types with array property
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) PutValid(ctx context.Context, complexBody ArrayWrapper, options *ArrayPutValidOptions) (*http.Response, error) {
 	req, err := client.putValidCreateRequest(ctx, complexBody, options)
 	if err != nil {
@@ -229,9 +251,13 @@ func (client *ArrayClient) putValidCreateRequest(ctx context.Context, complexBod
 
 // putValidHandleError handles the PutValid error response.
 func (client *ArrayClient) putValidHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

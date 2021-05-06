@@ -9,6 +9,7 @@ package filegroup
 
 import (
 	"context"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 )
@@ -25,6 +26,7 @@ func NewFilesClient(con *Connection) *FilesClient {
 }
 
 // GetEmptyFile - Get empty file
+// If the operation fails it returns the *Error error type.
 func (client *FilesClient) GetEmptyFile(ctx context.Context, options *FilesGetEmptyFileOptions) (*http.Response, error) {
 	req, err := client.getEmptyFileCreateRequest(ctx, options)
 	if err != nil {
@@ -55,14 +57,19 @@ func (client *FilesClient) getEmptyFileCreateRequest(ctx context.Context, option
 
 // getEmptyFileHandleError handles the GetEmptyFile error response.
 func (client *FilesClient) getEmptyFileHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetFile - Get file
+// If the operation fails it returns the *Error error type.
 func (client *FilesClient) GetFile(ctx context.Context, options *FilesGetFileOptions) (*http.Response, error) {
 	req, err := client.getFileCreateRequest(ctx, options)
 	if err != nil {
@@ -93,14 +100,19 @@ func (client *FilesClient) getFileCreateRequest(ctx context.Context, options *Fi
 
 // getFileHandleError handles the GetFile error response.
 func (client *FilesClient) getFileHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetFileLarge - Get a large file
+// If the operation fails it returns the *Error error type.
 func (client *FilesClient) GetFileLarge(ctx context.Context, options *FilesGetFileLargeOptions) (*http.Response, error) {
 	req, err := client.getFileLargeCreateRequest(ctx, options)
 	if err != nil {
@@ -131,9 +143,13 @@ func (client *FilesClient) getFileLargeCreateRequest(ctx context.Context, option
 
 // getFileLargeHandleError handles the GetFileLarge error response.
 func (client *FilesClient) getFileLargeHandleError(resp *azcore.Response) error {
-	var err Error
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

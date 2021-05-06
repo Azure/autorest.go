@@ -7,10 +7,7 @@
 
 package azurespecialsgroup
 
-import (
-	"fmt"
-	"net/http"
-)
+import "net/http"
 
 // APIVersionDefaultGetMethodGlobalNotProvidedValidOptions contains the optional parameters for the APIVersionDefault.GetMethodGlobalNotProvidedValid method.
 type APIVersionDefaultGetMethodGlobalNotProvidedValidOptions struct {
@@ -53,28 +50,18 @@ type APIVersionLocalGetSwaggerLocalValidOptions struct {
 	// placeholder for future optional parameters
 }
 
+// Implements the error and azcore.HTTPResponse interfaces.
 type Error struct {
+	raw        string
 	ConstantID *int32  `json:"constantId,omitempty"`
 	Message    *string `json:"message,omitempty"`
 	Status     *int32  `json:"status,omitempty"`
 }
 
 // Error implements the error interface for type Error.
+// The contents of the error text are not contractual and subject to change.
 func (e Error) Error() string {
-	msg := ""
-	if e.ConstantID != nil {
-		msg += fmt.Sprintf("ConstantID: %v\n", *e.ConstantID)
-	}
-	if e.Message != nil {
-		msg += fmt.Sprintf("Message: %v\n", *e.Message)
-	}
-	if e.Status != nil {
-		msg += fmt.Sprintf("Status: %v\n", *e.Status)
-	}
-	if msg == "" {
-		msg = "missing error info"
-	}
-	return msg
+	return e.raw
 }
 
 // HeaderCustomNamedRequestIDHeadOptions contains the optional parameters for the Header.CustomNamedRequestIDHead method.

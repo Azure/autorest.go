@@ -10,6 +10,7 @@ package armnetwork
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
@@ -30,6 +31,7 @@ func NewLoadBalancerProbesClient(con *armcore.Connection, subscriptionID string)
 }
 
 // Get - Gets load balancer probe.
+// If the operation fails it returns the *CloudError error type.
 func (client *LoadBalancerProbesClient) Get(ctx context.Context, resourceGroupName string, loadBalancerName string, probeName string, options *LoadBalancerProbesGetOptions) (ProbeResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, loadBalancerName, probeName, options)
 	if err != nil {
@@ -87,14 +89,19 @@ func (client *LoadBalancerProbesClient) getHandleResponse(resp *azcore.Response)
 
 // getHandleError handles the Get error response.
 func (client *LoadBalancerProbesClient) getHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // List - Gets all the load balancer probes.
+// If the operation fails it returns the *CloudError error type.
 func (client *LoadBalancerProbesClient) List(resourceGroupName string, loadBalancerName string, options *LoadBalancerProbesListOptions) LoadBalancerProbeListResultPager {
 	return &loadBalancerProbeListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -148,9 +155,13 @@ func (client *LoadBalancerProbesClient) listHandleResponse(resp *azcore.Response
 
 // listHandleError handles the List error response.
 func (client *LoadBalancerProbesClient) listHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

@@ -10,6 +10,7 @@ package azartifacts
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -22,6 +23,7 @@ type datasetClient struct {
 }
 
 // BeginCreateOrUpdateDataset - Creates or updates a dataset.
+// If the operation fails it returns the *CloudError error type.
 func (client *datasetClient) BeginCreateOrUpdateDataset(ctx context.Context, datasetName string, dataset DatasetResource, options *DatasetBeginCreateOrUpdateDatasetOptions) (DatasetResourcePollerResponse, error) {
 	resp, err := client.createOrUpdateDataset(ctx, datasetName, dataset, options)
 	if err != nil {
@@ -69,6 +71,7 @@ func (client *datasetClient) ResumeCreateOrUpdateDataset(ctx context.Context, to
 }
 
 // CreateOrUpdateDataset - Creates or updates a dataset.
+// If the operation fails it returns the *CloudError error type.
 func (client *datasetClient) createOrUpdateDataset(ctx context.Context, datasetName string, dataset DatasetResource, options *DatasetBeginCreateOrUpdateDatasetOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateDatasetCreateRequest(ctx, datasetName, dataset, options)
 	if err != nil {
@@ -117,14 +120,19 @@ func (client *datasetClient) createOrUpdateDatasetHandleResponse(resp *azcore.Re
 
 // createOrUpdateDatasetHandleError handles the CreateOrUpdateDataset error response.
 func (client *datasetClient) createOrUpdateDatasetHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginDeleteDataset - Deletes a dataset.
+// If the operation fails it returns the *CloudError error type.
 func (client *datasetClient) BeginDeleteDataset(ctx context.Context, datasetName string, options *DatasetBeginDeleteDatasetOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteDataset(ctx, datasetName, options)
 	if err != nil {
@@ -172,6 +180,7 @@ func (client *datasetClient) ResumeDeleteDataset(ctx context.Context, token stri
 }
 
 // DeleteDataset - Deletes a dataset.
+// If the operation fails it returns the *CloudError error type.
 func (client *datasetClient) deleteDataset(ctx context.Context, datasetName string, options *DatasetBeginDeleteDatasetOptions) (*azcore.Response, error) {
 	req, err := client.deleteDatasetCreateRequest(ctx, datasetName, options)
 	if err != nil {
@@ -208,14 +217,19 @@ func (client *datasetClient) deleteDatasetCreateRequest(ctx context.Context, dat
 
 // deleteDatasetHandleError handles the DeleteDataset error response.
 func (client *datasetClient) deleteDatasetHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetDataset - Gets a dataset.
+// If the operation fails it returns the *CloudError error type.
 func (client *datasetClient) GetDataset(ctx context.Context, datasetName string, options *DatasetGetDatasetOptions) (DatasetResourceResponse, error) {
 	req, err := client.getDatasetCreateRequest(ctx, datasetName, options)
 	if err != nil {
@@ -264,14 +278,19 @@ func (client *datasetClient) getDatasetHandleResponse(resp *azcore.Response) (Da
 
 // getDatasetHandleError handles the GetDataset error response.
 func (client *datasetClient) getDatasetHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetDatasetsByWorkspace - Lists datasets.
+// If the operation fails it returns the *CloudError error type.
 func (client *datasetClient) GetDatasetsByWorkspace(options *DatasetGetDatasetsByWorkspaceOptions) DatasetListResponsePager {
 	return &datasetListResponsePager{
 		pipeline: client.con.Pipeline(),
@@ -313,14 +332,19 @@ func (client *datasetClient) getDatasetsByWorkspaceHandleResponse(resp *azcore.R
 
 // getDatasetsByWorkspaceHandleError handles the GetDatasetsByWorkspace error response.
 func (client *datasetClient) getDatasetsByWorkspaceHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginRenameDataset - Renames a dataset.
+// If the operation fails it returns the *CloudError error type.
 func (client *datasetClient) BeginRenameDataset(ctx context.Context, datasetName string, request ArtifactRenameRequest, options *DatasetBeginRenameDatasetOptions) (HTTPPollerResponse, error) {
 	resp, err := client.renameDataset(ctx, datasetName, request, options)
 	if err != nil {
@@ -368,6 +392,7 @@ func (client *datasetClient) ResumeRenameDataset(ctx context.Context, token stri
 }
 
 // RenameDataset - Renames a dataset.
+// If the operation fails it returns the *CloudError error type.
 func (client *datasetClient) renameDataset(ctx context.Context, datasetName string, request ArtifactRenameRequest, options *DatasetBeginRenameDatasetOptions) (*azcore.Response, error) {
 	req, err := client.renameDatasetCreateRequest(ctx, datasetName, request, options)
 	if err != nil {
@@ -404,9 +429,13 @@ func (client *datasetClient) renameDatasetCreateRequest(ctx context.Context, dat
 
 // renameDatasetHandleError handles the RenameDataset error response.
 func (client *datasetClient) renameDatasetHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

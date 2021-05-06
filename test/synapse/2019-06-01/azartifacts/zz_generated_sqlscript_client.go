@@ -10,6 +10,7 @@ package azartifacts
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
@@ -22,6 +23,7 @@ type sqlScriptClient struct {
 }
 
 // BeginCreateOrUpdateSQLScript - Creates or updates a Sql Script.
+// If the operation fails it returns the *CloudError error type.
 func (client *sqlScriptClient) BeginCreateOrUpdateSQLScript(ctx context.Context, sqlScriptName string, sqlScript SQLScriptResource, options *SQLScriptBeginCreateOrUpdateSQLScriptOptions) (SQLScriptResourcePollerResponse, error) {
 	resp, err := client.createOrUpdateSQLScript(ctx, sqlScriptName, sqlScript, options)
 	if err != nil {
@@ -69,6 +71,7 @@ func (client *sqlScriptClient) ResumeCreateOrUpdateSQLScript(ctx context.Context
 }
 
 // CreateOrUpdateSQLScript - Creates or updates a Sql Script.
+// If the operation fails it returns the *CloudError error type.
 func (client *sqlScriptClient) createOrUpdateSQLScript(ctx context.Context, sqlScriptName string, sqlScript SQLScriptResource, options *SQLScriptBeginCreateOrUpdateSQLScriptOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateSQLScriptCreateRequest(ctx, sqlScriptName, sqlScript, options)
 	if err != nil {
@@ -117,14 +120,19 @@ func (client *sqlScriptClient) createOrUpdateSQLScriptHandleResponse(resp *azcor
 
 // createOrUpdateSQLScriptHandleError handles the CreateOrUpdateSQLScript error response.
 func (client *sqlScriptClient) createOrUpdateSQLScriptHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginDeleteSQLScript - Deletes a Sql Script.
+// If the operation fails it returns the *CloudError error type.
 func (client *sqlScriptClient) BeginDeleteSQLScript(ctx context.Context, sqlScriptName string, options *SQLScriptBeginDeleteSQLScriptOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteSQLScript(ctx, sqlScriptName, options)
 	if err != nil {
@@ -172,6 +180,7 @@ func (client *sqlScriptClient) ResumeDeleteSQLScript(ctx context.Context, token 
 }
 
 // DeleteSQLScript - Deletes a Sql Script.
+// If the operation fails it returns the *CloudError error type.
 func (client *sqlScriptClient) deleteSQLScript(ctx context.Context, sqlScriptName string, options *SQLScriptBeginDeleteSQLScriptOptions) (*azcore.Response, error) {
 	req, err := client.deleteSQLScriptCreateRequest(ctx, sqlScriptName, options)
 	if err != nil {
@@ -208,14 +217,19 @@ func (client *sqlScriptClient) deleteSQLScriptCreateRequest(ctx context.Context,
 
 // deleteSQLScriptHandleError handles the DeleteSQLScript error response.
 func (client *sqlScriptClient) deleteSQLScriptHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetSQLScript - Gets a sql script.
+// If the operation fails it returns the *CloudError error type.
 func (client *sqlScriptClient) GetSQLScript(ctx context.Context, sqlScriptName string, options *SQLScriptGetSQLScriptOptions) (SQLScriptResourceResponse, error) {
 	req, err := client.getSQLScriptCreateRequest(ctx, sqlScriptName, options)
 	if err != nil {
@@ -264,14 +278,19 @@ func (client *sqlScriptClient) getSQLScriptHandleResponse(resp *azcore.Response)
 
 // getSQLScriptHandleError handles the GetSQLScript error response.
 func (client *sqlScriptClient) getSQLScriptHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // GetSQLScriptsByWorkspace - Lists sql scripts.
+// If the operation fails it returns the *CloudError error type.
 func (client *sqlScriptClient) GetSQLScriptsByWorkspace(options *SQLScriptGetSQLScriptsByWorkspaceOptions) SQLScriptsListResponsePager {
 	return &sqlScriptsListResponsePager{
 		pipeline: client.con.Pipeline(),
@@ -313,14 +332,19 @@ func (client *sqlScriptClient) getSQLScriptsByWorkspaceHandleResponse(resp *azco
 
 // getSQLScriptsByWorkspaceHandleError handles the GetSQLScriptsByWorkspace error response.
 func (client *sqlScriptClient) getSQLScriptsByWorkspaceHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginRenameSQLScript - Renames a sqlScript.
+// If the operation fails it returns the *CloudError error type.
 func (client *sqlScriptClient) BeginRenameSQLScript(ctx context.Context, sqlScriptName string, request ArtifactRenameRequest, options *SQLScriptBeginRenameSQLScriptOptions) (HTTPPollerResponse, error) {
 	resp, err := client.renameSQLScript(ctx, sqlScriptName, request, options)
 	if err != nil {
@@ -368,6 +392,7 @@ func (client *sqlScriptClient) ResumeRenameSQLScript(ctx context.Context, token 
 }
 
 // RenameSQLScript - Renames a sqlScript.
+// If the operation fails it returns the *CloudError error type.
 func (client *sqlScriptClient) renameSQLScript(ctx context.Context, sqlScriptName string, request ArtifactRenameRequest, options *SQLScriptBeginRenameSQLScriptOptions) (*azcore.Response, error) {
 	req, err := client.renameSQLScriptCreateRequest(ctx, sqlScriptName, request, options)
 	if err != nil {
@@ -404,9 +429,13 @@ func (client *sqlScriptClient) renameSQLScriptCreateRequest(ctx context.Context,
 
 // renameSQLScriptHandleError handles the RenameSQLScript error response.
 func (client *sqlScriptClient) renameSQLScriptHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err.InnerError); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

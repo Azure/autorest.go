@@ -10,6 +10,7 @@ package armnetwork
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
@@ -31,6 +32,7 @@ func NewIPAllocationsClient(con *armcore.Connection, subscriptionID string) *IPA
 }
 
 // BeginCreateOrUpdate - Creates or updates an IpAllocation in the specified resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *IPAllocationsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, ipAllocationName string, parameters IPAllocation, options *IPAllocationsBeginCreateOrUpdateOptions) (IPAllocationPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, ipAllocationName, parameters, options)
 	if err != nil {
@@ -80,6 +82,7 @@ func (client *IPAllocationsClient) ResumeCreateOrUpdate(ctx context.Context, tok
 }
 
 // CreateOrUpdate - Creates or updates an IpAllocation in the specified resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *IPAllocationsClient) createOrUpdate(ctx context.Context, resourceGroupName string, ipAllocationName string, parameters IPAllocation, options *IPAllocationsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, ipAllocationName, parameters, options)
 	if err != nil {
@@ -133,14 +136,19 @@ func (client *IPAllocationsClient) createOrUpdateHandleResponse(resp *azcore.Res
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *IPAllocationsClient) createOrUpdateHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // BeginDelete - Deletes the specified IpAllocation.
+// If the operation fails it returns the *CloudError error type.
 func (client *IPAllocationsClient) BeginDelete(ctx context.Context, resourceGroupName string, ipAllocationName string, options *IPAllocationsBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, ipAllocationName, options)
 	if err != nil {
@@ -190,6 +198,7 @@ func (client *IPAllocationsClient) ResumeDelete(ctx context.Context, token strin
 }
 
 // Delete - Deletes the specified IpAllocation.
+// If the operation fails it returns the *CloudError error type.
 func (client *IPAllocationsClient) deleteOperation(ctx context.Context, resourceGroupName string, ipAllocationName string, options *IPAllocationsBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, ipAllocationName, options)
 	if err != nil {
@@ -234,14 +243,19 @@ func (client *IPAllocationsClient) deleteCreateRequest(ctx context.Context, reso
 
 // deleteHandleError handles the Delete error response.
 func (client *IPAllocationsClient) deleteHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // Get - Gets the specified IpAllocation by resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *IPAllocationsClient) Get(ctx context.Context, resourceGroupName string, ipAllocationName string, options *IPAllocationsGetOptions) (IPAllocationResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, ipAllocationName, options)
 	if err != nil {
@@ -298,14 +312,19 @@ func (client *IPAllocationsClient) getHandleResponse(resp *azcore.Response) (IPA
 
 // getHandleError handles the Get error response.
 func (client *IPAllocationsClient) getHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // List - Gets all IpAllocations in a subscription.
+// If the operation fails it returns the *CloudError error type.
 func (client *IPAllocationsClient) List(options *IPAllocationsListOptions) IPAllocationListResultPager {
 	return &ipAllocationListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -351,14 +370,19 @@ func (client *IPAllocationsClient) listHandleResponse(resp *azcore.Response) (IP
 
 // listHandleError handles the List error response.
 func (client *IPAllocationsClient) listHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // ListByResourceGroup - Gets all IpAllocations in a resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *IPAllocationsClient) ListByResourceGroup(resourceGroupName string, options *IPAllocationsListByResourceGroupOptions) IPAllocationListResultPager {
 	return &ipAllocationListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -408,14 +432,19 @@ func (client *IPAllocationsClient) listByResourceGroupHandleResponse(resp *azcor
 
 // listByResourceGroupHandleError handles the ListByResourceGroup error response.
 func (client *IPAllocationsClient) listByResourceGroupHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // UpdateTags - Updates a IpAllocation tags.
+// If the operation fails it returns the *CloudError error type.
 func (client *IPAllocationsClient) UpdateTags(ctx context.Context, resourceGroupName string, ipAllocationName string, parameters TagsObject, options *IPAllocationsUpdateTagsOptions) (IPAllocationResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, ipAllocationName, parameters, options)
 	if err != nil {
@@ -469,9 +498,13 @@ func (client *IPAllocationsClient) updateTagsHandleResponse(resp *azcore.Respons
 
 // updateTagsHandleError handles the UpdateTags error response.
 func (client *IPAllocationsClient) updateTagsHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

@@ -10,6 +10,7 @@ package armnetwork
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
@@ -30,6 +31,7 @@ func NewNetworkInterfaceLoadBalancersClient(con *armcore.Connection, subscriptio
 }
 
 // List - List all load balancers in a network interface.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkInterfaceLoadBalancersClient) List(resourceGroupName string, networkInterfaceName string, options *NetworkInterfaceLoadBalancersListOptions) NetworkInterfaceLoadBalancerListResultPager {
 	return &networkInterfaceLoadBalancerListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -83,9 +85,13 @@ func (client *NetworkInterfaceLoadBalancersClient) listHandleResponse(resp *azco
 
 // listHandleError handles the List error response.
 func (client *NetworkInterfaceLoadBalancersClient) listHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

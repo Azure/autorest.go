@@ -7,10 +7,7 @@
 
 package durationgroup
 
-import (
-	"fmt"
-	"net/http"
-)
+import "net/http"
 
 // DurationGetInvalidOptions contains the optional parameters for the Duration.GetInvalid method.
 type DurationGetInvalidOptions struct {
@@ -32,24 +29,17 @@ type DurationPutPositiveDurationOptions struct {
 	// placeholder for future optional parameters
 }
 
+// Implements the error and azcore.HTTPResponse interfaces.
 type Error struct {
+	raw     string
 	Message *string `json:"message,omitempty"`
 	Status  *int32  `json:"status,omitempty"`
 }
 
 // Error implements the error interface for type Error.
+// The contents of the error text are not contractual and subject to change.
 func (e Error) Error() string {
-	msg := ""
-	if e.Message != nil {
-		msg += fmt.Sprintf("Message: %v\n", *e.Message)
-	}
-	if e.Status != nil {
-		msg += fmt.Sprintf("Status: %v\n", *e.Status)
-	}
-	if msg == "" {
-		msg = "missing error info"
-	}
-	return msg
+	return e.raw
 }
 
 // StringResponse is the response envelope for operations that return a string type.

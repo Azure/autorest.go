@@ -10,6 +10,7 @@ package armnetwork
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
@@ -30,6 +31,7 @@ func NewAvailableResourceGroupDelegationsClient(con *armcore.Connection, subscri
 }
 
 // List - Gets all of the available subnet delegations for this resource group in this region.
+// If the operation fails it returns the *CloudError error type.
 func (client *AvailableResourceGroupDelegationsClient) List(location string, resourceGroupName string, options *AvailableResourceGroupDelegationsListOptions) AvailableDelegationsResultPager {
 	return &availableDelegationsResultPager{
 		pipeline: client.con.Pipeline(),
@@ -83,9 +85,13 @@ func (client *AvailableResourceGroupDelegationsClient) listHandleResponse(resp *
 
 // listHandleError handles the List error response.
 func (client *AvailableResourceGroupDelegationsClient) listHandleError(resp *azcore.Response) error {
-	var err CloudError
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return azcore.NewResponseError(resp.UnmarshalError(err), resp.Response)
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
 	}
-	return azcore.NewResponseError(&err, resp.Response)
+	errType := CloudError{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }

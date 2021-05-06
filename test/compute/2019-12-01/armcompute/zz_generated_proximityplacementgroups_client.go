@@ -10,10 +10,8 @@ package armcompute
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strings"
@@ -32,6 +30,7 @@ func NewProximityPlacementGroupsClient(con *armcore.Connection, subscriptionID s
 }
 
 // CreateOrUpdate - Create or update a proximity placement group.
+// If the operation fails it returns a generic error.
 func (client *ProximityPlacementGroupsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, proximityPlacementGroupName string, parameters ProximityPlacementGroup, options *ProximityPlacementGroupsCreateOrUpdateOptions) (ProximityPlacementGroupResponse, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, proximityPlacementGroupName, parameters, options)
 	if err != nil {
@@ -85,9 +84,9 @@ func (client *ProximityPlacementGroupsClient) createOrUpdateHandleResponse(resp 
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *ProximityPlacementGroupsClient) createOrUpdateHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -96,6 +95,7 @@ func (client *ProximityPlacementGroupsClient) createOrUpdateHandleError(resp *az
 }
 
 // Delete - Delete a proximity placement group.
+// If the operation fails it returns a generic error.
 func (client *ProximityPlacementGroupsClient) Delete(ctx context.Context, resourceGroupName string, proximityPlacementGroupName string, options *ProximityPlacementGroupsDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, proximityPlacementGroupName, options)
 	if err != nil {
@@ -139,9 +139,9 @@ func (client *ProximityPlacementGroupsClient) deleteCreateRequest(ctx context.Co
 
 // deleteHandleError handles the Delete error response.
 func (client *ProximityPlacementGroupsClient) deleteHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -150,6 +150,7 @@ func (client *ProximityPlacementGroupsClient) deleteHandleError(resp *azcore.Res
 }
 
 // Get - Retrieves information about a proximity placement group .
+// If the operation fails it returns a generic error.
 func (client *ProximityPlacementGroupsClient) Get(ctx context.Context, resourceGroupName string, proximityPlacementGroupName string, options *ProximityPlacementGroupsGetOptions) (ProximityPlacementGroupResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, proximityPlacementGroupName, options)
 	if err != nil {
@@ -206,9 +207,9 @@ func (client *ProximityPlacementGroupsClient) getHandleResponse(resp *azcore.Res
 
 // getHandleError handles the Get error response.
 func (client *ProximityPlacementGroupsClient) getHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -217,6 +218,7 @@ func (client *ProximityPlacementGroupsClient) getHandleError(resp *azcore.Respon
 }
 
 // ListByResourceGroup - Lists all proximity placement groups in a resource group.
+// If the operation fails it returns a generic error.
 func (client *ProximityPlacementGroupsClient) ListByResourceGroup(resourceGroupName string, options *ProximityPlacementGroupsListByResourceGroupOptions) ProximityPlacementGroupListResultPager {
 	return &proximityPlacementGroupListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -266,9 +268,9 @@ func (client *ProximityPlacementGroupsClient) listByResourceGroupHandleResponse(
 
 // listByResourceGroupHandleError handles the ListByResourceGroup error response.
 func (client *ProximityPlacementGroupsClient) listByResourceGroupHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -277,6 +279,7 @@ func (client *ProximityPlacementGroupsClient) listByResourceGroupHandleError(res
 }
 
 // ListBySubscription - Lists all proximity placement groups in a subscription.
+// If the operation fails it returns a generic error.
 func (client *ProximityPlacementGroupsClient) ListBySubscription(options *ProximityPlacementGroupsListBySubscriptionOptions) ProximityPlacementGroupListResultPager {
 	return &proximityPlacementGroupListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -322,9 +325,9 @@ func (client *ProximityPlacementGroupsClient) listBySubscriptionHandleResponse(r
 
 // listBySubscriptionHandleError handles the ListBySubscription error response.
 func (client *ProximityPlacementGroupsClient) listBySubscriptionHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
@@ -333,6 +336,7 @@ func (client *ProximityPlacementGroupsClient) listBySubscriptionHandleError(resp
 }
 
 // Update - Update a proximity placement group.
+// If the operation fails it returns a generic error.
 func (client *ProximityPlacementGroupsClient) Update(ctx context.Context, resourceGroupName string, proximityPlacementGroupName string, parameters ProximityPlacementGroupUpdate, options *ProximityPlacementGroupsUpdateOptions) (ProximityPlacementGroupResponse, error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, proximityPlacementGroupName, parameters, options)
 	if err != nil {
@@ -386,9 +390,9 @@ func (client *ProximityPlacementGroupsClient) updateHandleResponse(resp *azcore.
 
 // updateHandleError handles the Update error response.
 func (client *ProximityPlacementGroupsClient) updateHandleError(resp *azcore.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := resp.Payload()
 	if err != nil {
-		return fmt.Errorf("%s; failed to read response body: %w", resp.Status, err)
+		return azcore.NewResponseError(err, resp.Response)
 	}
 	if len(body) == 0 {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
